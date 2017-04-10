@@ -1,0 +1,10 @@
+[START]
+[Date: 2017-01-18T16:37:01.188]
+[Information: Got 1x a Clue scroll (medium) from Guard.]
+[END]
+
+[START]
+[Date: 2017-01-18T16:37:59.984]
+[Information: Got 1x a Clue scroll (medium) from Guard.]
+[END]
+

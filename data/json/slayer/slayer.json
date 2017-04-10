@@ -1,0 +1,210 @@
+[
+  {
+    "masters": [
+      "SPRIA",
+      "TURAEL"
+    ],
+    "tasks": [
+      {
+        "key": "ROCK CRABS",
+        "difficulty": "EASY",
+        "amount": [
+          25,
+          50
+        ]
+      },
+      {
+        "key": "DOGS",
+        "difficulty": "EASY",
+        "amount": [
+          25,
+          50
+        ]
+      },
+      {
+        "key": "MOSS GIANTS",
+        "difficulty": "EASY",
+        "amount": [
+          25,
+          50
+        ]
+      },
+      {
+        "key": "SKELETONS",
+        "difficulty": "EASY",
+        "amount": [
+          25,
+          50
+        ]
+      },
+      {
+        "key": "BLUE DRAGONS",
+        "difficulty": "EASY",
+        "amount": [
+          25,
+          50
+        ]
+      },
+      {
+        "key": "LESSER DEMONS",
+        "difficulty": "EASY",
+        "amount": [
+          25,
+          50
+        ],
+        "requirement": 50
+      },
+      {
+        "key": "DWARVES",
+        "difficulty": "EASY",
+        "amount": [
+          25,
+          50
+        ]
+      },
+      {
+        "key": "CRAWLING HANDS",
+        "difficulty": "EASY",
+        "amount": [
+          25,
+          50
+        ]
+      },
+      {
+        "key": "BATS",
+        "difficulty": "EASY",
+        "amount": [
+          25,
+          50
+        ]
+      },
+      {
+        "key": "COWS",
+        "difficulty": "EASY",
+        "amount": [
+          25,
+          50
+        ]
+      },
+      {
+        "key": "GOBLINS",
+        "difficulty": "EASY",
+        "amount": [
+          25,
+          50
+        ]
+      },
+      {
+        "key": "FIRE GIANTS",
+        "difficulty": "EASY",
+        "amount": [
+          25,
+          50
+        ],
+        "requirement": 50
+      },
+      {
+        "key": "GREATER DEMONS",
+        "difficulty": "MODERATE",
+        "amount": [
+          30,
+          50
+        ],
+        "requirement": 75
+      },
+      {
+        "key": "HELLHOUNDS",
+        "difficulty": "MODERATE",
+        "amount": [
+          30,
+          50
+        ],
+        "requirement": 80
+      },
+      {
+        "key": "BLACK DEMONS",
+        "difficulty": "HARD",
+        "amount": [
+          40,
+          50
+        ],
+        "requirement": 80
+      },
+      {
+        "key": "BRONZE DRAGONS",
+        "difficulty": "MODERATE",
+        "amount": [
+          30,
+          50
+        ],
+        "requirement": 70
+      },
+      {
+        "key": "IRON DRAGONS",
+        "difficulty": "HARD",
+        "amount": [
+          40,
+          50
+        ],
+        "requirement": 70
+      },
+      {
+        "key": "STEEL DRAGONS",
+        "difficulty": "HARD",
+        "amount": [
+          40,
+          50
+        ],
+        "requirement": 70
+      },
+      {
+        "key": "BLACK DRAGONS",
+        "difficulty": "HARD",
+        "amount": [
+          40,
+          50
+        ],
+        "requirement": 70
+      }
+    ]
+  },
+  {
+    "masters": [
+      "MAZCHNA"
+    ],
+    "tasks": [
+      {
+        "key": "CAVE CRAWLERS",
+        "difficulty": "EASY",
+        "amount": [
+          10,
+          25
+        ]
+      },
+      {
+        "key": "BANSHEES",
+        "difficulty": "EASY",
+        "amount": [
+          10,
+          25
+        ]
+      },
+      {
+        "key": "CAVE SLIMES",
+        "difficulty": "EASY",
+        "amount": [
+          10,
+          25
+        ]
+      },
+      {
+        "key": "COCKATRICES",
+        "difficulty": "EASY",
+        "amount": [
+          10,
+          25
+        ]
+      }
+    ]
+  }
+]

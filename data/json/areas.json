@@ -1,0 +1,168 @@
+[
+  {
+    "name": "HOME",
+    "location": [
+      {
+        "square": {
+          "swX": 3197,
+          "swY": 3422,
+          "neX": 3229,
+          "neY": 3444,
+          "z": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "FUN_PVP",
+    "location": [
+      {
+        "square": {
+          "swX": 3089,
+          "swY": 3506,
+          "neX": 3095,
+          "neY": 3511,
+          "z": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "GLACORS",
+    "location": [
+      {
+        "square": {
+          "swX": 4150,
+          "swY": 5691,
+          "neX": 4239,
+          "neY": 5765,
+          "z": 0
+        },
+        "multi": true
+      }
+    ]
+  },
+  {
+    "name": "CHAOS_DWARF_BATTLEFIELD",
+    "location": [
+      {
+        "square": {
+          "swX": 1486,
+          "swY": 4692,
+          "neX": 1522,
+          "neY": 4716,
+          "z": 0
+        },
+        "multi": true
+      }
+    ]
+  },
+  {
+    "name": "CORPOREAL_BEAST",
+    "location": [
+      {
+        "square": {
+          "swX": 2974,
+          "swY": 4367,
+          "neX": 3003,
+          "neY": 4400,
+          "z": 2
+        },
+        "multi": true
+      }
+    ]
+  },
+  {
+    "name": "DAGANNOTH_KINGS",
+    "location": [
+      {
+        "square": {
+          "swX": 2890,
+          "swY": 4427,
+          "neX": 2937,
+          "neY": 4466,
+          "z": 0
+        },
+        "multi": true
+      }
+    ]
+  },
+  {
+    "name": "WILDERNESS",
+    "location": [
+      {
+        "square": {
+          "swX": 2941,
+          "swY": 3525,
+          "neX": 3392,
+          "neY": 3966,
+          "z": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "GODWARS",
+    "location": [
+      {
+        "square": {
+          "swX": 2810,
+          "swY": 5250,
+          "neX": 2950,
+          "neY": 5380,
+          "z": 2
+        },
+        "multi": true
+      },
+      {
+        "square": {
+          "swX": 2914,
+          "swY": 5276,
+          "neX": 2930,
+          "neY": 5300,
+          "z": 1
+        },
+        "multi": true
+      },
+      {
+        "square": {
+          "swX": 2885,
+          "swY": 5254,
+          "neX": 2925,
+          "neY": 5274,
+          "z": 0
+        },
+        "multi": true
+      }
+    ]
+  },
+  {
+    "name": "DUEL_ARENA",
+    "location": [
+      {
+        "square": {
+          "swX": 3349,
+          "swY": 3263,
+          "neX": 3379,
+          "neY": 3280,
+          "z": 0
+        },
+        "summon": false
+      }
+    ]
+  },
+  {
+    "name": "CLAN_WARS",
+    "location": [
+      {
+        "square": {
+          "swX": 3264,
+          "swY": 3672,
+          "neX": 3279,
+          "neY": 3695,
+          "z": 0
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,51 @@
+Skilling Pets - pets that are obtained through skilling; each skilling pet would have a benefit to you if you have the pet, when training the skill you obtained the pet from whether it's banking or more experience.
+
+Particles - particles on capes make them look sooo much better.
+
+First Click - being able to attack an NPC with one click, regardless of the level is always helpful and I'd quite like an option for that to be toggled in the settings tab.
+
+Include Subjugation Robes in K'ril Tsutsaroth's drop table.
+
+Include Saradomin's Hiss, Murmur, and Whisper + Armadyl Crossbow in Commander Zilyana's drop table.
+
+Include an Uncut Onyx in the Chaos Elemental's drop table. Would help maintain a fairer price for everybody's favourite amulet if it's dangerous to obtain.
+
+Include Ornament Kits (especially the Fury Ornament Kit) in the Giant Moles drop table. The Giant Mole isn't very hard to kill, not that anybody ever bothers, but I think that cosmetics will be enough of a reason for people to kill it without wasting their time.
+
+The only purpose of Bork and the Skeletal Horror in RS3 is for Elite Clue Scrolls. If you guys are planning to add Clue Scrolls then maybe give them a much better chance of dropping one than, say, the God Wars Dungeon Bosses. If not, then maybe give them an incredibly low chance to drop Third Age Armour and a slightly less low chance to drop Gilded Armour.
+
+Maybe give the Sea Troll Queen and the Phoenix a similar drop table to Bork and the Skeletal Horror. Unless you guys are planning to go crazy with pets like every other server. Although, I wouldn't mind grinding for Phoenix pets, I got them both years ago on RS2.
+
+If skilling stores like the Crafting and Herblore stores are removed (Ocyn mentioned in passing) then add Gems and Herbs in high amounts (maybe 20-100 noted depending on which) to the boss drop tables. If this is the case you guys may wish to lower the sell value of cut gems to the General Store, in order to avoid huge amounts of cash entering the game.
+
+Although there aren't stores for them at the moment (to my knowledge) add [noted] Raw Fish, Ore (or Bars), Logs, Bones, and Pure Essence to the drop tables of bosses.
+
+Add Ring Imbue Kits (Berserkers, Warriors, Archers, Seers, and maybe Onyx) to the Slayer Points Shop for maybe 200 points each.
+
+Cave Horrors (58 Slayer) for Black Masks.
+
+Automatons (67 Slayer along with a Grandmaster Quest on RS3, so maybe Require 90 (ish) Slayer) for the 85 Defence Static, Pneumatic, and Tracking Gloves. These are the glove slot equivelent to the Glacor Boots.
+
+Jungle Strykewyrms (73 Slayer) for Hexcrest. In RS3 they're task only, but I don't know if you guys want to go that direction.
+
+Desert Strykewyrms (77 Slayer) for Focus Sight. In RS3 they're task only, but I don't know if you guys want to go that direction.
+
+Mutated Jadinko Males (91 Slayer) for the Whip Vine. Maybe make the Whip Vine consume Abyssal Whips after so many hits like the Abyssal Tentacle in OSRS in order to keep the Abyssal Whips price up.
+
+Ice Strykewyrms (93 Slayer) for Staff of Light. In RS3 they're task only, but I don't know if you guys want to go that direction. In RS3 they also require either a Fire Cape, Kiln Cape, or Completionist Cape to kill, but that might be kind of hard to code (to check if they have one of the 3) if you decide to make them task only.
+
+Ganodermic Beasts (95 Slayer) for Polypore Staff. It'd probably be for the best if they straight up drop a fully charged Polypore Staff that doesn't lose charges, unless it's made rechargeable in exchange for cash (as a money sink). Requiring Polypore Spores (and Runes) would just cause people to camp more Ganodermic Beasts, therefore allowing more Staffs to enter the game and lowering their price.
+
+I don't really care from which Minigames, but please include Battlemage, Trickster, and Vanguard Armours, as well as Halos in their rewards.
+
+Add the Rogue's Chest (84 Thieving) to the deep wilderness. Have either multiple chests or a quick respawn time, with maybe a daily limit as to how many times the chest can be looted. Give it rewards like Crystal Key halves, Torstols (remove from shop), and Dragon Bones. Maybe even allow us to loot small amounts of Pk Points. Give it one very good rewards (like an Uncut Onyx) that auto-triggers the daily limit and displays a unlimitedStock message to make it more dangerous.
+
+Add feathers to the Fletching shop so that we can make darts, because Fletching (including stringing the bows) leaves no logs for Firemaking.
+
+An afk mining method like coal/gold deposits or the Lava Flow Mine.
+
+Redwood trees. This'll give another tree to cut, and another way to make cash. Make the logs worth like 5k each, and they'll be a pretty good money making method.
+
+Make Amulet's of Fury cost more, when you die it isn't an 'item kept on death', instead I kept Red Dragon Hide armour.
+
+Cooking shrimps & anchovies on the range is EXTREMELY slow, I cooked/burnt around 10 full inventories of small org catches, before I stopped burning them.

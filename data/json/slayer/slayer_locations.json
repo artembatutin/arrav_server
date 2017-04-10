@@ -1,0 +1,192 @@
+[
+  {
+    "key": "ROCK CRABS",
+    "price": 0,
+    "position": {
+      "x": 2673,
+      "y": 3712,
+      "z": 0
+    }
+  },
+  {
+    "key": "DOGS",
+    "price": 1000,
+    "position": {
+      "x": 2632,
+      "y": 9546,
+      "z": 0
+    }
+  },
+  {
+    "key": "MOSS GIANTS",
+    "price": 1000,
+    "position": [
+      {
+        "x": 2644,
+        "y": 9527,
+        "z": 0
+      },
+      {
+        "x": 2683,
+        "y": 9541,
+        "z": 0
+      },
+      {
+        "x": 3154,
+        "y": 9909,
+        "z": 0
+      }
+    ]
+  },
+  {
+    "key": "SKELETONS",
+    "price": 1000,
+    "position": [
+      {
+        "x": 2881,
+        "y": 9828,
+        "z": 0
+      },
+      {
+        "x": 3279,
+        "y": 9906,
+        "z": 0
+      }
+    ]
+  },
+  {
+    "key": "BLUE DRAGONS",
+    "price": 1000,
+    "position": {
+      "x": 2908,
+      "y": 9812,
+      "z": 0
+    }
+  },
+  {
+    "key": "LESSER DEMONS",
+    "price": 1000,
+    "position": {
+      "x": 2830,
+      "y": 9567,
+      "z": 0
+    }
+  },
+  {
+    "key": "DWARVES",
+    "price": 1000,
+    "position": {
+      "x": 3021,
+      "y": 3339,
+      "z": 0
+    }
+  },
+  {
+    "key": "CRAWLING HANDS",
+    "price": 1000,
+    "position": {
+      "x": 3412,
+      "y": 3531,
+      "z": 0
+    }
+  },
+  {
+    "key": "BATS",
+    "price": 1000,
+    "position": {
+      "x": 2913,
+      "y": 9824,
+      "z": 0
+    }
+  },
+  {
+    "key": "COWS",
+    "price": 0,
+    "position": {
+      "x": 3259,
+      "y": 3256,
+      "z": 0
+    }
+  },
+  {
+    "key": "GOBLINS",
+    "price": 0,
+    "position": {
+      "x": 3256,
+      "y": 3230,
+      "z": 0
+    }
+  },
+  {
+    "key": "FIRE GIANTS",
+    "price": 1000,
+    "position": {
+      "x": 2666,
+      "y": 9506,
+      "z": 0
+    }
+  },
+  {
+    "key": "GREATER DEMONS",
+    "price": 1000,
+    "position": {
+      "x": 2627,
+      "y": 9516,
+      "z": 2
+    }
+  },
+  {
+    "key": "HELLHOUNDS",
+    "price": 1000,
+    "position": {
+      "x": 2866,
+      "y": 9833,
+      "z": 0
+    }
+  },
+  {
+    "key": "BLACK DEMONS",
+    "price": 1000,
+    "position": {
+      "x": 3086,
+      "y": 9970,
+      "z": 0
+    }
+  },
+  {
+    "key": "BRONZE DRAGONS",
+    "price": 1000,
+    "position": {
+      "x": 2706,
+      "y": 9468,
+      "z": 0
+    }
+  },
+  {
+    "key": "IRON DRAGONS",
+    "price": 1000,
+    "position": {
+      "x": 2706,
+      "y": 9468,
+      "z": 0
+    }
+  },
+  {
+    "key": "STEEL DRAGONS",
+    "price": 1000,
+    "position": {
+      "x": 2706,
+      "y": 9468,
+      "z": 0
+    }
+  },
+  {
+    "key": "BLACK DRAGONS",
+    "price": 1000,
+    "position": {
+      "x": 2831,
+      "y": 9817,
+      "z": 0
+    }
+  }
+]
