@@ -177,11 +177,11 @@ public final class ClanMember {
 		}
 		if(rank.isPresent()) {
 			if(member.getRank().getValue() < rank.get().getValue()) {
-				member.getPlayer().getMessages().sendClanMessage("", "You were promoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER);
+				//member.getPlayer().getMessages().sendClanMessage("", "You were promoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER);
 				member.setRank(rank.get());
 				World.getClanManager().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, clan);
 			} else if(member.getRank().getValue() > rank.get().getValue()) {
-				member.getPlayer().getMessages().sendClanMessage("", "You were demoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER);
+				//member.getPlayer().getMessages().sendClanMessage("", "You were demoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER);
 				member.setRank(rank.get());
 				World.getClanManager().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, clan);
 			}
