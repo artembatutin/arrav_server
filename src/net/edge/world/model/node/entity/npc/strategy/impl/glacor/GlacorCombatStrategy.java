@@ -151,7 +151,7 @@ public final class GlacorCombatStrategy extends DynamicCombatStrategy<Glacor> {
 			Arrays.stream(data.getHits()).forEach(h -> h.setDamage(h.getDamage() / 2));
 		}
 		
-		if(VALUES.stream().anyMatch(s -> s.getSpell().spellId() == attacker.getCurrentlyCasting().spellId())) {
+		if(attacker.getCurrentlyCasting() != null && VALUES.stream().anyMatch(s -> s.getSpell().spellId() == attacker.getCurrentlyCasting().spellId())) {
 			Arrays.stream(data.getHits()).forEach(h -> h.setDamage((int) (h.getDamage() * 1.2)));
 		}
 	}
