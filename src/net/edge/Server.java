@@ -46,6 +46,11 @@ import java.util.stream.Collectors;
  * @author lare96 <http://github.com/lare96>
  */
 public final class Server {
+	
+	/**
+	 * Condition if the server is running online for players.
+	 */
+	public static boolean ONLINE;
 
 	/**
 	 * The flag that determines if debugging messages should be printed or not.
@@ -79,10 +84,12 @@ public final class Server {
 
 	/**
 	 * A package-private constructor to discourage external instantiation.
+	 * @param online if the server is launching to host real players.
 	 */
-	public Server() {
+	public Server(boolean online) {
 		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleInitializationThread").build());
 		launchService = MoreExecutors.listeningDecorator(delegateService);
+		Server.ONLINE = online;
 	}
 
 	/**

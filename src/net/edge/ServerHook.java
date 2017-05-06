@@ -26,7 +26,8 @@ public final class ServerHook extends Thread {
 			World.getScoreboardManager().serializeIndividualScoreboard();
 			MarketItem.serializeMarketItems();
 
-			TimeUnit.SECONDS.sleep(5);//this is necessary, otherwice the thread is closed without
+			TimeUnit.SECONDS.sleep(5);
+			//this is necessary, otherwise the thread is closed without
 			//saving all character files properly.
 		} catch (InterruptedException e) {
 			e.printStackTrace();

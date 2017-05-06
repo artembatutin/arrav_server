@@ -33,9 +33,11 @@ public final class Main {
 	 * @param args The runtime arguments, none of which are parsed.
 	 */
 	public static void main(String[] args) {
-		Runtime.getRuntime().addShutdownHook(new ServerHook());
+		boolean online = Boolean.parseBoolean(args[0]);
+		if(online)
+			Runtime.getRuntime().addShutdownHook(new ServerHook());
 		try {
-			Server edgeville = new Server();
+			Server edgeville = new Server(online);
 			edgeville.init();
 		} catch(Exception e) {
 			LOGGER.log(Level.SEVERE, "Error in game run time!", e);
