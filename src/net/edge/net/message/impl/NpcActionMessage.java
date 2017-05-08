@@ -504,8 +504,8 @@ public final class NpcActionMessage implements InputMessageListener {
 						player.animation(new Animation(2110));
 						player.forceChat("Thbbbbt!");
 						npc.forceChat("Whine!");
-						Position delta = Position.delta(player.getPosition(), npc.getPosition());
-						npc.getMovementQueue().walk(delta.getX() > 0 ? 1 : -1, delta.getY() > 0 ? 1 : -1);
+						Optional<Position> move = World.getTraversalMap().getRandomTraversableTile(npc.getPosition(), npc.size(), player.getPosition());
+						move.ifPresent(position1 -> npc.getMovementQueue().walk(position1));
 						break;
 					default:
 						if(player.getRights().greater(Rights.ADMINISTRATOR)) {
