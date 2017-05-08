@@ -1,6 +1,7 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
 import net.edge.world.content.skill.Skills;
+import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
@@ -41,6 +42,11 @@ public final class GraniteCrab extends Familiar {
 	@Override
 	public Item getPouch() {
 		return new Item(12009);
+	}
+	
+	@Override
+	public Charm getCharm() {
+		return Charm.CRIMSON;
 	}
 	
 	@Override

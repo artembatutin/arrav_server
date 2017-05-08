@@ -1,6 +1,7 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
 import net.edge.world.content.dialogue.impl.NpcDialogue;
+import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.Familiar;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.ability.Fighter;
@@ -30,6 +31,11 @@ public abstract class MinotaurFamiliar extends Familiar {
 	private static final String[] RANDOM_DIALOGUE = new String[]{"All this walking about is making me angry.", "Can you tell me why we're not fighting yet?", "Hey no-horns!"};
 	
 	private final Fighter ability = new Fighter();
+	
+	@Override
+	public Charm getCharm() {
+		return Charm.BLUE;
+	}
 	
 	@Override
 	public final FamiliarAbility getAbilityType() {

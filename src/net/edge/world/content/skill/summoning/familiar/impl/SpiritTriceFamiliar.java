@@ -1,6 +1,7 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
 import net.edge.world.content.dialogue.impl.NpcDialogue;
+import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
@@ -20,9 +21,14 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class SpiritTriceFamiliar extends Familiar {
 	
 	/**
-	 * The life ticks
+	 * The life ticks.
 	 */
 	private static final int LIFE_TICKS = 3600;
+	
+	/**
+	 * Dialogues.
+	 */
+	private static final String[] RANDOM_DIALOGUE = new String[]{"Where's my brothers?", "Where's my sisters?"};
 	
 	/**
 	 * Constructs a new {@link VoidFamiliar}.
@@ -32,7 +38,10 @@ public abstract class SpiritTriceFamiliar extends Familiar {
 		super(id, LIFE_TICKS);
 	}
 	
-	private static final String[] RANDOM_DIALOGUE = new String[]{"Where's my brothers?", "Where's my sisters?"};
+	@Override
+	public Charm getCharm() {
+		return Charm.GREEN;
+	}
 	
 	@Override
 	public final int getRequirement() {
@@ -95,6 +104,7 @@ public abstract class SpiritTriceFamiliar extends Familiar {
 		public Item getPouch() {
 			return new Item(12095);
 		}
+		
 	}
 	
 	/**

@@ -3,6 +3,7 @@ package net.edge.world.content.skill.summoning.familiar.impl;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.world.World;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
+import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.model.node.entity.model.Animation;
@@ -44,6 +45,11 @@ public final class DesertWyrm extends Familiar {
 	@Override
 	public Item getPouch() {
 		return new Item(12049);
+	}
+	
+	@Override
+	public Charm getCharm() {
+		return Charm.GREEN;
 	}
 	
 	@Override

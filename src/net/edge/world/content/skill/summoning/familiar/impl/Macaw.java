@@ -3,6 +3,7 @@ package net.edge.world.content.skill.summoning.familiar.impl;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.dialogue.impl.StatementDialogue;
+import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
@@ -42,7 +43,12 @@ public final class Macaw extends Familiar {
 	public Item getPouch() {
 		return new Item(12071);
 	}
-
+	
+	@Override
+	public Charm getCharm() {
+		return Charm.GREEN;
+	}
+	
 	@Override
 	public int getRequirement() {
 		return 41;

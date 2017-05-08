@@ -1,6 +1,7 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
 import net.edge.world.content.dialogue.impl.NpcDialogue;
+import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.model.node.entity.player.Player;
@@ -38,6 +39,11 @@ public final class SpiritScorpion extends Familiar {
 	@Override
 	public Item getPouch() {
 		return new Item(12055);
+	}
+	
+	@Override
+	public Charm getCharm() {
+		return Charm.CRIMSON;
 	}
 	
 	@Override

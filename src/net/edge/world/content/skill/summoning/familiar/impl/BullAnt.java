@@ -1,6 +1,7 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
 import net.edge.world.content.dialogue.impl.NpcDialogue;
+import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.Summoning;
@@ -40,7 +41,12 @@ public final class BullAnt extends Familiar {
 	public Item getPouch() {
 		return new Item(12087);
 	}
-
+	
+	@Override
+	public Charm getCharm() {
+		return Charm.GOLD;
+	}
+	
 	@Override
 	public int getRequirement() {
 		return 47;

@@ -9,6 +9,7 @@ import net.edge.world.World;
 import net.edge.world.content.TabInterface;
 import net.edge.world.content.dialogue.Expression;
 import net.edge.world.content.skill.Skills;
+import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import net.edge.world.model.locale.Position;
@@ -219,6 +220,12 @@ public abstract class Familiar extends Follower {
 	 * @return the item identification.
 	 */
 	public abstract Item getPouch();
+	
+	/**
+	 * The charm required to create this familiars pouch.
+	 * @return charm required.
+	 */
+	public abstract Charm getCharm();
 	
 	/**
 	 * The requirement required to summon this familiar.

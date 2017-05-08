@@ -1,5 +1,6 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
+import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.ability.Teleporter;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
 import net.edge.world.content.skill.summoning.Summoning;
@@ -25,6 +26,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public abstract class VoidFamiliar extends Familiar {
 	
 	/**
+	 * Dialogues.
+	 */
+	private static final String[] RANDOM_DIALOGUE = new String[]{"Let's go play hide an' seek!", "I'm coming to tickle you!",};
+	
+	/**
 	 * Constructs a new {@link VoidFamiliar}.
 	 * @param id   the identification of this familiar.
 	 * @param life the amount of ticks it stays alive for.
@@ -33,7 +39,10 @@ public abstract class VoidFamiliar extends Familiar {
 		super(id, life);
 	}
 	
-	private static final String[] RANDOM_DIALOGUE = new String[]{"Let's go play hide an' seek!", "I'm coming to tickle you!",};
+	@Override
+	public Charm getCharm() {
+		return Charm.BLUE;
+	}
 	
 	@Override
 	public final int getRequirement() {
@@ -81,6 +90,11 @@ public abstract class VoidFamiliar extends Familiar {
 		@Override
 		public Item getPouch() {
 			return new Item(12818);
+		}
+		
+		@Override
+		public Charm getCharm() {
+			return Charm.GREEN;
 		}
 		
 		private final ForagerPassiveAbility ability = new ForagerPassiveAbility(436, 438, 440);
