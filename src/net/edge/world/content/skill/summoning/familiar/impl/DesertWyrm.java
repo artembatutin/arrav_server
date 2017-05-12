@@ -1,23 +1,22 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
 import net.edge.task.LinkedTaskSequence;
+import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
-import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
+import net.edge.world.content.skill.summoning.specials.SummoningData;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Graphic;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.object.ObjectNode;
 import net.edge.world.content.skill.summoning.familiar.Familiar;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerRightClickAbility;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Represents the Desert wyrm familiar.
@@ -26,41 +25,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public final class DesertWyrm extends Familiar {
 	
 	/**
-	 * The identification of the dread fowl.
-	 */
-	private static final int DESERT_WYRM_ID = 6831;
-	
-	/**
-	 * The amount of ticks this familiar stays alive for.
-	 */
-	private static final int LIFE_TICKS = 1900;
-	
-	/**
 	 * Constructs a new {@link DesertWyrm}.
 	 */
 	public DesertWyrm() {
-		super(DESERT_WYRM_ID, LIFE_TICKS);
+		super(SummoningData.DESERT_WYRM);
 	}
-	
-	@Override
-	public Item getPouch() {
-		return new Item(12049);
-	}
-	
-	@Override
-	public Charm getCharm() {
-		return Charm.GREEN;
-	}
-	
-	@Override
-	public int getRequirement() {
-		return 18;
-	}
-	
-	@Override
-	public int getPoints() {
-		return 1;
-	}
+
 	
 	private final ForagerRightClickAbility ability = new ForagerRightClickAbility(t -> {
 		if(!t.getFamiliar().isPresent()) {
@@ -72,10 +42,11 @@ public final class DesertWyrm extends Familiar {
 		familiar.graphic(new Graphic(1412));
 		
 		Set<ObjectNode> objs = World.getRegions().getRegion(familiar.getPosition()).getObjects(familiar.getPosition(), 7);
-		//Rock rock = null; TODO
+		//Rock rock = null;
 		for(ObjectNode n : objs) {
 			if(n != null) {
 				//rock = Rock.getDefinition(n.getId()).orElse(null);
+				//TODO: Stan, look at this.
 			}
 		}
 		
@@ -107,11 +78,15 @@ public final class DesertWyrm extends Familiar {
 	@Override
 	public void interact(Player player, Npc npc, int id) {
 		if(id == 1) {
-			player.getDialogueBuilder().append(RANDOM_DIALOGUE[ThreadLocalRandom.current().nextInt(RANDOM_DIALOGUE.length - 1)]);
+			player.getDialogueBuilder().append(RandomUtils.random(RANDOM_DIALOGUE));
 		} else if(id == 2) {
 			this.ability.activate(player);
 		}
 	}
 	
-	private final NpcDialogue[] RANDOM_DIALOGUE = new NpcDialogue[]{new NpcDialogue(DESERT_WYRM_ID, "This is so unsafe... I should have a hard hat", "for this work..."), new NpcDialogue(DESERT_WYRM_ID, "You can't touch me, I'm part of the union!"), new NpcDialogue(DESERT_WYRM_ID, "If you have that pick, why make me dig?"),};
+	private final NpcDialogue[] RANDOM_DIALOGUE = new NpcDialogue[] {
+			new NpcDialogue(getId(), "This is so unsafe... I should have a hard hat", "for this work..."),
+			new NpcDialogue(getId(), "You can't touch me, I'm part of the union!"),
+			new NpcDialogue(getId(), "If you have that pick, why make me dig?")
+	};
 }

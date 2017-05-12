@@ -1,6 +1,6 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
-import net.edge.world.content.skill.summoning.Charm;
+import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.skill.summoning.familiar.ability.Teleporter;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
 import net.edge.world.content.skill.summoning.Summoning;
@@ -10,14 +10,13 @@ import net.edge.world.content.skill.summoning.familiar.ability.Fighter;
 import net.edge.world.content.skill.summoning.familiar.ability.Healer;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
+import net.edge.world.content.skill.summoning.specials.SummoningData;
 import net.edge.world.content.teleport.impl.DefaultTeleportSpell.TeleportType;
 import net.edge.world.model.locale.Location;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
 
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * The predefined familiar settings for the void familiars.
@@ -32,26 +31,10 @@ public abstract class VoidFamiliar extends Familiar {
 	
 	/**
 	 * Constructs a new {@link VoidFamiliar}.
-	 * @param id   the identification of this familiar.
-	 * @param life the amount of ticks it stays alive for.
+	 * @param data Summoning data
 	 */
-	public VoidFamiliar(int id, int life) {
-		super(id, life);
-	}
-	
-	@Override
-	public Charm getCharm() {
-		return Charm.BLUE;
-	}
-	
-	@Override
-	public final int getRequirement() {
-		return 34;
-	}
-	
-	@Override
-	public final int getPoints() {
-		return 4;
+	public VoidFamiliar(SummoningData data) {
+		super(data);
 	}
 	
 	@Override
@@ -71,30 +54,10 @@ public abstract class VoidFamiliar extends Familiar {
 	public static final class VoidRavager extends VoidFamiliar {
 		
 		/**
-		 * The identification of the void ravager.
-		 */
-		private static final int VOID_RAVAGER_ID = 7370;
-		
-		/**
-		 * The amount of ticks this familiar stays alive for.
-		 */
-		private static final int LIFE_TICKS = 2700;
-		
-		/**
 		 * Constructs a new {@link VoidRavager}.
 		 */
 		public VoidRavager() {
-			super(VOID_RAVAGER_ID, LIFE_TICKS);
-		}
-		
-		@Override
-		public Item getPouch() {
-			return new Item(12818);
-		}
-		
-		@Override
-		public Charm getCharm() {
-			return Charm.GREEN;
+			super(SummoningData.VOID_RAVAGER);
 		}
 		
 		private final ForagerPassiveAbility ability = new ForagerPassiveAbility(436, 438, 440);
@@ -107,7 +70,7 @@ public abstract class VoidFamiliar extends Familiar {
 		@Override
 		public void interact(Player player, Npc npc, int id) {
 			if(id == 1) {
-				player.getDialogueBuilder().append(new NpcDialogue(VOID_RAVAGER_ID, RANDOM_DIALOGUE[ThreadLocalRandom.current().nextInt(RANDOM_DIALOGUE.length - 1)]));
+				player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 			} else if(id == 2) {
 				Summoning.openBeastOfBurden(player, npc);
 			}
@@ -121,25 +84,10 @@ public abstract class VoidFamiliar extends Familiar {
 	public static final class VoidShifter extends VoidFamiliar {
 		
 		/**
-		 * The identification of the void shifter.
-		 */
-		private static final int VOID_SHIFTER_ID = 7367;
-		
-		/**
-		 * The amount of ticks this familiar stays alive for.
-		 */
-		private static final int LIFE_TICKS = 9400;
-		
-		/**
 		 * Constructs a new {@link VoidShifter}.
 		 */
 		public VoidShifter() {
-			super(VOID_SHIFTER_ID, LIFE_TICKS);
-		}
-		
-		@Override
-		public Item getPouch() {
-			return new Item(12814);
+			super(SummoningData.VOID_SHIFTER);
 		}
 		
 		private final Teleporter ability = new Teleporter(Location.PEST_CONTROL, TeleportType.VOID_FAMILIAR, Optional.of(new Teleporter.TeleportPolicy(true, 10)));
@@ -152,7 +100,7 @@ public abstract class VoidFamiliar extends Familiar {
 		@Override
 		public void interact(Player player, Npc npc, int id) {
 			if(id == 1) {
-				player.getDialogueBuilder().append(new NpcDialogue(VOID_SHIFTER_ID, RANDOM_DIALOGUE[ThreadLocalRandom.current().nextInt(RANDOM_DIALOGUE.length - 1)]));
+				player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 			}
 		}
 	}
@@ -164,25 +112,10 @@ public abstract class VoidFamiliar extends Familiar {
 	public static final class VoidSpinner extends VoidFamiliar {
 		
 		/**
-		 * The identification of the void spinner.
-		 */
-		private static final int VOID_SPINNER_ID = 7333;
-		
-		/**
-		 * The amount of ticks this familiar stays alive for.
-		 */
-		private static final int LIFE_TICKS = 2700;
-		
-		/**
 		 * Constructs a new {@link VoidSpinner}.
 		 */
 		public VoidSpinner() {
-			super(VOID_SPINNER_ID, LIFE_TICKS);
-		}
-		
-		@Override
-		public Item getPouch() {
-			return new Item(12780);
+			super(SummoningData.VOID_SPINNER);
 		}
 		
 		private final Healer ability = new Healer(25, 1);
@@ -195,7 +128,7 @@ public abstract class VoidFamiliar extends Familiar {
 		@Override
 		public void interact(Player player, Npc npc, int id) {
 			if(id == 1) {
-				player.getDialogueBuilder().append(new NpcDialogue(VOID_SPINNER_ID, RANDOM_DIALOGUE[ThreadLocalRandom.current().nextInt(RANDOM_DIALOGUE.length - 1)]));
+				player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 			}
 		}
 	}
@@ -207,25 +140,10 @@ public abstract class VoidFamiliar extends Familiar {
 	public static final class VoidTorcher extends VoidFamiliar {
 		
 		/**
-		 * The identification of the void torcher.
-		 */
-		private static final int VOID_TORCHER_ID = 7351;
-		
-		/**
-		 * The amount of ticks this familiar stays alive for.
-		 */
-		private static final int LIFE_TICKS = 9400;
-		
-		/**
 		 * Constructs a new {@link VoidTorcher}.
 		 */
 		public VoidTorcher() {
-			super(VOID_TORCHER_ID, LIFE_TICKS);
-		}
-		
-		@Override
-		public Item getPouch() {
-			return new Item(12798);
+			super(SummoningData.VOID_TORCHER);
 		}
 		
 		private final Fighter ability = new Fighter();
@@ -238,7 +156,7 @@ public abstract class VoidFamiliar extends Familiar {
 		@Override
 		public void interact(Player player, Npc npc, int id) {
 			if(id == 1) {
-				player.getDialogueBuilder().append(new NpcDialogue(VOID_TORCHER_ID, RANDOM_DIALOGUE[ThreadLocalRandom.current().nextInt(RANDOM_DIALOGUE.length - 1)]));
+				player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 			} else if(id == 2) {
 				player.message("Oops, we didn't know what the ability was for this familiar, if you know it");
 				player.message("please let us know through the forums.");

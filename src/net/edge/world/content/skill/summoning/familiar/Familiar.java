@@ -3,15 +3,14 @@ package net.edge.world.content.skill.summoning.familiar;
 import net.edge.net.message.OutputMessages;
 import net.edge.task.Task;
 import net.edge.utils.TextUtils;
-import net.edge.utils.Utility;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.content.TabInterface;
 import net.edge.world.content.dialogue.Expression;
 import net.edge.world.content.skill.Skills;
-import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
+import net.edge.world.content.skill.summoning.specials.SummoningData;
 import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Graphic;
 import net.edge.world.model.node.entity.npc.Npc;
@@ -32,18 +31,23 @@ import java.util.Optional;
 public abstract class Familiar extends Follower {
 	
 	/**
-	 * The amount of ticks this familiar lives for.
+	 * The data of this summoned familiar.
+	 */
+	private final SummoningData data;
+	
+	/**
+	 * Life of the current familiar.
 	 */
 	private int duration;
 	
 	/**
 	 * Constructs a new {@link Familiar}.
-	 * @param id       the id of this npc.
-	 * @param duration {@link #duration}.
+	 * @param data       the summoning data.
 	 */
-	public Familiar(int id, int duration) {
-		super(id, new Position(0, 0));
-		this.duration = duration;
+	public Familiar(SummoningData data) {
+		super(data.getNpcId(), new Position(0, 0));
+		this.data = data;
+		duration = data.getLife();
 	}
 	
 	/**
@@ -62,11 +66,11 @@ public abstract class Familiar extends Follower {
 	 * @return <true> if the player can summon this familiar, <false> otherwise.
 	 */
 	public boolean canSummon(Player player) {
-		if(!player.getSkills()[Skills.SUMMONING].reqLevel(getRequirement())) {
-			player.message("You need a summoning level of " + getRequirement() + " to summon this familiar.");
+		if(!player.getSkills()[Skills.SUMMONING].reqLevel(data.getLevelRequired())) {
+			player.message("You need a summoning level of " + data.getLevelRequired() + " to summon this familiar.");
 			return false;
 		}
-		if(player.getSkills()[Skills.SUMMONING].getLevel() < getPoints()) {
+		if(player.getSkills()[Skills.SUMMONING].getLevel() < data.getSummonCost()) {
 			player.message("You don't have enough summoning points to summon this familiar.");
 			return false;
 		}
@@ -122,11 +126,13 @@ public abstract class Familiar extends Follower {
 		if(!login) {
 			player.message("You summon " + TextUtils.appendIndefiniteArticle(this.getDefinition().getName()) + ".");
 		}
+		/* Adding experience for summoning. */
+		player.getSkills()[Skills.SUMMONING].increaseExperience(data.getSummonExperience());
 		/* Get the specific ability type for this familiar. */
 		FamiliarAbility ability = this.getAbilityType();
 		/* Activate the familiars ability */
 		ability.initialise(player);
-		/* We start the familiar life task */
+		/* We start the familiar duration task */
 		task = Optional.of(new FamiliarSpawnTask(player, this));
 		World.submit(task.get());
 	}
@@ -143,6 +149,8 @@ public abstract class Familiar extends Follower {
 		encoder.sendString("60/60", 18024);
 		/* We send the familiars name */
 		encoder.sendString(this.getDefinition().getName(), 18028);
+		/* Time of our familiar. */
+		player.getMessages().sendString(getDuration() + " minutes", 18043);
 		/* We set the familiars face */
 		encoder.sendNpcModelOnInterface(18021, this.getId());
 		encoder.sendInterfaceAnimation(18021, Expression.CALM.getExpression());
@@ -216,30 +224,6 @@ public abstract class Familiar extends Follower {
 	}
 	
 	/**
-	 * The item identification for this familiars pouch.
-	 * @return the item identification.
-	 */
-	public abstract Item getPouch();
-	
-	/**
-	 * The charm required to create this familiars pouch.
-	 * @return charm required.
-	 */
-	public abstract Charm getCharm();
-	
-	/**
-	 * The requirement required to summon this familiar.
-	 * @return the requirement required.
-	 */
-	public abstract int getRequirement();
-	
-	/**
-	 * The amount of points deducted upon summoning this familiar.
-	 * @return the amount of points.
-	 */
-	public abstract int getPoints();
-	
-	/**
 	 * The ability type chained to this familiar.
 	 * @return the familiar ability type.
 	 */
@@ -275,18 +259,26 @@ public abstract class Familiar extends Follower {
 	public abstract void interact(Player player, Npc npc, int id);
 	
 	/**
-	 * @return {@link #duration}.
+	 * @return {@link #data}.
+	 */
+	public SummoningData getData() {
+		return data;
+	}
+	
+	/**
+	 * Gets the duration of this familiar in minutes.
+	 * @return duration of this familiar.
 	 */
 	public int getDuration() {
 		return duration;
 	}
 	
 	/**
-	 * Sets the value for {@link Familiar#duration}.
-	 * @param life the new value to set.
+	 * Sets the new {@link #duration}.
+	 * @param duration new value to set.
 	 */
-	public void setDuration(int life) {
-		this.duration = life;
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 	
 	/**
@@ -307,13 +299,17 @@ public abstract class Familiar extends Follower {
 		private final Familiar familiar;
 		
 		/**
+		 * An interval state to remove points each 30 seconds.
+		 */
+		private boolean interval;
+		
+		/**
 		 * Constructs a new {@link FamiliarSpawnTask}.
 		 * @param player   the player this familiar belongs too.
 		 * @param familiar the familiar this task is active for.
 		 */
-		public FamiliarSpawnTask(Player player, Familiar familiar) {
-			super(1, false);
-			
+		FamiliarSpawnTask(Player player, Familiar familiar) {
+			super(50, false);
 			this.player = player;
 			this.familiar = familiar;
 		}
@@ -328,29 +324,23 @@ public abstract class Familiar extends Follower {
 				this.cancel();
 				return;
 			}
-			familiar.duration--;
-			if(familiar.duration % 50 == 0) {
-				player.getSkills()[Skills.SUMMONING].decreaseLevel(1);
-				player.getMessages().sendString(Integer.toString(player.getSkills()[Skills.SUMMONING].getLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()), 18045);
-				Skills.refresh(player, Skills.SUMMONING);
-			}
+			//TODO: PROPER DECREASING. Why orb lvl isn't same as skill tab's?
+			player.getSkills()[Skills.SUMMONING].decreaseLevel(1);
+			player.getMessages().sendString(Integer.toString(player.getSkills()[Skills.SUMMONING].getLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()), 18045);
+			Skills.refresh(player, Skills.SUMMONING);
 			
-			player.getMessages().sendString(Utility.convertTime(familiar.duration * 600), 18043);
+			interval = !interval;
+			if(interval)
+				return;
+			familiar.setDuration(familiar.getDuration() - 1);
+			player.getMessages().sendString(familiar.getDuration() + " minutes", 18043);
 			
-			if(familiar.duration < 1) { //cant be in the switch statement because it tends to skip 0
+			if(familiar.getDuration() < 1 || player.getSkills()[Skills.SUMMONING].getLevel() == 0) {
 				familiar.dismiss(player, false);
 				player.message("@red@Your familiar has vanished.");
 				this.cancel();
-				return;
-			}
-			
-			switch(familiar.duration) {
-				case 100:
-					player.message("@red@You have 1 minute before your familiar vanishes.");
-					break;
-				case 50:
-					player.message("@red@You have 30 seconds before your familiar vanishes.");
-					break;
+			} else if(familiar.getDuration() < 4) {
+				player.message("@red@You have " + familiar.getDuration() + " minute before your familiar vanishes.");
 			}
 		}
 		

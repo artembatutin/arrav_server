@@ -41,7 +41,7 @@ public final class TzKihCombatStrategy implements CombatStrategy {
 
 	@Override
 	public int[] getNpcs() {
-		return new int[]{2627, SpiritTzKih.SPIRIT_TZ_KIH_ID};
+		return new int[]{2627, 7361};
 	}
 
 }

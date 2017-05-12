@@ -1,16 +1,15 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
+import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
-import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
+import net.edge.world.content.skill.summoning.specials.SummoningData;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
 import net.edge.world.content.skill.summoning.familiar.Familiar;
 
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Represents the Spirit tz-kih familiar. familiar.
@@ -19,40 +18,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public final class SpiritTzKih extends Familiar {
 	
 	/**
-	 * The identification of the spirit spider.
-	 */
-	public static final int SPIRIT_TZ_KIH_ID = 7361;
-	
-	/**
-	 * The amount of ticks this familiar stays alive for.
-	 */
-	private static final int LIFE_TICKS = 1800;
-	
-	/**
 	 * Constructs a new {@link SpiritTzKih}.
 	 */
 	public SpiritTzKih() {
-		super(SPIRIT_TZ_KIH_ID, LIFE_TICKS);
-	}
-	
-	@Override
-	public Item getPouch() {
-		return new Item(12808);
-	}
-	
-	@Override
-	public Charm getCharm() {
-		return Charm.CRIMSON;
-	}
-	
-	@Override
-	public int getRequirement() {
-		return 22;
-	}
-	
-	@Override
-	public int getPoints() {
-		return 3;
+		super(SummoningData.SPIRIT_TZ_KIH);
 	}
 	
 	@Override
@@ -74,7 +43,7 @@ public final class SpiritTzKih extends Familiar {
 	@Override
 	public void interact(Player player, Npc npc, int id) {
 		if(id == 1) {
-			player.getDialogueBuilder().append(new NpcDialogue(SPIRIT_TZ_KIH_ID, RANDOM_DIALOGUE[ThreadLocalRandom.current().nextInt(RANDOM_DIALOGUE.length - 1)]));
+			player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 		}
 	}
 	

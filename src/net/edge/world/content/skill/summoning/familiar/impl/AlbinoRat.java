@@ -1,11 +1,12 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
+import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
-import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
+import net.edge.world.content.skill.summoning.specials.SummoningData;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
@@ -23,40 +24,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public final class AlbinoRat extends Familiar {
 	
 	/**
-	 * The identification of the albino rat.
-	 */
-	private static final int ALBINO_RAT_ID = 6847;
-	
-	/**
-	 * The amount of ticks this familiar stays alive for.
-	 */
-	private static final int LIFE_TICKS = 2200;
-	
-	/**
 	 * Constructs a new {@link AlbinoRat}.
 	 */
 	public AlbinoRat() {
-		super(ALBINO_RAT_ID, LIFE_TICKS);
-	}
-	
-	@Override
-	public Item getPouch() {
-		return new Item(12067);
-	}
-	
-	@Override
-	public Charm getCharm() {
-		return Charm.BLUE;
-	}
-	
-	@Override
-	public int getRequirement() {
-		return 23;
-	}
-	
-	@Override
-	public int getPoints() {
-		return 1;
+		super(SummoningData.ALBINO_RAT);
 	}
 	
 	private final ForagerPassiveAbility ability = new ForagerPassiveAbility(1985);
@@ -94,9 +65,13 @@ public final class AlbinoRat extends Familiar {
 	@Override
 	public void interact(Player player, Npc npc, int id) {
 		if(id == 1) {
-			player.getDialogueBuilder().append(RANDOM_DIALOGUE[ThreadLocalRandom.current().nextInt(RANDOM_DIALOGUE.length - 1)]);
+			player.getDialogueBuilder().append(RandomUtils.random(RANDOM_DIALOGUE));
 		}
 	}
 	
-	private final NpcDialogue[] RANDOM_DIALOGUE = new NpcDialogue[]{new NpcDialogue(ALBINO_RAT_ID, "Hey boss, we doing to do anything wicked today?"), new NpcDialogue(ALBINO_RAT_ID, "You know, boss, I don't think you're totally into", "this whole 'evil' thing."), new NpcDialogue(ALBINO_RAT_ID, "Hey boss, can we go and loot something now?"),};
+	private final NpcDialogue[] RANDOM_DIALOGUE = new NpcDialogue[]{
+			new NpcDialogue(getId(), "Hey boss, we doing to do anything wicked today?"),
+			new NpcDialogue(getId(), "You know, boss, I don't think you're totally into", "this whole 'evil' thing."),
+			new NpcDialogue(getId(), "Hey boss, can we go and loot something now?")
+	};
 }

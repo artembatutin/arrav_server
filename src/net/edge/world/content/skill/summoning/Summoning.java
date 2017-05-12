@@ -343,7 +343,7 @@ public final class Summoning {
 			return true;
 		}
 		
-		Optional<Familiar> familiar = FAMILIARS.stream().filter(def -> def.getPouch().getId() == item.getId()).findAny();
+		Optional<Familiar> familiar = FAMILIARS.stream().filter(def -> def.getData().getPouchId() == item.getId()).findAny();
 		
 		if(!familiar.isPresent()) {
 			return false;
