@@ -113,7 +113,7 @@ public final class PlayerUpdater {
 			msg.putBit(true);
 			msg.putBits(2, 3);
 			msg.putBits(2, position.getZ());
-			msg.putBit(!player.isNeedsPlacement());
+			msg.putBit(player.isTeleporting());
 			msg.putBit(needsUpdate);
 			msg.putBits(7, position.getLocalY(player.getLastRegion()));
 			msg.putBits(7, position.getLocalX(player.getLastRegion()));

@@ -5,6 +5,7 @@ import net.edge.utils.rand.RandomUtils;
 import net.edge.world.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.PlayerPanel;
+import net.edge.world.content.combat.CombatConstants;
 import net.edge.world.content.container.impl.Equipment;
 import net.edge.world.content.container.impl.Inventory;
 import net.edge.world.content.minigame.Minigame;
@@ -26,10 +27,7 @@ import net.edge.world.model.locale.Location;
 import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.update.UpdateFlag;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * The {@link EntityDeath} implementation that is dedicated to managing the
@@ -61,7 +59,23 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		if(!MinigameHandler.getMinigame(getCharacter()).isPresent()) {
 			deathMessage = true;
 		}
-		
+
+		if(Prayer.isActivated(getCharacter(), Prayer.RETRIBUTION)) {
+			getCharacter().graphic(new Graphic(437));
+			final int hit = RandomUtils.inclusive(CombatConstants.MAXIMUM_RETRIBUTION_DAMAGE);
+			if(Location.inMultiCombat(getCharacter())) {
+				getCharacter().getLocalNpcs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
+				if(Location.inWilderness(getCharacter())) {
+					getCharacter().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
+				}
+			} else {
+				EntityNode victim = getCharacter().getCombatBuilder().getVictim();
+				if(victim != null && victim.getPosition().withinDistance(getCharacter().getPosition(), 2)) {
+					victim.damage(new Hit(RandomUtils.inclusive(hit)));
+				}
+			}
+		}
+
 		if(Prayer.isActivated(getCharacter(), Prayer.WRATH)) {
 			getCharacter().graphic(new Graphic(2259));
 			int x = getCharacter().getPosition().getX() - 3;
@@ -78,13 +92,13 @@ public final class PlayerDeath extends EntityDeath<Player> {
 			}
 			int maxHit = (int) ((getCharacter().getSkills()[Skills.PRAYER].getLevel() / 100.D) * 25);
 			if(Location.inMultiCombat(getCharacter())) {
-				getCharacter().getLocalNpcs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
+				getCharacter().getLocalNpcs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
 				if(Location.inWilderness(getCharacter())) {
-					getCharacter().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
+					getCharacter().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getCharacter().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
 				}
 			} else {
 				EntityNode victim = getCharacter().getCombatBuilder().getVictim();
-				if(victim != null) {
+				if(victim != null && victim.getPosition().withinDistance(getCharacter().getPosition(), 3)) {
 					victim.damage(new Hit(RandomUtils.inclusive(maxHit)));
 				}
 			}

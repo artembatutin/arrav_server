@@ -9,7 +9,6 @@ import net.edge.world.content.combat.strategy.base.MeleeCombatStrategy;
 import net.edge.world.content.combat.strategy.base.RangedCombatStrategy;
 import net.edge.world.content.container.impl.Equipment;
 import net.edge.world.content.skill.Skills;
-import net.edge.world.model.node.NodeType;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Graphic;
@@ -33,6 +32,7 @@ import net.edge.world.model.node.entity.npc.impl.gwd.GodwarsFaction;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 import static net.edge.world.model.node.NodeType.NPC;
 import static net.edge.world.model.node.NodeType.PLAYER;
@@ -42,97 +42,97 @@ import static net.edge.world.model.node.NodeType.PLAYER;
  * @author lare96 <http://github.com/lare96>
  */
 public final class Combat {
-	
+
 	/**
 	 * The attack stab bonus identifier.
 	 */
 	public static final int ATTACK_STAB = 0;
-	
+
 	/**
 	 * The attack slash bonus identifier.
 	 */
 	public static final int ATTACK_SLASH = 1;
-	
+
 	/**
 	 * The attack crush bonus identifier.
 	 */
 	public static final int ATTACK_CRUSH = 2;
-	
+
 	/**
 	 * The attack magic bonus identifier.
 	 */
 	public static final int ATTACK_MAGIC = 3;
-	
+
 	/**
 	 * The attack ranged bonus identifier.
 	 */
 	public static final int ATTACK_RANGED = 4;
-	
+
 	/**
 	 * The defence stab bonus identifier.
 	 */
 	public static final int DEFENCE_STAB = 5;
-	
+
 	/**
 	 * The defence slash bonus identifier.
 	 */
 	public static final int DEFENCE_SLASH = 6;
-	
+
 	/**
 	 * The defence crush bonus identifier.
 	 */
 	public static final int DEFENCE_CRUSH = 7;
-	
+
 	/**
 	 * The defence magic bonus identifier.
 	 */
 	public static final int DEFENCE_MAGIC = 8;
-	
+
 	/**
 	 * The defence ranged bonus identifier.
 	 */
 	public static final int DEFENCE_RANGED = 9;
-	
+
 	/**
 	 * The summoning bonus identifier.
 	 */
 	public static final int DEFENCE_SUMMONING = 10;
-	
+
 	/**
 	 * The absorb melee bonus identifier.
 	 */
 	public static final int ABSORB_MELEE = 11;
-	
+
 	/**
 	 * The absorb magic identifier.
 	 */
 	public static final int ABSORB_MAGIC = 12;
-	
+
 	/**
 	 * The absorb ranged bonus identifier.
 	 */
 	public static final int ABSORB_RANGED = 13;
-	
+
 	/**
 	 * The strength bonus identifier.
 	 */
 	public static final int BONUS_STRENGTH = 14;
-	
+
 	/**
 	 * The ranged strength bonus identifier.
 	 */
 	public static final int BONUS_RANGED_STRENGTH = 15;
-	
+
 	/**
 	 * The prayer bonus identifier.
 	 */
 	public static final int BONUS_PRAYER = 16;
-	
+
 	/**
 	 * The magic damage bonus identifier.
 	 */
 	public static final int BONUS_MAGIC_DAMAGE = 17;
-	
+
 	/**
 	 * The bonus
 	 */
@@ -141,17 +141,17 @@ public final class Combat {
 	 * The names of all the bonuses in their exact identified slots.
 	 */
 	public static final String[] BONUS_NAMES = {"Stab", "Slash", "Crush", "Magic", "Range", "Stab", "Slash", "Crush", "Magic", "Range", "Summoning", "Absorb Melee", "Absorb Magic", "Absorb Ranged", "Strength", "Ranged Strength", "Prayer", "Magic Damage"};
-	
+
 	/**
 	 * The names of all the bonuses in their exact identified slots.
 	 */
 	public static final int[] BONUS_IDS = {1675, 1676, 1677, 1678, 1679, 1680, 1681, 1682, 1683, 1684, 19148, 19149, 19150, 19151, 1686, 19152, 1687, 19153};
-	
+
 	/**
 	 * The hash collection of all the default NPCs mapped to their combat strategies.
 	 */
 	public static final Map<Integer, CombatStrategy> DEFAULT_STRATEGIES = new HashMap<>();
-	
+
 	/**
 	 * The default constructor.
 	 * @throws UnsupportedOperationException if this class is instantiated.
@@ -159,52 +159,7 @@ public final class Combat {
 	private Combat() {
 		throw new UnsupportedOperationException("This class cannot be instantiated!");
 	}
-	
-	/**
-	 * Applies combat prayer accuracy and damage reductions before executing the
-	 * {@link CombatSessionAttack}.
-	 * @param data the data for this combat session.
-	 */
-	protected static void applyPrayerEffects(CombatSessionData data) {
-		if(!data.isCheckAccuracy()) {
-			return;
-		}
-		if(data.getVictim().getType() != PLAYER) {
-			return;
-		}
-		if(Combat.isFullVeracs(data.getAttacker())) {
-			if(Server.DEBUG && data.getAttacker().getType() == PLAYER)
-				data.getAttacker().toPlayer().message("[DEBUG]: Chance of opponents prayer cancelling hit " + "[0/" + CombatConstants.PRAYER_ACCURACY_REDUCTION + "]");
-			return;
-		}
-		Player player = (Player) data.getVictim();
-		
-		if(Prayer.isAnyActivated(player, Combat.getProtectingPrayer(data.getType()))) {
-			switch(data.getAttacker().getType()) {
-				case PLAYER:
-					for(Hit h : data.getHits()) {
-						int hit = h.getDamage();
-						double mod = Math.abs(1 - CombatConstants.PRAYER_DAMAGE_REDUCTION);
-						h.setDamage((int) (hit * mod));
-						if(Server.DEBUG)
-							player.message("[DEBUG]: Damage " + "reduced by opponents prayer [" + (hit - h.getDamage()) + "]");
-						mod = Math.round(RandomUtils.nextDouble() * 100.0) / 100.0;
-						if(Server.DEBUG)
-							player.message("[DEBUG]: Chance " + "of opponents prayer cancelling hit [" + mod + "/" + CombatConstants.PRAYER_ACCURACY_REDUCTION + "]");
-						if(mod <= CombatConstants.PRAYER_ACCURACY_REDUCTION) {
-							h.setAccurate(false);
-						}
-					}
-					break;
-				case NPC:
-					Arrays.stream(data.getHits()).filter(Objects::nonNull).forEach(h -> h.setAccurate(false));
-					break;
-				default:
-					throw new IllegalStateException("Invalid character node " + "type!");
-			}
-		}
-	}
-	
+
 	/**
 	 * Handles the distribution of experience for the amount of damage dealt in
 	 * this combat session attack.
@@ -220,7 +175,7 @@ public final class Combat {
 			Player player = (Player) builder.getCharacter();
 			double exp;
 			double hitpointsExp;
-			
+
 			if(data.getType() == CombatType.MAGIC) {
 				exp = ((counter / 10.0) * 4d) + builder.getCharacter().getCurrentlyCasting().baseExperience();
 				hitpointsExp = (exp / 3d);
@@ -230,14 +185,14 @@ public final class Combat {
 			}
 			exp = (((counter / 10.0) * 4d) / data.getExperience().length);
 			hitpointsExp = (exp / 3d);
-			
+
 			for(int amount : data.getExperience()) {
 				Skills.experience(player, exp, amount);
 			}
 			Skills.experience(player, hitpointsExp, Skills.HITPOINTS);
 		}
 	}
-	
+
 	/**
 	 * Deals the damage contained within {@code data} to all {@code characters}
 	 * within {@code radius} of {@code position}. This method also executes
@@ -264,7 +219,7 @@ public final class Combat {
 				action.accept(c);
 		}
 	}
-	
+
 	/**
 	 * Deals the damage contained within {@code data} to all {@code characters}
 	 * within {@code radius} of {@code position}. This method also executes
@@ -281,7 +236,7 @@ public final class Combat {
 	public static void damageCharactersWithin(EntityNode attacker, Iterable<? extends EntityNode> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
 		damageCharactersWithin(attacker, victims, position, radius, hits, type, checkAccuracy, null);
 	}
-	
+
 	/**
 	 * Deals the damage contained within {@code data} to all {@link Player}s
 	 * within {@code radius} of {@code position}. Please note that this only
@@ -297,7 +252,7 @@ public final class Combat {
 	public static void damagePlayersWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Player> action) {
 		damageCharactersWithin(attacker, () -> World.getLocalPlayers(attacker), position, radius, hits, type, checkAccuracy, action);
 	}
-	
+
 	/**
 	 * Deals the damage contained within {@code data} to all {@link Player}s
 	 * within {@code radius} of {@code position}. This method also executes
@@ -313,7 +268,7 @@ public final class Combat {
 	public static void damagePlayersWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
 		damagePlayersWithin(attacker, position, radius, hits, type, checkAccuracy, null);
 	}
-	
+
 	/**
 	 * Deals the damage contained within {@code data} to all {@link Npc}s within
 	 * {@code radius} of {@code position}. This method also executes
@@ -330,7 +285,7 @@ public final class Combat {
 	public static void damageNpcsWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Npc> action) {
 		damageCharactersWithin(attacker, () -> World.getLocalNpcs(attacker), position, radius, hits, type, checkAccuracy, action);
 	}
-	
+
 	/**
 	 * Deals the damage contained within {@code data} to all {@link Npc}s within
 	 * {@code radius} of {@code position}. This method also executes
@@ -346,14 +301,14 @@ public final class Combat {
 	public static void damageNpcsWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
 		damageNpcsWithin(attacker, position, radius, hits, type, checkAccuracy, null);
 	}
-	
+
 	/**
 	 * Gets the corresponding combat prayer to {@code type}.
 	 * @param type the combat type to get the prayer for.
 	 * @return the corresponding combat prayer.
 	 * @throws IllegalArgumentException if the combat type is invalid.
 	 */
-	private static Prayer[] getProtectingPrayer(CombatType type) {
+	static Prayer[] getProtectingPrayer(CombatType type) {
 		switch(type) {
 			case MELEE:
 				return new Prayer[]{Prayer.PROTECT_FROM_MELEE, Prayer.DEFLECT_MELEE};
@@ -365,7 +320,7 @@ public final class Combat {
 				throw new IllegalArgumentException("Invalid combat type: " + type);
 		}
 	}
-	
+
 	/**
 	 * Determines the combat strategy for {@code npcId}.
 	 * @param npc the npc to determine the combat strategy for.
@@ -377,7 +332,7 @@ public final class Combat {
 			return Combat.newDefaultMeleeStrategy();
 		return combat;
 	}
-	
+
 	/**
 	 * Determines which spell {@code npc} will use when they have the
 	 * {@link MagicCombatStrategy} combat strategy.
@@ -404,7 +359,7 @@ public final class Combat {
 				return CombatSpells.FIRE_STRIKE;
 		}
 	}
-	
+
 	/**
 	 * Determines if {@code character} is wearing full void.
 	 * @param character the character to determine this for.
@@ -417,7 +372,7 @@ public final class Combat {
 		Item top = ((Player) character).getEquipment().get(Equipment.CHEST_SLOT);
 		return top != null && !(top.getId() != 8839 && top.getId() != 10611) && character.toPlayer().getEquipment().containsAll(8840, 8842);
 	}
-	
+
 	/**
 	 * Determines if {@code character} is wearing full veracs.
 	 * @param character the character to determine this for.
@@ -427,7 +382,7 @@ public final class Combat {
 	public static boolean isFullVeracs(EntityNode character) {
 		return character.getType() == NPC ? character.toNpc().getDefinition().getName().equals("Verac the Defiled") : character.toPlayer().getEquipment().containsAll(4753, 4757, 4759, 4755);
 	}
-	
+
 	/**
 	 * Determines if {@code character} is wearing full dharoks.
 	 * @param character the character to determine this for.
@@ -437,7 +392,7 @@ public final class Combat {
 	public static boolean isFullDharoks(EntityNode character) {
 		return character.getType() == NPC ? character.toNpc().getDefinition().getName().equals("Dharok the Wretched") : character.toPlayer().getEquipment().containsAll(4716, 4720, 4722, 4718);
 	}
-	
+
 	/**
 	 * Determines if {@code character} is wearing full karils.
 	 * @param character the character to determine this for.
@@ -447,7 +402,7 @@ public final class Combat {
 	public static boolean isFullKarils(EntityNode character) {
 		return character.getType() == NPC ? character.toNpc().getDefinition().getName().equals("Karil the Tainted") : character.toPlayer().getEquipment().containsAll(4732, 4736, 4738, 4734);
 	}
-	
+
 	/**
 	 * Determines if {@code character} is wearing full ahrims.
 	 * @param character the character to determine this for.
@@ -457,7 +412,7 @@ public final class Combat {
 	public static boolean isFullAhrims(EntityNode character) {
 		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Ahrim the Blighted") : character.toPlayer().getEquipment().containsAll(4708, 4712, 4714, 4710);
 	}
-	
+
 	/**
 	 * Determines if {@code character} is wearing full torags.
 	 * @param character the character to determine this for.
@@ -467,7 +422,7 @@ public final class Combat {
 	public static boolean isFullTorags(EntityNode character) {
 		return character.getType() == NPC ? character.toNpc().getDefinition().getName().equals("Torag the Corrupted") : character.toPlayer().getEquipment().containsAll(4745, 4749, 4751, 4747);
 	}
-	
+
 	/**
 	 * Determines if {@code character} is wearing full guthans.
 	 * @param character the character to determine this for.
@@ -477,7 +432,7 @@ public final class Combat {
 	public static boolean isFullGuthans(EntityNode character) {
 		return character.getType() == NPC ? character.toNpc().getDefinition().getName().equals("Guthan the Infested") : character.toPlayer().getEquipment().containsAll(4724, 4728, 4730, 4726);
 	}
-	
+
 	/**
 	 * Determines if {@code player} is wielding a crystal bow.
 	 * @param player the player to determine this for.
@@ -490,14 +445,14 @@ public final class Combat {
 			return false;
 		return item.getDefinition().getName().toLowerCase().contains("crystal bow");
 	}
-	
+
 	/**
 	 * Gets the ranged distance based on {@code weapon}.
 	 * @param weapon the weapon you have equipped.
 	 * @return the ranged distance.
 	 * @throws IllegalArgumentException if the weapon interface type is invalid.
 	 */
-	
+
 	public static int getRangedDistance(WeaponInterface weapon) {
 		switch(weapon) {
 			case SALAMANDER:
@@ -520,7 +475,7 @@ public final class Combat {
 				throw new IllegalArgumentException("Invalid weapon interface type!");
 		}
 	}
-	
+
 	/**
 	 * Gets the delay for the specified {@code type}.
 	 * @param type the combat type to retrieve the delay for.
@@ -531,7 +486,7 @@ public final class Combat {
 		if(character.isPlayer() && character.toPlayer().getWeapon().equals(WeaponInterface.SALAMANDER)) {
 			return 1;
 		}
-		
+
 		switch(type) {
 			case MELEE:
 				return 1;
@@ -543,7 +498,7 @@ public final class Combat {
 				throw new IllegalArgumentException("Invalid combat type!");
 		}
 	}
-	
+
 	/**
 	 * Applies the {@code effect} in any context.
 	 * @param effect the effect that must be applied.
@@ -553,7 +508,7 @@ public final class Combat {
 	public static boolean effect(EntityNode character, CombatEffectType effect) {
 		return CombatEffect.EFFECTS.get(effect).start(character);
 	}
-	
+
 	/**
 	 * Calculates the combat level difference for wilderness player vs. player
 	 * combat.
@@ -570,7 +525,7 @@ public final class Combat {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Calculates a pseudo-random hit for {@code character} based on
 	 * {@code victim} and {@code type}.
@@ -609,7 +564,7 @@ public final class Combat {
 				throw new IllegalArgumentException("Invalid combat type!");
 		}
 	}
-	
+
 	/**
 	 * Returns an empty spell which prevents the use of nullpointers.
 	 * @param maxHit the max hit of this spell.
@@ -617,64 +572,64 @@ public final class Combat {
 	 */
 	public static CombatNormalSpell emptySpell(int maxHit) {
 		return new CombatNormalSpell() {
-			
+
 			@Override
 			public int spellId() {
 				return 0;
 			}
-			
+
 			@Override
 			public int maximumHit() {
 				return maxHit;
 			}
-			
+
 			@Override
 			public Optional<Animation> castAnimation() {
 				return Optional.empty();
 			}
-			
+
 			@Override
 			public Optional<Graphic> startGraphic() {
 				return Optional.empty();
 			}
-			
+
 			@Override
 			public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
 				return Optional.empty();
 			}
-			
+
 			@Override
 			public Optional<Graphic> endGraphic() {
 				return Optional.empty();
 			}
-			
+
 			@Override
 			public void executeOnHit(EntityNode cast, EntityNode castOn, boolean accurate, int damage) {
 			}
-			
+
 			@Override
 			public int levelRequired() {
 				return 0;
 			}
-			
+
 			@Override
 			public double baseExperience() {
 				return 0;
 			}
-			
+
 			@Override
 			public Optional<Item[]> itemsRequired(Player player) {
 				return Optional.empty();
 			}
-			
+
 			@Override
 			public Optional<Item[]> equipmentRequired(Player player) {
 				return Optional.empty();
 			}
-			
+
 		};
 	}
-	
+
 	/**
 	 * Calculates a pseudo-random hit for {@code character} based on {@code victim} and {@code type}.
 	 * @param victim the victim of this hit that will be used as a factor.
@@ -697,7 +652,7 @@ public final class Combat {
 		}
 		return hit;
 	}
-	
+
 	/**
 	 * Determines if {@code attacker}'s attack will be successful.
 	 * @param attacker the attacker that this will be determined for.
@@ -707,7 +662,7 @@ public final class Combat {
 	 */
 	public static boolean isAccurate(EntityNode attacker, EntityNode victim, CombatType type) {
 		boolean veracEffect = false;
-		
+
 		if(type == CombatType.MELEE) {
 			if(Combat.isFullVeracs(attacker)) {
 				if(RandomUtils.inclusive(8) == 3) {
@@ -715,7 +670,7 @@ public final class Combat {
 				}
 			}
 		}
-		
+
 		double prayerMod = 1;
 		double equipmentBonus = 1;
 		double specialBonus = 1;
@@ -723,7 +678,7 @@ public final class Combat {
 		int bonusType = -1;
 		if(attacker.getType() == PLAYER) {
 			Player player = (Player) attacker;
-			
+
 			equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[Combat.ATTACK_MAGIC] : player.getEquipment().getBonuses()[player.getFightType().getBonus()];
 			bonusType = player.getFightType().getCorrespondingBonus();
 			if(type == CombatType.MELEE) {
@@ -741,8 +696,9 @@ public final class Combat {
 					if(victim.isPlayer()) {
 						//1000 because if strength is 99 / 100 * 10 = 9.9 which is wayy to much.
 						prayerMod = (victim.toPlayer().getSkills()[Skills.ATTACK].getRealLevel() / 1000) * 15;
+					} else {
+						prayerMod = prayerMod + 1.15;
 					}
-					prayerMod = prayerMod + 1.15;
 				}
 			} else if(type == CombatType.RANGED) {
 				if(Prayer.isActivated(player, Prayer.SHARP_EYE)) {
@@ -761,17 +717,17 @@ public final class Combat {
 					prayerMod = 1.15;
 				}
 			}
-			
+
 			if(player.getFightType().getStyle() == FightStyle.ACCURATE) {
 				styleBonus = 3;
 			} else if(player.getFightType().getStyle() == FightStyle.CONTROLLED) {
 				styleBonus = 1;
 			}
-			
+
 			if(player.isSpecialActivated()) {
 				specialBonus = player.getCombatSpecial().getAccuracy();
 			}
-			
+
 			if(victim.isNpc()) {
 				Npc npc = victim.toNpc();
 				/* SLAYER */
@@ -792,28 +748,28 @@ public final class Combat {
 				}
 			}
 		}
-		
+
 		double attackCalc = Math.floor(equipmentBonus + attacker.getBaseAttack(type)) + 8;
 		attackCalc *= prayerMod;
 		attackCalc += styleBonus;
-		
+
 		if(equipmentBonus < -67) {
 			attackCalc = RandomUtils.inclusive(8) == 0 ? attackCalc : 0;
 		}
 		attackCalc *= specialBonus;
-		
+
 		equipmentBonus = 1;
 		prayerMod = 1;
 		styleBonus = 0;
 		if(victim.getType() == PLAYER) {
 			Player player = (Player) victim;
-			
+
 			if(bonusType == -1) {
 				equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[Combat.DEFENCE_MAGIC] : player.getSkills()[Skills.DEFENCE].getLevel();
 			} else {
 				equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[Combat.DEFENCE_MAGIC] : player.getEquipment().getBonuses()[bonusType];
 			}
-			
+
 			if(Prayer.isActivated(player, Prayer.THICK_SKIN)) {
 				prayerMod = 1.05;
 			} else if(Prayer.isActivated(player, Prayer.ROCK_SKIN)) {
@@ -831,18 +787,18 @@ public final class Combat {
 				}
 				prayerMod = prayerMod + 0.15;
 			}
-			
+
 			if(player.getFightType().getStyle() == FightStyle.DEFENSIVE) {
 				styleBonus = 3;
 			} else if(player.getFightType().getStyle() == FightStyle.CONTROLLED) {
 				styleBonus = 1;
 			}
 		}
-		
+
 		double defenceCalc = Math.floor(equipmentBonus + victim.getBaseDefence(type)) + 8;
 		defenceCalc *= prayerMod;
 		defenceCalc += styleBonus;
-		
+
 		if(equipmentBonus < -67) {
 			defenceCalc = RandomUtils.inclusive(8) == 0 ? defenceCalc : 0;
 		}
@@ -853,13 +809,13 @@ public final class Combat {
 		double D = Math.floor(defenceCalc);
 		double hitSucceed = A < D ? (A - 1.0) / (2.0 * D) : 1.0 - (D + 1.0) / (2.0 * A);
 		hitSucceed = hitSucceed >= 1.0 ? 0.99 : hitSucceed <= 0.0 ? 0.01 : hitSucceed;
-		
+
 		if(attacker.isPlayer() && Server.DEBUG) {
 			attacker.toPlayer().message("[DEBUG]: Your roll " + "[" + (Math.round(attackCalc * 1000.0) / 1000.0) + "] : " + "Victim's roll [" + (Math.round(defenceCalc * 1000.0) / 1000.0) + "] : Chance to hit [" + (100 * Math.round(hitSucceed * 1000.0) / 1000.0) + "%]");
 		}
 		return hitSucceed >= RandomUtils.nextDouble();
 	}
-	
+
 	/**
 	 * Calculates the maximum hit that can be dealt using melee for
 	 * {@code character}.
@@ -869,7 +825,7 @@ public final class Combat {
 	 */
 	private static int calculateMaxMeleeHit(EntityNode character, EntityNode victim) {
 		int maxHit;
-		
+
 		if(character.getType() == NPC) {
 			Npc npc = character.toNpc();
 			maxHit = npc.getDefinition().getMaxHit();
@@ -880,9 +836,9 @@ public final class Combat {
 			}
 			return maxHit;
 		}
-		
+
 		Player player = (Player) character;
-		
+
 		double specialMultiplier = 1;
 		// TODO: void melee = 1.2, slayer helm = 1.15, salve amulet = 1.15,
 		// salve amulet(e) = 1.2
@@ -912,7 +868,7 @@ public final class Combat {
 		} else if(player.getFightType().getStyle() == FightStyle.CONTROLLED) {
 			cumulativeStr += 1;
 		}
-		
+
 		if(isFullDharoks(player)) {
 			cumulativeStr *= 1.0 + ((player.getMaximumHealth() - player.getCurrentHealth()) * 0.01);
 		} else if(isFullVoid(player) && player.getEquipment().contains(11665)) {
@@ -925,7 +881,7 @@ public final class Combat {
 				}
 			}*/
 		}
-		
+
 		if(victim.isNpc()) {
 			Npc npc = (Npc) victim;
 			if(npc.getWeakenedBy() == CombatWeaken.DEFENCE_LOW) {
@@ -951,21 +907,21 @@ public final class Combat {
 				}
 			}
 		}
-		
+
 		double baseDamage = ((16 + cumulativeStr + (bonus / 8) + ((cumulativeStr * bonus) * 0.016865)) / 10);
-		
+
 		if(player.isSpecialActivated()) {
 			specialMultiplier = player.getCombatSpecial().getStrength();
 		}
-		
+
 		maxHit = (int) (baseDamage * specialMultiplier);
-		
+
 		if(Server.DEBUG)
 			player.message("[DEBUG]: Maximum hit this turn " + "is [" + maxHit + "].");
 		return maxHit * 10;
-		
+
 	}
-	
+
 	/**
 	 * Calculates the maximum hit that can be dealt using ranged for
 	 * {@code character}.
@@ -980,16 +936,16 @@ public final class Combat {
 			maxHit = npc.getDefinition().getMaxHit();
 			return maxHit;
 		}
-		
+
 		Player player = (Player) character;
-		
+
 		double specialMultiplier = 1;
 		double prayerMultiplier = 1;
 		double otherBonusMultiplier = 1;
 		int rangedStrength = player.getEquipment().getBonuses()[Combat.BONUS_RANGED_STRENGTH];
 		int rangeLevel = player.getSkills()[Skills.RANGED].getLevel();
 		int combatStyleBonus = 0;
-		
+
 		switch(player.getFightType().getStyle()) {
 			case ACCURATE:
 				combatStyleBonus = 3;
@@ -997,25 +953,25 @@ public final class Combat {
 			default:
 				break;
 		}
-		
+
 		// if (fullVoidRange(character)) {
 		// otherBonusMultiplier = 1.1;
 		// }
-		
+
 		int effectiveRangeDamage = (int) ((rangeLevel * prayerMultiplier * otherBonusMultiplier) + combatStyleBonus);
 		double baseDamage = 1.3 + (effectiveRangeDamage / 10) + (rangedStrength / 80) + ((effectiveRangeDamage * rangedStrength) / 640);
-		
+
 		if(player.isSpecialActivated()) {
 			specialMultiplier = player.getCombatSpecial().getStrength();
 		}
-		
+
 		maxHit = (int) (baseDamage * specialMultiplier);
-		
+
 		if(Server.DEBUG)
 			player.message("[DEBUG]: Maximum hit this turn " + "is [" + maxHit + "].");
 		return maxHit * 10;
 	}
-	
+
 	/**
 	 * Determines if the {@code character} can be attacked by the specified {@code attacker}.
 	 * @param character the character being attacked.
@@ -1031,7 +987,7 @@ public final class Combat {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Determines if the character within {@code builder} is close enough to
 	 * it's victim to attack.
@@ -1048,10 +1004,10 @@ public final class Combat {
 		int distance = builder.getStrategy().attackDistance(builder.getCharacter());
 		MovementQueue movement = builder.getCharacter().getMovementQueue();
 		MovementQueue otherMovement = builder.getVictim().getMovementQueue();
-		
+
 		if(!movement.isMovementDone() && !otherMovement.isMovementDone() && !movement.isLockMovement() && !builder.getCharacter().isFrozen()) {
 			distance += 1;
-			
+
 			// XXX: Might have to change this back to 1 or even remove it, not
 			// sure what it's like on actual runescape. Are you allowed to
 			// attack when the character is trying to run away from you?
@@ -1059,7 +1015,7 @@ public final class Combat {
 				distance += 2;
 			}
 		}
-		
+
 		if(builder.getCombatType() == CombatType.MELEE) {//Melee clipping.
 			if(!World.getSimplePathChecker().checkLine(attacker, victim, builder.getCharacter().size())) {
 				if(!builder.getCharacter().isFollowing()) {
@@ -1077,7 +1033,7 @@ public final class Combat {
 				return false;
 			}
 		}
-		
+
 		if(distance == 1 || distance == 2) {
 			if(!builder.getCharacter().isFollowing()) {
 				builder.getCharacter().getMovementQueue().follow(builder.getVictim());
@@ -1093,10 +1049,10 @@ public final class Combat {
 				return false;
 			}
 		}
-		
+
 		return new Boundary(attacker, builder.getCharacter().size()).within(victim, builder.getVictim().size(), distance);
 	}
-	
+
 	/**
 	 * A static factory method that constructs the default melee combat strategy
 	 * implementation.
@@ -1105,7 +1061,7 @@ public final class Combat {
 	public static CombatStrategy newDefaultMeleeStrategy() {
 		return new MeleeCombatStrategy();
 	}
-	
+
 	/**
 	 * A static factory method that constructs the default magic combat strategy
 	 * implementation.
@@ -1114,7 +1070,7 @@ public final class Combat {
 	public static CombatStrategy newDefaultMagicStrategy() {
 		return new MagicCombatStrategy();
 	}
-	
+
 	/**
 	 * A static factory method that constructs the default ranged combat
 	 * strategy implementation.
@@ -1123,7 +1079,7 @@ public final class Combat {
 	public static CombatStrategy newDefaultRangedStrategy() {
 		return new RangedCombatStrategy();
 	}
-	
+
 	/**
 	 * Used to return a collection which are within distance of the {@code node} type.
 	 * @param node   The node type to check distance within.
@@ -1136,15 +1092,15 @@ public final class Combat {
 		List<E> list = new ArrayList<>();
 		while(target.hasNext()) {
 			E character = target.next();
-			
+
 			if(character == null) {
 				continue;
 			}
-			
+
 			if(character.getPosition().withinDistance(node.getPosition(), radius) && !character.equals(node) && character.getCurrentHealth() > 0 && !character.isDead())
 				list.add(character);
 		}
-		
+
 		return list;
 	}
 }

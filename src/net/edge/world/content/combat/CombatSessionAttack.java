@@ -1,13 +1,15 @@
 package net.edge.world.content.combat;
 
+import net.edge.Server;
+import net.edge.task.LinkedTaskSequence;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.container.impl.Equipment;
-import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.NodeType;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Graphic;
+import net.edge.world.model.node.entity.model.Projectile;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemNode;
@@ -17,10 +19,12 @@ import net.edge.world.content.combat.ranged.CombatRangedAmmoDefinition;
 import net.edge.world.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
 import net.edge.world.content.skill.prayer.Prayer;
 import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.model.locale.Location;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.model.Hit;
 import net.edge.task.Task;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * An attack on the builder's victim that is sent completely separate from the main combat session.
@@ -73,7 +77,7 @@ public final class CombatSessionAttack extends Task {
 			victim.getCombatBuilder().getStrategy().incomingAttack(victim, attacker, data);
 			victim.getCombatBuilder().resetStrategy();
 		}
-		
+
 		if(data.getHits().length != 0 && !data.isIgnored()) {
 			counter = data.attack(data.getType() == CombatType.MAGIC && data.isAccurate());
 			victim.getCombatBuilder().getDamageCache().add(attacker, counter);
@@ -242,45 +246,87 @@ public final class CombatSessionAttack extends Task {
 	 * Handles all prayer effects that take place upon a successful attack.
 	 */
 	private void handlePrayerEffects() {
-		if(builder.getVictim().isPlayer() && data.getHits().length != 0) {
-			Player victim = (Player) builder.getVictim();
+		if(data.getHits().length != 0) {
 
-			if(Prayer.isActivated(victim, Prayer.REDEMPTION) && victim.getSkills()[Skills.HITPOINTS].getLevel() <= (victim.getSkills()[Skills.HITPOINTS].getRealLevel() / 10)) {
-				int heal = (int) (victim.getSkills()[Skills.HITPOINTS].getRealLevel() * CombatConstants.REDEMPTION_PRAYER_HEAL);
-				victim.getSkills()[Skills.HITPOINTS].increaseLevel(RandomUtils.inclusive(1, heal));
-				victim.graphic(new Graphic(436));
-				victim.getSkills()[Skills.PRAYER].setLevel(0, true);
-				victim.message("You've run out of prayer points!");
-				Prayer.deactivateAll(victim);
-				Skills.refresh(victim, Skills.PRAYER);
-				Skills.refresh(victim, Skills.HITPOINTS);
-				return;
+			EntityNode victim = data.getVictim();
+			EntityNode attacker = data.getAttacker();
+
+			//PROTECTION PRAYERS
+			if(victim.isPlayer() && Prayer.isAnyActivated(victim.toPlayer(), Combat.getProtectingPrayer(data.getType()))) {
+				switch(attacker.getType()) {
+					case PLAYER:
+						for(Hit h : data.getHits()) {
+							int hit = h.getDamage();
+							double mod = Math.abs(1 - CombatConstants.PRAYER_DAMAGE_REDUCTION);
+							h.setDamage((int) (hit * mod));
+							if(Server.DEBUG)
+								victim.toPlayer().message("[DEBUG]: Damage " + "reduced by opponents prayer [" + (hit - h.getDamage()) + "]");
+							mod = Math.round(RandomUtils.nextDouble() * 100.0) / 100.0;
+							if(Server.DEBUG)
+								victim.toPlayer().message("[DEBUG]: Chance " + "of opponents prayer cancelling hit [" + mod + "/" + CombatConstants.PRAYER_ACCURACY_REDUCTION + "]");
+							if(mod <= CombatConstants.PRAYER_ACCURACY_REDUCTION) {
+								h.setAccurate(false);
+							}
+						}
+						break;
+					case NPC:
+						Arrays.stream(data.getHits()).filter(Objects::nonNull).forEach(h -> h.setAccurate(false));
+						break;
+					default:
+						throw new IllegalStateException("Invalid character node " + "type!");
+				}
 			}
-			if(builder.getCharacter().isPlayer()) {
-				boolean inMinigame = MinigameHandler.getMinigame(victim).isPresent();
-				if(Prayer.isActivated(victim, Prayer.RETRIBUTION) && victim.getSkills()[Skills.HITPOINTS].getLevel() < 1) {
-					victim.graphic(new Graphic(437));
 
-					if(Location.inWilderness(victim) || inMinigame && !Location.inMultiCombat(victim)) {
-						if(builder.getCharacter().getPosition().withinDistance(victim.getPosition(), CombatConstants.RETRIBUTION_RADIUS)) {
-							builder.getCharacter().damage(new Hit(RandomUtils.inclusive(CombatConstants.MAXIMUM_RETRIBUTION_DAMAGE)));
-						}
-					} else if(Location.inWilderness(victim) || inMinigame && Location.inMultiCombat(victim)) {
-						for(Player player : victim.getLocalPlayers()) {
-							if(player == null) {
-								continue;
-							}
+			//REDEMPTION
+			if(victim.isPlayer() && Prayer.isActivated(victim.toPlayer(), Prayer.REDEMPTION) && victim.toPlayer().getSkills()[Skills.HITPOINTS].getLevel() <= (victim.toPlayer().getSkills()[Skills.HITPOINTS].getRealLevel() / 10)) {
+				int heal = (int) (victim.toPlayer().getSkills()[Skills.HITPOINTS].getRealLevel() * CombatConstants.REDEMPTION_PRAYER_HEAL);
+				victim.toPlayer().getSkills()[Skills.HITPOINTS].increaseLevel(RandomUtils.inclusive(1, heal));
+				victim.graphic(new Graphic(436));
+				victim.toPlayer().getSkills()[Skills.PRAYER].setLevel(0, true);
+				victim.toPlayer().message("You've run out of prayer points!");
+				Prayer.deactivateAll(victim.toPlayer());
+				Skills.refresh(victim.toPlayer(), Skills.PRAYER);
+				Skills.refresh(victim.toPlayer(), Skills.HITPOINTS);
+			}
 
-							if(!player.equals(victim) && player.getPosition().withinDistance(victim.getPosition(), CombatConstants.RETRIBUTION_RADIUS)) {
-								player.damage(new Hit(RandomUtils.inclusive(CombatConstants.MAXIMUM_RETRIBUTION_DAMAGE)));
-							}
-						}
+			//SMITE
+			if(Prayer.isActivated(builder.getCharacter().toPlayer(), Prayer.SMITE)) {
+				victim.toPlayer().getSkills()[Skills.PRAYER].decreaseLevel(counter / 40, true);
+				Skills.refresh(victim.toPlayer(), Skills.PRAYER);
+			}
+
+			//SOULSPLIT
+			if (attacker.isPlayer() && Prayer.isActivated(attacker.toPlayer(), Prayer.SOUL_SPLIT) && data.isAccurate()) {
+				new Projectile(attacker, victim, 2263, 44, 0, 11, 7, 0).sendProjectile();
+
+				LinkedTaskSequence seq = new LinkedTaskSequence();
+				seq.connect(1, () -> {
+					if (attacker.isDead() || victim.isDead()) {
+						seq.cancel();
+						return;
 					}
-				}
-				if(Prayer.isActivated(builder.getCharacter().toPlayer(), Prayer.SMITE)) {
-					victim.getSkills()[Skills.PRAYER].decreaseLevel(counter / 4);
-					Skills.refresh(victim, Skills.PRAYER);
-				}
+
+					victim.graphic(new Graphic(2264));
+
+					if(victim.isPlayer()) {
+						final int drain = counter / 50;
+						victim.toPlayer().getSkills()[Skills.PRAYER].decreaseLevel(drain, true);
+					}
+
+					new Projectile(victim, attacker, 2263, 44, 0, 11, 7, 0).sendProjectile();
+				});
+				seq.connect(1, () -> {
+					if(attacker.isDead() || victim.isDead()) {
+						seq.cancel();
+						return;
+					}
+
+					//heals 40% of damage when hit on player and 20% of damage when hit on npcs
+					final int heal = (int) (attacker.isPlayer() ? (counter / 10) * 0.40 : (counter / 10) * 0.20);
+					attacker.toPlayer().message("counter = " + counter + ", heal = " + heal);
+					attacker.healEntity(heal);
+				});
+				seq.start();
 			}
 		}
 	}

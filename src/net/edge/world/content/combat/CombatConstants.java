@@ -34,11 +34,6 @@ public final class CombatConstants {
 	public static final int MAXIMUM_RETRIBUTION_DAMAGE = 150;
 	
 	/**
-	 * The radius in which the retribution effect will take place.
-	 */
-	public static final int RETRIBUTION_RADIUS = 5;
-	
-	/**
 	 * The default constructor.
 	 * @throws UnsupportedOperationException if this class is instantiated.
 	 */

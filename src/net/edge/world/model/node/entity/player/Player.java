@@ -848,7 +848,6 @@ public final class Player extends EntityNode {
 			setLastRegion(getPosition().copy());
 		super.setPosition(destination.copy());
 		setNeedsPlacement(true);
-		//setUpdates(true, true);
 	}
 	
 	/**

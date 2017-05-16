@@ -151,7 +151,6 @@ public class CombatSessionData {
 	 * @return the amount of damage that was dealt.
 	 */
 	public final int attack(boolean ignored) {
-		Combat.applyPrayerEffects(this);
 		int counter = 0;
 		int index = 0;
 		Hit[] container = new Hit[hits.length];
