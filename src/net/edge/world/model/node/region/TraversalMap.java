@@ -1,5 +1,6 @@
 package net.edge.world.model.node.region;
 
+import net.edge.utils.rand.RandomUtils;
 import net.edge.world.model.node.entity.model.Direction;
 import net.edge.world.model.node.object.ObjectDirection;
 import net.edge.world.model.node.object.ObjectNode;
@@ -11,6 +12,8 @@ import net.edge.world.model.node.object.ObjectType;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static net.edge.world.model.node.object.ObjectType.*;
 
@@ -937,7 +940,7 @@ public final class TraversalMap {
 	/**
 	 * Returns a {@link List} of positions that are traversable from the
 	 * specified position.
-	 * @param from The position.
+	 * @param from The position moving from.
 	 * @param size The size of the mob attempting to traverse.
 	 * @return A {@link List} of positions.
 	 */
@@ -960,6 +963,26 @@ public final class TraversalMap {
 		if(isTraversableSouthWest(from.getZ(), from.getX(), from.getY(), size))
 			positions.add(new Position(from.getX() - 1, from.getY() - 1, from.getZ()));
 		return positions;
+	}
+	
+	/**
+	 * Returns a {@link Optional} {@link Position} of a random traversable tile.
+	 * @param from The position moving from.
+	 * @param size The size of the mob attempting to traverse.
+	 * @param exceptions The exceptions of traversable positions.
+	 * @return A random traversable position.
+	 */
+	public Optional<Position> getRandomTraversableTile(Position from, int size, Position... exceptions) {
+		List<Position> pos = getNearbyTraversableTiles(from, size).stream().filter(p -> {
+			for(Position e : exceptions) {
+				if(p.equals(e))
+					return false;
+			}
+			return true;
+		}).collect(Collectors.toList());
+		if(pos.isEmpty())
+			return Optional.empty();
+		return Optional.of(RandomUtils.random(pos));
 	}
 	
 	/**

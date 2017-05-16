@@ -164,7 +164,6 @@ public class MarketItem {
 	 * Serializes the market items.
 	 */
 	public static void serializeMarketItems() {
-		if(false) {
 		JsonSaver item_values_saver = new JsonSaver();
 		
 		for(MarketItem v : VALUES) {
@@ -184,9 +183,9 @@ public class MarketItem {
 			item_values_saver.split();
 		}
 		
-		item_values_saver.publish("./data/json/items/market_values.json");}
-		
+		item_values_saver.publish("./data/json/items/market_values.json");
 	}
+	
 	
 	/* setters and getters */
 	

@@ -544,7 +544,7 @@ public final class Combat {
 		switch(type) {
 			case MELEE:
 				max = Combat.calculateMaxMeleeHit(character, victim);
-				hit = RandomUtils.inclusive(1, max);
+				hit = RandomUtils.inclusive(1, max < 1 ? 2 : max);
 				if(Server.DEBUG && character.isPlayer())
 					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
 				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.MELEE, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));

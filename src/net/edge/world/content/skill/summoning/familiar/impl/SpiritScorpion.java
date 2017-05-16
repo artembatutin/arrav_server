@@ -1,16 +1,16 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
+import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
+import net.edge.world.content.skill.summoning.specials.SummoningData;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
 import net.edge.world.content.skill.summoning.familiar.Familiar;
 import net.edge.world.content.skill.summoning.familiar.ability.Fighter;
 import net.edge.world.model.node.entity.npc.Npc;
 
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Represents the Spirit scorpion familiar.
@@ -19,35 +19,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public final class SpiritScorpion extends Familiar {
 	
 	/**
-	 * The identification of the granite crab.
-	 */
-	private static final int SPIRIT_SCORPION_ID = 6837;
-	
-	/**
-	 * The amount of ticks this familiar stays alive for.
-	 */
-	private static final int LIFE_TICKS = 1700;
-	
-	/**
 	 * Constructs a new {@link SpiritScorpion}.
 	 */
 	public SpiritScorpion() {
-		super(SPIRIT_SCORPION_ID, LIFE_TICKS);
-	}
-	
-	@Override
-	public Item getPouch() {
-		return new Item(12055);
-	}
-	
-	@Override
-	public int getRequirement() {
-		return 19;
-	}
-	
-	@Override
-	public int getPoints() {
-		return 2;
+		super(SummoningData.SPIRIT_SCORPION);
 	}
 	
 	private final Fighter ability = new Fighter();
@@ -70,7 +45,7 @@ public final class SpiritScorpion extends Familiar {
 	@Override
 	public void interact(Player player, Npc npc, int id) {
 		if(id == 1) {
-			player.getDialogueBuilder().append(new NpcDialogue(SPIRIT_SCORPION_ID, RANDOM_DIALOGUE[ThreadLocalRandom.current().nextInt(RANDOM_DIALOGUE.length - 1)]));
+			player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 		}
 	}
 	

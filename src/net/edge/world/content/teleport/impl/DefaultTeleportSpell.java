@@ -237,13 +237,14 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 	}
 	
 	public enum TeleportType {
-		NORMAL(4, 4, Optional.of(new Animation(8939)), Optional.of(new Animation(8941)), Optional.of(new Graphic(1576)), Optional.of(new Graphic(1577))),
-		ANCIENT(5, 0, Optional.of(new Animation(9599)), Optional.of(new Animation(-1)), Optional.of(new Graphic(1681)), Optional.empty()),
-		LUNAR(6, 0, Optional.of(new Animation(9606)), Optional.empty(), Optional.of(new Graphic(1685)), Optional.empty()),
-		TABLET(4, 0, Optional.of(new Animation(4731)), Optional.empty(), Optional.of(new Graphic(678)), Optional.empty()),
-		LEVER(4, 0, Optional.of(new Animation(714)), Optional.of(new Animation(715)), Optional.of(new Graphic(111, 65535)), Optional.empty()),
+		NORMAL(3, 6, Optional.of(new Animation(8939)), Optional.of(new Animation(8941)), Optional.of(new Graphic(1576)), Optional.of(new Graphic(1577))),
+		ANCIENT(2, 3, Optional.of(new Animation(9599)), Optional.empty(), Optional.of(new Graphic(1681)), Optional.empty()),
+		LUNAR(5, 5, Optional.of(new Animation(9606)), Optional.empty(), Optional.of(new Graphic(1685)), Optional.empty()),
+		TABLET(4, 5, Optional.of(new Animation(4731)), Optional.empty(), Optional.of(new Graphic(678)), Optional.empty()),
+		LEVER(4, 4, Optional.of(new Animation(714)), Optional.of(new Animation(715)), Optional.of(new Graphic(111, 65535)), Optional.empty()),
+		LADDER(1, 1, Optional.of(new Animation(828)), Optional.empty(), Optional.empty(), Optional.empty()),
 		//TODO: Fix animation.
-		OBELISK(6, 0, Optional.of(new Animation(8939)), Optional.of(new Animation(8941)), Optional.of(new Graphic(661)), Optional.empty()),
+		OBELISK(3, 6, Optional.of(new Animation(8939)), Optional.of(new Animation(8941)), Optional.of(new Graphic(661)), Optional.empty()),
 		VOID_FAMILIAR(3, 2, Optional.of(new Animation(8136)), Optional.of(new Animation(8137)), Optional.of(new Graphic(1503)), Optional.of(new Graphic(1502))),
 		FREEZE(5, 8, Optional.of(new Animation(11044)), Optional.empty(), Optional.of(new Graphic(1973)), Optional.empty()),
 		TRAINING_PORTAL(5, 3, Optional.of(new Animation(10100)), Optional.of(new Animation(9013)), Optional.of(new Graphic(606)), Optional.empty()),

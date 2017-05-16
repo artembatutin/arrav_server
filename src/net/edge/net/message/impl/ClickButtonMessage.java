@@ -74,7 +74,7 @@ public final class ClickButtonMessage implements InputMessageListener {
 	@Override
 	public void handleMessage(Player player, int opcode, int size, ByteMessage payload) {
 		int button = PROPER_READ ? payload.getShort() : hexToInt(payload.getBytes(2));
-		
+
 		if(Server.DEBUG) {
 			player.message("Clicked button " + button + ".");
 		}
@@ -357,6 +357,7 @@ public final class ClickButtonMessage implements InputMessageListener {
 				}, "@red@Previous page", "Graveyard", "Chaos Altar (Multi)", "@red@Suggest more!"));
 				break;
 			case 4143:
+			case 117210:
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						player.teleport(new Position(3223, 3218), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);

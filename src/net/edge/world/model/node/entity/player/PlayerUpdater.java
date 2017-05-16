@@ -107,7 +107,6 @@ public final class PlayerUpdater {
 	 */
 	private void handleMovement(Player player, ByteMessage msg) {
 		boolean needsUpdate = !player.getFlags().isEmpty();
-		System.out.println(player.isNeedsPlacement());
 		if(player.isNeedsPlacement()) {
 			Position position = player.getPosition();
 			msg.putBit(true);

@@ -37,6 +37,10 @@ import net.edge.world.model.node.entity.player.assets.Rights;
 
 import java.util.Optional;
 
+import static net.edge.world.content.teleport.impl.DefaultTeleportSpell.TeleportType.BOSS_PORTAL;
+import static net.edge.world.content.teleport.impl.DefaultTeleportSpell.TeleportType.LADDER;
+import static net.edge.world.content.teleport.impl.DefaultTeleportSpell.TeleportType.TRAINING_PORTAL;
+
 /**
  * The message sent from the client when a player clicks an object.
  * @author lare96 <http://github.com/lare96>
@@ -228,11 +232,9 @@ public final class ObjectActionMessage implements InputMessageListener {
 						}
 						ForcedMovementManager.submit(player, movement);
 						break;
-					case 14758:
+					case 2273:
 						if(objectX == 3005 && objectY == 3963 && objectZ == 0)//wilderness agility
 							player.teleport(GameConstants.STARTING_POSITION, DefaultTeleportSpell.TeleportType.OBELISK);
-						break;
-					case 2273:
 						if(objectX == 2996 && objectY == 9823 && objectZ == 0)//to rune essence
 							player.teleport(new Position(2922, 4819, 0), DefaultTeleportSpell.TeleportType.FREEZE);
 						if(objectX == 2922 && objectY == 4819 && objectZ == 0)//from rune essence
@@ -257,34 +259,6 @@ public final class ObjectActionMessage implements InputMessageListener {
 						player.setViewingOrb(new ViewingOrb(player, new Position(2398, 5150), new Position(2384, 5157), new Position(2409, 5158), new Position(2388, 5138), new Position(2411, 5137)));
 						player.getViewingOrb().open();
 						break;
-					//				case 9368:
-					//					if(player.getPosition().getY() <= 5167 && FightCavesHandler.players.remove(player)) {
-					//						player.move(new Position(2399, 5169));
-					//						player.getCombatBuilder().reset();
-					//						FightCavesHandler.awaiting.add(player);
-					//						player.message("You forfeit the fight pits minigame!");
-					//						player.getMessages().sendWalkable(2804);
-					//						FightCavesHandler.display(player);
-					//						player.getMessages().sendContextMenu(1, "null");
-					//						FightCavesHandler.end(false);
-					//					}
-					//					break;
-					//				case 9369:
-					//					if(FightCavesHandler.awaiting.contains(player)) {
-					//						FightCavesHandler.awaiting.remove(player);
-					//						player.message("You exit the fight pits minigame waiting room!");
-					//						player.move(new Position(2399, 5177));
-					//						player.getMessages().sendWalkable(-1);
-					//					} else if(!FightCavesHandler.awaiting.contains(player)) {
-					//						//int minutes = FightCavesHandler.GAME_CYCLE_MINUTES - FightCavesHandler.gameCounter;
-					//						FightCavesHandler.awaiting.add(player);
-					//						player.message("You enter the fight pits minigame waiting room!");
-					//						player.move(new Position(2399, 5175));
-					//						player.getMessages().sendWalkable(2804);
-					//						FightCavesHandler.display(player);
-					//						FightCavesHandler.awaiting.forEach(it -> FightCavesHandler.display(it));
-					//					}
-					//					break;
 					case 3193:
 					case 2213:
 					case 34752:
@@ -353,51 +327,39 @@ public final class ObjectActionMessage implements InputMessageListener {
 									return;
 								}
 							}
-							player.move(new Position(3081, 3510, 1));
+							player.teleport(new Position(3081, 3510, 1), LADDER);
 						}
 						break;
 					case 24354:
-						player.move(new Position(3091, 3478, 1));
+						player.teleport(new Position(3091, 3478, 1), LADDER);
 						break;
 					case 24362:
-						player.move(new Position(3091, 3480, 0));
+						player.teleport(new Position(3091, 3480, 0), LADDER);
 						break;
 					case 34499:
-						player.move(new Position(3084, 3510, 0));
-						break;
-					case 36960:
-						if(objectX == 3075 && objectY == 3505 && objectZ == 0)
-							player.move(new Position(3075, 3504, 1));
-						if(objectX == 3075 && objectY == 3494 && objectZ == 0)
-							player.move(new Position(3075, 3493, 1));
-						if(objectX == 3099 && objectY == 3504 && objectZ == 0)
-							player.move(new Position(3098, 3504, 1));
-						break;
-					case 26933:
-						if(objectX == 3097 && objectY == 3468 && objectZ == 0)
-							player.move(new Position(3096, 9867, 0));
+						player.teleport(new Position(3084, 3510, 0), LADDER);
 						break;
 					//home mining ladder
 					case 24363:
 						if(objectX == 3088 && objectY == 3481 && objectZ == 0)
-							player.move(new Position(2995, 9826, 0));
+							player.teleport(new Position(2995, 9826, 0), LADDER);
 						break;
 					//Brimhaven stairs
 					case 5094:
 						if(objectX == 2648 && objectY == 9592 && objectZ == 0)
-							player.move(new Position(2642, 9595, 2));
+							player.teleport(new Position(2642, 9595, 2), LADDER);
 						break;
 					case 5096:
 						if(objectX == 2644 && objectY == 9593 && objectZ == 2)
-							player.move(new Position(2649, 9591, 0));
+							player.teleport(new Position(2649, 9591, 0), LADDER);
 						break;
 					case 5097:
 						if(objectX == 2635 && objectY == 9514 && objectZ == 0)
-							player.move(new Position(2637, 9510, 2));
+							player.teleport(new Position(2637, 9510, 2), LADDER);
 						break;
 					case 5098:
 						if(objectX == 2635 && objectY == 9511 && objectZ == 2)
-							player.move(new Position(2637, 9517, 0));
+							player.teleport(new Position(2637, 9517, 0), LADDER);
 						break;
 					
 					//ancient cavern dungeon
@@ -420,23 +382,23 @@ public final class ObjectActionMessage implements InputMessageListener {
 					
 					case 8972://Woodcutting portal
 						if(objectX == 2611 && objectY == 4776 && objectZ == 0)
-							player.teleport(new Position(3220, 3433, 0), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+							player.teleport(new Position(3220, 3433, 0), TRAINING_PORTAL);
 						break;
 					
 					case 1817://king black dragon lever
 						if(objectX == 2273 && objectY == 4680 && objectZ == 0)
-							player.teleport(new Position(3220, 3430, 0), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+							player.teleport(new Position(3220, 3430, 0), BOSS_PORTAL);
 						break;
 					
 					//Abyssal rift
 					case 7133:
 						if(objectX == 3035 && objectY == 4842 && objectZ == 0) {
-							player.teleport(new Position(2400, 4850, 0), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+							player.teleport(new Position(2400, 4850, 0), TRAINING_PORTAL);
 						}
 						break;
 					case 7132:
 						if(objectX == 3028 && objectY == 4837 && objectZ == 0) {
-							player.teleport(new Position(2142, 4836, 0), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+							player.teleport(new Position(2142, 4836, 0), TRAINING_PORTAL);
 						}
 						break;
 					case 7141:
@@ -496,30 +458,27 @@ public final class ObjectActionMessage implements InputMessageListener {
 						break;
 					//Agility stairs
 					case 3205:
-						if(objectX == 2532 && objectY == 3545) {
-							player.animation(new Animation(828));
-							player.move(new Position(2532, 3546));
-						}
+						if(objectX == 2532 && objectY == 3545)
+							player.teleport(new Position(2532, 3546), LADDER);
 						break;
 					
 					//chaos dwarf
 					case 87012:
-						if(objectX == 1487 && objectY == 4704) {
-							player.teleport(new Position(3207, 3437, 0), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-						}
+						if(objectX == 1487 && objectY == 4704)
+							player.teleport(new Position(3207, 3437, 0), TRAINING_PORTAL);
 						break;
 					
 					case 4493:
-						player.move(new Position(3432, 3537, 1));
+						player.teleport(new Position(3432, 3537, 1), LADDER);
 						break;
 					case 4494:
-						player.move(new Position(3438, 3537, 0));
+						player.teleport(new Position(3438, 3537, 0), LADDER);
 						break;
 					case 4495:
-						player.move(new Position(3417, 3540, 2));
+						player.teleport(new Position(3417, 3540, 2), LADDER);
 						break;
 					case 4496:
-						player.move(new Position(3412, 3540, 1));
+						player.teleport(new Position(3412, 3540, 1), LADDER);
 						break;
 				}
 			}
