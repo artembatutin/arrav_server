@@ -11,6 +11,7 @@ import net.edge.world.content.container.impl.Inventory;
 import net.edge.world.content.minigame.Minigame;
 import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.scoreboard.PlayerScoreboardStatistic;
+import net.edge.world.content.skill.Skill;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.prayer.Prayer;
 import net.edge.world.model.node.entity.EntityDeath;
@@ -55,7 +56,7 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		getCharacter().animation(new Animation(0x900, Animation.AnimationPriority.HIGH));
 		getCharacter().setSkillAction(Optional.empty());
 		World.getExchangeSessionManager().reset(getCharacter());
-		
+
 		if(!MinigameHandler.getMinigame(getCharacter()).isPresent()) {
 			deathMessage = true;
 		}
@@ -200,9 +201,26 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		if(deathMessage) {
 			getCharacter().message(getCharacter().getRights().less(Rights.ADMINISTRATOR) ? "Oh dear, you're dead!" : "You are unaffected by death because of your rank.");
 		}
+
 		getCharacter().getMessages().sendWalkable(-1);
 		Prayer.deactivateAll(getCharacter());
+
+		if(getCharacter().isNightmareMode()) {
+			for(int index = 0; index < getCharacter().getSkills().length; index++) {
+				Skill skill = getCharacter().getSkills()[index];
+
+				int newLevel = (int) (skill.getRealLevel() * 0.75);
+
+				if(index == Skills.HITPOINTS && newLevel < 10)  {
+					newLevel = 10;
+				}
+
+				skill.setRealLevel(newLevel);
+			}
+		}
+
 		Skills.restoreAll(getCharacter());
+
 		getCharacter().getActivityManager().enable();
 		getCharacter().getFlags().flag(UpdateFlag.APPEARANCE);
 	}

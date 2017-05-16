@@ -92,7 +92,12 @@ public final class Player extends EntityNode {
 	 * The logger that will print important information.
 	 */
 	private static Logger logger = LoggerUtils.getLogger(Player.class);
-	
+
+	/**
+	 * Determines if this player is playing in nightmare mode.
+	 */
+	private boolean nightmareMode;
+
 	/**
 	 * The hash collection of the local players.
 	 */
@@ -961,7 +966,21 @@ public final class Player extends EntityNode {
 	public String getFormatUsername() {
 		return TextUtils.capitalize(username);
 	}
-	
+
+	/**
+	 * Determines whether this player is in nightmare mode.
+	 * @return {@link #nightmareMode}.
+	 */
+	public boolean isNightmareMode() {
+		return nightmareMode;
+	}
+
+	/**
+	 * Sets the {@link #nightmareMode} to true.
+	 */
+	public void setNightmareMode() {
+		this.nightmareMode = true;
+	}
 	/**
 	 * Gets the hash collection of the local players.
 	 * @return the local players.

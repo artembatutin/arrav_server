@@ -41,6 +41,17 @@ public final class ExchangeSessionManager {
 	public boolean request(ExchangeSession session) {
 		Player player = session.getPlayers().get(0);
 		Player requested = session.getOther(player);
+
+		if(player.isNightmareMode()) {
+			player.message("You cannot start an exchange session with another player.");
+			return false;
+		}
+
+		if(requested.isNightmareMode()) {
+			player.message("This player is in nightmare mode and can't start an exchange session.");
+			return false;
+		}
+
 		if(inAnySession(player)) {
 			session.getPlayers().forEach(this::reset);
 			return false;
