@@ -1,9 +1,9 @@
 package net.edge.world.content.skill.summoning.familiar.passive.impl;
 
+import net.edge.task.Task;
+import net.edge.world.World;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.World;
-import net.edge.task.Task;
 
 import java.util.Optional;
 import java.util.function.Consumer;

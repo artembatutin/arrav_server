@@ -1,8 +1,8 @@
 package net.edge.net.message.impl;
 
 import net.edge.net.codec.ByteMessage;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.net.message.InputMessageListener;
+import net.edge.world.model.node.entity.player.Player;
 
 /**
  * This message sent from the client when the focus of the player's window changes.

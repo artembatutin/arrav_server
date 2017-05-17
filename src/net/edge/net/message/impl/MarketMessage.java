@@ -1,10 +1,10 @@
 package net.edge.net.message.impl;
 
 import net.edge.net.codec.ByteMessage;
+import net.edge.net.message.InputMessageListener;
 import net.edge.utils.TextUtils;
 import net.edge.world.content.market.MarketShop;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.net.message.InputMessageListener;
 
 /**
  * The message that is sent from the client when the player searches an item in the market.

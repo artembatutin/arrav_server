@@ -8,7 +8,7 @@ import net.edge.world.model.node.entity.npc.Npc;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Glacyte extends Npc {
-
+	
 	/**
 	 * The glacor that summoned this glacyte.
 	 */
@@ -21,17 +21,13 @@ public final class Glacyte extends Npc {
 	
 	/**
 	 * Constructs a new {@link Glacyte}.
-	 * @param id
-	 * @param position
-	 * @param glacor
-	 * @param data
 	 */
 	public Glacyte(GlacyteData data, Position position, Glacor glacor) {
 		super(data.getNpcId(), position);
 		this.glacor = glacor;
 		this.data = data;
 	}
-
+	
 	@Override
 	public Npc create() {
 		return new Glacyte(data, getPosition(), glacor);
@@ -40,7 +36,7 @@ public final class Glacyte extends Npc {
 	@Override
 	public void appendDeath() {
 		super.appendDeath();
-
+		
 		glacor.getGlacytes().remove(data);
 		
 		if(glacor.getGlacytes().isEmpty()) {

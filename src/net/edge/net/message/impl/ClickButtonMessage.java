@@ -3,6 +3,7 @@ package net.edge.net.message.impl;
 import net.edge.Server;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.message.InputMessageListener;
+import net.edge.task.Task;
 import net.edge.utils.ActionListener;
 import net.edge.utils.TextUtils;
 import net.edge.world.World;
@@ -13,35 +14,34 @@ import net.edge.world.content.clanchat.ClanChatRank;
 import net.edge.world.content.clanchat.ClanChatUpdate;
 import net.edge.world.content.combat.magic.CombatSpells;
 import net.edge.world.content.combat.magic.lunars.LunarSpells;
+import net.edge.world.content.combat.special.CombatSpecial;
 import net.edge.world.content.combat.weapon.FightType;
+import net.edge.world.content.combat.weapon.WeaponInterface;
 import net.edge.world.content.container.impl.Equipment;
+import net.edge.world.content.dialogue.Dialogues;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
+import net.edge.world.content.item.Skillcape;
+import net.edge.world.content.market.MarketShop;
 import net.edge.world.content.minigame.MinigameHandler;
+import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.cooking.Cooking;
 import net.edge.world.content.skill.cooking.CookingData;
+import net.edge.world.content.skill.cooking.DoughCreation;
 import net.edge.world.content.skill.crafting.*;
 import net.edge.world.content.skill.fletching.BowCarving;
 import net.edge.world.content.skill.magic.EnchantCrossbowBolts;
 import net.edge.world.content.skill.prayer.Prayer;
 import net.edge.world.content.skill.slayer.Slayer;
 import net.edge.world.content.skill.smithing.Smelting;
+import net.edge.world.content.skill.summoning.Summoning;
 import net.edge.world.content.teleport.impl.DefaultTeleportSpell;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.Spellbook;
 import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.content.combat.special.CombatSpecial;
-import net.edge.world.content.combat.weapon.WeaponInterface;
-import net.edge.world.content.dialogue.Dialogues;
-import net.edge.world.content.item.Skillcape;
-import net.edge.world.content.market.MarketShop;
-import net.edge.world.content.skill.SkillData;
-import net.edge.world.content.skill.cooking.DoughCreation;
-import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.model.locale.Position;
-import net.edge.task.Task;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -74,7 +74,7 @@ public final class ClickButtonMessage implements InputMessageListener {
 	@Override
 	public void handleMessage(Player player, int opcode, int size, ByteMessage payload) {
 		int button = PROPER_READ ? payload.getShort() : hexToInt(payload.getBytes(2));
-
+		
 		if(Server.DEBUG) {
 			player.message("Clicked button " + button + ".");
 		}

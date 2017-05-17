@@ -66,7 +66,7 @@ public final class TextUtils {
 	public static String appendIndefiniteArticle(String thing) {
 		return determineIndefiniteArticle(thing).concat(" " + thing);
 	}
-
+	
 	/**
 	 * Appends the determined indefinite article to {@code thing}.
 	 * @param thing the thing to append.

@@ -1,5 +1,6 @@
 package net.edge.world.content.combat;
 
+import net.edge.task.EventListener;
 import net.edge.world.World;
 import net.edge.world.content.combat.strategy.CombatStrategy;
 import net.edge.world.model.locale.Boundary;
@@ -9,7 +10,6 @@ import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.npc.NpcAggression;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.Rights;
-import net.edge.task.EventListener;
 
 import java.util.concurrent.TimeUnit;
 
@@ -84,10 +84,10 @@ public final class CombatBuilder {
 	 * @param target the character that this controller will be prompted to attack.
 	 */
 	public void attack(EntityNode target) {
-
+		
 		if(character.equals(target))
 			return;
-
+		
 		if(character.isPlayer() && target.isNpc() && character.toPlayer().getRights().equals(Rights.DEVELOPER)) {
 			character.toPlayer().message("[DEBUG NPC ID] Npc = " + target.toNpc().getId() + ", position = " + target.toNpc().getPosition().toString());
 		}
@@ -107,7 +107,7 @@ public final class CombatBuilder {
 		}
 		
 		character.getMovementQueue().follow(target);
-
+		
 		if(combatTask != null && combatTask.isRunning()) {
 			currentVictim = target;
 			if(character.isPlayer()) {

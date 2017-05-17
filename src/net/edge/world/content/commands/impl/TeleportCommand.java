@@ -1,10 +1,10 @@
 package net.edge.world.content.commands.impl;
 
+import net.edge.world.content.commands.Command;
 import net.edge.world.content.commands.CommandSignature;
 import net.edge.world.content.teleport.impl.DefaultTeleportSpell;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.content.commands.Command;
 import net.edge.world.model.locale.Position;
+import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.Rights;
 
 @CommandSignature(alias = {"tele", "teleport"}, rights = {Rights.DEVELOPER, Rights.ADMINISTRATOR, Rights.SUPER_MODERATOR, Rights.MODERATOR}, syntax = "Use this command as ::tele or ::teleport x y [[z/height axis is optional]")

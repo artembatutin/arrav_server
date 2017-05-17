@@ -1,13 +1,13 @@
 package net.edge.world.content.skill.fishing;
 
+import net.edge.task.Task;
+import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.Skills;
+import net.edge.world.content.skill.action.impl.HarvestingSkillAction;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.skill.SkillData;
-import net.edge.world.content.skill.action.impl.HarvestingSkillAction;
-import net.edge.world.model.locale.Position;
-import net.edge.task.Task;
 
 import java.util.Optional;
 

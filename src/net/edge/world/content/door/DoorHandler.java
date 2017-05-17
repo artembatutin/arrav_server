@@ -1,9 +1,9 @@
 package net.edge.world.content.door;
 
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.object.ObjectNode;
 import net.edge.world.model.locale.Position;
+import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.object.ObjectDefinition;
+import net.edge.world.model.node.object.ObjectNode;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,22 +21,22 @@ public class DoorHandler {
 
 	private static boolean exception(Player player, ObjectNode object) {
 		switch(object.getId()) {
-		case 68429://armadyl gwd door
-			return object.getPosition().same(new Position(2839, 5296, 2)) || object.getPosition().same(new Position(2839, 5295, 2));
-		case 26425://bandos gwd door
-			return object.getPosition().same(new Position(2863, 5354, 2)) || object.getPosition().same(new Position(2864, 5354, 2));
-		case 26428://zamorak gwd door
-			return object.getPosition().same(new Position(2925, 5331, 2)) || object.getPosition().same(new Position(2925, 5332, 2));
-		case 68430://saradomin gwd door
-			return object.getPosition().same(new Position(2908, 5265, 0)) || object.getPosition().same(new Position(2907, 5265, 0));
-		case 24375:
-			return object.getPosition().same(new Position(3214, 3415)) || object.getPosition().same(new Position(3217, 3419)) || object.getPosition().same(new Position(3208, 3415));
-		case 15644:
-			return object.getPosition().same(new Position(2855, 3545)) || object.getPosition().same(new Position(2855, 3546)) || object.getPosition().same(new Position(2846, 3541, 2)) || object.getPosition().same(new Position(2847, 3541, 2));
-		case 15641:
-			return object.getPosition().same(new Position(2854, 3545)) || object.getPosition().same(new Position(2854, 3546)) || object.getPosition().same(new Position(2846, 3540, 2)) || object.getPosition().same(new Position(2847, 3540, 2));
-		default:
-			return false;
+			case 68429://armadyl gwd door
+				return object.getPosition().same(new Position(2839, 5296, 2)) || object.getPosition().same(new Position(2839, 5295, 2));
+			case 26425://bandos gwd door
+				return object.getPosition().same(new Position(2863, 5354, 2)) || object.getPosition().same(new Position(2864, 5354, 2));
+			case 26428://zamorak gwd door
+				return object.getPosition().same(new Position(2925, 5331, 2)) || object.getPosition().same(new Position(2925, 5332, 2));
+			case 68430://saradomin gwd door
+				return object.getPosition().same(new Position(2908, 5265, 0)) || object.getPosition().same(new Position(2907, 5265, 0));
+			case 24375:
+				return object.getPosition().same(new Position(3214, 3415)) || object.getPosition().same(new Position(3217, 3419)) || object.getPosition().same(new Position(3208, 3415));
+			case 15644:
+				return object.getPosition().same(new Position(2855, 3545)) || object.getPosition().same(new Position(2855, 3546)) || object.getPosition().same(new Position(2846, 3541, 2)) || object.getPosition().same(new Position(2847, 3541, 2));
+			case 15641:
+				return object.getPosition().same(new Position(2854, 3545)) || object.getPosition().same(new Position(2854, 3546)) || object.getPosition().same(new Position(2846, 3540, 2)) || object.getPosition().same(new Position(2847, 3540, 2));
+			default:
+				return false;
 		}
 	}
 

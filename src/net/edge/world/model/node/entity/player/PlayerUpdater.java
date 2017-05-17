@@ -1,13 +1,13 @@
 package net.edge.world.model.node.entity.player;
 
 import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.MessageType;
 import net.edge.world.World;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.model.Direction;
-import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.update.UpdateBlockSet;
 import net.edge.world.model.node.entity.update.UpdateState;
-import net.edge.net.codec.MessageType;
 
 import java.util.Iterator;
 

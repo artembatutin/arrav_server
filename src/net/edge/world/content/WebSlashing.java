@@ -1,13 +1,13 @@
 package net.edge.world.content;
 
+import net.edge.task.Task;
 import net.edge.utils.rand.RandomUtils;
+import net.edge.world.World;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.object.ObjectDirection;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.World;
-import net.edge.world.model.locale.Position;
-import net.edge.task.Task;
 
 import java.util.Arrays;
 

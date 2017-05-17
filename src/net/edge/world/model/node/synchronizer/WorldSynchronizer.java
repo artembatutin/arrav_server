@@ -1,13 +1,13 @@
 package net.edge.world.model.node.synchronizer;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import net.edge.utils.LoggerUtils;
 import net.edge.world.World;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.npc.NpcUpdater;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.PlayerUpdater;
 import net.edge.world.model.node.item.ItemNode;
-import net.edge.utils.LoggerUtils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

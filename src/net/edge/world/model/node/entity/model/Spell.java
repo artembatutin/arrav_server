@@ -1,10 +1,10 @@
 package net.edge.world.model.node.entity.model;
 
+import net.edge.world.content.MagicStaff;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.MagicStaff;
 
 import java.util.Optional;
 

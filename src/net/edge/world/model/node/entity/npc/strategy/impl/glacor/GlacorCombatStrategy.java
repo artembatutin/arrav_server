@@ -1,5 +1,6 @@
 package net.edge.world.model.node.entity.npc.strategy.impl.glacor;
 
+import com.google.common.collect.ImmutableSet;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.content.combat.CombatSessionData;
@@ -23,8 +24,6 @@ import net.edge.world.model.node.item.Item;
 import java.util.Arrays;
 import java.util.Optional;
 
-import com.google.common.collect.ImmutableSet;
-
 /**
  * The class which represents the combat strategy for glacors.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -33,7 +32,7 @@ public final class GlacorCombatStrategy extends DynamicCombatStrategy<Glacor> {
 
 	/**
 	 * Constructs a new {@link GlacorCombatStrategy}.
-	 * @param npc	the npc this strategy is for.
+	 * @param npc the npc this strategy is for.
 	 */
 	public GlacorCombatStrategy(Glacor npc) {
 		super(npc);
@@ -128,14 +127,14 @@ public final class GlacorCombatStrategy extends DynamicCombatStrategy<Glacor> {
 
 	private CombatSessionData type(EntityNode victim, CombatType type) {
 		switch(type) {
-		case MELEE:
-			return melee(victim);
-		case RANGED:
-			return ranged(victim);
-		case MAGIC:
-			return magic(victim);
-		default:
-			return magic(victim);
+			case MELEE:
+				return melee(victim);
+			case RANGED:
+				return ranged(victim);
+			case MAGIC:
+				return magic(victim);
+			default:
+				return magic(victim);
 		}
 	}
 

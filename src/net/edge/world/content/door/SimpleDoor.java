@@ -1,11 +1,11 @@
 package net.edge.world.content.door;
 
+import net.edge.world.World;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.object.ObjectDirection;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.model.node.region.Region;
-import net.edge.world.World;
 import net.edge.world.model.node.object.ObjectType;
+import net.edge.world.model.node.region.Region;
 
 /**
  * Represents a single door.

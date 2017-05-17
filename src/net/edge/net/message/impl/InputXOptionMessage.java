@@ -2,15 +2,15 @@ package net.edge.net.message.impl;
 
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
+import net.edge.net.codec.ByteTransform;
+import net.edge.net.message.InputMessageListener;
+import net.edge.world.World;
 import net.edge.world.content.container.session.ExchangeSession;
+import net.edge.world.content.container.session.ExchangeSessionType;
+import net.edge.world.content.skill.summoning.Summoning;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemDefinition;
-import net.edge.world.World;
-import net.edge.world.content.container.session.ExchangeSessionType;
-import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.net.codec.ByteTransform;
-import net.edge.net.message.InputMessageListener;
 
 public final class InputXOptionMessage implements InputMessageListener {
 	

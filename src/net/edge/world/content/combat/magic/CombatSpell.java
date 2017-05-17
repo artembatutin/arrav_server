@@ -1,12 +1,12 @@
 package net.edge.world.content.combat.magic;
 
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Graphic;
 import net.edge.world.model.node.entity.model.Projectile;
 import net.edge.world.model.node.entity.model.Spell;
-import net.edge.task.Task;
 
 import java.util.Optional;
 

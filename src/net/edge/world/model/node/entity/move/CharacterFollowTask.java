@@ -1,5 +1,7 @@
 package net.edge.world.model.node.entity.move;
 
+import net.edge.task.Task;
+import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.content.combat.Combat;
 import net.edge.world.content.skill.summoning.Summoning;
@@ -10,8 +12,6 @@ import net.edge.world.model.node.entity.model.Direction;
 import net.edge.world.model.node.entity.move.path.Path;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.task.Task;
-import net.edge.utils.rand.RandomUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,22 +21,22 @@ import java.util.Optional;
  * @author lare96 <http://github.com/lare96>
  */
 class CharacterFollowTask extends Task {
-
+	
 	/**
 	 * The character this process is being executed for.
 	 */
 	private final EntityNode character;
-
+	
 	/**
 	 * The character being followed in this process.
 	 */
 	private final EntityNode leader;
-
+	
 	/**
 	 * The current destination of the path.
 	 */
 	private Position destination;
-
+	
 	/**
 	 * Creates a new {@link CharacterFollowTask}.
 	 * @param character the character this process is being executed for.
@@ -47,7 +47,7 @@ class CharacterFollowTask extends Task {
 		this.character = character;
 		this.leader = leader;
 	}
-
+	
 	@Override
 	public void execute() {
 		//Familiar calling back.
@@ -67,7 +67,7 @@ class CharacterFollowTask extends Task {
 				familiar = true;
 			}
 		}
-
+		
 		//First checks.
 		if(!character.isFollowing() || (!character.getPosition().withinDistance(leader.getPosition(), 30) && !familiar) || character.isDead() || leader.isDead()) {//Death and away check.
 			character.faceEntity(null);
@@ -76,10 +76,10 @@ class CharacterFollowTask extends Task {
 			this.cancel();
 			return;
 		}
-
+		
 		//Entity facing.
 		character.faceEntity(leader);
-
+		
 		//Movement locks.
 		if(character.getMovementQueue().isLockMovement() || character.isFrozen() || character.isStunned()) {//Requirement check.
 			if(character.isPlayer()) {
@@ -92,7 +92,7 @@ class CharacterFollowTask extends Task {
 			this.cancel();
 			return;
 		}
-
+		
 		//Randomized walk away from leader's tile.
 		if(new Boundary(leader.getPosition(), leader.size()).inside(character.getPosition(), character.size())) {
 			character.getMovementQueue().reset();
@@ -103,18 +103,18 @@ class CharacterFollowTask extends Task {
 			}
 			return;
 		}
-
+		
 		//Combat distance check.
 		if(character.getCombatBuilder().isAttacking()) {
 			if(character.isPlayer()) {
 				character.getCombatBuilder().determineStrategy();
-
+				
 				if(Combat.checkAttackDistance(character.getCombatBuilder())) {
 					return;
 				}
 			}
 		}
-
+		
 		//Resets if character next to the player.
 		if(new Boundary(leader.getPosition(), leader.size()).within(character.getPosition(), character.size(), 1)) {
 			character.getMovementQueue().reset();
@@ -130,12 +130,12 @@ class CharacterFollowTask extends Task {
 			}
 			return;
 		}
-
+		
 		//returns if path calculate is next to the leader.
 		if(destination != null && new Boundary(leader.getPosition(), leader.size()).inside(destination, character.size())) {
 			return;
 		}
-
+		
 		//Setting new path.
 		Path path = character.isPlayer() || (character.isNpc() && character.toNpc().isSmart()) ? World.getAStarPathFinder().find(character, leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
 		if(path.isPossible()) {
@@ -146,7 +146,7 @@ class CharacterFollowTask extends Task {
 			destination = null;
 		}
 	}
-
+	
 	@Override
 	public void onCancel() {
 		destination = null;
@@ -154,10 +154,10 @@ class CharacterFollowTask extends Task {
 		character.setFollowEntity(null);
 		character.getMovementQueue().setFollowTask(Optional.empty());
 	}
-
+	
 	@Override
 	public void onException(Exception e) {
 		onCancel();
 	}
-
+	
 }

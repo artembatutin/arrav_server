@@ -10,6 +10,8 @@ import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.world.content.skill.summoning.familiar.ability.Teleporter;
 import net.edge.world.content.skill.summoning.familiar.impl.*;
+import net.edge.world.content.skill.summoning.familiar.impl.MinotaurFamiliar.BronzeMinotaur;
+import net.edge.world.content.skill.summoning.familiar.impl.MinotaurFamiliar.IronMinotaur;
 import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.NodeType;
 import net.edge.world.model.node.entity.EntityNode;
@@ -17,12 +19,7 @@ import net.edge.world.model.node.entity.model.Graphic;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.skill.summoning.familiar.impl.MinotaurFamiliar.BronzeMinotaur;
-import net.edge.world.content.skill.summoning.familiar.impl.MinotaurFamiliar.IronMinotaur;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -431,37 +428,5 @@ public final class Summoning {
 	/**
 	 * The collection of familiars a player can summon.
 	 */
-	public static final ImmutableList<Familiar> FAMILIARS = ImmutableList.of(
-			new SpiritWolf(),
-			new DreadFowl(),
-			new SpiritSpider(),
-			new ThornySnail(),
-			new GraniteCrab(),
-			new SpiritMosquito(),
-			new DesertWyrm(),
-			new SpiritScorpion(),
-			new SpiritTzKih(),
-			new AlbinoRat(),
-			new SpiritKalphite(),
-			new CompostMound(),
-			new GiantChinchompa(),
-			new VampyreBat(),
-			new HoneyBadger(),
-			new Beaver(),
-			new VoidFamiliar.VoidRavager(),
-			new VoidFamiliar.VoidSpinner(),
-			new VoidFamiliar.VoidShifter(),
-			new VoidFamiliar.VoidTorcher(),
-			new BronzeMinotaur(),
-			new BullAnt(),
-			new Macaw(),
-			new SpiritTriceFamiliar.SpiritCockatrice(),
-			new SpiritTriceFamiliar.SpiritGuthatrice(),
-			new SpiritTriceFamiliar.SpiritSaratrice(),
-			new SpiritTriceFamiliar.SpiritZamatrice(),
-			new SpiritTriceFamiliar.SpiritPengatrice(),
-			new SpiritTriceFamiliar.SpiritCoraxatrice(),
-			new SpiritTriceFamiliar.SpiritVulatrice(),
-			new IronMinotaur()
-	);
+	public static final ImmutableList<Familiar> FAMILIARS = ImmutableList.of(new SpiritWolf(), new DreadFowl(), new SpiritSpider(), new ThornySnail(), new GraniteCrab(), new SpiritMosquito(), new DesertWyrm(), new SpiritScorpion(), new SpiritTzKih(), new AlbinoRat(), new SpiritKalphite(), new CompostMound(), new GiantChinchompa(), new VampyreBat(), new HoneyBadger(), new Beaver(), new VoidFamiliar.VoidRavager(), new VoidFamiliar.VoidSpinner(), new VoidFamiliar.VoidShifter(), new VoidFamiliar.VoidTorcher(), new BronzeMinotaur(), new BullAnt(), new Macaw(), new SpiritTriceFamiliar.SpiritCockatrice(), new SpiritTriceFamiliar.SpiritGuthatrice(), new SpiritTriceFamiliar.SpiritSaratrice(), new SpiritTriceFamiliar.SpiritZamatrice(), new SpiritTriceFamiliar.SpiritPengatrice(), new SpiritTriceFamiliar.SpiritCoraxatrice(), new SpiritTriceFamiliar.SpiritVulatrice(), new IronMinotaur());
 }

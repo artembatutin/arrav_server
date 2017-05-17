@@ -4,11 +4,11 @@ import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.container.impl.Inventory;
 import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.skill.Skill;
+import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.skill.SkillData;
 
 import java.util.Optional;
 

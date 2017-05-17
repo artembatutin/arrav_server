@@ -2,14 +2,14 @@ package net.edge.world.content.skill.summoning.familiar.impl;
 
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
+import net.edge.world.content.skill.summoning.Summoning;
+import net.edge.world.content.skill.summoning.familiar.Familiar;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.specials.SummoningData;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.content.skill.summoning.familiar.Familiar;
 
 import java.util.Optional;
 
@@ -52,9 +52,6 @@ public final class EvilTurnip extends Familiar {
 		}
 	}
 	
-	private final String[] RANDOM_DIALOGUE = new String[] {
-			"My roots feel hurty. I thinking it be someone I eated.",
-			"Hur hur hur...", "When we gonna fighting things, boss?"
-	};
+	private final String[] RANDOM_DIALOGUE = new String[]{"My roots feel hurty. I thinking it be someone I eated.", "Hur hur hur...", "When we gonna fighting things, boss?"};
 	
 }

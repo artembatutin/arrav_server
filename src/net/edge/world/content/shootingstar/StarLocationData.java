@@ -1,11 +1,10 @@
 package net.edge.world.content.shootingstar;
 
-import java.util.EnumSet;
-
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-
 import net.edge.world.model.locale.Position;
+
+import java.util.EnumSet;
 
 /**
  * The enumerated type whose elements represent a set of constants used to define
@@ -40,10 +39,10 @@ public enum StarLocationData {
 	
 	/**
 	 * Constructs a new {@link StarLocationData}.
-	 * @param x				the x-tile to spawn this star on.
-	 * @param y				the y-tile to spawn this star on.
-	 * @param message		the message to send to the world.
-	 * @param messageActive	the message to send to the world if this star hasn't been mined fully.
+	 * @param x             the x-tile to spawn this star on.
+	 * @param y             the y-tile to spawn this star on.
+	 * @param message       the message to send to the world.
+	 * @param messageActive the message to send to the world if this star hasn't been mined fully.
 	 */
 	private StarLocationData(int x, int y, String message, String messageActive) {
 		this.position = new Position(x, y);
@@ -53,11 +52,11 @@ public enum StarLocationData {
 
 	/**
 	 * Constructs a new {@link StarLocationData}.
-	 * @param x			the x-tile to spawn this star on.
-	 * @param y			the y-tile to spawn this star on.
-	 * @param z			the z-tile to spawn this star on.
-	 * @param message	the message to send to the world.
-	 * @param messageActive	the message to send to the world if this star hasn't been mined fully.
+	 * @param x             the x-tile to spawn this star on.
+	 * @param y             the y-tile to spawn this star on.
+	 * @param z             the z-tile to spawn this star on.
+	 * @param message       the message to send to the world.
+	 * @param messageActive the message to send to the world if this star hasn't been mined fully.
 	 */
 	private StarLocationData(int x, int y, int z, String message, String messageActive) {
 		this.position = new Position(x, y, z);

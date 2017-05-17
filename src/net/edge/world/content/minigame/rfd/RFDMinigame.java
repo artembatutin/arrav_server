@@ -1,11 +1,11 @@
 package net.edge.world.content.minigame.rfd;
 
-import net.edge.world.content.item.PotionConsumable;
 import net.edge.world.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.dialogue.Expression;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
 import net.edge.world.content.item.FoodConsumable;
+import net.edge.world.content.item.PotionConsumable;
 import net.edge.world.content.minigame.SequencedMinigame;
 import net.edge.world.content.skill.prayer.Prayer;
 import net.edge.world.model.locale.Position;

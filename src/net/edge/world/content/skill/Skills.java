@@ -1,5 +1,6 @@
 package net.edge.world.content.skill;
 
+import net.edge.utils.TextUtils;
 import net.edge.world.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.skill.agility.impl.Shortcuts;
@@ -17,7 +18,6 @@ import net.edge.world.model.node.entity.model.Graphic;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.update.UpdateFlag;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.utils.TextUtils;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;

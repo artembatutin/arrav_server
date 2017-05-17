@@ -21,17 +21,17 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Stalls extends Thieving {
-
+	
 	/**
 	 * The definition for this stall.
 	 */
 	private final StallData stall;
-
+	
 	/**
 	 * The object node this player is interacting with.
 	 */
 	private final ObjectNode object;
-
+	
 	/**
 	 * Constructs a new {@link Stalls}.
 	 * @param player {@link #getPlayer()}.
@@ -43,7 +43,7 @@ public final class Stalls extends Thieving {
 		this.stall = stall;
 		this.object = object;
 	}
-
+	
 	/**
 	 * Attempts to steal from a stall.
 	 * @param player the player trying to steal from a stall.
@@ -52,39 +52,39 @@ public final class Stalls extends Thieving {
 	 */
 	public static boolean steal(Player player, ObjectNode object) {
 		Optional<StallData> definition = StallData.getDefinition(object.getId());
-
+		
 		if(!definition.isPresent()) {
 			return false;
 		}
 		if(object.isDisabled()) {
 			return false;
 		}
-
+		
 		Stalls stall = new Stalls(player, definition.get(), object);
 		stall.start();
 		return true;
 	}
-
+	
 	/**
 	 * The animation when stealing from stalls
 	 */
 	private static final Animation ANIMATION = new Animation(832);
-
+	
 	/**
 	 * Object ids of empty stalls
 	 */
 	private static final int[] EMPTY_STALLS = new int[]{634, 620};
-
+	
 	@Override
 	public int requirement() {
 		return stall.requirement;
 	}
-
+	
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.of(ANIMATION);
 	}
-
+	
 	@Override
 	public boolean canInit() {
 		if(object.isDisabled()) {
@@ -102,7 +102,7 @@ public final class Stalls extends Thieving {
 		player.getSkills()[skill().getId()].getDelay().reset();
 		return true;
 	}
-
+	
 	@Override
 	public void onSubmit() {
 		if(stall.requirement > 40 && ThreadLocalRandom.current().nextInt(100) < 40) {
@@ -114,43 +114,43 @@ public final class Stalls extends Thieving {
 			}
 		}
 	}
-
+	
 	@Override
 	public void onExecute(Task t) {
 		t.cancel();
 	}
-
+	
 	@Override
 	public void onStop(boolean success) {
 		if(success)
 			World.submit(new StallTask(this, object));
 	}
-
+	
 	@Override
 	public Item[] loot() {
 		return stall.loot;
 	}
-
+	
 	@Override
 	public int delay() {
 		return 1;
 	}
-
+	
 	@Override
 	public boolean instant() {
 		return false;
 	}
-
+	
 	@Override
 	public boolean canExecute() {
 		return !object.isDisabled();
 	}
-
+	
 	@Override
 	public double experience() {
 		return stall.experience;
 	}
-
+	
 	/**
 	 * The enumerated type whose elements represent the data for stealing from a stall.
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -174,42 +174,42 @@ public final class Stalls extends Thieving {
 		MAGIC_STALL(new int[]{4877}, EMPTY_STALLS[1], 75, new Item[]{new Item(995, 5000)}, 100, 10),
 		SCIMITAR_STALL(new int[]{4878}, EMPTY_STALLS[1], 90, new Item[]{new Item(995, 10000)}, 125, 15),
 		GEM(new int[]{2562}, EMPTY_STALLS[0], 75, new Item[]{new Item(995, 35000)}, 160, 80);
-
+		
 		/**
 		 * Caches our enum values.
 		 */
 		private static final ImmutableSet<StallData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(StallData.class));
-
+		
 		/**
 		 * The object identification for this stall.
 		 */
 		private final int[] objectId;
-
+		
 		/**
 		 * The object identification for an empty stall.
 		 */
 		private final int emptyStallId;
-
+		
 		/**
 		 * The required level to steal from this stall.
 		 */
 		private final int requirement;
-
+		
 		/**
 		 * The loot you get from stealing for this stall.
 		 */
 		private final Item[] loot;
-
+		
 		/**
 		 * The experience gained for stealing from this stall.
 		 */
 		private final double experience;
-
+		
 		/**
 		 * The time it takes for the stall to respawn.
 		 */
 		private final int respawnTime;
-
+		
 		/**
 		 * Constructs a new {@link StallData} enumerator.
 		 * @param objectId     {@link #objectId}.
@@ -227,7 +227,7 @@ public final class Stalls extends Thieving {
 			this.experience = experience;
 			this.respawnTime = respawnTime;
 		}
-
+		
 		protected static Optional<StallData> getDefinition(int id) {
 			for(StallData def : VALUES) {
 				for(int object : def.objectId) {
@@ -239,28 +239,28 @@ public final class Stalls extends Thieving {
 			return Optional.empty();
 		}
 	}
-
+	
 	/**
 	 * The class which submits respawning tasks for stalls.
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static class StallTask extends Task {
-
+		
 		/**
 		 * The stall we're submitting this task for.
 		 */
 		private final Stalls stall;
-
+		
 		/**
 		 * The main stall object.
 		 */
 		private final ObjectNode object;
-
+		
 		/**
 		 * The empty stall
 		 */
 		private final ObjectNode empty;
-
+		
 		/**
 		 * Constructs a new {@link StallTask}.
 		 * @param stall  the stall being used.
@@ -272,14 +272,14 @@ public final class Stalls extends Thieving {
 			this.object = object;
 			this.empty = new ObjectNode(stall.stall.emptyStallId, object.getPosition(), object.getDirection(), object.getObjectType());
 		}
-
+		
 		@Override
 		public void onSubmit() {
 			object.setDisabled(true);
 			World.getRegions().getRegion(object.getPosition()).unregister(object);
 			World.getRegions().getRegion(object.getPosition()).register(empty);
 		}
-
+		
 		@Override
 		public void execute() {
 			object.setDisabled(false);
@@ -287,6 +287,6 @@ public final class Stalls extends Thieving {
 			World.getRegions().getRegion(object.getPosition()).register(stall.object);
 			this.cancel();
 		}
-
+		
 	}
 }

@@ -5,8 +5,8 @@ import net.edge.world.World;
 import net.edge.world.content.PlayerPanel;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.region.Region;
 import net.edge.world.model.node.entity.player.assets.Rights;
+import net.edge.world.model.node.region.Region;
 
 import java.util.*;
 import java.util.function.Predicate;

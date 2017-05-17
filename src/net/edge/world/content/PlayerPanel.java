@@ -3,13 +3,13 @@ package net.edge.world.content;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.utils.TextUtils;
-import net.edge.world.content.dialogue.impl.OptionDialogue;
-import net.edge.world.content.scoreboard.PlayerScoreboardStatistic;
+import net.edge.utils.Utility;
 import net.edge.world.World;
+import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.dialogue.impl.StatementDialogue;
+import net.edge.world.content.scoreboard.PlayerScoreboardStatistic;
 import net.edge.world.model.locale.Location;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.utils.Utility;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -90,7 +90,7 @@ public enum PlayerPanel {
 	EMPTY1(62171),
 	
 	PVE_HEADER(62172),
-
+	
 	HIGHEST_KILLSTREAK(62173),
 	CURRENT_KILLSTREAK(62174),
 	TOTAL_PLAYER_KILLS(62175),
@@ -106,7 +106,6 @@ public enum PlayerPanel {
 	INDIVIDUAL_CURRENT_KILLSTREAKS(62182),
 	INDIVIDUAL_KILLS(62183),
 	INDIVIDUAL_DEATHS(62184);
-	
 	
 	/**
 	 * Caches our enum values.

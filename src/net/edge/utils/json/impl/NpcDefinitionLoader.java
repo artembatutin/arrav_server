@@ -2,10 +2,10 @@ package net.edge.utils.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import net.edge.utils.json.JsonLoader;
 import net.edge.world.content.skill.slayer.Slayer;
 import net.edge.world.model.node.entity.npc.NpcAggression;
 import net.edge.world.model.node.entity.npc.NpcDefinition;
-import net.edge.utils.json.JsonLoader;
 
 import java.util.Objects;
 

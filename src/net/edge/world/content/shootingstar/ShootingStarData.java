@@ -21,12 +21,12 @@ public enum ShootingStarData {
 	PHASE_THREE(3, 38666, 70, 10, 29),
 	PHASE_TWO(2, 38667, 80, 10, 25),
 	PHASE_ONE(1, 38668, 90, 10, 14);
-
+	
 	/**
 	 * Caches our enum values.
 	 */
 	public static final ImmutableSet<ShootingStarData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(ShootingStarData.class));
-
+	
 	/**
 	 * The size of this star.
 	 */
@@ -36,12 +36,12 @@ public enum ShootingStarData {
 	 * The object id of this fire pit.
 	 */
 	final int objectId;
-
+	
 	/**
 	 * The level required to mine this star.
 	 */
 	final int levelRequirement;
-
+	
 	/**
 	 * The amount of stardust required to move to the next phase.
 	 */
@@ -54,11 +54,11 @@ public enum ShootingStarData {
 	
 	/**
 	 * Constructs a new {@link ShootingStarData}.
-	 * @param size					{@link #size}.
-	 * @param objectId 				{@link #objectId}.
-	 * @param levelRequirement      {@link #log}.
-	 * @param stardust 				{@link #stardust}.
-	 * @param experience			{@link #experience}.
+	 * @param size             {@link #size}.
+	 * @param objectId         {@link #objectId}.
+	 * @param levelRequirement {@link #log}.
+	 * @param stardust         {@link #stardust}.
+	 * @param experience       {@link #experience}.
 	 */
 	ShootingStarData(int size, int objectId, int levelRequirement, int stardust, int experience) {
 		this.size = size;
@@ -67,15 +67,15 @@ public enum ShootingStarData {
 		this.stardust = stardust;
 		this.experience = experience;
 	}
-
+	
 	static Optional<ShootingStarData> valueOf(int index) {
 		return VALUES.stream().filter(star -> star.ordinal() == index).findAny();
 	}
-
+	
 	Optional<ShootingStarData> getNext() {
 		return valueOf(this.ordinal() + 1);
 	}
-
+	
 	public int getObjectId() {
 		return objectId;
 	}

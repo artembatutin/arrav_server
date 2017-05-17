@@ -2,9 +2,9 @@ package net.edge.world.content.minigame.rfd;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.world.content.market.MarketItem;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.market.MarketItem;
 
 import java.util.Arrays;
 import java.util.EnumSet;

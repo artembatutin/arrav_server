@@ -1,5 +1,7 @@
 package net.edge.world.content.scene.impl;
 
+import net.edge.net.PunishmentHandler;
+import net.edge.task.Task;
 import net.edge.world.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.TabInterface;
@@ -14,8 +16,6 @@ import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Graphic;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.activity.ActivityManager.ActivityType;
-import net.edge.net.PunishmentHandler;
-import net.edge.task.Task;
 
 /**
  * The introduction cutscene for the player when he logs into the game for the first time.

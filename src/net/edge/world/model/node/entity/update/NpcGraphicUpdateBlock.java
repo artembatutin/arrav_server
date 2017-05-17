@@ -9,14 +9,14 @@ import net.edge.world.model.node.entity.player.Player;
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class NpcGraphicUpdateBlock extends NpcUpdateBlock {
-
+	
 	/**
 	 * Creates a new {@link NpcGraphicUpdateBlock}.
 	 */
 	public NpcGraphicUpdateBlock() {
 		super(0x100, UpdateFlag.GRAPHIC);
 	}
-
+	
 	@Override
 	public int write(Player player, Npc mob, ByteMessage msg) {
 		msg.putShort(mob.getGraphic().getId());

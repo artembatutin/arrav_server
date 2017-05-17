@@ -1,7 +1,7 @@
 package net.edge.world.content;
 
-import net.edge.world.content.item.PotionConsumable;
 import net.edge.world.content.container.impl.Inventory;
+import net.edge.world.content.item.PotionConsumable;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemDefinition;

@@ -1,9 +1,9 @@
 package net.edge.world.model.node.item;
 
 import net.edge.world.World;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.locale.Position;
 
 /**
  * The node implementation that represents an item everyone can see by default

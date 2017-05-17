@@ -3,8 +3,8 @@ package net.edge.world.content.minigame.dueling;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.world.content.container.impl.Equipment;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.content.container.session.impl.DuelSession;
+import net.edge.world.model.node.entity.player.Player;
 
 import java.util.EnumSet;
 import java.util.Optional;

@@ -1,18 +1,18 @@
 package net.edge.world.content.combat;
 
+import net.edge.task.Task;
 import net.edge.world.GameConstants;
-import net.edge.world.content.combat.effect.CombatEffectType;
-import net.edge.world.content.minigame.MinigameHandler;
-import net.edge.world.model.node.NodeState;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.World;
+import net.edge.world.content.combat.effect.CombatEffectType;
 import net.edge.world.content.combat.special.CombatSpecial;
 import net.edge.world.content.combat.weapon.WeaponInterface;
+import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.model.locale.Boundary;
 import net.edge.world.model.locale.Location;
+import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.npc.NpcAggression;
-import net.edge.task.Task;
+import net.edge.world.model.node.entity.player.Player;
 
 /**
  * The combat session controls the mechanics of when and how the controller of

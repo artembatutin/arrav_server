@@ -3,9 +3,9 @@ package net.edge.world.content.skill.agility.obstacle.impl;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.world.content.skill.agility.obstacle.ObstacleActivity;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.update.UpdateFlag;
 
 /**
@@ -29,7 +29,7 @@ public class Walkable extends ObstacleActivity {
 	
 	@Override
 	public boolean canExecute(Player player) {
-
+		
 		return true;
 	}
 	
@@ -49,7 +49,7 @@ public class Walkable extends ObstacleActivity {
 			player.getMovementQueue().walk(getDestination());
 		} else {
 			LinkedTaskSequence sequence = new LinkedTaskSequence();
-			sequence.connect(1, () ->  player.move(getStart()));
+			sequence.connect(1, () -> player.move(getStart()));
 			sequence.connect(2, () -> {
 				player.setWalkIndex(animation);
 				player.setRunIndex(animation);

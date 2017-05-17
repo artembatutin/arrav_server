@@ -2,7 +2,6 @@ package net.edge.utils.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
 import net.edge.utils.MutableNumber;
 import net.edge.utils.json.JsonLoader;
 import net.edge.world.World;

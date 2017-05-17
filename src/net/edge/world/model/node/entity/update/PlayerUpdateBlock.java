@@ -7,7 +7,7 @@ import net.edge.world.model.node.entity.player.Player;
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public abstract class PlayerUpdateBlock extends UpdateBlock<Player> {
-
+	
 	/**
 	 * Creates a new {@link PlayerUpdateBlock}.
 	 * @param mask The bit mask for this update block.

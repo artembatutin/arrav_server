@@ -1,7 +1,7 @@
 package net.edge.world.content.container.impl;
 
-import net.edge.world.content.container.ItemContainerAdapter;
 import net.edge.world.content.container.ItemContainer;
+import net.edge.world.content.container.ItemContainerAdapter;
 import net.edge.world.content.container.ItemWeightListener;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;

@@ -1,31 +1,31 @@
 package net.edge.world.model.node.entity;
 
 import com.google.common.base.Preconditions;
-import net.edge.world.content.combat.CombatBuilder;
-import net.edge.world.content.combat.CombatType;
-import net.edge.world.content.combat.effect.CombatEffectType;
-import net.edge.world.content.combat.strategy.CombatStrategy;
-import net.edge.world.model.node.NodeState;
-import net.edge.world.model.node.NodeType;
-import net.edge.world.model.node.entity.model.*;
-import net.edge.world.model.node.entity.move.MovementQueue;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.model.node.entity.update.UpdateFlagHolder;
-import net.edge.world.World;
-import net.edge.world.content.combat.Combat;
-import net.edge.world.content.combat.magic.CombatSpell;
-import net.edge.world.content.combat.magic.CombatWeaken;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.Node;
-import net.edge.world.model.node.entity.attribute.AttributeMap;
-import net.edge.world.model.node.entity.move.ForcedMovement;
-import net.edge.world.model.node.entity.move.MovementQueueListener;
-import net.edge.world.model.node.entity.update.UpdateFlag;
 import net.edge.task.Task;
 import net.edge.utils.MutableNumber;
 import net.edge.utils.Stopwatch;
+import net.edge.world.World;
+import net.edge.world.content.combat.Combat;
+import net.edge.world.content.combat.CombatBuilder;
+import net.edge.world.content.combat.CombatType;
+import net.edge.world.content.combat.effect.CombatEffectType;
+import net.edge.world.content.combat.magic.CombatSpell;
+import net.edge.world.content.combat.magic.CombatWeaken;
+import net.edge.world.content.combat.strategy.CombatStrategy;
+import net.edge.world.model.locale.Position;
+import net.edge.world.model.node.Node;
+import net.edge.world.model.node.NodeState;
+import net.edge.world.model.node.NodeType;
+import net.edge.world.model.node.entity.attribute.AttributeMap;
+import net.edge.world.model.node.entity.model.*;
+import net.edge.world.model.node.entity.move.ForcedMovement;
+import net.edge.world.model.node.entity.move.MovementQueue;
+import net.edge.world.model.node.entity.move.MovementQueueListener;
+import net.edge.world.model.node.entity.npc.Npc;
+import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.model.node.entity.update.UpdateFlag;
+import net.edge.world.model.node.entity.update.UpdateFlagHolder;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -747,7 +747,7 @@ public abstract class EntityNode extends Node {
 	/**
 	 * Sets regional and placement updates on this {@link EntityNode}.
 	 * @param needsPlacement this flag describes if the entity needs placement.
-	 * @param region this flag descibes if the entity needs to have region map update.
+	 * @param region         this flag descibes if the entity needs to have region map update.
 	 */
 	public final void setUpdates(boolean needsPlacement, boolean region) {
 		this.needsPlacement = needsPlacement;

@@ -1,8 +1,8 @@
 package net.edge.world.content.combat.effect;
 
+import net.edge.task.Task;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.EntityNode;
-import net.edge.task.Task;
 
 /**
  * The {@link Task} implementation that provides processing for

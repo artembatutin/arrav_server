@@ -3,6 +3,7 @@ package net.edge.world.model.node.entity.npc.strategy.impl.gwd;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.combat.CombatSessionData;
 import net.edge.world.content.combat.CombatType;
+import net.edge.world.content.combat.magic.CombatNormalSpell;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.model.Animation;
@@ -12,7 +13,6 @@ import net.edge.world.model.node.entity.npc.impl.gwd.CommanderZilyana;
 import net.edge.world.model.node.entity.npc.strategy.DynamicCombatStrategy;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.combat.magic.CombatNormalSpell;
 
 import java.util.Optional;
 

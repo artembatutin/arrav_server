@@ -2,8 +2,8 @@ package net.edge.world.content.skill.mining;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.world.model.node.item.Item;
 import net.edge.world.content.skill.action.TransformableObject;
+import net.edge.world.model.node.item.Item;
 
 import java.util.EnumSet;
 import java.util.Optional;

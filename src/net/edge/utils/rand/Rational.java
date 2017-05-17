@@ -18,12 +18,12 @@ public final class Rational extends Number {
 	public Rational(int numerator, int denominator) {
 		checkArgument(denominator != 0, "denominator cannot be 0");
 		
-		if (denominator < 0) {
+		if(denominator < 0) {
 			numerator = numerator * -1;
 			denominator = denominator * -1;
 		}
 		
-		if (numerator != 0) {
+		if(numerator != 0) {
 			int gcd = gcd(Math.abs(numerator), denominator);
 			
 			numerator = numerator / gcd;
@@ -38,9 +38,9 @@ public final class Rational extends Number {
 	public String toString() {
 		String result;
 		
-		if (numerator == 0)
+		if(numerator == 0)
 			result = "0";
-		else if (denominator == 1)
+		else if(denominator == 1)
 			result = numerator + "";
 		else
 			result = numerator + "/" + denominator;
@@ -62,10 +62,10 @@ public final class Rational extends Number {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if(this == obj) {
 			return true;
 		}
-		if (obj instanceof Rational) {
+		if(obj instanceof Rational) {
 			Rational other = (Rational) obj;
 			return numerator == other.numerator && denominator == other.denominator;
 		}
@@ -131,8 +131,8 @@ public final class Rational extends Number {
 	}
 	
 	private int gcd(int numeratorOne, int numeratorTwo) {
-		while (numeratorOne != numeratorTwo) {
-			if (numeratorOne > numeratorTwo) {
+		while(numeratorOne != numeratorTwo) {
+			if(numeratorOne > numeratorTwo) {
 				numeratorOne = numeratorOne - numeratorTwo;
 			} else {
 				numeratorTwo = numeratorTwo - numeratorOne;

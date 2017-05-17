@@ -1,14 +1,14 @@
 package net.edge.world.content.skill.magic;
 
 import com.google.common.collect.ImmutableMap;
+import net.edge.net.message.OutputMessages;
 import net.edge.world.content.container.impl.Inventory;
 import net.edge.world.content.skill.Skill;
+import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.Skills;
+import net.edge.world.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.skill.SkillData;
-import net.edge.world.content.skill.action.impl.ProducingSkillAction;
-import net.edge.net.message.OutputMessages;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class EnchantCrossbowBolts extends ProducingSkillAction {
-
+	
 	/**
 	 * The data this skill action is dependent of.
 	 */
@@ -63,7 +63,7 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 		if(buttonId != 75007) {
 			return false;
 		}
-
+		
 		Skill magic = player.getSkills()[Skills.MAGIC];
 		
 		if(!magic.reqLevel(4)) {
@@ -121,43 +121,43 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 		encoder.sendInterface(49000);
 		return true;
 	}
-
+	
 	@Override
 	public Optional<Item[]> removeItem() {
 		return Optional.of(data.required);
 	}
-
+	
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(new Item[]{data.produced});
 	}
-
+	
 	@Override
 	public int delay() {
 		return 3;
 	}
-
+	
 	@Override
 	public boolean instant() {
 		return true;
 	}
-
+	
 	@Override
 	public boolean init() {
 		player.getMessages().sendCloseWindows();
 		return checkMagic();
 	}
-
+	
 	@Override
 	public boolean canExecute() {
 		return checkMagic();
 	}
-
+	
 	@Override
 	public double experience() {
 		return data.experience;
 	}
-
+	
 	@Override
 	public SkillData skill() {
 		return SkillData.MAGIC;
@@ -170,7 +170,7 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * The enumerated type whose elements represent a set of constants used to
 	 * define the bolts that can be enchanted.

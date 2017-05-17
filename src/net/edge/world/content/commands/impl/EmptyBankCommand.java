@@ -1,8 +1,8 @@
 package net.edge.world.content.commands.impl;
 
-import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.commands.Command;
 import net.edge.world.content.commands.CommandSignature;
+import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.dialogue.impl.StatementDialogue;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.Rights;

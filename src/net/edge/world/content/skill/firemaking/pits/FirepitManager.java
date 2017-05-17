@@ -1,10 +1,10 @@
 package net.edge.world.content.skill.firemaking.pits;
 
 import net.edge.world.World;
+import net.edge.world.content.skill.firemaking.FireLighter;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.content.skill.firemaking.FireLighter;
 
 /**
  * The manager class for the fire pit event objects.

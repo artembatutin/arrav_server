@@ -1,10 +1,7 @@
 package net.edge.world.content.commands.impl;
 
 import net.edge.utils.TextUtils;
-import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
-import net.edge.world.content.clanchat.ClanChat;
-import net.edge.world.content.clanchat.ClanMember;
 import net.edge.world.content.commands.Command;
 import net.edge.world.content.commands.CommandSignature;
 import net.edge.world.model.node.entity.player.Player;
@@ -15,32 +12,7 @@ public final class CameraCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		String[] names = {
-				"Hailikor",
-				"Ybirewiel",
-				"Hairebard",
-				"Rhoethiel",
-				"Glardoseth",
-				"Forecien",
-				"Thendarid",
-				"Onoadia",
-				"Elaocan",
-				"Chorewen",
-				"Asterran",
-				"Nearien",
-				"Adirag",
-				"Galaleveth",
-				"Laroaa",
-				"Ulendamwen",
-				"Sevedribaen",
-				"Uneiven",
-				"Sirelith",
-				"Afang",
-				"Qoik",
-				"Fien",
-				"Drohanwan",
-				"Sdaaga"
-		};
+		String[] names = {"Hailikor", "Ybirewiel", "Hairebard", "Rhoethiel", "Glardoseth", "Forecien", "Thendarid", "Onoadia", "Elaocan", "Chorewen", "Asterran", "Nearien", "Adirag", "Galaleveth", "Laroaa", "Ulendamwen", "Sevedribaen", "Uneiven", "Sirelith", "Afang", "Qoik", "Fien", "Drohanwan", "Sdaaga"};
 		for(String usr : names) {
 			Player play = new Player(TextUtils.nameToHash(usr));
 			play.setUsername(usr);
@@ -86,7 +58,7 @@ public final class CameraCommand implements Command {
 		//System.out.println(player.getPosition().getLocalX() + " - " + player.getPosition().getLocalY());
 		//player.getMovementQueue().smartWalk(player.getPosition().move(0, 10));
 		/*if(cmd[0].equals("camera")) {
-	            player.getMessages().sendResetCameraPosition();
+		        player.getMessages().sendResetCameraPosition();
 				return;
 			}
 			player.getMessages().sendResetCameraPosition();

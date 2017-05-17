@@ -110,7 +110,6 @@ public final class JsonSaver {
 	
 	/**
 	 * Gets the json array.
-	 * @return	the json array.
 	 */
 	public JsonArray getJsonArray() {
 		return array;

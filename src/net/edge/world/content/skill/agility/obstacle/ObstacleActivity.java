@@ -1,11 +1,11 @@
 package net.edge.world.content.skill.agility.obstacle;
 
+import net.edge.task.Task;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Animation;
+import net.edge.world.model.node.entity.move.ForcedMovement;
 import net.edge.world.model.node.entity.move.ForcedMovementManager;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.move.ForcedMovement;
-import net.edge.task.Task;
 
 /**
  * Holds functionality for obstacle activity's when trying to cross them.
@@ -128,15 +128,9 @@ public abstract class ObstacleActivity {
 	public void onCancel(Player player) {
 		
 	}
-
+	
 	/**
 	 * Executes an {@Link ForcedMovement} action before instantiation of any further action.
-	 * @param player
-	 * @param beggining_position
-	 * @param ending_position
-	 * @param first_speed
-	 * @param second_speed
-	 * @param animation_id
 	 */
 	public static void executeForcedMovementAction(Player player, Position beggining_position, Position ending_position, int first_speed, int second_speed, Animation animation_id) {
 		player.setForcedMovement(new ForcedMovement(player));
@@ -149,7 +143,7 @@ public abstract class ObstacleActivity {
 		movement.setAnimation(animation_id);
 		ForcedMovementManager.submit(player, movement);
 	}
-
+	
 	/**
 	 * @return {@link #start}.
 	 */

@@ -1,13 +1,13 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
 import net.edge.utils.rand.RandomUtils;
-import net.edge.world.content.skill.Skills;
-import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
-import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
+import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.summoning.Summoning;
 import net.edge.world.content.skill.summoning.familiar.Familiar;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
+import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
+import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.specials.SummoningData;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
@@ -28,7 +28,6 @@ public final class GraniteCrab extends Familiar {
 	public GraniteCrab() {
 		super(SummoningData.GRANITE_CRAB);
 	}
-	
 	
 	private final ForagerPassiveAbility ability = new ForagerPassiveAbility(ItemIdentifiers.COD, ItemIdentifiers.PIKE, ItemIdentifiers.SEAWEED, ItemIdentifiers.OYSTER) {
 		@Override
@@ -68,9 +67,5 @@ public final class GraniteCrab extends Familiar {
 		}
 	}
 	
-	private final String[] RANDOM_DIALOGUE = new String[] {
-			"Can I have some fish?",
-			"Rock fish now, please?",
-			"When can we go fishing? I want rock fish."
-	};
+	private final String[] RANDOM_DIALOGUE = new String[]{"Can I have some fish?", "Rock fish now, please?", "When can we go fishing? I want rock fish."};
 }

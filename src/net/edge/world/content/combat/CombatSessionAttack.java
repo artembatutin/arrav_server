@@ -2,26 +2,26 @@ package net.edge.world.content.combat;
 
 import net.edge.Server;
 import net.edge.task.LinkedTaskSequence;
+import net.edge.task.Task;
 import net.edge.utils.rand.RandomUtils;
+import net.edge.world.World;
+import net.edge.world.content.combat.ranged.CombatRangedAmmoDefinition;
+import net.edge.world.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
 import net.edge.world.content.container.impl.Equipment;
 import net.edge.world.content.skill.Skills;
+import net.edge.world.content.skill.prayer.Prayer;
+import net.edge.world.content.skill.summoning.Summoning;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.NodeType;
+import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Graphic;
+import net.edge.world.model.node.entity.model.Hit;
 import net.edge.world.model.node.entity.model.Projectile;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemNode;
 import net.edge.world.model.node.region.Region;
-import net.edge.world.World;
-import net.edge.world.content.combat.ranged.CombatRangedAmmoDefinition;
-import net.edge.world.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
-import net.edge.world.content.skill.prayer.Prayer;
-import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.model.Hit;
-import net.edge.task.Task;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -296,12 +296,12 @@ public final class CombatSessionAttack extends Task {
 			}
 
 			//SOULSPLIT
-			if (attacker.isPlayer() && Prayer.isActivated(attacker.toPlayer(), Prayer.SOUL_SPLIT) && data.isAccurate()) {
+			if(attacker.isPlayer() && Prayer.isActivated(attacker.toPlayer(), Prayer.SOUL_SPLIT) && data.isAccurate()) {
 				new Projectile(attacker, victim, 2263, 44, 0, 11, 7, 0).sendProjectile();
 
 				LinkedTaskSequence seq = new LinkedTaskSequence();
 				seq.connect(1, () -> {
-					if (attacker.isDead() || victim.isDead()) {
+					if(attacker.isDead() || victim.isDead()) {
 						seq.cancel();
 						return;
 					}

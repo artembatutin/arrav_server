@@ -20,17 +20,17 @@ public enum ForcedMovementDirection {
 	SOUTH_EAST(5),
 	SOUTH_WEST(6),
 	NORTH_WEST(7);
-
+	
 	/**
 	 * Caches our enum values.
 	 */
 	private static final ImmutableSet<ForcedMovementDirection> VALUES = Sets.immutableEnumSet(EnumSet.allOf(ForcedMovementDirection.class));
-
+	
 	/**
 	 * The value of this viewpoint.
 	 */
 	private final int value;
-
+	
 	/**
 	 * Constructs a new {@link ForcedMovementDirection}.
 	 * @param value The value of this viewpoint.
@@ -38,7 +38,7 @@ public enum ForcedMovementDirection {
 	ForcedMovementDirection(int value) {
 		this.value = value;
 	}
-
+	
 	/**
 	 * Gets the direction identifier.
 	 * @return direction's value.
@@ -46,7 +46,7 @@ public enum ForcedMovementDirection {
 	public int getId() {
 		return value;
 	}
-
+	
 	/**
 	 * Checks if the identifier matches the value of the viewpoint.
 	 * @param identifier The identifier to check for matches.
@@ -55,7 +55,7 @@ public enum ForcedMovementDirection {
 	public static Optional<ForcedMovementDirection> getDirection(int identifier) {
 		return VALUES.stream().filter(direction -> direction.value == identifier).findAny();
 	}
-
+	
 	/**
 	 * Gets the direction for movement.
 	 * @param diffX The difference between 2 xcoordinates.

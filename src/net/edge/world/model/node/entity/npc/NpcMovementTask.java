@@ -1,15 +1,17 @@
 package net.edge.world.model.node.entity.npc;
 
+import net.edge.task.Task;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.model.locale.Boundary;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Direction;
 import net.edge.world.model.node.entity.move.path.Path;
 import net.edge.world.model.node.region.TraversalMap;
-import net.edge.world.model.locale.Position;
-import net.edge.task.Task;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * An implementation of a {@link Task} that handles randomized {@link Npc} movements.
@@ -36,25 +38,27 @@ public class NpcMovementTask extends Task {
 	
 	@Override
 	protected void execute() {
-
+		
 		//System.out.println(npcs.size());
-
+		
 		int count = RandomUtils.inclusive(npcs.size());
-
+		
 		for(int iterator = 0; iterator < npcs.size(); iterator++) {
-
+			
 			Npc npc = npcs.poll();
-
-			if(npc == null) break;
-
-			if(!npc.isActive()) break;
-
+			
+			if(npc == null)
+				break;
+			
+			if(!npc.isActive())
+				break;
+			
 			NpcMovementCoordinator move = npc.getMovementCoordinator();
-
+			
 			if(!move.isCoordinate() || npc.getCombatBuilder().isAttacking() || npc.getCombatBuilder().isBeingAttacked()) {
 				return;
 			}
-
+			
 			if(npc.getMovementQueue().isMovementDone()) {
 				if(!move.getBoundary().inside(npc.getPosition(), npc.size())) {
 					Path pathHome = World.getAStarPathFinder().find(npc, npc.getOriginalPosition());
@@ -70,19 +74,21 @@ public class NpcMovementTask extends Task {
 					boolean traversable = traverse.isTraversable(generated_random_position, boundary, dir, npc.size());
 					if(traversable) {
 						Path pathHome = World.getSimplePathFinder().find(npc, generated_random_position);
-						if(pathHome.isPossible()) npc.getMovementQueue().walk(pathHome.getMoves());
-						else break;
+						if(pathHome.isPossible())
+							npc.getMovementQueue().walk(pathHome.getMoves());
+						else
+							break;
 					}
 				}
 			}
 			npcs.offer(npc);
 		}
 	}
-
+	
 	private int randomSteps(int size) {
 		return RandomUtils.inclusive(0, size);
 	}
-
+	
 	Queue<Npc> getNpcs() {
 		return npcs;
 	}

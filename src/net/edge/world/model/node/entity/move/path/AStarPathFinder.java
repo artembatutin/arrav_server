@@ -1,8 +1,8 @@
 package net.edge.world.model.node.entity.move.path;
 
-import net.edge.world.model.node.entity.model.Direction;
 import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.EntityNode;
+import net.edge.world.model.node.entity.model.Direction;
 import net.edge.world.model.node.region.TraversalMap;
 
 import java.util.*;
@@ -74,7 +74,7 @@ public final class AStarPathFinder extends PathFinder {
 			if(position.same(target)) {
 				break;// found
 			}
-			if(count++ > 32*20+1) {
+			if(count++ > 32 * 20 + 1) {
 				//System.out.println("Taking too long 1, breaking. Avoided while-loop deadlock.");
 				break;
 			}

@@ -2,9 +2,9 @@ package net.edge.world.model.node.entity.npc;
 
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.GameConstants;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.World;
 import net.edge.world.model.locale.Location;
+import net.edge.world.model.node.entity.player.Player;
 
 import java.util.HashSet;
 import java.util.Set;

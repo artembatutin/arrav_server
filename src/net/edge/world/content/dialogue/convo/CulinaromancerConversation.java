@@ -1,17 +1,17 @@
 package net.edge.world.content.dialogue.convo;
 
-import net.edge.world.content.dialogue.impl.NpcDialogue;
-import net.edge.world.content.dialogue.impl.OptionDialogue;
-import net.edge.world.content.minigame.rfd.RFDMinigame;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
 import net.edge.world.content.dialogue.Conversation;
 import net.edge.world.content.dialogue.Expression;
+import net.edge.world.content.dialogue.impl.NpcDialogue;
+import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.dialogue.impl.PlayerDialogue;
 import net.edge.world.content.dialogue.impl.RequestItemDialogue;
 import net.edge.world.content.dialogue.test.DialogueAppender;
 import net.edge.world.content.market.MarketCounter;
 import net.edge.world.content.minigame.rfd.RFDData;
+import net.edge.world.content.minigame.rfd.RFDMinigame;
+import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.model.node.item.Item;
 
 import java.util.Optional;
 
@@ -20,16 +20,16 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public class CulinaromancerConversation implements Conversation {
-
+	
 	@Override
 	public void send(Player player, int index) {
-
+	
 	}
-
+	
 	@Override
 	public DialogueAppender dialogues(Player player) {
 		DialogueAppender ap = new DialogueAppender(player);
-
+		
 		ap.chain(new NpcDialogue(3400, Expression.MAD, "Ergh... What do you want?"));
 		ap.chain(new OptionDialogue(t -> {
 			if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
@@ -77,5 +77,5 @@ public class CulinaromancerConversation implements Conversation {
 		ap.chain(new PlayerDialogue("Nevermind."));
 		return ap;
 	}
-
+	
 }

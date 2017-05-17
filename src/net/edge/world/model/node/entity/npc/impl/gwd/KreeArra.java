@@ -2,12 +2,12 @@ package net.edge.world.model.node.entity.npc.impl.gwd;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.world.World;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.locale.SquareLocation;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.npc.NpcAggression;
 import net.edge.world.model.node.entity.npc.impl.DefaultNpc;
 import net.edge.world.model.node.entity.npc.strategy.impl.gwd.KreeArraCombatStrategy;
-import net.edge.world.model.locale.Position;
 
 import java.util.Optional;
 

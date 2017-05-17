@@ -1,19 +1,19 @@
 package net.edge.world.content.skill.agility;
 
+import net.edge.task.Task;
+import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.Skills;
+import net.edge.world.content.skill.action.SkillAction;
 import net.edge.world.content.skill.agility.obstacle.ObstacleAction;
+import net.edge.world.content.skill.agility.obstacle.ObstacleActivity;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.model.Animation;
+import net.edge.world.model.node.entity.move.ForcedMovement;
+import net.edge.world.model.node.entity.move.ForcedMovementManager;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.content.skill.SkillData;
-import net.edge.world.content.skill.action.SkillAction;
-import net.edge.world.content.skill.agility.obstacle.ObstacleActivity;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.move.ForcedMovement;
-import net.edge.world.model.node.entity.move.ForcedMovementManager;
-import net.edge.task.Task;
 
 import java.util.Optional;
 
@@ -162,7 +162,7 @@ public abstract class AgilityCourse extends SkillAction {
 
 		movement.setSecondSpeed(second_speed);
 
-		movement.setAnimation(!(animation_id instanceof Animation) ? new Animation((Integer) animation_id) : new Animation((Integer)animation_id));
+		movement.setAnimation(!(animation_id instanceof Animation) ? new Animation((Integer) animation_id) : new Animation((Integer) animation_id));
 
 		ForcedMovementManager.submit(player, movement);
 

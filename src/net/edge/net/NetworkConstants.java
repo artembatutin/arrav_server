@@ -14,12 +14,12 @@ import java.math.BigInteger;
  * @author lare96 <http://github.org/lare96>
  */
 public final class NetworkConstants {
-
+	
 	/**
 	 * The port that this server will bind to.
 	 */
 	public static final int PORT = 43594;
-
+	
 	/**
 	 * The input timeout value that determines how long a session can go without
 	 * reading data from the client in {@code SECONDS}.
@@ -36,23 +36,23 @@ public final class NetworkConstants {
 	 * The maximum amount of incoming messages per cycle.
 	 */
 	public static final int MESSAGE_LIMIT = 15;
-
+	
 	/**
 	 * The resource leak detection level when not running the server in debug
 	 * mode.
 	 */
 	static final Level RESOURCE_DETECTION = Level.DISABLED;
-
+	
 	/**
 	 * An array of the message opcodes mapped to their respective listeners.
 	 */
 	public static final InputMessageListener[] MESSAGES = new InputMessageListener[257];
-
+	
 	/**
 	 * An array of message opcodes mapped to their respective sizes.
 	 */
 	public static final int MESSAGE_SIZES[] = new int[257];
-
+	
 	/**
 	 * The {@link AttributeKey} value that is used to retrieve the session
 	 * instance from the attribute map of a {@link io.netty.channel.Channel}.

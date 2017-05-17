@@ -1,10 +1,10 @@
 package net.edge.world.content.skill.agility.obstacle.impl;
 
+import net.edge.task.Task;
 import net.edge.world.content.skill.agility.obstacle.ObstacleActivity;
 import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.task.Task;
 
 /**
  * The climbable obstacle action which will move a player from a starting position to a new height

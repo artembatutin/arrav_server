@@ -9,14 +9,14 @@ import net.edge.world.model.node.entity.player.Player;
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 final class NpcForceChatUpdateBlock extends NpcUpdateBlock {
-
+	
 	/**
 	 * Creates a new {@link NpcForceChatUpdateBlock}.
 	 */
 	NpcForceChatUpdateBlock() {
 		super(4, UpdateFlag.FORCE_CHAT);
 	}
-
+	
 	@Override
 	public int write(Player player, Npc npc, ByteMessage msg) {
 		msg.putString(npc.getForcedText());

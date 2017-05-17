@@ -5,6 +5,7 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import net.edge.net.NetworkConstants;
 import net.edge.net.PunishmentHandler;
+import net.edge.net.codec.game.GameMessageDecoder;
 import net.edge.net.codec.game.GameMessageEncoder;
 import net.edge.net.codec.login.LoginCredentialsMessage;
 import net.edge.net.codec.login.LoginResponse;
@@ -15,7 +16,6 @@ import net.edge.world.World;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.PlayerSerialization;
 import net.edge.world.model.node.entity.player.assets.Rights;
-import net.edge.net.codec.game.GameMessageDecoder;
 
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during login.

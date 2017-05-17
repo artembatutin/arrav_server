@@ -1,10 +1,10 @@
 package net.edge.world.model.node.entity.update;
 
 import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.ByteTransform;
 import net.edge.world.content.container.impl.Equipment;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.PlayerAppearance;
-import net.edge.net.codec.ByteTransform;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the updating of the appearance of {@link Player}s.

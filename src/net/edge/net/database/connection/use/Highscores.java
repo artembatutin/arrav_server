@@ -1,8 +1,8 @@
 package net.edge.net.database.connection.use;
 
 import net.edge.net.database.connection.ConnectionUse;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.net.database.pool.ConnectionPool;
+import net.edge.world.model.node.entity.player.Player;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

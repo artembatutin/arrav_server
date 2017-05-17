@@ -1,9 +1,9 @@
 package net.edge.world.content.clanchat;
 
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
 import net.edge.net.message.OutputMessages;
 import net.edge.utils.TextUtils;
+import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.model.node.entity.player.assets.Rights;
 
 /**
  * The enumerated type whose elements represent the update states

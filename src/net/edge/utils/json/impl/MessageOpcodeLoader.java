@@ -3,8 +3,8 @@ package net.edge.utils.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.net.NetworkConstants;
-import net.edge.utils.json.JsonLoader;
 import net.edge.net.message.InputMessageListener;
+import net.edge.utils.json.JsonLoader;
 
 import java.util.Arrays;
 import java.util.Objects;

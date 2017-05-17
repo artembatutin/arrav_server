@@ -40,7 +40,7 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 	 * A concurrent {@link Multiset} containing active connections.
 	 */
 	private final Multiset<String> connections = ConcurrentHashMultiset.create();
-
+	
 	@Override
 	protected boolean accept(ChannelHandlerContext ctx, InetSocketAddress remoteAddress) throws Exception {
 		String address = address(remoteAddress);

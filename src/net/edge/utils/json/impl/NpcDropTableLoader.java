@@ -3,15 +3,18 @@ package net.edge.utils.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
+import net.edge.world.model.node.entity.npc.drop.NpcDrop;
 import net.edge.world.model.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.model.node.entity.npc.drop.NpcDropManager;
-import net.edge.world.model.node.entity.npc.drop.NpcDrop;
 import net.edge.world.model.node.entity.npc.drop.NpcDropTable;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * The {@link JsonLoader} implementation that loads all npc drops.
@@ -57,7 +60,7 @@ public final class NpcDropTableLoader extends JsonLoader {
 		if(OUTPUT && writer != null) {
 			for(int i : array) {
 				if(!written.contains(i)) {
-					writer.print(i+"-");
+					writer.print(i + "-");
 				}
 			}
 		}

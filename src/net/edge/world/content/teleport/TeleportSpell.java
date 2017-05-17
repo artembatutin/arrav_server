@@ -1,13 +1,13 @@
 package net.edge.world.content.teleport;
 
 import net.edge.utils.ActionListener;
+import net.edge.world.World;
 import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.skill.Skills;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.World;
 import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Spell;
+import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
 
 import java.util.Optional;
 

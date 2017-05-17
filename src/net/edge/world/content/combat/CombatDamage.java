@@ -1,10 +1,10 @@
 package net.edge.world.content.combat;
 
+import net.edge.utils.Stopwatch;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.utils.Stopwatch;
 
 import java.util.HashMap;
 import java.util.Map;

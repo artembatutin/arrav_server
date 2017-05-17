@@ -1,7 +1,7 @@
 package net.edge.world.model.node.entity.npc.impl;
 
-import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.locale.Position;
+import net.edge.world.model.node.entity.npc.Npc;
 
 /**
  * The follower class which holds functionality for following types.

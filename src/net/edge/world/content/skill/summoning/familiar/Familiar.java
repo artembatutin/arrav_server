@@ -42,7 +42,7 @@ public abstract class Familiar extends Follower {
 	
 	/**
 	 * Constructs a new {@link Familiar}.
-	 * @param data       the summoning data.
+	 * @param data the summoning data.
 	 */
 	public Familiar(SummoningData data) {
 		super(data.getNpcId(), new Position(0, 0));

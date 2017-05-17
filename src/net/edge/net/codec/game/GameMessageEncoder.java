@@ -4,8 +4,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import net.edge.net.codec.IsaacCipher;
-import net.edge.net.message.GameMessage;
 import net.edge.net.codec.MessageType;
+import net.edge.net.message.GameMessage;
 
 /**
  * A {@link MessageToByteEncoder} implementation that encodes all {@link GameMessage}s into {@link ByteBuf}s.

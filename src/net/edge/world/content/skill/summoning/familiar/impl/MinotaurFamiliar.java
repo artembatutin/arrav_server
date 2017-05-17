@@ -18,11 +18,7 @@ import java.util.Optional;
  */
 public abstract class MinotaurFamiliar extends Familiar {
 	
-	private static final String[] RANDOM_DIALOGUE = new String[] {
-			"All this walking about is making me angry.",
-			"Can you tell me why we're not fighting yet?",
-			"Hey no-horns!"
-	};
+	private static final String[] RANDOM_DIALOGUE = new String[]{"All this walking about is making me angry.", "Can you tell me why we're not fighting yet?", "Hey no-horns!"};
 	
 	/**
 	 * Constructs a new {@link MinotaurFamiliar}.
@@ -68,7 +64,7 @@ public abstract class MinotaurFamiliar extends Familiar {
 		public BronzeMinotaur() {
 			super(SummoningData.BRONZE_MINOTAUR);
 		}
-
+		
 	}
 	
 	/**

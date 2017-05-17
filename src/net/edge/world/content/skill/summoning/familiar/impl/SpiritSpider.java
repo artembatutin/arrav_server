@@ -3,6 +3,8 @@ package net.edge.world.content.skill.summoning.familiar.impl;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
+import net.edge.world.content.skill.summoning.Summoning;
+import net.edge.world.content.skill.summoning.familiar.Familiar;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
@@ -13,8 +15,6 @@ import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemNodeStatic;
 import net.edge.world.model.node.region.Region;
-import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.content.skill.summoning.familiar.Familiar;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -36,7 +36,6 @@ public final class SpiritSpider extends Familiar {
 	public SpiritSpider() {
 		super(SummoningData.SPIRIT_SPIDER);
 	}
-	
 	
 	private final ForagerPassiveAbility ability = new ForagerPassiveAbility(RED_SPIDERS_EGGS);
 	

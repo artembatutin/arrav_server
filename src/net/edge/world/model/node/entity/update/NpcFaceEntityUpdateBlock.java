@@ -9,14 +9,14 @@ import net.edge.world.model.node.entity.player.Player;
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class NpcFaceEntityUpdateBlock extends NpcUpdateBlock {
-
+	
 	/**
 	 * Creates a new {@link NpcFaceEntityUpdateBlock}.
 	 */
 	public NpcFaceEntityUpdateBlock() {
 		super(0x10, UpdateFlag.FACE_ENTITY);
 	}
-
+	
 	@Override
 	public int write(Player player, Npc mob, ByteMessage msg) {
 		msg.putShort(mob.getFaceIndex());

@@ -2,67 +2,67 @@ package net.edge.world.model.node.entity.player;
 
 import net.edge.Server;
 import net.edge.net.codec.ByteMessage;
+import net.edge.net.message.OutputMessages;
+import net.edge.net.session.GameSession;
+import net.edge.task.Task;
 import net.edge.utils.*;
 import net.edge.world.GameConstants;
+import net.edge.world.World;
 import net.edge.world.content.PlayerPanel;
+import net.edge.world.content.TabInterface;
+import net.edge.world.content.ViewingOrb;
 import net.edge.world.content.clanchat.ClanMember;
+import net.edge.world.content.combat.Combat;
 import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.effect.CombatEffect;
 import net.edge.world.content.combat.effect.CombatEffectTask;
-import net.edge.world.content.combat.weapon.FightType;
-import net.edge.world.content.container.impl.Equipment;
-import net.edge.world.content.container.impl.Inventory;
-import net.edge.world.content.dialogue.impl.OptionDialogue;
-import net.edge.world.content.item.PotionConsumable;
-import net.edge.world.content.minigame.MinigameHandler;
-import net.edge.world.content.pets.Pet;
-import net.edge.world.content.pets.PetManager;
-import net.edge.world.content.scene.impl.IntroductionCutscene;
-import net.edge.world.content.skill.Skill;
-import net.edge.world.content.skill.Skills;
-import net.edge.world.content.skill.slayer.Slayer;
-import net.edge.world.content.teleport.impl.DefaultTeleportSpell;
-import net.edge.world.model.node.NodeType;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.player.assets.*;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.World;
-import net.edge.world.content.TabInterface;
-import net.edge.world.content.ViewingOrb;
-import net.edge.world.content.combat.Combat;
 import net.edge.world.content.combat.effect.CombatPoisonEffect;
 import net.edge.world.content.combat.magic.CombatSpell;
 import net.edge.world.content.combat.magic.CombatWeaken;
 import net.edge.world.content.combat.ranged.CombatRangedDetails;
 import net.edge.world.content.combat.special.CombatSpecial;
 import net.edge.world.content.combat.strategy.CombatStrategy;
+import net.edge.world.content.combat.weapon.FightType;
 import net.edge.world.content.combat.weapon.WeaponAnimation;
 import net.edge.world.content.combat.weapon.WeaponInterface;
 import net.edge.world.content.commands.impl.UpdateCommand;
+import net.edge.world.content.container.impl.Equipment;
+import net.edge.world.content.container.impl.Inventory;
 import net.edge.world.content.container.impl.bank.Bank;
 import net.edge.world.content.dialogue.DialogueBuilder;
+import net.edge.world.content.dialogue.impl.OptionDialogue;
+import net.edge.world.content.item.PotionConsumable;
 import net.edge.world.content.market.MarketShop;
 import net.edge.world.content.minigame.Minigame;
 import net.edge.world.content.minigame.MinigameContainer;
+import net.edge.world.content.minigame.MinigameHandler;
+import net.edge.world.content.pets.Pet;
+import net.edge.world.content.pets.PetManager;
 import net.edge.world.content.quest.QuestManager;
+import net.edge.world.content.scene.impl.IntroductionCutscene;
+import net.edge.world.content.skill.Skill;
+import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.action.SkillActionTask;
 import net.edge.world.content.skill.agility.AgilityCourseBonus;
 import net.edge.world.content.skill.prayer.Prayer;
+import net.edge.world.content.skill.slayer.Slayer;
 import net.edge.world.content.skill.smithing.Smelting;
 import net.edge.world.content.skill.summoning.Summoning;
 import net.edge.world.content.skill.summoning.familiar.Familiar;
+import net.edge.world.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.world.model.locale.Location;
 import net.edge.world.model.locale.Position;
+import net.edge.world.model.node.NodeType;
 import net.edge.world.model.node.entity.EntityNode;
+import net.edge.world.model.node.entity.model.Graphic;
 import net.edge.world.model.node.entity.model.Hit;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.npc.NpcAggression;
 import net.edge.world.model.node.entity.npc.impl.gwd.GodwarsFaction;
+import net.edge.world.model.node.entity.player.assets.*;
+import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.model.node.entity.update.UpdateFlag;
-import net.edge.net.message.OutputMessages;
-import net.edge.net.session.GameSession;
-import net.edge.task.Task;
+import net.edge.world.model.node.item.Item;
 
 import java.util.*;
 import java.util.function.Function;
@@ -92,12 +92,12 @@ public final class Player extends EntityNode {
 	 * The logger that will print important information.
 	 */
 	private static Logger logger = LoggerUtils.getLogger(Player.class);
-
+	
 	/**
 	 * Determines if this player is playing in nightmare mode.
 	 */
 	private boolean nightmareMode;
-
+	
 	/**
 	 * The hash collection of the local players.
 	 */
@@ -966,7 +966,7 @@ public final class Player extends EntityNode {
 	public String getFormatUsername() {
 		return TextUtils.capitalize(username);
 	}
-
+	
 	/**
 	 * Determines whether this player is in nightmare mode.
 	 * @return {@link #nightmareMode}.
@@ -974,13 +974,14 @@ public final class Player extends EntityNode {
 	public boolean isNightmareMode() {
 		return nightmareMode;
 	}
-
+	
 	/**
 	 * Sets the {@link #nightmareMode} to true.
 	 */
 	public void setNightmareMode() {
 		this.nightmareMode = true;
 	}
+	
 	/**
 	 * Gets the hash collection of the local players.
 	 * @return the local players.

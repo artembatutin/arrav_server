@@ -3,8 +3,8 @@ package net.edge.world.content.dialogue;
 import com.google.common.collect.Iterables;
 import net.edge.utils.ActionListener;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.content.dialogue.test.DialogueAppender;
+import net.edge.world.model.node.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;

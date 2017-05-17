@@ -1,9 +1,9 @@
 package net.edge.net.message.impl;
 
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager.ActivityType;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.message.InputMessageListener;
+import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.model.node.entity.player.assets.activity.ActivityManager.ActivityType;
 
 /**
  * The message sent from the client when the player clicks on the 'Click this to

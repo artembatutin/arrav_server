@@ -1,14 +1,12 @@
 package net.edge.world.model.node.entity.npc.drop;
 
+import net.edge.utils.rand.Chance;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.model.node.item.Item;
-import net.edge.utils.rand.Chance;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static net.edge.utils.rand.Chance.EXTREMELY_RARE;
-import static net.edge.utils.rand.Chance.RARE;
-import static net.edge.utils.rand.Chance.VERY_RARE;
+import static net.edge.utils.rand.Chance.*;
 
 /**
  * A model representing an item within a rational item table that can be dropped.
@@ -114,16 +112,13 @@ public final class NpcDrop {
 	
 	@Override
 	public boolean equals(Object o) {
-		if (o == this)
+		if(o == this)
 			return true;
-		if (!(o instanceof NpcDrop)) {
+		if(!(o instanceof NpcDrop)) {
 			return false;
 		}
 		NpcDrop drop = (NpcDrop) o;
-		return drop.getId() == getId() &&
-				drop.getMinimum() == getMinimum() &&
-				drop.getMaximum() == getMaximum() &&
-				drop.getChance() == getChance();
+		return drop.getId() == getId() && drop.getMinimum() == getMinimum() && drop.getMaximum() == getMaximum() && drop.getChance() == getChance();
 	}
 	
 	@Override

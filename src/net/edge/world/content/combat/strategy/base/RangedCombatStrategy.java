@@ -27,15 +27,15 @@ import net.edge.world.model.node.item.ItemIdentifiers;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class RangedCombatStrategy implements CombatStrategy {
-
+	
 	@Override
 	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
 		if(character.isNpc()) {
 			return true;
 		}
-
+		
 		Player player = character.toPlayer();
-
+		
 		if(!MinigameHandler.execute(player, m -> m.canHit(player, victim, CombatType.RANGED))) {
 			return false;
 		}
@@ -47,33 +47,33 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		player.getCombatBuilder().setCombatType(CombatType.RANGED);
 		return true;
 	}
-
+	
 	@Override
 	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
 		if(character.isNpc()) {
 			Npc npc = character.toNpc();
 			character.animation(new Animation(npc.getDefinition().getAttackAnimation()));
-
+			
 			CombatRangedAmmoDefinition ammo = prepareAmmo(npc.getId());
-
+			
 			if(ammo.getGraphic().getId() != 0)
 				character.graphic(ammo.getGraphic());
-
+			
 			new Projectile(character, victim, ammo.getProjectile(), ammo.getDelay(), ammo.getSpeed(), ammo.getStartHeight(), ammo.getEndHeight(), 0).sendProjectile();
 			return new CombatSessionData(character, victim, 1, CombatType.RANGED, true);
 		}
-
+		
 		Player player = character.toPlayer();
-
+		
 		CombatRangedWeapon weapon = player.getRangedDetails().getWeapon().get();
-
+		
 		CombatRangedAmmo ammo = weapon.getAmmunition();
-
+		
 		if(!player.isSpecialActivated()) {
 			if(!player.isVisible()) {
 				return new CombatSessionData(character, victim, 1, CombatType.RANGED, true);
 			}
-
+			
 			if(weapon.getWeapon() == ItemIdentifiers.DARK_BOW) {
 				new Projectile(character, victim, ammo.getDefinition().getProjectile(), 64, 36, 40, 31, 0).sendProjectile();
 			} else {
@@ -81,24 +81,24 @@ public final class RangedCombatStrategy implements CombatStrategy {
 					new Projectile(character, victim, ammo.getDefinition().getProjectile(), ammo.getDefinition().getDelay(), ammo.getDefinition().getSpeed(), ammo.getDefinition().getStartHeight(), ammo.getDefinition().getEndHeight(), 0).sendProjectile();
 				}
 			}
-
+			
 		}
 		startAnimation(player);
 		if(ammo.getDefinition().getGraphic(player).getId() != 0)
 			player.graphic(ammo.getDefinition().getGraphic(player));
-
+		
 		CombatSessionData data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatSessionData(character, victim, 1, CombatType.RANGED, true));
 		
 		decrementAmmo(player, weapon, ammo);
 		
 		return data;
 	}
-
+	
 	@Override
 	public int attackDelay(EntityNode character) {
 		return character.isPlayer() ? character.toPlayer().getRangedDetails().delay() : character.getAttackSpeed();
 	}
-
+	
 	@Override
 	public int attackDistance(EntityNode character) {
 		if(character.isNpc())
@@ -106,12 +106,12 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		Player player = (Player) character;
 		return Combat.getRangedDistance(player.getWeapon()) + (player.getFightType().getStyle() == FightStyle.DEFENSIVE ? 2 : 0);
 	}
-
+	
 	@Override
 	public int[] getNpcs() {
 		return new int[]{6276, 6256, 6220, 688, 1183, 8781, 8776};
 	}
-
+	
 	private void startAnimation(Player player) {
 		if(player.getWeaponAnimation() != null) {
 			player.animation(new Animation(player.getWeaponAnimation().getAttacking()[player.getFightType().getStyle().ordinal()], AnimationPriority.HIGH));
@@ -119,7 +119,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 			player.animation(new Animation(player.getFightType().getAnimation(), Animation.AnimationPriority.HIGH));
 		}
 	}
-
+	
 	private CombatRangedAmmoDefinition prepareAmmo(int id) {
 		switch(id) {
 			case 8776:
@@ -136,42 +136,42 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	private boolean prerequisites(Player player) {
 		return player.getRangedDetails().determine();
 	}
-
+	
 	private void decrementAmmo(Player player, CombatRangedWeapon weapon, CombatRangedAmmo ammo) {
 		if(weapon.getType().isSpecialBow()) {
 			return;
 		}
-
+		
 		Item item = ammo.getItem();
-
+		
 		if(item == null) {
 			throw new IllegalStateException("Player doesn't have ammunition at this stage which is not permissible.");
 		}
 		
 		item.decrementAmount();
-
+		
 		//Item cape = player.getEquipment().get(Equipment.CAPE_SLOT);
 		//if(cape != null && cape.getId() == ItemIdentifiers.AVAS_ACCUMULATOR && gen.inclusive(4) == 1) {
 		//	item.incrementAmount();
 		//}
-
+		
 		int slot = weapon.getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
-
+		
 		if(item.getAmount() == 0) {
 			player.message("That was your last piece of ammunition!");
-
+			
 			player.getEquipment().set(slot, null, true);
-
+			
 			if(slot == Equipment.WEAPON_SLOT) {
 				WeaponInterface.execute(player, null);
 				WeaponAnimation.execute(player, new Item(0));
 			}
 		}
-
+		
 		if(slot == Equipment.WEAPON_SLOT) {
 			player.getFlags().flag(UpdateFlag.APPEARANCE);
 		}
-
+		
 		player.getEquipment().refresh(player, Equipment.EQUIPMENT_DISPLAY_ID);
 	}
 }

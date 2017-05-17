@@ -1,21 +1,21 @@
 package net.edge.world.model.node.entity.npc.strategy.impl.gwd;
 
+import net.edge.task.Task;
 import net.edge.utils.rand.RandomUtils;
+import net.edge.world.World;
+import net.edge.world.content.combat.CombatSessionData;
 import net.edge.world.content.combat.CombatType;
+import net.edge.world.content.combat.magic.CombatNormalSpell;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.NodeState;
+import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Graphic;
 import net.edge.world.model.node.entity.model.Projectile;
+import net.edge.world.model.node.entity.npc.impl.gwd.KreeArra;
 import net.edge.world.model.node.entity.npc.strategy.DynamicCombatStrategy;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.World;
-import net.edge.world.content.combat.CombatSessionData;
-import net.edge.world.content.combat.magic.CombatNormalSpell;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.npc.impl.gwd.KreeArra;
-import net.edge.task.Task;
 
 import java.util.List;
 import java.util.Optional;

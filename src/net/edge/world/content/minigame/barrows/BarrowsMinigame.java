@@ -1,25 +1,25 @@
 package net.edge.world.content.minigame.barrows;
 
 import net.edge.utils.rand.RandomUtils;
+import net.edge.world.World;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.dialogue.impl.StatementDialogue;
 import net.edge.world.content.item.FoodConsumable;
 import net.edge.world.content.item.PotionConsumable;
 import net.edge.world.content.minigame.Minigame;
 import net.edge.world.content.teleport.impl.DefaultTeleportSpell;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.npc.Npc;
+import net.edge.world.model.node.entity.npc.drop.NpcDrop;
 import net.edge.world.model.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.model.node.entity.npc.drop.NpcDropManager;
+import net.edge.world.model.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemNode;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.World;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.npc.drop.NpcDrop;
-import net.edge.world.model.node.entity.npc.drop.NpcDropTable;
 
 import java.util.ArrayList;
 import java.util.List;

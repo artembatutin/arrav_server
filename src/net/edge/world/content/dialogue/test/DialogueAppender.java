@@ -1,11 +1,11 @@
 package net.edge.world.content.dialogue.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.edge.world.content.dialogue.Dialogue;
 import net.edge.world.content.dialogue.DialogueBuilder;
 import net.edge.world.model.node.entity.player.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the dialogue appender class which is a more functional way of
@@ -31,7 +31,7 @@ public final class DialogueAppender {
 	
 	/**
 	 * Constructs a new {@link DialogueAppender}.
-	 * @param player	{@link #player}.
+	 * @param player {@link #player}.
 	 */
 	public DialogueAppender(Player player) {
 		this.player = player;
@@ -40,7 +40,7 @@ public final class DialogueAppender {
 	
 	/**
 	 * Chains a dialogue to the underlying {@code dialogues} list.
-	 * @param dialogue	the dialogue to add to the chain.
+	 * @param dialogue the dialogue to add to the chain.
 	 * @return an instance of this class for chaining.
 	 */
 	public DialogueAppender chain(Dialogue dialogue) {

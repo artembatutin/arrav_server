@@ -1,5 +1,6 @@
 package net.edge.world.model.node.entity.npc.impl.corp;
 
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.content.skill.summoning.familiar.Familiar;
 import net.edge.world.model.locale.Position;
@@ -8,7 +9,6 @@ import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.npc.strategy.impl.corp.CorporealBeastCombatStrategy;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.task.Task;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -47,7 +47,7 @@ public final class CorporealBeast extends Npc {
 		if(!darkEnergyCore.isDead() && darkEnergyCore.getState() == NodeState.ACTIVE) {
 			darkEnergyCore.appendDeath();
 		}
-
+		
 		this.task.ifPresent(t -> {
 			t.setRunning(false);
 			task = Optional.empty();
@@ -98,7 +98,7 @@ public final class CorporealBeast extends Npc {
 	public DarkEnergyCore getDarkEnergyCore() {
 		return darkEnergyCore;
 	}
-
+	
 	/**
 	 * The task which is responsible for summoning dark energy cores and replenishing
 	 * the corporeal beast when there are no players in the room anymore.

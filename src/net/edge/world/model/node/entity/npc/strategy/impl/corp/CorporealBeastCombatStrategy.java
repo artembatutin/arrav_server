@@ -7,8 +7,10 @@ import net.edge.world.World;
 import net.edge.world.content.combat.CombatSessionData;
 import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.magic.CombatNormalSpell;
+import net.edge.world.content.combat.weapon.WeaponInterface;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.model.locale.Boundary;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.model.Animation;
@@ -19,8 +21,6 @@ import net.edge.world.model.node.entity.npc.impl.corp.CorporealBeast;
 import net.edge.world.model.node.entity.npc.strategy.DynamicCombatStrategy;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.combat.weapon.WeaponInterface;
-import net.edge.world.model.locale.Position;
 
 import java.util.Arrays;
 import java.util.List;
@@ -225,14 +225,14 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 
 	private CombatSessionData type(EntityNode victim, CombatType type, List<Player> players) {
 		switch(type) {
-		case MELEE:
-			return melee(victim, players);
-		case RANGED:
-			return ranged(victim, players);
-		case MAGIC:
-			return magic(victim, players);
-		default:
-			return magic(victim, players);
+			case MELEE:
+				return melee(victim, players);
+			case RANGED:
+				return ranged(victim, players);
+			case MAGIC:
+				return magic(victim, players);
+			default:
+				return magic(victim, players);
 		}
 	}
 

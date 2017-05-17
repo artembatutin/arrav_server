@@ -3,10 +3,10 @@ package net.edge.utils.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
-import net.edge.world.model.node.object.ObjectDirection;
-import net.edge.world.model.node.object.ObjectNode;
 import net.edge.world.World;
 import net.edge.world.model.locale.Position;
+import net.edge.world.model.node.object.ObjectDirection;
+import net.edge.world.model.node.object.ObjectNode;
 import net.edge.world.model.node.object.ObjectType;
 
 import java.util.Objects;

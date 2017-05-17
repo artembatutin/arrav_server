@@ -2,16 +2,16 @@ package net.edge.world.content.skill.hunter.trap.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.world.content.skill.Skills;
+import net.edge.task.Task;
+import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
+import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.hunter.trap.Trap;
 import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.task.Task;
-import net.edge.utils.rand.RandomUtils;
 
 import java.util.EnumSet;
 import java.util.Optional;

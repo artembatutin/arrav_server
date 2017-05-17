@@ -1,9 +1,9 @@
 package net.edge.world.content.item;
 
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.task.Task;
 
 import java.util.function.Consumer;
 

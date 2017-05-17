@@ -1,8 +1,8 @@
 package net.edge.world.content.skill.summoning.familiar.ability;
 
+import net.edge.world.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.skill.summoning.familiar.FamiliarContainer;
 
 /**
  * Holds functionality for the forager ability.

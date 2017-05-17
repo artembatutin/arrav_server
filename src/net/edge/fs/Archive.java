@@ -1,9 +1,9 @@
 package net.edge.fs;
 
 import com.google.common.base.Preconditions;
-import net.edge.utils.TextUtils;
 import net.edge.utils.ByteBufferUtil;
 import net.edge.utils.CompressionUtil;
+import net.edge.utils.TextUtils;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

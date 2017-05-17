@@ -2,6 +2,7 @@ package net.edge.world.model.node.entity.npc.drop;
 
 import net.edge.utils.log.Log;
 import net.edge.utils.log.impl.DropLog;
+import net.edge.utils.rand.Chance;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.GameConstants;
 import net.edge.world.World;
@@ -9,7 +10,6 @@ import net.edge.world.content.container.impl.Equipment;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.utils.rand.Chance;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -47,7 +47,7 @@ public final class NpcDropTable {
 	 * is not a static implementation meaning that calling this multiple times
 	 * will return a different array of items.
 	 * @param player the player that these calculations are being performed for.
-	 * @param npc	 the npc that was killed.
+	 * @param npc    the npc that was killed.
 	 * @return the array of items that were calculated.
 	 */
 	public List<Item> toItems(Player player, Npc victim) {

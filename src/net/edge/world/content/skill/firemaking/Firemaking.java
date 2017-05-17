@@ -1,5 +1,6 @@
 package net.edge.world.content.skill.firemaking;
 
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.Skills;
@@ -11,7 +12,6 @@ import net.edge.world.model.node.entity.model.Direction;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.object.ObjectType;
-import net.edge.task.Task;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;

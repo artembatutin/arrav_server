@@ -7,7 +7,6 @@ import net.edge.world.content.skill.Skill;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.content.skill.summoning.familiar.impl.SpiritTzKih;
 
 public final class TzKihCombatStrategy implements CombatStrategy {
 

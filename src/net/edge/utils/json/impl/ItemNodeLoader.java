@@ -4,11 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
 import net.edge.world.World;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.item.Item;
+import net.edge.world.model.node.item.ItemNodeStatic;
 import net.edge.world.model.node.item.ItemPolicy;
 import net.edge.world.model.node.region.Region;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.item.ItemNodeStatic;
 
 import java.util.Objects;
 

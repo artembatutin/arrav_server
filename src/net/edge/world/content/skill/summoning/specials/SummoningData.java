@@ -37,7 +37,7 @@ public enum SummoningData {
 	/**
 	 * Represents a spirit mosquito familiar.
 	 */
-	SPIRIT_MOSQUITO(5,12778, 17, 46.5, 7331, 0.5, 2, Charm.GOLD, 12, new Item(12158), new Item(12155), new Item(6319), new Item(12183, 1)),
+	SPIRIT_MOSQUITO(5, 12778, 17, 46.5, 7331, 0.5, 2, Charm.GOLD, 12, new Item(12158), new Item(12155), new Item(6319), new Item(12183, 1)),
 	
 	/**
 	 * Represents a desrrt wyrm familiar.
@@ -87,7 +87,7 @@ public enum SummoningData {
 	/**
 	 * Represents a beaver familiar.
 	 */
-	BEAVER(15, 12021, 33, 57.6, 6808, 0.7, 4, Charm.GREEN, 27,new Item(12159), new Item(12155), new Item(1519), new Item(12183, 72)),
+	BEAVER(15, 12021, 33, 57.6, 6808, 0.7, 4, Charm.GREEN, 27, new Item(12159), new Item(12155), new Item(1519), new Item(12183, 72)),
 	
 	/**
 	 * Represents a void ravager familiar.
@@ -395,7 +395,7 @@ public enum SummoningData {
 	//STEEL_TITAN_POUCH(76, 12790, 99, 435.2, 7343, 4.9, 10, new Item(12160), new Item(1119), new Item(12155), new Item(12183, 178));
 	
 	/**
-	 *  The slot id.
+	 * The slot id.
 	 */
 	private final int slot;
 	
@@ -446,15 +446,15 @@ public enum SummoningData {
 	
 	/**
 	 * Constructs a new {@code SummoningData} {@code Object}.
-	 * @param pouchId The pouch item id.
-	 * @param levelRequired The level required to create.
+	 * @param pouchId          The pouch item id.
+	 * @param levelRequired    The level required to create.
 	 * @param createExperience The experience gained when creating a pouch.
-	 * @param npcId The familiar's NPC id.
+	 * @param npcId            The familiar's NPC id.
 	 * @param summonExperience The experience gained when summoning.
-	 * @param summonCost The amount of summoning points to drain when summoned.
-	 * @param items The items required to create this familiar.
+	 * @param summonCost       The amount of summoning points to drain when summoned.
+	 * @param items            The items required to create this familiar.
 	 */
-	SummoningData(int slot, int pouchId, int levelRequired, double createExperience, int npcId, double summonExperience, int summonCost, Charm charm, int life, Item...items) {
+	SummoningData(int slot, int pouchId, int levelRequired, double createExperience, int npcId, double summonExperience, int summonCost, Charm charm, int life, Item... items) {
 		this.slot = slot;
 		this.pouchId = pouchId;
 		this.levelRequired = levelRequired;

@@ -2,9 +2,9 @@ package net.edge.world.content.dialogue.impl;
 
 import net.edge.utils.ActionListener;
 import net.edge.world.content.dialogue.Dialogue;
-import net.edge.world.model.node.item.Item;
 import net.edge.world.content.dialogue.DialogueBuilder;
 import net.edge.world.content.dialogue.DialogueType;
+import net.edge.world.model.node.item.Item;
 
 import java.util.Optional;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
  * @author lare96 <http://github.com/lare96>
  */
 public final class GiveItemDialogue extends Dialogue {
-
+	
 	/**
 	 * The item to give to the player during this chain.
 	 */
@@ -23,7 +23,7 @@ public final class GiveItemDialogue extends Dialogue {
 	 * The action to execute when the requested item is given.
 	 */
 	private final Optional<ActionListener> action;
-
+	
 	/**
 	 * Creates a new {@link GiveItemDialogue}.
 	 * @param item the item to give to the player during this chain.
@@ -34,7 +34,7 @@ public final class GiveItemDialogue extends Dialogue {
 		this.item = item;
 		this.action = action;
 	}
-
+	
 	@Override
 	public void accept(DialogueBuilder t) {
 		if(t.getPlayer().getInventory().add(item)) {
@@ -46,7 +46,7 @@ public final class GiveItemDialogue extends Dialogue {
 			t.getPlayer().getMessages().sendChatboxString("You do not have enough space in your inventory!");
 		}
 	}
-
+	
 	@Override
 	public DialogueType type() {
 		return DialogueType.GIVE_ITEM_DIALOGUE;

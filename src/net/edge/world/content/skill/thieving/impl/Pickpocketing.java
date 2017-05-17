@@ -2,16 +2,16 @@ package net.edge.world.content.skill.thieving.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.task.Task;
 import net.edge.utils.TextUtils;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.thieving.Thieving;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Graphic;
+import net.edge.world.model.node.entity.model.Hit;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.entity.model.Hit;
-import net.edge.task.Task;
 
 import java.util.EnumSet;
 import java.util.Optional;

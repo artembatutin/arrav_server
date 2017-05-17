@@ -1,13 +1,13 @@
 package net.edge.world.model.node.region;
 
 import net.edge.utils.rand.RandomUtils;
-import net.edge.world.model.node.entity.model.Direction;
-import net.edge.world.model.node.object.ObjectDirection;
-import net.edge.world.model.node.object.ObjectNode;
 import net.edge.world.World;
 import net.edge.world.model.locale.Boundary;
 import net.edge.world.model.locale.Position;
+import net.edge.world.model.node.entity.model.Direction;
 import net.edge.world.model.node.object.ObjectDefinition;
+import net.edge.world.model.node.object.ObjectDirection;
+import net.edge.world.model.node.object.ObjectNode;
 import net.edge.world.model.node.object.ObjectType;
 
 import java.util.LinkedList;
@@ -967,8 +967,8 @@ public final class TraversalMap {
 	
 	/**
 	 * Returns a {@link Optional} {@link Position} of a random traversable tile.
-	 * @param from The position moving from.
-	 * @param size The size of the mob attempting to traverse.
+	 * @param from       The position moving from.
+	 * @param size       The size of the mob attempting to traverse.
 	 * @param exceptions The exceptions of traversable positions.
 	 * @return A random traversable position.
 	 */

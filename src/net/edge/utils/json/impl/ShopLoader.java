@@ -3,9 +3,9 @@ package net.edge.utils.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
-import net.edge.world.content.market.currency.Currency;
 import net.edge.world.content.market.MarketCounter;
 import net.edge.world.content.market.MarketShop;
+import net.edge.world.content.market.currency.Currency;
 
 import java.util.Objects;
 

@@ -45,9 +45,9 @@ class Block extends Rectangle {
 			if(edit.isPaintFloor()) {
 				if(edit.getFloor() != null) {
 					//setFloor(edit.getFloor());
-					//floor.heightmap[edit.getHeight()] = edit.getFloor().heightmap[edit.getHeight()];
-					floor.overlayFloorId[edit.getHeight()] = edit.getFloor().overlayFloorId[edit.getHeight()];
-					floor.underlayFloorId[edit.getHeight()] = edit.getFloor().underlayFloorId[edit.getHeight()];
+					floor.heightmap[edit.getHeight()] = edit.getFloor().heightmap[edit.getHeight()];
+					//floor.overlayFloorId[edit.getHeight()] = edit.getFloor().overlayFloorId[edit.getHeight()];
+					//floor.underlayFloorId[edit.getHeight()] = edit.getFloor().underlayFloorId[edit.getHeight()];
 					//floor.renderRuleFlag = edit.getFloor().renderRuleFlag;
 					//floor.setBlock(this);
 				}

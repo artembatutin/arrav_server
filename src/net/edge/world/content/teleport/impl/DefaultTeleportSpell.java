@@ -1,8 +1,9 @@
 package net.edge.world.content.teleport.impl;
 
-import net.edge.world.content.dialogue.impl.OptionDialogue;
-import net.edge.world.model.node.entity.player.assets.Spellbook;
+import net.edge.task.Task;
+import net.edge.utils.ActionListener;
 import net.edge.world.World;
+import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.teleport.TeleportSpell;
 import net.edge.world.model.locale.Location;
 import net.edge.world.model.locale.Position;
@@ -10,10 +11,9 @@ import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Graphic;
 import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.model.node.entity.player.assets.Spellbook;
 import net.edge.world.model.node.entity.player.assets.activity.ActivityManager.ActivityType;
 import net.edge.world.model.node.item.Item;
-import net.edge.task.Task;
-import net.edge.utils.ActionListener;
 
 import java.util.Optional;
 

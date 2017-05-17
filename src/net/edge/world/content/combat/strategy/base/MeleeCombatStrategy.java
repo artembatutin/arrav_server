@@ -1,14 +1,14 @@
 package net.edge.world.content.combat.strategy.base;
 
+import net.edge.world.content.combat.CombatSessionData;
 import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.strategy.CombatStrategy;
+import net.edge.world.content.combat.weapon.WeaponInterface;
 import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.content.combat.CombatSessionData;
-import net.edge.world.content.combat.weapon.WeaponInterface;
 
 public final class MeleeCombatStrategy implements CombatStrategy {
 	

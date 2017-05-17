@@ -1,18 +1,18 @@
 package net.edge.world.content.combat.strategy.npc;
 
-import net.edge.world.content.combat.CombatType;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.model.Projectile;
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.content.combat.CombatSessionData;
+import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.magic.CombatNormalSpell;
 import net.edge.world.content.combat.strategy.CombatStrategy;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.EntityNode;
+import net.edge.world.model.node.entity.model.Animation;
+import net.edge.world.model.node.entity.model.Graphic;
+import net.edge.world.model.node.entity.model.Projectile;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.task.Task;
 
 import java.util.Optional;
 

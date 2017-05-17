@@ -1,25 +1,25 @@
 package net.edge.world.model.node.entity.npc;
 
 import com.google.common.collect.ImmutableMap;
+import net.edge.world.World;
+import net.edge.world.content.combat.Combat;
 import net.edge.world.content.combat.CombatType;
+import net.edge.world.content.combat.effect.CombatPoisonEffect;
+import net.edge.world.content.combat.magic.CombatWeaken;
 import net.edge.world.content.combat.strategy.CombatStrategy;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.NodeType;
+import net.edge.world.model.node.entity.EntityNode;
+import net.edge.world.model.node.entity.model.Hit;
 import net.edge.world.model.node.entity.model.PoisonType;
+import net.edge.world.model.node.entity.npc.impl.DefaultNpc;
 import net.edge.world.model.node.entity.npc.impl.corp.CorporealBeast;
 import net.edge.world.model.node.entity.npc.impl.glacor.Glacor;
 import net.edge.world.model.node.entity.npc.impl.gwd.CommanderZilyana;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.World;
-import net.edge.world.content.combat.Combat;
-import net.edge.world.content.combat.effect.CombatPoisonEffect;
-import net.edge.world.content.combat.magic.CombatWeaken;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.model.Hit;
-import net.edge.world.model.node.entity.npc.impl.DefaultNpc;
 import net.edge.world.model.node.entity.npc.impl.gwd.GeneralGraardor;
 import net.edge.world.model.node.entity.npc.impl.gwd.KreeArra;
 import net.edge.world.model.node.entity.npc.strategy.impl.TormentedDemonCombatStrategy;
+import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.update.UpdateFlag;
 
 import java.util.Objects;
@@ -509,5 +509,5 @@ public abstract class Npc extends EntityNode {
 	public String toString() {
 		return "NPC[slot= " + getSlot() + ", name=" + getDefinition().getName() + "]";
 	}
-
+	
 }

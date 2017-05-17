@@ -10,7 +10,7 @@ import net.edge.world.model.node.object.ObjectNode;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ShootingStar extends ObjectNode {
-
+	
 	/**
 	 * The data for this shooting star.
 	 */
@@ -33,7 +33,7 @@ public final class ShootingStar extends ObjectNode {
 	
 	/**
 	 * Constructs a new {@link ShootingStar}.
-	 * @param locationData	the data to construct this star from.
+	 * @param locationData the data to construct this star from.
 	 */
 	public ShootingStar(StarLocationData locationData) {
 		super(ShootingStarData.PHASE_NINE.objectId, locationData.position.copy(), ObjectDirection.SOUTH);
@@ -43,8 +43,8 @@ public final class ShootingStar extends ObjectNode {
 	
 	/**
 	 * Attempts to mine this star.
-	 * @param player		the player attempting to mine the star.
-	 * @param objectId		the object id interacted with.
+	 * @param player   the player attempting to mine the star.
+	 * @param objectId the object id interacted with.
 	 * @return {@code true} if the player mined, {@code false} otherwise.
 	 */
 	public boolean mine(Player player, int objectId) {
@@ -58,17 +58,17 @@ public final class ShootingStar extends ObjectNode {
 	
 	/**
 	 * Attempts to prospect this star.
-	 * @param player		the player attempting to prospect the star.
-	 * @param objectId		the object id interacted with.
+	 * @param player   the player attempting to prospect the star.
+	 * @param objectId the object id interacted with.
 	 * @return {@code true} if the player prospected, {@code false} otherwise.
 	 */
 	public boolean prospect(Player player, int objectId) {
 		if(this.getId() != objectId) {
 			return false;
 		}
-	
+		
 		int percent = (int) ((float) getProducingCount() / data.stardust * 100);
-
+		
 		player.getDialogueBuilder().append(new StatementDialogue("This is a size-" + this.data.size + " star. A mining level of at least " + this.data.levelRequirement + " is required to", "mine this layer. It has been mined about " + percent + " percent of the way", "to the next layer."));
 		return true;
 	}
@@ -88,9 +88,9 @@ public final class ShootingStar extends ObjectNode {
 	public String getUsername() {
 		return username;
 	}
-
+	
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
+	
 }

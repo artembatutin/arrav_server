@@ -1,8 +1,8 @@
 package net.edge.world.content.market.exchange.personal.impl;
 
 import net.edge.world.content.market.exchange.item.ExchangeItem;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.content.market.exchange.personal.PlayerCounterSection;
+import net.edge.world.model.node.entity.player.Player;
 
 /**
  * The section offerring items from other players.

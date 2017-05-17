@@ -1,8 +1,8 @@
 package net.edge.world.model.node.entity.update;
 
 import net.edge.net.codec.ByteMessage;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.model.Hit;
+import net.edge.world.model.node.entity.player.Player;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the secondary {@link Hit} update block.

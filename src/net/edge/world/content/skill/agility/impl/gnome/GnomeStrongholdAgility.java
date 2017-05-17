@@ -24,12 +24,12 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class GnomeStrongholdAgility extends AgilityCourse {
-
+	
 	/**
 	 * The definition for this obstacle course.
 	 */
 	private final GnomeAgilityData obstacle;
-
+	
 	/**
 	 * Constructs a new {@link GnomeStrongholdAgility} course.
 	 * @param player   {@link #getPlayer()}.
@@ -38,10 +38,10 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 	 */
 	private GnomeStrongholdAgility(Player player, ObjectNode object, GnomeAgilityData obstacle) {
 		super(player, object, AgilityCourseType.GNOME_AGILITY);
-
+		
 		this.obstacle = obstacle;
 	}
-
+	
 	/**
 	 * Starts this skill action.
 	 * @param player {@link #getPlayer()}.
@@ -53,12 +53,12 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		if(!data.isPresent()) {
 			return false;
 		}
-
+		
 		GnomeStrongholdAgility agility = new GnomeStrongholdAgility(player, object, data.get());
 		agility.start();
 		return true;
 	}
-
+	
 	@Override
 	public void onSuccess() {
 		player.getAgilityBonus().addGnomeObstacle(obstacle);
@@ -75,22 +75,22 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 	public ObstacleAction obstacleAction() {
 		return obstacle.obstacleAction;
 	}
-
+	
 	@Override
 	public double experience() {
 		return obstacle.obstacleAction.activity(getPlayer()).getExperience();
 	}
-
+	
 	@Override
 	public String message() {
 		return obstacle.message;
 	}
-
+	
 	@Override
 	public Optional<String> crossedMessage() {
 		return obstacle.crossedMessage;
 	}
-
+	
 	public enum GnomeAgilityData {
 		LOG_BALANCE(new int[]{2295}, ObstacleType.LOG_BALANCE, player1 -> new Walkable(new Position(2474, 3436), new Position(2474, 3429), ObstacleType.LOG_BALANCE.getAnimation(), 1, 7)),
 		OBSTACLE_NET_UP(new int[]{2285}, ObstacleType.NETTING, player1 -> new Climbable(new Position(player1.getPosition().getX(), 3426, 0), new Position(player1.getPosition().getX(), 3424, 1), ObstacleType.NETTING.getAnimation(), 2, 1, 7.5)),
@@ -115,32 +115,32 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		RUN_ACROSS_SIGNPOST(new int[]{85584}, ObstacleType.RUN_ACROSS_SIGNPOST, player1 -> new Movable(new Position(2476, 3418, 3), new Position(2484, 3418, 3), ObstacleType.RUN_ACROSS_SIGNPOST.getAnimation(), 105, 6, 60, 25)),
 		POLE_SWING(new int[]{85532}, ObstacleType.POLE_SWING, PoleSwing::new),
 		JUMP_OVER_BARRIER(new int[]{85542}, ObstacleType.JUMP_OVER_BARRIER, player1 -> new JumpOverBarrier());
-
+		
 		/**
 		 * Caches our enum values.
 		 */
 		private static final ImmutableSet<GnomeAgilityData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(GnomeAgilityData.class));
-
+		
 		/**
 		 * The object identifications for this Obstacle.
 		 */
 		private final int[] objectIds;
-
+		
 		/**
 		 * The message sent when attempting to cross this obstacle.
 		 */
 		private final String message;
-
+		
 		/**
 		 * The message sent when successfully crossing this obstacle.
 		 */
 		private final Optional<String> crossedMessage;
-
+		
 		/**
 		 * The policy chained to this Obstacle.
 		 */
 		private final ObstacleAction obstacleAction;
-
+		
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
 		 * @param objectIds      {@link #objectId}.
@@ -154,7 +154,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 			this.crossedMessage = crossedMessage;
 			this.obstacleAction = obstacleAction;
 		}
-
+		
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
 		 * @param objectIds      {@link #objectId}.
@@ -168,7 +168,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 			this.crossedMessage = Optional.ofNullable(crossedMessage);
 			this.obstacleAction = obstacleAction;
 		}
-
+		
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
 		 * @param objectIds      {@link #objectIds}.
@@ -182,7 +182,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 			this.crossedMessage = type.getCrossedMessage();
 			this.obstacleAction = obstacleAction;
 		}
-
+		
 		/**
 		 * Gets an Optional of the matched value.
 		 * @param identifier the identifier to check for matches.

@@ -2,11 +2,11 @@ package net.edge.world.model.node.entity.update;
 
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.net.codec.ByteTransform;
 import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.move.ForcedMovement;
-import net.edge.net.codec.ByteTransform;
+import net.edge.world.model.node.entity.npc.Npc;
+import net.edge.world.model.node.entity.player.Player;
 
 /**
  * An {@link NpcUpdateBlock} implementation that handles the {@code TRANSFORM} update block.

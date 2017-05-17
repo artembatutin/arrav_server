@@ -1,11 +1,11 @@
 package net.edge.world.model.node.entity.move;
 
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.model.node.entity.update.UpdateFlag;
-import net.edge.task.Task;
 
 /**
  * Holds functionality for the 0x400 mask.

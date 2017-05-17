@@ -1,9 +1,9 @@
 package net.edge.world.content.skill.summoning.familiar.ability;
 
 import com.google.common.collect.ImmutableList;
+import net.edge.world.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.skill.summoning.familiar.FamiliarContainer;
 
 import java.util.Optional;
 

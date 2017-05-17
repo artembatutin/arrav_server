@@ -3,9 +3,9 @@ package net.edge.net.message.impl;
 import net.edge.Server;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.message.InputMessageListener;
+import net.edge.world.model.node.entity.player.Player;
 
 /**
  * The message sent from the client when a player uses magic on a ground item.

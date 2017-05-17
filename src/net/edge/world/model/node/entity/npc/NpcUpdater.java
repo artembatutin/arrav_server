@@ -6,8 +6,8 @@ import net.edge.world.World;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.model.Direction;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.update.UpdateBlockSet;
 import net.edge.world.model.node.entity.update.UpdateBlock;
+import net.edge.world.model.node.entity.update.UpdateBlockSet;
 import net.edge.world.model.node.entity.update.UpdateState;
 
 import java.util.Iterator;

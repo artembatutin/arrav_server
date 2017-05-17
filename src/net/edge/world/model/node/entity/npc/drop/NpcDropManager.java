@@ -6,7 +6,10 @@ import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemNode;
 import net.edge.world.model.node.region.Region;
 
-import java.util.*;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The static-utility class that manages all of the {@link NpcDropTable}s

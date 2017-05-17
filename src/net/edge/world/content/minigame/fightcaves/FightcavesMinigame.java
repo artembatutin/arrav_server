@@ -21,49 +21,49 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class FightcavesMinigame extends SequencedMinigame {
-
+	
 	/**
 	 * The current timer.
 	 */
 	private int timer;
-
+	
 	/**
 	 * The count of jads killed.
 	 */
 	private int killed;
-
+	
 	/**
 	 * The instance of the current fightcave minigame.
 	 */
 	private final int instance = World.getInstanceManager().closeNext();
-
+	
 	/**
 	 * The flag to determines if the fight is started.
 	 */
 	private boolean started;
-
+	
 	/**
 	 * The first jad which is set to be killed.
 	 */
 	private final Npc jad = new DefaultNpc(2745, new Position(2408, 5092));
-
+	
 	/**
 	 * The second jad if it's in advanced mode.
 	 */
 	private final Npc otherJad = new DefaultNpc(2745, new Position(2398, 5092));
-
+	
 	/**
 	 * The delay before the wave spawns.
 	 */
 	private static final int DELAY = 10;
-
+	
 	/**
 	 * Constructs a new {@link FightcavesMinigame} minigame.
 	 */
 	public FightcavesMinigame() {
 		super("FIGHT_CAVES", MinigameSafety.SAFE);
 	}
-
+	
 	public static boolean enter(Player player, ObjectNode object) {
 		if(object.getId() != 9356) {
 			return false;
@@ -75,7 +75,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			player.getMessages().sendCloseWindows();
 		}, "Kill one Jad for a Fire cape.", "I'll wait here."));
 		/*player.getDialogueChain().append(
-	            new OptionDialogue(t -> {
+		        new OptionDialogue(t -> {
 					if(t.equals(OptionType.FIRST_OPTION)) {
 						MinigameContainer.FIGHT_CAVES.onEnter(player);
 					} else if(t.equals(OptionType.SECOND_OPTION)) {
@@ -87,12 +87,12 @@ public final class FightcavesMinigame extends SequencedMinigame {
 				);*/
 		return true;
 	}
-
+	
 	@Override
 	public boolean contains(Player player) {
 		return player.getPosition().within(2366, 5119, 2431, 5057);
 	}
-
+	
 	@Override
 	public void onSequence(Player player) {
 		if(timer-- < 1 && !started) {
@@ -111,12 +111,12 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			player.getDialogueBuilder().append(new NpcDialogue(2617, "You're on your own, JalYt", "Prepare to fight for your life!"));
 		}
 	}
-
+	
 	@Override
 	public void onDeath(Player player) {
 		logout(player);
 	}
-
+	
 	@Override
 	public void onKill(Player player, EntityNode victim) {
 		if(victim.isPlayer()) {
@@ -139,17 +139,17 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			World.getNpcs().remove(otherJad);
 		}
 	}
-
+	
 	@Override
 	public int delay() {
 		return 1;
 	}
-
+	
 	@Override
 	public void login(Player player) {
 		this.logout(player);
 	}
-
+	
 	@Override
 	public void enter(Player player) {
 		World.getInstanceManager().isolate(player, instance);
@@ -158,7 +158,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		started = false;
 		killed = 0;
 	}
-
+	
 	@Override
 	public boolean canLogout(Player player) {
 		return true;
@@ -175,12 +175,12 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		player.setInstance(0);
 		World.getInstanceManager().open(instance);
 	}
-
+	
 	@Override
 	public boolean canEat(Player player, FoodConsumable food) {
 		return true;
 	}
-
+	
 	@Override
 	public boolean onFirstClickObject(Player player, ObjectNode object) {
 		if(object.getId() == 9357) {//Exit
@@ -190,7 +190,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		player.message("You cannot interact with this object in here!");
 		return false;
 	}
-
+	
 	@Override
 	public Position deathPosition(Player player) {
 		return GameConstants.STARTING_POSITION;

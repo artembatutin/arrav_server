@@ -1,12 +1,12 @@
 package net.edge.world.content.shootingstar;
 
-import java.util.concurrent.TimeUnit;
-
+import net.edge.utils.Stopwatch;
 import net.edge.utils.rand.RandomUtils;
+import net.edge.world.World;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.World;
-import net.edge.utils.Stopwatch;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * The manager class for the shooting star event objects.
@@ -69,8 +69,8 @@ public final class ShootingStarManager {
 
 	/**
 	 * Attempts to mine the shooting star.
-	 * @param player		the player attempting to mine.
-	 * @param objectId		the object id clicked to mine.
+	 * @param player   the player attempting to mine.
+	 * @param objectId the object id clicked to mine.
 	 * @return {@code true} if the object was mined, {@code false} otherwise.
 	 */
 	public boolean mine(Player player, int objectId) {

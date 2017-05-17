@@ -1,14 +1,6 @@
 package net.edge.world.content.scoreboard;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.ComparisonChain;
-
 import net.edge.utils.MutableNumber;
 import net.edge.utils.json.JsonSaver;
 import net.edge.world.World;
@@ -20,28 +12,35 @@ import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
 
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
 /**
  * The manager for the scoreboards.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ScoreboardManager {
-
+	
 	/**
 	 * The mappings of the player scoreboard.
 	 */
 	private final Map<String, PlayerScoreboardStatistic> player_scoreboard = new HashMap<>();
-
+	
 	/**
 	 * The mappings of the player rewards, where string is the users username and the mutable number
 	 * the amount of edge-tokens to be given.
 	 */
 	private final Map<String, MutableNumber> player_scoreboard_rewards = new HashMap<>();
-
+	
 	/**
 	 * Determines if the player score board has been reset.
 	 */
 	private boolean resetPlayerScoreboardStatistic = false;
-
+	
 	/**
 	 * Serializes the individual scoreboard.
 	 */
@@ -49,9 +48,9 @@ public final class ScoreboardManager {
 		JsonSaver scoreboard_statistics_saver = new JsonSaver();
 		
 		List<PlayerScoreboardStatistic> statistics = player_scoreboard.values().stream().collect(Collectors.toList());
-
+		
 		statistics.sort(new PlayerScoreboardComparator());
-
+		
 		if(statistics.size() > 10) {
 			statistics = statistics.subList(0, 11);//it's exclusive.
 		}
@@ -64,9 +63,6 @@ public final class ScoreboardManager {
 			scoreboard_statistics_saver.current().addProperty("deaths", p.getDeaths().get());
 			scoreboard_statistics_saver.split();
 		}
-		
-		
-		
 		
 		scoreboard_statistics_saver.publish("./data/json/scoreboard/individual_killstreaks.json");
 		
@@ -85,52 +81,52 @@ public final class ScoreboardManager {
 	
 	/**
 	 * Sends the scoreboard to the player.
-	 * @param player	the player to send it to.
+	 * @param player the player to send it to.
 	 */
 	public void sendPlayerScoreboardStatistics(Player player) {
 		List<PlayerScoreboardStatistic> statistics = player_scoreboard.values().stream().collect(Collectors.toList());
-
+		
 		statistics.sort(new PlayerScoreboardComparator());
-
+		
 		if(statistics.size() > 10) {
 			statistics = statistics.subList(0, 11);//it's exclusive.
 		}
-
+		
 		for(int i = 0; i < statistics.size(); i++) {
 			PlayerScoreboardStatistic stat = statistics.get(i);
 			player.getMessages().sendScoreInput(i, stat.getUsername(), stat.getKills().get(), stat.getDeaths().get(), stat.getCurrentKillstreak().get());
 		}
-
+		
 		player.getMessages().sendInterface(-12);
 	}
-
+	
 	/**
 	 * Resets all the statistics on the player scoreboard and rewards the top-3 players.
 	 */
 	public void resetPlayerScoreboard() {
 		this.setResetPlayerScoreboardStatistic(true);
-
+		
 		if(player_scoreboard.size() < 10) {
 			World.message("There weren't enough players participating in the player scoreboard event.", true);
 			World.message("The event has been extended by another week.", true);
 			return;
 		}
-
+		
 		List<PlayerScoreboardStatistic> statistics = player_scoreboard.values().stream().collect(Collectors.toList());
-
+		
 		statistics.sort(new PlayerScoreboardComparator());
-
+		
 		statistics.forEach(p -> {
 			p.getCurrentKillstreak().set(0);
 			p.getHighestKillstreak().set(0);
 			p.getKills().set(0);
 			p.getDeaths().set(0);
 		});
-
+		
 		statistics = statistics.subList(0, 3);
-
+		
 		int points = 1200;//we divide by 2, so player 1 gets 600, 2 gets 300, 3 gets 150
-
+		
 		for(PlayerScoreboardStatistic p : statistics) {
 			MutableNumber amount = player_scoreboard_rewards.putIfAbsent(p.getUsername(), new MutableNumber());
 			amount.incrementAndGet(points = points / 2);
@@ -138,7 +134,7 @@ public final class ScoreboardManager {
 		
 		player_scoreboard.clear();
 	}
-
+	
 	/**
 	 * Attempts to claim the rewards from the individual scoreboards.
 	 * @return {@code true} if the player claimed anything, {@code false} otherwise.
@@ -147,9 +143,9 @@ public final class ScoreboardManager {
 		if(npc.getId() != 13926) {
 			return false;
 		}
-
+		
 		DialogueAppender ap = new DialogueAppender(player);
-
+		
 		ap.chain(new NpcDialogue(npc.getId(), "Hello " + player.getFormatUsername() + ", what can I do for you today?"));
 		ap.chain(new OptionDialogue(t -> {
 			if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
@@ -161,12 +157,12 @@ public final class ScoreboardManager {
 			}
 		}, "Who are you?", "What is the individual scoreboard?", "Claim pending rewards."));
 		ap.chain(new PlayerDialogue("Who are you?"));
-		ap.chain(new NpcDialogue(npc.getId(), "I am the scoreboard manager, I keep track of the ", "scoreboard of Main. Once a week on every monday, I",  "reset the leaderboards and reward certain players on", "the rankings.").attachAfter(() -> ap.getBuilder().go(-3)));
+		ap.chain(new NpcDialogue(npc.getId(), "I am the scoreboard manager, I keep track of the ", "scoreboard of Main. Once a week on every monday, I", "reset the leaderboards and reward certain players on", "the rankings.").attachAfter(() -> ap.getBuilder().go(-3)));
 		ap.chain(new PlayerDialogue("What is the individual scoreboard?"));
 		ap.chain(new NpcDialogue(npc.getId(), "The individual scoreboard, is a scoreboard for individuals.", "It keeps track of certain statistics for players however,", "whenever you die your killstreak does not reset."));
 		ap.chain(new NpcDialogue(npc.getId(), "Instead, once every week on monday, all your individual ", "statistics will be reset and I will reward the top-3 players", "on the leaderboards."));
 		ap.chain(new PlayerDialogue("Ah, I think I understand now.").attachAfter(() -> ap.getBuilder().go(-7)));
-
+		
 		ap.chain(new PlayerDialogue("I would like to claim my rewards."));
 		if(player_scoreboard_rewards.containsKey(player.getFormatUsername())) {
 			player.getInventory().addOrBank(new Item(12852, player_scoreboard_rewards.get(player.getFormatUsername()).get()));
@@ -179,7 +175,7 @@ public final class ScoreboardManager {
 		ap.start();
 		return true;
 	}
-
+	
 	/**
 	 * @return player scoreboard
 	 */
@@ -193,33 +189,33 @@ public final class ScoreboardManager {
 	public Map<String, MutableNumber> getPlayerScoreboardRewards() {
 		return player_scoreboard_rewards;
 	}
-
+	
 	/**
 	 * @return the resetPlayerScoreboardStatistic
 	 */
 	public boolean isResetPlayerScoreboardStatistic() {
 		return resetPlayerScoreboardStatistic;
 	}
-
+	
 	/**
 	 * @param resetPlayerScoreboardStatistic the resetPlayerScoreboardStatistic to set
 	 */
 	public void setResetPlayerScoreboardStatistic(boolean resetPlayerScoreboardStatistic) {
 		this.resetPlayerScoreboardStatistic = resetPlayerScoreboardStatistic;
 	}
-
+	
 	/**
 	 * The comparator which will compare the values.
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private final class PlayerScoreboardComparator implements Comparator<PlayerScoreboardStatistic> {
-
+		
 		@Override
 		public int compare(PlayerScoreboardStatistic arg0, PlayerScoreboardStatistic arg1) {
 			ComparisonChain c = ComparisonChain.start().compare(arg1.getCurrentKillstreak().get(), arg0.getCurrentKillstreak().get()).compare(arg1.getKills().get(), arg0.getKills().get()).compare(arg0.getDeaths(), arg1.getDeaths());
 			return c.result();
 		}
-
+		
 	}
-
+	
 }

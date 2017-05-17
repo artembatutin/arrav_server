@@ -1,12 +1,12 @@
 package net.edge.world.model.node.entity.player.assets;
 
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.content.TabInterface;
 import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Graphic;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.task.Task;
 
 /**
  * The enumerated type whose elements represent a spellbook type.

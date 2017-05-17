@@ -1,10 +1,10 @@
 package net.edge.world.model.node.entity.move;
 
+import net.edge.task.EventListener;
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.EntityNode;
-import net.edge.task.EventListener;
-import net.edge.task.Task;
 
 import java.util.Objects;
 import java.util.Optional;

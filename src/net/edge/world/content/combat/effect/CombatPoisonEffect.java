@@ -1,11 +1,11 @@
 package net.edge.world.content.combat.effect;
 
 import net.edge.world.model.node.entity.EntityNode;
+import net.edge.world.model.node.entity.model.Hit;
 import net.edge.world.model.node.entity.model.PoisonType;
+import net.edge.world.model.node.entity.npc.NpcDefinition;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.entity.model.Hit;
-import net.edge.world.model.node.entity.npc.NpcDefinition;
 
 import java.util.HashMap;
 import java.util.Map;

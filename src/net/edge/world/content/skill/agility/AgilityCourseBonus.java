@@ -1,8 +1,8 @@
 package net.edge.world.content.skill.agility;
 
 import net.edge.world.content.skill.agility.impl.barb.BarbarianOutpostAgility;
-import net.edge.world.content.skill.agility.impl.wild.WildernessAgility;
 import net.edge.world.content.skill.agility.impl.gnome.GnomeStrongholdAgility.GnomeAgilityData;
+import net.edge.world.content.skill.agility.impl.wild.WildernessAgility;
 
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -13,7 +13,7 @@ import java.util.EnumSet;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class AgilityCourseBonus {
-
+	
 	/**
 	 * The set of obstacles for the gnome agility course.
 	 */

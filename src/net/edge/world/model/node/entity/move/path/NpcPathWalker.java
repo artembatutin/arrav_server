@@ -1,9 +1,9 @@
 package net.edge.world.model.node.entity.move.path;
 
-import net.edge.world.model.node.entity.model.Direction;
-import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.EntityNode;
+import net.edge.world.model.node.entity.model.Direction;
+import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.region.TraversalMap;
 
 import java.util.ArrayDeque;

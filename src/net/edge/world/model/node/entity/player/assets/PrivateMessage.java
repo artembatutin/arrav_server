@@ -1,8 +1,8 @@
 package net.edge.world.model.node.entity.player.assets;
 
+import net.edge.utils.MutableNumber;
 import net.edge.world.World;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.utils.MutableNumber;
 
 /**
  * The class that contains functions for managing private messaging lists.

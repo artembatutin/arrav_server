@@ -2,16 +2,16 @@ package net.edge.world.content.skill.summoning.familiar.impl;
 
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
+import net.edge.world.content.skill.summoning.Summoning;
+import net.edge.world.content.skill.summoning.familiar.Familiar;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.specials.SummoningData;
+import net.edge.world.model.node.entity.model.Hit;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.content.skill.summoning.familiar.Familiar;
-import net.edge.world.model.node.entity.model.Hit;
 
 import java.util.Optional;
 
@@ -65,10 +65,6 @@ public final class CompostMound extends Familiar {
 		return true;
 	}
 	
-	private final String[] RANDOM_DIALOGUE = new String[] {
-			"Oi wud just a-wonderin'...",
-			"*Errr... Are ye gonna eat that?",
-			"Oi've gotta braand new comboine 'aarvester!"
-	};
+	private final String[] RANDOM_DIALOGUE = new String[]{"Oi wud just a-wonderin'...", "*Errr... Are ye gonna eat that?", "Oi've gotta braand new comboine 'aarvester!"};
 	
 }

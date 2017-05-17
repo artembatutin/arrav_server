@@ -1,9 +1,9 @@
 package net.edge.world.model.node.object;
 
-import net.edge.world.model.node.NodeType;
 import net.edge.world.World;
 import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.Node;
+import net.edge.world.model.node.NodeType;
 
 import java.util.Objects;
 

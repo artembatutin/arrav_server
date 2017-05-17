@@ -6,6 +6,7 @@ import net.edge.world.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.PlayerPanel;
 import net.edge.world.content.combat.CombatConstants;
+import net.edge.world.content.combat.weapon.WeaponInterface;
 import net.edge.world.content.container.impl.Equipment;
 import net.edge.world.content.container.impl.Inventory;
 import net.edge.world.content.minigame.Minigame;
@@ -14,21 +15,23 @@ import net.edge.world.content.scoreboard.PlayerScoreboardStatistic;
 import net.edge.world.content.skill.Skill;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.prayer.Prayer;
+import net.edge.world.model.locale.Location;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.EntityDeath;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Graphic;
 import net.edge.world.model.node.entity.model.Hit;
 import net.edge.world.model.node.entity.player.assets.Rights;
+import net.edge.world.model.node.entity.update.UpdateFlag;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemNode;
 import net.edge.world.model.node.region.Region;
-import net.edge.world.content.combat.weapon.WeaponInterface;
-import net.edge.world.model.locale.Location;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.update.UpdateFlag;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * The {@link EntityDeath} implementation that is dedicated to managing the
@@ -157,7 +160,7 @@ public final class PlayerDeath extends EntityDeath<Player> {
 			PlayerPanel.INDIVIDUAL_KILLS.refresh(k, "@or2@ - Current Players killed: @yel@" + killerStatistic.getKills().incrementAndGet());
 			
 			PlayerPanel.TOTAL_PLAYER_KILLS.refresh(k, "@or2@ - Total Players killed: @yel@" + k.getPlayerKills().incrementAndGet());
-		
+
 			//killstreak
 			if(k.getCurrentKillstreak().incrementAndGet() > k.getHighestKillstreak().get()) {
 				k.getHighestKillstreak().set(k.getCurrentKillstreak().get());
@@ -171,7 +174,7 @@ public final class PlayerDeath extends EntityDeath<Player> {
 				PlayerPanel.INDIVIDUAL_HIGHEST_KILLSTREAKS.refresh(k, "@or2@ - Highest Killstreak: @yel@" + killerStatistic.getHighestKillstreak().get());
 			}
 			PlayerPanel.INDIVIDUAL_CURRENT_KILLSTREAKS.refresh(k, "@or2@ - Current Killstreak: @yel@" + killerStatistic.getCurrentKillstreak().get());
-		
+
 			k.message(RandomUtils.random(GameConstants.DEATH_MESSAGES).replaceAll("-victim-", getCharacter().getFormatUsername()).replaceAll("-killer-", k.getFormatUsername()));
 		});
 		
@@ -211,7 +214,7 @@ public final class PlayerDeath extends EntityDeath<Player> {
 
 				int newLevel = (int) (skill.getRealLevel() * 0.75);
 
-				if(index == Skills.HITPOINTS && newLevel < 10)  {
+				if(index == Skills.HITPOINTS && newLevel < 10) {
 					newLevel = 10;
 				}
 

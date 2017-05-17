@@ -2,10 +2,10 @@ package net.edge.world.content.combat;
 
 import com.google.common.base.Preconditions;
 import net.edge.utils.rand.RandomUtils;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.content.combat.special.CombatSpecial;
+import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.model.Hit;
+import net.edge.world.model.node.entity.player.Player;
 
 /**
  * The container that holds data for an entire combat session attack.

@@ -1,16 +1,16 @@
 package net.edge.world.model.node.entity.npc;
 
+import net.edge.task.Task;
+import net.edge.world.World;
 import net.edge.world.content.PlayerPanel;
 import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.skill.slayer.Slayer;
+import net.edge.world.model.node.entity.EntityDeath;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.npc.drop.NpcDropManager;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.World;
-import net.edge.world.model.node.entity.EntityDeath;
 import net.edge.world.model.node.entity.npc.impl.gwd.GodwarsFaction;
+import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.Rights;
-import net.edge.task.Task;
 
 import java.util.Optional;
 
@@ -20,7 +20,7 @@ import java.util.Optional;
  * @author lare96 <http://github.com/lare96>
  */
 public final class NpcDeath extends EntityDeath<Npc> {
-
+	
 	/**
 	 * Creates a new {@link NpcDeath}.
 	 * @param npc the NPC who has died and needs the death process.
@@ -28,7 +28,7 @@ public final class NpcDeath extends EntityDeath<Npc> {
 	public NpcDeath(Npc npc) {
 		super(npc);
 	}
-
+	
 	@Override
 	public void preDeath() {
 		if(getCharacter().getCombatBuilder().getVictim() != null) {
@@ -36,7 +36,7 @@ public final class NpcDeath extends EntityDeath<Npc> {
 		}
 		getCharacter().animation(new Animation(getCharacter().getDefinition().getDeathAnimation(), Animation.AnimationPriority.HIGH));
 	}
-
+	
 	@Override
 	public void death() {
 		Optional<Player> killer = getCharacter().getCombatBuilder().getDamageCache().getPlayerKiller();
@@ -46,7 +46,7 @@ public final class NpcDeath extends EntityDeath<Npc> {
 			Slayer.decrement(player, getCharacter());
 			MinigameHandler.getMinigame(player).ifPresent(m -> m.onKill(player, getCharacter()));
 			NpcDropManager.dropItems(player, getCharacter());
-
+			
 			if(player.getRights().less(Rights.ADMINISTRATOR)) {
 				player.getNpcKills().incrementAndGet();
 				PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Npcs killed: @yel@" + player.getNpcKills().get());
@@ -54,7 +54,7 @@ public final class NpcDeath extends EntityDeath<Npc> {
 		}
 		World.getNpcs().remove(getCharacter());
 	}
-
+	
 	@Override
 	public void postDeath() {
 		try {

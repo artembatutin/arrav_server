@@ -4,12 +4,12 @@ import net.edge.utils.Stopwatch;
 import net.edge.world.World;
 import net.edge.world.content.container.session.ExchangeSession;
 import net.edge.world.content.container.session.ExchangeSessionActionType;
+import net.edge.world.content.container.session.ExchangeSessionType;
 import net.edge.world.content.minigame.dueling.DuelMinigame;
 import net.edge.world.content.minigame.dueling.DuelingRules;
+import net.edge.world.model.locale.Location;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.container.session.ExchangeSessionType;
-import net.edge.world.model.locale.Location;
 
 import java.util.*;
 import java.util.stream.IntStream;

@@ -2,7 +2,10 @@ package net.edge.world.model.node.item;
 
 import net.edge.world.content.container.impl.EquipmentType;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -115,7 +118,7 @@ public final class ItemDefinition {
 	 * @param weapon           the flag that determines if this item is a weapon.
 	 * @param twoHanded        the flag that determines if this item is two-handed.
 	 * @param stackable        the flag that determines if this item is stackable.
-	 * @param alchable        the flag that determines if this item is alchable.
+	 * @param alchable         the flag that determines if this item is alchable.
 	 * @param noted            the flag that determines if this item is noted.
 	 * @param lended           the flag that determines if this item is lended.
 	 * @param lowAlchValue     the low alch value of this item.
@@ -356,7 +359,6 @@ public final class ItemDefinition {
 	public String[] getGroundActions() {
 		return groundActions;
 	}
-	
 	
 	public static void dumpDrops() {
 		/*try {

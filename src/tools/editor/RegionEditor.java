@@ -569,6 +569,9 @@ public class RegionEditor extends Application {
 							} else {
 								blocks[x][63 - y].floor.heightmap[z] = blocks[x][63 - y].floor.heightmap[z - 1] + (height * 8);
 							}
+							if(blocks[x][63 - y].floor.heightmap[z] == 968) {
+								blocks[x][63 - y].floor.heightmap[z] = 920;
+							}
 							break;
 						} else if(opcode <= 49) {
 							blocks[x][63 - y].floor.overlayFloorId[z] = mapBuffer.get();

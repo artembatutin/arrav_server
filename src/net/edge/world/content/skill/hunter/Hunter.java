@@ -6,6 +6,8 @@ import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.hunter.trap.Trap;
 import net.edge.world.content.skill.hunter.trap.TrapProcessor;
 import net.edge.world.content.skill.hunter.trap.TrapTask;
+import net.edge.world.model.locale.Location;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Direction;
 import net.edge.world.model.node.entity.npc.Npc;
@@ -13,10 +15,8 @@ import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemNode;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.model.node.region.Region;
-import net.edge.world.model.locale.Location;
-import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.object.ObjectType;
+import net.edge.world.model.node.region.Region;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,12 +28,12 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Hunter {
-
+	
 	/**
 	 * The mappings which contain each trap by player on the world.
 	 */
 	public static final Map<Player, TrapProcessor> GLOBAL_TRAPS = new HashMap<>();
-
+	
 	/**
 	 * Retrieves the maximum amount of traps a player can lay.
 	 * @param player the player to lay a trap down for.
@@ -43,7 +43,7 @@ public final class Hunter {
 		Skill hunter = player.getSkills()[Skills.HUNTER];
 		return hunter.getLevel() / 20 + 1;
 	}
-
+	
 	/**
 	 * Attempts to abandon the specified {@code trap} for the player.
 	 * @param trap   the trap that was abandoned.
@@ -53,7 +53,7 @@ public final class Hunter {
 		if(GLOBAL_TRAPS.get(player) == null) {
 			return;
 		}
-
+		
 		if(logout) {
 			GLOBAL_TRAPS.get(player).getTraps().forEach(t -> {
 				t.setAbandoned(true);
@@ -74,13 +74,13 @@ public final class Hunter {
 			}
 			player.message("You have abandoned your trap...");
 		}
-
+		
 		if(GLOBAL_TRAPS.get(player).getTraps().isEmpty()) {
 			GLOBAL_TRAPS.get(player).setTask(Optional.empty());
 			GLOBAL_TRAPS.remove(player);
 		}
 	}
-
+	
 	/**
 	 * Attempts to lay down the specified {@code trap} for the specified {@code player}.
 	 * @param player the player to lay the trap for.
@@ -89,24 +89,24 @@ public final class Hunter {
 	 */
 	public static boolean lay(Player player, Trap trap) {
 		GLOBAL_TRAPS.putIfAbsent(player, new TrapProcessor());
-
+		
 		if(!GLOBAL_TRAPS.get(player).getTask().isPresent()) {
 			GLOBAL_TRAPS.get(player).setTask(new TrapTask(player));
 			World.submit(GLOBAL_TRAPS.get(player).getTask().get());
 		}
-
+		
 		if(GLOBAL_TRAPS.get(player).getTraps().size() >= getMaximumTraps(player)) {
 			player.message("You cannot lay more then " + getMaximumTraps(player) + " with your hunter level.");
 			return false;
 		}
-
+		
 		Position p = player.getPosition();
-
+		
 		if(player.getRegion().getObjects(p).stream().filter(o -> o.getObjectType() == ObjectType.GENERAL_PROP).findAny().isPresent() || !World.getTraversalMap().isTraversable(p, Direction.WEST, player.size()) && !World.getTraversalMap().isTraversable(p, Direction.EAST, player.size()) || Location.isAtHome(player)) {
 			player.message("You can't set-up your trap here.");
 			return false;
 		}
-
+		
 		for(Npc npc : player.getLocalNpcs()) {
 			if(npc == null) {
 				continue;
@@ -116,9 +116,9 @@ public final class Hunter {
 				return false;
 			}
 		}
-
+		
 		GLOBAL_TRAPS.get(player).getTraps().add(trap);
-
+		
 		trap.submit();
 		player.animation(new Animation(827));
 		player.getInventory().remove(new Item(trap.getType().getItemId(), 1));
@@ -131,7 +131,7 @@ public final class Hunter {
 		player.facePosition(p);
 		return true;
 	}
-
+	
 	/**
 	 * Attempts to pick up the trap for the specified {@code player}.
 	 * @param player the player to pick this trap up for.
@@ -140,40 +140,40 @@ public final class Hunter {
 	 */
 	public static boolean pickup(Player player, ObjectNode object) {
 		Optional<Trap.TrapType> type = Trap.TrapType.getTrapByObjectId(object.getId());
-
+		
 		if(!type.isPresent()) {
 			return false;
 		}
-
+		
 		Trap trap = getTrap(player, object).orElse(null);
-
+		
 		if(trap == null) {
 			return false;
 		}
-
+		
 		if(trap.getState().equals(Trap.TrapState.CAUGHT)) {
 			return false;
 		}
-
+		
 		if(!trap.getPlayer().getFormatUsername().equals(player.getFormatUsername())) {
 			player.message("You can't pickup someone elses trap...");
 			return false;
 		}
-
+		
 		GLOBAL_TRAPS.get(player).getTraps().remove(trap);
-
+		
 		if(GLOBAL_TRAPS.get(player).getTraps().isEmpty()) {
 			GLOBAL_TRAPS.get(player).setTask(Optional.empty());
 			GLOBAL_TRAPS.remove(player);
 		}
-
+		
 		trap.onPickUp();
 		World.getRegions().getRegion(trap.getObject().getPosition()).unregister(object);
 		player.getInventory().add(new Item(trap.getType().getItemId(), 1));
 		player.animation(new Animation(827));
 		return true;
 	}
-
+	
 	/**
 	 * Attempts to claim the rewards of this trap.
 	 * @param player the player attempting to claim the items.
@@ -182,30 +182,30 @@ public final class Hunter {
 	 */
 	public static boolean claim(Player player, ObjectNode object) {
 		Trap trap = getTrap(player, object).orElse(null);
-
+		
 		if(trap == null) {
 			return false;
 		}
-
+		
 		if(!trap.getState().equals(Trap.TrapState.CAUGHT)) {
 			return false;
 		}
-
+		
 		if(!trap.getPlayer().getFormatUsername().equals(player.getFormatUsername())) {
 			player.message("You can't claim the rewards of someone elses trap...");
 			return false;
 		}
-
+		
 		if(!trap.canClaim(object)) {
 			return false;
 		}
-
+		
 		Arrays.stream(trap.reward()).forEach(reward -> player.getInventory().add(reward));
-
+		
 		Skills.experience(player, (int) trap.experience() * 5, Skills.HUNTER);
-
+		
 		GLOBAL_TRAPS.get(player).getTraps().remove(trap);
-
+		
 		if(GLOBAL_TRAPS.get(player).getTraps().isEmpty()) {
 			GLOBAL_TRAPS.get(player).setTask(Optional.empty());
 			GLOBAL_TRAPS.remove(player);
@@ -215,7 +215,7 @@ public final class Hunter {
 		player.animation(new Animation(827));
 		return true;
 	}
-
+	
 	/**
 	 * Gets a trap for the specified global object given.
 	 * @param player the player to return a trap for.

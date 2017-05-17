@@ -17,34 +17,34 @@ import java.util.Optional;
  * Handles the Korasi sword special chained hits in multi areas.
  */
 class KorasiChain extends Task {
-
+	
 	/**
 	 * The player doing the special.
 	 */
 	private final Player player;
-
+	
 	/**
 	 * The entities being already hitted by the lightning.
 	 */
 	private List<EntityNode> hitted = new ArrayList<>();
-
+	
 	/**
 	 * The chained damage in the korasi hits.
 	 */
 	private int chainedDamage;
-
+	
 	/**
 	 * the first hit position.
 	 */
 	private Position position;
-
+	
 	KorasiChain(Player player, EntityNode victim, int damage) {
 		super(3, false);
 		this.player = player;
 		this.position = victim.getPosition();
 		chainedDamage = damage;
 	}
-
+	
 	@Override
 	protected void execute() {
 		if(chainedDamage <= 0) {

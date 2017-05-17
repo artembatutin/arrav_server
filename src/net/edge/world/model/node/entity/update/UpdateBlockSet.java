@@ -41,7 +41,7 @@ public final class UpdateBlockSet<E extends EntityNode> {
 			PLAYER_BLOCK_SET.add(new PlayerPositionUpdateBlock());
 			PLAYER_BLOCK_SET.add(new PlayerPrimaryHitUpdateBlock());
 			PLAYER_BLOCK_SET.add(new PlayerSecondaryHitUpdateBlock());
-        
+		
         /* Build the non-player character block set. */
 			NPC_BLOCK_SET.add(new NpcForceMovementUpdateBlock());
 			NPC_BLOCK_SET.add(new NpcGraphicUpdateBlock());

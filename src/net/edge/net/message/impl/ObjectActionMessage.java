@@ -7,9 +7,12 @@ import net.edge.world.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.ViewingOrb;
 import net.edge.world.content.WebSlashing;
+import net.edge.world.content.combat.weapon.WeaponInterface;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.door.DoorHandler;
+import net.edge.world.content.market.MarketCounter;
 import net.edge.world.content.minigame.MinigameHandler;
+import net.edge.world.content.minigame.fightcaves.FightcavesMinigame;
 import net.edge.world.content.minigame.warriorsguild.WarriorsGuild;
 import net.edge.world.content.skill.Skill;
 import net.edge.world.content.skill.Skills;
@@ -17,29 +20,24 @@ import net.edge.world.content.skill.firemaking.Bonfire;
 import net.edge.world.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.world.content.wilderness.Obelisk;
 import net.edge.world.model.locale.Boundary;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.model.Graphic;
+import net.edge.world.model.node.entity.move.ForcedMovement;
 import net.edge.world.model.node.entity.move.ForcedMovementDirection;
+import net.edge.world.model.node.entity.move.ForcedMovementManager;
 import net.edge.world.model.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.PrayerBook;
+import net.edge.world.model.node.entity.player.assets.Rights;
 import net.edge.world.model.node.entity.player.assets.Spellbook;
 import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.content.combat.weapon.WeaponInterface;
-import net.edge.world.content.market.MarketCounter;
-import net.edge.world.content.minigame.fightcaves.FightcavesMinigame;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.move.ForcedMovement;
-import net.edge.world.model.node.entity.move.ForcedMovementManager;
-import net.edge.world.model.node.entity.player.assets.Rights;
 
 import java.util.Optional;
 
-import static net.edge.world.content.teleport.impl.DefaultTeleportSpell.TeleportType.BOSS_PORTAL;
-import static net.edge.world.content.teleport.impl.DefaultTeleportSpell.TeleportType.LADDER;
-import static net.edge.world.content.teleport.impl.DefaultTeleportSpell.TeleportType.TRAINING_PORTAL;
+import static net.edge.world.content.teleport.impl.DefaultTeleportSpell.TeleportType.*;
 
 /**
  * The message sent from the client when a player clicks an object.

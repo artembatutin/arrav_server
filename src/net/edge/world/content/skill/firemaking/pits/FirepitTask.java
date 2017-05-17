@@ -1,11 +1,11 @@
 package net.edge.world.content.skill.firemaking.pits;
 
-import java.util.Optional;
-
+import net.edge.task.Task;
 import net.edge.world.GameConstants;
 import net.edge.world.World;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.task.Task;
+
+import java.util.Optional;
 
 /**
  * Represents the task ran when a fire pit is active.

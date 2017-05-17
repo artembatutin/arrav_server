@@ -1,12 +1,14 @@
 package net.edge.world.content.skill.fishing;
 
+import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.skill.Skill;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.utils.rand.RandomUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public enum Tool {
 	NET(303, 1, -1, 0.30, 621, new Catchable[]{Catchable.SHRIMP, Catchable.ANCHOVY, Catchable.MONKFISH}) {

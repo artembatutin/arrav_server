@@ -3,25 +3,25 @@ package net.edge.net.message;
 import com.google.common.base.Preconditions;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
+import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.MessageType;
 import net.edge.utils.ActionListener;
 import net.edge.world.World;
 import net.edge.world.content.clanchat.ClanMember;
+import net.edge.world.content.market.MarketItem;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.EntityNode;
+import net.edge.world.model.node.entity.npc.NpcDefinition;
+import net.edge.world.model.node.entity.npc.drop.NpcDrop;
 import net.edge.world.model.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.model.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.model.node.entity.player.assets.Rights;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemNode;
 import net.edge.world.model.node.object.ObjectDirection;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.npc.NpcDefinition;
-import net.edge.world.model.node.entity.npc.drop.NpcDrop;
-import net.edge.world.model.node.entity.player.assets.Rights;
-import net.edge.world.content.market.MarketItem;
 import net.edge.world.model.node.object.ObjectType;
-import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.MessageType;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,12 +34,12 @@ import java.util.function.Function;
  * @author lare96 <http://github.com/lare96>
  */
 public final class OutputMessages {
-
+	
 	/**
 	 * The player that will queue these messages.
 	 */
 	private final Player player;
-
+	
 	/**
 	 * Creates a new {@link OutputMessages}.
 	 * @param player the player that will queue these messages.
@@ -47,7 +47,7 @@ public final class OutputMessages {
 	public OutputMessages(Player player) {
 		this.player = player;
 	}
-
+	
 	/**
 	 * The message that forces the player to view {@code id} tab.
 	 * @param id the tab to force on the player.
@@ -56,9 +56,9 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(106);
 		msg.put(id, ByteTransform.C);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that either shows or hides a layer on an interface.
 	 * @param id   the interface to show or hide a layer on.
@@ -69,9 +69,9 @@ public final class OutputMessages {
 		msg.put(hide ? 1 : 0);
 		msg.putShort(id);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that updates a special bar with {@code amount} of special
 	 * energy.
@@ -84,9 +84,9 @@ public final class OutputMessages {
 		msg.putShort(0, ByteOrder.LITTLE);
 		msg.putShort(id, ByteOrder.LITTLE);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The messages that display {@code str} on an empty chatbox.
 	 * @param str the string to display on the chatbox.
@@ -95,9 +95,9 @@ public final class OutputMessages {
 		sendString(str, 357);
 		sendString("Click here to continue", 358);
 		sendChatInterface(356);
-
+		
 	}
-
+	
 	/**
 	 * The messages that play an animation for an object that only the
 	 * underlying player can see.
@@ -113,9 +113,9 @@ public final class OutputMessages {
 		msg.put((type.getId() << 2) + (direction.getId() & 3), ByteTransform.S);
 		msg.putShort(animation, ByteTransform.A);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The messages that play an animation for an object that all local players
 	 * can see.
@@ -127,9 +127,9 @@ public final class OutputMessages {
 	public void sendLocalObjectAnimation(Position position, int animation, ObjectType type, ObjectDirection direction) {
 		player.getMessages().sendObjectAnimation(position, animation, type, direction);
 		player.getLocalPlayers().stream().filter(Objects::nonNull).forEach(p -> p.getMessages().sendObjectAnimation(position, animation, type, direction));
-
+		
 	}
-
+	
 	/**
 	 * The message that creates a graphic that only the underlying player can
 	 * see.
@@ -145,9 +145,9 @@ public final class OutputMessages {
 		msg.put(level);
 		msg.putShort(0);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that creates a graphic that all local players can see.
 	 * @param id       the id of the graphic that will be created.
@@ -157,9 +157,9 @@ public final class OutputMessages {
 	public void sendLocalGraphic(int id, Position position, int level) {
 		player.getMessages().sendGraphic(id, position, level);
 		player.getLocalPlayers().stream().filter(Objects::nonNull).forEach(p -> p.getMessages().sendGraphic(id, position, level));
-
+		
 	}
-
+	
 	/**
 	 * The message that creates a graphic that all players can see.
 	 * @param id       the id of the graphic that will be created.
@@ -169,7 +169,7 @@ public final class OutputMessages {
 	public static void sendAllGraphic(int id, Position position, int level) {
 		World.getRegions().getSurroundingRegions(position).forEach(r -> r.getPlayers().forEach((i, p) -> p.getMessages().sendGraphic(id, position, level)));
 	}
-
+	
 	/**
 	 * The message that allows for an interface to be animated.
 	 * @param id        the interface to animate on.
@@ -180,9 +180,9 @@ public final class OutputMessages {
 		msg.putShort(id);
 		msg.putShort(animation);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that updates the state of the multi-combat icon.
 	 * @param hide determines if the icon should be turned on or off.
@@ -191,9 +191,9 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(61);
 		msg.put(hide ? 0 : 1);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends {@code item} on a specific interface slot.
 	 * @param id   the interface to display the item on.
@@ -205,18 +205,18 @@ public final class OutputMessages {
 		msg.putShort(id);
 		msg.put(slot);
 		msg.putShort(item.getId() + 1);
-
+		
 		if(item.getAmount() > 254) {
 			msg.put(255);
 			msg.putShort(item.getAmount());
 		} else {
 			msg.put(item.getAmount());
 		}
-
+		
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends an item model on an interface.
 	 * @param id    the interface id to send the model on.
@@ -229,9 +229,9 @@ public final class OutputMessages {
 		msg.putShort(id, ByteOrder.LITTLE);
 		msg.putShort(zoom).putShort(model);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends an array of items on an interface.
 	 * @param id     the interface that the items will be sent on.
@@ -245,7 +245,7 @@ public final class OutputMessages {
 			msg.putShort(0);
 			msg.put(0);
 			msg.putShort(0, ByteTransform.A, ByteOrder.LITTLE);
-
+			
 			player.queue(msg);
 		} else {
 			msg.putShort(length);
@@ -281,8 +281,8 @@ public final class OutputMessages {
 	
 	/**
 	 * The message that sends an array of shop items on the panel.
-	 * @param id     the interface that the items will be sent on.
-	 * @param items  the items that will be sent on the panel.
+	 * @param id    the interface that the items will be sent on.
+	 * @param items the items that will be sent on the panel.
 	 */
 	public void sendShopItemsOnInterface(int id, int[] items) {
 		ByteMessage msg = ByteMessage.message(53, MessageType.VARIABLE_SHORT);
@@ -297,7 +297,7 @@ public final class OutputMessages {
 			for(int i : items) {
 				MarketItem item = MarketItem.get(i);
 				if(item != null) {
-					msg.put(item.isUnlimitedStock() ?  1 : 0);
+					msg.put(item.isUnlimitedStock() ? 1 : 0);
 					if(!item.isUnlimitedStock()) {
 						if(item.getStock() > 254) {
 							msg.put(255);
@@ -327,7 +327,7 @@ public final class OutputMessages {
 	
 	/**
 	 * The message that sends an shop price update.
-	 * @param item     the item that will be updated.
+	 * @param item the item that will be updated.
 	 */
 	public void sendShopItemPrice(MarketItem item) {
 		ByteMessage msg = ByteMessage.message(54, MessageType.VARIABLE_SHORT);
@@ -343,7 +343,7 @@ public final class OutputMessages {
 	
 	/**
 	 * The message that sends an shop price update.
-	 * @param item     the item that will be updated.
+	 * @param item the item that will be updated.
 	 */
 	public void sendShopItemStock(MarketItem item) {
 		ByteMessage msg = ByteMessage.message(55, MessageType.VARIABLE_SHORT);
@@ -356,7 +356,7 @@ public final class OutputMessages {
 		msg.putShort(item.getId() + 1, ByteTransform.A, ByteOrder.LITTLE);
 		player.queue(msg);
 	}
-
+	
 	/**
 	 * The message that sends an array of items on an interface, with the length
 	 * being the capacity of {@code items}.
@@ -367,7 +367,7 @@ public final class OutputMessages {
 		int length = (items == null) ? 0 : items.length;
 		sendItemsOnInterface(id, items, length);
 	}
-
+	
 	/**
 	 * The message that sends the head model of an NPC to an interface.
 	 * @param id    the interface to send the model on.
@@ -379,9 +379,9 @@ public final class OutputMessages {
 		msg.putShort(model, ByteTransform.A, ByteOrder.LITTLE);
 		msg.putShort(id, ByteTransform.A, ByteOrder.LITTLE);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends the head model of a player to an interface.
 	 * @param id the interface to send the model on.
@@ -390,9 +390,9 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(185);
 		msg.putShort(id, ByteTransform.A, ByteOrder.LITTLE);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that causes a sidebar icon to start flashing.
 	 * @param code the identification of the sidebar to flash. The code for each
@@ -433,9 +433,9 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(24);
 		msg.put(code, ByteTransform.A);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that changes the state of the minimap.
 	 * @param code the new state of the minimap. The code for each of the minimap
@@ -454,9 +454,9 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(99);
 		msg.put(code);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The packet that sends the camera angle based on the player position.
 	 * @param position      the position of the camera.
@@ -472,9 +472,9 @@ public final class OutputMessages {
 		msg.put(movementSpeed);
 		msg.put(rotationSpeed);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The packet that moves the actual camera based on the player's position.
 	 * @param position      the {@code Position} to go to.
@@ -490,9 +490,9 @@ public final class OutputMessages {
 		msg.put(movementSpeed);
 		msg.put(rotationSpeed);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that causes the screen and camera to shake.
 	 * @param parameter the position parameter to oscillate. The position parameters
@@ -526,18 +526,18 @@ public final class OutputMessages {
 		msg.put(amplitude);
 		msg.put(frequency);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that resets the position of the camera.
 	 */
 	public void sendResetCameraPosition() {
 		ByteMessage msg = ByteMessage.message(107);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends the system update timer. A timer showing how many
 	 * seconds until a 'System Update' will appear in the lower left hand corner
@@ -552,9 +552,9 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(114);
 		msg.putShort(amount, ByteOrder.LITTLE);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends the underlying player's run energy percentage to
 	 * the correct place.
@@ -563,9 +563,9 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(110);
 		msg.put((int) player.getRunEnergy());
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The packets that switch on or off the running orb/switch.
 	 * @param running_state the state of the running orb.
@@ -578,7 +578,7 @@ public final class OutputMessages {
 	//		player.queue(msg);
 	//		
 	//	}
-
+	
 	/**
 	 * The message that changes the color of an interface that is text.
 	 * @param id    the interface identification to send the color on.
@@ -599,9 +599,9 @@ public final class OutputMessages {
 		msg.putShort(id, ByteTransform.A, ByteOrder.LITTLE);
 		msg.putShort(color, ByteTransform.A, ByteOrder.LITTLE);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that launches a projectile that only the underlying player
 	 * can see.
@@ -630,9 +630,9 @@ public final class OutputMessages {
 		msg.put(16);
 		msg.put(64);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that launches a projectile that all of the local players can
 	 * see.
@@ -649,7 +649,7 @@ public final class OutputMessages {
 	public void sendAllProjectile(Position position, Position offset, int speed, int gfxMoving, int startHeight, int endHeight, int lockon, int time) {
 		player.getLocalPlayers().stream().filter(Objects::nonNull).forEach(p -> p.getMessages().sendProjectile(position, offset, speed, gfxMoving, startHeight, endHeight, lockon, time));
 	}
-
+	
 	/**
 	 * The message that changes the configuration value for a certain client
 	 * setting in the form of a byte.
@@ -664,14 +664,14 @@ public final class OutputMessages {
 			player.queue(msg);
 			return;
 		}
-
+		
 		ByteMessage msg = ByteMessage.message(36);
 		msg.putShort(id, ByteOrder.LITTLE);
 		msg.put(state);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The packet that sends the player's desired skill goal.
 	 * @param id   the identification number of the skill.
@@ -683,7 +683,7 @@ public final class OutputMessages {
 		msg.put(goal);
 		player.queue(msg);
 	}
-
+	
 	/**
 	 * The message that sends the enter input box.
 	 * @param title the title of this enter input box.
@@ -692,11 +692,11 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(187, MessageType.VARIABLE);
 		msg.putString(title);
 		player.setEnterInputListener(Optional.of(action));
-
+		
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends an browser pop-up link.
 	 * @param link the link extending the edgeville domain page to be sent.
@@ -705,9 +705,9 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(100, MessageType.VARIABLE);
 		msg.putString(link);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends the enter amount input box.
 	 * @param title the title of this enter input box.
@@ -718,7 +718,7 @@ public final class OutputMessages {
 		player.setEnterInputListener(Optional.of(listener));
 		player.queue(msg);
 	}
-
+	
 	/**
 	 * Updates a single entry on the top lists.
 	 * @param index the index of the top list.
@@ -732,7 +732,7 @@ public final class OutputMessages {
 		msg.putString(title);
 		player.queue(msg);
 	}
-
+	
 	/**
 	 * The message that spawns an object only the underlying player can see.
 	 * @param object the object to spawn for the player.
@@ -744,9 +744,9 @@ public final class OutputMessages {
 		msg.putInt(object.getId());
 		msg.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.S);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that removes an object only the underlying player can see.
 	 * @param object the object to remove for the player.
@@ -757,9 +757,9 @@ public final class OutputMessages {
 		msg.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.C);
 		msg.put(0);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The messages that replace an existing object with a new one.
 	 * @param object the object being replaced.
@@ -769,9 +769,9 @@ public final class OutputMessages {
 		sendRemoveObject(object);
 		object.setId(id);
 		sendObject(object);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends the underlying player's skill to the proper
 	 * interfaces.
@@ -783,7 +783,7 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(134).put(id).putInt(exp, ByteOrder.MIDDLE).putInt(level);
 		player.queue(msg);
 	}
-
+	
 	/**
 	 * The message that closes any interfaces the underlying player has openShop.
 	 */
@@ -791,9 +791,9 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(219);
 		player.queue(msg);
 		player.getDialogueBuilder().interrupt();
-
+		
 	}
-
+	
 	/**
 	 * The message that sends a fading to the player's screen.
 	 * @param start    the start fade in duration.
@@ -806,9 +806,9 @@ public final class OutputMessages {
 		msg.put(duration);
 		msg.put(end);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends a item on an interface.
 	 * @param widget the interface/widget id.
@@ -819,9 +819,9 @@ public final class OutputMessages {
 		msg.putInt(widget);
 		msg.putInt(itemId);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends the first private messaging list load status.
 	 * @param code the status of the friends list. The status for the friends
@@ -840,9 +840,9 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(221);
 		msg.put(code);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends a clan member to the friend list.
 	 * @param members the {@link ClanMember}s list to send.
@@ -853,11 +853,11 @@ public final class OutputMessages {
 		for(ClanMember m : members) {
 			msg.putString(m.getRank().toIcon(player, m.getPlayer()) + (m.isMuted() ? "@red@" : "") + m.getPlayer().getUsername());
 		}
-
+		
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends a clan member to the friend list.
 	 * @param bans the ban list to send.
@@ -866,11 +866,11 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(52, MessageType.VARIABLE);
 		msg.putShort(bans.size());
 		bans.forEach(msg::putString);
-
+		
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends a player to the friend list.
 	 * @param name   the player's name to add to the list.
@@ -884,9 +884,9 @@ public final class OutputMessages {
 		msg.putLong(name);
 		msg.put(value);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends a hint arrow on a position.
 	 * @param position  the position to send the arrow on.
@@ -913,9 +913,9 @@ public final class OutputMessages {
 		msg.putShort(position.getY());
 		msg.put(position.getZ());
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends a hint arrow on {@code character}.
 	 * @param character the character to send a hint arrow on.
@@ -925,9 +925,9 @@ public final class OutputMessages {
 		msg.putShort(character.getSlot());
 		msg.put(0);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends a private message to another player.
 	 * @param name    the name of the player you are sending the message to.
@@ -941,11 +941,11 @@ public final class OutputMessages {
 		msg.putInt(player.getPrivateMessage().getLastMessage().getAndIncrement());
 		msg.put(rights);
 		msg.putBytes(message, size);
-
+		
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends the players current coordinates to the client.
 	 * @param position the coordinates to send to the client.
@@ -960,7 +960,7 @@ public final class OutputMessages {
 		msg.put(position.getX() - (player.getLastRegion().getRegionX() * 8), ByteTransform.C);
 		player.queue(msg);
 	}
-
+	
 	/**
 	 * The message that opens a walkable interface for the underlying player.
 	 * @param id the identification of the interface to openShop.
@@ -969,9 +969,9 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(208);
 		msg.putInt(id);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that spawns a ground item.
 	 * @param item the ground item to spawn.
@@ -985,9 +985,9 @@ public final class OutputMessages {
 		msg.putShort(item.getItem().getAmount());
 		msg.put(0);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that removes a ground item.
 	 * @param item the ground item to remove.
@@ -998,9 +998,9 @@ public final class OutputMessages {
 		msg.put(0, ByteTransform.S);
 		msg.putShort(item.getItem().getId());
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends the player context menus.
 	 * @param slot   the slot for the option to be placed in.
@@ -1012,11 +1012,11 @@ public final class OutputMessages {
 		msg.put(slot, ByteTransform.C);
 		msg.put(top ? 1 : 0, ByteTransform.A);
 		msg.putString(option);
-
+		
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that attaches text to an interface.
 	 * @param text the text to attach to the interface.
@@ -1026,11 +1026,11 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(126, MessageType.VARIABLE_SHORT);
 		msg.putString(text);
 		msg.putShort(id, ByteTransform.A);
-
+		
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that opens an interface and displays another interface over
 	 * the inventory area.
@@ -1043,7 +1043,7 @@ public final class OutputMessages {
 		msg.putShort(overlay);
 		player.queue(msg);
 	}
-
+	
 	/**
 	 * The message that opens an interface for underlying player.
 	 * @param id the identification number of the interface to openShop.
@@ -1053,7 +1053,7 @@ public final class OutputMessages {
 		msg.putShort(id);
 		player.queue(msg);
 	}
-
+	
 	/**
 	 * The message that sends the underlying player a message to the chatbox.
 	 * @param message the message to send.
@@ -1096,7 +1096,7 @@ public final class OutputMessages {
 		}
 		player.queue(msg);
 	}
-
+	
 	/**
 	 * The message that sends an interface to a certain sidebar.
 	 * @param sidebar the sidebar to send the interface on.
@@ -1110,7 +1110,7 @@ public final class OutputMessages {
 		msg.put(type, ByteTransform.A);
 		player.queue(msg);
 	}
-
+	
 	/**
 	 * The message that sends the current map region.
 	 */
@@ -1122,9 +1122,9 @@ public final class OutputMessages {
 		msg.putShort(player.getPosition().getRegionX() + 6, ByteTransform.A);
 		msg.putShort(player.getPosition().getRegionY() + 6);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that disconnects the underlying player.
 	 */
@@ -1132,9 +1132,9 @@ public final class OutputMessages {
 		World.queueLogout(player);
 		ByteMessage msg = ByteMessage.message(109);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends the slot and membership status to the client.
 	 */
@@ -1143,9 +1143,9 @@ public final class OutputMessages {
 		msg.put(1, ByteTransform.A);
 		msg.putShort(player.getSlot(), ByteTransform.A, ByteOrder.LITTLE);
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that sends a clan chat message.
 	 */
@@ -1155,11 +1155,11 @@ public final class OutputMessages {
 		msg.putString(message);
 		msg.putString(clanName);
 		msg.putShort(rank.getProtocolValue());
-
+		
 		player.queue(msg);
-
+		
 	}
-
+	
 	/**
 	 * The message that shows an interface in the chat box.
 	 * @param id the identification of interface to show.
@@ -1169,5 +1169,5 @@ public final class OutputMessages {
 		msg.putShort(id, ByteOrder.LITTLE);
 		player.queue(msg);
 	}
-
+	
 }

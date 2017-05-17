@@ -1,8 +1,8 @@
 package net.edge.world.content.quest.impl;
 
 import net.edge.world.content.quest.Quest;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.content.quest.QuestTask;
+import net.edge.world.model.node.entity.player.Player;
 
 import java.time.LocalDate;
 

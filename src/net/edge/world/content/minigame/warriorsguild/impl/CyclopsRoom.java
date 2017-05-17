@@ -2,6 +2,7 @@ package net.edge.world.content.minigame.warriorsguild.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.task.Task;
 import net.edge.utils.TextUtils;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
@@ -15,6 +16,7 @@ import net.edge.world.content.dialogue.test.DialogueAppender;
 import net.edge.world.content.minigame.Minigame;
 import net.edge.world.content.minigame.warriorsguild.GuildRoom;
 import net.edge.world.content.minigame.warriorsguild.WarriorsGuild;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.locale.SquareLocation;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.npc.Npc;
@@ -23,8 +25,6 @@ import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemNode;
 import net.edge.world.model.node.object.ObjectNode;
 import net.edge.world.model.node.region.Region;
-import net.edge.world.model.locale.Position;
-import net.edge.task.Task;
 
 import java.util.*;
 

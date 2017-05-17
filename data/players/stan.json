@@ -1,35 +1,35 @@
 {
-  "username": "avro",
-  "password": "asddsa",
+  "username": "stan",
+  "password": "123",
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3087,
-    "y": 3515,
+    "x": 3084,
+    "y": 3514,
     "z": 0
   },
-  "rights": "DEVELOPER",
+  "rights": "PLAYER",
   "clan": "avro",
   "appearance": [
     0,
-    7,
-    13,
-    444,
     0,
-    34,
-    85,
+    10,
+    18,
+    26,
+    9,
+    36,
     42,
     0,
-    1,
-    2,
+    0,
+    0,
     0,
     0
   ],
   "prayer-type": "NORMAL",
-  "spell-book": "LUNAR",
-  "fight-type": "SCIMITAR_SLASH",
+  "spell-book": "NORMAL",
+  "fight-type": "UNARMED_PUNCH",
   "poison-damage": 0,
-  "auto-retaliate": false,
+  "auto-retaliate": true,
   "running": true,
   "run-energy": 100.0,
   "special-amount": 100,
@@ -176,9 +176,9 @@
       "goal": 0
     },
     {
-      "level": 45,
-      "experience": 61512.0,
-      "realLevel": 45,
+      "level": 99,
+      "experience": 2.0E8,
+      "realLevel": 99,
       "goal": 0
     },
     {
@@ -190,21 +190,18 @@
   ],
   "inventory": [
     {
-      "id": 12158,
+      "id": 3105,
       "amount": 1
     },
     {
-      "id": 12159,
+      "id": 386,
       "amount": 1
     },
     {
-      "id": 12160,
+      "id": 1115,
       "amount": 1
     },
-    {
-      "id": 12163,
-      "amount": 1
-    },
+    null,
     null,
     null,
     null,
@@ -231,118 +228,34 @@
     null
   ],
   "bank0": [
-    {
-      "id": 995,
-      "amount": 235000
-    },
-    {
-      "id": 329,
-      "amount": 500
-    },
-    {
-      "id": 361,
-      "amount": 200
-    },
-    {
-      "id": 385,
-      "amount": 50
-    },
-    {
-      "id": 1351,
-      "amount": 1
-    },
-    {
-      "id": 590,
-      "amount": 1
-    },
-    {
-      "id": 1265,
-      "amount": 1
-    },
-    {
-      "id": 946,
-      "amount": 1
-    },
-    {
-      "id": 19000,
-      "amount": 21
-    },
-    {
-      "id": 841,
-      "amount": 1
-    },
-    {
-      "id": 1379,
-      "amount": 1
-    },
-    {
-      "id": 3105,
-      "amount": 1
-    },
-    {
-      "id": 1153,
-      "amount": 1
-    },
-    {
-      "id": 1115,
-      "amount": 1
-    },
-    {
-      "id": 1067,
-      "amount": 1
-    },
-    {
-      "id": 1191,
-      "amount": 1
-    },
-    {
-      "id": 579,
-      "amount": 1
-    },
-    {
-      "id": 577,
-      "amount": 1
-    },
-    {
-      "id": 1011,
-      "amount": 1
-    },
-    {
-      "id": 4405,
-      "amount": 1
-    },
-    {
-      "id": 884,
-      "amount": 500
-    },
-    {
-      "id": 554,
-      "amount": 250
-    },
-    {
-      "id": 555,
-      "amount": 250
-    },
-    {
-      "id": 556,
-      "amount": 250
-    },
-    {
-      "id": 557,
-      "amount": 250
-    },
-    {
-      "id": 558,
-      "amount": 250
-    },
-    {
-      "id": 560,
-      "amount": 150
-    },
-    {
-      "id": 562,
-      "amount": 250
-    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
     null,
     null,
     null,
@@ -1085,10 +998,7 @@
     null,
     null,
     null,
-    {
-      "id": 1323,
-      "amount": 1
-    },
+    null,
     null,
     null,
     null,
@@ -1102,12 +1012,12 @@
   ],
   "friends": [],
   "ignores": [],
-  "total-player-kills": 3,
-  "total-player-deaths": 0,
+  "total-player-kills": 0,
+  "total-player-deaths": 3,
   "total-npc-kills": 0,
-  "total-npc-deaths": 2,
-  "current-killstreak": 3,
-  "highest-killstreak": 3,
+  "total-npc-deaths": 0,
+  "current-killstreak": 0,
+  "highest-killstreak": 0,
   "godwars-killcount": [
     0,
     0,
@@ -1169,10 +1079,6 @@
     "slayer_tasks": {
       "type": "java.lang.Integer",
       "value": 0
-    },
-    "quick_pray_on": {
-      "type": "java.lang.Boolean",
-      "value": false
     },
     "accept_aid": {
       "type": "java.lang.Boolean",

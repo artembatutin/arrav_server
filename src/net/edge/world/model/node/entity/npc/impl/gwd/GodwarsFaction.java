@@ -5,11 +5,11 @@ import com.google.common.collect.Sets;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.content.combat.CombatType;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.NodeState;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.locale.Position;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -71,7 +71,7 @@ public enum GodwarsFaction {
 	 * Constructs a new {@code GodwarsFaction}.
 	 * @param id              {@link #id}.
 	 * @param objectId        {@link #objectId}.
-	 * @param startPosition	  {@link #startPosition}.
+	 * @param startPosition   {@link #startPosition}.
 	 * @param chamberPosition {@link #chamberPosition}.
 	 * @param startId         {@link #startId}
 	 * @param endId           {@link #endId}
@@ -115,7 +115,7 @@ public enum GodwarsFaction {
 
 	/**
 	 * Refreshes the godwars killcount interface.
-	 * @param player	the player to refresh this for.
+	 * @param player the player to refresh this for.
 	 */
 	public static void refreshInterface(Player player) {
 		for(int i = 0; i <= 3; i++) {

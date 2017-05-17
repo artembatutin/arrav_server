@@ -10,17 +10,17 @@ import net.edge.world.model.node.item.Item;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public abstract class LunarItemSpell extends LunarSpell {
-
+	
 	/**
 	 * The spell identification.
 	 */
 	private final int spellId;
-
+	
 	/**
 	 * The interface identification.
 	 */
 	private final int interfaceId;
-
+	
 	/**
 	 * Constructs a new {@link LunarItemSpell}.
 	 * @param spellId     {@link #spellId}.
@@ -30,33 +30,33 @@ public abstract class LunarItemSpell extends LunarSpell {
 		this.spellId = spellId;
 		this.interfaceId = interfaceId;
 	}
-
+	
 	/**
 	 * The spell casted on the specified {@code item}.
 	 * @param caster the player casting the spell.
 	 * @param item   the item the spell was used on.
 	 */
 	public abstract void effect(Player caster, Item item);
-
+	
 	public abstract boolean canCast(Player caster, Item item);
-
+	
 	@Override
 	public final void effect(Player caster, EntityNode victim) {
 
 	}
-
+	
 	@Override
 	public final boolean prerequisites(Player caster, EntityNode victim) {
 		return true;
 	}
-
+	
 	/**
 	 * @return the spellId
 	 */
 	public int getSpellId() {
 		return spellId;
 	}
-
+	
 	/**
 	 * @return the interfaceId
 	 */

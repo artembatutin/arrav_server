@@ -1,12 +1,12 @@
 package net.edge.world.content.skill.action;
 
+import net.edge.task.Task;
 import net.edge.world.World;
+import net.edge.world.content.skill.SkillData;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.content.skill.SkillData;
-import net.edge.world.model.locale.Position;
-import net.edge.task.Task;
 
 import java.util.Optional;
 import java.util.OptionalInt;

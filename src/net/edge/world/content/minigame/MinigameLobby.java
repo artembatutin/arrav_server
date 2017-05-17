@@ -1,9 +1,9 @@
 package net.edge.world.content.minigame;
 
-import net.edge.world.World;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.task.Task;
 import net.edge.utils.MutableNumber;
+import net.edge.world.World;
+import net.edge.world.model.node.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

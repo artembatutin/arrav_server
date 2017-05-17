@@ -24,7 +24,7 @@ public enum GlacyteData {
 
 	/**
 	 * Constructs a new {@link GlacyteData}.
-	 * @param npcId	{@link #npcId}.
+	 * @param npcId {@link #npcId}.
 	 */
 	private GlacyteData(int npcId) {
 		this.npcId = npcId;

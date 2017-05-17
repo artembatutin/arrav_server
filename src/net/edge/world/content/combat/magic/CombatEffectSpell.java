@@ -1,8 +1,8 @@
 package net.edge.world.content.combat.magic;
 
+import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.entity.EntityNode;
 
 import java.util.Optional;
 

@@ -25,14 +25,14 @@ public final class ButterflyPolicy {
 		this.requirement = requirement;
 		this.experience = experience;
 	}
-
+	
 	/**
 	 * @return the requirement
 	 */
 	public int getRequirement() {
 		return requirement;
 	}
-
+	
 	/**
 	 * @return the experience
 	 */

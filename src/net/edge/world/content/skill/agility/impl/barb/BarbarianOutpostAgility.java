@@ -3,25 +3,25 @@ package net.edge.world.content.skill.agility.impl.barb;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.task.LinkedTaskSequence;
+import net.edge.task.Task;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.agility.AgilityCourse;
+import net.edge.world.content.skill.agility.AgilityCourseType;
 import net.edge.world.content.skill.agility.impl.barb.impl.BalanceBeam;
+import net.edge.world.content.skill.agility.impl.barb.impl.SlideDownRoof;
 import net.edge.world.content.skill.agility.obstacle.ObstacleAction;
 import net.edge.world.content.skill.agility.obstacle.ObstacleType;
 import net.edge.world.content.skill.agility.obstacle.impl.Climbable;
 import net.edge.world.content.skill.agility.obstacle.impl.Movable;
+import net.edge.world.content.skill.agility.obstacle.impl.Walkable;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Animation;
+import net.edge.world.model.node.entity.move.ForcedMovement;
+import net.edge.world.model.node.entity.move.ForcedMovementManager;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.object.ObjectDirection;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.content.skill.agility.AgilityCourseType;
-import net.edge.world.content.skill.agility.impl.barb.impl.SlideDownRoof;
-import net.edge.world.content.skill.agility.obstacle.impl.Walkable;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.move.ForcedMovement;
-import net.edge.world.model.node.entity.move.ForcedMovementManager;
 import net.edge.world.model.node.object.ObjectType;
-import net.edge.task.Task;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -117,10 +117,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 		}),
 		LOG_BALANCE(new int[]{43595}, ObstacleType.LOG_BALANCE, player1 -> new Walkable(new Position(2551, 3546, 0), new Position(2541, 3546, 0), ObstacleType.LOG_BALANCE.getAnimation(), 35, 13.7)),
 
-		OBSTACLE_NET_UP(new int[]{20211}, ObstacleType.NETTING, player1 ->
-				new Climbable(new Position(2539, player1.getPosition().getY(), 0),
-						new Position(2537, player1.getPosition().getY() , 1), ObstacleType.NETTING.getAnimation(),
-						2, 35, 8.2)),
+		OBSTACLE_NET_UP(new int[]{20211}, ObstacleType.NETTING, player1 -> new Climbable(new Position(2539, player1.getPosition().getY(), 0), new Position(2537, player1.getPosition().getY(), 1), ObstacleType.NETTING.getAnimation(), 2, 35, 8.2)),
 
 		BALANCING_LEDGE(new int[]{2302}, ObstacleType.LEDGE, player1 -> new Walkable(new Position(2536, 3547, 1), new Position(2532, 3547, 1), ObstacleType.LEDGE.getAnimation(), 35, 22)),
 		CRUMBLING_WALL(new int[]{1948}, ObstacleType.CRUMBLING_WALL, player1 -> {

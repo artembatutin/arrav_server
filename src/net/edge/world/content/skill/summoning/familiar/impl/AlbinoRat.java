@@ -2,6 +2,7 @@ package net.edge.world.content.skill.summoning.familiar.impl;
 
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
+import net.edge.world.content.skill.summoning.familiar.Familiar;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
@@ -12,7 +13,6 @@ import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemNodeStatic;
 import net.edge.world.model.node.region.Region;
-import net.edge.world.content.skill.summoning.familiar.Familiar;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -69,9 +69,5 @@ public final class AlbinoRat extends Familiar {
 		}
 	}
 	
-	private final NpcDialogue[] RANDOM_DIALOGUE = new NpcDialogue[]{
-			new NpcDialogue(getId(), "Hey boss, we doing to do anything wicked today?"),
-			new NpcDialogue(getId(), "You know, boss, I don't think you're totally into", "this whole 'evil' thing."),
-			new NpcDialogue(getId(), "Hey boss, can we go and loot something now?")
-	};
+	private final NpcDialogue[] RANDOM_DIALOGUE = new NpcDialogue[]{new NpcDialogue(getId(), "Hey boss, we doing to do anything wicked today?"), new NpcDialogue(getId(), "You know, boss, I don't think you're totally into", "this whole 'evil' thing."), new NpcDialogue(getId(), "Hey boss, can we go and loot something now?")};
 }

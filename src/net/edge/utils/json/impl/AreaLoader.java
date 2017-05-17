@@ -5,10 +5,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
-import net.edge.world.model.locale.SquareLocation;
-import net.edge.world.model.locale.area.Area;
 import net.edge.world.World;
 import net.edge.world.model.locale.CircleLocation;
+import net.edge.world.model.locale.SquareLocation;
+import net.edge.world.model.locale.area.Area;
 
 import java.util.ArrayList;
 import java.util.Iterator;

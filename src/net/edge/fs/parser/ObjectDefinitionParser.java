@@ -2,9 +2,9 @@ package net.edge.fs.parser;
 
 import net.edge.fs.Archive;
 import net.edge.fs.FileSystem;
+import net.edge.utils.ByteBufferUtil;
 import net.edge.utils.LoggerUtils;
 import net.edge.world.model.node.object.ObjectDefinition;
-import net.edge.utils.ByteBufferUtil;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

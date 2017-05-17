@@ -1,14 +1,14 @@
 package net.edge.world.content.skill.firemaking.pits;
 
-import java.util.Optional;
-
 import net.edge.utils.TextUtils;
 import net.edge.world.World;
 import net.edge.world.content.skill.firemaking.LogType;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.object.ObjectDirection;
 import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.model.locale.Position;
+
+import java.util.Optional;
 
 /**
  * Represents a single fire pit object.

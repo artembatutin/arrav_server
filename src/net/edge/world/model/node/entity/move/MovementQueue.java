@@ -1,14 +1,14 @@
 package net.edge.world.model.node.entity.move;
 
-import net.edge.world.model.node.NodeType;
-import net.edge.world.model.node.entity.model.Direction;
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.model.locale.Position;
+import net.edge.world.model.node.NodeType;
 import net.edge.world.model.node.entity.EntityNode;
+import net.edge.world.model.node.entity.model.Direction;
 import net.edge.world.model.node.entity.move.path.Path;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.Rights;
-import net.edge.task.Task;
 
 import java.util.Deque;
 import java.util.LinkedList;

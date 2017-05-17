@@ -1,22 +1,22 @@
 package net.edge.world.model.node.entity.update;
 
 import net.edge.net.codec.ByteMessage;
-import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.model.Hit;
+import net.edge.world.model.node.entity.player.Player;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the primary {@link Hit} update block.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class PlayerPrimaryHitUpdateBlock extends PlayerUpdateBlock {
-
+	
 	/**
 	 * Creates a new {@link PlayerPrimaryHitUpdateBlock}.
 	 */
 	public PlayerPrimaryHitUpdateBlock() {
 		super(0x20, UpdateFlag.PRIMARY_HIT);
 	}
-
+	
 	@Override
 	public int write(Player player, Player mob, ByteMessage msg) {
 		Hit hit = mob.getPrimaryHit();

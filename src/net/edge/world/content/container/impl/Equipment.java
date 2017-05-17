@@ -1,15 +1,15 @@
 package net.edge.world.content.container.impl;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.world.content.container.ItemContainerAdapter;
-import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.combat.Combat;
 import net.edge.world.content.combat.weapon.WeaponAnimation;
 import net.edge.world.content.combat.weapon.WeaponInterface;
 import net.edge.world.content.container.ItemContainer;
+import net.edge.world.content.container.ItemContainerAdapter;
 import net.edge.world.content.container.ItemWeightListener;
 import net.edge.world.content.item.Requirement;
 import net.edge.world.content.item.Skillcape;
+import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.ShieldAnimation;
 import net.edge.world.model.node.entity.update.UpdateFlag;

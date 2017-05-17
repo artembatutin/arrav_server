@@ -2,22 +2,22 @@ package net.edge.world.content.combat.ranged;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.utils.rand.RandomUtils;
-import net.edge.world.content.combat.CombatType;
-import net.edge.world.content.combat.weapon.FightType;
-import net.edge.world.content.skill.Skill;
-import net.edge.world.content.skill.Skills;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
 import net.edge.world.World;
 import net.edge.world.content.combat.Combat;
 import net.edge.world.content.combat.CombatSessionData;
+import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
+import net.edge.world.content.combat.weapon.FightType;
+import net.edge.world.content.skill.Skill;
+import net.edge.world.content.skill.Skills;
 import net.edge.world.model.node.entity.EntityNode;
+import net.edge.world.model.node.entity.model.Graphic;
 import net.edge.world.model.node.entity.model.Hit;
 import net.edge.world.model.node.entity.model.Hit.HitIcon;
 import net.edge.world.model.node.entity.model.Hit.HitType;
 import net.edge.world.model.node.entity.model.PoisonType;
+import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemIdentifiers;
 
 /**

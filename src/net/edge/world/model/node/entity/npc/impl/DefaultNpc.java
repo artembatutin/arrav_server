@@ -1,8 +1,8 @@
 package net.edge.world.model.node.entity.npc.impl;
 
 import net.edge.world.World;
-import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.locale.Position;
+import net.edge.world.model.node.entity.npc.Npc;
 
 /**
  * Represents an single {@link Npc} with default npc behavior in the {@link World}.

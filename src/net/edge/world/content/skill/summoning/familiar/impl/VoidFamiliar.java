@@ -1,13 +1,13 @@
 package net.edge.world.content.skill.summoning.familiar.impl;
 
 import net.edge.utils.rand.RandomUtils;
-import net.edge.world.content.skill.summoning.familiar.ability.Teleporter;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
 import net.edge.world.content.skill.summoning.Summoning;
 import net.edge.world.content.skill.summoning.familiar.Familiar;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.ability.Fighter;
 import net.edge.world.content.skill.summoning.familiar.ability.Healer;
+import net.edge.world.content.skill.summoning.familiar.ability.Teleporter;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.specials.SummoningData;

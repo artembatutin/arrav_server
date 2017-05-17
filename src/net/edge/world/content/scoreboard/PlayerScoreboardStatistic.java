@@ -7,7 +7,7 @@ import net.edge.utils.MutableNumber;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class PlayerScoreboardStatistic {
-
+	
 	/**
 	 * The username for this statistic holder.
 	 */
@@ -35,11 +35,11 @@ public final class PlayerScoreboardStatistic {
 	
 	/**
 	 * Constructs a new {@link PlayerScoreboardStatistic}.
-	 * @param username			{@link #username}.
-	 * @param highestKillstreak	{@link #highestKillstreak}.
-	 * @param currentKillstreak	{@link #currentKillstreak}.
-	 * @param kills				{@link #kills}.
-	 * @param deaths			{@link #deaths}.
+	 * @param username          {@link #username}.
+	 * @param highestKillstreak {@link #highestKillstreak}.
+	 * @param currentKillstreak {@link #currentKillstreak}.
+	 * @param kills             {@link #kills}.
+	 * @param deaths            {@link #deaths}.
 	 */
 	public PlayerScoreboardStatistic(String username, int highestKillstreak, int currentKillstreak, int kills, int deaths) {
 		this.username = username;
@@ -63,21 +63,21 @@ public final class PlayerScoreboardStatistic {
 	public String getUsername() {
 		return username;
 	}
-
+	
 	/**
 	 * @return the kills
 	 */
 	public MutableNumber getKills() {
 		return kills;
 	}
-
+	
 	/**
 	 * @return the deaths
 	 */
 	public MutableNumber getDeaths() {
 		return deaths;
 	}
-
+	
 	/**
 	 * @return the highest killstreak
 	 */

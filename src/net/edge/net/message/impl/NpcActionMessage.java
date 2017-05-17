@@ -2,6 +2,7 @@ package net.edge.net.message.impl;
 
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
+import net.edge.net.codec.ByteTransform;
 import net.edge.net.database.connection.use.Donating;
 import net.edge.net.message.InputMessageListener;
 import net.edge.utils.Utility;
@@ -14,6 +15,8 @@ import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.dialogue.impl.PlayerDialogue;
 import net.edge.world.content.dialogue.impl.StatementDialogue;
 import net.edge.world.content.dialogue.test.DialogueAppender;
+import net.edge.world.content.item.Skillcape;
+import net.edge.world.content.market.MarketCounter;
 import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.pets.Pet;
 import net.edge.world.content.shootingstar.StarSprite;
@@ -22,21 +25,18 @@ import net.edge.world.content.skill.fishing.Fishing;
 import net.edge.world.content.skill.fishing.Tool;
 import net.edge.world.content.skill.hunter.butterfly.ButterflyCatching;
 import net.edge.world.content.skill.slayer.Slayer;
+import net.edge.world.content.skill.summoning.Summoning;
+import net.edge.world.content.skill.thieving.impl.Pickpocketing;
 import net.edge.world.content.teleport.impl.AuburyTeleport;
 import net.edge.world.model.locale.Boundary;
+import net.edge.world.model.locale.Location;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.npc.NpcDefinition;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.content.market.MarketCounter;
-import net.edge.world.content.item.Skillcape;
-import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.content.skill.thieving.impl.Pickpocketing;
-import net.edge.world.model.locale.Location;
-import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.player.assets.Rights;
-import net.edge.net.codec.ByteTransform;
+import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
 
 import java.util.Optional;
 
@@ -147,20 +147,20 @@ public final class NpcActionMessage implements InputMessageListener {
 						DialogueAppender a = new DialogueAppender(player);
 						a.chain(new NpcDialogue(669, "Hey " + player.getFormatUsername() + ", what do you need?"));
 						a.chain(new OptionDialogue(t -> {
-								if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-									a.getBuilder().skip();
-								} else {
-									a.getBuilder().advance();
-								}
-							}, "Open shop", "Nevermind"));
+							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+								a.getBuilder().skip();
+							} else {
+								a.getBuilder().advance();
+							}
+						}, "Open shop", "Nevermind"));
 						a.chain(new PlayerDialogue("Nevermind, I forgot what I wanted to ask.").attachAfter(() -> player.getMessages().sendCloseWindows()));
 						a.chain(new PlayerDialogue("Can I see your shop?"));
 						a.chain(new NpcDialogue(669, "Ofcourse!").attachAfter(() -> MarketCounter.getShops().get(0).openShop(player)));
 						a.start();
-					break;
+						break;
 					case 604:
 						player.getDialogueBuilder().append(new NpcDialogue(604, "Beautiful day in this dark cave, isn't it?"));
-					break;
+						break;
 					case 4946:
 						DialogueAppender ap = new DialogueAppender(player);
 						boolean active = World.getFirepitEvent().getFirepit().isActive();
@@ -183,7 +183,7 @@ public final class NpcActionMessage implements InputMessageListener {
 						ap.chain(new PlayerDialogue("Ah, yeah I think I understand the concept now."));
 						ap.chain(new NpcDialogue(4946, "Aha, if you think you have any ideas to improve the concept", "feel free to make a suggestion on the forums!"));
 						ap.chain(new PlayerDialogue("Will do!").attachAfter(() -> player.getMessages().sendCloseWindows()));
-						ap.chain(new PlayerDialogue(active ? "Howlong till the event ends?" : "Howmany logs does the fire pit have?")); 
+						ap.chain(new PlayerDialogue(active ? "Howlong till the event ends?" : "Howmany logs does the fire pit have?"));
 						String[] messages = active ? new String[]{"The event is active for another:", Utility.convertTime(World.getFirepitEvent().getFirepit().getTime())} : new String[]{"Fire pit: " + World.getFirepitEvent().getFirepit().getCount() + "/1000 logs.", "The minimum log that's sacrificable: " + World.getFirepitEvent().getFirepit().getLogRequirement()};
 						ap.chain(new StatementDialogue(messages).attachAfter(() -> player.getMessages().sendCloseWindows()));
 						ap.chain(new PlayerDialogue("Do you sell anything?"));
@@ -364,10 +364,10 @@ public final class NpcActionMessage implements InputMessageListener {
 					case 7605:
 						MarketCounter.getShops().get(22).openShop(player);
 						break;
-						
+					
 					case 669://hazelmere
 						MarketCounter.getShops().get(0).openShop(player);
-					break;
+						break;
 					case 659://party guy
 						MarketCounter.getShops().get(1).openShop(player);
 						break;

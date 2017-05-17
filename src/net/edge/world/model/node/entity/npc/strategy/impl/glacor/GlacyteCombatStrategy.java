@@ -1,36 +1,36 @@
 package net.edge.world.model.node.entity.npc.strategy.impl.glacor;
 
-import java.util.Arrays;
-
-import net.edge.world.content.combat.CombatType;
-import net.edge.world.content.skill.Skills;
-import net.edge.world.model.node.entity.npc.strategy.DynamicCombatStrategy;
 import net.edge.world.World;
 import net.edge.world.content.combat.CombatSessionData;
+import net.edge.world.content.combat.CombatType;
+import net.edge.world.content.skill.Skills;
 import net.edge.world.model.node.entity.EntityNode;
 import net.edge.world.model.node.entity.npc.impl.glacor.GlacorExplodeTask;
 import net.edge.world.model.node.entity.npc.impl.glacor.Glacyte;
 import net.edge.world.model.node.entity.npc.impl.glacor.GlacyteData;
+import net.edge.world.model.node.entity.npc.strategy.DynamicCombatStrategy;
+
+import java.util.Arrays;
 
 /**
  * The combat strategy for glacytes.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class GlacyteCombatStrategy extends DynamicCombatStrategy<Glacyte> {
-
+	
 	/**
 	 * Constructs a new {@link GlacyteCombatStrategy}.
-	 * @param npc	the npc to create this strategy for.
+	 * @param npc the npc to create this strategy for.
 	 */
 	public GlacyteCombatStrategy(Glacyte npc) {
 		super(npc);
 	}
-
+	
 	@Override
 	public boolean canOutgoingAttack(EntityNode victim) {
 		return victim.isPlayer();
 	}
-
+	
 	@Override
 	public CombatSessionData outgoingAttack(EntityNode victim) {
 		CombatSessionData session = new CombatSessionData(npc, victim, 1, CombatType.MELEE, true);
@@ -41,7 +41,7 @@ public final class GlacyteCombatStrategy extends DynamicCombatStrategy<Glacyte> 
 			}
 			
 			int special = npc.getSpecial().getAsInt();
-
+			
 			if(special == 100) {
 				session.ignore();
 				World.submit(new GlacorExplodeTask(victim.toPlayer(), npc, false));
@@ -71,7 +71,6 @@ public final class GlacyteCombatStrategy extends DynamicCombatStrategy<Glacyte> 
 				Arrays.stream(data.getHits()).forEach(h -> h.setDamage(h.getDamage() / 2));
 			}
 			
-			
 		}
 	}
 	
@@ -84,5 +83,5 @@ public final class GlacyteCombatStrategy extends DynamicCombatStrategy<Glacyte> 
 	public int attackDistance() {
 		return 1;
 	}
-
+	
 }

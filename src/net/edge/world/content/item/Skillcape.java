@@ -172,7 +172,7 @@ public enum Skillcape {
 	/**
 	 * Attempts to reward the player by giving him the skillcape.
 	 * @param player the player to give the skillcape to.
-	 * @param item  the item id.
+	 * @param item   the item id.
 	 * @return {@code true} if the player got into the dialogue stage, {@code false} otherwise.
 	 */
 	public static boolean buy(Player player, int item) {

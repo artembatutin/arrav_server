@@ -1,8 +1,8 @@
 package net.edge.world.content.market;
 
+import net.edge.utils.json.JsonSaver;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.ItemDefinition;
-import net.edge.utils.json.JsonSaver;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -65,14 +65,14 @@ public class MarketItem {
 	
 	/**
 	 * Creating the {@link MarketItem}.
-	 * @param id the id of this item.
-	 * @param value the value of this item.
-	 * @param price the price of this item.
-	 * @param stock the stock amount of this item.
-	 * @param demand the demand of this item.
-	 * @param variable the variable condition.
+	 * @param id             the id of this item.
+	 * @param value          the value of this item.
+	 * @param price          the price of this item.
+	 * @param stock          the stock amount of this item.
+	 * @param demand         the demand of this item.
+	 * @param variable       the variable condition.
 	 * @param unlimitedStock the unlimitedStock condition.
-	 * @param isSearchable the isSearchable condition.
+	 * @param isSearchable   the isSearchable condition.
 	 */
 	public MarketItem(int id, int value, int price, int stock, int demand, boolean variable, boolean unlimitedStock, boolean isSearchable) {
 		this.id = id;
@@ -102,7 +102,7 @@ public class MarketItem {
 	 */
 	public static int[] search(Player player, String search) {
 		//searching by id.
-		if (search.matches("[0-9]+") && search.length() > 0) {
+		if(search.matches("[0-9]+") && search.length() > 0) {
 			int[] item = new int[1];
 			int id = Integer.parseInt(search);
 			if(!valid(id)) {
@@ -158,7 +158,6 @@ public class MarketItem {
 			p.getMessages().sendShopItemPrice(this);
 		}
 	}
-	
 	
 	/**
 	 * Serializes the market items.
@@ -269,7 +268,6 @@ public class MarketItem {
 			increasePrice(0.01);
 		}
 	}
-	
 	
 	public int getDemand() {
 		return demand;

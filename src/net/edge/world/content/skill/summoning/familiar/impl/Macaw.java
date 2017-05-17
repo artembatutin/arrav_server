@@ -4,14 +4,14 @@ import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.dialogue.impl.StatementDialogue;
+import net.edge.world.content.skill.summoning.Summoning;
+import net.edge.world.content.skill.summoning.familiar.Familiar;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.specials.SummoningData;
 import net.edge.world.model.node.entity.npc.Npc;
 import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.content.skill.summoning.familiar.Familiar;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -21,14 +21,14 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Macaw extends Familiar {
-
+	
 	/**
 	 * Constructs a new {@link Macaw}.
 	 */
 	public Macaw() {
 		super(SummoningData.MACAW);
 	}
-
+	
 	private final ForagerPassiveAbility ability = new ForagerPassiveAbility(199, 201, 203, 205) {
 		@Override
 		public boolean canForage(Player player) {
@@ -38,22 +38,22 @@ public final class Macaw extends Familiar {
 			return true;
 		}
 	};
-
+	
 	@Override
 	public FamiliarAbility getAbilityType() {
 		return ability;
 	}
-
+	
 	@Override
 	public Optional<PassiveAbility> getPassiveAbility() {
 		return Optional.empty();
 	}
-
+	
 	@Override
 	public boolean isCombatic() {
 		return false;
 	}
-
+	
 	@Override
 	public void interact(Player player, Npc npc, int id) {
 		if(id == 1) {
@@ -72,10 +72,7 @@ public final class Macaw extends Familiar {
 			Summoning.openBeastOfBurden(player, npc);
 		}
 	}
-
-	private final String[] RANDOM_DIALOGUE = new String[] {
-			"Awk! Gimme the rum! Gimme the rum!",
-			"Awk! I'm a pirate! Awk! Yo, ho ho!"
-	};
-
+	
+	private final String[] RANDOM_DIALOGUE = new String[]{"Awk! Gimme the rum! Gimme the rum!", "Awk! I'm a pirate! Awk! Yo, ho ho!"};
+	
 }

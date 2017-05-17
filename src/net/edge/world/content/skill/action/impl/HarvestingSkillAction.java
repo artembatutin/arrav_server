@@ -1,14 +1,14 @@
 package net.edge.world.content.skill.action.impl;
 
 import com.google.common.base.Preconditions;
+import net.edge.task.Task;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.skill.Skills;
+import net.edge.world.content.skill.action.SkillAction;
+import net.edge.world.model.locale.Position;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.skill.action.SkillAction;
-import net.edge.world.model.locale.Position;
-import net.edge.task.Task;
 
 import java.util.Optional;
 
@@ -27,7 +27,7 @@ import java.util.Optional;
  * @see ProducingSkillAction
  */
 public abstract class HarvestingSkillAction extends SkillAction {
-
+	
 	/**
 	 * The factor boost that determines the success rate for harvesting based on
 	 * skill level. The higher the number the less frequently harvest will be
@@ -35,7 +35,7 @@ public abstract class HarvestingSkillAction extends SkillAction {
 	 * throw an {@link IllegalStateException}.
 	 */
 	private static final int SUCCESS_FACTOR = 10;
-
+	
 	/**
 	 * Creates a new {@link HarvestingSkillAction}.
 	 * @param player   the player this skill action is for.
@@ -44,7 +44,7 @@ public abstract class HarvestingSkillAction extends SkillAction {
 	public HarvestingSkillAction(Player player, Optional<Position> position) {
 		super(player, position);
 	}
-
+	
 	@Override
 	public final boolean canRun(Task t) {
 		Optional<Item[]> removeItems = removeItems();
@@ -60,7 +60,7 @@ public abstract class HarvestingSkillAction extends SkillAction {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public final void execute(Task t) {
 		Preconditions.checkState(SUCCESS_FACTOR >= 0 && SUCCESS_FACTOR <= 99, "Invalid success factor for harvesting!");
@@ -69,7 +69,7 @@ public abstract class HarvestingSkillAction extends SkillAction {
 		if(RandomUtils.success((successFactor() + boost))) {
 			Optional<Item[]> removeItems = removeItems();
 			Item[] harvestItems = harvestItems();
-
+			
 			for(Item item : harvestItems) {
 				getPlayer().getInventory().add(item);
 				getPlayer().message("You get some " + item.getDefinition().getName() + ".");
@@ -79,17 +79,17 @@ public abstract class HarvestingSkillAction extends SkillAction {
 			onHarvest(t, harvestItems, true);
 		}
 	}
-
+	
 	@Override
 	public int delay() {
 		return 1;
 	}
-
+	
 	@Override
 	public Optional<ActivityManager.ActivityType[]> onDisable() {
 		return Optional.of(new ActivityManager.ActivityType[]{ActivityManager.ActivityType.WALKING, ActivityManager.ActivityType.TELEPORT});
 	}
-
+	
 	/**
 	 * The method executed upon harvest of the items.
 	 * @param t       the task executing this method.
@@ -99,26 +99,26 @@ public abstract class HarvestingSkillAction extends SkillAction {
 	public void onHarvest(Task t, Item[] items, boolean success) {
 
 	}
-
+	
 	/**
 	 * The success factor for the harvest. The higher the number means the more
 	 * frequently harvest will be obtained.
 	 * @return the success factor.
 	 */
 	public abstract double successFactor();
-
+	
 	/**
 	 * The items to be removed upon a successful harvest.
 	 * @return the items to be removed.
 	 */
 	public abstract Optional<Item[]> removeItems();
-
+	
 	/**
 	 * The items to be harvested upon a successful harvest.
 	 * @return the items to be harvested.
 	 */
 	public abstract Item[] harvestItems();
-
+	
 	@Override
 	public boolean isPrioritized() {
 		return false;

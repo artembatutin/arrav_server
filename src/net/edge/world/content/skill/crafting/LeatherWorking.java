@@ -1,13 +1,13 @@
 package net.edge.world.content.skill.crafting;
 
 import com.google.common.collect.ImmutableMap;
+import net.edge.task.Task;
 import net.edge.utils.TextUtils;
+import net.edge.world.content.skill.SkillData;
+import net.edge.world.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.model.node.entity.model.Animation;
 import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.item.Item;
-import net.edge.world.content.skill.SkillData;
-import net.edge.world.content.skill.action.impl.ProducingSkillAction;
-import net.edge.task.Task;
 
 import java.util.Optional;
 import java.util.function.Function;

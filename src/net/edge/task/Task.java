@@ -9,32 +9,32 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @author lare96 <http://github.org/lare96>
  */
 public abstract class Task {
-
+	
 	/**
 	 * If this {@code Task} executes upon being submitted.
 	 */
 	private final boolean instant;
-
+	
 	/**
 	 * The dynamic delay of this {@code Task}.
 	 */
 	private int delay;
-
+	
 	/**
 	 * If this {@code Task} is currently running.
 	 */
 	private boolean running;
-
+	
 	/**
 	 * A counter that determines when this {@code Task} is ready to execute.
 	 */
 	private int counter;
-
+	
 	/**
 	 * An attachment for this {@code Task} instance.
 	 */
 	private Optional<Object> key = Optional.empty();
-
+	
 	/**
 	 * Creates a new {@link Task}.
 	 * @param instant If this {@code Task} executes upon being submitted.
@@ -46,7 +46,7 @@ public abstract class Task {
 		this.instant = instant;
 		this.delay = delay;
 	}
-
+	
 	/**
 	 * Creates a new {@link Task} that doesn't execute instantly.
 	 * @param delay The dynamic delay of this {@code Task}.
@@ -54,12 +54,12 @@ public abstract class Task {
 	public Task(int delay) {
 		this(delay, false);
 	}
-
+	
 	/**
 	 * A function executed when the {@code counter} reaches the {@code delay}.
 	 */
 	protected abstract void execute();
-
+	
 	/**
 	 * Determines if this {@code Task} is ready to execute.
 	 * @return {@code true} if this {@code Task} can execute, {@code false} otherwise.
@@ -71,7 +71,7 @@ public abstract class Task {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Cancels this {@code Task}. If this {@code Task} is already cancelled, does nothing.
 	 */
@@ -81,35 +81,35 @@ public abstract class Task {
 			running = false;
 		}
 	}
-
+	
 	/**
 	 * Returns the flag which detemines if the task can be executed on the sequence.
 	 */
 	public boolean canExecute() {
 		return true;
 	}
-
+	
 	/**
 	 * The method executed when this task is submitted to the task manager.
 	 */
 	protected void onSubmit() {
-
+	
 	}
-
+	
 	/**
 	 * The method executed every {@code 600}ms when this task is sequenced.
 	 */
 	protected void onSequence() {
-
+	
 	}
-
+	
 	/**
 	 * The method executed when this task is cancelled using {@code cancel()}.
 	 */
 	protected void onCancel() {
-
+	
 	}
-
+	
 	/**
 	 * A function executed when this {@code Task} throws an {@code Exception}.
 	 * @param e The {@code Exception} thrown by this {@code Task}.
@@ -117,7 +117,7 @@ public abstract class Task {
 	public void onException(Exception e) {
 		e.printStackTrace();
 	}
-
+	
 	/**
 	 * Attaches {@code newKey} to this {@code Task}. The equivalent of doing {@code Optional.ofNullable(newKey)}.
 	 * @param newKey The new key to attach to this {@code Task}.
@@ -127,14 +127,14 @@ public abstract class Task {
 		key = Optional.ofNullable(newKey);
 		return this;
 	}
-
+	
 	/**
 	 * @return {@code true} if this {@code Task} executes upon being submitted, {@code false} otherwise.
 	 */
 	public boolean isInstant() {
 		return instant;
 	}
-
+	
 	/**
 	 * Gets the counter of this task.
 	 * @return the counter.
@@ -142,35 +142,35 @@ public abstract class Task {
 	public int getCounter() {
 		return counter;
 	}
-
+	
 	/**
 	 * @return The dynamic delay of this {@code Task}.
 	 */
 	public int getDelay() {
 		return delay;
 	}
-
+	
 	/**
 	 * Sets the delay of this {@code Task} to {@code delay}.
 	 */
 	public void setDelay(int delay) {
 		this.delay = delay;
 	}
-
+	
 	/**
 	 * @return {@code true} if this {@code Task} is running, {@code false} otherwise.
 	 */
 	public boolean isRunning() {
 		return running;
 	}
-
+	
 	/**
 	 * Sets the running flag for this {@link Task}.
 	 */
 	public void setRunning(boolean running) {
 		this.running = running;
 	}
-
+	
 	/**
 	 * @return The attachment for this {@code Task} instance.
 	 */

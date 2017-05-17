@@ -1,6 +1,8 @@
 package net.edge.net.message.impl;
 
 import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.ByteTransform;
+import net.edge.net.message.InputMessageListener;
 import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.pets.Pet;
 import net.edge.world.model.node.entity.player.Player;
@@ -9,8 +11,6 @@ import net.edge.world.model.node.item.Item;
 import net.edge.world.model.node.item.ItemDefinition;
 import net.edge.world.model.node.item.ItemNode;
 import net.edge.world.model.node.region.Region;
-import net.edge.net.codec.ByteTransform;
-import net.edge.net.message.InputMessageListener;
 
 /**
  * The message sent from the client when the player drops an item.
@@ -54,9 +54,10 @@ public final class DropItemMessage implements InputMessageListener {
 			player.getMessages().sendChatInterface(14170);
 			return;
 		}
-
-		if(player.getSkillActionTask().isPresent()) player.getSkillActionTask().get().cancel();
-
+		
+		if(player.getSkillActionTask().isPresent())
+			player.getSkillActionTask().get().cancel();
+		
 		int amount = ItemDefinition.DEFINITIONS[id].isStackable() ? item.getAmount() : 1;
 		player.getInventory().remove(new Item(id, amount), slot);
 		Region region = player.getRegion();
