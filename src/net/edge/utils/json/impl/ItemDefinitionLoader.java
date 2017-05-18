@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
 import net.edge.world.content.container.impl.EquipmentType;
-import net.edge.world.model.node.item.ItemDefinition;
+import net.edge.world.node.item.ItemDefinition;
 
 import java.util.Objects;
 

@@ -2,7 +2,7 @@ package net.edge.world.content.dialogue.test;
 
 import net.edge.world.content.dialogue.Dialogue;
 import net.edge.world.content.dialogue.DialogueBuilder;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

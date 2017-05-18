@@ -3,7 +3,7 @@ package net.edge.world.content.skill;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.utils.TextUtils;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.EnumSet;
 import java.util.Optional;

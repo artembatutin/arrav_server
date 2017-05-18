@@ -28,15 +28,15 @@ import net.edge.world.content.skill.slayer.Slayer;
 import net.edge.world.content.skill.summoning.Summoning;
 import net.edge.world.content.skill.thieving.impl.Pickpocketing;
 import net.edge.world.content.teleport.impl.AuburyTeleport;
-import net.edge.world.model.locale.Boundary;
-import net.edge.world.model.locale.Location;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.npc.NpcDefinition;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Location;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.npc.NpcDefinition;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 
 import java.util.Optional;
 

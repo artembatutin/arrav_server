@@ -3,9 +3,9 @@ package net.edge.world.content.combat.strategy.armadyl;
 import net.edge.world.content.combat.CombatSessionData;
 import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.strategy.CombatStrategy;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.npc.impl.gwd.KreeArra;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.npc.impl.gwd.KreeArra;
 
 /**
  * Represents the flight kilisa combat strategy.

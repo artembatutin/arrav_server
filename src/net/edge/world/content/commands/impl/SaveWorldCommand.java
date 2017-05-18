@@ -3,9 +3,9 @@ package net.edge.world.content.commands.impl;
 import net.edge.world.World;
 import net.edge.world.content.commands.Command;
 import net.edge.world.content.commands.CommandSignature;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.PlayerSerialization;
-import net.edge.world.model.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.PlayerSerialization;
+import net.edge.world.node.entity.player.assets.Rights;
 
 @CommandSignature(alias = {"save"}, rights = {Rights.DEVELOPER, Rights.ADMINISTRATOR}, syntax = "Use this command as just ::save")
 public final class SaveWorldCommand implements Command {

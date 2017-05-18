@@ -12,9 +12,9 @@ import net.edge.world.content.container.session.ExchangeSession;
 import net.edge.world.content.container.session.impl.DuelSession;
 import net.edge.world.content.minigame.Minigame;
 import net.edge.world.content.minigame.MinigameHandler;
-import net.edge.world.model.locale.Location;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.locale.Location;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 
 import java.util.Optional;
 

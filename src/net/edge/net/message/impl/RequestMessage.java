@@ -8,8 +8,8 @@ import net.edge.world.content.container.session.ExchangeSession;
 import net.edge.world.content.container.session.impl.DuelSession;
 import net.edge.world.content.container.session.impl.TradeSession;
 import net.edge.world.content.minigame.MinigameHandler;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 
 /**
  * The message sent from the client when a player sends some sort of request to

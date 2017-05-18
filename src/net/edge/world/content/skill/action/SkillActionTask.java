@@ -1,8 +1,8 @@
 package net.edge.world.content.skill.action;
 
 import net.edge.task.Task;
-import net.edge.world.model.node.NodeState;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.NodeState;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.Optional;
 

@@ -3,8 +3,8 @@ package net.edge.net.message.impl;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.message.InputMessageListener;
 import net.edge.world.content.quest.QuestManager;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 
 /**
  * The message that is sent from the client when the player chats anything

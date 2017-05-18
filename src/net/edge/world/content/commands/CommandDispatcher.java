@@ -3,7 +3,7 @@ package net.edge.world.content.commands;
 import net.edge.utils.LoggerUtils;
 import net.edge.utils.Utility;
 import net.edge.world.World;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.IncompleteAnnotationException;

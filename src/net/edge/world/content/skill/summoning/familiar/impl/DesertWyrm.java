@@ -9,11 +9,11 @@ import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerRightClickAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.specials.SummoningData;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.object.ObjectNode;
 
 import java.util.Optional;
 import java.util.Set;

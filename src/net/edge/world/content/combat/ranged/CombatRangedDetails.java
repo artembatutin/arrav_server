@@ -3,9 +3,9 @@ package net.edge.world.content.combat.ranged;
 import net.edge.utils.TextUtils;
 import net.edge.world.content.combat.weapon.FightStyle;
 import net.edge.world.content.container.impl.Equipment;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemDefinition;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemDefinition;
 
 import java.util.Arrays;
 import java.util.HashMap;

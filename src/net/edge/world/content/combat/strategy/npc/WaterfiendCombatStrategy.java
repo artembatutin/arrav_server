@@ -3,7 +3,7 @@ package net.edge.world.content.combat.strategy.npc;
 import net.edge.world.content.combat.CombatSessionData;
 import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.strategy.CombatStrategy;
-import net.edge.world.model.node.entity.EntityNode;
+import net.edge.world.node.entity.EntityNode;
 
 public final class WaterfiendCombatStrategy implements CombatStrategy {
 	

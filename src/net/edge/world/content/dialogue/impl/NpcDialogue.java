@@ -4,7 +4,7 @@ import net.edge.world.content.dialogue.Dialogue;
 import net.edge.world.content.dialogue.DialogueBuilder;
 import net.edge.world.content.dialogue.DialogueType;
 import net.edge.world.content.dialogue.Expression;
-import net.edge.world.model.node.entity.npc.NpcDefinition;
+import net.edge.world.node.entity.npc.NpcDefinition;
 
 /**
  * The dialogue chain entry that sends the player a dialogue from an NPC.

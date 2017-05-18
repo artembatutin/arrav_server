@@ -9,9 +9,9 @@ import net.edge.world.content.skill.agility.obstacle.ObstacleType;
 import net.edge.world.content.skill.agility.obstacle.impl.Movable;
 import net.edge.world.content.skill.agility.obstacle.impl.Steppable;
 import net.edge.world.content.skill.agility.obstacle.impl.Walkable;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.object.ObjectNode;
 
 import java.util.EnumSet;
 import java.util.Optional;

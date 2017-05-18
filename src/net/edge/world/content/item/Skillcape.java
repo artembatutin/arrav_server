@@ -9,10 +9,10 @@ import net.edge.world.content.dialogue.impl.NpcDialogue;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.dialogue.impl.PlayerDialogue;
 import net.edge.world.content.skill.Skills;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.EnumSet;
 import java.util.Optional;

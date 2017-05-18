@@ -1,6 +1,6 @@
 package net.edge.world.content.skill.agility.obstacle;
 
-import net.edge.world.model.node.entity.model.Animation;
+import net.edge.world.node.entity.model.Animation;
 
 import java.util.Optional;
 

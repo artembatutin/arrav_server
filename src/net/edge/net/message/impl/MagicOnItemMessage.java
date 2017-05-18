@@ -6,11 +6,11 @@ import net.edge.net.message.InputMessageListener;
 import net.edge.utils.Stopwatch;
 import net.edge.world.content.combat.magic.lunars.LunarSpells;
 import net.edge.world.content.skill.magic.Enchanting;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager.ActivityType;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemDefinition;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager.ActivityType;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemDefinition;
 
 /**
  * The message sent from the client when a player uses magic on an inventory item.

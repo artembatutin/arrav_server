@@ -13,13 +13,13 @@ import net.edge.world.content.skill.crafting.Spinning;
 import net.edge.world.content.skill.firemaking.Bonfire;
 import net.edge.world.content.skill.prayer.PrayerBoneAltar;
 import net.edge.world.content.skill.smithing.Smithing;
-import net.edge.world.model.locale.Boundary;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.object.ObjectNode;
 
 import java.util.Optional;
 

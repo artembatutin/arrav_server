@@ -1,7 +1,7 @@
 package net.edge.world.content.container.impl.bank;
 
 import net.edge.world.content.container.ItemContainerAdapter;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 /**
  * An {@link ItemContainerAdapter} implementation that listens for changes to the bank.

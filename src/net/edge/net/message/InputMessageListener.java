@@ -1,7 +1,7 @@
 package net.edge.net.message;
 
 import net.edge.net.codec.ByteMessage;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 /**
  * The listener for {@link InputMessage}s that will handle logic for incoming

@@ -7,12 +7,12 @@ import net.edge.world.content.TabInterface;
 import net.edge.world.content.dialogue.Expression;
 import net.edge.world.content.item.FoodConsumable;
 import net.edge.world.content.skill.summoning.familiar.Familiar;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.npc.impl.Follower;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.npc.impl.Follower;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.Arrays;
 import java.util.Optional;

@@ -1,8 +1,8 @@
 package net.edge.world.content.clanchat;
 
 import net.edge.world.World;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 
 import java.util.Objects;
 import java.util.Optional;

@@ -1,8 +1,8 @@
 package net.edge.world.content;
 
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.node.entity.player.Player;
 
 /**
  * An enumeration of emotes.

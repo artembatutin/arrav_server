@@ -12,15 +12,15 @@ import net.edge.world.content.combat.weapon.WeaponAnimation;
 import net.edge.world.content.combat.weapon.WeaponInterface;
 import net.edge.world.content.container.impl.Equipment;
 import net.edge.world.content.minigame.MinigameHandler;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.model.Animation.AnimationPriority;
-import net.edge.world.model.node.entity.model.Projectile;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.update.UpdateFlag;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemIdentifiers;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.model.Animation.AnimationPriority;
+import net.edge.world.node.entity.model.Projectile;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.update.UpdateFlag;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemIdentifiers;
 
 /**
  * The strategy class which holds support for ranged combat.

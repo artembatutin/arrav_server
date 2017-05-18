@@ -1,7 +1,7 @@
 package net.edge.world.content.dialogue;
 
 import net.edge.world.content.dialogue.test.DialogueAppender;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 /**
  * The concrete class which represents a contract each conversation should bind

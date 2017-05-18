@@ -1,6 +1,6 @@
 package net.edge.world.content.skill.agility.obstacle;
 
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 /**
  * The Obstacle Policy each obstacle should implement and bond to.

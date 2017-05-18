@@ -1,8 +1,8 @@
 package net.edge.world.content.container;
 
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemDefinition;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemDefinition;
 
 import java.util.Objects;
 import java.util.Optional;

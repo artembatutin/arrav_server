@@ -1,7 +1,7 @@
 package net.edge.world.content.combat.strategy;
 
 import net.edge.world.content.combat.CombatSessionData;
-import net.edge.world.model.node.entity.EntityNode;
+import net.edge.world.node.entity.EntityNode;
 
 /**
  * The blueprint of a combat session that determines how a character will act in

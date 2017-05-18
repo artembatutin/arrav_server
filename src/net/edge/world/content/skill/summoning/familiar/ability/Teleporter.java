@@ -2,8 +2,8 @@ package net.edge.world.content.skill.summoning.familiar.ability;
 
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.teleport.impl.DefaultTeleportSpell.TeleportType;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.Optional;
 

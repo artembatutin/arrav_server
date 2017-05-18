@@ -2,8 +2,8 @@ package net.edge.world.content.combat.weapon;
 
 import net.edge.world.content.TabInterface;
 import net.edge.world.content.combat.special.CombatSpecial;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.HashMap;
 import java.util.Map;

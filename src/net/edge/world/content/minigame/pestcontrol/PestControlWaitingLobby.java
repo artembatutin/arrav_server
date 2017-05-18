@@ -1,7 +1,7 @@
 package net.edge.world.content.minigame.pestcontrol;
 
 import net.edge.world.content.minigame.MinigameLobby;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.List;
 

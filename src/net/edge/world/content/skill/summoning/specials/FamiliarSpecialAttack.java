@@ -1,7 +1,7 @@
 package net.edge.world.content.skill.summoning.specials;
 
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.model.Graphic;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.model.Graphic;
 
 import java.util.Optional;
 

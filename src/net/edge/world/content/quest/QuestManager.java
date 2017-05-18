@@ -2,7 +2,7 @@ package net.edge.world.content.quest;
 
 import net.edge.world.content.PlayerPanel;
 import net.edge.world.content.quest.impl.HalloweenQuest;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.Arrays;
 import java.util.HashMap;

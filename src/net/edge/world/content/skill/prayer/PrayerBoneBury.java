@@ -3,9 +3,9 @@ package net.edge.world.content.skill.prayer;
 import net.edge.task.Task;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.action.impl.DestructionSkillAction;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.Optional;
 

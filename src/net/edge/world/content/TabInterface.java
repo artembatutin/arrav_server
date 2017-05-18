@@ -1,6 +1,6 @@
 package net.edge.world.content;
 
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 /**
  * An enumeration of tab interfaces.

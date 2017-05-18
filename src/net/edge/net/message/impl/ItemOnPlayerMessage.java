@@ -5,9 +5,9 @@ import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.message.InputMessageListener;
 import net.edge.world.World;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.item.Item;
 
 /**
  * The message sent from the client when a player uses an item on another player.

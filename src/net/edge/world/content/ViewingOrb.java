@@ -1,8 +1,8 @@
 package net.edge.world.content;
 
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.update.UpdateFlag;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.update.UpdateFlag;
 
 import java.util.stream.IntStream;
 

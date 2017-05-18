@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
 import net.edge.world.content.combat.effect.CombatPoisonEffect;
-import net.edge.world.model.node.entity.model.PoisonType;
+import net.edge.world.node.entity.model.PoisonType;
 
 import java.util.Objects;
 

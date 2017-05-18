@@ -5,10 +5,10 @@ import net.edge.utils.TextUtils;
 import net.edge.world.content.container.ItemContainer;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.action.SkillAction;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.item.Item;
 
 import java.util.Optional;
 

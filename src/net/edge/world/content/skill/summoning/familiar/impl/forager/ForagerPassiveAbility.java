@@ -4,8 +4,8 @@ import net.edge.task.Task;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.content.skill.summoning.familiar.ability.Forager;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.Optional;
 

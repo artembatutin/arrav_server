@@ -4,7 +4,7 @@ import net.edge.utils.ActionListener;
 import net.edge.world.content.dialogue.Dialogue;
 import net.edge.world.content.dialogue.DialogueBuilder;
 import net.edge.world.content.dialogue.DialogueType;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.item.Item;
 
 import java.util.Optional;
 

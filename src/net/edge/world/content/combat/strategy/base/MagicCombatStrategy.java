@@ -7,9 +7,9 @@ import net.edge.world.content.combat.magic.CombatSpell;
 import net.edge.world.content.combat.special.CombatSpecial;
 import net.edge.world.content.combat.strategy.CombatStrategy;
 import net.edge.world.content.minigame.MinigameHandler;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.player.Player;
 
 public final class MagicCombatStrategy implements CombatStrategy {
 	

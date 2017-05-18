@@ -10,15 +10,15 @@ import net.edge.world.content.combat.ranged.CombatRangedDetails.CombatRangedWeap
 import net.edge.world.content.combat.weapon.FightType;
 import net.edge.world.content.skill.Skill;
 import net.edge.world.content.skill.Skills;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.model.Hit;
-import net.edge.world.model.node.entity.model.Hit.HitIcon;
-import net.edge.world.model.node.entity.model.Hit.HitType;
-import net.edge.world.model.node.entity.model.PoisonType;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemIdentifiers;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.node.entity.model.Hit;
+import net.edge.world.node.entity.model.Hit.HitIcon;
+import net.edge.world.node.entity.model.Hit.HitType;
+import net.edge.world.node.entity.model.PoisonType;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemIdentifiers;
 
 /**
  * Represents a single definition of a ranged weapon which consists of details

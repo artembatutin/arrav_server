@@ -3,10 +3,10 @@ package net.edge.world.content.skill.firemaking.pits;
 import net.edge.utils.TextUtils;
 import net.edge.world.World;
 import net.edge.world.content.skill.firemaking.LogType;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.object.ObjectDirection;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.object.ObjectDirection;
+import net.edge.world.node.object.ObjectNode;
 
 import java.util.Optional;
 

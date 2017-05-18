@@ -1,9 +1,9 @@
 package net.edge.world;
 
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 /**
  * The class that contains a collection of constants related to the game. This

@@ -3,8 +3,8 @@ package net.edge.world.content.skill.summoning.familiar.ability;
 import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
-import net.edge.world.model.node.entity.model.Visualize;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.model.Visualize;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.Optional;
 

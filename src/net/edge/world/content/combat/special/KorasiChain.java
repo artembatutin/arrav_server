@@ -1,13 +1,13 @@
 package net.edge.world.content.combat.special;
 
 import net.edge.task.Task;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.model.Hit;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.node.entity.model.Hit;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

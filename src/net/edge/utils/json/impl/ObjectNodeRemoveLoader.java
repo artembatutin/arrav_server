@@ -5,10 +5,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
 import net.edge.world.World;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.model.node.object.ObjectType;
-import net.edge.world.model.node.region.Region;
+import net.edge.world.locale.Position;
+import net.edge.world.node.object.ObjectNode;
+import net.edge.world.node.object.ObjectType;
+import net.edge.world.node.region.Region;
 
 import java.util.Objects;
 import java.util.Set;

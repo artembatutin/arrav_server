@@ -5,8 +5,8 @@ import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.strategy.CombatStrategy;
 import net.edge.world.content.skill.Skill;
 import net.edge.world.content.skill.Skills;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.player.Player;
 
 public final class TzKihCombatStrategy implements CombatStrategy {
 

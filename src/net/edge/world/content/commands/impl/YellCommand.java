@@ -5,8 +5,8 @@ import net.edge.utils.TextUtils;
 import net.edge.world.World;
 import net.edge.world.content.commands.Command;
 import net.edge.world.content.commands.CommandSignature;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 
 @CommandSignature(alias = {"yell", "shout"}, rights = {Rights.DEVELOPER, Rights.ADMINISTRATOR, Rights.SUPER_MODERATOR, Rights.MODERATOR, Rights.EXTREME_DONATOR, Rights.SUPER_DONATOR, Rights.DONATOR, Rights.RESPECTED_MEMBER, Rights.DESIGNER}, syntax = "Use this command as ::yell or ::shout message")
 public final class YellCommand implements Command {

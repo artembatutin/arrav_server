@@ -11,11 +11,11 @@ import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.dialogue.impl.OptionDialogue.OptionType;
 import net.edge.world.content.dialogue.impl.StatementDialogue;
 import net.edge.world.content.scene.Cutscene;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager.ActivityType;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager.ActivityType;
 
 /**
  * The introduction cutscene for the player when he logs into the game for the first time.

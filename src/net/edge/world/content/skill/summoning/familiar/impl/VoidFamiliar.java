@@ -12,9 +12,9 @@ import net.edge.world.content.skill.summoning.familiar.impl.forager.ForagerPassi
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.specials.SummoningData;
 import net.edge.world.content.teleport.impl.DefaultTeleportSpell.TeleportType;
-import net.edge.world.model.locale.Location;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.locale.Location;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.Optional;
 

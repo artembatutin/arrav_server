@@ -1,9 +1,9 @@
 package net.edge.world.content.shootingstar;
 
 import net.edge.world.content.dialogue.impl.StatementDialogue;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.object.ObjectDirection;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.object.ObjectDirection;
+import net.edge.world.node.object.ObjectNode;
 
 /**
  * Represents a single shooting star object.

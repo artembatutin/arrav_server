@@ -1,7 +1,7 @@
 package net.edge.world.content.skill.summoning.familiar.ability;
 
 import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 /**
  * Holds functionality for the light enhancer ability.

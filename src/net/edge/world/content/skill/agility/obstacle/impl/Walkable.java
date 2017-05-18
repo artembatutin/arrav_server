@@ -3,10 +3,10 @@ package net.edge.world.content.skill.agility.obstacle.impl;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.world.content.skill.agility.obstacle.ObstacleActivity;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.update.UpdateFlag;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.update.UpdateFlag;
 
 /**
  * The forced walkable obstacle action which will walk a player starting from the start position

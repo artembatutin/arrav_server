@@ -2,12 +2,12 @@ package net.edge.world.content.skill.firemaking;
 
 import net.edge.task.Task;
 import net.edge.world.World;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemNodeStatic;
-import net.edge.world.model.node.item.ItemPolicy;
-import net.edge.world.model.node.object.ObjectDirection;
-import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.model.node.region.Region;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemNodeStatic;
+import net.edge.world.node.item.ItemPolicy;
+import net.edge.world.node.object.ObjectDirection;
+import net.edge.world.node.object.ObjectNode;
+import net.edge.world.node.region.Region;
 
 /**
  * Represents the task for creating and deregistering fires.

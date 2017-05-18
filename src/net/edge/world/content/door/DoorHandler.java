@@ -1,9 +1,9 @@
 package net.edge.world.content.door;
 
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.object.ObjectDefinition;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.object.ObjectDefinition;
+import net.edge.world.node.object.ObjectNode;
 
 import java.util.Arrays;
 import java.util.HashMap;

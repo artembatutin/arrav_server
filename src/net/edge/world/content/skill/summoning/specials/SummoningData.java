@@ -2,7 +2,7 @@ package net.edge.world.content.skill.summoning.specials;
 
 import net.edge.world.content.skill.summoning.Charm;
 import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.item.Item;
 
 /**
  * An enumeration of all {@link Summoning} pouches.

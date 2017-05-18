@@ -6,9 +6,9 @@ import net.edge.world.content.combat.magic.lunars.impl.LunarCombatSpell;
 import net.edge.world.content.combat.magic.lunars.impl.LunarItemSpell;
 import net.edge.world.content.combat.magic.lunars.impl.spells.*;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.Optional;
 

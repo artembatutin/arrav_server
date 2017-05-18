@@ -3,11 +3,11 @@ package net.edge.world.content.skill.agility.impl.barb.impl;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.world.content.skill.agility.obstacle.ObstacleActivity;
 import net.edge.world.content.skill.agility.obstacle.ObstacleType;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.move.ForcedMovement;
-import net.edge.world.model.node.entity.move.ForcedMovementManager;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.move.ForcedMovement;
+import net.edge.world.node.entity.move.ForcedMovementManager;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.stream.IntStream;
 

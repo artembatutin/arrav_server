@@ -4,7 +4,7 @@ import net.edge.task.Task;
 import net.edge.utils.Utility;
 import net.edge.world.World;
 import net.edge.world.content.TabInterface;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 public final class PetTask extends Task {
 	

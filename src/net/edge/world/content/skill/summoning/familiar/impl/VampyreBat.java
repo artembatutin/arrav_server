@@ -7,8 +7,8 @@ import net.edge.world.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.content.skill.summoning.familiar.ability.LightEnhancer;
 import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.specials.SummoningData;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.Optional;
 

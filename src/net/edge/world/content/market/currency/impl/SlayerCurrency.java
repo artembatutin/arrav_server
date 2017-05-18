@@ -1,7 +1,7 @@
 package net.edge.world.content.market.currency.impl;
 
 import net.edge.world.content.market.currency.GeneralCurrency;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 /**
  * The slayer currency based on the {@link Player#slayerPoints} value.

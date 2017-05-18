@@ -2,10 +2,10 @@ package net.edge.world.content.container;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.IndexedItem;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemDefinition;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.IndexedItem;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemDefinition;
 
 import java.util.*;
 import java.util.function.Consumer;

@@ -5,9 +5,9 @@ import net.edge.world.World;
 import net.edge.world.content.combat.special.CombatSpecial;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.prayer.Prayer;
-import net.edge.world.model.node.NodeState;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
+import net.edge.world.node.NodeState;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 
 /**
  * The class that handles the restoration of weakened skills.

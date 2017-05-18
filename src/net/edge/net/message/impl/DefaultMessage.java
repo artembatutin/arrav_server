@@ -2,7 +2,7 @@ package net.edge.net.message.impl;
 
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.message.InputMessageListener;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 /**
  * The decoder used to handle useless messages sent from the client.

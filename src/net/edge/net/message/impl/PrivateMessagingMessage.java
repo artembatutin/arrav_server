@@ -2,8 +2,8 @@ package net.edge.net.message.impl;
 
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.message.InputMessageListener;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 
 /**
  * The message sent from the client when a player adds, removes, or sends someone

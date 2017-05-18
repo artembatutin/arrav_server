@@ -2,9 +2,9 @@ package net.edge.world.content;
 
 import net.edge.net.message.impl.ItemInterfaceMessage;
 import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemDefinition;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemDefinition;
 
 /**
  * The attributes class which holds functionality for actions done

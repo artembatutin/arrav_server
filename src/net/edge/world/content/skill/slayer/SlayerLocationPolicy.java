@@ -1,6 +1,6 @@
 package net.edge.world.content.skill.slayer;
 
-import net.edge.world.model.locale.Position;
+import net.edge.world.locale.Position;
 
 /**
  * Represents a single slayer location, which basically chains the price and

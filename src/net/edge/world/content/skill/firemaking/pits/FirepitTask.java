@@ -3,7 +3,7 @@ package net.edge.world.content.skill.firemaking.pits;
 import net.edge.task.Task;
 import net.edge.world.GameConstants;
 import net.edge.world.World;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.node.object.ObjectNode;
 
 import java.util.Optional;
 

@@ -2,9 +2,9 @@ package net.edge.utils.log.impl;
 
 import net.edge.utils.TextUtils;
 import net.edge.utils.log.LogDetails;
-import net.edge.world.model.node.entity.npc.NpcDefinition;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.npc.NpcDefinition;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.Optional;
 

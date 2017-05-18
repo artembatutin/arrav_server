@@ -7,8 +7,8 @@ import net.edge.world.content.skill.Skill;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.action.impl.ProducingSkillAction;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.Optional;
 import java.util.function.Function;

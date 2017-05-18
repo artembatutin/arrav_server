@@ -2,7 +2,7 @@ package net.edge.world.content.clanchat;
 
 import com.google.common.collect.Lists;
 import net.edge.utils.TextUtils;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.List;
 import java.util.Optional;

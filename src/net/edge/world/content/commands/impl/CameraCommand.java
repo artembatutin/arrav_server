@@ -4,8 +4,8 @@ import net.edge.utils.TextUtils;
 import net.edge.world.World;
 import net.edge.world.content.commands.Command;
 import net.edge.world.content.commands.CommandSignature;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 
 @CommandSignature(alias = {"cam", "camera"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as just ::cam or ::camera")
 public final class CameraCommand implements Command {

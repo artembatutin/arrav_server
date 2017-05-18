@@ -6,11 +6,11 @@ import net.edge.world.World;
 import net.edge.world.content.TabInterface;
 import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.skill.Skills;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.PrayerBook;
-import net.edge.world.model.node.entity.update.UpdateFlag;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.PrayerBook;
+import net.edge.world.node.entity.update.UpdateFlag;
 
 import java.util.Arrays;
 import java.util.Optional;

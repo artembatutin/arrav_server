@@ -14,12 +14,12 @@ import net.edge.world.content.skill.herblore.Herb;
 import net.edge.world.content.skill.prayer.PrayerBoneBury;
 import net.edge.world.content.skill.slayer.Slayer;
 import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemDefinition;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemDefinition;
 
 /**
  * The message sent from the client when the player clicks an item.

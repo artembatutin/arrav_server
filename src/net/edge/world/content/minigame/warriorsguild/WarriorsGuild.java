@@ -2,10 +2,10 @@ package net.edge.world.content.minigame.warriorsguild;
 
 import net.edge.world.content.minigame.warriorsguild.impl.AnimationRoom;
 import net.edge.world.content.minigame.warriorsguild.impl.CyclopsRoom;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.object.ObjectNode;
 
 /**
  * The class which is responsible for executing minigame rooms of

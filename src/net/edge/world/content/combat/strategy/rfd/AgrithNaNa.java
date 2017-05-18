@@ -3,8 +3,8 @@ package net.edge.world.content.combat.strategy.rfd;
 import net.edge.world.content.combat.CombatSessionData;
 import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.strategy.CombatStrategy;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.model.Animation;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.model.Animation;
 
 public final class AgrithNaNa implements CombatStrategy {
 

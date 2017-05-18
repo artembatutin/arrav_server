@@ -1,8 +1,8 @@
 package net.edge.world.content.market;
 
 import net.edge.utils.json.JsonSaver;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.ItemDefinition;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.ItemDefinition;
 
 import java.util.HashSet;
 import java.util.Set;

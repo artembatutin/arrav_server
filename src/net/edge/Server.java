@@ -26,8 +26,8 @@ import net.edge.world.content.combat.Combat;
 import net.edge.world.content.combat.strategy.CombatStrategy;
 import net.edge.world.content.commands.CommandDispatcher;
 import net.edge.world.content.scoreboard.ScoreboardManager;
-import net.edge.world.model.locale.Location;
-import net.edge.world.model.node.entity.attribute.AttributeKey;
+import net.edge.world.locale.Location;
+import net.edge.world.node.entity.attribute.AttributeKey;
 
 import java.io.IOException;
 import java.time.DayOfWeek;

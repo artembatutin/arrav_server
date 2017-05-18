@@ -3,7 +3,7 @@ package net.edge.world.content.market;
 import com.google.gson.Gson;
 import net.edge.utils.json.JsonSaver;
 import net.edge.world.content.market.exchange.personal.PlayerCounter;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -5,12 +5,12 @@ import net.edge.net.codec.ByteTransform;
 import net.edge.net.message.InputMessageListener;
 import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.pets.Pet;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager.ActivityType;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemDefinition;
-import net.edge.world.model.node.item.ItemNode;
-import net.edge.world.model.node.region.Region;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager.ActivityType;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.region.Region;
 
 /**
  * The message sent from the client when the player drops an item.

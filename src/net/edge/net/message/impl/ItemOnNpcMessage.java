@@ -8,10 +8,10 @@ import net.edge.world.World;
 import net.edge.world.content.pets.Pet;
 import net.edge.world.content.skill.crafting.Tanning;
 import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.item.Item;
 
 public final class ItemOnNpcMessage implements InputMessageListener {
 	

@@ -10,8 +10,8 @@ import net.edge.world.content.dialogue.test.DialogueAppender;
 import net.edge.world.content.market.MarketCounter;
 import net.edge.world.content.minigame.rfd.RFDData;
 import net.edge.world.content.minigame.rfd.RFDMinigame;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.Optional;
 

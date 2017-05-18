@@ -8,13 +8,13 @@ import net.edge.world.content.combat.CombatSessionData;
 import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.magic.CombatNormalSpell;
 import net.edge.world.content.combat.strategy.CombatStrategy;
-import net.edge.world.model.node.NodeState;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.model.*;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.AntifireDetails;
-import net.edge.world.model.node.entity.player.assets.AntifireDetails.AntifireType;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.NodeState;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.model.*;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.AntifireDetails;
+import net.edge.world.node.entity.player.assets.AntifireDetails.AntifireType;
+import net.edge.world.node.item.Item;
 
 import java.util.Optional;
 

@@ -3,12 +3,12 @@ package net.edge.net.message.impl;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.message.InputMessageListener;
 import net.edge.utils.rand.Chance;
-import net.edge.world.model.node.entity.npc.NpcDefinition;
-import net.edge.world.model.node.entity.npc.drop.NpcDrop;
-import net.edge.world.model.node.entity.npc.drop.NpcDropManager;
-import net.edge.world.model.node.entity.npc.drop.NpcDropTable;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.npc.NpcDefinition;
+import net.edge.world.node.entity.npc.drop.NpcDrop;
+import net.edge.world.node.entity.npc.drop.NpcDropManager;
+import net.edge.world.node.entity.npc.drop.NpcDropTable;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

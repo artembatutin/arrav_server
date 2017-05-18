@@ -16,9 +16,9 @@ import net.edge.world.content.skill.herblore.FinishedPotion;
 import net.edge.world.content.skill.herblore.Grinding;
 import net.edge.world.content.skill.herblore.TarCreation;
 import net.edge.world.content.skill.herblore.UnfinishedPotion;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.item.Item;
 
 /**
  * The message sent from the client when a player uses an item on another item.

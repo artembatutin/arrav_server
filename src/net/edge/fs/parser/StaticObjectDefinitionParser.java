@@ -5,12 +5,12 @@ import net.edge.fs.FileSystem;
 import net.edge.utils.ByteBufferUtil;
 import net.edge.utils.CompressionUtil;
 import net.edge.world.World;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.object.ObjectDirection;
-import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.model.node.object.ObjectType;
-import net.edge.world.model.node.region.RegionDefinition;
-import net.edge.world.model.node.region.RegionTile;
+import net.edge.world.locale.Position;
+import net.edge.world.node.object.ObjectDirection;
+import net.edge.world.node.object.ObjectNode;
+import net.edge.world.node.object.ObjectType;
+import net.edge.world.node.region.RegionDefinition;
+import net.edge.world.node.region.RegionTile;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

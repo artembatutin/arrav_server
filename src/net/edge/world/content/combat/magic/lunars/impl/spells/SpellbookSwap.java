@@ -5,12 +5,12 @@ import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.content.combat.magic.lunars.LunarSpell;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Spellbook;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Spellbook;
+import net.edge.world.node.item.Item;
 
 import java.util.Optional;
 

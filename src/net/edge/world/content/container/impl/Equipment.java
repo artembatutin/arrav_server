@@ -10,11 +10,11 @@ import net.edge.world.content.container.ItemWeightListener;
 import net.edge.world.content.item.Requirement;
 import net.edge.world.content.item.Skillcape;
 import net.edge.world.content.minigame.MinigameHandler;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.ShieldAnimation;
-import net.edge.world.model.node.entity.update.UpdateFlag;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemDefinition;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.ShieldAnimation;
+import net.edge.world.node.entity.update.UpdateFlag;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemDefinition;
 
 import java.util.Arrays;
 import java.util.Objects;

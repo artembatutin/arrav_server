@@ -7,10 +7,10 @@ import net.edge.net.codec.ByteTransform;
 import net.edge.net.message.InputMessageListener;
 import net.edge.world.content.market.MarketShop;
 import net.edge.world.content.minigame.MinigameHandler;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 
 /**
  * The message sent from the client when a player makes a yellow {@code X} click,

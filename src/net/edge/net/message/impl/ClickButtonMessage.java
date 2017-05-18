@@ -36,12 +36,12 @@ import net.edge.world.content.skill.slayer.Slayer;
 import net.edge.world.content.skill.smithing.Smelting;
 import net.edge.world.content.skill.summoning.Summoning;
 import net.edge.world.content.teleport.impl.DefaultTeleportSpell;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Spellbook;
-import net.edge.world.model.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Spellbook;
+import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.object.ObjectNode;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;

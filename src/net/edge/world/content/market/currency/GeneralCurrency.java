@@ -1,6 +1,6 @@
 package net.edge.world.content.market.currency;
 
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 /**
  * The parent class of all currencies that provides basic functionality for any

@@ -4,11 +4,11 @@ import net.edge.task.Task;
 import net.edge.world.content.container.impl.Inventory;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.action.impl.ProducingSkillAction;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.object.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;

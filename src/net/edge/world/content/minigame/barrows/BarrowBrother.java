@@ -1,7 +1,7 @@
 package net.edge.world.content.minigame.barrows;
 
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.npc.Npc;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.npc.Npc;
 
 /**
  * The npc which represents the barrow brother.

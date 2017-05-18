@@ -3,7 +3,7 @@ package net.edge.fs.parser;
 import net.edge.fs.Archive;
 import net.edge.fs.FileSystem;
 import net.edge.utils.LoggerUtils;
-import net.edge.world.model.node.region.RegionDefinition;
+import net.edge.world.node.region.RegionDefinition;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

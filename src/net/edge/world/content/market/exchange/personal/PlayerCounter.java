@@ -2,7 +2,7 @@ package net.edge.world.content.market.exchange.personal;
 
 import net.edge.world.content.market.exchange.item.ExchangeItem;
 import net.edge.world.content.market.exchange.personal.impl.DemandSection;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 /**
  * A counter acting as a shop and hosted by a {@link Player}.

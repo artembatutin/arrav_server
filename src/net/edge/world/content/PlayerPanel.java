@@ -8,8 +8,8 @@ import net.edge.world.World;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.dialogue.impl.StatementDialogue;
 import net.edge.world.content.scoreboard.PlayerScoreboardStatistic;
-import net.edge.world.model.locale.Location;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.locale.Location;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.EnumSet;
 import java.util.List;

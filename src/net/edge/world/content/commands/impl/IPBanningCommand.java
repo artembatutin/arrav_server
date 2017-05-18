@@ -4,8 +4,8 @@ import net.edge.net.PunishmentHandler;
 import net.edge.world.World;
 import net.edge.world.content.commands.Command;
 import net.edge.world.content.commands.CommandSignature;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 
 @CommandSignature(alias = {"ipban"}, rights = {Rights.DEVELOPER, Rights.ADMINISTRATOR}, syntax = "Use this command as ::ipban username")
 public final class IPBanningCommand implements Command {

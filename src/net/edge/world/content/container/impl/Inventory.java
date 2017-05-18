@@ -3,9 +3,9 @@ package net.edge.world.content.container.impl;
 import net.edge.world.content.container.ItemContainer;
 import net.edge.world.content.container.ItemContainerAdapter;
 import net.edge.world.content.container.ItemWeightListener;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemNode;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemNode;
 
 import java.util.Arrays;
 import java.util.List;

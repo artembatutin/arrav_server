@@ -1,7 +1,7 @@
 package net.edge.world.content.combat.effect;
 
 import net.edge.world.World;
-import net.edge.world.model.node.entity.EntityNode;
+import net.edge.world.node.entity.EntityNode;
 
 import java.util.Collection;
 import java.util.Collections;

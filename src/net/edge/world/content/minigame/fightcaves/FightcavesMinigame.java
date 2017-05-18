@@ -6,13 +6,13 @@ import net.edge.world.content.dialogue.impl.NpcDialogue;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.item.FoodConsumable;
 import net.edge.world.content.minigame.SequencedMinigame;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.npc.impl.DefaultNpc;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.npc.impl.DefaultNpc;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.object.ObjectNode;
 
 import java.util.Optional;
 

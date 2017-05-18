@@ -7,7 +7,7 @@ import net.edge.net.codec.IsaacCipher;
 import net.edge.net.message.GameMessage;
 import net.edge.net.message.InputMessageListener;
 import net.edge.world.World;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;

@@ -8,10 +8,10 @@ import net.edge.world.content.dialogue.impl.*;
 import net.edge.world.content.market.currency.Currency;
 import net.edge.world.content.skill.Skill;
 import net.edge.world.content.skill.Skills;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.npc.NpcDefinition;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.npc.NpcDefinition;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.*;
 import java.util.stream.Collectors;

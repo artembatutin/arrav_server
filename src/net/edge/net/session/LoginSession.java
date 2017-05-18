@@ -13,9 +13,9 @@ import net.edge.net.codec.login.LoginResponseMessage;
 import net.edge.utils.TextUtils;
 import net.edge.world.GameConstants;
 import net.edge.world.World;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.PlayerSerialization;
-import net.edge.world.model.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.PlayerSerialization;
+import net.edge.world.node.entity.player.assets.Rights;
 
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during login.

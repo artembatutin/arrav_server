@@ -5,8 +5,8 @@ import net.edge.world.GameConstants;
 import net.edge.world.content.commands.Command;
 import net.edge.world.content.commands.CommandSignature;
 import net.edge.world.content.container.impl.Inventory;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 
 @CommandSignature(alias = {"starter"}, rights = {Rights.DEVELOPER, Rights.ADMINISTRATOR, Rights.SUPER_MODERATOR, Rights.MODERATOR, Rights.EXTREME_DONATOR, Rights.SUPER_DONATOR, Rights.DONATOR, Rights.RESPECTED_MEMBER, Rights.DESIGNER, Rights.PLAYER}, syntax = "Use this command as ::starter")
 public final class GetStarterCommand implements Command {

@@ -3,7 +3,7 @@ package net.edge.world.content.skill.hunter.trap;
 import net.edge.task.Task;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.skill.hunter.Hunter;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.node.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

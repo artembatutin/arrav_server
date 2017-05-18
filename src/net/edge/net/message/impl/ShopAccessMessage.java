@@ -3,8 +3,8 @@ package net.edge.net.message.impl;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.message.InputMessageListener;
 import net.edge.world.content.market.MarketCounter;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.player.Player;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.player.Player;
 
 /**
  * The message sent from the client which depends on the Npc Information panel integration.

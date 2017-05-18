@@ -9,9 +9,9 @@ import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.item.Skillcape;
 import net.edge.world.content.market.currency.Currency;
 import net.edge.world.content.minigame.rfd.RFDData;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.player.assets.Rights;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.item.Item;
 
 import java.util.Arrays;
 

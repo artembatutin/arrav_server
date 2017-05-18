@@ -2,9 +2,9 @@ package net.edge.world.content.combat.magic.lunars.impl.spells;
 
 import net.edge.world.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.world.content.skill.crafting.AmuletStringing;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.Optional;
 

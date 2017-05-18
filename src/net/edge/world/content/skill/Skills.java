@@ -14,10 +14,10 @@ import net.edge.world.content.skill.runecrafting.Runecrafting;
 import net.edge.world.content.skill.smithing.Smelting;
 import net.edge.world.content.skill.thieving.impl.Stalls;
 import net.edge.world.content.skill.woodcutting.Woodcutting;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.update.UpdateFlag;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.update.UpdateFlag;
+import net.edge.world.node.object.ObjectNode;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;

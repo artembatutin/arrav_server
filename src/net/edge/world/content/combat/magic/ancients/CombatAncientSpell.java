@@ -3,10 +3,10 @@ package net.edge.world.content.combat.magic.ancients;
 import net.edge.world.content.combat.Combat;
 import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.magic.CombatSpell;
-import net.edge.world.model.locale.Location;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.locale.Location;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.Optional;
 

@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
 import net.edge.world.content.skill.slayer.Slayer;
 import net.edge.world.content.skill.slayer.SlayerLocationPolicy;
-import net.edge.world.model.locale.Position;
+import net.edge.world.locale.Position;
 
 import java.util.Objects;
 

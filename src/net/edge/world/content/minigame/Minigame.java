@@ -10,15 +10,15 @@ import net.edge.world.content.item.FoodConsumable;
 import net.edge.world.content.item.PotionConsumable;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.prayer.Prayer;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.entity.update.UpdateFlag;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.item.ItemNode;
-import net.edge.world.model.node.object.ObjectNode;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.update.UpdateFlag;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.object.ObjectNode;
 
 import java.util.Optional;
 

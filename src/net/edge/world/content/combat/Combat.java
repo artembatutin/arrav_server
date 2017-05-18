@@ -17,24 +17,24 @@ import net.edge.world.content.combat.weapon.WeaponInterface;
 import net.edge.world.content.container.impl.Equipment;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.prayer.Prayer;
-import net.edge.world.model.locale.Boundary;
-import net.edge.world.model.locale.Position;
-import net.edge.world.model.node.entity.EntityNode;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.model.Graphic;
-import net.edge.world.model.node.entity.model.Hit;
-import net.edge.world.model.node.entity.model.Projectile;
-import net.edge.world.model.node.entity.move.MovementQueue;
-import net.edge.world.model.node.entity.npc.Npc;
-import net.edge.world.model.node.entity.npc.impl.gwd.GodwarsFaction;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
+import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.node.entity.model.Hit;
+import net.edge.world.node.entity.model.Projectile;
+import net.edge.world.node.entity.move.MovementQueue;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 import java.util.*;
 import java.util.function.Consumer;
 
-import static net.edge.world.model.node.NodeType.NPC;
-import static net.edge.world.model.node.NodeType.PLAYER;
+import static net.edge.world.node.NodeType.NPC;
+import static net.edge.world.node.NodeType.PLAYER;
 
 /**
  * A collection of utility methods and constants related to combat.

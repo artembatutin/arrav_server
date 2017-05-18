@@ -5,11 +5,11 @@ import net.edge.world.World;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.action.TransformableObject;
 import net.edge.world.content.skill.action.impl.HarvestingSkillAction;
-import net.edge.world.model.node.entity.model.Animation;
-import net.edge.world.model.node.entity.player.Player;
-import net.edge.world.model.node.item.Item;
-import net.edge.world.model.node.object.ObjectNode;
-import net.edge.world.model.node.region.Region;
+import net.edge.world.node.entity.model.Animation;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.object.ObjectNode;
+import net.edge.world.node.region.Region;
 
 import java.util.Arrays;
 import java.util.Optional;
