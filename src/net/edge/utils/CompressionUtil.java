@@ -1,6 +1,6 @@
 package net.edge.utils;
 
-import net.edge.fs.FileSystem;
+import net.edge.cache.FileSystem;
 import org.apache.tools.bzip2.CBZip2InputStream;
 
 import java.io.ByteArrayInputStream;

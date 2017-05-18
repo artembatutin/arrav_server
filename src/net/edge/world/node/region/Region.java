@@ -1,6 +1,6 @@
 package net.edge.world.node.region;
 
-import net.edge.fs.parser.StaticObjectDefinitionParser;
+import net.edge.cache.decoder.RegionDecoder;
 import net.edge.task.Task;
 import net.edge.utils.LoggerUtils;
 import net.edge.utils.rand.RandomUtils;
@@ -88,11 +88,6 @@ public final class Region extends Node {
 	private final int regionId;
 	
 	/**
-	 * Determines if this region is loaded.
-	 */
-	private boolean loaded = false;
-	
-	/**
 	 * A simple integer acting as a clean up timer for this region.
 	 * We randomize it so all regions clean at their own pace.
 	 */
@@ -148,9 +143,6 @@ public final class Region extends Node {
 	
 	@Override
 	public void register() {
-		//decoding region if not loaded yet.
-		if(!loaded)
-			load();
 		//activating all npcs.
 		npcs.forEach((i, n) -> n.setActive(true));
 		LOGGER.info("Loaded Region: [" + regionId + "] on the fly.");
@@ -158,22 +150,9 @@ public final class Region extends Node {
 	
 	@Override
 	public void dispose() {
-		//TODO: Remove empty keys/values from maps with key positions.
-		//clearing cache if we can from the region.
-		if(removeObjects.isEmpty() && getRegisteredObjects().isEmpty()) {
-			tiles = null;
-			objects.clear();
-			loaded = false;
-			StaticObjectDefinitionParser.setUnloaded(regionId);
-		}
 		//deactivating all npcs.
 		npcs.forEach((i, n) -> n.setActive(false));
 		LOGGER.info("Disposed Region: [" + regionId + "] on the fly.");
-	}
-	
-	public void load() {
-		StaticObjectDefinitionParser.load(regionId);
-		loaded = true;
 	}
 	
 	/**
@@ -555,15 +534,6 @@ public final class Region extends Node {
 			tiles[height][x + y * REGION_SIZE] = new RegionTile();
 		}
 		return tiles[height][x + y * REGION_SIZE];
-	}
-	
-	/**
-	 * Determines if this Region is loaded.
-	 * @return {@code true} if this Region is loaded, {@code false}
-	 * otherwise.
-	 */
-	public boolean isLoaded() {
-		return loaded;
 	}
 	
 	/**

@@ -1,6 +1,5 @@
 package net.edge.world.node.region;
 
-import net.edge.fs.parser.StaticObjectDefinitionParser;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
@@ -55,7 +54,7 @@ public final class RegionManager {
 	 * @return {@code true} if a {@code Region} exists, {@code false} otherwise.
 	 */
 	public boolean exists(int regionId) {
-		return StaticObjectDefinitionParser.REGION_DEFS.containsKey(regionId);
+		return RegionDefinition.contains(regionId);
 	}
 	
 	/**

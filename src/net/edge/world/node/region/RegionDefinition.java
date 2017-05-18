@@ -1,10 +1,19 @@
 package net.edge.world.node.region;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Represents a single region definition.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class RegionDefinition {
+	
+	/**
+	 * The region definitions.
+	 */
+	private final static Map<Integer, RegionDefinition> DEFINITIONS = new HashMap<>();
 	
 	/**
 	 * The hash of the region coordinates.
@@ -22,15 +31,10 @@ public class RegionDefinition {
 	private final int objectFile;
 	
 	/**
-	 * The flag which determines if the region is being a newer mapviewer.
+	 * The flag which determines if the region is being a newer region.
 	 * Used to load 667 objects instead of 530 preventing any graphical issues.
 	 */
 	private final boolean isNew;
-	
-	/**
-	 * Loaded default as false checks if the region has been loaded
-	 */
-	public boolean loaded = false;
 	
 	/**
 	 * Constructs a new {@link RegionDefinition} with the specified hash, terrain
@@ -44,6 +48,40 @@ public class RegionDefinition {
 		this.terrainFile = terrainFile;
 		this.objectFile = objectFile;
 		this.isNew = isNew;
+	}
+	
+	/**
+	 * Gets a {@link RegionDefinition}.
+	 * @param region region hash to get definition from.
+	 * @return region definition
+	 */
+	public static RegionDefinition get(int region) {
+		return DEFINITIONS.get(region);
+	}
+	
+	/**
+	 * Returns the flag if the region exists.
+	 * @param region region hash to check.
+	 * @return contains flag.
+	 */
+	public static boolean contains(int region) {
+		return DEFINITIONS.containsKey(region);
+	}
+	
+	/**
+	 * Adds a {@link RegionDefinition}.
+	 * @param definition definition to add.
+	 */
+	public static void set(RegionDefinition definition) {
+		DEFINITIONS.put(definition.getHash(), definition);
+	}
+	
+	/**
+	 * Gets the regional definitions.
+	 * @return region definitions.
+	 */
+	public static Map<Integer, RegionDefinition> getDefinitions() {
+		return DEFINITIONS;
 	}
 	
 	/**
@@ -74,18 +112,5 @@ public class RegionDefinition {
 		return isNew;
 	}
 	
-	/**
-	 * Checks if region has been loaded
-	 */
-	public boolean loaded() {
-		return loaded;
-	}
-	
-	/**
-	 * Loaded setter
-	 */
-	public void setLoaded(boolean loaded) {
-		this.loaded = loaded;
-	}
 	
 }

@@ -8,9 +8,10 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.ResourceLeakDetector;
-import net.edge.fs.FileSystem;
-import net.edge.fs.parser.ObjectDefinitionParser;
-import net.edge.fs.parser.StaticObjectDefinitionParser;
+import net.edge.cache.FileSystem;
+import net.edge.cache.decoder.MapDefinitionDecoder;
+import net.edge.cache.decoder.ObjectDefinitionDecoder;
+import net.edge.cache.decoder.RegionDecoder;
 import net.edge.net.EdgevilleChannelInitializer;
 import net.edge.net.NetworkConstants;
 import net.edge.net.PunishmentHandler;
@@ -48,11 +49,6 @@ import java.util.stream.Collectors;
 public final class Server {
 	
 	/**
-	 * Condition if the server is running online for players.
-	 */
-	public static boolean ONLINE;
-	
-	/**
 	 * The flag that determines if debugging messages should be printed or not.
 	 */
 	public static boolean DEBUG = false;
@@ -66,11 +62,6 @@ public final class Server {
 	 * The status that determines if the server is being updated.
 	 */
 	public static double UPDATING = 0;
-	
-	/**
-	 * File System
-	 **/
-	private static FileSystem fileSystem;
 	
 	/**
 	 * The {@link ExecutorService} that will execute startup tasks.
@@ -89,7 +80,6 @@ public final class Server {
 	public Server(boolean online) {
 		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleInitializationThread").build());
 		launchService = MoreExecutors.listeningDecorator(delegateService);
-		Server.ONLINE = online;
 	}
 	
 	/**
@@ -171,24 +161,24 @@ public final class Server {
 	 * @throws Exception If any exceptions are thrown while initializing startup tasks.
 	 */
 	private void initAsyncTasks() throws Exception {
+		FileSystem fs = FileSystem.create("data/cache");
 		AttributeKey.init();
+		//Object decoding.
 		launchService.execute(() -> {
-			try {
-				fileSystem = FileSystem.create("data/fs");
-				ObjectDefinitionParser.parse(fileSystem);
-				StaticObjectDefinitionParser.parse();
-				new ObjectNodeRemoveLoader().load();
-				new ObjectNodeLoader().load();
-				World.getFirepitEvent().register();
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
+			new ObjectDefinitionDecoder(fs).run();
+			new MapDefinitionDecoder(fs).run();
+			new RegionDecoder(fs).run();
+			new ObjectNodeRemoveLoader().load();
+			new ObjectNodeLoader().load();
+			World.getFirepitEvent().register();
 		});
+		//Item decoding.
 		launchService.execute(() -> {
 			new ItemDefinitionLoader().load();
 			new ItemNodeLoader().load();
 			new MarketValueLoader().load();
 		});
+		//NPC decoding.
 		launchService.execute(() -> {
 			new NpcDefinitionLoader().load();
 			new NpcNodeLoader().load();
@@ -226,13 +216,5 @@ public final class Server {
 		launchService.execute(PunishmentHandler::parseIPBans);
 		launchService.execute(PunishmentHandler::parseIPMutes);
 		launchService.execute(PunishmentHandler::parseStarters);
-	}
-	
-	/**
-	 * Gets the server's file system.
-	 * @return file system.
-	 */
-	public static FileSystem getFileSystem() {
-		return fileSystem;
 	}
 }
