@@ -17,7 +17,7 @@ import java.nio.ByteBuffer;
 import java.util.*;
 
 /**
- * A class which parses static object definitions, which include map tiles and
+ * A class which parses static object definitions, which include mapviewer tiles and
  * landscapes.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Artem Batutin <artembatutin@gmail.com>
@@ -26,12 +26,12 @@ import java.util.*;
 public final class StaticObjectDefinitionParser {
 	
 	/**
-	 * The map definitions.
+	 * The mapviewer definitions.
 	 */
 	public static Map<Integer, RegionDefinition> REGION_DEFS = new HashMap<>();
 	
 	/**
-	 * Parses the map definition files from the {@link FileSystem}.
+	 * Parses the mapviewer definition files from the {@link FileSystem}.
 	 * @throws IOException If some I/O exception occurs.
 	 */
 	public static void parse() throws IOException {
@@ -107,10 +107,10 @@ public final class StaticObjectDefinitionParser {
 	}
 	
 	/**
-	 * Loads all of the map indexes entries and decodes each.
-	 * @param mapBuffer The uncompressed map entry data buffer.
-	 * @param x         The x coordinate of this map entry.
-	 * @param y         The y coordinate of this map entry.
+	 * Loads all of the mapviewer indexes entries and decodes each.
+	 * @param mapBuffer The uncompressed mapviewer entry data buffer.
+	 * @param x         The x coordinate of this mapviewer entry.
+	 * @param y         The y coordinate of this mapviewer entry.
 	 */
 	private static void parseTerrain(ByteBuffer mapBuffer, int x, int y, List<Position> downHeights) {
 		for(int height = 0; height < 4; height++) {

@@ -22,8 +22,8 @@ public final class AStarPathFinder extends PathFinder {
 	private final Distance heuristic;
 	
 	/**
-	 * Constructs a new {@link AStarPathFinder} with the specified traversal map.
-	 * @param traversalMap The traversal map.
+	 * Constructs a new {@link AStarPathFinder} with the specified traversal mapviewer.
+	 * @param traversalMap The traversal mapviewer.
 	 */
 	public AStarPathFinder(TraversalMap traversalMap, Distance heuristic) {
 		super(traversalMap);

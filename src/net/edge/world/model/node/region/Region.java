@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * A location on the map that is {@code 64x64} in size. Used primarily for caching various types of {@link Node}s and
+ * A location on the mapviewer that is {@code 64x64} in size. Used primarily for caching various types of {@link Node}s and
  * {@link RegionTile}s. There is a reason that the {@link Node}s are not being cached together.
  * @author Artem Batutin <artembatutin@gmail.com>
  */

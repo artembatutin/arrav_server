@@ -1,7 +1,7 @@
-package tools.map;
+package tools.mapviewer;
 
 import net.edge.world.model.locale.Position;
-import tools.map.menu.MapMenuBar;
+import tools.mapviewer.menu.MapMenuBar;
 
 import javax.swing.*;
 import java.awt.*;

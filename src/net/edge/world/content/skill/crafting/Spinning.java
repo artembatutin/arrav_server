@@ -183,7 +183,7 @@ public final class Spinning extends ProducingSkillAction {
 		HAIR(10814, 954, 30, 25);
 		
 		/**
-		 * A map containing the item by spinning data.
+		 * A mapviewer containing the item by spinning data.
 		 */
 		private static final ImmutableMap<Integer, SpinningData> VALUES = ImmutableMap.copyOf(Stream.of(SpinningData.values()).collect(Collectors.toMap(t -> t.item.getId(), Function.identity())));
 		

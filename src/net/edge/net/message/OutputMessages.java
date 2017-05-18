@@ -500,12 +500,12 @@ public final class OutputMessages {
 	 *                  <p>
 	 *                  <p>
 	 *                  Camera location along world X axis (a horizontal axis, aligned
-	 *                  with map grid X): 0
+	 *                  with mapviewer grid X): 0
 	 *                  <p>
 	 *                  Camera location along world Z axis (vertical axis): 1
 	 *                  <p>
 	 *                  Camera location along world Y axis (a horizontal axis, aligned
-	 *                  with map grid Y): 2
+	 *                  with mapviewer grid Y): 2
 	 *                  <p>
 	 *                  Camera orientation in world X plane w.r.t. world Z axis, i.e.
 	 *                  yaw: 3
@@ -1112,7 +1112,7 @@ public final class OutputMessages {
 	}
 	
 	/**
-	 * The message that sends the current map region.
+	 * The message that sends the current mapviewer region.
 	 */
 	public void sendMapRegion() {
 		player.setLastRegion(player.getPosition().copy());

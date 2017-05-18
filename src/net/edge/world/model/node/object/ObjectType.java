@@ -123,7 +123,7 @@ public enum ObjectType {
 	STRAIGHT_BOTTOM_EDGE_CONNECTING_CORNER_ROOF(21),
 	
 	/**
-	 * Represents ground decoration + map signs (quests, water fountains, shops.
+	 * Represents ground decoration + mapviewer signs (quests, water fountains, shops.
 	 * etc)
 	 */
 	GROUND_PROP(22);

@@ -18,8 +18,8 @@ import static net.edge.world.model.node.entity.model.Direction.*;
 public final class SimplePathFinder extends PathFinder {
 	
 	/**
-	 * Constructs the {@code SimplePathFinder} with the specified traversal map.
-	 * @param traversalMap The traversal map to use.
+	 * Constructs the {@code SimplePathFinder} with the specified traversal mapviewer.
+	 * @param traversalMap The traversal mapviewer to use.
 	 */
 	public SimplePathFinder(TraversalMap traversalMap) {
 		super(traversalMap);

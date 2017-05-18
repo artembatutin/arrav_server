@@ -22,7 +22,7 @@ public class RegionDefinition {
 	private final int objectFile;
 	
 	/**
-	 * The flag which determines if the region is being a newer map.
+	 * The flag which determines if the region is being a newer mapviewer.
 	 * Used to load 667 objects instead of 530 preventing any graphical issues.
 	 */
 	private final boolean isNew;

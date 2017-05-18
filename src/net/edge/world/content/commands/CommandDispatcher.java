@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public final class CommandDispatcher {
 	
 	/**
-	 * The map which contains all the commands on the world.
+	 * The mapviewer which contains all the commands on the world.
 	 */
 	private static final Map<CommandSignature, Command> COMMANDS = new HashMap<>();
 	

@@ -9,12 +9,12 @@ package net.edge.world.model.node.region;
 public final class RegionTile {
 	
 	/**
-	 * The map flag which represents a clipped tile.
+	 * The mapviewer flag which represents a clipped tile.
 	 */
 	public static final int FLAG_BLOCKED = 0x1;
 	
 	/**
-	 * The map flag which represents a bridge tile.
+	 * The mapviewer flag which represents a bridge tile.
 	 */
 	public static final int FLAG_BRIDGE = 0x2;
 	

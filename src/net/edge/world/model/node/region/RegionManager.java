@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class RegionManager {
 	
 	/**
-	 * The map of cached {@link Region}s.
+	 * The mapviewer of cached {@link Region}s.
 	 */
 	private final Map<Integer, Region> regions = new ConcurrentHashMap<>();
 	

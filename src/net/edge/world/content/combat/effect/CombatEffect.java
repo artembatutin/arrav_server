@@ -18,7 +18,7 @@ import java.util.Map;
 public abstract class CombatEffect {
 	
 	/**
-	 * The map of all of the combat effect types mapped to their respective
+	 * The mapviewer of all of the combat effect types mapped to their respective
 	 * listeners.
 	 */
 	public static final Map<CombatEffectType, CombatEffect> EFFECTS = new HashMap<>();

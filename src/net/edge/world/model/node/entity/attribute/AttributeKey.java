@@ -33,7 +33,7 @@ public final class AttributeKey<T> {
 	
 	/**
 	 * An {@link IdentityHashMap} of {@link String} keys mapped to their {@code AttributeKey} aliases. All {@code String}s
-	 * added to this map are forcibly interned so we can compare them by their identity for faster performance.
+	 * added to this mapviewer are forcibly interned so we can compare them by their identity for faster performance.
 	 */
 	public static final Map<String, AttributeKey> ALIASES = new IdentityHashMap<>();
 	

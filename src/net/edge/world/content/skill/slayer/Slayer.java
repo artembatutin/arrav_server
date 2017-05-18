@@ -23,17 +23,17 @@ import java.util.stream.Collectors;
 public final class Slayer {
 	
 	/**
-	 * A map containing all the slayer masters with the possible tasks they can give.
+	 * A mapviewer containing all the slayer masters with the possible tasks they can give.
 	 */
 	public static final Map<SlayerMaster, SlayerKeyPolicy[]> SLAYER_KEYS = new HashMap<>();
 	
 	/**
-	 * A map which contains each slayer key by the position of the npcs.
+	 * A mapviewer which contains each slayer key by the position of the npcs.
 	 */
 	public static final Map<String, SlayerLocationPolicy> SLAYER_LOCATIONS = new HashMap<>();
 	
 	/**
-	 * A map which contains each slayer key by the level required slayer.
+	 * A mapviewer which contains each slayer key by the level required slayer.
 	 */
 	public static final Map<String, Integer> SLAYER_LEVELS = new HashMap<>();
 	

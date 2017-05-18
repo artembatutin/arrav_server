@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public final class CombatDamage {
 	
 	/**
-	 * The map of players who have inflicted damage.
+	 * The mapviewer of players who have inflicted damage.
 	 */
 	private final Map<EntityNode, DamageCounter> attackers = new HashMap<>();
 	

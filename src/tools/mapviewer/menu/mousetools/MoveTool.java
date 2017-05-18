@@ -1,8 +1,8 @@
-package tools.map.menu.mousetools;
+package tools.mapviewer.menu.mousetools;
 
 import net.edge.world.World;
 import net.edge.world.model.locale.Position;
-import tools.map.MapTool;
+import tools.mapviewer.MapTool;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

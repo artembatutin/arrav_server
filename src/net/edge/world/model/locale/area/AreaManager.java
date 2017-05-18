@@ -68,7 +68,7 @@ public final class AreaManager {
 	
 	/**
 	 * Gets the mapping which contains all areas loaded on startup.
-	 * @return the map which contains all areas.
+	 * @return the mapviewer which contains all areas.
 	 */
 	public Map<String, Area> getAreas() {
 		return AREAS;

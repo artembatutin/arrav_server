@@ -42,7 +42,7 @@ public final class FileSystem {
 	public static final int MIDI_INDEX = 3;
 	
 	/**
-	 * Represents the id of the map and landscape cache.
+	 * Represents the id of the mapviewer and landscape cache.
 	 */
 	public static final int MAP_INDEX = 4;
 	

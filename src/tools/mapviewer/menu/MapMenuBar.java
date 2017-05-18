@@ -1,8 +1,8 @@
-package tools.map.menu;
+package tools.mapviewer.menu;
 
-import tools.map.MapPanel;
-import tools.map.MapTool;
-import tools.map.menu.mousetools.MoveTool;
+import tools.mapviewer.MapPanel;
+import tools.mapviewer.MapTool;
+import tools.mapviewer.menu.mousetools.MoveTool;
 
 import javax.swing.*;
 

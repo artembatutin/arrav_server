@@ -10,8 +10,8 @@ import net.edge.world.model.node.region.TraversalMap;
 public class SimplePathChecker extends PathFinder {
 	
 	/**
-	 * Constructs a new {@code SimplePathChecker} with the specified traversal map.
-	 * @param traversalMap The specified traversal map to use.
+	 * Constructs a new {@code SimplePathChecker} with the specified traversal mapviewer.
+	 * @param traversalMap The specified traversal mapviewer to use.
 	 */
 	public SimplePathChecker(TraversalMap traversalMap) {
 		super(traversalMap);

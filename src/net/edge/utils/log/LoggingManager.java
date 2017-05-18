@@ -30,7 +30,7 @@ public final class LoggingManager {
 	private final Logger logger = Logger.getLogger(LoggingManager.class.getName());
 	
 	/**
-	 * Writes the log information to the {@code LOG_DATA} map and to the logs.txt file.
+	 * Writes the log information to the {@code LOG_DATA} mapviewer and to the logs.txt file.
 	 * @param log the log to submit.
 	 */
 	public void write(Log log) {

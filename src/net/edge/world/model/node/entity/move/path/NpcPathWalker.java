@@ -17,8 +17,8 @@ import java.util.Deque;
 public final class NpcPathWalker extends PathFinder {
 	
 	/**
-	 * Constructs the {@code SimplePathFinder} with the specified traversal map.
-	 * @param traversalMap The traversal map to use.
+	 * Constructs the {@code SimplePathFinder} with the specified traversal mapviewer.
+	 * @param traversalMap The traversal mapviewer to use.
 	 */
 	public NpcPathWalker(TraversalMap traversalMap) {
 		super(traversalMap);

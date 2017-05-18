@@ -28,7 +28,7 @@ public final class ClanChat {
 	private final List<ClanMember> members = new ArrayList<>(100);
 	
 	/**
-	 * A map of clan chat ranks.
+	 * A mapviewer of clan chat ranks.
 	 */
 	private final Map<String, ClanChatRank> ranks = new HashMap<>();
 	

@@ -12,13 +12,13 @@ import net.edge.world.model.node.region.TraversalMap;
 abstract class PathFinder {
 	
 	/**
-	 * The traversal map used for making sure any direction is traversable.
+	 * The traversal mapviewer used for making sure any direction is traversable.
 	 */
 	private final TraversalMap traversalMap;
 	
 	/**
-	 * Constructs a new {@code PathFinder} with the specified traversal map.
-	 * @param traversalMap The traversal map to use.
+	 * Constructs a new {@code PathFinder} with the specified traversal mapviewer.
+	 * @param traversalMap The traversal mapviewer to use.
 	 */
 	PathFinder(TraversalMap traversalMap) {
 		this.traversalMap = traversalMap;

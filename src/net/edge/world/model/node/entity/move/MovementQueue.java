@@ -61,7 +61,7 @@ public final class MovementQueue {
 	
 	/**
 	 * Executes movement processing which primarily consists of polling
-	 * waypoints, and updating the map region.
+	 * waypoints, and updating the mapviewer region.
 	 * @throws Exception if any errors occur while sequencing movement.
 	 */
 	public void sequence() {

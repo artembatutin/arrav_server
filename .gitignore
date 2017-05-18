@@ -14,3 +14,4 @@ data/fs/
 *.eml
 *.userlibraries
 *.class
+map_editor/**

@@ -1,4 +1,4 @@
-package tools.map.util;
+package tools.mapviewer.util;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -11,7 +11,7 @@ public class Resources {
 	
 	static {
 		try {
-			DOT = ImageIO.read(new File("data/map/dot/dot.png"));
+			DOT = ImageIO.read(new File("data/mapviewer/dot/dot.png"));
 		} catch(IOException e) {
 			System.err.println("Could not load dot.png");
 			e.printStackTrace();

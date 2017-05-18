@@ -8,7 +8,7 @@ import net.edge.world.model.node.entity.player.Player;
 import net.edge.world.model.node.entity.player.assets.Rights;
 
 /**
- * The message sent from the client when a player sends the load map region
+ * The message sent from the client when a player sends the load mapviewer region
  * message.
  * @author Artem Batutin <artembatutin@gmail.com></artembatutin@gmail.com>
  * @author lare96 <http://github.com/lare96>

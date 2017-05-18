@@ -26,11 +26,11 @@ public final class MapDefinitionParser {
 	/**
 	 * Parses {@link RegionDefinition}s from the specified {@link FileSystem}.
 	 * @param fs The file system.
-	 * @return A {@link Map} of parsed map definitions.
+	 * @return A {@link Map} of parsed mapviewer definitions.
 	 * @throws IOException If some I/O error occurs.
 	 */
 	public static Map<Integer, RegionDefinition> parse(FileSystem fs) throws IOException {
-		logger.info("Loading map definitions...");
+		logger.info("Loading mapviewer definitions...");
 		Archive archive = fs.getArchive(FileSystem.MANIFEST_ARCHIVE);
 		ByteBuffer buffer = archive.getData("map_index");
 		Map<Integer, RegionDefinition> defs = new HashMap<>();
@@ -42,7 +42,7 @@ public final class MapDefinitionParser {
 			boolean isNew = buffer.get() == 1;
 			defs.put(hash, new RegionDefinition(hash, terrainFile, objectFile, isNew));
 		}
-		logger.info("Loaded " + count + " map definitions.");
+		logger.info("Loaded " + count + " mapviewer definitions.");
 		return defs;
 	}
 	

@@ -1,6 +1,6 @@
-package tools.map;
+package tools.mapviewer;
 
-import tools.map.util.Resources;
+import tools.mapviewer.util.Resources;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,7 +13,7 @@ import java.io.IOException;
 public class MapPanel extends JPanel {
 	
 	/**
-	 * The map panels context (parent)
+	 * The mapviewer panels context (parent)
 	 */
 	private MapTool context;
 	
@@ -28,12 +28,12 @@ public class MapPanel extends JPanel {
 	private int zoom = 100;
 	
 	/**
-	 * X coordinate of the center of the map portion we are viewing
+	 * X coordinate of the center of the mapviewer portion we are viewing
 	 */
 	public int centerX = 3080;
 	
 	/**
-	 * Y coordinate of the center of the map portion we are viewing
+	 * Y coordinate of the center of the mapviewer portion we are viewing
 	 */
 	public int centerY = 3510;
 	
@@ -43,7 +43,7 @@ public class MapPanel extends JPanel {
 	private int plane = 0;
 	
 	/**
-	 * Creates a MapPanel, loads the map and registers listeners for the
+	 * Creates a MapPanel, loads the mapviewer and registers listeners for the
 	 * component
 	 */
 	MapPanel(MapTool mapViewer) {
@@ -57,8 +57,8 @@ public class MapPanel extends JPanel {
 	}
 	
 	/**
-	 * Clears the panel, draws the section of the map being viewed and then
-	 * draws the selections over the map
+	 * Clears the panel, draws the section of the mapviewer being viewed and then
+	 * draws the selections over the mapviewer
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
@@ -87,7 +87,7 @@ public class MapPanel extends JPanel {
 		// Calculate the preferred zoom for the rect size
 		int zoomX = (int) (context.getMap().getWidth() * 100 / rect.getWidth());
 		int zoomY = (int) (context.getMap().getHeight() * 100 / rect.getHeight());
-		// Center the map on the center of the selected rectangle
+		// Center the mapviewer on the center of the selected rectangle
 		context.getMap().centerX = (int) rect.getCenterX();
 		context.getMap().centerY = (int) rect.getCenterY();
 		// Use the minimum zoom value to ensure everything selected is shown
@@ -129,7 +129,7 @@ public class MapPanel extends JPanel {
 	
 	private void loadMap() {
 		try {
-			this.img = ImageIO.read(new File("./data/map/plane/map" + plane + ".png"));
+			this.img = ImageIO.read(new File("./data/mapviewer/plane/mapviewer" + plane + ".png"));
 		} catch(IOException e) {
 			System.err.println("FATAL ERROR: Could not load map_" + plane + ".png");
 			e.printStackTrace();

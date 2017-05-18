@@ -747,7 +747,7 @@ public abstract class EntityNode extends Node {
 	/**
 	 * Sets regional and placement updates on this {@link EntityNode}.
 	 * @param needsPlacement this flag describes if the entity needs placement.
-	 * @param region         this flag descibes if the entity needs to have region map update.
+	 * @param region         this flag descibes if the entity needs to have region mapviewer update.
 	 */
 	public final void setUpdates(boolean needsPlacement, boolean region) {
 		this.needsPlacement = needsPlacement;
