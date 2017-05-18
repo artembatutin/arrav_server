@@ -9,7 +9,7 @@ out/**
 /bin/
 /out/
 /file_server/file_server.iml
-data/fs/
+data/cache/
 *.iml
 *.eml
 *.userlibraries
