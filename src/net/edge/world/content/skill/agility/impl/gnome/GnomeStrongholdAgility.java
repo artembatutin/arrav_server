@@ -143,7 +143,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
-		 * @param objectIds      {@link #objectId}.
+		 * @param objectIds      {@link #objectIds}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
@@ -157,7 +157,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
-		 * @param objectIds      {@link #objectId}.
+		 * @param objectIds      {@link #objectIds}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
@@ -172,8 +172,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
 		 * @param objectIds      {@link #objectIds}.
-		 * @param message        {@link #message}.
-		 * @param crossedMessage {@link #crossedMessage}.
+		 * @param type        {@link #message}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
 		GnomeAgilityData(int[] objectIds, ObstacleType type, ObstacleAction obstacleAction) {

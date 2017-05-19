@@ -8,6 +8,7 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.region.Region;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	/**
 	 * An {@link Iterator} implementation designed specifically {@link EntityList}s.
 	 * @param <E> The specific type of {@link EntityNode} being managed within this {@code Iterator}.
-	 * @author lare96 <http://github.org/lare96>
+	 * @author Artem Batutin <artembatutin@gmail.com>
 	 */
 	public static final class EntityListIterator<E extends EntityNode> implements Iterator<E> {
 		
@@ -41,12 +42,12 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 		/**
 		 * The current index.
 		 */
-		private int curr;
+		private int current;
 		
 		/**
-		 * The previous index.
+		 * The last index found.
 		 */
-		private int prev = -1;
+		private int last = -1;
 		
 		/**
 		 * Creates a new {@link EntityListIterator}.
@@ -58,39 +59,43 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 		
 		@Override
 		public boolean hasNext() {
-			return curr < list.capacity() && skipNullIndexes();
+			int index = current;
+			// return true iff there is a non-null element within the list
+			while (index <= list.size()) {
+				E mob = list.entities[index++];
+				if (mob != null) {
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		@Override
 		public E next() {
-			skipNullIndexes();
-			checkPositionIndex(curr, list.capacity(), "No elements left");
-			E entity = list.element(curr);
-			prev = curr++;
-			return entity;
+			while (current <= list.size()) {
+				E mob = list.entities[current++];
+				if (mob != null) {
+					last = current;
+					return mob;
+				}
+			}
+			throw new NoSuchElementException("There are no more elements!");
 		}
 		
 		@Override
 		public void remove() {
-			checkState(prev != -1, "remove() can only be called once after each call to next()");
-			
-			list.remove(list.get(prev));
-			prev = -1;
-		}
-		
-		/**
-		 * Forwards the {@code curr} marker until a {@code non-null} element is found.
-		 * @return {@code true} if a non-null element is found, {@code false} otherwise.
-		 */
-		private boolean skipNullIndexes() {
-			while(list.get(curr) == null) {
-				if(++curr >= list.capacity()) {
-					return false;
-				}
+			if (last == -1) {
+				throw new IllegalStateException("remove() may only be called once per call to next()");
 			}
-			return true;
+			list.remove(last);
+			last = -1;
 		}
 	}
+	
+	/**
+	 * A {@link Queue} of available indices.
+	 */
+	private final Queue<Integer> indices = new PriorityQueue<>();
 	
 	/**
 	 * The entities contained within this list.
@@ -98,14 +103,14 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	private final E[] entities;
 	
 	/**
-	 * A queue that acts as a cache for indexes.
+	 * The capacity of this repository.
 	 */
-	private final Queue<Integer> indexes;
+	private final int capacity;
 	
 	/**
 	 * The internal size of this list.
 	 */
-	private int size;
+	private int size = 0;
 	
 	/**
 	 * Creates a new {@link EntityList}.
@@ -113,10 +118,9 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	 */
 	@SuppressWarnings("unchecked")
 	public EntityList(int capacity) {
-		entities = (E[]) new EntityNode[++capacity];
-		
-		Stream<Integer> indexStream = IntStream.rangeClosed(1, entities.length).boxed();
-		indexes = new ArrayDeque<>(indexStream.collect(Collectors.toList()));
+		this.capacity = capacity;
+		entities = (E[]) Array.newInstance(EntityNode.class, capacity);
+		IntStream.rangeClosed(0, capacity).boxed().forEachOrdered(indices::offer);
 	}
 	
 	@Override
@@ -188,14 +192,22 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * @param entity The entity to add to this list.
 	 */
 	public boolean add(E entity) {
-		checkArgument(entity.getState() != NodeState.ACTIVE, "state == ACTIVE");
-		checkState(!isFull(), "isFull() == true");
-		int index = indexes.remove();
+		if(entity.getState() == NodeState.ACTIVE)
+			return false;
+		if (size == capacity())
+			return false;
+		Integer index = indices.poll();
+		if (index == null)
+			return false;
+		if (entities[index] != null)
+			return false;
 		entities[index] = entity;
 		entity.setSlot(index);
 		entity.setState(NodeState.ACTIVE);
+		//Updating player count.
 		if(entity.isPlayer())
 			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + World.getPlayers().size());
+		//Activating npc if region active.
 		if(entity.isNpc()) {
 			Region reg = entity.getRegion();
 			if(reg != null && reg.getState() == NodeState.ACTIVE)
@@ -213,10 +225,12 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	public boolean remove(E entity) {
 		if(entity.getState() != NodeState.ACTIVE)
 			return true;
-		checkArgument(entity.getSlot() != -1, "index == -1");
-		indexes.add(entity.getSlot());
+		if(entity.getSlot() == -1)
+			return false;
+		int index = entity.getSlot();
+		indices.offer(index);
 		entity.setState(NodeState.INACTIVE);
-		entities[entity.getSlot()] = null;
+		entities[index] = null;
 		size--;
 		if(entity.isPlayer()) {
 			Player player = entity.toPlayer();
@@ -300,7 +314,7 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * @return The length of the backing array.
 	 */
 	public int capacity() {
-		return entities.length;
+		return capacity;
 	}
 	
 	/**
@@ -309,7 +323,7 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * @return The shallow copy of the backing array.
 	 */
 	public E[] toArray() {
-		return Arrays.copyOf(entities, entities.length);
+		return Arrays.copyOf(entities, capacity);
 	}
 	
 	/**
