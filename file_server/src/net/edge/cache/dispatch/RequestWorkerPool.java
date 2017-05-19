@@ -47,7 +47,7 @@ public final class RequestWorkerPool {
 	 * @throws Exception if the file system cannot be created.
 	 */
 	public void start() throws Exception {
-		File base = new File("data/fs/");
+		File base = new File("data/cache/");
 		final IndexedFileSystem fs = new IndexedFileSystem(base);
 		for(int i = 0; i < THREADS_PER_REQUEST_TYPE; i++) {
 			workers.add(new JagGrabRequestWorker(fs));
