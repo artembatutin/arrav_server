@@ -27,73 +27,69 @@ import static com.google.common.base.Preconditions.*;
 public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	
 	/**
-	 * The {@link Iterator} implementation for the EntityList.
-	 *
-	 * @author Graham
-	 * @author Ryley
-	 * @author Artem Batutin <artembatutin@gmail.com>
+	 * An {@link Iterator} implementation designed specifically {@link EntityList}s.
+	 * @param <E> The specific type of {@link EntityNode} being managed within this {@code Iterator}.
+	 * @author lare96 <http://github.org/lare96>
 	 */
-	private static final class EntityListIterator<E extends EntityNode> implements Iterator<E> {
+	public static final class EntityListIterator<E extends EntityNode> implements Iterator<E> {
 		
 		/**
-		 * The current index of this Iterator.
+		 * The {@link EntityList} this {@link Iterator} is dedicated to.
 		 */
-		private int current;
+		private final EntityList<E> list;
 		
 		/**
-		 * The last index found.
+		 * The current index.
 		 */
-		private int last = -1;
+		private int curr;
 		
 		/**
-		 * The list of {@link EntityNode}s this {@link Iterator} iterates over.
+		 * The previous index.
 		 */
-		private final EntityList<E> repository;
+		private int prev = -1;
 		
 		/**
-		 * Constructs a new {@link EntityListIterator} with the specified EntityList.
-		 *
-		 * @param list The EntityList we're iterating over.
+		 * Creates a new {@link EntityListIterator}.
+		 * @param list The {@link EntityList} this {@link Iterator} is dedicated to.
 		 */
-		private EntityListIterator(EntityList<E> list) {
-			this.repository = list;
+		public EntityListIterator(EntityList<E> list) {
+			this.list = list;
 		}
 		
 		@Override
 		public boolean hasNext() {
-			int index = current;
-			while (index <= repository.size()) {
-				EntityNode e = repository.entities[index++];
-				if (e != null) {
-					return true;
-				}
-			}
-			
-			return false;
+			return curr < list.capacity() && skipNullIndexes();
 		}
 		
 		@Override
 		public E next() {
-			while (current <= repository.size()) {
-				E mob = repository.entities[current++];
-				if (mob != null) {
-					last = current;
-					return mob;
-				}
-			}
-			
-			throw new NoSuchElementException("There are no more elements!");
+			skipNullIndexes();
+			checkPositionIndex(curr, list.capacity(), "No elements left");
+			E entity = list.element(curr);
+			prev = curr++;
+			return entity;
 		}
 		
 		@Override
 		public void remove() {
-			if (last == -1) {
-				throw new IllegalStateException("remove() may only be called once per call to next()");
-			}
-			repository.remove(last);
-			last = -1;
+			checkState(prev != -1, "remove() can only be called once after each call to next()");
+			
+			list.remove(list.get(prev));
+			prev = -1;
 		}
 		
+		/**
+		 * Forwards the {@code curr} marker until a {@code non-null} element is found.
+		 * @return {@code true} if a non-null element is found, {@code false} otherwise.
+		 */
+		private boolean skipNullIndexes() {
+			while(list.get(curr) == null) {
+				if(++curr >= list.capacity()) {
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 	
 	/**
