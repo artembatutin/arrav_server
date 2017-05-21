@@ -1,4 +1,4 @@
-package net.edge.world.node.entity.move.path;
+package net.edge.world.node.entity.move.path.distance;
 
 import net.edge.world.locale.Position;
 

@@ -9,7 +9,7 @@ import net.edge.world.region.TraversalMap;
  * An algorithm used to find a path between two {@link Position}s.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-abstract class PathFinder {
+public abstract class PathFinder {
 	
 	/**
 	 * The traversal mapviewer used for making sure any direction is traversable.
@@ -20,7 +20,7 @@ abstract class PathFinder {
 	 * Constructs a new {@code PathFinder} with the specified traversal mapviewer.
 	 * @param traversalMap The traversal mapviewer to use.
 	 */
-	PathFinder(TraversalMap traversalMap) {
+	protected PathFinder(TraversalMap traversalMap) {
 		this.traversalMap = traversalMap;
 	}
 	
@@ -41,7 +41,7 @@ abstract class PathFinder {
 	 * @param directions The Directions that should be checked.
 	 * @return {@code true} if any of the Directions lead to a traversable tile, otherwise {@code false}.
 	 */
-	boolean traversable(Position current, int size, Direction... directions) {
+	protected boolean traversable(Position current, int size, Direction... directions) {
 		Preconditions.checkArgument(directions != null && directions.length > 0, "Directions array cannot be null.");
 		for(Direction direction : directions) {
 			if(!traversalMap.isTraversable(current, direction, size)) {

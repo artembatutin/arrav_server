@@ -3,6 +3,7 @@ package net.edge.world.node.entity.move.path;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Direction;
+import net.edge.world.node.entity.move.path.distance.Distance;
 import net.edge.world.region.TraversalMap;
 
 import java.util.*;

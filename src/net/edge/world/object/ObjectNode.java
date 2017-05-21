@@ -20,9 +20,14 @@ public abstract class ObjectNode {
 	private int id;
 	
 	/**
-	 * Packed {@link ObjectType} and {@link ObjectDirection}.
+	 * The {@link ObjectType} of this object.
 	 */
-	private final byte packed;
+	private final ObjectType type;
+	
+	/**
+	 * The {@link ObjectDirection} of this object.
+	 */
+	private final ObjectDirection direction;
 	
 	/**
 	 * Creates a new {@link ObjectNode}.
@@ -32,7 +37,8 @@ public abstract class ObjectNode {
 	 */
 	public ObjectNode(int id, ObjectDirection direction, ObjectType type) {
 		this.id = id;
-		this.packed = (byte) ((type.getId() & 0xF) << 2 | (direction.getId() & 3));
+		this.type = type;
+		this.direction = direction;
 	}
 	
 	/**
@@ -257,7 +263,7 @@ public abstract class ObjectNode {
 	 * @return the direction.
 	 */
 	public ObjectDirection getDirection() {
-		return ObjectDirection.valueOf(packed & 0b0000_0011).get();
+		return direction;
 	}
 	
 	/**
@@ -265,7 +271,7 @@ public abstract class ObjectNode {
 	 * @return the type of the object.
 	 */
 	public ObjectType getObjectType() {
-		return ObjectType.valueOf((packed >> 2) & 0xF).get();
+		return type;
 	}
 	
 	/**

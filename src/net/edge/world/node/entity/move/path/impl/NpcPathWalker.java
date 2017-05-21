@@ -1,27 +1,28 @@
-package net.edge.world.node.entity.move.path;
+package net.edge.world.node.entity.move.path.impl;
 
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityNode;
+import net.edge.world.Direction;
+import net.edge.world.node.entity.move.path.Path;
+import net.edge.world.node.entity.move.path.PathFinder;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.region.TraversalMap;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import static net.edge.world.Direction.*;
-
 /**
  * Represents a simple path finder which determines a straight path to the first blocked tile or it's destination.
  * Mostly used by {@link Npc} following and movement.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public final class SimplePathFinder extends PathFinder {
+public final class NpcPathWalker extends PathFinder {
 	
 	/**
 	 * Constructs the {@code SimplePathFinder} with the specified traversal mapviewer.
 	 * @param traversalMap The traversal mapviewer to use.
 	 */
-	public SimplePathFinder(TraversalMap traversalMap) {
+	public NpcPathWalker(TraversalMap traversalMap) {
 		super(traversalMap);
 	}
 	
@@ -70,7 +71,7 @@ public final class SimplePathFinder extends PathFinder {
 			
 			if(dx > 0 && dy > 0) {
 				while((dx-- > 0 && dy-- > 0)) {
-					if(traversable(current, size, SOUTH_WEST)) {
+					if(traversable(current, size, Direction.SOUTH_WEST)) {
 						current = new Position(--x, --y, height);
 						positions.addLast(current);
 						move = true;
@@ -81,7 +82,7 @@ public final class SimplePathFinder extends PathFinder {
 				}
 			} else if(dx < 0 && dy < 0) {
 				while((dx++ < 0 && dy++ < 0)) {
-					if(traversable(current, size, NORTH_EAST)) {
+					if(traversable(current, size, Direction.NORTH_EAST)) {
 						current = new Position(++x, ++y, height);
 						positions.addLast(current);
 						move = true;
@@ -92,7 +93,7 @@ public final class SimplePathFinder extends PathFinder {
 				}
 			} else if(dx < 0 && dy > 0) {
 				while((dx++ < 0 && dy-- > 0)) {
-					if(traversable(current, size, SOUTH_EAST)) {
+					if(traversable(current, size, Direction.SOUTH_EAST)) {
 						current = new Position(++x, --y, height);
 						positions.addLast(current);
 						move = true;
@@ -103,7 +104,7 @@ public final class SimplePathFinder extends PathFinder {
 				}
 			} else if(dx > 0 && dy < 0) {
 				while((dx-- > 0 && dy++ < 0)) {
-					if(traversable(current, size, NORTH_WEST)) {
+					if(traversable(current, size, Direction.NORTH_WEST)) {
 						current = new Position(--x, ++y, height);
 						positions.addLast(current);
 						move = true;
@@ -116,7 +117,7 @@ public final class SimplePathFinder extends PathFinder {
 			
 			if(dy > 0 && !move) {
 				while(dy-- > 0) {
-					if(traversable(current, size, SOUTH)) {
+					if(traversable(current, size, Direction.SOUTH)) {
 						current = new Position(x, --y, height);
 						positions.addLast(current);
 						exit = false;
@@ -126,7 +127,7 @@ public final class SimplePathFinder extends PathFinder {
 				}
 			} else if(dy < 0 && !move) {
 				while(dy++ < 0) {
-					if(traversable(current, size, NORTH)) {
+					if(traversable(current, size, Direction.NORTH)) {
 						current = new Position(x, ++y, height);
 						positions.addLast(current);
 						exit = false;
@@ -137,7 +138,7 @@ public final class SimplePathFinder extends PathFinder {
 			}
 			if(dx > 0 && !move) {
 				while(dx-- > 0) {
-					if(traversable(current, size, WEST)) {
+					if(traversable(current, size, Direction.WEST)) {
 						current = new Position(--x, y, height);
 						positions.addLast(current);
 						exit = false;
@@ -147,7 +148,7 @@ public final class SimplePathFinder extends PathFinder {
 				}
 			} else if(dx < 0 && !move) {
 				while(dx++ < 0) {
-					if(traversable(current, size, EAST)) {
+					if(traversable(current, size, Direction.EAST)) {
 						current = new Position(++x, y, height);
 						positions.addLast(current);
 						exit = false;

@@ -21,9 +21,9 @@ import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityList;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.move.path.AStarPathFinder;
-import net.edge.world.node.entity.move.path.Distance;
 import net.edge.world.node.entity.move.path.SimplePathChecker;
-import net.edge.world.node.entity.move.path.SimplePathFinder;
+import net.edge.world.node.entity.move.path.impl.SimplePathFinder;
+import net.edge.world.node.entity.move.path.distance.Manhattan;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcMovementTask;
 import net.edge.world.node.entity.player.Player;
@@ -368,7 +368,7 @@ public final class World {
 	/**
 	 * The world's A* path finder use for player's movements.
 	 */
-	private static final AStarPathFinder A_STAR_PATH_FINDER = new AStarPathFinder(TRAVERSAL_MAP, new Distance.Manhattan());
+	private static final AStarPathFinder A_STAR_PATH_FINDER = new AStarPathFinder(TRAVERSAL_MAP, new Manhattan());
 	
 	/**
 	 * This world's straight line pathfinder used for NPCs movements.

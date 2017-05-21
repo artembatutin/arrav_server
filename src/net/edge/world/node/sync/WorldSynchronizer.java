@@ -97,12 +97,7 @@ public final class WorldSynchronizer {
 	 * Post-synchronization, clear various flags. This can be done safely in parallel.
 	 */
 	public void postSynchronize() {
-		for(Player it : World.getPlayers()) {
-			it.getSession().flushQueue();
-			it.reset();
-			it.setCachedUpdateBlock(null);
-		}
-		/*synchronizer.bulkRegister(World.getPlayers().size());
+		synchronizer.bulkRegister(World.getPlayers().size());
 		World.getPlayers().forEach(it -> updateExecutor.execute(new EntitySynchronization(this, it) {
 			@Override
 			public void execute() {
@@ -111,20 +106,17 @@ public final class WorldSynchronizer {
 				it.setCachedUpdateBlock(null);
 			}
 		}));
-		synchronizer.arriveAndAwaitAdvance();*/
+		synchronizer.arriveAndAwaitAdvance();
+
 		
-		for(Npc it : World.getNpcs()) {
-			it.reset();
-		}
-		/*synchronizer.bulkRegister(World.getNpcs().size());
+		synchronizer.bulkRegister(World.getNpcs().size());
 		World.getNpcs().forEach(it -> updateExecutor.execute(new EntitySynchronization(this, it) {
 			@Override
 			public void execute() {
 				it.reset();
 			}
 		}));
-		synchronizer.arriveAndAwaitAdvance();*/
-		
+		synchronizer.arriveAndAwaitAdvance();
 		regionTick();
 	}
 	
