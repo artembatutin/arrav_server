@@ -10,7 +10,6 @@ import net.edge.world.content.dialogue.test.DialogueAppender;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.region.Region;
 
 /**
  * The class which represents a single star sprite npc.
@@ -28,7 +27,7 @@ public final class StarSprite extends Npc {
 	 * @param star {@link #star}.
 	 */
 	public StarSprite(ShootingStar star) {
-		super(8091, star.getPosition().copy());
+		super(8091, star.getGlobalPos().copy());
 		this.star = star;
 	}
 	
@@ -38,10 +37,7 @@ public final class StarSprite extends Npc {
 	 */
 	public void spawn(Player player) {
 		star.setDisabled(true);
-		
-		Region region = World.getRegions().getRegion(star.getPosition());
-		region.unregister(star);
-		
+		star.unregister();
 		World.getNpcs().add(star.sprite);
 	}
 	

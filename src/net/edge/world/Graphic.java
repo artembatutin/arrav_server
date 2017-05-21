@@ -1,4 +1,4 @@
-package net.edge.world.node.entity.model;
+package net.edge.world;
 
 /**
  * The container class that represents an graphic.

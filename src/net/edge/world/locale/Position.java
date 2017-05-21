@@ -1,7 +1,7 @@
 package net.edge.world.locale;
 
 import net.edge.utils.rand.RandomUtils;
-import net.edge.world.node.entity.model.Direction;
+import net.edge.world.Direction;
 import net.edge.world.node.entity.player.Player;
 
 /**
@@ -162,6 +162,30 @@ public class Position {
 	 */
 	public static Position create(int x, int y, int z) {
 		return new Position(x, y, z);
+	}
+	
+	/**
+	 * Returns a local packed integer.
+	 * @return packed position integer.
+	 */
+	public int toLocalPacked() {
+		return (z & 0x3f) << 12 | (getRegionLocalX() & 0x3f) << 6 | (getRegionLocalY() & 0x3f);
+	}
+	
+	/**
+	 * Gets the local packed X coordinate.
+	 * @return regional local X.
+	 */
+	public int getRegionLocalX() {
+		return x - (x & 0x3F) * 64;
+	}
+	
+	/**
+	 * Gets the local packed Y coordinate.
+	 * @return regional local Y.
+	 */
+	public int getRegionLocalY() {
+		return y - (y & 0x3F) * 64;
 	}
 	
 	/**

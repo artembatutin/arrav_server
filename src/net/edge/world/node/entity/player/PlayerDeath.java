@@ -2,7 +2,7 @@ package net.edge.world.node.entity.player;
 
 import com.google.common.collect.Ordering;
 import net.edge.utils.rand.RandomUtils;
-import net.edge.world.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.PlayerPanel;
 import net.edge.world.content.combat.CombatConstants;
@@ -19,14 +19,14 @@ import net.edge.world.locale.Location;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityDeath;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
-import net.edge.world.node.entity.model.Hit;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
+import net.edge.world.Hit;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.entity.update.UpdateFlag;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.region.Region;
+import net.edge.world.region.Region;
 
 import java.util.Iterator;
 import java.util.LinkedList;

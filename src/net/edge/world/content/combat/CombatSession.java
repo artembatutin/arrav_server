@@ -1,7 +1,7 @@
 package net.edge.world.content.combat;
 
 import net.edge.task.Task;
-import net.edge.world.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.combat.effect.CombatEffectType;
 import net.edge.world.content.combat.special.CombatSpecial;

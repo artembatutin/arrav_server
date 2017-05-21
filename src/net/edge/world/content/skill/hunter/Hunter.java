@@ -8,15 +8,14 @@ import net.edge.world.content.skill.hunter.trap.TrapProcessor;
 import net.edge.world.content.skill.hunter.trap.TrapTask;
 import net.edge.world.locale.Location;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Direction;
+import net.edge.world.Animation;
+import net.edge.world.Direction;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.object.ObjectNode;
-import net.edge.world.node.object.ObjectType;
-import net.edge.world.node.region.Region;
+import net.edge.world.object.ObjectNode;
+import net.edge.world.object.ObjectType;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -57,21 +56,15 @@ public final class Hunter {
 		if(logout) {
 			GLOBAL_TRAPS.get(player).getTraps().forEach(t -> {
 				t.setAbandoned(true);
-				Region region = World.getRegions().getRegion(t.getObject().getPosition());
-				if(region != null) {
-					region.unregister(t.getObject());
-					region.register(new ItemNode(new Item(t.getType().getItemId()), t.getObject().getPosition().copy(), player));
-				}
+				t.getObject().getRegion().register(new ItemNode(new Item(t.getType().getItemId()), t.getObject().getGlobalPos().copy(), player));
+				t.getObject().unregister();
 			});
 			GLOBAL_TRAPS.get(player).getTraps().clear();
 		} else {
 			GLOBAL_TRAPS.get(player).getTraps().remove(trap);
 			trap.setAbandoned(true);
-			Region region = World.getRegions().getRegion(trap.getObject().getPosition());
-			if(region != null) {
-				region.unregister(trap.getObject());
-				region.register(new ItemNode(new Item(trap.getType().getItemId()), trap.getObject().getPosition().copy(), player));
-			}
+			trap.getObject().getRegion().register(new ItemNode(new Item(trap.getType().getItemId()), trap.getObject().getGlobalPos().copy(), player));
+			trap.getObject().unregister();
 			player.message("You have abandoned your trap...");
 		}
 		
@@ -102,7 +95,7 @@ public final class Hunter {
 		
 		Position p = player.getPosition();
 		
-		if(player.getRegion().getObjects(p).stream().filter(o -> o.getObjectType() == ObjectType.GENERAL_PROP).findAny().isPresent() || !World.getTraversalMap().isTraversable(p, Direction.WEST, player.size()) && !World.getTraversalMap().isTraversable(p, Direction.EAST, player.size()) || Location.isAtHome(player)) {
+		if(player.getRegion().getObjects(p).stream().anyMatch(o -> o.getObjectType() == ObjectType.GENERAL_PROP) || !World.getTraversalMap().isTraversable(p, Direction.WEST, player.size()) && !World.getTraversalMap().isTraversable(p, Direction.EAST, player.size()) || Location.isAtHome(player)) {
 			player.message("You can't set-up your trap here.");
 			return false;
 		}
@@ -122,7 +115,7 @@ public final class Hunter {
 		trap.submit();
 		player.animation(new Animation(827));
 		player.getInventory().remove(new Item(trap.getType().getItemId(), 1));
-		World.getRegions().getRegion(trap.getObject().getPosition()).register(trap.getObject());
+		trap.getObject().register();
 		if(World.getTraversalMap().isTraversable(p, Direction.WEST, player.size())) {
 			player.getMovementQueue().walk(Direction.WEST.getX(), Direction.WEST.getY());
 		} else if(World.getTraversalMap().isTraversable(p, Direction.EAST, player.size())) {
@@ -168,7 +161,7 @@ public final class Hunter {
 		}
 		
 		trap.onPickUp();
-		World.getRegions().getRegion(trap.getObject().getPosition()).unregister(object);
+		object.unregister();
 		player.getInventory().add(new Item(trap.getType().getItemId(), 1));
 		player.animation(new Animation(827));
 		return true;
@@ -210,7 +203,7 @@ public final class Hunter {
 			GLOBAL_TRAPS.get(player).setTask(Optional.empty());
 			GLOBAL_TRAPS.remove(player);
 		}
-		World.getRegions().getRegion(trap.getObject().getPosition()).unregister(trap.getObject());
+		trap.getObject().unregister();
 		player.getInventory().add(new Item(trap.getType().getItemId(), 1));
 		player.animation(new Animation(827));
 		return true;
@@ -223,6 +216,6 @@ public final class Hunter {
 	 * @return a trap wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
 	public static Optional<Trap> getTrap(Player player, ObjectNode object) {
-		return !GLOBAL_TRAPS.containsKey(player) ? Optional.empty() : GLOBAL_TRAPS.get(player).getTraps().stream().filter(trap -> trap.getObject().getId() == object.getId() && trap.getObject().getPosition().getX() == object.getPosition().getX() && trap.getObject().getPosition().getY() == object.getPosition().getY() && trap.getObject().getPosition().getZ() == object.getPosition().getZ()).findAny();
+		return !GLOBAL_TRAPS.containsKey(player) ? Optional.empty() : GLOBAL_TRAPS.get(player).getTraps().stream().filter(trap -> trap.getObject().getId() == object.getId() && trap.getObject().getX() == object.getX() && trap.getObject().getY() == object.getY() && trap.getObject().getZ() == object.getZ()).findAny();
 	}
 }

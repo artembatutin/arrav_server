@@ -12,13 +12,13 @@ import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.prayer.Prayer;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.update.UpdateFlag;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
 

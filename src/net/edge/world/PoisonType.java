@@ -1,4 +1,4 @@
-package net.edge.world.node.entity.model;
+package net.edge.world;
 
 /**
  * The enumerated type whose elements represent the different levels of poison.

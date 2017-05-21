@@ -1,9 +1,9 @@
 package net.edge.cache.decoder;
 
-import net.edge.cache.Archive;
+import net.edge.cache.archive.Archive;
 import net.edge.cache.FileSystem;
 import net.edge.utils.LoggerUtils;
-import net.edge.world.node.region.RegionDefinition;
+import net.edge.world.region.RegionDefinition;
 
 import java.nio.ByteBuffer;
 import java.util.logging.Logger;

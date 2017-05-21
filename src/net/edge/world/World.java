@@ -1,5 +1,7 @@
 package net.edge.world;
 
+import net.edge.GameConstants;
+import net.edge.GameService;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
 import net.edge.task.Task;
@@ -25,9 +27,9 @@ import net.edge.world.node.entity.move.path.SimplePathFinder;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcMovementTask;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.region.RegionManager;
-import net.edge.world.node.region.TraversalMap;
-import net.edge.world.node.synchronizer.WorldSynchronizer;
+import net.edge.world.region.RegionManager;
+import net.edge.world.region.TraversalMap;
+import net.edge.world.node.sync.WorldSynchronizer;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -1,4 +1,4 @@
-package net.edge.world.node.entity.model;
+package net.edge.world;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;

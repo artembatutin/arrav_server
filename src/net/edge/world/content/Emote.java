@@ -1,7 +1,7 @@
 package net.edge.world.content;
 
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
 
 /**

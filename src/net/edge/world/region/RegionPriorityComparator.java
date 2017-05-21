@@ -1,4 +1,4 @@
-package net.edge.world.node.region;
+package net.edge.world.region;
 
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityNode;

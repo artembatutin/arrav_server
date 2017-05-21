@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.move.path;
 
 import net.edge.world.locale.Position;
-import net.edge.world.node.region.TraversalMap;
+import net.edge.world.region.TraversalMap;
 
 /**
  * Represents a {@code PathFinder} which is meant to be used to check projectiles passage in a straight line.

@@ -6,11 +6,12 @@ import net.edge.task.Task;
 import net.edge.utils.TextUtils;
 import net.edge.world.World;
 import net.edge.world.content.skill.thieving.Thieving;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.DynamicObject;
+import net.edge.world.object.ObjectNode;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -30,7 +31,7 @@ public final class Stalls extends Thieving {
 	/**
 	 * The object node this player is interacting with.
 	 */
-	private final ObjectNode object;
+	private final DynamicObject object;
 	
 	/**
 	 * Constructs a new {@link Stalls}.
@@ -38,8 +39,8 @@ public final class Stalls extends Thieving {
 	 * @param stall  the stall this player is stealing from.
 	 * @param object the object this player is interacting with.
 	 */
-	Stalls(Player player, StallData stall, ObjectNode object) {
-		super(player, object.getPosition());
+	Stalls(Player player, StallData stall, DynamicObject object) {
+		super(player, object.getGlobalPos());
 		this.stall = stall;
 		this.object = object;
 	}
@@ -52,15 +53,15 @@ public final class Stalls extends Thieving {
 	 */
 	public static boolean steal(Player player, ObjectNode object) {
 		Optional<StallData> definition = StallData.getDefinition(object.getId());
-		
+		DynamicObject o = object.toDynamic();
 		if(!definition.isPresent()) {
 			return false;
 		}
-		if(object.isDisabled()) {
+		if(o.isDisabled()) {
 			return false;
 		}
 		
-		Stalls stall = new Stalls(player, definition.get(), object);
+		Stalls stall = new Stalls(player, definition.get(), o);
 		stall.start();
 		return true;
 	}
@@ -254,37 +255,37 @@ public final class Stalls extends Thieving {
 		/**
 		 * The main stall object.
 		 */
-		private final ObjectNode object;
+		private final DynamicObject object;
 		
 		/**
-		 * The empty stall
+		 * The saved stall id.
 		 */
-		private final ObjectNode empty;
+		private final int id;
 		
 		/**
 		 * Constructs a new {@link StallTask}.
 		 * @param stall  the stall being used.
 		 * @param object the stall's object node.
 		 */
-		StallTask(Stalls stall, ObjectNode object) {
+		StallTask(Stalls stall, DynamicObject object) {
 			super(stall.stall.respawnTime, false);
 			this.stall = stall;
 			this.object = object;
-			this.empty = new ObjectNode(stall.stall.emptyStallId, object.getPosition(), object.getDirection(), object.getObjectType());
+			this.id = object.getId();
 		}
 		
 		@Override
 		public void onSubmit() {
 			object.setDisabled(true);
-			World.getRegions().getRegion(object.getPosition()).unregister(object);
-			World.getRegions().getRegion(object.getPosition()).register(empty);
+			object.setId(stall.stall.emptyStallId);
+			object.register();
 		}
 		
 		@Override
 		public void execute() {
 			object.setDisabled(false);
-			World.getRegions().getRegion(object.getPosition()).unregister(empty);
-			World.getRegions().getRegion(object.getPosition()).register(stall.object);
+			object.setId(id);
+			stall.object.register();
 			this.cancel();
 		}
 		

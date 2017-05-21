@@ -2,7 +2,7 @@ package net.edge.world.content.commands.impl;
 
 import net.edge.world.content.commands.Command;
 import net.edge.world.content.commands.CommandSignature;
-import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 

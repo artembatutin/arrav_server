@@ -3,7 +3,7 @@ package net.edge.net.message.impl;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.message.InputMessageListener;
 import net.edge.task.LinkedTaskSequence;
-import net.edge.world.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.ViewingOrb;
 import net.edge.world.content.WebSlashing;
@@ -21,8 +21,8 @@ import net.edge.world.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.world.content.wilderness.Obelisk;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
 import net.edge.world.node.entity.move.ForcedMovement;
 import net.edge.world.node.entity.move.ForcedMovementDirection;
 import net.edge.world.node.entity.move.ForcedMovementManager;
@@ -33,7 +33,7 @@ import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.entity.player.assets.Spellbook;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
 
@@ -88,13 +88,13 @@ public final class ObjectActionMessage implements InputMessageListener {
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(objectId < 0 || objectX < 0 || objectY < 0)
 			return;
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position);
+		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
 		player.facePosition(position);
 		final ObjectNode object = o.get();
 		if(player.getRights().greater(Rights.ADMINISTRATOR))
-			player.message("[DEBUG]: ID - " + objectId + ", " + "X - " + objectX + ", Y - " + objectY + ", Z - " + objectZ + ", Direction - " + object.getDirection().toString());
+			player.message("[OBJ-1]:" + o.get().toString());
 		player.getMovementListener().append(() -> {
 			if(objectId == 85584 || objectId == 85532 || objectId == 85534 ||//agility
 					new Boundary(position, object.getDefinition().getSize()).within(player.getPosition(), player.size(), 1)) {
@@ -219,7 +219,7 @@ public final class ObjectActionMessage implements InputMessageListener {
 						movement.setFirstSpeed(95);
 						movement.setAnimation(7081);
 						movement.setSecondSpeed(120);
-						if(player.getPosition().getY() < object.getPosition().getY()) {
+						if(player.getPosition().getY() < object.getY()) {
 							movement.setDirection(ForcedMovementDirection.NORTH);
 							movement.setFirst(new Position(2872, 5269, 2));
 							movement.setSecond(new Position(2872, 5279, 2));
@@ -497,12 +497,12 @@ public final class ObjectActionMessage implements InputMessageListener {
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(objectId < 0 || objectX < 0 || objectY < 0)
 			return;
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position);
+		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
 		//Controlling data.
 		if(player.getRights().greater(Rights.ADMINISTRATOR))
-			player.message("[DEBUG]: ID - " + objectId + ", " + "X - " + objectX + ", Y - " + objectY);
+			player.message("[OBJ-2]:" + o.get().toString());
 		player.facePosition(position);
 		final ObjectNode object = o.get();
 		player.getMovementListener().append(() -> {
@@ -549,9 +549,11 @@ public final class ObjectActionMessage implements InputMessageListener {
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(objectId < 0 || objectX < 0 || objectY < 0)
 			return;
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position);
+		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
+		if(player.getRights().greater(Rights.ADMINISTRATOR))
+			player.message("[OBJ-3]:" + o.get().toString());
 		//Controlling data.
 		player.facePosition(position);
 		final ObjectNode object = o.get();
@@ -581,9 +583,11 @@ public final class ObjectActionMessage implements InputMessageListener {
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(objectId < 0 || objectX < 0 || objectY < 0)
 			return;
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position);
+		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
+		if(player.getRights().greater(Rights.ADMINISTRATOR))
+			player.message("[OBJ-4]:" + o.get().toString());
 		//Controlling data.
 		player.facePosition(position);
 		final ObjectNode object = o.get();
@@ -613,9 +617,11 @@ public final class ObjectActionMessage implements InputMessageListener {
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(objectId < 0 || objectX < 0 || objectY < 0)
 			return;
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position);
+		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
+		if(player.getRights().greater(Rights.ADMINISTRATOR))
+			player.message("[OBJ-5]:" + o.get().toString());
 		//Controlling data.
 		player.facePosition(position);
 		final ObjectNode object = o.get();
@@ -646,7 +652,7 @@ public final class ObjectActionMessage implements InputMessageListener {
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(spell < 0 || objectId < 0 || objectX < 0 || objectY < 0)
 			return;
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position);
+		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
 		//Controlling data.

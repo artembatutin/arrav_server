@@ -3,12 +3,12 @@ package net.edge.world.content.skill.cooking;
 import net.edge.task.Task;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.action.impl.ProducingSkillAction;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -26,7 +26,7 @@ public final class Cooking extends ProducingSkillAction {
 	private final ThreadLocalRandom random = ThreadLocalRandom.current();
 	
 	public Cooking(Player player, ObjectNode object, CookingData data, boolean cookStove, int counter, boolean spell) {
-		super(player, spell ? Optional.empty() : Optional.of(object.getPosition()));
+		super(player, spell ? Optional.empty() : Optional.of(object.getGlobalPos()));
 		this.data = data;
 		this.object = object;
 		this.cookStove = cookStove;
@@ -77,9 +77,7 @@ public final class Cooking extends ProducingSkillAction {
 	@Override
 	public boolean init() {
 		player.getMessages().sendCloseWindows();
-		if(!checkCooking())
-			return false;
-		return true;
+		return checkCooking();
 	}
 	
 	@Override
@@ -131,7 +129,7 @@ public final class Cooking extends ProducingSkillAction {
 	private boolean checkCooking() {
 		if(counter == 0)
 			return false;
-		if(!spell && object.getDefinition().getName().contains("fire") && !object.getRegion().getObject(object.getId(), object.getPosition()).isPresent()) {
+		if(!spell && object.getDefinition().getName().contains("fire") && !object.getRegion().getObject(object.getId(), object.getLocalPos()).isPresent()) {
 			return false;//Fire doesn't exist.
 		}
 		if(!player.getInventory().contains(data.getRawId())) {

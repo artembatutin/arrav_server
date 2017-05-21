@@ -1,12 +1,12 @@
 package net.edge.world.content.skill.firemaking.pits;
 
 import net.edge.utils.TextUtils;
-import net.edge.world.World;
 import net.edge.world.content.skill.firemaking.LogType;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.object.ObjectDirection;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.DynamicObject;
+import net.edge.world.object.ObjectDirection;
+import net.edge.world.object.ObjectType;
 
 import java.util.Optional;
 
@@ -14,17 +14,12 @@ import java.util.Optional;
  * Represents a single fire pit object.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
-public final class FirepitObject extends ObjectNode {
+public final class FirepitObject extends DynamicObject {
 
 	/**
 	 * The data for this fire pit object.
 	 */
 	FirepitData data;
-
-	/**
-	 * The count of logs this fire pit has.
-	 */
-	int count;
 
 	/**
 	 * Determines if this fire pit is active.
@@ -35,14 +30,9 @@ public final class FirepitObject extends ObjectNode {
 	 * Constructs a new {@link FirepitObject}.
 	 */
 	FirepitObject() {
-		super(FirepitData.PHASE_ONE.objectId, new Position(3081, 3497), ObjectDirection.SOUTH);
+		super(FirepitData.PHASE_ONE.objectId, new Position(3081, 3497), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, 0);
 		this.data = FirepitData.PHASE_ONE;
-		this.count = 0;
 		this.active = Optional.empty();//never active when constructed.
-	}
-
-	public int getCount() {
-		return count;
 	}
 
 	public boolean isActive() {
@@ -70,13 +60,12 @@ public final class FirepitObject extends ObjectNode {
 	 * Increments the amount of logs this fire pit has.
 	 */
 	public void increment() {
-		count++;
-		if(count >= data.count && this.data.getNext().isPresent()) {
+		setElements(getElements() + 1);
+		if(getElements() >= data.count && this.data.getNext().isPresent()) {
 			this.data = this.data.getNext().get();
 			this.setId(data.objectId);
-			World.getRegions().getRegion(this.getPosition()).register(this);
+			this.register();
 		}
-
 	}
 	
 	/**
@@ -101,7 +90,7 @@ public final class FirepitObject extends ObjectNode {
 			return false;
 		}
 
-		if(count >= data.count && !this.data.getNext().isPresent() && this.data.equals(FirepitData.PHASE_FIVE)) {
+		if(getElements() >= data.count && !this.data.getNext().isPresent() && this.data.equals(FirepitData.PHASE_FIVE)) {
 			player.message("You can't add logs anymore... You have to fire the pile of logs.");
 			return false;
 		}

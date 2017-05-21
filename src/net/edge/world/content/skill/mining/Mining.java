@@ -5,11 +5,11 @@ import net.edge.world.World;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.action.TransformableObject;
 import net.edge.world.content.skill.action.impl.HarvestingSkillAction;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
-import net.edge.world.node.region.Region;
+import net.edge.world.object.DynamicObject;
+import net.edge.world.object.ObjectNode;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -30,7 +30,7 @@ public final class Mining extends HarvestingSkillAction {
 	/**
 	 * The object we're interfering with.
 	 */
-	private final ObjectNode object;
+	private final DynamicObject object;
 
 	/**
 	 * The random generator which will generate random values.
@@ -54,11 +54,10 @@ public final class Mining extends HarvestingSkillAction {
 	 * @param object the rock object.
 	 */
 	public Mining(Player player, RockData rock, ObjectNode object) {
-		super(player, Optional.of(object.getPosition()));
-
-		this.object = object;
+		super(player, Optional.of(object.getGlobalPos()));
 		this.rock = rock;
 		this.pickaxe = PickaxeData.getDefinition(player).orElse(null);
+		this.object = object.toDynamic();
 	}
 
 	/**
@@ -115,19 +114,18 @@ public final class Mining extends HarvestingSkillAction {
 			return;
 		if(success) {
 			randomEvent();
-			object.setProducingCount(object.getProducingCount() - 1);
+			object.setElements(object.getElements() - 1);
 		}
-		if(object.getProducingCount() <= 0 && !object.isDisabled()) {
+		if(object.getElements() <= 0 && !object.isDisabled()) {
 			Optional<TransformableObject> filter = Arrays.stream(rock.getObject()).filter(p -> p.getObjectId() == object.getId()).findFirst();
-
 			if(filter.isPresent()) {
-				ObjectNode emptyRock = new ObjectNode(filter.get().getTransformable(), object.getPosition(), object.getDirection(), object.getObjectType());
-				Region reg = World.getRegions().getRegion(object.getPosition());
-				reg.unregister(object);
+				int id = object.getId();//filled rock.
+				ObjectNode emptyRock = object.setId(filter.get().getTransformable());
+				emptyRock.register();
 				object.setDisabled(true);
-				reg.register(emptyRock, rock.getRespawnTime(), n -> {
-					reg.unregister(emptyRock);
-					reg.register(object);
+				object.register(rock.getRespawnTime(), n -> {
+					object.setId(id);
+					object.register();
 					object.setDisabled(false);
 				});
 			}
@@ -165,8 +163,8 @@ public final class Mining extends HarvestingSkillAction {
 		if(!checkMining()) {
 			return false;
 		}
-		if(object.getProducingCount() <= 0) {
-			object.setProducingCount(rock.getOreCount());
+		if(object.getElements() <= 0) {
+			object.setElements(rock.getOreCount());
 		}
 		getPlayer().message("You begin to mine the rock...");
 		getPlayer().animation(pickaxe.getAnimation());

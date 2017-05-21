@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.update;
 
 import net.edge.net.codec.ByteMessage;
-import net.edge.world.node.entity.model.Hit;
+import net.edge.world.Hit;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 

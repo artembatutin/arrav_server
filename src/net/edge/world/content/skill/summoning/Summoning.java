@@ -15,7 +15,7 @@ import net.edge.world.content.skill.summoning.familiar.impl.MinotaurFamiliar.Iro
 import net.edge.world.locale.Position;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.Graphic;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;

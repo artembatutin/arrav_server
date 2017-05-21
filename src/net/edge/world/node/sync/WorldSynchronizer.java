@@ -1,4 +1,4 @@
-package net.edge.world.node.synchronizer;
+package net.edge.world.node.sync;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import net.edge.utils.LoggerUtils;

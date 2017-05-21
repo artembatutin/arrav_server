@@ -14,7 +14,7 @@ import net.edge.world.content.skill.herblore.Herb;
 import net.edge.world.content.skill.prayer.PrayerBoneBury;
 import net.edge.world.content.skill.slayer.Slayer;
 import net.edge.world.content.skill.summoning.Summoning;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;

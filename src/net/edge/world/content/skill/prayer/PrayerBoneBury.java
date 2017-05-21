@@ -3,7 +3,7 @@ package net.edge.world.content.skill.prayer;
 import net.edge.task.Task;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.action.impl.DestructionSkillAction;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

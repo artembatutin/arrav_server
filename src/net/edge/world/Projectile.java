@@ -1,6 +1,5 @@
-package net.edge.world.node.entity.model;
+package net.edge.world;
 
-import net.edge.world.World;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityNode;
 

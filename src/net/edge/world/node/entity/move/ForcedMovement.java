@@ -3,7 +3,7 @@ package net.edge.world.node.entity.move;
 import net.edge.task.Task;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 
 import java.util.OptionalInt;
 

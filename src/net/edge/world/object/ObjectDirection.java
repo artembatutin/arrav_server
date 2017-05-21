@@ -1,4 +1,4 @@
-package net.edge.world.node.object;
+package net.edge.world.object;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
@@ -17,22 +17,22 @@ public enum ObjectDirection {
 	/**
 	 * The north orientation.
 	 */
-	NORTH(1, 3, 2),
+	NORTH(1),
 	
 	/**
 	 * The south orientation.
 	 */
-	SOUTH(3, 1, 0),
+	SOUTH(3),
 	
 	/**
 	 * The east orientation.
 	 */
-	EAST(2, 0, 3),
+	EAST(2),
 	
 	/**
 	 * The west orientation.
 	 */
-	WEST(0, 2, 1);
+	WEST(0);
 	
 	/**
 	 * Caches our enum values.
@@ -45,32 +45,10 @@ public enum ObjectDirection {
 	private final int id;
 	
 	/**
-	 * The opposite identification of this direction.
-	 */
-	private final int opposite;
-	
-	/**
-	 * The rotate identification of this direction.
-	 */
-	private final int rotate;
-	
-	/**
 	 * Creates a new {@link ObjectDirection}.
 	 */
-	ObjectDirection(int id, int opposite, int rotate) {
+	ObjectDirection(int id) {
 		this.id = id;
-		this.opposite = opposite;
-		this.rotate = rotate;
-	}
-	
-	/**
-	 * Gets the opposite object direction for the specified
-	 * {@code direction}.
-	 * @param direction the direction to get the opposite for.
-	 * @return the opposite object direction.
-	 */
-	public static ObjectDirection getOpposite(ObjectDirection direction) {
-		return VALUES.stream().filter(def -> def.opposite == direction.id).findAny().get();
 	}
 	
 	/**
@@ -106,11 +84,4 @@ public enum ObjectDirection {
 		return Optional.ofNullable(values.get(id));
 	}
 	
-	/**
-	 * Gets the rotated direction.
-	 * @return rotated direction.
-	 */
-	public ObjectDirection rotate() {
-		return values.get(rotate);
-	}
 }

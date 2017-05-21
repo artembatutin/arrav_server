@@ -4,11 +4,11 @@ import net.edge.task.Task;
 import net.edge.world.content.container.impl.Inventory;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.action.impl.ProducingSkillAction;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +56,7 @@ public final class Runecrafting extends ProducingSkillAction {
 	 * @param object the object the {@code player} is interacting with.
 	 */
 	public Runecrafting(Player player, ObjectNode object) {
-		super(player, Optional.of(object.getPosition()));
-
+		super(player, Optional.of(object.getGlobalPos()));
 		this.altar = Altar.getDefinition(object.getId()).orElse(null);
 	}
 

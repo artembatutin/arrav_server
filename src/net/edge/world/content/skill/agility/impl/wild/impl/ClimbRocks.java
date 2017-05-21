@@ -4,8 +4,8 @@ import net.edge.task.LinkedTaskSequence;
 import net.edge.world.content.skill.agility.obstacle.ObstacleActivity;
 import net.edge.world.content.skill.agility.obstacle.ObstacleType;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Direction;
+import net.edge.world.Animation;
+import net.edge.world.Direction;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.stream.IntStream;

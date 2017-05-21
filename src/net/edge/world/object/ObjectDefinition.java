@@ -1,4 +1,4 @@
-package net.edge.world.node.object;
+package net.edge.world.object;
 
 /**
  * Represents the definition of some game object.

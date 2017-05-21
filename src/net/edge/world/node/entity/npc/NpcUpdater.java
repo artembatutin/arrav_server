@@ -4,7 +4,7 @@ import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.MessageType;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.model.Direction;
+import net.edge.world.Direction;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.update.UpdateBlock;
 import net.edge.world.node.entity.update.UpdateBlockSet;

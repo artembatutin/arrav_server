@@ -9,8 +9,8 @@ import net.edge.world.content.dialogue.impl.NpcDialogue;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.dialogue.impl.PlayerDialogue;
 import net.edge.world.content.skill.Skills;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

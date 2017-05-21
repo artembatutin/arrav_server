@@ -1,7 +1,7 @@
 package net.edge.world.content.commands.impl;
 
 import net.edge.net.PunishmentHandler;
-import net.edge.world.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.content.commands.Command;
 import net.edge.world.content.commands.CommandSignature;
 import net.edge.world.content.container.impl.Inventory;

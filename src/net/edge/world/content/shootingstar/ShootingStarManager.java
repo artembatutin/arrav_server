@@ -34,7 +34,7 @@ public final class ShootingStarManager {
 		
 		stopwatch.reset();
 		
-		if(star != null && World.getRegions().getRegion(star.getPosition()).getObject(star.getId(), star.getPosition()).isPresent()) {
+		if(star != null && !star.isDisabled()) {
 			World.message(star.locationData.messageActive, true);
 			return;
 		}
@@ -47,7 +47,7 @@ public final class ShootingStarManager {
 	 */
 	public void spawn() {
 		star = generateStar();
-		World.getRegions().getRegion(star.getPosition()).register(star);
+		star.register();
 		World.message(star.locationData.message, true);
 	}
 	

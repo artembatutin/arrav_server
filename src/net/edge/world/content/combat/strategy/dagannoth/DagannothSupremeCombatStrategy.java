@@ -7,8 +7,8 @@ import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.strategy.CombatStrategy;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Projectile;
+import net.edge.world.Animation;
+import net.edge.world.Projectile;
 
 import java.util.Arrays;
 import java.util.Objects;

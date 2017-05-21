@@ -1,6 +1,7 @@
-package net.edge.world;
+package net.edge;
 
 import com.google.common.util.concurrent.*;
+import net.edge.world.World;
 
 import java.util.Queue;
 import java.util.concurrent.Callable;

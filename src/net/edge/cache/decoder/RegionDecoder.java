@@ -6,11 +6,13 @@ import net.edge.utils.CompressionUtil;
 import net.edge.utils.LoggerUtils;
 import net.edge.world.World;
 import net.edge.world.locale.Position;
-import net.edge.world.node.object.ObjectDirection;
-import net.edge.world.node.object.ObjectNode;
-import net.edge.world.node.object.ObjectType;
-import net.edge.world.node.region.RegionDefinition;
-import net.edge.world.node.region.RegionTile;
+import net.edge.world.object.ObjectDirection;
+import net.edge.world.object.ObjectNode;
+import net.edge.world.object.ObjectType;
+import net.edge.world.object.StaticObject;
+import net.edge.world.region.Region;
+import net.edge.world.region.RegionDefinition;
+import net.edge.world.region.RegionTile;
 
 import java.nio.ByteBuffer;
 import java.util.*;
@@ -66,26 +68,21 @@ public final class RegionDecoder implements Runnable {
 		final int x = (hash >> 8 & 0xFF) * 64;
 		final int y = (hash & 0xFF) * 64;
 		final boolean isNew = def.isNew();
-		
+		Region region = World.getRegions().getRegion(new Position(x, y));
 		try {
 			List<Position> downHeights = new LinkedList<>();
 			ByteBuffer terrainData = fs.getFile(FileSystem.MAP_INDEX, def.getTerrainFile());
 			ByteBuffer terrainBuffer = ByteBuffer.wrap(CompressionUtil.gunzip(terrainData.array()));
-			parseTerrain(terrainBuffer, x, y, downHeights);
+			parseTerrain(region, terrainBuffer, x, y, downHeights);
 			
 			ByteBuffer gameObjectData = fs.getFile(FileSystem.MAP_INDEX, def.getObjectFile());
 			ByteBuffer gameObjectBuffer = ByteBuffer.wrap(CompressionUtil.gunzip(gameObjectData.array()));
-			Set<ObjectNode> objects = parseGameObject(gameObjectBuffer, x, y, downHeights, true);
-			for(ObjectNode o : objects) {
-				if(isNew) {
-					o.setId(o.getId() + 42003);//667 objects.
-				} else if(o.getId() >= 42003) {
-					o.setId(o.getId() + 42003);//667 offset for 530 objects.
-				}
-				if(o.getId() == 38453 || o.getId() == 38447)
-					continue;
-				World.getTraversalMap().markObject(o, true, true);
+			List<StaticObject> objects = parseGameObject(region, gameObjectBuffer, x, y, downHeights, isNew);
+			for(StaticObject o : objects) {
+				World.getTraversalMap().markObject(region, o, true, true);
 			}
+			downHeights.clear();
+			objects.clear();
 			decoded++;
 		} catch(Exception e) {
 			errors++;
@@ -98,8 +95,8 @@ public final class RegionDecoder implements Runnable {
 	 * @param x                The x coordinate this object is on.
 	 * @param y                The y coordinate this object is on.
 	 */
-	private Set<ObjectNode> parseGameObject(ByteBuffer gameObjectBuffer, int x, int y, List<Position> downHeights, boolean down) {
-		Set<ObjectNode> objs = new HashSet<>();
+	private List<StaticObject> parseGameObject(Region region, ByteBuffer gameObjectBuffer, int x, int y, List<Position> downHeights, boolean isNew) {
+		List<StaticObject> objs = new ArrayList<>();
 		for(int deltaId, id = -1; (deltaId = ByteBufferUtil.getSmart(gameObjectBuffer)) != 0; ) {
 			id += deltaId;
 			for(int deltaPos, hash = 0; (deltaPos = ByteBufferUtil.getSmart(gameObjectBuffer)) != 0; ) {
@@ -110,14 +107,22 @@ public final class RegionDecoder implements Runnable {
 				int attributeHashCode = gameObjectBuffer.get() & 0xFF;
 				Optional<ObjectType> type = ObjectType.valueOf(attributeHashCode >> 2);
 				Optional<ObjectDirection> orientation = ObjectDirection.valueOf(attributeHashCode & 0x3);
-				Position position = new Position(x + localX, y + localY, height);
+				Position pos = new Position(x + localX, y + localY, height);
 				if(height > 0) {
-					if(down && downHeights.contains(new Position(position.getX(), position.getY(), 1))) {
-						position = position.move(0, 0, -1);
+					if(downHeights.contains(new Position(pos.getX(), pos.getY(), 1))) {
+						pos = pos.move(0, 0, -1);
 					}
 				}
+				int objectId = id;
+				if(isNew) {
+					objectId = objectId + 42003;//667 objects.
+				} else if(objectId >= 42003) {
+					objectId = objectId + 42003;//667 offset for 530 objects.
+				}
+				if(objectId == 38453 || objectId == 38447)
+					continue;
 				if(type.isPresent() && orientation.isPresent()) {
-					objs.add(new ObjectNode(id, position, orientation.get(), type.get()));
+					objs.add(new StaticObject(region, objectId, localX, localY, pos.getZ(), orientation.get(), type.get()));
 				}
 			}
 		}
@@ -130,7 +135,7 @@ public final class RegionDecoder implements Runnable {
 	 * @param x         The x coordinate of this mapviewer entry.
 	 * @param y         The y coordinate of this mapviewer entry.
 	 */
-	private void parseTerrain(ByteBuffer mapBuffer, int x, int y, List<Position> downHeights) {
+	private void parseTerrain(Region region, ByteBuffer mapBuffer, int x, int y, List<Position> downHeights) {
 		for(int height = 0; height < 4; height++) {
 			for(int localX = 0; localX < 64; localX++) {
 				for(int localY = 0; localY < 64; localY++) {
@@ -139,12 +144,12 @@ public final class RegionDecoder implements Runnable {
 					while(true) {
 						int attributeId = mapBuffer.get() & 0xFF;
 						if(attributeId == 0) {
-							terrainDecoded(flags, position, downHeights);
+							terrainDecoded(region, flags, position, downHeights);
 							break;
 						}
 						if(attributeId == 1) {
 							mapBuffer.get();
-							terrainDecoded(flags, position, downHeights);
+							terrainDecoded(region, flags, position, downHeights);
 							break;
 						}
 						if(attributeId <= 49) {
@@ -166,15 +171,15 @@ public final class RegionDecoder implements Runnable {
 	 * @param flags    The flags for the specified position.
 	 * @param position The decoded position.
 	 */
-	private void terrainDecoded(int flags, Position position, List<Position> downHeights) {
+	private void terrainDecoded(Region region, int flags, Position position, List<Position> downHeights) {
 		if(position.getZ() > 0 && downHeights.contains(new Position(position.getX(), position.getY(), 1))) {
 			position = position.move(0, 0, -1);
 		}
 		if((flags & RegionTile.FLAG_BLOCKED) != 0) {
-			World.getTraversalMap().mark(position.getZ(), position.getX(), position.getY(), true, false);
+			World.getTraversalMap().mark(region, position.getZ(), position.getX(), position.getY(), true, false);
 		}
 		if((flags & RegionTile.FLAG_BRIDGE) != 0) {
-			World.getTraversalMap().markBridge(position.getZ(), position.getX(), position.getY() - 1);
+			World.getTraversalMap().markBridge(region, position.getZ(), position.getX(), position.getY() - 1);
 		}
 	}
 	

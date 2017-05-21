@@ -8,7 +8,7 @@ import net.edge.world.content.skill.summoning.Summoning;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Direction;
+import net.edge.world.Direction;
 import net.edge.world.node.entity.move.path.Path;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;

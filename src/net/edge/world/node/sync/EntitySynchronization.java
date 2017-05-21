@@ -1,4 +1,4 @@
-package net.edge.world.node.synchronizer;
+package net.edge.world.node.sync;
 
 import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;

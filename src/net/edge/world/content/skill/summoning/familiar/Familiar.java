@@ -12,7 +12,7 @@ import net.edge.world.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import net.edge.world.content.skill.summoning.specials.SummoningData;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.Graphic;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcDeath;
 import net.edge.world.node.entity.npc.NpcDefinition;

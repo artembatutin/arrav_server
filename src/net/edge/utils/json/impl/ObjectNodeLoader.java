@@ -5,9 +5,9 @@ import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
 import net.edge.world.World;
 import net.edge.world.locale.Position;
-import net.edge.world.node.object.ObjectDirection;
-import net.edge.world.node.object.ObjectNode;
-import net.edge.world.node.object.ObjectType;
+import net.edge.world.object.DynamicObject;
+import net.edge.world.object.ObjectDirection;
+import net.edge.world.object.ObjectType;
 
 import java.util.Objects;
 
@@ -30,7 +30,8 @@ public final class ObjectNodeLoader extends JsonLoader {
 		Position position = Objects.requireNonNull(builder.fromJson(reader.get("position"), Position.class));
 		ObjectDirection face = Objects.requireNonNull(ObjectDirection.valueOf(reader.get("direction").getAsString()));
 		ObjectType type = Objects.requireNonNull(ObjectType.valueOf(reader.get("type").getAsString()));
-		if(!World.getRegions().getRegion(position).getRegisteredObjects().contains(new ObjectNode(id, position, face, type)))
-			World.getRegions().getRegion(position).register(new ObjectNode(id, position, face, type));
+		DynamicObject obj = new DynamicObject(id, position, face, type, false, 0, 0);
+		if(!World.getRegions().getRegion(position).getDynamicObjects().contains(obj))
+			obj.register();
 	}
 }

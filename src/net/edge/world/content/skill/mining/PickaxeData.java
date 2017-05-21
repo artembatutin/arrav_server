@@ -3,7 +3,7 @@ package net.edge.world.content.skill.mining;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.world.content.skill.woodcutting.Hatchet;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

@@ -8,8 +8,10 @@ import net.edge.world.content.skill.Skills;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectDirection;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectDirection;
+import net.edge.world.object.ObjectNode;
+import net.edge.world.object.ObjectType;
+import net.edge.world.object.StaticObject;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -54,7 +56,7 @@ public abstract class Trap {
 		this.player = player;
 		this.type = type;
 		this.state = TrapState.PENDING;
-		this.object = new ObjectNode(type.objectId, player.getPosition().copy(), ObjectDirection.SOUTH);
+		this.object = new StaticObject(player.getRegion(), type.objectId, player.getPosition().getLocalX(), player.getPosition().getLocalY(), player.getPosition().getZ(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP);
 	}
 	
 	/**
@@ -212,8 +214,9 @@ public abstract class Trap {
 	 * Sets the object id.
 	 * @param id the id to set.
 	 */
-	public void setObject(int id) {
-		this.object = new ObjectNode(id, this.getObject().getPosition().copy(), this.getObject().getDirection());
+	public void updateObject(int id) {
+		this.object = object.setId(id);
+		this.object.register();
 	}
 	
 	/**

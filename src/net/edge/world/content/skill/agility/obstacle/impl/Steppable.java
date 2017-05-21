@@ -3,7 +3,7 @@ package net.edge.world.content.skill.agility.obstacle.impl;
 import net.edge.task.Task;
 import net.edge.world.content.skill.agility.obstacle.ObstacleActivity;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.move.ForcedMovement;
 import net.edge.world.node.entity.move.ForcedMovementManager;
 import net.edge.world.node.entity.player.Player;

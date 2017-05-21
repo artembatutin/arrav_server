@@ -15,10 +15,10 @@ import net.edge.world.content.skill.prayer.Prayer;
 import net.edge.world.locale.Location;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
-import net.edge.world.node.entity.model.Hit;
-import net.edge.world.node.entity.model.Projectile;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
+import net.edge.world.Hit;
+import net.edge.world.Projectile;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

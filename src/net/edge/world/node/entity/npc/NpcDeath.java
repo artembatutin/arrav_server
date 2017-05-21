@@ -6,7 +6,7 @@ import net.edge.world.content.PlayerPanel;
 import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.skill.slayer.Slayer;
 import net.edge.world.node.entity.EntityDeath;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.node.entity.player.Player;

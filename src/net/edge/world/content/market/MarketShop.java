@@ -1,7 +1,7 @@
 package net.edge.world.content.market;
 
 import net.edge.utils.TextUtils;
-import net.edge.world.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.content.TabInterface;
 import net.edge.world.content.dialogue.Expression;
 import net.edge.world.content.dialogue.impl.NpcDialogue;

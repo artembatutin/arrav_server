@@ -19,9 +19,9 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.object.ObjectDirection;
-import net.edge.world.node.object.ObjectNode;
-import net.edge.world.node.object.ObjectType;
+import net.edge.world.object.ObjectDirection;
+import net.edge.world.object.ObjectNode;
+import net.edge.world.object.ObjectType;
 
 import java.util.List;
 import java.util.Objects;
@@ -738,7 +738,7 @@ public final class OutputMessages {
 	 * @param object the object to spawn for the player.
 	 */
 	public void sendObject(ObjectNode object) {
-		sendCoordinates(object.getPosition());
+		sendCoordinates(object.getGlobalPos());
 		ByteMessage msg = ByteMessage.message(151);
 		msg.put(0, ByteTransform.S);
 		msg.putInt(object.getId());
@@ -752,7 +752,7 @@ public final class OutputMessages {
 	 * @param object the object to remove for the player.
 	 */
 	public void sendRemoveObject(ObjectNode object) {
-		sendCoordinates(object.getPosition());
+		sendCoordinates(object.getGlobalPos());
 		ByteMessage msg = ByteMessage.message(101);
 		msg.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.C);
 		msg.put(0);

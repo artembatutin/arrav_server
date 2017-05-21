@@ -31,7 +31,7 @@ import net.edge.world.content.teleport.impl.AuburyTeleport;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Location;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.player.Player;
@@ -184,7 +184,7 @@ public final class NpcActionMessage implements InputMessageListener {
 						ap.chain(new NpcDialogue(4946, "Aha, if you think you have any ideas to improve the concept", "feel free to make a suggestion on the forums!"));
 						ap.chain(new PlayerDialogue("Will do!").attachAfter(() -> player.getMessages().sendCloseWindows()));
 						ap.chain(new PlayerDialogue(active ? "Howlong till the event ends?" : "Howmany logs does the fire pit have?"));
-						String[] messages = active ? new String[]{"The event is active for another:", Utility.convertTime(World.getFirepitEvent().getFirepit().getTime())} : new String[]{"Fire pit: " + World.getFirepitEvent().getFirepit().getCount() + "/1000 logs.", "The minimum log that's sacrificable: " + World.getFirepitEvent().getFirepit().getLogRequirement()};
+						String[] messages = active ? new String[]{"The event is active for another:", Utility.convertTime(World.getFirepitEvent().getFirepit().getTime())} : new String[]{"Fire pit: " + World.getFirepitEvent().getFirepit().getElements() + "/1000 logs.", "The minimum log that's sacrificable: " + World.getFirepitEvent().getFirepit().getLogRequirement()};
 						ap.chain(new StatementDialogue(messages).attachAfter(() -> player.getMessages().sendCloseWindows()));
 						ap.chain(new PlayerDialogue("Do you sell anything?"));
 						ap.chain(new NpcDialogue(4946, "Sadly, I don't have anything for sale, I used all my logs", "to get 99 firemaking years ago..."));

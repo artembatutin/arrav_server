@@ -1,8 +1,8 @@
 package net.edge.world.content.combat.effect;
 
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Hit;
-import net.edge.world.node.entity.model.PoisonType;
+import net.edge.world.Hit;
+import net.edge.world.PoisonType;
 import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;

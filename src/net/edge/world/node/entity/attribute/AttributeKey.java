@@ -7,10 +7,11 @@ import net.edge.world.content.skill.cooking.CookingData;
 import net.edge.world.content.skill.crafting.Spinning.SpinningData;
 import net.edge.world.content.skill.fletching.BowCarving;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Direction;
+import net.edge.world.Direction;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectDirection;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.DynamicObject;
+import net.edge.world.object.ObjectDirection;
+import net.edge.world.object.ObjectType;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -86,7 +87,7 @@ public final class AttributeKey<T> {
 		AttributeKey.forTransient("goalSettingSkill", -1);
 		AttributeKey.forPersistent("slayer_tasks", 0);
 		AttributeKey.forTransient("cooking_data", CookingData.SHRIMP);
-		AttributeKey.forTransient("cooking_object", new ObjectNode(-1, new Position(0, 0), ObjectDirection.SOUTH));
+		AttributeKey.forTransient("cooking_object", new DynamicObject(-1, new Position(0, 0), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, 0));
 		AttributeKey.forTransient("cooking_usingStove", false);
 		AttributeKey.forTransient("creating_dough", false);
 		AttributeKey.forTransient("crafting_potfired", false);

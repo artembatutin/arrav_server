@@ -19,7 +19,7 @@ import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.EnumSet;

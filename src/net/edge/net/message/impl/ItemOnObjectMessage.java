@@ -19,7 +19,7 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
 
@@ -53,17 +53,13 @@ public final class ItemOnObjectMessage implements InputMessageListener {
 			return;
 		}
 		
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position);
-		
-		if(!o.isPresent()) {
+		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
+		if(!o.isPresent())
 			return;
-		}
-		
 		final ObjectNode object = o.get();
 		
-		if(player.getRights().greater(Rights.ADMINISTRATOR)) {
-			player.message("[ItemOnObject message] objectId = " + object.getId() + ", itemId = " + item.getId());
-		}
+		if(player.getRights().greater(Rights.ADMINISTRATOR))
+			player.message("[ItemOnObject message] objectId = " + object.toString() + ", itemId = " + item.getId());
 		
 		player.facePosition(position);
 		player.getMovementListener().append(() -> {

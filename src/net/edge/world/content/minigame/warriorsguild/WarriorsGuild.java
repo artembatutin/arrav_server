@@ -5,7 +5,7 @@ import net.edge.world.content.minigame.warriorsguild.impl.CyclopsRoom;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 /**
  * The class which is responsible for executing minigame rooms of
@@ -29,10 +29,9 @@ public final class WarriorsGuild {
 		if(object.getId() != 15641 && object.getId() != 15644) {
 			return false;
 		}
-		if(!object.getPosition().same(new Position(2855, 3546)) && !object.getPosition().same(new Position(2854, 3546))) {
+		if(!object.getGlobalPos().same(new Position(2855, 3546)) && !object.getGlobalPos().same(new Position(2854, 3546))) {
 			return false;
 		}
-
 		return AnimationRoom.enter(player, object);
 	}
 
@@ -46,7 +45,7 @@ public final class WarriorsGuild {
 		if(object.getId() != 43741) {
 			return false;
 		}
-		if(!object.getPosition().same(new Position(2839, 3537))) {
+		if(!object.getGlobalPos().same(new Position(2839, 3537))) {
 			return false;
 		}
 		return CyclopsRoom.enter(player, object);

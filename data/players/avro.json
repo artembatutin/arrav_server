@@ -4,8 +4,8 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3085,
-    "y": 3508,
+    "x": 3087,
+    "y": 3473,
     "z": 0
   },
   "rights": "DEVELOPER",
@@ -190,30 +190,57 @@
   ],
   "inventory": [
     {
-      "id": 12158,
+      "id": 1351,
       "amount": 1
     },
     {
-      "id": 12159,
+      "id": 1265,
       "amount": 1
     },
     {
-      "id": 12160,
+      "id": 1515,
       "amount": 1
     },
     {
-      "id": 12163,
+      "id": 1515,
       "amount": 1
     },
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
+    {
+      "id": 1515,
+      "amount": 1
+    },
+    {
+      "id": 1515,
+      "amount": 1
+    },
+    {
+      "id": 1515,
+      "amount": 1
+    },
+    {
+      "id": 1515,
+      "amount": 1
+    },
+    {
+      "id": 1515,
+      "amount": 1
+    },
+    {
+      "id": 1515,
+      "amount": 1
+    },
+    {
+      "id": 1515,
+      "amount": 1
+    },
+    {
+      "id": 1515,
+      "amount": 1
+    },
+    {
+      "id": 1515,
+      "amount": 1
+    },
     null,
     null,
     null,
@@ -247,18 +274,12 @@
       "id": 385,
       "amount": 50
     },
-    {
-      "id": 1351,
-      "amount": 1
-    },
+    null,
     {
       "id": 590,
       "amount": 1
     },
-    {
-      "id": 1265,
-      "amount": 1
-    },
+    null,
     {
       "id": 946,
       "amount": 1
@@ -343,10 +364,22 @@
       "id": 562,
       "amount": 250
     },
-    null,
-    null,
-    null,
-    null,
+    {
+      "id": 12158,
+      "amount": 1
+    },
+    {
+      "id": 12159,
+      "amount": 1
+    },
+    {
+      "id": 12160,
+      "amount": 1
+    },
+    {
+      "id": 12163,
+      "amount": 1
+    },
     null,
     null,
     null,

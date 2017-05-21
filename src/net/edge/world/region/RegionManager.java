@@ -1,10 +1,10 @@
-package net.edge.world.node.region;
+package net.edge.world.region;
 
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -115,9 +115,9 @@ public final class RegionManager {
 				for(ObjectNode ob : o)
 					player.getMessages().sendRemoveObject(ob);
 			});
-			Set<ObjectNode> regionObj = region.getRegisteredObjects();
+			Set<ObjectNode> regionObj = region.getDynamicObjects();
 			for(ObjectNode o : regionObj) {
-				if(o.getPosition().getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance())
+				if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance())
 					player.getMessages().sendObject(o);
 			}
 		}

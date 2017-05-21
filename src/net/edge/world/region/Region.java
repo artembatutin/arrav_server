@@ -1,7 +1,5 @@
-package net.edge.world.node.region;
+package net.edge.world.region;
 
-import net.edge.cache.decoder.RegionDecoder;
-import net.edge.task.Task;
 import net.edge.utils.LoggerUtils;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
@@ -14,11 +12,10 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.node.item.ItemState;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -74,12 +71,12 @@ public final class Region extends Node {
 	/**
 	 * A concurrent {@link Map} of active {@link ObjectNode}s in this {@code Region}.
 	 */
-	private final Map<Position, Set<ObjectNode>> objects = new ConcurrentHashMap<>();
+	private final Map<Integer, Set<ObjectNode>> objects = new ConcurrentHashMap<>();
 	
 	/**
 	 * A concurrent {@link Map} of removed {@link ObjectNode}s in this {@code Region}.
 	 */
-	private final Map<Position, Set<ObjectNode>> removeObjects = new ConcurrentHashMap<>();
+	private final Map<Integer, Set<ObjectNode>> removeObjects = new ConcurrentHashMap<>();
 	
 	//The clipping data and few switches.
 	/**
@@ -328,8 +325,8 @@ public final class Region extends Node {
 	 * @param o The object to add.
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
-	boolean addObj(ObjectNode o) {
-		return getObjects(o.getPosition()).add(o);
+	public boolean addObj(ObjectNode o) {
+		return getObjectsFrompacked(o.getLocalPos()).add(o);
 	}
 	
 	/**
@@ -337,56 +334,8 @@ public final class Region extends Node {
 	 * @param o The object to remove.
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
-	boolean removeObj(ObjectNode o) {
-		return getObjects(o.getPosition()).remove(o);
-	}
-	
-	/**
-	 * Registers a {@link ObjectNode} to the object backing set.
-	 * @param object the object to register
-	 */
-	public boolean register(ObjectNode object) {
-		if(addObj(object)) {
-			World.getTraversalMap().markObject(object, true, false);
-			object.setState(NodeState.ACTIVE);
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * The method that attempts to register {@code object} and then execute
-	 * {@code action} after specified amount of ticks.
-	 * @param object the object to attempt to register.
-	 * @param ticks  the amount of ticks to unregister this object after.
-	 * @return {@code true} if the object was registered, {@code false}
-	 * otherwise.
-	 */
-	public boolean register(ObjectNode object, int ticks, Consumer<ObjectNode> action) {
-		if(register(object)) {
-			World.submit(new Task(ticks, false) {
-				@Override
-				public void execute() {
-					action.accept(object);
-					this.cancel();
-				}
-			});
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * Unregisters a {@link ObjectNode} from the object backing set.
-	 * @param object the object to unregister
-	 */
-	public boolean unregister(ObjectNode object) {
-		if(removeObj(object)) {
-			World.getTraversalMap().markObject(object, false, false);
-			object.setState(NodeState.INACTIVE);
-			return true;
-		}
-		return false;
+	public boolean removeObj(ObjectNode o) {
+		return getObjectsFrompacked(o.getLocalPos()).remove(o);
 	}
 	
 	/**
@@ -394,9 +343,10 @@ public final class Region extends Node {
 	 * @param position the position from which we delete our objects.
 	 */
 	public void unregister(Position position) {
-		getRegisteredObjects().stream().filter(o2 -> o2.getPosition().equals(position)).collect(Collectors.toSet()).stream().filter(this::removeObj).forEach(o -> {
-			World.getTraversalMap().markObject(o, false, false);
-			o.setState(NodeState.INACTIVE);
+		int local = position.toLocalPacked();
+		getDynamicObjects().stream().filter(o2 -> local == o2.getLocalPos()).collect(Collectors.toSet()).stream().filter(this::removeObj).forEach(o -> {
+			World.getTraversalMap().markObject(this, o, false, false);
+			o.visible(false);
 		});
 	}
 	
@@ -404,9 +354,9 @@ public final class Region extends Node {
 	 * Unregisters all {@link ObjectNode}s from the object backing set.
 	 */
 	public void unregisterAll() {
-		getRegisteredObjects().stream().filter(this::removeObj).forEach(o -> {
-			World.getTraversalMap().markObject(o, false, false);
-			o.setState(NodeState.INACTIVE);
+		getDynamicObjects().stream().filter(this::removeObj).forEach(o -> {
+			World.getTraversalMap().markObject(this, o, false, false);
+			o.visible(false);
 		});
 	}
 	
@@ -416,7 +366,7 @@ public final class Region extends Node {
 	 */
 	public Set<ObjectNode> getObjects() {
 		Set<ObjectNode> all = new HashSet<>();
-		for(Position pos : objects.keySet())
+		for(Integer pos : objects.keySet())
 			all.addAll(objects.get(pos));
 		return all;
 	}
@@ -427,7 +377,16 @@ public final class Region extends Node {
 	 * @return A {@link Set} of {@link ObjectNode}s on the specified position.
 	 */
 	public Set<ObjectNode> getObjects(Position position) {
-		return objects.computeIfAbsent(position, key -> new HashSet<>());
+		return objects.computeIfAbsent(position.toLocalPacked(), key -> new HashSet<>());
+	}
+	
+	/**
+	 * Gets the a set of {@link ObjectNode} on the packed coordinates.
+	 * @param packed The packed position.
+	 * @return A {@link Set} of {@link ObjectNode}s on the specified position.
+	 */
+	public Set<ObjectNode> getObjectsFrompacked(int packed) {
+		return objects.computeIfAbsent(packed, key -> new HashSet<>());
 	}
 	
 	/**
@@ -437,7 +396,22 @@ public final class Region extends Node {
 	 * @return A {@link Optional} of {@link ObjectNode} on the specified position.
 	 */
 	public Optional<ObjectNode> getObject(int id, Position position) {
-		for(ObjectNode o : getObjects(position)) {
+		for(ObjectNode o : getObjectsFrompacked(position.toLocalPacked())) {
+			if(o.getId() == id) {
+				return Optional.of(o);
+			}
+		}
+		return Optional.empty();
+	}
+	
+	/**
+	 * Gets the an {@link Optional} of {@link ObjectNode}s with the specified {@code id} and {@code packed} coordinates.
+	 * @param id       The id of the object to seek for.
+	 * @param packed The packed position.
+	 * @return A {@link Optional} of {@link ObjectNode}.
+	 */
+	public Optional<ObjectNode> getObject(int id, int packed) {
+		for(ObjectNode o : getObjectsFrompacked(packed)) {
 			if(o.getId() == id) {
 				return Optional.of(o);
 			}
@@ -460,49 +434,31 @@ public final class Region extends Node {
 	 * @return A {@link Set} of {@link ObjectNode}s on the specified position.
 	 */
 	public Set<ObjectNode> getObjects(Position position, int distance) {
-		return getObjects().stream().filter(e -> position.withinDistance(e.getPosition(), distance)).collect(Collectors.toSet());
+		return getObjects().stream().filter(e -> position.withinDistance(e.getGlobalPos(), distance)).collect(Collectors.toSet());
 	}
 	
 	/**
 	 * Gets the a set of {@link ObjectNode}s that are registered by the server during game time.
 	 * @return A {@link Set} of {@link ObjectNode}s that are registered..
 	 */
-	public Set<ObjectNode> getRegisteredObjects() {
-		return getObjects().stream().filter(o -> o.getState() == NodeState.ACTIVE).collect(Collectors.toSet());
-	}
-	
-	/**
-	 * Adds an {@link Position} to the removable object backing set.
-	 * @param o The {@link ObjectNode} to be removed.
-	 * @return {@code true} if it was added successfully, otherwise {@code false}.
-	 */
-	public boolean addDeletedObj(ObjectNode o) {
-		return getRemovedObjects(o.getPosition()).add(o);
-	}
-	
-	/**
-	 * Removes an {@link Position} from the removable object backing set.
-	 * @param o The {@link ObjectNode} to be removed from the object removal backing set.
-	 * @return {@code true} if it was added successfully, otherwise {@code false}.
-	 */
-	public boolean removeDeletedObj(ObjectNode o) {
-		return getRemovedObjects(o.getPosition()).remove(o);
+	public Set<ObjectNode> getDynamicObjects() {
+		return getObjects().stream().filter(ObjectNode::isDynamic).collect(Collectors.toSet());
 	}
 	
 	/**
 	 * Gets the a set of removed {@link ObjectNode} on the specified {@link Position}.
-	 * @param position The position.
+	 * @param local The local packed position.
 	 * @return A {@link Set} of removed {@link ObjectNode}s on the specified position.
 	 */
-	public Set<ObjectNode> getRemovedObjects(Position position) {
-		return removeObjects.computeIfAbsent(position, key -> new HashSet<>());
+	public Set<ObjectNode> getRemovedObjects(int local) {
+		return removeObjects.computeIfAbsent(local, key -> new HashSet<>());
 	}
 	
 	/**
 	 * Gets the a {@link Map} of {@link ObjectNode}s that are removed by the server during game time.
 	 * @return A {@link Map} of {@link ObjectNode}s that are removed.
 	 */
-	public Map<Position, Set<ObjectNode>> getRemovedObjects() {
+	public Map<Integer, Set<ObjectNode>> getRemovedObjects() {
 		return removeObjects;
 	}
 	

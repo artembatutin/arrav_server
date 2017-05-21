@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.npc;
 
 import net.edge.utils.rand.RandomUtils;
-import net.edge.world.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.World;
 import net.edge.world.locale.Location;
 import net.edge.world.node.entity.player.Player;

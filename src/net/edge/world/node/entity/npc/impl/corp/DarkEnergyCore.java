@@ -6,10 +6,10 @@ import net.edge.world.World;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.model.Hit;
-import net.edge.world.node.entity.model.Hit.HitIcon;
-import net.edge.world.node.entity.model.Hit.HitType;
-import net.edge.world.node.entity.model.Projectile;
+import net.edge.world.Hit;
+import net.edge.world.Hit.HitIcon;
+import net.edge.world.Hit.HitType;
+import net.edge.world.Projectile;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 

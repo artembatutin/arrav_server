@@ -3,9 +3,9 @@ package net.edge.world.content.combat.special;
 import net.edge.task.Task;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
-import net.edge.world.node.entity.model.Hit;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
+import net.edge.world.Hit;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 

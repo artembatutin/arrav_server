@@ -19,7 +19,6 @@ import net.edge.task.Task;
 import net.edge.utils.LoggerUtils;
 import net.edge.utils.Utility;
 import net.edge.utils.json.impl.*;
-import net.edge.world.GameService;
 import net.edge.world.World;
 import net.edge.world.content.PlayerPanel;
 import net.edge.world.content.RestoreStatTask;
@@ -30,7 +29,6 @@ import net.edge.world.content.scoreboard.ScoreboardManager;
 import net.edge.world.locale.Location;
 import net.edge.world.node.entity.attribute.AttributeKey;
 
-import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -73,6 +71,31 @@ public final class Server {
 	 */
 	private final static Logger LOGGER = LoggerUtils.getLogger(Server.class);
 	
+	static {
+		try {
+			Thread.currentThread().setName("EdgevilleInitializationThread");
+		} catch(Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
+	
+	/**
+	 * Invoked when this program is started, initializes the {@link Server}.
+	 * @param args The runtime arguments, none of which are parsed.
+	 */
+	public static void main(String[] args) {
+		boolean online = Boolean.parseBoolean(args[0]);
+		if(online)
+			Runtime.getRuntime().addShutdownHook(new ServerHook());
+		try {
+			Server edgeville = new Server(online);
+			edgeville.init();
+		} catch(Exception e) {
+			LOGGER.log(Level.SEVERE, "Error in game run time!", e);
+			System.exit(0);
+		}
+	}
+	
 	/**
 	 * A package-private constructor to discourage external instantiation.
 	 * @param online if the server is launching to host real players.
@@ -83,7 +106,7 @@ public final class Server {
 	}
 	
 	/**
-	 * Creates {@link Main} by initializing all of the individual modules.
+	 * Initializing all of the individual modules.
 	 * @throws Exception If any exceptions are thrown during initialization.
 	 */
 	public void init() throws Exception {

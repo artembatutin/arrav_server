@@ -2,7 +2,7 @@ package net.edge.world.content.scene.impl;
 
 import net.edge.net.PunishmentHandler;
 import net.edge.task.Task;
-import net.edge.world.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.TabInterface;
 import net.edge.world.content.container.impl.Inventory;
@@ -12,8 +12,8 @@ import net.edge.world.content.dialogue.impl.OptionDialogue.OptionType;
 import net.edge.world.content.dialogue.impl.StatementDialogue;
 import net.edge.world.content.scene.Cutscene;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager.ActivityType;
 

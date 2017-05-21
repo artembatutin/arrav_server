@@ -7,10 +7,11 @@ import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.action.impl.DestructionSkillAction;
 import net.edge.world.content.skill.firemaking.pits.FirepitData;
 import net.edge.world.content.skill.firemaking.pits.FirepitObject;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.DynamicObject;
+import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
 
@@ -18,15 +19,15 @@ public final class Bonfire extends DestructionSkillAction {
 	
 	private final LogType log;
 	
-	private final ObjectNode object;
+	private final DynamicObject object;
 	
 	private final FirepitObject pit;
 	
 	private int amount;
 	
 	public Bonfire(Player player, ObjectNode object, LogType log, FirepitObject pit) {
-		super(player, Optional.of(object.getPosition()));
-		this.object = object;
+		super(player, Optional.of(object.getGlobalPos()));
+		this.object = object.toDynamic();
 		this.log = log;
 		this.pit = pit;
 		this.amount = player.getInventory().computeAmountForId(log.getLog().getId());
@@ -114,10 +115,9 @@ public final class Bonfire extends DestructionSkillAction {
 	}
 	
 	private boolean checkFiremaking() {
-		if(!World.getRegions().getRegion(object.getPosition()).getObject(object.getId(), object.getPosition()).isPresent()) {
+		if(object.isDisabled()) {
 			return false;
 		}
-		
 		if(pit != null && !pit.isPermissable(player, log.getLog().getId())) {
 			return false;
 		}

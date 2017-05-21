@@ -3,11 +3,9 @@ package net.edge.world.content;
 import net.edge.task.Task;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
-import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.object.ObjectDirection;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.Arrays;
 
@@ -23,9 +21,9 @@ public final class WebSlashing extends Task {
 	private final ObjectNode object;
 	
 	/**
-	 * The slashed object which will replace the current {@code object}.
+	 * The saved id of the object being slashed.
 	 */
-	private final ObjectNode slashed;
+	private final int id;
 	
 	/**
 	 * Constructs a new {@link WebSlashing}.
@@ -34,7 +32,7 @@ public final class WebSlashing extends Task {
 	private WebSlashing(ObjectNode object) {
 		super(RandomUtils.inclusive(10, 20));
 		this.object = object;
-		this.slashed = new ObjectNode(SLASHED_WEB, object.getPosition(), object.getDirection());
+		this.id = object.getId();
 	}
 	
 	/**
@@ -44,7 +42,7 @@ public final class WebSlashing extends Task {
 	 * @return {@code true} if anything was slashed, {@code false} otherwise.
 	 */
 	public static boolean slash(Player player, ObjectNode object) {
-		if(Arrays.stream(OBJECTS).noneMatch(d -> d.getId() == object.getId() && d.getPosition().same(object.getPosition()) && d.getDirection().equals(object.getDirection()))) {
+		if(Arrays.stream(OBJECTS).noneMatch(d -> d == object.getId())) {
 			return false;
 		}
 		if(!player.getWebSlashingTimer().elapsed(1800)) {
@@ -68,14 +66,14 @@ public final class WebSlashing extends Task {
 	
 	@Override
 	protected void onSubmit() {
-		World.getRegions().getRegion(object.getPosition()).unregister(object);
-		World.getRegions().getRegion(slashed.getPosition()).register(slashed);
+		object.setId(SLASHED_WEB);
+		object.register();
 	}
 	
 	@Override
 	protected void execute() {
-		World.getRegions().getRegion(slashed.getPosition()).unregister(slashed);
-		World.getRegions().getRegion(object.getPosition()).register(object);
+		object.setId(id);
+		object.register();
 	}
 	
 	/**
@@ -86,5 +84,5 @@ public final class WebSlashing extends Task {
 	/**
 	 * An array containing all the objects which represent webs that can be slashed.
 	 */
-	private static final ObjectNode[] OBJECTS = new ObjectNode[]{new ObjectNode(42736, new Position(3106, 3958), ObjectDirection.SOUTH)};
+	private static final int[] OBJECTS = {42736};
 }

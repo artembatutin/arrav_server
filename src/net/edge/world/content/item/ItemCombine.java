@@ -3,8 +3,8 @@ package net.edge.world.content.item;
 import com.google.common.collect.ImmutableSet;
 import net.edge.world.content.container.ItemContainer;
 import net.edge.world.content.skill.Skills;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

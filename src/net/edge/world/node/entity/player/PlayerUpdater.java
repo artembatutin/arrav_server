@@ -5,7 +5,7 @@ import net.edge.net.codec.MessageType;
 import net.edge.world.World;
 import net.edge.world.locale.Position;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.model.Direction;
+import net.edge.world.Direction;
 import net.edge.world.node.entity.update.UpdateBlockSet;
 import net.edge.world.node.entity.update.UpdateState;
 

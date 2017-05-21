@@ -1,10 +1,10 @@
 package net.edge.cache.decoder;
 
-import net.edge.cache.Archive;
+import net.edge.cache.archive.Archive;
 import net.edge.cache.FileSystem;
 import net.edge.utils.ByteBufferUtil;
 import net.edge.utils.LoggerUtils;
-import net.edge.world.node.object.ObjectDefinition;
+import net.edge.world.object.ObjectDefinition;
 
 import java.nio.ByteBuffer;
 import java.util.logging.Logger;

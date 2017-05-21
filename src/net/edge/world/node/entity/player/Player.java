@@ -6,7 +6,7 @@ import net.edge.net.message.OutputMessages;
 import net.edge.net.session.GameSession;
 import net.edge.task.Task;
 import net.edge.utils.*;
-import net.edge.world.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.PlayerPanel;
 import net.edge.world.content.TabInterface;
@@ -54,8 +54,8 @@ import net.edge.world.locale.Location;
 import net.edge.world.locale.Position;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Graphic;
-import net.edge.world.node.entity.model.Hit;
+import net.edge.world.Graphic;
+import net.edge.world.Hit;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcAggression;
 import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
@@ -635,7 +635,7 @@ public final class Player extends EntityNode {
 		if(World.getFirepitEvent().getFirepit().isActive()) {
 			this.message("@red@[ANNOUNCEMENT]: Enjoy the double blood money event for another " + Utility.convertTime(World.getFirepitEvent().getFirepit().getTime()) + ".");
 		}
-		if(World.getShootingStarEvent().getShootingStar() != null && World.getRegions().getRegion(World.getShootingStarEvent().getShootingStar().getPosition()).getObject(World.getShootingStarEvent().getShootingStar().getId(), World.getShootingStarEvent().getShootingStar().getPosition()).isPresent()) {
+		if(World.getShootingStarEvent().getShootingStar() != null && World.getShootingStarEvent().getShootingStar().isReg()) {
 			this.message("@red@[ANNOUNCEMENT]: " + World.getShootingStarEvent().getShootingStar().getLocationData().getMessageWhenActive());
 		}
 		if(Server.UPDATING > 0) {

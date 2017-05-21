@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.locale.Boundary;
-import net.edge.world.node.entity.model.Hit;
+import net.edge.world.Hit;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 

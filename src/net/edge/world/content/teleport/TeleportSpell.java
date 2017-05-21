@@ -5,7 +5,7 @@ import net.edge.world.World;
 import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Spell;
+import net.edge.world.Spell;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 

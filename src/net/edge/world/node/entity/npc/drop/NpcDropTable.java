@@ -4,7 +4,7 @@ import net.edge.utils.log.Log;
 import net.edge.utils.log.impl.DropLog;
 import net.edge.utils.rand.Chance;
 import net.edge.utils.rand.RandomUtils;
-import net.edge.world.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.container.impl.Equipment;
 import net.edge.world.node.entity.npc.Npc;

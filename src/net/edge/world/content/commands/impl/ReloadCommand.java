@@ -10,8 +10,8 @@ import net.edge.world.content.shootingstar.ShootingStarData;
 import net.edge.world.content.skill.firemaking.pits.FirepitData;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.object.ObjectNode;
-import net.edge.world.node.region.Region;
+import net.edge.world.object.ObjectNode;
+import net.edge.world.region.Region;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +22,7 @@ public final class ReloadCommand implements Command {
 	private final Set<ObjectNode> getRegisteredObjects(Region r) {
 		Set<ObjectNode> obj = new HashSet<>();
 		
-		for(ObjectNode object : r.getRegisteredObjects()) {
+		for(ObjectNode object : r.getDynamicObjects()) {
 			if(ShootingStarData.VALUES.stream().anyMatch(t -> t.getObjectId() == object.getId())) {
 				continue;
 			}
@@ -50,7 +50,7 @@ public final class ReloadCommand implements Command {
 					World.getNpcs().clear();
 					World.getPlayers().forEach(p -> p.getLocalNpcs().clear());
 					//Removing objects.
-					World.getRegions().getRegions().forEach((c, r) -> getRegisteredObjects(r).forEach(r::unregister));
+					World.getRegions().getRegions().forEach((c, r) -> r.getDynamicObjects().forEach(ObjectNode::unregister));
 					
 					//clearing areas
 					World.getAreaManager().getAreas().clear();

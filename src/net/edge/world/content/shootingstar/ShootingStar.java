@@ -2,14 +2,15 @@ package net.edge.world.content.shootingstar;
 
 import net.edge.world.content.dialogue.impl.StatementDialogue;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.object.ObjectDirection;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.DynamicObject;
+import net.edge.world.object.ObjectDirection;
+import net.edge.world.object.ObjectType;
 
 /**
  * Represents a single shooting star object.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
-public final class ShootingStar extends ObjectNode {
+public final class ShootingStar extends DynamicObject {
 	
 	/**
 	 * The data for this shooting star.
@@ -36,7 +37,7 @@ public final class ShootingStar extends ObjectNode {
 	 * @param locationData the data to construct this star from.
 	 */
 	public ShootingStar(StarLocationData locationData) {
-		super(ShootingStarData.PHASE_NINE.objectId, locationData.position.copy(), ObjectDirection.SOUTH);
+		super(ShootingStarData.PHASE_NINE.objectId, locationData.position.copy(), ObjectDirection.SOUTH,  ObjectType.GENERAL_PROP, false, 0, 0);
 		this.data = ShootingStarData.PHASE_NINE;
 		this.locationData = locationData;
 	}
@@ -66,9 +67,7 @@ public final class ShootingStar extends ObjectNode {
 		if(this.getId() != objectId) {
 			return false;
 		}
-		
-		int percent = (int) ((float) getProducingCount() / data.stardust * 100);
-		
+		int percent = (int) ((float) getElements() / data.stardust * 100);
 		player.getDialogueBuilder().append(new StatementDialogue("This is a size-" + this.data.size + " star. A mining level of at least " + this.data.levelRequirement + " is required to", "mine this layer. It has been mined about " + percent + " percent of the way", "to the next layer."));
 		return true;
 	}

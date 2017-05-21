@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.npc;
 
 import net.edge.world.locale.Boundary;
-import net.edge.world.node.entity.model.Direction;
+import net.edge.world.Direction;
 
 /**
  * The movement coordinator that makes all {@link Npc}s pseudo-randomly move

@@ -8,8 +8,8 @@ import net.edge.world.World;
 import net.edge.world.locale.Position;
 import net.edge.world.locale.SquareLocation;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.object.ObjectNode;
-import net.edge.world.node.region.Region;
+import net.edge.world.object.ObjectNode;
+import net.edge.world.region.Region;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -105,7 +105,7 @@ public enum Obelisk {
 			obelisks = reg.getObjects(data.object);
 			obelisks.forEach(o -> {
 				o.setId(14825);
-				reg.register(o);
+				o.register();
 			});
 		}
 		
@@ -113,7 +113,7 @@ public enum Obelisk {
 		protected void execute() {
 			obelisks.forEach(o -> {
 				o.setId(data.object);
-				reg.register(o);
+				o.register();
 			});
 			Obelisk dest = RandomUtils.random(VALUES.stream().filter(d -> d != data).collect(Collectors.toList()));
 			int x = dest.boundary.getSwX();

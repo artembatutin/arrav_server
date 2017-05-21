@@ -1,6 +1,7 @@
 package net.edge.cache;
 
 import com.google.common.base.Preconditions;
+import net.edge.cache.archive.Archive;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

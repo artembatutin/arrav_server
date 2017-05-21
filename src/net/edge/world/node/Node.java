@@ -5,8 +5,8 @@ import net.edge.world.locale.Position;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.object.ObjectNode;
-import net.edge.world.node.region.Region;
+import net.edge.world.object.ObjectNode;
+import net.edge.world.region.Region;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;

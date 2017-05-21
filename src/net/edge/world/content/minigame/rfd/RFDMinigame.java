@@ -1,6 +1,6 @@
 package net.edge.world.content.minigame.rfd;
 
-import net.edge.world.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.dialogue.Expression;
 import net.edge.world.content.dialogue.impl.NpcDialogue;
@@ -14,7 +14,7 @@ import net.edge.world.node.entity.attribute.AttributeValue;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.impl.DefaultNpc;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
 

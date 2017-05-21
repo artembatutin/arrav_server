@@ -8,12 +8,12 @@ import net.edge.world.content.skill.agility.obstacle.ObstacleAction;
 import net.edge.world.content.skill.agility.obstacle.ObstacleActivity;
 import net.edge.world.locale.Position;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.move.ForcedMovement;
 import net.edge.world.node.entity.move.ForcedMovementManager;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
 

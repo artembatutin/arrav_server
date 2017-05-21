@@ -1,13 +1,13 @@
 package net.edge.world.content.skill.firemaking;
 
 import net.edge.task.Task;
-import net.edge.world.World;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNodeStatic;
 import net.edge.world.node.item.ItemPolicy;
-import net.edge.world.node.object.ObjectDirection;
-import net.edge.world.node.object.ObjectNode;
-import net.edge.world.node.region.Region;
+import net.edge.world.object.DynamicObject;
+import net.edge.world.object.ObjectDirection;
+import net.edge.world.object.ObjectNode;
+import net.edge.world.object.ObjectType;
 
 /**
  * Represents the task for creating and deregistering fires.
@@ -36,17 +36,14 @@ final class FiremakingTask extends Task {
 	
 	@Override
 	public void onSubmit() {
-		object = new ObjectNode(firemaking.getFireLighter().getObjectId(), firemaking.getPlayer().getPosition(), ObjectDirection.SOUTH);
-		World.getRegions().getRegion(object.getPosition()).register(object);
+		object = new DynamicObject(firemaking.getFireLighter().getObjectId(), firemaking.getPlayer().getPosition(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, 0);
+		object.register();
 	}
 	
 	@Override
 	public void execute() {
-		Region region = object.getRegion();
-		if(region.unregister(object)) {
-			region.register(new ItemNodeStatic(new Item(592), object.getPosition(), ItemPolicy.TIMEOUT));
-		}
-		cancel();
+		object.getRegion().register(new ItemNodeStatic(new Item(592), object.getGlobalPos(), ItemPolicy.TIMEOUT));
+		object.unregister();
 	}
 	
 }

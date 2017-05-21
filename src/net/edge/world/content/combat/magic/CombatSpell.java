@@ -3,10 +3,10 @@ package net.edge.world.content.combat.magic;
 import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
-import net.edge.world.node.entity.model.Projectile;
-import net.edge.world.node.entity.model.Spell;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
+import net.edge.world.Projectile;
+import net.edge.world.Spell;
 
 import java.util.Optional;
 

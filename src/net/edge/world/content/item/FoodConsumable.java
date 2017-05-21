@@ -6,7 +6,7 @@ import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.skill.Skill;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.Skills;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

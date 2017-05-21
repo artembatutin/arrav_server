@@ -11,7 +11,7 @@ import net.edge.world.locale.Position;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -95,12 +95,12 @@ public final class BoxTrap extends Trap {
 			
 			@Override
 			public void execute() {
-				npc.getMovementQueue().smartWalk(getObject().getPosition().copy());
+				npc.getMovementQueue().smartWalk(getObject().getGlobalPos().copy());
 				if(isAbandoned()) {
 					this.cancel();
 					return;
 				}
-				if(npc.getPosition().getX() == getObject().getPosition().getX() && npc.getPosition().getY() == getObject().getPosition().getY()) {
+				if(npc.getPosition().getX() == getObject().getX() && npc.getPosition().getY() == getObject().getY()) {
 					this.cancel();
 					
 					int count = RandomUtils.inclusive(180);
@@ -111,9 +111,7 @@ public final class BoxTrap extends Trap {
 						return;
 					}
 					kill(npc);
-					World.getRegions().getRegion(getObject().getPosition()).unregister(getObject());
-					setObject(CAUGHT_ID);
-					World.getRegions().getRegion(getObject().getPosition()).register(getObject());
+					updateObject(CAUGHT_ID);
 					setState(TrapState.CAUGHT);
 				}
 			}
@@ -135,7 +133,7 @@ public final class BoxTrap extends Trap {
 			if(!BoxTrapData.VALUES.stream().anyMatch(id -> id.npcId == npc.getId())) {
 				continue;
 			}
-			if(this.getObject().getPosition().withinDistance(npc.getPosition(), DISTANCE_PORT)) {
+			if(this.getObject().getGlobalPos().withinDistance(npc.getPosition(), DISTANCE_PORT)) {
 				if(RandomUtils.inclusive(100) < 20) {
 					return;
 				}
@@ -194,9 +192,7 @@ public final class BoxTrap extends Trap {
 			throw new IllegalArgumentException("Cannot set trap state back to pending.");
 		}
 		if(state.equals(TrapState.FALLEN)) {
-			World.getRegions().getRegion(getObject().getPosition()).unregister(getObject());
-			this.setObject(TrapType.FAILED_BOX_TRAP.getObjectId());
-			World.getRegions().getRegion(getObject().getPosition()).register(getObject());
+			this.updateObject(TrapType.FAILED_BOX_TRAP.getObjectId());
 		}
 		player.message("Your trap has been triggered by something...");
 		super.setState(state);

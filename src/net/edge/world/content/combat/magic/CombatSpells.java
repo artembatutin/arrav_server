@@ -4,10 +4,10 @@ import net.edge.world.content.combat.Combat;
 import net.edge.world.content.combat.effect.CombatEffectType;
 import net.edge.world.content.combat.magic.ancients.CombatAncientSpell;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
-import net.edge.world.node.entity.model.PoisonType;
-import net.edge.world.node.entity.model.Projectile;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
+import net.edge.world.PoisonType;
+import net.edge.world.Projectile;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

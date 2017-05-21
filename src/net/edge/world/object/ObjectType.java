@@ -1,4 +1,4 @@
-package net.edge.world.node.object;
+package net.edge.world.object;
 
 import java.util.HashMap;
 import java.util.Map;

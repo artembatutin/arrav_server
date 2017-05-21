@@ -8,7 +8,7 @@ import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.content.skill.summoning.familiar.Familiar;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

@@ -1,18 +1,17 @@
 package net.edge.world.content.skill.woodcutting;
 
 import net.edge.task.Task;
-import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.action.TransformableObject;
 import net.edge.world.content.skill.action.impl.HarvestingSkillAction;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Direction;
+import net.edge.world.Animation;
+import net.edge.world.Direction;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
-import net.edge.world.node.region.Region;
+import net.edge.world.object.DynamicObject;
+import net.edge.world.object.ObjectNode;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -36,7 +35,7 @@ public final class Woodcutting extends HarvestingSkillAction {
 	/**
 	 * The object we're interfering with.
 	 */
-	private final ObjectNode object;
+	private final DynamicObject object;
 	
 	/**
 	 * The object's name.
@@ -49,12 +48,11 @@ public final class Woodcutting extends HarvestingSkillAction {
 	 * @param object the object the {@code player} is interacting with.
 	 */
 	public Woodcutting(Player player, Tree tree, ObjectNode object) {
-		super(player, Optional.of(object.getPosition()));
-		
-		this.object = object;
+		super(player, Optional.of(object.getGlobalPos()));
 		this.objectName = object.getDefinition().getName().toLowerCase();
 		this.tree = tree;
 		this.hatchet = Hatchet.getDefinition(player).orElse(null);
+		this.object = object.toDynamic();
 	}
 	
 	/**
@@ -103,8 +101,8 @@ public final class Woodcutting extends HarvestingSkillAction {
 		if(!checkWoodcutting()) {
 			return false;
 		}
-		if(object.getProducingCount() <= 0) {
-			object.setProducingCount(tree.getLogCount());
+		if(object.getElements() <= 0) {
+			object.setElements(tree.getLogCount());
 		}
 		getPlayer().message("You begin to cut the " + objectName + "...");
 		getPlayer().animation(hatchet.getAnimation());
@@ -123,39 +121,36 @@ public final class Woodcutting extends HarvestingSkillAction {
 	public void onHarvest(Task t, Item[] items, boolean success) {
 		if(!tree.isObstacle() && success) {
 			BirdNest.drop(getPlayer());
-			object.setProducingCount(RandomUtils.inclusive(1, object.getProducingCount()));
+			object.setElements(object.getElements() - 1);
 		}
-		
-		if(tree.isObstacle() && success && !object.isDisabled()) {
-			Region reg = World.getRegions().getRegion(object.getPosition());
-			reg.unregister(object);
+		if(tree.isObstacle() && success && object.isReg()) {
+			object.unregister();
 			object.setDisabled(true);
 			World.getTaskManager().submit(new Task(2, false) {
 				@Override
 				public void execute() {
-					World.getRegions().getRegion(object.getPosition()).register(object);
+					object.register();
 					object.setDisabled(false);
 				}
 			});
 			if(tree.equals(Tree.VINES)) {//Vines
-				Position delta = Position.delta(object.getPosition(), player.getPosition());
+				Position delta = Position.delta(object.getGlobalPos(), player.getPosition());
 				Direction dir = Direction.fromDeltas(delta);
 				player.getMovementQueue().walk(-dir.getX() * 2, -dir.getY() * 2);
 			}
 			this.onStop();
 			t.cancel();
 		}
-		if(object.getProducingCount() <= 0 && !tree.isObstacle() && !object.isDisabled()) {
+		if(object.getElements() <= 0 && !tree.isObstacle() && object.isReg()) {
 			Optional<TransformableObject> filter = Arrays.stream(tree.getObject()).filter(p -> p.getObjectId() == object.getId()).findFirst();
 			
 			if(filter.isPresent()) {
-				ObjectNode stump = new ObjectNode(filter.get().getTransformable(), position.get(), object.getDirection(), object.getObjectType());
-				Region reg = World.getRegions().getRegion(object.getPosition());
-				reg.unregister(object);
+				int id = object.getId();//saved tree id.
+				object.setId(filter.get().getTransformable());
 				object.setDisabled(true);
-				reg.register(stump, tree.getRespawnTime(), n -> {
-					reg.unregister(stump);
-					reg.register(object);
+				object.register(tree.getRespawnTime(), n -> {
+					object.setId(id);
+					object.register();
 					object.setDisabled(false);
 				});
 			}

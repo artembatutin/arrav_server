@@ -5,7 +5,7 @@ import net.edge.world.World;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.action.impl.HarvestingSkillAction;
 import net.edge.world.content.skill.mining.PickaxeData;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -51,11 +51,10 @@ public final class StarMining extends HarvestingSkillAction {
 	/**
 	 * Constructs a new {@link StarMining}.
 	 * @param player {@link #player}.
-	 * @param rock   the mining rock.
-	 * @param object the rock object.
+	 * @param star   the star rock.
 	 */
 	public StarMining(Player player, ShootingStar star) {
-		super(player, Optional.of(star.getPosition()));
+		super(player, Optional.of(star.getGlobalPos()));
 		this.star = star;
 		this.pickaxe = PickaxeData.getDefinition(player).orElse(null);
 	}
@@ -83,17 +82,15 @@ public final class StarMining extends HarvestingSkillAction {
 	@Override
 	public void onHarvest(Task t, Item[] items, boolean success) {
 		if(success) {
-			star.setProducingCount(star.getProducingCount() + 1);
+			star.setElements(star.getElements() + 1);
 		}
-		
-		if(star.getProducingCount() >= star.data.stardust && !star.isDisabled()) {
+		if(star.getElements() >= star.data.stardust && !star.isDisabled()) {
 			Optional<ShootingStarData> filter = star.data.getNext();
-			
 			if(filter.isPresent()) {
 				star.data = filter.get();
 				star.setId(star.data.objectId);
-				star.setProducingCount(0);
-				World.getRegions().getRegion(star.getPosition()).register(star);
+				star.setElements(0);
+				star.register();
 			} else {
 				World.getShootingStarEvent().getShootingStar().getStarSprite().spawn(player);
 			}

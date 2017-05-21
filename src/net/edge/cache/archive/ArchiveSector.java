@@ -1,4 +1,6 @@
-package net.edge.cache;
+package net.edge.cache.archive;
+
+import net.edge.cache.FileSystem;
 
 import java.nio.ByteBuffer;
 

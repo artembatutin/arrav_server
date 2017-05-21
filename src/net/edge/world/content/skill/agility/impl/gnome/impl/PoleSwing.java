@@ -5,7 +5,7 @@ import net.edge.world.content.skill.agility.obstacle.ObstacleActivity;
 import net.edge.world.content.skill.agility.obstacle.ObstacleType;
 import net.edge.world.content.skill.agility.obstacle.impl.Movable;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.move.ForcedMovement;
 import net.edge.world.node.entity.move.ForcedMovementDirection;
 import net.edge.world.node.entity.move.ForcedMovementManager;

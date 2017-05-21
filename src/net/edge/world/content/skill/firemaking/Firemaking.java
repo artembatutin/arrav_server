@@ -7,11 +7,11 @@ import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.action.impl.DestructionSkillAction;
 import net.edge.world.locale.Location;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Direction;
+import net.edge.world.Animation;
+import net.edge.world.Direction;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectType;
+import net.edge.world.object.ObjectType;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;

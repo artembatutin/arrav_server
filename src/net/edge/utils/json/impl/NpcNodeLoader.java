@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
 import net.edge.world.World;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Direction;
+import net.edge.world.Direction;
 import net.edge.world.node.entity.npc.Npc;
 
 import java.util.Objects;

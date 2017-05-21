@@ -1,9 +1,8 @@
 package net.edge.world.content.skill.firemaking.pits;
 
 import net.edge.task.Task;
-import net.edge.world.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.World;
-import net.edge.world.node.object.ObjectNode;
 
 import java.util.Optional;
 
@@ -36,8 +35,8 @@ public final class FirepitTask extends Task {
 	protected void execute() {
 		this.cancel();
 		object.setActive(Optional.empty());
-		World.getRegions().getRegion(object.getPosition()).unregister(object);
-		World.getRegions().getRegion(object.getPosition()).register(new ObjectNode(FirepitData.PHASE_ONE.objectId, object.getPosition(), object.getDirection()));
+		object.setId(FirepitData.PHASE_ONE.objectId);
+		object.register();
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package net.edge.world.node.entity.model;
+package net.edge.world;
 
 import net.edge.world.content.MagicStaff;
 import net.edge.world.content.skill.Skills;

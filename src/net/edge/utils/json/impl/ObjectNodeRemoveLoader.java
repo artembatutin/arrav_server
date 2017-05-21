@@ -6,9 +6,9 @@ import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
 import net.edge.world.World;
 import net.edge.world.locale.Position;
-import net.edge.world.node.object.ObjectNode;
-import net.edge.world.node.object.ObjectType;
-import net.edge.world.node.region.Region;
+import net.edge.world.object.ObjectNode;
+import net.edge.world.object.ObjectType;
+import net.edge.world.region.Region;
 
 import java.util.Objects;
 import java.util.Set;
@@ -37,9 +37,9 @@ public final class ObjectNodeRemoveLoader extends JsonLoader {
 		final ObjectType typef = type;
 		reg.getObjects(position).forEach(o -> {
 			if(typef == null) {
-				reg.addDeletedObj(o);
+				o.delete();
 			} else if(typef == o.getObjectType()) {
-				reg.addDeletedObj(o);
+				o.delete();
 			}
 		});
 		
@@ -47,9 +47,9 @@ public final class ObjectNodeRemoveLoader extends JsonLoader {
 		Set<ObjectNode> objects = ImmutableSet.copyOf(reg.getObjects(position));
 		for(ObjectNode o : objects) {
 			if(typef == null) {
-				World.getTraversalMap().markObject(o, false, true);
+				World.getTraversalMap().markObject(reg, o, false, true);
 			} else if(typef == o.getObjectType()) {
-				World.getTraversalMap().markObject(o, false, true);
+				World.getTraversalMap().markObject(reg, o, false, true);
 			}
 		}
 	}

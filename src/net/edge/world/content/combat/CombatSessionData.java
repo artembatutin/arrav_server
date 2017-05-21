@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.combat.special.CombatSpecial;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Hit;
+import net.edge.world.Hit;
 import net.edge.world.node.entity.player.Player;
 
 /**

@@ -2,8 +2,8 @@ package net.edge.world.node.entity.move.path;
 
 import com.google.common.base.Preconditions;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Direction;
-import net.edge.world.node.region.TraversalMap;
+import net.edge.world.Direction;
+import net.edge.world.region.TraversalMap;
 
 /**
  * An algorithm used to find a path between two {@link Position}s.

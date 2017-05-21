@@ -10,10 +10,10 @@ import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
 
@@ -127,7 +127,7 @@ public final class Smithing extends ProducingSkillAction {
 						player.getMessages().sendCloseWindows();
 						
 						player.animation(new Animation(898));
-						player.getMessages().sendLocalGraphic(2123, object.getPosition().copy(), 50);
+						player.getMessages().sendLocalGraphic(2123, object.getGlobalPos().copy(), 50);
 						LinkedTaskSequence seq = new LinkedTaskSequence();
 						seq.connect(3, () -> {
 							
@@ -168,7 +168,7 @@ public final class Smithing extends ProducingSkillAction {
 				return false;
 			}
 			player.animation(new Animation(898));
-			player.getMessages().sendLocalGraphic(2123, object.getPosition().copy(), 50);
+			player.getMessages().sendLocalGraphic(2123, object.getGlobalPos().copy(), 50);
 			player.getInventory().removeAll(new Item(11710), new Item(11712), new Item(11714));
 			player.getInventory().add(new Item(11690));
 			return true;
@@ -211,7 +211,7 @@ public final class Smithing extends ProducingSkillAction {
 			return false;
 		}
 		player.getAttr().get("smithing_equipment").set(table.getBar());
-		player.getAttr().get("smithing_position").set(object.getPosition());
+		player.getAttr().get("smithing_position").set(object.getGlobalPos());
 		player.getMessages().sendInterface(994);
 		return true;
 	}

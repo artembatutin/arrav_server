@@ -1,10 +1,9 @@
 package net.edge.world.content.skill.firemaking.pits;
 
-import net.edge.world.World;
 import net.edge.world.content.skill.firemaking.FireLighter;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 /**
  * The manager class for the fire pit event objects.
@@ -43,7 +42,7 @@ public final class FirepitManager {
 	 * @return {@code true} if the pit was fired, {@code false} otherwise.
 	 */
 	public boolean fire(Player player, ObjectNode object, Item item) {
-		FirepitObject pit = firepit.getPosition().same(object.getPosition()) && firepit.getId() == object.getId() ? firepit : null;
+		FirepitObject pit = firepit.getGlobalPos().same(object.getGlobalPos()) && firepit.getId() == object.getId() ? firepit : null;
 		
 		if(pit == null) {
 			return false;
@@ -64,7 +63,7 @@ public final class FirepitManager {
 	 * Registers the two fire pits on the world.
 	 */
 	public void register() {
-		World.getRegions().getRegion(firepit.getPosition()).register(firepit);
+		firepit.register();
 	}
 	
 }

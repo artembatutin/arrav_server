@@ -1,21 +1,21 @@
-package net.edge.world.node.region;
+package net.edge.world.region;
 
 import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Direction;
-import net.edge.world.node.object.ObjectDefinition;
-import net.edge.world.node.object.ObjectDirection;
-import net.edge.world.node.object.ObjectNode;
-import net.edge.world.node.object.ObjectType;
+import net.edge.world.Direction;
+import net.edge.world.object.ObjectDefinition;
+import net.edge.world.object.ObjectDirection;
+import net.edge.world.object.ObjectNode;
+import net.edge.world.object.ObjectType;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static net.edge.world.node.object.ObjectType.*;
+import static net.edge.world.object.ObjectType.*;
 
 /**
  * Contains traversal data for a set of regions.
@@ -31,14 +31,14 @@ public final class TraversalMap {
 	 * @param add    The condition if the object is added.
 	 * @param list   the condition if the region object list will be affected.
 	 */
-	public void markObject(ObjectNode object, boolean add, boolean list) {
+	public void markObject(Region reg, ObjectNode object, boolean add, boolean list) {
 		if(object.getId() > ObjectDefinition.DEFINITIONS.length) {
 			return;
 		}
 		ObjectDefinition def = ObjectDefinition.DEFINITIONS[object.getId()];
-		Position position = object.getPosition();
-		//Sets the sizes.
+		Position position = new Position(object.getX(), object.getY(), object.getZ());
 		
+		//Sets the sizes.
 		final int sizeX;
 		final int sizeY;
 		if(object.getDirection() == ObjectDirection.NORTH || object.getDirection() == ObjectDirection.SOUTH) {
@@ -53,27 +53,28 @@ public final class TraversalMap {
 			if(object.getObjectType() == GROUND_PROP) {
 				if(def.hasActions() || def.isDecoration()) {
 					if(def.hasActions()) {
-						markOccupant(position.getZ(), position.getX(), position.getY(), sizeX, sizeY, false, add);
+						markOccupant(reg, position.getZ(), position.getX(), position.getY(), sizeX, sizeY, false, add);
 					}
 				}
 			} else if(object.getObjectType() == GENERAL_PROP || object.getObjectType() == WALKABLE_PROP) {
-				markOccupant(position.getZ(), position.getX(), position.getY(), sizeX, sizeY, def.isWalkable(), add);
+				markOccupant(reg, position.getZ(), position.getX(), position.getY(), sizeX, sizeY, def.isWalkable(), add);
 			} else if(object.getObjectType().getId() >= 12) {
-				markOccupant(position.getZ(), position.getX(), position.getY(), sizeX, sizeY, def.isWalkable(), add);
+				markOccupant(reg, position.getZ(), position.getX(), position.getY(), sizeX, sizeY, def.isWalkable(), add);
 			} else if(object.getObjectType() == DIAGONAL_WALL) {
-				markOccupant(position.getZ(), position.getX(), position.getY(), sizeX, sizeY, def.isWalkable(), add);
+				markOccupant(reg, position.getZ(), position.getX(), position.getY(), sizeX, sizeY, def.isWalkable(), add);
 			} else if(object.getObjectType().getId() >= 0 && object.getObjectType().getId() <= 3) {
 				if(add)
-					markWall(object.getDirection(), position.getZ(), position.getX(), position.getY(), object.getObjectType(), def.isWalkable());
+					markWall(reg, object.getDirection(), position.getZ(), position.getX(), position.getY(), object.getObjectType(), def.isWalkable());
 				else
-					unmarkWall(object.getDirection(), position.getZ(), position.getX(), position.getY(), object.getObjectType(), def.isWalkable());
+					unmarkWall(reg, object.getDirection(), position.getZ(), position.getX(), position.getY(), object.getObjectType(), def.isWalkable());
 			}
 		}
-		
+		if(reg == null)
+			reg = World.getRegions().getRegion(position);
 		if(add && list) {
-			World.getRegions().getRegion(position).addObj(object);
+			reg.addObj(object);
 		} else if(list) {
-			World.getRegions().getRegion(position).removeObj(object);
+			reg.removeObj(object);
 		}
 		
 	}
@@ -87,82 +88,82 @@ public final class TraversalMap {
 	 * @param type         The type of wall.
 	 * @param impenetrable Whether or not this wall can be passed through.
 	 */
-	private void markWall(ObjectDirection orientation, int height, int x, int y, ObjectType type, boolean impenetrable) {
+	private void markWall(Region reg, ObjectDirection orientation, int height, int x, int y, ObjectType type, boolean impenetrable) {
 		switch(type) {
 			case STRAIGHT_WALL:
 				if(orientation == ObjectDirection.WEST) {
-					set(height, x, y, TraversalConstants.WALL_WEST);
-					set(height, x - 1, y, TraversalConstants.WALL_EAST);
+					set(reg, height, x, y, TraversalConstants.WALL_WEST);
+					set(reg, height, x - 1, y, TraversalConstants.WALL_EAST);
 					if(impenetrable) {
-						set(height, x, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
-						set(height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
+						set(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
+						set(reg, height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
 					}
 				}
 				if(orientation == ObjectDirection.NORTH) {
-					set(height, x, y, TraversalConstants.WALL_NORTH);
-					set(height, x, y + 1, TraversalConstants.WALL_SOUTH);
+					set(reg, height, x, y, TraversalConstants.WALL_NORTH);
+					set(reg, height, x, y + 1, TraversalConstants.WALL_SOUTH);
 					if(impenetrable) {
-						set(height, x, y, TraversalConstants.IMPENETRABLE_WALL_NORTH);
-						set(height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+						set(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_NORTH);
+						set(reg, height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
 					}
 				}
 				if(orientation == ObjectDirection.EAST) {
-					set(height, x, y, TraversalConstants.WALL_EAST);
-					set(height, x + 1, y, TraversalConstants.WALL_WEST);
+					set(reg, height, x, y, TraversalConstants.WALL_EAST);
+					set(reg, height, x + 1, y, TraversalConstants.WALL_WEST);
 					if(impenetrable) {
-						set(height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
-						set(height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
+						set(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
+						set(reg, height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
 					}
 				}
 				if(orientation == ObjectDirection.SOUTH) {
-					set(height, x, y, TraversalConstants.WALL_SOUTH);
-					set(height, x, y - 1, TraversalConstants.WALL_NORTH);
+					set(reg, height, x, y, TraversalConstants.WALL_SOUTH);
+					set(reg, height, x, y - 1, TraversalConstants.WALL_NORTH);
 					if(impenetrable) {
-						set(height, x, y, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
-						set(height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH);
+						set(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+						set(reg, height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH);
 					}
 				}
 				break;
 			
 			case ENTIRE_WALL:
 				if(orientation == ObjectDirection.WEST) {
-					set(height, x, y, TraversalConstants.WALL_WEST | TraversalConstants.WALL_NORTH);
-					set(height, x - 1, y, TraversalConstants.WALL_EAST);
-					set(height, x, y + 1, TraversalConstants.WALL_SOUTH);
+					set(reg, height, x, y, TraversalConstants.WALL_WEST | TraversalConstants.WALL_NORTH);
+					set(reg, height, x - 1, y, TraversalConstants.WALL_EAST);
+					set(reg, height, x, y + 1, TraversalConstants.WALL_SOUTH);
 					if(impenetrable) {
-						set(height, x, y, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_WALL_NORTH);
-						set(height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
-						set(height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+						set(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_WALL_NORTH);
+						set(reg, height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
+						set(reg, height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
 					}
 				}
 				if(orientation == ObjectDirection.NORTH) {
-					set(height, x, y, TraversalConstants.WALL_EAST | TraversalConstants.WALL_NORTH);
-					set(height, x, y + 1, TraversalConstants.WALL_SOUTH);
-					set(height, x + 1, y, TraversalConstants.WALL_WEST);
+					set(reg, height, x, y, TraversalConstants.WALL_EAST | TraversalConstants.WALL_NORTH);
+					set(reg, height, x, y + 1, TraversalConstants.WALL_SOUTH);
+					set(reg, height, x + 1, y, TraversalConstants.WALL_WEST);
 					if(impenetrable) {
-						set(height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_NORTH);
-						set(height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
-						set(height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
+						set(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_NORTH);
+						set(reg, height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+						set(reg, height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
 					}
 				}
 				if(orientation == ObjectDirection.EAST) {
-					set(height, x, y, TraversalConstants.WALL_EAST | TraversalConstants.WALL_SOUTH);
-					set(height, x + 1, y, TraversalConstants.WALL_WEST);
-					set(height, x, y - 1, TraversalConstants.WALL_NORTH);
+					set(reg, height, x, y, TraversalConstants.WALL_EAST | TraversalConstants.WALL_SOUTH);
+					set(reg, height, x + 1, y, TraversalConstants.WALL_WEST);
+					set(reg, height, x, y - 1, TraversalConstants.WALL_NORTH);
 					if(impenetrable) {
-						set(height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_SOUTH);
-						set(height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
-						set(height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH);
+						set(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+						set(reg, height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
+						set(reg, height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH);
 					}
 				}
 				if(orientation == ObjectDirection.SOUTH) {
-					set(height, x, y, TraversalConstants.WALL_WEST | TraversalConstants.WALL_SOUTH);
-					set(height, x - 1, y, TraversalConstants.WALL_EAST);
-					set(height, x, y - 1, TraversalConstants.WALL_NORTH);
+					set(reg, height, x, y, TraversalConstants.WALL_WEST | TraversalConstants.WALL_SOUTH);
+					set(reg, height, x - 1, y, TraversalConstants.WALL_EAST);
+					set(reg, height, x, y - 1, TraversalConstants.WALL_NORTH);
 					if(impenetrable) {
-						set(height, x, y, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_WALL_SOUTH);
-						set(height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
-						set(height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH);
+						set(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+						set(reg, height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
+						set(reg, height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH);
 					}
 				}
 				break;
@@ -170,35 +171,35 @@ public final class TraversalMap {
 			case DIAGONAL_CORNER_WALL:
 			case WALL_CORNER:
 				if(orientation == ObjectDirection.WEST) {
-					set(height, x, y, TraversalConstants.WALL_NORTH_WEST);
-					set(height, x - 1, y + 1, TraversalConstants.WALL_SOUTH_EAST);
+					set(reg, height, x, y, TraversalConstants.WALL_NORTH_WEST);
+					set(reg, height, x - 1, y + 1, TraversalConstants.WALL_SOUTH_EAST);
 					if(impenetrable) {
-						set(height, x, y, TraversalConstants.IMPENETRABLE_WALL_NORTH_WEST);
-						set(height, x - 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH_EAST);
+						set(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_NORTH_WEST);
+						set(reg, height, x - 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH_EAST);
 					}
 				}
 				if(orientation == ObjectDirection.NORTH) {
-					set(height, x, y, TraversalConstants.WALL_NORTH_EAST);
-					set(height, x + 1, y + 1, TraversalConstants.WALL_SOUTH_WEST);
+					set(reg, height, x, y, TraversalConstants.WALL_NORTH_EAST);
+					set(reg, height, x + 1, y + 1, TraversalConstants.WALL_SOUTH_WEST);
 					if(impenetrable) {
-						set(height, x, y, TraversalConstants.IMPENETRABLE_WALL_NORTH_EAST);
-						set(height, x + 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH_WEST);
+						set(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_NORTH_EAST);
+						set(reg, height, x + 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH_WEST);
 					}
 				}
 				if(orientation == ObjectDirection.EAST) {
-					set(height, x, y, TraversalConstants.WALL_SOUTH_EAST);
-					set(height, x + 1, y - 1, TraversalConstants.WALL_NORTH_WEST);
+					set(reg, height, x, y, TraversalConstants.WALL_SOUTH_EAST);
+					set(reg, height, x + 1, y - 1, TraversalConstants.WALL_NORTH_WEST);
 					if(impenetrable) {
-						set(height, x, y, TraversalConstants.IMPENETRABLE_WALL_SOUTH_EAST);
-						set(height, x + 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH_WEST);
+						set(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_SOUTH_EAST);
+						set(reg, height, x + 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH_WEST);
 					}
 				}
 				if(orientation == ObjectDirection.SOUTH) {
-					set(height, x, y, TraversalConstants.WALL_SOUTH_WEST);
-					set(height, x - 1, y - 1, TraversalConstants.WALL_NORTH_EAST);
+					set(reg, height, x, y, TraversalConstants.WALL_SOUTH_WEST);
+					set(reg, height, x - 1, y - 1, TraversalConstants.WALL_NORTH_EAST);
 					if(impenetrable) {
-						set(height, x, y, TraversalConstants.IMPENETRABLE_WALL_SOUTH_WEST);
-						set(height, x - 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH_EAST);
+						set(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_SOUTH_WEST);
+						set(reg, height, x - 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH_EAST);
 					}
 				}
 				break;
@@ -216,82 +217,82 @@ public final class TraversalMap {
 	 * @param type         The type of wall.
 	 * @param impenetrable Whether or not this wall can be passed through.
 	 */
-	private void unmarkWall(ObjectDirection orientation, int height, int x, int y, ObjectType type, boolean impenetrable) {
+	private void unmarkWall(Region reg, ObjectDirection orientation, int height, int x, int y, ObjectType type, boolean impenetrable) {
 		switch(type) {
 			case STRAIGHT_WALL:
 				if(orientation == ObjectDirection.WEST) {
-					unset(height, x, y, TraversalConstants.WALL_WEST);
-					unset(height, x - 1, y, TraversalConstants.WALL_EAST);
+					unset(reg, height, x, y, TraversalConstants.WALL_WEST);
+					unset(reg, height, x - 1, y, TraversalConstants.WALL_EAST);
 					if(impenetrable) {
-						unset(height, x, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
-						unset(height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
+						unset(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
+						unset(reg, height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
 					}
 				}
 				if(orientation == ObjectDirection.NORTH) {
-					unset(height, x, y, TraversalConstants.WALL_NORTH);
-					unset(height, x, y + 1, TraversalConstants.WALL_SOUTH);
+					unset(reg, height, x, y, TraversalConstants.WALL_NORTH);
+					unset(reg, height, x, y + 1, TraversalConstants.WALL_SOUTH);
 					if(impenetrable) {
-						unset(height, x, y, TraversalConstants.IMPENETRABLE_WALL_NORTH);
-						unset(height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+						unset(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_NORTH);
+						unset(reg, height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
 					}
 				}
 				if(orientation == ObjectDirection.EAST) {
-					unset(height, x, y, TraversalConstants.WALL_EAST);
-					unset(height, x + 1, y, TraversalConstants.WALL_WEST);
+					unset(reg, height, x, y, TraversalConstants.WALL_EAST);
+					unset(reg, height, x + 1, y, TraversalConstants.WALL_WEST);
 					if(impenetrable) {
-						unset(height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
-						unset(height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
+						unset(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
+						unset(reg, height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
 					}
 				}
 				if(orientation == ObjectDirection.SOUTH) {
-					unset(height, x, y, TraversalConstants.WALL_SOUTH);
-					unset(height, x, y - 1, TraversalConstants.WALL_NORTH);
+					unset(reg, height, x, y, TraversalConstants.WALL_SOUTH);
+					unset(reg, height, x, y - 1, TraversalConstants.WALL_NORTH);
 					if(impenetrable) {
-						unset(height, x, y, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
-						unset(height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH);
+						unset(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+						unset(reg, height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH);
 					}
 				}
 				break;
 			
 			case ENTIRE_WALL:
 				if(orientation == ObjectDirection.WEST) {
-					unset(height, x, y, TraversalConstants.WALL_WEST | TraversalConstants.WALL_NORTH);
-					unset(height, x - 1, y, TraversalConstants.WALL_EAST);
-					unset(height, x, y + 1, TraversalConstants.WALL_SOUTH);
+					unset(reg, height, x, y, TraversalConstants.WALL_WEST | TraversalConstants.WALL_NORTH);
+					unset(reg, height, x - 1, y, TraversalConstants.WALL_EAST);
+					unset(reg, height, x, y + 1, TraversalConstants.WALL_SOUTH);
 					if(impenetrable) {
-						unset(height, x, y, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_WALL_NORTH);
-						unset(height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
-						unset(height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+						unset(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_WALL_NORTH);
+						unset(reg, height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST);
+						unset(reg, height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
 					}
 				}
 				if(orientation == ObjectDirection.NORTH) {
-					unset(height, x, y, TraversalConstants.WALL_EAST | TraversalConstants.WALL_NORTH);
-					unset(height, x, y + 1, TraversalConstants.WALL_SOUTH);
-					unset(height, x + 1, y, TraversalConstants.WALL_WEST);
+					unset(reg, height, x, y, TraversalConstants.WALL_EAST | TraversalConstants.WALL_NORTH);
+					unset(reg, height, x, y + 1, TraversalConstants.WALL_SOUTH);
+					unset(reg, height, x + 1, y, TraversalConstants.WALL_WEST);
 					if(impenetrable) {
-						unset(height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_NORTH);
-						unset(height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
-						unset(height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
+						unset(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_NORTH);
+						unset(reg, height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+						unset(reg, height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
 					}
 				}
 				if(orientation == ObjectDirection.EAST) {
-					unset(height, x, y, TraversalConstants.WALL_EAST | TraversalConstants.WALL_SOUTH);
-					unset(height, x + 1, y, TraversalConstants.WALL_WEST);
-					unset(height, x, y - 1, TraversalConstants.WALL_NORTH);
+					unset(reg, height, x, y, TraversalConstants.WALL_EAST | TraversalConstants.WALL_SOUTH);
+					unset(reg, height, x + 1, y, TraversalConstants.WALL_WEST);
+					unset(reg, height, x, y - 1, TraversalConstants.WALL_NORTH);
 					if(impenetrable) {
-						unset(height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_SOUTH);
-						unset(height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
-						unset(height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH);
+						unset(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+						unset(reg, height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST);
+						unset(reg, height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH);
 					}
 				}
 				if(orientation == ObjectDirection.SOUTH) {
-					unset(height, x, y, TraversalConstants.WALL_EAST | TraversalConstants.WALL_SOUTH);
-					unset(height, x, y - 1, TraversalConstants.WALL_WEST);
-					unset(height, x - 1, y, TraversalConstants.WALL_NORTH);
+					unset(reg, height, x, y, TraversalConstants.WALL_EAST | TraversalConstants.WALL_SOUTH);
+					unset(reg, height, x, y - 1, TraversalConstants.WALL_WEST);
+					unset(reg, height, x - 1, y, TraversalConstants.WALL_NORTH);
 					if(impenetrable) {
-						unset(height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_SOUTH);
-						unset(height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_WEST);
-						unset(height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_NORTH);
+						unset(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+						unset(reg, height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_WEST);
+						unset(reg, height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_NORTH);
 					}
 				}
 				break;
@@ -299,35 +300,35 @@ public final class TraversalMap {
 			case DIAGONAL_CORNER_WALL:
 			case WALL_CORNER:
 				if(orientation == ObjectDirection.WEST) {
-					unset(height, x, y, TraversalConstants.WALL_NORTH_WEST);
-					unset(height, x - 1, y + 1, TraversalConstants.WALL_SOUTH_EAST);
+					unset(reg, height, x, y, TraversalConstants.WALL_NORTH_WEST);
+					unset(reg, height, x - 1, y + 1, TraversalConstants.WALL_SOUTH_EAST);
 					if(impenetrable) {
-						unset(height, x, y, TraversalConstants.IMPENETRABLE_WALL_NORTH_WEST);
-						unset(height, x - 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH_EAST);
+						unset(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_NORTH_WEST);
+						unset(reg, height, x - 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH_EAST);
 					}
 				}
 				if(orientation == ObjectDirection.NORTH) {
-					unset(height, x, y, TraversalConstants.WALL_NORTH_EAST);
-					unset(height, x + 1, y + 1, TraversalConstants.WALL_SOUTH_WEST);
+					unset(reg, height, x, y, TraversalConstants.WALL_NORTH_EAST);
+					unset(reg, height, x + 1, y + 1, TraversalConstants.WALL_SOUTH_WEST);
 					if(impenetrable) {
-						unset(height, x, y, TraversalConstants.IMPENETRABLE_WALL_NORTH_EAST);
-						unset(height, x + 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH_WEST);
+						unset(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_NORTH_EAST);
+						unset(reg, height, x + 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH_WEST);
 					}
 				}
 				if(orientation == ObjectDirection.EAST) {
-					unset(height, x, y, TraversalConstants.WALL_SOUTH_EAST);
-					unset(height, x + 1, y - 1, TraversalConstants.WALL_NORTH_WEST);
+					unset(reg, height, x, y, TraversalConstants.WALL_SOUTH_EAST);
+					unset(reg, height, x + 1, y - 1, TraversalConstants.WALL_NORTH_WEST);
 					if(impenetrable) {
-						unset(height, x, y, TraversalConstants.IMPENETRABLE_WALL_SOUTH_EAST);
-						unset(height, x + 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH_WEST);
+						unset(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_SOUTH_EAST);
+						unset(reg, height, x + 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH_WEST);
 					}
 				}
 				if(orientation == ObjectDirection.SOUTH) {
-					unset(height, x, y, TraversalConstants.WALL_SOUTH_WEST);
-					unset(height, x - 1, y - 1, TraversalConstants.WALL_NORTH_EAST);
+					unset(reg, height, x, y, TraversalConstants.WALL_SOUTH_WEST);
+					unset(reg, height, x - 1, y - 1, TraversalConstants.WALL_NORTH_EAST);
 					if(impenetrable) {
-						unset(height, x, y, TraversalConstants.IMPENETRABLE_WALL_SOUTH_WEST);
-						unset(height, x - 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH_EAST);
+						unset(reg, height, x, y, TraversalConstants.IMPENETRABLE_WALL_SOUTH_WEST);
+						unset(reg, height, x - 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH_EAST);
 					}
 				}
 				break;
@@ -345,14 +346,14 @@ public final class TraversalMap {
 	 * @param block      The condition if the tile is blocked.
 	 * @param projectile The condition if the tile is blocked for projectiles.
 	 */
-	public void mark(int height, int x, int y, boolean block, boolean projectile) {
+	public void mark(Region region, int height, int x, int y, boolean block, boolean projectile) {
 		int localX = x & 0x3F;
 		int localY = y & 0x3F;
 		
-		Region region = World.getRegions().getRegion(new Position(x, y));
-		if(region == null) {
+		if(region == null)
+			region = World.getRegions().getRegion(new Position(x, y));
+		if(region == null)
 			return;
-		}
 		
 		int modifiedHeight = height;
 		if(region.getTile(1, localX, localY).isActive(TraversalConstants.BRIDGE)) {
@@ -381,7 +382,7 @@ public final class TraversalMap {
 	 * @param impenetrable Whether or not this occupation can be passed through.
 	 * @param add          Flag if the occupant is added or removed.
 	 */
-	private void markOccupant(int height, int x, int y, int sizeX, int sizeY, boolean impenetrable, boolean add) {
+	private void markOccupant(Region region, int height, int x, int y, int sizeX, int sizeY, boolean impenetrable, boolean add) {
 		int flag = TraversalConstants.BLOCKED;
 		if(impenetrable) {
 			flag += TraversalConstants.IMPENETRABLE_BLOCKED;
@@ -389,9 +390,9 @@ public final class TraversalMap {
 		for(int xPos = x; xPos < x + sizeX; xPos++) {
 			for(int yPos = y; yPos < y + sizeY; yPos++) {
 				if(add)
-					set(height, xPos, yPos, flag);
+					set(region, height, xPos, yPos, flag);
 				else
-					unset(height, xPos, yPos, flag);
+					unset(region, height, xPos, yPos, flag);
 			}
 		}
 	}
@@ -402,8 +403,8 @@ public final class TraversalMap {
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
 	 */
-	public void markBridge(int height, int x, int y) {
-		set(height, x, y, TraversalConstants.BRIDGE);
+	public void markBridge(Region region, int height, int x, int y) {
+		set(region, height, x, y, TraversalConstants.BRIDGE);
 	}
 	
 	/**
@@ -797,11 +798,11 @@ public final class TraversalMap {
 	 * @param y      The y coordinate.
 	 * @param flag   The flag to put on this tile.
 	 */
-	public void set(int height, int x, int y, int flag) {
-		Region region = World.getRegions().getRegion(new Position(x, y));
-		if(region == null) {
+	public void set(Region region, int height, int x, int y, int flag) {
+		if(region == null)
+			region = World.getRegions().getRegion(new Position(x, y));
+		if(region == null)
 			return;
-		}
 		region.getTile(height, x & 0x3F, y & 0x3F).set(flag);
 	}
 	
@@ -846,12 +847,11 @@ public final class TraversalMap {
 	 * @param y      The y coordinate.
 	 * @param flag   The flag to unset from the specified position.
 	 */
-	private void unset(int height, int x, int y, int flag) {
-		Region region = World.getRegions().getRegion(new Position(x, y));
-		if(region == null) {
+	private void unset(Region region, int height, int x, int y, int flag) {
+		if(region == null)
+			region = World.getRegions().getRegion(new Position(x, y));
+		if(region == null)
 			return;
-		}
-		
 		region.getTile(height, x & 0x3F, y & 0x3F).unset(flag);
 	}
 	

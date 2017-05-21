@@ -3,10 +3,10 @@ package net.edge.world.content.skill.prayer;
 import net.edge.task.Task;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.action.impl.DestructionSkillAction;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.object.ObjectNode;
+import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
 
@@ -15,7 +15,7 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 	private final Bone bone;
 	
 	public PrayerBoneAltar(Player player, int itemId, ObjectNode object) {
-		super(player, Optional.of(object.getPosition()));
+		super(player, Optional.of(object.getGlobalPos()));
 		this.bone = Bone.getBone(itemId).orElse(null);
 	}
 	

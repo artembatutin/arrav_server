@@ -4,7 +4,7 @@ import net.edge.world.content.combat.CombatSessionData;
 import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.strategy.CombatStrategy;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 
 public final class AgrithNaNa implements CombatStrategy {
 

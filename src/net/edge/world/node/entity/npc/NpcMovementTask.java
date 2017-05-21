@@ -5,9 +5,9 @@ import net.edge.utils.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
-import net.edge.world.node.entity.model.Direction;
+import net.edge.world.Direction;
 import net.edge.world.node.entity.move.path.Path;
-import net.edge.world.node.region.TraversalMap;
+import net.edge.world.region.TraversalMap;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;

@@ -6,8 +6,8 @@ import net.edge.utils.rand.RandomUtils;
 import net.edge.world.content.clanchat.ClanChatRank;
 import net.edge.world.content.clanchat.ClanMember;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
-import net.edge.world.node.entity.model.Animation;
-import net.edge.world.node.entity.model.Graphic;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

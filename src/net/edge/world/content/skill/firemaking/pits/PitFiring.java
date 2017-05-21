@@ -2,11 +2,11 @@ package net.edge.world.content.skill.firemaking.pits;
 
 import net.edge.task.Task;
 import net.edge.utils.rand.RandomUtils;
-import net.edge.world.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.World;
 import net.edge.world.content.skill.SkillData;
 import net.edge.world.content.skill.action.SkillAction;
-import net.edge.world.node.entity.model.Animation;
+import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 
@@ -30,7 +30,7 @@ final class PitFiring extends SkillAction {
 	 * @param pit    {@link #pit}.
 	 */
 	PitFiring(Player player, FirepitObject pit) {
-		super(player, Optional.of(pit.getPosition()));
+		super(player, Optional.of(pit.getGlobalPos()));
 		this.pit = pit;
 	}
 
@@ -65,7 +65,7 @@ final class PitFiring extends SkillAction {
 			player.message("The pit is already fired...");
 			return false;
 		}
-		if(pit.count < pit.data.count && !pit.data.equals(FirepitData.PHASE_FIVE)) {
+		if(pit.getElements() < pit.data.count && !pit.data.equals(FirepitData.PHASE_FIVE)) {
 			player.message("You can't fire the pit yet...");
 			return false;
 		}
@@ -96,7 +96,7 @@ final class PitFiring extends SkillAction {
 		}
 		t.cancel();
 		pit.setId(FirepitData.PHASE_IGNITED.objectId);
-		World.getRegions().getRegion(pit.getPosition()).register(pit);
+		pit.register();
 		World.submit(new FirepitTask(pit));
 		player.animation(null);
 		player.message("You successfully fired the pit...");

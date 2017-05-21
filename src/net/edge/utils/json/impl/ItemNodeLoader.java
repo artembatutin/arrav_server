@@ -8,7 +8,7 @@ import net.edge.world.locale.Position;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNodeStatic;
 import net.edge.world.node.item.ItemPolicy;
-import net.edge.world.node.region.Region;
+import net.edge.world.region.Region;
 
 import java.util.Objects;
 

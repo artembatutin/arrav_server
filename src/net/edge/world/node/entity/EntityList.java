@@ -6,12 +6,11 @@ import net.edge.world.content.PlayerPanel;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.region.Region;
+import net.edge.world.region.Region;
 
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;

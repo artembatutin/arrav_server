@@ -1,6 +1,7 @@
-package net.edge.cache;
+package net.edge.cache.archive;
 
 import com.google.common.base.Preconditions;
+import net.edge.cache.Cache;
 import net.edge.utils.ByteBufferUtil;
 import net.edge.utils.CompressionUtil;
 import net.edge.utils.TextUtils;
