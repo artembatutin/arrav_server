@@ -37,9 +37,9 @@ public class Highscores extends ConnectionUse {
 			stmt2.setInt(5 + i, experience);
 		}
 		stmt2.setLong(4, totalExperience);
-		stmt2.setLong(30, player.getCurrentKillstreak().get());
-		stmt2.setLong(31, player.getPlayerKills().get());
-		stmt2.setLong(32, player.getDeathsByPlayer().get());
+		stmt2.setInt(30, player.getCurrentKillstreak().get());
+		stmt2.setInt(31, player.getPlayerKills().get());
+		stmt2.setInt(32, player.getDeathsByPlayer().get());
 		stmt2.execute();
 	}
 	

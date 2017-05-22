@@ -91,8 +91,8 @@ public final class World {
 	
 	static {
 		try {
-			//donation = new Database("45.32.7.163", "avarrocka_donate", "avarrocka", "@$p{eh2FS5A8%b6k", 4);
-			//score = new Database("45.32.7.163", "avarrocka_score", "avarrocka", "@$p{eh2FS5A8%b6k", 1);
+			donation = new Database("127.0.0.1", "edge_donation", "server_local", "%GL5{)hAJBU(MB3h", 4);
+			score = new Database("127.0.0.1", "edge_score", "server_local", "%GL5{)hAJBU(MB3h", 1);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -319,8 +319,6 @@ public final class World {
 	public static TaskManager getTaskManager() {
 		return TASK_MANAGER;
 	}
-
-
 
 
 	/* FINAL STATIC ASSETS DECLARATION */
