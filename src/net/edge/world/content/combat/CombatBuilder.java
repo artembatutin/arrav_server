@@ -4,7 +4,7 @@ import net.edge.task.EventListener;
 import net.edge.world.World;
 import net.edge.world.content.combat.strategy.CombatStrategy;
 import net.edge.world.locale.Boundary;
-import net.edge.world.locale.Location;
+import net.edge.world.locale.loc.Location;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcAggression;

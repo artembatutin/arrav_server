@@ -29,7 +29,7 @@ import net.edge.world.content.skill.summoning.Summoning;
 import net.edge.world.content.skill.thieving.impl.Pickpocketing;
 import net.edge.world.content.teleport.impl.AuburyTeleport;
 import net.edge.world.locale.Boundary;
-import net.edge.world.locale.Location;
+import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.node.entity.npc.Npc;

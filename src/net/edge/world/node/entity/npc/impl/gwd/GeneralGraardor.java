@@ -3,7 +3,7 @@ package net.edge.world.node.entity.npc.impl.gwd;
 import com.google.common.collect.ImmutableSet;
 import net.edge.world.World;
 import net.edge.world.locale.Position;
-import net.edge.world.locale.SquareLocation;
+import net.edge.world.locale.loc.SquareLocation;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcAggression;
 import net.edge.world.node.entity.npc.impl.DefaultNpc;

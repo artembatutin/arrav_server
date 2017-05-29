@@ -1,6 +1,6 @@
 package net.edge.world.locale.area;
 
-import net.edge.world.locale.Location;
+import net.edge.world.locale.loc.Location;
 
 import java.util.List;
 

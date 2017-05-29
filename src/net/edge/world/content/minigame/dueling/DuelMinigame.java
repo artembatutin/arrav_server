@@ -14,7 +14,7 @@ import net.edge.world.content.item.PotionConsumable;
 import net.edge.world.content.minigame.Minigame;
 import net.edge.world.content.skill.prayer.Prayer;
 import net.edge.world.locale.Position;
-import net.edge.world.locale.SquareLocation;
+import net.edge.world.locale.loc.SquareLocation;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.player.Player;

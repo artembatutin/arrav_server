@@ -17,7 +17,7 @@ import net.edge.world.content.minigame.Minigame;
 import net.edge.world.content.minigame.warriorsguild.GuildRoom;
 import net.edge.world.content.minigame.warriorsguild.WarriorsGuild;
 import net.edge.world.locale.Position;
-import net.edge.world.locale.SquareLocation;
+import net.edge.world.locale.loc.SquareLocation;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;

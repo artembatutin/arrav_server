@@ -13,11 +13,6 @@ import net.edge.world.node.entity.player.Player;
 public class Position {
 	
 	/**
-	 * The maximum distance that a {@link Player} can view.
-	 */
-	public static final int VIEWING_DISTANCE = 15;
-	
-	/**
 	 * The {@code X} coordinate.
 	 */
 	private final int x;
@@ -372,25 +367,6 @@ public class Position {
 	}
 	
 	/**
-	 * Determines if this position is within {@code amount} distance of
-	 * {@code other}.
-	 * @param other the position to check the distance for.
-	 * @param sizeX the x size of the object.
-	 * @param sizeY the y size of the object.
-	 * @return {@code true} if this position is within the distance,
-	 * {@code false} otherwise.
-	 */
-	public final boolean withinDistance(Position other, int sizeX, int sizeY) {
-		if(this.z != other.z)
-			return false;
-		int minX = x - 1;
-		int maxX = minX + sizeX + 1;
-		int minY = y - 1;
-		int maxY = minY + sizeY + 1;
-		return (getX() >= minX && getX() <= maxX && getY() >= minY && getY() <= maxY);
-	}
-	
-	/**
 	 * Returns the distance between this and the {@code other} position.
 	 * @param other the other position.
 	 * @return The amount of distance between this and the other position.
@@ -410,17 +386,6 @@ public class Position {
 		int deltaX = Math.abs(getX() - other.getX());
 		int deltaY = Math.abs(getY() - other.getY());
 		return Math.max(deltaX, deltaY);
-	}
-	
-	/**
-	 * Determines if this {@link Position} is within the area defined by
-	 * {@code center} and {@code VIEWING_DISTANCE}.
-	 * @param center The center point of the radius.
-	 * @return {@code true} if within the viewable distance, {@code false}
-	 * otherwise.
-	 */
-	public boolean isViewable(Position center) {
-		return withinDistance(center, VIEWING_DISTANCE);
 	}
 	
 	/**

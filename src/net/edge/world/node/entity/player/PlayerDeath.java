@@ -15,7 +15,7 @@ import net.edge.world.content.scoreboard.PlayerScoreboardStatistic;
 import net.edge.world.content.skill.Skill;
 import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.prayer.Prayer;
-import net.edge.world.locale.Location;
+import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityDeath;
 import net.edge.world.node.entity.EntityNode;

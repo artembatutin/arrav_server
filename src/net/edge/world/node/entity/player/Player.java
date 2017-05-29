@@ -50,7 +50,7 @@ import net.edge.world.content.skill.smithing.Smelting;
 import net.edge.world.content.skill.summoning.Summoning;
 import net.edge.world.content.skill.summoning.familiar.Familiar;
 import net.edge.world.content.teleport.impl.DefaultTeleportSpell;
-import net.edge.world.locale.Location;
+import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.Position;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;

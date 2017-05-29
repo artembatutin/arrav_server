@@ -1,4 +1,6 @@
-package net.edge.world.locale;
+package net.edge.world.locale.loc;
+
+import net.edge.world.locale.Position;
 
 /**
  * The location type that models any area in a circle or oval shape.

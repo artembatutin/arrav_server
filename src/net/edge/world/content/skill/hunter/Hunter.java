@@ -6,7 +6,7 @@ import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.hunter.trap.Trap;
 import net.edge.world.content.skill.hunter.trap.TrapProcessor;
 import net.edge.world.content.skill.hunter.trap.TrapTask;
-import net.edge.world.locale.Location;
+import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Direction;

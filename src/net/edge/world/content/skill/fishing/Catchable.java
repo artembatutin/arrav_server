@@ -2,7 +2,7 @@ package net.edge.world.content.skill.fishing;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.world.locale.Location;
+import net.edge.world.locale.loc.Location;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.EnumSet;

@@ -3,7 +3,7 @@ package net.edge.world.content.combat.magic.ancients;
 import net.edge.world.content.combat.Combat;
 import net.edge.world.content.combat.CombatType;
 import net.edge.world.content.combat.magic.CombatSpell;
-import net.edge.world.locale.Location;
+import net.edge.world.locale.loc.Location;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;

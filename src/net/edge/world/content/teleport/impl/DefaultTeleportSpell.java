@@ -5,7 +5,7 @@ import net.edge.utils.ActionListener;
 import net.edge.world.World;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.teleport.TeleportSpell;
-import net.edge.world.locale.Location;
+import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;

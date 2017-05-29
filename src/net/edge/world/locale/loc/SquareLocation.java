@@ -1,6 +1,7 @@
-package net.edge.world.locale;
+package net.edge.world.locale.loc;
 
 import net.edge.utils.rand.RandomUtils;
+import net.edge.world.locale.Position;
 
 /**
  * The location type that models any area in a square or rectangle shape.

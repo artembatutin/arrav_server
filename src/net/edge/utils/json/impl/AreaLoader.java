@@ -6,8 +6,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.edge.utils.json.JsonLoader;
 import net.edge.world.World;
-import net.edge.world.locale.CircleLocation;
-import net.edge.world.locale.SquareLocation;
+import net.edge.world.locale.loc.CircleLocation;
+import net.edge.world.locale.loc.SquareLocation;
 import net.edge.world.locale.area.Area;
 
 import java.util.ArrayList;
