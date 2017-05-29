@@ -247,9 +247,9 @@ public abstract class EntityNode extends Node {
 		if(slot == -1)
 			return "unregistered entity node.";
 		if(isPlayer())
-			return World.getPlayers().get(slot).toString();
+			return World.getPlayers().get(slot - 1).toString();
 		else if(isNpc())
-			return World.getNpcs().get(slot).toString();
+			return World.getNpcs().get(slot - 1).toString();
 		throw new IllegalStateException("Invalid entity node type!");
 	}
 	

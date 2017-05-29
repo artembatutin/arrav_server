@@ -30,7 +30,7 @@ public final class ItemOnNpcMessage implements InputMessageListener {
 		if(container == 3214) {
 			item = player.getInventory().get(slot);
 		}
-		Npc usedOn = World.getNpcs().get(npc);
+		Npc usedOn = World.getNpcs().get(npc - 1);
 		
 		if(item == null || usedOn == null || item.getId() != itemId) {
 			return;

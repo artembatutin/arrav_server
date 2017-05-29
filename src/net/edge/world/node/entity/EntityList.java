@@ -201,7 +201,7 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 		if (entities[index] != null)
 			return false;
 		entities[index] = entity;
-		entity.setSlot(index);
+		entity.setSlot(index + 1);
 		entity.setState(NodeState.ACTIVE);
 		//Updating player count.
 		if(entity.isPlayer())
@@ -227,9 +227,10 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 		if(entity.getSlot() == -1)
 			return false;
 		int index = entity.getSlot();
-		indices.offer(index);
+		int normal = index - 1;
+		indices.offer(normal);
 		entity.setState(NodeState.INACTIVE);
-		entities[index] = null;
+		entities[normal] = null;
 		size--;
 		if(entity.isPlayer()) {
 			Player player = entity.toPlayer();

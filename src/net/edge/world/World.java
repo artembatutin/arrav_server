@@ -91,8 +91,8 @@ public final class World {
 	
 	static {
 		try {
-			donation = new Database("127.0.0.1", "edge_donation", "server_local", "%GL5{)hAJBU(MB3h", 4);
-			score = new Database("127.0.0.1", "edge_score", "server_local", "%GL5{)hAJBU(MB3h", 1);
+			donation = new Database("127.0.0.1", "edge_donation", "edge_local", "%GL5{)hAJBU(MB3h", 4);
+			score = new Database("127.0.0.1", "edge_score", "edge_local", "%GL5{)hAJBU(MB3h", 1);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

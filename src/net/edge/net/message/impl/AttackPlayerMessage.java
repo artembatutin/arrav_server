@@ -47,7 +47,7 @@ public final class AttackPlayerMessage implements InputMessageListener {
 	private void attackMagic(Player player, ByteMessage payload) {
 		int index = payload.getShort(true, ByteTransform.A);
 		int spellId = payload.getShort(true, ByteOrder.LITTLE);
-		Player victim = World.getPlayers().get(index);
+		Player victim = World.getPlayers().get(index - 1);
 		
 		Optional<CombatSpells> spell = CombatSpells.getSpell(spellId);
 		
@@ -72,7 +72,7 @@ public final class AttackPlayerMessage implements InputMessageListener {
 	 */
 	private void attackOther(Player player, ByteMessage payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
-		Player victim = World.getPlayers().get(index);
+		Player victim = World.getPlayers().get(index - 1);
 		
 		if(index < 0 || index > World.getPlayers().capacity() || !checkAttack(player, victim))
 			return;

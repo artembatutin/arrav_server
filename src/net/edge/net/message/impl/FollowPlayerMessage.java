@@ -18,7 +18,7 @@ public final class FollowPlayerMessage implements InputMessageListener {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.FOLLOW_PLAYER))
 			return;
 		int index = payload.getShort(false, ByteOrder.LITTLE);
-		Player follow = World.getPlayers().get(index);
+		Player follow = World.getPlayers().get(index - 1);
 		
 		if(follow == null || !follow.getPosition().isViewableFrom(player.getPosition()) || follow.equals(player))
 			return;

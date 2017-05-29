@@ -25,7 +25,7 @@ public final class ItemOnPlayerMessage implements InputMessageListener {
 		int itemUsed = payload.getShort();
 		int itemSlot = payload.getShort(false, ByteTransform.A, ByteOrder.LITTLE);
 		Item item = player.getInventory().get(itemSlot);
-		Player usedOn = World.getPlayers().get(index);
+		Player usedOn = World.getPlayers().get(index - 1);
 		
 		if(container < 0 || item == null || usedOn == null || itemUsed < 0)
 			return;

@@ -41,7 +41,7 @@ public final class RequestMessage implements InputMessageListener {
 	 */
 	private void tradeRequest(Player player, ByteMessage payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
-		Player other = World.getPlayers().get(index);
+		Player other = World.getPlayers().get(index - 1);
 		if(other == null || !validate(player, other))
 			return;
 		if(!MinigameHandler.execute(player, m -> m.canTrade(player, other)))
@@ -56,7 +56,7 @@ public final class RequestMessage implements InputMessageListener {
 	 */
 	private void duelRequest(Player player, ByteMessage payload) {
 		int index = payload.getShort(false);
-		Player other = World.getPlayers().get(index);
+		Player other = World.getPlayers().get(index - 1);
 		if(other == null || !validate(player, other))
 			return;
 		World.getExchangeSessionManager().request(new DuelSession(player, other, ExchangeSession.REQUEST));
