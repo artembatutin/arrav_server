@@ -49,14 +49,14 @@ public class Donating {
 		try {
 			boolean received = false;
 			Statement st = con.createStatement();
-			String sql = ("SELECT amount FROM donations WHERE user='" + player.getUsername().toLowerCase().replace(" ", "_") + "'  and claimed=0");
+			String sql = ("SELECT amount FROM donations WHERE username='" + player.getUsername().toLowerCase().replace(" ", "_") + "'  and claimed=0");
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int amount = rs.getInt("amount");
 				if(amount > 0) {
 					player.getBank().add(0, new Item(7478, amount));
 					player.message("We added " + amount + " edge tokens to your bank, thank you for donating!");
-					PreparedStatement stmt1 = con.prepareStatement("UPDATE donations SET claimed = 1 WHERE user=? and amount=? and claimed=0");
+					PreparedStatement stmt1 = con.prepareStatement("UPDATE donations SET claimed = 1 WHERE username=? and amount=? and claimed=0");
 					stmt1.setString(1, player.getFormatUsername());
 					stmt1.setInt(2, amount);
 					stmt1.execute();
