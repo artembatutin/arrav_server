@@ -14,8 +14,8 @@ import java.util.EnumSet;
 public enum StarLocationData {
 	EDGEVILLE_HOME_LOCATION(3101, 3508, "A shooting star has just struck east from Edgeville's bank!", "The star east from Edgeville's bank hasn't been mined yet!"),
 	LUMBRIDGE_BRIDGE_LOCATION(3234, 3224, "A shooting star has just struck near the Lumbridge's bridge!", "The star near the Lumbridge's bridge hasn't been mined yet!"),
-	ROCK_CRABS_LOCATION(2660, 3708, "A shooting star has just struck near the Rock crabs!", "The star near the Rock crabs hasn't been mined yet!"),
-	DUEL_ARENA_LOCATION(3368, 3265, "A shooting star has just struck near the Duelling Arena!", "The star near the Duelling Arena hasn't been mined yet!");
+	ROCK_CRABS_LOCATION(2660, 3708, "A shooting star has just struck near the rock crabs!", "The star near the Rock crabs hasn't been mined yet!"),
+	DUEL_ARENA_LOCATION(3368, 3265, "A shooting star has just struck near the duel arena!", "The star near the Duelling Arena hasn't been mined yet!");
 	
 	/**
 	 * Caches our enum values.
@@ -44,7 +44,7 @@ public enum StarLocationData {
 	 * @param message       the message to send to the world.
 	 * @param messageActive the message to send to the world if this star hasn't been mined fully.
 	 */
-	private StarLocationData(int x, int y, String message, String messageActive) {
+	StarLocationData(int x, int y, String message, String messageActive) {
 		this.position = new Position(x, y);
 		this.message = message;
 		this.messageActive = messageActive;
