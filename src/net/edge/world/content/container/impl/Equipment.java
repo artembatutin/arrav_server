@@ -222,8 +222,18 @@ public final class Equipment extends ItemContainer {
 			return false;
 		
 		if(!inventory.hasCapacityFor(unequipPrimary.orElse(null), unequipSecondary.orElse(null))) {
-			player.message("You do not have enough space in your inventory.");
-			return false;
+			boolean possible = false;
+			if(unequipPrimary.isPresent() && unequipSecondary.isPresent()) {
+				if(equipItem.getDefinition().isTwoHanded() && unequipPrimary.get().getDefinition().getEquipmentType().getSlot() == type.getSlot())
+					possible = true;
+			} else if(unequipPrimary.isPresent()) {//one item
+				if(unequipPrimary.get().getDefinition().getEquipmentType().getSlot() == type.getSlot())
+					possible = true;
+			}
+			if(!possible) {
+				player.message("You do not have enough space in your inventory.");
+				return false;
+			}
 		}
 		
 		inventory.set(inventoryIndex, null, true);
@@ -291,7 +301,6 @@ public final class Equipment extends ItemContainer {
 			}
 			return true;
 		}
-		player.message("You do not have enough space in your inventory.");
 		return false;
 	}
 	
