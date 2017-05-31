@@ -979,6 +979,14 @@ public final class Player extends EntityNode {
 	}
 	
 	/**
+	 * Gets this player nightmare mode stage.
+	 * @return {@link #nightMode}.
+	 */
+	public int getNightMode() {
+		return nightMode;
+	}
+	
+	/**
 	 * Determines whether this player is maxed out in the nightmare mode.
 	 * @return {@link #nightMode} maxed out.
 	 */

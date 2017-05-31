@@ -1,5 +1,7 @@
 package net.edge.world.content.door;
 
+import net.edge.world.Direction;
+import net.edge.world.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.world.locale.Position;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectDefinition;
@@ -7,6 +9,8 @@ import net.edge.world.object.ObjectNode;
 
 import java.util.Arrays;
 import java.util.HashMap;
+
+import static net.edge.world.content.teleport.impl.DefaultTeleportSpell.TeleportType.DOOR;
 
 /**
  * Handles the interaction of the doors in the world.
@@ -20,6 +24,13 @@ public class DoorHandler {
 	private static HashMap<Position, SimpleDoor> doors = new HashMap<>();
 
 	private static boolean exception(Player player, ObjectNode object) {
+		if(object.getId() == 34811 && object.getGlobalPos().same(new Position(3104, 3498))) {
+			if(player.isNight())
+				player.teleport(new Position(player.getPosition().getX() >= 3104 ? 3103 : 3104, 3498), DOOR);
+			else
+				player.message("Only night's watch members can enter.");
+			return true;
+		}
 		switch(object.getId()) {
 			case 68429://armadyl gwd door
 				return object.getGlobalPos().same(new Position(2839, 5296, 2)) || object.getGlobalPos().same(new Position(2839, 5295, 2));
@@ -46,9 +57,6 @@ public class DoorHandler {
 			return false;
 		if(isDoor(def)) {
 			if(exception(player, object)) {
-				if(Arrays.stream(new int[]{68429, 26425, 26428, 68430}).noneMatch(t -> t == object.getId())) {
-					player.message("This door seems stuck...");
-				}
 				return false;
 			}
 			if(doors.containsKey(object.getGlobalPos())) {

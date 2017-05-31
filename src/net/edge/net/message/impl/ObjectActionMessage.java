@@ -313,6 +313,13 @@ public final class ObjectActionMessage implements InputMessageListener {
 							player.getMessages().sendCloseWindows();
 						}, "Normal", "Ancient", "Lunar"));
 						break;
+					//nightmare ladder
+					case 34548:
+							player.teleport(new Position(3099, 3497, 1), LADDER);
+						break;
+					case 34550:
+						player.teleport(new Position(3102, 3497, 0), LADDER);
+						break;
 					//home staires
 					case 2711:
 						if(objectX == 3082 && objectY == 3510 && objectZ == 0) {

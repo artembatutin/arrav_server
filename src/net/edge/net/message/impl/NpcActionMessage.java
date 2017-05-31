@@ -254,7 +254,7 @@ public final class NpcActionMessage implements InputMessageListener {
 					case 4906:
 						MarketCounter.getShops().get(21).openShop(player);
 						break;
-					case 961:
+					case 6180:
 						MarketCounter.getShops().get(8).openShop(player);
 						break;
 					case 587:

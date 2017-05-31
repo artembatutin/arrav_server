@@ -60,6 +60,11 @@ public final class Requirement {
 	public static boolean canEquip(Player player, Item item) {
 		if(item == null)
 			return true;
+		if((item.getId() == 18741 && !player.isNight()) || (item.getId() == 18740 && !player.isNightMaxed())) {
+			player.message("The cape vanishes as you touch it.");
+			player.getInventory().remove(item);
+			return false;
+		}
 		Requirement[] req = REQUIREMENTS.get(item.getId());
 		if(req == null)
 			return true;
