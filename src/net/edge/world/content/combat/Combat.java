@@ -167,7 +167,7 @@ public final class Combat {
 	 * @param counter the total amount of damage dealt.
 	 */
 	protected static void handleExperience(CombatBuilder builder, CombatSessionData data, int counter) {
-		if(builder.getCharacter().getType() == PLAYER) {
+		if(builder.getCharacter().isPlayer()) {
 			if(data.getExperience().length == 0 && data.getType() != CombatType.MAGIC) {
 				return;
 			}
@@ -366,7 +366,7 @@ public final class Combat {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullVoid(EntityNode character) {
-		if(character.getType() == NPC && character.toNpc().getDefinition().getName().contains("Void Knight"))
+		if(character.isNpc() && character.toNpc().getDefinition().getName().contains("Void Knight"))
 			return true;
 		Item top = ((Player) character).getEquipment().get(Equipment.CHEST_SLOT);
 		return top != null && !(top.getId() != 8839 && top.getId() != 10611) && character.toPlayer().getEquipment().containsAll(8840, 8842);
@@ -379,7 +379,7 @@ public final class Combat {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullVeracs(EntityNode character) {
-		return character.getType() == NPC ? character.toNpc().getDefinition().getName().equals("Verac the Defiled") : character.toPlayer().getEquipment().containsAll(4753, 4757, 4759, 4755);
+		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Verac the Defiled") : character.toPlayer().getEquipment().containsAll(4753, 4757, 4759, 4755);
 	}
 	
 	/**
@@ -389,7 +389,7 @@ public final class Combat {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullDharoks(EntityNode character) {
-		return character.getType() == NPC ? character.toNpc().getDefinition().getName().equals("Dharok the Wretched") : character.toPlayer().getEquipment().containsAll(4716, 4720, 4722, 4718);
+		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Dharok the Wretched") : character.toPlayer().getEquipment().containsAll(4716, 4720, 4722, 4718);
 	}
 	
 	/**
@@ -399,7 +399,7 @@ public final class Combat {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullKarils(EntityNode character) {
-		return character.getType() == NPC ? character.toNpc().getDefinition().getName().equals("Karil the Tainted") : character.toPlayer().getEquipment().containsAll(4732, 4736, 4738, 4734);
+		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Karil the Tainted") : character.toPlayer().getEquipment().containsAll(4732, 4736, 4738, 4734);
 	}
 	
 	/**
@@ -419,7 +419,7 @@ public final class Combat {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullTorags(EntityNode character) {
-		return character.getType() == NPC ? character.toNpc().getDefinition().getName().equals("Torag the Corrupted") : character.toPlayer().getEquipment().containsAll(4745, 4749, 4751, 4747);
+		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Torag the Corrupted") : character.toPlayer().getEquipment().containsAll(4745, 4749, 4751, 4747);
 	}
 	
 	/**
@@ -429,7 +429,7 @@ public final class Combat {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullGuthans(EntityNode character) {
-		return character.getType() == NPC ? character.toNpc().getDefinition().getName().equals("Guthan the Infested") : character.toPlayer().getEquipment().containsAll(4724, 4728, 4730, 4726);
+		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Guthan the Infested") : character.toPlayer().getEquipment().containsAll(4724, 4728, 4730, 4726);
 	}
 	
 	/**
@@ -485,7 +485,6 @@ public final class Combat {
 		if(character.isPlayer() && character.toPlayer().getWeapon().equals(WeaponInterface.SALAMANDER)) {
 			return 1;
 		}
-		
 		switch(type) {
 			case MELEE:
 				return 1;
@@ -555,6 +554,11 @@ public final class Combat {
 				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.RANGED, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
 			case MAGIC:
 				max = character.getCurrentlyCasting().maximumHit();
+				if(victim.isPlayer() && character.isNpc()) {
+					Player p = victim.toPlayer();
+					if(p.isNight())//Nightmare monsters tougher.
+						max *= 1.2;
+				}
 				hit = RandomUtils.inclusive(1, max);
 				if(Server.DEBUG && character.isPlayer())
 					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
@@ -675,7 +679,7 @@ public final class Combat {
 		double specialBonus = 1;
 		int styleBonus = 0;
 		int bonusType = -1;
-		if(attacker.getType() == PLAYER) {
+		if(attacker.isPlayer()) {
 			Player player = (Player) attacker;
 			
 			equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[Combat.ATTACK_MAGIC] : player.getEquipment().getBonuses()[player.getFightType().getBonus()];
@@ -760,7 +764,7 @@ public final class Combat {
 		equipmentBonus = 1;
 		prayerMod = 1;
 		styleBonus = 0;
-		if(victim.getType() == PLAYER) {
+		if(victim.isPlayer()) {
 			Player player = (Player) victim;
 			
 			if(bonusType == -1) {
@@ -825,9 +829,14 @@ public final class Combat {
 	private static int calculateMaxMeleeHit(EntityNode character, EntityNode victim) {
 		int maxHit;
 		
-		if(character.getType() == NPC) {
+		if(character.isNpc()) {
 			Npc npc = character.toNpc();
 			maxHit = npc.getDefinition().getMaxHit();
+			if(victim.isPlayer()) {
+				Player p = victim.toPlayer();
+				if(p.isNight())//Nightmare monsters tougher.
+					maxHit *= 1.2;
+			}
 			if(npc.getWeakenedBy() == CombatWeaken.STRENGTH_LOW || npc.getWeakenedBy() == CombatWeaken.STRENGTH_HIGH)
 				maxHit -= (int) ((npc.getWeakenedBy().getRate()) * (maxHit));
 			if(npc.getId() == 2026) { //Dharok the wretched
@@ -875,7 +884,7 @@ public final class Combat {
 		} else {
 		    /*int itemId = player.getEquipment().get(Equipment.HEAD_SLOT).getId();
 		    if (itemId >= 8901 && itemId <= 8921) {
-				if (victim.getType() == NPC && ((Npc) victim).getId() == player.getSlayer...) {
+				if (victim.isNpc() && ((Npc) victim).getId() == player.getSlayer...) {
 					return 1.15;
 				}
 			}*/
@@ -930,9 +939,14 @@ public final class Combat {
 	 */
 	private static int calculateMaxRangedHit(EntityNode character, EntityNode victim) {
 		int maxHit = 0;
-		if(character.getType() == NPC) {
+		if(character.isNpc()) {
 			Npc npc = (Npc) character;
 			maxHit = npc.getDefinition().getMaxHit();
+			if(victim.isPlayer()) {
+				Player p = victim.toPlayer();
+				if(p.isNight())//Nightmare monsters tougher.
+					maxHit *= 1.2;
+			}
 			return maxHit;
 		}
 		
