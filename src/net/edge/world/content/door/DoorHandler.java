@@ -25,10 +25,12 @@ public class DoorHandler {
 
 	private static boolean exception(Player player, ObjectNode object) {
 		if(object.getId() == 34811 && object.getGlobalPos().same(new Position(3104, 3498))) {
-			if(player.isNight())
+			if(player.isNight()) {
 				player.teleport(new Position(player.getPosition().getX() >= 3104 ? 3103 : 3104, 3498), DOOR);
-			else
-				player.message("Only night's watch members can enter.");
+				if(player.getPosition().getX() >= 3104)
+					player.getLocalNpcs().stream().filter(n -> n.getId() == 6183).findFirst().ifPresent(e -> e.forceChat("Welcome to the watch " + (player.isNightMaxed() ? "captain" : "soldier") + " " + player.getFormatUsername() + "."));
+			} else
+				player.getLocalNpcs().stream().filter(n -> n.getId() == 6184).findFirst().ifPresent(e -> e.forceChat("Only night's watch members can enter, sir."));
 			return true;
 		}
 		switch(object.getId()) {
