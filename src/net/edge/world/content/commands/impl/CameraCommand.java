@@ -4,6 +4,7 @@ import net.edge.utils.TextUtils;
 import net.edge.world.World;
 import net.edge.world.content.commands.Command;
 import net.edge.world.content.commands.CommandSignature;
+import net.edge.world.content.scene.impl.IntroductionCutscene;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
@@ -12,13 +13,13 @@ public final class CameraCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		String[] names = {"Hailikor", "Ybirewiel", "Hairebard", "Rhoethiel", "Glardoseth", "Forecien", "Thendarid", "Onoadia", "Elaocan", "Chorewen", "Asterran", "Nearien", "Adirag", "Galaleveth", "Laroaa", "Ulendamwen", "Sevedribaen", "Uneiven", "Sirelith", "Afang", "Qoik", "Fien", "Drohanwan", "Sdaaga"};
+		/*String[] names = {"Hailikor", "Ybirewiel", "Hairebard", "Rhoethiel", "Glardoseth", "Forecien", "Thendarid", "Onoadia", "Elaocan", "Chorewen", "Asterran", "Nearien", "Adirag", "Galaleveth", "Laroaa", "Ulendamwen", "Sevedribaen", "Uneiven", "Sirelith", "Afang", "Qoik", "Fien", "Drohanwan", "Sdaaga"};
 		for(String usr : names) {
 			Player play = new Player(TextUtils.nameToHash(usr));
 			play.setUsername(usr);
 			World.getClanManager().join(play, "avro");
-		}
-		//new IntroductionCutscene(player).submit();
+		}*/
+		new IntroductionCutscene(player).prerequisites();
 		/*for(int i = 0 ; i < 10; i++) {
 			RandomUtils random = new RandomUtils();
 			NpcDropTable table = NpcDropManager.TABLES.get(-1);

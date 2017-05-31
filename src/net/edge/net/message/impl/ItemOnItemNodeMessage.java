@@ -14,10 +14,8 @@ public final class ItemOnItemNodeMessage implements InputMessageListener {
 	
 	@Override
 	public void handleMessage(Player player, int opcode, int size, ByteMessage payload) {
-		
 		final int itemX = payload.getShort(true, ByteOrder.LITTLE);
 		final int itemY = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		final int itemId = payload.getShort(ByteTransform.A);
-		
 	}
 }

@@ -35,19 +35,15 @@ public final class ItemOnNpcMessage implements InputMessageListener {
 		if(item == null || usedOn == null || item.getId() != itemId) {
 			return;
 		}
-		
 		if(Summoning.itemOnNpc(player, usedOn, item)) {
 			return;
 		}
-		
 		if(Pet.feed(player, usedOn, item)) {
 			return;
 		}
-		
 		if(Tanning.openInterface(player, item, usedOn)) {
 			return;
 		}
-		
 		player.getActivityManager().execute(ActivityManager.ActivityType.ITEM_ON_NPC);
 	}
 	

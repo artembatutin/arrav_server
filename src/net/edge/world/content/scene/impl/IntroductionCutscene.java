@@ -7,6 +7,7 @@ import net.edge.world.World;
 import net.edge.world.content.TabInterface;
 import net.edge.world.content.container.impl.Inventory;
 import net.edge.world.content.dialogue.Dialogue;
+import net.edge.world.content.dialogue.impl.GiveItemDialogue;
 import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.dialogue.impl.OptionDialogue.OptionType;
 import net.edge.world.content.dialogue.impl.StatementDialogue;
@@ -16,6 +17,9 @@ import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager.ActivityType;
+import net.edge.world.node.item.Item;
+
+import java.util.Optional;
 
 /**
  * The introduction cutscene for the player when he logs into the game for the first time.
@@ -45,7 +49,7 @@ public final class IntroductionCutscene extends Cutscene {
 
 	@Override
 	public void onSubmit() {
-		player.setPosition(new Position(3088, 3509));
+		player.move(new Position(3088, 3509));
 		player.getMessages().sendInterface(3559);
 	}
 
@@ -54,39 +58,61 @@ public final class IntroductionCutscene extends Cutscene {
 		player.setPosition(new Position(3088, 3509));
 		if(player.getPosition().same(new Position(3088, 3509))) {
 			if((int) player.getAttr().get("introduction_stage").get() == 1) {
-				player.getDialogueBuilder().append(new StatementDialogue("Welcome to the World of @blu@Main!").attach(() -> {
-					player.getMessages().sendCameraMovement(new Position(3083, 3506), 400, 2, 20);
-					player.getMessages().sendCameraAngle(new Position(3089, 3508), 360, 2, 10);
+				player.getDialogueBuilder().append(new StatementDialogue("Welcome to the World of @blu@Edgeville!").attach(() -> {
+					player.getMessages().sendCameraMovement(new Position(3085, 3510), 310, 2, 10);
+					player.getMessages().sendCameraAngle(new Position(3093, 3509), 300, 2, 10);
 				}), new StatementDialogue("Here is the @red@home@bla@ area.", "You can use the bank booths to store your goods.", "There are the stores also at the back."), new StatementDialogue("By the way, this is you.", "But lets proceed...").attach(() -> {
-					player.facePosition(new Position(3083, 3506));
+					player.facePosition(new Position(3084, 3511));
 					player.animation(new Animation(863));
-				}), new StatementDialogue("This is our @red@Scoreboard.", "It tracks the top 20 players with the highest killstreak.", "Dying in Main will reset your killstreak.").attach(() -> {
-					player.getMessages().sendCameraMovement(new Position(3082, 3510), 340, 2, 10);
-					player.getMessages().sendCameraAngle(new Position(3081, 3513), 300, 2, 5);
-				}), new StatementDialogue("Those @red@3@bla@ with the longest streak at the @red@end of the week@bla@", "will gain a reward.", " Those @red@3@bla@ with the most recent @red@on-going@bla@ streaks", "will also gain rewards!").attach(() -> {
+				}), new StatementDialogue("This is the famous @red@Market place.", "You can search any type of item you want here.").attach(() -> {
+					player.getMessages().sendCameraAngle(new Position(3081, 3508), 240, 4, 10);
+				}),	new GiveItemDialogue(new Item(995, 200000), "There some coins to get you started...", Optional.empty()).attach(() -> {
+				}), new StatementDialogue("This is the @red@Scoreboard.", "It tracks the top 20 players with the highest killstreak.", "Dying will reset your killstreak.").attach(() -> {
+					player.getMessages().sendCameraMovement(new Position(3087, 3516), 340, 4, 10);
+					player.getMessages().sendCameraAngle(new Position(3089, 3514), 300, 6, 10);
+				}), new StatementDialogue("Those @red@3@bla@ with the highest streak at the @red@end of the week@bla@", "will gain a reward.", " Those @red@3@bla@ with the most recent @red@on-going@bla@ streaks", "will also gain rewards!").attach(() -> {
 					TabInterface.QUEST.sendInterface(player, 638);
 					player.getMessages().sendForceTab(2);
+				}),	new GiveItemDialogue(new Item(19000, 200), "Each player kill will give you blood money.", Optional.empty()).attach(() -> {
 				}), new StatementDialogue("You can view your personal individual statistics by", "clicking the quest tab which is just next to your skill tab.").attach(() -> {
-					player.getMessages().sendCameraMovement(new Position(3082, 3510), 340, 2, 10);
-					player.getMessages().sendCameraAngle(new Position(3081, 3513), 300, 2, 5);
-				}), new StatementDialogue("This shiny portal is the @red@traning portal.", "You can train all sort of skills.").attach(() -> {
-					player.getMessages().sendCameraMovement(new Position(3080, 3510), 280, 2, 10);
-					player.getMessages().sendCameraAngle(new Position(3076, 3510), 240, 2, 5);
-				}), new StatementDialogue("This purple portal is the @red@Minigame/Boss portal.", "A wonderful journey awaits you here.").attach(() -> {
-					player.getMessages().sendCameraMovement(new Position(3080, 3508), 280, 2, 10);
-					player.getMessages().sendCameraAngle(new Position(3080, 3506), 240, 2, 5);
-				}), new StatementDialogue("This is the @red@General Store.", "You can sell or purchase items here.").attach(() -> {
-					player.getMessages().sendCameraMovement(new Position(3081, 3498), 280, 5, 20);
-					player.getMessages().sendCameraAngle(new Position(3076, 3495), 240, 2, 5);
-				}), new StatementDialogue("This is the @red@Garden.", "One day, you might be able to farm here.").attach(() -> {
-					player.getMessages().sendCameraMovement(new Position(3084, 3496), 1800, 2, 10);
-					player.getMessages().sendCameraAngle(new Position(3091, 3497), 2000, 2, 5);
+				}), new StatementDialogue("This shiny portal allows you to", "get anywhere: @red@skills, minigames, bosses.").attach(() -> {
+					player.getMessages().sendCameraMovement(new Position(3087, 3514), 340, 2, 10);
+					player.getMessages().sendCameraAngle(new Position(3083, 3514), 320, 2, 5);
+				}), new StatementDialogue("There is one slayer master in Edgeville, ask her for any tasks.").attach(() -> {
+					player.getMessages().sendCameraMovement(new Position(3087, 3501), 280, 2, 10);
+					player.getMessages().sendCameraAngle(new Position(3085, 3502), 240, 2, 10);
+				}), new StatementDialogue("This is the @red@Fire pit.", "Firing it up will enable double blood money.").attach(() -> {
+					player.getMessages().sendCameraAngle(new Position(3083, 3497), 250, 2, 5);
+				}), new StatementDialogue("This is @red@Party Pete", "He changes edge tokens into precious goods.").attach(() -> {
+					player.getMessages().sendCameraAngle(new Position(3089, 3502), 250, 4, 10);
+				}),	new GiveItemDialogue(new Item(7478, 20), "You can get edge tokens by donating on our website.", Optional.empty()).attach(() -> {
+				}), new StatementDialogue("As you may noticed, this is the @red@Garden.", "One day, you might be able to farm here.").attach(() -> {
+					player.getMessages().sendCameraMovement(new Position(3087, 3502), 1800, 2, 10);
+					player.getMessages().sendCameraAngle(new Position(3087, 3496), 2000, 2, 10);
+				}), new StatementDialogue("You will discover these two buildings on your own.", "Let's move on...").attach(() -> {
+					player.getMessages().sendCameraMovement(new Position(3087, 3492), 1800, 2, 10);
+					player.getMessages().sendCameraAngle(new Position(3092, 3477), 2000, 2, 10);
 				}), new StatementDialogue("This is the @red@Construction Site.", "You can train few skills here.").attach(() -> {
-					player.getMessages().sendCameraMovement(new Position(3088, 3482), 1800, 2, 10);
-					player.getMessages().sendCameraAngle(new Position(3092, 3471), 2000, 2, 5);
-				}), new StatementDialogue("We hope you'll enjory your stay at @red@Main.", "Don't forget to register on our forums!").attach(() -> {
-					player.getMessages().sendCameraMovement(new Position(3087, 3521), 1800, 5, 20);
-					player.getMessages().sendCameraAngle(new Position(3089, 3511), 2000, 2, 5);
+					player.getMessages().sendCameraMovement(new Position(3088, 3484), 1800, 2, 10);
+					player.getMessages().sendCameraAngle(new Position(3093, 3475), 2000, 2, 10);
+				}), new StatementDialogue("A good start would be thieving on the second floor", "However be aware of guards!").attach(() -> {
+					player.getMessages().sendCameraMovement(new Position(3088, 3482), 1200, 2, 10);
+					player.getMessages().sendCameraAngle(new Position(3094, 3476), 1400, 2, 10);
+				}), new StatementDialogue("This is the @red@Night's watch.", "It's exclusive to nightmare mode members.").attach(() -> {
+					player.getMessages().sendCameraMovement(new Position(3099, 3496), 1200, 2, 10);
+					player.getMessages().sendCameraAngle(new Position(3102, 3499), 1400, 2, 10);
+				}), new StatementDialogue("@red@Nightmare mode:", "Levels decrease on death, only access to the night watch's shop,", "can't trade nor drop and tougher monsters.").attach(() -> {
+				}), new StatementDialogue("@red@Benefits when maxed out:", "Restrictions removed, 10% bonus monsters drops,", "unlimited run outside of wilderness", "and exclusive night watch items.").attach(() -> {}), new OptionDialogue(t2 -> {
+						if(t2.equals(OptionType.FIRST_OPTION))
+							setNight(player);
+						player.getDialogueBuilder().advance();
+					}, "I want to join the night's watch!", "I'll prefer playing without this mode.").attach(() -> {
+				}), new StatementDialogue("Another place on the list is the @red@Camp.", "Most of holidays activities will be held here.").attach(() -> {
+					player.getMessages().sendCameraMovement(new Position(3106, 3504), 1900, 2, 10);
+					player.getMessages().sendCameraAngle(new Position(3107, 3512), 2100, 2, 10);
+				}), new StatementDialogue("We hope you'll enjoy your stay at @red@Edgeville.", "Don't forget to register on our forums.", "Report bugs also!").attach(() -> {
+					player.getMessages().sendCameraMovement(new Position(3096, 3519), 1900, 2, 10);
+					player.getMessages().sendCameraAngle(new Position(3087, 3510), 2100, 2, 10);
 				}), complete());
 				this.destruct();
 			}
@@ -115,8 +141,8 @@ public final class IntroductionCutscene extends Cutscene {
 			player.getInventory().refresh(player, Inventory.INVENTORY_DISPLAY_ID);
 			if(firstLogin) {
 				player.getInventory().setItems(GameConstants.STARTER_PACKAGE);
-				PunishmentHandler.addStarter(player.getSession().getHost());
 				player.getInventory().refresh(player, Inventory.INVENTORY_DISPLAY_ID);
+				PunishmentHandler.addStarter(player.getSession().getHost());
 			} else {
 				player.message("You already received a starter package before.");
 			}
@@ -138,8 +164,16 @@ public final class IntroductionCutscene extends Cutscene {
 			} else {
 				player.getDialogueBuilder().advance();
 				player.getMessages().sendInterface(3559);
+				if(t.equals(OptionType.SECOND_OPTION))
+					setNight(player);
 			}
-		}, "I want a quick tour.", "Got no time for that."), complete());
+		}, "I want a quick tour.", "Skip, start as nightmare.", "Skip, start as regular"), complete());
+	}
+	
+	private void setNight(Player player) {
+		player.setNight(1);
+		player.message("You received a special package from the night's watch. It's in your bank!");
+		player.getBank().add(0, new Item(15246));
 	}
 
 }

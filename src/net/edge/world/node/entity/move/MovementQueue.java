@@ -3,6 +3,7 @@ package net.edge.world.node.entity.move;
 import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.locale.Position;
+import net.edge.world.locale.loc.Location;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Direction;
@@ -79,13 +80,11 @@ public final class MovementQueue {
 		if(walkPoint != null && walkPoint.getDirection() != Direction.NONE) {
 			int x = walkPoint.getDirection().getX();
 			int y = walkPoint.getDirection().getY();
-			// ye you should be doing it here... not during npc processing for path finding
-			// since the world tile stuff is cached checking if the next dir is traversable takes like no time at all
-			//			boolean traversable = World.getTraversalMap().isTraversable(character.getPosition(), walkPoint.getDirection(), character.size());
-			//			if(!traversable) {
-			//				reset();
-			//				return;
-			//			}
+			//boolean traversable = World.getTraversalMap().isTraversable(character.getPosition(), walkPoint.getDirection(), character.size());
+			//if(!traversable) {
+			//	reset();
+			//	return;
+			//}
 			if(character.isFollowing() && character.getFollowEntity() != null) {
 				if(character.getPosition().move(x, y).same(character.getFollowEntity().getPosition())) {
 					return;
@@ -104,11 +103,11 @@ public final class MovementQueue {
 		if(runPoint != null && runPoint.getDirection() != Direction.NONE) {
 			int x = runPoint.getDirection().getX();
 			int y = runPoint.getDirection().getY();
-			//			boolean traversable = World.getTraversalMap().isTraversable(character.getPosition(), runPoint.getDirection(), character.size());
-			//			if(!traversable) {
-			//				reset();
-			//				return;
-			//			}
+			//boolean traversable = World.getTraversalMap().isTraversable(character.getPosition(), runPoint.getDirection(), character.size());
+			//if(!traversable) {
+			//	reset();
+			//	return;
+			//}
 			if(character.isFollowing() && character.getFollowEntity() != null) {
 				if(character.getPosition().move(x, y).same(character.getFollowEntity().getPosition())) {
 					return;
@@ -118,7 +117,7 @@ public final class MovementQueue {
 			if(character.isPlayer()) {
 				Player player = character.toPlayer();
 				if(player.getRights().less(Rights.ADMINISTRATOR)) {
-					if(player.getRunEnergy() > 0) {
+					if(player.getRunEnergy() > 0 && !(player.isNightMaxed() && !Location.inWilderness(player))) {
 						double drainRate = 0.7D;
 						double weight = player.getWeight();
 						double weightFactor = (weight > 1.371D ? (int) weight * 0.00729166D : 0.0D);

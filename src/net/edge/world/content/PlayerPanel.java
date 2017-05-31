@@ -2,6 +2,7 @@ package net.edge.world.content;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.GameConstants;
 import net.edge.utils.TextUtils;
 import net.edge.utils.Utility;
 import net.edge.world.World;
@@ -83,29 +84,45 @@ public enum PlayerPanel {
 		}
 	},
 	RANK(62167),
-	SLAYER_POINTS(62168),
-	SLAYER_TASK(62169),
-	SLAYER_COUNT(62170),
+	NIGHT(62168) {
+		@Override
+		public void onClick(Player player) {
+			if(player.isNight()) {
+				player.getDialogueBuilder().append(new StatementDialogue("You want to quit the night's watch?"), new OptionDialogue(t -> {
+					if(t == OptionDialogue.OptionType.FIRST_OPTION) {
+						player.setNight(0);
+						player.teleport(GameConstants.STARTING_POSITION);
+					}
+					player.getMessages().sendCloseWindows();
+				}, "Yes, want to be a regular player.", "No, I want to keep the nightmare mode."));
+				return;
+			}
+			player.message("You can only become a night's watch member in the beginning.");
+		}
+	},
+	SLAYER_POINTS(62169),
+	SLAYER_TASK(62170),
+	SLAYER_COUNT(62171),
 	
-	EMPTY1(62171),
+	EMPTY1(62172),
 	
-	PVE_HEADER(62172),
+	PVE_HEADER(62173),
 	
-	HIGHEST_KILLSTREAK(62173),
-	CURRENT_KILLSTREAK(62174),
-	TOTAL_PLAYER_KILLS(62175),
-	TOTAL_PLAYER_DEATHS(62176),
-	TOTAL_NPC_KILLS(62177),
-	TOTAL_NPC_DEATHS(62178),
+	HIGHEST_KILLSTREAK(62174),
+	CURRENT_KILLSTREAK(62175),
+	TOTAL_PLAYER_KILLS(62176),
+	TOTAL_PLAYER_DEATHS(62177),
+	TOTAL_NPC_KILLS(62178),
+	TOTAL_NPC_DEATHS(62179),
 	
-	EMPTY2(62179),
+	EMPTY2(62180),
 	
-	INDIVIDUAL_SCOREBOARD_STATISTICS(62180),
+	INDIVIDUAL_SCOREBOARD_STATISTICS(62181),
 	
-	INDIVIDUAL_HIGHEST_KILLSTREAKS(62181),
-	INDIVIDUAL_CURRENT_KILLSTREAKS(62182),
-	INDIVIDUAL_KILLS(62183),
-	INDIVIDUAL_DEATHS(62184);
+	INDIVIDUAL_HIGHEST_KILLSTREAKS(62182),
+	INDIVIDUAL_CURRENT_KILLSTREAKS(62183),
+	INDIVIDUAL_KILLS(62184),
+	INDIVIDUAL_DEATHS(62185);
 	
 	/**
 	 * Caches our enum values.
@@ -152,6 +169,7 @@ public enum PlayerPanel {
 		PlayerPanel.EMPTY.refresh(player, "");
 		PlayerPanel.USERNAME.refresh(player, "@or2@ - Username: @yel@" + TextUtils.capitalize(player.getUsername()));
 		PlayerPanel.PASSWORD.refresh(player, "@or2@ - Password: " + TextUtils.capitalize(TextUtils.passwordCheck(player.getPassword())));
+		PlayerPanel.NIGHT.refresh(player, "@or2@ - Nightmare: @yel@" + (player.isNight() ? "@gre@yes" : "@red@no"));
 		PlayerPanel.RANK.refresh(player, "@or2@ - Rank: @yel@" + TextUtils.capitalize(player.getRights().toString()));
 		PlayerPanel.SLAYER_POINTS.refresh(player, "@or2@ - Slayer points: @yel@" + player.getSlayerPoints());
 		PlayerPanel.SLAYER_TASK.refresh(player, "@or2@ - Slayer task: @yel@" + (player.getSlayer().isPresent() ? (player.getSlayer().get().toString()) : "none"));

@@ -95,8 +95,11 @@ public final class Player extends EntityNode {
 	
 	/**
 	 * Determines if this player is playing in nightmare mode.
+	 * 0 - not
+	 * 1 - nightmare mode
+	 * 2 - nightmare maxed
 	 */
-	private boolean nightmareMode;
+	private int nightMode;
 	
 	/**
 	 * The hash collection of the local players.
@@ -968,18 +971,27 @@ public final class Player extends EntityNode {
 	}
 	
 	/**
-	 * Determines whether this player is in nightmare mode.
-	 * @return {@link #nightmareMode}.
+	 * Determines whether this player is in the nightmare mode.
+	 * @return {@link #nightMode}.
 	 */
-	public boolean isNightmareMode() {
-		return nightmareMode;
+	public boolean isNight() {
+		return nightMode == 1 || nightMode == 2;
 	}
 	
 	/**
-	 * Sets the {@link #nightmareMode} to true.
+	 * Determines whether this player is maxed out in the nightmare mode.
+	 * @return {@link #nightMode} maxed out.
 	 */
-	public void setNightmareMode() {
-		this.nightmareMode = true;
+	public boolean isNightMaxed() {
+		return nightMode == 2;
+	}
+	
+	/**
+	 * Sets the {@link #nightMode} to the new value.
+	 */
+	public void setNight(int value) {
+		this.nightMode = value;
+		PlayerPanel.NIGHT.refresh(this, "@or2@ - Nightmare: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
 	}
 	
 	/**

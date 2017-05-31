@@ -208,7 +208,7 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		getCharacter().getMessages().sendWalkable(-1);
 		Prayer.deactivateAll(getCharacter());
 
-		if(getCharacter().isNightmareMode()) {
+		if(getCharacter().isNight() && !getCharacter().isNightMaxed()) {
 			for(int index = 0; index < getCharacter().getSkills().length; index++) {
 				Skill skill = getCharacter().getSkills()[index];
 
@@ -217,7 +217,6 @@ public final class PlayerDeath extends EntityDeath<Player> {
 				if(index == Skills.HITPOINTS && newLevel < 10) {
 					newLevel = 10;
 				}
-
 				skill.setRealLevel(newLevel);
 			}
 		}

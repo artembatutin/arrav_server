@@ -37,13 +37,12 @@ public final class ItemOnItemMessage implements InputMessageListener {
 		Item itemUsed = player.getInventory().get(firstSlot);
 		Item itemOn = player.getInventory().get(secondSlot);
 		
-		if(secondSlot < 0 || firstSlot < 0 || itemUsed == null || itemOn == null)
+		if(secondSlot < 0 || firstSlot < 0 || itemUsed == null || itemOn == null) {
 			return;
-		
+		}
 		if(PotionDecanting.manual(player, itemUsed, itemOn)) {
 			return;
 		}
-		
 		if(Firemaking.execute(player, itemUsed, itemOn)) {
 			return;
 		}
