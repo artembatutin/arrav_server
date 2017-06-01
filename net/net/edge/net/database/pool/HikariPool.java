@@ -13,7 +13,7 @@ import java.util.concurrent.Callable;
  * A {@link ConnectionPool} implementation for HikariCP.
  * @author Whis
  */
-public final class HikariPool implements ConnectionPool<Connection> {
+public final class HikariPool implements ConnectionPool {
 	
 	/**
 	 * The {@link ListeningExecutorService} to submit tasks to.

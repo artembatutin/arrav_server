@@ -9,11 +9,11 @@ import java.sql.SQLException;
  * An interface for asynchronously pooling database {@link Connection}s.
  * @author Whis
  */
-public interface ConnectionPool<C extends Connection> {
+public interface ConnectionPool { // any other tips to improve?
 	/**
 	 * Attempts to obtain a {@link Connection} from the pool.
 	 */
-	ListenableFuture<C> obtainConnection() throws Exception;
+	ListenableFuture<Connection> obtainConnection() throws Exception;
 	
 	/**
 	 * Terminates this pool.

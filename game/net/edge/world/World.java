@@ -90,9 +90,10 @@ public final class World {
 	public static long millis;
 	
 	static {
+		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-			donation = new Database("127.0.0.1", "edge_donation", "edge_local", "%GL5{)hAJBU(MB3h", 4);
-			score = new Database("127.0.0.1", "edge_score", "edge_local", "%GL5{)hAJBU(MB3h", 1);
+			donation = new Database("127.0.0.1", "edge_donation", "edge_local", "%GL5{)hAJBU(MB3h", amtCpu);
+			score = new Database("127.0.0.1", "edge_score", "edge_local", "%GL5{)hAJBU(MB3h", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -115,7 +116,7 @@ public final class World {
 	 */
 	public static void sequence() throws Exception {
 		long start = System.currentTimeMillis();
-		
+
 		// Handle queued logins.
 		for(int amount = 0; amount < GameConstants.LOGIN_THRESHOLD; amount++) {
 			Player player = logins.poll();
@@ -125,15 +126,15 @@ public final class World {
 				player.getSession().getChannel().close();
 			}
 		}
-		
+
 		// Handle task processing.
 		TASK_MANAGER.sequence();
-		
+
 		//Parsing a global sync.
 		SYNCHRONIZER.preSynchronize();
 		SYNCHRONIZER.synchronize();
 		SYNCHRONIZER.postSynchronize();
-		
+
 		// Handle queued logouts.
 		int amount = 0;
 		Iterator<Player> $it = logouts.iterator();
@@ -146,7 +147,7 @@ public final class World {
 				amount++;
 			}
 		}
-		
+
 		millis = System.currentTimeMillis() - start;
 	}
 	

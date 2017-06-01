@@ -19,10 +19,10 @@ public final class Database {
 	/**
 	 * The pool for this connection.
 	 */
-	private final ConnectionPool<Connection> pool;
+	private final ConnectionPool pool;
 	
 	//	pool, "96.9.242.27", "avarrock_forums", "Forums", "avarrock_forumsu", "n*v_aK46*ee~k}KW"
-	public Database(String ip, String database, String username, String password, int threads) {
+	public Database(String ip, String database, String username, String password, int threads) { // huh but it doesnt throw exception
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://" + ip + ":3306/" + database + "?autoReconnect=true&useSSL=false");
 		config.setUsername(username);
@@ -32,7 +32,7 @@ public final class Database {
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 		
 		HikariDataSource ds = new HikariDataSource(config);
-		pool = new HikariPool(ds, MoreExecutors.listeningDecorator(Executors.newScheduledThreadPool(threads)));
+		pool = new HikariPool(ds, MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(threads)));
 	}
 	
 	/**

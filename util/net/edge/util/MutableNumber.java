@@ -124,7 +124,14 @@ public final class MutableNumber extends Number implements Comparable<MutableNum
 	public int getAndIncrement() {
 		return getAndIncrement(1);
 	}
-	
+
+	//guys I have to go, it's me stan
+
+	//It's taraweeh time, gonna go pray and come back
+	//u guys can stay on teamviewer just shut it down when ur done, ill
+	//tell my mom not to close the laptop
+
+	//just dont do stupid stuff please xD ok -at rtnp ty <3
 	/**
 	 * Increments the value within this counter by {@code amount} to a maximum
 	 * of {@code maximum} and then returns it.
