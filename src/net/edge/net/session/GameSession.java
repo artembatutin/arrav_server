@@ -1,6 +1,5 @@
 package net.edge.net.session;
 
-import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import net.edge.net.NetworkConstants;
@@ -46,7 +45,7 @@ public final class GameSession extends Session {
 	 * @param encryptor The message encryptor.
 	 * @param decryptor The message decryptor.
 	 */
-	GameSession(Player player, Channel channel, IsaacCipher encryptor, IsaacCipher decryptor) {
+	public GameSession(Player player, Channel channel, IsaacCipher encryptor, IsaacCipher decryptor) {
 		super(channel);
 		this.player = player;
 		this.encryptor = encryptor;
@@ -124,13 +123,6 @@ public final class GameSession extends Session {
 	public IsaacCipher getDecryptor() {
 		return decryptor;
 	}
-	
-	/**
-	 * Getting a {@link ByteBufAllocator} to allocate buffers.
-	 * @return allocator.
-	 */
-	public ByteBufAllocator alloc() {
-		return getChannel().alloc();
-	}
+
 
 }

@@ -13,6 +13,11 @@ import static com.google.common.base.Preconditions.checkState;
  * @author lare96 <http://github.org/lare96>
  */
 public final class ByteMessage extends DefaultByteBufHolder {
+
+	/**
+	 * A buffer pool that will help reduce the overhead from allocating and deallocating direct buffers.
+	 */
+	public static final ByteBufAllocator ALLOC = PooledByteBufAllocator.DEFAULT;
 	
 	/**
 	 * An array of bit masks used for bitwise operations.
@@ -21,45 +26,37 @@ public final class ByteMessage extends DefaultByteBufHolder {
 	
 	/**
 	 * @return Creates a {@link ByteMessage} used to read and write raw messages.
-	 * @param alloc the buffer allocator.
 	 */
-	public static ByteMessage message(ByteBufAllocator alloc) {
-		return new ByteMessage(alloc.buffer(128), -1, MessageType.RAW);
+	public static ByteMessage message() {
+		return new ByteMessage(ALLOC.buffer(128), -1, MessageType.RAW);
 	}
 	
 	/**
 	 * Creates a new {@link ByteMessage} with the {@code cap} as the
 	 * capacity.
-	 * @param alloc the buffer allocator.
 	 * @param cap the capacity of the buffer.
 	 * @return the newly created buffer.
 	 */
-	public static ByteMessage create(ByteBufAllocator alloc, int cap) {
-		return new ByteMessage(alloc.buffer(cap), -1, MessageType.RAW);
+	public static ByteMessage create(int cap) {
+		return new ByteMessage(ALLOC.buffer(cap), -1, MessageType.RAW);
 	}
 	
 	/**
 	 * @return Creates a {@link ByteMessage} used to read and write game messages.
-	 * @param alloc the buffer allocator.
-	 * @param opcode the opcode of this message.
-	 * @param type the type of this message.
 	 */
-	public static ByteMessage message(ByteBufAllocator alloc, int opcode, MessageType type) {
-		return new ByteMessage(alloc.buffer(128), opcode, type);
+	public static ByteMessage message(int opcode, MessageType type) {
+		return new ByteMessage(ALLOC.buffer(128), opcode, type);
 	}
 	
 	/**
 	 * @return Creates a fixed type {@link ByteMessage} used to read and write game messages.
-	 * @param alloc the buffer allocator.
-	 * @param opcode the opcode of this message.
 	 */
-	public static ByteMessage message(ByteBufAllocator alloc, int opcode) {
-		return message(alloc, opcode, MessageType.FIXED);
+	public static ByteMessage message(int opcode) {
+		return message(opcode, MessageType.FIXED);
 	}
 	
 	/**
 	 * @return Creates a raw {@link ByteMessage} wrapped around the specified {@link ByteBuf}.
-	 * @param buf the buffer wrapped in this message.
 	 */
 	public static ByteMessage wrap(ByteBuf buf) {
 		return new ByteMessage(buf, -1, MessageType.RAW);
@@ -85,7 +82,7 @@ public final class ByteMessage extends DefaultByteBufHolder {
 	 */
 	private int bitIndex = -1;
 	
-	/*
+	/**
 	 * A static initialization block that calculates the bit masks.
 	 */
 	static {

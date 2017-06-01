@@ -1,6 +1,5 @@
 package net.edge.world.node.entity.npc;
 
-import io.netty.buffer.ByteBufAllocator;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.MessageType;
 import net.edge.world.World;
@@ -26,9 +25,9 @@ public final class NpcUpdater {
 	private final UpdateBlockSet<Npc> blockSet = UpdateBlockSet.NPC_BLOCK_SET;
 	
 	public ByteMessage write(Player player) {
-		ByteBufAllocator alloc = player.getSession().alloc();
-		ByteMessage msg = ByteMessage.message(alloc, 65, MessageType.VARIABLE_SHORT);
-		ByteMessage blockMsg = ByteMessage.message(alloc);
+		ByteMessage msg = ByteMessage.message(65, MessageType.VARIABLE_SHORT);
+		ByteMessage blockMsg = ByteMessage.message();
+		
 		try {
 			msg.startBitAccess();
 			msg.putBits(8, player.getLocalNpcs().size());

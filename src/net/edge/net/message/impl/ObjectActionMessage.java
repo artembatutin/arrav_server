@@ -8,10 +8,7 @@ import net.edge.world.World;
 import net.edge.world.content.ViewingOrb;
 import net.edge.world.content.WebSlashing;
 import net.edge.world.content.combat.weapon.WeaponInterface;
-import net.edge.world.content.dialogue.Dialogue;
-import net.edge.world.content.dialogue.Expression;
-import net.edge.world.content.dialogue.impl.*;
-import net.edge.world.content.dialogue.test.DialogueAppender;
+import net.edge.world.content.dialogue.impl.OptionDialogue;
 import net.edge.world.content.door.DoorHandler;
 import net.edge.world.content.market.MarketCounter;
 import net.edge.world.content.minigame.MinigameHandler;
@@ -135,21 +132,6 @@ public final class ObjectActionMessage implements InputMessageListener {
 					return;
 				}
 				switch(objectId) {
-					case 44566:
-						DialogueAppender app = new DialogueAppender(player);
-						app.chain(new StatementDialogue("You investigate the mysterious cape that is hanging on the rack..."));
-						boolean maxed = !Skills.maxed(player);
-						Dialogue dialogue = maxed ? new OptionDialogue(t -> {
-							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-								app.getBuilder().advance();
-							} else {
-								player.getMessages().sendCloseWindows();
-							}
-						}, "Claim max cape for 100,000 coins", "Nevermind") : new PlayerDialogue(Expression.CONFUSED, "A strange feeling is telling me I do not meet", "the requirements for this cape.");
-						app.chain(dialogue);
-						app.chain(new RequestItemDialogue(new Item(995, 100_000), Optional.of(new Item(20769)), "You offer your coins up and receive the cape in return.", Optional.empty(), true));
-						app.start();
-						break;
 					case 29947:
 						player.message("Summoning will be released soon.");
 						break;
