@@ -15,14 +15,14 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 	/**
 	 * Creates a new {@link PlayerAppearanceUpdateBlock}.
 	 */
-	public PlayerAppearanceUpdateBlock() {
+	PlayerAppearanceUpdateBlock() {
 		super(0x10, UpdateFlag.APPEARANCE);
 	}
 
 	@Override
 	public int write(Player player, Player mob, ByteMessage msg) {
 		PlayerAppearance appearance = mob.getAppearance();
-		ByteMessage buf = ByteMessage.message();
+		ByteMessage buf = ByteMessage.message(player.getSession().alloc());
 		buf.put(appearance.getGender());
 		buf.put(mob.getHeadIcon());
 		buf.put(mob.getSkullIcon());
