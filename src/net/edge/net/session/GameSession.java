@@ -1,5 +1,6 @@
 package net.edge.net.session;
 
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import net.edge.net.NetworkConstants;
 import net.edge.net.codec.ByteMessage;
@@ -93,20 +94,17 @@ public final class GameSession extends Session {
 	 * Dequeues the inbound queue, handling all logic accordingly.
 	 */
 	public void dequeue() {
-		for(; ; ) {
+		while (!inboundQueue.isEmpty()) {
 			GameMessage msg = inboundQueue.poll();
-			if(msg == null) {
-				break;
-			}
+
 			try {
 				InputMessageListener listener = NetworkConstants.MESSAGES[msg.getOpcode()];
 				listener.handleMessage(player, msg.getOpcode(), msg.getSize(), msg.getPayload());
 			} catch(Exception e) {
 				e.printStackTrace();
 			} finally {
-				ByteMessage payload = msg.getPayload();
-				if(payload.refCnt() > 0) {
-					payload.release();
+				if (msg.getPayload().getBuffer() != Unpooled.EMPTY_BUFFER) {
+					msg.getPayload().release();
 				}
 			}
 		}
@@ -125,4 +123,6 @@ public final class GameSession extends Session {
 	public IsaacCipher getDecryptor() {
 		return decryptor;
 	}
+
+
 }
