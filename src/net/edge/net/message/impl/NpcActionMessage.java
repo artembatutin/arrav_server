@@ -6,6 +6,7 @@ import net.edge.net.codec.ByteTransform;
 import net.edge.net.database.connection.use.Donating;
 import net.edge.net.message.InputMessageListener;
 import net.edge.utils.Utility;
+import net.edge.world.Graphic;
 import net.edge.world.World;
 import net.edge.world.content.combat.magic.CombatSpells;
 import net.edge.world.content.dialogue.Expression;
@@ -20,6 +21,7 @@ import net.edge.world.content.market.MarketCounter;
 import net.edge.world.content.minigame.MinigameHandler;
 import net.edge.world.content.pets.Pet;
 import net.edge.world.content.shootingstar.StarSprite;
+import net.edge.world.content.skill.Skills;
 import net.edge.world.content.skill.crafting.Tanning;
 import net.edge.world.content.skill.fishing.Fishing;
 import net.edge.world.content.skill.fishing.Tool;
@@ -519,6 +521,30 @@ public final class NpcActionMessage implements InputMessageListener {
 				}
 				
 				switch(id) {
+					case 8327:
+						DialogueAppender ap = new DialogueAppender(player);
+						boolean maxed = Skills.maxed(player);
+						String[] message = maxed ? new String[]{"Very well warrior, I see that you've accomplished maxing", "out all of your skills. Would you like to prestige to remove",  "your restrictions?"} : new String[]{"You have not yet maxed all of your skills warrior."};
+						ap.chain(new NpcDialogue(8327, message).attachAfter(() -> {
+							if(!maxed) {
+								player.getMessages().sendCloseWindows();
+							}
+						}));
+						ap.chain(new OptionDialogue(t -> {
+							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+								ap.getBuilder().skip();
+							} else {
+								ap.getBuilder().advance();
+							}
+						}, "Yes please", "No thanks"));
+						ap.chain(new PlayerDialogue("No thanks...").attachAfter(() -> player.getMessages().sendCloseWindows()));
+						ap.chain(new PlayerDialogue("Yes, please..."));
+						ap.chain(new NpcDialogue(8327, "Very well, you've been prestiged and your restrictions have", "been removed...").attach(() -> {
+							player.graphic(new Graphic(2189));
+							player.setNight(2);
+						}));
+						ap.start();
+						break;
 					case 805:
 						Tanning.openInterface(player);
 						break;

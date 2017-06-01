@@ -359,7 +359,15 @@ public final class Skills {
 			}
 		}
 	}
-	
+
+	/**
+	 * Determines if the specified {@code player} has maxed it's skills.
+	 * @return {@code true} if the player has, {@code false} otherwise.
+	 */
+	public static boolean maxed(Player player) {
+		return Arrays.stream(player.getSkills()).allMatch(s -> s.getRealLevel() >= 99);
+	}
+
 	/**
 	 * Restores {@code skill} back to its original level for {@code player}.
 	 * @param player the player to restore the skill for.

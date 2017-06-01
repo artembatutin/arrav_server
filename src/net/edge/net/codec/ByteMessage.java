@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.checkState;
  * @author lare96 <http://github.org/lare96>
  */
 public final class ByteMessage extends DefaultByteBufHolder {
-	
+
 	/**
 	 * A buffer pool that will help reduce the overhead from allocating and deallocating direct buffers.
 	 */

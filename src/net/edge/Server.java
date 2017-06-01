@@ -159,6 +159,11 @@ public final class Server {
 	 * @throws Exception If any exceptions are thrown while binding.
 	 */
 	private void bind() throws Exception {
+//		if we run server on a unix machine, then we can use a native implementation instead of nio
+//		if (Epoll.isAvailable()) {
+//			EventLoopGroup loopGroup = new EpollEventLoopGroup();
+//			bootstrap.channel(EpollServerSocketChannel.class);
+//		}
 		LOGGER.info("Binding Edgeville on port " + (DEBUG ? NetworkConstants.PORT_DEV : NetworkConstants.PORT_ONLINE) + ".");
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		EventLoopGroup loopGroup = new NioEventLoopGroup();
