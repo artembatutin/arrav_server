@@ -1,6 +1,7 @@
 bin/**
 out/**
 .idea/**
+/data/players/*
 /bin
 .DS_Store**
 .project**
