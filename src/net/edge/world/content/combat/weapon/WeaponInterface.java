@@ -141,7 +141,8 @@ public enum WeaponInterface {
 	 *               was unequipped.
 	 */
 	public static void execute(Player player, Item item) {
-		if(item == null) {
+		WeaponInterface weapon = item == null ? null : INTERFACES.get(item.getId());
+		if(item == null || weapon == null) {
 			TabInterface.ATTACK.sendInterface(player, WeaponInterface.UNARMED.id);
 			player.getMessages().sendString("Unarmed", WeaponInterface.UNARMED.nameLine);
 			player.setWeapon(WeaponInterface.UNARMED);
@@ -155,7 +156,6 @@ public enum WeaponInterface {
 			}
 			return;
 		}
-		WeaponInterface weapon = INTERFACES.get(item.getId());
 		if(weapon == WeaponInterface.UNARMED) {
 			TabInterface.ATTACK.sendInterface(player, weapon.id);
 			player.getMessages().sendString("Unarmed", weapon.nameLine);
@@ -165,9 +165,6 @@ public enum WeaponInterface {
 			player.getMessages().sendString("Weapon: ", weapon.nameLine - 1);
 		} else if(weapon == WeaponInterface.WHIP) {
 			player.getMessages().sendString("Weapon: ", weapon.nameLine - 1);
-		}
-		if(weapon == null) {
-			return;
 		}
 		TabInterface.ATTACK.sendInterface(player, weapon.id);
 		player.getMessages().sendString(item.getDefinition().getName(), weapon.nameLine);
