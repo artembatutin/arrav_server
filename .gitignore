@@ -1,7 +1,6 @@
 bin/**
 out/**
 .idea/**
-/data/players/*
 /bin
 .DS_Store**
 .project**
@@ -16,3 +15,4 @@ data/cache/
 *.userlibraries
 *.class
 map_editor/**
+data/players/**
