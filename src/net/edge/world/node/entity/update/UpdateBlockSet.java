@@ -135,11 +135,10 @@ public final class UpdateBlockSet<E extends EntityNode> {
 	 * @return The buffer containing the data.
 	 */
 	private ByteMessage encodeBlocks(Player player, E forMob, UpdateState state) {
-		ByteMessage encodedBlock = ByteMessage.message();
+		ByteMessage encodedBlock = ByteMessage.message(player.getSession().alloc());
 		
 		int mask = 0;
 		Set<UpdateBlock<E>> writeBlocks = new LinkedHashSet<>();
-		
 		for(UpdateBlock<E> updateBlock : updateBlocks) {
 			if(state == UpdateState.ADD_LOCAL && updateBlock.getFlag() == UpdateFlag.APPEARANCE) {
 				mask |= updateBlock.getMask();
