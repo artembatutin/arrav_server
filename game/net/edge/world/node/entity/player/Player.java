@@ -7,7 +7,7 @@ import net.edge.net.session.GameSession;
 import net.edge.task.Task;
 import net.edge.util.*;
 import net.edge.GameConstants;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
 import net.edge.content.ViewingOrb;

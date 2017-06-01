@@ -12,7 +12,7 @@ import net.edge.net.codec.login.LoginResponse;
 import net.edge.net.codec.login.LoginResponseMessage;
 import net.edge.util.TextUtils;
 import net.edge.GameConstants;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerSerialization;
 import net.edge.world.node.entity.player.assets.Rights;

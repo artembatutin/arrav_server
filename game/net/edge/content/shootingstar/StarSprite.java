@@ -1,7 +1,7 @@
 package net.edge.content.shootingstar;
 
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;

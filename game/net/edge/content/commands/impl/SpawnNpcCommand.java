@@ -1,6 +1,6 @@
 package net.edge.content.commands.impl;
 
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.npc.Npc;

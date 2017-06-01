@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.MutableNumber;
 import net.edge.util.json.JsonLoader;
-import net.edge.World;
+import net.edge.world.World;
 
 /**
  * The {@link JsonLoader} implementation that loads all individual scoreboard rewards.

@@ -2,7 +2,7 @@ package net.edge.content.minigame;
 
 import net.edge.task.Task;
 import net.edge.util.MutableNumber;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.Optional;

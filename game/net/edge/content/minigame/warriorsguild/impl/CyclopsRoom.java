@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.CombatType;
 import net.edge.content.dialogue.Conversation;
 import net.edge.content.dialogue.Expression;

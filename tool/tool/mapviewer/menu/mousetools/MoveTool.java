@@ -1,6 +1,6 @@
 package tool.mapviewer.menu.mousetools;
 
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.locale.Position;
 import tool.mapviewer.MapTool;
 

@@ -1,7 +1,7 @@
 package net.edge.content.combat;
 
 import net.edge.task.EventListener;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.locale.Boundary;
 import net.edge.locale.loc.Location;

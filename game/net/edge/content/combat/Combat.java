@@ -2,7 +2,7 @@ package net.edge.content.combat;
 
 import net.edge.Server;
 import net.edge.util.rand.RandomUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.magic.CombatNormalSpell;

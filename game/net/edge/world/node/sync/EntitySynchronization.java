@@ -1,6 +1,6 @@
 package net.edge.world.node.sync;
 
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 
 /**

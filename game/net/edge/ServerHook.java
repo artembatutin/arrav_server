@@ -1,6 +1,7 @@
 package net.edge;
 
 import net.edge.content.market.MarketItem;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerSerialization;
 

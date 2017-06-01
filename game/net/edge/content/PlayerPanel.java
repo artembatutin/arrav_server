@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import net.edge.GameConstants;
 import net.edge.util.TextUtils;
 import net.edge.util.Utility;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.scoreboard.PlayerScoreboardStatistic;

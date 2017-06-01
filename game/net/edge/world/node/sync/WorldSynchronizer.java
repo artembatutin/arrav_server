@@ -2,7 +2,7 @@ package net.edge.world.node.sync;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import net.edge.util.LoggerUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcUpdater;
 import net.edge.world.node.entity.player.Player;

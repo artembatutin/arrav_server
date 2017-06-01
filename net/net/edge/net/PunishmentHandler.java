@@ -1,7 +1,7 @@
 package net.edge.net;
 
 import com.google.common.collect.Sets;
-import net.edge.World;
+import net.edge.world.World;
 
 import java.io.FileWriter;
 import java.nio.file.Paths;

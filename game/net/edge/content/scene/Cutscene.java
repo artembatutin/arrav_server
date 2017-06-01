@@ -1,7 +1,7 @@
 package net.edge.content.scene;
 
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 
 import java.util.Optional;
 

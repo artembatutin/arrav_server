@@ -1,7 +1,7 @@
 package net.edge.world.node.entity;
 
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 
 /**
  * The parent class that handles the death process for all characters.

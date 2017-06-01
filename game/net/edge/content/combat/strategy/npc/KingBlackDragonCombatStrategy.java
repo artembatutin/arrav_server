@@ -1,7 +1,7 @@
 package net.edge.content.combat.strategy.npc;
 
 import com.google.common.collect.ImmutableList;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.world.*;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;

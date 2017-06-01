@@ -4,7 +4,7 @@ import net.edge.net.message.OutputMessages;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.skill.Skills;

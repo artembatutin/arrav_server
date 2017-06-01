@@ -1,6 +1,6 @@
 package net.edge.content.clanchat;
 
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 

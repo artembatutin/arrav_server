@@ -1,7 +1,7 @@
 package net.edge.task;
 
 import com.google.common.base.Preconditions;
-import net.edge.World;
+import net.edge.world.World;
 
 import java.util.*;
 

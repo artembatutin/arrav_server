@@ -4,7 +4,7 @@ import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.message.InputMessageListener;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.combat.magic.lunars.LunarSpells;

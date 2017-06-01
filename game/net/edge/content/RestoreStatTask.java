@@ -1,7 +1,7 @@
 package net.edge.content;
 
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;

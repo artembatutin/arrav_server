@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.hunter.trap.Trap;
 import net.edge.locale.Position;

@@ -2,7 +2,7 @@ package net.edge.content.pets;
 
 import net.edge.net.message.OutputMessages;
 import net.edge.util.TextUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.item.FoodConsumable;

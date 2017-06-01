@@ -1,6 +1,6 @@
 package net.edge.world.node.entity.npc.strategy.impl.glacor;
 
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.skill.Skills;

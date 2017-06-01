@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.npc;
 
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.PlayerPanel;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.slayer.Slayer;

@@ -1,7 +1,7 @@
 package net.edge.content.skill.mining;
 
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.TransformableObject;
 import net.edge.content.skill.action.impl.HarvestingSkillAction;

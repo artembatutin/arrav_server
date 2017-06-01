@@ -3,7 +3,7 @@ package net.edge.world.node.entity.player;
 import com.google.common.collect.Ordering;
 import net.edge.util.rand.RandomUtils;
 import net.edge.GameConstants;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.PlayerPanel;
 import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.weapon.WeaponInterface;

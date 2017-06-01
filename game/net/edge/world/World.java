@@ -1,5 +1,7 @@
-package net.edge;
+package net.edge.world;
 
+import net.edge.GameConstants;
+import net.edge.GameService;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
 import net.edge.task.Task;

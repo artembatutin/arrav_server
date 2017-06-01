@@ -2,7 +2,7 @@ package net.edge.content.combat;
 
 import net.edge.task.Task;
 import net.edge.GameConstants;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.weapon.WeaponInterface;

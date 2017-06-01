@@ -1,6 +1,6 @@
 package net.edge.content.clanchat;
 
-import net.edge.World;
+import net.edge.world.World;
 
 import java.util.Optional;
 

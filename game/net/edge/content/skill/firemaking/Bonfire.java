@@ -2,7 +2,7 @@ package net.edge.content.skill.firemaking;
 
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.DestructionSkillAction;
 import net.edge.content.skill.firemaking.pits.FirepitData;

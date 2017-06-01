@@ -2,7 +2,7 @@ package net.edge.content.skill;
 
 import net.edge.util.TextUtils;
 import net.edge.GameConstants;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.skill.agility.impl.Shortcuts;
 import net.edge.content.skill.agility.impl.barb.BarbarianOutpostAgility;
 import net.edge.content.skill.agility.impl.gnome.GnomeStrongholdAgility;

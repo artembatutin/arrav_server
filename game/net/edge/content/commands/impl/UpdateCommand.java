@@ -2,7 +2,7 @@ package net.edge.content.commands.impl;
 
 import net.edge.Server;
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.player.Player;

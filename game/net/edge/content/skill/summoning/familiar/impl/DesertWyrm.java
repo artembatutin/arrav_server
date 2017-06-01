@@ -2,7 +2,7 @@ package net.edge.content.skill.summoning.familiar.impl;
 
 import net.edge.task.LinkedTaskSequence;
 import net.edge.util.rand.RandomUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;

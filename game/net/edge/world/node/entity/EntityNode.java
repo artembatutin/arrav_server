@@ -1,7 +1,7 @@
 package net.edge.world.node.entity;
 
 import com.google.common.base.Preconditions;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.world.*;
 import net.edge.task.Task;
 import net.edge.util.MutableNumber;

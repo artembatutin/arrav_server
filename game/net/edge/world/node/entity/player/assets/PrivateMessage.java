@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.player.assets;
 
 import net.edge.util.MutableNumber;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
 /**

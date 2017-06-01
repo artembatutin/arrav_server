@@ -1,7 +1,7 @@
 package net.edge.content.skill.summoning.familiar.passive.impl;
 
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.world.node.entity.player.Player;
 

@@ -2,7 +2,7 @@ package net.edge.content;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectNode;
