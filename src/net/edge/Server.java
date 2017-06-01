@@ -49,7 +49,7 @@ public final class Server {
 	/**
 	 * The flag that determines if debugging messages should be printed or not.
 	 */
-	public static boolean DEBUG = false;
+	public static boolean DEBUG = true;
 	
 	/**
 	 * The flag that determines if the server is starting up.
@@ -143,7 +143,7 @@ public final class Server {
 					World.getShootingStarEvent().process();
 				}
 			});
-			LOGGER.info("Main is now online!");
+			LOGGER.info("Edgeville is now online!");
 			STARTING = false;
 		} catch(Exception e) {
 			LOGGER.log(Level.SEVERE, "An error occurred while binding the Bootstrap!", e);
@@ -159,6 +159,7 @@ public final class Server {
 	 * @throws Exception If any exceptions are thrown while binding.
 	 */
 	private void bind() throws Exception {
+		LOGGER.info("Binding Edgeville on port " + (DEBUG ? NetworkConstants.PORT_DEV : NetworkConstants.PORT_ONLINE) + ".");
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		EventLoopGroup loopGroup = new NioEventLoopGroup();
 		ResourceLeakDetector.setLevel(DEBUG ? ResourceLeakDetector.Level.PARANOID : ResourceLeakDetector.Level.DISABLED);
