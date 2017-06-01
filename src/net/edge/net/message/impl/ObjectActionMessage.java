@@ -132,6 +132,9 @@ public final class ObjectActionMessage implements InputMessageListener {
 					return;
 				}
 				switch(objectId) {
+					case 29947:
+						player.message("Summoning will be released soon.");
+						break;
 					case 24124:
 						player.getMessages().sendInterface(-13);
 						break;

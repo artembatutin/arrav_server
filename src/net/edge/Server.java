@@ -85,8 +85,10 @@ public final class Server {
 	 */
 	public static void main(String[] args) {
 		boolean online = Boolean.parseBoolean(args[0]);
-		if(online)
+		if(online) {
 			Runtime.getRuntime().addShutdownHook(new ServerHook());
+			DEBUG = false;
+		}
 		try {
 			Server edgeville = new Server(online);
 			edgeville.init();
@@ -114,12 +116,9 @@ public final class Server {
 			LOGGER.info("Main is being initialized...");
 			
 			bind();
-			
 			initAsyncTasks();
-			
 			launchService.shutdown();
 			launchService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			
 			initGame();
 			
 			World.getInstanceManager().close(0);
@@ -144,7 +143,6 @@ public final class Server {
 					World.getShootingStarEvent().process();
 				}
 			});
-			CommandDispatcher.load();
 			LOGGER.info("Main is now online!");
 			STARTING = false;
 		} catch(Exception e) {
@@ -167,7 +165,7 @@ public final class Server {
 		bootstrap.group(loopGroup);
 		bootstrap.channel(NioServerSocketChannel.class);
 		bootstrap.childHandler(new EdgevilleChannelInitializer());
-		bootstrap.bind(NetworkConstants.PORT).syncUninterruptibly();
+		bootstrap.bind(DEBUG ? NetworkConstants.PORT_DEV : NetworkConstants.PORT_ONLINE).syncUninterruptibly();
 		
 	}
 	
@@ -239,5 +237,6 @@ public final class Server {
 		launchService.execute(PunishmentHandler::parseIPBans);
 		launchService.execute(PunishmentHandler::parseIPMutes);
 		launchService.execute(PunishmentHandler::parseStarters);
+		CommandDispatcher.load();
 	}
 }
