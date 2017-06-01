@@ -963,5 +963,13 @@
       19494,
       19495
     ]
+  },
+  {
+    "id": 24,
+    "name": "Night's watch shop",
+    "currency": "COINS",
+    "items": [
+      18741
+    ]
   }
 ]

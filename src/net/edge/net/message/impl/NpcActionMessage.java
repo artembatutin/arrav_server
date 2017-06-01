@@ -143,6 +143,40 @@ public final class NpcActionMessage implements InputMessageListener {
 					return;
 				}
 				switch(id) {
+					case 8327:
+						DialogueAppender night = new DialogueAppender(player);
+						night.chain(new NpcDialogue(8327, "Evening " + player.getFormatUsername() + ", what do you want?"));
+						night.chain(new OptionDialogue(t -> {
+							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+								night.getBuilder().skip();
+							} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
+								night.getBuilder().advance();
+							} else {
+								night.getBuilder().last();
+							}
+						}, "Who are you?", "I'd like to see your shop", "Nevermind"));
+						night.chain(new PlayerDialogue("I'd like to see your shop.").attachAfter(() -> {
+							player.getMessages().sendCloseWindows();
+							MarketCounter.getShops().get(24).openShop(player);
+						}));
+						night.chain(new PlayerDialogue("Who are you?"));
+						night.chain(new NpcDialogue(8327, "I am the Night's watch captain, it is thanks to me", "that the nightmare mode is available for players like you.", "Oh and I also sell interesting items in my shop..."));
+						night.chain(new NpcDialogue(8327, "Would you perhaps want to take a look?"));
+						night.chain(new OptionDialogue(t -> {
+							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+								night.getBuilder().skip();
+							} else {
+								night.getBuilder().advance();
+							}
+						}, "Sure", "No"));
+						night.chain(new PlayerDialogue("No thank you...").attachAfter(() -> player.getMessages().sendCloseWindows()));
+						night.chain(new PlayerDialogue("Yeah sure...").attachAfter(() -> {
+							player.getMessages().sendCloseWindows();
+							MarketCounter.getShops().get(24).openShop(player);
+						}));
+						night.chain(new PlayerDialogue("Nevermind..."));
+						night.start();
+						break;
 					case 669:
 						DialogueAppender a = new DialogueAppender(player);
 						a.chain(new NpcDialogue(669, "Hey " + player.getFormatUsername() + ", what do you need?"));
@@ -361,6 +395,9 @@ public final class NpcActionMessage implements InputMessageListener {
 				}
 				
 				switch(id) {
+					case 8327:
+						MarketCounter.getShops().get(24).openShop(player);
+						break;
 					case 7605:
 						MarketCounter.getShops().get(22).openShop(player);
 						break;
