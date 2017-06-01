@@ -90,7 +90,7 @@ public final class Server {
 			DEBUG = false;
 		}
 		try {
-			Server edgeville = new Server(online);
+			Server edgeville = new Server();
 			edgeville.init();
 		} catch(Exception e) {
 			LOGGER.log(Level.SEVERE, "Error in game run time!", e);
@@ -100,9 +100,8 @@ public final class Server {
 	
 	/**
 	 * A package-private constructor to discourage external instantiation.
-	 * @param online if the server is launching to host real players.
 	 */
-	public Server(boolean online) {
+	public Server() {
 		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleInitializationThread").build());
 		launchService = MoreExecutors.listeningDecorator(delegateService);
 	}

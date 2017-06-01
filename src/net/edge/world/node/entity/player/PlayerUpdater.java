@@ -1,5 +1,6 @@
 package net.edge.world.node.entity.player;
 
+import io.netty.buffer.ByteBufAllocator;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.MessageType;
 import net.edge.world.World;
@@ -25,8 +26,9 @@ public final class PlayerUpdater {
 	private final UpdateBlockSet<Player> blockSet = UpdateBlockSet.PLAYER_BLOCK_SET;
 	
 	public ByteMessage write(Player player) {
-		ByteMessage msg = ByteMessage.message(81, MessageType.VARIABLE_SHORT);
-		ByteMessage blockMsg = ByteMessage.message();
+		ByteBufAllocator alloc = player.getSession().alloc();
+		ByteMessage msg = ByteMessage.message(alloc, 81, MessageType.VARIABLE_SHORT);
+		ByteMessage blockMsg = ByteMessage.message(alloc);
 		
 		try {
 			msg.startBitAccess();
