@@ -28,21 +28,24 @@ public final class RequestItemDialogue extends Dialogue {
 	 * The action to execute when the requested item is given.
 	 */
 	private final Optional<ActionListener> action;
+
+	private final boolean displayReward;
 	
 	/**
 	 * Creates a new {@link RequestItemDialogue}.
 	 * @param item the item to remove to the player during this chain.
 	 * @param text the text to display when the item is removed.
 	 */
-	public RequestItemDialogue(Item item, Optional<Item> reward, String text, Optional<ActionListener> action) {
+	public RequestItemDialogue(Item item, Optional<Item> reward, String text, Optional<ActionListener> action, boolean displayReward) {
 		super(text);
 		this.item = item;
 		this.reward = reward;
 		this.action = action;
+		this.displayReward = displayReward;
 	}
 	
 	public RequestItemDialogue(Item item, Item reward, String text, Optional<ActionListener> action) {
-		this(item, Optional.of(reward), text, action);
+		this(item, Optional.of(reward), text, action, false);
 	}
 	
 	public RequestItemDialogue(Item item, int reward, String text, Optional<ActionListener> action) {
@@ -50,7 +53,7 @@ public final class RequestItemDialogue extends Dialogue {
 	}
 	
 	public RequestItemDialogue(Item item, String text, Optional<ActionListener> action) {
-		this(item, Optional.empty(), text, action);
+		this(item, Optional.empty(), text, action, false);
 	}
 	
 	@Override
@@ -60,7 +63,8 @@ public final class RequestItemDialogue extends Dialogue {
 			action.ifPresent(ActionListener::execute);
 			reward.ifPresent(dialogue.getPlayer().getInventory()::addOrDrop);
 			dialogue.getPlayer().getMessages().sendString(getText()[0], 308);
-			dialogue.getPlayer().getMessages().sendItemModelOnInterface(307, 200, item.getId());
+			int id = displayReward && reward.isPresent() ? reward.get().getId() : item.getId();
+			dialogue.getPlayer().getMessages().sendItemModelOnInterface(307, 200, id);
 			dialogue.getPlayer().getMessages().sendChatInterface(306);
 		} else {
 			dialogue.getPlayer().getMessages().sendChatboxString("You don't have the requested item...");
