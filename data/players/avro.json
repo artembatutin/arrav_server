@@ -4,8 +4,8 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3087,
-    "y": 3499,
+    "x": 3088,
+    "y": 3506,
     "z": 0
   },
   "rights": "DEVELOPER",
@@ -57,7 +57,7 @@
       "goal": 0
     },
     {
-      "level": 881,
+      "level": 990,
       "experience": 2.0E8,
       "realLevel": 99,
       "goal": 0
@@ -1134,7 +1134,13 @@
     null,
     null
   ],
-  "friends": [],
+  "friends": [
+    38261318,
+    1289,
+    989838,
+    1480805004802,
+    77401079141981
+  ],
   "ignores": [],
   "total-player-kills": 3,
   "total-player-deaths": 0,

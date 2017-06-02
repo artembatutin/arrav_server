@@ -33,7 +33,9 @@ public final class DropItemMessage implements InputMessageListener {
 		Item item = player.getInventory().get(slot);
 		if(item == null || item.getId() != id)
 			return;
-		
+		ItemDefinition def = ItemDefinition.get(item.getId());
+		if(def == null)
+			return;
 		if(!MinigameHandler.execute(player, m -> m.canDrop(player, item, slot))) {
 			return;
 		}
@@ -49,7 +51,6 @@ public final class DropItemMessage implements InputMessageListener {
 			player.getMessages().sendString("This item is valuable, you will not get it back", 14182);
 			player.getMessages().sendString("once clicked Yes.", 14183);
 			player.getMessages().sendString(item.getDefinition().getName(), 14184);
-			
 			player.getAttr().get("destroy_item_slot").set(slot);
 			player.getMessages().sendChatInterface(14170);
 			return;

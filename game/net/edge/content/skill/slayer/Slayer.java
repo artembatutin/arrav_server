@@ -203,7 +203,7 @@ public final class Slayer {
 		if(slayer.amount < 1) {
 			player.message("You have completed your slayer task.");
 			player.message("To get another slayer task go talk to a slayer master.");
-			Skills.experience(player, slayer.getDifficulty().getValue() * (100 + RandomUtils.inclusive(5, 15 * (slayer.getAmount() / 2))), Skills.SLAYER);
+			Skills.experience(player, slayer.getDifficulty().getValue() * (100 + RandomUtils.inclusive(5, 5 + (15 * (slayer.getAmount() / 2)))), Skills.SLAYER);
 			player.updateSlayers(slayer.points);
 			player.setSlayer(Optional.empty());
 			player.getAttr().get("slayer_tasks").set(player.getAttr().get("slayer_tasks").getInt() + 1);

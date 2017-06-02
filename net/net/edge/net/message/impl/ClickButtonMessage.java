@@ -161,7 +161,7 @@ public final class ClickButtonMessage implements InputMessageListener {
 		switch(button) {
 			//Skills 0-24
 			case Skills.THIEVING:
-				player.teleport(new Position(3080, 3506, 1), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				player.teleport(new Position(3093, 3479, 1), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				break;
 			case Skills.COOKING:
 				player.teleport(new Position(2610, 3396), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
@@ -493,7 +493,7 @@ public final class ClickButtonMessage implements InputMessageListener {
 				if(player.getActivityManager().contains(ActivityManager.ActivityType.LOG_OUT)) {
 					break;
 				}
-				World.handleLogout(player);
+				World.handleLogout(player, false);
 				break;
 			case 153:
 			case 152:

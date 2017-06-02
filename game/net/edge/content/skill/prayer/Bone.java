@@ -21,7 +21,7 @@ public enum Bone {
 	private final int id;
 	private final double experience;
 
-	private Bone(int id, double experience) {
+	Bone(int id, double experience) {
 		this.id = id;
 		this.experience = experience;
 	}

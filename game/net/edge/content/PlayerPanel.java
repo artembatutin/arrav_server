@@ -177,6 +177,8 @@ public enum PlayerPanel {
 		}
 		PlayerPanel.TOOLS.refresh(player, "@or1@Quickies:");
 		PlayerPanel.COMMUNITY.refresh(player, "@or2@ - Forums");
+		PlayerPanel.VOTE.refresh(player, "@or2@ - Vote");
+		PlayerPanel.DONATE.refresh(player, "@or2@ - Donate");
 		PlayerPanel.NPC_TOOL.refresh(player, "@or2@ - Monster Database");
 		PlayerPanel.SERVER_STATISTICS.refresh(player, "@or1@Server Information:");
 		PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));

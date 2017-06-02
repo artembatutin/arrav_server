@@ -55,11 +55,6 @@ import java.util.stream.Collectors;
 public final class Server {
 	
 	/**
-	 * The flag that determines if the server is on a shutdown hook.
-	 */
-	private static boolean SHUTDOWN_HOOK = false;
-	
-	/**
 	 * The flag that determines if debugging messages should be printed or not.
 	 */
 	public static boolean DEBUG = true;
@@ -99,7 +94,7 @@ public final class Server {
 	public static void main(String[] args) {
 		boolean online = Boolean.parseBoolean(args[0]);
 		if(online) {
-			SHUTDOWN_HOOK = true;
+			Runtime.getRuntime().addShutdownHook(new ServerHook());
 			DEBUG = false;
 		}
 		try {
@@ -254,41 +249,5 @@ public final class Server {
 		launchService.execute(PunishmentHandler::parseStarters);
 		CommandDispatcher.load();
 	}
-	
-	public static void terminate() {
-		if(SHUTDOWN_HOOK) {
-			try {
-				ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleTerminateThread").build());
-				ListeningExecutorService launchService = MoreExecutors.listeningDecorator(delegateService);
-				launchService.execute(() -> World.getClanManager().save());
-				launchService.execute(() -> World.getScoreboardManager().serializeIndividualScoreboard());
-				launchService.execute(MarketItem::serializeMarketItems);
-				launchService.execute(NpcDropManager::dump);
-				launchService.execute(() -> {
-					//players
-					for(Player p : World.getPlayers()) {
-						if(p != null) {
-							World.getService().submit(() -> new PlayerSerialization(p).serialize());
-						}
-					}
-				});
-				launchService.execute(() -> {
-					try {
-						BufferedWriter out = new BufferedWriter(new FileWriter("./data/suggested_drops.txt", true));
-						for(NpcDrop d : NpcInformationMessage.SUGGESTED) {
-							out.write(d.toString());
-							out.newLine();
-						}
-						NpcInformationMessage.SUGGESTED.clear();
-						out.close();
-					} catch(Exception e) {
-					}
-				});
-				launchService.shutdown();
-				launchService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			} catch(InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+
 }

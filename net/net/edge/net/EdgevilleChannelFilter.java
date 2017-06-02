@@ -12,6 +12,7 @@ import io.netty.handler.ipfilter.AbstractRemoteAddressFilter;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import net.edge.Server;
+import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.net.codec.login.LoginResponse;
 import net.edge.net.codec.login.LoginResponseMessage;
 
@@ -45,6 +46,10 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 	protected boolean accept(ChannelHandlerContext ctx, InetSocketAddress remoteAddress) throws Exception {
 		String address = address(remoteAddress);
 		System.out.println("inbound: " + remoteAddress);
+		if(UpdateCommand.inProgess == 2) {
+			response(ctx, LoginResponse.SERVER_BEING_UPDATED);
+			return false;
+		}
 		if(Server.STARTING) {
 			response(ctx, LoginResponse.SERVER_STARTING);
 			return false;

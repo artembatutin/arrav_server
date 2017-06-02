@@ -142,7 +142,7 @@ public final class World {
 			Player player = $it.next();
 			if(player == null || amount >= GameConstants.LOGOUT_THRESHOLD)
 				break;
-			if(handleLogout(player)) {
+			if(handleLogout(player, false)) {
 				$it.remove();
 				amount++;
 			}
@@ -264,15 +264,15 @@ public final class World {
 	 * @return {@code true} if the player was logged out, {@code false}
 	 * otherwise.
 	 */
-	public static boolean handleLogout(Player player) {
+	public static boolean handleLogout(Player player, boolean forced) {
 		try {
 			// If the player x-logged, don't log the player out. Keep the
 			// player queued until they are out of combat to prevent x-logging.
-			//if(!forced) {
-			if(!player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && (player.getCombatBuilder().isBeingAttacked() && player.getCombatBuilder().pjingCheck())) {
-				return false;
+			if(!forced) {
+				if(!player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && (player.getCombatBuilder().isBeingAttacked() && player.getCombatBuilder().pjingCheck())) {
+					return false;
+				}
 			}
-			//}
 			boolean response = World.getPlayers().remove(player);
 			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + World.getPlayers().size());
 			List<Npc> npcs = World.getNpcs().findAll(n -> n != null && n.isSpawnedFor(player));
