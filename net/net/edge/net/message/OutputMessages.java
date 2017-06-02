@@ -13,7 +13,6 @@ import net.edge.locale.Position;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
@@ -692,9 +691,7 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 187, MessageType.VARIABLE);
 		msg.putString(title);
 		player.setEnterInputListener(Optional.of(action));
-		
 		player.queue(msg);
-		
 	}
 	
 	/**
@@ -705,7 +702,6 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 100, MessageType.VARIABLE);
 		msg.putString(link);
 		player.queue(msg);
-		
 	}
 	
 	/**
@@ -1077,12 +1073,6 @@ public final class OutputMessages {
 			NpcDefinition def = NpcDefinition.DEFINITIONS[id];
 			if(def == null)
 				return;
-			msg.putShort(drop.getCommon() == null ? 0 : drop.getCommon().length);
-			if(drop.getCommon() != null) {
-				for(NpcDropCache c : drop.getCommon()) {
-					msg.putShort(c.ordinal());
-				}
-			}
 			msg.putShort(drop.getUnique() == null ? 0 : drop.getUnique().length);
 			if(drop.getUnique() != null) {
 				for(NpcDrop d : drop.getUnique()) {

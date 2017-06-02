@@ -28,6 +28,7 @@ import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.locale.loc.Location;
 import net.edge.world.World;
 import net.edge.world.node.entity.attribute.AttributeKey;
+import net.edge.world.node.entity.npc.drop.NpcDropManager;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -206,8 +207,8 @@ public final class Server {
 		launchService.execute(() -> {
 			new NpcDefinitionLoader().load();
 			new NpcNodeLoader().load();
-			new NpcDropCacheLoader().load();
 			new NpcDropTableLoader().load();
+			NpcDropManager.dump();
 		});
 		launchService.execute(new ClanChatLoader());
 		launchService.execute(new WeaponPoisonLoader());

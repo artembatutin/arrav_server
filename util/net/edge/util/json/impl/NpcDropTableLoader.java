@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.npc.drop.NpcDropTable;
 
@@ -32,7 +31,7 @@ public final class NpcDropTableLoader extends JsonLoader {
 	/**
 	 * A constant defined to write a new set of npc ids for the client.
 	 */
-	private final boolean OUTPUT = false;
+	private final boolean OUTPUT = true;
 	
 	/**
 	 * A set of written ids.
@@ -47,16 +46,8 @@ public final class NpcDropTableLoader extends JsonLoader {
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		int[] array = builder.fromJson(reader.get("ids"), int[].class);
-		NpcDrop[] unique = Objects.requireNonNull(builder.fromJson(reader.get("unique"), NpcDrop[].class));
-		NpcDropCache[] common = Objects.requireNonNull(builder.fromJson(reader.get("common"), NpcDropCache[].class));
-		if(Arrays.stream(common).anyMatch(Objects::isNull))
-			throw new NullPointerException("Invalid common drop table [" + array[0] + "]," + " npc_drops.json");
-		Arrays.stream(array).forEach(id -> NpcDropManager.TABLES.put(id, new NpcDropTable(unique, common)));
-		
-		for(int id : array) {
-			NpcDropManager.getTables().put(id, new NpcDropTable(unique, common));
-		}
-		
+		NpcDrop[] unique = Objects.requireNonNull(builder.fromJson(reader.get("drops"), NpcDrop[].class));
+		Arrays.stream(array).forEach(id -> NpcDropManager.getTables().put(id, new NpcDropTable(unique)));
 		if(OUTPUT && writer != null) {
 			for(int i : array) {
 				if(!written.contains(i)) {
@@ -71,7 +62,7 @@ public final class NpcDropTableLoader extends JsonLoader {
 	public void start() {
 		if(OUTPUT) {
 			try {
-				File out = new File("./drops2.txt");
+				File out = new File("./drops.txt");
 				writer = new PrintWriter(out);
 			} catch(IOException e) {
 				e.printStackTrace();

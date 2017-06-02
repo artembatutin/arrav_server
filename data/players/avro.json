@@ -5,7 +5,7 @@
   "muted": false,
   "position": {
     "x": 3087,
-    "y": 3509,
+    "y": 3499,
     "z": 0
   },
   "rights": "DEVELOPER",
@@ -57,7 +57,7 @@
       "goal": 0
     },
     {
-      "level": 990,
+      "level": 881,
       "experience": 2.0E8,
       "realLevel": 99,
       "goal": 0
@@ -222,7 +222,10 @@
       "id": 1521,
       "amount": 1
     },
-    null,
+    {
+      "id": 950,
+      "amount": 1
+    },
     null,
     {
       "id": 1511,

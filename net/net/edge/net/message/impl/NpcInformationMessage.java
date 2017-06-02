@@ -28,7 +28,7 @@ public final class NpcInformationMessage implements InputMessageListener {
 			int min = payload.getShort();
 			int max = payload.getShort();
 			if(player.getRights() == Rights.DEVELOPER) {
-				NpcDropTable table = NpcDropManager.TABLES.get(player.getAttr().get("npcInformation").getInt());
+				NpcDropTable table = NpcDropManager.getTables().get(player.getAttr().get("npcInformation").getInt());
 				if(table == null) {
 					player.message("No table found.");
 					return;
@@ -55,7 +55,11 @@ public final class NpcInformationMessage implements InputMessageListener {
 				return;
 			}
 			player.getAttr().get("npcInformation").set(id);
-			NpcDropTable drop = NpcDropManager.TABLES.getOrDefault(id, NpcDropManager.DEFAULT);
+			NpcDropTable drop = NpcDropManager.getTables().get(id);
+			if(drop == null) {
+				player.message("This monster doesn't have any drop table.");
+				return;
+			}
 			player.getMessages().sendNpcInformation(id, drop);
 			player.getMessages().sendInterface(-11);
 		}

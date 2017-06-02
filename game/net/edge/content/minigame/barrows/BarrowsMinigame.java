@@ -1,5 +1,6 @@
 package net.edge.content.minigame.barrows;
 
+import net.edge.util.rand.Chance;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -13,7 +14,6 @@ import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.node.entity.player.Player;
@@ -26,11 +26,44 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static net.edge.util.rand.Chance.VERY_UNCOMMON;
+
 /**
  * Holds functionality for the barrows minigame.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class BarrowsMinigame extends Minigame {
+	
+	/**
+	 * The possible barrows drops.
+	 */
+	private static final NpcDrop[] DROPS = {
+			new NpcDrop(4708, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4710, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4712, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4714, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4716, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4718, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4720, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4722, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4724, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4726, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4728, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4730, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4732, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4734, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4736, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4738, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4740, 1, 120, VERY_UNCOMMON),
+			new NpcDrop(4745, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4747, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4749, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4751, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4753, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4755, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4757, 1, 1, VERY_UNCOMMON),
+			new NpcDrop(4759, 1, 1, VERY_UNCOMMON)
+	};
 	
 	/**
 	 * The location for the chest.
@@ -186,14 +219,13 @@ public final class BarrowsMinigame extends Minigame {
 				return true;
 			}
 			if(!container.getCurrent().isPresent()) {
-				NpcDropTable table = NpcDropManager.TABLES.get(-1);//barrows custom.
+				NpcDropTable table = NpcDropManager.getTables().get(-1);//barrows custom.
 				int expected = RandomUtils.inclusive(4, 8);
 				List<Item> loot = new ArrayList<>();
 				int items = 0;
 				player.message("gave item");
 				while(items < expected) {
-					NpcDropCache cache = RandomUtils.random(table.getCommon());
-					NpcDrop drop = RandomUtils.random(NpcDropManager.COMMON.get(cache));
+					NpcDrop drop = RandomUtils.random(DROPS);
 					if(drop.roll(ThreadLocalRandom.current())) {
 						loot.add(new Item(drop.getId(), RandomUtils.inclusive(drop.getMinimum(), drop.getMaximum())));
 						items++;

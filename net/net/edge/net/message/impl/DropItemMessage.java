@@ -40,7 +40,7 @@ public final class DropItemMessage implements InputMessageListener {
 		if(Pet.canDrop(player, item)) {
 			return;
 		}
-		if(!item.getDefinition().isTradable()) {
+		if(!item.getDefinition().isTradable() || item.getDefinition().destroyable()) {
 			player.getMessages().sendItemOnInterfaceSlot(14171, item, 0);
 			player.getMessages().sendString("Are you sure you want to destroy this item?", 14174);
 			player.getMessages().sendString("Yes", 14175);

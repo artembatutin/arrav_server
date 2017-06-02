@@ -1,12 +1,6 @@
 [
   {
     "opcodes": [
-      180
-    ],
-    "class": "net.edge.net.message.impl.SpecialitySelectionMessage"
-  },
-  {
-    "opcodes": [
       213
     ],
     "class": "net.edge.net.message.impl.InterfaceActionMessage"

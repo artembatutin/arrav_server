@@ -42,7 +42,6 @@ public final class ReloadCommand implements Command {
 					player.message("Successfully removed the world nodes [Objects, Npcs, Shops, Areas].");
 					removed = true;
 				} else {
-					new ObjectNodeRemoveLoader();
 					new ItemDefinitionLoader().load();
 					new NpcDefinitionLoader().load();
 					new NpcNodeLoader().load();

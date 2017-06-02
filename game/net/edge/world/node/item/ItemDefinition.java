@@ -360,6 +360,18 @@ public final class ItemDefinition {
 		return groundActions;
 	}
 	
+	/**
+	 * Checks if this item is destroyable.
+	 * @return destroyable flag.
+	 */
+	public boolean destroyable() {
+		for(String s : inventoryActions) {
+			if(s != null && s.equals("Destroy"))
+				return true;
+		}
+		return false;
+	}
+	
 	public static void dumpDrops() {
 		/*try {
 			int totald = 0;

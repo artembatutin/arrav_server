@@ -1,11 +1,16 @@
 package net.edge.world.node.entity.npc.drop;
 
 import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.region.Region;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -18,18 +23,10 @@ import java.util.Map;
  */
 public final class NpcDropManager {
 	
-	public static final NpcDropTable DEFAULT = new NpcDropTable(new NpcDrop[]{}, new NpcDropCache[]{NpcDropCache.CASKETS, NpcDropCache.HERB_SEEDS, NpcDropCache.FLOWER_SEEDS, NpcDropCache.ALLOTMENT_SEEDS, NpcDropCache.CHARMS, NpcDropCache.LOW_RUNES, NpcDropCache.LOW_GEMS, NpcDropCache.LOW_EQUIPMENT, NpcDropCache.LOW_RESOURCES});
-	
-	/**
-	 * The {@link EnumMap} consisting of the cached common {@link NpcDrop}s used
-	 * across many {@link NpcDropTable}s.
-	 */
-	public static final EnumMap<NpcDropCache, NpcDrop[]> COMMON = new EnumMap<>(NpcDropCache.class);
-	
 	/**
 	 * The {@link HashMap} that consists of the drops for {@link Npc}s.
 	 */
-	public static Map<Integer, NpcDropTable> TABLES = new HashMap<>();
+	private static final Map<Integer, NpcDropTable> TABLES = new HashMap<>();
 	
 	/**
 	 * Drops the items in {@code victim}s drop table for {@code killer}. If the
@@ -38,7 +35,11 @@ public final class NpcDropManager {
 	 * @param victim the victim that was killed.
 	 */
 	public static void dropItems(Player killer, Npc victim) {
-		NpcDropTable table = TABLES.getOrDefault(victim.getId(), DEFAULT);
+		NpcDropTable table = TABLES.get(victim.getId());
+		if(table == null) {
+			killer.message(victim.getDefinition().getName() + " doesn't have a drop table, please suggest one on the forums.");
+			return;
+		}
 		List<Item> dropItems = table.toItems(killer, victim);
 		Region region = victim.getRegion();
 		if(region == null)
@@ -54,40 +55,93 @@ public final class NpcDropManager {
 		return TABLES;
 	}
 	
-	/*public static void dump() {
-		JSONArray list = new JSONArray();
-		int npcs = 0;
+	public static void dump() {
+		/*JSONArray list = new JSONArray();
 		int drops = 0;
+		int tables = 0;
+		int npcsShare = 0;
+		boolean[] redirect = new boolean[NpcDefinition.DEFINITIONS.length];
+		Map<Integer, Integer> redirects = new HashMap<>();
 		for(int id : TABLES.keySet()) {
 			if(id < 0)
 				continue;
+			if(redirect[id])
+				continue;
+			NpcDropTable orig = TABLES.get(id);
+			for(int id2 : TABLES.keySet()) {
+				if(id2 < 0)
+					continue;
+				if(id == id2)
+					continue;
+				NpcDropTable check = TABLES.get(id2);
+				boolean same = true;
+				for(NpcDrop dropCheck : check.getUnique()) {
+					if(dropCheck == null)
+						continue;
+					if(!orig.contains(dropCheck)) {
+						same = false;
+						break;
+					}
+				}
+				if(orig.getUnique().length != check.getUnique().length)
+					same = false;
+				if(same) {
+					if(redirect[id]) {
+						redirects.put(id2, redirects.get(id));
+						//System.out.println(id2 + " same as " + redirects.get(id));
+					} else {
+						redirects.put(id2, id);
+						//System.out.println(id2 + " same as " + id);
+					}
+					redirect[id2] = true;
+				}
+			}
+		}
+		for(int id : TABLES.keySet()) {
+			if(id < 0)
+				continue;
+			if(redirect[id])
+				continue;
 			JSONObject obj = new JSONObject();
-			
 			JSONArray ids = new JSONArray();
-			int pos = 0;
 			ids.add(id);
+			for(int k : redirects.keySet()) {
+				int v = redirects.get(k);
+				if(v == id) {
+					npcsShare += 1;
+					ids.add(k);
+				}
+			}
 			obj.put("ids", ids);
 			
 			JSONArray unique = new JSONArray();
-			for(NpcDrop drop : TABLES.get(id).getUnique()) {
+			TABLES.get(id).sort();
+			NpcDrop[] packed = TABLES.get(id).getUnique();
+			for(int i = 0; i < packed.length; i++) {
+				NpcDrop drop = packed[i];
+				if(drop == null)
+					continue;
 				JSONObject dropa = new JSONObject();
 				if(drop == null)
 					continue;
 				if(drop.getId() < 0)
 					continue;
 				dropa.put("id", drop.getId());
+				if(drop.getMinimum() < 0)
+					drop.setMinimum(1);
 				dropa.put("minimum", drop.getMinimum());
+				if(drop.getMaximum() < drop.getMinimum())
+					drop.setMaximum(drop.getMinimum() + 3);
 				dropa.put("maximum", drop.getMaximum());
 				dropa.put("chance", drop.getChance().toString());
 				unique.add(dropa);
 				drops += 1;
 			}
 			obj.put("drops", unique);
-			npcs += pos;
 			list.add(obj);
+			tables += 1;
 		}
 		
-		System.out.println("Total drops: " + drops + " for " + npcs);
 		
 		JSONObject res = new JSONObject();
 		res.put("res", list);
@@ -99,6 +153,8 @@ public final class NpcDropManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}*/
+		System.out.println("Drops: " + drops + " in " + tables + " tables with " + npcsShare + " shared tables between npcs.");
+		*/
+	}
 	
 }

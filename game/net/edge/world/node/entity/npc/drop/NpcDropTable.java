@@ -10,6 +10,7 @@ import net.edge.content.container.impl.Equipment;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemDefinition;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,18 +28,11 @@ public final class NpcDropTable {
 	private NpcDrop[] unique;
 	
 	/**
-	 * The common drop table that is shared with other tables.
-	 */
-	private final NpcDropCache[] common;
-	
-	/**
 	 * Creates a new {@link NpcDropTable}.
 	 * @param unique the unique drop table.
-	 * @param common the common drop table.
 	 */
-	public NpcDropTable(NpcDrop[] unique, NpcDropCache[] common) {
+	public NpcDropTable(NpcDrop[] unique) {
 		this.unique = unique;
-		this.common = common;
 	}
 	
 	/**
@@ -47,7 +41,7 @@ public final class NpcDropTable {
 	 * is not a static implementation meaning that calling this multiple times
 	 * will return a different array of items.
 	 * @param player the player that these calculations are being performed for.
-	 * @param npc    the npc that was killed.
+	 * @param victim the victim that was killed.
 	 * @return the array of items that were calculated.
 	 */
 	public List<Item> toItems(Player player, Npc victim) {
@@ -56,7 +50,6 @@ public final class NpcDropTable {
 		// for the rare items, the common table, and a list that contains a
 		// shuffled copy of the unique table.
 		List<Item> items = new LinkedList<>();
-		NpcDropCache cache = RandomUtils.random(common.length > 0 ? common : NpcDropManager.DEFAULT.common);
 		
 		// Determines if the rare, common, and dynamic tables should be rolled.
 		// The breakdown of each of the formulas are touched upon later on.
@@ -96,7 +89,7 @@ public final class NpcDropTable {
 			// n (n = 12.5% chance, 25% if wearing Ring of Wealth)
 			// Chance to roll an item from the common table, pick one drop
 			// from the table and roll it.
-			NpcDrop next = RandomUtils.random(NpcDropManager.COMMON.get(cache));
+			NpcDrop next = RandomUtils.random(unique);
 			if(next.roll(random))
 				items.add(next.toItem());
 		}
@@ -112,8 +105,35 @@ public final class NpcDropTable {
 		return unique;
 	}
 	
-	public NpcDropCache[] getCommon() {
-		return common;
+	public void sort() {
+		for(int i = 0; i < unique.length; i++) {
+			NpcDrop d = unique[i];
+			if(d == null)
+				continue;
+			for(int i2 = 0; i2 < unique.length; i2++) {
+				if(i == i2)
+					continue;
+				NpcDrop d2 = unique[i2];
+				if(d2 == null)
+					continue;
+				if(d2.getChance().ordinal() > d.getChance().ordinal()) {
+					NpcDrop temp = new NpcDrop(unique[i]);
+					unique[i] = new NpcDrop(unique[i2]);
+					unique[i2] = temp;
+				}
+			}
+		}
+		System.out.println("sorted");
+	}
+	
+	public boolean contains(NpcDrop drop) {
+		for(NpcDrop d : unique) {
+			if(d == null)
+				continue;
+			if(d.getId() == drop.getId() && d.getChance() == drop.getChance() && d.getMinimum() == drop.getMinimum())
+				return true;
+		}
+		return false;
 	}
 	
 }

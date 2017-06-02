@@ -48,6 +48,13 @@ public final class NpcDrop {
 		this.chance = chance;
 	}
 	
+	public NpcDrop(NpcDrop drop) {
+		this.id = drop.getId();
+		this.minimum = drop.getMinimum();
+		this.maximum = drop.getMaximum();
+		this.chance = drop.getChance();
+	}
+	
 	@Override
 	public String toString() {
 		return "ITEM[id= " + getId() + ", min= " + getMinimum() + ", max= " + getMaximum() + ", chance= " + getChance() + "]";
