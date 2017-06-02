@@ -14,11 +14,11 @@ public final class UpdateCommand implements Command {
 	/**
 	 * The updating count in progress flag.
 	 */
-	public static boolean inProgess = false;
+	public static int inProgess = 0;
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		inProgess = true;
+		inProgess = 1;
 		int timer = Integer.parseInt(cmd[1]);
 		World.getPlayers().forEach(p -> p.getMessages().sendSystemUpdate(timer * 50 / 30));
 		Server.UPDATING = timer;
@@ -30,20 +30,21 @@ public final class UpdateCommand implements Command {
 				if(Server.UPDATING <= 0) {
 					System.out.println("Setting player into updating mode.");
 					System.out.println("Logging players out...");
-					World.getPlayers().forEach(World::handleLogout);
+					World.getPlayers().forEach(p -> {
+						World.handleLogout(p, true);
+					});
 					System.out.println("Waiting for shutdown.");
 					World.submit(new Task(1, false) {
 						@Override
 						protected void execute() {
+							inProgess = 2;
 							if(World.getPlayers().size() == 0) {
 								this.cancel();
-								Server.terminate();
 								System.out.println("Terminating server instance.");
 								System.exit(0);
 							}
 						}
 					});
-					this.cancel();
 				}
 			}
 		});

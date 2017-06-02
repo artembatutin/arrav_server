@@ -365,9 +365,11 @@ public final class ItemDefinition {
 	 * @return destroyable flag.
 	 */
 	public boolean destroyable() {
-		for(String s : inventoryActions) {
-			if(s != null && s.equals("Destroy"))
-				return true;
+		if(inventoryActions != null) {
+			for(String s : inventoryActions) {
+				if(s != null && s.equals("Destroy"))
+					return true;
+			}
 		}
 		return false;
 	}

@@ -603,7 +603,7 @@ public final class Player extends EntityNode {
 		});
 		World.getExchangeSessionManager().resetRequests(this);
 		encoder.sendMessage(GameConstants.WELCOME_MESSAGE);
-		if(UpdateCommand.inProgess) {
+		if(UpdateCommand.inProgess == 1) {
 			encoder.sendMessage("@red@There is currently an update schedule in progress. You'll be kicked off soon.");
 		}
 		WeaponInterface.execute(this, equipment.get(Equipment.WEAPON_SLOT));

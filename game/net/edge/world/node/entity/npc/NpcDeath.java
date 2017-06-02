@@ -40,36 +40,29 @@ public final class NpcDeath extends EntityDeath<Npc> {
 	
 	@Override
 	public void death() {
-		System.out.println(getCharacter().toString() + " death 1");
 		Optional<Player> killer = getCharacter().getCombatBuilder().getDamageCache().getPlayerKiller();
 		if(killer.isPresent()) {
 			Player player = killer.get();
 			GodwarsFaction.increment(player, getCharacter());
 			Slayer.decrement(player, getCharacter());
-			System.out.println(getCharacter().toString() + " death 2");
 			MinigameHandler.getMinigame(player).ifPresent(m -> m.onKill(player, getCharacter()));
-			System.out.println(getCharacter().toString() + " death 3");
 			NpcDropManager.dropItems(player, getCharacter());
-			System.out.println(getCharacter().toString() + " death 4");
 			if(player.getRights().less(Rights.ADMINISTRATOR)) {
 				player.getNpcKills().incrementAndGet();
 				PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Npcs killed: @yel@" + player.getNpcKills().get());
 			}
 		}
-		System.out.println(getCharacter().toString() + " death 5");
 		World.getNpcs().remove(getCharacter());
 	}
 	
 	@Override
 	public void postDeath() {
 		try {
-			System.out.println(getCharacter().toString() + " post death 1");
 			if(getCharacter().isRespawn()) {
 				World.submit(new Task(getCharacter().getDefinition().getRespawnTime(), false) {
 					@Override
 					public void execute() {
 						this.cancel();
-						System.out.println(getCharacter().toString() + " post death 2");
 						Npc npc = Npc.getNpc(getCharacter().getId(), getCharacter().getOriginalPosition());
 						npc.setOriginalRandomWalk(getCharacter().isOriginalRandomWalk());
 						npc.getMovementCoordinator().setCoordinate(getCharacter().getMovementCoordinator().isCoordinate());

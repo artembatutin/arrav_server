@@ -3,6 +3,7 @@ package net.edge.world.node.sync;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import net.edge.util.LoggerUtils;
 import net.edge.world.World;
+import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcUpdater;
 import net.edge.world.node.entity.player.Player;
@@ -77,7 +78,7 @@ public final class WorldSynchronizer {
 	 * parallel.
 	 */
 	public void synchronize() {
-		synchronizer.bulkRegister(World.getPlayers().size());
+		/*synchronizer.bulkRegister(World.getPlayers().size());
 		World.getPlayers().forEach(it -> updateExecutor.execute(new EntitySynchronization(this, it) {
 			@Override
 			public void execute() {
@@ -90,14 +91,23 @@ public final class WorldSynchronizer {
 				}
 			}
 		}));
-		synchronizer.arriveAndAwaitAdvance();
+		synchronizer.arriveAndAwaitAdvance();*/
+		for(Player it : World.getPlayers()) {
+			try {
+				it.getSession().queue(new PlayerUpdater().write(it));
+				it.getSession().queue(new NpcUpdater().write(it));
+			} catch(Exception e) {
+				World.queueLogout(it);
+				LOGGER.log(Level.WARNING, "Couldn't sync player " + it.toString(), e);
+			}
+		}
 	}
 	
 	/**
 	 * Post-synchronization, clear various flags. This can be done safely in parallel.
 	 */
 	public void postSynchronize() {
-		synchronizer.bulkRegister(World.getPlayers().size());
+		/*synchronizer.bulkRegister(World.getPlayers().size());
 		World.getPlayers().forEach(it -> updateExecutor.execute(new EntitySynchronization(this, it) {
 			@Override
 			public void execute() {
@@ -106,17 +116,25 @@ public final class WorldSynchronizer {
 				it.setCachedUpdateBlock(null);
 			}
 		}));
-		synchronizer.arriveAndAwaitAdvance();
+		synchronizer.arriveAndAwaitAdvance();*/
+		for(Player it : World.getPlayers()) {
+			it.getSession().flushQueue();
+			it.reset();
+			it.setCachedUpdateBlock(null);
+		}
 
 		
-		synchronizer.bulkRegister(World.getNpcs().size());
+		/*synchronizer.bulkRegister(World.getNpcs().size());
 		World.getNpcs().forEach(it -> updateExecutor.execute(new EntitySynchronization(this, it) {
 			@Override
 			public void execute() {
 				it.reset();
 			}
 		}));
-		synchronizer.arriveAndAwaitAdvance();
+		synchronizer.arriveAndAwaitAdvance();*/
+		for(Npc it : World.getNpcs()) {
+			it.reset();
+		}
 		regionTick();
 	}
 	

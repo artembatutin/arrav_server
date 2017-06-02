@@ -4,9 +4,9 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3100,
-    "y": 3499,
-    "z": 1
+    "x": 3085,
+    "y": 3508,
+    "z": 0
   },
   "rights": "DEVELOPER",
   "nightmare": 0,
@@ -81,9 +81,9 @@
       "goal": 0
     },
     {
-      "level": 99,
-      "experience": 2.0E8,
-      "realLevel": 99,
+      "level": 34,
+      "experience": 20647.0,
+      "realLevel": 34,
       "goal": 0
     },
     {
@@ -202,19 +202,58 @@
       "id": 1115,
       "amount": 1
     },
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
+    {
+      "id": 20769,
+      "amount": 1
+    },
+    {
+      "id": 13759,
+      "amount": 1
+    },
+    {
+      "id": 315,
+      "amount": 1
+    },
+    {
+      "id": 315,
+      "amount": 1
+    },
+    {
+      "id": 323,
+      "amount": 1
+    },
+    {
+      "id": 323,
+      "amount": 1
+    },
+    {
+      "id": 323,
+      "amount": 1
+    },
+    {
+      "id": 323,
+      "amount": 1
+    },
+    {
+      "id": 317,
+      "amount": 1
+    },
+    {
+      "id": 317,
+      "amount": 1
+    },
+    {
+      "id": 317,
+      "amount": 1
+    },
+    {
+      "id": 317,
+      "amount": 1
+    },
+    {
+      "id": 995,
+      "amount": 100000
+    },
     null,
     null,
     null,
@@ -1011,7 +1050,12 @@
     null,
     null
   ],
-  "friends": [],
+  "friends": [
+    2813493,
+    81452,
+    1723035346555578,
+    103083
+  ],
   "ignores": [],
   "total-player-kills": 0,
   "total-player-deaths": 3,
