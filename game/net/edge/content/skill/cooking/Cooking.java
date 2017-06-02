@@ -112,7 +112,7 @@ public final class Cooking extends ProducingSkillAction {
 	
 	private boolean determineBurn() {
 		if(player.getSkills()[skill().getId()].getLevel() >= data.getMasterLevel() || spell) {
-			return false;
+			return true;
 		}
 		double burn_chance = (COOKING_BURN_RATE - (cookStove ? 5.0 : 1.0));
 		double cook_level = getPlayer().getSkills()[skill().getId()].getLevel();
