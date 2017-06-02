@@ -37,8 +37,9 @@ public final class UpdateCommand implements Command {
 						protected void execute() {
 							if(World.getPlayers().size() == 0) {
 								this.cancel();
+								Server.terminate();
 								System.out.println("Terminating server instance.");
-								System.exit(0);//it calls the {@link ServerHook} after.
+								System.exit(0);
 							}
 						}
 					});

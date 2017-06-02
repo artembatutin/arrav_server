@@ -12,12 +12,8 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 /**
  * The manager for the scoreboards.
@@ -47,7 +43,7 @@ public final class ScoreboardManager {
 	public void serializeIndividualScoreboard() {
 		JsonSaver scoreboard_statistics_saver = new JsonSaver();
 		
-		List<PlayerScoreboardStatistic> statistics = player_scoreboard.values().stream().collect(Collectors.toList());
+		List<PlayerScoreboardStatistic> statistics = new ArrayList<>(player_scoreboard.values());
 		
 		statistics.sort(new PlayerScoreboardComparator());
 		
@@ -84,7 +80,7 @@ public final class ScoreboardManager {
 	 * @param player the player to send it to.
 	 */
 	public void sendPlayerScoreboardStatistics(Player player) {
-		List<PlayerScoreboardStatistic> statistics = player_scoreboard.values().stream().collect(Collectors.toList());
+		List<PlayerScoreboardStatistic> statistics = new ArrayList<>(player_scoreboard.values());
 		
 		statistics.sort(new PlayerScoreboardComparator());
 		
@@ -112,7 +108,7 @@ public final class ScoreboardManager {
 			return;
 		}
 		
-		List<PlayerScoreboardStatistic> statistics = player_scoreboard.values().stream().collect(Collectors.toList());
+		List<PlayerScoreboardStatistic> statistics = new ArrayList<>(player_scoreboard.values());
 		
 		statistics.sort(new PlayerScoreboardComparator());
 		

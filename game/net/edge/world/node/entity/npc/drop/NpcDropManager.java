@@ -138,7 +138,7 @@ public final class NpcDropManager {
 		
 		JSONObject res = new JSONObject();
 		res.put("res", list);
-		try (FileWriter file = new FileWriter("./data/json/npcsdrops.json")) {
+		try (FileWriter file = new FileWriter("./data/json/npcs/dumped_drops.json")) {
 			
 			file.write(res.toJSONString());
 			file.flush();

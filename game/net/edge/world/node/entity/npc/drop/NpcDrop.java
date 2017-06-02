@@ -12,7 +12,7 @@ import static net.edge.util.rand.Chance.*;
  * A model representing an item within a rational item table that can be dropped.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public final class NpcDrop {
+public class NpcDrop {
 	
 	/**
 	 * The identification of this {@code NpcDrop}.

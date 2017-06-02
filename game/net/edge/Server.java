@@ -12,9 +12,11 @@ import net.edge.cache.FileSystem;
 import net.edge.cache.decoder.MapDefinitionDecoder;
 import net.edge.cache.decoder.ObjectDefinitionDecoder;
 import net.edge.cache.decoder.RegionDecoder;
+import net.edge.content.market.MarketItem;
 import net.edge.net.EdgevilleChannelInitializer;
 import net.edge.net.NetworkConstants;
 import net.edge.net.PunishmentHandler;
+import net.edge.net.message.impl.NpcInformationMessage;
 import net.edge.task.Task;
 import net.edge.util.LoggerUtils;
 import net.edge.util.Utility;
@@ -28,8 +30,13 @@ import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.locale.loc.Location;
 import net.edge.world.World;
 import net.edge.world.node.entity.attribute.AttributeKey;
+import net.edge.world.node.entity.npc.drop.NpcDrop;
 import net.edge.world.node.entity.npc.drop.NpcDropManager;
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.PlayerSerialization;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -46,6 +53,11 @@ import java.util.stream.Collectors;
  * @author lare96 <http://github.com/lare96>
  */
 public final class Server {
+	
+	/**
+	 * The flag that determines if the server is on a shutdown hook.
+	 */
+	private static boolean SHUTDOWN_HOOK = false;
 	
 	/**
 	 * The flag that determines if debugging messages should be printed or not.
@@ -87,7 +99,7 @@ public final class Server {
 	public static void main(String[] args) {
 		boolean online = Boolean.parseBoolean(args[0]);
 		if(online) {
-			Runtime.getRuntime().addShutdownHook(new ServerHook());
+			SHUTDOWN_HOOK = true;
 			DEBUG = false;
 		}
 		try {
@@ -208,7 +220,6 @@ public final class Server {
 			new NpcDefinitionLoader().load();
 			new NpcNodeLoader().load();
 			new NpcDropTableLoader().load();
-			NpcDropManager.dump();
 		});
 		launchService.execute(new ClanChatLoader());
 		launchService.execute(new WeaponPoisonLoader());
@@ -242,5 +253,42 @@ public final class Server {
 		launchService.execute(PunishmentHandler::parseIPMutes);
 		launchService.execute(PunishmentHandler::parseStarters);
 		CommandDispatcher.load();
+	}
+	
+	public static void terminate() {
+		if(SHUTDOWN_HOOK) {
+			try {
+				ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleTerminateThread").build());
+				ListeningExecutorService launchService = MoreExecutors.listeningDecorator(delegateService);
+				launchService.execute(() -> World.getClanManager().save());
+				launchService.execute(() -> World.getScoreboardManager().serializeIndividualScoreboard());
+				launchService.execute(MarketItem::serializeMarketItems);
+				launchService.execute(NpcDropManager::dump);
+				launchService.execute(() -> {
+					//players
+					for(Player p : World.getPlayers()) {
+						if(p != null) {
+							World.getService().submit(() -> new PlayerSerialization(p).serialize());
+						}
+					}
+				});
+				launchService.execute(() -> {
+					try {
+						BufferedWriter out = new BufferedWriter(new FileWriter("./data/suggested_drops.txt", true));
+						for(NpcDrop d : NpcInformationMessage.SUGGESTED) {
+							out.write(d.toString());
+							out.newLine();
+						}
+						NpcInformationMessage.SUGGESTED.clear();
+						out.close();
+					} catch(Exception e) {
+					}
+				});
+				launchService.shutdown();
+				launchService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+			} catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

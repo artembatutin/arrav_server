@@ -7,6 +7,7 @@ import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
 import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.npc.drop.NpcDropTable;
+import net.edge.world.node.entity.npc.drop.SuggestedDrop;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.ItemDefinition;
@@ -14,6 +15,7 @@ import net.edge.world.node.item.ItemDefinition;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * The message sent from the client which depends on the Npc Information panel integration.
@@ -21,15 +23,19 @@ import java.io.IOException;
  */
 public final class NpcInformationMessage implements InputMessageListener {
 	
+	public static final ArrayList<SuggestedDrop> SUGGESTED = new ArrayList<>();
+	
 	@Override
 	public void handleMessage(Player player, int opcode, int size, ByteMessage payload) {
 		if(opcode == 19) {
 			Chance chance = Chance.values()[payload.get()];
+			int npc = player.getAttr().get("npcInformation").getInt();
 			int item = payload.getShort();
 			int min = payload.getShort();
 			int max = payload.getShort();
+			SuggestedDrop suggested = new SuggestedDrop(npc, item, min, max, chance);
 			if(player.getRights() == Rights.DEVELOPER) {
-				NpcDropTable table = NpcDropManager.getTables().get(player.getAttr().get("npcInformation").getInt());
+				NpcDropTable table = NpcDropManager.getTables().get(npc);
 				if(table == null) {
 					player.message("No table found.");
 					return;
@@ -52,19 +58,12 @@ public final class NpcInformationMessage implements InputMessageListener {
 					player.message("Couldn't remove any drop.");
 					return;
 				}
-				NpcDrop drop = new NpcDrop(item, min, max, chance);
-				table.getDrops().add(drop);
+				table.getDrops().add(suggested.toDrop());
 				table.sort();
-				player.message("Added " + drop.toString());
+				player.message("Added " + suggested.toString());
 			} else {
-				try {
-					BufferedWriter out = new BufferedWriter(new FileWriter("./data/drops.txt", true));
-					out.write(player.getAttr().get("npcInformation").getInt() + " { \"id\": " + item + "\"minimum\": " + min + "\"maximum\": " + max + "\"chance\": \"" + chance.name() + "\"}");
-					out.newLine();
-					out.close();
-				} catch(IOException e) {
-					e.printStackTrace();
-				}
+				SUGGESTED.add(suggested);
+				player.message("Your suggestion has been submitted.");
 			}
 		} else {
 			int id = payload.getShort();
