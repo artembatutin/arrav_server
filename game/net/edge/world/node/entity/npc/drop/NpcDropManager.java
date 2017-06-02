@@ -56,7 +56,7 @@ public final class NpcDropManager {
 	}
 	
 	public static void dump() {
-		/*JSONArray list = new JSONArray();
+		JSONArray list = new JSONArray();
 		int drops = 0;
 		int tables = 0;
 		int npcsShare = 0;
@@ -75,23 +75,22 @@ public final class NpcDropManager {
 					continue;
 				NpcDropTable check = TABLES.get(id2);
 				boolean same = true;
-				for(NpcDrop dropCheck : check.getUnique()) {
-					if(dropCheck == null)
-						continue;
-					if(!orig.contains(dropCheck)) {
-						same = false;
-						break;
+				if(orig.getDrops().size() == check.getDrops().size()) {
+					for(NpcDrop dropCheck : check.getDrops()) {
+						if(dropCheck == null)
+							continue;
+						if(!orig.contains(dropCheck)) {
+							same = false;
+							break;
+						}
 					}
-				}
-				if(orig.getUnique().length != check.getUnique().length)
+				} else
 					same = false;
 				if(same) {
 					if(redirect[id]) {
 						redirects.put(id2, redirects.get(id));
-						//System.out.println(id2 + " same as " + redirects.get(id));
 					} else {
 						redirects.put(id2, id);
-						//System.out.println(id2 + " same as " + id);
 					}
 					redirect[id2] = true;
 				}
@@ -116,9 +115,7 @@ public final class NpcDropManager {
 			
 			JSONArray unique = new JSONArray();
 			TABLES.get(id).sort();
-			NpcDrop[] packed = TABLES.get(id).getUnique();
-			for(int i = 0; i < packed.length; i++) {
-				NpcDrop drop = packed[i];
+			for(NpcDrop drop : TABLES.get(id).getDrops()) {
 				if(drop == null)
 					continue;
 				JSONObject dropa = new JSONObject();
@@ -127,11 +124,7 @@ public final class NpcDropManager {
 				if(drop.getId() < 0)
 					continue;
 				dropa.put("id", drop.getId());
-				if(drop.getMinimum() < 0)
-					drop.setMinimum(1);
 				dropa.put("minimum", drop.getMinimum());
-				if(drop.getMaximum() < drop.getMinimum())
-					drop.setMaximum(drop.getMinimum() + 3);
 				dropa.put("maximum", drop.getMaximum());
 				dropa.put("chance", drop.getChance().toString());
 				unique.add(dropa);
@@ -145,7 +138,7 @@ public final class NpcDropManager {
 		
 		JSONObject res = new JSONObject();
 		res.put("res", list);
-		try (FileWriter file = new FileWriter("./drops.json")) {
+		try (FileWriter file = new FileWriter("./data/json/npcsdrops.json")) {
 			
 			file.write(res.toJSONString());
 			file.flush();
@@ -154,7 +147,7 @@ public final class NpcDropManager {
 			e.printStackTrace();
 		}
 		System.out.println("Drops: " + drops + " in " + tables + " tables with " + npcsShare + " shared tables between npcs.");
-		*/
+		
 	}
 	
 }

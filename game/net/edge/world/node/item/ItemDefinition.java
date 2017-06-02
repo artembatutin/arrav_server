@@ -555,8 +555,8 @@ public final class ItemDefinition {
 													if(comb == def.getCombatLevel()) {
 														if(NpcDropManager.getTables().containsKey(index)) {
 															NpcDropTable drop = NpcDropManager.getTables().get(def.getId());
-															if(!drop.getUnique().contains(new NpcDrop(index, minQuant, maxQuant, rarity))) {
-																drop.getUnique().add(new NpcDrop(index, minQuant, maxQuant, rarity));
+															if(!drop.getDrops().contains(new NpcDrop(index, minQuant, maxQuant, rarity))) {
+																drop.getDrops().add(new NpcDrop(index, minQuant, maxQuant, rarity));
 																drops += 1;
 															}
 														} else {
@@ -569,8 +569,8 @@ public final class ItemDefinition {
 											} else {
 												if(NpcDropManager.getTables().containsKey(index)) {
 													NpcDropTable drop = NpcDropManager.getTables().get(def.getId());
-													if(!drop.getUnique().contains(new NpcDrop(index, minQuant, maxQuant, rarity))) {
-														drop.getUnique().add(new NpcDrop(index, minQuant, maxQuant, rarity));
+													if(!drop.getDrops().contains(new NpcDrop(index, minQuant, maxQuant, rarity))) {
+														drop.getDrops().add(new NpcDrop(index, minQuant, maxQuant, rarity));
 														drops += 1;
 													}
 												} else {

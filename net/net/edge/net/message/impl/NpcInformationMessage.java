@@ -9,6 +9,7 @@ import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.item.ItemDefinition;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -33,11 +34,28 @@ public final class NpcInformationMessage implements InputMessageListener {
 					player.message("No table found.");
 					return;
 				}
-				NpcDrop[] drops = new NpcDrop[table.getUnique().length + 1];
-				System.arraycopy(table.getUnique(), 0, drops, 0, table.getUnique().length);
-				drops[table.getUnique().length] = new NpcDrop(item, min, max, chance);
-				player.message("Added " + drops[table.getUnique().length].toString());
-				table.setUnique(drops);
+				if(min == 99) {
+					int index = 0;
+					for(NpcDrop d : table.getDrops()) {
+						String itemName = ItemDefinition.get(item).getName().toLowerCase().replaceAll(" ", "_");
+						if(d != null) {
+							String name = ItemDefinition.get(d.getId()).getName().toLowerCase().replaceAll(" ", "_");
+							if(itemName.equals(name)) {
+								table.getDrops().remove(index);
+								table.sort();
+								player.message("Removed: " + d.toString());
+								return;
+							}
+						}
+						index++;
+					}
+					player.message("Couldn't remove any drop.");
+					return;
+				}
+				NpcDrop drop = new NpcDrop(item, min, max, chance);
+				table.getDrops().add(drop);
+				table.sort();
+				player.message("Added " + drop.toString());
 			} else {
 				try {
 					BufferedWriter out = new BufferedWriter(new FileWriter("./data/drops.txt", true));

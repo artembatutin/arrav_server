@@ -1073,9 +1073,9 @@ public final class OutputMessages {
 			NpcDefinition def = NpcDefinition.DEFINITIONS[id];
 			if(def == null)
 				return;
-			msg.putShort(drop.getUnique() == null ? 0 : drop.getUnique().length);
-			if(drop.getUnique() != null) {
-				for(NpcDrop d : drop.getUnique()) {
+			msg.putShort(drop.getDrops() == null ? 0 : drop.getDrops().size());
+			if(drop.getDrops() != null) {
+				for(NpcDrop d : drop.getDrops()) {
 					msg.putShort(d.getId());
 					msg.putShort(d.getMinimum());
 					msg.putShort(d.getMaximum());
@@ -1101,7 +1101,7 @@ public final class OutputMessages {
 	}
 	
 	/**
-	 * The message that sends the current tool.mapviewer region.
+	 * The message that sends the current map region.
 	 */
 	public void sendMapRegion() {
 		player.setLastRegion(player.getPosition().copy());
