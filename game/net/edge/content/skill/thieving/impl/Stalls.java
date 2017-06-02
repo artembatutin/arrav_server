@@ -278,14 +278,14 @@ public final class Stalls extends Thieving {
 		public void onSubmit() {
 			object.setDisabled(true);
 			object.setId(stall.stall.emptyStallId);
-			object.register();
+			object.publish();
 		}
 		
 		@Override
 		public void execute() {
 			object.setDisabled(false);
 			object.setId(id);
-			stall.object.register();
+			stall.object.publish();
 			this.cancel();
 		}
 		

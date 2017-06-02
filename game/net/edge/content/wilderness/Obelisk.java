@@ -12,8 +12,8 @@ import net.edge.world.object.ObjectNode;
 import net.edge.world.region.Region;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.OBELISK;
@@ -92,7 +92,7 @@ public enum Obelisk {
 		/**
 		 * The obelisks objects.
 		 */
-		private Set<ObjectNode> obelisks;
+		private List<ObjectNode> obelisks;
 		
 		ObeliskTask(Obelisk data, Region reg) {
 			super(8, false);
@@ -102,10 +102,10 @@ public enum Obelisk {
 		
 		@Override
 		protected void onSubmit() {
-			obelisks = reg.getObjects(data.object);
+			obelisks = reg.getInteractiveObjects(data.object);
 			obelisks.forEach(o -> {
 				o.setId(14825);
-				o.register();
+				o.publish();
 			});
 		}
 		
@@ -113,7 +113,7 @@ public enum Obelisk {
 		protected void execute() {
 			obelisks.forEach(o -> {
 				o.setId(data.object);
-				o.register();
+				o.publish();
 			});
 			Obelisk dest = RandomUtils.random(VALUES.stream().filter(d -> d != data).collect(Collectors.toList()));
 			int x = dest.boundary.getSwX();

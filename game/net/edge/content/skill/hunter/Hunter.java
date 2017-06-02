@@ -57,14 +57,14 @@ public final class Hunter {
 			GLOBAL_TRAPS.get(player).getTraps().forEach(t -> {
 				t.setAbandoned(true);
 				t.getObject().getRegion().register(new ItemNode(new Item(t.getType().getItemId()), t.getObject().getGlobalPos().copy(), player));
-				t.getObject().unregister();
+				t.getObject().publish();
 			});
 			GLOBAL_TRAPS.get(player).getTraps().clear();
 		} else {
 			GLOBAL_TRAPS.get(player).getTraps().remove(trap);
 			trap.setAbandoned(true);
 			trap.getObject().getRegion().register(new ItemNode(new Item(trap.getType().getItemId()), trap.getObject().getGlobalPos().copy(), player));
-			trap.getObject().unregister();
+			trap.getObject().remove();
 			player.message("You have abandoned your trap...");
 		}
 		
@@ -95,7 +95,7 @@ public final class Hunter {
 		
 		Position p = player.getPosition();
 		
-		if(player.getRegion().getObjects(p).stream().anyMatch(o -> o.getObjectType() == ObjectType.GENERAL_PROP) || !World.getTraversalMap().isTraversable(p, Direction.WEST, player.size()) && !World.getTraversalMap().isTraversable(p, Direction.EAST, player.size()) || Location.isAtHome(player)) {
+		if(player.getRegion().getInteractiveObjects().stream().anyMatch(o -> o.getObjectType() == ObjectType.GENERAL_PROP) || !World.getTraversalMap().isTraversable(p, Direction.WEST, player.size()) && !World.getTraversalMap().isTraversable(p, Direction.EAST, player.size()) || Location.isAtHome(player)) {
 			player.message("You can't set-up your trap here.");
 			return false;
 		}
@@ -115,7 +115,7 @@ public final class Hunter {
 		trap.submit();
 		player.animation(new Animation(827));
 		player.getInventory().remove(new Item(trap.getType().getItemId(), 1));
-		trap.getObject().register();
+		trap.getObject().publish();
 		if(World.getTraversalMap().isTraversable(p, Direction.WEST, player.size())) {
 			player.getMovementQueue().walk(Direction.WEST.getX(), Direction.WEST.getY());
 		} else if(World.getTraversalMap().isTraversable(p, Direction.EAST, player.size())) {
@@ -161,7 +161,7 @@ public final class Hunter {
 		}
 		
 		trap.onPickUp();
-		object.unregister();
+		object.remove();
 		player.getInventory().add(new Item(trap.getType().getItemId(), 1));
 		player.animation(new Animation(827));
 		return true;
@@ -203,7 +203,7 @@ public final class Hunter {
 			GLOBAL_TRAPS.get(player).setTask(Optional.empty());
 			GLOBAL_TRAPS.remove(player);
 		}
-		trap.getObject().unregister();
+		trap.getObject().remove();
 		player.getInventory().add(new Item(trap.getType().getItemId(), 1));
 		player.animation(new Animation(827));
 		return true;

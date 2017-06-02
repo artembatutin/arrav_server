@@ -28,29 +28,7 @@ public final class ObjectNodeRemoveLoader extends JsonLoader {
 	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
+		//TODO REMOVE THIS
 		Position position = Objects.requireNonNull(builder.fromJson(reader.get("position"), Position.class));
-		ObjectType type = null;
-		if(reader.has("type")) {
-			type = Objects.requireNonNull(builder.fromJson(reader.get("type"), ObjectType.class));
-		}
-		Region reg = World.getRegions().getRegion(position);
-		final ObjectType typef = type;
-		reg.getObjects(position).forEach(o -> {
-			if(typef == null) {
-				o.delete();
-			} else if(typef == o.getObjectType()) {
-				o.delete();
-			}
-		});
-		
-		//Deleting all.
-		Set<ObjectNode> objects = ImmutableSet.copyOf(reg.getObjects(position));
-		for(ObjectNode o : objects) {
-			if(typef == null) {
-				World.getTraversalMap().markObject(reg, o, false, true);
-			} else if(typef == o.getObjectType()) {
-				World.getTraversalMap().markObject(reg, o, false, true);
-			}
-		}
 	}
 }

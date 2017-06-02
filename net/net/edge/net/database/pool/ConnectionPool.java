@@ -9,7 +9,7 @@ import java.sql.SQLException;
  * An interface for asynchronously pooling database {@link Connection}s.
  * @author Whis
  */
-public interface ConnectionPool { // any other tips to improve?
+public interface ConnectionPool {
 	/**
 	 * Attempts to obtain a {@link Connection} from the pool.
 	 */

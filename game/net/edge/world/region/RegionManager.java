@@ -115,7 +115,7 @@ public final class RegionManager {
 				for(ObjectNode ob : o)
 					player.getMessages().sendRemoveObject(ob);
 			});
-			Set<ObjectNode> regionObj = region.getDynamicObjects();
+			List<ObjectNode> regionObj = region.getDynamicObjects();
 			for(ObjectNode o : regionObj) {
 				if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance())
 					player.getMessages().sendObject(o);

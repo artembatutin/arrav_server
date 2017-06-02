@@ -90,7 +90,7 @@ public class StaticObject extends ObjectNode {
 	@Override
 	public StaticObject setPosition(Position pos) {
 		//Removing from the region as it has been changed.
-		unregister();
+		remove();
 		Region reg = World.getRegions().getRegion(pos);
 		return new StaticObject(reg, getId(), pos.getX(), pos.getY(), pos.getZ(), getDirection(), getObjectType());
 	}

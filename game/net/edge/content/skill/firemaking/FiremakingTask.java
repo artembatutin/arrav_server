@@ -37,13 +37,13 @@ final class FiremakingTask extends Task {
 	@Override
 	public void onSubmit() {
 		object = new DynamicObject(firemaking.getFireLighter().getObjectId(), firemaking.getPlayer().getPosition(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, 0);
-		object.register();
+		object.publish();
 	}
 	
 	@Override
 	public void execute() {
 		object.getRegion().register(new ItemNodeStatic(new Item(592), object.getGlobalPos(), ItemPolicy.TIMEOUT));
-		object.unregister();
+		object.remove();
 	}
 	
 }

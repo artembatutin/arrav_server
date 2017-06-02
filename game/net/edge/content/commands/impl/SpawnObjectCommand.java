@@ -14,7 +14,7 @@ public final class SpawnObjectCommand implements Command {
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		int id = Integer.parseInt(cmd[1]);
-		new DynamicObject(id, player.getPosition(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, 0).register();
+		new DynamicObject(id, player.getPosition(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, 0).publish();
 	}
 	
 }

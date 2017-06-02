@@ -64,7 +64,7 @@ public final class FirepitObject extends DynamicObject {
 		if(getElements() >= data.count && this.data.getNext().isPresent()) {
 			this.data = this.data.getNext().get();
 			this.setId(data.objectId);
-			this.register();
+			this.publish();
 		}
 	}
 	

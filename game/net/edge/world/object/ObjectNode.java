@@ -67,7 +67,7 @@ public abstract class ObjectNode {
 	 * @return the copy of this object.
 	 */
 	public ObjectNode setId(int id) {
-		unregister();
+		remove();
 		this.id = id;
 		return this;
 	}
@@ -78,7 +78,7 @@ public abstract class ObjectNode {
 	 * @return the copy of this object.
 	 */
 	public ObjectNode setDirection(ObjectDirection direction) {
-		unregister();
+		remove();
 		return copy(direction);
 	}
 	
@@ -88,7 +88,7 @@ public abstract class ObjectNode {
 	 * @return the copy of this object.
 	 */
 	public ObjectNode setObjectType(ObjectType objectType) {
-		unregister();
+		remove();
 		return copy(objectType);
 	}
 	
@@ -186,52 +186,49 @@ public abstract class ObjectNode {
 		return getRegion().getObject(getId(), getLocalPos()).isPresent();
 	}
 	
-	/**
-	 * Registers the object in the region it is in.
-	 * @return <code>true</code> if succeeded, <code>false</code> otherwise
-	 */
-	public boolean register() {
-		if(getRegion().addObj(this)) {
-			World.getTraversalMap().markObject(getRegion(), this, true, false);
-			visible(true);
-			return true;
-		}
-		return false;
+	public void publish() {
+		Region r = getRegion();
+		r.addObj(this);
+		clip(r);
+	}
+	
+	public void remove() {
+		Region r = getRegion();
+		r.removeObj(this);
+		unclip(r);
 	}
 	
 	/**
-	 * Unregisters the object from the region it is in.
-	 * @return <code>true</code> if succeeded, <code>false</code> otherwise
+	 * Clips the object on the traversable map.
 	 */
-	public boolean unregister() {
-		if(getRegion().removeObj(this)) {
-			World.getTraversalMap().markObject(getRegion(), this, false, false);
-			visible(false);
-			return true;
-		}
-		return false;
+	public void clip(Region reg) {
+		World.getTraversalMap().markObject(reg, this, true, false);
+		visible(true);
+	}
+	
+	/**
+	 * Unclips the object from the traversable map.
+	 */
+	public void unclip(Region reg) {
+		World.getTraversalMap().markObject(reg, this, false, false);
+		visible(false);
 	}
 	
 	/**
 	 * The method that attempts to register this object and then execute
 	 * {@code action} after specified amount of ticks.
 	 * @param ticks  the amount of ticks to unregister this object after.
-	 * @return {@code true} if the object was registered, {@code false}
-	 * otherwise.
 	 */
-	public boolean register(int ticks, Consumer<ObjectNode> action) {
-		if(register()) {
-			ObjectNode ref = this;
-			World.submit(new Task(ticks, false) {
-				@Override
-				public void execute() {
-					action.accept(ref);
-					this.cancel();
-				}
-			});
-			return true;
-		}
-		return false;
+	public void publish(int ticks, Consumer<ObjectNode> action) {
+		publish();
+		ObjectNode ref = this;
+		World.submit(new Task(ticks, false) {
+			@Override
+			public void execute() {
+				action.accept(ref);
+				this.cancel();
+			}
+		});
 	}
 	
 	/**

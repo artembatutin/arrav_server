@@ -107,7 +107,7 @@ public class DynamicObject extends ObjectNode {
 	@Override
 	public DynamicObject setPosition(Position position) {
 		//Removing from the region as it has been changed.
-		unregister();
+		remove();
 		return new DynamicObject(getId(), position, getDirection(), getObjectType(), disabled, elements, instance);
 	}
 	

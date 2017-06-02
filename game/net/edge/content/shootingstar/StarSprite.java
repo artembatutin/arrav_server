@@ -37,7 +37,7 @@ public final class StarSprite extends Npc {
 	 */
 	public void spawn(Player player) {
 		star.setDisabled(true);
-		star.unregister();
+		star.remove();
 		World.getNpcs().add(star.sprite);
 	}
 	

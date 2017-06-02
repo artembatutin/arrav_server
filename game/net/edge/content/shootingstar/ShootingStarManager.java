@@ -47,7 +47,7 @@ public final class ShootingStarManager {
 	 */
 	public void spawn() {
 		star = generateStar();
-		star.register();
+		star.publish();
 		World.message(star.locationData.message, true);
 	}
 	

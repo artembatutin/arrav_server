@@ -124,12 +124,12 @@ public final class Woodcutting extends HarvestingSkillAction {
 			object.setElements(object.getElements() - 1);
 		}
 		if(tree.isObstacle() && success && object.isReg()) {
-			object.unregister();
+			object.remove();
 			object.setDisabled(true);
 			World.getTaskManager().submit(new Task(2, false) {
 				@Override
 				public void execute() {
-					object.register();
+					object.publish();
 					object.setDisabled(false);
 				}
 			});
@@ -148,10 +148,10 @@ public final class Woodcutting extends HarvestingSkillAction {
 				int id = object.getId();//saved tree id.
 				object.setId(filter.get().getTransformable());
 				object.setDisabled(true);
-				object.register(tree.getRespawnTime(), n -> {
+				object.publish(tree.getRespawnTime(), n -> {
 					object.setId(id);
-					object.register();
 					object.setDisabled(false);
+					object.publish();
 				});
 			}
 		}

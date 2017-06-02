@@ -36,7 +36,7 @@ public final class FirepitTask extends Task {
 		this.cancel();
 		object.setActive(Optional.empty());
 		object.setId(FirepitData.PHASE_ONE.objectId);
-		object.register();
+		object.publish();
 	}
 	
 	@Override

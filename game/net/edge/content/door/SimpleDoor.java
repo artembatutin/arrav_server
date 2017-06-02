@@ -28,7 +28,7 @@ public class SimpleDoor {
 
 	public void append(Player player) {
 		current.delete();
-		current.unregister();
+		current.remove();
 		int xAdjustment = 0;
 		int yAdjustment = 0;
 		ObjectDirection direction = getDirection();
@@ -113,7 +113,7 @@ public class SimpleDoor {
 		closed = !closed;
 		appended = !appended;
 		current.restore();
-		current.register();
+		current.publish();
 	}
 	
 	public void change(Position position, ObjectDirection direction) {

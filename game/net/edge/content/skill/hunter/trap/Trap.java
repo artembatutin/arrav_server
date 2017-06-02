@@ -216,7 +216,7 @@ public abstract class Trap {
 	 */
 	public void updateObject(int id) {
 		this.object = object.setId(id);
-		this.object.register();
+		this.object.publish();
 	}
 	
 	/**

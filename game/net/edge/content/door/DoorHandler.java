@@ -25,7 +25,7 @@ public class DoorHandler {
 			if(player.isNight()) {
 				player.teleport(new Position(player.getPosition().getX() >= 3104 ? 3103 : 3104, 3498), DOOR);
 				if(player.getPosition().getX() >= 3104)
-					player.getLocalNpcs().stream().filter(n -> n.getId() == 6183).findFirst().ifPresent(e -> e.forceChat("Welcome to the watch " + (player.isNightMaxed() ? "captain" : "soldier") + " " + player.getFormatUsername() + "."));
+					player.getLocalNpcs().stream().filter(n -> n.getId() == 6184).findFirst().ifPresent(e -> e.forceChat("Welcome to the watch " + (player.isNightMaxed() ? "captain" : "soldier") + " " + player.getFormatUsername() + "."));
 			} else
 				player.getLocalNpcs().stream().filter(n -> n.getId() == 6184).findFirst().ifPresent(e -> e.forceChat("Only night's watch members can enter, sir."));
 			return true;

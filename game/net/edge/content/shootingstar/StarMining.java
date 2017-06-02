@@ -90,7 +90,7 @@ public final class StarMining extends HarvestingSkillAction {
 				star.data = filter.get();
 				star.setId(star.data.objectId);
 				star.setElements(0);
-				star.register();
+				star.publish();
 			} else {
 				World.getShootingStarEvent().getShootingStar().getStarSprite().spawn(player);
 			}

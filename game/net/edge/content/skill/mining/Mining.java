@@ -121,11 +121,10 @@ public final class Mining extends HarvestingSkillAction {
 			if(filter.isPresent()) {
 				int id = object.getId();//filled rock.
 				ObjectNode emptyRock = object.setId(filter.get().getTransformable());
-				emptyRock.register();
 				object.setDisabled(true);
-				object.register(rock.getRespawnTime(), n -> {
+				emptyRock.publish(rock.getRespawnTime(), n -> {
 					object.setId(id);
-					object.register();
+					object.publish();
 					object.setDisabled(false);
 				});
 			}

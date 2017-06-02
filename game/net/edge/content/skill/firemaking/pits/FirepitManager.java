@@ -63,7 +63,7 @@ public final class FirepitManager {
 	 * Registers the two fire pits on the world.
 	 */
 	public void register() {
-		firepit.register();
+		firepit.publish();
 	}
 	
 }

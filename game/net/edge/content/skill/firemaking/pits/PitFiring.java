@@ -96,7 +96,7 @@ final class PitFiring extends SkillAction {
 		}
 		t.cancel();
 		pit.setId(FirepitData.PHASE_IGNITED.objectId);
-		pit.register();
+		pit.publish();
 		World.submit(new FirepitTask(pit));
 		player.animation(null);
 		player.message("You successfully fired the pit...");

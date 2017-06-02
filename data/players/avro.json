@@ -4,11 +4,12 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3085,
+    "x": 3087,
     "y": 3509,
     "z": 0
   },
   "rights": "DEVELOPER",
+  "nightmare": 0,
   "clan": "avro",
   "appearance": [
     0,
@@ -197,18 +198,48 @@
       "id": 1265,
       "amount": 1
     },
+    {
+      "id": 13727,
+      "amount": 76
+    },
+    {
+      "id": 1521,
+      "amount": 1
+    },
+    {
+      "id": 1521,
+      "amount": 1
+    },
+    {
+      "id": 1521,
+      "amount": 1
+    },
+    {
+      "id": 1521,
+      "amount": 1
+    },
+    {
+      "id": 1521,
+      "amount": 1
+    },
     null,
     null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
     null,
     null,
     null,

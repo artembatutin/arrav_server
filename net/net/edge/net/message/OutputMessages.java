@@ -1026,7 +1026,6 @@ public final class OutputMessages {
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 126, MessageType.VARIABLE_SHORT);
 		msg.putString(text);
 		msg.putShort(id, ByteTransform.A);
-		
 		player.queue(msg);
 		
 	}
@@ -1122,7 +1121,6 @@ public final class OutputMessages {
 		msg.putShort(player.getPosition().getRegionX() + 6, ByteTransform.A);
 		msg.putShort(player.getPosition().getRegionY() + 6);
 		player.queue(msg);
-		
 	}
 	
 	/**
@@ -1132,7 +1130,6 @@ public final class OutputMessages {
 		World.queueLogout(player);
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 109);
 		player.queue(msg);
-		
 	}
 	
 	/**
@@ -1143,7 +1140,6 @@ public final class OutputMessages {
 		msg.put(1, ByteTransform.A);
 		msg.putShort(player.getSlot(), ByteTransform.A, ByteOrder.LITTLE);
 		player.queue(msg);
-		
 	}
 	
 	/**
@@ -1155,9 +1151,7 @@ public final class OutputMessages {
 		msg.putString(message);
 		msg.putString(clanName);
 		msg.putShort(rank.getProtocolValue());
-		
 		player.queue(msg);
-		
 	}
 	
 	/**

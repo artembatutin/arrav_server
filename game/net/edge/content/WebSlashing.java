@@ -67,13 +67,13 @@ public final class WebSlashing extends Task {
 	@Override
 	protected void onSubmit() {
 		object.setId(SLASHED_WEB);
-		object.register();
+		object.publish();
 	}
 	
 	@Override
 	protected void execute() {
 		object.setId(id);
-		object.register();
+		object.publish();
 	}
 	
 	/**

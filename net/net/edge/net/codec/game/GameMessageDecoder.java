@@ -11,6 +11,7 @@ import net.edge.net.codec.MessageType;
 import net.edge.net.message.GameMessage;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -54,7 +55,7 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 	/**
 	 * The message that was decoded and needs to be queued.
 	 */
-	private GameMessage currentMessage = null;
+	private Optional<GameMessage> currentMessage = Optional.empty();
 	
 	/**
 	 * Creates a new {@link GameMessageDecoder}.
@@ -77,10 +78,10 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 				payload(in);
 				break;
 		}
-		if(currentMessage != null) {
-			out.add(currentMessage);
-			currentMessage = null;
-		}
+		currentMessage.ifPresent(m -> {
+			out.add(m);
+			currentMessage = Optional.empty();
+		});
 	}
 	
 	/**
@@ -118,11 +119,9 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 		
 		if(in.isReadable(bytes)) {
 			size = 0;
-			
 			for(int i = 0; i < bytes; i++) {
 				size |= in.readUnsignedByte() << 8 * (bytes - 1 - i);
 			}
-			
 			state = State.PAYLOAD;
 		}
 	}
@@ -145,7 +144,7 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 		checkState(opcode >= 0, "opcode < 0");
 		checkState(size >= 0, "size < 0");
 		checkState(type != MessageType.RAW, "type == MessageType.RAW");
-		checkState(currentMessage != null, "message already in queue");
+		checkState(!currentMessage.isPresent(), "message already in queue");
 		
 		try {
 			if(NetworkConstants.MESSAGES[opcode] == null) {
@@ -153,7 +152,7 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 				currentMessage = null;
 				return;
 			}
-			currentMessage = new GameMessage(opcode, type, ByteMessage.wrap(payload));
+			currentMessage = Optional.of(new GameMessage(opcode, type, ByteMessage.wrap(payload)));
 		} finally {
 			resetState();
 		}

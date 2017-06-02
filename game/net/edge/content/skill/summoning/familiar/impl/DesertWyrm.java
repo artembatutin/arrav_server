@@ -15,6 +15,7 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectNode;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -40,14 +41,14 @@ public final class DesertWyrm extends Familiar {
 		familiar.animation(new Animation(7800));
 		familiar.graphic(new Graphic(1412));
 		
-		Set<ObjectNode> objs = World.getRegions().getRegion(familiar.getPosition()).getObjects(familiar.getPosition(), 7);
+		//List<ObjectNode> objs = World.getRegions().getRegion(familiar.getPosition()).getInteractiveObjects(familiar.getPosition(), 7);
 		//Rock rock = null;
-		for(ObjectNode n : objs) {
-			if(n != null) {
-				//rock = Rock.getDefinition(n.getId()).orElse(null);
-				//TODO: Stan, look at this.
-			}
-		}
+		//for(ObjectNode n : objs) {
+		//	if(n != null) {
+		//		//rock = Rock.getDefinition(n.getId()).orElse(null);
+		//		TODO: Stan, look at this.
+		//	}
+		//}
 		
 		LinkedTaskSequence seq = new LinkedTaskSequence();
 		seq.connect(4, () -> familiar.setVisible(false));

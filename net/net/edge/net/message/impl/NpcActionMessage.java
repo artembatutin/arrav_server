@@ -145,9 +145,9 @@ public final class NpcActionMessage implements InputMessageListener {
 					return;
 				}
 				switch(id) {
-					case 8327:
+					case 3705:
 						DialogueAppender night = new DialogueAppender(player);
-						night.chain(new NpcDialogue(8327, "Evening " + player.getFormatUsername() + ", what do you want?"));
+						night.chain(new NpcDialogue(3705, "Evening " + player.getFormatUsername() + ", what do you want?"));
 						night.chain(new OptionDialogue(t -> {
 							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 								night.getBuilder().skip();
@@ -162,8 +162,8 @@ public final class NpcActionMessage implements InputMessageListener {
 							MarketCounter.getShops().get(24).openShop(player);
 						}));
 						night.chain(new PlayerDialogue("Who are you?"));
-						night.chain(new NpcDialogue(8327, "I am the Night's watch captain, it is thanks to me", "that the nightmare mode is available for players like you.", "Oh and I also sell interesting items in my shop..."));
-						night.chain(new NpcDialogue(8327, "Would you perhaps want to take a look?"));
+						night.chain(new NpcDialogue(3705, "I am the Night's watch captain, it is thanks to me", "that the nightmare mode is available for players like you.", "Oh and I also sell interesting items in my shop..."));
+						night.chain(new NpcDialogue(3705, "Would you perhaps want to take a look?"));
 						night.chain(new OptionDialogue(t -> {
 							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 								night.getBuilder().skip();
@@ -397,7 +397,7 @@ public final class NpcActionMessage implements InputMessageListener {
 				}
 				
 				switch(id) {
-					case 8327:
+					case 3705:
 						MarketCounter.getShops().get(24).openShop(player);
 						break;
 					case 7605:
@@ -521,11 +521,11 @@ public final class NpcActionMessage implements InputMessageListener {
 				}
 				
 				switch(id) {
-					case 8327:
+					case 3705:
 						DialogueAppender ap = new DialogueAppender(player);
 						boolean maxed = Skills.maxed(player);
 						String[] message = maxed ? new String[]{"Very well warrior, I see that you've accomplished maxing", "out all of your skills. Would you like to prestige to remove",  "your restrictions?"} : new String[]{"You have not yet maxed all of your skills warrior."};
-						ap.chain(new NpcDialogue(8327, message).attachAfter(() -> {
+						ap.chain(new NpcDialogue(3705, message).attachAfter(() -> {
 							if(!maxed) {
 								player.getMessages().sendCloseWindows();
 							}
@@ -539,7 +539,7 @@ public final class NpcActionMessage implements InputMessageListener {
 						}, "Yes please", "No thanks"));
 						ap.chain(new PlayerDialogue("No thanks...").attachAfter(() -> player.getMessages().sendCloseWindows()));
 						ap.chain(new PlayerDialogue("Yes, please..."));
-						ap.chain(new NpcDialogue(8327, "Very well, you've been prestiged and your restrictions have", "been removed...").attach(() -> {
+						ap.chain(new NpcDialogue(3705, "Very well, you've been prestiged and your restrictions have", "been removed...").attach(() -> {
 							player.graphic(new Graphic(2189));
 							player.setNight(2);
 						}));

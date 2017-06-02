@@ -194,8 +194,6 @@ public final class Server {
 			new ObjectDefinitionDecoder(fs).run();
 			new MapDefinitionDecoder(fs).run();
 			new RegionDecoder(fs).run();
-			new ObjectNodeRemoveLoader().load();
-			new ObjectNodeLoader().load();
 			World.getFirepitEvent().register();
 		});
 		//Item decoding.
