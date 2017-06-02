@@ -114,7 +114,7 @@ public final class RegionDecoder implements Runnable {
 					}
 				}
 				int objectId = id;
-				if(isNew) {
+				if(isNew || objectId == 2563) {
 					objectId = objectId + 42003;//667 objects.
 				} else if(objectId >= 42003) {
 					objectId = objectId + 42003;//667 offset for 530 objects.

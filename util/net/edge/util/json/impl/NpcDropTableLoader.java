@@ -31,7 +31,7 @@ public final class NpcDropTableLoader extends JsonLoader {
 	/**
 	 * A constant defined to write a new set of npc ids for the client.
 	 */
-	private final boolean OUTPUT = true;
+	private final boolean OUTPUT = false;
 	
 	/**
 	 * A set of written ids.
