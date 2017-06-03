@@ -1,5 +1,7 @@
 package net.edge.task;
 
+import net.edge.world.World;
+
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -81,7 +83,14 @@ public abstract class Task {
 			running = false;
 		}
 	}
-	
+
+	/**
+	 * Submits this task to the world.
+	 */
+	public final void submit() {
+		World.get().submit(this);
+	}
+
 	/**
 	 * Returns the flag which detemines if the task can be executed on the sequence.
 	 */

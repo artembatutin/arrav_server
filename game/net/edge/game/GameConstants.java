@@ -95,7 +95,21 @@ public final class GameConstants {
 	 * killed, while {@code -killer-} is replaced with the killer's name.
 	 */
 	public static final String[] DEATH_MESSAGES = {"You have just killed -victim-!", "You have completely slaughtered -victim-!", "I bet -victim- will think twice before messing with you again!", "Your killing style is impeccable, -victim- didn't stand a chance!"};
-	
+
+	/**
+	 * Strings that can not be used in a username.
+	 */
+	public static final String BAD_USERNAMES[] = {"m o d", "a d m i n", "mod", "admin", "moderator", "administrator", "owner", "m0d", "adm1n", "0wner", "retard", "Nigga", "nigger", "n1gger", "n1gg3r", "nigg3r", "n1gga", "cock", "faggot", "fag", "anus", "arse", "fuck", "bastard", "bitch", "cunt", "chode", "damn", "dick", "faggit", "gay", "homo", "jizz", "lesbian", "negro", "pussy", "penis", "queef", "twat", "titty", "whore", "b1tch"};
+
+	/**
+	 * Strings that are classified as bad.
+	 */
+	public static final String[] BAD_STRINGS = {
+			"fag", "f4g", "faggot", "nigger", "fuck", "bitch", "whore", "slut",
+			"gay", "lesbian", "scape", ".net", ".org", "vagina", "dick",
+			"cock", "penis", "hoe", "soulsplit", "ikov", "retard", "cunt"
+	};
+
 	/**
 	 * The default constructor.
 	 * @throws UnsupportedOperationException if this class is instantiated.

@@ -35,13 +35,6 @@ public final class DiggingHandler extends Task {
 		this.action = action;
 	}
 	
-	/**
-	 * Submits this action.
-	 */
-	public void submit() {
-		World.get().submit(this);
-	}
-	
 	@Override
 	public void onSubmit() {
 		player.animation(new Animation(831));

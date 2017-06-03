@@ -1,5 +1,6 @@
 package net.edge.world;
 
+import net.edge.content.trivia.TriviaTask;
 import net.edge.game.GameConstants;
 import net.edge.game.GameExecutor;
 import net.edge.game.GamePulseHandler;
@@ -61,7 +62,12 @@ public final class World {
 	 * instantiation of this class file.
 	 */
 	private static final World singleton = new World();
-	
+
+	/**
+	 * The trivia task for this world.
+	 */
+	private static final TriviaTask TRIVIA_BOT = new TriviaTask();
+
 	/**
 	 * The scheduled executor service.
 	 */
@@ -347,7 +353,7 @@ public final class World {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Gets the game executor which forwards process.
 	 * @return game executor.
@@ -363,7 +369,7 @@ public final class World {
 	public TaskManager getTask() {
 		return taskManager;
 	}
-	
+
 	/**
 	 * Gets the collection of active players.
 	 * @return the active players.
@@ -607,5 +613,8 @@ public final class World {
 	public static final World get() {
 		return singleton;
 	}
-	
+
+	public static TriviaTask getTriviaBot() {
+		return TRIVIA_BOT;
+	}
 }
