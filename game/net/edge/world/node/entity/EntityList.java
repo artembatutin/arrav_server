@@ -217,20 +217,30 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	}
 	
 	/**
-	 * Removes {@code entity} from this list. Will throw an exception if the entity being removed does not have a state of {@code
-	 * ACTIVE}.
+	 * Removes {@code entity} from this list.
 	 * @param entity The entity to remove from this list.
 	 */
 	public boolean remove(E entity) {
-		if(entity.getState() != NodeState.ACTIVE)
+		return remove(entity, false);
+	}
+	
+	/**
+	 * Removes {@code entity} from this list.
+	 * @param entity The entity to remove from this list.
+	 * @param forced If the entity is forced to get out from the list.
+	 */
+	public boolean remove(E entity, boolean forced) {
+		if(!forced && entity.getState() != NodeState.ACTIVE)
 			return true;
-		if(entity.getSlot() == -1)
+		if(!forced && entity.getSlot() == -1)
 			return false;
 		int index = entity.getSlot();
 		int normal = index - 1;
-		indices.offer(normal);
+		if(entity.getSlot() != -1) {
+			indices.offer(normal);
+			entities[normal] = null;
+		}
 		entity.setState(NodeState.INACTIVE);
-		entities[normal] = null;
 		size--;
 		if(entity.isPlayer()) {
 			Player player = entity.toPlayer();

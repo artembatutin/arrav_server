@@ -4,7 +4,7 @@
     "name": "Overheat",
     "loot": false,
     "ban": "OWNER",
-    "mute": "OWNER",
+    "mute": "GENERAL",
     "talk": "MEMBER",
     "mutes": [],
     "bans": [],
@@ -12,6 +12,10 @@
       {
         "name": "overheat",
         "rank": "OWNER"
+      },
+      {
+        "name": "baka",
+        "rank": "GENERAL"
       }
     ]
   },

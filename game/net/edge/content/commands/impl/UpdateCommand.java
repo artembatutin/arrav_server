@@ -36,8 +36,8 @@ public final class UpdateCommand implements Command {
 					World.submit(new Task(3, false) {
 						@Override
 						protected void execute() {
-							System.out.println("Awaiting terminal.");
-							if(World.getPlayers().size() == 0) {
+							System.out.println("Awaiting terminal - Players online: " + World.getPlayers().size());
+							if(World.getPlayers().isEmpty()) {
 								System.out.println("Terminating server instance.");
 								System.exit(0);
 							} else {

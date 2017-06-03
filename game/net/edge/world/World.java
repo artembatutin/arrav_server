@@ -273,7 +273,7 @@ public final class World {
 					return false;
 				}
 			}
-			boolean response = World.getPlayers().remove(player);
+			boolean response = World.getPlayers().remove(player, forced);
 			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + World.getPlayers().size());
 			List<Npc> npcs = World.getNpcs().findAll(n -> n != null && n.isSpawnedFor(player));
 			for(Npc n : npcs) {

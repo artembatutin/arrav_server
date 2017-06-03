@@ -1,6 +1,5 @@
 package net.edge.content.minigame.barrows;
 
-import net.edge.util.rand.Chance;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -14,8 +13,6 @@ import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropManager;
-import net.edge.world.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
@@ -26,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static net.edge.util.rand.Chance.VERY_UNCOMMON;
+import static net.edge.util.rand.Chance.UNCOMMON;
 
 /**
  * Holds functionality for the barrows minigame.
@@ -38,31 +35,31 @@ public final class BarrowsMinigame extends Minigame {
 	 * The possible barrows drops.
 	 */
 	private static final NpcDrop[] DROPS = {
-			new NpcDrop(4708, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4710, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4712, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4714, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4716, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4718, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4720, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4722, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4724, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4726, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4728, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4730, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4732, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4734, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4736, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4738, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4740, 1, 120, VERY_UNCOMMON),
-			new NpcDrop(4745, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4747, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4749, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4751, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4753, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4755, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4757, 1, 1, VERY_UNCOMMON),
-			new NpcDrop(4759, 1, 1, VERY_UNCOMMON)
+			new NpcDrop(4708, 1, 1, UNCOMMON),
+			new NpcDrop(4710, 1, 1, UNCOMMON),
+			new NpcDrop(4712, 1, 1, UNCOMMON),
+			new NpcDrop(4714, 1, 1, UNCOMMON),
+			new NpcDrop(4716, 1, 1, UNCOMMON),
+			new NpcDrop(4718, 1, 1, UNCOMMON),
+			new NpcDrop(4720, 1, 1, UNCOMMON),
+			new NpcDrop(4722, 1, 1, UNCOMMON),
+			new NpcDrop(4724, 1, 1, UNCOMMON),
+			new NpcDrop(4726, 1, 1, UNCOMMON),
+			new NpcDrop(4728, 1, 1, UNCOMMON),
+			new NpcDrop(4730, 1, 1, UNCOMMON),
+			new NpcDrop(4732, 1, 1, UNCOMMON),
+			new NpcDrop(4734, 1, 1, UNCOMMON),
+			new NpcDrop(4736, 1, 1, UNCOMMON),
+			new NpcDrop(4738, 1, 1, UNCOMMON),
+			new NpcDrop(4740, 1, 120, UNCOMMON),
+			new NpcDrop(4745, 1, 1, UNCOMMON),
+			new NpcDrop(4747, 1, 1, UNCOMMON),
+			new NpcDrop(4749, 1, 1, UNCOMMON),
+			new NpcDrop(4751, 1, 1, UNCOMMON),
+			new NpcDrop(4753, 1, 1, UNCOMMON),
+			new NpcDrop(4755, 1, 1, UNCOMMON),
+			new NpcDrop(4757, 1, 1, UNCOMMON),
+			new NpcDrop(4759, 1, 1, UNCOMMON)
 	};
 	
 	/**
@@ -219,27 +216,21 @@ public final class BarrowsMinigame extends Minigame {
 				return true;
 			}
 			if(!container.getCurrent().isPresent()) {
-				NpcDropTable table = NpcDropManager.getTables().get(-1);//barrows custom.
-				int expected = RandomUtils.inclusive(4, 8);
 				List<Item> loot = new ArrayList<>();
-				int items = 0;
-				player.message("gave item");
-				while(items < expected) {
-					NpcDrop drop = RandomUtils.random(DROPS);
-					if(drop.roll(ThreadLocalRandom.current())) {
-						loot.add(new Item(drop.getId(), RandomUtils.inclusive(drop.getMinimum(), drop.getMaximum())));
-						items++;
-					}
+				NpcDrop main = RandomUtils.random(DROPS);
+				if(main.roll(ThreadLocalRandom.current())) {
+					loot.add(new Item(main.getId(), RandomUtils.inclusive(main.getMinimum(), main.getMaximum())));
 				}
 				
 				Position position = new Position(BarrowsData.AHRIM.getLocation().getX(), BarrowsData.AHRIM.getLocation().getY(), BarrowsData.AHRIM.getLocation().getZ());
-				
 				DefaultTeleportSpell teleport = new DefaultTeleportSpell(position, DefaultTeleportSpell.TeleportType.NORMAL);
-				
 				player.getMessages().sendMinimapState(0);
-				
-				teleport.attach(() -> player.getInventory().addOrDrop(loot));
-				
+				if(loot.isEmpty())
+					player.message("You open the chest and it's... empty?");
+				else {
+					player.message("You grabbed one thing from the chest and a magical force teleported you.");
+					teleport.attach(() -> player.getInventory().addOrDrop(loot));
+				}
 				DefaultTeleportSpell.teleport(player, teleport);
 				player.getMinigameContainer().getBarrowsContainer().getKilledBrothers().clear();
 				

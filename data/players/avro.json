@@ -5,7 +5,7 @@
   "muted": false,
   "position": {
     "x": 3088,
-    "y": 3506,
+    "y": 3507,
     "z": 0
   },
   "rights": "DEVELOPER",
@@ -57,7 +57,7 @@
       "goal": 0
     },
     {
-      "level": 990,
+      "level": 571,
       "experience": 2.0E8,
       "realLevel": 99,
       "goal": 0
@@ -190,74 +190,23 @@
     }
   ],
   "inventory": [
-    {
-      "id": 995,
-      "amount": 6319576
-    },
-    {
-      "id": 557,
-      "amount": 200
-    },
-    {
-      "id": 556,
-      "amount": 1710
-    },
-    {
-      "id": 9075,
-      "amount": 200
-    },
-    {
-      "id": 560,
-      "amount": 160
-    },
-    {
-      "id": 561,
-      "amount": 200
-    },
-    {
-      "id": 555,
-      "amount": 165
-    },
-    {
-      "id": 554,
-      "amount": 186
-    },
-    {
-      "id": 562,
-      "amount": 200
-    },
-    {
-      "id": 564,
-      "amount": 200
-    },
-    {
-      "id": 559,
-      "amount": 200
-    },
-    {
-      "id": 558,
-      "amount": 200
-    },
-    {
-      "id": 563,
-      "amount": 200
-    },
-    {
-      "id": 565,
-      "amount": 36
-    },
-    {
-      "id": 1387,
-      "amount": 1
-    },
-    {
-      "id": 4115,
-      "amount": 1
-    },
-    {
-      "id": 6109,
-      "amount": 1
-    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
     null,
     null,
     null,
@@ -273,7 +222,7 @@
   "bank0": [
     {
       "id": 995,
-      "amount": 8467449
+      "amount": 14787025
     },
     {
       "id": 329,
@@ -349,31 +298,31 @@
     },
     {
       "id": 554,
-      "amount": 250
+      "amount": 436
     },
     {
       "id": 555,
-      "amount": 250
+      "amount": 415
     },
     {
       "id": 556,
-      "amount": 250
+      "amount": 1960
     },
     {
       "id": 557,
-      "amount": 250
+      "amount": 450
     },
     {
       "id": 558,
-      "amount": 250
+      "amount": 450
     },
     {
       "id": 560,
-      "amount": 150
+      "amount": 310
     },
     {
       "id": 562,
-      "amount": 250
+      "amount": 450
     },
     {
       "id": 12158,
@@ -413,7 +362,7 @@
     },
     {
       "id": 17672,
-      "amount": 45
+      "amount": 62
     },
     {
       "id": 1511,
@@ -443,15 +392,42 @@
       "id": 12075,
       "amount": 1
     },
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
+    {
+      "id": 9075,
+      "amount": 200
+    },
+    {
+      "id": 561,
+      "amount": 200
+    },
+    {
+      "id": 564,
+      "amount": 200
+    },
+    {
+      "id": 559,
+      "amount": 200
+    },
+    {
+      "id": 563,
+      "amount": 200
+    },
+    {
+      "id": 565,
+      "amount": 36
+    },
+    {
+      "id": 1387,
+      "amount": 1
+    },
+    {
+      "id": 4115,
+      "amount": 1
+    },
+    {
+      "id": 6109,
+      "amount": 1
+    },
     null,
     null,
     null,
