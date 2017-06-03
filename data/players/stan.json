@@ -4,8 +4,8 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3111,
-    "y": 9844,
+    "x": 3086,
+    "y": 3499,
     "z": 0
   },
   "rights": "DEVELOPER",
@@ -28,7 +28,7 @@
   ],
   "prayer-type": "NORMAL",
   "spell-book": "NORMAL",
-  "fight-type": "CLAWS_CHOP",
+  "fight-type": "UNARMED_PUNCH",
   "poison-damage": 0,
   "auto-retaliate": true,
   "running": true,
@@ -106,7 +106,7 @@
     },
     {
       "level": 99,
-      "experience": 2.0E8,
+      "experience": 1.3034431E7,
       "realLevel": 99,
       "goal": 0
     },
@@ -191,12 +191,12 @@
   ],
   "inventory": [
     {
-      "id": 20769,
+      "id": 14484,
       "amount": 1
     },
     {
       "id": 995,
-      "amount": 10000
+      "amount": 99810000
     },
     {
       "id": 5303,
@@ -210,10 +210,22 @@
       "id": 5318,
       "amount": 1
     },
-    null,
-    null,
-    null,
-    null,
+    {
+      "id": 9805,
+      "amount": 1
+    },
+    {
+      "id": 9804,
+      "amount": 1
+    },
+    {
+      "id": 20769,
+      "amount": 1
+    },
+    {
+      "id": 9805,
+      "amount": 1
+    },
     null,
     null,
     null,
@@ -1041,10 +1053,7 @@
     null,
     null,
     null,
-    {
-      "id": 14484,
-      "amount": 1
-    },
+    null,
     null,
     null,
     null,

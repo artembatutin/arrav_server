@@ -1,5 +1,6 @@
 package net.edge.content.skill;
 
+import net.edge.content.item.Skillcape;
 import net.edge.util.TextUtils;
 import net.edge.game.GameConstants;
 import net.edge.world.World;
@@ -358,6 +359,20 @@ public final class Skills {
 				player.getSkills()[i].setExperience(1300);
 			}
 		}
+	}
+
+	/**
+	 * Determines whether to give a trimmed or untrimmed skillcape to the
+	 * player.
+	 * @param player		the player to give a skillcape to.
+	 * @param skillcape		the skillcape to determine for.
+	 * @return A trimmed skillcape if the player has more than 1 level 99, or
+	 * an untrimmed skillcape if it's the players first 99.
+	 */
+	public static int determineSkillcape(Player player, Skillcape skillcape) {
+		Skill[] skills = player.getSkills();
+		int count = (int) Arrays.stream(skills).filter(s -> s.getRealLevel() >= 99).count();
+		return count > 1 ? skillcape.getItem() + 1 : skillcape.getItem();
 	}
 
 	/**

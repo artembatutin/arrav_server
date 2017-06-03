@@ -14,6 +14,7 @@ import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Optional;
 
@@ -36,7 +37,7 @@ public enum Skillcape {
 	CRAFTING_CAPE(9780, 4949, 818, Skills.CRAFTING, 805),
 	FLETCHING_CAPE(9783, 4937, 812, Skills.FLETCHING, 1281),
 	SLAYER_CAPE(9786, 4967, 1656, Skills.SLAYER, 8275),
-	CONSTRUCT_CAPE(9768, 4953, 820, Skills.CONSTRUCTION, 4247),
+	CONSTRUCT_CAPE(9789, 4953, 820, Skills.CONSTRUCTION, 4247),
 	MINING_CAPE(9792, 4941, 814, Skills.MINING, 3295),
 	SMITHING_CAPE(9795, 4943, 815, Skills.SMITHING, 604),
 	FISHING_CAPE(9798, 4951, 819, Skills.FISHING, 308),
@@ -47,7 +48,7 @@ public enum Skillcape {
 	SUMMONING_CAPE(12169, 8525, 1515, Skills.SUMMONING, 6790),
 	HUNTER_CAPE(9948, 5158, 907, Skills.HUNTER, 5113),
 	VETERAN_CAPE(20763, 352, 1446, -1, -1);
-	
+
 	private static final ImmutableSet<Skillcape> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Skillcape.class));
 	
 	/**
@@ -90,7 +91,7 @@ public enum Skillcape {
 		this.skill = skill;
 		this.master = master;
 	}
-	
+
 	/**
 	 * Verifies if the player can wear the skill cape.
 	 * @param player The player wearing a new item.
@@ -98,14 +99,14 @@ public enum Skillcape {
 	 * @return {@code false} if the player hasn't met the criteria, {@code true} otherwise.
 	 */
 	public static boolean verifySkillCape(Player player, Item item) {
-		Skillcape c = VALUES.stream().filter(t -> t.getItem() == item.getId()).findAny().orElse(null);
+		Skillcape c = getSkillcape(item.getId());
 		
 		if(c == null) {
 			return true;
 		}
 		
 		if(c.getSkill() != -1 && player.getSkills()[c.getSkill()].getRealLevel() != 99) {
-			player.message("You need to max out the specific skill before wearing this cape.");
+			player.dialogue(new NpcDialogue(c.getMaster(), Expression.CONFUSED, "You haven't mastered this skill yet."));
 			return false;
 		}
 		return true;
@@ -122,7 +123,7 @@ public enum Skillcape {
 			return false;
 		}
 		
-		Skillcape cape = VALUES.stream().filter(c -> player.getEquipment().get(Equipment.CAPE_SLOT).getId() == c.getItem()).findAny().orElse(null);
+		Skillcape cape = getSkillcape(player.getEquipment().get(Equipment.CAPE_SLOT).getId());
 		
 		if(cape == null) {
 			return false;
@@ -148,7 +149,7 @@ public enum Skillcape {
 		}
 		
 		if(c.getSkill() != -1 && player.getSkills()[c.getSkill()].getRealLevel() != 99) {
-			player.message("You haven't mastered this skill yet.");
+			player.dialogue(new NpcDialogue(c.getMaster(), Expression.CONFUSED, "You haven't mastered this skill yet."));
 			return false;
 		}
 		
@@ -156,7 +157,8 @@ public enum Skillcape {
 			if(t == OptionDialogue.OptionType.FIRST_OPTION) {
 				if(player.getInventory().contains(new Item(995, 100_000))) {
 					if(player.getInventory().remaining() >= 1) {
-						player.getDialogueBuilder().append(new GiveItemDialogue(new Item(c.getItem(), 1), "You received the skill cape!", Optional.of(() -> player.getInventory().remove(new Item(995, 100000)))));
+						int item = Skills.determineSkillcape(player, c);
+						player.getDialogueBuilder().append(new GiveItemDialogue(new Item(item, 1), "You received the skill cape!", Optional.of(() -> player.getInventory().remove(new Item(995, 100000)))));
 					}
 				} else {
 					player.getDialogueBuilder().append(new PlayerDialogue(Expression.SAD, "I don't have enough for this skill cape."));
@@ -176,17 +178,26 @@ public enum Skillcape {
 	 * @return {@code true} if the player got into the dialogue stage, {@code false} otherwise.
 	 */
 	public static boolean buy(Player player, int item) {
-		Skillcape c = VALUES.stream().filter(cape -> cape.getItem() == item).findAny().orElse(null);
+		Skillcape c = getSkillcape(item);
 		
 		if(c == null) {
 			return false;
 		}
 		
 		if(c.getSkill() != -1 && player.getSkills()[c.getSkill()].getRealLevel() != 99) {
-			player.message("You haven't mastered this skill yet.");
+			player.dialogue(new NpcDialogue(c.getMaster(), Expression.CONFUSED, "You haven't mastered this skill yet."));
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Gets the skillcape by the specified {@code item}.
+	 * @param item	the item to grab the skillcape from.
+	 * @return {@code Skillcape} matching the specified item.
+	 */
+	private static Skillcape getSkillcape(int item) {
+		return VALUES.stream().filter(c -> c.item == item || c.item + 1 == item).findAny().orElse(null);
 	}
 	
 	public int getItem() {

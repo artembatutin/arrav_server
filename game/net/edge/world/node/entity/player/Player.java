@@ -1,6 +1,8 @@
 package net.edge.world.node.entity.player;
 
 import net.edge.Server;
+import net.edge.content.dialogue.Dialogue;
+import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.message.OutputMessages;
 import net.edge.net.session.GameSession;
@@ -2216,6 +2218,16 @@ public final class Player extends EntityNode {
 	 */
 	public void message(String text) {
 		getMessages().sendMessage(text);
+	}
+
+	/**
+	 * Sends a single dialogue, this method is used for ease.
+	 * @param dialogue	the dialogue to send.
+	 */
+	public void dialogue(Dialogue dialogue) {
+		DialogueAppender ap = new DialogueAppender(this);
+		ap.chain(dialogue);
+		ap.start();
 	}
 	
 	/**
