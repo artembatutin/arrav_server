@@ -2,7 +2,7 @@ package net.edge.world.node.entity.npc.strategy.impl.glacor;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
@@ -60,7 +60,7 @@ public final class GlacorCombatStrategy extends DynamicCombatStrategy<Glacor> {
 
 				if(special == 100) {
 					session.ignore();
-					World.submit(new GlacorExplodeTask(victim.toPlayer(), this.npc, false));
+					World.get().submit(new GlacorExplodeTask(victim.toPlayer(), this.npc, false));
 				}
 				
 				npc.setSpecial(special + 10);

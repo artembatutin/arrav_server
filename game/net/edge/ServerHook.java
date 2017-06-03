@@ -1,9 +1,7 @@
 package net.edge;
 
 import net.edge.content.market.MarketItem;
-import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.PlayerSerialization;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,10 +15,8 @@ public final class ServerHook extends Thread {
 	@Override
 	public void run() {
 		try {
-			for(Player p : World.getPlayers()) {
-				if(p != null) {
-					World.getService().submit(() -> new PlayerSerialization(p).serialize());
-				}
+			for(Player p : World.get().getPlayers()) {
+				World.get().getExecutor().savePlayer(p);
 			}
 			World.getClanManager().save();
 			World.getScoreboardManager().serializeIndividualScoreboard();

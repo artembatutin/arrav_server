@@ -2,7 +2,7 @@ package net.edge.content.shootingstar;
 
 import net.edge.util.Stopwatch;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.player.Player;
 
@@ -35,7 +35,7 @@ public final class ShootingStarManager {
 		stopwatch.reset();
 		
 		if(star != null && !star.isDisabled()) {
-			World.message(star.locationData.messageActive, true);
+			World.get().message(star.locationData.messageActive, true);
 			return;
 		}
 		
@@ -48,7 +48,7 @@ public final class ShootingStarManager {
 	public void spawn() {
 		star = generateStar();
 		star.publish();
-		World.message(star.locationData.message, true);
+		World.get().message(star.locationData.message, true);
 	}
 	
 	/**

@@ -3,7 +3,7 @@ package net.edge.net.message.impl;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.message.InputMessageListener;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.container.session.ExchangeSession;
 import net.edge.content.container.session.impl.DuelSession;
 import net.edge.content.container.session.impl.TradeSession;
@@ -41,7 +41,7 @@ public final class RequestMessage implements InputMessageListener {
 	 */
 	private void tradeRequest(Player player, ByteMessage payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
-		Player other = World.getPlayers().get(index - 1);
+		Player other = World.get().getPlayers().get(index - 1);
 		if(other == null || !validate(player, other))
 			return;
 		if(!MinigameHandler.execute(player, m -> m.canTrade(player, other)))
@@ -56,7 +56,7 @@ public final class RequestMessage implements InputMessageListener {
 	 */
 	private void duelRequest(Player player, ByteMessage payload) {
 		int index = payload.getShort(false);
-		Player other = World.getPlayers().get(index - 1);
+		Player other = World.get().getPlayers().get(index - 1);
 		if(other == null || !validate(player, other))
 			return;
 		World.getExchangeSessionManager().request(new DuelSession(player, other, ExchangeSession.REQUEST));

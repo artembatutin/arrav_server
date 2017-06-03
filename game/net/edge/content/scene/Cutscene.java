@@ -1,7 +1,7 @@
 package net.edge.content.scene;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 
 import java.util.Optional;
 
@@ -46,7 +46,7 @@ public abstract class Cutscene {
 		}
 
 		task = Optional.of(new CutsceneTask(this));
-		World.submit(task.get());
+		World.get().submit(task.get());
 	}
 
 	/**

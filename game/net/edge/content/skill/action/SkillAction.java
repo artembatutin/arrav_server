@@ -1,7 +1,7 @@
 package net.edge.content.skill.action;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.skill.SkillData;
 import net.edge.locale.Position;
 import net.edge.world.Animation;
@@ -55,7 +55,7 @@ public abstract class SkillAction {
 		
 		SkillActionTask task = new SkillActionTask(this);
 		getPlayer().setSkillAction(task);
-		World.submit(task);
+		World.get().submit(task);
 	}
 	
 	/**

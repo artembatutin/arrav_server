@@ -6,7 +6,7 @@ import net.edge.net.message.InputMessageListener;
 import net.edge.task.Task;
 import net.edge.util.ActionListener;
 import net.edge.util.TextUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.Emote;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
@@ -493,7 +493,7 @@ public final class ClickButtonMessage implements InputMessageListener {
 				if(player.getActivityManager().contains(ActivityManager.ActivityType.LOG_OUT)) {
 					break;
 				}
-				World.handleLogout(player, false);
+				World.get().logout(player, false);
 				break;
 			case 153:
 			case 152:
@@ -1208,7 +1208,7 @@ public final class ClickButtonMessage implements InputMessageListener {
 						player.getCombatBuilder().instant();
 						break;
 					}
-					World.submit(new Task(1, false) {
+					World.get().submit(new Task(1, false) {
 						@Override
 						public void execute() {
 							if(!player.isSpecialActivated()) {

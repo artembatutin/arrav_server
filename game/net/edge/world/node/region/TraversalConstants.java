@@ -1,4 +1,4 @@
-package net.edge.world.region;
+package net.edge.world.node.region;
 
 /**
  * Represents flags for each of the traversals.

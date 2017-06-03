@@ -1,6 +1,6 @@
 package net.edge.content.commands.impl;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.player.Player;
@@ -11,7 +11,7 @@ public final class GiveSlayerCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player slayer = World.getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player slayer = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		int amount = Integer.parseInt(cmd[2]);
 		slayer.updateSlayers(amount);
 		player.message("You gave " + amount + " slayer points to " + slayer.getFormatUsername());

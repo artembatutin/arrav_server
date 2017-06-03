@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.player.assets;
 
 import net.edge.util.MutableNumber;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.node.entity.player.Player;
 
 /**
@@ -36,7 +36,7 @@ public final class PrivateMessage {
 		for(long name : player.getFriends()) {
 			if(name == 0)
 				continue;
-			player.getMessages().sendPrivateMessageFriend(name, World.getPlayer(name).isPresent());
+			player.getMessages().sendPrivateMessageFriend(name, World.get().getPlayer(name).isPresent());
 		}
 	}
 	
@@ -46,7 +46,7 @@ public final class PrivateMessage {
 	 * @param online the status to update the other players friends lists with.
 	 */
 	public void updateOtherList(boolean online) {
-		for(Player players : World.getPlayers()) {
+		for(Player players : World.get().getPlayers()) {
 			if(players == null)
 				continue;
 			if(players.getFriends().contains(player.getUsernameHash()))
@@ -64,7 +64,7 @@ public final class PrivateMessage {
 			return;
 		}
 		if(player.getFriends().add(name)) {
-			player.getMessages().sendPrivateMessageFriend(name, World.getPlayer(name).isPresent());
+			player.getMessages().sendPrivateMessageFriend(name, World.get().getPlayer(name).isPresent());
 		} else {
 			player.message("They are already on your friends" + " list!");
 		}
@@ -112,7 +112,7 @@ public final class PrivateMessage {
 	public void sendPrivateMessage(long name, byte[] message, int size) {
 		int rights = player.getRights().getProtocolValue();
 		long hash = player.getUsernameHash();
-		World.getPlayer(name).ifPresent(p -> p.getMessages().sendPrivateMessage(hash, rights, message, size));
+		World.get().getPlayer(name).ifPresent(p -> p.getMessages().sendPrivateMessage(hash, rights, message, size));
 	}
 	
 	/**

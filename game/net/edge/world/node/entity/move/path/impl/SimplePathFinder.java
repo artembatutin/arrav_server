@@ -5,7 +5,7 @@ import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.move.path.Path;
 import net.edge.world.node.entity.move.path.PathFinder;
 import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.region.TraversalMap;
+import net.edge.world.node.region.TraversalMap;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

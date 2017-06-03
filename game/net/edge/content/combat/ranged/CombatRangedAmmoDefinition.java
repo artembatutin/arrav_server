@@ -2,7 +2,7 @@ package net.edge.content.combat.ranged;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
@@ -614,7 +614,7 @@ public enum CombatRangedAmmoDefinition {
 				return data;
 			}
 			
-			Combat.charactersWithinDistance(attacker, World.getLocalPlayers(attacker), 1).forEach(pl -> {
+			Combat.charactersWithinDistance(attacker, World.get().getLocalPlayers(attacker), 1).forEach(pl -> {
 				if(!World.getAreaManager().inMulti(pl)) {
 					return;
 				}
@@ -635,7 +635,7 @@ public enum CombatRangedAmmoDefinition {
 				return data;
 			}
 			
-			Combat.charactersWithinDistance(attacker, World.getLocalPlayers(attacker), 1).forEach(pl -> {
+			Combat.charactersWithinDistance(attacker, World.get().getLocalPlayers(attacker), 1).forEach(pl -> {
 				if(!World.getAreaManager().inMulti(pl)) {
 					return;
 				}

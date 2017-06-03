@@ -2,7 +2,7 @@ package net.edge.content.teleport.impl;
 
 import net.edge.task.Task;
 import net.edge.util.ActionListener;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.teleport.TeleportSpell;
 import net.edge.locale.loc.Location;
@@ -140,7 +140,7 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 	 */
 	public static void teleport(Player player, DefaultTeleportSpell spell) {
 		spell.resetPlayerFlags(player);
-		World.submit(new DefaultTeleportSpellTask(player, spell));
+		World.get().submit(new DefaultTeleportSpellTask(player, spell));
 	}
 	
 	@Override

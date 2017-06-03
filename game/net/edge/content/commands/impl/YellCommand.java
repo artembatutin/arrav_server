@@ -2,7 +2,7 @@ package net.edge.content.commands.impl;
 
 import net.edge.net.PunishmentHandler;
 import net.edge.util.TextUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.player.Player;
@@ -20,7 +20,7 @@ public final class YellCommand implements Command {
 
 		String c = cmd[0];
 		String message = TextUtils.capitalize(command.substring(c.length(), command.length()).substring(1));
-		World.message("@blu@[Global Chat] " + "@cr" + player.getRights().getProtocolValue() + "@" + player.getRights().getYellPrefix() + player.getFormatUsername() + "@blu@: " + message);
+		World.get().message("@blu@[Global Chat] " + "@cr" + player.getRights().getProtocolValue() + "@" + player.getRights().getYellPrefix() + player.getFormatUsername() + "@blu@: " + message);
 	}
 
 }

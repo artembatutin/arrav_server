@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.npc.strategy.impl.gwd;
 
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.world.node.NodeState;
@@ -55,7 +55,7 @@ public final class GeneralGraardorCombatStrategy extends DynamicCombatStrategy<G
 	private CombatSessionData ranged(EntityNode victim) {
 		List<Player> toHit = new ArrayList<>();
 		npc.animation(new Animation(7063));
-		World.getLocalPlayers(victim).forEachRemaining(player -> {
+		World.get().getLocalPlayers(victim).forEachRemaining(player -> {
 			if(GeneralGraardor.CHAMBER.inLocation(player.getPosition())) {
 				toHit.add(player);
 			}

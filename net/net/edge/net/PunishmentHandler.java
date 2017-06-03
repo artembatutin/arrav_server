@@ -1,7 +1,7 @@
 package net.edge.net;
 
 import com.google.common.collect.Sets;
-import net.edge.world.World;
+import net.edge.World;
 
 import java.io.FileWriter;
 import java.nio.file.Paths;
@@ -76,7 +76,7 @@ public final class PunishmentHandler {
 		if(PunishmentHandler.isLocal(host)) {
 			return;
 		}
-		World.getService().submit(() -> {
+		World.get().getExecutor().submit(() -> {
 			if(IP_BANNED.contains(host))
 				return;
 			try(FileWriter out = new FileWriter(Paths.get("./data/", "banned_ips.txt").toFile(), true)) {
@@ -98,7 +98,7 @@ public final class PunishmentHandler {
 	public static void addIPMute(String host, String username) {
 		if(PunishmentHandler.isLocal(host))
 			return;
-		World.getService().submit(() -> {
+		World.get().getExecutor().submit(() -> {
 			if(IP_MUTED.contains(host))
 				return;
 			try(FileWriter out = new FileWriter(Paths.get("./data/", "muted_ips.txt").toFile(), true)) {
@@ -119,7 +119,7 @@ public final class PunishmentHandler {
 	public static void addStarter(String host) {
 		if(PunishmentHandler.isLocal(host))
 			return;
-		World.getService().submit(() -> {
+		World.get().getExecutor().submit(() -> {
 			if(STARTERS.contains(host))
 				return;
 			try(FileWriter out = new FileWriter(Paths.get("./data/", "starters.txt").toFile(), true)) {

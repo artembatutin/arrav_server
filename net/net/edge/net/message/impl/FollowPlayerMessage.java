@@ -3,7 +3,7 @@ package net.edge.net.message.impl;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.message.InputMessageListener;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 
@@ -18,7 +18,7 @@ public final class FollowPlayerMessage implements InputMessageListener {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.FOLLOW_PLAYER))
 			return;
 		int index = payload.getShort(false, ByteOrder.LITTLE);
-		Player follow = World.getPlayers().get(index - 1);
+		Player follow = World.get().getPlayers().get(index - 1);
 		
 		if(follow == null || !follow.getPosition().isViewableFrom(player.getPosition()) || follow.equals(player))
 			return;

@@ -2,7 +2,7 @@ package net.edge.world.node.entity.npc.strategy.impl;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
@@ -126,7 +126,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 	private CombatSessionData ranged(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(10919));
 		character.graphic(new Graphic(1888));
-		World.submit(new Task(1, false) {
+		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
 				this.cancel();
@@ -147,7 +147,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 	private CombatSessionData magic(EntityNode character, EntityNode victim) {
 		character.setCurrentlyCasting(TORMENTED_DEMON_BLAST);
 		TORMENTED_DEMON_BLAST.castAnimation().ifPresent(character::animation);
-		World.submit(new Task(1, false) {
+		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
 				this.cancel();
@@ -201,12 +201,12 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 		
 		if(!switchAttackTask.isPresent()) {
 			switchAttackTask = Optional.of(new SwitchAttackTask(this));
-			World.submit(switchAttackTask.get());
+			World.get().submit(switchAttackTask.get());
 		}
 		
 		if(!switchPrayerTask.isPresent()) {
 			switchPrayerTask = Optional.of(new SwitchPrayerTask(this));
-			World.submit(switchPrayerTask.get());
+			World.get().submit(switchPrayerTask.get());
 		}
 		return data;
 	}
@@ -235,7 +235,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 			if(player.getEquipment().containsAny(2402, 6746) && Arrays.stream(data.getHits()).anyMatch(hit -> hit.getDamage() > 0) && !isMeleeDemon(npc)) {
 				player.message("The demon is temporarily weakened by your weapon.");
 				shieldRestorationTask = Optional.of(new ShieldRestorationTask(this));
-				World.submit(shieldRestorationTask.get());
+				World.get().submit(shieldRestorationTask.get());
 			}
 		}
 	}

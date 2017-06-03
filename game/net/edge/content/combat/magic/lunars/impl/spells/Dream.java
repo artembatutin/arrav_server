@@ -2,7 +2,7 @@ package net.edge.content.combat.magic.lunars.impl.spells;
 
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
@@ -28,7 +28,7 @@ public final class Dream extends LunarButtonSpell {
 	@Override
 	public void effect(Player caster, EntityNode victim) {
 		caster.getActivityManager().disable();
-		World.submit(new DreamTask(caster));
+		World.get().submit(new DreamTask(caster));
 	}
 
 	@Override

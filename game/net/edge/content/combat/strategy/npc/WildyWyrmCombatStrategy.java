@@ -2,7 +2,7 @@ package net.edge.content.combat.strategy.npc;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
@@ -54,7 +54,7 @@ public final class WildyWyrmCombatStrategy implements CombatStrategy {
 
 	private CombatSessionData magic(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(12794));
-		World.submit(new Task(1, false) {
+		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
 				this.cancel();

@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.locale.loc.CircleLocation;
 import net.edge.locale.loc.SquareLocation;
 import net.edge.locale.area.Area;

@@ -1,6 +1,6 @@
 package net.edge.content.commands.impl;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.player.Player;
@@ -11,8 +11,8 @@ public final class ListPlayersCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		player.message("There is currently " + World.getPlayers().size() + " player online.");
-		World.getPlayers().forEach(p -> player.message(" - " + p.getFormatUsername()));
+		player.message("There is currently " + World.get().getPlayers().size() + " player online.");
+		World.get().getPlayers().forEach(p -> player.message(" - " + p.getFormatUsername()));
 	}
 	
 }

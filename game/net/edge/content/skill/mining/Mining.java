@@ -1,7 +1,7 @@
 package net.edge.content.skill.mining;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.TransformableObject;
 import net.edge.content.skill.action.impl.HarvestingSkillAction;
@@ -89,7 +89,7 @@ public final class Mining extends HarvestingSkillAction {
 
 		String message = rock.get().toString().concat(" ore").replace("_", " ");
 
-		World.submit(new Task(rock.get().prospectDelay(), false) {
+		World.get().submit(new Task(rock.get().prospectDelay(), false) {
 
 			@Override
 			public void execute() {

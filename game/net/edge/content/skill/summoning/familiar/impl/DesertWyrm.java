@@ -2,7 +2,6 @@ package net.edge.content.skill.summoning.familiar.impl;
 
 import net.edge.task.LinkedTaskSequence;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
@@ -13,11 +12,8 @@ import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.object.ObjectNode;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Represents the Desert wyrm familiar.

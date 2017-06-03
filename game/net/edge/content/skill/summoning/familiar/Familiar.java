@@ -4,7 +4,7 @@ import net.edge.net.message.OutputMessages;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.skill.Skills;
@@ -15,7 +15,6 @@ import net.edge.locale.Position;
 import net.edge.world.Graphic;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcDeath;
-import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.npc.impl.Follower;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
@@ -114,7 +113,7 @@ public abstract class Familiar extends Follower {
 		/* Caches the familiar instance to this player. */
 		player.setFamiliar(Optional.of(this));
 		/* Add the npc to the world */
-		World.getNpcs().add(this);
+		World.get().getNpcs().add(this);
 		/* Make the familiar follow the player */
 		this.getMovementQueue().follow(player);
 		/* Play the graphic when the familiar is spawned */
@@ -134,7 +133,7 @@ public abstract class Familiar extends Follower {
 		ability.initialise(player);
 		/* We start the familiar duration task */
 		task = Optional.of(new FamiliarSpawnTask(player, this));
-		World.submit(task.get());
+		World.get().submit(task.get());
 	}
 	
 	/**
@@ -178,7 +177,7 @@ public abstract class Familiar extends Follower {
 			/* Set the follow task to null */
 			this.setFollowEntity(null);
 			/* Remove this npc from the world */
-			World.getNpcs().remove(this);
+			World.get().getNpcs().remove(this);
 			/* Disable the familiars task. */
 			task = Optional.empty();
 			return;
@@ -190,7 +189,7 @@ public abstract class Familiar extends Follower {
 		/* Set the follow task to null */
 		this.setFollowEntity(null);
 		/* Remove this npc from the world */
-		World.submit(new NpcDeath(this));
+		World.get().submit(new NpcDeath(this));
 		/* Check if the familiar can hold items */
 		if(this.getAbilityType().isHoldableContainer()) {
 			/* Cast to ItemHoldableAbility, this is safe since we checked */

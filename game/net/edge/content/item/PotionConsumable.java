@@ -3,7 +3,7 @@ package net.edge.content.item;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.minigame.MinigameHandler;
@@ -408,7 +408,7 @@ public enum PotionConsumable {
 			if(player.getPoisonImmunity().get() <= 0) {
 				player.message("You have been granted immunity against poison.");
 				player.getPoisonImmunity().incrementAndGet(length);
-				World.submit(new Task(50, false) {
+				World.get().submit(new Task(50, false) {
 					@Override
 					public void execute() {
 						if(player.getPoisonImmunity().get() <= 0)

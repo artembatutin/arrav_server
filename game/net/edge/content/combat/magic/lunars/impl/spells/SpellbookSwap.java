@@ -2,7 +2,7 @@ package net.edge.content.combat.magic.lunars.impl.spells;
 
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.magic.lunars.LunarSpell;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.world.node.entity.EntityNode;
@@ -40,7 +40,7 @@ public final class SpellbookSwap extends LunarSpell {
 		seq.connect(11, () -> {
 			Spellbook.convert(caster, type.equals(OptionDialogue.OptionType.FIRST_OPTION) ? Spellbook.NORMAL : Spellbook.ANCIENT);
 			caster.getAttr().get("lunar_spellbook_swap").set(true);
-			World.submit(new SpellbookSwapTask(caster, type.equals(OptionDialogue.OptionType.FIRST_OPTION) ? Spellbook.NORMAL : Spellbook.ANCIENT));
+			World.get().submit(new SpellbookSwapTask(caster, type.equals(OptionDialogue.OptionType.FIRST_OPTION) ? Spellbook.NORMAL : Spellbook.ANCIENT));
 			caster.getActivityManager().enable();
 		});
 		seq.start();

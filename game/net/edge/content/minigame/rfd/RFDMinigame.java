@@ -1,7 +1,7 @@
 package net.edge.content.minigame.rfd;
 
 import net.edge.GameConstants;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.item.FoodConsumable;
@@ -67,7 +67,7 @@ public final class RFDMinigame extends SequencedMinigame {
 			Npc npc = this.currentNpc.get();
 			
 			World.getInstanceManager().isolate(npc, instance);
-			World.getNpcs().add(npc);
+			World.get().getNpcs().add(npc);
 			
 			npc.getCombatBuilder().attack(player);
 			
@@ -101,7 +101,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	@Override
 	public void logout(Player player) {
 		if(currentNpc.isPresent() && !currentNpc.get().isDead()) {
-			World.getNpcs().remove(currentNpc.get());
+			World.get().getNpcs().remove(currentNpc.get());
 		}
 		leave(player);
 	}
@@ -166,7 +166,7 @@ public final class RFDMinigame extends SequencedMinigame {
 		switch(object.getId()) {
 			case 12356:
 				if(currentNpc.isPresent() && !currentNpc.get().isDead()) {
-					World.getNpcs().remove(currentNpc.get());
+					World.get().getNpcs().remove(currentNpc.get());
 				}
 				player.message("You leave the minigame...");
 				leave(player);

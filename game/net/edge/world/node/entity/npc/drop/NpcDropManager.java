@@ -5,13 +5,12 @@ import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.region.Region;
+import net.edge.world.node.region.Region;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

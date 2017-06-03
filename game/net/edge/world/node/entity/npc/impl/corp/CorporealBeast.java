@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.npc.impl.corp;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.locale.Position;
 import net.edge.world.node.NodeState;
@@ -92,7 +92,7 @@ public final class CorporealBeast extends Npc {
 			return;
 		}
 		this.task = Optional.of(new CorporealBeastTask(this));
-		World.submit(task.get());
+		World.get().submit(task.get());
 	}
 	
 	public DarkEnergyCore getDarkEnergyCore() {

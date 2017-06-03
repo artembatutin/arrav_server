@@ -1,6 +1,5 @@
 package net.edge.net.message.impl;
 
-import net.edge.content.market.MarketShop;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
@@ -8,7 +7,7 @@ import net.edge.net.database.connection.use.Donating;
 import net.edge.net.message.InputMessageListener;
 import net.edge.util.Utility;
 import net.edge.world.Graphic;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.convo.CulinaromancerConversation;
@@ -84,7 +83,7 @@ public final class NpcActionMessage implements InputMessageListener {
 	 */
 	private void attackOther(Player player, ByteMessage payload) {
 		int index = payload.getShort(false, ByteTransform.A);
-		Npc npc = World.getNpcs().get(index - 1);
+		Npc npc = World.get().getNpcs().get(index - 1);
 		if(npc == null || !checkAttack(player, npc))
 			return;
 		player.getTolerance().reset();
@@ -99,7 +98,7 @@ public final class NpcActionMessage implements InputMessageListener {
 	private void attackMagic(Player player, ByteMessage payload) {
 		int index = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int spellId = payload.getShort(true, ByteTransform.A);
-		Npc npc = World.getNpcs().get(index - 1);
+		Npc npc = World.get().getNpcs().get(index - 1);
 		Optional<CombatSpells> spell = CombatSpells.getSpell(spellId);
 		if(npc == null || !spell.isPresent() || !checkAttack(player, npc))
 			return;
@@ -115,7 +114,7 @@ public final class NpcActionMessage implements InputMessageListener {
 	 */
 	private void firstClick(Player player, ByteMessage payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
-		Npc npc = World.getNpcs().get(index - 1);
+		Npc npc = World.get().getNpcs().get(index - 1);
 		if(npc == null)
 			return;
 		final int id = npc.getId();
@@ -386,7 +385,7 @@ public final class NpcActionMessage implements InputMessageListener {
 	 */
 	private void secondClick(Player player, ByteMessage payload) {
 		int index = payload.getShort(false, ByteTransform.A, ByteOrder.LITTLE);
-		Npc npc = World.getNpcs().get(index - 1);
+		Npc npc = World.get().getNpcs().get(index - 1);
 		if(npc == null)
 			return;
 		final int id = npc.getId();
@@ -492,7 +491,7 @@ public final class NpcActionMessage implements InputMessageListener {
 	 */
 	private void thirdClick(Player player, ByteMessage payload) {
 		int index = payload.getShort(true);
-		Npc npc = World.getNpcs().get(index - 1);
+		Npc npc = World.get().getNpcs().get(index - 1);
 		if(npc == null)
 			return;
 		final int id = npc.getId();
@@ -528,7 +527,7 @@ public final class NpcActionMessage implements InputMessageListener {
 	 */
 	private void fourthClick(Player player, ByteMessage payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
-		Npc npc = World.getNpcs().get(index - 1);
+		Npc npc = World.get().getNpcs().get(index - 1);
 		if(npc == null)
 			return;
 		final int id = npc.getId();

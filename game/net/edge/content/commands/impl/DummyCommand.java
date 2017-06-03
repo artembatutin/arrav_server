@@ -1,6 +1,6 @@
 package net.edge.content.commands.impl;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.npc.Npc;
@@ -18,7 +18,7 @@ public final class DummyCommand implements Command {
 		npc.setCurrentHealth(1000);
 		npc.setSpawnedFor(player.getUsername());
 		npc.getMovementQueue().setLockMovement(true);
-		World.getNpcs().add(npc);
+		World.get().getNpcs().add(npc);
 	}
 	
 }

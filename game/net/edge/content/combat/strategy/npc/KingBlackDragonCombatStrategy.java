@@ -1,7 +1,7 @@
 package net.edge.content.combat.strategy.npc;
 
 import com.google.common.collect.ImmutableList;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.*;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
@@ -61,7 +61,7 @@ public final class KingBlackDragonCombatStrategy implements CombatStrategy {
 	private CombatSessionData magic(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(81));
 		CombatNormalSpell spell = getSpell();
-		World.submit(new Task(1, false) {
+		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
 				this.cancel();

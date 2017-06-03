@@ -1,13 +1,14 @@
-package net.edge.world;
+package net.edge;
 
-import net.edge.GameConstants;
-import net.edge.GameService;
+import net.edge.game.GameExecutor;
+import net.edge.game.GameSynchronizer;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
 import net.edge.task.Task;
 import net.edge.task.TaskManager;
 import net.edge.util.LoggerUtils;
 import net.edge.util.Stopwatch;
+import net.edge.util.ThreadUtil;
 import net.edge.util.log.LoggingManager;
 import net.edge.content.PlayerPanel;
 import net.edge.content.clanchat.ClanManager;
@@ -26,21 +27,26 @@ import net.edge.world.node.entity.move.path.impl.SimplePathFinder;
 import net.edge.world.node.entity.move.path.distance.Manhattan;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcMovementTask;
+import net.edge.world.node.entity.npc.NpcUpdater;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.region.RegionManager;
-import net.edge.world.region.TraversalMap;
-import net.edge.world.node.sync.WorldSynchronizer;
+import net.edge.world.node.entity.player.PlayerUpdater;
+import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.region.RegionManager;
+import net.edge.world.node.region.TraversalMap;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * The static utility class that contains functions to manage and process game characters.
- * @author lare96 <http://github.com/lare96>
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class World {
 	
@@ -50,39 +56,50 @@ public final class World {
 	private static Logger logger = LoggerUtils.getLogger(World.class);
 	
 	/**
-	 * The game service that processes this world.
+	 * An implementation of the singleton pattern to prevent indirect
+	 * instantiation of this class file.
 	 */
-	private static final GameService SERVICE = new GameService();
+	private static final World singleton = new World();
+	
+	/**
+	 * The scheduled executor service.
+	 */
+	private final ScheduledExecutorService sync = Executors.newSingleThreadScheduledExecutor(ThreadUtil.create("GameSynchronizer"));
+	
+	/**
+	 * The game executor in charge of managing process.
+	 */
+	private final GameExecutor executor = new GameExecutor();
 	
 	/**
 	 * The manager for the queue of game tasks.
 	 */
-	private static final TaskManager TASK_MANAGER = new TaskManager();
-	
-	/**
-	 * The {@link WorldSynchronizer} that will perform updating for all {@link EntityNode}s.
-	 */
-	private static final WorldSynchronizer SYNCHRONIZER = new WorldSynchronizer();
+	private final TaskManager taskManager = new TaskManager();
 	
 	/**
 	 * The collection of active players.
 	 */
-	private static EntityList<Player> players = new EntityList<>(2048);
+	private final EntityList<Player> players = new EntityList<>(2048);
 	
 	/**
 	 * The collection of active NPCs.
 	 */
-	private static EntityList<Npc> npcs = new EntityList<>(16384);
+	private final EntityList<Npc> npcs = new EntityList<>(16384);
 	
 	/**
 	 * The queue of {@link Player}s waiting to be logged in.
 	 */
-	private static Queue<Player> logins = new ConcurrentLinkedQueue<>();
+	private final Queue<Player> logins = new ConcurrentLinkedQueue<>();
 	
 	/**
 	 * The queue of {@link Player}s waiting to be logged out.
 	 */
-	private static Queue<Player> logouts = new ConcurrentLinkedQueue<>();
+	private final Queue<Player> logouts = new ConcurrentLinkedQueue<>();
+	
+	/**
+	 * The regional tick counter for processing such as {@link ItemNode} in a region.
+	 */
+	private int regionalTick;
 	
 	/**
 	 * The time it took in milliseconds to do the sync.
@@ -99,22 +116,18 @@ public final class World {
 		}
 	}
 	
-	/**
-	 * The default constructor, will throw an
-	 * {@link UnsupportedOperationException} if instantiated.
-	 * @throws UnsupportedOperationException if this class is instantiated.
-	 */
-	private World() {
-		throw new UnsupportedOperationException("This class cannot be instantiated!");
+	public void start() {
+		sync.scheduleAtFixedRate(new GameSynchronizer(this), 600, 600, TimeUnit.MILLISECONDS);
+	}
+	
+	public void shutdown() {
+		sync.shutdownNow();
 	}
 	
 	/**
-	 * The method that executes the update sequence for all in game characters
-	 * every cycle. The update sequence may either run sequentially or
-	 * concurrently depending on the type of engine selected by the server.
-	 * @throws Exception if any errors occur during the update sequence.
+	 * The method that executes the update sequence for all in game characters every cycle.
 	 */
-	public static void sequence() throws Exception {
+	public void pulse() {
 		long start = System.currentTimeMillis();
 
 		// Handle queued logins.
@@ -126,15 +139,60 @@ public final class World {
 				player.getSession().getChannel().close();
 			}
 		}
-
+		
 		// Handle task processing.
-		TASK_MANAGER.sequence();
-
-		//Parsing a global sync.
-		SYNCHRONIZER.preSynchronize();
-		SYNCHRONIZER.synchronize();
-		SYNCHRONIZER.postSynchronize();
-
+		taskManager.sequence();
+		
+		// Pre sync
+		for(Player it : players) {
+			try {
+				it.getSession().dequeue();
+				it.getMovementQueue().sequence();
+				it.sequence();
+			} catch(Exception e) {
+				queueLogout(it);
+				logger.log(Level.WARNING, "Couldn't pre sync player " + it.toString(), e);
+			}
+		}
+		for(Npc it : npcs) {
+			if(it.isActive()) {
+				try {
+					it.sequence();
+					it.getMovementQueue().sequence();
+				} catch(Exception e) {
+					logger.log(Level.WARNING, "Couldn't pre sync npc " + it.toString(), e);
+				}
+			}
+		}
+		
+		// Sync
+		for(Player it : players) {
+			try {
+				it.getSession().queue(new PlayerUpdater().write(it));
+				it.getSession().queue(new NpcUpdater().write(it));
+			} catch(Exception e) {
+				queueLogout(it);
+				logger.log(Level.WARNING, "Couldn't sync player " + it.toString(), e);
+			}
+		}
+		
+		// Post sync
+		for(Player it : players) {
+			it.getSession().flushQueue();
+			it.reset();
+			it.setCachedUpdateBlock(null);
+		}
+		for(Npc it : npcs) {
+			it.reset();
+		}
+		
+		// Region tick
+		regionalTick++;
+		if(regionalTick == 10) {
+			World.getRegions().getRegions().forEach((i, it) -> it.sequence());
+			regionalTick = 0;
+		}
+		
 		// Handle queued logouts.
 		int amount = 0;
 		Iterator<Player> $it = logouts.iterator();
@@ -142,12 +200,12 @@ public final class World {
 			Player player = $it.next();
 			if(player == null || amount >= GameConstants.LOGOUT_THRESHOLD)
 				break;
-			if(handleLogout(player, false)) {
+			if(logout(player, false)) {
 				$it.remove();
 				amount++;
 			}
 		}
-
+		
 		millis = System.currentTimeMillis() - start;
 	}
 	
@@ -155,7 +213,7 @@ public final class World {
 	 * Queues {@code player} to be logged in on the next server sequence.
 	 * @param player the player to log in.
 	 */
-	public static void queueLogin(Player player) {
+	public void queueLogin(Player player) {
 		if(!logins.contains(player)) {
 			logins.add(player);
 		}
@@ -165,7 +223,7 @@ public final class World {
 	 * Queues {@code player} to be logged out on the next server sequence.
 	 * @param player the player to log out.
 	 */
-	public static void queueLogout(Player player) {
+	public void queueLogout(Player player) {
 		if(player.getState() == NodeState.ACTIVE && !logouts.contains(player)) {
 			if(player.getCombatBuilder().inCombat())
 				player.getLogoutTimer().reset();
@@ -177,8 +235,8 @@ public final class World {
 	 * Submits {@code t} to the backing {@link TaskManager}.
 	 * @param t the task to submit to the queue.
 	 */
-	public static void submit(Task t) {
-		TASK_MANAGER.submit(t);
+	public void submit(Task t) {
+		taskManager.submit(t);
 	}
 	
 	/**
@@ -188,7 +246,7 @@ public final class World {
 	 * @return the player within an optional if found, or an empty optional if
 	 * not found.
 	 */
-	public static Optional<Player> getPlayer(long username) {
+	public Optional<Player> getPlayer(long username) {
 		return players.findFirst(it -> Objects.equals(it.getUsernameHash(), username));
 	}
 	
@@ -199,7 +257,7 @@ public final class World {
 	 * @return the player within an optional if found, or an empty optional if
 	 * not found.
 	 */
-	public static Optional<Player> getPlayer(String username) {
+	public Optional<Player> getPlayer(String username) {
 		return players.findFirst(it -> Objects.equals(it.getUsername(), username));
 	}
 	
@@ -210,7 +268,7 @@ public final class World {
 	 * @param character the character that it will be returned for.
 	 * @return the local players.
 	 */
-	public static Iterator<Player> getLocalPlayers(EntityNode character) {
+	public Iterator<Player> getLocalPlayers(EntityNode character) {
 		if(character.isPlayer())
 			return character.toPlayer().getLocalPlayers().iterator();
 		return players.iterator();
@@ -223,7 +281,7 @@ public final class World {
 	 * @param character the character that it will be returned for.
 	 * @return the local npcs.
 	 */
-	public static Iterator<Npc> getLocalNpcs(EntityNode character) {
+	public Iterator<Npc> getLocalNpcs(EntityNode character) {
 		if(character.isPlayer())
 			return character.toPlayer().getLocalNpcs().iterator();
 		return npcs.iterator();
@@ -233,7 +291,7 @@ public final class World {
 	 * Gets every single character in the player and npc character lists.
 	 * @return a set containing every single character.
 	 */
-	public static Set<EntityNode> getEntities() {
+	public Set<EntityNode> getEntities() {
 		Set<EntityNode> characters = new HashSet<>();
 		players.forEach(characters::add);
 		npcs.forEach(characters::add);
@@ -245,7 +303,7 @@ public final class World {
 	 * @param message      the message to send to all online players.
 	 * @param announcement determines if this message is an announcement.
 	 */
-	public static void message(String message, boolean announcement) {
+	public void message(String message, boolean announcement) {
 		players.forEach(p -> p.message((announcement ? "@red@[ANNOUNCEMENT]: " : "") + message));
 	}
 	
@@ -253,7 +311,7 @@ public final class World {
 	 * Sends {@code message} to all online players without an announcement.
 	 * @param message the message to send to all online players.
 	 */
-	public static void message(String message) {
+	public void message(String message) {
 		message(message, false);
 	}
 	
@@ -264,7 +322,7 @@ public final class World {
 	 * @return {@code true} if the player was logged out, {@code false}
 	 * otherwise.
 	 */
-	public static boolean handleLogout(Player player, boolean forced) {
+	public boolean logout(Player player, boolean forced) {
 		try {
 			// If the player x-logged, don't log the player out. Keep the
 			// player queued until they are out of combat to prevent x-logging.
@@ -273,11 +331,11 @@ public final class World {
 					return false;
 				}
 			}
-			boolean response = World.getPlayers().remove(player, forced);
-			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + World.getPlayers().size());
-			List<Npc> npcs = World.getNpcs().findAll(n -> n != null && n.isSpawnedFor(player));
+			boolean response = players.remove(player, forced);
+			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + players.size());
+			List<Npc> npcs = this.npcs.findAll(n -> n != null && n.isSpawnedFor(player));
 			for(Npc n : npcs) {
-				World.getNpcs().remove(n);
+				this.npcs.remove(n);
 			}
 			if(response)
 				logger.info(player.toString() + " has logged out.");
@@ -290,10 +348,26 @@ public final class World {
 	}
 	
 	/**
+	 * Gets the game executor which forwards process.
+	 * @return game executor.
+	 */
+	public GameExecutor getExecutor() {
+		return executor;
+	}
+	
+	/**
+	 * Gets the manager for the queue of game tasks.
+	 * @return the queue of tasks.
+	 */
+	public TaskManager getTask() {
+		return taskManager;
+	}
+	
+	/**
 	 * Gets the collection of active players.
 	 * @return the active players.
 	 */
-	public static EntityList<Player> getPlayers() {
+	public EntityList<Player> getPlayers() {
 		return players;
 	}
 	
@@ -301,28 +375,12 @@ public final class World {
 	 * Gets the collection of active npcs.
 	 * @return the active npcs.
 	 */
-	public static EntityList<Npc> getNpcs() {
+	public EntityList<Npc> getNpcs() {
 		return npcs;
 	}
-	
-	/**
-	 * Returns the game service that processes this world.
-	 * @return the game service.
-	 */
-	public static GameService getService() {
-		return SERVICE;
-	}
-	
-	/**
-	 * Gets the manager for the queue of game tasks.
-	 * @return the queue of tasks.
-	 */
-	public static TaskManager getTaskManager() {
-		return TASK_MANAGER;
-	}
 
 
-	/* FINAL STATIC ASSETS DECLARATION */
+	/* CONSTANTS DECLARATIONS */
 	
 	/**
 	 * The time the server has been running.
@@ -540,4 +598,13 @@ public final class World {
 			return null;
 		}
 	}
+	
+	/**
+	 * Returns the singleton pattern implementation.
+	 * @return The returned implementation.
+	 */
+	public static final World get() {
+		return singleton;
+	}
+	
 }

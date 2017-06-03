@@ -1,7 +1,7 @@
 package net.edge.content.item;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 
@@ -39,7 +39,7 @@ public final class DiggingHandler extends Task {
 	 * Submits this action.
 	 */
 	public void submit() {
-		World.submit(this);
+		World.get().submit(this);
 	}
 	
 	@Override

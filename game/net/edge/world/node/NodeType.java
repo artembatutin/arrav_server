@@ -4,7 +4,7 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
-import net.edge.world.region.Region;
+import net.edge.world.node.region.Region;
 
 /**
  * The enumerated type whose elements represent the different types of {@link Node} implementations.

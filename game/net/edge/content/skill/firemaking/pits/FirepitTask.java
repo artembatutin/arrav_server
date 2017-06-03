@@ -2,7 +2,7 @@ package net.edge.content.skill.firemaking.pits;
 
 import net.edge.task.Task;
 import net.edge.GameConstants;
-import net.edge.world.World;
+import net.edge.World;
 
 import java.util.Optional;
 
@@ -41,7 +41,7 @@ public final class FirepitTask extends Task {
 	
 	@Override
 	protected void onCancel() {
-		World.message("@red@The double blood money event has ended due to the fire pit being distinguised!", true);
+		World.get().message("@red@The double blood money event has ended due to the fire pit being distinguised!", true);
 		GameConstants.DOUBLE_BLOOD_MONEY_EVENT = false;
 	}
 }

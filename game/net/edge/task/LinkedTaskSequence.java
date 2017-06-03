@@ -1,7 +1,7 @@
 package net.edge.task;
 
 import com.google.common.base.Preconditions;
-import net.edge.world.World;
+import net.edge.World;
 
 import java.util.*;
 
@@ -24,13 +24,13 @@ import java.util.*;
  * math to figure out the delays; For instance, take these examples:
  * <p>
  * <pre>
- * World.submit(new Task(5, false) {
+ * World.get().submit(new Task(5, false) {
  *     &#064;Override
  *     public void execute() {
  *         System.out.println(&quot;#1: executed after 5 ticks&quot;);
  *     }
  * });
- * World.submit(new Task(7, false) {
+ * World.get().submit(new Task(7, false) {
  *     &#064;Override
  *     public void execute() {
  *         System.out.println(&quot;#2: executed 2 ticks after #1&quot;);
@@ -41,11 +41,11 @@ import java.util.*;
  * Or instead of the math, the nesting tasks alternative.
  * <p>
  * <pre>
- * World.submit(new Task(5, false) {
+ * World.get().submit(new Task(5, false) {
  *     &#064;Override
  *     public void execute() {
  *         System.out.println(&quot;#1: executed after 5 ticks&quot;);
- *         World.submit(new Task(2, false) {
+ *         World.get().submit(new Task(2, false) {
  *             &#064;Override
  *             public void execute() {
  *                 System.out.println(&quot;#2: executed 2 ticks after #1&quot;);
@@ -156,13 +156,13 @@ public final class LinkedTaskSequence extends Task {
 	 * Starts this sequence by submitting itself as a task. The equivalent to:
 	 * <p>
 	 * <p>
-	 * {@code World.submit(this);}
+	 * {@code World.get().submit(this);}
 	 * <p>
 	 * This is just an easier alternative.
 	 * @return an instance of itself, for chaining.
 	 */
 	public LinkedTaskSequence start() {
-		World.submit(this);
+		World.get().submit(this);
 		return this;
 	}
 	

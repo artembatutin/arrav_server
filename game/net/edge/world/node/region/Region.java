@@ -1,8 +1,8 @@
-package net.edge.world.region;
+package net.edge.world.node.region;
 
 import net.edge.util.LoggerUtils;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.locale.Position;
 import net.edge.world.node.Node;
 import net.edge.world.node.NodeState;
@@ -15,9 +15,7 @@ import net.edge.world.node.item.ItemState;
 import net.edge.world.object.ObjectNode;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * A location on the tool.mapviewer that is {@code 64x64} in size. Used primarily for caching various types of {@link Node}s and
@@ -51,32 +49,32 @@ public final class Region extends Node {
 	/**
 	 * A concurrent {@link Map} of active {@link Player}s in this {@code Region}.
 	 */
-	private final Map<Integer, Player> players = new ConcurrentHashMap<>();
+	private final Map<Integer, Player> players = new HashMap<>();
 	
 	/**
 	 * A concurrent {@link Map} of active {@link Npc}s in this {@code Region}.
 	 */
-	private final Map<Integer, Npc> npcs = new ConcurrentHashMap<>();
+	private final Map<Integer, Npc> npcs = new HashMap<>();
 	
 	/**
 	 * A concurrent {@link Map} of {@link ItemNode}s in this {@code Region}.
 	 */
-	private final Map<Position, Set<ItemNode>> items = new ConcurrentHashMap<>();
+	private final Map<Position, Set<ItemNode>> items = new HashMap<>();
 	
 	/**
 	 * A concurrent {@link Map} of {@link ItemNode}s in this {@code Region} that is queued to be removed.
 	 */
-	private final Map<Position, Set<ItemNode>> removedItems = new ConcurrentHashMap<>();
+	private final Map<Position, Set<ItemNode>> removedItems = new HashMap<>();
 	
 	/**
 	 * A concurrent {@link Map} of active {@link ObjectNode}s in this {@code Region}.
 	 */
-	private final Map<Integer, RegionTiledObjects> objects = new ConcurrentHashMap<>();
+	private final Map<Integer, RegionTiledObjects> objects = new HashMap<>();
 	
 	/**
 	 * A concurrent {@link Map} of removed {@link ObjectNode}s in this {@code Region}.
 	 */
-	private final Map<Integer, Set<ObjectNode>> removeObjects = new ConcurrentHashMap<>();
+	private final Map<Integer, Set<ObjectNode>> removeObjects = new HashMap<>();
 	
 	//The clipping data and few switches.
 	/**

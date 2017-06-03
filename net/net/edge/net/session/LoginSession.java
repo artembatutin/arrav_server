@@ -12,7 +12,7 @@ import net.edge.net.codec.login.LoginResponse;
 import net.edge.net.codec.login.LoginResponseMessage;
 import net.edge.util.TextUtils;
 import net.edge.GameConstants;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerSerialization;
 import net.edge.world.node.entity.player.assets.Rights;
@@ -52,14 +52,14 @@ public final class LoginSession extends Session {
 		// Validate the username and password, change login response if needed
 		// for invalid credentials or the world being full.
 		boolean invalidCredentials = !msg.getUsername().matches("^[a-zA-Z0-9_ ]{1,12}$") || msg.getPassword().isEmpty() || msg.getPassword().length() > 20;
-		response = invalidCredentials ? LoginResponse.INVALID_CREDENTIALS : World.getPlayers().remaining() == 0 ? LoginResponse.WORLD_FULL : response;
+		response = invalidCredentials ? LoginResponse.INVALID_CREDENTIALS : World.get().getPlayers().remaining() == 0 ? LoginResponse.WORLD_FULL : response;
 		
 		// If the login response is normal, deserialize the character file (or
 		// grab it from the Cache if it was recently serialized).
 		if(response == LoginResponse.NORMAL) {
 			player.setUsername(msg.getUsername().toLowerCase());
 			player.setPassword(msg.getPassword());
-			if(World.getPlayer(player.getUsernameHash()).isPresent()) {
+			if(World.get().getPlayer(player.getUsernameHash()).isPresent()) {
 				response = LoginResponse.ACCOUNT_ONLINE;
 			}
 			if(msg.getBuild() != GameConstants.CLIENT_BUILD) {
@@ -86,7 +86,7 @@ public final class LoginSession extends Session {
 				player.setSession(session);
 				
 				new PlayerSerialization(player).deserialize(msg.getPassword(), false);
-				World.queueLogin(player);
+				World.get().queueLogin(player);
 			});
 		}
 	}

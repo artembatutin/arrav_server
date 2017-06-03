@@ -2,7 +2,7 @@ package net.edge.content.combat.special;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
@@ -358,7 +358,7 @@ public enum CombatSpecial {
 				public void postAttack(int counter) {
 					if(Location.inMultiCombat(player)) {
 						if(!player.isWildernessInterface()) {
-							World.submit(new KorasiChain(player, target, counter));
+							World.get().submit(new KorasiChain(player, target, counter));
 						}
 					}
 				}
@@ -398,7 +398,7 @@ public enum CombatSpecial {
 		@Override
 		public CombatSessionData container(Player player, EntityNode target) {
 			player.animation(new Animation(426));
-			World.submit(new Task(1, false) {
+			World.get().submit(new Task(1, false) {
 				int tick = 0;
 				
 				@Override
@@ -432,7 +432,7 @@ public enum CombatSpecial {
 			player.graphic(new Graphic(250, 100));
 			new Projectile(player, target, 249, 58, 40, 43, 31, 0).sendProjectile();
 			
-			World.submit(new Task(1, false) {
+			World.get().submit(new Task(1, false) {
 				@Override
 				public void execute() {
 					player.animation(new Animation(426, Animation.AnimationPriority.HIGH));

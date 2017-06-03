@@ -4,7 +4,7 @@ import net.edge.task.LinkedTaskSequence;
 import net.edge.util.log.Log;
 import net.edge.util.log.impl.DuelLog;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.container.session.impl.DuelSession;

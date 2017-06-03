@@ -4,7 +4,7 @@ import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.message.InputMessageListener;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
@@ -25,7 +25,7 @@ public final class ItemOnPlayerMessage implements InputMessageListener {
 		int itemUsed = payload.getShort();
 		int itemSlot = payload.getShort(false, ByteTransform.A, ByteOrder.LITTLE);
 		Item item = player.getInventory().get(itemSlot);
-		Player usedOn = World.getPlayers().get(index - 1);
+		Player usedOn = World.get().getPlayers().get(index - 1);
 		
 		if(container < 0 || item == null || usedOn == null || itemUsed < 0)
 			return;

@@ -1,6 +1,6 @@
 package net.edge.content.combat.magic.lunars.impl.spells;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.world.node.entity.EntityNode;
@@ -57,7 +57,7 @@ public final class HealGroup extends LunarButtonSpell {
 			return false;
 		}
 		
-		local_players = Combat.charactersWithinDistance(caster, World.getLocalPlayers(caster), 1);
+		local_players = Combat.charactersWithinDistance(caster, World.get().getLocalPlayers(caster), 1);
 		
 		if(local_players.isEmpty()) {
 			caster.message("There are no players within your radius to cast this spell for.");

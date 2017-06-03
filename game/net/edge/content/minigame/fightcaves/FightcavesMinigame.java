@@ -1,7 +1,7 @@
 package net.edge.content.minigame.fightcaves;
 
 import net.edge.GameConstants;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.FoodConsumable;
@@ -99,12 +99,12 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			if(player.getAttr().get("fight_caves_advanced").getBoolean()) {
 				otherJad.setRespawn(false);
 				otherJad.setSpawnedFor(player.getUsername());
-				World.getNpcs().add(otherJad);
+				World.get().getNpcs().add(otherJad);
 				World.getInstanceManager().isolate(otherJad, instance);
 			}
 			jad.setRespawn(false);
 			jad.setSpawnedFor(player.getUsername());
-			World.getNpcs().add(jad);
+			World.get().getNpcs().add(jad);
 			World.getInstanceManager().isolate(jad, instance);
 			started = true;
 		} else if(timer == 8) {
@@ -135,8 +135,8 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			int reward = player.getAttr().get("fight_caves_advanced").getBoolean() ? 19111 : 6570;
 			player.getInventory().addOrBank(new Item(reward, 1));
 			player.move(new Position(2436, 5169, 0));
-			World.getNpcs().remove(jad);
-			World.getNpcs().remove(otherJad);
+			World.get().getNpcs().remove(jad);
+			World.get().getNpcs().remove(otherJad);
 		}
 	}
 	
@@ -166,8 +166,8 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	
 	@Override
 	public void logout(Player player) {
-		World.getNpcs().remove(jad);
-		World.getNpcs().remove(otherJad);
+		World.get().getNpcs().remove(jad);
+		World.get().getNpcs().remove(otherJad);
 		player.move(GameConstants.STARTING_POSITION);
 		player.message("You failed to complete the fight cave...");
 		this.destruct(player);

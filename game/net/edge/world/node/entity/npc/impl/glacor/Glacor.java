@@ -1,6 +1,6 @@
 package net.edge.world.node.entity.npc.impl.glacor;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.locale.Position;
 import net.edge.world.Hit;
 import net.edge.world.node.entity.npc.Npc;
@@ -83,7 +83,7 @@ public final class Glacor extends Npc {
 		super.appendDeath();
 		
 		if(specialty.isPresent() && specialty.get().equals(GlacyteData.UNSTABLE)) {
-			World.submit(new GlacorExplodeTask(null, this, true));
+			World.get().submit(new GlacorExplodeTask(null, this, true));
 		}
 	}
 	
@@ -103,7 +103,7 @@ public final class Glacor extends Npc {
 				g.setStrategy(Optional.of(new GlacyteCombatStrategy(g)));
 				g.setRespawn(false);
 				this.getGlacytes().add(glacyte);
-				World.getNpcs().add(g);
+				World.get().getNpcs().add(g);
 				g.getCombatBuilder().attack(victim);
 			}
 			

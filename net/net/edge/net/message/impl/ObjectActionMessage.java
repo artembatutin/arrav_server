@@ -4,7 +4,7 @@ import net.edge.net.codec.ByteMessage;
 import net.edge.net.message.InputMessageListener;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.GameConstants;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.ViewingOrb;
 import net.edge.content.WebSlashing;
 import net.edge.content.combat.weapon.WeaponInterface;

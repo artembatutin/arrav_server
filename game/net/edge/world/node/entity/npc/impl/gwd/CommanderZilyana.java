@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.npc.impl.gwd;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.locale.Position;
 import net.edge.locale.loc.SquareLocation;
 import net.edge.world.node.entity.npc.Npc;
@@ -69,7 +69,7 @@ public final class CommanderZilyana extends Npc {
 			minion.getMovementCoordinator().setCoordinate(true);
 			minion.getMovementCoordinator().setRadius(3);
 			NpcAggression.AGGRESSIVE.add(minion.getId());
-			World.getNpcs().add(minion);
+			World.get().getNpcs().add(minion);
 		});
 		NpcAggression.AGGRESSIVE.add(this.getId());
 	}

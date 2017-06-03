@@ -1,6 +1,6 @@
 package net.edge.content.combat.effect;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.node.entity.EntityNode;
 
 import java.util.Collection;
@@ -51,7 +51,7 @@ public abstract class CombatEffect {
 	 */
 	public final boolean start(EntityNode c) {
 		if(apply(c)) {
-			World.submit(new CombatEffectTask(c, this));
+			World.get().submit(new CombatEffectTask(c, this));
 			return true;
 		}
 		return false;

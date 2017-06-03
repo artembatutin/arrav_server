@@ -3,7 +3,7 @@ package net.edge.world.node.entity.player.assets.activity;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.task.LinkedTaskSequence;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.skill.action.SkillActionTask;
 import net.edge.world.node.entity.player.Player;
 

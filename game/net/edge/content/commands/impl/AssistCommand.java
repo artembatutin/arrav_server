@@ -1,6 +1,6 @@
 package net.edge.content.commands.impl;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.locale.Position;
@@ -17,7 +17,7 @@ public final class AssistCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player assisted = World.getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player assisted = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(assisted != null && assisted != player) {
 			Optional<Position> pos = World.getTraversalMap().getNearbyTraversableTiles(assisted.getPosition(), 1).stream().findAny();
 			player.move(pos.orElse(assisted.getPosition()));

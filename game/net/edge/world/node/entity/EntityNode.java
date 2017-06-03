@@ -1,7 +1,7 @@
 package net.edge.world.node.entity;
 
 import com.google.common.base.Preconditions;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.*;
 import net.edge.task.Task;
 import net.edge.util.MutableNumber;
@@ -248,9 +248,9 @@ public abstract class EntityNode extends Node {
 		if(slot == -1)
 			return "unregistered entity node.";
 		if(isPlayer())
-			return World.getPlayers().get(slot - 1).toString();
+			return World.get().getPlayers().get(slot - 1).toString();
 		else if(isNpc())
-			return World.getNpcs().get(slot - 1).toString();
+			return World.get().getNpcs().get(slot - 1).toString();
 		throw new IllegalStateException("Invalid entity node type!");
 	}
 	
@@ -507,7 +507,7 @@ public abstract class EntityNode extends Node {
 	private void sendDamage(Hit hit, Hit hit2, Hit hit3) {
 		sendDamage(hit, hit2);
 		
-		World.submit(new Task(1, false) {
+		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
 				this.cancel();
@@ -530,7 +530,7 @@ public abstract class EntityNode extends Node {
 	private void sendDamage(Hit hit, Hit hit2, Hit hit3, Hit hit4) {
 		sendDamage(hit, hit2);
 		
-		World.submit(new Task(1, false) {
+		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
 				this.cancel();

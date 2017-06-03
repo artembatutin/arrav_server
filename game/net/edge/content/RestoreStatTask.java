@@ -1,7 +1,7 @@
 package net.edge.content;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
@@ -29,7 +29,7 @@ public final class RestoreStatTask extends Task {
 	
 	@Override
 	public void execute() {
-		for(Player player : World.getPlayers()) {
+		for(Player player : World.get().getPlayers()) {
 			if(player == null)
 				continue;
 			if(player.getState() != NodeState.ACTIVE) {
@@ -92,6 +92,6 @@ public final class RestoreStatTask extends Task {
 	
 	@Override
 	public void onCancel() {
-		World.submit(new RestoreStatTask());
+		World.get().submit(new RestoreStatTask());
 	}
 }

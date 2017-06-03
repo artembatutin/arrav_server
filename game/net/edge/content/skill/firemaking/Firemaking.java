@@ -1,7 +1,7 @@
 package net.edge.content.skill.firemaking;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.DestructionSkillAction;
@@ -11,7 +11,6 @@ import net.edge.world.Animation;
 import net.edge.world.Direction;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectType;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -61,7 +60,7 @@ public final class Firemaking extends DestructionSkillAction {
 	public void onDestruct(Task t, boolean success) {
 		if(success) {
 			getPlayer().animation(null);
-			World.submit(new FiremakingTask(this));
+			World.get().submit(new FiremakingTask(this));
 			if(lighter != null && lighter != FireLighter.TINDERBOX) {
 				player.getInventory().remove(new Item(lighter.getItem(), 1));
 			}

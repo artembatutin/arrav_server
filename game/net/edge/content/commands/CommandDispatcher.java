@@ -2,7 +2,7 @@ package net.edge.content.commands;
 
 import net.edge.util.LoggerUtils;
 import net.edge.util.Utility;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.node.entity.player.Player;
 
 import java.lang.annotation.Annotation;

@@ -2,7 +2,7 @@ package net.edge.content.combat;
 
 import net.edge.Server;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.magic.CombatNormalSpell;
@@ -246,7 +246,7 @@ public final class Combat {
 	 * @param action        the action to execute for each victim.
 	 */
 	public static void damagePlayersWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Player> action) {
-		damageCharactersWithin(attacker, () -> World.getLocalPlayers(attacker), position, radius, hits, type, checkAccuracy, action);
+		damageCharactersWithin(attacker, () -> World.get().getLocalPlayers(attacker), position, radius, hits, type, checkAccuracy, action);
 	}
 	
 	/**
@@ -279,7 +279,7 @@ public final class Combat {
 	 * @param action        the action to execute for each victim.
 	 */
 	public static void damageNpcsWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Npc> action) {
-		damageCharactersWithin(attacker, () -> World.getLocalNpcs(attacker), position, radius, hits, type, checkAccuracy, action);
+		damageCharactersWithin(attacker, () -> World.get().getLocalNpcs(attacker), position, radius, hits, type, checkAccuracy, action);
 	}
 	
 	/**

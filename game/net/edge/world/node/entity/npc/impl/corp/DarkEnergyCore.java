@@ -2,7 +2,7 @@ package net.edge.world.node.entity.npc.impl.corp;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
 import net.edge.world.node.NodeState;
@@ -61,8 +61,8 @@ public final class DarkEnergyCore extends Npc {
 	@Override
 	public void register() {
 		this.setRespawn(false);
-		World.submit(moveTask);
-		World.submit(leechTask);
+		World.get().submit(moveTask);
+		World.get().submit(leechTask);
 	}
 	
 	@Override
@@ -116,7 +116,7 @@ public final class DarkEnergyCore extends Npc {
 			Position position = victim.getPosition();
 			
 			new Projectile(core.getCenterPosition(), position, 0, 1828, 44, 4, 60, 43, 0, core.getInstance()).sendProjectile();
-			World.submit(new Task(2) {
+			World.get().submit(new Task(2) {
 				@Override
 				protected void execute() {
 					this.cancel();

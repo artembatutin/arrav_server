@@ -2,7 +2,7 @@ package net.edge.content.skill.summoning;
 
 import com.google.common.collect.ImmutableList;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.pets.Pet;
 import net.edge.content.skill.summoning.familiar.Familiar;

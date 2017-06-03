@@ -4,12 +4,12 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.locale.Position;
 import net.edge.locale.loc.SquareLocation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectNode;
-import net.edge.world.region.Region;
+import net.edge.world.node.region.Region;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -39,7 +39,7 @@ public enum Obelisk {
 		Optional<Obelisk> obelisk = get(object);
 		
 		if(obelisk.isPresent()) {
-			World.submit(new ObeliskTask(obelisk.get(), player.getRegion()));
+			World.get().submit(new ObeliskTask(obelisk.get(), player.getRegion()));
 			return true;
 		}
 		return false;

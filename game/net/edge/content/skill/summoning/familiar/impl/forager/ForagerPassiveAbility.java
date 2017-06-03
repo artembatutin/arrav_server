@@ -2,7 +2,7 @@ package net.edge.content.skill.summoning.familiar.impl.forager;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.skill.summoning.familiar.ability.Forager;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
@@ -57,7 +57,7 @@ public class ForagerPassiveAbility extends Forager {
 			return;
 		}
 		setTask(Optional.of(new ForagerTask(player, this)));
-		World.submit(getTask().get());
+		World.get().submit(getTask().get());
 	}
 	
 	/**

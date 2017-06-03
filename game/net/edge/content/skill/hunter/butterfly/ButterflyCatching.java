@@ -6,7 +6,7 @@ import com.google.common.collect.Sets;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.container.impl.Equipment;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
@@ -110,7 +110,7 @@ public final class ButterflyCatching extends ProducingSkillAction {
 		Position position = RandomUtils.random(World.getTraversalMap().getNearbyTraversableTiles(player.getPosition(), 3));
 		Npc npc = new DefaultNpc(data.npc, position);
 		LinkedTaskSequence seq = new LinkedTaskSequence();
-		seq.connect(2, () -> World.getNpcs().add(npc));
+		seq.connect(2, () -> World.get().getNpcs().add(npc));
 		seq.start();
 		return true;
 	}
@@ -131,7 +131,7 @@ public final class ButterflyCatching extends ProducingSkillAction {
 				Npc npc = new DefaultNpc(data.npc, position);
 				LinkedTaskSequence seq = new LinkedTaskSequence();
 				seq.connect(2, () -> player.graphic(data.barehandGraphic));
-				seq.connect(4, () -> World.getNpcs().add(npc));
+				seq.connect(4, () -> World.get().getNpcs().add(npc));
 				seq.start();
 			}
 			

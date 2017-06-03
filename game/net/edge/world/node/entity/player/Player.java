@@ -7,7 +7,7 @@ import net.edge.net.session.GameSession;
 import net.edge.task.Task;
 import net.edge.util.*;
 import net.edge.GameConstants;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
 import net.edge.content.ViewingOrb;
@@ -599,7 +599,7 @@ public final class Player extends EntityNode {
 		encoder.sendContextMenu(4, false, "Trade with");
 		CombatEffect.values().forEach($it -> {
 			if($it.onLogin(this))
-				World.submit(new CombatEffectTask(this, $it));
+				World.get().submit(new CombatEffectTask(this, $it));
 		});
 		World.getExchangeSessionManager().resetRequests(this);
 		encoder.sendMessage(GameConstants.WELCOME_MESSAGE);
@@ -673,7 +673,7 @@ public final class Player extends EntityNode {
 		World.getExchangeSessionManager().reset(this);
 		if(getMarketShop() != null)
 			MarketShop.clearFromShop(this);
-		World.getTaskManager().cancel(this);
+		World.get().getTask().cancel(this);
 		World.getExchangeSessionManager().reset(this);
 		setSkillAction(Optional.empty());
 		MinigameHandler.executeVoid(this, m -> m.onLogout(this));
@@ -693,7 +693,7 @@ public final class Player extends EntityNode {
 	@Override
 	public void appendDeath() {
 		setDead(true);
-		World.submit(new PlayerDeath(this));
+		World.get().submit(new PlayerDeath(this));
 	}
 	
 	@Override
@@ -862,7 +862,7 @@ public final class Player extends EntityNode {
 	 * Saves the character file for this player.
 	 */
 	private void save() {
-		World.getService().submit(() -> new PlayerSerialization(this).serialize());
+		World.get().getExecutor().savePlayer(this);
 	}
 	
 	/**
@@ -1890,13 +1890,11 @@ public final class Player extends EntityNode {
 	 * @param cachedUpdateBlock the new value to set.
 	 */
 	public void setCachedUpdateBlock(ByteMessage cachedUpdateBlock) {
-		// Release reference to currently cached block, if we have one.
+		/* Release reference to old cached block. */
 		if(this.cachedUpdateBlock != null) {
 			this.cachedUpdateBlock.release();
 		}
-		
-		// If we need to set a new cached block, retain a reference to it. Otherwise it means that the current block
-		// reference was just being cleared.
+		/* Retain a reference to new cached block.. */
 		if(cachedUpdateBlock != null) {
 			cachedUpdateBlock.retain();
 		}

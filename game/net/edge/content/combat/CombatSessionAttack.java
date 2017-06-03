@@ -4,7 +4,7 @@ import net.edge.Server;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.ranged.CombatRangedAmmoDefinition;
 import net.edge.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
 import net.edge.content.container.impl.Equipment;
@@ -21,7 +21,7 @@ import net.edge.world.Projectile;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.region.Region;
+import net.edge.world.node.region.Region;
 
 import java.util.Arrays;
 import java.util.Objects;

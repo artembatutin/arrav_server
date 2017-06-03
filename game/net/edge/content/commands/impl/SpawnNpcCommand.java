@@ -1,6 +1,6 @@
 package net.edge.content.commands.impl;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.npc.Npc;
@@ -19,7 +19,7 @@ public final class SpawnNpcCommand implements Command {
 		n.getMovementCoordinator().setCoordinate(coordinate);
 		n.getMovementCoordinator().setRadius(3);
 		n.setRespawn(false);
-		World.getNpcs().add(n);
+		World.get().getNpcs().add(n);
 		n.setSpecial(20);
 	}
 	

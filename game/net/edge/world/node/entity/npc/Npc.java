@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.npc;
 
 import com.google.common.collect.ImmutableMap;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
@@ -156,7 +156,7 @@ public abstract class Npc extends EntityNode {
 	public void dispose() {
 		setVisible(false);
 		setPosition(new Position(1, 1));
-		World.getTaskManager().cancel(this);
+		World.get().getTask().cancel(this);
 		getRegion().removeChar(this);
 	}
 	
@@ -175,7 +175,7 @@ public abstract class Npc extends EntityNode {
 	@Override
 	public void appendDeath() {
 		setDead(true);
-		World.submit(new NpcDeath(this));
+		World.get().submit(new NpcDeath(this));
 	}
 	
 	@Override

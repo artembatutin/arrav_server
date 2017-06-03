@@ -1,6 +1,6 @@
 package net.edge.content.skill.hunter;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.hunter.trap.Trap;
@@ -85,7 +85,7 @@ public final class Hunter {
 		
 		if(!GLOBAL_TRAPS.get(player).getTask().isPresent()) {
 			GLOBAL_TRAPS.get(player).setTask(new TrapTask(player));
-			World.submit(GLOBAL_TRAPS.get(player).getTask().get());
+			World.get().submit(GLOBAL_TRAPS.get(player).getTask().get());
 		}
 		
 		if(GLOBAL_TRAPS.get(player).getTraps().size() >= getMaximumTraps(player)) {

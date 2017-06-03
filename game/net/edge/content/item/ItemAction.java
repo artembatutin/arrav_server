@@ -1,5 +1,8 @@
 package net.edge.content.item;
 
+import net.edge.content.skill.hunter.Hunter;
+import net.edge.content.skill.hunter.trap.impl.BirdSnare;
+import net.edge.content.skill.hunter.trap.impl.BoxTrap;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.world.Animation;
 import net.edge.content.Dice;
@@ -62,12 +65,10 @@ public class ItemAction {
 					player.getInventory().addAll(HunterKit.ITEMS);
 					return true;
 				case 10006:
-					player.message("disabled for now...");
-					//Hunter.lay(player, new BirdSnare(player));
+					Hunter.lay(player, new BirdSnare(player));
 					return true;
 				case 10008:
-					player.message("disabled for now...");
-					//Hunter.lay(player, new BoxTrap(player));
+					Hunter.lay(player, new BoxTrap(player));
 					return true;
 				case 952:
 					LinkedTaskSequence seq = new LinkedTaskSequence();

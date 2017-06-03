@@ -4,7 +4,7 @@ import net.edge.locale.Position;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Direction;
 import net.edge.world.node.entity.move.path.distance.Distance;
-import net.edge.world.region.TraversalMap;
+import net.edge.world.node.region.TraversalMap;
 
 import java.util.*;
 

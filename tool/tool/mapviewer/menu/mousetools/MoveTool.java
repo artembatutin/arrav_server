@@ -1,6 +1,6 @@
 package tool.mapviewer.menu.mousetools;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.locale.Position;
 import tool.mapviewer.MapTool;
 
@@ -41,7 +41,7 @@ public class MoveTool extends MouseTool {
 		} else {
 			lastDragX = context.getMap().getMapX(e.getX());
 			lastDragY = context.getMap().getMapY(e.getY());
-			World.getPlayers().findFirst(p -> p.getUsername().equals("ocyn") || p.getUsername().equals("chk")).ifPresent(o -> o.move(new Position(lastDragX, lastDragY)));
+			World.get().getPlayers().findFirst(p -> p.getUsername().equals("ocyn") || p.getUsername().equals("chk")).ifPresent(o -> o.move(new Position(lastDragX, lastDragY)));
 			context.setCurrent(new Position(lastDragX, lastDragY));
 			context.getMap().repaint();
 		}

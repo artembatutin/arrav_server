@@ -1,14 +1,14 @@
 package net.edge.content.skill.summoning.familiar;
 
 import com.google.common.collect.ImmutableList;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.container.ItemContainer;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
 import net.edge.world.node.item.ItemNodeStatic;
-import net.edge.world.region.Region;
+import net.edge.world.node.region.Region;
 
 /**
  * Holds functionality for abilities which can hold items such as

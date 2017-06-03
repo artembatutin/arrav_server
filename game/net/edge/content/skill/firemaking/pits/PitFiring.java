@@ -3,7 +3,7 @@ package net.edge.content.skill.firemaking.pits;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.GameConstants;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.SkillAction;
 import net.edge.world.Animation;
@@ -97,12 +97,12 @@ final class PitFiring extends SkillAction {
 		t.cancel();
 		pit.setId(FirepitData.PHASE_IGNITED.objectId);
 		pit.publish();
-		World.submit(new FirepitTask(pit));
+		World.get().submit(new FirepitTask(pit));
 		player.animation(null);
 		player.message("You successfully fired the pit...");
 		GameConstants.DOUBLE_BLOOD_MONEY_EVENT = true;
-		World.message("@red@ " + player.getFormatUsername() + " @blu@ has ignited the fire pit!", true);
-		World.message("@red@ Enjoy the double blood money event for five hours.", true);
+		World.get().message("@red@ " + player.getFormatUsername() + " @blu@ has ignited the fire pit!", true);
+		World.get().message("@red@ Enjoy the double blood money event for five hours.", true);
 	}
 
 	@Override

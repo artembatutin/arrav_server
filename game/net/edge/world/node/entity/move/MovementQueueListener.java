@@ -2,7 +2,7 @@ package net.edge.world.node.entity.move;
 
 import net.edge.task.EventListener;
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 
@@ -51,7 +51,7 @@ public final class MovementQueueListener {
 		listener.ifPresent(Task::cancel);
 		listener = Optional.of(new MovementQueueListenerTask(character, task));
 		character.setFollowing(false);
-		World.submit(listener.get());
+		World.get().submit(listener.get());
 	}
 	
 	/**

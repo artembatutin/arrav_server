@@ -1,7 +1,7 @@
 package net.edge.content.minigame.barrows;
 
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.item.FoodConsumable;
@@ -102,7 +102,7 @@ public final class BarrowsMinigame extends Minigame {
 		
 		BarrowBrother current = new BarrowBrother(data, player.getUsername(), data.getSpawn());
 		player.getMinigameContainer().getBarrowsContainer().setCurrent(current);
-		World.getNpcs().add(current);
+		World.get().getNpcs().add(current);
 		current.forceChat("How dare you disturb our grave!");
 		current.getCombatBuilder().attack(player);
 	}
@@ -139,7 +139,7 @@ public final class BarrowsMinigame extends Minigame {
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
 		if(current.isPresent() && current.get().getState() != NodeState.ACTIVE)
 			return true;
-		current.ifPresent(World.getNpcs()::remove);
+		current.ifPresent(World.get().getNpcs()::remove);
 		return true;
 	}
 	
@@ -172,7 +172,7 @@ public final class BarrowsMinigame extends Minigame {
 		if(stair != null) {
 			current.ifPresent(c -> {
 				if(c.getState() == NodeState.ACTIVE)
-					World.getNpcs().remove(c);
+					World.get().getNpcs().remove(c);
 			});
 			player.getMessages().sendMinimapState(0);
 			player.move(new Position(stair.getLocation().getX(), stair.getLocation().getY(), stair.getLocation().getZ()));
@@ -210,7 +210,7 @@ public final class BarrowsMinigame extends Minigame {
 					return false;
 				}
 				player.getMinigameContainer().getBarrowsContainer().setCurrent(container.getCurrent().get());
-				World.getNpcs().add(container.getCurrent().get());
+				World.get().getNpcs().add(container.getCurrent().get());
 				container.getCurrent().get().forceChat("How dare you steal from us!");
 				container.getCurrent().get().getCombatBuilder().attack(player);
 				return true;
@@ -248,7 +248,7 @@ public final class BarrowsMinigame extends Minigame {
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
 		if(current.isPresent() && current.get().getState() != NodeState.ACTIVE)
 			return;
-		current.ifPresent(World.getNpcs()::remove);
+		current.ifPresent(World.get().getNpcs()::remove);
 	}
 	
 	@Override
@@ -284,7 +284,7 @@ public final class BarrowsMinigame extends Minigame {
 		if(current.isPresent() && current.get().getState() != NodeState.ACTIVE) {
 			return;
 		}
-		current.ifPresent(World.getNpcs()::remove);
+		current.ifPresent(World.get().getNpcs()::remove);
 	}
 	
 	@Override

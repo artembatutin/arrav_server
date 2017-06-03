@@ -1,7 +1,7 @@
 package net.edge.world.node.entity;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 
 /**
  * The parent class that handles the death process for all characters.
@@ -80,9 +80,9 @@ public abstract class EntityDeath<T extends EntityNode> extends Task {
 	public final void onException(Exception e) {
 		e.printStackTrace();
 		if(getCharacter().isPlayer()) {
-			World.queueLogout(getCharacter().toPlayer());
+			World.get().queueLogout(getCharacter().toPlayer());
 		} else if(getCharacter().isNpc()) {
-			World.getNpcs().remove(getCharacter().toNpc());
+			World.get().getNpcs().remove(getCharacter().toNpc());
 		}
 	}
 	

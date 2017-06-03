@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.npc.impl.gwd;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.locale.Position;
 import net.edge.locale.loc.SquareLocation;
 import net.edge.world.node.entity.npc.Npc;
@@ -69,7 +69,7 @@ public final class KreeArra extends Npc {
 			aviantese.getMovementCoordinator().setCoordinate(true);
 			aviantese.getMovementCoordinator().setRadius(3);
 			NpcAggression.AGGRESSIVE.add(aviantese.getId());
-			World.getNpcs().add(aviantese);
+			World.get().getNpcs().add(aviantese);
 		});
 		NpcAggression.AGGRESSIVE.add(this.getId());
 	}

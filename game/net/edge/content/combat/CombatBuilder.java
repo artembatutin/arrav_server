@@ -1,7 +1,7 @@
 package net.edge.content.combat;
 
 import net.edge.task.EventListener;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.locale.Boundary;
 import net.edge.locale.loc.Location;
@@ -121,7 +121,7 @@ public final class CombatBuilder {
 		if(distanceTask != null && distanceTask.isRunning())
 			distanceTask.cancel();
 		distanceTask = new CombatDistanceListener(this, target);
-		World.submit(distanceTask);
+		World.get().submit(distanceTask);
 	}
 	
 	/**
@@ -420,7 +420,7 @@ public final class CombatBuilder {
 			
 			if(builder.combatTask == null || !builder.combatTask.isRunning()) {
 				builder.combatTask = new CombatSession(builder);
-				World.submit(builder.combatTask);
+				World.get().submit(builder.combatTask);
 			}
 		}
 	}

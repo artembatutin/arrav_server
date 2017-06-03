@@ -1,7 +1,7 @@
 package net.edge.content.skill.woodcutting;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.TransformableObject;
 import net.edge.content.skill.action.impl.HarvestingSkillAction;
@@ -126,7 +126,7 @@ public final class Woodcutting extends HarvestingSkillAction {
 		if(tree.isObstacle() && success && object.isReg()) {
 			object.remove();
 			object.setDisabled(true);
-			World.getTaskManager().submit(new Task(2, false) {
+			World.get().getTask().submit(new Task(2, false) {
 				@Override
 				public void execute() {
 					object.publish();

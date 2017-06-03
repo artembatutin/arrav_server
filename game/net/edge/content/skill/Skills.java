@@ -2,7 +2,7 @@ package net.edge.content.skill;
 
 import net.edge.util.TextUtils;
 import net.edge.GameConstants;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.skill.agility.impl.Shortcuts;
 import net.edge.content.skill.agility.impl.barb.BarbarianOutpostAgility;
 import net.edge.content.skill.agility.impl.gnome.GnomeStrongholdAgility;
@@ -272,7 +272,7 @@ public final class Skills {
 				if(newLevel == 99 || newLevel == 120) {
 					String append_max = TextUtils.appendIndefiniteArticleNoVowel(data.toString());
 					player.graphic(new Graphic(MAXED_GRAPHICS));
-					World.message("@blu@[Global Announcements] @red@" + player.getFormatUsername() + "@blu@ has just reached level " + newLevel + " " + append_max + ".");
+					World.get().message("@blu@[Global Announcements] @red@" + player.getFormatUsername() + "@blu@ has just reached level " + newLevel + " " + append_max + ".");
 				} else {
 					player.graphic(new Graphic(199));
 				}

@@ -2,7 +2,7 @@ package net.edge.content.minigame;
 
 import net.edge.task.Task;
 import net.edge.util.MutableNumber;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.Optional;
@@ -41,7 +41,7 @@ public abstract class SequencedMinigame extends Minigame {
 			throw new IllegalStateException("Sequenced Minigame Task is already started.");
 		}
 		task = Optional.of(new SequencedMinigameTask(player, this));
-		World.submit(task.get());
+		World.get().submit(task.get());
 		player.setMinigame(Optional.of(this));
 		enter(player);
 	}
@@ -52,7 +52,7 @@ public abstract class SequencedMinigame extends Minigame {
 			throw new IllegalStateException("Sequenced Minigame Task is already started.");
 		}
 		task = Optional.of(new SequencedMinigameTask(player, this));
-		World.submit(task.get());
+		World.get().submit(task.get());
 		this.login(player);
 	}
 	

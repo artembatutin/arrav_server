@@ -1,6 +1,6 @@
 package net.edge.content.commands.impl;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.content.skill.SkillData;
@@ -13,7 +13,7 @@ public final class SetPlayerlevelCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player p = World.getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player p = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(p == null)
 			return;
 		String skill = cmd[2].toUpperCase();

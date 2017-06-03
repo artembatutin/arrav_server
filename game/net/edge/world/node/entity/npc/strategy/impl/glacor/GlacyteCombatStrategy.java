@@ -1,6 +1,6 @@
 package net.edge.world.node.entity.npc.strategy.impl.glacor;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.skill.Skills;
@@ -44,7 +44,7 @@ public final class GlacyteCombatStrategy extends DynamicCombatStrategy<Glacyte> 
 			
 			if(special == 100) {
 				session.ignore();
-				World.submit(new GlacorExplodeTask(victim.toPlayer(), npc, false));
+				World.get().submit(new GlacorExplodeTask(victim.toPlayer(), npc, false));
 			}
 			
 			npc.setSpecial(special + 10);

@@ -3,7 +3,7 @@ package net.edge.content.commands.impl;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.market.MarketItem;
 import net.edge.net.message.impl.NpcInformationMessage;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
@@ -22,10 +22,8 @@ public final class SaveCommand implements Command {
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		switch(cmd[1].toLowerCase()) {
 			case "players":
-				for(Player world : World.getPlayers()) {
-					if(world != null) {
-						World.getService().submit(() -> new PlayerSerialization(world).serialize());
-					}
+				for(Player world : World.get().getPlayers()) {
+					new PlayerSerialization(world).serialize();
 				}
 				World.getClanManager().save();
 				player.message("Character files have been saved for everyone online!");

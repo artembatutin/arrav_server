@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.CombatType;
 import net.edge.content.dialogue.Conversation;
 import net.edge.content.dialogue.Expression;
@@ -24,7 +24,7 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
-import net.edge.world.region.Region;
+import net.edge.world.node.region.Region;
 
 import java.util.*;
 
@@ -129,7 +129,7 @@ public final class CyclopsRoom extends GuildRoom {
 		if(!entered.isPresent()) {
 			player.getInventory().remove(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), 200));
 			entered = Optional.of(new CyclopsRoomTask(this, player));
-			World.submit(entered.get());
+			World.get().submit(entered.get());
 			player.move(new Position(2847, player.getPosition().getY(), 2));//FIXME use the proper walk-through door function.
 			updateInterface(player);
 		}

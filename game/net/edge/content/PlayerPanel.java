@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import net.edge.GameConstants;
 import net.edge.util.TextUtils;
 import net.edge.util.Utility;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.scoreboard.PlayerScoreboardStatistic;
@@ -61,13 +61,13 @@ public enum PlayerPanel {
 	PLAYERS_ONLINE(62163) {
 		@Override
 		public void onClick(Player player) {
-			player.message("There is currently " + World.getPlayers().size() + " players online.");
+			player.message("There is currently " + World.get().getPlayers().size() + " players online.");
 		}
 	},
 	STAFF_ONLINE(62164) {
 		@Override
 		public void onClick(Player player) {
-			List<Player> staff = World.getPlayers().findAll(p -> p != null && p.getRights().isStaff());
+			List<Player> staff = World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff());
 			if(staff.isEmpty()) {
 				player.message("There is currently no staff online to assist you.");
 				player.message("You can post a thread on our forums in the support section.");
@@ -189,8 +189,8 @@ public enum PlayerPanel {
 		PlayerPanel.NPC_TOOL.refresh(player, "@or2@ - Monster Database");
 		PlayerPanel.SERVER_STATISTICS.refresh(player, "@or1@Server Information:");
 		PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
-		PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + World.getPlayers().findAll(p -> p != null && Location.inWilderness(p)).size());
-		PlayerPanel.STAFF_ONLINE.refreshAll("@or2@ - Staff online: @yel@" + World.getPlayers().findAll(p -> p != null && p.getRights().isStaff()).size());
+		PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + World.get().getPlayers().findAll(p -> p != null && Location.inWilderness(p)).size());
+		PlayerPanel.STAFF_ONLINE.refreshAll("@or2@ - Staff online: @yel@" + World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff()).size());
 		PlayerPanel.PLAYER_STATISTICS.refresh(player, "@or1@Player Information:");
 		PlayerPanel.EMPTY.refresh(player, "");
 		PlayerPanel.USERNAME.refresh(player, "@or2@ - Username: @yel@" + TextUtils.capitalize(player.getUsername()));
@@ -249,7 +249,7 @@ public enum PlayerPanel {
 	 * @param update the updated string for that tab.
 	 */
 	public void refreshAll(String update) {
-		World.getPlayers().forEach(player -> refresh(player, update));
+		World.get().getPlayers().forEach(player -> refresh(player, update));
 	}
 	
 	/**

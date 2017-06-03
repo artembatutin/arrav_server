@@ -4,7 +4,7 @@ import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.message.InputMessageListener;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.pets.Pet;
 import net.edge.content.skill.crafting.Tanning;
 import net.edge.content.skill.summoning.Summoning;
@@ -30,7 +30,7 @@ public final class ItemOnNpcMessage implements InputMessageListener {
 		if(container == 3214) {
 			item = player.getInventory().get(slot);
 		}
-		Npc usedOn = World.getNpcs().get(npc - 1);
+		Npc usedOn = World.get().getNpcs().get(npc - 1);
 		
 		if(item == null || usedOn == null || item.getId() != itemId) {
 			return;

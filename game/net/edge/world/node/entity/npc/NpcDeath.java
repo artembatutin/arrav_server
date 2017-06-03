@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.npc;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.PlayerPanel;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.slayer.Slayer;
@@ -51,14 +51,14 @@ public final class NpcDeath extends EntityDeath<Npc> {
 				PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Npcs killed: @yel@" + player.getNpcKills().get());
 			}
 		}
-		World.getNpcs().remove(getCharacter());
+		World.get().getNpcs().remove(getCharacter());
 	}
 	
 	@Override
 	public void postDeath() {
 		try {
 			if(getCharacter().isRespawn()) {
-				World.submit(new Task(getCharacter().getDefinition().getRespawnTime(), false) {
+				World.get().submit(new Task(getCharacter().getDefinition().getRespawnTime(), false) {
 					@Override
 					public void execute() {
 						this.cancel();
@@ -67,7 +67,7 @@ public final class NpcDeath extends EntityDeath<Npc> {
 						npc.getMovementCoordinator().setCoordinate(getCharacter().getMovementCoordinator().isCoordinate());
 						npc.getMovementCoordinator().setBoundary(getCharacter().getMovementCoordinator().getBoundary());
 						npc.setRespawn(true);
-						World.getNpcs().add(npc);
+						World.get().getNpcs().add(npc);
 					}
 				});
 			}

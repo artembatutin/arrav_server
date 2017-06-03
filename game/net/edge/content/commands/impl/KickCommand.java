@@ -1,6 +1,6 @@
 package net.edge.content.commands.impl;
 
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.player.Player;
@@ -11,10 +11,10 @@ public final class KickCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player kick = World.getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		Player kick = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(kick != null && (kick.getRights().less(Rights.MODERATOR) || player.getRights().equals(Rights.DEVELOPER)) && kick != player) {
 			player.message("Successfully kicked " + kick.getFormatUsername() + ".");
-			World.queueLogout(kick);
+			World.get().queueLogout(kick);
 		}
 	}
 	

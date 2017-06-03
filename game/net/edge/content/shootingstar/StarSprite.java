@@ -1,7 +1,7 @@
 package net.edge.content.shootingstar;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -38,7 +38,7 @@ public final class StarSprite extends Npc {
 	public void spawn(Player player) {
 		star.setDisabled(true);
 		star.remove();
-		World.getNpcs().add(star.sprite);
+		World.get().getNpcs().add(star.sprite);
 	}
 	
 	/**
@@ -138,7 +138,7 @@ public final class StarSprite extends Npc {
 	
 	@Override
 	public void register() {
-		World.submit(new StarSpriteLifeTask(star.sprite));
+		World.get().submit(new StarSpriteLifeTask(star.sprite));
 	}
 	
 	@Override
@@ -169,7 +169,7 @@ public final class StarSprite extends Npc {
 		@Override
 		protected void execute() {
 			this.cancel();
-			World.getNpcs().remove(sprite);
+			World.get().getNpcs().remove(sprite);
 			World.getShootingStarEvent().stopwatch.reset();
 		}
 		

@@ -1,9 +1,9 @@
 package net.edge.world.object;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.locale.Position;
-import net.edge.world.region.Region;
+import net.edge.world.node.region.Region;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -222,7 +222,7 @@ public abstract class ObjectNode {
 	public void publish(int ticks, Consumer<ObjectNode> action) {
 		publish();
 		ObjectNode ref = this;
-		World.submit(new Task(ticks, false) {
+		World.get().submit(new Task(ticks, false) {
 			@Override
 			public void execute() {
 				action.accept(ref);

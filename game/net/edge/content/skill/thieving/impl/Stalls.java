@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.skill.thieving.Thieving;
 import net.edge.world.Animation;
 import net.edge.world.node.entity.npc.Npc;
@@ -124,7 +124,7 @@ public final class Stalls extends Thieving {
 	@Override
 	public void onStop(boolean success) {
 		if(success)
-			World.submit(new StallTask(this, object));
+			World.get().submit(new StallTask(this, object));
 	}
 	
 	@Override

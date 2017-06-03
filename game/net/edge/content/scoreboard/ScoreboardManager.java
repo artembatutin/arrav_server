@@ -3,7 +3,7 @@ package net.edge.content.scoreboard;
 import com.google.common.collect.ComparisonChain;
 import net.edge.util.MutableNumber;
 import net.edge.util.json.JsonSaver;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.PlayerDialogue;
@@ -103,8 +103,8 @@ public final class ScoreboardManager {
 		this.setResetPlayerScoreboardStatistic(true);
 		
 		if(player_scoreboard.size() < 10) {
-			World.message("There weren't enough players participating in the player scoreboard event.", true);
-			World.message("The event has been extended by another week.", true);
+			World.get().message("There weren't enough players participating in the player scoreboard event.", true);
+			World.get().message("The event has been extended by another week.", true);
 			return;
 		}
 		

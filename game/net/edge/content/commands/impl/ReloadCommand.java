@@ -2,26 +2,20 @@ package net.edge.content.commands.impl;
 
 import net.edge.task.Task;
 import net.edge.util.json.impl.*;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.content.market.MarketCounter;
-import net.edge.content.shootingstar.ShootingStarData;
-import net.edge.content.skill.firemaking.pits.FirepitData;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.object.ObjectNode;
-import net.edge.world.region.Region;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @CommandSignature(alias = {"reload"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as just ::reload")
 public final class ReloadCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		World.getTaskManager().submit(new Task(2, false) {
+		World.get().getTask().submit(new Task(2, false) {
 			
 			boolean removed;
 			
@@ -29,8 +23,8 @@ public final class ReloadCommand implements Command {
 			protected void execute() {
 				if(!removed) {
 					//Removing npcs.
-					World.getNpcs().clear();
-					World.getPlayers().forEach(p -> p.getLocalNpcs().clear());
+					World.get().getNpcs().clear();
+					World.get().getPlayers().forEach(p -> p.getLocalNpcs().clear());
 					//Removing objects.
 					World.getRegions().getRegions().forEach((c, r) -> r.getDynamicObjects().forEach(ObjectNode::remove));
 					

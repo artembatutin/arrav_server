@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.hunter.trap.Trap;
 import net.edge.locale.Position;
@@ -135,12 +135,12 @@ public final class BirdSnare extends Trap {
 		});
 		
 		if(event.isPresent())
-			World.submit(event.get());
+			World.get().submit(event.get());
 	}
 	
 	@Override
 	public void onSequence(Task t) {
-		for(Npc npc : World.getNpcs()) {
+		for(Npc npc : World.get().getNpcs()) {
 			if(npc == null || npc.isDead()) {
 				continue;
 			}

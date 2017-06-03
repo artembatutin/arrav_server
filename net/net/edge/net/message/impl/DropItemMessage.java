@@ -10,7 +10,7 @@ import net.edge.world.node.entity.player.assets.activity.ActivityManager.Activit
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.region.Region;
+import net.edge.world.node.region.Region;
 
 /**
  * The message sent from the client when the player drops an item.

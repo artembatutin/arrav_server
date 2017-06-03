@@ -3,7 +3,7 @@ package net.edge.content.minigame.warriorsguild.impl;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.task.LinkedTaskSequence;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.CombatType;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.minigame.Minigame;
@@ -21,7 +21,7 @@ import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
-import net.edge.world.region.Region;
+import net.edge.world.node.region.Region;
 
 import java.util.*;
 
@@ -136,7 +136,7 @@ public final class AnimationRoom extends GuildRoom {
 			ForcedMovement.create(player, player.getPosition().move(0, 3), null).setSecondSpeed(42).setDirection(ForcedMovementDirection.SOUTH).submit();
 		});
 		seq.connect(3, () -> {
-			World.getNpcs().add(arm);
+			World.get().getNpcs().add(arm);
 			arm.setSpawnedFor(player.getUsername());
 			arm.forceChat("I'M ALIVE!!!!");
 		});
@@ -147,7 +147,7 @@ public final class AnimationRoom extends GuildRoom {
 	
 	@Override
 	public void onDestruct(Player player) {
-		armour.ifPresent(World.getNpcs()::remove);
+		armour.ifPresent(World.get().getNpcs()::remove);
 	}
 	
 	@Override
@@ -183,7 +183,7 @@ public final class AnimationRoom extends GuildRoom {
 		if(region == null)
 			return;
 		items.forEach(item -> region.register(item, item.getItem().getId() == WarriorsGuild.WARRIOR_GUILD_TOKEN.getId()));
-		armour.ifPresent(World.getNpcs()::remove);
+		armour.ifPresent(World.get().getNpcs()::remove);
 		armour = Optional.empty();
 	}
 	

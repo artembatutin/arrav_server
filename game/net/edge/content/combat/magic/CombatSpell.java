@@ -1,7 +1,7 @@
 package net.edge.content.combat.magic;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -27,7 +27,7 @@ public abstract class CombatSpell extends Spell {
 			cast.animation(animation);
 		}
 		startGraphic().ifPresent(cast::graphic);
-		projectile(cast, castOn).ifPresent(g -> World.submit(new Task(2, false) {
+		projectile(cast, castOn).ifPresent(g -> World.get().submit(new Task(2, false) {
 			@Override
 			public void execute() {
 				g.sendProjectile();

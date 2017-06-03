@@ -1,4 +1,4 @@
-package net.edge.world.region;
+package net.edge.world.node.region;
 
 import net.edge.world.object.ObjectNode;
 

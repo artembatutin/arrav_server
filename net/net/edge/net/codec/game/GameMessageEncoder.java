@@ -34,11 +34,7 @@ public final class GameMessageEncoder extends MessageToByteEncoder<GameMessage> 
 		} else if(msg.getType() == MessageType.VARIABLE_SHORT) {
 			out.writeShort(msg.getSize());
 		}
-
-		try {
-			out.writeBytes(msg.getPayload().getBuffer());
-		} finally {
-			msg.getPayload().release();
-		}
+		out.writeBytes(msg.getPayload().getBuffer());
+		msg.getPayload().release();
 	}
 }

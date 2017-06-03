@@ -2,7 +2,7 @@ package net.edge.content.pets;
 
 import net.edge.net.message.OutputMessages;
 import net.edge.util.TextUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.item.FoodConsumable;
@@ -137,7 +137,7 @@ public final class Pet extends Follower {
 		
 		pet = player.getPetManager().put(pet);
 		
-		World.getNpcs().add(pet);
+		World.get().getNpcs().add(pet);
 		
 		pet.getMovementQueue().follow(player);
 		
@@ -145,7 +145,7 @@ public final class Pet extends Follower {
 		
 		pet.task = pet.getProgress().getData().getPolicy().getNext().isPresent() ? Optional.of(new PetTask(player, pet)) : Optional.empty();
 		
-		pet.task.ifPresent(World.getTaskManager()::submit);
+		pet.task.ifPresent(World.get().getTask()::submit);
 		
 		player.getInventory().remove(item);
 		return true;
@@ -164,7 +164,7 @@ public final class Pet extends Follower {
 		
 		pet.setPosition(player.getPosition());
 		
-		World.getNpcs().add(pet);
+		World.get().getNpcs().add(pet);
 		
 		pet.getMovementQueue().follow(player);
 		
@@ -172,7 +172,7 @@ public final class Pet extends Follower {
 		
 		pet.task = pet.getProgress().getData().getPolicy().getNext().isPresent() ? Optional.of(new PetTask(player, pet)) : Optional.empty();
 		
-		pet.task.ifPresent(World.getTaskManager()::submit);
+		pet.task.ifPresent(World.get().getTask()::submit);
 	}
 	
 	/**
@@ -185,7 +185,7 @@ public final class Pet extends Follower {
 		if(pet == null) {
 			return;
 		}
-		World.getNpcs().remove(pet);
+		World.get().getNpcs().remove(pet);
 		
 		pet.task.ifPresent(t -> t.setRunning(false));
 		
@@ -217,7 +217,7 @@ public final class Pet extends Follower {
 			return false;
 		}
 		
-		World.getNpcs().remove(pet);
+		World.get().getNpcs().remove(pet);
 		
 		player.getPetManager().reset();
 		

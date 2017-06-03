@@ -1,14 +1,13 @@
 package net.edge.net.session;
 
 import io.netty.buffer.ByteBufAllocator;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import net.edge.net.NetworkConstants;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.IsaacCipher;
 import net.edge.net.message.GameMessage;
 import net.edge.net.message.InputMessageListener;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.Queue;
@@ -55,7 +54,7 @@ public final class GameSession extends Session {
 	
 	@Override
 	public void onDispose() {
-		World.queueLogout(player);
+		World.get().queueLogout(player);
 	}
 	
 	@Override
@@ -104,8 +103,9 @@ public final class GameSession extends Session {
 			} catch(Exception e) {
 				e.printStackTrace();
 			} finally {
-				if (msg.getPayload().getBuffer() != Unpooled.EMPTY_BUFFER) {
-					msg.getPayload().release();
+				ByteMessage payload = msg.getPayload(); /* Finally, release pooled buffer reference. */
+				if (payload.refCnt() > 0) {
+					payload.release();
 				}
 			}
 		}

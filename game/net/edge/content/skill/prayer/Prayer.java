@@ -2,7 +2,7 @@ package net.edge.content.skill.prayer;
 
 import com.google.common.collect.ImmutableList;
 import net.edge.util.TextUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.TabInterface;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.Skills;
@@ -480,7 +480,7 @@ public enum Prayer {
 			return false;
 		if(player.getPrayerDrain() == null || !player.getPrayerDrain().isRunning()) {
 			player.setPrayerDrain(new PrayerTask(player));
-			World.submit(player.getPrayerDrain());
+			World.get().submit(player.getPrayerDrain());
 		}
 		if(prayer.get().deactivate().isPresent())
 			Arrays.stream(prayer.get().deactivate().get()).forEach(it -> it.deactivate(player));

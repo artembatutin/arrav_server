@@ -1,12 +1,12 @@
 package net.edge.world.node.entity;
 
 import net.edge.net.database.connection.use.Highscores;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.PlayerPanel;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.region.Region;
+import net.edge.world.node.region.Region;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -205,7 +205,7 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 		entity.setState(NodeState.ACTIVE);
 		//Updating player count.
 		if(entity.isPlayer())
-			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + World.getPlayers().size());
+			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + World.get().getPlayers().size());
 		//Activating npc if region active.
 		if(entity.isNpc()) {
 			Region reg = entity.getRegion();

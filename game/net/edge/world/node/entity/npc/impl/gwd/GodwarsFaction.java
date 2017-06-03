@@ -3,7 +3,7 @@ package net.edge.world.node.entity.npc.impl.gwd;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.CombatType;
 import net.edge.locale.Position;
 import net.edge.world.node.NodeState;
@@ -230,13 +230,13 @@ public enum GodwarsFaction {
 	private static List<EntityNode> getTargets(Npc npc) {
 		List<EntityNode> targets = new ArrayList<>();
 
-		World.getLocalNpcs(npc).forEachRemaining(n -> {
+		World.get().getLocalNpcs(npc).forEachRemaining(n -> {
 			if(n != null && canAttack(npc, n)) {
 				targets.add(n);
 			}
 		});
 
-		World.getLocalPlayers(npc).forEachRemaining(p -> {
+		World.get().getLocalPlayers(npc).forEachRemaining(p -> {
 			if(p != null && canAttack(npc, p)) {
 				targets.add(p);
 			}

@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.player.assets;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.TabInterface;
 import net.edge.locale.Position;
 import net.edge.world.Animation;
@@ -17,7 +17,7 @@ public enum Spellbook {
 		@Override
 		public void execute(Player player, Position position) {
 			player.animation(new Animation(714));
-			World.submit(new Task(1, false) {
+			World.get().submit(new Task(1, false) {
 				@Override
 				public void execute() {
 					if(player.getTeleportStage() == 1) {
@@ -39,7 +39,7 @@ public enum Spellbook {
 		@Override
 		public void execute(Player player, Position position) {
 			player.animation(new Animation(1979));
-			World.submit(new Task(1, false) {
+			World.get().submit(new Task(1, false) {
 				@Override
 				public void execute() {
 					if(player.getTeleportStage() == 1) {
@@ -62,7 +62,7 @@ public enum Spellbook {
 		@Override
 		public void execute(Player player, Position position) {//TODO replace this to correct lunar home teleport
 			player.animation(new Animation(714));
-			World.submit(new Task(1, false) {
+			World.get().submit(new Task(1, false) {
 				@Override
 				public void execute() {
 					if(player.getTeleportStage() == 1) {

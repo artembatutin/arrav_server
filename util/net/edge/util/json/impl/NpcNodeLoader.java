@@ -3,20 +3,13 @@ package net.edge.util.json.impl;
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import net.edge.content.skill.slayer.Slayer;
-import net.edge.content.skill.slayer.SlayerLocationPolicy;
 import net.edge.util.json.JsonLoader;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.locale.Position;
 import net.edge.world.Direction;
 import net.edge.world.node.entity.npc.Npc;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The {@link JsonLoader} implementation that loads all npc nodes.
@@ -51,7 +44,7 @@ public final class NpcNodeLoader extends JsonLoader {
 			npc.getMovementCoordinator().setFacingDirection(dir);
 		}
 		npc.setRespawn(true);
-		if(!World.getNpcs().add(npc))
+		if(!World.get().getNpcs().add(npc))
 			throw new IllegalStateException(npc.toString() + " could not be added to the world!");
 	}
 

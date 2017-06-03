@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.move;
 
 import net.edge.task.Task;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
@@ -59,7 +59,7 @@ public final class ForcedMovementManager {
 		if(prerequisites(character)) {
 			ForcedMovementManager manager = new ForcedMovementManager(movement);
 			movement.getCharacter().setForcedMovement(manager.movement);
-			World.submit(manager.t);
+			World.get().submit(manager.t);
 		}
 	}
 
@@ -73,7 +73,7 @@ public final class ForcedMovementManager {
 		if(skipPrerequisites || prerequisites(character)) {
 			ForcedMovementManager manager = new ForcedMovementManager(movement);
 			movement.getCharacter().setForcedMovement(manager.movement);
-			World.submit(manager.t);
+			World.get().submit(manager.t);
 		}
 	}
 

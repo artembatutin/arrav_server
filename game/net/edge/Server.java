@@ -12,11 +12,9 @@ import net.edge.cache.FileSystem;
 import net.edge.cache.decoder.MapDefinitionDecoder;
 import net.edge.cache.decoder.ObjectDefinitionDecoder;
 import net.edge.cache.decoder.RegionDecoder;
-import net.edge.content.market.MarketItem;
 import net.edge.net.EdgevilleChannelInitializer;
 import net.edge.net.NetworkConstants;
 import net.edge.net.PunishmentHandler;
-import net.edge.net.message.impl.NpcInformationMessage;
 import net.edge.task.Task;
 import net.edge.util.LoggerUtils;
 import net.edge.util.Utility;
@@ -28,15 +26,8 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.locale.loc.Location;
-import net.edge.world.World;
 import net.edge.world.node.entity.attribute.AttributeKey;
-import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropManager;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.PlayerSerialization;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -110,7 +101,7 @@ public final class Server {
 	 * A package-private constructor to discourage external instantiation.
 	 */
 	public Server() {
-		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleInitializationThread").build());
+		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleInitialization").build());
 		launchService = MoreExecutors.listeningDecorator(delegateService);
 	}
 	
@@ -126,17 +117,17 @@ public final class Server {
 			initAsyncTasks();
 			launchService.shutdown();
 			launchService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			initGame();
+			World.get().start();
 			
 			World.getInstanceManager().close(0);
-			World.submit(World.getNpcMovementTask());
-			World.submit(new RestoreStatTask());
-			World.submit(new Task(100, false) {
+			World.get().submit(World.getNpcMovementTask());
+			World.get().submit(new RestoreStatTask());
+			World.get().submit(new Task(100, false) {
 				@Override
 				public void execute() {
 					PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
-					PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + World.getPlayers().findAll(p -> p != null && Location.inWilderness(p)).size());
-					PlayerPanel.STAFF_ONLINE.refreshAll("@or2@ - Staff online: @yel@" + World.getPlayers().findAll(p -> p != null && p.getRights().isStaff()).size());
+					PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + World.get().getPlayers().findAll(p -> p != null && Location.inWilderness(p)).size());
+					PlayerPanel.STAFF_ONLINE.refreshAll("@or2@ - Staff online: @yel@" + World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff()).size());
 					
 					LocalDate date = LocalDate.now();
 					
@@ -180,14 +171,6 @@ public final class Server {
 		bootstrap.childHandler(new EdgevilleChannelInitializer());
 		bootstrap.bind(DEBUG ? NetworkConstants.PORT_DEV : NetworkConstants.PORT_ONLINE).syncUninterruptibly();
 		
-	}
-	
-	/**
-	 * Initializes the {@link GameService} asynchronously.
-	 * @throws Exception If any exceptions are thrown during initialization of the {@code GameService}.
-	 */
-	private void initGame() throws Exception {
-		World.getService().startAsync().awaitRunning();
 	}
 	
 	/**

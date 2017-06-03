@@ -2,12 +2,12 @@ package net.edge.world.node.entity.npc;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
 import net.edge.world.Direction;
 import net.edge.world.node.entity.move.path.Path;
-import net.edge.world.region.TraversalMap;
+import net.edge.world.node.region.TraversalMap;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;

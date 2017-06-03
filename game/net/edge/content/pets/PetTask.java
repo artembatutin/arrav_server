@@ -2,7 +2,7 @@ package net.edge.content.pets;
 
 import net.edge.task.Task;
 import net.edge.util.Utility;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.TabInterface;
 import net.edge.world.node.entity.player.Player;
 
@@ -28,7 +28,7 @@ public final class PetTask extends Task {
 		
 		if(pet.getProgress().getHunger() == 100.0) {
 			this.cancel();
-			World.getNpcs().remove(pet);
+			World.get().getNpcs().remove(pet);
 			player.getPetManager().reset();
 			TabInterface.SUMMONING.sendInterface(player, -1);
 			player.message("Your pet has ran away to find some food!");

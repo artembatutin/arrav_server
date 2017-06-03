@@ -3,7 +3,7 @@ package net.edge.world.node.entity.move.path;
 import com.google.common.base.Preconditions;
 import net.edge.locale.Position;
 import net.edge.world.Direction;
-import net.edge.world.region.TraversalMap;
+import net.edge.world.node.region.TraversalMap;
 
 /**
  * An algorithm used to find a path between two {@link Position}s.

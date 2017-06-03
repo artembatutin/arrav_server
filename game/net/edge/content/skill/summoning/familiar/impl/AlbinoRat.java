@@ -12,7 +12,7 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNodeStatic;
-import net.edge.world.region.Region;
+import net.edge.world.node.region.Region;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;

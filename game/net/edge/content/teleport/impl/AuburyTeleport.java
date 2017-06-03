@@ -2,7 +2,7 @@ package net.edge.content.teleport.impl;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.teleport.TeleportSpell;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.EntityNode;
@@ -43,7 +43,7 @@ public final class AuburyTeleport extends TeleportSpell {
 	
 	public static void move(Player player, Npc aubury) {
 		player.getMessages().sendCloseWindows();
-		World.submit(new TeleportTask(new AuburyTeleport(player, aubury)));
+		World.get().submit(new TeleportTask(new AuburyTeleport(player, aubury)));
 	}
 	
 	@Override

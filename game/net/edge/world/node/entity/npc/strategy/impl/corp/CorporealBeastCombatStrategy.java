@@ -3,7 +3,7 @@ package net.edge.world.node.entity.npc.strategy.impl.corp;
 import com.google.common.collect.ImmutableList;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.World;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
@@ -89,13 +89,13 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 
 		new Projectile(npc.getCenterPosition(), pos, 0, 1828, 44, 4, 60, 43, 0, npc.getInstance()).sendProjectile();
 
-		World.submit(new Task(2) {
+		World.get().submit(new Task(2) {
 
 			@Override
 			protected void execute() {
 				this.cancel();
 				npc.getDarkEnergyCore().setPosition(pos);
-				World.getNpcs().add(npc.getDarkEnergyCore());
+				World.get().getNpcs().add(npc.getDarkEnergyCore());
 			}
 
 		});
@@ -148,7 +148,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 
 		Position originalVictimPosition = victim.getPosition();
 
-		World.submit(new Task(1, false) {
+		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
 				this.cancel();
@@ -186,7 +186,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 
 				positions.forEach(p -> new Projectile(originalVictimPosition, p, 0, 1824, 44, 4, 60, 43, 0, npc.getInstance()).sendProjectile());
 
-				World.submit(new Task(1, false) {
+				World.get().submit(new Task(1, false) {
 
 					@Override
 					protected void execute() {
@@ -210,7 +210,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 	private CombatSessionData ranged(EntityNode victim, List<Player> players) {
 		npc.animation(new Animation(10410));
 
-		World.submit(new Task(1, false) {
+		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
 				this.cancel();
