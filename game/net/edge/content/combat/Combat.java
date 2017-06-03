@@ -210,7 +210,7 @@ public final class Combat {
 			if(!c.getPosition().withinDistance(position, radius) || c.equals(attacker) || c.equals(attacker.getCombatBuilder().getVictim()) || c.getCurrentHealth() <= 0 || c.isDead())
 				continue;
 			CombatSessionData data = new CombatSessionData(attacker, c, hits, type, checkAccuracy);
-			c.getCombatBuilder().getDamageCache().add(attacker, data.attack(false));
+			c.getCombatBuilder().getDamageCache().add(attacker, data.attack());
 			if(action != null)
 				action.accept(c);
 		}
@@ -539,13 +539,16 @@ public final class Combat {
 		switch(type) {
 			case MELEE:
 				max = Combat.calculateMaxMeleeHit(character, victim);
-				hit = RandomUtils.inclusive(1, max < 2 ? 2 : max);
+				hit = RandomUtils.inclusive(1, max);
+				if(character.isNpc()) {
+					World.get().message("accurate = " + isAccurate(character, victim, type) + ", check accuracy = " + checkAccuracy);
+				}
 				if(Server.DEBUG && character.isPlayer())
 					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
 				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.MELEE, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
 			case RANGED:
 				max = Combat.calculateMaxRangedHit(character, victim);
-				hit = RandomUtils.inclusive(1, max < 2 ? 2 : max);
+				hit = RandomUtils.inclusive(1, max);
 				if(Server.DEBUG && character.isPlayer())
 					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
 				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.RANGED, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));

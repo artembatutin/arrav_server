@@ -79,7 +79,7 @@ public final class CombatSessionAttack extends Task {
 		}
 
 		if(data.getHits().length != 0 && !data.isIgnored()) {
-			counter = data.attack(!data.isAccurate());
+			counter = data.attack();
 			victim.getCombatBuilder().getDamageCache().add(attacker, counter);
 		}
 

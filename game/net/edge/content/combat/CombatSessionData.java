@@ -147,10 +147,9 @@ public class CombatSessionData {
 	
 	/**
 	 * Launches all of the damage concealed within this container.
-	 * @param ignored the flag which determines if the hit should be ignored on the victim.
 	 * @return the amount of damage that was dealt.
 	 */
-	public final int attack(boolean ignored) {
+	public final int attack() {
 		int counter = 0;
 		int index = 0;
 		Hit[] container = new Hit[hits.length];
@@ -162,7 +161,7 @@ public class CombatSessionData {
 			counter += hit.getDamage();
 			container[index++] = hit;
 		}
-		if(hits.length > 0 && victim != null && !victim.isDead() && !ignored) {
+		if(hits.length > 0 && victim != null && !victim.isDead() && !isIgnored()) {
 			victim.damage(container);
 		}
 		Combat.handleExperience(attacker.getCombatBuilder(), this, counter);
