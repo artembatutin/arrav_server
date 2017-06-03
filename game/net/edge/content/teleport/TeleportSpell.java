@@ -1,7 +1,7 @@
 package net.edge.content.teleport;
 
 import net.edge.util.ActionListener;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.Skills;
 import net.edge.locale.Position;

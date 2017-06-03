@@ -2,7 +2,7 @@ package net.edge.world.node.entity.npc.impl.glacor;
 
 import com.google.common.collect.Lists;
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.locale.Boundary;
 import net.edge.world.Hit;
 import net.edge.world.node.entity.npc.Npc;

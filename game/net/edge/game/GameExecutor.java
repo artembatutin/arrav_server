@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Executres tasks in parallel for faster response.
+ * Executes tasks in parallel for faster response.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class GameExecutor {
@@ -39,6 +39,10 @@ public class GameExecutor {
 	
 	public void submit(Runnable r) {
 		executor.submit(r);
+	}
+	
+	public ExecutorService get() {
+		return executor;
 	}
 	
 }

@@ -1,6 +1,7 @@
-package net.edge;
+package net.edge.game;
 
 import net.edge.content.market.MarketItem;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.concurrent.TimeUnit;
@@ -10,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  * server is shut down.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
-public final class ServerHook extends Thread {
+public final class GameShutdownHook extends Thread {
 	
 	@Override
 	public void run() {

@@ -3,7 +3,7 @@ package net.edge.content.minigame.warriorsguild.impl;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.task.LinkedTaskSequence;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.CombatType;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.minigame.Minigame;

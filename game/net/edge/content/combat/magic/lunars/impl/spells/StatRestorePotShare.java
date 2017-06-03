@@ -1,7 +1,7 @@
 package net.edge.content.combat.magic.lunars.impl.spells;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.content.item.PotionConsumable;

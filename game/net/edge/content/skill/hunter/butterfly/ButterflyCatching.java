@@ -6,7 +6,7 @@ import com.google.common.collect.Sets;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.container.impl.Equipment;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;

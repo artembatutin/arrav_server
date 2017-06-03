@@ -7,7 +7,7 @@ import net.edge.net.database.connection.use.Donating;
 import net.edge.net.message.InputMessageListener;
 import net.edge.util.Utility;
 import net.edge.world.Graphic;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.convo.CulinaromancerConversation;

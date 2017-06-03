@@ -4,7 +4,7 @@ import net.edge.cache.FileSystem;
 import net.edge.util.ByteBufferUtil;
 import net.edge.util.CompressionUtil;
 import net.edge.util.LoggerUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.locale.Position;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectNode;

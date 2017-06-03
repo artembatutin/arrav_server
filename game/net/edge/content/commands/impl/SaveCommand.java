@@ -3,7 +3,7 @@ package net.edge.content.commands.impl;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.market.MarketItem;
 import net.edge.net.message.impl.NpcInformationMessage;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.npc.drop.NpcDrop;

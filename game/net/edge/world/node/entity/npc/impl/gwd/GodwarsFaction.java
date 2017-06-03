@@ -3,7 +3,7 @@ package net.edge.world.node.entity.npc.impl.gwd;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.util.rand.RandomUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.CombatType;
 import net.edge.locale.Position;
 import net.edge.world.node.NodeState;

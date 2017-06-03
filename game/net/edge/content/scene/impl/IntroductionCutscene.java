@@ -2,8 +2,8 @@ package net.edge.content.scene.impl;
 
 import net.edge.net.PunishmentHandler;
 import net.edge.task.Task;
-import net.edge.GameConstants;
-import net.edge.World;
+import net.edge.game.GameConstants;
+import net.edge.world.World;
 import net.edge.content.TabInterface;
 import net.edge.content.container.impl.Inventory;
 import net.edge.content.dialogue.Dialogue;

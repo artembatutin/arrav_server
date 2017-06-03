@@ -379,7 +379,10 @@ public final class Slayer {
 				return false;//Awful way to check through a loop but alright... - we checking if any npc key exist of that type.
 			if(blocked.contains(s.getKey()))
 				return false;//The player blocked this task.
-			return true;
+			int dif = combat - s.getCombatRequirement();
+			if(dif <= 40 && dif >= -40)
+				return true;
+			return false;
 		}).collect(Collectors.toList());
 		
 		if(policy_values.isEmpty()) {

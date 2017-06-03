@@ -4,8 +4,8 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 2972,
-    "y": 3491,
+    "x": 3111,
+    "y": 9844,
     "z": 0
   },
   "rights": "DEVELOPER",
@@ -28,7 +28,7 @@
   ],
   "prayer-type": "NORMAL",
   "spell-book": "NORMAL",
-  "fight-type": "UNARMED_PUNCH",
+  "fight-type": "CLAWS_CHOP",
   "poison-damage": 0,
   "auto-retaliate": true,
   "running": true,
@@ -69,7 +69,7 @@
       "goal": 0
     },
     {
-      "level": 99,
+      "level": 95,
       "experience": 2.0E8,
       "realLevel": 99,
       "goal": 0
@@ -195,12 +195,21 @@
       "amount": 1
     },
     {
-      "id": 14484,
+      "id": 995,
+      "amount": 10000
+    },
+    {
+      "id": 5303,
       "amount": 1
     },
-    null,
-    null,
-    null,
+    {
+      "id": 5306,
+      "amount": 3
+    },
+    {
+      "id": 5318,
+      "amount": 1
+    },
     null,
     null,
     null,
@@ -1032,7 +1041,10 @@
     null,
     null,
     null,
-    null,
+    {
+      "id": 14484,
+      "amount": 1
+    },
     null,
     null,
     null,
@@ -1054,7 +1066,7 @@
   "total-player-kills": 0,
   "total-player-deaths": 3,
   "total-npc-kills": 0,
-  "total-npc-deaths": 0,
+  "total-npc-deaths": 8,
   "current-killstreak": 0,
   "highest-killstreak": 0,
   "godwars-killcount": [
@@ -1118,6 +1130,10 @@
     "slayer_tasks": {
       "type": "java.lang.Integer",
       "value": 0
+    },
+    "quick_pray_on": {
+      "type": "java.lang.Boolean",
+      "value": false
     },
     "accept_aid": {
       "type": "java.lang.Boolean",

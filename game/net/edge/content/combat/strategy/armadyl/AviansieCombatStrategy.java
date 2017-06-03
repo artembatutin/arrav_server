@@ -2,7 +2,7 @@ package net.edge.content.combat.strategy.armadyl;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;

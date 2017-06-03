@@ -2,11 +2,13 @@ package net.edge.content.commands.impl;
 
 import net.edge.Server;
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
+
+import java.util.concurrent.TimeUnit;
 
 @CommandSignature(alias = {"update"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::update seconds")
 public final class UpdateCommand implements Command {
@@ -36,12 +38,20 @@ public final class UpdateCommand implements Command {
 					World.get().submit(new Task(3, false) {
 						@Override
 						protected void execute() {
-							System.out.println("Awaiting terminal - Players online: " + World.get().getPlayers().size());
-							if(World.get().getPlayers().isEmpty()) {
-								System.out.println("Terminating server instance.");
-								System.exit(0);
-							} else {
-								World.get().getPlayers().forEach(p -> World.get().logout(p, true));
+							try {
+								System.out.println("Awaiting terminal - Players online: " + World.get().getPlayers().size());
+								if(World.get().getPlayers().isEmpty()) {
+									System.out.println("Terminating server instance.");
+									//Have to wait for saves.
+									World.get().getExecutor().get().shutdown();
+									World.get().getExecutor().get().awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+									World.get().shutdown();
+									System.exit(0);
+								} else {
+									World.get().getPlayers().forEach(p -> World.get().logout(p, true));
+								}
+							} catch(InterruptedException e) {
+								e.printStackTrace();
 							}
 						}
 					});

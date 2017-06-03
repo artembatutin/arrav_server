@@ -1,6 +1,6 @@
 package net.edge.content.skill.hunter;
 
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.hunter.trap.Trap;

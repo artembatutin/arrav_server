@@ -1,7 +1,7 @@
 package net.edge.content.minigame.barrows;
 
 import net.edge.util.rand.RandomUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.item.FoodConsumable;

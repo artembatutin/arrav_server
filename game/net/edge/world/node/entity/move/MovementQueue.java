@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.move;
 
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.locale.Position;
 import net.edge.locale.loc.Location;
 import net.edge.world.node.NodeType;

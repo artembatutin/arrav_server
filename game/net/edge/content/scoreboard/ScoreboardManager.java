@@ -3,7 +3,7 @@ package net.edge.content.scoreboard;
 import com.google.common.collect.ComparisonChain;
 import net.edge.util.MutableNumber;
 import net.edge.util.json.JsonSaver;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.PlayerDialogue;

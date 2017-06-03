@@ -6,7 +6,7 @@ import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.MessageType;
 import net.edge.util.ActionListener;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.clanchat.ClanMember;
 import net.edge.content.market.MarketItem;
 import net.edge.locale.Position;

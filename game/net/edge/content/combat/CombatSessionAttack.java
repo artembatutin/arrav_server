@@ -4,7 +4,7 @@ import net.edge.Server;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.ranged.CombatRangedAmmoDefinition;
 import net.edge.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
 import net.edge.content.container.impl.Equipment;

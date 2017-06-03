@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.clanchat.ClanChat;
 import net.edge.content.clanchat.ClanChatRank;
 

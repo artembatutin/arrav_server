@@ -12,6 +12,7 @@ import net.edge.cache.FileSystem;
 import net.edge.cache.decoder.MapDefinitionDecoder;
 import net.edge.cache.decoder.ObjectDefinitionDecoder;
 import net.edge.cache.decoder.RegionDecoder;
+import net.edge.game.GameShutdownHook;
 import net.edge.net.EdgevilleChannelInitializer;
 import net.edge.net.NetworkConstants;
 import net.edge.net.PunishmentHandler;
@@ -26,6 +27,7 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.locale.loc.Location;
+import net.edge.world.World;
 import net.edge.world.node.entity.attribute.AttributeKey;
 
 import java.time.DayOfWeek;
@@ -63,7 +65,7 @@ public final class Server {
 	/**
 	 * The {@link ExecutorService} that will execute startup tasks.
 	 */
-	private final ListeningExecutorService launchService;
+	private final ListeningExecutorService launch;
 	
 	/**
 	 * The LOGGER that will print important information.
@@ -85,7 +87,7 @@ public final class Server {
 	public static void main(String[] args) {
 		boolean online = Boolean.parseBoolean(args[0]);
 		if(online) {
-			Runtime.getRuntime().addShutdownHook(new ServerHook());
+			Runtime.getRuntime().addShutdownHook(new GameShutdownHook());
 			DEBUG = false;
 		}
 		try {
@@ -102,7 +104,7 @@ public final class Server {
 	 */
 	public Server() {
 		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleInitialization").build());
-		launchService = MoreExecutors.listeningDecorator(delegateService);
+		launch = MoreExecutors.listeningDecorator(delegateService);
 	}
 	
 	/**
@@ -115,8 +117,8 @@ public final class Server {
 			
 			bind();
 			initAsyncTasks();
-			launchService.shutdown();
-			launchService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+			launch.shutdown();
+			launch.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
 			World.get().start();
 			
 			World.getInstanceManager().close(0);
@@ -181,42 +183,39 @@ public final class Server {
 		FileSystem fs = FileSystem.create("data/cache");
 		AttributeKey.init();
 		//Object decoding.
-		launchService.execute(() -> {
+		launch.execute(() -> {
 			new ObjectDefinitionDecoder(fs).run();
 			new MapDefinitionDecoder(fs).run();
 			new RegionDecoder(fs).run();
 			World.getFirepitEvent().register();
 		});
 		//Item decoding.
-		launchService.execute(() -> {
+		launch.execute(() -> {
 			new ItemDefinitionLoader().load();
 			new ItemNodeLoader().load();
 			new MarketValueLoader().load();
 		});
 		//NPC decoding.
-		launchService.execute(() -> {
+		launch.execute(() -> {
 			new NpcDefinitionLoader().load();
 			new NpcNodeLoader().load();
 			new NpcDropTableLoader().load();
 		});
-		launchService.execute(new ClanChatLoader());
-		launchService.execute(new WeaponPoisonLoader());
-		launchService.execute(new MessageOpcodeLoader());
-		launchService.execute(new MessageSizeLoader());
-		launchService.execute(new IndividualScoreboardRewardsLoader());
-		launchService.execute(new ShopLoader());
-		launchService.execute(new ShieldAnimationLoader());
-		launchService.execute(new WeaponAnimationLoader());
-		launchService.execute(new WeaponInterfaceLoader());
-		launchService.execute(new EquipmentRequirementLoader());
-		launchService.execute(new CombatRangedBowLoader());
-		launchService.execute(new AreaLoader());
-		launchService.execute(() -> {
-			new SlayerLocationLoader().load();
-			new SlayerDefinitionLoader().load();
-		});
-		//launchService.execute(new SlayerLocationLoader());
-		launchService.execute(() -> {//Adding combat strategies.
+		launch.execute(new ClanChatLoader());
+		launch.execute(new WeaponPoisonLoader());
+		launch.execute(new MessageOpcodeLoader());
+		launch.execute(new MessageSizeLoader());
+		launch.execute(new IndividualScoreboardRewardsLoader());
+		launch.execute(new ShopLoader());
+		launch.execute(new ShieldAnimationLoader());
+		launch.execute(new WeaponAnimationLoader());
+		launch.execute(new WeaponInterfaceLoader());
+		launch.execute(new EquipmentRequirementLoader());
+		launch.execute(new CombatRangedBowLoader());
+		launch.execute(new AreaLoader());
+		launch.execute(() -> new SlayerDefinitionLoader().load());
+		launch.execute(new SlayerLocationLoader());
+		launch.execute(() -> {//Adding combat strategies.
 			for(String directory : Utility.getSubDirectories(CombatStrategy.class)) {
 				try {
 					List<CombatStrategy> s = Utility.getClassesInDirectory(CombatStrategy.class.getPackage().getName() + "." + directory).stream().map(clazz -> (CombatStrategy) clazz).collect(Collectors.toList());
@@ -230,9 +229,9 @@ public final class Server {
 				}
 			}
 		});
-		launchService.execute(PunishmentHandler::parseIPBans);
-		launchService.execute(PunishmentHandler::parseIPMutes);
-		launchService.execute(PunishmentHandler::parseStarters);
+		launch.execute(PunishmentHandler::parseIPBans);
+		launch.execute(PunishmentHandler::parseIPMutes);
+		launch.execute(PunishmentHandler::parseStarters);
 		CommandDispatcher.load();
 	}
 

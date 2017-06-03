@@ -1,6 +1,6 @@
 package net.edge.content.container.session;
 
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.container.ItemContainer;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;

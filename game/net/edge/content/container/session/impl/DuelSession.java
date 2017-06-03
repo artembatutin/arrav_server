@@ -1,7 +1,7 @@
 package net.edge.content.container.session.impl;
 
 import net.edge.util.Stopwatch;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.container.session.ExchangeSession;
 import net.edge.content.container.session.ExchangeSessionActionType;
 import net.edge.content.container.session.ExchangeSessionType;

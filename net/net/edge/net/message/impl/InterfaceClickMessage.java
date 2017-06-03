@@ -2,7 +2,7 @@ package net.edge.net.message.impl;
 
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.message.InputMessageListener;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;

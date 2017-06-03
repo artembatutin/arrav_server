@@ -3,7 +3,7 @@ package net.edge.content.item;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.minigame.MinigameHandler;

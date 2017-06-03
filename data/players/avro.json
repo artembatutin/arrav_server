@@ -4,8 +4,8 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3088,
-    "y": 3508,
+    "x": 3084,
+    "y": 3504,
     "z": 0
   },
   "rights": "DEVELOPER",
@@ -57,7 +57,7 @@
       "goal": 0
     },
     {
-      "level": 873,
+      "level": 953,
       "experience": 2.0E8,
       "realLevel": 99,
       "goal": 0
@@ -1190,14 +1190,7 @@
     0
   ],
   "killed-brothers": [],
-  "slayerPoints": 0,
-  "slayer": {
-    "master": "SPRIA",
-    "key": "FIRE GIANTS",
-    "difficulty": "EASY",
-    "points": 19,
-    "amount": 41
-  },
+  "slayerPoints": 24121,
   "blocked-tasks": [
     null,
     null,

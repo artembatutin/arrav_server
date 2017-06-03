@@ -2,7 +2,7 @@ package net.edge.content.combat.magic.lunars.impl.spells;
 
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.combat.magic.lunars.LunarSpell;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.world.node.entity.EntityNode;

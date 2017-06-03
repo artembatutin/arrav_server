@@ -4,7 +4,7 @@ import com.google.gson.*;
 import net.edge.net.codec.login.LoginResponse;
 import net.edge.util.MutableNumber;
 import net.edge.util.json.GsonUtils;
-import net.edge.World;
+import net.edge.world.World;
 import net.edge.content.clanchat.ClanMember;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.container.ItemContainer;

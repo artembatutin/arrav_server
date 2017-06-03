@@ -1,4 +1,4 @@
-package net.edge;
+package net.edge.game;
 
 import net.edge.locale.Position;
 import net.edge.world.node.entity.npc.Npc;
