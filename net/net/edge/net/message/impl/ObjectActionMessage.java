@@ -138,7 +138,7 @@ public final class ObjectActionMessage implements InputMessageListener {
 					case 44566:
 						DialogueAppender app = new DialogueAppender(player);
 						app.chain(new StatementDialogue("You investigate the mysterious cape that is hanging on the rack..."));
-						boolean maxed = !Skills.maxed(player);
+						boolean maxed = Skills.maxed(player);
 						Dialogue dialogue = maxed ? new OptionDialogue(t -> {
 							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 								app.getBuilder().advance();
