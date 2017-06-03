@@ -1,5 +1,6 @@
 package net.edge;
 
+import net.edge.game.GameConstants;
 import net.edge.game.GameExecutor;
 import net.edge.game.GameSynchronizer;
 import net.edge.net.database.Database;
