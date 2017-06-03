@@ -2,12 +2,12 @@ package net.edge.content.skill.prayer;
 
 import com.google.common.collect.ImmutableList;
 import net.edge.util.TextUtils;
-import net.edge.world.World;
 import net.edge.content.TabInterface;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.Skills;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.PrayerBook;
 import net.edge.world.node.entity.update.UpdateFlag;

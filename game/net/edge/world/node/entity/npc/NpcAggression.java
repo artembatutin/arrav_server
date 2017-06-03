@@ -2,8 +2,8 @@ package net.edge.world.node.entity.npc;
 
 import net.edge.util.rand.RandomUtils;
 import net.edge.game.GameConstants;
-import net.edge.world.World;
 import net.edge.locale.loc.Location;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.HashSet;

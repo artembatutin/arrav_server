@@ -1,7 +1,6 @@
 package net.edge.content.minigame.rfd;
 
 import net.edge.game.GameConstants;
-import net.edge.world.World;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.item.FoodConsumable;
@@ -9,6 +8,7 @@ import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.SequencedMinigame;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.locale.Position;
+import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.attribute.AttributeValue;
 import net.edge.world.node.entity.npc.Npc;

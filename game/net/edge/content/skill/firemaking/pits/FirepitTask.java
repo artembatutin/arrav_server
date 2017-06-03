@@ -41,7 +41,7 @@ public final class FirepitTask extends Task {
 	
 	@Override
 	protected void onCancel() {
-		World.get().message("@red@The double blood money event has ended due to the fire pit being distinguised!", true);
-		GameConstants.DOUBLE_BLOOD_MONEY_EVENT = false;
+		World.get().message("@red@The double experience event has ended due to the fire pit being distinguised!", true);
+		GameConstants.EXPERIENCE_MULTIPLIER = 1;
 	}
 }

@@ -23,9 +23,7 @@ public final class IndividualScoreboardRewardsLoader extends JsonLoader {
 	public void load(JsonObject reader, Gson builder) {
 		String username = reader.get("username").getAsString();
 		int amount = reader.get("amount").getAsInt();
-		
 		World.getScoreboardManager().getPlayerScoreboardRewards().put(username, new MutableNumber(amount));
-		
 	}
 
 }

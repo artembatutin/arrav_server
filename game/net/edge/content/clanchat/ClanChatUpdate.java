@@ -1,6 +1,6 @@
 package net.edge.content.clanchat;
 
-import net.edge.net.message.OutputMessages;
+import net.edge.net.packet.PacketWriter;
 import net.edge.util.TextUtils;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
@@ -16,7 +16,7 @@ public enum ClanChatUpdate {
 		public void update(ClanMember member) {
 			ClanChat clan = member.getClan();
 			Player player = member.getPlayer();
-			OutputMessages message = player.getMessages();
+			PacketWriter message = player.getMessages();
 			if(member.getRank().getValue() >= clan.getSettings().getBan().getValue())
 				message.sendString(clan.getName(), 50306);
 			message.sendString("Talking in: @or1@" + clan.getName(), 50139);

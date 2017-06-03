@@ -1,0 +1,242 @@
+[
+  {
+    "opcodes": [
+      213
+    ],
+    "class": "net.edge.net.packet.impl.InterfaceActionMessage"
+  },
+  {
+    "opcodes": [
+      181
+    ],
+    "class": "net.edge.net.packet.impl.MagicOnGroundItemMessage"
+  },
+  {
+    "opcodes": [
+      237
+    ],
+    "class": "net.edge.net.packet.impl.MagicOnItemMessage"
+  },
+  {
+    "opcodes": [
+      135
+    ],
+    "class": "net.edge.net.packet.impl.InputXOptionMessage"
+  },
+  {
+    "opcodes": [
+      208,
+      60
+    ],
+    "class": "net.edge.net.packet.impl.EnterInputMessage"
+  },
+  {
+    "opcodes": [
+      57
+    ],
+    "class": "net.edge.net.packet.impl.ItemOnNpcMessage"
+  },
+  {
+    "opcodes": [
+      202
+    ],
+    "class": "net.edge.net.packet.impl.IdleStateMessage"
+  },
+  {
+    "opcodes": [
+      249,
+      153
+    ],
+    "class": "net.edge.net.packet.impl.AttackPlayerMessage"
+  },
+  {
+    "opcodes": [
+      101
+    ],
+    "class": "net.edge.net.packet.impl.CharacterSelectionMessage"
+  },
+  {
+    "opcodes": [
+      3
+    ],
+    "class": "net.edge.net.packet.impl.FocusChangeMessage"
+  },
+  {
+    "opcodes": [
+      4
+    ],
+    "class": "net.edge.net.packet.impl.ChatMessage"
+  },
+  {
+    "opcodes": [
+      185
+    ],
+    "class": "net.edge.net.packet.impl.ClickButtonMessage"
+  },
+  {
+    "opcodes": [
+      122,
+      75
+    ],
+    "class": "net.edge.net.packet.impl.ItemActionMessage"
+  },
+  {
+    "opcodes": [
+      103
+    ],
+    "class": "net.edge.net.packet.impl.CommandMessage"
+  },
+  {
+    "opcodes": [
+      105
+    ],
+    "class": "net.edge.net.packet.impl.MarketMessage"
+  },
+  {
+    "opcodes": [
+      104
+    ],
+    "class": "net.edge.net.packet.impl.ClanChatMessage"
+  },
+  {
+    "opcodes": [
+      0,
+      95,
+      241,
+      86
+    ],
+    "class": "net.edge.net.packet.impl.DefaultMessage"
+  },
+  {
+    "opcodes": [
+      40
+    ],
+    "class": "net.edge.net.packet.impl.AdvanceDialogueMessage"
+  },
+  {
+    "opcodes": [
+      87
+    ],
+    "class": "net.edge.net.packet.impl.DropItemMessage"
+  },
+  {
+    "opcodes": [
+      73
+    ],
+    "class": "net.edge.net.packet.impl.FollowPlayerMessage"
+  },
+  {
+    "opcodes": [
+      130
+    ],
+    "class": "net.edge.net.packet.impl.InterfaceClickMessage"
+  },
+  {
+    "opcodes": [
+      145,
+      41,
+      117,
+      43,
+      129,
+      214,
+      216
+    ],
+    "class": "net.edge.net.packet.impl.ItemInterfaceMessage"
+  },
+  {
+    "opcodes": [
+      53
+    ],
+    "class": "net.edge.net.packet.impl.ItemOnItemMessage"
+  },
+  {
+    "opcodes": [
+      192
+    ],
+    "class": "net.edge.net.packet.impl.ItemOnObjectMessage"
+  },
+  {
+    "opcodes": [
+      14
+    ],
+    "class": "net.edge.net.packet.impl.ItemOnPlayerMessage"
+  },
+  {
+    "opcodes": [
+      248,
+      164,
+      98
+    ],
+    "class": "net.edge.net.packet.impl.MovementQueueMessage"
+  },
+  {
+    "opcodes": [
+      72,
+      131,
+      155,
+      17,
+      21,
+      18
+    ],
+    "class": "net.edge.net.packet.impl.NpcActionMessage"
+  },
+  {
+    "opcodes": [
+      132,
+      252,
+      228,
+      234,
+      35,
+      70
+    ],
+    "class": "net.edge.net.packet.impl.ObjectActionMessage"
+  },
+  {
+    "opcodes": [
+      253
+    ],
+    "class": "net.edge.net.packet.impl.ItemOnItemNodeMessage"
+  },
+  {
+    "opcodes": [
+      236
+    ],
+    "class": "net.edge.net.packet.impl.PickupItemMessage"
+  },
+  {
+    "opcodes": [
+      188,
+      215,
+      133,
+      74,
+      126
+    ],
+    "class": "net.edge.net.packet.impl.PrivateMessagingMessage"
+  },
+  {
+    "opcodes": [
+      139,
+      128
+    ],
+    "class": "net.edge.net.packet.impl.RequestMessage"
+  },
+  {
+    "opcodes": [
+      121
+    ],
+    "class": "net.edge.net.packet.impl.UpdateRegionMessage"
+  },
+  {
+    "opcodes": [
+      134,
+      19
+    ],
+    "class": "net.edge.net.packet.impl.NpcInformationMessage"
+  },
+  {
+    "opcodes": [
+      20
+    ],
+    "class": "net.edge.net.packet.impl.ShopAccessMessage"
+  }
+]

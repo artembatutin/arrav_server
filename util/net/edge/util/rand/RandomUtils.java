@@ -63,6 +63,8 @@ public final class RandomUtils {
 	 * @throws IllegalArgumentException If {@code max - min + 1} is less than {@code 0}.
 	 */
 	public static int inclusive(int min, int max) {
+		if(min == max)
+			return min;
 		checkArgument(max >= min, "max < min");
 		return ThreadLocalRandom.current().nextInt((max - min) + 1) + min;
 	}

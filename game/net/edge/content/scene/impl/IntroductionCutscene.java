@@ -3,7 +3,6 @@ package net.edge.content.scene.impl;
 import net.edge.net.PunishmentHandler;
 import net.edge.task.Task;
 import net.edge.game.GameConstants;
-import net.edge.world.World;
 import net.edge.content.TabInterface;
 import net.edge.content.container.impl.Inventory;
 import net.edge.content.dialogue.Dialogue;
@@ -15,6 +14,7 @@ import net.edge.content.scene.Cutscene;
 import net.edge.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager.ActivityType;
 import net.edge.world.node.item.Item;
@@ -81,7 +81,7 @@ public final class IntroductionCutscene extends Cutscene {
 				}), new StatementDialogue("There is one slayer master in Edgeville, ask her for any tasks.").attach(() -> {
 					player.getMessages().sendCameraMovement(new Position(3087, 3501), 280, 2, 10);
 					player.getMessages().sendCameraAngle(new Position(3085, 3502), 240, 2, 10);
-				}), new StatementDialogue("This is the @red@Fire pit.", "Firing it up will enable double blood money.").attach(() -> {
+				}), new StatementDialogue("This is the @red@Fire pit.", "Firing it up will enable double xp.").attach(() -> {
 					player.getMessages().sendCameraAngle(new Position(3083, 3497), 250, 2, 5);
 				}), new StatementDialogue("This is @red@Party Pete", "He changes edge tokens into precious goods.").attach(() -> {
 					player.getMessages().sendCameraAngle(new Position(3089, 3502), 250, 4, 10);

@@ -65,7 +65,7 @@ public final class World {
 	/**
 	 * The scheduled executor service.
 	 */
-	private final ScheduledExecutorService pulser = Executors.newSingleThreadScheduledExecutor(ThreadUtil.create("GamePulseHandler"));
+	private final ScheduledExecutorService sync = Executors.newSingleThreadScheduledExecutor(ThreadUtil.create("GamePulse"));
 	
 	/**
 	 * The game executor in charge of managing process.
@@ -118,11 +118,11 @@ public final class World {
 	}
 	
 	public void start() {
-		pulser.scheduleAtFixedRate(new GamePulseHandler(this), 600, 600, TimeUnit.MILLISECONDS);
+		sync.scheduleAtFixedRate(new GamePulseHandler(this), 600, 600, TimeUnit.MILLISECONDS);
 	}
 	
 	public void shutdown() {
-		pulser.shutdownNow();
+		sync.shutdownNow();
 	}
 	
 	/**

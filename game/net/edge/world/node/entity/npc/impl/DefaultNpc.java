@@ -1,6 +1,5 @@
 package net.edge.world.node.entity.npc.impl;
 
-import net.edge.world.World;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.npc.Npc;
 

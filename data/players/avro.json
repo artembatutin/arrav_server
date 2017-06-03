@@ -4,9 +4,9 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3084,
-    "y": 3504,
-    "z": 0
+    "x": 3092,
+    "y": 3477,
+    "z": 1
   },
   "rights": "DEVELOPER",
   "nightmare": 0,
@@ -57,7 +57,7 @@
       "goal": 0
     },
     {
-      "level": 953,
+      "level": 990,
       "experience": 2.0E8,
       "realLevel": 99,
       "goal": 0
@@ -177,9 +177,9 @@
       "goal": 0
     },
     {
-      "level": 99,
-      "experience": 1.30344356E7,
-      "realLevel": 99,
+      "level": 90,
+      "experience": 5346332.0,
+      "realLevel": 90,
       "goal": 0
     },
     {
@@ -190,23 +190,53 @@
     }
   ],
   "inventory": [
+    {
+      "id": 14097,
+      "amount": 1
+    },
+    null,
+    null,
+    {
+      "id": 8095,
+      "amount": 1
+    },
+    {
+      "id": 1505,
+      "amount": 1
+    },
+    {
+      "id": 4703,
+      "amount": 1
+    },
+    {
+      "id": 17279,
+      "amount": 1
+    },
     null,
     null,
     null,
     null,
     null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
+    {
+      "id": 1963,
+      "amount": 1
+    },
+    {
+      "id": 19650,
+      "amount": 1
+    },
+    {
+      "id": 4073,
+      "amount": 1
+    },
+    {
+      "id": 14061,
+      "amount": 1
+    },
+    {
+      "id": 6611,
+      "amount": 1
+    },
     null,
     null,
     null,
@@ -1191,6 +1221,13 @@
   ],
   "killed-brothers": [],
   "slayerPoints": 24121,
+  "slayer": {
+    "master": "SPRIA",
+    "key": "ABYSSAL DEMONS",
+    "difficulty": "HARD",
+    "points": 30,
+    "amount": 21
+  },
   "blocked-tasks": [
     null,
     null,

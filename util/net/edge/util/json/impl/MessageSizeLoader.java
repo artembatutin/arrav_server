@@ -16,7 +16,7 @@ public final class MessageSizeLoader extends JsonLoader {
 	 * Creates a new {@link MessageSizeLoader}.
 	 */
 	public MessageSizeLoader() {
-		super("./data/json/io/message_sizes.json");
+		super("./data/json/io/packet_sizes.json");
 	}
 	
 	@Override

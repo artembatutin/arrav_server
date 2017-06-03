@@ -1,6 +1,6 @@
 package net.edge.content;
 
-import net.edge.net.message.impl.ItemInterfaceMessage;
+import net.edge.net.packet.impl.ItemInterfaceMessage;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;

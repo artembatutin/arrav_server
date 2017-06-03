@@ -2,8 +2,8 @@ package net.edge.content.pets;
 
 import net.edge.task.Task;
 import net.edge.util.Utility;
-import net.edge.world.World;
 import net.edge.content.TabInterface;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
 public final class PetTask extends Task {

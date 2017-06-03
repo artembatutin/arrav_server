@@ -1,8 +1,8 @@
 package net.edge.world.node.entity;
 
 import net.edge.net.database.connection.use.Highscores;
-import net.edge.world.World;
 import net.edge.content.PlayerPanel;
+import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;

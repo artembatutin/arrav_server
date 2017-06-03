@@ -1,11 +1,11 @@
 package net.edge.world.node.entity.player.assets;
 
 import net.edge.task.Task;
-import net.edge.world.World;
 import net.edge.content.TabInterface;
 import net.edge.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
 /**

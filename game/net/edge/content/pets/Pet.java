@@ -1,14 +1,14 @@
 package net.edge.content.pets;
 
-import net.edge.net.message.OutputMessages;
+import net.edge.net.packet.PacketWriter;
 import net.edge.util.TextUtils;
-import net.edge.world.World;
 import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.locale.Position;
 import net.edge.world.Animation;
+import net.edge.world.World;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.impl.Follower;
 import net.edge.world.node.entity.player.Player;
@@ -237,7 +237,7 @@ public final class Pet extends Follower {
 	 * @param pet    the pet that was spawned.
 	 */
 	private static void setInterface(Player player, Pet pet) {
-		OutputMessages encoder = player.getMessages();
+		PacketWriter encoder = player.getMessages();
 		
 		encoder.sendString(pet.getDefinition().getName(), 19021);
 		

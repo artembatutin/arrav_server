@@ -2,7 +2,6 @@ package net.edge.content.combat;
 
 import net.edge.Server;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.magic.CombatNormalSpell;
@@ -19,11 +18,8 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
+import net.edge.world.*;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.Animation;
-import net.edge.world.Graphic;
-import net.edge.world.Hit;
-import net.edge.world.Projectile;
 import net.edge.world.node.entity.move.MovementQueue;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
@@ -539,16 +535,13 @@ public final class Combat {
 		switch(type) {
 			case MELEE:
 				max = Combat.calculateMaxMeleeHit(character, victim);
-				hit = RandomUtils.inclusive(1, max);
-				if(character.isNpc()) {
-					World.get().message("accurate = " + isAccurate(character, victim, type) + ", check accuracy = " + checkAccuracy);
-				}
+				hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);
 				if(Server.DEBUG && character.isPlayer())
 					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
 				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.MELEE, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
 			case RANGED:
 				max = Combat.calculateMaxRangedHit(character, victim);
-				hit = RandomUtils.inclusive(1, max);
+				hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);
 				if(Server.DEBUG && character.isPlayer())
 					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
 				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.RANGED, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
@@ -559,7 +552,7 @@ public final class Combat {
 					if(p.isNight())//Nightmare monsters tougher.
 						max *= 1.2;
 				}
-				hit = RandomUtils.inclusive(1, max < 2 ? 2 : max);
+				hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);
 				if(Server.DEBUG && character.isPlayer())
 					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
 				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.MAGIC, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));

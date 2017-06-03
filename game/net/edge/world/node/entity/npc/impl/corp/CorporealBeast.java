@@ -1,9 +1,9 @@
 package net.edge.world.node.entity.npc.impl.corp;
 
 import net.edge.task.Task;
-import net.edge.world.World;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.locale.Position;
+import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;

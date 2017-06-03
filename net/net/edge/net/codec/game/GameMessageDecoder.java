@@ -8,7 +8,7 @@ import net.edge.net.NetworkConstants;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.IsaacCipher;
 import net.edge.net.codec.MessageType;
-import net.edge.net.message.GameMessage;
+import net.edge.net.packet.Packet;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * A {@link ByteToMessageDecoder} implementation that decodes all {@link ByteBuf}s into {@link GameMessage}s.
+ * A {@link ByteToMessageDecoder} implementation that decodes all {@link ByteBuf}s into {@link Packet}s.
  * @author lare96 <http://github.org/lare96>
  */
 public final class GameMessageDecoder extends ByteToMessageDecoder {
@@ -55,7 +55,7 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 	/**
 	 * The message that was decoded and needs to be queued.
 	 */
-	private Optional<GameMessage> currentMessage = Optional.empty();
+	private Optional<Packet> currentMessage = Optional.empty();
 	
 	/**
 	 * Creates a new {@link GameMessageDecoder}.
@@ -85,7 +85,7 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 	}
 	
 	/**
-	 * Decodes the opcode of the {@link GameMessage}.
+	 * Decodes the opcode of the {@link Packet}.
 	 * @param in The data being decoded.
 	 */
 	private void opcode(ByteBuf in) {
@@ -111,7 +111,7 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 	}
 	
 	/**
-	 * Decodes the size of the {@link GameMessage}.
+	 * Decodes the size of the {@link Packet}.
 	 * @param in The data being decoded.
 	 */
 	private void size(ByteBuf in) {
@@ -127,7 +127,7 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 	}
 	
 	/**
-	 * Decodes the payload of the {@link GameMessage}.
+	 * Decodes the payload of the {@link Packet}.
 	 * @param in The data being decoded.
 	 */
 	private void payload(ByteBuf in) {
@@ -142,8 +142,8 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 	}
 	
 	/**
-	 * Prepares a {@link GameMessage} to be queued upstream and handled on the main game thread.
-	 * @param payload The payload of the {@code GameMessage}.
+	 * Prepares a {@link Packet} to be queued upstream and handled on the main game thread.
+	 * @param payload The payload of the {@code Packet}.
 	 */
 	private void queueMessage(ByteBuf payload) {
 		checkState(opcode >= 0, "opcode < 0");
@@ -158,7 +158,7 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 				return;
 			}
 			payload.retain();
-			currentMessage = Optional.of(new GameMessage(opcode, type, ByteMessage.wrap(payload)));
+			currentMessage = Optional.of(new Packet(opcode, type, ByteMessage.wrap(payload)));
 		} finally {
 			resetState();
 		}

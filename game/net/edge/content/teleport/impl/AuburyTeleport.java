@@ -2,9 +2,9 @@ package net.edge.content.teleport.impl;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.content.teleport.TeleportSpell;
 import net.edge.locale.Position;
+import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;

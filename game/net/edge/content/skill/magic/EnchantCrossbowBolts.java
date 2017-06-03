@@ -1,7 +1,7 @@
 package net.edge.content.skill.magic;
 
 import com.google.common.collect.ImmutableMap;
-import net.edge.net.message.OutputMessages;
+import net.edge.net.packet.PacketWriter;
 import net.edge.content.container.impl.Inventory;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.SkillData;
@@ -71,7 +71,7 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 			return false;
 		}
 		
-		OutputMessages encoder = player.getMessages();
+		PacketWriter encoder = player.getMessages();
 		
 		Inventory inventory = player.getInventory();
 		

@@ -3,8 +3,8 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.world.World;
 import net.edge.content.scoreboard.PlayerScoreboardStatistic;
+import net.edge.world.World;
 
 /**
  * The {@link JsonLoader} implementation that loads all individual scoreboard statistics.
@@ -26,7 +26,6 @@ public final class IndividualScoreboardLoader extends JsonLoader {
 		int currentKillstreak = reader.get("current-killstreak").getAsInt();
 		int kills = reader.get("kills").getAsInt();
 		int deaths = reader.get("deaths").getAsInt();
-		
 		World.getScoreboardManager().getPlayerScoreboard().put(username, new PlayerScoreboardStatistic(username, highestKillstreak, currentKillstreak, kills, deaths));
 	}
 

@@ -1,11 +1,11 @@
 package net.edge.content.shootingstar;
 
 import net.edge.task.Task;
-import net.edge.world.World;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.HarvestingSkillAction;
 import net.edge.content.skill.mining.PickaxeData;
 import net.edge.world.Animation;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

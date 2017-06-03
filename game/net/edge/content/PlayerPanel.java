@@ -5,11 +5,11 @@ import com.google.common.collect.Sets;
 import net.edge.game.GameConstants;
 import net.edge.util.TextUtils;
 import net.edge.util.Utility;
-import net.edge.world.World;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.scoreboard.PlayerScoreboardStatistic;
 import net.edge.locale.loc.Location;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.EnumSet;

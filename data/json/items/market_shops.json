@@ -979,5 +979,17 @@
     "items": [
       1555
     ]
+  },
+  {
+    "id": 26,
+    "name": "Thieving black market",
+    "currency": "COINS",
+    "items": [
+      1963,
+      19650,
+      4073,
+      14061,
+      6611
+    ]
   }
 ]

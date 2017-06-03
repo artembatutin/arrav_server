@@ -4,12 +4,11 @@ import net.edge.Server;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.net.codec.ByteMessage;
-import net.edge.net.message.OutputMessages;
+import net.edge.net.packet.PacketWriter;
 import net.edge.net.session.GameSession;
 import net.edge.task.Task;
 import net.edge.util.*;
 import net.edge.game.GameConstants;
-import net.edge.world.World;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
 import net.edge.content.ViewingOrb;
@@ -54,6 +53,7 @@ import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.locale.loc.Location;
 import net.edge.locale.Position;
+import net.edge.world.World;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Graphic;
@@ -232,7 +232,7 @@ public final class Player extends EntityNode {
 	/**
 	 * The encoder that will encode and send messages.
 	 */
-	private final OutputMessages messages;
+	private final PacketWriter messages;
 	
 	/**
 	 * The enter input listener which will execute code when a player submits an input.
@@ -560,7 +560,7 @@ public final class Player extends EntityNode {
 	public Player(Long usernameHash) {
 		super(GameConstants.STARTING_POSITION, NodeType.PLAYER);
 		this.usernameHash = usernameHash;
-		this.messages = new OutputMessages(this);
+		this.messages = new PacketWriter(this);
 	}
 	
 	public void sendDefaultSidebars() {
@@ -582,7 +582,7 @@ public final class Player extends EntityNode {
 	
 	@Override
 	public void register() {
-		OutputMessages encoder = getMessages();
+		PacketWriter encoder = getMessages();
 		encoder.sendDetails();
 		this.getMessages().sendMapRegion();
 		super.getFlags().flag(UpdateFlag.APPEARANCE);
@@ -638,7 +638,7 @@ public final class Player extends EntityNode {
 			new IntroductionCutscene(this).prerequisites();
 		}
 		if(World.getFirepitEvent().getFirepit().isActive()) {
-			this.message("@red@[ANNOUNCEMENT]: Enjoy the double blood money event for another " + Utility.convertTime(World.getFirepitEvent().getFirepit().getTime()) + ".");
+			this.message("@red@[ANNOUNCEMENT]: Enjoy the double experience event for another " + Utility.convertTime(World.getFirepitEvent().getFirepit().getTime()) + ".");
 		}
 		if(World.getShootingStarEvent().getShootingStar() != null && World.getShootingStarEvent().getShootingStar().isReg()) {
 			this.message("@red@[ANNOUNCEMENT]: " + World.getShootingStarEvent().getShootingStar().getLocationData().getMessageWhenActive());
@@ -700,7 +700,7 @@ public final class Player extends EntityNode {
 	
 	@Override
 	public Hit decrementHealth(Hit hit) {
-		OutputMessages encoder = getMessages();
+		PacketWriter encoder = getMessages();
 		if(hit.getDamage() > skills[Skills.HITPOINTS].getLevel()) {
 			hit.setDamage(skills[Skills.HITPOINTS].getLevel());
 			if(hit.getType() == Hit.HitType.CRITICAL) {
@@ -816,7 +816,7 @@ public final class Player extends EntityNode {
 	
 	@Override
 	public boolean weaken(CombatWeaken effect) {
-		OutputMessages encoder = getMessages();
+		PacketWriter encoder = getMessages();
 		int id = (effect == CombatWeaken.ATTACK_LOW || effect == CombatWeaken.ATTACK_HIGH ? Skills.ATTACK : effect == CombatWeaken.STRENGTH_LOW || effect == CombatWeaken.STRENGTH_HIGH ? Skills.STRENGTH : Skills.DEFENCE);
 		if(skills[id].getLevel() < skills[id].getRealLevel())
 			return false;
@@ -848,7 +848,7 @@ public final class Player extends EntityNode {
 	 */
 	@Override
 	public void move(Position destination) {
-		OutputMessages encoder = getMessages();
+		PacketWriter encoder = getMessages();
 		dialogueChain.interrupt();
 		getMovementQueue().reset();
 		encoder.sendCloseWindows();
@@ -897,7 +897,7 @@ public final class Player extends EntityNode {
 	 * Sends wilderness and multi-combat interfaces as needed.
 	 */
 	public void sendInterfaces() {
-		OutputMessages encoder = getMessages();
+		PacketWriter encoder = getMessages();
 		if(Location.inDuelArena(this)) {
 			if(!duelingContext) {
 				encoder.sendContextMenu(2, false, "Challenge");
@@ -954,7 +954,7 @@ public final class Player extends EntityNode {
 	 * Restores run energy based on the last time it was restored.
 	 */
 	public void restoreRunEnergy() {
-		OutputMessages encoder = getMessages();
+		PacketWriter encoder = getMessages();
 		if(lastEnergy.elapsed(3500) && runEnergy < 100 && this.getMovementQueue().isMovementDone()) {
 			double restoreRate = 0.45D;
 			double agilityFactor = 0.01 * skills[Skills.AGILITY].getLevel();
@@ -1087,7 +1087,7 @@ public final class Player extends EntityNode {
 	 * Gets the encoder that will encode and send messages.
 	 * @return the message encoder.
 	 */
-	public OutputMessages getMessages() {
+	public PacketWriter getMessages() {
 		return messages;
 	}
 	

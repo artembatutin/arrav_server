@@ -2,17 +2,13 @@ package net.edge.content.combat.strategy.npc;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.world.*;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.Animation;
-import net.edge.world.Graphic;
-import net.edge.world.Hit;
-import net.edge.world.Projectile;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.AntifireDetails;
 import net.edge.world.node.entity.player.assets.AntifireDetails.AntifireType;
