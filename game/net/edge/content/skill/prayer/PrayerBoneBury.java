@@ -12,10 +12,13 @@ import java.util.Optional;
 public final class PrayerBoneBury extends DestructionSkillAction {
 	
 	private final Bone bone;
+
+	private final int itemId;
 	
-	public PrayerBoneBury(Player player, Bone bone) {
+	public PrayerBoneBury(Player player, int itemId, Bone bone) {
 		super(player, Optional.empty());
 		this.bone = bone;
+		this.itemId = itemId;
 	}
 	
 	public static boolean produce(Player player, Item item) {
@@ -25,7 +28,7 @@ public final class PrayerBoneBury extends DestructionSkillAction {
 			return false;
 		}
 		
-		PrayerBoneBury buryAction = new PrayerBoneBury(player, bone.get());
+		PrayerBoneBury buryAction = new PrayerBoneBury(player, item.getId(), bone.get());
 		buryAction.start();
 		return true;
 	}
@@ -37,7 +40,7 @@ public final class PrayerBoneBury extends DestructionSkillAction {
 	
 	@Override
 	public Item destructItem() {
-		return new Item(bone.getId());
+		return new Item(itemId);
 	}
 	
 	@Override

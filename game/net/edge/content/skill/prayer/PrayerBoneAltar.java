@@ -13,10 +13,13 @@ import java.util.Optional;
 public final class PrayerBoneAltar extends DestructionSkillAction {
 	
 	private final Bone bone;
+
+	private final int itemId;
 	
 	public PrayerBoneAltar(Player player, int itemId, ObjectNode object) {
 		super(player, Optional.of(object.getGlobalPos()));
 		this.bone = Bone.getBone(itemId).orElse(null);
+		this.itemId = itemId;
 	}
 	
 	public static boolean produce(Player player, int itemId, ObjectNode object) {
@@ -46,7 +49,7 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 	
 	@Override
 	public Item destructItem() {
-		return new Item(bone.getId());
+		return new Item(itemId);
 	}
 	
 	@Override
