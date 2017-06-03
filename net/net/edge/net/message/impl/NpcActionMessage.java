@@ -1,5 +1,6 @@
 package net.edge.net.message.impl;
 
+import net.edge.content.market.MarketShop;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
@@ -145,6 +146,24 @@ public final class NpcActionMessage implements InputMessageListener {
 					return;
 				}
 				switch(id) {
+					case 6892:
+						DialogueAppender pets = new DialogueAppender(player);
+						pets.chain(new NpcDialogue(6892, "Hello " + player.getFormatUsername() + ", lovely day isn't it?"));
+						pets.chain(new OptionDialogue(t -> {
+							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+								player.getMessages().sendCloseWindows();
+								MarketCounter.getShops().get(25).openShop(player);
+							} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
+								pets.getBuilder().advance();
+							} else {
+								pets.getBuilder().last();
+							}
+						}, "Yes, can i buy a pet?", "You don't have what I'm looking for", "Nevermind"));
+						pets.chain(new PlayerDialogue(Expression.QUESTIONING, "You don't have much choices", "in your shop do you?"));
+						pets.chain(new NpcDialogue(6892, "Suggest other pets on the forums", "if you wish!"));
+						pets.chain(new PlayerDialogue("Nevermind..."));
+						pets.start();
+						break;
 					case 3705:
 						DialogueAppender night = new DialogueAppender(player);
 						night.chain(new NpcDialogue(3705, "Evening " + player.getFormatUsername() + ", what do you want?"));
@@ -397,6 +416,9 @@ public final class NpcActionMessage implements InputMessageListener {
 				}
 				
 				switch(id) {
+					case 6892:
+						MarketCounter.getShops().get(25).openShop(player);
+						break;
 					case 3705:
 						MarketCounter.getShops().get(24).openShop(player);
 						break;

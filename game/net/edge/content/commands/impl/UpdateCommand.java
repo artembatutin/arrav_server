@@ -28,23 +28,24 @@ public final class UpdateCommand implements Command {
 				Server.UPDATING -= 0.6;
 				System.out.println("Update count: " + Server.UPDATING);
 				if(Server.UPDATING <= 0) {
+					inProgess = 2;
 					System.out.println("Setting player into updating mode.");
 					System.out.println("Logging players out...");
-					World.getPlayers().forEach(p -> {
-						World.handleLogout(p, true);
-					});
+					World.getPlayers().forEach(p -> World.handleLogout(p, true));
 					System.out.println("Waiting for shutdown.");
-					World.submit(new Task(1, false) {
+					World.submit(new Task(3, false) {
 						@Override
 						protected void execute() {
-							inProgess = 2;
+							System.out.println("Awaiting terminal.");
 							if(World.getPlayers().size() == 0) {
-								this.cancel();
 								System.out.println("Terminating server instance.");
 								System.exit(0);
+							} else {
+								World.getPlayers().forEach(p -> World.handleLogout(p, true));
 							}
 						}
 					});
+					this.cancel();
 				}
 			}
 		});

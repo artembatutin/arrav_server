@@ -27,7 +27,6 @@ public final class SlayerLocationLoader extends JsonLoader {
 		String key = Objects.requireNonNull(reader.get("key").getAsString());
 		int price = reader.get("price").getAsInt();
 		Position[] positions = reader.get("position").isJsonArray() ? Objects.requireNonNull(builder.fromJson(reader.get("position").getAsJsonArray(), Position[].class)) : new Position[]{Objects.requireNonNull(builder.fromJson(reader.get("position").getAsJsonObject(), Position.class))};
-		
 		Slayer.SLAYER_LOCATIONS.put(key, new SlayerLocationPolicy(positions, price));
 	}
 }

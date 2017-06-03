@@ -971,5 +971,13 @@
     "items": [
       18741
     ]
+  },
+  {
+    "id": 25,
+    "name": "Pet shop",
+    "currency": "COINS",
+    "items": [
+      1555
+    ]
   }
 ]

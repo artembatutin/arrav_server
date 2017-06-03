@@ -30,35 +30,41 @@ public enum PlayerPanel {
 			player.getMessages().sendLink("community/");
 		}
 	},
-	VOTE(62156) {
+	DISCORD(62156) {
 		@Override
 		public void onClick(Player player) {
-			player.getMessages().sendLink("vote/");
+			player.getMessages().sendLink("discord");
 		}
 	},
-	DONATE(62157) {
+	VOTE(62157) {
+		@Override
+		public void onClick(Player player) {
+			player.getMessages().sendLink("community/index.php?/topic/11-please-vote-for-us/");
+		}
+	},
+	DONATE(62158) {
 		@Override
 		public void onClick(Player player) {
 			player.getMessages().sendLink("donate/");
 		}
 	},
-	NPC_TOOL(62158) {
+	NPC_TOOL(62159) {
 		@Override
 		public void onClick(Player player) {
 			player.getMessages().sendNpcInformation(0, null);
 		}
 	},
-	TOOL3(62159),
+	TOOL3(62160),
 	
-	SERVER_STATISTICS(62160),
-	UPTIME(621561),
-	PLAYERS_ONLINE(62162) {
+	SERVER_STATISTICS(62161),
+	UPTIME(621562),
+	PLAYERS_ONLINE(62163) {
 		@Override
 		public void onClick(Player player) {
 			player.message("There is currently " + World.getPlayers().size() + " players online.");
 		}
 	},
-	STAFF_ONLINE(62163) {
+	STAFF_ONLINE(62164) {
 		@Override
 		public void onClick(Player player) {
 			List<Player> staff = World.getPlayers().findAll(p -> p != null && p.getRights().isStaff());
@@ -76,13 +82,13 @@ public enum PlayerPanel {
 			}
 		}
 	},
-	PLAYERS_IN_WILD(62164),
+	PLAYERS_IN_WILD(62165),
 	
-	EMPTY(62165),
+	EMPTY(62166),
 	
-	PLAYER_STATISTICS(62166),
-	USERNAME(62167),
-	PASSWORD(62168) {
+	PLAYER_STATISTICS(62167),
+	USERNAME(62168),
+	PASSWORD(62169) {
 		@Override
 		public void onClick(Player player) {
 			player.getDialogueBuilder().append(new StatementDialogue("You sure you want to change your password?"), new OptionDialogue(t -> {
@@ -100,8 +106,8 @@ public enum PlayerPanel {
 			}, "Yes please!", "No thanks."));
 		}
 	},
-	RANK(62169),
-	NIGHT(62170) {
+	RANK(62170),
+	NIGHT(62171) {
 		@Override
 		public void onClick(Player player) {
 			if(player.isNight()) {
@@ -117,29 +123,29 @@ public enum PlayerPanel {
 			player.message("You can only become a night's watch member in the beginning.");
 		}
 	},
-	SLAYER_POINTS(62171),
-	SLAYER_TASK(62172),
-	SLAYER_COUNT(62173),
+	SLAYER_POINTS(62172),
+	SLAYER_TASK(62173),
+	SLAYER_COUNT(62174),
 	
-	EMPTY1(62174),
+	EMPTY1(62175),
 	
-	PVE_HEADER(62175),
+	PVE_HEADER(62176),
 	
-	HIGHEST_KILLSTREAK(62176),
-	CURRENT_KILLSTREAK(62177),
-	TOTAL_PLAYER_KILLS(62178),
-	TOTAL_PLAYER_DEATHS(62179),
-	TOTAL_NPC_KILLS(62180),
-	TOTAL_NPC_DEATHS(62181),
+	HIGHEST_KILLSTREAK(62177),
+	CURRENT_KILLSTREAK(62178),
+	TOTAL_PLAYER_KILLS(62179),
+	TOTAL_PLAYER_DEATHS(62180),
+	TOTAL_NPC_KILLS(62181),
+	TOTAL_NPC_DEATHS(62182),
 	
-	EMPTY2(62182),
+	EMPTY2(62183),
 	
-	INDIVIDUAL_SCOREBOARD_STATISTICS(62183),
+	INDIVIDUAL_SCOREBOARD_STATISTICS(62184),
 	
-	INDIVIDUAL_HIGHEST_KILLSTREAKS(62184),
-	INDIVIDUAL_CURRENT_KILLSTREAKS(62185),
-	INDIVIDUAL_KILLS(62186),
-	INDIVIDUAL_DEATHS(62187);
+	INDIVIDUAL_HIGHEST_KILLSTREAKS(62185),
+	INDIVIDUAL_CURRENT_KILLSTREAKS(62186),
+	INDIVIDUAL_KILLS(62187),
+	INDIVIDUAL_DEATHS(62188);
 	
 	/**
 	 * Caches our enum values.
@@ -177,6 +183,7 @@ public enum PlayerPanel {
 		}
 		PlayerPanel.TOOLS.refresh(player, "@or1@Quickies:");
 		PlayerPanel.COMMUNITY.refresh(player, "@or2@ - Forums");
+		PlayerPanel.DISCORD.refresh(player, "@or2@ - Discord");
 		PlayerPanel.VOTE.refresh(player, "@or2@ - Vote");
 		PlayerPanel.DONATE.refresh(player, "@or2@ - Donate");
 		PlayerPanel.NPC_TOOL.refresh(player, "@or2@ - Monster Database");

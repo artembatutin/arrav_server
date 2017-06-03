@@ -31,7 +31,6 @@ public final class NpcDeath extends EntityDeath<Npc> {
 	
 	@Override
 	public void preDeath() {
-		System.out.println(getCharacter().toString() + " pre death");
 		if(getCharacter().getCombatBuilder().getVictim() != null) {
 			getCharacter().getCombatBuilder().getVictim().getCombatBuilder().reset();
 		}

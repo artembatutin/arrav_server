@@ -25,11 +25,9 @@ public final class SlayerDefinitionLoader extends JsonLoader {
 	public void load(JsonObject reader, Gson builder) {
 		SlayerMaster[] masters = Objects.requireNonNull(builder.fromJson(reader.get("masters").getAsJsonArray(), SlayerMaster[].class));
 		SlayerKeyPolicy[] tasks = Objects.requireNonNull(builder.fromJson(reader.get("tasks").getAsJsonArray(), SlayerKeyPolicy[].class));
-		
 		for(SlayerKeyPolicy task : tasks) {
 			task.setAmount(IntStream.rangeClosed(task.getAmount()[0], task.getAmount()[1]).toArray());
 		}
-		
 		Arrays.stream(masters).forEach(master -> Slayer.SLAYER_KEYS.put(master, tasks));
 	}
 	

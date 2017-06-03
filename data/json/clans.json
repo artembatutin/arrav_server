@@ -1,11 +1,27 @@
 [
   {
+    "owner": "overheat",
+    "name": "Overheat",
+    "loot": false,
+    "ban": "OWNER",
+    "mute": "OWNER",
+    "talk": "MEMBER",
+    "mutes": [],
+    "bans": [],
+    "ranked": [
+      {
+        "name": "overheat",
+        "rank": "OWNER"
+      }
+    ]
+  },
+  {
     "owner": "avro",
     "name": "Edgeville",
     "loot": false,
     "ban": "CORPORAL",
     "mute": "LIEUTENANT",
-    "talk": "CAPTAIN",
+    "talk": "MEMBER",
     "mutes": [],
     "bans": [],
     "ranked": [

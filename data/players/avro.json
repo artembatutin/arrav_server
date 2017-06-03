@@ -27,7 +27,7 @@
     0
   ],
   "prayer-type": "NORMAL",
-  "spell-book": "LUNAR",
+  "spell-book": "NORMAL",
   "fight-type": "SCIMITAR_SLASH",
   "poison-damage": 0,
   "auto-retaliate": false,
@@ -177,9 +177,9 @@
       "goal": 0
     },
     {
-      "level": 45,
-      "experience": 61512.0,
-      "realLevel": 45,
+      "level": 99,
+      "experience": 1.30344356E7,
+      "realLevel": 99,
       "goal": 0
     },
     {
@@ -191,61 +191,73 @@
   ],
   "inventory": [
     {
-      "id": 1351,
+      "id": 995,
+      "amount": 6319576
+    },
+    {
+      "id": 557,
+      "amount": 200
+    },
+    {
+      "id": 556,
+      "amount": 1710
+    },
+    {
+      "id": 9075,
+      "amount": 200
+    },
+    {
+      "id": 560,
+      "amount": 160
+    },
+    {
+      "id": 561,
+      "amount": 200
+    },
+    {
+      "id": 555,
+      "amount": 165
+    },
+    {
+      "id": 554,
+      "amount": 186
+    },
+    {
+      "id": 562,
+      "amount": 200
+    },
+    {
+      "id": 564,
+      "amount": 200
+    },
+    {
+      "id": 559,
+      "amount": 200
+    },
+    {
+      "id": 558,
+      "amount": 200
+    },
+    {
+      "id": 563,
+      "amount": 200
+    },
+    {
+      "id": 565,
+      "amount": 36
+    },
+    {
+      "id": 1387,
       "amount": 1
     },
     {
-      "id": 1265,
+      "id": 4115,
       "amount": 1
     },
     {
-      "id": 13727,
-      "amount": 76
-    },
-    {
-      "id": 1521,
+      "id": 6109,
       "amount": 1
     },
-    {
-      "id": 1521,
-      "amount": 1
-    },
-    {
-      "id": 1521,
-      "amount": 1
-    },
-    {
-      "id": 1521,
-      "amount": 1
-    },
-    {
-      "id": 1521,
-      "amount": 1
-    },
-    {
-      "id": 950,
-      "amount": 1
-    },
-    null,
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    null,
-    null,
-    null,
     null,
     null,
     null,
@@ -261,7 +273,7 @@
   "bank0": [
     {
       "id": 995,
-      "amount": 235000
+      "amount": 8467449
     },
     {
       "id": 329,
@@ -379,19 +391,58 @@
       "id": 12163,
       "amount": 1
     },
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
+    {
+      "id": 1351,
+      "amount": 1
+    },
+    {
+      "id": 1265,
+      "amount": 1
+    },
+    {
+      "id": 13727,
+      "amount": 76
+    },
+    {
+      "id": 1521,
+      "amount": 5
+    },
+    {
+      "id": 950,
+      "amount": 1
+    },
+    {
+      "id": 17672,
+      "amount": 45
+    },
+    {
+      "id": 1511,
+      "amount": 4
+    },
+    {
+      "id": 997,
+      "amount": 12
+    },
+    {
+      "id": 1555,
+      "amount": 1
+    },
+    {
+      "id": 12087,
+      "amount": 1
+    },
+    {
+      "id": 12083,
+      "amount": 1
+    },
+    {
+      "id": 12077,
+      "amount": 1
+    },
+    {
+      "id": 12075,
+      "amount": 1
+    },
     null,
     null,
     null,
@@ -1116,17 +1167,26 @@
     null
   ],
   "equipment": [
-    null,
+    {
+      "id": 4089,
+      "amount": 1
+    },
     null,
     null,
     {
       "id": 1323,
       "amount": 1
     },
+    {
+      "id": 4091,
+      "amount": 1
+    },
     null,
     null,
-    null,
-    null,
+    {
+      "id": 4093,
+      "amount": 1
+    },
     null,
     null,
     null,
@@ -1136,16 +1196,15 @@
   ],
   "friends": [
     38261318,
-    1289,
+    63723366978073,
     989838,
-    1480805004802,
     77401079141981
   ],
   "ignores": [],
   "total-player-kills": 3,
   "total-player-deaths": 0,
   "total-npc-kills": 0,
-  "total-npc-deaths": 2,
+  "total-npc-deaths": 3,
   "current-killstreak": 3,
   "highest-killstreak": 3,
   "godwars-killcount": [
@@ -1156,6 +1215,13 @@
   ],
   "killed-brothers": [],
   "slayerPoints": 0,
+  "slayer": {
+    "master": "SPRIA",
+    "key": "FIRE GIANTS",
+    "difficulty": "EASY",
+    "points": 19,
+    "amount": 41
+  },
   "blocked-tasks": [
     null,
     null,
@@ -1163,7 +1229,13 @@
     null,
     null
   ],
-  "pets": [],
+  "pets": [
+    {
+      "data": "BLACK_AND_GREY_KITTEN",
+      "hunger": 2.799999999999994,
+      "growth": 1.7283950617283972
+    }
+  ],
   "familiar": 0,
   "familiarLife": 0,
   "familiarDuration": 0,

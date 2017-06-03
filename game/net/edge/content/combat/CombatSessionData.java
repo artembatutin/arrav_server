@@ -154,7 +154,6 @@ public class CombatSessionData {
 		int counter = 0;
 		int index = 0;
 		Hit[] container = new Hit[hits.length];
-		
 		for(Hit hit : hits) {
 			if(!hit.isAccurate()) {
 				hit = new Hit(0);
@@ -163,8 +162,9 @@ public class CombatSessionData {
 			counter += hit.getDamage();
 			container[index++] = hit;
 		}
-		if(hits.length > 0 && victim != null && !victim.isDead() && !ignored)
+		if(hits.length > 0 && victim != null && !victim.isDead() && !ignored) {
 			victim.damage(container);
+		}
 		Combat.handleExperience(attacker.getCombatBuilder(), this, counter);
 		return counter;
 	}

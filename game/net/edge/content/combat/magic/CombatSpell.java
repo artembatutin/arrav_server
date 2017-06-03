@@ -26,9 +26,7 @@ public abstract class CombatSpell extends Spell {
 			Animation animation = new Animation(optional.get().getId(), optional.get().getDelay(), Animation.AnimationPriority.NORMAL);
 			cast.animation(animation);
 		}
-		
 		startGraphic().ifPresent(cast::graphic);
-		
 		projectile(cast, castOn).ifPresent(g -> World.submit(new Task(2, false) {
 			@Override
 			public void execute() {

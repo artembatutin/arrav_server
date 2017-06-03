@@ -460,7 +460,6 @@ public abstract class EntityNode extends Node {
 	 */
 	public final void damage(Hit... hits) {
 		Preconditions.checkArgument(hits.length >= 1 && hits.length <= 4);
-		
 		switch(hits.length) {
 			case 1:
 				sendDamage(hits[0]);

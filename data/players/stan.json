@@ -4,8 +4,8 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3085,
-    "y": 3508,
+    "x": 2972,
+    "y": 3491,
     "z": 0
   },
   "rights": "DEVELOPER",
@@ -13,14 +13,14 @@
   "clan": "avro",
   "appearance": [
     0,
-    0,
-    10,
-    18,
-    26,
-    9,
-    36,
-    42,
-    0,
+    261,
+    16,
+    468,
+    606,
+    119,
+    647,
+    438,
+    6,
     0,
     0,
     0,
@@ -191,69 +191,27 @@
   ],
   "inventory": [
     {
-      "id": 3105,
-      "amount": 1
-    },
-    {
-      "id": 386,
-      "amount": 1
-    },
-    {
-      "id": 1115,
-      "amount": 1
-    },
-    {
       "id": 20769,
       "amount": 1
     },
     {
-      "id": 13759,
+      "id": 14484,
       "amount": 1
     },
-    {
-      "id": 315,
-      "amount": 1
-    },
-    {
-      "id": 315,
-      "amount": 1
-    },
-    {
-      "id": 323,
-      "amount": 1
-    },
-    {
-      "id": 323,
-      "amount": 1
-    },
-    {
-      "id": 323,
-      "amount": 1
-    },
-    {
-      "id": 323,
-      "amount": 1
-    },
-    {
-      "id": 317,
-      "amount": 1
-    },
-    {
-      "id": 317,
-      "amount": 1
-    },
-    {
-      "id": 317,
-      "amount": 1
-    },
-    {
-      "id": 317,
-      "amount": 1
-    },
-    {
-      "id": 995,
-      "amount": 100000
-    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
     null,
     null,
     null,
@@ -268,18 +226,54 @@
     null
   ],
   "bank0": [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
+    {
+      "id": 3105,
+      "amount": 1
+    },
+    {
+      "id": 385,
+      "amount": 1
+    },
+    {
+      "id": 1115,
+      "amount": 1
+    },
+    {
+      "id": 13759,
+      "amount": 1
+    },
+    {
+      "id": 315,
+      "amount": 2
+    },
+    {
+      "id": 323,
+      "amount": 4
+    },
+    {
+      "id": 317,
+      "amount": 4
+    },
+    {
+      "id": 995,
+      "amount": 100000
+    },
+    {
+      "id": 13727,
+      "amount": 10
+    },
+    {
+      "id": 17674,
+      "amount": 1
+    },
+    {
+      "id": 532,
+      "amount": 9
+    },
+    {
+      "id": 15259,
+      "amount": 1
+    },
     null,
     null,
     null,

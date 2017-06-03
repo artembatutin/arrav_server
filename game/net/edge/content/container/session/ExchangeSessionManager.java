@@ -43,7 +43,7 @@ public final class ExchangeSessionManager {
 		Player requested = session.getOther(player);
 		
 		if(player.isNight() && !player.isNightMaxed()) {
-			player.message("You cannot start an exchange session with another player.");
+			player.message("You cannot start an exchange session because you're a night's watch member.");
 			return false;
 		}
 		

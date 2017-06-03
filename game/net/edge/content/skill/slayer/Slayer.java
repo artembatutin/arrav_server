@@ -1,5 +1,6 @@
 package net.edge.content.skill.slayer;
 
+import net.edge.locale.Position;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.PlayerPanel;
@@ -23,17 +24,17 @@ import java.util.stream.Collectors;
 public final class Slayer {
 	
 	/**
-	 * A tool.mapviewer containing all the slayer masters with the possible tasks they can give.
+	 * A map containing all the slayer masters with the possible tasks they can give.
 	 */
 	public static final Map<SlayerMaster, SlayerKeyPolicy[]> SLAYER_KEYS = new HashMap<>();
 	
 	/**
-	 * A tool.mapviewer which contains each slayer key by the position of the npcs.
+	 * A map which contains each slayer key by the position of the npcs.
 	 */
 	public static final Map<String, SlayerLocationPolicy> SLAYER_LOCATIONS = new HashMap<>();
 	
 	/**
-	 * A tool.mapviewer which contains each slayer key by the level required slayer.
+	 * A map which contains each slayer key by the level required slayer.
 	 */
 	public static final Map<String, Integer> SLAYER_LEVELS = new HashMap<>();
 	
@@ -378,9 +379,6 @@ public final class Slayer {
 				return false;//Awful way to check through a loop but alright... - we checking if any npc key exist of that type.
 			if(blocked.contains(s.getKey()))
 				return false;//The player blocked this task.
-			if(combat <= s.getCombatRequirement() && s.getCombatRequirement() + 40 > combat) {
-				return false;//Checking the combat requirements and removing the easy ones.
-			}
 			return true;
 		}).collect(Collectors.toList());
 		

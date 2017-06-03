@@ -1,5 +1,6 @@
 package net.edge.world.node.entity.npc.drop;
 
+import net.edge.content.skill.prayer.Bone;
 import net.edge.util.log.Log;
 import net.edge.util.log.impl.DropLog;
 import net.edge.util.rand.Chance;
@@ -10,6 +11,7 @@ import net.edge.content.container.impl.Equipment;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemDefinition;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;

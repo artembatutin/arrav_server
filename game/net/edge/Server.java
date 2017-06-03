@@ -228,8 +228,11 @@ public final class Server {
 		launchService.execute(new EquipmentRequirementLoader());
 		launchService.execute(new CombatRangedBowLoader());
 		launchService.execute(new AreaLoader());
-		launchService.execute(new SlayerDefinitionLoader());
-		launchService.execute(new SlayerLocationLoader());
+		launchService.execute(() -> {
+			new SlayerLocationLoader().load();
+			new SlayerDefinitionLoader().load();
+		});
+		//launchService.execute(new SlayerLocationLoader());
 		launchService.execute(() -> {//Adding combat strategies.
 			for(String directory : Utility.getSubDirectories(CombatStrategy.class)) {
 				try {

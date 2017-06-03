@@ -491,7 +491,7 @@ public final class ObjectActionMessage implements InputMessageListener {
 					//chaos dwarf
 					case 87012:
 						if(objectX == 1487 && objectY == 4704)
-							player.teleport(new Position(3207, 3437, 0), TRAINING_PORTAL);
+							player.teleport(new Position(3085, 3513, 0), TRAINING_PORTAL);
 						break;
 					
 					case 4493:

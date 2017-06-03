@@ -101,7 +101,7 @@ public abstract class Familiar extends Follower {
 	 */
 	public void summon(Player player, boolean login) {
 		/* Checks if the familiar is a large npc. */
-		boolean isLarge = NpcDefinition.DEFINITIONS[this.getId()].getSize() > 1;
+		boolean isLarge = size() > 1;
 		List<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), size());
 		if(!pos.isEmpty()) {
 			Position p = RandomUtils.random(pos);

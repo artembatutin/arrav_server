@@ -9,8 +9,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 25,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       },
       {
@@ -222,8 +222,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 25,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       },
       {
@@ -317,6 +317,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1203,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 2,
         "id": 562,
@@ -362,12 +368,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 436,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1203,
         "minimum": 1
       },
       {
@@ -423,8 +423,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 3,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -570,8 +570,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 25,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       },
       {
@@ -680,8 +680,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -775,6 +775,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1458,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 20946,
@@ -856,12 +862,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 2353,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1458,
         "minimum": 1
       },
       {
@@ -964,8 +964,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 27,
-        "id": 617,
+        "maximum": 20,
+        "id": 995,
         "minimum": 5
       },
       {
@@ -1080,8 +1080,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -1133,6 +1133,12 @@
         "minimum": 2
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 2,
+        "id": 561,
+        "minimum": 2
+      },
+      {
         "chance": "RARE",
         "maximum": 2,
         "id": 20948,
@@ -1142,12 +1148,6 @@
         "chance": "RARE",
         "maximum": 2,
         "id": 565,
-        "minimum": 2
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 2,
-        "id": 561,
         "minimum": 2
       },
       {
@@ -1202,8 +1202,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -1789,7 +1789,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -1931,6 +1931,12 @@
         "minimum": 2
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 2,
+        "id": 1827,
+        "minimum": 2
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 447,
@@ -1983,12 +1989,6 @@
         "maximum": 1,
         "id": 10977,
         "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 2,
-        "id": 1827,
-        "minimum": 2
       },
       {
         "chance": "RARE",
@@ -2054,8 +2054,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 120,
-        "id": 617,
+        "maximum": 8,
+        "id": 995,
         "minimum": 2
       },
       {
@@ -2119,6 +2119,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 2359,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 213,
@@ -2167,12 +2173,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 2359,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 18757,
@@ -2195,8 +2195,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 300,
-        "id": 617,
+        "maximum": 800,
+        "id": 995,
         "minimum": 200
       },
       {
@@ -2280,8 +2280,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -2348,6 +2348,12 @@
         "chance": "UNCOMMON",
         "maximum": 1,
         "id": 1446,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 2347,
         "minimum": 1
       },
       {
@@ -2438,12 +2444,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 2434,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 2347,
         "minimum": 1
       },
       {
@@ -2579,8 +2579,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 10,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       }
     ],
@@ -2739,8 +2739,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -2858,6 +2858,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 209,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 213,
@@ -2867,12 +2873,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 215,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 209,
         "minimum": 1
       },
       {
@@ -2912,8 +2912,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 690,
-        "id": 617,
+        "maximum": 784,
+        "id": 995,
         "minimum": 196
       },
       {
@@ -2995,6 +2995,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1355,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1123,
@@ -3010,12 +3016,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 2722,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1355,
         "minimum": 1
       },
       {
@@ -3049,8 +3049,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 440,
-        "id": 617,
+        "maximum": 44,
+        "id": 995,
         "minimum": 11
       },
       {
@@ -3235,8 +3235,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -3478,8 +3478,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -3785,7 +3785,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17673,
+        "id": 530,
         "minimum": 1
       },
       {
@@ -3886,8 +3886,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 450,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -4072,8 +4072,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 460,
-        "id": 617,
+        "maximum": 44,
+        "id": 995,
         "minimum": 11
       },
       {
@@ -4210,8 +4210,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 200,
-        "id": 617,
+        "maximum": 120,
+        "id": 995,
         "minimum": 30
       },
       {
@@ -4335,6 +4335,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1125,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 10,
         "id": 20948,
@@ -4362,12 +4368,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 217,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1125,
         "minimum": 1
       },
       {
@@ -4485,8 +4485,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 33,
-        "id": 617,
+        "maximum": 8,
+        "id": 995,
         "minimum": 2
       },
       {
@@ -4628,6 +4628,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1279,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 211,
@@ -4679,12 +4685,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 1323,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1279,
         "minimum": 1
       },
       {
@@ -4850,7 +4850,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 2860,
+        "id": 2859,
         "minimum": 1
       },
       {
@@ -4960,8 +4960,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -5115,6 +5115,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 3,
+        "id": 884,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1189,
@@ -5184,12 +5190,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 1448,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 3,
-        "id": 884,
         "minimum": 1
       },
       {
@@ -5308,7 +5308,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -5361,8 +5361,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 300,
-        "id": 617,
+        "maximum": 60,
+        "id": 995,
         "minimum": 15
       },
       {
@@ -5432,6 +5432,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 12,
+        "id": 892,
+        "minimum": 12
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 2485,
@@ -5468,12 +5474,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 12,
-        "id": 892,
-        "minimum": 12
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 10977,
@@ -5496,7 +5496,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -5519,8 +5519,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 8,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -5735,13 +5735,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17675,
+        "id": 15,
         "minimum": 1
       },
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -5800,8 +5800,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 300,
-        "id": 617,
+        "maximum": 8,
+        "id": 995,
         "minimum": 2
       },
       {
@@ -5973,6 +5973,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1969,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 213,
@@ -6069,12 +6075,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1969,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1442,
@@ -6094,7 +6094,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 3125,
+        "id": 526,
         "minimum": 1
       },
       {
@@ -6117,8 +6117,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 22,
-        "id": 617,
+        "maximum": 88,
+        "id": 995,
         "minimum": 22
       },
       {
@@ -6142,7 +6142,7 @@
       {
         "chance": "COMMON",
         "maximum": 3,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -6391,7 +6391,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -6575,6 +6575,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 383,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 349,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 5301,
@@ -6671,18 +6683,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 383,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 349,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 10977,
@@ -6698,13 +6698,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17675,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -6879,13 +6879,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17675,
+        "id": 15,
         "minimum": 1
       },
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -6950,8 +6950,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 3,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -7372,7 +7372,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -7544,6 +7544,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 2,
+        "id": 5307,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 5302,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 3,
         "id": 888,
@@ -7592,18 +7604,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 2,
-        "id": 5307,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 5302,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1621,
@@ -7636,8 +7636,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 16,
+        "id": 995,
         "minimum": 4
       },
       {
@@ -7748,8 +7748,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 550,
-        "id": 617,
+        "maximum": 100,
+        "id": 995,
         "minimum": 25
       },
       {
@@ -7903,8 +7903,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 16,
+        "id": 995,
         "minimum": 4
       },
       {
@@ -8057,8 +8057,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 68,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -8409,8 +8409,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 479,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -8680,8 +8680,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 60,
+        "id": 995,
         "minimum": 15
       },
       {
@@ -8823,6 +8823,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 211,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 2,
         "id": 890,
@@ -8865,12 +8871,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 211,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 2485,
@@ -8899,8 +8899,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 15,
-        "id": 617,
+        "maximum": 60,
+        "id": 995,
         "minimum": 15
       },
       {
@@ -9070,7 +9070,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -9189,8 +9189,8 @@
       },
       {
         "chance": "RARE",
-        "maximum": 323,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -9234,13 +9234,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -9554,7 +9554,7 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 15000,
+        "maximum": 12000,
         "id": 995,
         "minimum": 3000
       },
@@ -9725,8 +9725,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 8,
-        "id": 617,
+        "maximum": 32,
+        "id": 995,
         "minimum": 8
       },
       {
@@ -9802,6 +9802,12 @@
         "minimum": 2
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 45,
+        "id": 556,
+        "minimum": 45
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1297,
@@ -9836,12 +9842,6 @@
         "maximum": 1,
         "id": 187,
         "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 45,
-        "id": 556,
-        "minimum": 45
       },
       {
         "chance": "RARE",
@@ -9912,8 +9912,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 300,
-        "id": 617,
+        "maximum": 1200,
+        "id": 995,
         "minimum": 300
       },
       {
@@ -9993,8 +9993,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 3000,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -10170,8 +10170,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -10262,8 +10262,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 300,
-        "id": 617,
+        "maximum": 1200,
+        "id": 995,
         "minimum": 300
       },
       {
@@ -10384,8 +10384,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 25,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       },
       {
@@ -10548,8 +10548,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -10683,8 +10683,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 15,
-        "id": 617,
+        "maximum": 20,
+        "id": 995,
         "minimum": 5
       },
       {
@@ -10990,8 +10990,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 35,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       },
       {
@@ -11042,7 +11042,7 @@
       {
         "chance": "COMMON",
         "maximum": 4,
-        "id": 617,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -11201,8 +11201,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 270,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -11338,6 +11338,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 5301,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1428,
@@ -11452,12 +11458,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 5301,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 217,
@@ -11529,8 +11529,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 32,
+        "id": 995,
         "minimum": 8
       },
       {
@@ -11689,8 +11689,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 25,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -11778,6 +11778,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1381,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 20915,
@@ -11835,12 +11841,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 217,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1381,
         "minimum": 1
       },
       {
@@ -11971,6 +11971,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1525,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1533,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 20910,
@@ -12043,18 +12055,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1525,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1533,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 217,
@@ -12119,8 +12119,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -12294,8 +12294,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 29,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       },
       {
@@ -12409,8 +12409,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 5,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -12459,7 +12459,7 @@
       {
         "chance": "COMMON",
         "maximum": 0,
-        "id": 617,
+        "id": 995,
         "minimum": 0
       },
       {
@@ -12598,8 +12598,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 600,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -12653,7 +12653,7 @@
       {
         "chance": "UNCOMMON",
         "maximum": 1,
-        "id": 11338,
+        "id": 526,
         "minimum": 1
       },
       {
@@ -12713,8 +12713,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -12848,8 +12848,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 20,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -13002,7 +13002,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       }
     ],
@@ -13120,8 +13120,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 272,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -13235,8 +13235,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 254,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -13272,8 +13272,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 310,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -13525,8 +13525,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 301,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -13656,6 +13656,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 157,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1113,
@@ -13683,12 +13689,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 5304,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 157,
         "minimum": 1
       },
       {
@@ -13875,8 +13875,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 440,
-        "id": 617,
+        "maximum": 80,
+        "id": 995,
         "minimum": 20
       },
       {
@@ -14000,6 +14000,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 209,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 2722,
@@ -14039,12 +14045,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 207,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 209,
         "minimum": 1
       },
       {
@@ -14171,8 +14171,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 25,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       },
       {
@@ -14260,6 +14260,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1203,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 2,
         "id": 562,
@@ -14305,12 +14311,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 436,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1203,
         "minimum": 1
       },
       {
@@ -14453,8 +14453,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 306,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -14605,15 +14605,15 @@
         "minimum": 1
       },
       {
-        "chance": "RARE",
-        "maximum": 1,
-        "id": 5298,
-        "minimum": 1
-      },
-      {
         "chance": "UNCOMMON",
         "maximum": 1,
         "id": 225,
+        "minimum": 1
+      },
+      {
+        "chance": "RARE",
+        "maximum": 1,
+        "id": 5298,
         "minimum": 1
       },
       {
@@ -14645,8 +14645,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 440,
-        "id": 617,
+        "maximum": 80,
+        "id": 995,
         "minimum": 20
       },
       {
@@ -14806,6 +14806,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 209,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 2722,
@@ -14845,12 +14851,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 207,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 209,
         "minimum": 1
       },
       {
@@ -14971,8 +14971,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1000,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -15130,8 +15130,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 450,
-        "id": 617,
+        "maximum": 40,
+        "id": 995,
         "minimum": 10
       },
       {
@@ -15227,8 +15227,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 11,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -15485,7 +15485,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17673,
+        "id": 530,
         "minimum": 1
       },
       {
@@ -15705,7 +15705,7 @@
       {
         "chance": "UNCOMMON",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -15760,13 +15760,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17675,
+        "id": 15,
         "minimum": 1
       },
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -15997,8 +15997,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -16072,8 +16072,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 25,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -16316,7 +16316,7 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 350,
+        "maximum": 100,
         "id": 995,
         "minimum": 25
       },
@@ -16461,8 +16461,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 350,
-        "id": 617,
+        "maximum": 100,
+        "id": 995,
         "minimum": 25
       },
       {
@@ -16590,7 +16590,7 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 37,
+        "maximum": 100,
         "id": 995,
         "minimum": 25
       },
@@ -16705,8 +16705,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 550,
-        "id": 617,
+        "maximum": 100,
+        "id": 995,
         "minimum": 25
       },
       {
@@ -16858,7 +16858,7 @@
       {
         "chance": "COMMON",
         "maximum": 400,
-        "id": 617,
+        "id": 995,
         "minimum": 100
       },
       {
@@ -17616,7 +17616,7 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 467,
+        "maximum": 424,
         "id": 995,
         "minimum": 106
       },
@@ -17893,7 +17893,7 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 467,
+        "maximum": 424,
         "id": 995,
         "minimum": 106
       },
@@ -18591,8 +18591,8 @@
       },
       {
         "chance": "RARE",
-        "maximum": 106,
-        "id": 617,
+        "maximum": 424,
+        "id": 995,
         "minimum": 106
       },
       {
@@ -18679,7 +18679,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17675,
+        "id": 15,
         "minimum": 1
       }
     ],
@@ -18753,8 +18753,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -19082,13 +19082,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17675,
+        "id": 15,
         "minimum": 1
       },
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -19134,15 +19134,15 @@
         "minimum": 1
       },
       {
-        "chance": "RARE",
-        "maximum": 1,
-        "id": 5295,
-        "minimum": 1
-      },
-      {
         "chance": "UNCOMMON",
         "maximum": 1,
         "id": 12176,
+        "minimum": 1
+      },
+      {
+        "chance": "RARE",
+        "maximum": 1,
+        "id": 5295,
         "minimum": 1
       },
       {
@@ -19172,8 +19172,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -19312,8 +19312,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -19533,6 +19533,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 211,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 5295,
@@ -19590,12 +19596,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 1391,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 211,
         "minimum": 1
       },
       {
@@ -19668,8 +19668,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 460,
-        "id": 617,
+        "maximum": 120,
+        "id": 995,
         "minimum": 30
       },
       {
@@ -19850,8 +19850,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 11,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -19938,13 +19938,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 6729,
+        "id": 526,
         "minimum": 1
       },
       {
         "chance": "COMMON",
         "maximum": 0,
-        "id": 617,
+        "id": 995,
         "minimum": 0
       },
       {
@@ -19963,7 +19963,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -20196,8 +20196,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 420,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -20251,8 +20251,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 3,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -20555,8 +20555,8 @@
       },
       {
         "chance": "RARE",
-        "maximum": 5,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -20645,8 +20645,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 11,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -20770,15 +20770,15 @@
         "minimum": 1
       },
       {
-        "chance": "RARE",
-        "maximum": 1,
-        "id": 2722,
-        "minimum": 1
-      },
-      {
         "chance": "UNCOMMON",
         "maximum": 1,
         "id": 199,
+        "minimum": 1
+      },
+      {
+        "chance": "RARE",
+        "maximum": 1,
+        "id": 2722,
         "minimum": 1
       },
       {
@@ -20812,8 +20812,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 50,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -20964,7 +20964,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -21127,7 +21127,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -21385,8 +21385,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 240,
-        "id": 617,
+        "maximum": 308,
+        "id": 995,
         "minimum": 77
       },
       {
@@ -21531,8 +21531,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 12,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -21622,8 +21622,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 42,
-        "id": 617,
+        "maximum": 48,
+        "id": 995,
         "minimum": 12
       },
       {
@@ -21744,8 +21744,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 42,
-        "id": 617,
+        "maximum": 48,
+        "id": 995,
         "minimum": 12
       },
       {
@@ -21865,8 +21865,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 42,
-        "id": 617,
+        "maximum": 48,
+        "id": 995,
         "minimum": 12
       },
       {
@@ -21986,8 +21986,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 15,
-        "id": 617,
+        "maximum": 60,
+        "id": 995,
         "minimum": 15
       },
       {
@@ -22662,6 +22662,12 @@
         "minimum": 4
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 4,
+        "id": 4698,
+        "minimum": 4
+      },
+      {
         "chance": "RARE",
         "maximum": 13,
         "id": 560,
@@ -22684,12 +22690,6 @@
         "maximum": 11,
         "id": 566,
         "minimum": 11
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 4,
-        "id": 4698,
-        "minimum": 4
       },
       {
         "chance": "RARE",
@@ -22932,6 +22932,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1185,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1347,
@@ -22956,12 +22962,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1185,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 985,
@@ -22977,8 +22977,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -23078,6 +23078,12 @@
         "minimum": 7
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 4,
+        "id": 562,
+        "minimum": 4
+      },
+      {
         "chance": "RARE",
         "maximum": 2,
         "id": 17789,
@@ -23106,12 +23112,6 @@
         "maximum": 1,
         "id": 217,
         "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 4,
-        "id": 562,
-        "minimum": 4
       },
       {
         "chance": "RARE",
@@ -23169,7 +23169,7 @@
       {
         "chance": "COMMON",
         "maximum": 0,
-        "id": 617,
+        "id": 995,
         "minimum": 0
       },
       {
@@ -23223,8 +23223,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 25,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       }
     ],
@@ -23250,7 +23250,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -23273,8 +23273,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 190,
-        "id": 617,
+        "maximum": 80,
+        "id": 995,
         "minimum": 20
       },
       {
@@ -23311,6 +23311,12 @@
         "chance": "UNCOMMON",
         "maximum": 1,
         "id": 205,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 203,
         "minimum": 1
       },
       {
@@ -23356,12 +23362,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 203,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 3122,
@@ -23390,7 +23390,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -23413,8 +23413,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 190,
-        "id": 617,
+        "maximum": 80,
+        "id": 995,
         "minimum": 20
       },
       {
@@ -23523,7 +23523,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -23552,8 +23552,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 250,
-        "id": 617,
+        "maximum": 32,
+        "id": 995,
         "minimum": 8
       },
       {
@@ -23737,6 +23737,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 211,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1361,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 5321,
@@ -23809,18 +23821,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 211,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1361,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 18757,
@@ -23843,7 +23843,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -23872,8 +23872,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 190,
-        "id": 617,
+        "maximum": 80,
+        "id": 995,
         "minimum": 20
       },
       {
@@ -23922,6 +23922,12 @@
         "chance": "UNCOMMON",
         "maximum": 1,
         "id": 199,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 203,
         "minimum": 1
       },
       {
@@ -23979,12 +23985,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 203,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 207,
@@ -24008,13 +24008,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
         "chance": "COMMON",
-        "maximum": 250,
-        "id": 617,
+        "maximum": 32,
+        "id": 995,
         "minimum": 8
       },
       {
@@ -24198,6 +24198,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 211,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 5321,
@@ -24249,12 +24255,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 10976,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 211,
         "minimum": 1
       },
       {
@@ -24343,8 +24343,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 20,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -24480,6 +24480,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 211,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1213,
@@ -24543,12 +24549,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 397,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 211,
         "minimum": 1
       },
       {
@@ -24706,8 +24706,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -24787,8 +24787,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 20,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -24960,6 +24960,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 211,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1213,
@@ -25023,12 +25029,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 397,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 211,
         "minimum": 1
       },
       {
@@ -25100,8 +25100,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -25207,8 +25207,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 15,
-        "id": 617,
+        "maximum": 60,
+        "id": 995,
         "minimum": 15
       },
       {
@@ -25432,8 +25432,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -25556,8 +25556,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 3,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -25825,8 +25825,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -25970,8 +25970,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 89,
-        "id": 617,
+        "maximum": 308,
+        "id": 995,
         "minimum": 77
       }
     ],
@@ -26033,8 +26033,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 4400,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -26407,8 +26407,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 200,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -26666,8 +26666,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 15,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -26956,8 +26956,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 15,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -27219,8 +27219,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 3,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -27400,8 +27400,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 200,
-        "id": 617,
+        "maximum": 800,
+        "id": 995,
         "minimum": 200
       },
       {
@@ -27590,8 +27590,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 225,
-        "id": 617,
+        "maximum": 900,
+        "id": 995,
         "minimum": 225
       },
       {
@@ -27751,6 +27751,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 2,
+        "id": 438,
+        "minimum": 2
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1438,
@@ -27785,12 +27791,6 @@
         "maximum": 1,
         "id": 1729,
         "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 2,
-        "id": 438,
-        "minimum": 2
       },
       {
         "chance": "RARE",
@@ -27832,8 +27832,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 250,
-        "id": 617,
+        "maximum": 1000,
+        "id": 995,
         "minimum": 250
       },
       {
@@ -28119,8 +28119,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 33,
-        "id": 617,
+        "maximum": 8,
+        "id": 995,
         "minimum": 2
       },
       {
@@ -28238,6 +28238,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1349,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 216,
@@ -28298,12 +28304,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1349,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 560,
@@ -28319,7 +28319,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -28419,8 +28419,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 200,
-        "id": 617,
+        "maximum": 20,
+        "id": 995,
         "minimum": 5
       },
       {
@@ -28464,7 +28464,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17675,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -28475,8 +28475,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 5,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -28604,7 +28604,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -28627,8 +28627,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 200,
-        "id": 617,
+        "maximum": 120,
+        "id": 995,
         "minimum": 30
       },
       {
@@ -28728,6 +28728,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 563,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 3,
         "id": 466,
@@ -28786,12 +28792,6 @@
         "maximum": 3,
         "id": 453,
         "minimum": 3
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 563,
-        "minimum": 1
       },
       {
         "chance": "RARE",
@@ -28905,8 +28905,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 330,
-        "id": 617,
+        "maximum": 784,
+        "id": 995,
         "minimum": 196
       },
       {
@@ -28964,6 +28964,24 @@
         "minimum": 67
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 373,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 16,
+        "id": 810,
+        "minimum": 16
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1355,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1303,
@@ -29015,24 +29033,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 2361,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 373,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 16,
-        "id": 810,
-        "minimum": 16
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1355,
         "minimum": 1
       },
       {
@@ -29176,8 +29176,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 990,
-        "id": 617,
+        "maximum": 1080,
+        "id": 995,
         "minimum": 270
       },
       {
@@ -29259,6 +29259,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 9431,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1432,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 15,
         "id": 20945,
@@ -29307,21 +29319,9 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 9431,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1201,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1432,
         "minimum": 1
       },
       {
@@ -29387,8 +29387,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 650,
-        "id": 617,
+        "maximum": 1880,
+        "id": 995,
         "minimum": 470
       },
       {
@@ -29470,6 +29470,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 7,
+        "id": 868,
+        "minimum": 7
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1163,
@@ -29486,12 +29492,6 @@
         "maximum": 1,
         "id": 4087,
         "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 7,
-        "id": 868,
-        "minimum": 7
       },
       {
         "chance": "RARE",
@@ -29580,8 +29580,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 29,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       },
       {
@@ -29681,6 +29681,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 231,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 239,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 5323,
@@ -29714,18 +29726,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 4119,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 231,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 239,
         "minimum": 1
       },
       {
@@ -29885,9 +29885,15 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 460,
-        "id": 617,
+        "maximum": 1840,
+        "id": 995,
         "minimum": 460
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1073,
+        "minimum": 1
       },
       {
         "chance": "RARE",
@@ -29911,12 +29917,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 2722,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1073,
         "minimum": 1
       },
       {
@@ -29948,7 +29948,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -30013,8 +30013,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 44,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -30213,8 +30213,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 11,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -30322,8 +30322,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 35,
-        "id": 617,
+        "maximum": 52,
+        "id": 995,
         "minimum": 13
       },
       {
@@ -30465,6 +30465,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 5295,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 207,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1191,
@@ -30492,18 +30504,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 2677,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 5295,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 207,
         "minimum": 1
       },
       {
@@ -30551,8 +30551,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 8992,
-        "id": 617,
+        "maximum": 44,
+        "id": 995,
         "minimum": 11
       },
       {
@@ -30688,6 +30688,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 21621,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 4131,
@@ -30715,12 +30721,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 18757,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 21621,
         "minimum": 1
       },
       {
@@ -30819,8 +30819,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 460,
-        "id": 617,
+        "maximum": 120,
+        "id": 995,
         "minimum": 30
       },
       {
@@ -30948,6 +30948,12 @@
         "maximum": 1,
         "id": 18757,
         "minimum": 1
+      },
+      {
+        "chance": "RARE",
+        "maximum": 1,
+        "id": 4151,
+        "minimum": 1
       }
     ],
     "ids": [
@@ -30976,8 +30982,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 440,
-        "id": 617,
+        "maximum": 44,
+        "id": 995,
         "minimum": 11
       },
       {
@@ -31194,8 +31200,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 10,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -31267,13 +31273,19 @@
       {
         "chance": "UNCOMMON",
         "maximum": 5,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
         "chance": "UNCOMMON",
         "maximum": 1,
         "id": 444,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 2293,
         "minimum": 1
       },
       {
@@ -31310,12 +31322,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 2722,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 2293,
         "minimum": 1
       },
       {
@@ -31407,8 +31413,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 309,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -31508,6 +31514,12 @@
         "minimum": 50
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1069,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 215,
@@ -31559,12 +31571,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 5311,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1069,
         "minimum": 1
       },
       {
@@ -31686,8 +31692,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 44,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -31850,7 +31856,7 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 440,
+        "maximum": 176,
         "id": 995,
         "minimum": 44
       },
@@ -32047,6 +32053,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 209,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 13290,
@@ -32092,12 +32104,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 217,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 209,
         "minimum": 1
       },
       {
@@ -32181,8 +32187,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 2000,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -32434,8 +32440,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 44,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -32661,8 +32667,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 561,
-        "id": 617,
+        "maximum": 2244,
+        "id": 995,
         "minimum": 561
       },
       {
@@ -32726,6 +32732,12 @@
         "minimum": 2
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 3,
+        "id": 5307,
+        "minimum": 3
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 447,
@@ -32748,12 +32760,6 @@
         "maximum": 2,
         "id": 5321,
         "minimum": 2
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 3,
-        "id": 5307,
-        "minimum": 3
       },
       {
         "chance": "RARE",
@@ -32872,8 +32878,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 561,
-        "id": 617,
+        "maximum": 2244,
+        "id": 995,
         "minimum": 561
       },
       {
@@ -32901,6 +32907,12 @@
         "minimum": 3
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 2,
+        "id": 5306,
+        "minimum": 2
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 447,
@@ -32917,12 +32929,6 @@
         "maximum": 1,
         "id": 1452,
         "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 2,
-        "id": 5306,
-        "minimum": 2
       },
       {
         "chance": "RARE",
@@ -32962,7 +32968,7 @@
       },
       {
         "chance": "ALWAYS",
-        "maximum": 304,
+        "maximum": 20,
         "id": 995,
         "minimum": 5
       },
@@ -33047,8 +33053,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 472,
-        "id": 617,
+        "maximum": 16,
+        "id": 995,
         "minimum": 4
       },
       {
@@ -33160,8 +33166,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 400,
-        "id": 617,
+        "maximum": 40,
+        "id": 995,
         "minimum": 10
       },
       {
@@ -33408,8 +33414,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 36,
-        "id": 617,
+        "maximum": 16,
+        "id": 995,
         "minimum": 4
       },
       {
@@ -33490,8 +33496,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 6,
-        "id": 617,
+        "maximum": 8,
+        "id": 995,
         "minimum": 2
       },
       {
@@ -33828,8 +33834,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 20,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -33947,7 +33953,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -33958,8 +33964,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 37,
-        "id": 617,
+        "maximum": 8,
+        "id": 995,
         "minimum": 2
       },
       {
@@ -34031,8 +34037,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 15,
-        "id": 617,
+        "maximum": 20,
+        "id": 995,
         "minimum": 5
       },
       {
@@ -34122,8 +34128,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 46,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -34255,8 +34261,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 3,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -34302,6 +34308,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 36,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1395,
@@ -34335,12 +34347,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 12985,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 36,
         "minimum": 1
       },
       {
@@ -34484,7 +34490,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -34507,8 +34513,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 200,
-        "id": 617,
+        "maximum": 120,
+        "id": 995,
         "minimum": 30
       },
       {
@@ -34798,8 +34804,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -34867,8 +34873,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 479,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -35124,7 +35130,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -35191,7 +35197,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -35208,8 +35214,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 286,
-        "id": 617,
+        "maximum": 108,
+        "id": 995,
         "minimum": 27
       },
       {
@@ -35417,8 +35423,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -35520,8 +35526,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 690,
-        "id": 617,
+        "maximum": 784,
+        "id": 995,
         "minimum": 196
       },
       {
@@ -35585,6 +35591,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1355,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1123,
@@ -35600,12 +35612,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 2722,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1355,
         "minimum": 1
       },
       {
@@ -35670,8 +35676,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 60,
+        "id": 995,
         "minimum": 15
       },
       {
@@ -35807,6 +35813,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 211,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 2,
         "id": 890,
@@ -35849,12 +35861,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 211,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 2485,
@@ -35892,7 +35898,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 4812,
+        "id": 526,
         "minimum": 1
       },
       {
@@ -35968,8 +35974,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 68,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -36314,7 +36320,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 4812,
+        "id": 526,
         "minimum": 1
       },
       {
@@ -36346,8 +36352,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 6,
-        "id": 617,
+        "maximum": 24,
+        "id": 995,
         "minimum": 6
       },
       {
@@ -36396,8 +36402,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 12,
-        "id": 617,
+        "maximum": 48,
+        "id": 995,
         "minimum": 12
       },
       {
@@ -36893,8 +36899,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 450,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -36946,6 +36952,18 @@
         "minimum": 12
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 444,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1315,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1147,
@@ -36994,18 +37012,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 444,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1315,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 217,
@@ -37048,8 +37054,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 11,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -37173,15 +37179,15 @@
         "minimum": 1
       },
       {
-        "chance": "RARE",
-        "maximum": 1,
-        "id": 2722,
-        "minimum": 1
-      },
-      {
         "chance": "UNCOMMON",
         "maximum": 1,
         "id": 199,
+        "minimum": 1
+      },
+      {
+        "chance": "RARE",
+        "maximum": 1,
+        "id": 2722,
         "minimum": 1
       },
       {
@@ -37258,8 +37264,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 23,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -37542,8 +37548,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 16,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -37631,8 +37637,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 33,
-        "id": 617,
+        "maximum": 8,
+        "id": 995,
         "minimum": 2
       },
       {
@@ -37937,8 +37943,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 46,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -38130,7 +38136,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -38296,6 +38302,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 2,
+        "id": 5307,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 5302,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 3,
         "id": 888,
@@ -38341,18 +38359,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 1623,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 2,
-        "id": 5307,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 5302,
         "minimum": 1
       },
       {
@@ -38422,8 +38428,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 460,
-        "id": 617,
+        "maximum": 44,
+        "id": 995,
         "minimum": 11
       },
       {
@@ -38557,8 +38563,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 200,
-        "id": 617,
+        "maximum": 120,
+        "id": 995,
         "minimum": 30
       },
       {
@@ -38577,6 +38583,12 @@
         "chance": "COMMON",
         "maximum": 1,
         "id": 205,
+        "minimum": 1
+      },
+      {
+        "chance": "COMMON",
+        "maximum": 1,
+        "id": 201,
         "minimum": 1
       },
       {
@@ -38664,6 +38676,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1127,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1147,
@@ -38697,18 +38715,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 133,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1127,
-        "minimum": 1
-      },
-      {
-        "chance": "COMMON",
-        "maximum": 1,
-        "id": 201,
         "minimum": 1
       },
       {
@@ -38753,8 +38759,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 6,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -39103,8 +39109,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 35,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       },
       {
@@ -39141,7 +39147,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -39200,8 +39206,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 300,
-        "id": 617,
+        "maximum": 60,
+        "id": 995,
         "minimum": 15
       },
       {
@@ -39265,6 +39271,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 12,
+        "id": 892,
+        "minimum": 12
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 2485,
@@ -39301,12 +39313,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 12,
-        "id": 892,
-        "minimum": 12
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 10977,
@@ -39329,7 +39335,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -39346,8 +39352,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 8,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -39571,7 +39577,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 18830,
+        "id": 536,
         "minimum": 1
       },
       {
@@ -39588,8 +39594,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 200,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -39720,8 +39726,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 990,
-        "id": 617,
+        "maximum": 1080,
+        "id": 995,
         "minimum": 270
       },
       {
@@ -39803,6 +39809,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1163,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 4585,
@@ -39848,12 +39860,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 1201,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1163,
         "minimum": 1
       },
       {
@@ -39946,8 +39952,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -40059,6 +40065,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 209,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 213,
@@ -40068,12 +40080,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 215,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 209,
         "minimum": 1
       },
       {
@@ -40138,8 +40144,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -40311,6 +40317,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 3,
+        "id": 884,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1189,
@@ -40380,12 +40392,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 1448,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 3,
-        "id": 884,
         "minimum": 1
       },
       {
@@ -40498,7 +40504,7 @@
       {
         "chance": "COMMON",
         "maximum": 0,
-        "id": 617,
+        "id": 995,
         "minimum": 0
       }
     ],
@@ -40516,8 +40522,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -40801,8 +40807,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -40887,7 +40893,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -40910,8 +40916,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 64,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -41128,7 +41134,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -41403,8 +41409,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 38,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -41596,8 +41602,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 10,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -41888,8 +41894,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 355,
-        "id": 617,
+        "maximum": 1420,
+        "id": 995,
         "minimum": 355
       },
       {
@@ -41980,7 +41986,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -41999,7 +42005,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -42018,7 +42024,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -42037,7 +42043,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -42056,7 +42062,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -42075,7 +42081,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -42094,7 +42100,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -42113,7 +42119,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -42132,7 +42138,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -42151,7 +42157,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -42199,7 +42205,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -42246,8 +42252,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 403,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -42387,13 +42393,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 5,
-        "id": 17675,
+        "id": 15,
         "minimum": 5
       },
       {
         "chance": "ALWAYS",
         "maximum": 5,
-        "id": 532,
+        "id": 15,
         "minimum": 5
       }
     ],
@@ -42474,7 +42480,7 @@
       {
         "chance": "COMMON",
         "maximum": 4,
-        "id": 617,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -42487,6 +42493,12 @@
         "chance": "UNCOMMON",
         "maximum": 2,
         "id": 877,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1448,
         "minimum": 1
       },
       {
@@ -42517,12 +42529,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 29,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1448,
         "minimum": 1
       },
       {
@@ -42686,8 +42692,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 600,
-        "id": 617,
+        "maximum": 1200,
+        "id": 995,
         "minimum": 300
       },
       {
@@ -42784,8 +42790,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -42953,8 +42959,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 25,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       }
     ],
@@ -42990,8 +42996,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 15,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       },
       {
@@ -43045,8 +43051,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 27,
-        "id": 617,
+        "maximum": 20,
+        "id": 995,
         "minimum": 5
       },
       {
@@ -43227,7 +43233,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -43238,8 +43244,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 13207,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       }
     ],
@@ -43252,7 +43258,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -43269,8 +43275,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 190,
-        "id": 617,
+        "maximum": 80,
+        "id": 995,
         "minimum": 20
       },
       {
@@ -43334,6 +43340,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 203,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1121,
@@ -43385,12 +43397,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 3122,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 203,
         "minimum": 1
       },
       {
@@ -43553,8 +43559,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 44,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -43826,8 +43832,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 89,
-        "id": 617,
+        "maximum": 308,
+        "id": 995,
         "minimum": 77
       }
     ],
@@ -43841,13 +43847,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17675,
+        "id": 15,
         "minimum": 1
       },
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -43872,7 +43878,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -44052,8 +44058,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -44220,8 +44226,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 185,
-        "id": 617,
+        "maximum": 80,
+        "id": 995,
         "minimum": 20
       },
       {
@@ -44439,8 +44445,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 185,
-        "id": 617,
+        "maximum": 80,
+        "id": 995,
         "minimum": 20
       },
       {
@@ -44649,8 +44655,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -44705,7 +44711,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -44820,6 +44826,12 @@
         "chance": "UNCOMMON",
         "maximum": 1,
         "id": 626,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 646,
         "minimum": 1
       },
       {
@@ -45009,12 +45021,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 646,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 10976,
@@ -45087,8 +45093,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 440,
-        "id": 617,
+        "maximum": 44,
+        "id": 995,
         "minimum": 11
       },
       {
@@ -45240,7 +45246,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -45293,8 +45299,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 44,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -45563,7 +45569,7 @@
       {
         "chance": "UNCOMMON",
         "maximum": 3,
-        "id": 532,
+        "id": 15,
         "minimum": 3
       },
       {
@@ -45694,7 +45700,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -45753,8 +45759,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 44,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -45890,6 +45896,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 2,
+        "id": 6332,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 5321,
@@ -45932,12 +45944,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 2,
-        "id": 6332,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 2722,
@@ -45974,8 +45980,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 6,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -46244,8 +46250,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 100,
-        "id": 617,
+        "maximum": 60,
+        "id": 995,
         "minimum": 15
       },
       {
@@ -46421,8 +46427,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 2,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -46525,8 +46531,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 2,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -46596,15 +46602,15 @@
         "minimum": 5
       },
       {
-        "chance": "RARE",
-        "maximum": 1,
-        "id": 12988,
-        "minimum": 1
-      },
-      {
         "chance": "UNCOMMON",
         "maximum": 1,
         "id": 9007,
+        "minimum": 1
+      },
+      {
+        "chance": "RARE",
+        "maximum": 1,
+        "id": 12988,
         "minimum": 1
       },
       {
@@ -46623,13 +46629,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17675,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -46652,8 +46658,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 286,
-        "id": 617,
+        "maximum": 108,
+        "id": 995,
         "minimum": 27
       },
       {
@@ -47010,6 +47016,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 209,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 2485,
@@ -47025,12 +47037,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 207,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 209,
         "minimum": 1
       },
       {
@@ -47179,13 +47185,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17675,
+        "id": 15,
         "minimum": 1
       },
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -47220,8 +47226,8 @@
       },
       {
         "chance": "RARE",
-        "maximum": 325,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -47258,7 +47264,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -47311,8 +47317,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 300,
-        "id": 617,
+        "maximum": 8,
+        "id": 995,
         "minimum": 2
       },
       {
@@ -47490,6 +47496,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 5296,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 213,
@@ -47577,12 +47589,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 1287,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 5296,
         "minimum": 1
       },
       {
@@ -47905,8 +47911,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 100,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -48157,8 +48163,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 2054,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -48368,8 +48374,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 2054,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -48526,8 +48532,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 2054,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -48737,8 +48743,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 2054,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -48896,7 +48902,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -48969,8 +48975,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 1337,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -49048,8 +49054,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 1337,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -49272,8 +49278,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 1337,
-        "id": 617,
+        "maximum": 2000,
+        "id": 995,
         "minimum": 500
       },
       {
@@ -49435,8 +49441,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -49548,8 +49554,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 14,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -49612,8 +49618,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 54,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -49675,8 +49681,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -49815,8 +49821,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 5,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -49919,7 +49925,7 @@
       {
         "chance": "COMMON",
         "maximum": 4,
-        "id": 617,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -50149,8 +50155,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 51,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -50350,8 +50356,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 15,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -50497,8 +50503,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 54,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -50848,8 +50854,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -51188,8 +51194,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -51401,8 +51407,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -51630,8 +51636,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 600,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -51685,7 +51691,7 @@
       {
         "chance": "UNCOMMON",
         "maximum": 1,
-        "id": 11338,
+        "id": 526,
         "minimum": 1
       },
       {
@@ -51734,7 +51740,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 11337,
+        "id": 526,
         "minimum": 1
       }
     ],
@@ -51825,8 +51831,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 342,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -51966,8 +51972,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 44,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -52101,13 +52107,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
         "chance": "COMMON",
-        "maximum": 35,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -52374,7 +52380,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -52385,8 +52391,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 35,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -52558,6 +52564,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1347,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 213,
@@ -52606,12 +52618,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1347,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 10977,
@@ -52629,7 +52635,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -52664,8 +52670,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 35,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -52837,6 +52843,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 561,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 213,
@@ -52891,12 +52903,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 561,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 18778,
@@ -52914,7 +52920,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -52949,8 +52955,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 35,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -53185,7 +53191,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -53214,8 +53220,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 35,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -53733,8 +53739,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -54810,8 +54816,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -54961,8 +54967,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 25,
-        "id": 617,
+        "maximum": 20,
+        "id": 995,
         "minimum": 5
       },
       {
@@ -55067,8 +55073,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 50,
-        "id": 617,
+        "maximum": 200,
+        "id": 995,
         "minimum": 50
       },
       {
@@ -55202,13 +55208,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 2,
-        "id": 17675,
+        "id": 15,
         "minimum": 2
       },
       {
         "chance": "ALWAYS",
         "maximum": 2,
-        "id": 532,
+        "id": 15,
         "minimum": 2
       },
       {
@@ -55316,8 +55322,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 400,
-        "id": 617,
+        "maximum": 40,
+        "id": 995,
         "minimum": 10
       },
       {
@@ -55429,6 +55435,12 @@
         "minimum": 2
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 29,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 13783,
@@ -55480,12 +55492,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 1925,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 29,
         "minimum": 1
       },
       {
@@ -55600,8 +55606,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 364,
-        "id": 617,
+        "maximum": 40,
+        "id": 995,
         "minimum": 10
       },
       {
@@ -55793,8 +55799,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 364,
-        "id": 617,
+        "maximum": 40,
+        "id": 995,
         "minimum": 10
       },
       {
@@ -56172,8 +56178,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 323,
-        "id": 617,
+        "maximum": 1292,
+        "id": 995,
         "minimum": 323
       },
       {
@@ -56293,8 +56299,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 490,
-        "id": 617,
+        "maximum": 424,
+        "id": 995,
         "minimum": 106
       },
       {
@@ -56436,6 +56442,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 2801,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1157,
@@ -56466,15 +56478,9 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 2801,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
-        "id": 11337,
+        "id": 526,
         "minimum": 1
       }
     ],
@@ -56504,8 +56510,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 142,
-        "id": 617,
+        "maximum": 424,
+        "id": 995,
         "minimum": 106
       },
       {
@@ -56703,8 +56709,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 106,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -56824,8 +56830,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 106,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -56943,6 +56949,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1157,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1371,
@@ -57039,12 +57051,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1157,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 2361,
@@ -57078,7 +57084,7 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 9000,
+        "maximum": 16000,
         "id": 995,
         "minimum": 4000
       },
@@ -57603,8 +57609,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 400,
-        "id": 617,
+        "maximum": 40,
+        "id": 995,
         "minimum": 10
       },
       {
@@ -57803,8 +57809,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 450,
-        "id": 617,
+        "maximum": 40,
+        "id": 995,
         "minimum": 10
       },
       {
@@ -57894,8 +57900,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 6531,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -58105,8 +58111,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 3504,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -58205,8 +58211,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 268,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -58324,6 +58330,12 @@
         "minimum": 10
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1303,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 11732,
@@ -58333,12 +58345,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 2722,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1303,
         "minimum": 1
       },
       {
@@ -58359,7 +58365,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -58388,8 +58394,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 18000,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -58453,6 +58459,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 15343,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1289,
@@ -58507,12 +58519,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 15343,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 11702,
@@ -58545,8 +58551,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 6531,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -58758,8 +58764,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 268,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -58841,6 +58847,12 @@
         "minimum": 10
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1303,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 11732,
@@ -58850,12 +58862,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 2722,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1303,
         "minimum": 1
       },
       {
@@ -58986,6 +58992,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 211,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 9432,
@@ -59025,12 +59037,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 207,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 211,
         "minimum": 1
       },
       {
@@ -59099,8 +59105,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1300,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -59122,6 +59128,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 3,
+        "id": 7946,
+        "minimum": 3
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 11710,
@@ -59138,12 +59150,6 @@
         "maximum": 1,
         "id": 11714,
         "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 3,
-        "id": 7946,
-        "minimum": 3
       },
       {
         "chance": "RARE",
@@ -59178,8 +59184,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1300,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -59213,6 +59219,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 3,
+        "id": 7946,
+        "minimum": 3
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 11710,
@@ -59229,12 +59241,6 @@
         "maximum": 1,
         "id": 11714,
         "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 3,
-        "id": 7946,
-        "minimum": 3
       },
       {
         "chance": "RARE",
@@ -59269,8 +59275,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1300,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -59396,13 +59402,13 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 3126,
+        "id": 526,
         "minimum": 1
       },
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 3125,
+        "id": 526,
         "minimum": 1
       },
       {
@@ -59413,8 +59419,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 22,
-        "id": 617,
+        "maximum": 88,
+        "id": 995,
         "minimum": 22
       },
       {
@@ -59450,7 +59456,7 @@
       {
         "chance": "COMMON",
         "maximum": 3,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -59691,7 +59697,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -59792,8 +59798,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 3,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -60179,7 +60185,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 17675,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -60410,8 +60416,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 15,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -60535,7 +60541,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -60564,8 +60570,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -60599,6 +60605,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1458,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1347,
@@ -60626,12 +60638,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 10977,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1458,
         "minimum": 1
       },
       {
@@ -60693,8 +60699,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 100,
-        "id": 617,
+        "maximum": 400,
+        "id": 995,
         "minimum": 100
       },
       {
@@ -60725,8 +60731,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 100,
-        "id": 617,
+        "maximum": 400,
+        "id": 995,
         "minimum": 100
       },
       {
@@ -60829,8 +60835,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -61162,8 +61168,8 @@
       },
       {
         "chance": "RARE",
-        "maximum": 380,
-        "id": 617,
+        "maximum": 1520,
+        "id": 995,
         "minimum": 380
       }
     ],
@@ -62083,8 +62089,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 18,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -62166,7 +62172,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -62212,6 +62218,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 385,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 5317,
@@ -62251,12 +62263,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 10977,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 385,
         "minimum": 1
       },
       {
@@ -62531,8 +62537,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -62598,8 +62604,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -62725,8 +62731,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -62798,8 +62804,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -63049,7 +63055,7 @@
       {
         "chance": "COMMON",
         "maximum": 0,
-        "id": 617,
+        "id": 995,
         "minimum": 0
       },
       {
@@ -63164,7 +63170,7 @@
       {
         "chance": "COMMON",
         "maximum": 0,
-        "id": 617,
+        "id": 995,
         "minimum": 0
       },
       {
@@ -63273,7 +63279,7 @@
       {
         "chance": "COMMON",
         "maximum": 60,
-        "id": 617,
+        "id": 995,
         "minimum": 15
       },
       {
@@ -63417,8 +63423,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 60,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -63599,7 +63605,7 @@
       {
         "chance": "COMMON",
         "maximum": 0,
-        "id": 617,
+        "id": 995,
         "minimum": 0
       },
       {
@@ -63762,8 +63768,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 5,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -63871,8 +63877,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -63956,8 +63962,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -64035,8 +64041,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 80,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -64164,7 +64170,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -64187,8 +64193,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 250,
-        "id": 617,
+        "maximum": 32,
+        "id": 995,
         "minimum": 8
       },
       {
@@ -64378,6 +64384,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 211,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 1361,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 5321,
@@ -64450,18 +64468,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 211,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 1361,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 18757,
@@ -64476,8 +64482,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 27,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -64941,7 +64947,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -64972,7 +64978,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -64998,7 +65004,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -65083,8 +65089,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 100,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -65282,8 +65288,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1000,
-        "id": 617,
+        "maximum": 4000,
+        "id": 995,
         "minimum": 1000
       },
       {
@@ -65439,8 +65445,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1000,
-        "id": 617,
+        "maximum": 2000,
+        "id": 995,
         "minimum": 500
       },
       {
@@ -65587,8 +65593,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 10,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -65714,8 +65720,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 20,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -65824,8 +65830,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 100,
-        "id": 617,
+        "maximum": 400,
+        "id": 995,
         "minimum": 100
       },
       {
@@ -65865,6 +65871,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 440,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 119,
@@ -65874,12 +65886,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 125,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 440,
         "minimum": 1
       },
       {
@@ -65903,8 +65909,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 2000,
-        "id": 617,
+        "maximum": 8000,
+        "id": 995,
         "minimum": 2000
       },
       {
@@ -66116,7 +66122,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -66145,8 +66151,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 5000,
-        "id": 617,
+        "maximum": 20000,
+        "id": 995,
         "minimum": 5000
       },
       {
@@ -66315,8 +66321,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 6,
-        "id": 617,
+        "maximum": 8,
+        "id": 995,
         "minimum": 2
       },
       {
@@ -66537,6 +66543,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 203,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 2,
         "id": 561,
@@ -66654,12 +66666,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 5299,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 203,
         "minimum": 1
       },
       {
@@ -66781,8 +66787,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 67,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -66948,8 +66954,8 @@
     "drops": [
       {
         "chance": "ALWAYS",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -67132,6 +67138,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 11074,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 207,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 3,
         "id": 5281,
@@ -67205,21 +67223,9 @@
       },
       {
         "chance": "RARE",
-        "maximum": 750,
-        "id": 617,
+        "maximum": 3000,
+        "id": 995,
         "minimum": 750
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 11074,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 207,
-        "minimum": 1
       },
       {
         "chance": "RARE",
@@ -67464,8 +67470,8 @@
       },
       {
         "chance": "RARE",
-        "maximum": 750,
-        "id": 617,
+        "maximum": 3000,
+        "id": 995,
         "minimum": 750
       },
       {
@@ -67484,7 +67490,7 @@
       {
         "chance": "ALWAYS",
         "maximum": 1,
-        "id": 532,
+        "id": 15,
         "minimum": 1
       },
       {
@@ -67495,8 +67501,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 2500,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -67566,6 +67572,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 207,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1331,
@@ -67614,12 +67626,6 @@
         "minimum": 1
       },
       {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 207,
-        "minimum": 1
-      },
-      {
         "chance": "RARE",
         "maximum": 1,
         "id": 18778,
@@ -67665,8 +67671,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 2,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -67732,8 +67738,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 2,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -67763,8 +67769,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 2,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -67824,8 +67830,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -67873,8 +67879,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 1306,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -67962,6 +67968,12 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 2,
+        "id": 21621,
+        "minimum": 2
+      },
+      {
         "chance": "RARE",
         "maximum": 70,
         "id": 554,
@@ -67984,12 +67996,6 @@
         "maximum": 1,
         "id": 5302,
         "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 2,
-        "id": 21621,
-        "minimum": 2
       },
       {
         "chance": "RARE",
@@ -68054,8 +68060,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 29,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       },
       {
@@ -68143,6 +68149,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 223,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 225,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 216,
@@ -68182,18 +68200,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 4119,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 223,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 225,
         "minimum": 1
       },
       {
@@ -68271,8 +68277,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 35,
-        "id": 617,
+        "maximum": 52,
+        "id": 995,
         "minimum": 13
       },
       {
@@ -68378,6 +68384,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 5295,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 207,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 1191,
@@ -68405,18 +68423,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 2677,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 5295,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 207,
         "minimum": 1
       },
       {
@@ -68494,8 +68500,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 29,
-        "id": 617,
+        "maximum": 12,
+        "id": 995,
         "minimum": 3
       },
       {
@@ -68571,6 +68577,18 @@
         "minimum": 1
       },
       {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 231,
+        "minimum": 1
+      },
+      {
+        "chance": "UNCOMMON",
+        "maximum": 1,
+        "id": 239,
+        "minimum": 1
+      },
+      {
         "chance": "RARE",
         "maximum": 1,
         "id": 5323,
@@ -68604,18 +68622,6 @@
         "chance": "RARE",
         "maximum": 1,
         "id": 4119,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 231,
-        "minimum": 1
-      },
-      {
-        "chance": "UNCOMMON",
-        "maximum": 1,
-        "id": 239,
         "minimum": 1
       },
       {
@@ -68681,8 +68687,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 15,
-        "id": 617,
+        "maximum": 60,
+        "id": 995,
         "minimum": 15
       },
       {
@@ -69000,13 +69006,13 @@
       {
         "chance": "RARE",
         "maximum": 2,
-        "id": 4832,
+        "id": 526,
         "minimum": 2
       },
       {
         "chance": "RARE",
         "maximum": 3,
-        "id": 4830,
+        "id": 526,
         "minimum": 3
       }
     ],
@@ -69111,8 +69117,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 80,
-        "id": 617,
+        "maximum": 160,
+        "id": 995,
         "minimum": 40
       },
       {
@@ -69214,8 +69220,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 80,
-        "id": 617,
+        "maximum": 320,
+        "id": 995,
         "minimum": 80
       },
       {
@@ -69389,8 +69395,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 100,
-        "id": 617,
+        "maximum": 400,
+        "id": 995,
         "minimum": 100
       },
       {
@@ -69609,8 +69615,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 130,
-        "id": 617,
+        "maximum": 520,
+        "id": 995,
         "minimum": 130
       },
       {
@@ -69796,8 +69802,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 175,
-        "id": 617,
+        "maximum": 700,
+        "id": 995,
         "minimum": 175
       },
       {
@@ -69971,8 +69977,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 20,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -70068,8 +70074,8 @@
       },
       {
         "chance": "COMMON",
-        "maximum": 30,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -70099,8 +70105,8 @@
     "drops": [
       {
         "chance": "COMMON",
-        "maximum": 25,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -70358,8 +70364,8 @@
       },
       {
         "chance": "UNCOMMON",
-        "maximum": 60,
-        "id": 617,
+        "maximum": 4,
+        "id": 995,
         "minimum": 1
       },
       {
@@ -70377,7 +70383,7 @@
       {
         "chance": "UNCOMMON",
         "maximum": 5,
-        "id": 532,
+        "id": 15,
         "minimum": 5
       }
     ],

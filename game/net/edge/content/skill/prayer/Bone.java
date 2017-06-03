@@ -12,27 +12,22 @@ public enum Bone {
 	BAT_BONES(530, 5.2),
 	MONKEY_BONES(3179, 5),
 	WOLF_BONES(2859, 4.5),
-	BIG_BONES(15, 532, 17674),
+	BIG_BONES(15, 532),
 	BABYDRAGON_BONES(534, 30),
 	DRAGON_BONES(536, 72),
 	OURG_BONES(4834, 140);
 
 	public static final ImmutableSet<Bone> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Bone.class));
 
-	private final int[] id;
+	private final int id;
 	private final double experience;
 
 	Bone(int id, double experience) {
-		this.id = new int[]{id};
-		this.experience = experience;
-	}
-
-	Bone(double experience, int... id) {
 		this.id = id;
 		this.experience = experience;
 	}
 
-	public int[] getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -46,6 +41,6 @@ public enum Bone {
 	}
 
 	public static Optional<Bone> getBone(int id) {
-		return VALUES.stream().filter(it -> Arrays.stream(it.id).anyMatch(t -> t == id)).findFirst();
+		return VALUES.stream().filter(it -> it.getId() == id).findFirst();
 	}
 }

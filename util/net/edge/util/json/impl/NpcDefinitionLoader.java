@@ -53,7 +53,7 @@ public final class NpcDefinitionLoader extends JsonLoader {
 		String weakness = reader.get("weakness").getAsString();
 		String slayerKey = reader.get("slayerKey").getAsString();
 		int slayerRequirement = reader.get("slayerRequirement").getAsInt();
-		if(!Slayer.SLAYER_LEVELS.containsKey(slayerKey)) {
+		if(!Slayer.SLAYER_LEVELS.containsKey(slayerKey) && slayerKey != null && slayerKey.length() > 1) {
 			Slayer.SLAYER_LEVELS.put(slayerKey, slayerRequirement);
 		}
 		
