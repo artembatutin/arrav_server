@@ -643,7 +643,7 @@ public final class Player extends EntityNode {
 		if(World.getShootingStarEvent().getShootingStar() != null && World.getShootingStarEvent().getShootingStar().isReg()) {
 			this.message("@red@[ANNOUNCEMENT]: " + World.getShootingStarEvent().getShootingStar().getLocationData().getMessageWhenActive());
 		}
-		World.get().getTriviaBot().onLogin(this);
+		World.getTriviaBot().onLogin(this);
 		if(Server.UPDATING > 0) {
 			encoder.sendSystemUpdate((int) (Server.UPDATING * 50 / 30));
 		}

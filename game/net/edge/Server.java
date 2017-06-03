@@ -143,6 +143,7 @@ public final class Server {
 					World.getShootingStarEvent().process();
 				}
 			});
+			World.getTriviaBot().submit();
 			LOGGER.info("Edgeville is now online!");
 			STARTING = false;
 		} catch(Exception e) {

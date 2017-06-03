@@ -1,6 +1,7 @@
 package net.edge.content.trivia;
 
 import net.edge.task.Task;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
 /**
@@ -18,35 +19,34 @@ public final class TriviaTask extends Task {
      * Creates a new {@link TriviaTask}.
      */
     public TriviaTask() {
-        super(10, false);
+        super(2000, false);
     }
-
-    /**
-     * Determines if the world has been notified by the trivia question.
-     */
-    private boolean notified;
 
     /**
      * Determines if the world has been reminded of the trivia question.
      */
-    private boolean reminded;
+    private boolean reminded = false;
 
     /**
      * A function executed when the {@code counter} reaches the {@code delay}.
      */
     @Override
     protected void execute() {
-        if(!notified) {
+        if(entry.current == null) {
+            entry.current = TriviaData.random();
             entry.ask();
-            notified = true;
-        } else if(!reminded) {
+            return;
+        }
+
+        if(!reminded) {
             entry.reminder();
             reminded = true;
-        } else {
-            entry.reset();
-            notified = false;
-            reminded = false;
+            return;
         }
+
+        World.get().message("@red@[Trivia Bot]: @blu@The last trivia question hasn't been answered and has expired!");
+        entry.reset();
+        reminded = false;
     }
 
     /**

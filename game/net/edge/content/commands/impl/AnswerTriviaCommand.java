@@ -26,7 +26,6 @@ public final class AnswerTriviaCommand implements Command {
 
         answer = answer.substring(answer.indexOf(" ") + 1, answer.length());
 
-        System.out.println(answer);
-        World.get().getTriviaBot().entry.answer(player, answer);
+        World.getTriviaBot().entry.answer(player, answer);
     }
 }
