@@ -2,11 +2,11 @@ package net.edge.world.node.entity.npc.strategy.impl.gwd;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.locale.Position;
+import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;

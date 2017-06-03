@@ -1,7 +1,7 @@
 package net.edge.world.object;
 
-import net.edge.world.World;
 import net.edge.locale.Position;
+import net.edge.world.World;
 import net.edge.world.node.region.Region;
 
 /**

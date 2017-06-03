@@ -2,11 +2,11 @@ package net.edge.world.node.entity.move;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.content.combat.Combat;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
+import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Direction;
 import net.edge.world.node.entity.move.path.Path;

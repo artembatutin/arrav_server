@@ -1,10 +1,10 @@
 package net.edge.content.combat;
 
 import net.edge.task.EventListener;
-import net.edge.world.World;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.locale.Boundary;
 import net.edge.locale.loc.Location;
+import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcAggression;

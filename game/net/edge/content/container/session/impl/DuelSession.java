@@ -1,13 +1,13 @@
 package net.edge.content.container.session.impl;
 
 import net.edge.util.Stopwatch;
-import net.edge.world.World;
 import net.edge.content.container.session.ExchangeSession;
 import net.edge.content.container.session.ExchangeSessionActionType;
 import net.edge.content.container.session.ExchangeSessionType;
 import net.edge.content.minigame.dueling.DuelMinigame;
 import net.edge.content.minigame.dueling.DuelingRules;
 import net.edge.locale.loc.Location;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

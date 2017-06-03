@@ -3,7 +3,6 @@ package net.edge.content.skill;
 import net.edge.content.item.Skillcape;
 import net.edge.util.TextUtils;
 import net.edge.game.GameConstants;
-import net.edge.world.World;
 import net.edge.content.skill.agility.impl.Shortcuts;
 import net.edge.content.skill.agility.impl.barb.BarbarianOutpostAgility;
 import net.edge.content.skill.agility.impl.gnome.GnomeStrongholdAgility;
@@ -16,6 +15,7 @@ import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.thieving.impl.Stalls;
 import net.edge.content.skill.woodcutting.Woodcutting;
 import net.edge.world.Graphic;
+import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.update.UpdateFlag;
 import net.edge.world.object.ObjectNode;
@@ -380,7 +380,13 @@ public final class Skills {
 	 * @return {@code true} if the player has, {@code false} otherwise.
 	 */
 	public static boolean maxed(Player player) {
-		return Arrays.stream(player.getSkills()).allMatch(s -> s.getRealLevel() >= 99);
+		for(int i = 0; i < player.getSkills().length; i++) {
+			Skill s = player.getSkills()[i];
+			if(s.getRealLevel() < 99 && i != DUNGEONEERING && i != CONSTRUCTION && i != FARMING) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**

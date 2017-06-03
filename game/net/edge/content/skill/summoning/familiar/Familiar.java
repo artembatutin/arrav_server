@@ -1,10 +1,9 @@
 package net.edge.content.skill.summoning.familiar;
 
-import net.edge.net.message.OutputMessages;
+import net.edge.net.packet.PacketWriter;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.skill.Skills;
@@ -13,6 +12,7 @@ import net.edge.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import net.edge.content.skill.summoning.specials.SummoningData;
 import net.edge.locale.Position;
 import net.edge.world.Graphic;
+import net.edge.world.World;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcDeath;
 import net.edge.world.node.entity.npc.impl.Follower;
@@ -141,7 +141,7 @@ public abstract class Familiar extends Follower {
 	 * @param player the player we're setting this for.
 	 */
 	public void setInterface(Player player) {
-		OutputMessages encoder = player.getMessages();
+		PacketWriter encoder = player.getMessages();
 		/* We send the summoning points left out of the total summoning points this player has */
 		encoder.sendString(Integer.toString(player.getSkills()[Skills.SUMMONING].getLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()), 18045);
 		/* We send the special attack points left out of the total amount */

@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
-import net.edge.world.World;
 import net.edge.content.skill.thieving.Thieving;
 import net.edge.world.Animation;
+import net.edge.world.World;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
@@ -157,12 +157,14 @@ public final class Stalls extends Thieving {
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private enum StallData {
+		FOOD_STALL(new int[]{4875}, EMPTY_STALLS[1], 1, new Item[]{new Item(1963, 1)}, 23, 3),
+		CRAFTING_STALL(new int[]{4874}, EMPTY_STALLS[1], 35, new Item[]{new Item(19650, 1)}, 35, 3),
+		GENERAL_STALL(new int[]{4876}, EMPTY_STALLS[1], 50, new Item[]{new Item(4073, 1)}, 70, 4),
+		MAGIC_STALL(new int[]{4877}, EMPTY_STALLS[1], 75, new Item[]{new Item(14061, 1)}, 150, 8),
+		SCIMITAR_STALL(new int[]{4878}, EMPTY_STALLS[1], 90, new Item[]{new Item(6611, 1)}, 220, 12),
 		VEGETABLE(new int[]{4706}, EMPTY_STALLS[0], 1, new Item[]{new Item(995, 50)}, 10, 2),
-		FOOD_STALL(new int[]{4875}, EMPTY_STALLS[1], 1, new Item[]{new Item(995, 100)}, 13, 3),
 		BAKERS(new int[]{2561}, EMPTY_STALLS[0], 5, new Item[]{new Item(995, 100)}, 16, 3),
-		CRAFTING_STALL(new int[]{4874}, EMPTY_STALLS[1], 35, new Item[]{new Item(995, 250)}, 25, 3),
 		TEA(new int[]{635}, EMPTY_STALLS[0], 5, new Item[]{new Item(995, 500)}, 16, 7),
-		GENERAL_STALL(new int[]{4876}, EMPTY_STALLS[1], 50, new Item[]{new Item(995, 1000)}, 50, 4),
 		SILK(new int[]{2560}, EMPTY_STALLS[0], 20, new Item[]{new Item(995, 1000)}, 24, 8),
 		WINE(new int[]{14011}, EMPTY_STALLS[0], 22, new Item[]{new Item(995, 2500)}, 27, 16),
 		SEED(new int[]{7053}, EMPTY_STALLS[0], 27, new Item[]{new Item(995, 5000)}, 10, 11),
@@ -172,8 +174,6 @@ public final class Stalls extends Thieving {
 		SILVER(new int[]{2565}, EMPTY_STALLS[0], 50, new Item[]{new Item(995, 15000)}, 54, 20),
 		CUSTOMS_EVIDENCE_FILES(new int[]{-1}, -1, 63, new Item[]{new Item(995, 17500)}, 75, 20),
 		SPICE(new int[]{2564}, EMPTY_STALLS[0], 65, new Item[]{new Item(995, 20000)}, 81, 40),
-		MAGIC_STALL(new int[]{4877}, EMPTY_STALLS[1], 75, new Item[]{new Item(995, 5000)}, 100, 10),
-		SCIMITAR_STALL(new int[]{4878}, EMPTY_STALLS[1], 90, new Item[]{new Item(995, 10000)}, 125, 15),
 		GEM(new int[]{2562}, EMPTY_STALLS[0], 75, new Item[]{new Item(995, 35000)}, 160, 80);
 		
 		/**

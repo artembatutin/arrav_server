@@ -5,13 +5,13 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import net.edge.net.codec.IsaacCipher;
 import net.edge.net.codec.MessageType;
-import net.edge.net.message.GameMessage;
+import net.edge.net.packet.Packet;
 
 /**
- * A {@link MessageToByteEncoder} implementation that encodes all {@link GameMessage}s into {@link ByteBuf}s.
+ * A {@link MessageToByteEncoder} implementation that encodes all {@link Packet}s into {@link ByteBuf}s.
  * @author lare96 <http://github.org/lare96>
  */
-public final class GameMessageEncoder extends MessageToByteEncoder<GameMessage> {
+public final class GameMessageEncoder extends MessageToByteEncoder<Packet> {
 	
 	/**
 	 * The encryptor for this message.
@@ -27,7 +27,7 @@ public final class GameMessageEncoder extends MessageToByteEncoder<GameMessage> 
 	}
 	
 	@Override
-	public void encode(ChannelHandlerContext ctx, GameMessage msg, ByteBuf out) throws Exception {
+	public void encode(ChannelHandlerContext ctx, Packet msg, ByteBuf out) throws Exception {
 		out.writeByte(msg.getOpcode() + encryptor.nextInt());
 		if(msg.getType() == MessageType.VARIABLE) {
 			out.writeByte(msg.getSize());

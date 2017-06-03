@@ -2,11 +2,11 @@ package net.edge.content.teleport.impl;
 
 import net.edge.task.Task;
 import net.edge.util.ActionListener;
-import net.edge.world.World;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.teleport.TeleportSpell;
 import net.edge.locale.loc.Location;
 import net.edge.locale.Position;
+import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;

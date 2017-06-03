@@ -1,13 +1,13 @@
 package net.edge.world.node.entity.npc;
 
 import com.google.common.collect.ImmutableMap;
-import net.edge.world.World;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.locale.Position;
+import net.edge.world.World;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Hit;

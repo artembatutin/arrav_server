@@ -3,7 +3,7 @@ package net.edge.content.clanchat;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.edge.net.message.OutputMessages;
+import net.edge.net.packet.PacketWriter;
 import net.edge.util.TextUtils;
 import net.edge.util.json.JsonSaver;
 import net.edge.world.node.entity.player.Player;
@@ -23,7 +23,7 @@ public final class ClanManager {
 	private static final Map<String, ClanChat> GLOBAL_CLANS = new HashMap<>();
 	
 	public void clearOnLogin(Player player) {
-		OutputMessages message = player.getMessages();
+		PacketWriter message = player.getMessages();
 		message.sendString("Talking in: ", 50139);
 		message.sendString("Owner: ", 50140);
 		message.sendString("Join Clan", 50135);

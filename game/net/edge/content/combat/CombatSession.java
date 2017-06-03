@@ -2,13 +2,13 @@ package net.edge.content.combat;
 
 import net.edge.task.Task;
 import net.edge.game.GameConstants;
-import net.edge.world.World;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.locale.Boundary;
 import net.edge.locale.loc.Location;
+import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcAggression;

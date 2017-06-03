@@ -2,7 +2,6 @@ package net.edge.content.combat.ranged;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
@@ -10,6 +9,7 @@ import net.edge.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
+import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;

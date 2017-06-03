@@ -1,8 +1,8 @@
 package net.edge.world.object;
 
 import net.edge.task.Task;
-import net.edge.world.World;
 import net.edge.locale.Position;
+import net.edge.world.World;
 import net.edge.world.node.region.Region;
 
 import java.util.Objects;

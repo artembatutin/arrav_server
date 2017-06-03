@@ -1,9 +1,9 @@
 package net.edge.world.node.entity.move;
 
 import net.edge.task.Task;
-import net.edge.world.World;
 import net.edge.locale.Position;
 import net.edge.locale.loc.Location;
+import net.edge.world.World;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Direction;
@@ -185,7 +185,6 @@ public final class MovementQueue {
 	 */
 	public void smartWalk(Position position) {
 		Path path = World.getAStarPathFinder().find(character, position);
-		
 		if(path.isPossible()) {
 			walk(path.getMoves());
 		} else {

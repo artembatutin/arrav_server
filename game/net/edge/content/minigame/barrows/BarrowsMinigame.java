@@ -1,7 +1,6 @@
 package net.edge.content.minigame.barrows;
 
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.item.FoodConsumable;
@@ -9,6 +8,7 @@ import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.locale.Position;
+import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;

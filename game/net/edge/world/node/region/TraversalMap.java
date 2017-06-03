@@ -1,10 +1,10 @@
 package net.edge.world.node.region;
 
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
 import net.edge.world.Direction;
+import net.edge.world.World;
 import net.edge.world.object.ObjectDefinition;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectNode;

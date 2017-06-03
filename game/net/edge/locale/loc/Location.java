@@ -1,7 +1,7 @@
 package net.edge.locale.loc;
 
-import net.edge.world.World;
 import net.edge.locale.Position;
+import net.edge.world.World;
 import net.edge.world.node.Node;
 
 import java.util.Arrays;
