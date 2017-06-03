@@ -250,12 +250,6 @@ public final class CombatSessionAttack extends Task {
 
 			EntityNode victim = data.getVictim();
 			EntityNode attacker = data.getAttacker();
-			
-			//TODO: Stan, validate please.
-			if(!victim.isPlayer())
-				return;
-			if(!attacker.isPlayer())
-				return;
 
 			//PROTECTION PRAYERS
 			if(victim.isPlayer() && Prayer.isAnyActivated(victim.toPlayer(), Combat.getProtectingPrayer(data.getType()))) {
@@ -296,7 +290,7 @@ public final class CombatSessionAttack extends Task {
 			}
 
 			//SMITE
-			if(Prayer.isActivated(builder.getCharacter().toPlayer(), Prayer.SMITE)) {
+			if(builder.getCharacter().isPlayer() && Prayer.isActivated(builder.getCharacter().toPlayer(), Prayer.SMITE)) {
 				victim.toPlayer().getSkills()[Skills.PRAYER].decreaseLevel(counter / 40, true);
 				Skills.refresh(victim.toPlayer(), Skills.PRAYER);
 			}
