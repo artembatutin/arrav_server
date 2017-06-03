@@ -6,6 +6,7 @@ import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.thieving.Thieving;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
@@ -91,12 +92,12 @@ public final class Pickpocketing extends Thieving {
 	private int failureRate() {
 		double npcFactor = definition.requirement / 10;
 		double levelFactor = 100 / ((getPlayer().getSkills()[Skills.THIEVING].getLevel() + 1) - definition.requirement);
-		return (int) Math.floor((levelFactor + npcFactor) / 2);
+		return  (int) Math.floor((levelFactor + npcFactor) / 2);
 	}
-	
+//	3076 3252
 	@Override
 	public boolean failure() {
-		return ThreadLocalRandom.current().nextInt(100) < failureRate();
+		return RandomUtils.nextBoolean();
 	}
 	
 	@Override
@@ -116,7 +117,10 @@ public final class Pickpocketing extends Thieving {
 			getPlayer().message("You need a thieving level of " + requirement() + " to steal from " + TextUtils.appendIndefiniteArticle(name) + ".");
 			return false;
 		}
-		
+
+		if(!getPlayer().isStunned()) {
+			return false;
+		}
 		if(!player.getSkills()[skill().getId()].getDelay().elapsed(1800)) {
 			return false;
 		}
@@ -139,8 +143,9 @@ public final class Pickpocketing extends Thieving {
 		if(failure()) {
 			npc.forceChat("What do you think you're doing?");
 			npc.animation(NPC_ANIMATION);
-			
-			getPlayer().damage(new Hit(definition.damage));
+
+			int hit = RandomUtils.inclusive(1, RandomUtils.nextBoolean() ? definition.damage : 200);
+			getPlayer().damage(new Hit(hit));
 			getPlayer().animation(STUN_ANIMATION);
 			getPlayer().graphic(STUN_GRAPHIC);
 			getPlayer().stun(definition.seconds);
