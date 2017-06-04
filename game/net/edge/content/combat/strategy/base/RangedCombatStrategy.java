@@ -173,7 +173,9 @@ public final class RangedCombatStrategy implements CombatStrategy {
 
 		boolean collected = false;
 
-		if(player.getEquipment().containsAny(10498, 10499, 20068)) {
+		boolean ava_collector = player.getEquipment().containsAny(10498, 10499, 20068);
+
+		if(ava_collector) {
 			boolean droppable = !weapon.getType().isSpecialBow() && CombatRangedAmmoDefinition.NON_DROPPABLE.stream().noneMatch(weapon.getAmmunition().getDefinition()::equals);
 			if(weapon.getAmmunition().getItem().getAmount() > 0 && droppable && RandomUtils.nextBoolean()) {
 				int cape = player.getEquipment().get(Equipment.CAPE_SLOT).getId();
@@ -186,7 +188,8 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		if(!collected) {//if not collected decrement arrow count
 			item.decrementAmount();
 
-			if(RandomUtils.success(0.35)) {//register item to floor 35% chance
+			double chance = ava_collector ? 0.35 : 0.70;
+			if(RandomUtils.success(chance)) {//register item to floor
 				ItemNodeManager.register(new ItemNode(new Item(item.getId()), victim.getPosition(), player), true);
 			}
 		}
