@@ -114,15 +114,15 @@ public final class World {
 	 */
 	public static long millis;
 	
-//	static {
-//		int amtCpu = Runtime.getRuntime().availableProcessors();
-//		try {
-//			donation = new Database("127.0.0.1", "edge_donation", "edge_local", "%GL5{)hAJBU(MB3h", amtCpu);
-//			score = new Database("127.0.0.1", "edge_score", "edge_local", "%GL5{)hAJBU(MB3h", amtCpu);
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	static {
+		int amtCpu = Runtime.getRuntime().availableProcessors();
+		try {
+			donation = new Database("127.0.0.1", "edge_donation", "edge_local", "%GL5{)hAJBU(MB3h", amtCpu);
+			score = new Database("127.0.0.1", "edge_score", "edge_local", "%GL5{)hAJBU(MB3h", amtCpu);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void start() {
 		sync.scheduleAtFixedRate(new GamePulseHandler(this), 600, 600, TimeUnit.MILLISECONDS);

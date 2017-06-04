@@ -7,6 +7,8 @@ import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Hit;
 import net.edge.world.node.entity.player.Player;
 
+import java.util.OptionalInt;
+
 /**
  * The container that holds data for an entire combat session attack.
  * @author lare96 <http://github.com/lare96>
@@ -53,7 +55,7 @@ public class CombatSessionData {
 	 * If delay = 2, The first hit will be instant, second hit will have a delay of 2, third hit will have a delay of 4 and so on..
 	 * First hit is instant due to the calculateHit method
 	 */
-	private final int delay;
+	public final OptionalInt delay;
 	
 	/**
 	 * Determines if this hit should be ignored.
@@ -73,7 +75,7 @@ public class CombatSessionData {
 		this.victim = victim;
 		this.type = type;
 		this.checkAccuracy = checkAccuracy;
-		this.delay = 0;
+		this.delay = OptionalInt.empty();
 		this.hits = calculateHits(amount);
 		this.experience = determineExperience();
 	}
@@ -83,7 +85,7 @@ public class CombatSessionData {
 		this.victim = victim;
 		this.type = type;
 		this.checkAccuracy = checkAccuracy;
-		this.delay = delay;
+		this.delay = OptionalInt.of(delay);
 		this.hits = calculateHits(amount);
 		this.experience = determineExperience();
 	}
@@ -120,7 +122,7 @@ public class CombatSessionData {
 		// hit and accuracy calculations.
 		Hit[] array = new Hit[amount];
 		for(int i = 0; i < array.length; i++) {
-			array[i] = Combat.calculateRandomHit(attacker, victim, type, i == 0 ? 0 : (delay * (i * 2)), checkAccuracy);
+			array[i] = Combat.calculateRandomHit(attacker, victim, type, 0/**i == 0 ? 0 : (delay * (i * 2))*/, checkAccuracy);
 			if(array[i].isAccurate())
 				accurate = true;
 		}
@@ -150,6 +152,7 @@ public class CombatSessionData {
 	 * @return the amount of damage that was dealt.
 	 */
 	public final int attack() {
+		CombatSessionAttack.applyPrayerEffects(this);
 		int counter = 0;
 		int index = 0;
 		Hit[] container = new Hit[hits.length];

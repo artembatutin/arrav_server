@@ -105,11 +105,13 @@ public final class FightcavesMinigame extends SequencedMinigame {
 				otherJad.setSpawnedFor(player.getUsername());
 				World.get().getNpcs().add(otherJad);
 				World.getInstanceManager().isolate(otherJad, instance);
+				otherJad.getCombatBuilder().attack(player);
 			}
 			jad.setRespawn(false);
 			jad.setSpawnedFor(player.getUsername());
 			World.get().getNpcs().add(jad);
 			World.getInstanceManager().isolate(jad, instance);
+			jad.getCombatBuilder().attack(player);
 			started = true;
 		} else if(timer == 8) {
 			player.getDialogueBuilder().append(new NpcDialogue(2617, "You're on your own, JalYt", "Prepare to fight for your life!"));

@@ -50,7 +50,7 @@ public final class CombatSessionAttack extends Task {
 	 * @param data    the combat data from the combat session.
 	 */
 	public CombatSessionAttack(CombatBuilder builder, CombatSessionData data) {
-		super(Combat.getDelay(builder.getCharacter(), data.getType()), data.getType() == CombatType.MELEE);
+		super(data.delay.orElse(Combat.getDelay(builder.getCharacter(), data.getType())), data.getType() == CombatType.MELEE);
 		this.builder = builder;
 		this.data = data;
 	}
@@ -65,6 +65,7 @@ public final class CombatSessionAttack extends Task {
 			this.cancel();
 			return;
 		}
+
 		data = data.preAttack();
 
 		if(victim.getCombatBuilder().getStrategy() != null && !data.isIgnored()) {
@@ -237,11 +238,12 @@ public final class CombatSessionAttack extends Task {
 	}
 
 	/**
-	 * Handles all prayer effects that take place upon a successful attack.
+	 * Applies combat prayer accuracy and damage reductions before executing the
+	 * {@link CombatSessionAttack}, this method shouldn't be confused with #handlePrayerEffects
+	 * which handles the prayer effects after the damage is dealt.
 	 */
-	private void handlePrayerEffects() {
+	public static void applyPrayerEffects(CombatSessionData data) {
 		if(data.getHits().length != 0) {
-
 			EntityNode victim = data.getVictim();
 			EntityNode attacker = data.getAttacker();
 
@@ -270,6 +272,16 @@ public final class CombatSessionAttack extends Task {
 						throw new IllegalStateException("Invalid character node " + "type!");
 				}
 			}
+		}
+	}
+	/**
+	 * Handles all prayer effects that take place upon a successful attack.
+	 */
+	private void handlePrayerEffects() {
+		if(data.getHits().length != 0) {
+
+			EntityNode victim = data.getVictim();
+			EntityNode attacker = data.getAttacker();
 
 			//REDEMPTION
 			if(victim.isPlayer() && Prayer.isActivated(victim.toPlayer(), Prayer.REDEMPTION) && victim.toPlayer().getSkills()[Skills.HITPOINTS].getLevel() <= (victim.toPlayer().getSkills()[Skills.HITPOINTS].getRealLevel() / 10)) {

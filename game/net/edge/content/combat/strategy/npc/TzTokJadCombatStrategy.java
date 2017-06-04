@@ -103,7 +103,7 @@ public final class TzTokJadCombatStrategy implements CombatStrategy {
 
 		@Override
 		public int maximumHit() {
-			return 98;
+			return 980;
 		}
 
 		@Override
