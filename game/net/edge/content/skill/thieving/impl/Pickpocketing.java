@@ -143,8 +143,7 @@ public final class Pickpocketing extends Thieving {
 		if(failure()) {
 			npc.forceChat("What do you think you're doing?");
 			npc.animation(NPC_ANIMATION);
-
-			int hit = RandomUtils.inclusive(1, RandomUtils.nextBoolean() ? definition.damage : 200);
+			int hit = RandomUtils.inclusive(1, definition.damage);
 			getPlayer().damage(new Hit(hit));
 			getPlayer().animation(STUN_ANIMATION);
 			getPlayer().graphic(STUN_GRAPHIC);
