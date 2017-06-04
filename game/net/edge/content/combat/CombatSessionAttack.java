@@ -133,7 +133,7 @@ public final class CombatSessionAttack extends Task {
 					@Override
 					protected void execute() {
 						Arrays.stream(data.getHits()).forEach(hit -> {
-							int damage = (int) (hit.getDamage() * 0.20);
+							int damage = (int) (hit.getDamage() * 0.10);
 							victim.getCombatBuilder().getDamageCache().add(attacker, damage);
 							attacker.damage(new Hit(damage, Hit.HitType.NORMAL, Hit.HitIcon.DEFLECT, victim.getSlot()));
 						});
