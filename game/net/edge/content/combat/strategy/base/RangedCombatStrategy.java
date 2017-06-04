@@ -12,6 +12,8 @@ import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.container.impl.Equipment;
 import net.edge.content.minigame.MinigameHandler;
+import net.edge.util.rand.RandomUtils;
+import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
 import net.edge.world.Animation.AnimationPriority;
@@ -21,13 +23,15 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.update.UpdateFlag;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemIdentifiers;
+import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.ItemNodeManager;
 
 /**
  * The strategy class which holds support for ranged combat.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class RangedCombatStrategy implements CombatStrategy {
-	
+
 	@Override
 	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
 		if(character.isNpc()) {
@@ -89,7 +93,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		
 		CombatSessionData data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatSessionData(character, victim, 1, CombatType.RANGED, true));
 		
-		decrementAmmo(player, weapon, ammo);
+		decrementAmmo(player, victim, weapon, ammo);
 		
 		return data;
 	}
@@ -137,7 +141,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		return player.getRangedDetails().determine();
 	}
 	
-	private void decrementAmmo(Player player, CombatRangedWeapon weapon, CombatRangedAmmo ammo) {
+	private void decrementAmmo(Player player, EntityNode victim, CombatRangedWeapon weapon, CombatRangedAmmo ammo) {
 		if(weapon.getType().isSpecialBow()) {
 			return;
 		}
@@ -147,14 +151,46 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		if(item == null) {
 			throw new IllegalStateException("Player doesn't have ammunition at this stage which is not permissible.");
 		}
-		
-		item.decrementAmount();
-		
-		//Item cape = player.getEquipment().get(Equipment.CAPE_SLOT);
-		//if(cape != null && cape.getId() == ItemIdentifiers.AVAS_ACCUMULATOR && gen.inclusive(4) == 1) {
-		//	item.incrementAmount();
-		//}
-		
+
+//			CombatRangedWeapon rangedWeapon = player.getRangedDetails().getWeapon().get();
+//			boolean droppable = !rangedWeapon.getType().isSpecialBow() && CombatRangedAmmoDefinition.NON_DROPPABLE.stream().noneMatch(rangedWeapon.getAmmunition().getDefinition()::equals);
+//
+//			if(rangedWeapon.getAmmunition().getItem().getAmount() > 0 && droppable) {
+//				if (RandomUtils.inclusive(10) <= 1) {//attempting to drop ammo.
+//					int ava = player.getEquipment().getId(Equipment.CAPE_SLOT);
+//					int chance = ava == 10498 ? 25 : ava == 10499 ? 50 : 75;
+//					boolean collected = false;
+//					if (ava == 10498 || ava == 10499 || ava == 20068) {//gathering with accumulator.
+//						if (RandomUtils.inclusive(100) <= chance) {
+//							collected = true;
+//						}
+//					}
+//					if (!collected) {//dropping arrow if not gathered.
+//						ItemNodeManager.register(new ItemNode(new Item(rangedWeapon.getAmmunition().getItem().getId()), victim.getPosition(), player), true);
+//					}
+//				}
+//			}
+
+		boolean collected = false;
+
+		if(player.getEquipment().containsAny(10498, 10499, 20068)) {
+			boolean droppable = !weapon.getType().isSpecialBow() && CombatRangedAmmoDefinition.NON_DROPPABLE.stream().noneMatch(weapon.getAmmunition().getDefinition()::equals);
+			if(weapon.getAmmunition().getItem().getAmount() > 0 && droppable && RandomUtils.nextBoolean()) {
+				int cape = player.getEquipment().get(Equipment.CAPE_SLOT).getId();
+
+				double chance = cape == 10498 ? 0.25 : cape == 10499 ? 0.50 : 0.75;
+				collected = RandomUtils.success(chance);
+			}
+		}
+
+		if(!collected) {//if not collected decrement arrow count
+			item.decrementAmount();
+
+			if(RandomUtils.success(0.35)) {//register item to floor 35% chance
+				ItemNodeManager.register(new ItemNode(new Item(item.getId()), victim.getPosition(), player), true);
+			}
+		}
+
 		int slot = weapon.getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
 		
 		if(item.getAmount() == 0) {

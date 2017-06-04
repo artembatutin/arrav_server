@@ -106,29 +106,6 @@ public final class CombatSessionAttack extends Task {
 			}
 		}
 
-		if(data.getType() == CombatType.RANGED && attacker.isPlayer() && !data.isIgnored()) {
-			Player player = attacker.toPlayer();
-
-			CombatRangedWeapon rangedWeapon = player.getRangedDetails().getWeapon().get();
-			boolean droppable = !rangedWeapon.getType().isSpecialBow() && CombatRangedAmmoDefinition.NON_DROPPABLE.stream().noneMatch(rangedWeapon.getAmmunition().getDefinition()::equals);
-
-			if(rangedWeapon.getAmmunition().getItem().getAmount() > 0 && droppable) {
-				if(RandomUtils.inclusive(10) <= 1) {//attempting to drop ammo.
-					int ava = player.getEquipment().getId(Equipment.CAPE_SLOT);
-					int chance = ava == 10498 ? 25 : ava == 10499 ? 50 : 75;
-					boolean collected = false;
-					if(ava == 10498 || ava == 10499 || ava == 20068) {//gathering with accumulator.
-						if(RandomUtils.inclusive(100) <= chance) {
-							collected = true;
-						}
-					}
-					if(!collected) {//dropping arrow if not gathered.
-						ItemNodeManager.register(new ItemNode(new Item(rangedWeapon.getAmmunition().getItem().getId()), victim.getPosition(), player), true);
-					}
-				}
-			}
-		}
-
 		if(victim.isPlayer() && !data.isIgnored()) {
 			Player player = (Player) victim;
 			int id = player.getShieldAnimation() != null ? player.getShieldAnimation().getBlock() : player.getWeaponAnimation() != null ? player.getWeaponAnimation().getBlocking() : 404;
