@@ -17,6 +17,7 @@ public enum Tool {
 			return Catchable.SHRIMP;
 		}
 	},
+	NET_MONKFISH(303, 62, -1, 0.10, 621, new Catchable[]{Catchable.MONKFISH}),
 	BIG_NET(305, 16, -1, 0.25, 620, new Catchable[]{Catchable.MACKEREL, Catchable.COD, Catchable.BASS, Catchable.CASKET, Catchable.LEATHER_BOOTS, Catchable.LEATHER_GLOVES, Catchable.OYSTER, Catchable.SEAWEED}) {
 		@Override
 		public Item[] onCatch(Player player) {
@@ -55,18 +56,8 @@ public enum Tool {
 			return Catchable.TUNA;
 		}
 	},
-	SHARK_HARPOON(311, 76, -1, 0.05, 618, new Catchable[]{Catchable.SHARK}) {
-		@Override
-		public Catchable catchable() {
-			return Catchable.SHARK;
-		}
-	},
-	LOBSTER_POT(301, 40, -1, 0.20, 619, new Catchable[]{Catchable.LOBSTER}) {
-		@Override
-		public Catchable catchable() {
-			return Catchable.LOBSTER;
-		}
-	};
+	SHARK_HARPOON(311, 76, -1, 0.05, 618, new Catchable[]{Catchable.SHARK}),
+	LOBSTER_POT(301, 40, -1, 0.20, 619, new Catchable[]{Catchable.LOBSTER});
 	
 	final int id;
 	final int level;
@@ -90,7 +81,7 @@ public enum Tool {
 	}
 	
 	public Catchable catchable() {
-		return null;
+		return catchables[0];
 	}
 	
 	Catchable calculate(Player player) {

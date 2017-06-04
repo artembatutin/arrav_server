@@ -369,6 +369,10 @@ public final class NpcActionPacket implements PacketReader {
 						Fishing net = new Fishing(player, Tool.NET, position);
 						net.start();
 						break;
+					case 322:
+						Fishing net_monkfish = new Fishing(player, Tool.NET_MONKFISH, position);
+						net_monkfish.start();
+						break;
 					case 13926://SPECIALIST MASTER
 						break;
 					default:
@@ -470,6 +474,7 @@ public final class NpcActionPacket implements PacketReader {
 						fishing_rod.start();
 						break;
 					case 312:
+					case 322:
 						Fishing harpoon = new Fishing(player, Tool.HARPOON, position);
 						harpoon.start();
 						break;
