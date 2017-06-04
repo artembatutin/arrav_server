@@ -59,8 +59,8 @@ public final class StarSprite extends Npc {
 				ap.chain(new NpcDialogue(8091, "Hello " + player.getFormatUsername() + ", I had been trapped inside this rock", "for a few decades, I can now finally return."));
 				ap.chain(new PlayerDialogue(Expression.CONFUSED, "Ehh? This is where you say, \"Thank you for saving me", "oh noble warrior, do you want a reward in return?\""));
 				
-				boolean stardust = player.getInventory().contains(new Item(StarMining.STARDUST.getId(), 100));
-				String[] message = stardust ? new String[]{"Eh, I see you have stardust on you, perhaps you", "would want to trade it for blood coins?"} : player.getInventory().contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of 100 stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
+				boolean stardust = player.getInventory().contains(new Item(StarMining.STARDUST.getId(), 300));
+				String[] message = stardust ? new String[]{"Eh, I see you have stardust on you, perhaps you", "would want to trade it for blood coins?"} : player.getInventory().contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of 300 stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
 				
 				ap.chain(new NpcDialogue(8091, message).attachAfter(() -> {
 					if(!stardust) {
@@ -69,7 +69,7 @@ public final class StarSprite extends Npc {
 				}));
 				
 				ap.chain(new PlayerDialogue("Mhm, sounds interesting, what's the conversion rate?"));
-				ap.chain(new NpcDialogue(8091, "Ehh, I guess 100 stardust for 1 blood coin would be fair?"));
+				ap.chain(new NpcDialogue(8091, "Ehh, I guess 300 stardust for 1 blood coin would be fair?"));
 				ap.chain(new PlayerDialogue("Alright, let's do it."));
 				ap.chain(new NpcDialogue(8091, "How much stardust would you like to convert?").attachAfter(() -> {
 					sendEnterAmount(player);
@@ -87,8 +87,8 @@ public final class StarSprite extends Npc {
 	private static void sendInstant(Player player) {
 		DialogueAppender ap = new DialogueAppender(player);
 		
-		boolean stardust = player.getInventory().contains(new Item(StarMining.STARDUST.getId(), 100));
-		String[] message = stardust ? new String[]{"Howmuch stardust would you like to convert to", "blood coins?"} : player.getInventory().contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of 100 stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
+		boolean stardust = player.getInventory().contains(new Item(StarMining.STARDUST.getId(), 300));
+		String[] message = stardust ? new String[]{"Howmuch stardust would you like to convert to", "blood coins?"} : player.getInventory().contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of 300 stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
 		
 		ap.chain(new NpcDialogue(8091, message).attachAfter(() -> {
 			if(!stardust) {
@@ -104,8 +104,8 @@ public final class StarSprite extends Npc {
 		player.getMessages().sendEnterAmount("How much would you like to convert?", s -> () -> {
 			int selectedAmount = Integer.parseInt(s);
 			
-			if(selectedAmount < 100) {
-				player.getDialogueBuilder().append(new NpcDialogue(8091, "I only accept a minimum of 100 stardust per blood coin."));
+			if(selectedAmount < 300) {
+				player.getDialogueBuilder().append(new NpcDialogue(8091, "I only accept a minimum of 300 stardust per blood coin."));
 				return;
 			}
 			if(!player.getInventory().contains(new Item(StarMining.STARDUST.getId(), selectedAmount))) {
@@ -113,7 +113,7 @@ public final class StarSprite extends Npc {
 				return;
 			}
 			
-			int amountRemovable = ((selectedAmount + 50) / 100) * 100;
+			int amountRemovable = ((selectedAmount + 50) / 100) * 300;
 			
 			DialogueAppender a = new DialogueAppender(player);
 			
