@@ -249,6 +249,28 @@ public final class Skills {
 		}
 		return 0;
 	}
+
+	/**
+	 * Gets the level based on the specified experience.
+	 * @return the level based on experience.
+	 */
+	public static int getLevelForExperience(int experience) {
+		int points = 0;
+		int output;
+
+		if(experience >= 13034431) {
+			return 99;
+		}
+
+		for(int lvl = 1; lvl <= 99; lvl++) {
+			points += Math.floor(lvl + 300.0 * Math.pow(2.0, lvl / 7.0));
+			output = (int) Math.floor(points / 4);
+			if(output >= experience) {
+				return lvl;
+			}
+		}
+		return 99;
+	}
 	
 	/**
 	 * Sends {@code skill} to the client which will refresh it for

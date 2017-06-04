@@ -213,7 +213,10 @@ public final class PlayerDeath extends EntityDeath<Player> {
 			for(int index = 0; index < getCharacter().getSkills().length; index++) {
 				Skill skill = getCharacter().getSkills()[index];
 
-				int newLevel = (int) (skill.getRealLevel() * 0.75);
+				int experience = (int) (skill.getExperience() * 0.75);
+
+				int newLevel = Skills.getLevelForExperience(experience);
+
 
 				if(index == Skills.HITPOINTS && newLevel < 10) {
 					newLevel = 10;
