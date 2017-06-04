@@ -1,7 +1,7 @@
 [
   {
     "key": "ROCK CRABS",
-    "price": 500,
+    "price": 1000,
     "position": {
       "x": 2673,
       "y": 3712,
@@ -10,7 +10,7 @@
   },
   {
     "key": "DOGS",
-    "price": 1000,
+    "price": 15000,
     "position": {
       "x": 2632,
       "y": 9546,
@@ -19,7 +19,7 @@
   },
   {
     "key": "MOSS GIANTS",
-    "price": 1000,
+    "price": 15000,
     "position": [
       {
         "x": 2644,
@@ -40,7 +40,7 @@
   },
   {
     "key": "SKELETONS",
-    "price": 1000,
+    "price": 15000,
     "position": [
       {
         "x": 2881,
@@ -56,7 +56,7 @@
   },
   {
     "key": "BLUE DRAGONS",
-    "price": 10000,
+    "price": 50000,
     "position": {
       "x": 2908,
       "y": 9812,
@@ -65,7 +65,7 @@
   },
   {
     "key": "LESSER DEMONS",
-    "price": 10000,
+    "price": 25000,
     "position": {
       "x": 2830,
       "y": 9567,
@@ -74,7 +74,7 @@
   },
   {
     "key": "DWARVES",
-    "price": 3000,
+    "price": 15000,
     "position": {
       "x": 3021,
       "y": 3339,
@@ -83,7 +83,7 @@
   },
   {
     "key": "CRAWLING HANDS",
-    "price": 2000,
+    "price": 15000,
     "position": {
       "x": 3412,
       "y": 3531,
@@ -92,7 +92,7 @@
   },
   {
     "key": "BATS",
-    "price": 5000,
+    "price": 15000,
     "position": {
       "x": 2913,
       "y": 9824,
@@ -101,7 +101,7 @@
   },
   {
     "key": "COWS",
-    "price": 250,
+    "price": 12500,
     "position": {
       "x": 3259,
       "y": 3256,
@@ -110,7 +110,7 @@
   },
   {
     "key": "GOBLINS",
-    "price": 500,
+    "price": 10000,
     "position": {
       "x": 3256,
       "y": 3230,
@@ -119,7 +119,7 @@
   },
   {
     "key": "FIRE GIANTS",
-    "price": 1400,
+    "price": 24000,
     "position": {
       "x": 2666,
       "y": 9506,
@@ -128,7 +128,7 @@
   },
   {
     "key": "GREATER DEMONS",
-    "price": 5000,
+    "price": 25000,
     "position": {
       "x": 2627,
       "y": 9516,
@@ -137,7 +137,7 @@
   },
   {
     "key": "HELLHOUNDS",
-    "price": 8000,
+    "price": 28000,
     "position": {
       "x": 2866,
       "y": 9833,
@@ -146,7 +146,7 @@
   },
   {
     "key": "BLACK DEMONS",
-    "price": 10000,
+    "price": 20000,
     "position": {
       "x": 3086,
       "y": 9970,
@@ -155,7 +155,7 @@
   },
   {
     "key": "BRONZE DRAGONS",
-    "price": 15000,
+    "price": 50000,
     "position": {
       "x": 2706,
       "y": 9468,
@@ -164,7 +164,7 @@
   },
   {
     "key": "IRON DRAGONS",
-    "price": 2000,
+    "price": 50000,
     "position": {
       "x": 2706,
       "y": 9468,
@@ -173,7 +173,7 @@
   },
   {
     "key": "BIRDS",
-    "price": 50,
+    "price": 12500,
     "position": {
       "x": 3235,
       "y": 3293,
@@ -182,7 +182,7 @@
   },
   {
     "key": "ICE GIANTS",
-    "price": 5000,
+    "price": 25000,
     "position": {
         "x": 3058,
         "y": 9565,
@@ -191,7 +191,7 @@
   },
   {
     "key": "BEARS",
-    "price": 1000,
+    "price": 15000,
     "position": [
       {
         "x": 2818,
@@ -207,7 +207,7 @@
   },
   {
     "key": "ICE WARRIORS",
-    "price": 4000,
+    "price": 24000,
     "position": {
         "x": 3045,
         "y": 9581,
@@ -216,7 +216,7 @@
   },
   {
     "key": "SCORPIONS",
-    "price": 5000,
+    "price": 24000,
     "position": [
       {
         "x": 3298,
@@ -227,12 +227,12 @@
         "x": 2862,
         "y": 3161,
         "z": 0
-      },
+      }
     ]
   },
   {
     "key": "MONKEYS",
-    "price": 5000,
+    "price": 24000,
     "position": [
       {
         "x": 2781,
@@ -243,12 +243,12 @@
         "x": 2927,
         "y": 3159,
         "z": 0
-      },
+      }
     ]
   },
   {
     "key": "GHOSTS",
-    "price": 3000,
+    "price": 23000,
     "position": [
       {
         "x": 3680,
@@ -259,12 +259,12 @@
         "x": 2899,
         "y": 9848,
         "z": 0
-      },
+      }
     ]
   },
   {
     "key": "CYCLOPES",
-    "price": 1000,
+    "price": 10000,
     "position": [
       {
         "x": 2844,
@@ -275,12 +275,12 @@
         "x": 2848,
         "y": 5341,
         "z": 2
-      },
+      }
     ]
   },
   {
     "key": "RATS",
-    "price": 1000,
+    "price": 10000,
     "position": {
       "x": 3235,
       "y": 9867,
@@ -289,7 +289,7 @@
   },
   {
     "key": "ZOMBIES",
-    "price": 5000,
+    "price": 16000,
     "position": {
       "x": 3141,
       "y": 9915,
@@ -298,7 +298,7 @@
   },
   {
     "key": "EARTH WARRIORS",
-    "price": 5000,
+    "price": 15000,
     "position": {
       "x": 3119,
       "y": 9973,
@@ -307,7 +307,7 @@
   },
   {
     "key": "SPIDERS",
-    "price": 5000,
+    "price": 15000,
     "position": {
       "x": 3209,
       "y": 9891,
@@ -316,7 +316,7 @@
   },
   {
     "key": "MITHRIL DRAGONS",
-    "price": 12000,
+    "price": 75000,
     "position": {
       "x": 1773,
       "y": 5349,
@@ -325,7 +325,7 @@
   },
   {
     "key": "HILL GIANTS",
-    "price": 12000,
+    "price": 20000,
     "position": {
       "x": 2895,
       "y": 2727,
@@ -334,7 +334,7 @@
   },
   {
     "key": "ELVES",
-    "price": 1000,
+    "price": 20000,
     "position": {
       "x": 2899,
       "y": 2733,
@@ -343,7 +343,7 @@
   },
   {
     "key": "TROLLS",
-    "price": 4000,
+    "price": 20000,
     "position": {
       "x": 2834,
       "y": 3260,
@@ -352,7 +352,7 @@
   },
   {
     "key": "GREEN DRAGONS",
-    "price": 4000,
+    "price": 30000,
     "position": {
       "x": 2979,
       "y": 3598,
@@ -361,7 +361,7 @@
   },
   {
     "key": "WATERFIENDS",
-    "price": 5000,
+    "price": 30000,
     "position": {
       "x": 1752,
       "y": 5350,
@@ -370,7 +370,7 @@
   },
   {
     "key": "WOLVES",
-    "price": 2000,
+    "price": 18000,
     "position": {
       "x": 2849,
       "y": 3487,
@@ -379,7 +379,7 @@
   },
   {
     "key": "DAGANNOTHS",
-    "price": 9000,
+    "price": 40000,
     "position": {
       "x": 2446,
       "y": 10141,
@@ -388,7 +388,7 @@
   },
   {
     "key": "STEEL DRAGONS",
-    "price": 2000,
+    "price": 50000,
     "position": {
       "x": 2706,
       "y": 9468,
@@ -397,7 +397,7 @@
   },
   {
     "key": "ROCKSLUGS",
-    "price": 7000,
+    "price": 28000,
     "position": {
       "x": 2798,
       "y": 10018,
@@ -406,7 +406,7 @@
   },
   {
     "key": "KALPHITE",
-    "price": 7000,
+    "price": 55000,
     "position": {
       "x": 3509,
       "y": 9488,
@@ -415,7 +415,7 @@
   },
   {
     "key": "HOBGOBLINS",
-    "price": 5000,
+    "price": 15000,
     "position": {
       "x": 2836,
       "y": 5354,
@@ -424,7 +424,7 @@
   },
   {
     "key": "WEREWOLVES",
-    "price": 5000,
+    "price": 15000,
     "position": {
       "x": 2925,
       "y": 5354,
@@ -433,7 +433,7 @@
   },
   {
     "key": "SPIRITUAL WARRIORS",
-    "price": 5000,
+    "price": 15000,
     "position": {
       "x": 2845,
       "y": 5346,
@@ -442,7 +442,7 @@
   },
   {
     "key": "SPIRITUAL MAGES",
-    "price": 5000,
+    "price": 15000,
     "position": {
       "x": 2921,
       "y": 5352,
@@ -451,7 +451,7 @@
   },
   {
     "key": "SPIRITUAL RANGERS",
-    "price": 5000,
+    "price": 15000,
     "position": {
       "x": 2921,
       "y": 5352,
@@ -460,7 +460,7 @@
   },
   {
     "key": "STEEL DRAGONS",
-    "price": 2000,
+    "price": 50000,
     "position": {
       "x": 2706,
       "y": 9468,
@@ -469,7 +469,7 @@
   },
   {
     "key": "BLACK DRAGONS",
-    "price": 50000,
+    "price": 45000,
     "position": {
       "x": 2831,
       "y": 9817,
@@ -478,7 +478,7 @@
   },
   {
     "key": "ABYSSAL DEMONS",
-    "price": 10000,
+    "price": 50000,
     "position": {
       "x": 3423,
       "y": 3568,
@@ -487,7 +487,7 @@
   },
   {
     "key": "DUST DEVILS",
-    "price": 9000,
+    "price": 30000,
     "position": {
       "x": 3427,
       "y": 3551,
@@ -496,7 +496,7 @@
   },
   {
     "key": "BLOODVELD",
-    "price": 8000,
+    "price": 25000,
     "position": {
       "x": 3421,
       "y": 3572,
@@ -505,7 +505,7 @@
   },
   {
     "key": "INFERNAL MAGES",
-    "price": 7000,
+    "price": 25000,
     "position": {
       "x": 3438,
       "y": 3561,
@@ -514,7 +514,7 @@
   },
   {
     "key": "RED DRAGONS",
-    "price": 15000,
+    "price": 45000,
     "position": {
       "x": 2689,
       "y": 9507,
@@ -523,7 +523,7 @@
   },
   {
     "key": "CAVE BUGS",
-    "price": 10000,
+    "price": 15000,
     "position": {
       "x": 3152,
       "y": 9574,
@@ -532,7 +532,7 @@
   },
   {
     "key": "AQUANITES",
-    "price": 10000,
+    "price": 35000,
     "position": {
       "x": 2722,
       "y": 9971,
@@ -541,7 +541,7 @@
   },
   {
     "key": "TUROTHS",
-    "price": 9000,
+    "price": 30000,
     "position": {
       "x": 2719,
       "y": 10010,
@@ -550,7 +550,7 @@
   },
   {
     "key": "JELLIES",
-    "price": 5000,
+    "price": 25000,
     "position": {
       "x": 2704,
       "y": 10026,
@@ -559,7 +559,7 @@
   },
   {
     "key": "BASILISK",
-    "price": 8000,
+    "price": 25000,
     "position": {
       "x": 2743,
       "y": 10005,
@@ -568,7 +568,7 @@
   },
   {
     "key": "PYREFIENDS",
-    "price": 6000,
+    "price": 25000,
     "position": {
       "x": 2758,
       "y": 10008,
@@ -577,7 +577,7 @@
   },
   {
     "key": "CAVE CRAWLERS",
-    "price": 1000,
+    "price": 25000,
     "position": {
       "x": 2791,
       "y": 9995,
@@ -586,7 +586,7 @@
   },
   {
     "key": "BANSHEES",
-    "price": 1000,
+    "price": 25000,
     "position": {
       "x": 3437,
       "y": 3572,
@@ -595,7 +595,7 @@
   },
   {
     "key": "CAVE SLIMES",
-    "price": 1000,
+    "price": 25000,
     "position": {
       "x": 3161,
       "y": 9590,
@@ -604,7 +604,7 @@
   },
   {
     "key": "COCKATRICES",
-    "price": 2000,
+    "price": 25000,
     "position": {
       "x": 2799,
       "y": 10034,
