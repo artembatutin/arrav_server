@@ -70,7 +70,12 @@ public final class StarMining extends HarvestingSkillAction {
 		mining.start();
 		return true;
 	}
-	
+
+	@Override
+	public boolean harvestMessage() {
+		return false;
+	}
+
 	@Override
 	public void onSequence(Task t) {
 		if(star.isDisabled()) {

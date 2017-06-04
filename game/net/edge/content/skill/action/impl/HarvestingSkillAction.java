@@ -72,7 +72,9 @@ public abstract class HarvestingSkillAction extends SkillAction {
 			
 			for(Item item : harvestItems) {
 				getPlayer().getInventory().add(item);
-				getPlayer().message("You get some " + item.getDefinition().getName() + ".");
+				if(harvestMessage()) {
+					getPlayer().message("You get some " + item.getDefinition().getName() + ".");
+				}
 			}
 			Skills.experience(getPlayer(), experience(), skill().getId());
 			removeItems.ifPresent(getPlayer().getInventory()::removeAll);
@@ -118,7 +120,15 @@ public abstract class HarvestingSkillAction extends SkillAction {
 	 * @return the items to be harvested.
 	 */
 	public abstract Item[] harvestItems();
-	
+
+	/**
+	 * Determines if a message should be sent upon successfully harvesting.
+	 * @return {@code true} if a message should be sent, {@code false} otherwise.
+	 */
+	public boolean harvestMessage() {
+		return true;
+	}
+
 	@Override
 	public boolean isPrioritized() {
 		return false;
