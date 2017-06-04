@@ -46,6 +46,7 @@ final class FiremakingTask extends Task {
 	public void execute() {
 		ItemNodeManager.register(new ItemNodeStatic(new Item(592), object.getGlobalPos(), ItemPolicy.TIMEOUT));
 		object.remove();
+		this.cancel();
 	}
 	
 }
