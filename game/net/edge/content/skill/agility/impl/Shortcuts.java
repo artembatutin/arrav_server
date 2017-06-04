@@ -9,6 +9,7 @@ import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Steppable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
+import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectNode;
@@ -38,22 +39,22 @@ public final class Shortcuts extends AgilityCourse {
 		this.definition = definition;
 	}
 	
-	/**
-	 * Starts this skill action.
-	 * @param player {@link #getPlayer()}.
-	 * @param object the object this player is interacting with.
-	 * @return <true> if the player can execute the logic, <false> otherwise.
-	 */
-	public static boolean execute(Player player, ObjectNode object) {
-		Optional<ShortcutsData> definition = ShortcutsData.getDefinition(object.getId());
-		
-		if(!definition.isPresent()) {
-			return false;
+	public static void objects() {
+		for(ShortcutsData data : ShortcutsData.values()) {
+			ObjectEvent perform = new ObjectEvent() {
+				@Override
+				public boolean click(Player player, ObjectNode object, int click) {
+					Shortcuts shortcut = new Shortcuts(player, object, data);
+					shortcut.start();
+					return true;
+				}
+			};
+			for(int object : data.getObjects()) {
+				perform.registerFirst(object);
+				if(object > 42003)
+					perform.registerFirst(object - 42003);
+			}
 		}
-		
-		Shortcuts shortcut = new Shortcuts(player, object, definition.get());
-		shortcut.start();
-		return true;
 	}
 	
 	@Override
@@ -111,14 +112,9 @@ public final class Shortcuts extends AgilityCourse {
 		BRIMHAVEN_OBSTACLE_ROCKS_OTHERWAY(new int[]{5110}, ObstacleType.STEPPING_STONE, player -> new Steppable(new Position(2649, 9562), new Position[]{new Position(2649, 9561), new Position(2649, 9560), new Position(2648, 9560), new Position(2647, 9560), new Position(2647, 9559), new Position(2647, 9558)}, new Position(2647, 9557), ObstacleType.STEPPING_STONE.getAnimation(), 30, 0));
 		
 		/**
-		 * Caches our enum values.
-		 */
-		private static final ImmutableSet<ShortcutsData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(ShortcutsData.class));
-		
-		/**
 		 * The object identification for this object.
 		 */
-		private final int[] objectId;
+		private final int[] objectIds;
 		
 		/**
 		 * The message sent to this player when he attempts to cross the obstacle.
@@ -137,13 +133,13 @@ public final class Shortcuts extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link ShortcutsData}.
-		 * @param objectId       {@link #objectId}.
+		 * @param objectIds       {@link #objectIds}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
-		ShortcutsData(int[] objectId, String message, Optional<String> crossedMessage, ObstacleAction obstacleAction) {
-			this.objectId = objectId;
+		ShortcutsData(int[] objectIds, String message, Optional<String> crossedMessage, ObstacleAction obstacleAction) {
+			this.objectIds = objectIds;
 			this.message = message;
 			this.crossedMessage = crossedMessage;
 			this.obstacleAction = obstacleAction;
@@ -151,13 +147,13 @@ public final class Shortcuts extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link ShortcutsData}.
-		 * @param objectId       {@link #objectId}.
+		 * @param objectIds       {@link #objectIds}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
-		ShortcutsData(int[] objectId, String message, String crossedMessage, ObstacleAction obstacleAction) {
-			this.objectId = objectId;
+		ShortcutsData(int[] objectIds, String message, String crossedMessage, ObstacleAction obstacleAction) {
+			this.objectIds = objectIds;
 			this.message = message;
 			this.crossedMessage = Optional.ofNullable(crossedMessage);
 			this.obstacleAction = obstacleAction;
@@ -165,31 +161,22 @@ public final class Shortcuts extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link ShortcutsData}.
-		 * @param objectId       {@link #objectId}.
+		 * @param objectIds       {@link #objectIds}.
 		 * @param type           {@link #message}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
-		ShortcutsData(int[] objectId, ObstacleType type, ObstacleAction obstacleAction) {
-			this.objectId = objectId;
+		ShortcutsData(int[] objectIds, ObstacleType type, ObstacleAction obstacleAction) {
+			this.objectIds = objectIds;
 			this.message = type.getMessage();
 			this.crossedMessage = type.getCrossedMessage();
 			this.obstacleAction = obstacleAction;
 		}
 		
 		/**
-		 * Gets an Optional of the matched value.
-		 * @param identifier the identifier to check for matches.
-		 * @return an optional with the {@link ShortcutsData} found, {@link Optional#empty} otherwise.
+		 * Gets the objects of this shortcut.
 		 */
-		protected static Optional<ShortcutsData> getDefinition(int identifier) {
-			for(ShortcutsData data : VALUES) {
-				for(int object : data.objectId) {
-					if(object == identifier || object == identifier - 42003) {
-						return Optional.of(data);
-					}
-				}
-			}
-			return Optional.empty();
+		public int[] getObjects() {
+			return objectIds;
 		}
 	}
 }

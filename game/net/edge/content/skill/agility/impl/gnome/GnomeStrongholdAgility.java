@@ -1,7 +1,5 @@
 package net.edge.content.skill.agility.impl.gnome;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.agility.AgilityCourse;
 import net.edge.content.skill.agility.AgilityCourseType;
@@ -12,11 +10,11 @@ import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Climbable;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
+import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectNode;
 
-import java.util.EnumSet;
 import java.util.Optional;
 
 /**
@@ -38,25 +36,25 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 	 */
 	private GnomeStrongholdAgility(Player player, ObjectNode object, GnomeAgilityData obstacle) {
 		super(player, object, AgilityCourseType.GNOME_AGILITY);
-		
 		this.obstacle = obstacle;
 	}
 	
-	/**
-	 * Starts this skill action.
-	 * @param player {@link #getPlayer()}.
-	 * @param object the object this player is interacting with.
-	 * @return <true> if the player can execute the logic, <false> otherwise.
-	 */
-	public static boolean execute(Player player, ObjectNode object) {
-		Optional<GnomeAgilityData> data = GnomeAgilityData.getDefinition(object.getId());
-		if(!data.isPresent()) {
-			return false;
+	public static void objects() {
+		for(GnomeAgilityData data : GnomeAgilityData.values()) {
+			ObjectEvent perform = new ObjectEvent() {
+				@Override
+				public boolean click(Player player, ObjectNode object, int click) {
+					GnomeStrongholdAgility agility = new GnomeStrongholdAgility(player, object, data);
+					agility.start();
+					return true;
+				}
+			};
+			for(int object : data.getObjects()) {
+				perform.registerFirst(object);
+				if(object > 42003)
+					perform.registerFirst(object - 42003);
+			}
 		}
-		
-		GnomeStrongholdAgility agility = new GnomeStrongholdAgility(player, object, data.get());
-		agility.start();
-		return true;
 	}
 	
 	@Override
@@ -115,11 +113,6 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		RUN_ACROSS_SIGNPOST(new int[]{85584}, ObstacleType.RUN_ACROSS_SIGNPOST, player1 -> new Movable(new Position(2476, 3418, 3), new Position(2484, 3418, 3), ObstacleType.RUN_ACROSS_SIGNPOST.getAnimation(), 105, 6, 60, 25)),
 		POLE_SWING(new int[]{85532}, ObstacleType.POLE_SWING, PoleSwing::new),
 		JUMP_OVER_BARRIER(new int[]{85542}, ObstacleType.JUMP_OVER_BARRIER, player1 -> new JumpOverBarrier());
-		
-		/**
-		 * Caches our enum values.
-		 */
-		private static final ImmutableSet<GnomeAgilityData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(GnomeAgilityData.class));
 		
 		/**
 		 * The object identifications for this Obstacle.
@@ -183,19 +176,10 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		}
 		
 		/**
-		 * Gets an Optional of the matched value.
-		 * @param identifier the identifier to check for matches.
-		 * @return an optional with the {@link GnomeAgilityData} found, {@link Optional#empty} otherwise.
+		 * Objects in this course.
 		 */
-		protected static Optional<GnomeAgilityData> getDefinition(int identifier) {
-			for(GnomeAgilityData data : VALUES) {
-				for(int object : data.objectIds) {
-					if(object == identifier || object == identifier - 42003) {
-						return Optional.of(data);
-					}
-				}
-			}
-			return Optional.empty();
+		public int[] getObjects() {
+			return objectIds;
 		}
 	}
 }

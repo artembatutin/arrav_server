@@ -6,6 +6,7 @@ import net.edge.content.container.ItemWeightListener;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.ItemNodeManager;
 
 import java.util.Arrays;
 import java.util.List;
@@ -154,7 +155,7 @@ public final class Inventory extends ItemContainer {
 	public void addOrDrop(List<Item> items) {
 		addOrExecute(t -> {
 			ItemNode node = new ItemNode(t, player.getPosition(), player);
-			player.getRegion().register(node);
+			ItemNodeManager.register(node);
 		}, "Some of the items were dropped beneath you instead...", items);
 	}
 	

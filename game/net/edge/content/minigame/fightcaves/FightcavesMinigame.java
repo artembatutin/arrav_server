@@ -1,5 +1,6 @@
 package net.edge.content.minigame.fightcaves;
 
+import net.edge.event.impl.ObjectEvent;
 import net.edge.game.GameConstants;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -60,32 +61,35 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	/**
 	 * Constructs a new {@link FightcavesMinigame} minigame.
 	 */
-	public FightcavesMinigame() {
+	private FightcavesMinigame() {
 		super("FIGHT_CAVES", MinigameSafety.SAFE);
 	}
 	
-	public static boolean enter(Player player, ObjectNode object) {
-		if(object.getId() != 9356) {
-			return false;
-		}
-		player.getDialogueBuilder().append(new OptionDialogue(t -> {
-			if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-				new FightcavesMinigame().onEnter(player);
-			}
-			player.getMessages().sendCloseWindows();
-		}, "Kill one Jad for a Fire cape.", "I'll wait here."));
-		/*player.getDialogueChain().append(
+	public static void init() {
+		ObjectEvent e = new ObjectEvent() {
+			@Override
+			public boolean click(Player player, ObjectNode object, int click) {
+				player.getDialogueBuilder().append(new OptionDialogue(t -> {
+					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+						new FightcavesMinigame().onEnter(player);
+					}
+					player.getMessages().sendCloseWindows();
+				}, "Kill one Jad for a Fire cape.", "I'll wait here."));
+				/*player.getDialogueChain().append(
 		        new OptionDialogue(t -> {
 					if(t.equals(OptionType.FIRST_OPTION)) {
 						MinigameContainer.FIGHT_CAVES.onEnter(player);
 					} else if(t.equals(OptionType.SECOND_OPTION)) {
 						MinigameContainer.FIGHT_CAVES.onEnter(player);
 						player.getAttr().get("fight_caves_advanced").set(true);
-					} 
+					}
 					player.getMessages().sendCloseWindows();
 				}, "Fire cape", "TokHaar-kal cape", "I'll wait here")
 				);*/
-		return true;
+				return true;
+			}
+		};
+		e.registerFirst(9356);
 	}
 	
 	@Override
@@ -195,4 +199,5 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	public Position deathPosition(Player player) {
 		return GameConstants.STARTING_POSITION;
 	}
+	
 }

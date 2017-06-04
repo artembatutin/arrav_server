@@ -12,10 +12,13 @@ import net.edge.cache.FileSystem;
 import net.edge.cache.decoder.MapDefinitionDecoder;
 import net.edge.cache.decoder.ObjectDefinitionDecoder;
 import net.edge.cache.decoder.RegionDecoder;
+import net.edge.event.Event;
+import net.edge.event.impl.ObjectEvent;
 import net.edge.game.GameShutdownHook;
 import net.edge.net.EdgevilleChannelInitializer;
 import net.edge.net.NetworkConstants;
 import net.edge.net.PunishmentHandler;
+import net.edge.net.packet.impl.ObjectActionPacket;
 import net.edge.task.Task;
 import net.edge.util.LoggerUtils;
 import net.edge.util.Utility;
@@ -29,6 +32,7 @@ import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.locale.loc.Location;
 import net.edge.world.World;
 import net.edge.world.node.entity.attribute.AttributeKey;
+import net.edge.world.node.item.ItemNodeManager;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -119,10 +123,12 @@ public final class Server {
 			initAsyncTasks();
 			launch.shutdown();
 			launch.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+			ObjectEvent.init();
 			World.get().start();
 			
 			World.getInstanceManager().close(0);
 			World.get().submit(World.getNpcMovementTask());
+			World.get().submit(new ItemNodeManager());
 			World.get().submit(new RestoreStatTask());
 			World.get().submit(new Task(100, false) {
 				@Override
@@ -202,20 +208,20 @@ public final class Server {
 			new NpcNodeLoader().load();
 			new NpcDropTableLoader().load();
 		});
+		launch.execute(new AreaLoader());
+		launch.execute(new ShopLoader());
 		launch.execute(new ClanChatLoader());
 		launch.execute(new WeaponPoisonLoader());
 		launch.execute(new MessageOpcodeLoader());
 		launch.execute(new MessageSizeLoader());
-		launch.execute(new IndividualScoreboardRewardsLoader());
-		launch.execute(new ShopLoader());
+		launch.execute(new SlayerLocationLoader());
 		launch.execute(new ShieldAnimationLoader());
 		launch.execute(new WeaponAnimationLoader());
 		launch.execute(new WeaponInterfaceLoader());
-		launch.execute(new EquipmentRequirementLoader());
 		launch.execute(new CombatRangedBowLoader());
-		launch.execute(new AreaLoader());
+		launch.execute(new EquipmentRequirementLoader());
+		launch.execute(new IndividualScoreboardRewardsLoader());
 		launch.execute(() -> new SlayerDefinitionLoader().load());
-		launch.execute(new SlayerLocationLoader());
 		launch.execute(() -> {//Adding combat strategies.
 			for(String directory : Utility.getSubDirectories(CombatStrategy.class)) {
 				try {

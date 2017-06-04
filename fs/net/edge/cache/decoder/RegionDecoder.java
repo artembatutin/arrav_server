@@ -1,6 +1,7 @@
 package net.edge.cache.decoder;
 
 import net.edge.cache.FileSystem;
+import net.edge.content.door.DoorHandler;
 import net.edge.util.ByteBufferUtil;
 import net.edge.util.CompressionUtil;
 import net.edge.util.LoggerUtils;
@@ -80,6 +81,8 @@ public final class RegionDecoder implements Runnable {
 			List<StaticObject> objects = parseGameObject(region, gameObjectBuffer, x, y, downHeights, isNew);
 			for(StaticObject o : objects) {
 				World.getTraversalMap().markObject(region, o, true, true);
+				if(o.getDefinition() != null && DoorHandler.isDoor(o.getDefinition()))
+					DoorHandler.APPENDER.registerFirst(o.getId());
 			}
 			downHeights.clear();
 			objects.clear();

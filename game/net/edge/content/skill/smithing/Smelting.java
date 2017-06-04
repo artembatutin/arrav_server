@@ -2,6 +2,7 @@ package net.edge.content.skill.smithing;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.event.impl.ObjectEvent;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
@@ -90,21 +91,6 @@ public final class Smelting extends ProducingSkillAction {
 	}
 	
 	/**
-	 * Opens the smelting interface for the {@code player}.
-	 * @param player the player we're opening this smelting interface for.
-	 * @param object the object the player is interacting with.
-	 * @return <true> if the interface was opened, <false> otherwise.
-	 */
-	public static boolean openInterface(Player player, ObjectNode object) {
-		boolean isFurnace = Arrays.stream(FURNACE_IDS).filter(def -> def == object.getId()).findAny().isPresent();
-		if(!isFurnace) {
-			return false;
-		}
-		player.getMessages().sendChatInterface(2400);
-		return true;
-	}
-	
-	/**
 	 * Sends the items on the smelting interface.
 	 * @param player the player we're sending these values for.
 	 */
@@ -118,7 +104,7 @@ public final class Smelting extends ProducingSkillAction {
 	 * The array which holds all the possible furnace ids a player
 	 * can smelt his bars in.
 	 */
-	private static final int[] FURNACE_IDS = {26814, 37651};
+	private static final int[] FURNACE_IDS = {26814, 37651, 11666};
 	
 	/**
 	 * The array which holds all the frames you can draw an item on.
@@ -129,6 +115,19 @@ public final class Smelting extends ProducingSkillAction {
 	 * The bar identification to be drawed on each frame.
 	 */
 	private static final int[] SMELT_BARS = {2349, 2351, 2355, 2353, 2357, 2359, 2361, 2363};
+	
+	public static void objects() {
+		ObjectEvent smelt = new ObjectEvent() {
+			@Override
+			public boolean click(Player player, ObjectNode object, int click) {
+				player.getMessages().sendChatInterface(2400);
+				return true;
+			}
+		};
+		for(int o : FURNACE_IDS) {
+			smelt.registerSecond(o);
+		}
+	}
 	
 	@Override
 	public Optional<Item[]> removeItem() {

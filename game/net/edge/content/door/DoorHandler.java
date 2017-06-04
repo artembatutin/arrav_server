@@ -1,5 +1,6 @@
 package net.edge.content.door;
 
+import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectDefinition;
@@ -19,7 +20,36 @@ public class DoorHandler {
 	 * The list of doors
 	 */
 	private static HashMap<Position, SimpleDoor> doors = new HashMap<>();
-
+	
+	/**
+	 * The door appender event.
+	 */
+	public static final ObjectEvent APPENDER = new ObjectEvent() {
+		@Override
+		public boolean click(Player player, ObjectNode object, int click) {
+			ObjectDefinition def = object.getDefinition();
+			if(def == null)
+				return false;
+			if(exception(player, object))
+				return false;
+			if(doors.containsKey(object.getGlobalPos())) {
+				SimpleDoor door = doors.get(object.getGlobalPos());
+				doors.remove(door.getCurrent().getGlobalPos(), door);
+				door.append(player);
+				doors.put(door.getCurrent().getGlobalPos(), door);
+			} else {
+				SimpleDoor door = new SimpleDoor(object);
+				door.append(player);
+				doors.put(door.getCurrent().getGlobalPos(), door);
+				
+			}
+			return true;
+		}
+	};
+	
+	/**
+	 * All exceptions to door opening.
+	 */
 	private static boolean exception(Player player, ObjectNode object) {
 		if(object.getId() == 34811 && object.getGlobalPos().same(new Position(3104, 3498))) {
 			if(player.isNight()) {
@@ -50,30 +80,7 @@ public class DoorHandler {
 		}
 	}
 
-	public static boolean interact(Player player, ObjectNode object) {
-		ObjectDefinition def = object.getDefinition();
-		if(def == null)
-			return false;
-		if(isDoor(def)) {
-			if(exception(player, object)) {
-				return false;
-			}
-			if(doors.containsKey(object.getGlobalPos())) {
-				SimpleDoor door = doors.get(object.getGlobalPos());
-				doors.remove(door.getCurrent().getGlobalPos(), door);
-				door.append(player);
-				doors.put(door.getCurrent().getGlobalPos(), door);
-			} else {
-				SimpleDoor door = new SimpleDoor(object);
-				door.append(player);
-				doors.put(door.getCurrent().getGlobalPos(), door);
-
-			}
-		}
-		return false;
-	}
-
-	private static boolean isDoor(ObjectDefinition def) {
+	public static boolean isDoor(ObjectDefinition def) {
 		String name = def.getName().toLowerCase();
 		return (name.contains("door") && !name.contains("trap") && !name.contains("way")) || name.contains("gate");
 	}

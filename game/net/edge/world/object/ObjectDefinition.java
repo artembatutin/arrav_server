@@ -169,13 +169,23 @@ public final class ObjectDefinition {
 	}
 	
 	/**
+	 * Gets the clicking actions of this object.
+	 * @return actions
+	 */
+	public String[] getActions() {
+		return actions;
+	}
+	
+	/**
 	 * Determines if the specified action exists in the object's action array.
 	 * @return {@code true} if the action exists in the object's action array, otherwise {@code false}.
 	 */
 	public boolean hasAction(String action) {
-		for(String a : actions) {
-			if(a != null && a.toLowerCase().equals(action.toLowerCase()))
-				return true;
+		if(action != null) {
+			for(String a : actions) {
+				if(a != null && a.equals(action))
+					return true;
+			}
 		}
 		return false;
 	}

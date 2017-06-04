@@ -6,6 +6,7 @@ import net.edge.util.json.JsonLoader;
 import net.edge.locale.Position;
 import net.edge.world.World;
 import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.node.item.ItemNodeStatic;
 import net.edge.world.node.item.ItemPolicy;
 import net.edge.world.node.region.Region;
@@ -30,9 +31,6 @@ public final class ItemNodeLoader extends JsonLoader {
 		int id = reader.get("id").getAsInt();
 		int amount = reader.get("amount").getAsInt();
 		Position position = Objects.requireNonNull(builder.fromJson(reader.get("position"), Position.class));
-		Region region = World.getRegions().getRegion(position);
-		if(region != null) {
-			region.register(new ItemNodeStatic(new Item(id, amount), position, ItemPolicy.RESPAWN));
-		}
+		ItemNodeManager.register(new ItemNodeStatic(new Item(id, amount), position, ItemPolicy.RESPAWN));
 	}
 }

@@ -3,100 +3,100 @@
     "opcodes": [
       213
     ],
-    "class": "net.edge.net.packet.impl.InterfaceActionMessage"
+    "class": "net.edge.net.packet.impl.InterfaceActionPacket"
   },
   {
     "opcodes": [
       181
     ],
-    "class": "net.edge.net.packet.impl.MagicOnGroundItemMessage"
+    "class": "net.edge.net.packet.impl.MagicOnGroundItemPacket"
   },
   {
     "opcodes": [
       237
     ],
-    "class": "net.edge.net.packet.impl.MagicOnItemMessage"
+    "class": "net.edge.net.packet.impl.MagicOnItemPacket"
   },
   {
     "opcodes": [
       135
     ],
-    "class": "net.edge.net.packet.impl.InputXOptionMessage"
+    "class": "net.edge.net.packet.impl.InputXOptionPacket"
   },
   {
     "opcodes": [
       208,
       60
     ],
-    "class": "net.edge.net.packet.impl.EnterInputMessage"
+    "class": "net.edge.net.packet.impl.EnterInputPacket"
   },
   {
     "opcodes": [
       57
     ],
-    "class": "net.edge.net.packet.impl.ItemOnNpcMessage"
+    "class": "net.edge.net.packet.impl.ItemOnNpcPacket"
   },
   {
     "opcodes": [
       202
     ],
-    "class": "net.edge.net.packet.impl.IdleStateMessage"
+    "class": "net.edge.net.packet.impl.IdleStatePacket"
   },
   {
     "opcodes": [
       249,
       153
     ],
-    "class": "net.edge.net.packet.impl.AttackPlayerMessage"
+    "class": "net.edge.net.packet.impl.AttackPlayerPacket"
   },
   {
     "opcodes": [
       101
     ],
-    "class": "net.edge.net.packet.impl.CharacterSelectionMessage"
+    "class": "net.edge.net.packet.impl.CharacterSelectionPacket"
   },
   {
     "opcodes": [
       3
     ],
-    "class": "net.edge.net.packet.impl.FocusChangeMessage"
+    "class": "net.edge.net.packet.impl.FocusChangePacket"
   },
   {
     "opcodes": [
       4
     ],
-    "class": "net.edge.net.packet.impl.ChatMessage"
+    "class": "net.edge.net.packet.impl.ChatPacket"
   },
   {
     "opcodes": [
       185
     ],
-    "class": "net.edge.net.packet.impl.ClickButtonMessage"
+    "class": "net.edge.net.packet.impl.ClickButtonPacket"
   },
   {
     "opcodes": [
       122,
       75
     ],
-    "class": "net.edge.net.packet.impl.ItemActionMessage"
+    "class": "net.edge.net.packet.impl.ItemActionPacket"
   },
   {
     "opcodes": [
       103
     ],
-    "class": "net.edge.net.packet.impl.CommandMessage"
+    "class": "net.edge.net.packet.impl.CommandPacket"
   },
   {
     "opcodes": [
       105
     ],
-    "class": "net.edge.net.packet.impl.MarketMessage"
+    "class": "net.edge.net.packet.impl.MarketPacket"
   },
   {
     "opcodes": [
       104
     ],
-    "class": "net.edge.net.packet.impl.ClanChatMessage"
+    "class": "net.edge.net.packet.impl.ClanChatPacket"
   },
   {
     "opcodes": [
@@ -105,31 +105,31 @@
       241,
       86
     ],
-    "class": "net.edge.net.packet.impl.DefaultMessage"
+    "class": "net.edge.net.packet.impl.DefaultPacket"
   },
   {
     "opcodes": [
       40
     ],
-    "class": "net.edge.net.packet.impl.AdvanceDialogueMessage"
+    "class": "net.edge.net.packet.impl.AdvanceDialoguePacket"
   },
   {
     "opcodes": [
       87
     ],
-    "class": "net.edge.net.packet.impl.DropItemMessage"
+    "class": "net.edge.net.packet.impl.DropItemPacket"
   },
   {
     "opcodes": [
       73
     ],
-    "class": "net.edge.net.packet.impl.FollowPlayerMessage"
+    "class": "net.edge.net.packet.impl.FollowPlayerPacket"
   },
   {
     "opcodes": [
       130
     ],
-    "class": "net.edge.net.packet.impl.InterfaceClickMessage"
+    "class": "net.edge.net.packet.impl.InterfaceClickPacket"
   },
   {
     "opcodes": [
@@ -141,25 +141,25 @@
       214,
       216
     ],
-    "class": "net.edge.net.packet.impl.ItemInterfaceMessage"
+    "class": "net.edge.net.packet.impl.ItemInterfacePacket"
   },
   {
     "opcodes": [
       53
     ],
-    "class": "net.edge.net.packet.impl.ItemOnItemMessage"
+    "class": "net.edge.net.packet.impl.ItemOnItemPacket"
   },
   {
     "opcodes": [
       192
     ],
-    "class": "net.edge.net.packet.impl.ItemOnObjectMessage"
+    "class": "net.edge.net.packet.impl.ItemOnObjectPacket"
   },
   {
     "opcodes": [
       14
     ],
-    "class": "net.edge.net.packet.impl.ItemOnPlayerMessage"
+    "class": "net.edge.net.packet.impl.ItemOnPlayerPacket"
   },
   {
     "opcodes": [
@@ -167,7 +167,7 @@
       164,
       98
     ],
-    "class": "net.edge.net.packet.impl.MovementQueueMessage"
+    "class": "net.edge.net.packet.impl.MovementQueuePacket"
   },
   {
     "opcodes": [
@@ -178,7 +178,7 @@
       21,
       18
     ],
-    "class": "net.edge.net.packet.impl.NpcActionMessage"
+    "class": "net.edge.net.packet.impl.NpcActionPacket"
   },
   {
     "opcodes": [
@@ -189,19 +189,19 @@
       35,
       70
     ],
-    "class": "net.edge.net.packet.impl.ObjectActionMessage"
+    "class": "net.edge.net.packet.impl.ObjectActionPacket"
   },
   {
     "opcodes": [
       253
     ],
-    "class": "net.edge.net.packet.impl.ItemOnItemNodeMessage"
+    "class": "net.edge.net.packet.impl.ItemOnItemNodePacket"
   },
   {
     "opcodes": [
       236
     ],
-    "class": "net.edge.net.packet.impl.PickupItemMessage"
+    "class": "net.edge.net.packet.impl.PickupItemPacket"
   },
   {
     "opcodes": [
@@ -211,32 +211,32 @@
       74,
       126
     ],
-    "class": "net.edge.net.packet.impl.PrivateMessagingMessage"
+    "class": "net.edge.net.packet.impl.SocialPacket"
   },
   {
     "opcodes": [
       139,
       128
     ],
-    "class": "net.edge.net.packet.impl.RequestMessage"
+    "class": "net.edge.net.packet.impl.RequestPacket"
   },
   {
     "opcodes": [
       121
     ],
-    "class": "net.edge.net.packet.impl.UpdateRegionMessage"
+    "class": "net.edge.net.packet.impl.UpdateRegionPacket"
   },
   {
     "opcodes": [
       134,
       19
     ],
-    "class": "net.edge.net.packet.impl.NpcInformationMessage"
+    "class": "net.edge.net.packet.impl.NpcInformationPacket"
   },
   {
     "opcodes": [
       20
     ],
-    "class": "net.edge.net.packet.impl.ShopAccessMessage"
+    "class": "net.edge.net.packet.impl.ShopAccessPacket"
   }
 ]

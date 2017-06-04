@@ -1,5 +1,6 @@
 package net.edge.content.skill.mining;
 
+import net.edge.event.impl.ObjectEvent;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.TransformableObject;
@@ -59,45 +60,37 @@ public final class Mining extends HarvestingSkillAction {
 		this.pickaxe = PickaxeData.getDefinition(player).orElse(null);
 		this.object = object.toDynamic();
 	}
-
-	/**
-	 * Starts the skill action for the mining skill.
-	 * @param player the player we are starting the action for.
-	 * @param object the object that we're getting the definition from.
-	 * @return <true> if the skill action started, <false> otherwise.
-	 */
-	public static boolean produce(Player player, ObjectNode object) {
-		Optional<RockData> rock = RockData.getDefinition(object.getId());
-
-		if(!rock.isPresent()) {
-			return false;
-		}
-
-		Mining mining = new Mining(player, rock.get(), object);
-		mining.start();
-		return true;
-	}
-
-	public static boolean prospect(Player player, ObjectNode object) {
-		Optional<RockData> rock = RockData.getDefinition(object.getId());
-
-		if(!rock.isPresent()) {
-			return false;
-		}
-
-		player.message("You examine the rock for ores...");
-
-		String message = rock.get().toString().concat(" ore").replace("_", " ");
-
-		World.get().submit(new Task(rock.get().prospectDelay(), false) {
-
-			@Override
-			public void execute() {
-				player.message("... this rock contains @red@" + message + "@bla@.");
-				cancel();
+	
+	public static void objects() {
+		for(RockData rock : RockData.values()) {
+			ObjectEvent mine = new ObjectEvent() {
+				@Override
+				public boolean click(Player player, ObjectNode object, int click) {
+					Mining mining = new Mining(player, rock, object);
+					mining.start();
+					return true;
+				}
+			};
+			ObjectEvent prospect = new ObjectEvent() {
+				@Override
+				public boolean click(Player player, ObjectNode object, int click) {
+					player.message("You examine the rock for ores...");
+					String message = rock.toString().concat(" ore").replace("_", " ");
+					World.get().submit(new Task(rock.prospectDelay(), false) {
+						@Override
+						public void execute() {
+							player.message("... this rock contains @red@" + message + "@bla@.");
+							cancel();
+						}
+					}.attach(player));
+					return true;
+				}
+			};
+			for(TransformableObject o : rock.getObject()) {
+				mine.registerFirst(o.getObjectId());
+				prospect.registerSecond(o.getObjectId());
 			}
-		}.attach(player));
-		return true;
+		}
 	}
 
 	@Override

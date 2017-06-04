@@ -7,6 +7,7 @@ import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.node.item.ItemNodeStatic;
 import net.edge.world.node.region.Region;
 
@@ -156,13 +157,10 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 	 * @param position the position on which we are dropping the items.
 	 */
 	public final void dropAll(Position position) {
-		Region region = World.getRegions().getRegion(position);
-		if(region != null) {
-			container.forEach(item -> {
-				ItemNodeStatic ground = new ItemNodeStatic(item, position);
-				region.register(ground);
-			});
-		}
+		container.forEach(item -> {
+			ItemNodeStatic ground = new ItemNodeStatic(item, position);
+			ItemNodeManager.register(ground);
+		});
 		container.clear();
 	}
 	

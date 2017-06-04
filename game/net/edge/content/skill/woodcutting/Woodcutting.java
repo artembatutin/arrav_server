@@ -1,5 +1,6 @@
 package net.edge.content.skill.woodcutting;
 
+import net.edge.event.impl.ObjectEvent;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.TransformableObject;
@@ -55,22 +56,20 @@ public final class Woodcutting extends HarvestingSkillAction {
 		this.object = object.toDynamic();
 	}
 	
-	/**
-	 * Starts the skill action for the woodcutting skill.
-	 * @param player the player we are starting the action for.
-	 * @param object the object that we're getting the definition from.
-	 * @return <true> if the skill action started, <false> otherwise.
-	 */
-	public static boolean produce(Player player, ObjectNode object) {
-		Optional<Tree> tree = Tree.getDefinition(object.getId());
-		
-		if(!tree.isPresent()) {
-			return false;
+	public static void objects() {
+		for(Tree tree : Tree.values()) {
+			ObjectEvent cut = new ObjectEvent() {
+				@Override
+				public boolean click(Player player, ObjectNode object, int click) {
+					Woodcutting woodcutting = new Woodcutting(player, tree, object);
+					woodcutting.start();
+					return true;
+				}
+			};
+			for(TransformableObject o : tree.getObject()) {
+				cut.registerFirst(o.getObjectId());
+			}
 		}
-		
-		Woodcutting woodcutting = new Woodcutting(player, tree.get(), object);
-		woodcutting.start();
-		return true;
 	}
 	
 	@Override

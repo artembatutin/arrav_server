@@ -4,7 +4,7 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3086,
+    "x": 3088,
     "y": 3499,
     "z": 0
   },
@@ -226,16 +226,46 @@
       "id": 9805,
       "amount": 1
     },
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
+    {
+      "id": 1513,
+      "amount": 1
+    },
+    {
+      "id": 1513,
+      "amount": 1
+    },
+    {
+      "id": 1513,
+      "amount": 1
+    },
+    {
+      "id": 1513,
+      "amount": 1
+    },
+    {
+      "id": 1513,
+      "amount": 1
+    },
+    {
+      "id": 1513,
+      "amount": 1
+    },
+    {
+      "id": 1513,
+      "amount": 1
+    },
+    {
+      "id": 1513,
+      "amount": 1
+    },
+    {
+      "id": 1513,
+      "amount": 1
+    },
+    {
+      "id": 1513,
+      "amount": 1
+    },
     null,
     null,
     null,

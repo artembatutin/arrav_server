@@ -119,6 +119,10 @@ public class MarketShop {
 			player.message("You can't sell " + itemName + " " + "to the store.");
 			return;
 		}
+		if(!canSell(player, item.getId())) {
+			player.message("You can't sell " + item.getDefinition().getName() + " here.");
+			return;
+		}
 		String formatPrice = TextUtils.formatPrice((int) Math.floor(determinePrice(player, item) / 2));
 		player.message(itemName + ": shop will buy for " + formatPrice + " " + getCurrency() + ".");
 	}
@@ -263,7 +267,7 @@ public class MarketShop {
 			return false;
 		}
 		if(!canSell(player, item.getId())) {
-			player.message("You can't sell " + item.getDefinition().getName() + " " + "to this store.");
+			player.message("You can't sell " + item.getDefinition().getName() + " here.");
 			return false;
 		}
 		int amount = player.getInventory().computeAmountForId(item.getId());

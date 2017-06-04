@@ -69,7 +69,7 @@ public final class ItemNodeStatic extends ItemNode {
 		if(player.getInventory().add(super.getItem())) {
 			switch(policy) {
 				case TIMEOUT:
-					this.getRegion().unregister(this);
+					ItemNodeManager.register(this);
 					break;
 				case RESPAWN:
 					dispose();

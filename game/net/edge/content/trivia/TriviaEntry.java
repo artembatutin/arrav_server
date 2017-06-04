@@ -48,7 +48,8 @@ public final class TriviaEntry {
      * @param player    the player to send the question to.
      */
     public void onLogin(Player player) {
-        player.message("@red@[Trivia Bot]: @blu@" + current.question);
+        if(current != null)
+            player.message("@red@[Trivia Bot]: @blu@" + current.question);
     }
     /**
      * Attempts to answer the current trivia question.

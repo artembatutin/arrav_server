@@ -5,6 +5,7 @@ import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.node.region.Region;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -46,7 +47,7 @@ public final class NpcDropManager {
 		for(Item drop : dropItems) {
 			if(drop == null)
 				continue;
-			region.register(new ItemNode(drop, victim.getPosition(), killer));
+			ItemNodeManager.register(new ItemNode(drop, victim.getPosition(), killer));
 		}
 	}
 	

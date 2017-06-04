@@ -42,17 +42,17 @@ public final class ItemDefinition {
 	/**
 	 * The flag that determines if the item is noted.
 	 */
-	private final boolean noted;
+	private boolean noted;
 	
 	/**
 	 * The note transform id of this item.
 	 */
-	private final int noteId;
+	private int noteId;
 	
 	/**
 	 * The flag that determines if the item is lended.
 	 */
-	private boolean lended;
+	private final boolean lended;
 	
 	/**
 	 * The lend transform id of this item.
@@ -604,6 +604,14 @@ public final class ItemDefinition {
 		} catch(IOException ex) {
 			ex.printStackTrace();
 		}*/
+	}
+	
+	public void setNoted(boolean noted) {
+		this.noted = noted;
+	}
+	
+	public void setNoted(int noted) {
+		this.noteId = noted;
 	}
 	
 }

@@ -4,9 +4,9 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3092,
-    "y": 3477,
-    "z": 1
+    "x": 3104,
+    "y": 3514,
+    "z": 0
   },
   "rights": "DEVELOPER",
   "nightmare": 0,
@@ -191,42 +191,15 @@
   ],
   "inventory": [
     {
-      "id": 14097,
-      "amount": 1
-    },
-    null,
-    null,
-    {
-      "id": 8095,
-      "amount": 1
+      "id": 995,
+      "amount": 9081724
     },
     {
-      "id": 1505,
+      "id": 4089,
       "amount": 1
     },
     {
-      "id": 4703,
-      "amount": 1
-    },
-    {
-      "id": 17279,
-      "amount": 1
-    },
-    null,
-    null,
-    null,
-    null,
-    null,
-    {
-      "id": 1963,
-      "amount": 1
-    },
-    {
-      "id": 19650,
-      "amount": 1
-    },
-    {
-      "id": 4073,
+      "id": 14061,
       "amount": 1
     },
     {
@@ -237,22 +210,85 @@
       "id": 6611,
       "amount": 1
     },
+    {
+      "id": 14061,
+      "amount": 1
+    },
+    {
+      "id": 6611,
+      "amount": 1
+    },
+    {
+      "id": 14061,
+      "amount": 1
+    },
+    {
+      "id": 590,
+      "amount": 1
+    },
     null,
     null,
     null,
     null,
     null,
     null,
-    null,
-    null,
-    null,
-    null,
-    null
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    },
+    {
+      "id": 1511,
+      "amount": 1
+    }
   ],
   "bank0": [
     {
       "id": 995,
-      "amount": 14787025
+      "amount": 14810227
     },
     {
       "id": 329,
@@ -268,7 +304,7 @@
     },
     {
       "id": 590,
-      "amount": 1
+      "amount": 2
     },
     {
       "id": 946,
@@ -396,7 +432,7 @@
     },
     {
       "id": 1511,
-      "amount": 4
+      "amount": 14
     },
     {
       "id": 997,
@@ -458,15 +494,42 @@
       "id": 6109,
       "amount": 1
     },
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
+    {
+      "id": 20667,
+      "amount": 1
+    },
+    {
+      "id": 10,
+      "amount": 2
+    },
+    {
+      "id": 14061,
+      "amount": 1
+    },
+    {
+      "id": 97,
+      "amount": 1
+    },
+    {
+      "id": 99,
+      "amount": 1
+    },
+    {
+      "id": 20661,
+      "amount": 1
+    },
+    {
+      "id": 6644,
+      "amount": 2
+    },
+    {
+      "id": 15752,
+      "amount": 3
+    },
+    {
+      "id": 19650,
+      "amount": 4
+    },
     null,
     null,
     null,
@@ -1173,10 +1236,7 @@
     null
   ],
   "equipment": [
-    {
-      "id": 4089,
-      "amount": 1
-    },
+    null,
     null,
     null,
     {
@@ -1204,6 +1264,8 @@
     38261318,
     63723366978073,
     989838,
+    41307633,
+    26066,
     77401079141981
   ],
   "ignores": [],

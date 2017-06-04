@@ -61,7 +61,7 @@ final class BankTab extends ItemContainer {
 		depositItem = depositItem.createWithAmount(amount);
 		
 		ItemDefinition def = depositItem.getDefinition();
-		Item newDepositItem = depositItem.createWithId(def.isNoted() ? depositItem.getId() - 1 : depositItem.getId());
+		Item newDepositItem = depositItem.createWithId(def.isNoted() ? def.getNoted() : depositItem.getId());
 		
 		int remaining = remaining(); // Do we have enough space in the bank?
 		if(remaining < 1 && computeIndexForId(newDepositItem.getId()) == -1) {

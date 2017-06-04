@@ -1,11 +1,11 @@
 package net.edge.content.skill.thieving.impl;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
+import net.edge.event.impl.ObjectEvent;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.thieving.Thieving;
 import net.edge.world.Animation;
+import net.edge.world.Hit;
 import net.edge.world.World;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
@@ -13,7 +13,6 @@ import net.edge.world.node.item.Item;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectNode;
 
-import java.util.EnumSet;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -39,31 +38,29 @@ public final class Stalls extends Thieving {
 	 * @param stall  the stall this player is stealing from.
 	 * @param object the object this player is interacting with.
 	 */
-	Stalls(Player player, StallData stall, DynamicObject object) {
+	private Stalls(Player player, StallData stall, DynamicObject object) {
 		super(player, object.getGlobalPos());
 		this.stall = stall;
 		this.object = object;
 	}
 	
-	/**
-	 * Attempts to steal from a stall.
-	 * @param player the player trying to steal from a stall.
-	 * @param object the object this player is stealing from.
-	 * @return <true> if the stall can be theft, <false> otherwise.
-	 */
-	public static boolean steal(Player player, ObjectNode object) {
-		Optional<StallData> definition = StallData.getDefinition(object.getId());
-		DynamicObject o = object.toDynamic();
-		if(!definition.isPresent()) {
-			return false;
+	public static void objects() {
+		for(StallData data : StallData.values()) {
+			ObjectEvent steal = new ObjectEvent() {
+				@Override
+				public boolean click(Player player, ObjectNode object, int click) {
+					if(object.isDynamic() && object.toDynamic().isDisabled()) {
+						return false;
+					}
+					Stalls stall = new Stalls(player, data, object.toDynamic());
+					stall.start();
+					return true;
+				}
+			};
+			for(int o : data.objectId) {
+				steal.registerSecond(o);
+			}
 		}
-		if(o.isDisabled()) {
-			return false;
-		}
-		
-		Stalls stall = new Stalls(player, definition.get(), o);
-		stall.start();
-		return true;
 	}
 	
 	/**
@@ -106,12 +103,12 @@ public final class Stalls extends Thieving {
 	
 	@Override
 	public void onSubmit() {
-		if(stall.requirement > 40 && ThreadLocalRandom.current().nextInt(100) < 40) {
+		if(stall.requirement > 40 && ThreadLocalRandom.current().nextInt(200) < 40) {
 			Optional<Npc> guard = player.getLocalNpcs().stream().filter(g -> g.getId() == 3408 && !g.getCombatBuilder().inCombat()).findFirst();
 			if(guard.isPresent()) {
-				guard.get().forceChat("What do you think you're doing?!?");
-				guard.get().getCombatBuilder().attack(player);
-				guard.get().setSmart(true);
+				guard.get().forceChat("Get your hands off there!");
+				guard.get().faceEntity(player);
+				player.damage(new Hit(10, Hit.HitType.DISEASE, Hit.HitIcon.NONE));
 			}
 		}
 	}
@@ -177,11 +174,6 @@ public final class Stalls extends Thieving {
 		GEM(new int[]{2562}, EMPTY_STALLS[0], 75, new Item[]{new Item(995, 35000)}, 160, 80);
 		
 		/**
-		 * Caches our enum values.
-		 */
-		private static final ImmutableSet<StallData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(StallData.class));
-		
-		/**
 		 * The object identification for this stall.
 		 */
 		private final int[] objectId;
@@ -229,16 +221,6 @@ public final class Stalls extends Thieving {
 			this.respawnTime = respawnTime;
 		}
 		
-		protected static Optional<StallData> getDefinition(int id) {
-			for(StallData def : VALUES) {
-				for(int object : def.objectId) {
-					if(object == id) {
-						return Optional.of(def);
-					}
-				}
-			}
-			return Optional.empty();
-		}
 	}
 	
 	/**

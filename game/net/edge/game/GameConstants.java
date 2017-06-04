@@ -82,7 +82,7 @@ public final class GameConstants {
 	/**
 	 * The message that will be sent on every login.
 	 */
-	public static final String WELCOME_MESSAGE = "@blu@Welcome to Edgeville.";
+	public static final String WELCOME_MESSAGE = "@blu@Welcome to Edgeville - Game has just been release so please report any bugs.";
 	
 	/**
 	 * The items received when a player logs in for the first time.

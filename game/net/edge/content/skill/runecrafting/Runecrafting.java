@@ -1,5 +1,6 @@
 package net.edge.content.skill.runecrafting;
 
+import net.edge.event.impl.ObjectEvent;
 import net.edge.task.Task;
 import net.edge.content.container.impl.Inventory;
 import net.edge.content.skill.SkillData;
@@ -43,39 +44,35 @@ public final class Runecrafting extends ProducingSkillAction {
 	/**
 	 * Represents the crafting graphic identification.
 	 */
-	public static final Graphic RUNECRAFTING_GRAPHIC = new Graphic(186);
+	private static final Graphic RUNECRAFTING_GRAPHIC = new Graphic(186);
 
 	/**
 	 * Represents the crafting animation identification.
 	 */
-	public static final Animation RUNECRAFTING_ANIMATION = new Animation(791);
+	private static final Animation RUNECRAFTING_ANIMATION = new Animation(791);
 
 	/**
 	 * Constructs a new {@link Runecrafting}
 	 * @param player {@link #player}.
 	 * @param object the object the {@code player} is interacting with.
 	 */
-	public Runecrafting(Player player, ObjectNode object) {
+	private Runecrafting(Player player, ObjectNode object, Altar altar) {
 		super(player, Optional.of(object.getGlobalPos()));
-		this.altar = Altar.getDefinition(object.getId()).orElse(null);
+		this.altar = altar;
 	}
-
-	/**
-	 * Starts the skill action for the runecrafting skill.
-	 * @param player the player we are starting the action for.
-	 * @param object the object that we're getting the definition from.
-	 * @return <true> if the skill action started, <false> otherwise.
-	 */
-	public static boolean produce(Player player, ObjectNode object) {
-		Optional<Altar> altar = Altar.getDefinition(object.getId());
-
-		if(!altar.isPresent()) {
-			return false;
+	
+	public static void objects() {
+		for(Altar a : Altar.values()) {
+			ObjectEvent rc = new ObjectEvent() {
+				@Override
+				public boolean click(Player player, ObjectNode object, int click) {
+					Runecrafting runeCrafting = new Runecrafting(player, object, a);
+					runeCrafting.start();
+					return true;
+				}
+			};
+			rc.registerFirst(a.getObjectId());
 		}
-
-		Runecrafting runeCrafting = new Runecrafting(player, object);
-		runeCrafting.start();
-		return true;
 	}
 
 	@Override

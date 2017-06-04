@@ -11,7 +11,7 @@ public enum TriviaData {
     _1("Who are the owners of Edgeville?", "Avro and Stan", "Avro & Stan", "Stan & Avro", "Stan and Avro"),
     _2("Name one game developer.", "Avro", "Stan"),
     _3("What is the maximum combat level?", "138"),
-    _4("Howmuch coins does a starterpack in Edgeville contain?", "200k", "200000", "200_000"),
+    _4("How much coins does a starterpack in Edgeville contain?", "200k", "200000", "200_000"),
     _5("Who is the shop owner of the Blood money store?", "Hazelmere"),
     _6("Who is the shop owner of the Edge tokens store?", "Party Pete"),
     _7("How many Hitpoints do Sharks heal?", "20", "Twenty", "200", "Two-hundred", "Two hundred"),
@@ -31,6 +31,7 @@ public enum TriviaData {
     _21("Which godswords special attack can heal you?", "Saradomin godsword"),
     _22("Which godswords special attack drains your opponents stats?", "Bandos godsword"),
     _23("Which godswords special attack freezes your enemy?", "Zamorak godsword"),
+    _24("Where can you quit the night's watch if you play in nightmare mode?", "Quest tab", "quest tab")
     ;
 
     /**

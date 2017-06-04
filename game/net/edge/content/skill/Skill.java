@@ -231,7 +231,7 @@ public final class Skill {
 	 */
 	public void setRealLevel(int realLevel) {
 		if(realLevel < 0) {
-			realLevel = 0;
+			realLevel = 1;
 		} else if(realLevel > 99) {
 			realLevel = 99;
 		}

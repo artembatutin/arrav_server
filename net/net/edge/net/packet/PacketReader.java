@@ -17,5 +17,5 @@ public interface PacketReader {
 	 * @param size    the size of this message.
 	 * @param payload the data contained within this message.
 	 */
-	void handleMessage(Player player, int opcode, int size, ByteMessage payload);
+	void handle(Player player, int opcode, int size, ByteMessage payload);
 }

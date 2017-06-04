@@ -1,11 +1,6 @@
 package net.edge.content.skill.runecrafting;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import net.edge.locale.Position;
-
-import java.util.EnumSet;
-import java.util.Optional;
 
 /**
  * The enumerated type which elements represents an altar which can produce
@@ -26,11 +21,6 @@ public enum Altar {
 	DEATH(2488, Rune.DEATH, 65, 80.0, new Position(2208, 4830), false),
 	BLOOD(30624, Rune.BLOOD, 80, 90.0, new Position(3027, 4834), false),
 	SOUL(7138, Rune.SOUL, 95, 100.0, new Position(3050, 4829), false);
-
-	/**
-	 * Caches our enum values.
-	 */
-	private static final ImmutableSet<Altar> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Altar.class));
 
 	/**
 	 * The object identification for this altar.
@@ -122,13 +112,4 @@ public enum Altar {
 		return diverse;
 	}
 
-	/**
-	 * Gets the definition for this altar.
-	 * @param identifier the identifier to check for.
-	 * @return an optional holding the {@link Altar} value found,
-	 * {@link Optional#empty} otherwise.
-	 */
-	public static Optional<Altar> getDefinition(int identifier) {
-		return VALUES.stream().filter(def -> def.objectId == identifier).findAny();
-	}
 }

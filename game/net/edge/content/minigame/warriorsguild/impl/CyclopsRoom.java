@@ -23,6 +23,7 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.node.region.Region;
 
@@ -139,13 +140,9 @@ public final class CyclopsRoom extends GuildRoom {
 	public void onKill(Player player, EntityNode other) {
 		Defender defender = Defender.getNext(player);
 		boolean rollRare = true; // 10% chance.
-
 		if(rollRare) {
-			Region region = other.getRegion();
-			if(region != null) {
-				ItemNode node = new ItemNode(defender.item, other.getPosition(), player);
-				region.register(node);
-			}
+			ItemNode node = new ItemNode(defender.item, other.getPosition(), player);
+			ItemNodeManager.register(node);
 		}
 	}
 

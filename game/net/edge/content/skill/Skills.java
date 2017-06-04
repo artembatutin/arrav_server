@@ -184,61 +184,6 @@ public final class Skills {
 		throw new UnsupportedOperationException("This class cannot be " + "instantiated!");
 	}
 	
-	/**
-	 * Executes a certain skill.
-	 * @param player the player executing the skill.
-	 * @param object the object interacted with.
-	 * @param id     the id of the object.
-	 * @return <true> if the skill was started, <false> otherwise.
-	 */
-	public static boolean executeObjectantSkills(Player player, ObjectNode object, int id) {
-		switch(id) {
-			case 1:
-				if(Hunter.claim(player, object)) {
-					return true;
-				}
-				if(Hunter.pickup(player, object)) {
-					return true;
-				}
-				if(Woodcutting.produce(player, object)) {
-					return true;
-				}
-				if(Mining.produce(player, object)) {
-					return true;
-				}
-				if(Runecrafting.produce(player, object)) {
-					return true;
-				}
-				if(GnomeStrongholdAgility.execute(player, object)) {
-					return true;
-				}
-				if(BarbarianOutpostAgility.execute(player, object)) {
-					return true;
-				}
-				if(WildernessAgility.execute(player, object)) {
-					return true;
-				}
-				if(Shortcuts.execute(player, object)) {
-					return true;
-				}
-				if(PotClaying.openInterface(player, object)) {
-					return true;
-				}
-				break;
-			case 2:
-				if(Stalls.steal(player, object)) {
-					return true;
-				}
-				if(Mining.prospect(player, object)) {
-					return true;
-				}
-				if(Smelting.openInterface(player, object)) {
-					return true;
-				}
-				break;
-		}
-		return false;
-	}
 	
 	/**
 	 * Attempts to add {@code amount} of experience for {@code player}.

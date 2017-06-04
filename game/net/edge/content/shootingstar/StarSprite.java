@@ -129,7 +129,7 @@ public final class StarSprite extends Npc {
 			a.chain(new PlayerDialogue("No, nevermind sorry."));
 			a.chain(new PlayerDialogue("Yes, let's do it.").attachAfter(() -> {
 				player.getInventory().remove(new Item(StarMining.STARDUST.getId(), amountRemovable));
-				player.getInventory().addOrBank(new Item(19000, amountRemovable / 100));
+				player.getInventory().addOrBank(new Item(19000, amountRemovable / 10));
 			}));
 			a.chain(new NpcDialogue(8091, "Very well, your blood coins have been added to your", "inventory or have been banked."));
 			a.start();

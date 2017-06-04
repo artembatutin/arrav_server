@@ -4,6 +4,7 @@ import net.edge.util.MutableNumber;
 import net.edge.locale.Position;
 import net.edge.world.World;
 import net.edge.world.node.Node;
+import net.edge.world.node.NodeState;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.player.Player;
 
@@ -74,7 +75,7 @@ public class ItemNode extends Node {
 				state = ItemState.SEEN_BY_EVERYONE;
 				break;
 			case SEEN_BY_EVERYONE:
-				this.getRegion().unregister(this);
+				this.setState(NodeState.INACTIVE);
 				break;
 			default:
 				throw new IllegalStateException("Invalid item node state!");
@@ -87,7 +88,7 @@ public class ItemNode extends Node {
 	 */
 	public void onPickup(Player player) {
 		if(player.getInventory().add(item)) {
-			this.getRegion().unregister(this);
+			this.setState(NodeState.INACTIVE);
 		}
 	}
 	
@@ -95,7 +96,7 @@ public class ItemNode extends Node {
 	 * Gets the item state of this node.
 	 * @return the item state.
 	 */
-	public final ItemState getItemState() {
+	final ItemState getItemState() {
 		return state;
 	}
 	

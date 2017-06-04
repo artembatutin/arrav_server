@@ -2,6 +2,7 @@ package net.edge.content.skill.agility.impl.barb;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.event.impl.ObjectEvent;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.content.skill.Skills;
@@ -48,22 +49,22 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 		this.obstacle = obstacle;
 	}
 	
-	/**
-	 * Starts this skill action.
-	 * @param player {@link #getPlayer()}.
-	 * @param object the object this player is interacting with.
-	 * @return <true> if the player can execute the logic, <false> otherwise.
-	 */
-	public static boolean execute(Player player, ObjectNode object) {
-		Optional<BarbarianAgilityData> obstacle = BarbarianAgilityData.getDefinition(object.getId());
-		
-		if(!obstacle.isPresent()) {
-			return false;
+	public static void objects() {
+		for(BarbarianAgilityData data : BarbarianAgilityData.values()) {
+			ObjectEvent perform = new ObjectEvent() {
+				@Override
+				public boolean click(Player player, ObjectNode object, int click) {
+					BarbarianOutpostAgility agility = new BarbarianOutpostAgility(player, object, data);
+					agility.start();
+					return true;
+				}
+			};
+			for(int object : data.getObjects()) {
+				perform.registerFirst(object);
+				if(object > 42003)
+					perform.registerFirst(object - 42003);
+			}
 		}
-		
-		BarbarianOutpostAgility agility = new BarbarianOutpostAgility(player, object, obstacle.get());
-		agility.start();
-		return true;
 	}
 	
 	@Override
@@ -201,11 +202,6 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 		SLIDE_DOWN_ROOF(new int[]{43532}, ObstacleType.JUMP_GAP, SlideDownRoof::new);
 		
 		/**
-		 * Caches our enum values.
-		 */
-		private static final ImmutableSet<BarbarianAgilityData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(BarbarianAgilityData.class));
-		
-		/**
 		 * The object identification for this object.
 		 */
 		private final int[] objectId;
@@ -267,19 +263,10 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 		}
 		
 		/**
-		 * Gets an Optional of the matched value.
-		 * @param identifier the identifier to check for matches.
-		 * @return an optional with the {@link BarbarianOutpostAgility} found, {@link Optional#empty} otherwise.
+		 * Objects of this course.
 		 */
-		protected static Optional<BarbarianAgilityData> getDefinition(int identifier) {
-			for(BarbarianAgilityData data : VALUES) {
-				for(int object : data.objectId) {
-					if(object == identifier || object == identifier - 42003) {
-						return Optional.of(data);
-					}
-				}
-			}
-			return Optional.empty();
+		public int[] getObjects() {
+			return objectId;
 		}
 	}
 }

@@ -2,6 +2,7 @@ package net.edge.content.wilderness;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.event.impl.ObjectEvent;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.locale.Position;
@@ -34,17 +35,6 @@ public enum Obelisk {
 	 */
 	private static final ImmutableSet<Obelisk> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Obelisk.class));
 	
-	public static boolean activate(Player player, ObjectNode object) {
-		
-		Optional<Obelisk> obelisk = get(object);
-		
-		if(obelisk.isPresent()) {
-			World.get().submit(new ObeliskTask(obelisk.get(), player.getRegion()));
-			return true;
-		}
-		return false;
-	}
-	
 	/**
 	 * The obelisk object id.
 	 */
@@ -72,6 +62,21 @@ public enum Obelisk {
 	 */
 	public static Optional<Obelisk> get(ObjectNode object) {
 		return VALUES.stream().filter(t -> object.getId() == t.object).findAny();
+	}
+	
+	public static void init() {
+		ObjectEvent a = new ObjectEvent() {
+			@Override
+			public boolean click(Player player, ObjectNode object, int click) {
+				Optional<Obelisk> obelisk = get(object);
+				if(obelisk.isPresent()) {
+					World.get().submit(new ObeliskTask(obelisk.get(), player.getRegion()));
+					return true;
+				}
+				return false;
+			}
+		};
+		VALUES.forEach(o -> a.registerFirst(o.getObject()));
 	}
 	
 	/**

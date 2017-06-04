@@ -11,6 +11,7 @@ import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Steppable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
+import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectDirection;
@@ -42,22 +43,22 @@ public final class WildernessAgility extends AgilityCourse {
 		this.data = data;
 	}
 	
-	/**
-	 * Starts this skill action.
-	 * @param player {@link #getPlayer()}.
-	 * @param object the object this player is interacting with.
-	 * @return <true> if the player can execute the logic, <false> otherwise.
-	 */
-	public static boolean execute(Player player, ObjectNode object) {
-		Optional<WildernessAgilityData> obstacle = WildernessAgilityData.getDefinition(object.getId());
-		
-		if(!obstacle.isPresent()) {
-			return false;
+	public static void objects() {
+		for(WildernessAgilityData data : WildernessAgilityData.values()) {
+			ObjectEvent perform = new ObjectEvent() {
+				@Override
+				public boolean click(Player player, ObjectNode object, int click) {
+					WildernessAgility agility = new WildernessAgility(player, object, data);
+					agility.start();
+					return true;
+				}
+			};
+			for(int object : data.getObjects()) {
+				perform.registerFirst(object);
+				if(object > 42003)
+					perform.registerFirst(object - 42003);
+			}
 		}
-		
-		WildernessAgility agility = new WildernessAgility(player, object, obstacle.get());
-		agility.start();
-		return true;
 	}
 	
 	@Override
@@ -106,11 +107,6 @@ public final class WildernessAgility extends AgilityCourse {
 		STEPPING_STONES(new int[]{37704}, ObstacleType.STEPPING_STONE, player1 -> new Steppable(new Position(3002, 3960, 0), new Position[]{new Position(3001, 3960, 0), new Position(3000, 3960, 0), new Position(2999, 3960, 0), new Position(2998, 3960, 0), new Position(2997, 3960, 0)}, new Position(2996, 3960, 0), ObstacleType.STEPPING_STONE.getAnimation(), 52, 20)),
 		LOG_BALANCE(new int[]{2297}, ObstacleType.LOG_BALANCE, player1 -> new Walkable(new Position(3002, 3945, 0), new Position(2994, 3945, 0), ObstacleType.LOG_BALANCE.getAnimation(), 52, 20)),
 		CLIMB_ROCKS(new int[]{2328}, ObstacleType.ROCKS, player1 -> new ClimbRocks(player1));
-		
-		/**
-		 * Caches our enum values.
-		 */
-		private static final ImmutableSet<WildernessAgilityData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(WildernessAgilityData.class));
 		
 		/**
 		 * The object identifications for this Obstacle.
@@ -174,19 +170,10 @@ public final class WildernessAgility extends AgilityCourse {
 		}
 		
 		/**
-		 * Gets an Optional of the matched value.
-		 * @param identifier the identifier to check for matches.
-		 * @return an optional with the {@link WildernessAgilityData} found, {@link Optional#empty} otherwise.
+		 * Gets the objects of this course.
 		 */
-		protected static Optional<WildernessAgilityData> getDefinition(int identifier) {
-			for(WildernessAgilityData data : VALUES) {
-				for(int object : data.objectIds) {
-					if(object == identifier || object == identifier - 42003) {
-						return Optional.of(data);
-					}
-				}
-			}
-			return Optional.empty();
+		public int[] getObjects() {
+			return objectIds;
 		}
 	}
 	

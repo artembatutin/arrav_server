@@ -96,14 +96,12 @@ public final class GameSession extends Session {
 	public void dequeue() {
 		while (!inboundQueue.isEmpty()) {
 			Packet msg = inboundQueue.poll();
-
 			try {
-				PacketReader listener = NetworkConstants.MESSAGES[msg.getOpcode()];
-				listener.handleMessage(player, msg.getOpcode(), msg.getSize(), msg.getPayload());
+				NetworkConstants.MESSAGES[msg.getOpcode()].handle(player, msg.getOpcode(), msg.getSize(), msg.getPayload());
 			} catch(Exception e) {
 				e.printStackTrace();
 			} finally {
-				ByteMessage payload = msg.getPayload(); /* Finally, release pooled buffer reference. */
+				ByteMessage payload = msg.getPayload();
 				if (payload.refCnt() > 0) {
 					payload.release();
 				}

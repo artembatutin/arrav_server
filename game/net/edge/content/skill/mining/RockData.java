@@ -1,12 +1,7 @@
 package net.edge.content.skill.mining;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import net.edge.content.skill.action.TransformableObject;
 import net.edge.world.node.item.Item;
-
-import java.util.EnumSet;
-import java.util.Optional;
 
 import static net.edge.content.skill.mining.RockType.*;
 
@@ -51,11 +46,6 @@ enum RockData {
 	public static TransformableObject small(int rock, RockType type) {
 		return new TransformableObject(rock, type.getSmall());
 	}
-	
-	/**
-	 * Caches our enum values.
-	 */
-	private static final ImmutableSet<RockData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(RockData.class));
 	
 	/**
 	 * The regular and empty rock identification for this rock.
@@ -180,20 +170,4 @@ enum RockData {
 		return name().toLowerCase();
 	}
 	
-	/**
-	 * Gets the definition for this rock.
-	 * @param id the identifier to check for.
-	 * @return an optional holding the {@link RockData} value found,
-	 * {@link Optional#empty} otherwise.
-	 */
-	public static Optional<RockData> getDefinition(int id) {
-		for(RockData rock : VALUES) {
-			for(TransformableObject object : rock.object) {
-				if(object.getObjectId() == id) {
-					return Optional.of(rock);
-				}
-			}
-		}
-		return Optional.empty();
-	}
 }

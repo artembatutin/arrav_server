@@ -25,11 +25,6 @@ public enum Tree {
 	VINES(new TransformableObject[]{new TransformableObject(5107, 2376), new TransformableObject(5106, 2376), new TransformableObject(5105, 2376), new TransformableObject(5103, 2376), new TransformableObject(5104, 2376)}, -1, 1, 0.0, 17, 0.5, 0, true);
 
 	/**
-	 * Caches our enum values.
-	 */
-	private static final ImmutableSet<Tree> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Tree.class));
-
-	/**
 	 * The regular and stump identification for this tree.
 	 */
 	private final TransformableObject[] object;
@@ -146,21 +141,5 @@ public enum Tree {
 	public boolean isObstacle() {
 		return obstacle;
 	}
-
-	/**
-	 * Gets the definition for this tree.
-	 * @param id the identifier to check for.
-	 * @return an optional holding the {@link Tree} value found,
-	 * {@link Optional#empty} otherwise.
-	 */
-	public static Optional<Tree> getDefinition(int id) {
-		for(Tree tree : VALUES) {
-			for(TransformableObject object : tree.object) {
-				if(object.getObjectId() == id) {
-					return Optional.of(tree);
-				}
-			}
-		}
-		return Optional.empty();
-	}
+	
 }

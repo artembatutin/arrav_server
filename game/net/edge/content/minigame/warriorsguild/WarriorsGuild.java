@@ -2,6 +2,7 @@ package net.edge.content.minigame.warriorsguild;
 
 import net.edge.content.minigame.warriorsguild.impl.AnimationRoom;
 import net.edge.content.minigame.warriorsguild.impl.CyclopsRoom;
+import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
@@ -18,37 +19,23 @@ public final class WarriorsGuild {
 	 * Represents the item for a warrior guild token.
 	 */
 	public static final Item WARRIOR_GUILD_TOKEN = new Item(8851);
-
-	/**
-	 * Attempts to add the player to the {@link AnimationRoom}.
-	 * @param player the player to handle the this functionality for.
-	 * @param object the object that is being interacted with.
-	 * @return {@code true} if the player entered, {@code false} otherwise.
-	 */
-	public static boolean enterAnimationRoom(Player player, ObjectNode object) {
-		if(object.getId() != 15641 && object.getId() != 15644) {
-			return false;
-		}
-		if(!object.getGlobalPos().same(new Position(2855, 3546)) && !object.getGlobalPos().same(new Position(2854, 3546))) {
-			return false;
-		}
-		return AnimationRoom.enter(player, object);
+	
+	public static void init() {
+		ObjectEvent c =new ObjectEvent() {
+			@Override
+			public boolean click(Player player, ObjectNode object, int click) {
+				return object.getGlobalPos().same(new Position(2839, 3537)) && CyclopsRoom.enter(player, object);
+			}
+		};
+		c.registerFirst(43741);
+		ObjectEvent a = new ObjectEvent() {
+			@Override
+			public boolean click(Player player, ObjectNode object, int click) {
+				return !(!object.getGlobalPos().same(new Position(2855, 3546)) && !object.getGlobalPos().same(new Position(2854, 3546))) && AnimationRoom.enter(player, object);
+			}
+		};
+		a.registerFirst(15641);
+		a.registerFirst(15644);
 	}
-
-	/**
-	 * Attempts to add the player to the {@link CyclopsRoom}.
-	 * @param player the player to handle this functionality for.
-	 * @param object the object being interacted with.
-	 * @return {@code true} if the player was added, {@code false} otherwise.
-	 */
-	public static boolean enterCyclopsRoom(Player player, ObjectNode object) {
-		if(object.getId() != 43741) {
-			return false;
-		}
-		if(!object.getGlobalPos().same(new Position(2839, 3537))) {
-			return false;
-		}
-		return CyclopsRoom.enter(player, object);
-	}
-
+	
 }

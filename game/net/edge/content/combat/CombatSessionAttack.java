@@ -17,6 +17,7 @@ import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.node.region.Region;
 
 import java.util.Arrays;
@@ -121,10 +122,7 @@ public final class CombatSessionAttack extends Task {
 						}
 					}
 					if(!collected) {//dropping arrow if not gathered.
-						Region region = victim.getRegion();
-						if(region != null) {
-							region.register(new ItemNode(new Item(rangedWeapon.getAmmunition().getItem().getId()), victim.getPosition(), player), true);
-						}
+						ItemNodeManager.register(new ItemNode(new Item(rangedWeapon.getAmmunition().getItem().getId()), victim.getPosition(), player), true);
 					}
 				}
 			}

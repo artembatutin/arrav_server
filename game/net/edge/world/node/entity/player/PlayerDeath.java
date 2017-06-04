@@ -26,6 +26,7 @@ import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.entity.update.UpdateFlag;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.node.region.Region;
 
 import java.util.Iterator;
@@ -216,6 +217,8 @@ public final class PlayerDeath extends EntityDeath<Player> {
 
 				if(index == Skills.HITPOINTS && newLevel < 10) {
 					newLevel = 10;
+				} else if(newLevel < 1) {
+					newLevel = 1;
 				}
 				skill.setRealLevel(newLevel);
 			}
@@ -285,13 +288,11 @@ public final class PlayerDeath extends EntityDeath<Player> {
 					amount--;
 				}
 			}
-			if(region != null) {
-				region.register(!killer.isPresent() ? new ItemNode(new Item(526), character.getPosition(), character) : new ItemNode(new Item(526), character.getPosition(), killer.get()));
-				items.forEach(item -> region.register(!killer.isPresent() ? new ItemNode(item, character.getPosition(), character) : new ItemNode(item, character.getPosition(), killer.get())));
-			}
+			ItemNodeManager.register(killer.map(player -> new ItemNode(new Item(526), character.getPosition(), player)).orElseGet(() -> new ItemNode(new Item(526), character.getPosition(), character)));
+			items.forEach(item -> ItemNodeManager.register(killer.map(player -> new ItemNode(item, character.getPosition(), player)).orElseGet(() -> new ItemNode(item, character.getPosition(), character))));
 			character.getInventory().addAll(keep);
 		} else {
-			region.register(!killer.isPresent() ? new ItemNode(new Item(526), character.getPosition(), character) : new ItemNode(new Item(526), character.getPosition(), killer.get()));
+			ItemNodeManager.register(killer.map(player -> new ItemNode(new Item(526), character.getPosition(), player)).orElseGet(() -> new ItemNode(new Item(526), character.getPosition(), character)));
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package net.edge.content;
 
-import net.edge.net.packet.impl.ItemInterfaceMessage;
+import net.edge.net.packet.impl.ItemInterfacePacket;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
@@ -14,7 +14,7 @@ import net.edge.world.node.item.ItemDefinition;
 public final class Attributes {
 	
 	/**
-	 * The first slot action from the {@link ItemInterfaceMessage} packet, any attribute
+	 * The first slot action from the {@link ItemInterfacePacket} packet, any attribute
 	 * action should be utilised here.
 	 * @param player      the player we're utilizing this action for.
 	 * @param interfaceId the interface id of this interface.
@@ -44,7 +44,7 @@ public final class Attributes {
 	}
 	
 	/**
-	 * The second slot action from the {@link ItemInterfaceMessage} packet, any attribute
+	 * The second slot action from the {@link ItemInterfacePacket} packet, any attribute
 	 * action should be utilised here.
 	 * @param player      the player we're utilizing this action for.
 	 * @param interfaceId the interface id of this interface.
@@ -74,7 +74,7 @@ public final class Attributes {
 	}
 	
 	/**
-	 * The third slot action from the {@link ItemInterfaceMessage} packet, any attribute
+	 * The third slot action from the {@link ItemInterfacePacket} packet, any attribute
 	 * action should be utilised here.
 	 * @param player      the player we're utilizing this action for.
 	 * @param interfaceId the interface id of this interface.
@@ -104,7 +104,7 @@ public final class Attributes {
 	}
 	
 	/**
-	 * The fourth slot action from the {@link ItemInterfaceMessage} packet, any attribute
+	 * The fourth slot action from the {@link ItemInterfacePacket} packet, any attribute
 	 * action should be utilised here.
 	 * @param player      the player we're utilizing this action for.
 	 * @param interfaceId the interface id of this interface.

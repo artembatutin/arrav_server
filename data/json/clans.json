@@ -20,6 +20,22 @@
     ]
   },
   {
+    "owner": "baka",
+    "name": "Hentai_land",
+    "loot": false,
+    "ban": "OWNER",
+    "mute": "OWNER",
+    "talk": "MEMBER",
+    "mutes": [],
+    "bans": [],
+    "ranked": [
+      {
+        "name": "baka",
+        "rank": "OWNER"
+      }
+    ]
+  },
+  {
     "owner": "avro",
     "name": "Edgeville",
     "loot": false,

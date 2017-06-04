@@ -2,7 +2,7 @@ package net.edge.content.commands.impl;
 
 import net.edge.content.market.MarketCounter;
 import net.edge.content.market.MarketItem;
-import net.edge.net.packet.impl.NpcInformationMessage;
+import net.edge.net.packet.impl.NpcInformationPacket;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.World;
@@ -32,11 +32,11 @@ public final class SaveCommand implements Command {
 				NpcDropManager.dump();
 				try {
 					BufferedWriter out = new BufferedWriter(new FileWriter("./data/suggested_drops.txt", true));
-					for(NpcDrop d : NpcInformationMessage.SUGGESTED) {
+					for(NpcDrop d : NpcInformationPacket.SUGGESTED) {
 						out.write(d.toString());
 						out.newLine();
 					}
-					NpcInformationMessage.SUGGESTED.clear();
+					NpcInformationPacket.SUGGESTED.clear();
 					out.close();
 				} catch(Exception e) {
 				}

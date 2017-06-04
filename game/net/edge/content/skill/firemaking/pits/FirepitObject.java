@@ -89,6 +89,11 @@ public final class FirepitObject extends DynamicObject {
 			player.message("You can only add logs to this fire pit.");
 			return false;
 		}
+		
+		if(this.data.log == null) {
+			player.message("Let the pit burn. Don't add any logs yet.");
+			return false;
+		}
 
 		if(getElements() >= data.count && !this.data.getNext().isPresent() && this.data.equals(FirepitData.PHASE_FIVE)) {
 			player.message("You can't add logs anymore... You have to fire the pile of logs.");

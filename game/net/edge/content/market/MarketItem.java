@@ -56,7 +56,7 @@ public class MarketItem {
 	/**
 	 * Condition if this item can be bought of the counter.
 	 */
-	private final boolean isSearchable;
+	private boolean searchable;
 	
 	/**
 	 * Players viewing this item in a shop.
@@ -72,9 +72,9 @@ public class MarketItem {
 	 * @param demand         the demand of this item.
 	 * @param variable       the variable condition.
 	 * @param unlimitedStock the unlimitedStock condition.
-	 * @param isSearchable   the isSearchable condition.
+	 * @param searchable   the searchable condition.
 	 */
-	public MarketItem(int id, int value, int price, int stock, int demand, boolean variable, boolean unlimitedStock, boolean isSearchable) {
+	public MarketItem(int id, int value, int price, int stock, int demand, boolean variable, boolean unlimitedStock, boolean searchable) {
 		this.id = id;
 		this.value = value;
 		this.price = price;
@@ -82,7 +82,7 @@ public class MarketItem {
 		this.demand = demand;
 		this.variable = variable;
 		this.unlimitedStock = unlimitedStock;
-		this.isSearchable = isSearchable;
+		this.searchable = searchable;
 		viewers = new HashSet<>();
 	}
 	
@@ -294,7 +294,11 @@ public class MarketItem {
 	}
 	
 	public boolean isSearchable() {
-		return isSearchable;
+		return searchable;
+	}
+	
+	public void setSearchable(boolean searchable) {
+		this.searchable = searchable;
 	}
 	
 	public Set<Player> getViewers() {
