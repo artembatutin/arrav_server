@@ -254,7 +254,7 @@ public final class Hit {
 		/**
 		 * Represents the leech hit icon.
 		 */
-		LEECH(3),
+		DEFLECT(3),
 		
 		/**
 		 * Represents the canon hit icon.

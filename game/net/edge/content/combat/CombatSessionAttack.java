@@ -4,9 +4,6 @@ import net.edge.Server;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.ranged.CombatRangedAmmoDefinition;
-import net.edge.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
-import net.edge.content.container.impl.Equipment;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.summoning.Summoning;
@@ -15,10 +12,6 @@ import net.edge.world.node.NodeState;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.item.ItemNodeManager;
-import net.edge.world.node.region.Region;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -108,8 +101,46 @@ public final class CombatSessionAttack extends Task {
 
 		if(victim.isPlayer() && !data.isIgnored()) {
 			Player player = (Player) victim;
-			int id = player.getShieldAnimation() != null ? player.getShieldAnimation().getBlock() : player.getWeaponAnimation() != null ? player.getWeaponAnimation().getBlocking() : 404;
+
+			boolean activated = false;
+
+			switch(data.getType()) {
+				case MELEE:
+					if(Prayer.isActivated(player, Prayer.DEFLECT_MELEE)) {
+						player.graphic(new Graphic(2230));
+						activated = true;
+					}
+					break;
+				case RANGED:
+					if(Prayer.isActivated(player, Prayer.DEFLECT_MISSILES)) {
+						player.graphic(new Graphic(2229));
+						activated = true;
+					}
+					break;
+				case MAGIC:
+					if(Prayer.isActivated(player, Prayer.DEFLECT_MAGIC)) {
+						player.graphic(new Graphic(2228));
+						activated = true;
+					}
+					break;
+			}
+
+			int id = activated ? 12573 : player.getShieldAnimation() != null ? player.getShieldAnimation().getBlock() : player.getWeaponAnimation() != null ? player.getWeaponAnimation().getBlocking() : 404;
 			player.animation(new Animation(id, Animation.AnimationPriority.LOW));
+
+			if(activated) {
+				World.get().submit(new Task(1, false) {
+					@Override
+					protected void execute() {
+						Arrays.stream(data.getHits()).forEach(hit -> {
+							int damage = (int) (hit.getDamage() * 0.20);
+							victim.getCombatBuilder().getDamageCache().add(attacker, damage);
+							attacker.damage(new Hit(damage, Hit.HitType.NORMAL, Hit.HitIcon.DEFLECT, victim.getSlot()));
+						});
+						this.cancel();
+					}
+				});
+			}
 		} else if(victim.isNpc() && !data.isIgnored()) {
 			victim.animation(new Animation(victim.toNpc().getDefinition().getDefenceAnimation(), Animation.AnimationPriority.LOW));
 		}
