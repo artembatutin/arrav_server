@@ -1287,8 +1287,7 @@ public final class Player extends EntityNode {
 	 * @return the new value to set.
 	 */
 	public void setRunEnergy(double energy) {
-		boolean maxed = (this.runEnergy + energy) > 100;
-		this.runEnergy = maxed ? 100 : energy;
+		this.runEnergy = energy > 100 ? 100 : energy;
 		getMessages().sendString((int) runEnergy + "%", 149);
 	}
 	
@@ -2155,7 +2154,7 @@ public final class Player extends EntityNode {
 	}
 	
 	/**
-	 * Updates the value for {@link Player#credits}.
+	 * Updates the value for {@link Player#slayerPoints}.
 	 * @param points the new value to update.
 	 */
 	public void updateSlayers(int points) {
