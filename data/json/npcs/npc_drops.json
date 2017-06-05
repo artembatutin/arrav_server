@@ -3023,6 +3023,12 @@
         "maximum": 1,
         "id": 19043,
         "minimum": 1
+      },
+      {
+        "chance": "VERY_RARE",
+        "maximum": 1,
+        "id": 11286,
+        "minimum": 1
       }
     ],
     "ids": [
