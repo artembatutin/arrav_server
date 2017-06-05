@@ -197,7 +197,7 @@ public final class Skills {
 		int oldLevel = player.getSkills()[skill].getRealLevel();
 		boolean combatLevel = IntStream.rangeClosed(0, COMBAT_SKILLS.length).anyMatch(id -> id == skill);
 		amount *= skill == Skills.PRAYER ? Skills.PRAYER_EXPERIENCE_MULTIPLIER : combatLevel ? Skills.COMBAT_EXPERIENCE_MULTIPLER : Skills.SKILL_EXPERIENCE_MULTIPLIER;
-		amount *= GameConstants.EXPERIENCE_MULTIPLIER;
+		amount = amount * GameConstants.EXPERIENCE_MULTIPLIER;
 		player.getSkills()[skill].increaseExperience(amount);
 		if(oldLevel < 99) {
 			int newLevel = player.getSkills()[skill].getLevelForExperience();
