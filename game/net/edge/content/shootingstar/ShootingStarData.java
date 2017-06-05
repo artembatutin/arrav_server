@@ -56,7 +56,7 @@ public enum ShootingStarData {
 	 * Constructs a new {@link ShootingStarData}.
 	 * @param size             {@link #size}.
 	 * @param objectId         {@link #objectId}.
-	 * @param levelRequirement {@link #log}.
+	 * @param levelRequirement {@link #levelRequirement}.
 	 * @param stardust         {@link #stardust}.
 	 * @param experience       {@link #experience}.
 	 */
