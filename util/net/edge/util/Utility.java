@@ -62,7 +62,7 @@ public final class Utility {
 				Object objectEvent = (Class.forName(directory + "." + file.getName().replace(".class", "")).newInstance());
 				classes.add(objectEvent);
 			} catch(InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		return classes;

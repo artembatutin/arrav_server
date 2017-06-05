@@ -33,7 +33,6 @@ import net.edge.world.node.entity.npc.NpcUpdater;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerUpdater;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.node.region.RegionManager;
 import net.edge.world.node.region.TraversalMap;
 
@@ -347,6 +346,8 @@ public final class World {
 			}
 			if(response)
 				logger.info(player.toString() + " has logged out.");
+			else
+				logger.info(player.toString() + " couldn't be logged out.");
 			return response;
 			
 		} catch(Exception e) {

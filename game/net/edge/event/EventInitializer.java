@@ -9,6 +9,6 @@ public abstract class EventInitializer {
 		init();
 	}
 	
-	protected abstract void init();
+	public abstract void init();
 	
 }

@@ -146,7 +146,7 @@ public abstract class Node {
 	}
 	
 	/**
-	 * Gets the region on which the object is standing.
+	 * Gets the region on which the entity is standing.
 	 * @return the region of this object.
 	 */
 	public Region getRegion() {

@@ -20,7 +20,6 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.node.region.Region;
 
@@ -183,7 +182,7 @@ public final class AnimationRoom extends GuildRoom {
 		Region region = World.getRegions().getRegion(armour.get().getPosition());
 		if(region == null)
 			return;
-		items.forEach(item -> ItemNodeManager.register(item, item.getItem().getId() == WarriorsGuild.WARRIOR_GUILD_TOKEN.getId()));
+		items.forEach(item -> region.register(item, item.getItem().getId() == WarriorsGuild.WARRIOR_GUILD_TOKEN.getId()));
 		armour.ifPresent(World.get().getNpcs()::remove);
 		armour = Optional.empty();
 	}

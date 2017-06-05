@@ -3,13 +3,10 @@ package net.edge.content.skill.summoning.familiar;
 import com.google.common.collect.ImmutableList;
 import net.edge.content.container.ItemContainer;
 import net.edge.locale.Position;
-import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
-import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.node.item.ItemNodeStatic;
-import net.edge.world.node.region.Region;
 
 /**
  * Holds functionality for abilities which can hold items such as
@@ -156,10 +153,10 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 	 * Attempts to drop all the items in the container.
 	 * @param position the position on which we are dropping the items.
 	 */
-	public final void dropAll(Position position) {
+	final void dropAll(Position position) {
 		container.forEach(item -> {
 			ItemNodeStatic ground = new ItemNodeStatic(item, position);
-			ItemNodeManager.register(ground);
+			ground.getRegion().register(ground);
 		});
 		container.clear();
 	}

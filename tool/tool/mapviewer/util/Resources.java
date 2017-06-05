@@ -11,7 +11,7 @@ public class Resources {
 	
 	static {
 		try {
-			DOT = ImageIO.read(new File("data/tool.mapviewer/dot/dot.png"));
+			DOT = ImageIO.read(new File("data/map/dot/dot.png"));
 		} catch(IOException e) {
 			System.err.println("Could not load dot.png");
 			e.printStackTrace();

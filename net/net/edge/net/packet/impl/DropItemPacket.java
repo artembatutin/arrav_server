@@ -10,8 +10,6 @@ import net.edge.world.node.entity.player.assets.activity.ActivityManager.Activit
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.item.ItemNodeManager;
-import net.edge.world.node.region.Region;
 
 /**
  * The message sent from the client when the player drops an item.
@@ -62,7 +60,7 @@ public final class DropItemPacket implements PacketReader {
 		
 		int amount = ItemDefinition.DEFINITIONS[id].isStackable() ? item.getAmount() : 1;
 		player.getInventory().remove(new Item(id, amount), slot);
-		ItemNodeManager.register(new ItemNode(new Item(id, amount), player.getPosition(), player));
+		player.getRegion().register(new ItemNode(new Item(id, amount), player.getPosition(), player));
 		player.getActivityManager().execute(ActivityType.DROP_ITEM);
 	}
 }

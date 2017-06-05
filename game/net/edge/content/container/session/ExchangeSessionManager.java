@@ -43,13 +43,17 @@ public final class ExchangeSessionManager {
 		Player requested = session.getOther(player);
 		
 		if(player.isNight() && !player.isNightMaxed()) {
-			player.message("You cannot start an exchange session because you're a night's watch member.");
-			return false;
+			if(requested.isNight()) {
+				player.message("You cannot start an exchange session because you're a night's watch member.");
+				return false;
+			}
 		}
 		
 		if(requested.isNight() && !requested.isNightMaxed()) {
-			player.message("This player is in nightmare mode and can't start an exchange session.");
-			return false;
+			if(!player.isNight()) {
+				player.message("This player is in nightmare mode and can't start an exchange session.");
+				return false;
+			}
 		}
 		
 		if(inAnySession(player)) {

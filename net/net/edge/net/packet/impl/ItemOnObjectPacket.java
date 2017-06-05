@@ -93,6 +93,8 @@ public final class ItemOnObjectPacket implements PacketReader {
 					case 114:
 					case 2728:
 					case 25730:
+					case 24283:
+					case 2732:
 						CookingData c = CookingData.forItem(item);
 						if(c == null)
 							return;
@@ -100,15 +102,6 @@ public final class ItemOnObjectPacket implements PacketReader {
 						player.getAttr().get("cooking_data").set(c);
 						player.getAttr().get("cooking_object").set(object);
 						c.openInterface(player);
-						break;
-					case 2732:
-						CookingData d = CookingData.forItem(item);
-						if(d == null)
-							return;
-						player.getAttr().get("cooking_usingStove").set(false);
-						player.getAttr().get("cooking_data").set(d);
-						player.getAttr().get("cooking_object").set(object);
-						d.openInterface(player);
 						break;
 				}
 				

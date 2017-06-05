@@ -46,6 +46,10 @@
     "bans": [],
     "ranked": [
       {
+        "name": "stan",
+        "rank": "GENERAL"
+      },
+      {
         "name": "avro",
         "rank": "OWNER"
       }

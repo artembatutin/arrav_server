@@ -88,7 +88,7 @@ public final class ClanChat {
 	}
 	
 	/**
-	 * Adds a player to the member's list.
+	 * Removes a player to the member's list.
 	 * @param player the player to add.
 	 */
 	public void remove(Player player, boolean logout) {

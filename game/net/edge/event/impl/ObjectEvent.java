@@ -64,29 +64,6 @@ public abstract class ObjectEvent extends Event {
 		PotClaying.objects();
 		Stalls.objects();
 		Smelting.objects();
-		
-		new AbyssalRift();
-		new AgilityStairs();
-		new AncientCavern();
-		new BankBooth();
-		new Brimhaven();
-		new ChaosDwarf();
-		new CorporealBeast();
-		new Dragannoth();
-		new EdgevilleDitch();
-		new GodWars();
-		new HomeAltar();
-		new HomeLadder();
-		new HomePortal();
-		new KingDragonLever();
-		new MarketBooth();
-		new MaxCape();
-		new Scoreboard();
-		new SimplePortal();
-		new SlayerTower();
-		new SummoningObelisk();
-		new ViewingOrb();
-		new WoodcuttingPortal();
 	}
 	
 }

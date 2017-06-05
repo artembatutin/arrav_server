@@ -83,6 +83,7 @@ public final class Smithing extends ProducingSkillAction {
 		return true;
 	}
 	
+	
 	/**
 	 * Opens the smithing interface and sets all the values for
 	 * the specified {code player}.

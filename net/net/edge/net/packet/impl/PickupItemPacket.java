@@ -10,7 +10,6 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.node.region.Region;
 
 import java.util.Optional;
@@ -36,7 +35,7 @@ public final class PickupItemPacket implements PacketReader {
 				Region region = World.getRegions().getRegion(position);
 				if(region == null)
 					return;
-				Optional<ItemNode> item = ItemNodeManager.getItem(itemId, position);
+				Optional<ItemNode> item = region.getItem(itemId, position);
 				if(item.isPresent()) {
 					if(!MinigameHandler.execute(player, m -> m.canPickup(player, item.get()))) {
 						return;

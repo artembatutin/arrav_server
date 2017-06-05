@@ -13,9 +13,7 @@ import net.edge.content.skill.summoning.specials.SummoningData;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.node.item.ItemNodeStatic;
-import net.edge.world.node.region.Region;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -54,7 +52,7 @@ public final class SpiritSpider extends Familiar {
 			return;
 		}
 		ItemNodeStatic eggs = new ItemNodeStatic(new Item(223), t.getFamiliar().get().getPosition());
-		ItemNodeManager.register(eggs);
+		eggs.getRegion().register(eggs);
 	});
 	
 	@Override

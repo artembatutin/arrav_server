@@ -1,6 +1,6 @@
 package net.edge.world.node.entity.move;
 
-import net.edge.task.EventListener;
+import net.edge.task.TaskListener;
 import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
@@ -36,7 +36,7 @@ public final class MovementQueueListener {
 	}
 	
 	/**
-	 * Resets this {@link EventListener} so it may listen for the walking queue
+	 * Resets this {@link TaskListener} so it may listen for the walking queue
 	 * to finish. Once the walking queue is finished the listener will run the
 	 * logic within {@code task}.
 	 * <p>
@@ -59,7 +59,7 @@ public final class MovementQueueListener {
 	 * to the end of the movement queue.
 	 * @author lare96 <http://github.com/lare96>
 	 */
-	private static final class MovementQueueListenerTask extends EventListener {
+	private static final class MovementQueueListenerTask extends TaskListener {
 		
 		/**
 		 * The character that the queued task will be ran for.

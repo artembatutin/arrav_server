@@ -25,14 +25,13 @@ import java.util.Optional;
  */
 public final class ObjectActionPacket implements PacketReader {
 	
+	/*
+	 * All of the object events.
+	 */
 	public static final EventContainer<ObjectEvent> FIRST = new EventContainer<>();
-	
 	public static final EventContainer<ObjectEvent> SECOND = new EventContainer<>();
-	
 	public static final EventContainer<ObjectEvent> THIRD = new EventContainer<>();
-	
 	public static final EventContainer<ObjectEvent> FOURTH = new EventContainer<>();
-	
 	public static final EventContainer<ObjectEvent> FIFTH = new EventContainer<>();
 	
 	@Override
