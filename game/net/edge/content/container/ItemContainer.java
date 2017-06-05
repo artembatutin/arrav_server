@@ -319,6 +319,11 @@ public class ItemContainer implements Iterable<Item> {
 		checkArgument(preferredIndex >= -1, "invalid index identifier");
 		
 		ItemDefinition def = item.getDefinition();
+		if(def == null) {
+			Item current = items[preferredIndex];
+			fireItemUpdatedEvent(current, items[preferredIndex], preferredIndex, refresh);
+			return true;
+		}
 		boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;
 		if(stackable) {
 			preferredIndex = computeIndexForId(item.getId());
