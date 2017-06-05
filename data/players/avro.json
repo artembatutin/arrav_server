@@ -4,8 +4,8 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3104,
-    "y": 3514,
+    "x": 1899,
+    "y": 4627,
     "z": 0
   },
   "rights": "DEVELOPER",
@@ -27,8 +27,8 @@
     0
   ],
   "prayer-type": "NORMAL",
-  "spell-book": "NORMAL",
-  "fight-type": "SCIMITAR_SLASH",
+  "spell-book": "ANCIENT",
+  "fight-type": "UNARMED_KICK",
   "poison-damage": 0,
   "auto-retaliate": false,
   "running": true,
@@ -191,39 +191,75 @@
   ],
   "inventory": [
     {
+      "id": 4091,
+      "amount": 1
+    },
+    {
+      "id": 1323,
+      "amount": 1
+    },
+    {
+      "id": 361,
+      "amount": 1
+    },
+    {
       "id": 995,
-      "amount": 9081724
+      "amount": 422162
+    },
+    {
+      "id": 7400,
+      "amount": 1
+    },
+    {
+      "id": 3385,
+      "amount": 1
+    },
+    {
+      "id": 4109,
+      "amount": 1
+    },
+    {
+      "id": 14499,
+      "amount": 1
+    },
+    {
+      "id": 579,
+      "amount": 1
+    },
+    {
+      "id": 4099,
+      "amount": 1
     },
     {
       "id": 4089,
       "amount": 1
     },
     {
-      "id": 14061,
+      "id": 6109,
       "amount": 1
     },
     {
-      "id": 14061,
+      "id": 4099,
       "amount": 1
     },
     {
-      "id": 6611,
+      "id": 4093,
       "amount": 1
     },
     {
-      "id": 14061,
+      "id": 1115,
       "amount": 1
     },
     {
-      "id": 6611,
+      "id": 1067,
       "amount": 1
     },
     {
-      "id": 14061,
+      "id": 3105,
       "amount": 1
     },
     {
-      "id": 590,
+      "id": 11694,
       "amount": 1
     },
     null,
@@ -232,79 +268,19 @@
     null,
     null,
     null,
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    },
-    {
-      "id": 1511,
-      "amount": 1
-    }
+    null,
+    null,
+    null,
+    null
   ],
   "bank0": [
     {
       "id": 995,
-      "amount": 14810227
-    },
-    {
-      "id": 329,
-      "amount": 500
-    },
-    {
-      "id": 361,
-      "amount": 200
+      "amount": 14825017
     },
     {
       "id": 385,
       "amount": 50
-    },
-    {
-      "id": 590,
-      "amount": 2
     },
     {
       "id": 946,
@@ -322,28 +298,9 @@
       "id": 1379,
       "amount": 1
     },
-    {
-      "id": 3105,
-      "amount": 1
-    },
-    {
-      "id": 1153,
-      "amount": 1
-    },
-    {
-      "id": 1115,
-      "amount": 1
-    },
-    {
-      "id": 1067,
-      "amount": 1
-    },
+    null,
     {
       "id": 1191,
-      "amount": 1
-    },
-    {
-      "id": 579,
       "amount": 1
     },
     {
@@ -351,20 +308,12 @@
       "amount": 1
     },
     {
-      "id": 1011,
-      "amount": 1
-    },
-    {
       "id": 4405,
       "amount": 1
     },
     {
-      "id": 884,
-      "amount": 500
-    },
-    {
-      "id": 554,
-      "amount": 436
+      "id": 1011,
+      "amount": 1
     },
     {
       "id": 555,
@@ -395,10 +344,6 @@
       "amount": 1
     },
     {
-      "id": 12159,
-      "amount": 1
-    },
-    {
       "id": 12160,
       "amount": 1
     },
@@ -408,11 +353,15 @@
     },
     {
       "id": 1351,
-      "amount": 1
+      "amount": 2
     },
     {
       "id": 1265,
       "amount": 1
+    },
+    {
+      "id": 9375,
+      "amount": 10
     },
     {
       "id": 13727,
@@ -451,10 +400,6 @@
       "amount": 1
     },
     {
-      "id": 12077,
-      "amount": 1
-    },
-    {
       "id": 12075,
       "amount": 1
     },
@@ -464,10 +409,6 @@
     },
     {
       "id": 561,
-      "amount": 200
-    },
-    {
-      "id": 564,
       "amount": 200
     },
     {
@@ -503,19 +444,7 @@
       "amount": 2
     },
     {
-      "id": 14061,
-      "amount": 1
-    },
-    {
-      "id": 97,
-      "amount": 1
-    },
-    {
       "id": 99,
-      "amount": 1
-    },
-    {
-      "id": 20661,
       "amount": 1
     },
     {
@@ -530,6 +459,53 @@
       "id": 19650,
       "amount": 4
     },
+    {
+      "id": 2347,
+      "amount": 1
+    },
+    {
+      "id": 1277,
+      "amount": 1
+    },
+    {
+      "id": 1205,
+      "amount": 1
+    },
+    {
+      "id": 1117,
+      "amount": 1
+    },
+    {
+      "id": 592,
+      "amount": 14
+    },
+    {
+      "id": 2349,
+      "amount": 1
+    },
+    {
+      "id": 97,
+      "amount": 1
+    },
+    {
+      "id": 12077,
+      "amount": 1
+    },
+    {
+      "id": 1153,
+      "amount": 1
+    },
+    {
+      "id": 564,
+      "amount": 200
+    },
+    {
+      "id": 20661,
+      "amount": 1
+    },
+    null,
+    null,
+    null,
     null,
     null,
     null,
@@ -716,7 +692,10 @@
     null
   ],
   "bank1": [
-    null,
+    {
+      "id": 590,
+      "amount": 2
+    },
     null,
     null,
     null,
@@ -781,9 +760,18 @@
     null
   ],
   "bank2": [
-    null,
-    null,
-    null,
+    {
+      "id": 361,
+      "amount": 199
+    },
+    {
+      "id": 884,
+      "amount": 500
+    },
+    {
+      "id": 554,
+      "amount": 436
+    },
     null,
     null,
     null,
@@ -846,7 +834,10 @@
     null
   ],
   "bank3": [
-    null,
+    {
+      "id": 329,
+      "amount": 500
+    },
     null,
     null,
     null,
@@ -1239,20 +1230,11 @@
     null,
     null,
     null,
-    {
-      "id": 1323,
-      "amount": 1
-    },
-    {
-      "id": 4091,
-      "amount": 1
-    },
     null,
     null,
-    {
-      "id": 4093,
-      "amount": 1
-    },
+    null,
+    null,
+    null,
     null,
     null,
     null,
@@ -1266,15 +1248,16 @@
     989838,
     41307633,
     26066,
-    77401079141981
+    77401079141981,
+    92575420490763048
   ],
   "ignores": [],
-  "total-player-kills": 3,
-  "total-player-deaths": 0,
+  "total-player-kills": 5,
+  "total-player-deaths": 3,
   "total-npc-kills": 0,
-  "total-npc-deaths": 3,
-  "current-killstreak": 3,
-  "highest-killstreak": 3,
+  "total-npc-deaths": 5,
+  "current-killstreak": 5,
+  "highest-killstreak": 5,
   "godwars-killcount": [
     0,
     0,

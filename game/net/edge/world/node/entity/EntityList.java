@@ -230,10 +230,14 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * @param forced If the entity is forced to get out from the list.
 	 */
 	public boolean remove(E entity, boolean forced) {
-		if(!forced && entity.getState() != NodeState.ACTIVE)
+		if(!forced && entity.getState() != NodeState.ACTIVE) {
+			System.out.println("Couldn't remove: " + entity.toString() + " because not active.");
 			return true;
-		if(!forced && entity.getSlot() == -1)
+		}
+		if(!forced && entity.getSlot() == -1) {
+			System.out.println("Couldn't remove: " + entity.toString() + " because of slot.");
 			return false;
+		}
 		int index = entity.getSlot();
 		int normal = index - 1;
 		if(entity.getSlot() != -1) {
@@ -244,10 +248,10 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 		size--;
 		if(entity.isPlayer()) {
 			Player player = entity.toPlayer();
-			if(player.getRights() != Rights.DEVELOPER && player.getRights() != Rights.ADMINISTRATOR)
-				new Highscores(World.getScore(), player).submit();
 			player.getSession().flushQueue();
 			player.getSession().getChannel().close();
+			if(player.getRights() != Rights.DEVELOPER && player.getRights() != Rights.ADMINISTRATOR)
+				new Highscores(World.getScore(), player).submit();
 			
 		}
 		return true;

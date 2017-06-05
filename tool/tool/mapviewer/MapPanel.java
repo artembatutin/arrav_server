@@ -129,7 +129,7 @@ public class MapPanel extends JPanel {
 	
 	private void loadMap() {
 		try {
-			this.img = ImageIO.read(new File("./data/tool.mapviewer/plane/tool.mapviewer" + plane + ".png"));
+			this.img = ImageIO.read(new File("./data/map/plane/map" + plane + ".png"));
 		} catch(IOException e) {
 			System.err.println("FATAL ERROR: Could not load map_" + plane + ".png");
 			e.printStackTrace();

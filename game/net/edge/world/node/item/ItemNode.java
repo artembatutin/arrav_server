@@ -7,6 +7,7 @@ import net.edge.world.node.Node;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.region.Region;
 
 /**
  * The node implementation that represents an item on the ground.
@@ -96,7 +97,7 @@ public class ItemNode extends Node {
 	 * Gets the item state of this node.
 	 * @return the item state.
 	 */
-	final ItemState getItemState() {
+	public final ItemState getItemState() {
 		return state;
 	}
 	
@@ -139,5 +140,14 @@ public class ItemNode extends Node {
 	public final MutableNumber getCounter() {
 		return counter;
 	}
+	
+	/**
+	 * Gets the region on which the item is standing.
+	 * @return the region of this item.
+	 */
+	public Region getRegion() {
+		return World.getRegions().getRegion(getPosition());
+	}
+	
 	
 }

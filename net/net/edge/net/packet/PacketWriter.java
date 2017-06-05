@@ -10,6 +10,7 @@ import net.edge.content.clanchat.ClanMember;
 import net.edge.content.market.MarketItem;
 import net.edge.locale.Position;
 import net.edge.world.World;
+import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
@@ -26,6 +27,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+
+import static net.edge.world.node.NodeState.INACTIVE;
 
 /**
  * The utility class used to queue {@link ByteMessage}s to be encoded and
@@ -52,6 +55,8 @@ public final class PacketWriter {
 	 * @param id the tab to force on the player.
 	 */
 	public void sendForceTab(int id) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 106);
 		msg.put(id, ByteTransform.C);
 		player.queue(msg);
@@ -64,6 +69,8 @@ public final class PacketWriter {
 	 * @param hide if the layer should be hidden or shown.
 	 */
 	public void sendInterfaceLayer(int id, boolean hide) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 171);
 		msg.put(hide ? 1 : 0);
 		msg.putShort(id);
@@ -78,6 +85,8 @@ public final class PacketWriter {
 	 * @param amount the amount of energy to update a special bar with.
 	 */
 	public void sendUpdateSpecial(int id, int amount) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 70);
 		msg.putShort(amount);
 		msg.putShort(0, ByteOrder.LITTLE);
@@ -91,6 +100,8 @@ public final class PacketWriter {
 	 * @param str the string to display on the chatbox.
 	 */
 	public void sendChatboxString(String str) {
+		if(player.getState() == INACTIVE)
+			return;
 		sendString(str, 357);
 		sendString("Click here to continue", 358);
 		sendChatInterface(356);
@@ -106,6 +117,8 @@ public final class PacketWriter {
 	 * @param direction the direction this object is facing.
 	 */
 	public void sendObjectAnimation(Position position, int animation, ObjectType type, ObjectDirection direction) {
+		if(player.getState() == INACTIVE)
+			return;
 		sendCoordinates(position);
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 160);
 		msg.put(((0 & 7) << 4) + (0 & 7), ByteTransform.S);
@@ -124,6 +137,8 @@ public final class PacketWriter {
 	 * @param direction the direction this object is facing.
 	 */
 	public void sendLocalObjectAnimation(Position position, int animation, ObjectType type, ObjectDirection direction) {
+		if(player.getState() == INACTIVE)
+			return;
 		player.getMessages().sendObjectAnimation(position, animation, type, direction);
 		player.getLocalPlayers().stream().filter(Objects::nonNull).forEach(p -> p.getMessages().sendObjectAnimation(position, animation, type, direction));
 		
@@ -137,6 +152,8 @@ public final class PacketWriter {
 	 * @param level    the height of the graphic that will be created.
 	 */
 	public void sendGraphic(int id, Position position, int level) {
+		if(player.getState() == INACTIVE)
+			return;
 		sendCoordinates(position);
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 4);
 		msg.put(0);
@@ -154,6 +171,8 @@ public final class PacketWriter {
 	 * @param level    the height of the graphic that will be created.
 	 */
 	public void sendLocalGraphic(int id, Position position, int level) {
+		if(player.getState() == INACTIVE)
+			return;
 		player.getMessages().sendGraphic(id, position, level);
 		player.getLocalPlayers().stream().filter(Objects::nonNull).forEach(p -> p.getMessages().sendGraphic(id, position, level));
 		
@@ -175,6 +194,8 @@ public final class PacketWriter {
 	 * @param animation the animation to animate the interface with.
 	 */
 	public void sendInterfaceAnimation(int id, int animation) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 200);
 		msg.putShort(id);
 		msg.putShort(animation);
@@ -187,6 +208,8 @@ public final class PacketWriter {
 	 * @param hide determines if the icon should be turned on or off.
 	 */
 	public void sendMultiIcon(boolean hide) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 61);
 		msg.put(hide ? 0 : 1);
 		player.queue(msg);
@@ -200,6 +223,8 @@ public final class PacketWriter {
 	 * @param slot the slot on the interface to display the item on.
 	 */
 	public void sendItemOnInterfaceSlot(int id, Item item, int slot) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 34, MessageType.VARIABLE_SHORT);
 		msg.putShort(id);
 		msg.put(slot);
@@ -224,6 +249,8 @@ public final class PacketWriter {
 	 *              words the item identification.
 	 */
 	public void sendItemModelOnInterface(int id, int zoom, int model) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 246);
 		msg.putShort(id, ByteOrder.LITTLE);
 		msg.putShort(zoom).putShort(model);
@@ -238,6 +265,8 @@ public final class PacketWriter {
 	 * @param length the amount of items that will be sent on the interface.
 	 */
 	public void sendItemsOnInterface(int id, Item[] items, int length) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 53, MessageType.VARIABLE_SHORT);
 		msg.putShort(id);
 		if(items == null) {
@@ -284,6 +313,8 @@ public final class PacketWriter {
 	 * @param items the items that will be sent on the panel.
 	 */
 	public void sendShopItemsOnInterface(int id, int[] items) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 53, MessageType.VARIABLE_SHORT);
 		msg.putShort(id);
 		if(items == null) {
@@ -329,6 +360,8 @@ public final class PacketWriter {
 	 * @param item the item that will be updated.
 	 */
 	public void sendShopItemPrice(MarketItem item) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 54, MessageType.VARIABLE_SHORT);
 		if(item.getPrice() > 254) {
 			msg.put(255);
@@ -345,6 +378,8 @@ public final class PacketWriter {
 	 * @param item the item that will be updated.
 	 */
 	public void sendShopItemStock(MarketItem item) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 55, MessageType.VARIABLE_SHORT);
 		if(item.getStock() > 254) {
 			msg.put(255);
@@ -363,6 +398,8 @@ public final class PacketWriter {
 	 * @param items the items that will be sent on the interface.
 	 */
 	public void sendItemsOnInterface(int id, Item[] items) {
+		if(player.getState() == INACTIVE)
+			return;
 		int length = (items == null) ? 0 : items.length;
 		sendItemsOnInterface(id, items, length);
 	}
@@ -374,6 +411,8 @@ public final class PacketWriter {
 	 *              words the NPC identification.
 	 */
 	public void sendNpcModelOnInterface(int id, int model) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 75);
 		msg.putShort(model, ByteTransform.A, ByteOrder.LITTLE);
 		msg.putShort(id, ByteTransform.A, ByteOrder.LITTLE);
@@ -386,6 +425,8 @@ public final class PacketWriter {
 	 * @param id the interface to send the model on.
 	 */
 	public void sendPlayerModelOnInterface(int id) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 185);
 		msg.putShort(id, ByteTransform.A, ByteOrder.LITTLE);
 		player.queue(msg);
@@ -429,6 +470,8 @@ public final class PacketWriter {
 	 *             <p>
 	 */
 	public void sendFlashSidebar(int code) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 24);
 		msg.put(code, ByteTransform.A);
 		player.queue(msg);
@@ -450,6 +493,8 @@ public final class PacketWriter {
 	 *             <p>
 	 */
 	public void sendMinimapState(int code) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 99);
 		msg.put(code);
 		player.queue(msg);
@@ -464,6 +509,8 @@ public final class PacketWriter {
 	 * @param rotationSpeed the angle the camera will turn to.
 	 */
 	public void sendCameraAngle(Position position, int height, int movementSpeed, int rotationSpeed) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 177);
 		msg.put(position.getLocalX(player.getPosition()));
 		msg.put(position.getLocalY(player.getPosition()));
@@ -482,6 +529,8 @@ public final class PacketWriter {
 	 * @param rotationSpeed the angle the camera will turn to while moving. max 99, 100 is instant.
 	 */
 	public void sendCameraMovement(Position position, int height, int movementSpeed, int rotationSpeed) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 166);
 		msg.put(position.getLocalX(player.getPosition()));
 		msg.put(position.getLocalY(player.getPosition()));
@@ -518,6 +567,8 @@ public final class PacketWriter {
 	 * @param frequency how often the screen will shake (scaled by 100).
 	 */
 	public void sendCameraShake(int parameter, int jitter, int amplitude, int frequency) {
+		if(player.getState() == INACTIVE)
+			return;
 		Preconditions.checkArgument(parameter <= 4);
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 35);
 		msg.put(parameter);
@@ -532,6 +583,8 @@ public final class PacketWriter {
 	 * The message that resets the position of the camera.
 	 */
 	public void sendResetCameraPosition() {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 107);
 		player.queue(msg);
 		
@@ -548,6 +601,8 @@ public final class PacketWriter {
 	 * @param amount the amount of time until an update.
 	 */
 	public void sendSystemUpdate(int amount) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 114);
 		msg.putShort(amount, ByteOrder.LITTLE);
 		player.queue(msg);
@@ -559,6 +614,8 @@ public final class PacketWriter {
 	 * the correct place.
 	 */
 	public void sendRunEnergy() {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 110);
 		msg.put((int) player.getRunEnergy());
 		player.queue(msg);
@@ -594,6 +651,8 @@ public final class PacketWriter {
 	 *              <p>
 	 */
 	public void sendInterfaceColor(int id, int color) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 122);
 		msg.putShort(id, ByteTransform.A, ByteOrder.LITTLE);
 		msg.putShort(color, ByteTransform.A, ByteOrder.LITTLE);
@@ -615,6 +674,8 @@ public final class PacketWriter {
 	 *                    position.
 	 */
 	public void sendProjectile(Position position, Position offset, int speed, int gfxMoving, int startHeight, int endHeight, int lockon, int time) {
+		if(player.getState() == INACTIVE)
+			return;
 		sendCoordinates(position);
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 117);
 		msg.put(0);
@@ -646,6 +707,8 @@ public final class PacketWriter {
 	 *                    position.
 	 */
 	public void sendAllProjectile(Position position, Position offset, int speed, int gfxMoving, int startHeight, int endHeight, int lockon, int time) {
+		if(player.getState() == INACTIVE)
+			return;
 		player.getLocalPlayers().stream().filter(Objects::nonNull).forEach(p -> p.getMessages().sendProjectile(position, offset, speed, gfxMoving, startHeight, endHeight, lockon, time));
 	}
 	
@@ -656,6 +719,8 @@ public final class PacketWriter {
 	 * @param state the new value for the setting.
 	 */
 	public void sendConfig(int id, int state) {
+		if(player.getState() == INACTIVE)
+			return;
 		if(state < Byte.MIN_VALUE || state > Byte.MAX_VALUE) {
 			ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 87);
 			msg.putShort(id, ByteOrder.LITTLE);
@@ -677,6 +742,8 @@ public final class PacketWriter {
 	 * @param goal the desired level to reach.
 	 */
 	public void sendSkillGoal(int id, int goal) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 135);
 		msg.put(id);
 		msg.put(goal);
@@ -688,6 +755,8 @@ public final class PacketWriter {
 	 * @param title the title of this enter input box.
 	 */
 	public void sendEnterName(String title, Function<String, ActionListener> action) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 187, MessageType.VARIABLE);
 		msg.putString(title);
 		player.setEnterInputListener(Optional.of(action));
@@ -699,6 +768,8 @@ public final class PacketWriter {
 	 * @param link the link extending the edgeville domain page to be sent.
 	 */
 	public void sendLink(String link) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 100, MessageType.VARIABLE);
 		msg.putString(link);
 		player.queue(msg);
@@ -709,6 +780,8 @@ public final class PacketWriter {
 	 * @param title the title of this enter input box.
 	 */
 	public void sendEnterAmount(String title, Function<String, ActionListener> listener) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 27, MessageType.VARIABLE);
 		msg.putString(title);
 		player.setEnterInputListener(Optional.of(listener));
@@ -720,6 +793,8 @@ public final class PacketWriter {
 	 * @param index the index of the top list.
 	 */
 	public void sendScoreInput(int index, String title, int kills, int deaths, int killstreak) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 30, MessageType.VARIABLE);
 		msg.putShort(index);
 		msg.putShort(kills);
@@ -734,6 +809,8 @@ public final class PacketWriter {
 	 * @param object the object to spawn for the player.
 	 */
 	public void sendObject(ObjectNode object) {
+		if(player.getState() == INACTIVE)
+			return;
 		sendCoordinates(object.getGlobalPos());
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 151);
 		msg.put(0, ByteTransform.S);
@@ -748,6 +825,8 @@ public final class PacketWriter {
 	 * @param object the object to remove for the player.
 	 */
 	public void sendRemoveObject(ObjectNode object) {
+		if(player.getState() == INACTIVE)
+			return;
 		sendCoordinates(object.getGlobalPos());
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 101);
 		msg.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.C);
@@ -762,6 +841,8 @@ public final class PacketWriter {
 	 * @param id     the id of the new object to be set.
 	 */
 	public void sendReplaceObject(ObjectNode object, int id) {
+		if(player.getState() == INACTIVE)
+			return;
 		sendRemoveObject(object);
 		object.setId(id);
 		sendObject(object);
@@ -776,6 +857,8 @@ public final class PacketWriter {
 	 * @param exp   the amount of experience obtained in this skill.
 	 */
 	public void sendSkill(int id, int level, int exp) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 134).put(id).putInt(exp, ByteOrder.MIDDLE).putInt(level);
 		player.queue(msg);
 	}
@@ -784,6 +867,8 @@ public final class PacketWriter {
 	 * The message that closes any interfaces the underlying player has openShop.
 	 */
 	public void sendCloseWindows() {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 219);
 		player.queue(msg);
 		player.getDialogueBuilder().interrupt();
@@ -797,6 +882,8 @@ public final class PacketWriter {
 	 * @param end      the end fade out duration.
 	 */
 	public void sendFade(int start, int duration, int end) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 80);
 		msg.put(start);
 		msg.put(duration);
@@ -811,6 +898,8 @@ public final class PacketWriter {
 	 * @param itemId the item id to sent.
 	 */
 	public void sendItemOnInterface(int widget, int itemId) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 82);
 		msg.putInt(widget);
 		msg.putInt(itemId);
@@ -833,6 +922,8 @@ public final class PacketWriter {
 	 *             <p>
 	 */
 	public void sendPrivateMessageListStatus(int code) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 221);
 		msg.put(code);
 		player.queue(msg);
@@ -844,6 +935,8 @@ public final class PacketWriter {
 	 * @param members the {@link ClanMember}s list to send.
 	 */
 	public void sendClanMemberList(List<ClanMember> members) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 51, MessageType.VARIABLE);
 		msg.putShort(members.size());
 		for(ClanMember m : members) {
@@ -859,6 +952,8 @@ public final class PacketWriter {
 	 * @param bans the ban list to send.
 	 */
 	public void sendClanBanList(List<String> bans) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 52, MessageType.VARIABLE);
 		msg.putShort(bans.size());
 		bans.forEach(msg::putString);
@@ -873,6 +968,8 @@ public final class PacketWriter {
 	 * @param online if the player is online or not.
 	 */
 	public void sendPrivateMessageFriend(long name, boolean online) {
+		if(player.getState() == INACTIVE)
+			return;
 		int value = online ? 1 : 0;
 		if(value != 0)
 			value += 9;
@@ -903,6 +1000,8 @@ public final class PacketWriter {
 	 *                  <p>
 	 */
 	public void sendPositionHintArrow(Position position, int direction) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 254);
 		msg.put(direction);
 		msg.putShort(position.getX());
@@ -917,6 +1016,8 @@ public final class PacketWriter {
 	 * @param character the character to send a hint arrow on.
 	 */
 	public void sendCharacterHintArrow(EntityNode character) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 254).put(character.isNpc() ? 1 : 10);
 		msg.putShort(character.getSlot());
 		msg.put(0);
@@ -932,6 +1033,8 @@ public final class PacketWriter {
 	 * @param size    the size of the message being sent.
 	 */
 	public void sendPrivateMessage(long name, int rights, byte[] message, int size) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 196, MessageType.VARIABLE);
 		msg.putLong(name);
 		msg.putInt(player.getPrivateMessage().getLastMessage().getAndIncrement());
@@ -947,6 +1050,8 @@ public final class PacketWriter {
 	 * @param position the coordinates to send to the client.
 	 */
 	private void sendCoordinates(Position position) {
+		if(player.getState() == INACTIVE)
+			return;
 		if(position == null)
 			return;
 		if(player.getLastRegion() == null)
@@ -962,6 +1067,8 @@ public final class PacketWriter {
 	 * @param id the identification of the interface to openShop.
 	 */
 	public void sendWalkable(int id) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 208);
 		msg.putInt(id);
 		player.queue(msg);
@@ -974,6 +1081,8 @@ public final class PacketWriter {
 	 */
 	public void sendGroundItem(ItemNode item) {
 		if(item == null)
+			return;
+		if(player.getState() == INACTIVE)
 			return;
 		sendCoordinates(item.getPosition());
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 44);
@@ -989,6 +1098,8 @@ public final class PacketWriter {
 	 * @param item the ground item to remove.
 	 */
 	public void sendRemoveGroundItem(ItemNode item) {
+		if(player.getState() == INACTIVE)
+			return;
 		sendCoordinates(item.getPosition());
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 156);
 		msg.put(0, ByteTransform.S);
@@ -1004,6 +1115,8 @@ public final class PacketWriter {
 	 * @param option the string literal option to display.
 	 */
 	public void sendContextMenu(int slot, boolean top, String option) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 104, MessageType.VARIABLE);
 		msg.put(slot, ByteTransform.C);
 		msg.put(top ? 1 : 0, ByteTransform.A);
@@ -1019,6 +1132,8 @@ public final class PacketWriter {
 	 * @param id   the identification for the interface.
 	 */
 	public void sendString(String text, int id) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 126, MessageType.VARIABLE_SHORT);
 		msg.putString(text);
 		msg.putShort(id, ByteTransform.A);
@@ -1033,6 +1148,8 @@ public final class PacketWriter {
 	 * @param overlay the interface to send on the inventory area.
 	 */
 	public void sendInventoryInterface(int open, int overlay) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 248);
 		msg.putShort(open, ByteTransform.A);
 		msg.putShort(overlay);
@@ -1044,6 +1161,8 @@ public final class PacketWriter {
 	 * @param id the identification number of the interface to openShop.
 	 */
 	public void sendInterface(int id) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 97);
 		msg.putShort(id);
 		player.queue(msg);
@@ -1054,6 +1173,8 @@ public final class PacketWriter {
 	 * @param message the message to send.
 	 */
 	public void sendMessage(String message) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 253, MessageType.VARIABLE);
 		msg.putString(message);
 		player.queue(msg);
@@ -1065,6 +1186,8 @@ public final class PacketWriter {
 	 * @param drop the drop of this npc, may be null.
 	 */
 	public void sendNpcInformation(int id, NpcDropTable drop) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 121, MessageType.VARIABLE_SHORT);
 		msg.putInt(id);
 		if(id != 0) {
@@ -1093,6 +1216,8 @@ public final class PacketWriter {
 	 * @param type    0 for old game-frames, 1 for new game-frames and 2 for both.
 	 */
 	public void sendSidebarInterface(int sidebar, int id, int type) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 71);
 		msg.putShort(id);
 		msg.put(sidebar, ByteTransform.A);
@@ -1104,6 +1229,8 @@ public final class PacketWriter {
 	 * The message that sends the current map region.
 	 */
 	public void sendMapRegion() {
+		if(player.getState() == INACTIVE)
+			return;
 		player.setLastRegion(player.getPosition().copy());
 		player.setUpdates(true, false);
 		player.setUpdateRegion(true);
@@ -1126,6 +1253,8 @@ public final class PacketWriter {
 	 * The message that sends the slot and membership status to the client.
 	 */
 	public void sendDetails() {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 249);
 		msg.put(1, ByteTransform.A);
 		msg.putShort(player.getSlot(), ByteTransform.A, ByteOrder.LITTLE);
@@ -1136,6 +1265,8 @@ public final class PacketWriter {
 	 * The message that sends a clan chat message.
 	 */
 	public void sendClanMessage(String author, String message, String clanName, Rights rank) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 217, MessageType.VARIABLE);
 		msg.putString(author);
 		msg.putString(message);
@@ -1149,6 +1280,8 @@ public final class PacketWriter {
 	 * @param id the identification of interface to show.
 	 */
 	public void sendChatInterface(int id) {
+		if(player.getState() == INACTIVE)
+			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 164);
 		msg.putShort(id, ByteOrder.LITTLE);
 		player.queue(msg);

@@ -1,6 +1,6 @@
 package net.edge.content.combat;
 
-import net.edge.task.EventListener;
+import net.edge.task.TaskListener;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.locale.Boundary;
 import net.edge.locale.loc.Location;
@@ -214,7 +214,7 @@ public final class CombatBuilder {
 	 * character, {@code false} otherwise.
 	 */
 	public boolean isBeingAttacked() {
-		return pjingCheck();
+		return aggressor != null && pjingCheck();
 	}
 	
 	/**
@@ -224,7 +224,7 @@ public final class CombatBuilder {
 	 * @return pjing check condition.
 	 */
 	public boolean pjingCheck() {
-		return !character.getLastCombat().elapsed(5, TimeUnit.SECONDS);
+		return !character.getLastCombat().elapsed(5, TimeUnit.SECONDS) && World.getAreaManager().inArea(character, "WILDERNESS");
 	}
 	
 	/**
@@ -355,11 +355,11 @@ public final class CombatBuilder {
 	}
 	
 	/**
-	 * An {@link EventListener} implementation that is used to listen for the
+	 * An {@link TaskListener} implementation that is used to listen for the
 	 * controller to become in proper range of the victim.
 	 * @author lare96 <http://github.com/lare96>
 	 */
-	private static final class CombatDistanceListener extends EventListener {
+	private static final class CombatDistanceListener extends TaskListener {
 		
 		/**
 		 * The combat builder owned by the controller.

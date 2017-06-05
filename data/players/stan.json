@@ -4,8 +4,8 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 3085,
-    "y": 3496,
+    "x": 1897,
+    "y": 4627,
     "z": 0
   },
   "rights": "DEVELOPER",
@@ -26,9 +26,9 @@
     0,
     0
   ],
-  "prayer-type": "NORMAL",
+  "prayer-type": "CURSES",
   "spell-book": "NORMAL",
-  "fight-type": "UNARMED_PUNCH",
+  "fight-type": "PICKAXE_IMPALE",
   "poison-damage": 0,
   "auto-retaliate": false,
   "running": true,
@@ -191,81 +191,39 @@
   ],
   "inventory": [
     {
+      "id": 385,
+      "amount": 1
+    },
+    {
+      "id": 2434,
+      "amount": 1
+    },
+    {
+      "id": 952,
+      "amount": 1
+    },
+    null,
+    {
+      "id": 11694,
+      "amount": 1
+    },
+    {
       "id": 14484,
       "amount": 1
     },
-    {
-      "id": 995,
-      "amount": 99810000
-    },
-    {
-      "id": 5303,
-      "amount": 1
-    },
-    {
-      "id": 5306,
-      "amount": 3
-    },
-    {
-      "id": 5318,
-      "amount": 1
-    },
-    {
-      "id": 9805,
-      "amount": 1
-    },
-    {
-      "id": 9804,
-      "amount": 1
-    },
-    {
-      "id": 20769,
-      "amount": 1
-    },
-    {
-      "id": 9805,
-      "amount": 1
-    },
-    {
-      "id": 1513,
-      "amount": 1
-    },
-    {
-      "id": 1513,
-      "amount": 1
-    },
-    {
-      "id": 1513,
-      "amount": 1
-    },
-    {
-      "id": 1513,
-      "amount": 1
-    },
-    {
-      "id": 1513,
-      "amount": 1
-    },
-    {
-      "id": 1513,
-      "amount": 1
-    },
-    {
-      "id": 1513,
-      "amount": 1
-    },
-    {
-      "id": 1513,
-      "amount": 1
-    },
-    {
-      "id": 1513,
-      "amount": 1
-    },
-    {
-      "id": 1513,
-      "amount": 1
-    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
     null,
     null,
     null,
@@ -306,15 +264,19 @@
       "amount": 4
     },
     {
-      "id": 995,
-      "amount": 100000
-    },
-    {
       "id": 13727,
       "amount": 10
     },
     {
+      "id": 995,
+      "amount": 174994
+    },
+    {
       "id": 17674,
+      "amount": 1
+    },
+    {
+      "id": 15259,
       "amount": 1
     },
     {
@@ -322,10 +284,9 @@
       "amount": 9
     },
     {
-      "id": 15259,
+      "id": 303,
       "amount": 1
     },
-    null,
     null,
     null,
     null,
@@ -1083,7 +1044,10 @@
     null,
     null,
     null,
-    null,
+    {
+      "id": 20786,
+      "amount": 1
+    },
     null,
     null,
     null,
@@ -1099,22 +1063,28 @@
     2813493,
     81452,
     1723035346555578,
-    103083
+    103083,
+    61532441,
+    1355088654,
+    77401079141981,
+    1861608
   ],
   "ignores": [],
-  "total-player-kills": 0,
-  "total-player-deaths": 3,
+  "total-player-kills": 3,
+  "total-player-deaths": 5,
   "total-npc-kills": 0,
-  "total-npc-deaths": 22,
-  "current-killstreak": 0,
-  "highest-killstreak": 0,
+  "total-npc-deaths": 12,
+  "current-killstreak": 3,
+  "highest-killstreak": 3,
   "godwars-killcount": [
     0,
     0,
     0,
     0
   ],
-  "killed-brothers": [],
+  "killed-brothers": [
+    "DHAROK"
+  ],
   "slayerPoints": 0,
   "blocked-tasks": [
     null,
@@ -1162,6 +1132,10 @@
   "validated": false,
   "quests": {},
   "attributes": {
+    "fight_caves_advanced": {
+      "type": "java.lang.Boolean",
+      "value": false
+    },
     "introduction_stage": {
       "type": "java.lang.Integer",
       "value": 2

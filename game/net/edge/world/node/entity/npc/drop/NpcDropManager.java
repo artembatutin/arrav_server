@@ -5,7 +5,6 @@ import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.node.region.Region;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -37,7 +36,6 @@ public final class NpcDropManager {
 	public static void dropItems(Player killer, Npc victim) {
 		NpcDropTable table = TABLES.get(victim.getId());
 		if(table == null) {
-			killer.message(victim.getDefinition().getName() + " doesn't have a drop table, please suggest one on the forums.");
 			return;
 		}
 		List<Item> dropItems = table.toItems(killer, victim);
@@ -47,7 +45,7 @@ public final class NpcDropManager {
 		for(Item drop : dropItems) {
 			if(drop == null)
 				continue;
-			ItemNodeManager.register(new ItemNode(drop, victim.getPosition(), killer));
+			region.register(new ItemNode(drop, victim.getPosition(), killer));
 		}
 	}
 	

@@ -252,6 +252,8 @@ public class MarketShop {
 	public boolean sell(Player player, Item item, int fromSlot) {
 		if(!Item.valid(item))
 			return false;
+		if(player.getInventory().get(fromSlot) == null)
+			return false;
 		if(Arrays.stream(GameConstants.INVALID_SHOP_ITEMS).anyMatch(i -> i == item.getId())) {
 			player.message("You can't sell " + item.getDefinition().getName() + " here.");
 			return false;

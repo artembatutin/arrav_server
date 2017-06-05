@@ -15,7 +15,7 @@ public final class GameConstants {
 	/**
 	 * The public client build number for the login authentication.
 	 */
-	public static final int CLIENT_BUILD = 16;
+	public static final int CLIENT_BUILD = 17;
 	
 	/**
 	 * The experience mltiplier for the game.
@@ -82,7 +82,7 @@ public final class GameConstants {
 	/**
 	 * The message that will be sent on every login.
 	 */
-	public static final String WELCOME_MESSAGE = "@blu@Welcome to Edgeville - Game has just been release so please report any bugs.";
+	public static final String WELCOME_MESSAGE = "@blu@Welcome to Edgeville - Report any bugs on the forums when found.";
 	
 	/**
 	 * The items received when a player logs in for the first time.

@@ -13,7 +13,6 @@ import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.container.impl.Equipment;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
 import net.edge.world.Animation.AnimationPriority;
@@ -24,7 +23,6 @@ import net.edge.world.node.entity.update.UpdateFlag;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemIdentifiers;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.item.ItemNodeManager;
 
 /**
  * The strategy class which holds support for ranged combat.
@@ -172,7 +170,6 @@ public final class RangedCombatStrategy implements CombatStrategy {
 //			}
 
 		boolean collected = false;
-
 		boolean ava_collector = player.getEquipment().containsAny(10498, 10499, 20068);
 
 		if(ava_collector) {
@@ -190,7 +187,8 @@ public final class RangedCombatStrategy implements CombatStrategy {
 
 			double chance = ava_collector ? 0.35 : 0.70;
 			if(RandomUtils.success(chance)) {//register item to floor
-				ItemNodeManager.register(new ItemNode(new Item(item.getId()), victim.getPosition(), player), true);
+				ItemNode am = new ItemNode(new Item(item.getId()), victim.getPosition(), player);
+				am.getRegion().register(am, true);
 			}
 		}
 

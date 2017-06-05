@@ -14,14 +14,12 @@ public class MapTool extends JFrame {
 	
 	public static void start() {
 		MapTool frame = new MapTool();
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.initComponents();
 		frame.setVisible(true);
 	}
 	
 	public static void main(String[] args) {
 		MapTool frame = new MapTool();
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.initComponents();
 		frame.setVisible(true);
 	}

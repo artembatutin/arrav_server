@@ -6,7 +6,6 @@ import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.item.ItemNodeManager;
 
 /**
  * The message sent from the client when a player sends the load tool.mapviewer region
@@ -23,11 +22,11 @@ public final class UpdateRegionPacket implements PacketReader {
 			player.sendInterfaces();
 			player.getTolerance().reset();
 			player.setUpdateRegion(false);
-			ItemNodeManager.updateRegion(player);
 			World.getRegions().getAllSurroundingRegions(player.getPosition().getRegion()).forEach(r -> {
 				if(r.getState() != NodeState.ACTIVE) {
 					r.setState(NodeState.ACTIVE);
 				}
+				r.onEnter(player);
 			});
 			if(player.getRights().greater(Rights.ADMINISTRATOR))
 				player.message("DEBUG[region= " + player.getPosition().getRegion() + "]");

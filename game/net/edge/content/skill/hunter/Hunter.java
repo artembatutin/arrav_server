@@ -14,7 +14,6 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.item.ItemNodeManager;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
@@ -58,7 +57,7 @@ public final class Hunter {
 			GLOBAL_TRAPS.get(player).getTraps().forEach(t -> {
 				t.setAbandoned(true);
 				t.getObject().publish();
-				ItemNodeManager.register(new ItemNode(new Item(t.getType().getItemId()), t.getObject().getGlobalPos().copy(), player));
+				t.getObject().getRegion().register(new ItemNode(new Item(t.getType().getItemId()), t.getObject().getGlobalPos().copy(), player));
 			});
 			GLOBAL_TRAPS.get(player).getTraps().clear();
 		} else {
@@ -66,7 +65,7 @@ public final class Hunter {
 			trap.setAbandoned(true);
 			trap.getObject().remove();
 			player.message("You have abandoned your trap...");
-			ItemNodeManager.register(new ItemNode(new Item(trap.getType().getItemId()), trap.getObject().getGlobalPos().copy(), player));
+			trap.getObject().getRegion().register(new ItemNode(new Item(trap.getType().getItemId()), trap.getObject().getGlobalPos().copy(), player));
 		}
 		
 		if(GLOBAL_TRAPS.get(player).getTraps().isEmpty()) {

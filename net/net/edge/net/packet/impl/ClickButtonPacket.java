@@ -30,6 +30,8 @@ import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.content.teleport.impl.DefaultTeleportSpell;
+import net.edge.event.EventContainer;
+import net.edge.event.impl.ButtonEvent;
 import net.edge.locale.Position;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.packet.PacketReader;
@@ -38,6 +40,7 @@ import net.edge.util.ActionListener;
 import net.edge.util.TextUtils;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.entity.player.assets.Spellbook;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
@@ -52,6 +55,8 @@ import java.util.function.Function;
  * @author lare96 <http://github.com/lare96>
  */
 public final class ClickButtonPacket implements PacketReader {
+	
+	public static final EventContainer<ButtonEvent> BUTTONS = new EventContainer<>();
 	
 	/**
 	 * The flag that determines if this message should be read properly.
@@ -75,7 +80,7 @@ public final class ClickButtonPacket implements PacketReader {
 	public void handle(Player player, int opcode, int size, ByteMessage payload) {
 		int button = PROPER_READ ? payload.getShort() : hexToInt(payload.getBytes(2));
 		
-		if(Server.DEBUG) {
+		if(Server.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}
 		
@@ -84,6 +89,11 @@ public final class ClickButtonPacket implements PacketReader {
 			if(player.getMarketShop() != null) {
 				MarketShop.clearFromShop(player);
 			}
+		}
+		ButtonEvent e = BUTTONS.get(button);
+		if(e != null) {
+			if(e.click(player, button))
+				return;
 		}
 		if(Prayer.activate(player, true, button)) {
 			return;
@@ -159,54 +169,7 @@ public final class ClickButtonPacket implements PacketReader {
 			player.getBank().setTab(button - 100);
 		}
 		switch(button) {
-			//Skills 0-24
-			case Skills.THIEVING:
-				player.teleport(new Position(3093, 3479, 1), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case Skills.COOKING:
-				player.teleport(new Position(3147, 3451), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case Skills.WOODCUTTING:
-				player.teleport(new Position(2605, 4774), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case Skills.FISHING:
-				player.teleport(new Position(2605, 3412), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case Skills.RUNECRAFTING:
-				player.teleport(new Position(3039, 4834), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case Skills.FLETCHING:
-				player.teleport(new Position(3002, 9799), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case Skills.MINING:
-				player.teleport(new Position(2998, 9829), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case Skills.SMITHING:
-				player.teleport(new Position(2998, 9826), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case Skills.FIREMAKING:
-				player.teleport(new Position(2610, 3095), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case Skills.CRAFTING:
-				player.teleport(new Position(3350, 3332), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case Skills.HERBLORE:
-				player.teleport(new Position(2898, 3430), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case Skills.AGILITY:
-				player.getDialogueBuilder().append(new OptionDialogue(t -> {
-					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.teleport(new Position(2475, 3439), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(2553, 3546), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(2998, 3915), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-					}
-				}, "Gnome", "Barbarian", "@red@Wilderness"));
-				break;
-			case Skills.CONSTRUCTION://Hunter and construction are inverted.
-				player.teleport(new Position(2375, 3618), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
+			
 			//Minigames 30-47
 			case 31://barrows
 				player.teleport(new Position(3565, 3306), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
@@ -293,29 +256,6 @@ public final class ClickButtonPacket implements PacketReader {
 			case 241:
 				World.getClanManager().delete(player);
 				break;
-			//Magic spellbooks
-			case 84237://Home teleport
-			case 75010:
-			case 75008:
-			case 117048:
-				player.teleport(new Position(3085, 3508));
-				break;
-			case 6004:
-			case 117131://Skills
-				player.getMessages().sendInterface(-4);
-				break;
-			case 4146:
-			case 117112://Monsters
-				player.getMessages().sendInterface(-9);
-				break;
-			case 6005:
-			case 117154:
-				player.getMessages().sendInterface(-6);
-				break;
-			case 4150:
-			case 117123:
-				player.getMessages().sendInterface(-7);
-				break;
 			case 118114:
 				LunarSpells.castSpellbookSwap(player);
 				break;
@@ -328,64 +268,6 @@ public final class ClickButtonPacket implements PacketReader {
 				break;
 			case 55096:
 				player.getMessages().sendCloseWindows();
-				break;
-			case 4140:
-			case 117162:
-				player.getDialogueBuilder().append(new OptionDialogue(t -> {
-					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.teleport(new Position(3087, 3492), DefaultTeleportSpell.TeleportType.PVP_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(2539, 4716), DefaultTeleportSpell.TeleportType.PVP_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(2986, 3598), DefaultTeleportSpell.TeleportType.PVP_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
-						player.teleport(new Position(3308, 3908), DefaultTeleportSpell.TeleportType.PVP_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.FIFTH_OPTION)) {
-						player.getDialogueBuilder().advance();
-					}
-				}, "Edgeville", "Mage bank", "Green dragons (Level-14 wild)", "Level-50 Obelisks", "@red@Next page"), new OptionDialogue(t -> {
-					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.getDialogueBuilder().previous();
-					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(3211, 3681), DefaultTeleportSpell.TeleportType.PVP_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(3240, 3611), DefaultTeleportSpell.TeleportType.PVP_PORTAL);
-					} else {
-						player.getMessages().sendCloseWindows();
-						player.message("Suggest more on the forums!");
-					}
-				}, "@red@Previous page", "Graveyard", "Chaos Altar (Multi)", "@red@Suggest more!"));
-				break;
-			case 4143:
-			case 117210:
-				player.getDialogueBuilder().append(new OptionDialogue(t -> {
-					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.teleport(new Position(3223, 3218), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(2964, 3378), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(3093, 3244), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
-						player.teleport(new Position(2815, 3447), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-					} else {
-						player.getDialogueBuilder().advance();
-					}
-					if(!t.equals(OptionDialogue.OptionType.FIFTH_OPTION)) {
-						player.getMessages().sendCloseWindows();
-					}
-				}, "Lumbridge", "Falador", "Draynor", "Catherby", "@red@Next page"), new OptionDialogue(t -> {
-					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.getDialogueBuilder().previous();
-					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(2529, 3307), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(2662, 3305), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-					}
-					
-					if(!t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.getMessages().sendCloseWindows();
-					}
-				}, "@red@Previous page", "West Ardougne", "East Ardougne", "Nevermind"));
 				break;
 			case 195212:
 				if(player.getClan().isPresent())

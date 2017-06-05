@@ -833,7 +833,7 @@ public final class Combat {
 			if(npc.getWeakenedBy() == CombatWeaken.STRENGTH_LOW || npc.getWeakenedBy() == CombatWeaken.STRENGTH_HIGH)
 				maxHit -= (int) ((npc.getWeakenedBy().getRate()) * (maxHit));
 			if(npc.getId() == 2026) { //Dharok the wretched
-				maxHit += (int) (npc.getMaxHealth() - npc.getCurrentHealth() * 0.2);
+				maxHit += (int) ((npc.getMaxHealth() / 10) - (npc.getCurrentHealth() / 10) * 0.15);
 			}
 			return maxHit;
 		}
@@ -871,7 +871,7 @@ public final class Combat {
 		}
 		
 		if(isFullDharoks(player)) {
-			cumulativeStr *= 1.0 + ((player.getMaximumHealth() - player.getCurrentHealth()) * 0.01);
+			cumulativeStr *= 1.0 + (((player.getMaximumHealth() / 10) - (player.getCurrentHealth() / 10)) * 0.01);
 		} else if(isFullVoid(player) && player.getEquipment().contains(11665)) {
 			cumulativeStr *= 1.1;
 		} else {

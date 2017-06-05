@@ -15,12 +15,7 @@ import net.edge.world.node.item.ItemState;
 import net.edge.world.object.ObjectNode;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.logging.Logger;
-
-import static net.edge.world.node.NodeState.ACTIVE;
-import static net.edge.world.node.NodeState.INACTIVE;
 
 /**
  * A location on the tool.mapviewer that is {@code 64x64} in size. Used primarily for caching various types of {@link Node}s and
@@ -45,24 +40,34 @@ public final class Region extends Node {
 	 */
 	private static final int MAXIMUM_HEIGHT_LEVEL = 4;
 	
+	/**
+	 * The amount of ticks to execute the sequence listener.
+	 */
+	private static final int SEQUENCE_TICKS = 100;
+	
 	//The nodes in this region.
 	/**
-	 * A concurrent {@link Map} of active {@link Player}s in this {@code Region}.
+	 * A {@link List} of {@link ItemNode}s in this {@code Region}.
+	 */
+	private final List<ItemNode> items = new LinkedList<>();
+	
+	/**
+	 * A {@link Map} of active {@link Player}s in this {@code Region}.
 	 */
 	private final Map<Integer, Player> players = new HashMap<>();
 	
 	/**
-	 * A concurrent {@link Map} of active {@link Npc}s in this {@code Region}.
+	 * A {@link Map} of active {@link Npc}s in this {@code Region}.
 	 */
 	private final Map<Integer, Npc> npcs = new HashMap<>();
 	
 	/**
-	 * A concurrent {@link Map} of active {@link ObjectNode}s in this {@code Region}.
+	 * A {@link Map} of active {@link ObjectNode}s in this {@code Region}.
 	 */
 	private final Map<Integer, RegionTiledObjects> objects = new HashMap<>();
 	
 	/**
-	 * A concurrent {@link Map} of removed {@link ObjectNode}s in this {@code Region}.
+	 * A {@link Map} of removed {@link ObjectNode}s in this {@code Region}.
 	 */
 	private final Map<Integer, Set<ObjectNode>> removeObjects = new HashMap<>();
 	
@@ -93,6 +98,37 @@ public final class Region extends Node {
 	}
 	
 	@Override
+	public void sequence() {
+		//cleanup timer increased.
+		cleanup++;
+		
+		//sequencing active item nodes.
+		Iterator<ItemNode> it = items.iterator();
+		while (it.hasNext()) {
+			ItemNode item = it.next();
+			if (item.getCounter().incrementAndGet(10) >= SEQUENCE_TICKS) {
+				item.onSequence();
+				item.getCounter().set(0);
+			}
+			if (item.getState() != NodeState.ACTIVE) {
+				item.dispose();
+				it.remove();
+			}
+		}
+		
+		//cleaning only when the cleanup time has come.
+		if(cleanup > 500) {
+			if(getState() == NodeState.ACTIVE && getPlayers().isEmpty()) {
+				boolean playersNearby = playersAround();
+				if(!playersNearby) {
+					setState(NodeState.INACTIVE);
+				}
+			}
+			cleanup = 0;
+		}
+	}
+	
+	@Override
 	public void register() {
 		//activating all npcs.
 		npcs.forEach((i, n) -> n.setActive(true));
@@ -104,6 +140,31 @@ public final class Region extends Node {
 		//deactivating all npcs.
 		npcs.forEach((i, n) -> n.setActive(false));
 		LOGGER.info("Disposed Region: [" + regionId + "] on the fly.");
+	}
+	
+	/**
+	 * The method that updates all items in the region for {@code player}.
+	 * @param player the player to update items for.
+	 */
+	public void onEnter(Player player) {
+		for(ItemNode item : items) {
+			if(item.getItemState() == ItemState.HIDDEN || item.getState() != NodeState.ACTIVE)
+				continue;
+			if(item.getPosition() == null)
+				continue;
+			if(item.getInstance() != player.getInstance())
+				continue;
+			player.getMessages().sendRemoveGroundItem(item);
+			if(item.getPosition().withinDistance(player.getPosition(), 60)) {
+				if(item.getPlayer() == null && item.getItemState() == ItemState.SEEN_BY_EVERYONE) {
+					player.getMessages().sendGroundItem(item);
+					continue;
+				}
+				if(item.getPlayer().equals(player) && item.getItemState() == ItemState.SEEN_BY_OWNER) {
+					player.getMessages().sendGroundItem(item);
+				}
+			}
+		}
 	}
 	
 	/**
@@ -150,6 +211,90 @@ public final class Region extends Node {
 	 */
 	public Map<Integer, Npc> getNpcs() {
 		return npcs;
+	}
+	
+	/**
+	 * The method that attempts to register {@code item} and does not stack by
+	 * default.
+	 * @param item the item to attempt to register.
+	 * @return {@code true} if the item was registered, {@code false} otherwise.
+	 */
+	public boolean register(ItemNode item) {
+		return register(item, false);
+	}
+	
+	/**
+	 * The method that attempts to register {@code item}.
+	 * @param item  the item to attempt to register.
+	 * @param stack if the item should stack upon registration.
+	 * @return {@code true} if the item was registered, {@code false} otherwise.
+	 */
+	public boolean register(ItemNode item, boolean stack) {
+		if(item.getState() != NodeState.IDLE)
+			return false;
+		if(stack) {
+			for(ItemNode next : items) {
+				if(next.getPlayer() == null || next.getPosition() == null || next.getItem() == null)
+					continue;
+				if(!next.getPosition().same(item.getPosition()))
+					continue;
+				if(next.getItem().getId() == item.getItem().getId() && next.getPlayer().equals(item.getPlayer())) {
+					next.getItem().incrementAmountBy(item.getItem().getAmount());
+					if(next.getItem().getAmount() <= 5) {
+						next.dispose();
+						next.register();
+					}
+					return true;
+				}
+			}
+			item.setState(NodeState.ACTIVE);
+			items.add(item);
+			return true;
+		}
+		if(item.getItem().getDefinition().isStackable()) {
+			item.setState(NodeState.ACTIVE);
+			items.add(item);
+			return true;
+		}
+		int amount = item.getItem().getAmount();
+		item.getItem().setAmount(1);
+		for(int i = 0; i < amount; i++) {
+			item.setState(NodeState.ACTIVE);
+			items.add(item);
+		}
+		return true;
+	}
+	
+	/**
+	 * The method that attempts to unregister {@code item}.
+	 * @param item the item to attempt to unregister.
+	 * @return {@code true} if the item was unregistered, {@code false}
+	 * otherwise.
+	 */
+	public boolean unregister(ItemNode item) {
+		if (item.getState() != NodeState.ACTIVE)
+			return false;
+		if (items.remove(item)) {
+			item.setState(NodeState.INACTIVE);
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * The method that retrieves the item with {@code id} on {@code position}.
+	 * @param id       the identifier to retrieve the item with.
+	 * @param position the position to retrieve the item on.
+	 * @return the item instance wrapped in an optional, or an empty optional if
+	 * no item is found.
+	 */
+	public Optional<ItemNode> getItem(int id, Position position) {
+		for(ItemNode i : items) {
+			if(i.getItem().getId() == id && i.getItemState() != ItemState.HIDDEN && i.getState() == NodeState.ACTIVE && i.getPosition().same(position)) {
+				return Optional.of(i);
+			}
+		}
+		return Optional.empty();
 	}
 	
 	/**
