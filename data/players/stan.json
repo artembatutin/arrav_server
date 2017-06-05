@@ -4,8 +4,8 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 1897,
-    "y": 4627,
+    "x": 3089,
+    "y": 3518,
     "z": 0
   },
   "rights": "DEVELOPER",
@@ -28,7 +28,7 @@
   ],
   "prayer-type": "CURSES",
   "spell-book": "NORMAL",
-  "fight-type": "PICKAXE_IMPALE",
+  "fight-type": "SHORTBOW_RAPID",
   "poison-damage": 0,
   "auto-retaliate": false,
   "running": true,
@@ -202,7 +202,10 @@
       "id": 952,
       "amount": 1
     },
-    null,
+    {
+      "id": 9185,
+      "amount": 1
+    },
     {
       "id": 11694,
       "amount": 1
@@ -211,7 +214,10 @@
       "id": 14484,
       "amount": 1
     },
-    null,
+    {
+      "id": 20786,
+      "amount": 1
+    },
     null,
     null,
     null,
@@ -1045,7 +1051,7 @@
     null,
     null,
     {
-      "id": 20786,
+      "id": 20171,
       "amount": 1
     },
     null,
@@ -1057,7 +1063,10 @@
     null,
     null,
     null,
-    null
+    {
+      "id": 9242,
+      "amount": 999
+    }
   ],
   "friends": [
     2813493,
@@ -1132,13 +1141,13 @@
   "validated": false,
   "quests": {},
   "attributes": {
-    "fight_caves_advanced": {
-      "type": "java.lang.Boolean",
-      "value": false
-    },
     "introduction_stage": {
       "type": "java.lang.Integer",
       "value": 2
+    },
+    "fight_caves_advanced": {
+      "type": "java.lang.Boolean",
+      "value": false
     },
     "slayer_tasks": {
       "type": "java.lang.Integer",

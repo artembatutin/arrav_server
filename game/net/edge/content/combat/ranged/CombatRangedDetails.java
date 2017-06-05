@@ -78,12 +78,10 @@ public final class CombatRangedDetails {
 	 * @return {@link CombatRangedAmmoDefinition} or null if no value is found.
 	 */
 	public CombatRangedAmmoDefinition determineAmmo(Item ammunition, CombatRangedWeapon def) {
-		return Arrays.stream(def.getAmmunitions()).filter(t -> {
-			for(Item item : t.getAmmus()) {
-				return item.getId() == ammunition.getId() || def.type.equals(CombatRangedType.SPECIAL_BOW);
-			}
-			return false;
-		}).findAny().orElse(null);
+		if(def.type.equals(CombatRangedType.SPECIAL_BOW)) {
+			return CombatRangedDetails.RANGED_WEAPONS.get(def.getWeapon()).ammunitions[0];
+		}
+		return Arrays.stream(def.getAmmunitions()).filter(t -> Arrays.stream(t.getAmmus()).anyMatch(a -> a.getId() == ammunition.getId())).findFirst().orElse(null);
 	}
 	
 	/**
@@ -107,7 +105,7 @@ public final class CombatRangedDetails {
 		weapon.setId(weaponId);
 		
 		int slot = weapon.getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
-		
+
 		Item ammunition = player.getEquipment().get(slot);
 		
 		if(ammunition == null) {
