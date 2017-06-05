@@ -12,15 +12,15 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum ShootingStarData {
-	PHASE_NINE(9, 38660, 10, 15, 130),
-	PHASE_EIGHT(8, 38661, 20, 25, 106),
-	PHASE_SEVEN(7, 38662, 30, 40, 87),
-	PHASE_SIX(6, 38663, 40, 80, 61),
-	PHASE_FIVE(5, 38664, 50, 175, 44),
-	PHASE_FOUR(4, 38665, 60, 250, 34),
-	PHASE_THREE(3, 38666, 70, 439, 25),
-	PHASE_TWO(2, 38667, 80, 700, 20),
-	PHASE_ONE(1, 38668, 90, 1200, 14);
+	PHASE_NINE(9, 38660, 10, 15, 32),
+	PHASE_EIGHT(8, 38661, 20, 25, 26),
+	PHASE_SEVEN(7, 38662, 30, 40, 21),
+	PHASE_SIX(6, 38663, 40, 80, 15),
+	PHASE_FIVE(5, 38664, 50, 175, 11),
+	PHASE_FOUR(4, 38665, 60, 250, 8),
+	PHASE_THREE(3, 38666, 70, 439, 6),
+	PHASE_TWO(2, 38667, 80, 700, 5),
+	PHASE_ONE(1, 38668, 90, 1200, 3);
 	
 	/**
 	 * Caches our enum values.
