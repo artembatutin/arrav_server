@@ -123,6 +123,12 @@ public final class CombatSession extends Task {
 	 * {@code false} otherwise.
 	 */
 	private boolean sessionCanAttack() {
+		if(builder == null)
+			return false;
+		if(builder.getCharacter() == null)
+			return false;
+		if(builder.getVictim() == null)
+			return false;
 		if(builder.getVictim().getState() != NodeState.ACTIVE || builder.getCharacter().getState() != NodeState.ACTIVE || builder.getCharacter().isDead() || builder.getVictim().isDead()) {
 			builder.reset();
 			return false;

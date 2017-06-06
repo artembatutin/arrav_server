@@ -1,5 +1,8 @@
 package net.edge.content.item;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
+import net.edge.event.impl.ItemEvent;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.container.impl.Inventory;
 import net.edge.content.minigame.MinigameHandler;
@@ -10,6 +13,7 @@ import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
+import java.util.EnumSet;
 import java.util.Optional;
 
 /**
@@ -267,10 +271,15 @@ public enum FoodConsumable {
 				Skill randomSkill = player.getSkills()[id];
 				randomSkill.decreaseLevel(RandomUtils.inclusive(3));
 				player.message("Eating the kebab has damaged" + " your " + SkillData.values()[id] + " stat.");
-				return;
 			}
 		}
 	};
+	
+	/**
+	 * Caches our enum values.
+	 */
+	private static final ImmutableSet<FoodConsumable> VALUES = Sets.immutableEnumSet(EnumSet.allOf(FoodConsumable.class));
+	
 	
 	/**
 	 * The amount of hit points this food heals.
@@ -297,34 +306,40 @@ public enum FoodConsumable {
 		return name().toLowerCase().replace("_", " ");
 	}
 	
-	/**
-	 * Attempts to consume {@code item} in {@code slot} for {@code player}.
-	 * @param player the player attempting to consume the item.
-	 * @param item   the item being consumed by the player.
-	 * @param slot   the slot the player is consuming from.
-	 * @return {@code true} if the item was consumed, {@code false} otherwise.
-	 */
-	public static boolean consume(Player player, Item item, int slot) {
-		Optional<FoodConsumable> food = forId(item.getId());
-		if(!food.isPresent() || player.isDead() || !player.getEatingTimer().elapsed(food.get().getDelay()))
-			return false;
-		
-		if(!MinigameHandler.execute(player, m -> m.canEat(player, food.get()))) {
-			return false;
+	public static void event() {
+		for(FoodConsumable food : FoodConsumable.values()) {
+			ItemEvent e = new ItemEvent() {
+				@Override
+				public boolean click(Player player, Item item, int container, int slot, int click) {
+					if(player.isDead() || !player.getEatingTimer().elapsed(food.getDelay()))
+						return false;
+					
+					if(!MinigameHandler.execute(player, m -> m.canEat(player, food))) {
+						return false;
+					}
+					player.animation(new Animation(829));
+					player.getEatingTimer().reset();
+					player.getInventory().remove(item, slot);
+					Optional<Item> replacement = Optional.empty();
+					int length = food.getIds().length;
+					for(int index = 0; index < length; index++) {
+						if(food.getIds()[index] == item.getId() && index + 1 < length) {
+							replacement = Optional.of(new Item(food.getIds()[index + 1]));
+						}
+					}
+					if(replacement.isPresent()) {
+						player.getInventory().set(slot, replacement.get(), true);
+						player.getInventory().refresh(player, Inventory.INVENTORY_DISPLAY_ID);
+					}
+					player.message(food.getMessage());
+					food.onEffect(player);
+					Skills.refresh(player, Skills.HITPOINTS);
+					return true;
+				}
+			};
+			for(int f : food.getIds())
+				e.registerInventory(f);
 		}
-		player.animation(new Animation(829));
-		player.getEatingTimer().reset();
-		player.getInventory().remove(item, slot);
-		
-		Optional<Item> replacement = getReplacementItem(item);
-		if(replacement.isPresent()) {
-			player.getInventory().set(slot, replacement.get(), true);
-			player.getInventory().refresh(player, Inventory.INVENTORY_DISPLAY_ID);
-		}
-		player.message(food.get().getMessage());
-		food.get().onEffect(player);
-		Skills.refresh(player, Skills.HITPOINTS);
-		return true;
 	}
 	
 	/**
@@ -338,6 +353,23 @@ public enum FoodConsumable {
 			return;
 		}
 		player.getSkills()[Skills.HITPOINTS].increaseLevel(getHealAmount(), player.getMaximumHealth());
+	}
+	
+	/**
+	 * Retrieves the food consumable element for {@code id}.
+	 * @param id the id that the food consumable is attached to.
+	 * @return the food consumable wrapped in an optional, or an empty optional
+	 * if no food consumable was found.
+	 */
+	public static Optional<FoodConsumable> forId(int id) {
+		for(FoodConsumable food : VALUES) {
+			for(int foodId : food.getIds()) {
+				if(id == foodId) {
+					return Optional.of(food);
+				}
+			}
+		}
+		return Optional.empty();
 	}
 	
 	/**
@@ -358,42 +390,6 @@ public enum FoodConsumable {
 	 */
 	public String getMessage() {
 		return (ids.length > 1 ? "You eat a slice of the " : "You eat the ") + toString() + ".";
-	}
-	
-	/**
-	 * Retrieves the replacement item for {@code item}.
-	 * @param item the item to retrieve the replacement item for.
-	 * @return the replacement item wrapped in an optional, or an empty optional
-	 * if no replacement item is available.
-	 */
-	private static Optional<Item> getReplacementItem(Item item) {
-		Optional<FoodConsumable> food = forId(item.getId());
-		if(food.isPresent()) {
-			int length = food.get().getIds().length;
-			for(int index = 0; index < length; index++) {
-				if(food.get().getIds()[index] == item.getId() && index + 1 < length) {
-					return Optional.of(new Item(food.get().getIds()[index + 1]));
-				}
-			}
-		}
-		return Optional.empty();
-	}
-	
-	/**
-	 * Retrieves the food consumable element for {@code id}.
-	 * @param id the id that the food consumable is attached to.
-	 * @return the food consumable wrapped in an optional, or an empty optional
-	 * if no food consumable was found.
-	 */
-	public static Optional<FoodConsumable> forId(int id) {
-		for(FoodConsumable food : FoodConsumable.values()) {
-			for(int foodId : food.getIds()) {
-				if(id == foodId) {
-					return Optional.of(food);
-				}
-			}
-		}
-		return Optional.empty();
 	}
 	
 	/**

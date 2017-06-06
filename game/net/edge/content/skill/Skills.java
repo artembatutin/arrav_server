@@ -349,9 +349,10 @@ public final class Skills {
 	public static boolean maxed(Player player) {
 		for(int i = 0; i < player.getSkills().length; i++) {
 			Skill s = player.getSkills()[i];
-			if(s.getRealLevel() < 99 && i != DUNGEONEERING && i != CONSTRUCTION && i != FARMING) {
+			if(i == DUNGEONEERING || i == CONSTRUCTION || i == FARMING)
+				continue;
+			if(s.getRealLevel() < 99)
 				return false;
-			}
 		}
 		return true;
 	}

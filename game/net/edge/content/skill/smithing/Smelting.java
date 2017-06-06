@@ -116,7 +116,7 @@ public final class Smelting extends ProducingSkillAction {
 	 */
 	private static final int[] SMELT_BARS = {2349, 2351, 2355, 2353, 2357, 2359, 2361, 2363};
 	
-	public static void objects() {
+	public static void event() {
 		ObjectEvent smelt = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {

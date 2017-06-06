@@ -2,6 +2,7 @@ package net.edge.content.item;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.event.impl.ItemEvent;
 import net.edge.task.Task;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.effect.CombatEffectType;
@@ -293,29 +294,37 @@ public enum PotionConsumable {
 		this.ids = ids;
 	}
 	
-	/**
-	 * Attempts to consume {@code item} in {@code slot} for {@code player}.
-	 * @param player the player attempting to consume the item.
-	 * @param item   the item being consumed by the player.
-	 * @param slot   the slot the player is consuming from.
-	 * @return {@code true} if the item was consumed, {@code false} otherwise.
-	 */
-	public static boolean consume(Player player, Item item, int slot) {
-		Optional<PotionConsumable> potion = forId(item.getId());
-		if(!potion.isPresent() || player.isDead() || !player.getPotionTimer().elapsed(1200))
-			return false;
-		if(!MinigameHandler.execute(player, m -> m.canPot(player, potion.get()))) {
-			return false;
+	public static void event() {
+		for(PotionConsumable potion : PotionConsumable.values()) {
+			ItemEvent e = new ItemEvent() {
+				@Override
+				public boolean click(Player player, Item item, int container, int slot, int click) {
+					if(player.isDead() || !player.getPotionTimer().elapsed(1200))
+						return false;
+					if(!MinigameHandler.execute(player, m -> m.canPot(player, potion))) {
+						return false;
+					}
+					if(!potion.canDrink(player)) {
+						return false;
+					}
+					player.animation(new Animation(829));
+					player.getPotionTimer().reset();
+					player.getInventory().remove(item, slot);
+					Item replace = VIAL;
+					int length = potion.getIds().length;
+					for(int index = 0; index < length; index++) {
+						if(potion.getIds()[index] == item.getId() && index + 1 < length) {
+							replace = new Item(potion.getIds()[index + 1]);
+						}
+					}
+					player.getInventory().add(replace);
+					potion.onEffect(player);
+					return true;
+				}
+			};
+			for(int p : potion.getIds())
+				e.registerInventory(p);
 		}
-		if(!potion.get().canDrink(player)) {
-			return false;
-		}
-		player.animation(new Animation(829));
-		player.getPotionTimer().reset();
-		player.getInventory().remove(item, slot);
-		player.getInventory().add(getReplacementItem(item));
-		potion.get().onEffect(player);
-		return true;
 	}
 	
 	/**
@@ -380,7 +389,6 @@ public enum PotionConsumable {
 	 * The method that executes the prayer potion action.
 	 * @param player        the player to do this action for.
 	 * @param superPrayer   determines if this potion is a super prayer potion.
-	 * @param restorePotion determines if this potion is a restore potion.
 	 */
 	private static void onPrayerEffect(Player player, boolean superPrayer) {
 		Skill skill = player.getSkills()[Skills.PRAYER];
@@ -494,25 +502,6 @@ public enum PotionConsumable {
 		}
 		s.increaseLevel(boostLevel, cap);
 		Skills.refresh(player, skill);
-	}
-	
-	/**
-	 * Retrieves the replacement item for {@code item}.
-	 * @param item the item to retrieve the replacement item for.
-	 * @return the replacement item wrapped in an optional, or an empty optional
-	 * if no replacement item is available.
-	 */
-	private static Item getReplacementItem(Item item) {
-		Optional<PotionConsumable> potion = forId(item.getId());
-		if(potion.isPresent()) {
-			int length = potion.get().getIds().length;
-			for(int index = 0; index < length; index++) {
-				if(potion.get().getIds()[index] == item.getId() && index + 1 < length) {
-					return new Item(potion.get().getIds()[index + 1]);
-				}
-			}
-		}
-		return VIAL;
 	}
 	
 	/**

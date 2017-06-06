@@ -1,5 +1,7 @@
 package net.edge.content.skill.slayer;
 
+import net.edge.event.impl.ItemEvent;
+import net.edge.event.impl.NpcEvent;
 import net.edge.locale.Position;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
@@ -75,46 +77,6 @@ public final class Slayer {
 	}
 	
 	/**
-	 * Attempts to use contact the slayer master through the slayer gem.
-	 * @param player the player attempting to contact the slayer master.
-	 * @param item   the item that was interacted with.
-	 * @param option the option of the gem that was used.
-	 * @return {@code true} if the player managed to contact, {@code false} otherwise.
-	 */
-	public static boolean contact(Player player, Item item, int option) {
-		if(item.getId() != 4155) {
-			return false;
-		}
-		
-		SlayerMaster master = player.getSlayer().isPresent() ? player.getSlayer().get().getMaster() : SlayerMaster.SPRIA;
-		
-		switch(option) {
-			case 1:
-				player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "Ughh, what do you want?"), new OptionDialogue(t -> {
-							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-								player.getDialogueBuilder().go(3);
-							} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-								player.getDialogueBuilder().advance();
-							} else {
-								player.getDialogueBuilder().last();
-							}
-						}, "Can I get a new task?", "Howmany kills are left?", "Nevermind"), new PlayerDialogue("Howmany kills are left?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."} : new String[]{"You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."}).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Can I get a new task?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You already are assigned to a slayer task..."} : new String[]{"Come speak to me or another slayer master ", "in order to get assigned to a task."}).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Nevermind").attach(() -> player.getMessages().sendCloseWindows())
-				
-				);
-				break;
-			case 2:
-				if(player.getSlayer().isPresent()) {
-					player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."));
-				} else {
-					player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."));
-				}
-				break;
-		}
-		
-		return true;
-	}
-	
-	/**
 	 * Opens the slayer panel for a particular player.
 	 * @param player the player interacting with the panel.
 	 */
@@ -123,48 +85,72 @@ public final class Slayer {
 		updateBlocked(player);
 	}
 	
-	/**
-	 * Appends a slayer task for the specified player with a dialogue.
-	 * @param player the player this task should be appended to.
-	 * @param npcId  the npc id the player interacted with.
-	 * @return <true> if the task was appended, <false> otherwise.
-	 */
-	public static boolean append(Player player, int npcId) {
-		Optional<SlayerMaster> has_master = SlayerMaster.getDefinition(npcId);
-		
-		if(!has_master.isPresent()) {
-			return false;
-		}
-		
-		SlayerMaster master = has_master.get();
-		
-		if(!player.getSkills()[Skills.SLAYER].reqLevel(master.getRequirement())) {
-			player.message("You need a slayer level of " + master.getRequirement() + " to access " + TextUtils.capitalize(master.toString().toLowerCase()) + ".");
-			return false;
-		}
-		
-		player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "'Ello, and what are you after, then?"), new OptionDialogue(t -> {
-			if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-				Optional<Slayer> task = getTask(player, master);
-				
-				Dialogue[] dialogues = player.getSlayer().isPresent() ? new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "You already have a slayer task.", "Speak to me once you have completed it.")} : !task.isPresent() ? new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "There was no task found, please try again shortly.")} : new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "Excellent, you're doing great, your new task", "is to kill " + task.get().amount + " " + TextUtils.capitalize(task.get().getKey().toLowerCase() + ".")).attach(() -> player.setSlayer(Optional.of(task.get())))};
-				
-				player.getDialogueBuilder().append(dialogues);
-			} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-				teleport(player, master);
-			} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-				player.getDialogueBuilder().advance();
-			} else {
-				player.getDialogueBuilder().last();
+	public static void eventItem() {
+		ItemEvent e = new ItemEvent() {
+			@Override
+			public boolean click(Player player, Item item, int container, int slot, int click) {
+				SlayerMaster master = player.getSlayer().isPresent() ? player.getSlayer().get().getMaster() : SlayerMaster.SPRIA;
+				if(click == 1) {
+					player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "Ughh, what do you want?"), new OptionDialogue(t -> {
+								if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+									player.getDialogueBuilder().go(3);
+								} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
+									player.getDialogueBuilder().advance();
+								} else {
+									player.getDialogueBuilder().last();
+								}
+							}, "Can I get a new task?", "Howmany kills are left?", "Nevermind"), new PlayerDialogue("Howmany kills are left?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."} : new String[]{"You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."}).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Can I get a new task?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You already are assigned to a slayer task..."} : new String[]{"Come speak to me or another slayer master ", "in order to get assigned to a task."}).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Nevermind").attach(() -> player.getMessages().sendCloseWindows())
+					
+					);
+				} else if(click == 2) {
+					if(player.getSlayer().isPresent()) {
+						player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."));
+					} else {
+						player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."));
+					}
+				}
+				return true;
 			}
-		}, "I need another assignment.", "I want to teleport to my assignment.", "Can I buy a slayer gem?", "Nevermind."), new PlayerDialogue("Can I buy a slayer gem?"), new NpcDialogue(master.getNpcId(), "Yes, it costs 10,000 gp."), new OptionDialogue(t -> {
-			if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-				player.getDialogueBuilder().advance();
-			} else {
-				player.getDialogueBuilder().skip();
-			}
-		}, "Buy the slayer gem", "Nevermind"), new RequestItemDialogue(new Item(995, 10000), new Item(4155), "You hand over 10,000 coins to buy \\na slayer gem.", Optional.empty()).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Nevermind").attach(() -> player.getMessages().sendCloseWindows()));
-		return true;
+		};
+		e.registerInventory(4155);
+	}
+	
+	public static void eventNpc() {
+		for(SlayerMaster master : SlayerMaster.values()) {
+			NpcEvent e = new NpcEvent() {
+				@Override
+				public boolean click(Player player, Npc npc, int click) {
+					if(!player.getSkills()[Skills.SLAYER].reqLevel(master.getRequirement())) {
+						player.message("You need a slayer level of " + master.getRequirement() + " to access " + TextUtils.capitalize(master.toString().toLowerCase()) + ".");
+						return false;
+					}
+					
+					player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "'Ello, and what are you after, then?"), new OptionDialogue(t -> {
+						if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+							Optional<Slayer> task = getTask(player, master);
+							
+							Dialogue[] dialogues = player.getSlayer().isPresent() ? new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "You already have a slayer task.", "Speak to me once you have completed it.")} : !task.isPresent() ? new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "There was no task found, please try again shortly.")} : new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "Excellent, you're doing great, your new task", "is to kill " + task.get().amount + " " + TextUtils.capitalize(task.get().getKey().toLowerCase() + ".")).attach(() -> player.setSlayer(Optional.of(task.get())))};
+							
+							player.getDialogueBuilder().append(dialogues);
+						} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
+							teleport(player, master);
+						} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
+							player.getDialogueBuilder().advance();
+						} else {
+							player.getDialogueBuilder().last();
+						}
+					}, "I need another assignment.", "I want to teleport to my assignment.", "Can I buy a slayer gem?", "Nevermind."), new PlayerDialogue("Can I buy a slayer gem?"), new NpcDialogue(master.getNpcId(), "Yes, it costs 10,000 gp."), new OptionDialogue(t -> {
+						if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+							player.getDialogueBuilder().advance();
+						} else {
+							player.getDialogueBuilder().skip();
+						}
+					}, "Buy the slayer gem", "Nevermind"), new RequestItemDialogue(new Item(995, 10000), new Item(4155), "You hand over 10,000 coins to buy \\na slayer gem.", Optional.empty()).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Nevermind").attach(() -> player.getMessages().sendCloseWindows()));
+					return true;
+				}
+			};
+			e.registerFirst(master.getNpcId());
+		}
 	}
 	
 	/**

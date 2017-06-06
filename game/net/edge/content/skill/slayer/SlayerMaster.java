@@ -16,11 +16,6 @@ public enum SlayerMaster {
 	MAZCHNA(8464, 20);
 	
 	/**
-	 * Caches our enum values.
-	 */
-	public static final ImmutableSet<SlayerMaster> VALUES = Sets.immutableEnumSet(EnumSet.allOf(SlayerMaster.class));
-	
-	/**
 	 * The identifier for this slayer master id.
 	 */
 	private final int npcId;
@@ -38,16 +33,6 @@ public enum SlayerMaster {
 	SlayerMaster(int npcId, int requirement) {
 		this.npcId = npcId;
 		this.requirement = requirement;
-	}
-	
-	/**
-	 * Gets the definition for this slayer master dependent on the specified
-	 * {@code id}.
-	 * @param id the id to check for.
-	 * @return a slayer master wrapped in an optional if a match was found, {@link Optional#empty()} otherwise.
-	 */
-	public static Optional<SlayerMaster> getDefinition(int id) {
-		return VALUES.stream().filter(def -> def.npcId == id).findAny();
 	}
 	
 	/**

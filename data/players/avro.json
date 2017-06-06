@@ -4,8 +4,8 @@
   "banned": false,
   "muted": false,
   "position": {
-    "x": 1899,
-    "y": 4627,
+    "x": 3081,
+    "y": 3507,
     "z": 0
   },
   "rights": "DEVELOPER",
@@ -28,9 +28,9 @@
   ],
   "prayer-type": "NORMAL",
   "spell-book": "ANCIENT",
-  "fight-type": "UNARMED_KICK",
+  "fight-type": "SCIMITAR_SLASH",
   "poison-damage": 0,
-  "auto-retaliate": false,
+  "auto-retaliate": true,
   "running": true,
   "run-energy": 100.0,
   "special-amount": 100,
@@ -195,7 +195,7 @@
       "amount": 1
     },
     {
-      "id": 1323,
+      "id": 952,
       "amount": 1
     },
     {
@@ -204,7 +204,7 @@
     },
     {
       "id": 995,
-      "amount": 422162
+      "amount": 1100862
     },
     {
       "id": 7400,
@@ -262,10 +262,22 @@
       "id": 11694,
       "amount": 1
     },
-    null,
-    null,
-    null,
-    null,
+    {
+      "id": 1777,
+      "amount": 1
+    },
+    {
+      "id": 249,
+      "amount": 1
+    },
+    {
+      "id": 249,
+      "amount": 1
+    },
+    {
+      "id": 20769,
+      "amount": 1
+    },
     null,
     null,
     null,
@@ -298,7 +310,6 @@
       "id": 1379,
       "amount": 1
     },
-    null,
     {
       "id": 1191,
       "amount": 1
@@ -503,6 +514,7 @@
       "id": 20661,
       "amount": 1
     },
+    null,
     null,
     null,
     null,
@@ -1230,7 +1242,10 @@
     null,
     null,
     null,
-    null,
+    {
+      "id": 1323,
+      "amount": 1
+    },
     null,
     null,
     null,

@@ -18,7 +18,6 @@ import net.edge.game.GameShutdownHook;
 import net.edge.net.EdgevilleChannelInitializer;
 import net.edge.net.NetworkConstants;
 import net.edge.net.PunishmentHandler;
-import net.edge.task.TaskListener;
 import net.edge.task.Task;
 import net.edge.util.LoggerUtils;
 import net.edge.util.Utility;
@@ -122,12 +121,22 @@ public final class Server {
 			initAsyncTasks();
 			launch.shutdown();
 			launch.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+			CommandDispatcher.load();
+			for(String directory : Utility.getSubDirectories(EventInitializer.class)) {
+				try {
+					List<EventInitializer> s = Utility.getClassesInDirectory(EventInitializer.class.getPackage().getName() + "." + directory).stream().map(clazz -> (EventInitializer) clazz).collect(Collectors.toList());
+					s.forEach(EventInitializer::init);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 			ObjectEvent.init();
 			World.get().start();
 			
 			World.getInstanceManager().close(0);
 			World.get().submit(World.getNpcMovementTask());
 			World.get().submit(new RestoreStatTask());
+			World.get().submit(new net.edge.net.voting.Motivote());
 			World.get().submit(new Task(100, false) {
 				@Override
 				public void execute() {
@@ -237,15 +246,6 @@ public final class Server {
 		launch.execute(PunishmentHandler::parseIPBans);
 		launch.execute(PunishmentHandler::parseIPMutes);
 		launch.execute(PunishmentHandler::parseStarters);
-		CommandDispatcher.load();
-		for(String directory : Utility.getSubDirectories(EventInitializer.class)) {
-			try {
-				List<EventInitializer> s = Utility.getClassesInDirectory(EventInitializer.class.getPackage().getName() + "." + directory).stream().map(clazz -> (EventInitializer) clazz).collect(Collectors.toList());
-				s.forEach(EventInitializer::init);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 }

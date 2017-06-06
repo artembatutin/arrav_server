@@ -1,13 +1,13 @@
 package net.edge.net.packet.impl;
 
 import net.edge.content.Attributes;
-import net.edge.content.Dice;
 import net.edge.content.container.impl.Inventory;
 import net.edge.content.container.session.ExchangeSession;
 import net.edge.content.container.session.ExchangeSessionType;
 import net.edge.content.skill.crafting.JewelleryMoulding;
-import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.smithing.Smithing;
+import net.edge.event.EventContainer;
+import net.edge.event.impl.ItemEvent;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
@@ -26,6 +26,11 @@ import java.util.Optional;
  * @author lare96 <http://github.com/lare96>
  */
 public final class ItemInterfacePacket implements PacketReader {
+	
+	/**
+	 * Events called on item equip action.
+	 */
+	public static final EventContainer<ItemEvent> EQUIP = new EventContainer<>();
 	
 	@Override
 	public void handle(Player player, int opcode, int size, ByteMessage payload) {
@@ -298,15 +303,9 @@ public final class ItemInterfacePacket implements PacketReader {
 		if(item == null || !Item.valid(item)) {
 			return;
 		}
-		if(Slayer.contact(player, item, 2)) {
-			return;
-		}
-		if(Dice.roll(player, item.getId(), true)) {
-			return;
-		}
-		switch(itemId) {
-			
-		}
+		ItemEvent e = EQUIP.get(item.getId());
+		if(e != null)
+			e.click(player, item, interfaceId, slot, 5);
 		player.getEquipment().equip(slot);
 		player.getCombatBuilder().cooldown(false);
 	}

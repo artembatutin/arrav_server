@@ -3,6 +3,7 @@ package net.edge.content.skill.hunter.butterfly;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.event.impl.NpcEvent;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
@@ -70,29 +71,23 @@ public final class ButterflyCatching extends ProducingSkillAction {
 		this.barehanded = barehanded;
 	}
 	
-	/**
-	 * Attempts to catch a butterfly by starting this skill action.
-	 * @param player the player attempting to catch the butterly.
-	 * @param npc    the npc which represents a butterfly.
-	 * @return {@code true} if the skill action was started, {@code false} otherwise.
-	 */
-	public static boolean catchButterfly(Player player, Npc npc) {
-		ButterflyData data = ButterflyData.getDefinitionId(npc.getId());
-		
-		if(data == null) {
-			return false;
+	public static void event() {
+		for(ButterflyData data : ButterflyData.values()) {
+			NpcEvent e = new NpcEvent() {
+				@Override
+				public boolean click(Player player, Npc npc, int click) {
+					boolean barehanded = !player.getEquipment().contains(10010);
+					if(barehanded && (player.getEquipment().get(Equipment.WEAPON_SLOT) != null || player.getEquipment().get(Equipment.SHIELD_SLOT) != null)) {
+						player.message("Your hands need to be free to catch a butterfly.");
+						return false;
+					}
+					ButterflyCatching hunter = new ButterflyCatching(player, data, npc, barehanded);
+					hunter.start();
+					return true;
+				}
+			};
+			e.registerFirst(data.npc);
 		}
-		
-		boolean barehanded = !player.getEquipment().contains(10010);
-		
-		if(barehanded && (player.getEquipment().get(Equipment.WEAPON_SLOT) != null || player.getEquipment().get(Equipment.SHIELD_SLOT) != null)) {
-			player.message("Your hands need to be free to catch a butterfly.");
-			return false;
-		}
-		
-		ButterflyCatching hunter = new ButterflyCatching(player, data, npc, barehanded);
-		hunter.start();
-		return true;
 	}
 	
 	public static boolean releaseButterfly(Player player, Item item) {
@@ -156,7 +151,7 @@ public final class ButterflyCatching extends ProducingSkillAction {
 	
 	@Override
 	public boolean instant() {
-		return barehanded ? true : false;
+		return barehanded;
 	}
 	
 	@Override

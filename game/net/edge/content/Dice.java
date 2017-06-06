@@ -1,6 +1,7 @@
 package net.edge.content;
 
 import com.google.common.collect.ImmutableMap;
+import net.edge.event.impl.ItemEvent;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.clanchat.ClanChatRank;
@@ -28,13 +29,7 @@ public final class Dice {
 	 * @param clanchat determines if this roll is in the clan chat.
 	 * @return {@code true} if the dice was rolled, {@code false} otherwise.
 	 */
-	public static boolean roll(Player player, int itemId, boolean clanchat) {
-		DiceData data = DiceData.VALUES.get(itemId);
-		
-		if(data == null) {
-			return false;
-		}
-		
+	public static boolean roll(Player player, DiceData data, boolean clanchat) {
 		if(player.getCombatBuilder().inCombat()) {
 			return true;
 		}
@@ -70,69 +65,82 @@ public final class Dice {
 		return true;
 	}
 	
-	/**
-	 * Attempts to select a dice from the dice bag.
-	 * @param player the player selecting.
-	 * @param item   the item interacted with.
-	 * @return {@code true} if the player selected a dice, {@code false} otherwise.
-	 */
-	public static boolean select(Player player, int item) {
-		DiceData data = DiceData.VALUES.get(item);
-		
-		if(data == null || (data != null && !data.equals(DiceData.DICE_BAG))) {
-			return false;
+	public static void event() {
+		for(DiceData data : DiceData.values()) {
+			if(data.equals(DiceData.DICE_BAG)) {
+				continue;
+			}
+			ItemEvent e = new ItemEvent() {
+				@Override
+				public boolean click(Player player, Item item, int container, int slot, int click) {
+					return roll(player, data, false);
+				}
+			};
+			e.registerInventory(data.item.getId());
+			e = new ItemEvent() {
+				@Override
+				public boolean click(Player player, Item item, int container, int slot, int click) {
+					return roll(player, data, true);
+				}
+			};
+			e.registerInterface(data.item.getId());
 		}
-		
-		player.getDialogueBuilder().append(new OptionDialogue(t -> {
-					if(!t.equals(OptionDialogue.OptionType.FIFTH_OPTION)) {
-						player.getInventory().remove(DiceData.DICE_BAG.item);
-						player.getMessages().sendCloseWindows();
-					}
-					switch(t) {
-						case FIRST_OPTION:
-							player.getInventory().add(DiceData.DIE_4_SIDED.item);
-							break;
-						case SECOND_OPTION:
-							player.getInventory().add(DiceData.DIE_6_SIDED.item);
-							break;
-						case THIRD_OPTION:
-							player.getInventory().add(DiceData.DIE_8_SIDED.item);
-							break;
-						case FOURTH_OPTION:
-							player.getInventory().add(DiceData.DIE_10_SIDED.item);
-							break;
-						case FIFTH_OPTION:
-							player.getDialogueBuilder().advance();
-							break;
-					}
-				}, "Die (4 sides)", "Die (6 sides)", "Die (8 sides)", "Die (10 sides)", "@red@Next page"),
+		ItemEvent bag = new ItemEvent() {
+			@Override
+			public boolean click(Player player, Item item, int container, int slot, int click) {
+				player.getDialogueBuilder().append(new OptionDialogue(t -> {
+							if(!t.equals(OptionDialogue.OptionType.FIFTH_OPTION)) {
+								player.getInventory().remove(DiceData.DICE_BAG.item);
+								player.getMessages().sendCloseWindows();
+							}
+							switch(t) {
+								case FIRST_OPTION:
+									player.getInventory().add(DiceData.DIE_4_SIDED.item);
+									break;
+								case SECOND_OPTION:
+									player.getInventory().add(DiceData.DIE_6_SIDED.item);
+									break;
+								case THIRD_OPTION:
+									player.getInventory().add(DiceData.DIE_8_SIDED.item);
+									break;
+								case FOURTH_OPTION:
+									player.getInventory().add(DiceData.DIE_10_SIDED.item);
+									break;
+								case FIFTH_OPTION:
+									player.getDialogueBuilder().advance();
+									break;
+							}
+						}, "Die (4 sides)", "Die (6 sides)", "Die (8 sides)", "Die (10 sides)", "@red@Next page"),
+						
+						new OptionDialogue(t -> {
+							if(!t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+								player.getInventory().remove(DiceData.DICE_BAG.item);
+								player.getMessages().sendCloseWindows();
+							}
+							switch(t) {
+								case FIRST_OPTION:
+									player.getDialogueBuilder().previous();
+									break;
+								case SECOND_OPTION:
+									player.getInventory().add(DiceData.DIE_12_SIDED.item);
+									break;
+								case THIRD_OPTION:
+									player.getInventory().add(DiceData.DIE_20_SIDED.item);
+									break;
+								case FOURTH_OPTION:
+									player.getInventory().add(DiceData.DICE_2_6_SIDED.item);
+									break;
+								case FIFTH_OPTION:
+									player.getInventory().add(DiceData.DICE_100.item);
+									break;
+							}
+						}, "@red@Previous page", "Die (12 sides)", "Die (20 sides)", "Dice (2, 6)", "Dice (up to 100)")
 				
-				new OptionDialogue(t -> {
-					if(!t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.getInventory().remove(DiceData.DICE_BAG.item);
-						player.getMessages().sendCloseWindows();
-					}
-					switch(t) {
-						case FIRST_OPTION:
-							player.getDialogueBuilder().previous();
-							break;
-						case SECOND_OPTION:
-							player.getInventory().add(DiceData.DIE_12_SIDED.item);
-							break;
-						case THIRD_OPTION:
-							player.getInventory().add(DiceData.DIE_20_SIDED.item);
-							break;
-						case FOURTH_OPTION:
-							player.getInventory().add(DiceData.DICE_2_6_SIDED.item);
-							break;
-						case FIFTH_OPTION:
-							player.getInventory().add(DiceData.DICE_100.item);
-							break;
-					}
-				}, "@red@Previous page", "Die (12 sides)", "Die (20 sides)", "Dice (2, 6)", "Dice (up to 100)")
-		
-		);
-		return true;
+				);
+				return true;
+			}
+		};
+		bag.registerInventory(DiceData.DICE_BAG.item.getId());
 	}
 	
 	/**

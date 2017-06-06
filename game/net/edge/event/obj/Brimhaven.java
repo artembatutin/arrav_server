@@ -43,7 +43,7 @@ public class Brimhaven extends EventInitializer {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
 				if(object.getGlobalPos().same(new Position(2635, 9511, 2)))
-					player.teleport(new Position(2637, 9517, 2), LADDER);
+					player.teleport(new Position(2637, 9517, 0), LADDER);
 				return true;
 			}
 		};

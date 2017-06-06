@@ -1,14 +1,12 @@
 package net.edge.content.skill.herblore;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
+import net.edge.event.impl.ItemEvent;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.EnumSet;
 import java.util.Optional;
 
 /**
@@ -26,29 +24,24 @@ public final class Herb extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link Herb}.
 	 * @param player {@link #getPlayer()}.
-	 * @param item   the item that was clicked.
 	 */
-	public Herb(Player player, Item item) {
+	private Herb(Player player, GrimyHerb herb) {
 		super(player, Optional.of(player.getPosition()));
-		
-		definition = GrimyHerb.getDefinition(item.getId()).orElse(null);
+		definition = herb;
 	}
 	
-	/**
-	 * Identify's the current herb.
-	 * @param player {@link #getPlayer()}.
-	 * @param item   the current item that was clicked.
-	 * @return <true> if the herb was identified, <false> otherwise.
-	 */
-	public static boolean identify(Player player, Item item) {
-		Herb herb = new Herb(player, item);
-		
-		if(herb.definition == null) {
-			return false;
+	public static void event() {
+		for(GrimyHerb h : GrimyHerb.values()) {
+			ItemEvent e = new ItemEvent() {
+				@Override
+				public boolean click(Player player, Item item, int container, int slot, int click) {
+					Herb herb = new Herb(player, h);
+					herb.start();
+					return true;
+				}
+			};
+			e.registerInventory(h.grimy.getId());
 		}
-		
-		herb.start();
-		return true;
 	}
 	
 	@Override
@@ -78,18 +71,12 @@ public final class Herb extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		if(!canProduce()) {
-			return false;
-		}
-		return true;
+		return canProduce();
 	}
 	
 	@Override
 	public boolean canExecute() {
-		if(!canProduce()) {
-			return false;
-		}
-		return true;
+		return canProduce();
 	}
 	
 	@Override
@@ -102,7 +89,7 @@ public final class Herb extends ProducingSkillAction {
 		return SkillData.HERBLORE;
 	}
 	
-	public boolean canProduce() {
+	private boolean canProduce() {
 		if(!getPlayer().getSkills()[skill().getId()].reqLevel(definition.level)) {
 			getPlayer().message("You need a herblore level of " + definition.level + " to clean this herb.");
 			return false;
@@ -131,11 +118,6 @@ public final class Herb extends ProducingSkillAction {
 		LANTADYME(67, 2485, 2481, 13.1),
 		DWARFWEED(70, 217, 267, 13.8),
 		TORSTOL(75, 219, 269, 15);
-		
-		/**
-		 * Caches our enum values.
-		 */
-		private static final ImmutableSet<GrimyHerb> VALUES = Sets.immutableEnumSet(EnumSet.allOf(GrimyHerb.class));
 		
 		/**
 		 * The required level for creating this potion.
@@ -170,16 +152,6 @@ public final class Herb extends ProducingSkillAction {
 			this.grimy = new Item(grimy);
 			this.clean = new Item(clean);
 			this.experience = experience;
-		}
-		
-		/**
-		 * Gets the definition for this grimy herb.
-		 * @param identifier the identifier to check for.
-		 * @return an optional holding the {@link GrimyHerb} value found,
-		 * {@link Optional#empty} otherwise.
-		 */
-		public static Optional<GrimyHerb> getDefinition(int identifier) {
-			return VALUES.stream().filter(herb -> herb.grimy.getId() == identifier).findAny();
 		}
 	}
 }
