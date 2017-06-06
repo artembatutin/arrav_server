@@ -1,5 +1,6 @@
 package net.edge.content.shootingstar;
 
+import net.edge.event.impl.NpcEvent;
 import net.edge.task.Task;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
@@ -46,47 +47,39 @@ public final class StarSprite extends Npc {
 		World.get().getNpcs().add(star.sprite);
 	}
 	
-	/**
-	 * Attempts to interact with this star sprite.
-	 * @param player the player interacting with the star sprite.
-	 * @param npcId  the npc id representing the star sprite.
-	 * @param option the option id interacted with.
-	 * @return {@code true} if there was an interaction, {@code false} otherwise.
-	 */
-	public static boolean interact(Player player, int npcId, int option) {
-		if(npcId != 8091) {
-			return false;
-		}
-		
-		switch(option) {
-			case 1:
-				DialogueAppender ap = new DialogueAppender(player);
-				ap.chain(new NpcDialogue(8091, "Hello " + player.getFormatUsername() + ", I had been trapped inside this rock", "for a few decades, I can now finally return."));
-				ap.chain(new PlayerDialogue(Expression.CONFUSED, "Ehh? This is where you say, \"Thank you for saving me", "oh noble warrior, do you want a reward in return?\""));
-				
-				boolean stardust = player.getInventory().contains(new Item(StarMining.STARDUST.getId(), EXCHANGE_FOR_BLOOD_COINS));
-				String[] message = stardust ? new String[]{"Eh, I see you have stardust on you, perhaps you", "would want to trade it for blood coins?"} : player.getInventory().contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of " + EXCHANGE_FOR_BLOOD_COINS +  " stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
-				
-				ap.chain(new NpcDialogue(8091, message).attachAfter(() -> {
-					if(!stardust) {
-						player.getMessages().sendCloseWindows();
-					}
-				}));
-				
-				ap.chain(new PlayerDialogue("Mhm, sounds interesting, what's the conversion rate?"));
-				ap.chain(new NpcDialogue(8091, "Ehh, I guess " + EXCHANGE_FOR_BLOOD_COINS + " stardust for 1 blood coin would be fair?"));
-				ap.chain(new PlayerDialogue("Alright, let's do it."));
-				ap.chain(new NpcDialogue(8091, "How much stardust would you like to convert?").attachAfter(() -> {
-					sendEnterAmount(player);
-				}));
-				
-				ap.start();
-				break;
-			case 2:
-				sendInstant(player);
-				break;
-		}
-		return true;
+	public static void event() {
+		NpcEvent e = new NpcEvent() {
+			@Override
+			public boolean click(Player player, Npc npc, int click) {
+				if(click == 1) {
+					DialogueAppender ap = new DialogueAppender(player);
+					ap.chain(new NpcDialogue(8091, "Hello " + player.getFormatUsername() + ", I had been trapped inside this rock", "for a few decades, I can now finally return."));
+					ap.chain(new PlayerDialogue(Expression.CONFUSED, "Ehh? This is where you say, \"Thank you for saving me", "oh noble warrior, do you want a reward in return?\""));
+					
+					boolean stardust = player.getInventory().contains(new Item(StarMining.STARDUST.getId(), EXCHANGE_FOR_BLOOD_COINS));
+					String[] message = stardust ? new String[]{"Eh, I see you have stardust on you, perhaps you", "would want to trade it for blood coins?"} : player.getInventory().contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of " + EXCHANGE_FOR_BLOOD_COINS +  " stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
+					
+					ap.chain(new NpcDialogue(8091, message).attachAfter(() -> {
+						if(!stardust) {
+							player.getMessages().sendCloseWindows();
+						}
+					}));
+					
+					ap.chain(new PlayerDialogue("Mhm, sounds interesting, what's the conversion rate?"));
+					ap.chain(new NpcDialogue(8091, "Ehh, I guess " + EXCHANGE_FOR_BLOOD_COINS + " stardust for 1 blood coin would be fair?"));
+					ap.chain(new PlayerDialogue("Alright, let's do it."));
+					ap.chain(new NpcDialogue(8091, "How much stardust would you like to convert?").attachAfter(() -> {
+						sendEnterAmount(player);
+					}));
+					ap.start();
+				} else if(click == 2) {
+					sendInstant(player);
+				}
+				return true;
+			}
+		};
+		e.registerFirst(8091);
+		e.registerSecond(8091);
 	}
 	
 	private static void sendInstant(Player player) {

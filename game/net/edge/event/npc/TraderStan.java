@@ -46,7 +46,7 @@ public class TraderStan extends EventInitializer {
 		NpcEvent e = new NpcEvent() {
 			@Override
 			public boolean click(Player player, Npc npc, int click) {
-				DialogueAppender app = new DialogueAppender(player);
+				/*DialogueAppender app = new DialogueAppender(player);
 				app.chain(new NpcDialogue(5913, "Hello " + player.getFormatUsername() + ", my name is Stan.", "How may I help you today?"));
 				app.chain(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
@@ -72,12 +72,13 @@ public class TraderStan extends EventInitializer {
 					//open own shop
 				}));
 				app.chain(new PlayerDialogue("Nevermind..."));
-				app.start();
+				app.start();*/
+				player.getMessages().sendInterface(-13);
 				return true;
 			}
 		};
 		e.registerFirst(4650);
-		Task yell = new Task(150, false) {
+		Task yell = new Task(250, false) {
 			@Override
 			protected void execute() {
 				stan.forceChat(RandomUtils.random(chats));

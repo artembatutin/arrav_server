@@ -13,6 +13,9 @@ import net.edge.cache.decoder.MapDefinitionDecoder;
 import net.edge.cache.decoder.ObjectDefinitionDecoder;
 import net.edge.cache.decoder.RegionDecoder;
 import net.edge.event.EventInitializer;
+import net.edge.event.impl.ButtonEvent;
+import net.edge.event.impl.ItemEvent;
+import net.edge.event.impl.NpcEvent;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.game.GameShutdownHook;
 import net.edge.net.EdgevilleChannelInitializer;
@@ -130,13 +133,15 @@ public final class Server {
 					e.printStackTrace();
 				}
 			}
+			ButtonEvent.init();
+			ItemEvent.init();
+			NpcEvent.init();
 			ObjectEvent.init();
 			World.get().start();
 			
 			World.getInstanceManager().close(0);
 			World.get().submit(World.getNpcMovementTask());
 			World.get().submit(new RestoreStatTask());
-			World.get().submit(new net.edge.net.voting.Motivote());
 			World.get().submit(new Task(100, false) {
 				@Override
 				public void execute() {

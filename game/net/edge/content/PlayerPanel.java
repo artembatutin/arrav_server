@@ -39,7 +39,7 @@ public enum PlayerPanel {
 	VOTE(62157) {
 		@Override
 		public void onClick(Player player) {
-			player.getMessages().sendLink("community/index.php?/topic/11-please-vote-for-us/");
+			player.getMessages().sendLink("vote");
 		}
 	},
 	DONATE(62158) {
