@@ -9,8 +9,10 @@ import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.PlayerDialogue;
 import net.edge.content.skill.Skills;
+import net.edge.event.impl.NpcEvent;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -30,7 +32,7 @@ public enum Skillcape {
 	PRAYER_CAPE(9759, 4979, 829, Skills.PRAYER, 802),
 	MAGIC_CAPE(9762, 4939, 813, Skills.MAGIC, 1658),
 	RUNECRAFT_CAPE(9765, 4947, 817, Skills.RUNECRAFTING, 5913),
-	HITPOINTS_CAPE(9768, 4971, 833, Skills.HITPOINTS, 961),
+	HITPOINTS_CAPE(9768, 4971, 833, Skills.HITPOINTS, 6180),
 	AGILITY_CAPE(9771, 4977, 830, Skills.AGILITY, 437),
 	HERBLORE_CAPE(9774, 4969, 835, Skills.HERBLORE, 455),
 	THIEVING_CAPE(9777, 4965, 826, Skills.THIEVING, 2270),
@@ -134,42 +136,38 @@ public enum Skillcape {
 		return true;
 	}
 	
-	/**
-	 * Attempts to reward the player by giving him the skillcape.
-	 * @param player the player to give the skillcape to.
-	 * @param npcId  the npc id the player interacted with.
-	 * @param option the action option handled.
-	 * @return {@code true} if the player got into the dialogue stage, {@code false} otherwise.
-	 */
-	public static boolean reward(Player player, int npcId, int option) {
-		Skillcape c = VALUES.stream().filter(cape -> cape.getMaster() == npcId).findAny().orElse(null);
-		
-		if(c == null || (option == 3 && !c.equals(Skillcape.RUNECRAFT_CAPE))) {
-			return false;
-		}
-		
-		if(c.getSkill() != -1 && player.getSkills()[c.getSkill()].getRealLevel() != 99) {
-			player.dialogue(new NpcDialogue(c.getMaster(), Expression.CONFUSED, "You haven't mastered this skill yet."));
-			return false;
-		}
-		
-		player.getDialogueBuilder().append(new NpcDialogue(c.getMaster(), "You want to acquire the master skillcape for 100k?"), new OptionDialogue(t -> {
-			if(t == OptionDialogue.OptionType.FIRST_OPTION) {
-				if(player.getInventory().contains(new Item(995, 100_000))) {
-					if(player.getInventory().remaining() >= 1) {
-						int item = Skills.determineSkillcape(player, c);
-						player.getDialogueBuilder().append(new GiveItemDialogue(new Item(item, 1), "You received the skill cape!", Optional.of(() -> player.getInventory().remove(new Item(995, 100000)))));
+	public static void event() {
+		for(Skillcape c : Skillcape.values()) {
+			NpcEvent e = new NpcEvent() {
+				@Override
+				public boolean click(Player player, Npc npc, int click) {
+					if(c.getSkill() != -1 && player.getSkills()[c.getSkill()].getRealLevel() != 99) {
+						player.dialogue(new NpcDialogue(c.getMaster(), Expression.CONFUSED, "You haven't mastered this skill yet."));
+						return false;
 					}
-				} else {
-					player.getDialogueBuilder().append(new PlayerDialogue(Expression.SAD, "I don't have enough for this skill cape."));
+					player.getDialogueBuilder().append(new NpcDialogue(c.getMaster(), "You want to acquire the master skillcape for 500k?"), new OptionDialogue(t -> {
+						if(t == OptionDialogue.OptionType.FIRST_OPTION) {
+							if(player.getInventory().contains(new Item(995, 500_000))) {
+								if(player.getInventory().remaining() >= 1) {
+									int item = Skills.determineSkillcape(player, c);
+									player.getDialogueBuilder().append(new GiveItemDialogue(new Item(item, 1), "You received the skill cape!", Optional.of(() -> player.getInventory().remove(new Item(995, 500000)))));
+								}
+							} else {
+								player.getDialogueBuilder().append(new PlayerDialogue(Expression.SAD, "I don't have enough for this skill cape."));
+							}
+							
+						} else if(t == OptionDialogue.OptionType.SECOND_OPTION) {
+							player.getMessages().sendCloseWindows();
+						}
+					}, "Yes please!", "No thanks."));
+					return true;
 				}
-				
-			} else if(t == OptionDialogue.OptionType.SECOND_OPTION) {
-				player.getMessages().sendCloseWindows();
-			}
-		}, "Yes please!", "No thanks."));
-		return true;
+			};
+			e.registerSecond(c.getMaster());
+		}
 	}
+	
+	
 	
 	/**
 	 * Attempts to reward the player by giving him the skillcape.

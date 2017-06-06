@@ -15,8 +15,6 @@ import net.edge.content.skill.thieving.impl.Stalls;
 import net.edge.content.skill.woodcutting.Woodcutting;
 import net.edge.content.wilderness.Obelisk;
 import net.edge.event.Event;
-import net.edge.event.EventInitializer;
-import net.edge.event.obj.*;
 import net.edge.net.packet.impl.ObjectActionPacket;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectNode;
@@ -50,20 +48,20 @@ public abstract class ObjectEvent extends Event {
 	}
 	
 	public static void init() {
-		WebSlashing.init();
-		WarriorsGuild.init();
-		Obelisk.init();
-		FightcavesMinigame.init();
-		Woodcutting.objects();
-		Mining.objects();
-		Runecrafting.objects();
-		GnomeStrongholdAgility.objects();
-		BarbarianOutpostAgility.objects();
-		WildernessAgility.objects();
-		Shortcuts.objects();
+		WebSlashing.event();
+		WarriorsGuild.event();
+		Obelisk.event();
+		FightcavesMinigame.event();
+		Woodcutting.event();
+		Mining.event();
+		Runecrafting.event();
+		GnomeStrongholdAgility.event();
+		BarbarianOutpostAgility.event();
+		WildernessAgility.event();
+		Shortcuts.event();
 		PotClaying.objects();
-		Stalls.objects();
-		Smelting.objects();
+		Stalls.event();
+		Smelting.event();
 	}
 	
 }

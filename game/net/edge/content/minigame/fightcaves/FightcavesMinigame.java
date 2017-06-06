@@ -65,7 +65,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		super("FIGHT_CAVES", MinigameSafety.SAFE);
 	}
 	
-	public static void init() {
+	public static void event() {
 		ObjectEvent e = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {

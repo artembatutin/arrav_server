@@ -56,7 +56,7 @@ public final class Woodcutting extends HarvestingSkillAction {
 		this.object = object.toDynamic();
 	}
 	
-	public static void objects() {
+	public static void event() {
 		for(Tree tree : Tree.values()) {
 			ObjectEvent cut = new ObjectEvent() {
 				@Override

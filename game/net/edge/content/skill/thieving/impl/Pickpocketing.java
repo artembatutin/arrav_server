@@ -2,6 +2,7 @@ package net.edge.content.skill.thieving.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.event.impl.NpcEvent;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.Skills;
@@ -62,27 +63,23 @@ public final class Pickpocketing extends Thieving {
 	 */
 	private Pickpocketing(Player player, PickpocketData data, Npc npc) {
 		super(player, npc.getPosition());
-		
 		this.definition = data;
 		this.npc = npc;
 	}
 	
-	/**
-	 * Attempts to pickpocket the {@code npc}'s pocket.
-	 * @param player the player pickpocketing.
-	 * @param npc    the victim being pickpocketted.
-	 * @return <true> if the player managed to pickpocket the victim, <false> otherwise.
-	 */
-	public static boolean steal(Player player, Npc npc) {
-		Optional<PickpocketData> pickpocket = PickpocketData.getDefinition(npc.getId());
-		
-		if(!pickpocket.isPresent()) {
-			return false;
+	public static void event() {
+		for(PickpocketData data : PickpocketData.values()) {
+			NpcEvent e = new NpcEvent() {
+				@Override
+				public boolean click(Player player, Npc npc, int click) {
+					Pickpocketing thieving = new Pickpocketing(player, data, npc);
+					thieving.start();
+					return true;
+				}
+			};
+			for(int n : data.npcId)
+				e.registerSecond(n);
 		}
-		
-		Pickpocketing thieving = new Pickpocketing(player, pickpocket.get(), npc);
-		thieving.start();
-		return true;
 	}
 	
 	/**
@@ -94,7 +91,7 @@ public final class Pickpocketing extends Thieving {
 		double levelFactor = 100 / ((getPlayer().getSkills()[Skills.THIEVING].getLevel() + 1) - definition.requirement);
 		return  (int) Math.floor((levelFactor + npcFactor) / 2);
 	}
-//	3076 3252
+
 	@Override
 	public boolean failure() {
 		return RandomUtils.nextBoolean();

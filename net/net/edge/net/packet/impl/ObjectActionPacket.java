@@ -1,5 +1,6 @@
 package net.edge.net.packet.impl;
 
+import net.edge.Server;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.firemaking.Bonfire;
 import net.edge.content.skill.hunter.Hunter;
@@ -12,6 +13,7 @@ import net.edge.net.packet.PacketReader;
 import net.edge.world.World;
 import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
@@ -21,7 +23,7 @@ import java.util.Optional;
 
 /**
  * The message sent from the client when a player clicks an object.
- * @author lare96 <http://github.com/lare96>
+ * @author Artem Batutin <artembatutin@gmail.com
  */
 public final class ObjectActionPacket implements PacketReader {
 	
@@ -82,7 +84,8 @@ public final class ObjectActionPacket implements PacketReader {
 			return;
 		player.facePosition(position);
 		final ObjectNode object = o.get();
-		
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
+			player.message("[OBJ"+action+"]:" + object.toString());
 		boolean distanceIgnore = (action == 1 && (objectId == 85584 || objectId == 85532 || objectId == 85534));
 		player.getMovementListener().append(() -> {
 			if(distanceIgnore || new Boundary(position, object.getDefinition().getSize()).within(player.getPosition(), player.size(), 1)) {

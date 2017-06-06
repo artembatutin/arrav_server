@@ -49,7 +49,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 		this.obstacle = obstacle;
 	}
 	
-	public static void objects() {
+	public static void event() {
 		for(BarbarianAgilityData data : BarbarianAgilityData.values()) {
 			ObjectEvent perform = new ObjectEvent() {
 				@Override

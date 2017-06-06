@@ -20,7 +20,7 @@ public final class WarriorsGuild {
 	 */
 	public static final Item WARRIOR_GUILD_TOKEN = new Item(8851);
 	
-	public static void init() {
+	public static void event() {
 		ObjectEvent c =new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {

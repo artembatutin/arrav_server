@@ -1,6 +1,7 @@
 package net.edge.content.scoreboard;
 
 import com.google.common.collect.ComparisonChain;
+import net.edge.event.impl.NpcEvent;
 import net.edge.util.MutableNumber;
 import net.edge.util.json.JsonSaver;
 import net.edge.content.dialogue.impl.NpcDialogue;
@@ -131,45 +132,42 @@ public final class ScoreboardManager {
 		player_scoreboard.clear();
 	}
 	
-	/**
-	 * Attempts to claim the rewards from the individual scoreboards.
-	 * @return {@code true} if the player claimed anything, {@code false} otherwise.
-	 */
-	public boolean claimPlayerScoreboardRewards(Player player, Npc npc) {
-		if(npc.getId() != 13926) {
-			return false;
-		}
-		
-		DialogueAppender ap = new DialogueAppender(player);
-		
-		ap.chain(new NpcDialogue(npc.getId(), "Hello " + player.getFormatUsername() + ", what can I do for you today?"));
-		ap.chain(new OptionDialogue(t -> {
-			if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-				ap.getBuilder().advance();
-			} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-				ap.getBuilder().go(3);
-			} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-				ap.getBuilder().go(7);
+	public static void event() {
+		NpcEvent e = new NpcEvent() {
+			@Override
+			public boolean click(Player player, Npc npc, int click) {
+				DialogueAppender ap = new DialogueAppender(player);
+				ap.chain(new NpcDialogue(npc.getId(), "Hello " + player.getFormatUsername() + ", what can I do for you today?"));
+				ap.chain(new OptionDialogue(t -> {
+					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+						ap.getBuilder().advance();
+					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
+						ap.getBuilder().go(3);
+					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
+						ap.getBuilder().go(7);
+					}
+				}, "Who are you?", "What is the individual scoreboard?", "Claim pending rewards."));
+				ap.chain(new PlayerDialogue("Who are you?"));
+				ap.chain(new NpcDialogue(npc.getId(), "I am the scoreboard manager, I keep track of the ", "scoreboard of Main. Once a week on every monday, I", "reset the leaderboards and reward certain players on", "the rankings.").attachAfter(() -> ap.getBuilder().go(-3)));
+				ap.chain(new PlayerDialogue("What is the individual scoreboard?"));
+				ap.chain(new NpcDialogue(npc.getId(), "The individual scoreboard, is a scoreboard for individuals.", "It keeps track of certain statistics for players however,", "whenever you die your killstreak does not reset."));
+				ap.chain(new NpcDialogue(npc.getId(), "Instead, once every week on monday, all your individual ", "statistics will be reset and I will reward the top-3 players", "on the leaderboards."));
+				ap.chain(new PlayerDialogue("Ah, I think I understand now.").attachAfter(() -> ap.getBuilder().go(-7)));
+				
+				ap.chain(new PlayerDialogue("I would like to claim my rewards."));
+				if(World.getScoreboardManager().getPlayerScoreboardRewards().containsKey(player.getFormatUsername())) {
+					player.getInventory().addOrBank(new Item(12852, World.getScoreboardManager().getPlayerScoreboardRewards().get(player.getFormatUsername()).get()));
+					World.getScoreboardManager().getPlayerScoreboardRewards().remove(player.getFormatUsername());
+					ap.chain(new NpcDialogue(npc.getId(), "Ah yeah, there were some rewards waiting for you however,", "they have been added to your inventory or have been", "banked.").attachAfter(() -> ap.getBuilder().go(-10)));
+				} else {
+					ap.chain(new NpcDialogue(npc.getId(), "There are no rewards waiting for you.").attachAfter(() -> ap.getBuilder().go(-9)));
+					ap.start();
+				}
+				ap.start();
+				return true;
 			}
-		}, "Who are you?", "What is the individual scoreboard?", "Claim pending rewards."));
-		ap.chain(new PlayerDialogue("Who are you?"));
-		ap.chain(new NpcDialogue(npc.getId(), "I am the scoreboard manager, I keep track of the ", "scoreboard of Main. Once a week on every monday, I", "reset the leaderboards and reward certain players on", "the rankings.").attachAfter(() -> ap.getBuilder().go(-3)));
-		ap.chain(new PlayerDialogue("What is the individual scoreboard?"));
-		ap.chain(new NpcDialogue(npc.getId(), "The individual scoreboard, is a scoreboard for individuals.", "It keeps track of certain statistics for players however,", "whenever you die your killstreak does not reset."));
-		ap.chain(new NpcDialogue(npc.getId(), "Instead, once every week on monday, all your individual ", "statistics will be reset and I will reward the top-3 players", "on the leaderboards."));
-		ap.chain(new PlayerDialogue("Ah, I think I understand now.").attachAfter(() -> ap.getBuilder().go(-7)));
-		
-		ap.chain(new PlayerDialogue("I would like to claim my rewards."));
-		if(player_scoreboard_rewards.containsKey(player.getFormatUsername())) {
-			player.getInventory().addOrBank(new Item(12852, player_scoreboard_rewards.get(player.getFormatUsername()).get()));
-			player_scoreboard_rewards.remove(player.getFormatUsername());
-			ap.chain(new NpcDialogue(npc.getId(), "Ah yeah, there were some rewards waiting for you however,", "they have been added to your inventory or have been", "banked.").attachAfter(() -> ap.getBuilder().go(-10)));
-		} else {
-			ap.chain(new NpcDialogue(npc.getId(), "There are no rewards waiting for you.").attachAfter(() -> ap.getBuilder().go(-9)));
-			ap.start();
-		}
-		ap.start();
-		return true;
+		};
+		e.registerFirst(13926);
 	}
 	
 	/**

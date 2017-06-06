@@ -38,7 +38,8 @@ public enum TriviaData {
     _29("Who is the owner of the mansion at home?", "sir prysin"),
     _30("With who the make-over mage is sharing his house with?", "aubury"),
     _31("How many levels you need to go on second floor mansion?", "2000", "two thousands"),
-    _32("If you want a new monster drop, where can you suggest a drop?", "monster database", "monster panel", "monster db")
+    _32("If you want a new monster drop, where can you suggest a drop?", "monster database", "monster panel", "monster db"),
+    _33("Who has the shop with the ingredients to dye your whip/darkbow?", "slayer master", "spria")
     ;
 
     /**

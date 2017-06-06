@@ -1,5 +1,6 @@
 package net.edge.content.skill.prayer;
 
+import net.edge.event.impl.ItemEvent;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.DestructionSkillAction;
@@ -21,16 +22,18 @@ public final class PrayerBoneBury extends DestructionSkillAction {
 		this.itemId = itemId;
 	}
 	
-	public static boolean produce(Player player, Item item) {
-		Optional<Bone> bone = Bone.getBone(item.getId());
-		
-		if(!bone.isPresent()) {
-			return false;
+	public static void event() {
+		for(Bone b : Bone.values()) {
+			ItemEvent e = new ItemEvent() {
+				@Override
+				public boolean click(Player player, Item item, int container, int slot, int click) {
+					PrayerBoneBury buryAction = new PrayerBoneBury(player, item.getId(), b);
+					buryAction.start();
+					return true;
+				}
+			};
+			e.registerInventory(b.getId());
 		}
-		
-		PrayerBoneBury buryAction = new PrayerBoneBury(player, item.getId(), bone.get());
-		buryAction.start();
-		return true;
 	}
 	
 	@Override

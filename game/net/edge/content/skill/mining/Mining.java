@@ -61,7 +61,7 @@ public final class Mining extends HarvestingSkillAction {
 		this.object = object.toDynamic();
 	}
 	
-	public static void objects() {
+	public static void event() {
 		for(RockData rock : RockData.values()) {
 			ObjectEvent mine = new ObjectEvent() {
 				@Override
