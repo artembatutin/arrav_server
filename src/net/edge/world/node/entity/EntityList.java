@@ -1,6 +1,6 @@
 package net.edge.world.node.entity;
 
-import net.edge.net.database.connection.use.Highscores;
+import net.edge.net.database.connection.use.Hiscores;
 import net.edge.content.PlayerPanel;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
@@ -251,7 +251,7 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 			player.getSession().flushQueue();
 			player.getSession().getChannel().close();
 			if(player.getRights() != Rights.DEVELOPER && player.getRights() != Rights.ADMINISTRATOR)
-				new Highscores(World.getScore(), player).submit();
+				new Hiscores(World.getScore(), player).submit();
 			
 		}
 		return true;
