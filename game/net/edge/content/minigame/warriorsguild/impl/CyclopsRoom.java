@@ -214,7 +214,7 @@ public final class CyclopsRoom extends GuildRoom {
 		 * @param player {@link #player}.
 		 */
 		public CyclopsRoomTask(CyclopsRoom room, Player player) {
-			super(50);
+			super(100);
 			this.room = room;
 			this.player = player;
 		}
