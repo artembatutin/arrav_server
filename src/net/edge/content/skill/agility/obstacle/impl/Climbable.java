@@ -40,13 +40,14 @@ public class Climbable extends ObstacleActivity {
 	public void onSubmit(Player player) {
 		player.animation(getAnimation());
 	}
-	
+
+	@Override
+	public boolean canExecute(Player player) {
+		return !player.getPosition().same(getDestination());
+	}
+
 	@Override
 	public void execute(Player player, Task t) {
-		if(player.getPosition().same(getDestination())) {
-			t.cancel();
-			return;
-		}
 		player.move(getDestination());
 	}
 }
