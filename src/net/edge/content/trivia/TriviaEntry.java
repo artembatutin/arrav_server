@@ -61,15 +61,17 @@ public final class TriviaEntry {
             player.message("@red@[Trivia Bot]: @blu@The last question has been answered or has expired already.");
             return;
         }
-        final String an = answer.replaceAll("-", " ").toLowerCase();
         if (Arrays.stream(GameConstants.BAD_STRINGS).anyMatch(answer::contains)) {
             player.message("@red@[Trivia Bot]: @blu@You think you're funny, don't you? Guess what? You ain't.");
             return;
         }
-
-        if (Arrays.stream(current.answers).anyMatch(a -> an.equals(answer))) {
-            answered(player, answer);
-            return;
+        
+        answer = answer.toLowerCase();
+        for(String a : current.answers) {
+            if(answer.equals(a)) {
+                answered(player, answer);
+                return;
+            }
         }
 
         if(!attempted_answers.contains(answer)) {
