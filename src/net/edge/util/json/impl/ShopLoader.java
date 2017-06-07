@@ -28,8 +28,7 @@ public final class ShopLoader extends JsonLoader {
 		String name = Objects.requireNonNull(reader.get("name").getAsString());
 		int[] items = builder.fromJson(reader.get("items").getAsJsonArray(), int[].class);
 		Currency currency = Objects.requireNonNull(Currency.valueOf(reader.get("currency").getAsString()));
-		
-		MarketShop shop = new MarketShop(name, currency, items);
+		MarketShop shop = new MarketShop(id, name, currency, items);
 		if(MarketCounter.getShops().containsKey(id))
 			throw new IllegalStateException("Duplicate shop id: " + id);
 		MarketCounter.getShops().put(id, shop);

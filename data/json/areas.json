@@ -23,7 +23,8 @@
           "neX": 3095,
           "neY": 3511,
           "z": 1
-        }
+        },
+        "multi": true
       }
     ]
   },
@@ -141,10 +142,20 @@
     "location": [
       {
         "square": {
-          "swX": 3349,
-          "swY": 3263,
-          "neX": 3379,
-          "neY": 3280,
+          "swX": 3390,
+          "swY": 3259,
+          "neX": 3362,
+          "neY": 3243,
+          "z": 0
+        },
+        "summon": false
+      },
+      {
+        "square": {
+          "swX": 3359,
+          "swY": 3259,
+          "neX": 3331,
+          "neY": 3243,
           "z": 0
         },
         "summon": false

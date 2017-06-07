@@ -1,6 +1,8 @@
 package net.edge.world.node.item;
 
+import com.google.gson.Gson;
 import net.edge.content.container.impl.EquipmentType;
+import net.edge.util.json.JsonSaver;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,12 +44,12 @@ public final class ItemDefinition {
 	/**
 	 * The flag that determines if the item is noted.
 	 */
-	private boolean noted;
+	private final boolean noted;
 	
 	/**
 	 * The note transform id of this item.
 	 */
-	private int noteId;
+	private final int noteId;
 	
 	/**
 	 * The flag that determines if the item is lended.
@@ -374,6 +376,38 @@ public final class ItemDefinition {
 		return false;
 	}
 	
+	/**
+	 * Saves the item definitions.
+	 */
+	public static void serializeDefinitions() {
+		JsonSaver item_def_saver = new JsonSaver();
+		for(ItemDefinition d : ItemDefinition.DEFINITIONS) {
+			item_def_saver.current().addProperty("id", d.getId());
+			item_def_saver.current().addProperty("name", d.getName());
+			item_def_saver.current().addProperty("tradeable", d.isTradable());
+			item_def_saver.current().addProperty("stackable", d.isStackable());
+			item_def_saver.current().addProperty("weapon", d.isWeapon());
+			item_def_saver.current().addProperty("twoHanded", d.isTwoHanded());
+			item_def_saver.current().addProperty("noted", d.isNoted());
+			item_def_saver.current().addProperty("lended", d.isLended());
+			item_def_saver.current().addProperty("alchable", d.isAlchable());
+			item_def_saver.current().addProperty("noteId", d.getNoted());
+			item_def_saver.current().addProperty("lendId", d.getLend());
+			item_def_saver.current().addProperty("weight", d.getWeight());
+			item_def_saver.current().addProperty("highAlch", d.getHighAlchValue());
+			item_def_saver.current().addProperty("lowAlch", d.getLowAlchValue());
+			item_def_saver.current().addProperty("equip", d.getEquipmentType() + "");
+			if(d.getInventoryActions() != null)
+				item_def_saver.current().add("inv", new Gson().toJsonTree(d.getInventoryActions()));
+			if(d.getGroundActions() != null)
+				item_def_saver.current().add("ground", new Gson().toJsonTree(d.getGroundActions()));
+			if(d.getBonus() != null)
+				item_def_saver.current().add("bonus", new Gson().toJsonTree(d.getBonus()));
+			item_def_saver.split();
+		}
+		item_def_saver.publish("./data/json/items/item_definitions2.json");
+	}
+	
 	public static void dumpDrops() {
 		/*try {
 			int totald = 0;
@@ -604,14 +638,6 @@ public final class ItemDefinition {
 		} catch(IOException ex) {
 			ex.printStackTrace();
 		}*/
-	}
-	
-	public void setNoted(boolean noted) {
-		this.noted = noted;
-	}
-	
-	public void setNoted(int noted) {
-		this.noteId = noted;
 	}
 	
 }

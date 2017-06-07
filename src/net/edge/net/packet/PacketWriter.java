@@ -14,6 +14,7 @@ import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
+import net.edge.world.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
@@ -1196,9 +1197,15 @@ public final class PacketWriter {
 			NpcDefinition def = NpcDefinition.DEFINITIONS[id];
 			if(def == null)
 				return;
-			msg.putShort(drop.getDrops() == null ? 0 : drop.getDrops().size());
-			if(drop.getDrops() != null) {
-				for(NpcDrop d : drop.getDrops()) {
+			msg.putShort(drop.getCommon() == null ? 0 : drop.getCommon().size());
+			if(drop.getCommon() != null) {
+				for(NpcDropCache c : drop.getCommon()) {
+					msg.putShort(c.ordinal());
+				}
+			}
+			msg.putShort(drop.getUnique() == null ? 0 : drop.getUnique().size());
+			if(drop.getUnique() != null) {
+				for(NpcDrop d : drop.getUnique()) {
 					msg.putShort(d.getId());
 					msg.putShort(d.getMinimum());
 					msg.putShort(d.getMaximum());

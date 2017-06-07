@@ -126,6 +126,7 @@ public final class PlayerSerialization {
 		tokens.add(new TokenSerializer("position", p.getPosition(), n -> p.setPosition(b.fromJson(n, Position.class)), TokeType.LOGIN));
 		tokens.add(new TokenSerializer("rights", p.getRights(), n -> p.setRights(Rights.valueOf(n.getAsString())), TokeType.LOGIN));
 		tokens.add(new TokenSerializer("nightmare", p.getNightMode(), n -> p.setNight(n.getAsInt())));
+		tokens.add(new TokenSerializer("vote", p.getVote(), n -> p.setVote(n.getAsInt())));
 		
 		Optional<ClanMember> clan = p.getClan();
 		tokens.add(new TokenSerializer("clan", clan.isPresent() ? clan.get().getClan().getOwner() : "", n -> World.getClanManager().join(p, n.getAsString())));

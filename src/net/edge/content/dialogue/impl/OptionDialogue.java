@@ -115,6 +115,13 @@ public final class OptionDialogue extends Dialogue {
 			}
 			return Optional.empty();
 		}
+		
+		/**
+		 * Convenient check method.
+		 */
+		public boolean is(OptionType type) {
+			return this == type;
+		}
 	}
 	
 	/**

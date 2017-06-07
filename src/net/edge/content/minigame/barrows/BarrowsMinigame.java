@@ -13,6 +13,9 @@ import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
+import net.edge.world.node.entity.npc.drop.NpcDropCache;
+import net.edge.world.node.entity.npc.drop.NpcDropManager;
+import net.edge.world.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
@@ -30,37 +33,6 @@ import static net.edge.util.rand.Chance.UNCOMMON;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class BarrowsMinigame extends Minigame {
-	
-	/**
-	 * The possible barrows drops.
-	 */
-	private static final NpcDrop[] DROPS = {
-			new NpcDrop(4708, 1, 1, UNCOMMON),
-			new NpcDrop(4710, 1, 1, UNCOMMON),
-			new NpcDrop(4712, 1, 1, UNCOMMON),
-			new NpcDrop(4714, 1, 1, UNCOMMON),
-			new NpcDrop(4716, 1, 1, UNCOMMON),
-			new NpcDrop(4718, 1, 1, UNCOMMON),
-			new NpcDrop(4720, 1, 1, UNCOMMON),
-			new NpcDrop(4722, 1, 1, UNCOMMON),
-			new NpcDrop(4724, 1, 1, UNCOMMON),
-			new NpcDrop(4726, 1, 1, UNCOMMON),
-			new NpcDrop(4728, 1, 1, UNCOMMON),
-			new NpcDrop(4730, 1, 1, UNCOMMON),
-			new NpcDrop(4732, 1, 1, UNCOMMON),
-			new NpcDrop(4734, 1, 1, UNCOMMON),
-			new NpcDrop(4736, 1, 1, UNCOMMON),
-			new NpcDrop(4738, 1, 1, UNCOMMON),
-			new NpcDrop(4740, 1, 120, UNCOMMON),
-			new NpcDrop(4745, 1, 1, UNCOMMON),
-			new NpcDrop(4747, 1, 1, UNCOMMON),
-			new NpcDrop(4749, 1, 1, UNCOMMON),
-			new NpcDrop(4751, 1, 1, UNCOMMON),
-			new NpcDrop(4753, 1, 1, UNCOMMON),
-			new NpcDrop(4755, 1, 1, UNCOMMON),
-			new NpcDrop(4757, 1, 1, UNCOMMON),
-			new NpcDrop(4759, 1, 1, UNCOMMON)
-	};
 	
 	/**
 	 * The location for the chest.
@@ -216,10 +188,17 @@ public final class BarrowsMinigame extends Minigame {
 				return true;
 			}
 			if(!container.getCurrent().isPresent()) {
+				NpcDropTable table = NpcDropManager.TABLES.get(-1);//barrows custom.
+				int expected = RandomUtils.inclusive(4, 8);
 				List<Item> loot = new ArrayList<>();
-				NpcDrop main = RandomUtils.random(DROPS);
-				if(main.roll(ThreadLocalRandom.current())) {
-					loot.add(new Item(main.getId(), RandomUtils.inclusive(main.getMinimum(), main.getMaximum())));
+				int items = 0;
+				while(items < expected) {
+					NpcDropCache cache = RandomUtils.random(table.getCommon());
+					NpcDrop drop = RandomUtils.random(NpcDropManager.COMMON.get(cache));
+					if(drop.roll(ThreadLocalRandom.current())) {
+						loot.add(new Item(drop.getId(), RandomUtils.inclusive(drop.getMinimum(), drop.getMaximum())));
+						items++;
+					}
 				}
 				
 				Position position = new Position(BarrowsData.AHRIM.getLocation().getX(), BarrowsData.AHRIM.getLocation().getY(), BarrowsData.AHRIM.getLocation().getZ());

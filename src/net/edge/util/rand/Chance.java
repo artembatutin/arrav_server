@@ -11,10 +11,10 @@ public enum Chance {
 	 */
 	ALWAYS(new Rational(1, 1)),
 	
-	/*
+	/**
 	 * Describing a {@code VERY_COMMON} chance (50%, 1 in 2 chance).
 	 */
-	//VERY_COMMON(new Rational(1, 2)),
+	VERY_COMMON(new Rational(1, 2)),
 	
 	/**
 	 * Describing an {@code COMMON} chance (25%, 1 in 4 chance).

@@ -1,9 +1,14 @@
 package net.edge.game;
 
 import net.edge.content.market.MarketItem;
+import net.edge.net.packet.impl.NpcInformationPacket;
 import net.edge.world.World;
+import net.edge.world.node.entity.npc.drop.NpcDrop;
+import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.player.Player;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,6 +27,18 @@ public final class GameShutdownHook extends Thread {
 			World.getClanManager().save();
 			World.getScoreboardManager().serializeIndividualScoreboard();
 			MarketItem.serializeMarketItems();
+			
+			//drops
+			NpcDropManager.serializeDrops();
+			try {
+				BufferedWriter out = new BufferedWriter(new FileWriter("./data/suggested_drops.txt", true));
+				for(NpcDrop d : NpcInformationPacket.SUGGESTED) {
+					out.write(d.toString());
+					out.newLine();
+				}
+				NpcInformationPacket.SUGGESTED.clear();
+				out.close();
+			} catch(Exception ignored) { }
 			
 			TimeUnit.SECONDS.sleep(5);
 			//this is necessary, otherwise the thread is closed without

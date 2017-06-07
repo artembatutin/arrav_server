@@ -37,16 +37,18 @@ public final class NpcInformationPacket implements PacketReader {
 					player.message("No table found.");
 					return;
 				}
+				//to remove item
 				if(min == 99) {
 					int index = 0;
-					for(NpcDrop d : table.getDrops()) {
-						String itemName = ItemDefinition.get(item).getName().toLowerCase().replaceAll(" ", "_");
+					String itemName = ItemDefinition.get(item).getName().toLowerCase().replaceAll(" ", "_");
+					for(NpcDrop d : table.getUnique()) {
 						if(d != null) {
 							String name = ItemDefinition.get(d.getId()).getName().toLowerCase().replaceAll(" ", "_");
 							if(itemName.equals(name)) {
-								table.getDrops().remove(index);
+								table.getUnique().remove(index);
 								table.sort();
 								player.message("Removed: " + d.toString());
+								player.getMessages().sendNpcInformation(npc, table);
 								return;
 							}
 						}
@@ -55,9 +57,31 @@ public final class NpcInformationPacket implements PacketReader {
 					player.message("Couldn't remove any drop.");
 					return;
 				}
-				table.getDrops().add(suggested.toDrop());
+				if(min == 99) {
+					int index = 0;
+					for(NpcDrop d : table.getUnique()) {
+						String itemName = ItemDefinition.get(item).getName().toLowerCase().replaceAll(" ", "_");
+						if(d != null) {
+							String name = ItemDefinition.get(d.getId()).getName().toLowerCase().replaceAll(" ", "_");
+							if(itemName.equals(name)) {
+								table.getUnique().remove(index);
+								table.sort();
+								player.message("Removed: " + d.toString());
+								player.getMessages().sendNpcInformation(npc, table);
+								return;
+							}
+						}
+						index++;
+					}
+					player.message("Couldn't remove any drop.");
+					return;
+				}
+				if(table.getUnique().isEmpty())
+					table.getCommon().clear();
+				table.getUnique().add(suggested.toDrop());
 				table.sort();
 				player.message("Added " + suggested.toString());
+				player.getMessages().sendNpcInformation(npc, table);
 			} else {
 				SUGGESTED.add(suggested);
 				player.message("Your suggestion has been submitted.");

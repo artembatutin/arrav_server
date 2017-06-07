@@ -37,17 +37,19 @@ public enum Catchable {
 			return Location.inWilderness(player);
 		}
 	},
-	LOBSTER(377, 40, 0.12, 90),
-	BASS(363, 46, 0.10, 100),
-	SWORDFISH(371, 50, 0.10, 100),
-	LAVA_EEL(2148, 53, 0.10, 60) {
+	LOBSTER(377, 40, 0.20, 90),
+	BASS(363, 46, 0.15, 100),
+	SWORDFISH(371, 50, 0.15, 100),
+	LAVA_EEL(2148, 53, 0.15, 60) {
 		@Override
 		public boolean catchable(Player player) {
 			return Location.inWilderness(player);
 		}
 	},
-	MONKFISH(7944, 62, 0.05, 120),
-	SHARK(383, 76, 0.03, 110);
+	MONKFISH(7944, 62, 0.12, 120),
+	SHARK(383, 76, 0.1, 110),
+	MANTAS(389, 81, 0.1, 140),
+	ROCKTAIL(15270, 90, 0.1, 185);
 
 	private static final ImmutableSet<Catchable> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Catchable.class));
 

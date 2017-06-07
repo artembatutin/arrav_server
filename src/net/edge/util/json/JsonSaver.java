@@ -108,6 +108,10 @@ public final class JsonSaver {
 		return currentWriter;
 	}
 	
+	public JsonArray createArray() {
+		return new JsonArray();
+	}
+	
 	/**
 	 * Gets the json array.
 	 */

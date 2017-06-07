@@ -85,7 +85,7 @@ public final class ObjectActionPacket implements PacketReader {
 		player.facePosition(position);
 		final ObjectNode object = o.get();
 		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
-			player.message("[OBJ"+action+"]:" + object.toString());
+			player.message("[OBJ"+action+"]:" + object.getId() + " - " + object.getGlobalPos().toString());
 		boolean distanceIgnore = (action == 1 && (objectId == 85584 || objectId == 85532 || objectId == 85534));
 		player.getMovementListener().append(() -> {
 			if(distanceIgnore || new Boundary(position, object.getDefinition().getSize()).within(player.getPosition(), player.size(), 1)) {

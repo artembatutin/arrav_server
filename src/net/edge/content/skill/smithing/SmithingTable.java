@@ -108,7 +108,7 @@ public interface SmithingTable {
 		 */
 		BronzeTable(int requirement, double experience, int barsRequired, Item produced, String name) {
 			this.requirement = requirement;
-			this.experience = experience;
+			this.experience = experience * 2;
 			this.barsRequired = barsRequired;
 			this.produced = produced;
 			this.name = name;
@@ -123,7 +123,7 @@ public interface SmithingTable {
 		 */
 		BronzeTable(int requirement, double experience, int barsRequired, Item produced) {
 			this.requirement = requirement;
-			this.experience = experience;
+			this.experience = experience * 2;
 			this.barsRequired = barsRequired;
 			this.produced = produced;
 			this.name = TextUtils.capitalize(toString().replaceAll("_", " "));

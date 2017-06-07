@@ -17,12 +17,17 @@ import java.util.OptionalInt;
  * Represents the skill action of firing the fire pit.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
-final class PitFiring extends SkillAction {
+public final class PitFiring extends SkillAction {
 
 	/**
 	 * The fire pit object this skill action is dependent of.
 	 */
 	private final FirepitObject pit;
+	
+	/**
+	 * The burning task for the pit.
+	 */
+	public static Task burning;
 
 	/**
 	 * Constructs a new {@link PitFiring}.
@@ -97,7 +102,8 @@ final class PitFiring extends SkillAction {
 		t.cancel();
 		pit.setId(FirepitData.PHASE_IGNITED.objectId);
 		pit.publish();
-		World.get().submit(new FirepitTask(pit));
+		burning = new FirepitTask(pit);
+		World.get().submit(burning);
 		player.animation(null);
 		player.message("You successfully fired the pit!");
 		GameConstants.EXPERIENCE_MULTIPLIER = 2;
@@ -119,4 +125,5 @@ final class PitFiring extends SkillAction {
 	public boolean isPrioritized() {
 		return false;
 	}
+	
 }

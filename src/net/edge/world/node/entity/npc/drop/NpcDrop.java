@@ -17,17 +17,17 @@ public class NpcDrop {
 	/**
 	 * The identification of this {@code NpcDrop}.
 	 */
-	private final int id;
+	private int id;
 	
 	/**
 	 * The minimum amount that will be dropped.
 	 */
-	private final int minimum;
+	private int minimum;
 	
 	/**
 	 * The maximum amount that will be dropped.
 	 */
-	private final int maximum;
+	private int maximum;
 	
 	/**
 	 * The chance of this item being dropped.
@@ -131,4 +131,19 @@ public class NpcDrop {
 		return result;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public void setMinimum(int minimum) {
+		this.minimum = minimum;
+	}
+	
+	public void setMaximum(int maximum) {
+		this.maximum = maximum;
+	}
+	
+	public void setChance(Chance chance) {
+		this.chance = chance;
+	}
 }

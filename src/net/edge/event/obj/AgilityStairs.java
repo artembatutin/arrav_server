@@ -14,8 +14,8 @@ public class AgilityStairs extends EventInitializer {
 		ObjectEvent l = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
-				if(object.getGlobalPos().same(new Position(2532, 3545)))
-						player.teleport(new Position(2532, 3546), LADDER);
+				if(object.getGlobalPos().same(new Position(2532, 3545, 1)))
+						player.teleport(new Position(2532, 3546, 0), LADDER);
 				return true;
 			}
 		};

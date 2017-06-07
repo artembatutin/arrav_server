@@ -51,8 +51,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 			};
 			for(int object : data.getObjects()) {
 				perform.registerFirst(object);
-				if(object > 42003)
-					perform.registerFirst(object - 42003);
+				perform.registerFirst(object + 42003);
 			}
 		}
 	}
@@ -95,8 +94,17 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		TREE_BRANCH_UP(new int[]{35970}, ObstacleType.TREE_BRANCH_UP, player1 -> new Climbable(new Position(player1.getPosition().getX(), 3423, 1), new Position(2473, 3420, 2), ObstacleType.TREE_BRANCH_UP.getAnimation(), 2, 1, 5)),
 		TIGHT_ROPE(new int[]{2312}, ObstacleType.TIGHT_ROPE, player1 -> new Walkable(new Position(2477, 3420, 2), new Position(2483, 3420, 2), ObstacleType.TIGHT_ROPE.getAnimation(), 1, 7.5)),
 		TREE_BRANCH_DOWN(new int[]{2314, 2315}, ObstacleType.TREE_BRANCH_DOWN, player1 -> new Climbable(player1.getPosition(), new Position(2486, 3420, 0), ObstacleType.TREE_BRANCH_DOWN.getAnimation(), 2, 1, 5)),
-		OBSTACLE_NET(new int[]{2286}, ObstacleType.NETTING, player1 -> new Climbable(new Position(player1.getPosition().getX(), 3425, 0), new Position(player1.getPosition().getX(), 3427, 0), ObstacleType.NETTING.getAnimation(), 2, 1, 7.5)),
-		OBSTACLE_PIPE(new int[]{43544, 43543}, ObstacleType.PIPE, player1 -> new Walkable(new Position(player1.getPosition().getX(), 3430, 0), new Position(player1.getPosition().getX(), 3437, 0), ObstacleType.PIPE.getAnimation(), 1, 7.5) {
+		OBSTACLE_NET(new int[]{2286}, ObstacleType.NETTING, player1 -> new Climbable(new Position(player1.getPosition().getX(), 3425, 0), new Position(player1.getPosition().getX(), 3427, 0), ObstacleType.NETTING.getAnimation(), 2, 1, 7.5) {
+			@Override
+			public boolean canExecute(Player player1) {
+				if(player1.getPosition().getY() < 3426) {
+					return true;
+				}
+				player1.message("You can't cross this obstacle from this side.");
+				return false;
+			}
+		}),
+		OBSTACLE_PIPE(new int[]{85547, 85546}, ObstacleType.PIPE, player1 -> new Walkable(new Position(player1.getPosition().getX(), 3430, 0), new Position(player1.getPosition().getX(), 3437, 0), ObstacleType.PIPE.getAnimation(), 1, 7.5) {
 			@Override
 			public boolean canExecute(Player player1) {
 				if(player1.getPosition().same(new Position(2483, 3430, 0)) || player1.getPosition().same(new Position(2487, 3430, 0))) {

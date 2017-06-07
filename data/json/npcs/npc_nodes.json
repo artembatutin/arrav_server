@@ -2721,30 +2721,10 @@
     "face": "SOUTH"
   },
   {
-    "id": 235,
-    "position": {
-      "x": 2602,
-      "y": 3414,
-      "z": 0
-    },
-    "random-walk": false,
-    "face": "SOUTH"
-  },
-  {
     "id": 312,
     "position": {
       "x": 2602,
       "y": 3415,
-      "z": 0
-    },
-    "random-walk": false,
-    "face": "SOUTH"
-  },
-  {
-    "id": 313,
-    "position": {
-      "x": 2604,
-      "y": 3417,
       "z": 0
     },
     "random-walk": false,
@@ -2775,36 +2755,6 @@
     "position": {
       "x": 2606,
       "y": 3407,
-      "z": 0
-    },
-    "random-walk": false,
-    "face": "SOUTH"
-  },
-  {
-    "id": 317,
-    "position": {
-      "x": 2612,
-      "y": 3415,
-      "z": 0
-    },
-    "random-walk": false,
-    "face": "SOUTH"
-  },
-  {
-    "id": 312,
-    "position": {
-      "x": 2612,
-      "y": 3412,
-      "z": 0
-    },
-    "random-walk": false,
-    "face": "SOUTH"
-  },
-  {
-    "id": 312,
-    "position": {
-      "x": 2599,
-      "y": 3419,
       "z": 0
     },
     "random-walk": false,
@@ -2871,36 +2821,6 @@
     "face": "SOUTH"
   },
   {
-    "id": 235,
-    "position": {
-      "x": 2607,
-      "y": 3410,
-      "z": 0
-    },
-    "random-walk": false,
-    "face": "SOUTH"
-  },
-  {
-    "id": 317,
-    "position": {
-      "x": 2612,
-      "y": 3411,
-      "z": 0
-    },
-    "random-walk": false,
-    "face": "SOUTH"
-  },
-  {
-    "id": 309,
-    "position": {
-      "x": 2612,
-      "y": 3414,
-      "z": 0
-    },
-    "random-walk": false,
-    "face": "SOUTH"
-  },
-  {
     "id": 313,
     "position": {
       "x": 2603,
@@ -2911,27 +2831,7 @@
     "face": "SOUTH"
   },
   {
-    "id": 313,
-    "position": {
-      "x": 2605,
-      "y": 3424,
-      "z": 0
-    },
-    "random-walk": false,
-    "face": "SOUTH"
-  },
-  {
-    "id": 313,
-    "position": {
-      "x": 2605,
-      "y": 3421,
-      "z": 0
-    },
-    "random-walk": false,
-    "face": "SOUTH"
-  },
-  {
-    "id": 312,
+    "id": 322,
     "position": {
       "x": 2605,
       "y": 3420,
@@ -6021,16 +5921,6 @@
     "walk-radius": 2
   },
   {
-    "id": 254,
-    "position": {
-      "x": 2607,
-      "y": 3185,
-      "z": 0
-    },
-    "random-walk": true,
-    "walk-radius": 2
-  },
-  {
     "id": 253,
     "position": {
       "x": 2607,
@@ -6061,50 +5951,10 @@
     "walk-radius": 2
   },
   {
-    "id": 254,
-    "position": {
-      "x": 2590,
-      "y": 3190,
-      "z": 0
-    },
-    "random-walk": true,
-    "walk-radius": 2
-  },
-  {
-    "id": 254,
-    "position": {
-      "x": 2595,
-      "y": 3186,
-      "z": 0
-    },
-    "random-walk": true,
-    "walk-radius": 2
-  },
-  {
     "id": 253,
     "position": {
       "x": 2590,
       "y": 3184,
-      "z": 0
-    },
-    "random-walk": true,
-    "walk-radius": 2
-  },
-  {
-    "id": 254,
-    "position": {
-      "x": 2594,
-      "y": 3181,
-      "z": 0
-    },
-    "random-walk": true,
-    "walk-radius": 2
-  },
-  {
-    "id": 254,
-    "position": {
-      "x": 2597,
-      "y": 3181,
       "z": 0
     },
     "random-walk": true,
@@ -6125,16 +5975,6 @@
     "position": {
       "x": 2601,
       "y": 3177,
-      "z": 0
-    },
-    "random-walk": true,
-    "walk-radius": 2
-  },
-  {
-    "id": 254,
-    "position": {
-      "x": 2597,
-      "y": 3175,
       "z": 0
     },
     "random-walk": true,
@@ -6211,30 +6051,10 @@
     "walk-radius": 2
   },
   {
-    "id": 254,
-    "position": {
-      "x": 2619,
-      "y": 3168,
-      "z": 0
-    },
-    "random-walk": true,
-    "walk-radius": 2
-  },
-  {
     "id": 253,
     "position": {
       "x": 2617,
       "y": 3157,
-      "z": 0
-    },
-    "random-walk": true,
-    "walk-radius": 2
-  },
-  {
-    "id": 254,
-    "position": {
-      "x": 2614,
-      "y": 3150,
       "z": 0
     },
     "random-walk": true,
@@ -6311,16 +6131,6 @@
     "walk-radius": 2
   },
   {
-    "id": 254,
-    "position": {
-      "x": 2584,
-      "y": 3149,
-      "z": 0
-    },
-    "random-walk": true,
-    "walk-radius": 2
-  },
-  {
     "id": 253,
     "position": {
       "x": 2597,
@@ -6345,26 +6155,6 @@
     "position": {
       "x": 2577,
       "y": 3167,
-      "z": 0
-    },
-    "random-walk": true,
-    "walk-radius": 2
-  },
-  {
-    "id": 254,
-    "position": {
-      "x": 2580,
-      "y": 3174,
-      "z": 0
-    },
-    "random-walk": true,
-    "walk-radius": 2
-  },
-  {
-    "id": 254,
-    "position": {
-      "x": 2579,
-      "y": 3176,
       "z": 0
     },
     "random-walk": true,

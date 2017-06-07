@@ -88,7 +88,7 @@ public class SkillPanel extends EventInitializer {
 		e = new ButtonEvent() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3350, 3332), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				player.teleport(new Position(3350, 3334), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};

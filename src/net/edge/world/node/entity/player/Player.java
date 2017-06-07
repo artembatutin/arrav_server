@@ -104,6 +104,11 @@ public final class Player extends EntityNode {
 	private int nightMode;
 	
 	/**
+	 * Player's voting points.
+	 */
+	private int vote;
+	
+	/**
 	 * The hash collection of the local players.
 	 */
 	private final Set<Player> localPlayers = new LinkedHashSet<>(255);
@@ -1003,6 +1008,23 @@ public final class Player extends EntityNode {
 	public void setNight(int value) {
 		this.nightMode = value;
 		PlayerPanel.NIGHT.refresh(this, "@or2@ - Nightmare: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
+	}
+	
+	/**
+	 * Gets the amount of vote points this player has.
+	 * @return votes
+	 */
+	public int getVote() {
+		return vote;
+	}
+	
+	/**
+	 * Sets the vote point amount for this player.
+	 * @param vote
+	 */
+	public void setVote(int vote) {
+		this.vote = vote;
+		PlayerPanel.VOTE.refresh(this, "@or2@ - vote: @yel@" + vote + " points");
 	}
 	
 	/**

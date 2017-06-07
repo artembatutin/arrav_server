@@ -1,5 +1,6 @@
 package net.edge.content.skill.mining;
 
+import net.edge.content.skill.Skills;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
@@ -56,6 +57,8 @@ public final class Mining extends HarvestingSkillAction {
 	 */
 	public Mining(Player player, RockData rock, ObjectNode object) {
 		super(player, Optional.of(object.getGlobalPos()));
+		if(rock == RockData.ESSENCE && player.getSkills()[Skills.MINING].getRealLevel() >= 30)
+			rock = RockData.PURE_ESSENCE;
 		this.rock = rock;
 		this.pickaxe = PickaxeData.getDefinition(player).orElse(null);
 		this.object = object.toDynamic();

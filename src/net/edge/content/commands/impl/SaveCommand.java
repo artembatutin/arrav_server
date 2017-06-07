@@ -11,6 +11,7 @@ import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerSerialization;
 import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.item.ItemDefinition;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -29,7 +30,7 @@ public final class SaveCommand implements Command {
 				player.message("Character files have been saved for everyone online!");
 				break;
 			case "drops":
-				NpcDropManager.dump();
+				NpcDropManager.serializeDrops();
 				try {
 					BufferedWriter out = new BufferedWriter(new FileWriter("./data/suggested_drops.txt", true));
 					for(NpcDrop d : NpcInformationPacket.SUGGESTED) {
@@ -40,7 +41,7 @@ public final class SaveCommand implements Command {
 					out.close();
 				} catch(Exception e) {
 				}
-				player.message("Serialized shops!");
+				player.message("Serialized drops!");
 				break;
 			case "shops":
 				MarketCounter.serializeShops();
@@ -58,8 +59,12 @@ public final class SaveCommand implements Command {
 				World.getScoreboardManager().serializeIndividualScoreboard();
 				player.message("Serialized scoreboard statistics!");
 				break;
+			case "itemdefs":
+				ItemDefinition.serializeDefinitions();
+				player.message("Serialized item definitions!");
+				break;
 			default:
-				player.message("Possible choices: players, drops, shops, market, clans, board.");
+				player.message("Possible choices: players, drops, shops, market, clans, board, itemdefs.");
 				break;
 		}
 	}

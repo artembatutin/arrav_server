@@ -13,7 +13,7 @@ public enum Altar {
 	WATER(2480, Rune.WATER, 5, 12.0, new Position(2726, 4832), true),
 	EARTH(2481, Rune.EARTH, 9, 15.0, new Position(2655, 4830), true),
 	FIRE(2482, Rune.FIRE, 14, 18.0, new Position(2574, 4849), true),
-	BODY(2483, Rune.BODY, 20, 20.0, new Position(2523, 4826), false),
+	BODY(2483, Rune.BODY, 20, 20.0, new Position(2521, 4835), false),
 	COSMIC(2484, Rune.COSMIC, 27, 50.0, new Position(2162, 4833), false),
 	CHAOS(2487, Rune.CHAOS, 35, 55.0, new Position(2281, 4837), false),
 	NATURE(2486, Rune.NATURE, 44, 60.0, new Position(2400, 4835), false),

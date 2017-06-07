@@ -61,8 +61,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			};
 			for(int object : data.getObjects()) {
 				perform.registerFirst(object);
-				if(object > 42003)
-					perform.registerFirst(object - 42003);
+				perform.registerFirst(object + 42003);
 			}
 		}
 	}

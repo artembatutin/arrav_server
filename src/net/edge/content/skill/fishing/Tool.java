@@ -18,7 +18,7 @@ public enum Tool {
 		}
 	},
 	NET_MONKFISH(303, 62, -1, 0.10, 621, new Catchable[]{Catchable.MONKFISH}),
-	BIG_NET(305, 16, -1, 0.25, 620, new Catchable[]{Catchable.MACKEREL, Catchable.COD, Catchable.BASS, Catchable.CASKET, Catchable.LEATHER_BOOTS, Catchable.LEATHER_GLOVES, Catchable.OYSTER, Catchable.SEAWEED}) {
+	BIG_NET(305, 16, -1, 0.20, 620, new Catchable[]{Catchable.MACKEREL, Catchable.COD, Catchable.BASS, Catchable.CASKET, Catchable.LEATHER_BOOTS, Catchable.LEATHER_GLOVES, Catchable.OYSTER, Catchable.SEAWEED, Catchable.ROCKTAIL}) {
 		@Override
 		public Item[] onCatch(Player player) {
 			int amount = RandomUtils.inclusive(1, 3);
@@ -56,7 +56,7 @@ public enum Tool {
 			return Catchable.TUNA;
 		}
 	},
-	SHARK_HARPOON(311, 76, -1, 0.05, 618, new Catchable[]{Catchable.SHARK}),
+	SHARK_HARPOON(311, 76, -1, 0.1, 618, new Catchable[]{Catchable.SHARK, Catchable.MANTAS}),
 	LOBSTER_POT(301, 40, -1, 0.20, 619, new Catchable[]{Catchable.LOBSTER});
 	
 	final int id;
@@ -89,7 +89,6 @@ public enum Tool {
 		Skill skill = player.getSkills()[Skills.FISHING];
 		Arrays.stream(catchables).filter(def -> skill.reqLevel(def.getLevel()) && def.catchable(player)).forEach(success::add);
 		//Collections.shuffle(success, random);
-		
 		return success.stream().anyMatch(def -> RandomUtils.success(def.getChance())) ? RandomUtils.random(success) : catchable();
 	}
 	

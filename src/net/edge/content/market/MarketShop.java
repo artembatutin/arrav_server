@@ -15,11 +15,18 @@ import net.edge.world.node.item.Item;
 
 import java.util.Arrays;
 
+import static net.edge.content.market.currency.Currency.*;
+
 /**
  * Represents a single market shop.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class MarketShop {
+	
+	/**
+	 * Id of this shop.
+	 */
+	private final int id;
 	
 	/**
 	 * The title of the shop.
@@ -41,7 +48,8 @@ public class MarketShop {
 	 * @param title the tile of this shop.
 	 * @param items items in this shop.
 	 */
-	public MarketShop(String title, Currency currency, int[] items) {
+	public MarketShop(int id, String title, Currency currency, int[] items) {
+		this.id = id;
 		this.currency = currency;
 		this.title = title;
 		this.items = items;
@@ -53,9 +61,10 @@ public class MarketShop {
 	 * @param search the search input.
 	 */
 	public MarketShop(Player player, String search) {
+		id = -1;//none
 		clearFromShop(player);
 		search = search.replace("_", " ");
-		this.currency = Currency.COINS;
+		this.currency = COINS;
 		this.title = "Items found for: " + search;
 		items = MarketItem.search(player, search);
 		openShop(player);
@@ -141,19 +150,15 @@ public class MarketShop {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 					player.getMessages().sendEnterAmount(shopItem.getName() + ": set price to:", s -> () -> {
 						shopItem.setPrice(Integer.parseInt(s));
-						player.getMessages().sendCloseWindows();
 					});
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
 					player.getMessages().sendEnterAmount(shopItem.getName() + ": set stock to?", s -> () -> {
 						shopItem.setStock(Integer.parseInt(s));
-						player.getMessages().sendCloseWindows();
 					});
 				} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 					shopItem.toggleVariable();
-					player.getMessages().sendCloseWindows();
 				} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
 					shopItem.toggleUnlimited();
-					player.getMessages().sendCloseWindows();
 				}
 			}, "Change price", "Change stock", "toggle: " + (!shopItem.isVariable() ? "price changes" : "price is fixed"), "toggle: " + (shopItem.isUnlimitedStock() ? "unlimited stock" : "variable stock")));
 			return;
@@ -305,7 +310,13 @@ public class MarketShop {
 	}
 	
 	public boolean canSell(Player player, int item) {
-		if(getCurrency() != Currency.COINS) {
+		if(getCurrency() == VOTE_POINTS)
+			return false;
+		if(getCurrency() == EDGE_TOKENS)
+			return false;
+		if(getCurrency() == BLOOD_MONEY)
+			return false;
+		if(getCurrency() != COINS) {
 			boolean has = false;
 			for(int i : getItems()) {
 				if(i == item) {
@@ -338,6 +349,10 @@ public class MarketShop {
 		System.arraycopy(items, 0, arr, 0, items.length);
 		arr[items.length] = item;
 		items = arr;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public String getTitle() {

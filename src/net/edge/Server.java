@@ -219,6 +219,7 @@ public final class Server {
 			new NpcDefinitionLoader().load();
 			new NpcNodeLoader().load();
 			new NpcDropTableLoader().load();
+			new NpcDropCacheLoader().load();
 		});
 		launch.execute(new AreaLoader());
 		launch.execute(new ShopLoader());

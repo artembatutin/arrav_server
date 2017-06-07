@@ -2,6 +2,9 @@ package net.edge.content;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.content.commands.impl.RedeemCommand;
+import net.edge.content.commands.impl.VoteCommand;
+import net.edge.content.market.MarketCounter;
 import net.edge.game.GameConstants;
 import net.edge.util.TextUtils;
 import net.edge.util.Utility;
@@ -39,7 +42,22 @@ public enum PlayerPanel {
 	VOTE(62157) {
 		@Override
 		public void onClick(Player player) {
-			player.getMessages().sendLink("vote");
+			player.getDialogueBuilder().append(new OptionDialogue(t -> {
+				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+					player.getMessages().sendLink("vote");
+				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
+					try {
+						new RedeemCommand().execute(player, null, null);
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+				player.getMessages().sendCloseWindows();
+				if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
+					MarketCounter.getShops().get(27).openShop(player);
+				}
+			}, "Vote", "Redeem", "Vote shop"));
+			
 		}
 	},
 	DONATE(62158) {
@@ -184,7 +202,7 @@ public enum PlayerPanel {
 		PlayerPanel.TOOLS.refresh(player, "@or1@Quickies:");
 		PlayerPanel.COMMUNITY.refresh(player, "@or2@ - Forums");
 		PlayerPanel.DISCORD.refresh(player, "@or2@ - Discord");
-		PlayerPanel.VOTE.refresh(player, "@or2@ - Vote");
+		PlayerPanel.VOTE.refresh(player, "@or2@ - vote: @yel@" + player.getVote() + " points");
 		PlayerPanel.DONATE.refresh(player, "@or2@ - Donate");
 		PlayerPanel.NPC_TOOL.refresh(player, "@or2@ - Monster Database");
 		PlayerPanel.SERVER_STATISTICS.refresh(player, "@or1@Server Information:");

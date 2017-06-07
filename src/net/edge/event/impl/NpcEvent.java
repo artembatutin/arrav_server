@@ -1,5 +1,6 @@
 package net.edge.event.impl;
 
+import net.edge.content.item.Skillcape;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.shootingstar.StarSprite;
 import net.edge.content.skill.hunter.butterfly.ButterflyCatching;
@@ -40,6 +41,7 @@ public abstract class NpcEvent extends Event {
 		Slayer.eventNpc();
 		StarSprite.event();
 		Pickpocketing.event();
+		Skillcape.event();
 	}
 	
 }

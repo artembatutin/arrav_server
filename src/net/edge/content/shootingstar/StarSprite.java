@@ -111,7 +111,7 @@ public final class StarSprite extends Npc {
 				return;
 			}
 			
-			int amountRemovable = ((selectedAmount + 50) / 100) * EXCHANGE_FOR_BLOOD_COINS;
+			int amountRemovable = (int) (selectedAmount * 0.15);
 			
 			DialogueAppender a = new DialogueAppender(player);
 			
@@ -126,8 +126,8 @@ public final class StarSprite extends Npc {
 			}, "Yes", "No"));
 			a.chain(new PlayerDialogue("No, nevermind sorry."));
 			a.chain(new PlayerDialogue("Yes, let's do it.").attachAfter(() -> {
-				player.getInventory().remove(new Item(StarMining.STARDUST.getId(), amountRemovable));
-				player.getInventory().addOrBank(new Item(19000, amountRemovable / 10));
+				player.getInventory().remove(new Item(StarMining.STARDUST.getId(), selectedAmount));
+				player.getInventory().addOrBank(new Item(19000, amountRemovable));
 			}));
 			a.chain(new NpcDialogue(8091, "Very well, your blood coins have been added to your", "inventory or have been banked."));
 			a.start();

@@ -4,12 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
 import net.edge.content.container.impl.EquipmentType;
+import net.edge.util.json.JsonSaver;
+import net.edge.world.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.node.item.ItemDefinition;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.io.*;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -55,55 +56,4 @@ public final class ItemDefinitionLoader extends JsonLoader {
 		ItemDefinition.DEFINITIONS[index] = new ItemDefinition(index, name, equipmentType, tradeable, weapon, twoHanded, stackable, alchable, noted, noteId, lended, lendId, lowAlchValue, highAlchValue, weight, bonus, inventoryActions, groundActions);
 	}
 	
-	public void dump() {
-		JSONArray all = new JSONArray();
-		for(ItemDefinition d : ItemDefinition.DEFINITIONS) {
-			JSONObject o = new JSONObject();
-			o.put("id", d.getId());
-			o.put("name", d.getName());
-			o.put("tradeable", d.isTradable());
-			o.put("stackable", d.isStackable());
-			o.put("weapon", d.isWeapon());
-			o.put("twoHanded", d.isTwoHanded());
-			o.put("noted", d.isNoted());
-			o.put("lended", d.isLended());
-			o.put("alchable", d.isAlchable());
-			o.put("noteId", d.getNoted());
-			o.put("lendId", d.getLend());
-			o.put("weight", d.getWeight());
-			o.put("highAlch", d.getHighAlchValue());
-			o.put("lowAlch", d.getLowAlchValue());
-			o.put("equip", d.getEquipmentType() + "");
-			JSONArray inv = new JSONArray();
-			JSONArray gr = new JSONArray();
-			JSONArray bon = new JSONArray();
-			if(d.getInventoryActions() != null) {
-				for(String b : d.getInventoryActions()) {
-					inv.add(b);
-				}
-				o.put("inv", inv);
-			}
-			if(d.getGroundActions() != null) {
-				for(String b : d.getGroundActions()) {
-					gr.add(b);
-				}
-				o.put("ground", gr);
-			}
-			if(d.getBonus() != null) {
-				for(double b : d.getBonus()) {
-					bon.add(b);
-				}
-				o.put("bonus", bon);
-			}
-			all.add(o);
-		}
-		try (FileWriter file = new FileWriter("./idefs.json")) {
-			
-			file.write(all.toJSONString());
-			file.flush();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }

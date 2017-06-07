@@ -29,8 +29,7 @@ public final class RedeemCommand implements Command {
 		Result r2 = platform.redeem(SearchField.USER_NAME, player.getUsername());
 		if (r2.success()) {
 			int total = r2.votes().size();
-			player.message("You received " + (total * 25_000) + " coins for voting!");
-			player.getInventory().addOrBank(new Item(995, total * 25_000));
+			player.setVote(player.getVote() + total);
 		} else {
 			player.message("Nothing found, you can vote by clicking the link in the quest tab.");
 		}
