@@ -1,6 +1,7 @@
 package net.edge.content.combat.magic.lunars.impl.spells;
 
 import com.google.common.collect.ImmutableMap;
+import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
@@ -26,12 +27,12 @@ public final class PlankMake extends LunarButtonSpell {
 	
 	@Override
 	public void effect(Player caster, EntityNode victim) {
-		Optional<Entry<Integer, Integer>> set = PLANKS.entrySet().stream().filter(entry -> caster.getInventory().contains(entry.getKey())).findAny();
-		
-		set.ifPresent(plank -> {
-			caster.getInventory().remove(new Item(plank.getKey()));
-			caster.getInventory().add(new Item(plank.getValue()));
-		});
+		for(int i : PLANKS.keySet()) {
+			if(caster.getInventory().contains(i)) {
+				caster.getInventory().remove(new Item(i));
+				caster.getInventory().add(new Item(PLANKS.get(i)));
+			}
+		}
 	}
 	
 	@Override
@@ -73,9 +74,12 @@ public final class PlankMake extends LunarButtonSpell {
 		return Optional.of(new Item[]{new Item(9075, 3), new Item(557, 15), new Item(561, 1)});
 	}
 	
-	private static final ImmutableMap<Integer, Integer> PLANKS = ImmutableMap.<Integer, Integer>builder().put(1511, 960)//regular plank
+	private static final Int2IntArrayMap PLANKS = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
+			.put(1511, 960)//regular plank
 			.put(1521, 8778)//oak plank
 			.put(6333, 8780)//teak plank
 			.put(6332, 8782)//mahogany plank
-			.build();
+			.build()
+	);
+	
 }

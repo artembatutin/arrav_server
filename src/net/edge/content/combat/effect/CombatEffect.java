@@ -1,12 +1,11 @@
 package net.edge.content.combat.effect;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Some sort of temporary effect applied to a {@link EntityNode} during
@@ -18,10 +17,10 @@ import java.util.Map;
 public abstract class CombatEffect {
 	
 	/**
-	 * The tool.mapviewer of all of the combat effect types mapped to their respective
+	 * The map of all of the combat effect types mapped to their respective
 	 * listeners.
 	 */
-	public static final Map<CombatEffectType, CombatEffect> EFFECTS = new HashMap<>();
+	public static final Object2ObjectArrayMap<CombatEffectType, CombatEffect> EFFECTS = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * The delay for this individual combat effect.

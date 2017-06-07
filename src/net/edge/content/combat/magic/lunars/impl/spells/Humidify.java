@@ -1,6 +1,7 @@
 package net.edge.content.combat.magic.lunars.impl.spells;
 
 import com.google.common.collect.ImmutableMap;
+import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
@@ -17,7 +18,7 @@ import java.util.Optional;
 public final class Humidify extends LunarButtonSpell {
 
 	/**
-	 * Constructs a new {@link HumidifySpell}.
+	 * Constructs a new {@link Humidify}.
 	 */
 	public Humidify() {
 		super(117104);
@@ -70,14 +71,16 @@ public final class Humidify extends LunarButtonSpell {
 	public Optional<Item[]> itemsRequired(Player player) {
 		return Optional.of(new Item[]{new Item(9075, 1), new Item(554, 1), new Item(555, 3)});
 	}
-
-	private static final ImmutableMap<Integer, Integer> VIALS = ImmutableMap.<Integer, Integer>builder().put(1925, 1929)//bucket of water
+	
+	private static final Int2IntArrayMap VIALS = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
+			.put(1925, 1929)//bucket of water
 			.put(1935, 1937)//jug of water
 			.put(229, 227)//vial of water
 			.put(5331, 5340)//watering can
 			.put(1831, 1823)//waterskin
 			.put(1923, 1921)//bowl of water
 			.put(434, 1761)//clay
-			.build();
+			.build()
+	);
 
 }

@@ -1,5 +1,6 @@
 package net.edge.content.combat.ranged;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.util.TextUtils;
 import net.edge.content.combat.weapon.FightStyle;
 import net.edge.content.container.impl.Equipment;
@@ -8,8 +9,6 @@ import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -22,12 +21,12 @@ public final class CombatRangedDetails {
 	/**
 	 * A mapping which contains every combat ranged weapon definition by the ranged weapon items.
 	 */
-	public static final Map<Integer, CombatRangedWeapon> RANGED_WEAPONS = new HashMap<>();
+	public static final Int2ObjectArrayMap<CombatRangedWeapon> RANGED_WEAPONS = new Int2ObjectArrayMap<>();
 	
 	/**
 	 * A mapping which contains every combat ranged weapon by the combat ranged ammo definitions.
 	 */
-	public static final Map<Integer, CombatRangedAmmoDefinition[]> RANGED_AMMUNITION = new HashMap<>();
+	public static final Int2ObjectArrayMap<CombatRangedAmmoDefinition[]> RANGED_AMMUNITION = new Int2ObjectArrayMap<>();
 	
 	static {
 		for(CombatRangedWeapon weapon : RANGED_WEAPONS.values()) {

@@ -1,5 +1,7 @@
 package net.edge.content.trivia;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.World;
 import net.edge.game.GameConstants;
 import net.edge.util.TextUtils;
@@ -7,7 +9,6 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public final class TriviaEntry {
     /**
      * The list of attempted answers.
      */
-    public final List<String> attempted_answers = new ArrayList<>();
+    public final ObjectList<String> attempted_answers = new ObjectArrayList<>();
 
     /**
      * Sends a message to the entire world asking the trivia question.

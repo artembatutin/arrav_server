@@ -1,10 +1,8 @@
 package net.edge.locale.area;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.locale.Position;
 import net.edge.world.node.Node;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -16,7 +14,7 @@ public final class AreaManager {
 	/**
 	 * The mapping of all the areas on the world.
 	 */
-	private static final Map<String, Area> AREAS = new HashMap<>();
+	private static final Object2ObjectArrayMap<String, Area> AREAS = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * Checks if the specified {@code node} is in the area specified {@code area}.
@@ -70,7 +68,7 @@ public final class AreaManager {
 	 * Gets the mapping which contains all areas loaded on startup.
 	 * @return the tool.mapviewer which contains all areas.
 	 */
-	public Map<String, Area> getAreas() {
+	public Object2ObjectArrayMap<String, Area> getAreas() {
 		return AREAS;
 	}
 }

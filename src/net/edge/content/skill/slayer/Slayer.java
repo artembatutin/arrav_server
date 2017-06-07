@@ -1,8 +1,9 @@
 package net.edge.content.skill.slayer;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.edge.event.impl.ItemEvent;
 import net.edge.event.impl.NpcEvent;
-import net.edge.locale.Position;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.PlayerPanel;
@@ -16,8 +17,7 @@ import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 /**
  * Holds functionality for the Slayer skill.
@@ -28,17 +28,17 @@ public final class Slayer {
 	/**
 	 * A map containing all the slayer masters with the possible tasks they can give.
 	 */
-	public static final Map<SlayerMaster, SlayerKeyPolicy[]> SLAYER_KEYS = new HashMap<>();
+	public static final Object2ObjectArrayMap<SlayerMaster, SlayerKeyPolicy[]> SLAYER_KEYS = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * A map which contains each slayer key by the position of the npcs.
 	 */
-	public static final Map<String, SlayerLocationPolicy> SLAYER_LOCATIONS = new HashMap<>();
+	public static final Object2ObjectArrayMap<String, SlayerLocationPolicy> SLAYER_LOCATIONS = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * A map which contains each slayer key by the level required slayer.
 	 */
-	public static final Map<String, Integer> SLAYER_LEVELS = new HashMap<>();
+	public static final Object2ObjectArrayMap<String, Integer> SLAYER_LEVELS = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * The slayer master this player is on.
@@ -298,7 +298,7 @@ public final class Slayer {
 	 * @param master the master associated to the task.
 	 */
 	public static void teleport(Player player, SlayerMaster master) {
-		List<Dialogue> dialogues = new ArrayList<>();
+		ObjectArrayList<Dialogue> dialogues = new ObjectArrayList<>();
 		
 		dialogues.add(new PlayerDialogue("I want to teleport to my assignment."));
 		
@@ -357,25 +357,28 @@ public final class Slayer {
 	public static Optional<Slayer> getTask(Player player, SlayerMaster master) {
 		Skill skill = player.getSkills()[Skills.SLAYER];
 		int combat = player.determineCombatLevel();
-		List<String> blocked = Arrays.asList(player.getBlockedTasks());
-		List<SlayerKeyPolicy> policy_values = Arrays.stream(SLAYER_KEYS.get(master)).filter(s -> {
-			if(skill.getRealLevel() < SLAYER_LEVELS.getOrDefault(s.getKey(), 99))
-				return false;//Player wont be able to do slayer on a higher boss slayer requirement.
-			if(!NpcDefinition.fromSlayerKey(s.getKey()).isPresent())
-				return false;//Awful way to check through a loop but alright... - we checking if any npc key exist of that type.
-			if(blocked.contains(s.getKey()))
-				return false;//The player blocked this task.
-			int dif = combat - s.getCombatRequirement();
-			if(dif <= 40 && dif >= -40)
-				return true;
-			return false;
-		}).collect(Collectors.toList());
+		ObjectArrayList<String> blocked = ObjectArrayList.wrap(player.getBlockedTasks());
+		ObjectArrayList<SlayerKeyPolicy> tasks = new ObjectArrayList<>();
 		
-		if(policy_values.isEmpty()) {
+		int count = 0;
+		for(SlayerKeyPolicy task : SLAYER_KEYS.get(master)) {
+			if(skill.getRealLevel() < SLAYER_LEVELS.getOrDefault(task.getKey(), 99))
+				continue;//Player wont be able to do slayer on a higher boss slayer requirement.
+			if(!NpcDefinition.fromSlayerKey(task.getKey()).isPresent())
+				continue;//Awful way to check through a loop but alright... - we checking if any npc key exist of that type.
+			if(blocked.contains(task.getKey()))
+				continue;//The player blocked this task.
+			int dif = combat - task.getCombatRequirement();
+			if(dif <= 40 && dif >= -40) {
+				tasks.add(count, task);
+				count++;
+			}
+		}
+		if(tasks.isEmpty()) {
 			return Optional.empty();
 		}
 		
-		SlayerKeyPolicy policy = RandomUtils.random(policy_values);
+		SlayerKeyPolicy policy = RandomUtils.random(tasks);
 		return Optional.of(new Slayer(master, policy));
 	}
 	

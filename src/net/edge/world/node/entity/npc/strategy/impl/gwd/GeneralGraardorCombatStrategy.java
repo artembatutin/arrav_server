@@ -1,5 +1,7 @@
 package net.edge.world.node.entity.npc.strategy.impl.gwd;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
@@ -11,9 +13,6 @@ import net.edge.world.Projectile;
 import net.edge.world.node.entity.npc.impl.gwd.GeneralGraardor;
 import net.edge.world.node.entity.npc.strategy.DynamicCombatStrategy;
 import net.edge.world.node.entity.player.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The dynamic combat strategy for the general graardor boss.
@@ -53,7 +52,7 @@ public final class GeneralGraardorCombatStrategy extends DynamicCombatStrategy<G
 	}
 
 	private CombatSessionData ranged(EntityNode victim) {
-		List<Player> toHit = new ArrayList<>();
+		ObjectList<Player> toHit = new ObjectArrayList<>();
 		npc.animation(new Animation(7063));
 		World.get().getLocalPlayers(victim).forEachRemaining(player -> {
 			if(GeneralGraardor.CHAMBER.inLocation(player.getPosition())) {

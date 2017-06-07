@@ -1,11 +1,12 @@
 package net.edge.content.skill.crafting;
 
 import com.google.common.collect.ImmutableMap;
-import net.edge.task.Task;
-import net.edge.util.TextUtils;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
+import net.edge.task.Task;
+import net.edge.util.TextUtils;
 import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
@@ -89,7 +90,8 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 	 * @return {@code true} if the interface opened, {@code false} otherwise.
 	 */
 	public static final boolean openInterface(Player player, Item item, ObjectNode object) {
-		if(!(item.getId() == GOLD_BAR.getId() && Arrays.stream(new String[]{"Pottery Oven", "Furnace"}).anyMatch(object.getDefinition().getName()::contains))) {
+		if(!(item.getId() == GOLD_BAR.getId() && Arrays.stream(new String[]{"Pottery Oven", "Furnace"})
+				.anyMatch(object.getDefinition().getName()::contains))) {
 			return false;
 		}
 		
@@ -97,7 +99,9 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 		
 		if(player.getInventory().contains(RING_MOULD)) {
 			for(int i = 0; i < rings.length; i++) {
-				boolean check = rings[i].required.isPresent() ? player.getInventory().contains(rings[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(rings[i].requirement) : player.getSkills()[Skills.CRAFTING].reqLevel(rings[i].requirement);
+				boolean check = rings[i].required.isPresent() ? player.getInventory()
+						.contains(rings[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(rings[i].requirement) : player
+						.getSkills()[Skills.CRAFTING].reqLevel(rings[i].requirement);
 				
 				if(check && player.getInventory().contains(GOLD_BAR)) {
 					player.getMessages().sendItemOnInterfaceSlot(4233, rings[i].product, i);
@@ -105,8 +109,13 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 					player.getMessages().sendItemOnInterfaceSlot(4233, new Item(-1, 1), i);
 				}
 				
-				player.getMessages().sendString(player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft rings.", 4230);
-				player.getMessages().sendItemModelOnInterface(4229, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId());
+				player.getMessages()
+						.sendString(player.getInventory()
+								.contains(GOLD_BAR) ? "" : "You need a gold bar to craft rings.", 4230);
+				player.getMessages()
+						.sendItemModelOnInterface(4229, player.getInventory()
+								.contains(GOLD_BAR) ? 0 : 120, player.getInventory()
+								.contains(GOLD_BAR) ? -1 : GOLD_BAR.getId());
 			}
 			;
 		} else {
@@ -123,7 +132,9 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 		
 		if(player.getInventory().contains(NECKLACE_MOULD)) {
 			for(int i = 0; i < necklaces.length; i++) {
-				boolean check = necklaces[i].required.isPresent() ? player.getInventory().contains(necklaces[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(necklaces[i].requirement) : player.getSkills()[Skills.CRAFTING].reqLevel(necklaces[i].requirement);
+				boolean check = necklaces[i].required.isPresent() ? player.getInventory()
+						.contains(necklaces[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(necklaces[i].requirement) : player
+						.getSkills()[Skills.CRAFTING].reqLevel(necklaces[i].requirement);
 				
 				if(check && player.getInventory().contains(GOLD_BAR)) {
 					player.getMessages().sendItemOnInterfaceSlot(4239, necklaces[i].product, i);
@@ -131,8 +142,13 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 					player.getMessages().sendItemOnInterfaceSlot(4239, new Item(-1, 1), i);
 				}
 				
-				player.getMessages().sendString(player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.", 4236);
-				player.getMessages().sendItemModelOnInterface(4235, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId());
+				player.getMessages()
+						.sendString(player.getInventory()
+								.contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.", 4236);
+				player.getMessages()
+						.sendItemModelOnInterface(4235, player.getInventory()
+								.contains(GOLD_BAR) ? 0 : 120, player.getInventory()
+								.contains(GOLD_BAR) ? -1 : GOLD_BAR.getId());
 			}
 			;
 		} else {
@@ -149,7 +165,9 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 		
 		if(player.getInventory().contains(AMULET_MOULD)) {
 			for(int i = 0; i < amulets.length; i++) {
-				boolean check = amulets[i].required.isPresent() ? player.getInventory().contains(amulets[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(amulets[i].requirement) : player.getSkills()[Skills.CRAFTING].reqLevel(amulets[i].requirement);
+				boolean check = amulets[i].required.isPresent() ? player.getInventory()
+						.contains(amulets[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(amulets[i].requirement) : player
+						.getSkills()[Skills.CRAFTING].reqLevel(amulets[i].requirement);
 				
 				if(check && player.getInventory().contains(GOLD_BAR)) {
 					player.getMessages().sendItemOnInterfaceSlot(4245, amulets[i].product, i);
@@ -157,8 +175,13 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 					player.getMessages().sendItemOnInterfaceSlot(4245, new Item(-1, 1), i);
 				}
 				
-				player.getMessages().sendString(player.getInventory().contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.", 4242);
-				player.getMessages().sendItemModelOnInterface(4241, player.getInventory().contains(GOLD_BAR) ? 0 : 120, player.getInventory().contains(GOLD_BAR) ? -1 : GOLD_BAR.getId());
+				player.getMessages()
+						.sendString(player.getInventory()
+								.contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.", 4242);
+				player.getMessages()
+						.sendItemModelOnInterface(4241, player.getInventory()
+								.contains(GOLD_BAR) ? 0 : 120, player.getInventory()
+								.contains(GOLD_BAR) ? -1 : GOLD_BAR.getId());
 			}
 			;
 		} else {
@@ -233,7 +256,9 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 	
 	private boolean checkCrafting() {
 		if(!player.getSkills()[skill().getId()].reqLevel(data.requirement)) {
-			player.message("You need a crafting level of " + data.requirement + " to craft " + TextUtils.appendIndefiniteArticle(data.product.getDefinition().getName()) + ".");
+			player.message("You need a crafting level of " + data.requirement + " to craft " + TextUtils.appendIndefiniteArticle(data.product
+					.getDefinition()
+					.getName()) + ".");
 			return false;
 		}
 		
@@ -333,5 +358,10 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 		return Optional.empty();
 	}
 	
-	private static final ImmutableMap<Integer, JewelleryData[]> GROUP = ImmutableMap.of(RING_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_RING, JewelleryData.SAPPHIRE_RING, JewelleryData.EMERALD_RING, JewelleryData.RUBY_RING, JewelleryData.DIAMOND_RING, JewelleryData.DRAGONSTONE_RING, JewelleryData.ONYX_RING}, NECKLACE_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_NECKLACE, JewelleryData.SAPPHIRE_NECKLACE, JewelleryData.EMERALD_NECKLACE, JewelleryData.RUBY_NECKLACE, JewelleryData.DIAMOND_NECKLACE, JewelleryData.DRAGON_NECKLACE, JewelleryData.ONYX_NECKLACE}, AMULET_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_AMULET, JewelleryData.SAPPHIRE_AMULET, JewelleryData.EMERALD_AMULET, JewelleryData.RUBY_AMULET, JewelleryData.DIAMOND_AMULET, JewelleryData.DRAGONSTONE_AMULET, JewelleryData.ONYX_AMULET});
+	private static final Int2ObjectArrayMap<JewelleryData[]> GROUP = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, JewelleryData[]>builder()
+			.put(RING_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_RING, JewelleryData.SAPPHIRE_RING, JewelleryData.EMERALD_RING, JewelleryData.RUBY_RING, JewelleryData.DIAMOND_RING, JewelleryData.DRAGONSTONE_RING, JewelleryData.ONYX_RING})
+			.put(NECKLACE_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_NECKLACE, JewelleryData.SAPPHIRE_NECKLACE, JewelleryData.EMERALD_NECKLACE, JewelleryData.RUBY_NECKLACE, JewelleryData.DIAMOND_NECKLACE, JewelleryData.DRAGON_NECKLACE, JewelleryData.ONYX_NECKLACE})
+			.put(AMULET_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_AMULET, JewelleryData.SAPPHIRE_AMULET, JewelleryData.EMERALD_AMULET, JewelleryData.RUBY_AMULET, JewelleryData.DIAMOND_AMULET, JewelleryData.DRAGONSTONE_AMULET, JewelleryData.ONYX_AMULET})
+			.build());
+	
 }

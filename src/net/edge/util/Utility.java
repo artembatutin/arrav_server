@@ -1,9 +1,11 @@
 package net.edge.util;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
+
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,8 +54,8 @@ public final class Utility {
 	 * @param directory The directory to iterate through
 	 * @return The list of classes
 	 */
-	public static List<Object> getClassesInDirectory(String directory) {
-		List<Object> classes = new ArrayList<>();
+	public static ObjectList<Object> getClassesInDirectory(String directory) {
+		ObjectList<Object> classes = new ObjectArrayList<>();
 		for(File file : new File("./bin/" + directory.replace(".", "/")).listFiles()) {
 			if(file.getName().contains("$")) {
 				continue;
@@ -71,10 +73,10 @@ public final class Utility {
 	/**
 	 * Gets all of the sub directories of a folder
 	 */
-	public static List<String> getSubDirectories(Class<?> clazz) {
+	public static ObjectList<String> getSubDirectories(Class<?> clazz) {
 		String directory = "./bin/" + clazz.getPackage().getName().replace(".", "/");
 		File file = new File(directory);
 		String[] directories = file.list((current, name) -> new File(current, name).isDirectory());
-		return Arrays.asList(directories);
+		return new ObjectArrayList<>(directories);
 	}
 }

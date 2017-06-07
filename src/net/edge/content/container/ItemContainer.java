@@ -2,6 +2,8 @@ package net.edge.content.container;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.IndexedItem;
 import net.edge.world.node.item.Item;
@@ -107,7 +109,7 @@ public class ItemContainer implements Iterable<Item> {
 	/**
 	 * An {@link ArrayList} of {@link ItemContainerListener}s listening for various events.
 	 */
-	private final List<ItemContainerListener> listeners = new ArrayList<>();
+	private final ObjectArrayList<ItemContainerListener> listeners = new ObjectArrayList<>();
 	
 	/**
 	 * The capacity of this container.
@@ -800,7 +802,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * @return An array of {@code IndexedItem}s describing the contents of the backing array.
 	 */
 	public final IndexedItem[] toIndexedArray() {
-		List<IndexedItem> indexedItems = new LinkedList<>();
+		ObjectList<IndexedItem> indexedItems = new ObjectArrayList<>();
 		for(int index = 0; index < capacity; index++) {
 			Item item = items[index];
 			if(item == null) {
@@ -808,7 +810,7 @@ public class ItemContainer implements Iterable<Item> {
 			}
 			indexedItems.add(new IndexedItem(item, index));
 		}
-		return Iterables.toArray(indexedItems, IndexedItem.class);
+		return indexedItems.toArray(new IndexedItem[indexedItems.size()]);
 	}
 	
 	/**

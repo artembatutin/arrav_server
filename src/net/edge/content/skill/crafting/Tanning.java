@@ -3,6 +3,7 @@ package net.edge.content.skill.crafting;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
@@ -332,5 +333,6 @@ public final class Tanning extends ProducingSkillAction {
 	/**
 	 * Caches our enum values.
 	 */
-	private static final ImmutableMap<Integer, TanningData> VALUES = ImmutableMap.copyOf(Stream.of(TanningData.values()).collect(Collectors.toMap(t -> t.buttonId, Function.identity())));
+	private static final Int2ObjectArrayMap<TanningData> VALUES = new Int2ObjectArrayMap<>(ImmutableMap.copyOf(Stream.of(TanningData.values()).collect(Collectors.toMap(t -> t.buttonId, Function.identity()))));
+	
 }

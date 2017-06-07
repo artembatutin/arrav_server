@@ -1,10 +1,10 @@
 package net.edge.world.node.entity.attribute;
 
 import com.google.common.collect.Iterators;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 
 import java.util.IdentityHashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
 /**
- * A wrapper for a {@link Map} that contains a function to retrieve an {@link AttributeValue} by its {@code String} key. The
+ * A wrapper for a {@link Object2ObjectArrayMap} that contains a function to retrieve an {@link AttributeValue} by its {@code String} key. The
  * retrieval of attributes is very high performing because it utilizes string interning and its own method of caching.
  * @author lare96 <http://github.org/lare96>
  */
@@ -21,7 +21,7 @@ public final class AttributeMap implements Iterable<Entry<String, AttributeValue
 	/**
 	 * An {@link IdentityHashMap} that holds our {@link AttributeKey} and {@link AttributeValue} pair.
 	 */
-	private final Map<String, AttributeValue<?>> attributes = new IdentityHashMap<>(AttributeKey.ALIASES.size());
+	private final Object2ObjectArrayMap<String, AttributeValue<?>> attributes = new Object2ObjectArrayMap<>(AttributeKey.ALIASES.size());
 	
 	/**
 	 * The last retrieved key.

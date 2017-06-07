@@ -1,12 +1,12 @@
 package net.edge.content.minigame;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.util.MutableNumber;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,7 +18,7 @@ public abstract class MinigameLobby {
 	/**
 	 * The list of players in this lobby.
 	 */
-	private final List<Player> players = new ArrayList<Player>();
+	private final ObjectList<Player> players = new ObjectArrayList<>();
 	
 	/**
 	 * The timer for this minigame lobby.
@@ -49,7 +49,7 @@ public abstract class MinigameLobby {
 	 * countdown timer has hit zero.
 	 * @param player the player to handle the functionality for.
 	 */
-	public abstract void onStart(List<Player> player);
+	public abstract void onStart(ObjectList<Player> player);
 	
 	/**
 	 * The flag which identifies if this player can enter the minigame lobby.
@@ -64,7 +64,7 @@ public abstract class MinigameLobby {
 	 * @param players the players in the lobby.
 	 * @return <true> if the minigame can start, <false> otherwise.
 	 */
-	public abstract boolean canStart(List<Player> players);
+	public abstract boolean canStart(ObjectList<Player> players);
 	
 	/**
 	 * The restart timer if this lobby can't start.
@@ -83,7 +83,7 @@ public abstract class MinigameLobby {
 	 * @param player the player in the lobby.
 	 * @param t      the task running for this lobby.
 	 */
-	public void onCountdown(List<Player> player, Task t) {
+	public void onCountdown(ObjectList<Player> player, Task t) {
 		
 	}
 	
@@ -117,7 +117,7 @@ public abstract class MinigameLobby {
 		/**
 		 * The players this task is running for.
 		 */
-		private final List<Player> players;
+		private final ObjectList<Player> players;
 		
 		/**
 		 * Constructs a new {@link MinigameLobbyTask}.

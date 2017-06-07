@@ -1,5 +1,9 @@
 package net.edge.world.node.region;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.LoggerUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.locale.Position;
@@ -14,7 +18,9 @@ import net.edge.world.node.item.ItemNode;
 import net.edge.world.node.item.ItemState;
 import net.edge.world.object.ObjectNode;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
@@ -47,29 +53,29 @@ public final class Region extends Node {
 	
 	//The nodes in this region.
 	/**
-	 * A {@link List} of {@link ItemNode}s in this {@code Region}.
+	 * A {@link ObjectList} of {@link ItemNode}s in this {@code Region}.
 	 */
-	private final List<ItemNode> items = new LinkedList<>();
+	private final ObjectList<ItemNode> items = new ObjectArrayList<>();
 	
 	/**
-	 * A {@link Map} of active {@link Player}s in this {@code Region}.
+	 * A {@link Int2ObjectOpenHashMap} of active {@link Player}s in this {@code Region}.
 	 */
-	private final Map<Integer, Player> players = new HashMap<>();
+	private final Int2ObjectOpenHashMap<Player> players = new Int2ObjectOpenHashMap<>();
 	
 	/**
-	 * A {@link Map} of active {@link Npc}s in this {@code Region}.
+	 * A {@link Int2ObjectOpenHashMap} of active {@link Npc}s in this {@code Region}.
 	 */
-	private final Map<Integer, Npc> npcs = new HashMap<>();
+	private final Int2ObjectOpenHashMap<Npc> npcs = new Int2ObjectOpenHashMap<>();
 	
 	/**
-	 * A {@link Map} of active {@link ObjectNode}s in this {@code Region}.
+	 * A {@link Int2ObjectOpenHashMap} of active {@link ObjectNode}s in this {@code Region}.
 	 */
-	private final Map<Integer, RegionTiledObjects> objects = new HashMap<>();
+	private final Int2ObjectOpenHashMap<RegionTiledObjects> objects = new Int2ObjectOpenHashMap<>();
 	
 	/**
-	 * A {@link Map} of removed {@link ObjectNode}s in this {@code Region}.
+	 * A {@link ObjectList} of removed {@link ObjectNode}s in this {@code Region}.
 	 */
-	private final Map<Integer, Set<ObjectNode>> removeObjects = new HashMap<>();
+	private final ObjectList<ObjectNode> removeObjects = new ObjectArrayList<>();
 	
 	//The clipping data and few switches.
 	/**
@@ -198,18 +204,18 @@ public final class Region extends Node {
 	}
 	
 	/**
-	 * Retrieves and returns an {@link Map} of {@link Player}s.
+	 * Retrieves and returns an {@link Int2ObjectOpenHashMap} of {@link Player}s.
 	 * @return all the players inside the region.
 	 */
-	public Map<Integer, Player> getPlayers() {
+	public Int2ObjectOpenHashMap<Player> getPlayers() {
 		return players;
 	}
 	
 	/**
-	 * Retrieves and returns an {@link Map} of {@link Npc}s.
+	 * Retrieves and returns an {@link Int2ObjectOpenHashMap} of {@link Npc}s.
 	 * @return all the npcs inside the region.
 	 */
-	public Map<Integer, Npc> getNpcs() {
+	public Int2ObjectOpenHashMap<Npc> getNpcs() {
 		return npcs;
 	}
 	
@@ -316,7 +322,7 @@ public final class Region extends Node {
 	/**
 	 * Gets the a set of {@link ObjectNode} on the specified {@link Position}.
 	 * @param position The position.
-	 * @return A {@link Set} of {@link ObjectNode}s on the specified position.
+	 * @return A {@link RegionTiledObjects} of {@link ObjectNode}s on the specified position.
 	 */
 	public RegionTiledObjects getObjects(Position position) {
 		return objects.computeIfAbsent(position.toLocalPacked(), key -> new RegionTiledObjects());
@@ -325,7 +331,7 @@ public final class Region extends Node {
 	/**
 	 * Gets the a set of {@link ObjectNode} on the packed coordinates.
 	 * @param packed The packed position.
-	 * @return A {@link Set} of {@link ObjectNode}s on the specified position.
+	 * @return A {@link RegionTiledObjects} of {@link ObjectNode}s on the specified position.
 	 */
 	public RegionTiledObjects getObjectsFrompacked(int packed) {
 		return objects.computeIfAbsent(packed, key -> new RegionTiledObjects());
@@ -358,11 +364,11 @@ public final class Region extends Node {
 	/**
 	 * Gets the a set of {@link ObjectNode}s with the specified {@code id}.
 	 * @param id The id of the object to seek for.
-	 * @return A {@link Set} of {@link ObjectNode}s on the specified position.
+	 * @return A {@link ObjectList} of {@link ObjectNode}s on the specified position.
 	 */
-	public List<ObjectNode> getInteractiveObjects(int id) {
-		List<ObjectNode> filtered = new ArrayList<>();
-		List<ObjectNode> active = getInteractiveObjects();
+	public ObjectList<ObjectNode> getInteractiveObjects(int id) {
+		ObjectList<ObjectNode> filtered = new ObjectArrayList<>();
+		ObjectList<ObjectNode> active = getInteractiveObjects();
 		for(ObjectNode o : active) {
 			if(o != null && o.getId() == id)
 				filtered.add(o);
@@ -373,11 +379,11 @@ public final class Region extends Node {
 	/**
 	 * Gets the a set of {@link ObjectNode}s on the specified {@link Position} within a distance.
 	 * @param position The position.
-	 * @return A {@link Set} of {@link ObjectNode}s on the specified position.
+	 * @return A {@link ObjectList} of {@link ObjectNode}s on the specified position.
 	 */
-	public List<ObjectNode> getInteractiveObjects(Position position, int id, int distance) {
-		List<ObjectNode> filtered = new ArrayList<>();
-		List<ObjectNode> active = getInteractiveObjects();
+	public ObjectList<ObjectNode> getInteractiveObjects(Position position, int id, int distance) {
+		ObjectList<ObjectNode> filtered = new ObjectArrayList<>();
+		ObjectList<ObjectNode> active = getInteractiveObjects();
 		for(ObjectNode o : active) {
 			if(o != null && o.getId() == id && o.getGlobalPos().withinDistance(position, distance))
 				filtered.add(o);
@@ -388,40 +394,40 @@ public final class Region extends Node {
 	
 	/**
 	 * Gets the a List of {@link ObjectNode} from all {@link Position}s of the region where objects are applied.
-	 * @return A {@link List}.
+	 * @return A {@link ObjectList}.
 	 */
-	public List<ObjectNode> getAllObjects() {
-		List<ObjectNode> all = new ArrayList<>();
+	public ObjectList<ObjectNode> getAllObjects() {
+		ObjectList<ObjectNode> all = new ObjectArrayList<>();
 		objects.forEach((l, c) -> all.addAll(c.getAll()));
 		return all;
 	}
 	
 	/**
 	 * Gets the a List of interactive {@link ObjectNode} from all {@link Position}s of the region where objects are applied.
-	 * @return A {@link List}.
+	 * @return A {@link ObjectList}.
 	 */
-	public List<ObjectNode> getInteractiveObjects() {
-		List<ObjectNode> all = new ArrayList<>();
+	public ObjectList<ObjectNode> getInteractiveObjects() {
+		ObjectList<ObjectNode> all = new ObjectArrayList<>();
 		objects.forEach((l, c) -> all.addAll(c.getInteract()));
 		return all;
 	}
 	
 	/**
 	 * Gets the a List of static {@link ObjectNode} of interactive from all {@link Position}s of the region where objects are applied.
-	 * @return A {@link List}.
+	 * @return A {@link ObjectList}.
 	 */
-	public List<ObjectNode> getStaticObjects() {
-		List<ObjectNode> all = new ArrayList<>();
+	public ObjectList<ObjectNode> getStaticObjects() {
+		ObjectList<ObjectNode> all = new ObjectArrayList<>();
 		objects.forEach((l, c) -> all.addAll(c.getInteract()));
 		return all;
 	}
 	
 	/**
 	 * Gets the a List of dynamic {@link ObjectNode} of interactive from all {@link Position}s of the region where objects are applied.
-	 * @return A {@link List}.
+	 * @return A {@link ObjectList}.
 	 */
-	public List<ObjectNode> getDynamicObjects() {
-		List<ObjectNode> all = new ArrayList<>();
+	public ObjectList<ObjectNode> getDynamicObjects() {
+		ObjectList<ObjectNode> all = new ObjectArrayList<>();
 		objects.forEach((l, c) -> all.addAll(c.getDynamic()));
 		return all;
 	}
@@ -484,19 +490,10 @@ public final class Region extends Node {
 	}
 	
 	/**
-	 * Gets the a set of removed {@link ObjectNode} on the specified {@link Position}.
-	 * @param local The local packed position.
-	 * @return A {@link Set} of removed {@link ObjectNode}s on the specified position.
+	 * Gets the a {@link ObjectList} of {@link ObjectNode}s that are removed by the server during game time.
+	 * @return A {@link ObjectList of {@link ObjectNode}s that are removed.
 	 */
-	public Set<ObjectNode> getRemovedObjects(int local) {
-		return removeObjects.computeIfAbsent(local, key -> new HashSet<>());
-	}
-	
-	/**
-	 * Gets the a {@link Map} of {@link ObjectNode}s that are removed by the server during game time.
-	 * @return A {@link Map} of {@link ObjectNode}s that are removed.
-	 */
-	public Map<Integer, Set<ObjectNode>> getRemovedObjects() {
+	public ObjectList<ObjectNode> getRemovedObjects() {
 		return removeObjects;
 	}
 	

@@ -1,6 +1,10 @@
 package net.edge.content.scoreboard;
 
 import com.google.common.collect.ComparisonChain;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.event.impl.NpcEvent;
 import net.edge.util.MutableNumber;
 import net.edge.util.json.JsonSaver;
@@ -25,13 +29,13 @@ public final class ScoreboardManager {
 	/**
 	 * The mappings of the player scoreboard.
 	 */
-	private final Map<String, PlayerScoreboardStatistic> player_scoreboard = new HashMap<>();
+	private final Object2ObjectOpenHashMap<String, PlayerScoreboardStatistic> player_scoreboard = new Object2ObjectOpenHashMap<>();
 	
 	/**
 	 * The mappings of the player rewards, where string is the users username and the mutable number
 	 * the amount of edge-tokens to be given.
 	 */
-	private final Map<String, MutableNumber> player_scoreboard_rewards = new HashMap<>();
+	private final Object2ObjectArrayMap<String, MutableNumber> player_scoreboard_rewards = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * Determines if the player score board has been reset.
@@ -43,15 +47,11 @@ public final class ScoreboardManager {
 	 */
 	public void serializeIndividualScoreboard() {
 		JsonSaver scoreboard_statistics_saver = new JsonSaver();
-		
-		List<PlayerScoreboardStatistic> statistics = new ArrayList<>(player_scoreboard.values());
-		
+		ObjectList<PlayerScoreboardStatistic> statistics = new ObjectArrayList<>(player_scoreboard.values());
 		statistics.sort(new PlayerScoreboardComparator());
-		
 		if(statistics.size() > 10) {
 			statistics = statistics.subList(0, 11);//it's exclusive.
 		}
-		
 		for(PlayerScoreboardStatistic p : statistics) {
 			scoreboard_statistics_saver.current().addProperty("username", p.getUsername());
 			scoreboard_statistics_saver.current().addProperty("highest-killstreak", p.getHighestKillstreak().get());
@@ -60,11 +60,9 @@ public final class ScoreboardManager {
 			scoreboard_statistics_saver.current().addProperty("deaths", p.getDeaths().get());
 			scoreboard_statistics_saver.split();
 		}
-		
 		scoreboard_statistics_saver.publish("./data/json/scoreboard/individual_killstreaks.json");
 		
 		JsonSaver scoreboard_rewards_saver = new JsonSaver();
-		
 		for(Entry<String, MutableNumber> entry : this.player_scoreboard_rewards.entrySet()) {
 			String username = entry.getKey();
 			int amount = entry.getValue().get();
@@ -72,7 +70,6 @@ public final class ScoreboardManager {
 			scoreboard_rewards_saver.current().addProperty("amount", amount);
 			scoreboard_rewards_saver.split();
 		}
-		
 		scoreboard_rewards_saver.publish("./data/json/scoreboard/individual_killstreak_rewards.json");
 	}
 	
@@ -81,10 +78,9 @@ public final class ScoreboardManager {
 	 * @param player the player to send it to.
 	 */
 	public void sendPlayerScoreboardStatistics(Player player) {
-		List<PlayerScoreboardStatistic> statistics = new ArrayList<>(player_scoreboard.values());
+		ObjectList<PlayerScoreboardStatistic> statistics = new ObjectArrayList<>(player_scoreboard.values());
 		
 		statistics.sort(new PlayerScoreboardComparator());
-		
 		if(statistics.size() > 10) {
 			statistics = statistics.subList(0, 11);//it's exclusive.
 		}
@@ -93,7 +89,6 @@ public final class ScoreboardManager {
 			PlayerScoreboardStatistic stat = statistics.get(i);
 			player.getMessages().sendScoreInput(i, stat.getUsername(), stat.getKills().get(), stat.getDeaths().get(), stat.getCurrentKillstreak().get());
 		}
-		
 		player.getMessages().sendInterface(-12);
 	}
 	
@@ -109,10 +104,9 @@ public final class ScoreboardManager {
 			return;
 		}
 		
-		List<PlayerScoreboardStatistic> statistics = new ArrayList<>(player_scoreboard.values());
+		ObjectList<PlayerScoreboardStatistic> statistics = new ObjectArrayList<>(player_scoreboard.values());
 		
 		statistics.sort(new PlayerScoreboardComparator());
-		
 		statistics.forEach(p -> {
 			p.getCurrentKillstreak().set(0);
 			p.getHighestKillstreak().set(0);
@@ -121,7 +115,6 @@ public final class ScoreboardManager {
 		});
 		
 		statistics = statistics.subList(0, 3);
-		
 		int points = 1200;//we divide by 2, so player 1 gets 600, 2 gets 300, 3 gets 150
 		
 		for(PlayerScoreboardStatistic p : statistics) {
@@ -173,14 +166,14 @@ public final class ScoreboardManager {
 	/**
 	 * @return player scoreboard
 	 */
-	public Map<String, PlayerScoreboardStatistic> getPlayerScoreboard() {
+	public Object2ObjectOpenHashMap<String, PlayerScoreboardStatistic> getPlayerScoreboard() {
 		return player_scoreboard;
 	}
 	
 	/**
 	 * @return player scoreboard rewards.
 	 */
-	public Map<String, MutableNumber> getPlayerScoreboardRewards() {
+	public Object2ObjectArrayMap<String, MutableNumber> getPlayerScoreboardRewards() {
 		return player_scoreboard_rewards;
 	}
 	

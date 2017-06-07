@@ -1,5 +1,7 @@
 package net.edge.world.node.region;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.rand.RandomUtils;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
@@ -10,10 +12,7 @@ import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static net.edge.world.object.ObjectType.*;
 
@@ -938,14 +937,14 @@ public final class TraversalMap {
 	}
 	
 	/**
-	 * Returns a {@link List} of positions that are traversable from the
+	 * Returns a {@link ObjectList} of positions that are traversable from the
 	 * specified position.
 	 * @param from The position moving from.
 	 * @param size The size of the mob attempting to traverse.
-	 * @return A {@link List} of positions.
+	 * @return A {@link ObjectList} of positions.
 	 */
-	public List<Position> getNearbyTraversableTiles(Position from, int size) {
-		List<Position> positions = new LinkedList<>();
+	public ObjectList<Position> getNearbyTraversableTiles(Position from, int size) {
+		ObjectList<Position> positions = new ObjectArrayList<>();
 		if(isTraversableNorth(from.getZ(), from.getX(), from.getY(), size))
 			positions.add(new Position(from.getX(), from.getY() + 1, from.getZ()));
 		if(isTraversableSouth(from.getZ(), from.getX(), from.getY(), size))
@@ -966,6 +965,61 @@ public final class TraversalMap {
 	}
 	
 	/**
+	 * Returns a {@link ObjectList} of positions that are traversable from the
+	 * specified position.
+	 * @param from The position moving from.
+	 * @param exclude the position to exclude
+	 * @param size The size of the mob attempting to traverse.
+	 * @return A {@link ObjectList} of positions.
+	 */
+	public Position getRandomNearby(Position from, Position exclude, int size) {
+		ObjectList<Position> positions = new ObjectArrayList<>();
+		if(isTraversableNorth(from.getZ(), from.getX(), from.getY(), size)) {
+			Position p = new Position(from.getX(), from.getY() + 1, from.getZ());
+			if(!exclude.same(p))
+				positions.add(p);
+		}
+		if(isTraversableSouth(from.getZ(), from.getX(), from.getY(), size)) {
+			Position p = new Position(from.getX(), from.getY() - 1, from.getZ());
+			if(!exclude.same(p))
+				positions.add(p);
+		}
+		if(isTraversableEast(from.getZ(), from.getX(), from.getY(), size)) {
+			Position p = new Position(from.getX() + 1, from.getY(), from.getZ());
+			if(!exclude.same(p))
+				positions.add(p);
+		}
+		if(isTraversableWest(from.getZ(), from.getX(), from.getY(), size)) {
+			Position p = new Position(from.getX() - 1, from.getY(), from.getZ());
+			if(!exclude.same(p))
+				positions.add(p);
+		}
+		if(isTraversableNorthEast(from.getZ(), from.getX(), from.getY(), size)) {
+			Position p = new Position(from.getX() + 1, from.getY() + 1, from.getZ());
+			if(!exclude.same(p))
+				positions.add(p);
+		}
+		if(isTraversableNorthWest(from.getZ(), from.getX(), from.getY(), size)) {
+			Position p = new Position(from.getX() - 1, from.getY() + 1, from.getZ());
+			if(!exclude.same(p))
+				positions.add(p);
+		}
+		if(isTraversableSouthEast(from.getZ(), from.getX(), from.getY(), size)) {
+			Position p = new Position(from.getX() +1, from.getY() - 1, from.getZ());
+			if(!exclude.same(p))
+				positions.add(p);
+		}
+		if(isTraversableSouthWest(from.getZ(), from.getX(), from.getY(), size)) {
+			Position p = new Position(from.getX() - 1, from.getY() - 1, from.getZ());
+			if(!exclude.same(p))
+				positions.add(p);
+		}
+		if(positions.isEmpty())
+			return null;
+		return RandomUtils.random(positions);
+	}
+	
+	/**
 	 * Returns a {@link Optional} {@link Position} of a random traversable tile.
 	 * @param from       The position moving from.
 	 * @param size       The size of the mob attempting to traverse.
@@ -973,28 +1027,33 @@ public final class TraversalMap {
 	 * @return A random traversable position.
 	 */
 	public Optional<Position> getRandomTraversableTile(Position from, int size, Position... exceptions) {
-		List<Position> pos = getNearbyTraversableTiles(from, size).stream().filter(p -> {
+		ObjectList<Position> pos = new ObjectArrayList<>();
+		for(Position p : getNearbyTraversableTiles(from, size)) {
+			boolean skip = false;
 			for(Position e : exceptions) {
-				if(p.equals(e))
-					return false;
+				if(p.same(e)) {
+					skip = true;
+					continue;
+				}
 			}
-			return true;
-		}).collect(Collectors.toList());
+			if(!skip)
+				pos.add(p);
+		}
 		if(pos.isEmpty())
 			return Optional.empty();
 		return Optional.of(RandomUtils.random(pos));
 	}
 	
 	/**
-	 * Returns a {@link List} of positions that are traversable from the
+	 * Returns a {@link ObjectList} of positions that are traversable from the
 	 * specified position depending on a direction.
 	 * Used for NPC movements as they are based on a straight line.
 	 * @param from The position.
 	 * @param size The size of the mob attempting to traverse.
-	 * @return A {@link List} of positions.
+	 * @return A {@link ObjectList} of positions.
 	 */
-	public List<Position> getNonDiagonalNearbyTraversableTiles(Position from, int size) {
-		List<Position> positions = new LinkedList<>();
+	public ObjectList<Position> getNonDiagonalNearbyTraversableTiles(Position from, int size) {
+		ObjectList<Position> positions = new ObjectArrayList<>();
 		if(isTraversableNorth(from.getZ(), from.getX(), from.getY(), size))
 			positions.add(new Position(from.getX(), from.getY() + 1, from.getZ()));
 		if(isTraversableSouth(from.getZ(), from.getX(), from.getY(), size))
@@ -1007,15 +1066,15 @@ public final class TraversalMap {
 	}
 	
 	/**
-	 * Returns a {@link List} of position that are settable from the
+	 * Returns a {@link ObjectList} of position that are settable from the
 	 * specified position depending on the leader's and follower's entity sizes.
 	 * @param from         the position.
 	 * @param leaderSize   the leader's entity size.
 	 * @param followerSize the follower's entity size.
-	 * @return A {@link List} of positions.
+	 * @return A {@link ObjectList} of positions.
 	 */
-	public List<Position> getSurroundedTraversableTiles(Position from, int leaderSize, int followerSize) {
-		List<Position> positions = new LinkedList<>();
+	public ObjectList<Position> getSurroundedTraversableTiles(Position from, int leaderSize, int followerSize) {
+		ObjectList<Position> positions = new ObjectArrayList<>();
 		//north
 		for(int x = from.getX() - 1; x < from.getX() + leaderSize; x++) {
 			Direction d = Direction.fromDeltas(Position.delta(new Position(x, from.getY() + (leaderSize), from.getZ()), from));

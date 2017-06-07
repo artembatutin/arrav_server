@@ -1,6 +1,7 @@
 package net.edge.world.node.entity.npc.strategy.impl.corp;
 
 import com.google.common.collect.ImmutableList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatSessionData;
@@ -178,10 +179,8 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 					return;
 				}
 
-				List<Position> positions = World.getTraversalMap().getNonDiagonalNearbyTraversableTiles(originalVictimPosition, 3);
-
+				ObjectList<Position> positions = World.getTraversalMap().getNonDiagonalNearbyTraversableTiles(originalVictimPosition, 3);
 				positions.forEach(p -> new Projectile(originalVictimPosition, p, 0, 1824, 44, 4, 60, 43, 0, npc.getInstance()).sendProjectile());
-
 				World.get().submit(new Task(1, false) {
 
 					@Override

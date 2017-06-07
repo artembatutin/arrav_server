@@ -19,8 +19,9 @@ public class StrayDog extends EventInitializer {
 				player.animation(new Animation(2110));
 				player.forceChat("Thbbbbt!");
 				npc.forceChat("Whine!");
-				Optional<Position> move = World.getTraversalMap().getRandomTraversableTile(npc.getPosition(), npc.size(), player.getPosition());
-				move.ifPresent(position1 -> npc.getMovementQueue().walk(position1));
+				Position pos = World.getTraversalMap().getRandomNearby(npc.getPosition(), player.getPosition(), npc.size());
+				if(pos != null)
+					npc.getMovementQueue().walk(pos);
 				return true;
 			}
 		};

@@ -1,5 +1,6 @@
 package net.edge.content.commands;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.util.LoggerUtils;
 import net.edge.util.Utility;
 import net.edge.world.World;
@@ -19,9 +20,9 @@ import java.util.stream.Collectors;
 public final class CommandDispatcher {
 	
 	/**
-	 * The tool.mapviewer which contains all the commands on the world.
+	 * The object map which contains all the commands on the world.
 	 */
-	private static final Map<CommandSignature, Command> COMMANDS = new HashMap<>();
+	private static final Object2ObjectArrayMap<CommandSignature, Command> COMMANDS = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * The logger that will print important information.

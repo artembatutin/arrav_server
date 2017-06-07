@@ -1,6 +1,7 @@
 package net.edge.world.node.entity.npc.impl.glacor;
 
 import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.edge.task.Task;
 import net.edge.locale.Boundary;
 import net.edge.world.Hit;
@@ -72,7 +73,7 @@ public final class GlacorExplodeTask extends Task {
 		
 		npc.damage(new Hit(npcDamage));
 		
-		for(Player t : Lists.newArrayList(World.get().getLocalPlayers(npc))) {
+		for(Player t : new ObjectArrayList<>(World.get().getLocalPlayers(npc))) {
 			if(t.isDead()) {
 				continue;
 			}

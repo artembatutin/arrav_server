@@ -1,6 +1,8 @@
 package net.edge.world.node.entity.player;
 
 import com.google.gson.*;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.edge.net.codec.login.LoginResponse;
 import net.edge.util.MutableNumber;
 import net.edge.util.json.GsonUtils;
@@ -237,24 +239,24 @@ public final class PlayerSerialization {
 				Gson gson = new GsonBuilder().setPrettyPrinting().create();
 				JsonObject obj = new JsonObject();
 				tokens.forEach(t -> obj.add(t.getName(), gson.toJsonTree(t.getToJson())));
-				Map<String, Object> quests = new HashMap<>();
+				Object2ObjectArrayMap<String, Object> quests = new Object2ObjectArrayMap<>();
 				for(Map.Entry<Quests, Quest> it : player.getQuestManager().getStartedQuests().entrySet()) {
 					Quests key = it.getKey();
 					Quest value = it.getValue();
 					
-					Map<String, Object> attributeEntry = new LinkedHashMap<>();
+					Object2ObjectLinkedOpenHashMap<String, Object> attributeEntry = new Object2ObjectLinkedOpenHashMap<>();
 					attributeEntry.put("quest", value);
 					
 					quests.put(key.name(), attributeEntry);
 				}
 				obj.add("quests", gson.toJsonTree(quests));
-				Map<String, Object> attributes = new HashMap<>();
+				Object2ObjectArrayMap<String, Object> attributes = new Object2ObjectArrayMap<>();
 				for(Map.Entry<String, AttributeValue<?>> it : player.getAttr()) {
 					AttributeKey<?> key = AttributeKey.ALIASES.get(it.getKey());
 					AttributeValue<?> value = it.getValue();
 					
 					if(key.isPersistent()) {
-						Map<String, Object> attributeEntry = new LinkedHashMap<>();
+						Object2ObjectLinkedOpenHashMap<String, Object> attributeEntry = new Object2ObjectLinkedOpenHashMap<>();
 						attributeEntry.put("type", key.getTypeName());
 						attributeEntry.put("value", value.get());
 						attributes.put(key.getName(), attributeEntry);

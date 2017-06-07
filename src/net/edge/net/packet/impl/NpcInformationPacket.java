@@ -1,5 +1,7 @@
 package net.edge.net.packet.impl;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.packet.PacketReader;
 import net.edge.util.rand.Chance;
@@ -12,15 +14,13 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.ItemDefinition;
 
-import java.util.ArrayList;
-
 /**
  * The message sent from the client which depends on the Npc Information panel integration.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class NpcInformationPacket implements PacketReader {
 	
-	public static final ArrayList<SuggestedDrop> SUGGESTED = new ArrayList<>();
+	public static final ObjectList<SuggestedDrop> SUGGESTED = new ObjectArrayList<>();
 	
 	@Override
 	public void handle(Player player, int opcode, int size, ByteMessage payload) {

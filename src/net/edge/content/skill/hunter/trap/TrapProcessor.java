@@ -1,9 +1,9 @@
 package net.edge.content.skill.hunter.trap;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -15,7 +15,7 @@ public final class TrapProcessor {
 	/**
 	 * The list of traps to manage.
 	 */
-	private final List<Trap> traps = new ArrayList<>();
+	private final ObjectList<Trap> traps = new ObjectArrayList<>();
 	
 	/**
 	 * The task running for the list of traps.
@@ -31,7 +31,7 @@ public final class TrapProcessor {
 	/**
 	 * @return the list of traps.
 	 */
-	public List<Trap> getTraps() {
+	public ObjectList<Trap> getTraps() {
 		return traps;
 	}
 	

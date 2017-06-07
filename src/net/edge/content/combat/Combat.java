@@ -1,5 +1,6 @@
 package net.edge.content.combat;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.edge.Server;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.effect.CombatEffect;
@@ -142,7 +143,7 @@ public final class Combat {
 	/**
 	 * The hash collection of all the default NPCs mapped to their combat strategies.
 	 */
-	public static final Map<Integer, CombatStrategy> DEFAULT_STRATEGIES = new HashMap<>();
+	public static final ObjectArrayList<CombatStrategy> DEFAULT_STRATEGIES = new ObjectArrayList<>(5000);
 	
 	/**
 	 * The default constructor.

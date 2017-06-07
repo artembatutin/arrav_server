@@ -236,7 +236,7 @@ public abstract class ObjectNode {
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
 	public boolean delete() {
-		return getRegion().getRemovedObjects(getLocalPos()).add(this);
+		return getRegion().getRemovedObjects().add(this);
 	}
 	
 	/**
@@ -244,7 +244,7 @@ public abstract class ObjectNode {
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
 	public boolean restore() {
-		return getRegion().getRemovedObjects(getLocalPos()).remove(this);
+		return getRegion().getRemovedObjects().remove(this);
 	}
 	
 	/**

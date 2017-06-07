@@ -6,7 +6,7 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import tool.mapviewer.MapTool;
 
-@CommandSignature(alias = {"tool/mapviewer"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::tool.mapviewer")
+@CommandSignature(alias = {"mapviewer"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::tool.mapviewer")
 public final class MapViewer implements Command {
 
 	@Override

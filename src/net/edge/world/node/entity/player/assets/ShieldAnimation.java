@@ -1,10 +1,8 @@
 package net.edge.world.node.entity.player.assets;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The container class that represents one equipment animation that is used with
@@ -17,7 +15,7 @@ public final class ShieldAnimation {
 	/**
 	 * The hash collection of weapon animations.
 	 */
-	public static final Map<Integer, ShieldAnimation> ANIMATIONS = new HashMap<>();
+	public static final Int2ObjectOpenHashMap<ShieldAnimation> ANIMATIONS = new Int2ObjectOpenHashMap<>();
 	
 	/**
 	 * The combat blocking animation for this weapon.

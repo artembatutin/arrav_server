@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "owner": "avro",
+    "name": "Edgeville",
+    "loot": false,
+    "ban": "OWNER",
+    "mute": "OWNER",
+    "talk": "MEMBER",
+    "mutes": [],
+    "bans": [],
+    "ranked": [
+      {
+        "name": "avro",
+        "rank": "OWNER"
+      }
+    ]
+  }
+]

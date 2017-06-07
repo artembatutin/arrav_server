@@ -1,5 +1,7 @@
 package net.edge.content.minigame.barrows;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
@@ -21,12 +23,8 @@ import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
-
-import static net.edge.util.rand.Chance.UNCOMMON;
 
 /**
  * Holds functionality for the barrows minigame.
@@ -190,7 +188,7 @@ public final class BarrowsMinigame extends Minigame {
 			if(!container.getCurrent().isPresent()) {
 				NpcDropTable table = NpcDropManager.TABLES.get(-1);//barrows custom.
 				int expected = RandomUtils.inclusive(4, 8);
-				List<Item> loot = new ArrayList<>();
+				ObjectList<Item> loot = new ObjectArrayList<>();
 				int items = 0;
 				while(items < expected) {
 					NpcDropCache cache = RandomUtils.random(table.getCommon());

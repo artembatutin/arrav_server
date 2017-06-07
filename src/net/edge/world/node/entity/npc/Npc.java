@@ -1,6 +1,7 @@
 package net.edge.world.node.entity.npc;
 
 import com.google.common.collect.ImmutableMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
@@ -38,7 +39,13 @@ public abstract class Npc extends EntityNode {
 	/**
 	 * A mapping which contains all the custom npcs by their id.
 	 */
-	private static final ImmutableMap<Integer, Function<Position, Npc>> CUSTOM_NPCS = ImmutableMap.of(6247, s -> new CommanderZilyana(), 6260, s -> new GeneralGraardor(), 6222, s -> new KreeArra(), 8133, s -> new CorporealBeast(), 14301, s -> new Glacor(s));
+	private static final Int2ObjectArrayMap<Function<Position, Npc>> CUSTOM_NPCS = new Int2ObjectArrayMap<>(
+			ImmutableMap.<Integer, Function<Position, Npc>>builder()
+			.put(6247, s -> new CommanderZilyana())
+			.put(6260, s -> new GeneralGraardor())
+			.put(6222, s -> new KreeArra())
+			.put(8133, s -> new CorporealBeast())
+			.put(14301, s -> new Glacor(s)).build());
 	
 	/**
 	 * Gets a certain npc by the specified {@code id} and supplies it's position.

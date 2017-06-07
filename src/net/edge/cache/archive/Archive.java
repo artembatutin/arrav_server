@@ -1,6 +1,7 @@
 package net.edge.cache.archive;
 
 import com.google.common.base.Preconditions;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.cache.Cache;
 import net.edge.util.ByteBufferUtil;
 import net.edge.util.CompressionUtil;
@@ -8,8 +9,6 @@ import net.edge.util.TextUtils;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import static net.edge.cache.Cache.INDEX_SIZE;
@@ -25,16 +24,16 @@ import static net.edge.cache.Cache.INDEX_SIZE;
 public final class Archive {
 	
 	/**
-	 * A {@link Map} of {@link ArchiveSector} hashes to {@link ArchiveSector}s.
+	 * A {@link Int2ObjectArrayMap} of {@link ArchiveSector} hashes to {@link ArchiveSector}s.
 	 */
-	private final Map<Integer, ArchiveSector> sectors;
+	private final Int2ObjectArrayMap<ArchiveSector> sectors;
 	
 	/**
-	 * Constructs a new {@link Archive} with the specified {@link Map} of
+	 * Constructs a new {@link Archive} with the specified {@link Int2ObjectArrayMap} of
 	 * {@link ArchiveSector}s.
-	 * @param sectors The {@link Map} of sectors within this archive.
+	 * @param sectors The {@link Int2ObjectArrayMap} of sectors within this archive.
 	 */
-	private Archive(Map<Integer, ArchiveSector> sectors) {
+	private Archive(Int2ObjectArrayMap<ArchiveSector> sectors) {
 		this.sectors = sectors;
 	}
 	
@@ -59,7 +58,7 @@ public final class Archive {
 		int total = data.getShort() & 0xFF;
 		int offset = data.position() + total * 10;
 		
-		Map<Integer, ArchiveSector> sectors = new HashMap<>(total);
+		Int2ObjectArrayMap<ArchiveSector> sectors = new Int2ObjectArrayMap<>(total);
 		for(int i = 0; i < total; i++) {
 			int hash = data.getInt();
 			length = ByteBufferUtil.getMedium(data);

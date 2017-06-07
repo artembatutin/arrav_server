@@ -1,6 +1,7 @@
 package net.edge.net.packet;
 
 import com.google.common.base.Preconditions;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
@@ -935,7 +936,7 @@ public final class PacketWriter {
 	 * The message that sends a clan member to the friend list.
 	 * @param members the {@link ClanMember}s list to send.
 	 */
-	public void sendClanMemberList(List<ClanMember> members) {
+	public void sendClanMemberList(ObjectList<ClanMember> members) {
 		if(player.getState() == INACTIVE)
 			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 51, MessageType.VARIABLE);
@@ -943,7 +944,6 @@ public final class PacketWriter {
 		for(ClanMember m : members) {
 			msg.putString(m.getRank().toIcon(player, m.getPlayer()) + (m.isMuted() ? "@red@" : "") + m.getPlayer().getUsername());
 		}
-		
 		player.queue(msg);
 		
 	}
@@ -952,13 +952,12 @@ public final class PacketWriter {
 	 * The message that sends a clan member to the friend list.
 	 * @param bans the ban list to send.
 	 */
-	public void sendClanBanList(List<String> bans) {
+	public void sendClanBanList(ObjectList<String> bans) {
 		if(player.getState() == INACTIVE)
 			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 52, MessageType.VARIABLE);
 		msg.putShort(bans.size());
 		bans.forEach(msg::putString);
-		
 		player.queue(msg);
 		
 	}

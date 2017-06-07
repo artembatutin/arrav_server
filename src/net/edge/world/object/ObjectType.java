@@ -1,7 +1,7 @@
 package net.edge.world.object;
 
-import java.util.HashMap;
-import java.util.Map;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+
 import java.util.Optional;
 
 /**
@@ -165,10 +165,10 @@ public enum ObjectType {
 	}
 	
 	/**
-	 * A mutable {@link Map} of {@code int} keys to {@link ObjectType}
+	 * A mutable {@link Int2ObjectOpenHashMap} of {@code int} keys to {@link ObjectType}
 	 * values.
 	 */
-	private static final Map<Integer, ObjectType> values = new HashMap<>();
+	private static final Int2ObjectOpenHashMap<ObjectType> values = new Int2ObjectOpenHashMap<>();
 	
 	/*
 	 * Populates the {@link #values} cache.

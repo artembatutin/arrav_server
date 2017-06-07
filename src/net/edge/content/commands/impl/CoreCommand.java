@@ -1,5 +1,7 @@
 package net.edge.content.commands.impl;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.util.rand.RandomUtils;
@@ -12,8 +14,6 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.Item;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @CommandSignature(alias = {"core"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::core")
@@ -26,7 +26,7 @@ public final class CoreCommand implements Command {
 		//TEST
 		NpcDropTable table = NpcDropManager.TABLES.get(-1);//barrows custom.
 		int expected = RandomUtils.inclusive(4, 8);
-		List<Item> loot = new ArrayList<>();
+		ObjectList<Item> loot = new ObjectArrayList<>();
 		int items = 0;
 		while(items < expected) {
 			NpcDropCache cache = RandomUtils.random(table.getCommon());

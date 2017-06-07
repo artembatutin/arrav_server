@@ -1,9 +1,8 @@
 package net.edge.content.minigame.pestcontrol;
 
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.minigame.MinigameLobby;
 import net.edge.world.node.entity.player.Player;
-
-import java.util.List;
 
 public final class PestControlWaitingLobby extends MinigameLobby {
 	
@@ -17,7 +16,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	}
 	
 	@Override
-	public void onStart(List<Player> player) {
+	public void onStart(ObjectList<Player> player) {
 		//start a {@link PestControlMinigame}
 	}
 	
@@ -28,7 +27,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	}
 	
 	@Override
-	public boolean canStart(List<Player> players) {
+	public boolean canStart(ObjectList<Player> players) {
 		//if enough players are in the room.
 		return false;
 	}

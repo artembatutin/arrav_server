@@ -1,13 +1,12 @@
 package net.edge.world.node.region;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.*;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectNode;
-
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Manages all of the cached {@link Region}s and the {@link EntityNode}s contained within them.
@@ -17,9 +16,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class RegionManager {
 	
 	/**
-	 * The tool.mapviewer of cached {@link Region}s.
+	 * The map of cached {@link Region}s.
 	 */
-	private final Map<Integer, Region> regions = new ConcurrentHashMap<>();
+	private final Int2ObjectOpenHashMap<Region> regions = new Int2ObjectOpenHashMap<>();
 	
 	/**
 	 * Returns a {@link Region} based on the given {@code pos}.
@@ -63,10 +62,9 @@ public final class RegionManager {
 	 * @param player The {@link Player}.
 	 * @return The local, prioritized, {@code Player}s.
 	 */
-	public Set<Player> getPriorityPlayers(Player player) {
-		List<Region> allRegions = getSurroundingRegions(player.getPosition());
-		Set<Player> localPlayers = new TreeSet<>(new RegionPriorityComparator(player));
-		
+	public ObjectSet<Player> getPriorityPlayers(Player player) {
+		ObjectList<Region> allRegions = getSurroundingRegions(player.getPosition());
+		ObjectSet<Player> localPlayers = new ObjectAVLTreeSet<>(new RegionPriorityComparator(player));
 		for(Region region : allRegions) {
 			localPlayers.addAll(region.getPlayers().values());
 		}
@@ -78,10 +76,9 @@ public final class RegionManager {
 	 * @param pos The {@link Position}.
 	 * @return The local, prioritized, {@code Player}s.
 	 */
-	public Set<Player> getPlayers(Position pos) {
-		List<Region> allRegions = getAllSurroundingRegions(pos.getRegion());
-		Set<Player> localPlayers = new HashSet<>();
-		
+	public ObjectSet<Player> getPlayers(Position pos) {
+		ObjectList<Region> allRegions = getAllSurroundingRegions(pos.getRegion());
+		ObjectSet<Player> localPlayers = new ObjectOpenHashSet<>();
 		for(Region region : allRegions) {
 			localPlayers.addAll(region.getPlayers().values());
 		}
@@ -94,10 +91,9 @@ public final class RegionManager {
 	 * @param player The {@link Player}.
 	 * @return The local, prioritized, {@code Npc}s.
 	 */
-	public Set<Npc> getPriorityNpcs(Player player) {
-		List<Region> allRegions = getSurroundingRegions(player.getPosition());
-		Set<Npc> localNpcs = new TreeSet<>(new RegionPriorityComparator(player));
-		
+	public ObjectSet<Npc> getPriorityNpcs(Player player) {
+		ObjectList<Region> allRegions = getSurroundingRegions(player.getPosition());
+		ObjectSet<Npc> localNpcs = new ObjectAVLTreeSet<>(new RegionPriorityComparator(player));
 		for(Region region : allRegions) {
 			localNpcs.addAll(region.getNpcs().values());
 		}
@@ -109,14 +105,11 @@ public final class RegionManager {
 	 * @param player the player to update objects for.
 	 */
 	public void updateRegionObjects(Player player) {
-		List<Region> allRegions = getAllSurroundingRegions(player.getPosition().getRegion());
+		ObjectList<Region> allRegions = getAllSurroundingRegions(player.getPosition().getRegion());
 		for(Region region : allRegions) {
-			region.getRemovedObjects().forEach((p, o) -> {
-				for(ObjectNode ob : o)
-					player.getMessages().sendRemoveObject(ob);
-			});
-			List<ObjectNode> regionObj = region.getDynamicObjects();
-			for(ObjectNode o : regionObj) {
+			for(ObjectNode obj : region.getRemovedObjects())
+				player.getMessages().sendRemoveObject(obj);
+			for(ObjectNode o : region.getDynamicObjects()) {
 				if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance())
 					player.getMessages().sendObject(o);
 			}
@@ -128,10 +121,10 @@ public final class RegionManager {
 	 * @param pos The {@link Position}.
 	 * @return The surrounding regions.
 	 */
-	public List<Region> getSurroundingRegions(Position pos) {
+	public ObjectList<Region> getSurroundingRegions(Position pos) {
 		int regionId = pos.getRegion();
 		
-		List<Region> regions = new LinkedList<>();
+		ObjectList<Region> regions = new ObjectArrayList<>();
 		regions.add(getRegion(regionId)); // Initial region.
 		
 		int x = pos.getX() % 64;
@@ -183,8 +176,8 @@ public final class RegionManager {
 	 * @param region The region id to get surrounding for.
 	 * @return The surrounding regions.
 	 */
-	public List<Region> getAllSurroundingRegions(int region) {
-		List<Region> regions = new LinkedList<>();
+	public ObjectList<Region> getAllSurroundingRegions(int region) {
+		ObjectList<Region> regions = new ObjectArrayList<>();
 		regions.add(getRegion(region));
 		if(exists(region + 256))
 			regions.add(getRegion(region + 256));
@@ -205,7 +198,7 @@ public final class RegionManager {
 		return regions;
 	}
 	
-	public Map<Integer, Region> getRegions() {
+	public Int2ObjectOpenHashMap<Region> getRegions() {
 		return regions;
 	}
 	

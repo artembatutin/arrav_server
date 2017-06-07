@@ -1,6 +1,7 @@
 package net.edge.content.skill.crafting;
 
 import com.google.common.collect.ImmutableMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
@@ -83,7 +84,7 @@ public final class LeatherWorking extends ProducingSkillAction {
 	/**
 	 * Attempts to open the leather working interface.
 	 * @param player the player that attempted to open the interface.
-	 * @param npc    the npc that was interacted with.
+	 * @param itemUsed    the item that was interacted with.
 	 * @return {@code true} if the interface was opened, {@code false} otherwise.
 	 */
 	public static boolean openInterface(Player player, Item itemUsed, Item usedOn) {
@@ -195,7 +196,7 @@ public final class LeatherWorking extends ProducingSkillAction {
 		/**
 		 * Caches our enum values.
 		 */
-		private static final ImmutableMap<Integer, LeatherData> VALUES = ImmutableMap.copyOf(Stream.of(values()).collect(Collectors.toMap(t -> t.buttonId, Function.identity())));
+		private static final Int2ObjectArrayMap<LeatherData> VALUES = new Int2ObjectArrayMap<>(ImmutableMap.copyOf(Stream.of(values()).collect(Collectors.toMap(t -> t.buttonId, Function.identity()))));
 		
 		/**
 		 * The button identification.

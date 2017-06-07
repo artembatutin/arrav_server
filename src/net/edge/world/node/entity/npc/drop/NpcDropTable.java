@@ -1,5 +1,7 @@
 package net.edge.world.node.entity.npc.drop;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.container.impl.Equipment;
 import net.edge.game.GameConstants;
 import net.edge.util.log.Log;
@@ -23,12 +25,12 @@ public final class NpcDropTable {
 	/**
 	 * The unique drop table that consists of both dynamic and rare drops.
 	 */
-	private final List<NpcDrop> unique;
+	private final ObjectList<NpcDrop> unique;
 	
 	/**
 	 * The common drop table that is shared with other tables.
 	 */
-	private final List<NpcDropCache> common;
+	private final ObjectList<NpcDropCache> common;
 	
 	/**
 	 * Creates a new {@link NpcDropTable}.
@@ -36,8 +38,8 @@ public final class NpcDropTable {
 	 * @param common the common drop table.
 	 */
 	public NpcDropTable(NpcDrop[] unique, NpcDropCache[] common) {
-		this.unique = new ArrayList<>(Arrays.asList(unique));
-		this.common = new ArrayList<>(Arrays.asList(common));
+		this.unique = new ObjectArrayList<>(unique);
+		this.common = new ObjectArrayList<>(common);
 	}
 	
 	/**
@@ -54,7 +56,7 @@ public final class NpcDropTable {
 		// Instantiate the random generator, the list of items to drop, the list
 		// for the rare items, the common table, and a list that contains a
 		// shuffled copy of the unique table.
-		List<Item> items = new LinkedList<>();
+		ObjectList<Item> items = new ObjectArrayList<>();
 		NpcDropCache cache = RandomUtils.random(!common.isEmpty() ? common : NpcDropManager.DEFAULT.common);
 		
 		// Determines if the rare, common, and dynamic tables should be rolled.
@@ -125,11 +127,11 @@ public final class NpcDropTable {
 		return false;
 	}
 	
-	public List<NpcDrop> getUnique() {
+	public ObjectList<NpcDrop> getUnique() {
 		return unique;
 	}
 	
-	public List<NpcDropCache> getCommon() {
+	public ObjectList<NpcDropCache> getCommon() {
 		return common;
 	}
 	

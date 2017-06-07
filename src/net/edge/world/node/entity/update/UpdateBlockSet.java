@@ -30,7 +30,7 @@ public final class UpdateBlockSet<E extends EntityNode> {
 	
 	static {
 		try {
-		/* Build the player block set. */
+			/* Build the player block set. */
 			PLAYER_BLOCK_SET.add(new PlayerForceMovementUpdateBlock());
 			PLAYER_BLOCK_SET.add(new PlayerGraphicUpdateBlock());
 			PLAYER_BLOCK_SET.add(new PlayerAnimationUpdateBlock());
@@ -42,7 +42,7 @@ public final class UpdateBlockSet<E extends EntityNode> {
 			PLAYER_BLOCK_SET.add(new PlayerPrimaryHitUpdateBlock());
 			PLAYER_BLOCK_SET.add(new PlayerSecondaryHitUpdateBlock());
 		
-        /* Build the non-player character block set. */
+            /* Build the non-player character block set. */
 			NPC_BLOCK_SET.add(new NpcForceMovementUpdateBlock());
 			NPC_BLOCK_SET.add(new NpcGraphicUpdateBlock());
 			NPC_BLOCK_SET.add(new NpcAnimationUpdateBlock());
@@ -72,22 +72,21 @@ public final class UpdateBlockSet<E extends EntityNode> {
 	}
 	
 	/**
-	 * Encodes the update blocks for {@code forMob} and appends the data to {@code msg}.
-	 * @param forMob The {@link EntityNode} to encode update blocks for.
+	 * Encodes the update blocks for {@code forEntity} and appends the data to {@code msg}.
+	 * @param forEntity The {@link EntityNode} to encode update blocks for.
 	 * @param msg    The main update buffer.
 	 * @param state  The {@link UpdateState} that the underlying {@link Player} is in.
 	 */
-	public void encodeUpdateBlocks(Player player, E forMob, ByteMessage msg, UpdateState state) {
-		if(forMob.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
+	public void encodeUpdateBlocks(Player player, E forEntity, ByteMessage msg, UpdateState state) {
+		if(forEntity.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
 		}
-		
-		if(forMob.isPlayer()) {
-			encodePlayerBlocks(player, forMob, msg, state);
-		} else if(forMob.isNpc()) {
-			encodeNpcBlocks(player, forMob, msg, state);
+		if(forEntity.isPlayer()) {
+			encodePlayerBlocks(player, forEntity, msg, state);
+		} else if(forEntity.isNpc()) {
+			encodeNpcBlocks(player, forEntity, msg, state);
 		} else {
-			throw new IllegalStateException("forMob.type() must be PLAYER or NPC");
+			throw new IllegalStateException("forEntity.type() must be PLAYER or NPC");
 		}
 	}
 	

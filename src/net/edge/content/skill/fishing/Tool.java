@@ -1,14 +1,15 @@
 package net.edge.content.skill.fishing;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Optional;
 
 public enum Tool {
 	NET(303, 1, -1, 0.30, 621, new Catchable[]{Catchable.SHRIMP, Catchable.ANCHOVY, Catchable.MONKFISH}) {
@@ -17,20 +18,15 @@ public enum Tool {
 			return Catchable.SHRIMP;
 		}
 	},
-	NET_MONKFISH(303, 62, -1, 0.10, 621, new Catchable[]{Catchable.MONKFISH}),
-	BIG_NET(305, 16, -1, 0.20, 620, new Catchable[]{Catchable.MACKEREL, Catchable.COD, Catchable.BASS, Catchable.CASKET, Catchable.LEATHER_BOOTS, Catchable.LEATHER_GLOVES, Catchable.OYSTER, Catchable.SEAWEED, Catchable.ROCKTAIL}) {
+	NET_MONKFISH(303, 62, -1, 0.20, 621, new Catchable[]{Catchable.MONKFISH}),
+	BIG_NET(305, 16, -1, 0.50, 620, new Catchable[]{Catchable.MACKEREL, Catchable.COD, Catchable.BASS, Catchable.CASKET, Catchable.LEATHER_BOOTS, Catchable.LEATHER_GLOVES, Catchable.OYSTER, Catchable.SEAWEED, Catchable.ROCKTAIL}) {
 		@Override
 		public Item[] onCatch(Player player) {
 			int amount = RandomUtils.inclusive(1, 3);
 			int slots = player.getInventory().remaining();
-			int counter = 0;
-			Item[] items = new Item[player.getInventory().remaining() < amount ? player.getInventory().remaining() : amount];
 			if(amount > slots)
 				amount = slots;
-			for(int i = 0; i < amount; i++) {
-				items[counter++] = new Item(calculate(player).getId());
-			}
-			return items;
+			return calculate(player, amount).toArray(new Item[amount]);
 		}
 		
 		@Override
@@ -84,15 +80,26 @@ public enum Tool {
 		return catchables[0];
 	}
 	
-	Catchable calculate(Player player) {
-		List<Catchable> success = new ArrayList<>(catchables.length);
+	ObjectList<Item> calculate(Player player, int cap) {
+		ObjectList<Item> success = new ObjectArrayList<>();
 		Skill skill = player.getSkills()[Skills.FISHING];
-		Arrays.stream(catchables).filter(def -> skill.reqLevel(def.getLevel()) && def.catchable(player)).forEach(success::add);
-		//Collections.shuffle(success, random);
-		return success.stream().anyMatch(def -> RandomUtils.success(def.getChance())) ? RandomUtils.random(success) : catchable();
+		int index = cap;
+		for(Catchable c : catchables) {
+			if(!skill.reqLevel(c.getLevel()))
+				continue;
+			if(!c.catchable(player))
+				continue;
+			if(!RandomUtils.success(c.getChance()))
+				continue;
+			success.add(new Item(c.getId()));
+			index--;
+			if(index == 0)
+				break;
+		}
+		return success;
 	}
 	
 	public Item[] onCatch(Player player) {
-		return new Item[]{new Item(calculate(player).getId())};
+		return calculate(player, 1).toArray(new Item[1]);
 	}
 }

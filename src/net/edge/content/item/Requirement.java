@@ -1,12 +1,10 @@
 package net.edge.content.item;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The container class that represents one equipment requirement.
@@ -15,9 +13,9 @@ import java.util.Map;
 public final class Requirement {
 	
 	/**
-	 * The hash collection of equipment requirements.
+	 * The array map collection of equipment requirements.
 	 */
-	public static final Map<Integer, Requirement[]> REQUIREMENTS = new HashMap<>();
+	public static final Int2ObjectArrayMap<Requirement[]> REQUIREMENTS = new Int2ObjectArrayMap<>();
 	
 	/**
 	 * The level of this equipment requirement.

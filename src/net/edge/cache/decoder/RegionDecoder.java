@@ -1,5 +1,7 @@
 package net.edge.cache.decoder;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.cache.FileSystem;
 import net.edge.content.door.DoorHandler;
 import net.edge.util.ByteBufferUtil;
@@ -71,14 +73,14 @@ public final class RegionDecoder implements Runnable {
 		final boolean isNew = def.isNew();
 		Region region = World.getRegions().getRegion(new Position(x, y));
 		try {
-			List<Position> downHeights = new LinkedList<>();
+			ObjectList<Position> downHeights = new ObjectArrayList<>();
 			ByteBuffer terrainData = fs.getFile(FileSystem.MAP_INDEX, def.getTerrainFile());
 			ByteBuffer terrainBuffer = ByteBuffer.wrap(CompressionUtil.gunzip(terrainData.array()));
 			parseTerrain(region, terrainBuffer, x, y, downHeights);
 			
 			ByteBuffer gameObjectData = fs.getFile(FileSystem.MAP_INDEX, def.getObjectFile());
 			ByteBuffer gameObjectBuffer = ByteBuffer.wrap(CompressionUtil.gunzip(gameObjectData.array()));
-			List<StaticObject> objects = parseGameObject(region, gameObjectBuffer, x, y, downHeights, isNew);
+			ObjectList<StaticObject> objects = parseGameObject(region, gameObjectBuffer, x, y, downHeights, isNew);
 			for(StaticObject o : objects) {
 				World.getTraversalMap().markObject(region, o, true, true);
 				if(o.getDefinition() != null && DoorHandler.isDoor(o.getDefinition()))
@@ -98,8 +100,8 @@ public final class RegionDecoder implements Runnable {
 	 * @param x                The x coordinate this object is on.
 	 * @param y                The y coordinate this object is on.
 	 */
-	private List<StaticObject> parseGameObject(Region region, ByteBuffer gameObjectBuffer, int x, int y, List<Position> downHeights, boolean isNew) {
-		List<StaticObject> objs = new ArrayList<>();
+	private ObjectList<StaticObject> parseGameObject(Region region, ByteBuffer gameObjectBuffer, int x, int y, ObjectList<Position> downHeights, boolean isNew) {
+		ObjectList<StaticObject> objs = new ObjectArrayList<>();
 		for(int deltaId, id = -1; (deltaId = ByteBufferUtil.getSmart(gameObjectBuffer)) != 0; ) {
 			id += deltaId;
 			for(int deltaPos, hash = 0; (deltaPos = ByteBufferUtil.getSmart(gameObjectBuffer)) != 0; ) {
@@ -138,7 +140,7 @@ public final class RegionDecoder implements Runnable {
 	 * @param x         The x coordinate of this tool.mapviewer entry.
 	 * @param y         The y coordinate of this tool.mapviewer entry.
 	 */
-	private void parseTerrain(Region region, ByteBuffer mapBuffer, int x, int y, List<Position> downHeights) {
+	private void parseTerrain(Region region, ByteBuffer mapBuffer, int x, int y, ObjectList<Position> downHeights) {
 		for(int height = 0; height < 4; height++) {
 			for(int localX = 0; localX < 64; localX++) {
 				for(int localY = 0; localY < 64; localY++) {
@@ -174,7 +176,7 @@ public final class RegionDecoder implements Runnable {
 	 * @param flags    The flags for the specified position.
 	 * @param position The decoded position.
 	 */
-	private void terrainDecoded(Region region, int flags, Position position, List<Position> downHeights) {
+	private void terrainDecoded(Region region, int flags, Position position, ObjectList<Position> downHeights) {
 		if(position.getZ() > 0 && downHeights.contains(new Position(position.getX(), position.getY(), 1))) {
 			position = position.move(0, 0, -1);
 		}

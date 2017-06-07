@@ -3,12 +3,15 @@ package net.edge.content.clanchat;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.packet.PacketWriter;
 import net.edge.util.TextUtils;
 import net.edge.util.json.JsonSaver;
 import net.edge.world.node.entity.player.Player;
 
-import java.util.*;
+import java.util.Optional;
 
 /**
  * The class which manages clans on the world.
@@ -20,7 +23,7 @@ public final class ClanManager {
 	/**
 	 * The collection of clans on this world.
 	 */
-	private static final Map<String, ClanChat> GLOBAL_CLANS = new HashMap<>();
+	private static final Object2ObjectArrayMap<String, ClanChat> GLOBAL_CLANS = new Object2ObjectArrayMap<>();
 	
 	public void clearOnLogin(Player player) {
 		PacketWriter message = player.getMessages();
@@ -28,8 +31,8 @@ public final class ClanManager {
 		message.sendString("Owner: ", 50140);
 		message.sendString("Join Clan", 50135);
 		message.sendString("Clan Setup", 50136);
-		message.sendClanMemberList(Collections.emptyList());
-		message.sendClanBanList(Collections.emptyList());
+		message.sendClanMemberList(new ObjectArrayList<>());
+		message.sendClanBanList(new ObjectArrayList<>());
 	}
 	
 	/**
@@ -103,7 +106,7 @@ public final class ClanManager {
 				return;
 			}
 			ClanChat clan = player.getClan().get().getClan();
-			List<ClanMember> list = clan.getMembers();
+			ObjectList<ClanMember> list = clan.getMembers();
 			list.forEach(m -> clan.remove(m.getPlayer(), false));
 			GLOBAL_CLANS.remove(player.getUsername());
 		} else {
@@ -125,7 +128,7 @@ public final class ClanManager {
 	 * Gets all of the {@link #GLOBAL_CLANS} in the world.
 	 * @return the clan chat wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
-	public Map<String, ClanChat> getClans() {
+	public Object2ObjectArrayMap<String, ClanChat> getClans() {
 		return GLOBAL_CLANS;
 	}
 	
@@ -134,8 +137,14 @@ public final class ClanManager {
 	 * @param update  the clan update to update the interface for.
 	 * @param members the members to update the interface for.
 	 */
-	public void update(ClanChatUpdate update, List<ClanMember> members) {
-		members.stream().filter(member -> member != null && member.getPlayer().getClan().isPresent()).forEach(update::update);
+	public void update(ClanChatUpdate update, ObjectList<ClanMember> members) {
+		for(ClanMember member : members) {
+			if(member == null)
+				continue;
+			if(!member.getPlayer().getClan().isPresent())
+				continue;
+			update(update, member);
+		}
 	}
 	
 	/**

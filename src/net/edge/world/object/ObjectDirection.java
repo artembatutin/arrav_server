@@ -2,10 +2,9 @@ package net.edge.world.object;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -60,10 +59,10 @@ public enum ObjectDirection {
 	}
 	
 	/**
-	 * A mutable {@link Map} of {@code int} keys to
+	 * A mutable {@link Int2ObjectOpenHashMap} of {@code int} keys to
 	 * {@link ObjectDirection} values.
 	 */
-	private static final Map<Integer, ObjectDirection> values = new HashMap<>();
+	private static final Int2ObjectOpenHashMap<ObjectDirection> values = new Int2ObjectOpenHashMap<>();
 	
 	/**
 	 * Populates the {@link #values} cache.

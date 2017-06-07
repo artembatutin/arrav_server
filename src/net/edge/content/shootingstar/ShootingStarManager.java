@@ -31,14 +31,11 @@ public final class ShootingStarManager {
 		if(!stopwatch.elapsed(28, TimeUnit.MINUTES) || (star != null && star.sprite.getState().equals(NodeState.ACTIVE))) { // 1 minute correction, because task runs every minute and it might skip.
 			return;
 		}
-		
 		stopwatch.reset();
-		
 		if(star != null && !star.isDisabled()) {
 			World.get().message(star.locationData.messageActive, true);
 			return;
 		}
-		
 		spawn();
 	}
 	

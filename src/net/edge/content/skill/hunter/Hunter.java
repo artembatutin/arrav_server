@@ -1,5 +1,6 @@
 package net.edge.content.skill.hunter;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.hunter.trap.Trap;
@@ -18,8 +19,6 @@ import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -31,7 +30,7 @@ public final class Hunter {
 	/**
 	 * The mappings which contain each trap by player on the world.
 	 */
-	public static final Map<Player, TrapProcessor> GLOBAL_TRAPS = new HashMap<>();
+	public static final Object2ObjectOpenHashMap<Player, TrapProcessor> GLOBAL_TRAPS = new Object2ObjectOpenHashMap<>();
 	
 	/**
 	 * Retrieves the maximum amount of traps a player can lay.

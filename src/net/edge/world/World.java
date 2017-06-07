@@ -1,5 +1,6 @@
 package net.edge.world;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.game.GameConstants;
 import net.edge.game.GameExecutor;
@@ -33,6 +34,7 @@ import net.edge.world.node.entity.npc.NpcUpdater;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerUpdater;
 import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.region.Region;
 import net.edge.world.node.region.RegionManager;
 import net.edge.world.node.region.TraversalMap;
 
@@ -62,11 +64,6 @@ public final class World {
 	 * instantiation of this class file.
 	 */
 	private static final World singleton = new World();
-
-	/**
-	 * The trivia task for this world.
-	 */
-	private static final TriviaTask TRIVIA_BOT = new TriviaTask();
 
 	/**
 	 * The scheduled executor service.
@@ -136,7 +133,6 @@ public final class World {
 	 */
 	public void pulse() {
 		long start = System.currentTimeMillis();
-
 		// Handle queued logins.
 		for(int amount = 0; amount < GameConstants.LOGIN_THRESHOLD; amount++) {
 			Player player = logins.poll();
@@ -150,53 +146,61 @@ public final class World {
 		// Handle task processing.
 		taskManager.sequence();
 		
+		Npc n;
+		Player p;
+		EntityList.EntityListIterator<Npc> ni = npcs.entityIterator();
+		EntityList.EntityListIterator<Player> pi = players.entityIterator();
+		
 		// Pre sync
-		for(Player it : players) {
+		while((p = pi.next()) != null) {
 			try {
-				it.getSession().dequeue();
-				it.getMovementQueue().sequence();
-				it.sequence();
+				p.getSession().dequeue();
+				p.getMovementQueue().sequence();
+				p.sequence();
 			} catch(Exception e) {
-				queueLogout(it);
-				logger.log(Level.WARNING, "Couldn't pre sync player " + it.toString(), e);
+				queueLogout(p);
+				logger.log(Level.WARNING, "Couldn't pre sync player " + p.toString(), e);
 			}
 		}
-		for(Npc it : npcs) {
-			if(it.isActive()) {
+		while((n = ni.next()) != null) {
+			if(n.isActive()) {
 				try {
-					it.sequence();
-					it.getMovementQueue().sequence();
+					n.sequence();
+					n.getMovementQueue().sequence();
 				} catch(Exception e) {
-					logger.log(Level.WARNING, "Couldn't pre sync npc " + it.toString(), e);
+					logger.log(Level.WARNING, "Couldn't pre sync npc " + n.toString(), e);
 				}
 			}
 		}
 		
 		// Sync
-		for(Player it : players) {
+		while((p = pi.next()) != null) {
 			try {
-				it.getSession().queue(new PlayerUpdater().write(it));
-				it.getSession().queue(new NpcUpdater().write(it));
+				p.getSession().queue(new PlayerUpdater().write(p));
+				p.getSession().queue(new NpcUpdater().write(p));
 			} catch(Exception e) {
-				queueLogout(it);
-				logger.log(Level.WARNING, "Couldn't sync player " + it.toString(), e);
+				queueLogout(p);
+				logger.log(Level.WARNING, "Couldn't sync player " + p.toString(), e);
 			}
 		}
 		
 		// Post sync
-		for(Player it : players) {
-			it.getSession().flushQueue();
-			it.reset();
-			it.setCachedUpdateBlock(null);
+		while((p = pi.next()) != null) {
+			p.getSession().flushQueue();
+			p.reset();
+			p.setCachedUpdateBlock(null);
 		}
-		for(Npc it : npcs) {
-			it.reset();
+		while((n = ni.next()) != null) {
+			n.reset();
 		}
 		
 		// Region tick
 		regionalTick++;
 		if(regionalTick == 10) {
-			World.getRegions().getRegions().forEach((i, it) -> it.sequence());
+			for(Int2ObjectMap.Entry<Region> entry : World.getRegions().getRegions().int2ObjectEntrySet()) {
+				entry.getValue().sequence();
+			}
+			//World.getRegions().getRegions().forEach((i, it) -> it.sequence());
 			regionalTick = 0;
 		}
 		
@@ -213,7 +217,8 @@ public final class World {
 			}
 		}
 		
-		millis = System.currentTimeMillis() - start;
+		long millis = System.currentTimeMillis() - start;
+		System.out.println("tick: " + millis + " ms");
 	}
 	
 	/**
@@ -392,6 +397,11 @@ public final class World {
 	/* CONSTANTS DECLARATIONS */
 	
 	/**
+	 * The trivia task for this world.
+	 */
+	private static final TriviaTask TRIVIA_BOT = new TriviaTask();
+	
+	/**
 	 * The time the server has been running.
 	 */
 	private static final Stopwatch RUNNING_TIME = new Stopwatch().reset();
@@ -480,6 +490,14 @@ public final class World {
 	
 	
 	/* ASSETS GATHERS METHODS. */
+	
+	/**
+	 * Returns the trivia bot handler.
+	 * @return
+	 */
+	public static TriviaTask getTriviaBot() {
+		return TRIVIA_BOT;
+	}
 	
 	/**
 	 * Returns this world's {@link ExchangeSessionManager}.
@@ -614,9 +632,5 @@ public final class World {
 	 */
 	public static final World get() {
 		return singleton;
-	}
-
-	public static TriviaTask getTriviaBot() {
-		return TRIVIA_BOT;
 	}
 }

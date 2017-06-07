@@ -1,5 +1,6 @@
 package net.edge.world.node.entity.move;
 
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.Combat;
@@ -96,7 +97,7 @@ class CharacterFollowTask extends Task {
 		//Randomized walk away from leader's tile.
 		if(new Boundary(leader.getPosition(), leader.size()).inside(character.getPosition(), character.size())) {
 			character.getMovementQueue().reset();
-			List<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(leader.getPosition(), leader.size(), character.size());
+			ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(leader.getPosition(), leader.size(), character.size());
 			if(pos.size() > 0) {
 				Position p = RandomUtils.random(pos);
 				character.getMovementQueue().walk(p);

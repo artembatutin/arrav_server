@@ -3,6 +3,8 @@ package net.edge.content.skill.hunter.butterfly;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.content.skill.crafting.HideWorking;
 import net.edge.event.impl.NpcEvent;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
@@ -279,6 +281,6 @@ public final class ButterflyCatching extends ProducingSkillAction {
 		}
 	}
 	
-	private static final ImmutableMap<Integer, ButterflyData> BUTTERFLY_DATA = ImmutableMap.copyOf(Stream.of(ButterflyData.values()).collect(Collectors.toMap(t -> t.npc, Function.identity())));
+	private static final Int2ObjectArrayMap<ButterflyData> BUTTERFLY_DATA = new Int2ObjectArrayMap<>(ImmutableMap.copyOf(Stream.of(ButterflyData.values()).collect(Collectors.toMap(t -> t.npc, Function.identity()))));
 	
 }

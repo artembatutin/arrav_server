@@ -1,6 +1,8 @@
 package net.edge.content.skill.crafting;
 
 import com.google.common.collect.ImmutableMap;
+import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
@@ -50,7 +52,7 @@ public final class Spinning extends ProducingSkillAction {
 	 * @return {@code true} if the player created any products, {@code false} otherwise.
 	 */
 	public static boolean create(Player player, int buttonId) {
-		if(BUTTON_FOR_AMOUNT.get(buttonId) == null || !player.getAttr().get("crafting_spin").getBoolean()) {
+		if(BUTTON_FOR_AMOUNT.containsKey(buttonId) || !player.getAttr().get("crafting_spin").getBoolean()) {
 			return false;
 		}
 		
@@ -183,9 +185,9 @@ public final class Spinning extends ProducingSkillAction {
 		HAIR(10814, 954, 30, 25);
 		
 		/**
-		 * A tool.mapviewer containing the item by spinning data.
+		 * A map containing the item by spinning data.
 		 */
-		private static final ImmutableMap<Integer, SpinningData> VALUES = ImmutableMap.copyOf(Stream.of(SpinningData.values()).collect(Collectors.toMap(t -> t.item.getId(), Function.identity())));
+		private static final Int2ObjectArrayMap<SpinningData> VALUES = new Int2ObjectArrayMap<>(ImmutableMap.copyOf(Stream.of(SpinningData.values()).collect(Collectors.toMap(t -> t.item.getId(), Function.identity()))));
 		
 		/**
 		 * The item required to spin.
@@ -222,5 +224,5 @@ public final class Spinning extends ProducingSkillAction {
 		}
 	}
 	
-	private static final ImmutableMap<Integer, Integer> BUTTON_FOR_AMOUNT = ImmutableMap.of(10239, 1, 10238, 5, 6212, -1, 6211, -2);
+	private static final Int2IntArrayMap BUTTON_FOR_AMOUNT = new Int2IntArrayMap(ImmutableMap.of(10239, 1, 10238, 5, 6212, -1, 6211, -2));
 }

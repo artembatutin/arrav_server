@@ -1,5 +1,6 @@
 package net.edge.world.node.entity.move.path;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Direction;
@@ -55,7 +56,7 @@ public final class AStarPathFinder extends PathFinder {
 	public Path find(Position origin, Position target, int size) {
 		if(origin.getZ() != target.getZ())
 			return new Path(null);
-		Map<Position, Node> nodes = new HashMap<>();
+		Object2ObjectArrayMap<Position, Node> nodes = new Object2ObjectArrayMap<>();
 		Node start = new Node(origin), end = new Node(target);
 		nodes.put(origin, start);
 		nodes.put(target, end);

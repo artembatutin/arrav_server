@@ -324,9 +324,9 @@ public enum CombatSpecial {
 			return new CombatSessionData(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
-					Optional<Position> pos = World.getTraversalMap().getNearbyTraversableTiles(target.getPosition(), target.size()).stream().filter(p -> !p.same(player.getPosition())).findAny();
-					if(pos.isPresent()) {
-						target.getMovementQueue().walk(pos.get());
+					Position pos = World.getTraversalMap().getRandomNearby(target.getPosition(), player.getPosition(), target.size());
+					if(pos != null) {
+						target.getMovementQueue().walk(pos);
 						target.getMovementListener().append(() -> target.freeze(4));
 					} else {
 						target.stun(4);

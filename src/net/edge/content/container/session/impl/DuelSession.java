@@ -1,5 +1,7 @@
 package net.edge.content.container.session.impl;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.Stopwatch;
 import net.edge.content.container.session.ExchangeSession;
 import net.edge.content.container.session.ExchangeSessionActionType;
@@ -142,6 +144,10 @@ public final class DuelSession extends ExchangeSession {
 	@Override
 	public void accept(Player player, int stage) {
 		Player other = this.getOther(player);
+		if(other == null) {
+			player.message("The other person can't trade now.");
+			return;
+		}
 		switch(stage) {
 			case OFFER_ITEMS:
 				if(!lastRuleModification.elapsed(1_000)) {
@@ -328,7 +334,7 @@ public final class DuelSession extends ExchangeSession {
 	 * @return the numerical value for the amount of items to unequip.
 	 */
 	private Item[] getEquipmentCount(Player player) {
-		List<Item> items = new ArrayList<>();
+		ObjectList<Item> items = new ObjectArrayList<>();
 		for(DuelingRules rule : DuelingRules.VALUES) {
 			if(rule.getSlot() == -1 || player.getEquipment().get(rule.getSlot()) == null) {
 				continue;

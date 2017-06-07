@@ -1,5 +1,6 @@
 package net.edge.content.combat.effect;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Hit;
 import net.edge.world.PoisonType;
@@ -7,8 +8,6 @@ import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -20,7 +19,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 	/**
 	 * The collection of weapons mapped to their respective poison types.
 	 */
-	public static final Map<Integer, PoisonType> TYPES = new HashMap<>();
+	public static final Int2ObjectArrayMap<PoisonType> TYPES = new Int2ObjectArrayMap<>();
 	
 	/**
 	 * The amount of times this player has been hit.

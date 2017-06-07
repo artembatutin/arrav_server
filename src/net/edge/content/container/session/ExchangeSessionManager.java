@@ -1,5 +1,7 @@
 package net.edge.content.container.session;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
@@ -15,7 +17,7 @@ public final class ExchangeSessionManager {
 	/**
 	 * The collection of sessions.
 	 */
-	private static final List<ExchangeSession> SESSIONS = new ArrayList<>();
+	private static final ObjectList<ExchangeSession> SESSIONS = new ObjectArrayList<>();
 	
 	/**
 	 * Adds a session to the collection.
@@ -41,6 +43,11 @@ public final class ExchangeSessionManager {
 	public boolean request(ExchangeSession session) {
 		Player player = session.getPlayers().get(0);
 		Player requested = session.getOther(player);
+		
+		if(requested == null) {
+			player.message("Couldn't request the session.");
+			return false;
+		}
 		
 		if(player.isNight() && !player.isNightMaxed()) {
 			if(requested.isNight()) {
@@ -178,7 +185,8 @@ public final class ExchangeSessionManager {
 			p.getMessages().sendCloseWindows();
 		});
 		Player other = session.get().getOther(player);
-		other.message("The other player has declined the session.");
+		if(other != null)
+			other.message("The other player has declined the session.");
 		remove(session.get());
 	}
 	

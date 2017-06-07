@@ -1,12 +1,11 @@
 package net.edge.content.skill.hunter.trap;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.skill.hunter.Hunter;
 import net.edge.world.node.entity.player.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents a single task which will run for each trap.
@@ -22,7 +21,7 @@ public final class TrapTask extends Task {
 	/**
 	 * The trap this task is running for.
 	 */
-	private List<Trap> trap = new ArrayList<>();
+	private ObjectList<Trap> trap = new ObjectArrayList<>();
 	
 	/**
 	 * Constructs a new {@link TrapTask}.

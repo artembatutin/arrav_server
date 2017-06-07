@@ -1,6 +1,8 @@
 package net.edge.content.clanchat;
 
 import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.TextUtils;
 import net.edge.world.node.entity.player.Player;
 
@@ -23,7 +25,7 @@ public enum ClanChatRank {
 	GENERAL(7),
 	OWNER(8);
 	
-	private static final List<ClanChatRank> RANKS = Lists.newArrayList(ClanChatRank.values());
+	private static final ObjectList<ClanChatRank> RANKS = new ObjectArrayList<>(ClanChatRank.values());
 	
 	/**
 	 * The value that matches this difficulty level.

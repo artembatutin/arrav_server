@@ -1,5 +1,6 @@
 package net.edge.world.node.entity.npc.strategy.impl.gwd;
 
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatSessionData;
@@ -65,11 +66,11 @@ public final class KreeArraCombatStrategy extends DynamicCombatStrategy<KreeArra
 				if(RandomUtils.inclusive(100) < 60) {
 					return;
 				}
-
-				List<Position> position = World.getTraversalMap().getNearbyTraversableTiles(victim.getPosition(), 2).stream().filter(KreeArra.CHAMBER::inLocation).collect(Collectors.toList());
-
+				
+				Position position = World.getTraversalMap().getRandomNearby(victim.getPosition(), npc.getPosition(), 2);
 				victim.getMovementQueue().reset();
-				victim.move(RandomUtils.random(position));
+				if(position != null)
+					victim.move(position);
 				victim.graphic(new Graphic(128));
 			}
 		};

@@ -1,5 +1,8 @@
 package net.edge.content.container.session;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.container.ItemContainer;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
@@ -22,7 +25,7 @@ public abstract class ExchangeSession {
 	/**
 	 * The two players in this session.
 	 */
-	private final List<Player> players = new ArrayList<>(PLAYER_LIMIT);
+	private final ObjectList<Player> players = new ObjectArrayList<>(PLAYER_LIMIT);
 	
 	/**
 	 * The exchange session type this manager is managing.
@@ -32,7 +35,7 @@ public abstract class ExchangeSession {
 	/**
 	 * The items which are in this exchange session.
 	 */
-	private final Map<Player, ItemContainer> exchangeSession = new HashMap<>();
+	private final Object2ObjectArrayMap<Player, ItemContainer> exchangeSession = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * The attachment to the session stage, this will more than likely be a player object
@@ -244,7 +247,7 @@ public abstract class ExchangeSession {
 	 * The list which contains both players.
 	 * @return the list which contains both players.
 	 */
-	public final List<Player> getPlayers() {
+	public final ObjectList<Player> getPlayers() {
 		return players;
 	}
 	
@@ -254,7 +257,12 @@ public abstract class ExchangeSession {
 	 * @return the other player in the session.
 	 */
 	public Player getOther(Player player) {
-		return players.stream().filter(p -> !Objects.equals(player, p)).findAny().get();
+		for(Player p : players) {
+			if(player.equals(p))
+				continue;
+			return p;
+		}
+		return null;
 	}
 	
 	/**

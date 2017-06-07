@@ -1,8 +1,6 @@
 package net.edge.event;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 
 /**
  * A container to handle specific {@link Event}s.
@@ -13,7 +11,7 @@ public class EventContainer<E extends Event> {
 	/**
 	 * All of the registered events.
 	 */
-	private final Map<Integer, E> events = new HashMap<>();
+	private final Int2ObjectArrayMap<E> events = new Int2ObjectArrayMap<>();
 	
 	/**
 	 * Registering an listener to the container.
@@ -47,7 +45,7 @@ public class EventContainer<E extends Event> {
 	 * Gets the events.
 	 * @return events.
 	 */
-	public Map<Integer, E> events() {
+	public Int2ObjectArrayMap<E> events() {
 		return events;
 	}
 

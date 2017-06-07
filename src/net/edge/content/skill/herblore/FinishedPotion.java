@@ -2,6 +2,8 @@ package net.edge.content.skill.herblore;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
@@ -68,10 +70,9 @@ public final class FinishedPotion extends ProducingSkillAction {
 	
 	@Override
 	public Optional<Item[]> removeItem() {
-		List<Item> items = new ArrayList<>();
+		ObjectList<Item> items = new ObjectArrayList<>();
 		items.add(definition.unfinishedPotion);
-		Arrays.stream(definition.requiredItem).forEach(items::add);
-		
+		items.addAll(Arrays.asList(definition.requiredItem));
 		return Optional.of(items.toArray(new Item[items.size()]));
 	}
 	

@@ -1,9 +1,13 @@
 package net.edge.content.clanchat;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Optional;
 
 /**
  * Represents a single clan chat in the world.
@@ -25,22 +29,22 @@ public final class ClanChat {
 	/**
 	 * The clan chat members in this clan chat.
 	 */
-	private final List<ClanMember> members = new ArrayList<>(100);
+	private final ObjectArrayList<ClanMember> members = new ObjectArrayList<>(100);
 	
 	/**
-	 * A tool.mapviewer of clan chat ranks.
+	 * A collection of clan chat ranks.
 	 */
-	private final Map<String, ClanChatRank> ranks = new HashMap<>();
+	private final Object2ObjectArrayMap<String, ClanChatRank> ranks = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * A list of banned members from this clan chat.
 	 */
-	private final List<String> banned = new ArrayList<>();
+	private final ObjectList<String> banned = new ObjectArrayList<>();
 	
 	/**
 	 * A list of muted members from this clan chat.
 	 */
-	private final List<String> muted = new ArrayList<>();
+	private final ObjectList<String> muted = new ObjectArrayList<>();
 	
 	/**
 	 * The name of the clan chat.
@@ -155,28 +159,28 @@ public final class ClanChat {
 	/**
 	 * @return the members
 	 */
-	public List<ClanMember> getMembers() {
+	public ObjectList<ClanMember> getMembers() {
 		return members;
 	}
 	
 	/**
 	 * @return the banned
 	 */
-	public List<String> getBanned() {
+	public ObjectList<String> getBanned() {
 		return banned;
 	}
 	
 	/**
 	 * @return the banned
 	 */
-	public List<String> getMuted() {
+	public ObjectList<String> getMuted() {
 		return muted;
 	}
 	
 	/**
 	 * @return the ranks
 	 */
-	public Map<String, ClanChatRank> getRanked() {
+	public Object2ObjectArrayMap<String, ClanChatRank> getRanked() {
 		return ranks;
 	}
 	

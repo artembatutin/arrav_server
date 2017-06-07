@@ -2,6 +2,8 @@ package net.edge.content.minigame.warriorsguild.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
@@ -314,7 +316,7 @@ public final class CyclopsRoom extends GuildRoom {
 		 * @return the next {@link Defender} that should be obtained by the player.
 		 */
 		public static Defender getNext(Player player) {
-			List<Defender> col = new ArrayList<>();
+			ObjectList<Defender> col = new ObjectArrayList<>();
 
 			player.getEquipment().stream().filter(Objects::nonNull).filter(item -> getDefender(item.getId()).isPresent()).forEach(item -> col.add(getDefender(item.getId()).get()));
 			player.getInventory().stream().filter(Objects::nonNull).filter(item -> getDefender(item.getId()).isPresent()).forEach(item -> col.add(getDefender(item.getId()).get()));

@@ -1,12 +1,11 @@
 package net.edge.content.quest;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.edge.content.PlayerPanel;
 import net.edge.content.quest.impl.HalloweenQuest;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The manager class which is exclusive to each player.
@@ -22,7 +21,7 @@ public final class QuestManager {
 	/**
 	 * The list containing all the quests the player has started.
 	 */
-	private final Map<Quests, Quest> started_quests = new HashMap<>();
+	private final Object2ObjectOpenHashMap<Quests, Quest> started_quests = new Object2ObjectOpenHashMap<>();
 
 	/**
 	 * Constructs a new {@link QuestManager}.
@@ -139,7 +138,7 @@ public final class QuestManager {
 	/**
 	 * @return {@link #started_quests}.
 	 */
-	public Map<Quests, Quest> getStartedQuests() {
+	public Object2ObjectOpenHashMap<Quests, Quest> getStartedQuests() {
 		return started_quests;
 	}
 

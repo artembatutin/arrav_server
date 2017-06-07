@@ -2,6 +2,8 @@ package net.edge.content.minigame.warriorsguild.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.content.combat.CombatType;
 import net.edge.content.dialogue.impl.StatementDialogue;
@@ -174,7 +176,7 @@ public final class AnimationRoom extends GuildRoom {
 		if(!armour.isPresent()) {
 			return;
 		}
-		List<ItemNode> items = new ArrayList<>();
+		ObjectList<ItemNode> items = new ObjectArrayList<>();
 		Arrays.stream(armour.get().data.set).forEach(item -> items.add(new ItemNode(item, armour.get().getPosition(), player)));
 		if(tokens) {
 			items.add(new ItemNode(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), armour.get().data.tokens), armour.get().getPosition(), player));

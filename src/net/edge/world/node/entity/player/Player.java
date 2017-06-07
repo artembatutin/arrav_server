@@ -1,5 +1,7 @@
 package net.edge.world.node.entity.player;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.Server;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
@@ -202,12 +204,12 @@ public final class Player extends EntityNode {
 	/**
 	 * The array determining which quick prayers id are stored.
 	 */
-	private final List<Prayer> quickPrayers = new ArrayList<>();
+	private final ObjectList<Prayer> quickPrayers = new ObjectArrayList<>();
 	
 	/**
 	 * The array determining which quick prayers id are selected on the interface.
 	 */
-	private final List<Prayer> selectedQuickPrayers = new ArrayList<>();
+	private final ObjectList<Prayer> selectedQuickPrayers = new ObjectArrayList<>();
 	
 	/**
 	 * Represents the class that holds functionality regarding completing agility obstacle laps.

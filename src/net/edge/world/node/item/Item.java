@@ -1,10 +1,9 @@
 package net.edge.world.node.item;
 
 import com.google.common.collect.Iterables;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.market.MarketItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The container class that represents an item that can be interacted with.
@@ -114,7 +113,7 @@ public final class Item {
 	 * @return the Integer array containing the values from the item array.
 	 */
 	public static final int[] convert(Item... ids) {
-		List<Integer> values = new ArrayList<>();
+		ObjectList<Integer> values = new ObjectArrayList<>();
 		for(Item identifier : ids) {
 			values.add(identifier.getId());
 		}
@@ -127,7 +126,7 @@ public final class Item {
 	 * @return the item array containing the values from the int array.
 	 */
 	public static final Item[] convert(int... id) {
-		List<Item> items = new ArrayList<>();
+		ObjectList<Item> items = new ObjectArrayList<>();
 		for(int identifier : id) {
 			items.add(new Item(identifier));
 		}

@@ -1,12 +1,13 @@
 package net.edge.content.dialogue;
 
 import com.google.common.collect.Iterables;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.ActionListener;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.world.node.entity.player.Player;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public final class DialogueBuilder {
 	/**
 	 * The list of all our dialogues for this conversation.
 	 */
-	private final List<Dialogue> chain = new ArrayList<>();
+	private final ObjectList<Dialogue> chain = new ObjectArrayList<>();
 	
 	/**
 	 * The position we're at in this chain.

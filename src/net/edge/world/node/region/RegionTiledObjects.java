@@ -1,9 +1,8 @@
 package net.edge.world.node.region;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.object.ObjectNode;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static net.edge.world.object.ObjectGroup.INTERACTABLE_OBJECT;
 import static net.edge.world.object.ObjectGroup.WALL;
@@ -34,8 +33,8 @@ public class RegionTiledObjects {
 		}
 	}
 	
-	public List<ObjectNode> getDynamic() {
-		List<ObjectNode> list = new ArrayList<>();
+	public ObjectList<ObjectNode> getDynamic() {
+		ObjectList<ObjectNode> list = new ObjectArrayList<>();
 		for(ObjectNode o : objects) {
 			if(o != null && o.isDynamic())
 				list.add(o);
@@ -43,8 +42,8 @@ public class RegionTiledObjects {
 		return list;
 	}
 	
-	public List<ObjectNode> getStatic() {
-		List<ObjectNode> list = new ArrayList<>();
+	public ObjectList<ObjectNode> getStatic() {
+		ObjectList<ObjectNode> list = new ObjectArrayList<>();
 		for(ObjectNode o : objects) {
 			if(o != null && !o.isDynamic())
 				list.add(o);
@@ -52,8 +51,8 @@ public class RegionTiledObjects {
 		return list;
 	}
 	
-	public List<ObjectNode> getInteract() {
-		List<ObjectNode> list = new ArrayList<>();
+	public ObjectList<ObjectNode> getInteract() {
+		ObjectList<ObjectNode> list = new ObjectArrayList<>();
 		for(ObjectNode o : objects) {
 			if(o != null && (o.getObjectType().getGroup() == INTERACTABLE_OBJECT || o.getObjectType().getGroup() == WALL))
 				list.add(o);
@@ -61,8 +60,8 @@ public class RegionTiledObjects {
 		return list;
 	}
 	
-	public List<ObjectNode> getAll() {
-		List<ObjectNode> list = new ArrayList<>();
+	public ObjectList<ObjectNode> getAll() {
+		ObjectList<ObjectNode> list = new ObjectArrayList<>();
 		for(ObjectNode o : objects) {
 			if(o != null)
 				list.add(o);

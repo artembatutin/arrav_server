@@ -1,12 +1,11 @@
 package net.edge.content.market;
 
 import com.google.gson.Gson;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.edge.util.json.JsonSaver;
 import net.edge.content.market.exchange.personal.PlayerCounter;
 import net.edge.world.node.entity.player.Player;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Controls all the Avarrockian market.
@@ -14,14 +13,14 @@ import java.util.Map;
 public class MarketCounter {
 	
 	/**
-	 * All cached player counters.
+	 * All cached world shop.
 	 */
-	private static final Map<Integer, MarketShop> SHOPS = new HashMap<>();
+	private static final Int2ObjectArrayMap<MarketShop> SHOPS = new Int2ObjectArrayMap<>();
 	
 	/**
 	 * All cached player counters.
 	 */
-	private static final Map<String, PlayerCounter> COUNTERS = new HashMap<>();
+	private static final Object2ObjectOpenHashMap<String, PlayerCounter> COUNTERS = new Object2ObjectOpenHashMap<>();
 	
 	/**
 	 * Gets the player specific counter.
@@ -56,11 +55,11 @@ public class MarketCounter {
 		item_values_saver.publish("./data/json/items/market_shops2.json");
 	}
 	
-	public static Map<Integer, MarketShop> getShops() {
+	public static Int2ObjectArrayMap<MarketShop> getShops() {
 		return SHOPS;
 	}
 	
-	public static Map<String, PlayerCounter> getCounters() {
+	public static Object2ObjectOpenHashMap<String, PlayerCounter> getCounters() {
 		return COUNTERS;
 	}
 }

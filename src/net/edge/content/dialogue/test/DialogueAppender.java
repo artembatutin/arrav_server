@@ -1,10 +1,11 @@
 package net.edge.content.dialogue.test;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.DialogueBuilder;
 import net.edge.world.node.entity.player.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public final class DialogueAppender {
 	/**
 	 * The list of dialogues to send.
 	 */
-	private final List<Dialogue> dialogues = new ArrayList<>();
+	private final ObjectList<Dialogue> dialogues = new ObjectArrayList<>();
 	
 	/**
 	 * Constructs a new {@link DialogueAppender}.

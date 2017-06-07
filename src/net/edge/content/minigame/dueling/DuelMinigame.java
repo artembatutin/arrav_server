@@ -1,5 +1,7 @@
 package net.edge.content.minigame.dueling;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.util.log.Log;
 import net.edge.util.log.impl.DuelLog;
@@ -21,9 +23,7 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -150,7 +150,7 @@ public final class DuelMinigame extends Minigame {
 		
 		if(rules.contains(DuelingRules.NO_MOVEMENT)) {
 			player.move(DEFAULT_ARENA_CHECK.random());
-			List<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), other.size());
+			ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), other.size());
 			if(pos.size() > 0) {
 				Position p = RandomUtils.random(pos);
 				other.move(p);
@@ -195,7 +195,7 @@ public final class DuelMinigame extends Minigame {
 		}
 		claim = false;
 		
-		List<Item> items = new ArrayList<>();
+		ObjectList<Item> items = new ObjectArrayList<>();
 		session.getPlayers().forEach(p -> {
 			session.getExchangeSession().get(p).forEach(items::add);
 			session.getExchangeSession().get(p).clear();

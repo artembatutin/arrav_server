@@ -1,5 +1,6 @@
 package net.edge.content.skill.summoning.familiar;
 
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.packet.PacketWriter;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
@@ -101,7 +102,7 @@ public abstract class Familiar extends Follower {
 	public void summon(Player player, boolean login) {
 		/* Checks if the familiar is a large npc. */
 		boolean isLarge = size() > 1;
-		List<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), size());
+		ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), size());
 		if(!pos.isEmpty()) {
 			Position p = RandomUtils.random(pos);
 			this.setPosition(p);

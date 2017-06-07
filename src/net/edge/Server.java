@@ -150,7 +150,6 @@ public final class Server {
 					PlayerPanel.STAFF_ONLINE.refreshAll("@or2@ - Staff online: @yel@" + World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff()).size());
 					
 					LocalDate date = LocalDate.now();
-					
 					ScoreboardManager score = World.getScoreboardManager();
 					if(date.getDayOfWeek().equals(DayOfWeek.MONDAY) && !score.isResetPlayerScoreboardStatistic()) {
 						score.resetPlayerScoreboard();
@@ -241,7 +240,7 @@ public final class Server {
 					List<CombatStrategy> s = Utility.getClassesInDirectory(CombatStrategy.class.getPackage().getName() + "." + directory).stream().map(clazz -> (CombatStrategy) clazz).collect(Collectors.toList());
 					s.forEach(c -> {
 						for(int n : c.getNpcs()) {
-							Combat.DEFAULT_STRATEGIES.put(n, c);
+							Combat.DEFAULT_STRATEGIES.add(c);
 						}
 					});
 				} catch(Exception e) {

@@ -1,6 +1,10 @@
 package net.edge.world.node.entity.npc.drop;
 
 import com.google.gson.Gson;
+import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.json.JsonSaver;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
@@ -17,7 +21,7 @@ import java.util.*;
  */
 public final class NpcDropManager {
 	
-	public static final NpcDropTable DEFAULT = new NpcDropTable(new NpcDrop[]{}, new NpcDropCache[]{NpcDropCache.CASKETS, NpcDropCache.HERB_SEEDS, NpcDropCache.FLOWER_SEEDS, NpcDropCache.ALLOTMENT_SEEDS, NpcDropCache.CHARMS, NpcDropCache.LOW_RUNES, NpcDropCache.LOW_GEMS, NpcDropCache.LOW_EQUIPMENT, NpcDropCache.LOW_RESOURCES});
+	static final NpcDropTable DEFAULT = new NpcDropTable(new NpcDrop[]{}, new NpcDropCache[]{NpcDropCache.CASKETS, NpcDropCache.HERB_SEEDS, NpcDropCache.FLOWER_SEEDS, NpcDropCache.ALLOTMENT_SEEDS, NpcDropCache.CHARMS, NpcDropCache.LOW_RUNES, NpcDropCache.LOW_GEMS, NpcDropCache.LOW_EQUIPMENT, NpcDropCache.LOW_RESOURCES});
 	
 	/**
 	 * The {@link EnumMap} consisting of the cached common {@link NpcDrop}s used
@@ -28,12 +32,12 @@ public final class NpcDropManager {
 	/**
 	 * The {@link HashMap} that consists of the drops for {@link Npc}s.
 	 */
-	public final static Map<Integer, NpcDropTable> TABLES = new HashMap<>();
+	public final static Int2ObjectOpenHashMap<NpcDropTable> TABLES = new Int2ObjectOpenHashMap<>();
 	
 	/**
-	 * Npc redirects.
+	 * Npc sharing the same table drop redirects.
 	 */
-	public final static Map<Integer, Integer> REDIRECTS = new HashMap<>();
+	public final static Int2IntArrayMap REDIRECTS = new Int2IntArrayMap();
 	
 	/**
 	 * Drops the items in {@code victim}s drop table for {@code killer}. If the
@@ -54,7 +58,7 @@ public final class NpcDropManager {
 		}
 	}
 	
-	public static Map<Integer, NpcDropTable> getTables() {
+	public static Int2ObjectOpenHashMap<NpcDropTable> getTables() {
 		return TABLES;
 	}
 	
@@ -69,7 +73,7 @@ public final class NpcDropManager {
 			NpcDropTable table = TABLES.get(id);
 			if(table == null)
 				continue;
-			List<Integer> redirects = new ArrayList<>();
+			ObjectList<Integer> redirects = new ObjectArrayList<>();
 			redirects.add(id);
 			REDIRECTS.forEach((i, r) -> {
 				if(r == id) {

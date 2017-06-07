@@ -1,6 +1,8 @@
 package net.edge.world.node.entity.player;
 
 import com.google.common.collect.Ordering;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.rand.RandomUtils;
 import net.edge.game.GameConstants;
 import net.edge.content.PlayerPanel;
@@ -29,8 +31,6 @@ import net.edge.world.node.item.ItemNode;
 import net.edge.world.node.region.Region;
 
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -240,8 +240,8 @@ public final class PlayerDeath extends EntityDeath<Player> {
 	 * @param dropAll   indicates no-items will be kept except the untradables.
 	 */
 	private void calculateDropItems(Player character, Optional<Player> killer, boolean dropAll) {
-		List<Item> keep = new LinkedList<>();
-		List<Item> items = new LinkedList<>();
+		ObjectList<Item> keep = new ObjectArrayList<>();
+		ObjectList<Item> items = new ObjectArrayList<>();
 		Region region = character.getRegion();
 		killer.ifPresent(player -> items.add(new Item(19000, RandomUtils.inclusive(10, 50) * (GameConstants.DOUBLE_BLOOD_MONEY_EVENT ? 2 : 1))));
 		character.getEquipment().forEach($it -> {

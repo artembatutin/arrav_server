@@ -1,6 +1,6 @@
 package net.edge.world.node.region;
 
-import java.util.HashMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import java.util.Map;
 
 /**
@@ -13,7 +13,7 @@ public class RegionDefinition {
 	/**
 	 * The region definitions.
 	 */
-	private final static Map<Integer, RegionDefinition> DEFINITIONS = new HashMap<>();
+	private final static Int2ObjectOpenHashMap<RegionDefinition> DEFINITIONS = new Int2ObjectOpenHashMap<>();
 	
 	/**
 	 * The hash of the region coordinates.

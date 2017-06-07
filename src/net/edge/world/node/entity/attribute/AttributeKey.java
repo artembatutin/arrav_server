@@ -1,6 +1,7 @@
 package net.edge.world.node.entity.attribute;
 
 import com.google.common.base.MoreObjects;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.minigame.rfd.RFDData;
 import net.edge.content.skill.cooking.CookingData;
@@ -14,7 +15,6 @@ import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectType;
 
 import java.util.IdentityHashMap;
-import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
@@ -36,7 +36,7 @@ public final class AttributeKey<T> {
 	 * An {@link IdentityHashMap} of {@link String} keys mapped to their {@code AttributeKey} aliases. All {@code String}s
 	 * added to this tool.mapviewer are forcibly interned so we can compare them by their identity for faster performance.
 	 */
-	public static final Map<String, AttributeKey> ALIASES = new IdentityHashMap<>();
+	public static final Object2ObjectArrayMap<String, AttributeKey> ALIASES = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * Aliases all attributes that will be used while Main is online. This is called eagerly on startup.

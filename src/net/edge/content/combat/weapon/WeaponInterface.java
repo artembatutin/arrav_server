@@ -1,12 +1,10 @@
 package net.edge.content.combat.weapon;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.content.TabInterface;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The enumerated type whose elements represent the weapon interfaces.
@@ -69,7 +67,7 @@ public enum WeaponInterface {
 	/**
 	 * The hash collection of weapon interfaces.
 	 */
-	public static final Map<Integer, WeaponInterface> INTERFACES = new HashMap<>();
+	public static final Int2ObjectArrayMap<WeaponInterface> INTERFACES = new Int2ObjectArrayMap<>();
 	
 	/**
 	 * The identification of the interface that will be displayed.

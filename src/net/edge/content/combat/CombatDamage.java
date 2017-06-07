@@ -1,13 +1,12 @@
 package net.edge.content.combat;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.edge.util.Stopwatch;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -20,9 +19,9 @@ import java.util.concurrent.TimeUnit;
 public final class CombatDamage {
 	
 	/**
-	 * The tool.mapviewer of players who have inflicted damage.
+	 * The damages of players who have inflicted damage.
 	 */
-	private final Map<EntityNode, DamageCounter> attackers = new HashMap<>();
+	private final Object2ObjectOpenHashMap<EntityNode, DamageCounter> attackers = new Object2ObjectOpenHashMap<>();
 	
 	/**
 	 * Registers damage in the backing collection for {@code character}. This

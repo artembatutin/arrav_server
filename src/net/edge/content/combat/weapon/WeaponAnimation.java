@@ -1,10 +1,8 @@
 package net.edge.content.combat.weapon;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The container class that represents one equipment animation that is used with
@@ -16,7 +14,7 @@ public final class WeaponAnimation {
 	/**
 	 * The hash collection of weapon animations.
 	 */
-	public static final Map<Integer, WeaponAnimation> ANIMATIONS = new HashMap<>();
+	public static final Int2ObjectArrayMap<WeaponAnimation> ANIMATIONS = new Int2ObjectArrayMap<>();
 	
 	/**
 	 * The standing animation for this weapon.

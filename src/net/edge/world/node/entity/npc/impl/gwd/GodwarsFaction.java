@@ -2,6 +2,8 @@ package net.edge.world.node.entity.npc.impl.gwd;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.locale.Position;
@@ -11,9 +13,7 @@ import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -169,7 +169,7 @@ public enum GodwarsFaction {
 	 * @return {@code true} if the attack was successful, {@code false} otherwise.
 	 */
 	public static boolean attack(Npc npc) {
-		List<EntityNode> targets = getTargets(npc);
+		ObjectList<EntityNode> targets = getTargets(npc);
 		if(targets.isEmpty()) {
 			return false;
 		}
@@ -227,21 +227,18 @@ public enum GodwarsFaction {
 	 * @param npc the npc to retrieve the targets for.
 	 * @return a list of entities that can be attacked.
 	 */
-	private static List<EntityNode> getTargets(Npc npc) {
-		List<EntityNode> targets = new ArrayList<>();
-
+	private static ObjectList<EntityNode> getTargets(Npc npc) {
+		ObjectList<EntityNode> targets = new ObjectArrayList<>();
 		World.get().getLocalNpcs(npc).forEachRemaining(n -> {
 			if(n != null && canAttack(npc, n)) {
 				targets.add(n);
 			}
 		});
-
 		World.get().getLocalPlayers(npc).forEachRemaining(p -> {
 			if(p != null && canAttack(npc, p)) {
 				targets.add(p);
 			}
 		});
-
 		return targets;
 	}
 

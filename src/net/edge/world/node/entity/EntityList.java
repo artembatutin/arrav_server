@@ -1,5 +1,7 @@
 package net.edge.world.node.entity;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.database.connection.use.Hiscores;
 import net.edge.content.PlayerPanel;
 import net.edge.world.World;
@@ -56,15 +58,23 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 			this.list = list;
 		}
 		
+		public void reset() {
+			current = 0;
+		}
+		
 		@Override
 		public boolean hasNext() {
+			//Looking for a not nulled
 			int index = current;
-			// return true iff there is a non-null element within the list
+			int out = 200;
 			while (index <= list.size()) {
 				E mob = list.entities[index++];
 				if (mob != null) {
 					return true;
 				}
+				if(out == 0)
+					return false;
+				out--;
 			}
 			return false;
 		}
@@ -78,7 +88,8 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 					return mob;
 				}
 			}
-			throw new NoSuchElementException("There are no more elements!");
+			return null;
+			//throw new NoSuchElementException("There are no more elements!");
 		}
 		
 		@Override
@@ -127,6 +138,10 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 		return new EntityListIterator<>(this);
 	}
 	
+	public EntityListIterator<E> entityIterator() {
+		return new EntityListIterator<>(this);
+	}
+	
 	/**
 	 * Finds the first element that matches {@code filter}.
 	 * @param filter The filter to apply to the elements of this sequence.
@@ -164,8 +179,8 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * @param filter The filter to apply to the elements of this sequence.
 	 * @return An {@link ArrayList} containing the elements.
 	 */
-	public List<E> findAll(Predicate<? super E> filter) {
-		List<E> list = new ArrayList<>();
+	public ObjectList<E> findAll(Predicate<? super E> filter) {
+		ObjectList<E> list = new ObjectArrayList<>();
 		for(E e : this) {
 			if(filter.test(e)) {
 				list.add(e);

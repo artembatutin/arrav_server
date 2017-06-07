@@ -1,5 +1,7 @@
 package net.edge.content.combat.special;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.EntityNode;
@@ -9,8 +11,6 @@ import net.edge.world.Hit;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,7 +26,7 @@ class KorasiChain extends Task {
 	/**
 	 * The entities being already hitted by the lightning.
 	 */
-	private List<EntityNode> hitted = new ArrayList<>();
+	private ObjectList<EntityNode> hitted = new ObjectArrayList<>();
 	
 	/**
 	 * The chained damage in the korasi hits.

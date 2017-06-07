@@ -1,9 +1,8 @@
 package net.edge.world;
 
 import com.google.common.collect.Iterables;
-
-import java.util.ArrayList;
-import java.util.List;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 /**
  * The container class that represents an animation.
@@ -81,7 +80,7 @@ public final class Animation {
 	 * @return the animation array containing the values from the int array.
 	 */
 	public static Animation[] convert(int... id) {
-		List<Animation> animations = new ArrayList<>();
+		ObjectList<Animation> animations = new ObjectArrayList<>();
 		for(int identifier : id) {
 			animations.add(new Animation(identifier));
 		}

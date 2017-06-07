@@ -1,6 +1,5 @@
 package net.edge.content;
 
-import com.google.common.collect.ImmutableMap;
 import net.edge.event.impl.ItemEvent;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.util.rand.RandomUtils;
@@ -12,10 +11,6 @@ import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 /**
  * The class which is responsible for dicing actions.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -25,7 +20,7 @@ public final class Dice {
 	/**
 	 * Attempts to roll the dice.
 	 * @param player   the player rolling the dice.
-	 * @param itemId   the item interacted with.
+	 * @param data   the dice data.
 	 * @param clanchat determines if this roll is in the clan chat.
 	 * @return {@code true} if the dice was rolled, {@code false} otherwise.
 	 */
@@ -158,8 +153,6 @@ public final class Dice {
 		DIE_20_SIDED(15096, 2068, 20, "20-sided die"),
 		DICE_2_6_SIDED(15088, 2074, 26, "2-, 6-sided dice"),
 		DICE_100(15098, 2075, 100, "percentile dice");
-		
-		private static final ImmutableMap<Integer, DiceData> VALUES = ImmutableMap.copyOf(Stream.of(values()).collect(Collectors.toMap(t -> t.item.getId(), Function.identity())));
 		
 		/**
 		 * The item this dice represents.

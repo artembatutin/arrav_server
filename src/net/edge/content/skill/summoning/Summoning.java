@@ -1,6 +1,7 @@
 package net.edge.content.skill.summoning;
 
 import com.google.common.collect.ImmutableList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.pets.Pet;
@@ -47,7 +48,7 @@ public final class Summoning {
 			//pet is already close enough.
 			return;
 		}
-		List<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), pet.size());
+		ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), pet.size());
 		if(pos.size() > 0) {
 			Position p = RandomUtils.random(pos);
 			pet.move(p);
@@ -59,19 +60,16 @@ public final class Summoning {
 	 * @param player the player to call the familiar for.
 	 */
 	public static void callFamiliar(Player player) {
-		Optional<Familiar> has_familiar = player.getFamiliar();
-		
-		if(!has_familiar.isPresent()) {
+		if(!player.getFamiliar().isPresent()) {
 			return;
 		}
-		
 		Familiar familiar = player.getFamiliar().get();
 		
 		if(familiar.getPosition().withinDistance(player.getPosition(), 3)) {
 			//familiar is already close enough.
 			return;
 		}
-		List<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), familiar.size());
+		ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), familiar.size());
 		if(pos.size() > 0) {
 			Position p = RandomUtils.random(pos);
 			familiar.move(p);

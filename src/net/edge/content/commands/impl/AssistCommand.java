@@ -19,8 +19,12 @@ public final class AssistCommand implements Command {
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player assisted = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(assisted != null && assisted != player) {
-			Optional<Position> pos = World.getTraversalMap().getNearbyTraversableTiles(assisted.getPosition(), 1).stream().findAny();
-			player.move(pos.orElse(assisted.getPosition()));
+			Position pos = World.getTraversalMap().getRandomNearby(assisted.getPosition(), player.getPosition(), 1);
+			if(pos != null) {
+				player.move(pos);
+			} else {
+				player.move(assisted.getPosition());
+			}
 			player.forceChat("Hello, my name is " + player.getFormatUsername() + ", I'm here to assist you.");
 		}
 	}

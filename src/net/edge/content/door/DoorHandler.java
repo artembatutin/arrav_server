@@ -1,12 +1,11 @@
 package net.edge.content.door;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectDefinition;
 import net.edge.world.object.ObjectNode;
-
-import java.util.HashMap;
 
 import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.DOOR;
 
@@ -19,7 +18,7 @@ public class DoorHandler {
 	/**
 	 * The list of doors
 	 */
-	private static HashMap<Position, SimpleDoor> doors = new HashMap<>();
+	private static Object2ObjectArrayMap<Position, SimpleDoor> doors = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * The door appender event.

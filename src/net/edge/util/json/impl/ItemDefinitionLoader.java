@@ -4,13 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
 import net.edge.content.container.impl.EquipmentType;
-import net.edge.util.json.JsonSaver;
-import net.edge.world.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.node.item.ItemDefinition;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
