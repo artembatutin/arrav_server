@@ -503,19 +503,10 @@ public enum CombatRangedAmmoDefinition {
 				return data;
 			}
 			
-			if(player.getCurrentHealth() == 4) {
-				return data;
-			}
-			
-			int baseHit = data.getHits()[0].getDamage();
-			
-			if(baseHit < 1) {
-				return data;
-			}
-			
-			int multiplier = (int) (victim.getCurrentHealth() * 1.20);
-			
-			data.getHits()[0].setDamage(baseHit * multiplier);
+			int damage = (int) (victim.getCurrentHealth() * 1.20);
+			int inflict = (int) (player.getCurrentHealth() * 0.10);
+			player.damage(new Hit(inflict, HitType.NORMAL, HitIcon.DEFLECT));
+			data.getHits()[0].setDamage(damage);
 			victim.graphic(new Graphic(754, 0, 20));
 			return data;
 		}

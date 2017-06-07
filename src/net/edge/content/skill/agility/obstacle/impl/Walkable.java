@@ -29,7 +29,6 @@ public class Walkable extends ObstacleActivity {
 	
 	@Override
 	public boolean canExecute(Player player) {
-		
 		return true;
 	}
 	
@@ -37,7 +36,6 @@ public class Walkable extends ObstacleActivity {
 	public void onSubmit(Player player) {
 		int animation = getAnimation().getId();
 		if(player.getPosition().same(getStart())) {
-			player.message("same");
 			player.setWalkIndex(animation);
 			player.setRunIndex(animation);
 			player.setStandIndex(animation);
@@ -60,7 +58,6 @@ public class Walkable extends ObstacleActivity {
 				player.setTurnIndex(animation);
 				player.getFlags().flag(UpdateFlag.APPEARANCE);
 				player.getMovementQueue().walk(getDestination());
-				player.message("walking");
 			});
 			sequence.start();
 		}
