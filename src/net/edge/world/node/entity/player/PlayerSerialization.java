@@ -18,7 +18,6 @@ import net.edge.content.skill.summoning.Summoning;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.locale.Position;
-import net.edge.net.codec.login.LoginRequest;
 import net.edge.net.codec.login.LoginResponse;
 import net.edge.util.json.GsonUtils;
 import net.edge.world.World;
@@ -284,15 +283,26 @@ public final class PlayerSerialization {
 		public void fromJson(Gson b, Player p, JsonElement n) {
 			p.setNight(n.getAsInt());
 		}
+	}, new Token("totalVotes") {
+
+		@Override
+		public Object toJson(Player p) {
+			return p.getTotalVotes();
+		}
+
+		@Override
+		public void fromJson(Gson b, Player p, JsonElement n) {
+			p.setTotalVotes(n.getAsInt());
+		}
 	}, new Token("vote") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getVote();
+			return p.getVotePoints();
 		}
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setVote(n.getAsInt());
+			p.setVotePoints(n.getAsInt());
 		}
 	}, new Token("clan") {
 		@Override

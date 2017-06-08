@@ -4,13 +4,8 @@ import com.motiservice.vote.Result;
 import com.motiservice.vote.SearchField;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
-import net.edge.locale.Position;
-import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.item.Item;
-
-import java.util.Optional;
 
 /**
  * The assist command for staff members.
@@ -29,7 +24,8 @@ public final class RedeemCommand implements Command {
 		Result r2 = platform.redeem(SearchField.USER_NAME, player.getUsername());
 		if (r2.success()) {
 			int total = r2.votes().size();
-			player.setVote(player.getVote() + total);
+			player.setVotePoints(player.getVotePoints() + total);
+			player.setTotalVotes(player.getTotalVotes() + total);
 		} else {
 			player.message("Nothing found, you can vote by clicking the link in the quest tab.");
 		}

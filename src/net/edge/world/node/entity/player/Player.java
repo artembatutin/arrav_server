@@ -104,12 +104,17 @@ public final class Player extends EntityNode {
 	 * 2 - nightmare maxed
 	 */
 	private int nightMode;
-	
+
+	/**
+	 * The total amount of times this player has voted.
+	 */
+	private int totalVotes;
+
 	/**
 	 * Player's voting points.
 	 */
-	private int vote;
-	
+	private int votePoints;
+
 	/**
 	 * The hash collection of the local players.
 	 */
@@ -1006,22 +1011,39 @@ public final class Player extends EntityNode {
 		this.nightMode = value;
 		PlayerPanel.NIGHT.refresh(this, "@or2@ - Nightmare: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
 	}
-	
+
+	/**
+	 * Gets the total amount of times this player has voted.
+	 * @return total amount of votes.
+	 */
+	public int getTotalVotes() {
+		return totalVotes;
+	}
+
+	/**
+	 * Sets the total amount of times this player has voted.
+	 * @param vote	the amount to set.
+	 */
+	public void setTotalVotes(int vote) {
+		this.totalVotes = vote;
+		PlayerPanel.TOTAL_VOTES.refresh(this, "@or@ - Total votes: @yel@" + this.getTotalVotes());
+	}
+
 	/**
 	 * Gets the amount of vote points this player has.
 	 * @return votes
 	 */
-	public int getVote() {
-		return vote;
+	public int getVotePoints() {
+		return votePoints;
 	}
 	
 	/**
 	 * Sets the vote point amount for this player.
 	 * @param vote
 	 */
-	public void setVote(int vote) {
-		this.vote = vote;
-		PlayerPanel.VOTE.refresh(this, "@or2@ - vote: @yel@" + vote + " points");
+	public void setVotePoints(int vote) {
+		this.votePoints = vote;
+		PlayerPanel.VOTE.refresh(this, "@or2@ - Vote points: @yel@" + this.getVotePoints() + " points");
 	}
 	
 	/**

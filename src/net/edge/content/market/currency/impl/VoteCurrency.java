@@ -12,8 +12,8 @@ public final class VoteCurrency implements GeneralCurrency {
 
 	@Override
 	public boolean takeCurrency(Player player, int amount) {
-		if(player.getVote() >= amount) {
-			player.setVote(player.getVote()-amount);
+		if(player.getVotePoints() >= amount) {
+			player.setVotePoints(player.getVotePoints()-amount);
 			return true;
 		} else {
 			player.message("You do not have enough voting points.");
@@ -23,13 +23,13 @@ public final class VoteCurrency implements GeneralCurrency {
 
 	@Override
 	public void recieveCurrency(Player player, int amount) {
-		player.setVote(player.getVote()+amount);
+		player.setVotePoints(player.getVotePoints()+amount);
 		player.message("You received " + amount + " voting points!");
 	}
 
 	@Override
 	public int currencyAmount(Player player) {
-		return player.getVote();
+		return player.getVotePoints();
 	}
 
 	@Override
