@@ -6,6 +6,7 @@ import net.edge.world.World;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
 import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.PlayerSerialization;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -22,7 +23,7 @@ public final class GameShutdownHook extends Thread {
 	public void run() {
 		try {
 			for(Player p : World.get().getPlayers()) {
-				World.get().getExecutor().savePlayer(p);
+				new PlayerSerialization(p).serialize();
 			}
 			World.getClanManager().save();
 			World.getScoreboardManager().serializeIndividualScoreboard();

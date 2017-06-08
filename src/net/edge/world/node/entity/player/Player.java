@@ -267,11 +267,6 @@ public final class Player extends EntityNode {
 	private boolean muted;
 	
 	/**
-	 * The validation flag of this player.
-	 */
-	private boolean validated;
-	
-	/**
 	 * The amount of authority this player has over others.
 	 */
 	private Rights rights = Rights.PLAYER;
@@ -872,7 +867,7 @@ public final class Player extends EntityNode {
 	 * Saves the character file for this player.
 	 */
 	private void save() {
-		World.get().getExecutor().savePlayer(this);
+		new PlayerSerialization(this).serialize();
 	}
 	
 	/**
@@ -1377,21 +1372,6 @@ public final class Player extends EntityNode {
 	 */
 	public void setBanned(boolean banned) {
 		this.banned = banned;
-	}
-	
-	/**
-	 * Returns the flag if the player has been validated.
-	 */
-	public boolean isValidated() {
-		return validated;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#validated}.
-	 * @param validated the new value to set.
-	 */
-	public boolean setValidated(boolean validated) {
-		return this.validated = validated;
 	}
 	
 	/**

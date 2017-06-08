@@ -77,7 +77,7 @@ public final class GameConstants {
 	/**
 	 * The items that are not allowed to be bought by shops.
 	 */
-	public static final int[] INVALID_SHOP_ITEMS = {995, 15246};
+	public static final int[] INVALID_SHOP_ITEMS = {995, 15246, 4067, 2996, 6529, 19000, 7478};
 	
 	/**
 	 * The message that will be sent on every login.

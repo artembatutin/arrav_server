@@ -1,2 +1,6 @@
 DROP[npc= 3408, id= 526, min= 1, max= 1, chance= ALWAYS]
 DROP[npc= 3408, id= 4151, min= 1, max= 1, chance= ALWAYS]
+DROP[npc= 14301, id= 453, min= 150, max= 150, chance= COMMON]
+DROP[npc= 941, id= 453, min= 10, max= 10, chance= COMMON]
+DROP[npc= 2883, id= 453, min= 100, max= 100, chance= COMMON]
+DROP[npc= 2881, id= 536, min= 20, max= 20, chance= COMMON]

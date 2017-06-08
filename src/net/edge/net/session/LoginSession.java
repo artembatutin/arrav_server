@@ -1,13 +1,13 @@
 package net.edge.net.session;
 
+import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import net.edge.net.NetworkConstants;
-import net.edge.net.PunishmentHandler;
 import net.edge.net.codec.game.GameMessageDecoder;
 import net.edge.net.codec.game.GameMessageEncoder;
-import net.edge.net.codec.login.LoginCredentialsMessage;
+import net.edge.net.codec.login.LoginRequest;
 import net.edge.net.codec.login.LoginResponse;
 import net.edge.net.codec.login.LoginResponseMessage;
 import net.edge.util.TextUtils;
@@ -15,7 +15,6 @@ import net.edge.game.GameConstants;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerSerialization;
-import net.edge.world.node.entity.player.assets.Rights;
 
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during login.
@@ -33,61 +32,84 @@ public final class LoginSession extends Session {
 	
 	@Override
 	public void handleUpstreamMessage(Object msg) throws Exception {
-		if(msg instanceof LoginCredentialsMessage) {
-			LoginCredentialsMessage credentials = (LoginCredentialsMessage) msg;
-			handleCredentials(credentials);
+		if(msg instanceof LoginRequest) {
+			LoginRequest request = (LoginRequest) msg;
+			handleRequest(request);
 		}
 	}
 	
 	/**
-	 * Loads the character file and sends the {@link LoginResponse} code to the client.
-	 * @param msg The message containing the credentials.
+	 * Handles a {@link LoginRequest}.
+	 * @param request The message containing the credentials.
 	 * @throws Exception If any errors occur while handling credentials.
 	 */
-	private void handleCredentials(LoginCredentialsMessage msg) throws Exception {
-		Player player = new Player(TextUtils.nameToHash(msg.getUsername()));
-		Channel channel = getChannel();
+	private void handleRequest(final LoginRequest request) throws Exception {
+		Player player = new Player(TextUtils.nameToHash(request.getUsername()));
 		LoginResponse response = LoginResponse.NORMAL;
+		Channel channel = getChannel();
 		
 		// Validate the username and password, change login response if needed
 		// for invalid credentials or the world being full.
-		boolean invalidCredentials = !msg.getUsername().matches("^[a-zA-Z0-9_ ]{1,12}$") || msg.getPassword().isEmpty() || msg.getPassword().length() > 20;
+		boolean invalidCredentials = !request.getUsername().matches("^[a-zA-Z0-9_ ]{1,12}$") || request.getPassword().isEmpty() || request.getPassword().length() > 20;
 		response = invalidCredentials ? LoginResponse.INVALID_CREDENTIALS : World.get().getPlayers().remaining() == 0 ? LoginResponse.WORLD_FULL : response;
 		
-		// If the login response is normal, deserialize the character file (or
-		// grab it from the Cache if it was recently serialized).
+		// Validating login before deserialization.
 		if(response == LoginResponse.NORMAL) {
-			player.setUsername(msg.getUsername().toLowerCase());
-			player.setPassword(msg.getPassword());
+			player.setUsername(request.getUsername().toLowerCase());
+			player.setPassword(request.getPassword());
 			if(World.get().getPlayer(player.getUsernameHash()).isPresent()) {
 				response = LoginResponse.ACCOUNT_ONLINE;
 			}
-			if(msg.getBuild() != GameConstants.CLIENT_BUILD) {
+			if(request.getBuild() != GameConstants.CLIENT_BUILD) {
 				response = LoginResponse.WRONG_BUILD_NUMBER;
 			}
 		}
 		
+		// Deserialization
+		PlayerSerialization.SerializeResponse serial = null;
 		if(response == LoginResponse.NORMAL) {
-			response = new PlayerSerialization(player).deserialize(msg.getPassword(), true);
+			serial = new PlayerSerialization(player).loginCheck(request.getPassword());
+			response = serial.getResponse();
 		}
-		player.setRights(PunishmentHandler.isLocal(getHost()) ? Rights.DEVELOPER : player.getRights());
 		
 		ChannelFuture future = channel.writeAndFlush(new LoginResponseMessage(response, player.getRights()));
 		if(response != LoginResponse.NORMAL) {
 			future.addListener(ChannelFutureListener.CLOSE);
 		} else {
+			final JsonObject reader = serial.getReader();
 			future.addListener(it -> {
-				msg.getPipeline().replace("login-encoder", "game-encoder", new GameMessageEncoder(msg.getEncryptor()));
-				msg.getPipeline().replace("login-decoder", "game-decoder", new GameMessageDecoder(msg.getDecryptor()));
+				request.getPipeline().replace("login-encoder", "game-encoder", new GameMessageEncoder(request.getEncryptor()));
+				request.getPipeline().replace("login-decoder", "game-decoder", new GameMessageDecoder(request.getDecryptor()));
 				
-				GameSession session = new GameSession(player, channel, msg.getEncryptor(), msg.getDecryptor());
+				GameSession session = new GameSession(player, channel, request.getEncryptor(), request.getDecryptor());
 				
 				channel.attr(NetworkConstants.SESSION_KEY).set(session);
 				player.setSession(session);
 				
-				new PlayerSerialization(player).deserialize(msg.getPassword(), false);
+				new PlayerSerialization(player).deserialize(reader);
 				World.get().queueLogin(player);
 			});
+		}
+	}
+	
+	public void handleResponse(Player player, LoginRequest request, LoginResponse response) {
+		System.out.println(player.getUsername() + " - " + response.toString());
+		Channel channel = getChannel();
+		channel.writeAndFlush(new LoginResponseMessage(response, player.getRights()));
+		
+		
+		if(response != LoginResponse.NORMAL) {
+			channel.close();
+		} else {
+			request.getPipeline().replace("login-encoder", "game-encoder", new GameMessageEncoder(request.getEncryptor()));
+			request.getPipeline().replace("login-decoder", "game-decoder", new GameMessageDecoder(request.getDecryptor()));
+			
+			GameSession session = new GameSession(player, channel, request.getEncryptor(), request.getDecryptor());
+			
+			channel.attr(NetworkConstants.SESSION_KEY).set(session);
+			player.setSession(session);
+			
+			World.get().queueLogin(player);
 		}
 	}
 	

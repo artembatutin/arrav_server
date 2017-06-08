@@ -180,8 +180,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		} else if(ava_collector) {
 			boolean droppable = !weapon.getType().isSpecialBow() && CombatRangedAmmoDefinition.NON_DROPPABLE.stream().noneMatch(weapon.getAmmunition().getDefinition()::equals);
 			if(weapon.getAmmunition().getItem().getAmount() > 0 && droppable && RandomUtils.nextBoolean()) {
-				int cape = player.getEquipment().get(Equipment.CAPE_SLOT).getId();
-				double chance = cape == 10498 ? 0.25 : cape == 10499 ? 0.50 : 0.75;
+				double chance = cape.getId() == 10498 ? 0.25 : cape.getId() == 10499 ? 0.50 : 0.75;
 				collected = RandomUtils.success(chance);
 			}
 		}

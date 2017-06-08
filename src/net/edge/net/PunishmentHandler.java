@@ -76,17 +76,15 @@ public final class PunishmentHandler {
 		if(PunishmentHandler.isLocal(host)) {
 			return;
 		}
-		World.get().getExecutor().submit(() -> {
-			if(IP_BANNED.contains(host))
-				return;
-			try(FileWriter out = new FileWriter(Paths.get("./data/", "banned_ips.txt").toFile(), true)) {
-				out.write(host + "|" + username);
-				out.write(System.getProperty("line.separator"));
-				IP_BANNED.add(host);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-		});
+		if(IP_BANNED.contains(host))
+			return;
+		try(FileWriter out = new FileWriter(Paths.get("./data/", "banned_ips.txt").toFile(), true)) {
+			out.write(host + "|" + username);
+			out.write(System.getProperty("line.separator"));
+			IP_BANNED.add(host);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -98,17 +96,15 @@ public final class PunishmentHandler {
 	public static void addIPMute(String host, String username) {
 		if(PunishmentHandler.isLocal(host))
 			return;
-		World.get().getExecutor().submit(() -> {
-			if(IP_MUTED.contains(host))
-				return;
-			try(FileWriter out = new FileWriter(Paths.get("./data/", "muted_ips.txt").toFile(), true)) {
-				out.write(host + "|" + username);
-				out.write(System.getProperty("line.separator"));
-				IP_MUTED.add(host);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-		});
+		if(IP_MUTED.contains(host))
+			return;
+		try(FileWriter out = new FileWriter(Paths.get("./data/", "muted_ips.txt").toFile(), true)) {
+			out.write(host + "|" + username);
+			out.write(System.getProperty("line.separator"));
+			IP_MUTED.add(host);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -119,17 +115,15 @@ public final class PunishmentHandler {
 	public static void addStarter(String host) {
 		if(PunishmentHandler.isLocal(host))
 			return;
-		World.get().getExecutor().submit(() -> {
-			if(STARTERS.contains(host))
-				return;
-			try(FileWriter out = new FileWriter(Paths.get("./data/", "starters.txt").toFile(), true)) {
-				out.write(host);
-				out.write(System.getProperty("line.separator"));
-				STARTERS.add(host);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-		});
+		if(STARTERS.contains(host))
+			return;
+		try(FileWriter out = new FileWriter(Paths.get("./data/", "starters.txt").toFile(), true)) {
+			out.write(host);
+			out.write(System.getProperty("line.separator"));
+			STARTERS.add(host);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

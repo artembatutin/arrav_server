@@ -147,7 +147,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			
 			rsaBuffer.release();
 			
-			out.add(new LoginCredentialsMessage(username, password, build, encryptor, decryptor, ctx.channel().pipeline()));
+			out.add(new LoginRequest(username, password, build, encryptor, decryptor, ctx.channel().pipeline()));
 		}
 	}
 	

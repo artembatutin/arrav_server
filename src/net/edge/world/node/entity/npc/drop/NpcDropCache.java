@@ -28,8 +28,7 @@ public enum NpcDropCache {
 	CHARMS,
 	
 	/**
-	 * Contains only the basic elemental and combat runes, air, water, earth,
-	 * fire, mind, body, and chaos.
+	 * Contains only the basic elemental air, water, earth...
 	 */
 	LOW_RUNES,
 	
@@ -81,52 +80,6 @@ public enum NpcDropCache {
 	 * onyx gems in the highest possible quantities.
 	 */
 	HIGH_GEMS,
-	
-	/**
-	 * Contains lower level/useless equipment such as adamant armor, arrows, and
-	 * weapons.
-	 */
-	LOW_EQUIPMENT,
-	
-	/**
-	 * Contains medium level/useless equipment such as adamant armor, arrows, and
-	 * weapons.
-	 */
-	MED_EQUIPMENT,
-	
-	/**
-	 * Contains metal items varying from bronze to mithril equipment, weapons, throwing knifes,
-	 * darts and arrows.
-	 */
-	ADAMANT_EQUIPMENT,
-	
-	/**
-	 * Contains runite based equipment such as rune armor, weapons, throwing knifes,
-	 * darts and arrows.
-	 */
-	RUNE_EQUIPMENT,
-	
-	/**
-	 * Contains low level resources such as noted raw/cooked tuna, noted willow
-	 * logs, noted steel bars, coins, noted coal, noted iron ore, and low
-	 * quantities of pure essence.
-	 */
-	LOW_RESOURCES,
-	
-	/**
-	 * Contains medium level resources such as noted raw/cooked lobsters and
-	 * swordfish, noted willow/maple logs, noted mithril bars, coins, noted
-	 * coal, noted mithril ore, and decent amounts of pure essence.
-	 */
-	MED_RESOURCES,
-	
-	/**
-	 * Contains high level resources such as noted raw/cooked manta ray and
-	 * shark, noted yew and magic logs, adamant and noted rune bars, coins,
-	 * noted coal in high amounts, noted adamant and rune ore, very high amounts
-	 * of pure essence.
-	 */
-	HIGH_RESOURCES,
 	
 	/**
 	 * The rewarding caskets that are being dropped by several monster to

@@ -22,29 +22,30 @@ public enum Chance {
 	COMMON(new Rational(1, 4)),
 	
 	/**
-	 * Describing an {@code UNCOMMON} chance (10%, 1 in 10 chance).
+	 * Describing an {@code UNCOMMON} chance (20%, 2 in 10 chance).
 	 */
-	UNCOMMON(new Rational(1, 10)),
+	UNCOMMON(new Rational(2, 10)),
 	
 	/**
-	 * Describing an {@code VERY_UNCOMMON} chance (2.5%, 5 in 200 chance).
+	 * Describing an {@code VERY_UNCOMMON} chance (15%, 3 in 20 chance).
+	 * chance is now
 	 */
-	VERY_UNCOMMON(new Rational(5, 200)),
+	VERY_UNCOMMON(new Rational(3, 20)),
 	
 	/**
-	 * Describing an {@code RARE} chance (0.7%, 1 in 150 chance).
+	 * Describing an {@code RARE} chance (5%, 2 in 40 chance).
 	 */
-	RARE(new Rational(1, 150)),
+	RARE(new Rational(2, 40)),
 	
 	/**
-	 * Describing an {@code VERY_RARE} chance (0.3%, 1 in 300 chance).
+	 * Describing an {@code VERY_RARE} chance (2.5%, 1 in 40 chance).
 	 */
-	VERY_RARE(new Rational(1, 300)),
+	VERY_RARE(new Rational(1, 40)),
 	
 	/**
-	 * Describing an {@code VERY_RARE} chance (0.2%, 1 in 500 chance).
+	 * Describing an {@code VERY_RARE} chance (1%, 1 in 125 chance).
 	 */
-	EXTREMELY_RARE(new Rational(1, 500));
+	EXTREMELY_RARE(new Rational(1, 100));
 	
 	private final Rational rational;
 	

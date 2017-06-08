@@ -101,7 +101,7 @@ public final class Herb extends ProducingSkillAction {
 	 * The data required for processing the identifying of grimy herbs.
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
-	private enum GrimyHerb {
+	public enum GrimyHerb {
 		GUAM(1, 199, 249, 2.5),
 		ROGUESPURSE(3, 1533, 1534, 2.5),
 		SNAKEWEED(3, 1525, 1526, 2.5),

@@ -104,7 +104,7 @@ public final class Smelting extends ProducingSkillAction {
 	 * The array which holds all the possible furnace ids a player
 	 * can smelt his bars in.
 	 */
-	private static final int[] FURNACE_IDS = {26814, 37651, 11666};
+	private static final int[] FURNACE_IDS = {26814, 37651, 11666, 3044, 45047};
 	
 	/**
 	 * The array which holds all the frames you can draw an item on.

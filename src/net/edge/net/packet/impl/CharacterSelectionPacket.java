@@ -2,6 +2,7 @@ package net.edge.net.packet.impl;
 
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.packet.PacketReader;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerAppearance;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager.ActivityType;
@@ -54,4 +55,5 @@ public final class CharacterSelectionPacket implements PacketReader {
 		}
 		player.getActivityManager().execute(ActivityType.CHARACTER_SELECTION);
 	}
+	
 }

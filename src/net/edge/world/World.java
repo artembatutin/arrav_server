@@ -151,7 +151,7 @@ public final class World {
 		EntityList.EntityListIterator<Npc> ni = npcs.entityIterator();
 		EntityList.EntityListIterator<Player> pi = players.entityIterator();
 		
-		// Pre sync
+		// Pre synchronization
 		while((p = pi.next()) != null) {
 			try {
 				p.getSession().dequeue();
@@ -162,6 +162,7 @@ public final class World {
 				logger.log(Level.WARNING, "Couldn't pre sync player " + p.toString(), e);
 			}
 		}
+		pi.reset();
 		while((n = ni.next()) != null) {
 			if(n.isActive()) {
 				try {
@@ -172,8 +173,9 @@ public final class World {
 				}
 			}
 		}
+		ni.reset();
 		
-		// Sync
+		// Synchronization
 		while((p = pi.next()) != null) {
 			try {
 				p.getSession().queue(new PlayerUpdater().write(p));
@@ -183,16 +185,19 @@ public final class World {
 				logger.log(Level.WARNING, "Couldn't sync player " + p.toString(), e);
 			}
 		}
+		pi.reset();
 		
-		// Post sync
+		// Post synchronization
 		while((p = pi.next()) != null) {
 			p.getSession().flushQueue();
 			p.reset();
 			p.setCachedUpdateBlock(null);
 		}
+		pi.reset();
 		while((n = ni.next()) != null) {
 			n.reset();
 		}
+		ni.reset();
 		
 		// Region tick
 		regionalTick++;
@@ -200,7 +205,6 @@ public final class World {
 			for(Int2ObjectMap.Entry<Region> entry : World.getRegions().getRegions().int2ObjectEntrySet()) {
 				entry.getValue().sequence();
 			}
-			//World.getRegions().getRegions().forEach((i, it) -> it.sequence());
 			regionalTick = 0;
 		}
 		
@@ -217,8 +221,7 @@ public final class World {
 			}
 		}
 		
-		long millis = System.currentTimeMillis() - start;
-		System.out.println("tick: " + millis + " ms");
+		millis = System.currentTimeMillis() - start;
 	}
 	
 	/**

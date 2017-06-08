@@ -102,11 +102,8 @@ public final class CombatRangedDetails {
 		CombatRangedWeapon weapon = this.weapon.get();
 		
 		weapon.setId(weaponId);
-		
 		int slot = weapon.getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
-
 		Item ammunition = player.getEquipment().get(slot);
-		
 		if(ammunition == null) {
 			player.message("You don't have any ammunition to shoot with...");
 			player.getCombatBuilder().reset();
@@ -114,7 +111,6 @@ public final class CombatRangedDetails {
 		}
 		
 		CombatRangedAmmoDefinition def = determineAmmo(ammunition, weapon);
-		
 		if(def == null) {
 			player.message("You cannot use " + TextUtils.appendPluralCheck(ammunition.getDefinition().getName().toLowerCase()) + " with this ranged weapon.");
 			player.getCombatBuilder().reset();

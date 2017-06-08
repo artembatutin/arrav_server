@@ -8,7 +8,7 @@ import net.edge.net.codec.IsaacCipher;
  * The implementation that contains data used for the final portion of the login protocol.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public final class LoginCredentialsMessage {
+public final class LoginRequest {
 	
 	/**
 	 * The username of the player.
@@ -41,14 +41,14 @@ public final class LoginCredentialsMessage {
 	private final ChannelPipeline pipeline;
 	
 	/**
-	 * Creates a new {@link LoginCredentialsMessage}.
+	 * Creates a new {@link LoginRequest}.
 	 * @param username  the username of the player.
 	 * @param password  the password of the player.
 	 * @param build     the build number of the player connecting.
 	 * @param encryptor the encryptor for encrypting messages.
 	 * @param decryptor the decryptor for decrypting messages.
 	 */
-	LoginCredentialsMessage(String username, String password, int build, IsaacCipher encryptor, IsaacCipher decryptor, ChannelPipeline pipeline) {
+	LoginRequest(String username, String password, int build, IsaacCipher encryptor, IsaacCipher decryptor, ChannelPipeline pipeline) {
 		this.username = username;
 		this.password = password;
 		this.build = build;

@@ -121,23 +121,10 @@ public final class Server {
 			LOGGER.info("Main is being initialized...");
 			
 			bind();
-			initAsyncTasks();
+			initTasks();
 			launch.shutdown();
 			launch.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			CommandDispatcher.load();
-			for(String directory : Utility.getSubDirectories(EventInitializer.class)) {
-				try {
-					List<EventInitializer> s = Utility.getClassesInDirectory(EventInitializer.class.getPackage().getName() + "." + directory).stream().map(clazz -> (EventInitializer) clazz).collect(Collectors.toList());
-					s.forEach(EventInitializer::init);
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-			ButtonEvent.init();
-			ItemEvent.init();
-			NpcEvent.init();
-			ObjectEvent.init();
-			World.get().start();
+			prepare();
 			
 			World.getInstanceManager().close(0);
 			World.get().submit(World.getNpcMovementTask());
@@ -197,7 +184,7 @@ public final class Server {
 	 * Initializes all miscellaneous startup tasks asynchronously.
 	 * @throws Exception If any exceptions are thrown while initializing startup tasks.
 	 */
-	private void initAsyncTasks() throws Exception {
+	private void initTasks() throws Exception {
 		FileSystem fs = FileSystem.create("data/cache");
 		AttributeKey.init();
 		//Object decoding.
@@ -240,7 +227,7 @@ public final class Server {
 					List<CombatStrategy> s = Utility.getClassesInDirectory(CombatStrategy.class.getPackage().getName() + "." + directory).stream().map(clazz -> (CombatStrategy) clazz).collect(Collectors.toList());
 					s.forEach(c -> {
 						for(int n : c.getNpcs()) {
-							Combat.DEFAULT_STRATEGIES.add(c);
+							Combat.DEFAULT_STRATEGIES.put(n, c);
 						}
 					});
 				} catch(Exception e) {
@@ -251,6 +238,27 @@ public final class Server {
 		launch.execute(PunishmentHandler::parseIPBans);
 		launch.execute(PunishmentHandler::parseIPMutes);
 		launch.execute(PunishmentHandler::parseStarters);
+	}
+	
+	public void prepare() {
+		CommandDispatcher.load();
+		loadEvents();
+		ButtonEvent.init();
+		ItemEvent.init();
+		NpcEvent.init();
+		ObjectEvent.init();
+		World.get().start();
+	}
+	
+	public static void loadEvents() {
+		for(String directory : Utility.getSubDirectories(EventInitializer.class)) {
+			try {
+				List<EventInitializer> s = Utility.getClassesInDirectory(EventInitializer.class.getPackage().getName() + "." + directory).stream().map(clazz -> (EventInitializer) clazz).collect(Collectors.toList());
+				s.forEach(EventInitializer::init);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

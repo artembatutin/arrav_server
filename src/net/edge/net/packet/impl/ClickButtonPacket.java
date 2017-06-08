@@ -202,46 +202,6 @@ public final class ClickButtonPacket implements PacketReader {
 			case 65:
 				player.teleport(new Position(1910, 4371), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				break;
-			//Monsters 70-100
-			case 70://rock crabs
-				player.teleport(new Position(2670, 3728), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case 71://taverly
-				player.teleport(new Position(2884, 9798), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case 72://brimhaven
-				player.teleport(new Position(2713, 9564), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case 73://edgeville
-				player.teleport(new Position(3097, 9876), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case 74://elven camp
-				player.teleport(new Position(2896, 2724), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case 75://slayer tower
-				player.teleport(new Position(3429, 3538), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case 76://fremennik
-				player.teleport(new Position(2806, 10002, 0), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case 77://ancient cavern
-				player.teleport(new Position(1751, 5290, 1), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case 78://chaos dwarfs
-				player.teleport(new Position(1488, 4704, 0), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			case 79://glacors
-				player.teleport(new Position(4170, 5706, 0), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
-				break;
-			//<-banking 100-109 - slayer 110-12 ->
-			case 110://slayer teleport
-				break;
-			case 111://slayer skip
-				break;
-			case 112://slayer block
-				break;
-			case 113://slayer unblock -> 117
-				break;
 			//Clan chat
 			case 240:
 				player.getClan().filter(c -> c.getRank() == ClanChatRank.OWNER).ifPresent(clan -> player.getMessages().sendEnterName("The new clan chat name to set:", s -> () -> {

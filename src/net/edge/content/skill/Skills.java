@@ -169,7 +169,7 @@ public final class Skills {
 	/**
 	 * The experience multiplier that combat related skills experience will be calculated with.
 	 */
-	private static final int PRAYER_EXPERIENCE_MULTIPLIER = 125;
+	private static final int PRAYER_EXPERIENCE_MULTIPLIER = 100;
 	
 	/**
 	 * The experience multiplier that combat related skills experience will be calculated with.

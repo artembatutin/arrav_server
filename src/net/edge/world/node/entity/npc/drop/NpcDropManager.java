@@ -21,7 +21,7 @@ import java.util.*;
  */
 public final class NpcDropManager {
 	
-	static final NpcDropTable DEFAULT = new NpcDropTable(new NpcDrop[]{}, new NpcDropCache[]{NpcDropCache.CASKETS, NpcDropCache.HERB_SEEDS, NpcDropCache.FLOWER_SEEDS, NpcDropCache.ALLOTMENT_SEEDS, NpcDropCache.CHARMS, NpcDropCache.LOW_RUNES, NpcDropCache.LOW_GEMS, NpcDropCache.LOW_EQUIPMENT, NpcDropCache.LOW_RESOURCES});
+	static final NpcDropTable DEFAULT = new NpcDropTable(new NpcDrop[]{}, new NpcDropCache[]{NpcDropCache.CASKETS, NpcDropCache.HERB_SEEDS, NpcDropCache.FLOWER_SEEDS, NpcDropCache.ALLOTMENT_SEEDS, NpcDropCache.CHARMS, NpcDropCache.LOW_RUNES, NpcDropCache.LOW_GEMS});
 	
 	/**
 	 * The {@link EnumMap} consisting of the cached common {@link NpcDrop}s used

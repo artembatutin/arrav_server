@@ -42,6 +42,11 @@ public final class NpcDropTable {
 		this.common = new ObjectArrayList<>(common);
 	}
 	
+	public NpcDropTable(ObjectList<NpcDrop> unique, ObjectList<NpcDropCache> common) {
+		this.unique = unique;
+		this.common = common;
+	}
+	
 	/**
 	 * Performs the necessary calculations on all of the tables in this
 	 * container to determine an array of items to drop. Please note that this
@@ -81,6 +86,9 @@ public final class NpcDropTable {
 					Item item = drop.toItem();
 					items.add(item);
 					World.getLoggingManager().write(Log.create(new DropLog(player, victim.getDefinition(), item)));
+					if(drop.getChance() == Chance.EXTREMELY_RARE) {
+						World.get().message(player.getFormatUsername() + " just got an extremely rare drop: " + item.getDefinition().getName());
+					}
 				}
 				rollRare = false;
 			} else if(rollDynamic && !drop.isRare()) {
