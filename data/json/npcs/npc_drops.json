@@ -2112,12 +2112,6 @@
         "chance": "ALWAYS"
       },
       {
-        "id": 536,
-        "minimum": 1,
-        "maximum": 1,
-        "chance": "ALWAYS"
-      },
-      {
         "id": 2354,
         "minimum": 5,
         "maximum": 30,
@@ -4838,12 +4832,6 @@
         "chance": "ALWAYS"
       },
       {
-        "id": 536,
-        "minimum": 1,
-        "maximum": 1,
-        "chance": "ALWAYS"
-      },
-      {
         "id": 365,
         "minimum": 1,
         "maximum": 1,
@@ -6836,12 +6824,6 @@
         "chance": "ALWAYS"
       },
       {
-        "id": 536,
-        "minimum": 1,
-        "maximum": 1,
-        "chance": "ALWAYS"
-      },
-      {
         "id": 1751,
         "minimum": 1,
         "maximum": 1,
@@ -7442,12 +7424,6 @@
         "id": 2359,
         "minimum": 3,
         "maximum": 3,
-        "chance": "ALWAYS"
-      },
-      {
-        "id": 536,
-        "minimum": 1,
-        "maximum": 1,
         "chance": "ALWAYS"
       },
       {
@@ -13421,12 +13397,6 @@
         "id": 2351,
         "minimum": 5,
         "maximum": 5,
-        "chance": "ALWAYS"
-      },
-      {
-        "id": 536,
-        "minimum": 1,
-        "maximum": 1,
         "chance": "ALWAYS"
       },
       {
@@ -19408,12 +19378,6 @@
         "chance": "ALWAYS"
       },
       {
-        "id": 536,
-        "minimum": 1,
-        "maximum": 1,
-        "chance": "ALWAYS"
-      },
-      {
         "id": 1747,
         "minimum": 1,
         "maximum": 1,
@@ -20146,12 +20110,6 @@
       },
       {
         "id": 1749,
-        "minimum": 1,
-        "maximum": 1,
-        "chance": "ALWAYS"
-      },
-      {
-        "id": 536,
         "minimum": 1,
         "maximum": 1,
         "chance": "ALWAYS"
@@ -23259,12 +23217,6 @@
         "id": 2350,
         "minimum": 5,
         "maximum": 30,
-        "chance": "ALWAYS"
-      },
-      {
-        "id": 536,
-        "minimum": 1,
-        "maximum": 1,
         "chance": "ALWAYS"
       },
       {
@@ -42756,12 +42708,6 @@
       },
       {
         "id": 1753,
-        "minimum": 1,
-        "maximum": 1,
-        "chance": "ALWAYS"
-      },
-      {
-        "id": 536,
         "minimum": 1,
         "maximum": 1,
         "chance": "ALWAYS"
