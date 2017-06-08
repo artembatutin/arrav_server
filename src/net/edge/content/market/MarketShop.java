@@ -12,6 +12,7 @@ import net.edge.content.minigame.rfd.RFDData;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemDefinition;
 
 import java.util.Arrays;
 
@@ -277,6 +278,12 @@ public class MarketShop {
 			player.message("You can't sell " + item.getDefinition().getName() + " here.");
 			return false;
 		}
+		ItemDefinition def = ItemDefinition.get(item.getId());
+		if(def == null)
+			return false;
+		if(def.isNoted()) {
+			item.setId(def.getNoted());
+		}
 		int amount = player.getInventory().computeAmountForId(item.getId());
 		if(item.getAmount() > amount && !item.getDefinition().isStackable()) {
 			item.setAmount(amount);
@@ -326,6 +333,11 @@ public class MarketShop {
 			}
 			return has;
 		}
+		ItemDefinition def = ItemDefinition.get(item);
+		if(def == null)
+			return false;
+		if(def.isNoted())
+			item = def.getNoted();
 		MarketItem marketItem = MarketItem.get(item);
 		return marketItem != null && marketItem.isSearchable();
 	}
