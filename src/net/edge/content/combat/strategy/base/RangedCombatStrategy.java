@@ -170,21 +170,25 @@ public final class RangedCombatStrategy implements CombatStrategy {
 //			}
 
 		boolean collected = false;
-		boolean ava_collector = player.getEquipment().containsAny(10498, 10499, 20068);
-
-		if(ava_collector) {
+		Item wep = player.getEquipment().get(Equipment.WEAPON_SLOT);
+		Item cape = player.getEquipment().get(Equipment.CAPE_SLOT);
+		boolean ava_collector = cape != null && (cape.getId() == 1098 || cape.getId() == 10499 || cape.getId() == 20068);
+		boolean cannon = wep != null && wep.getId() == 15241;
+		if(cannon) {
+			item.decrementAmount();
+			collected = true;//skip shots on ground.
+		} else if(ava_collector) {
 			boolean droppable = !weapon.getType().isSpecialBow() && CombatRangedAmmoDefinition.NON_DROPPABLE.stream().noneMatch(weapon.getAmmunition().getDefinition()::equals);
 			if(weapon.getAmmunition().getItem().getAmount() > 0 && droppable && RandomUtils.nextBoolean()) {
 				int cape = player.getEquipment().get(Equipment.CAPE_SLOT).getId();
-
 				double chance = cape == 10498 ? 0.25 : cape == 10499 ? 0.50 : 0.75;
 				collected = RandomUtils.success(chance);
 			}
 		}
-
+		
 		if(!collected) {//if not collected decrement arrow count
 			item.decrementAmount();
-
+			
 			double chance = ava_collector ? 0.35 : 0.70;
 			if(RandomUtils.success(chance)) {//register item to floor
 				ItemNode am = new ItemNode(new Item(item.getId()), victim.getPosition(), player);
