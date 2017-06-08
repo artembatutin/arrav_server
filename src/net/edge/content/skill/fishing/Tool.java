@@ -12,13 +12,13 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum Tool {
-	NET(303, 1, -1, 0.30, 621, new Catchable[]{Catchable.SHRIMP, Catchable.ANCHOVY, Catchable.MONKFISH}) {
+	NET(303, 1, -1, 0.35, 621, new Catchable[]{Catchable.SHRIMP, Catchable.ANCHOVY, Catchable.MONKFISH}) {
 		@Override
 		public Catchable catchable() {
 			return Catchable.SHRIMP;
 		}
 	},
-	NET_MONKFISH(303, 62, -1, 0.20, 621, new Catchable[]{Catchable.MONKFISH}),
+	NET_MONKFISH(303, 62, -1, 0.25, 621, new Catchable[]{Catchable.MONKFISH}),
 	BIG_NET(305, 16, -1, 0.50, 620, new Catchable[]{Catchable.MACKEREL, Catchable.COD, Catchable.BASS, Catchable.CASKET, Catchable.LEATHER_BOOTS, Catchable.LEATHER_GLOVES, Catchable.OYSTER, Catchable.SEAWEED, Catchable.ROCKTAIL}) {
 		@Override
 		public Item[] onCatch(Player player) {
@@ -34,26 +34,26 @@ public enum Tool {
 			return Catchable.MACKEREL;
 		}
 	},
-	FISHING_ROD(307, 5, 313, 0.40, 622, new Catchable[]{Catchable.SARDINE, Catchable.HERRING, Catchable.PIKE, Catchable.SLIMY_EEL, Catchable.CAVE_EEL, Catchable.LAVA_EEL}) {
+	FISHING_ROD(307, 5, 313, 0.45, 622, new Catchable[]{Catchable.SARDINE, Catchable.HERRING, Catchable.PIKE, Catchable.SLIMY_EEL, Catchable.CAVE_EEL, Catchable.LAVA_EEL}) {
 		@Override
 		public Catchable catchable() {
 			return Catchable.SARDINE;
 		}
 	},
-	FLY_FISHING_ROD(309, 20, 314, 0.45, 622, new Catchable[]{Catchable.TROUT, Catchable.SALMON}) {
+	FLY_FISHING_ROD(309, 20, 314, 0.50, 622, new Catchable[]{Catchable.TROUT, Catchable.SALMON}) {
 		@Override
 		public Catchable catchable() {
 			return Catchable.TROUT;
 		}
 	},
-	HARPOON(311, 35, -1, 0.15, 618, new Catchable[]{Catchable.TUNA, Catchable.SWORDFISH}) {
+	HARPOON(311, 35, -1, 0.20, 618, new Catchable[]{Catchable.TUNA, Catchable.SWORDFISH}) {
 		@Override
 		public Catchable catchable() {
 			return Catchable.TUNA;
 		}
 	},
-	SHARK_HARPOON(311, 76, -1, 0.1, 618, new Catchable[]{Catchable.SHARK, Catchable.MANTAS}),
-	LOBSTER_POT(301, 40, -1, 0.20, 619, new Catchable[]{Catchable.LOBSTER});
+	SHARK_HARPOON(311, 76, -1, 0.15, 618, new Catchable[]{Catchable.SHARK, Catchable.MANTAS}),
+	LOBSTER_POT(301, 40, -1, 0.25, 619, new Catchable[]{Catchable.LOBSTER});
 	
 	final int id;
 	final int level;
