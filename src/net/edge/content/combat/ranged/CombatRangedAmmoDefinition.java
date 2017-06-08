@@ -503,10 +503,10 @@ public enum CombatRangedAmmoDefinition {
 				return data;
 			}
 			
-			int damage = (int) (victim.getCurrentHealth() * 1.20);
+			int damage = (int) (victim.getCurrentHealth() * 0.20);
 			int inflict = (int) (player.getCurrentHealth() * 0.10);
 			player.damage(new Hit(inflict, HitType.NORMAL, HitIcon.DEFLECT));
-			data.getHits()[0].setDamage(damage);
+			data.getHits()[0].setDamage(data.getHits()[0].getDamage() + damage);
 			victim.graphic(new Graphic(754, 0, 20));
 			return data;
 		}
