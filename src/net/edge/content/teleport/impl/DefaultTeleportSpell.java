@@ -1,5 +1,6 @@
 package net.edge.content.teleport.impl;
 
+import net.edge.content.minigame.MinigameHandler;
 import net.edge.task.Task;
 import net.edge.util.ActionListener;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -112,7 +113,6 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 		}
 		
 		DefaultTeleportSpell spell = new DefaultTeleportSpell(destination, type);
-		
 		if(!force && !spell.canTeleport(player)) {
 			return false;
 		}
@@ -202,6 +202,7 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 		
 		@Override
 		public void onSubmit() {
+			MinigameHandler.executeVoid(player, m -> m.onTeleportBefore(player, spell.getDestination()));
 			player.getMovementQueue().reset();
 			player.getActivityManager().disable();
 			initialDelay = spell.type.getStartDelay() + spell.type.getEndDelay();
