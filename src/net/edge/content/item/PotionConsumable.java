@@ -23,6 +23,13 @@ import java.util.Optional;
  * @author lare96 <http://github.com/lare96>
  */
 public enum PotionConsumable {
+	COMBAT(9739, 9741, 9743, 9745) {
+		@Override
+		public void onEffect(Player player) {
+			PotionConsumable.onBasicEffect(player, Skills.STRENGTH, BoostType.MODERATE);
+			PotionConsumable.onBasicEffect(player, Skills.ATTACK, BoostType.MODERATE);
+		}
+	},
 	EXTREME_STRENGTH(15312, 15313, 15314, 15315) {
 		@Override
 		public boolean canDrink(Player player) {
@@ -559,6 +566,7 @@ public enum PotionConsumable {
 	 */
 	private enum BoostType {
 		NORMAL(1, .08F),
+		MODERATE(3, 0.10F),//combat potion
 		SUPER(2, .12F),
 		EXTREME(3, .15F);
 		
