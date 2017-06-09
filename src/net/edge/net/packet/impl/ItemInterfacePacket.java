@@ -75,6 +75,16 @@ public final class ItemInterfacePacket implements PacketReader {
 		
 		if(interfaceId < 0 || slot < 0 || itemId < 0)
 			return;
+		if(interfaceId == 3900) {
+			if(player.getMarketShop() != null) {
+				player.getMarketShop().purchase(player, new Item(itemId, slot));
+			}
+		}
+		if(interfaceId == 3823) {
+			if(player.getMarketShop() != null) {
+				player.getMarketShop().sendSellingPrice(player, new Item(itemId));
+			}
+		}
 		if(Attributes.firstSlot(player, interfaceId, slot)) {
 			return;
 		}
@@ -89,14 +99,6 @@ public final class ItemInterfacePacket implements PacketReader {
 			case 1688:
 				player.getEquipment().unequip(slot);
 				player.getCombatBuilder().cooldown(true);
-				break;
-			case 3900:
-				if(player.getMarketShop() != null)
-					player.getMarketShop().purchase(player, new Item(itemId, slot));
-				break;
-			case 3823:
-				if(player.getMarketShop() != null)
-					player.getMarketShop().sendSellingPrice(player, new Item(itemId));
 				break;
 			case 3322:
 				if(!session.isPresent()) {
@@ -138,6 +140,11 @@ public final class ItemInterfacePacket implements PacketReader {
 		int slot = payload.getShort(true, ByteOrder.LITTLE);
 		if(interfaceId < 0 || slot < 0 || itemId < 0)
 			return;
+		if(interfaceId == 3823) {
+			if(player.getMarketShop() != null) {
+				player.getMarketShop().sell(player, new Item(itemId, 1), slot);
+			}
+		}
 		if(Attributes.secondSlot(player, interfaceId, slot)) {
 			return;
 		}
@@ -149,10 +156,6 @@ public final class ItemInterfacePacket implements PacketReader {
 		}
 		Optional<ExchangeSession> session = World.getExchangeSessionManager().getExchangeSession(player);
 		switch(interfaceId) {
-			case 3823:
-				if(player.getMarketShop() != null)
-					player.getMarketShop().sell(player, new Item(itemId, 1), slot);
-				break;
 			case 3322:
 				if(!session.isPresent()) {
 					return;
@@ -248,15 +251,16 @@ public final class ItemInterfacePacket implements PacketReader {
 		int itemId = payload.getShort(ByteTransform.A);
 		if(interfaceId < 0 || slot < 0 || itemId < 0)
 			return;
+		if(interfaceId == 3823) {
+			if(player.getMarketShop() != null) {
+				player.getMarketShop().sell(player, new Item(itemId, 10), slot);
+			}
+		}
 		if(Attributes.fourthSlot(player, interfaceId, itemId, slot)) {
 			return;
 		}
 		Optional<ExchangeSession> session = World.getExchangeSessionManager().getExchangeSession(player);
 		switch(interfaceId) {
-			case 3823:
-				if(player.getMarketShop() != null)
-					player.getMarketShop().sell(player, new Item(itemId, 10), slot);
-				break;
 			case 3322:
 				if(!session.isPresent()) {
 					return;
@@ -299,7 +303,6 @@ public final class ItemInterfacePacket implements PacketReader {
 			return;
 		
 		Item item = player.getInventory().get(slot);
-		
 		if(item == null || !Item.valid(item)) {
 			return;
 		}
