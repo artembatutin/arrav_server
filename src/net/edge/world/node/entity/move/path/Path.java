@@ -55,4 +55,12 @@ public class Path {
 		return moves;
 	}
 	
+	/**
+	 * Removing one of the last(but first in the queue) walking points.
+	 * @return true if removed, false otherwise.
+	 */
+	public Position poll() {
+		return moves.pollFirst();
+	}
+	
 }
