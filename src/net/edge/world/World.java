@@ -342,7 +342,7 @@ public final class World {
 			// If the player x-logged, don't log the player out. Keep the
 			// player queued until they are out of combat to prevent x-logging.
 			if(!forced) {
-				if(!player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && (player.getCombatBuilder().isBeingAttacked() && player.getCombatBuilder().pjingCheck())) {
+				if(!player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombatBuilder().isBeingAttacked()) {
 					return false;
 				}
 			}

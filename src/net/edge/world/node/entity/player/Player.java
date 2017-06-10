@@ -5,6 +5,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.Server;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
+import net.edge.event.obj.WeaponRack;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.packet.PacketWriter;
 import net.edge.net.session.GameSession;
@@ -690,8 +691,8 @@ public final class Player extends EntityNode {
 		getPrivateMessage().updateOtherList(false);
 		getClan().ifPresent(c -> c.getClan().remove(this, true));
 		messages.sendLogout();
-		save();
 		getRegion().removeChar(this);
+		save();
 	}
 	
 	@Override

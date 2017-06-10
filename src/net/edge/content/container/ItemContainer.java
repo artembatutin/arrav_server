@@ -1,7 +1,6 @@
 package net.edge.content.container;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Iterables;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.node.entity.player.Player;
@@ -11,8 +10,6 @@ import net.edge.world.node.item.ItemDefinition;
 
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
@@ -63,7 +60,6 @@ public class ItemContainer implements Iterable<Item> {
 		@Override
 		public Item next() {
 			checkState(index < container.capacity, "no more elements left to iterate");
-			
 			lastIndex = index;
 			index++;
 			return container.items[lastIndex];
@@ -72,13 +68,9 @@ public class ItemContainer implements Iterable<Item> {
 		@Override
 		public void remove() {
 			checkState(lastIndex != -1, "can only be called once after 'next'");
-			
 			Item oldItem = container.items[lastIndex];
-			
 			container.items[lastIndex] = null;
-			
 			container.fireItemUpdatedEvent(oldItem, null, lastIndex, true);
-			
 			index = lastIndex;
 			lastIndex = -1;
 		}
@@ -132,6 +124,11 @@ public class ItemContainer implements Iterable<Item> {
 	private boolean firingEvents = true;
 	
 	/**
+	 * The size of this container, counting occupied slots.
+	 */
+	private int size;
+	
+	/**
 	 * Creates a new {@link ItemContainer}.
 	 * @param capacity {@link #capacity()}.
 	 * @param policy   {@link #policy}.
@@ -178,13 +175,6 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
-	 * @return A stream associated with the elements in this container, built using the {@code spliterator()} implementation.
-	 */
-	public final Stream<Item> stream() {
-		return StreamSupport.stream(spliterator(), false);
-	}
-	
-	/**
 	 * Attempts to add {@code item} into this container.
 	 * @param item The {@link Item} to add.
 	 * @return {@code true} the {@code Item} was added, {@code false} if there was not enough space left.
@@ -202,17 +192,19 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public boolean add(Item item, int preferredIndex, boolean refresh) {
 		checkArgument(preferredIndex >= -1, "invalid index identifier");
-		
 		ItemDefinition def = item.getDefinition();
-		boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;
+		if(def == null) {
+			return false;
+		}
 		
+		boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;
 		if(stackable) {
 			preferredIndex = computeIndexForId(item.getId());
 		} else if(preferredIndex != -1) {
 			preferredIndex = items[preferredIndex] != null ? -1 : preferredIndex;
 		}
-		preferredIndex = preferredIndex == -1 ? computeFreeIndex() : preferredIndex;
 		
+		preferredIndex = preferredIndex == -1 ? computeFreeIndex() : preferredIndex;
 		if(preferredIndex == -1) { // Not enough space in container.
 			fireCapacityExceededEvent();
 			return false;
@@ -220,7 +212,12 @@ public class ItemContainer implements Iterable<Item> {
 		
 		if(stackable) {
 			Item current = items[preferredIndex];
-			items[preferredIndex] = (current == null) ? item : current.createAndIncrement(item.getAmount());
+			if(current == null) {
+				items[preferredIndex] = item;
+				size++;
+			} else {
+				items[preferredIndex] = current.createAndIncrement(item.getAmount());
+			}
 			fireItemUpdatedEvent(current, items[preferredIndex], preferredIndex, refresh);
 		} else {
 			int remaining = remaining();
@@ -234,10 +231,11 @@ public class ItemContainer implements Iterable<Item> {
 				}
 				Item newItem = new Item(item.getId());
 				items[preferredIndex] = newItem;
-				
+				size++;
 				fireItemUpdatedEvent(null, newItem, preferredIndex++, refresh);
 			}
 		}
+		System.out.println("size: " + size);
 		return true;
 	}
 	
@@ -246,16 +244,13 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param items The {@link Item}s to add.
 	 * @return {@code true} if at least {@code 1} of the {@code Item}s were added, {@code false} if none could be added.
 	 */
-	public boolean addAll(Collection<? extends Item> items) {
-		if(items.size() == 1) { // Bulk operation on singleton list? No thanks..
-			Optional<? extends Item> item = items.stream().
-					filter(Objects::nonNull).
-					findFirst();
-			return item.isPresent() && add(item.get());
+	public <I extends Item> boolean addAll(I... items) {
+		if(items.length == 1) {
+			// No bulk update on one item.
+			return add(items[0]);
 		}
 		
 		firingEvents = false;
-		
 		boolean added = false;
 		try {
 			for(Item item : items) {
@@ -271,15 +266,6 @@ public class ItemContainer implements Iterable<Item> {
 		}
 		fireBulkItemsUpdatedEvent();
 		return added;
-	}
-	
-	/**
-	 * Attempts to add {@code items} in bulk into this container.
-	 * @param items The {@link Item}s to add.
-	 * @return {@code true} if at least {@code 1} of the {@code Item}s were added, {@code false} if none could be added.
-	 */
-	public boolean addAll(Item... items) {
-		return addAll(Arrays.asList(items));
 	}
 	
 	/**
@@ -322,8 +308,9 @@ public class ItemContainer implements Iterable<Item> {
 		
 		ItemDefinition def = item.getDefinition();
 		if(def == null) {
-			Item current = items[preferredIndex];
-			fireItemUpdatedEvent(current, items[preferredIndex], preferredIndex, refresh);
+			items[preferredIndex] = null;
+			fireItemUpdatedEvent(items[preferredIndex], null, preferredIndex, refresh);
+			size--;
 			return true;
 		}
 		boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;
@@ -331,7 +318,6 @@ public class ItemContainer implements Iterable<Item> {
 			preferredIndex = computeIndexForId(item.getId());
 		} else {
 			preferredIndex = preferredIndex == -1 ? computeIndexForId(item.getId()) : preferredIndex;
-			
 			if(preferredIndex != -1 && items[preferredIndex] == null) {
 				preferredIndex = -1;
 			}
@@ -340,15 +326,14 @@ public class ItemContainer implements Iterable<Item> {
 		if(preferredIndex == -1) { // Item isn't present within this container.
 			return false;
 		}
-		
 		if(stackable) {
 			Item current = items[preferredIndex];
 			if(current.getAmount() > item.getAmount()) {
 				items[preferredIndex] = current.createAndDecrement(item.getAmount());
 			} else {
 				items[preferredIndex] = null;
+				size--;
 			}
-			
 			fireItemUpdatedEvent(current, items[preferredIndex], preferredIndex, refresh);
 		} else {
 			int until = computeAmountForId(item.getId());
@@ -368,8 +353,10 @@ public class ItemContainer implements Iterable<Item> {
 				Item oldItem = items[preferredIndex];
 				items[preferredIndex] = null;
 				fireItemUpdatedEvent(oldItem, null, preferredIndex++, refresh);
+				size--;
 			}
 		}
+		System.out.println("size: " + size);
 		return true;
 	}
 	
@@ -378,12 +365,10 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param items The {@link Item}s to remove.
 	 * @return {@code true} if at least {@code 1} of the {@code Item}s were remove, {@code false} if none could be removed.
 	 */
-	public boolean removeAll(Collection<? extends Item> items) {
-		if(items.size() == 1) { // Bulk operation on singleton list? No thanks..
-			Optional<? extends Item> item = items.stream().
-					filter(Objects::nonNull).
-					findFirst();
-			return item.isPresent() && remove(item.get());
+	public <I extends Item> boolean removeAll(I... items) {
+		if(items.length == 1) {
+			// No bulk update on one item.
+			return remove(items[0]);
 		}
 		
 		firingEvents = false;
@@ -402,15 +387,6 @@ public class ItemContainer implements Iterable<Item> {
 		}
 		fireBulkItemsUpdatedEvent();
 		return removed;
-	}
-	
-	/**
-	 * Attempts to remove {@code items} in bulk from this container.
-	 * @param items The {@link Item}s to remove.
-	 * @return {@code true} if at least {@code 1} of the {@code Item}s were remove, {@code false} if none could be removed.
-	 */
-	public boolean removeAll(Item... items) {
-		return removeAll(Arrays.asList(items));
 	}
 	
 	/**
@@ -485,10 +461,8 @@ public class ItemContainer implements Iterable<Item> {
 		if(index == -1) {
 			return false;
 		}
-		
 		Item oldItem = items[index];
 		Item newItem = oldItem.createWithId(newId);
-		
 		return remove(oldItem, index, refresh) && add(newItem, index, refresh);
 	}
 	
@@ -524,15 +498,16 @@ public class ItemContainer implements Iterable<Item> {
 			if(item == null)
 				continue;
 			ItemDefinition def = item.getDefinition();
-			boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;
+			if(def == null)
+				continue;
 			
+			boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;
 			if(stackable) {
 				int index = computeIndexForId(item.getId());
 				if(index == -1) {
 					indexCount++;
 					continue;
 				}
-				
 				Item existing = items[index];
 				if((existing.getAmount() + item.getAmount()) <= 0) {
 					indexCount++;
@@ -569,7 +544,42 @@ public class ItemContainer implements Iterable<Item> {
 	 * @return {@code true} if this container has all {@code identifiers}, {@code false} otherwise.
 	 */
 	public final boolean containsAll(int... identifiers) {
-		return Arrays.stream(identifiers).allMatch(this::contains);
+		for(int id : identifiers) {
+			boolean found = false;
+			for(Item item : items) {
+				if(item == null)
+					continue;
+				if(item.getId() == id) {
+					found = true;
+					break;
+				}
+			}
+			if(!found)
+				return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Determines if this container contains all {@code items}.
+	 * @param check The items to check this container for.
+	 * @return {@code true} if this container has all {@code identifiers}, {@code false} otherwise.
+	 */
+	public final boolean containsAll(Item... check) {
+		for(Item it : check) {
+			boolean found = false;
+			for(Item item : items) {
+				if(item == null)
+					continue;
+				if(item.getId() == it.getId() && item.getAmount() >= it.getAmount()) {
+					found = true;
+					break;
+				}
+			}
+			if(!found)
+				return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -578,7 +588,32 @@ public class ItemContainer implements Iterable<Item> {
 	 * @return {@code true} if this container has any {@code identifiers}, {@code false} otherwise.
 	 */
 	public final boolean containsAny(int... identifiers) {
-		return Arrays.stream(identifiers).anyMatch(this::contains);
+		for(int id : identifiers) {
+			for(Item item : items) {
+				if(item == null)
+					continue;
+				if(item.getId() == id)
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Determines if this container contains any {@code check}.
+	 * @param check The items to check this container for.
+	 * @return {@code true} if this container has any {@code identifiers}, {@code false} otherwise.
+	 */
+	public final boolean containsAny(Item... check) {
+		for(Item it : check) {
+			for(Item item : items) {
+				if(item == null)
+					continue;
+				if(item.getId() == it.getId() && item.getAmount() >= it.getAmount())
+					return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -596,42 +631,6 @@ public class ItemContainer implements Iterable<Item> {
 				return true;
 		}
 		return false;
-	}
-	
-	/**
-	 * Determines if this container contains all {@code items}.
-	 * @param items The {@link Item}s to check this container for.
-	 * @return {@code true} if this container has all {@code items}, {@code false} otherwise.
-	 */
-	public final boolean containsAll(Item... items) {
-		return containsAll(Arrays.asList(items));
-	}
-	
-	/**
-	 * Determines if this container contains all {@code items}.
-	 * @param items The {@link Item}s to check this container for.
-	 * @return {@code true} if this container has all {@code items}, {@code false} otherwise.
-	 */
-	public final boolean containsAll(Collection<Item> items) {
-		return items.stream().filter(Objects::nonNull).allMatch(this::contains);
-	}
-	
-	/**
-	 * Determines if this container contains any {@code items}.
-	 * @param items The {@link Item}s to check this container for.
-	 * @return {@code true} if this container has all {@code items}, {@code false} otherwise.
-	 */
-	public final boolean containsAny(Item... items) {
-		return containsAny(Arrays.asList(items));
-	}
-	
-	/**
-	 * Determines if this container contains any {@code items}.
-	 * @param items The {@link Item}s to check this container for.
-	 * @return {@code true} if this container has all {@code items}, {@code false} otherwise.
-	 */
-	public final boolean containsAny(Collection<Item> items) {
-		return items.stream().filter(Objects::nonNull).anyMatch(this::contains);
 	}
 	
 	/**
@@ -733,14 +732,12 @@ public class ItemContainer implements Iterable<Item> {
 	public final void shift() {
 		Item[] newItems = new Item[capacity];
 		int newIndex = 0;
-		
 		for(Item item : items) {
 			if(item == null) {
 				continue;
 			}
 			newItems[newIndex++] = item;
 		}
-		
 		setItems(newItems);
 	}
 	
@@ -754,6 +751,8 @@ public class ItemContainer implements Iterable<Item> {
 		Preconditions.checkArgument(items.length <= capacity);
 		clear();
 		for(int i = 0; i < items.length; i++) {
+			if(items[i] != null)
+				size++;
 			this.items[i] = items[i] == null ? null : items[i].copy();
 		}
 		fireBulkItemsUpdatedEvent();
@@ -775,42 +774,11 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param refresh The condition if the container must be refreshed.
 	 */
 	public final void set(int index, Item item, boolean refresh) {
-		boolean indexFree = items[index] == null;
-		boolean removingItem = item == null;
-		
 		Item oldItem = items[index];
 		items[index] = item;
-		
+		if(item == null)
+			size--;
 		fireItemUpdatedEvent(oldItem, items[index], index, refresh);
-	}
-	
-	/**
-	 * Sets the container of items to {@code newItems}. The only difference between this and {@code setItems(Item[])} is that
-	 * this method takes a wrapper class named {@link IndexedItem} that holds the index of items.
-	 * @param newItems The new array of items.
-	 */
-	public final void setIndexedItems(IndexedItem[] newItems) {
-		Arrays.fill(items, null);
-		for(IndexedItem item : newItems) {
-			items[item.getIndex()] = new Item(item.getId(), item.getAmount());
-		}
-	}
-	
-	/**
-	 * Returns an array of {@link IndexedItem}s describing the contents of the backing array. Changes made to the returned
-	 * array will, of course, not be reflected on the backing array.
-	 * @return An array of {@code IndexedItem}s describing the contents of the backing array.
-	 */
-	public final IndexedItem[] toIndexedArray() {
-		ObjectList<IndexedItem> indexedItems = new ObjectArrayList<>();
-		for(int index = 0; index < capacity; index++) {
-			Item item = items[index];
-			if(item == null) {
-				continue;
-			}
-			indexedItems.add(new IndexedItem(item, index));
-		}
-		return indexedItems.toArray(new IndexedItem[indexedItems.size()]);
 	}
 	
 	/**
@@ -846,13 +814,32 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
-	 * Searches and returns the first item found with {@code id}.
-	 * @param id the identifier to search this container for.
-	 * @return the item wrapped within an optional, or an empty optional if no
-	 * item was found.
+	 * Sets the container of items to {@code newItems}. The only difference between this and {@code setItems(Item[])} is that
+	 * this method takes a wrapper class named {@link IndexedItem} that holds the index of items.
+	 * @param newItems The new array of items.
 	 */
-	public Optional<Item> search(int id) {
-		return stream().filter(i -> i != null && id == i.getId()).findFirst();
+	public final void setIndexedItems(IndexedItem[] newItems) {
+		Arrays.fill(items, null);
+		for(IndexedItem item : newItems) {
+			items[item.getIndex()] = new Item(item.getId(), item.getAmount());
+		}
+	}
+	
+	/**
+	 * Returns an array of {@link IndexedItem}s describing the contents of the backing array. Changes made to the returned
+	 * array will, of course, not be reflected on the backing array.
+	 * @return An array of {@code IndexedItem}s describing the contents of the backing array.
+	 */
+	public final IndexedItem[] toIndexedArray() {
+		ObjectList<IndexedItem> indexedItems = new ObjectArrayList<>();
+		for(int index = 0; index < capacity; index++) {
+			Item item = items[index];
+			if(item == null) {
+				continue;
+			}
+			indexedItems.add(new IndexedItem(item, index));
+		}
+		return indexedItems.toArray(new IndexedItem[indexedItems.size()]);
 	}
 	
 	/**
@@ -917,6 +904,7 @@ public class ItemContainer implements Iterable<Item> {
 		Arrays.fill(items, null);
 		if(refresh)
 			fireBulkItemsUpdatedEvent();
+		size = 0;
 	}
 	
 	/**
@@ -950,7 +938,7 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public final void fireItemUpdatedEvent(Item oldItem, Item newItem, int index, boolean refresh) {
 		if(firingEvents) {
-			listeners.forEach(evt -> evt.itemUpdated(this, Optional.ofNullable(oldItem), Optional.ofNullable(newItem), index, refresh));
+			listeners.forEach(evt -> evt.itemUpdated(this, oldItem, newItem, index, refresh));
 		}
 	}
 	
@@ -1004,7 +992,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * @return The amount of used indexes.
 	 */
 	public final int size() {
-		return (int) Arrays.stream(items).filter(Objects::nonNull).count();
+		return size;
 	}
 	
 	/**

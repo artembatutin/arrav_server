@@ -1,5 +1,7 @@
 package net.edge.content.skill.slayer;
 
+import net.edge.world.node.item.Item;
+
 import java.util.stream.IntStream;
 
 /**
@@ -30,6 +32,11 @@ public final class SlayerKeyPolicy {
 	private final int requirement;
 	
 	/**
+	 * Rewards for completing this task.
+	 */
+	private final Item[] rewards;
+	
+	/**
 	 * Constructs a new {@link SlayerKeyPolicy}.
 	 * @param key               {@link #key}.
 	 * @param difficulty        {@link #difficulty}.
@@ -37,43 +44,54 @@ public final class SlayerKeyPolicy {
 	 * @param maxAmount         the maximum amount.
 	 * @param combatRequirement {@link #requirement}.
 	 */
-	SlayerKeyPolicy(String key, SlayerDifficulty difficulty, int minAmount, int maxAmount, int combatRequirement) {
+	SlayerKeyPolicy(String key, SlayerDifficulty difficulty, int minAmount, int maxAmount, int combatRequirement, Item... rewards) {
 		this.key = key;
 		this.difficulty = difficulty;
 		this.amount = IntStream.rangeClosed(minAmount, maxAmount).toArray();
 		this.requirement = combatRequirement;
+		this.rewards = rewards;
 	}
 	
 	/**
-	 * @return the key
+	 * @return the key.
 	 */
 	public String getKey() {
 		return key;
 	}
 	
 	/**
-	 * @return the difficulty
+	 * @return the difficulty.
 	 */
 	SlayerDifficulty getDifficulty() {
 		return difficulty;
 	}
 	
 	/**
-	 * @return the amount
+	 * @return the amount.
 	 */
 	public int[] getAmount() {
 		return amount;
 	}
 	
+	/**
+	 * Sets a new amount.
+	 */
 	public void setAmount(int[] amount) {
 		this.amount = amount;
 	}
 	
 	/**
-	 * @return the requirement
+	 * @return the requirement.
 	 */
 	public int getCombatRequirement() {
 		return requirement;
+	}
+	
+	/**
+	 * @return rewards.
+	 */
+	public Item[] getRewards() {
+		return rewards;
 	}
 	
 }

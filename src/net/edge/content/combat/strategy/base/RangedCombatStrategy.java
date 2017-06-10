@@ -212,6 +212,6 @@ public final class RangedCombatStrategy implements CombatStrategy {
 			player.getFlags().flag(UpdateFlag.APPEARANCE);
 		}
 		
-		player.getEquipment().refresh(player, Equipment.EQUIPMENT_DISPLAY_ID);
+		player.getEquipment().refresh();
 	}
 }

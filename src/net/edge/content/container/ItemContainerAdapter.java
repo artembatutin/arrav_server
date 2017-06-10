@@ -26,7 +26,7 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	}
 	
 	@Override
-	public void itemUpdated(ItemContainer container, Optional<Item> oldItem, Optional<Item> newItem, int index, boolean refresh) {
+	public void itemUpdated(ItemContainer container, Item oldItem, Item newItem, int index, boolean refresh) {
 		if(refresh)
 			sendItemsToWidget(container);
 	}

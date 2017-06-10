@@ -33,6 +33,8 @@ public class Boundary {
 	 * @return {@code true} the other entity is inside the boundary, {@code false} otherwise.
 	 */
 	public boolean inside(Position other, int size) {
+		if(other == null)
+			return false;
 		final Position otherEnd = new Position(other.getX() + size - 1, other.getY() + size - 1);
 		return !(start.getX() - otherEnd.getX() > 0) && !(end.getX() - other.getX() < 0) && !(end.getY() - other.getY() < 0) && !(start.getY() - otherEnd.getY() > 0);
 	}
@@ -44,6 +46,8 @@ public class Boundary {
 	 * @return {@code true} the other entity is within the boundary, {@code false} otherwise.
 	 */
 	public boolean within(Position other, int size, int distance) {
+		if(other == null)
+			return false;
 		final Position otherEnd = new Position(other.getX() + size - 1, other.getY() + size - 1);
 		return !(start.getX() - otherEnd.getX() - distance > 0) && !(end.getX() - other.getX() + distance < 0) && !(end.getY() - other.getY() + distance < 0) && !(start.getY() - otherEnd.getY() - distance > 0);
 	}

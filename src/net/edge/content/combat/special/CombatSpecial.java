@@ -29,7 +29,7 @@ import java.util.Set;
  */
 public enum CombatSpecial {
 	//int[] ids, int amount, double strength, double accuracy, CombatType combat, WeaponInterface weapon
-	ABYSSAL_WHIP(new int[]{4151, 15441, 15442, 15443, 15444}, 50, 1, 1, CombatType.MELEE, WeaponInterface.WHIP) {
+	ABYSSAL_WHIP(new int[]{4151, 13444, 15441, 15442, 15443, 15444}, 50, 1, 1, CombatType.MELEE, WeaponInterface.WHIP) {
 		@Override
 		public CombatSessionData container(Player player, EntityNode target) {
 			player.animation(new Animation(1658, Animation.AnimationPriority.HIGH));
@@ -68,7 +68,7 @@ public enum CombatSpecial {
 			};
 		}
 	},
-	ARMADYL_GODSWORD(new int[]{11694}, 50, 1.375, 2, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
+	ARMADYL_GODSWORD(new int[]{11694, 13450}, 50, 1.375, 2, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
 		@Override
 		public CombatSessionData container(Player player, EntityNode target) {
 			player.animation(new Animation(11989, Animation.AnimationPriority.HIGH));
@@ -233,7 +233,7 @@ public enum CombatSpecial {
 			throw new UnsupportedOperationException("Dragon battleaxe does not have a special attack!");
 		}
 	},
-	DRAGON_CLAWS(new int[]{14484}, 50, 1.05, 6, CombatType.MELEE, WeaponInterface.CLAWS) {
+	DRAGON_CLAWS(new int[]{14484, 14486}, 50, 1.05, 6, CombatType.MELEE, WeaponInterface.CLAWS) {
 		@Override
 		public CombatSessionData container(Player player, EntityNode target) {
 			player.animation(new Animation(10961, Animation.AnimationPriority.HIGH));
@@ -390,7 +390,7 @@ public enum CombatSpecial {
 			};
 		}
 	},
-	DARK_BOW(new int[]{11235, 15701, 15702, 15703, 15704}, 55, 1.45, 1.22, CombatType.RANGED, WeaponInterface.LONGBOW) {
+	DARK_BOW(new int[]{11235, 15701, 15702, 15703, 15704, 13405}, 55, 1.45, 1.22, CombatType.RANGED, WeaponInterface.LONGBOW) {
 		@Override
 		public CombatSessionData container(Player player, EntityNode target) {
 			player.animation(new Animation(426));

@@ -38,6 +38,7 @@ public final class UpdateCommand implements Command {
 					World.get().getTask().submit(new Task(5, false) {
 						@Override
 						protected void execute() {
+							World.get().getPlayers().forEach(p -> World.get().logout(p, true));
 							if(World.get().getPlayers().size() == 0) {
 								System.out.println("Terminating server instance - Players online: " + World.get().getPlayers().size());
 								World.get().shutdown();

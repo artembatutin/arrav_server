@@ -58,6 +58,10 @@ public final class Requirement {
 	public static boolean canEquip(Player player, Item item) {
 		if(item == null)
 			return true;
+		if(item.getDefinition() == null)
+			return false;
+		if(item.getDefinition().isLended())
+			return true;
 		if((item.getId() == 18741 && !player.isNight()) || (item.getId() == 18740 && !player.isNightMaxed())) {
 			player.message("The cape vanishes as you touch it.");
 			player.getInventory().remove(item);

@@ -8618,18 +8618,6 @@
     ],
     "unique": [
       {
-        "id": 526,
-        "minimum": 1,
-        "maximum": 1,
-        "chance": "ALWAYS"
-      },
-      {
-        "id": 592,
-        "minimum": 1,
-        "maximum": 1,
-        "chance": "ALWAYS"
-      },
-      {
         "id": 20268,
         "minimum": 1,
         "maximum": 1,

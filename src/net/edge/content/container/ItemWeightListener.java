@@ -27,7 +27,7 @@ public final class ItemWeightListener implements ItemContainerListener {
 	}
 	
 	@Override
-	public void itemUpdated(ItemContainer container, Optional<Item> oldItem, Optional<Item> newItem, int index, boolean refresh) {
+	public void itemUpdated(ItemContainer container, Item oldItem, Item newItem, int index, boolean refresh) {
 		updateWeight(oldItem, newItem);
 		queueWeight();
 	}
@@ -41,14 +41,12 @@ public final class ItemWeightListener implements ItemContainerListener {
 	/**
 	 * Updates the weight value for a single set of items.
 	 */
-	private void updateWeight(Optional<Item> oldItem, Optional<Item> newItem) {
+	private void updateWeight(Item oldItem, Item newItem) {
 		double subtract = applyWeight(oldItem);
 		double add = applyWeight(newItem);
-		
 		double currentWeight = player.getWeight();
 		currentWeight -= subtract;
 		currentWeight += add;
-		
 		player.setWeight(currentWeight);
 	}
 	
@@ -57,22 +55,27 @@ public final class ItemWeightListener implements ItemContainerListener {
 	 */
 	private void updateAllWeight() {
 		player.setWeight(0.0);
-		
-		player.getInventory().stream().
-				filter(Objects::nonNull).
-				forEach(it -> updateWeight(Optional.empty(), Optional.of(it)));
-		player.getEquipment().stream().
-				filter(Objects::nonNull).
-				forEach(it -> updateWeight(Optional.empty(), Optional.of(it)));
+		for(Item item : player.getInventory().getItems()) {
+			if(item == null)
+				continue;
+			updateWeight(null, item);
+		}
+		for(Item item : player.getEquipment().getItems()) {
+			if(item == null)
+				continue;
+			updateWeight(null, item);
+		}
 	}
 	
 	/**
 	 * Converts an {@link Optional} into a {@code double} describing its weight value.
 	 */
-	private double applyWeight(Optional<Item> item) {
-		return item.map(Item::getDefinition).
-				map(ItemDefinition::getWeight).
-				orElse(0.0);
+	private double applyWeight(Item item) {
+		if(item == null)
+			return 0.0;
+		if(item.getDefinition() == null)
+			return 0.0;
+		return item.getDefinition().getWeight();
 	}
 	
 	/**

@@ -52,7 +52,7 @@ public final class Equipment extends ItemContainer {
 		}
 		
 		@Override
-		public void itemUpdated(ItemContainer container, Optional<Item> oldItem, Optional<Item> newItem, int index, boolean refresh) {
+		public void itemUpdated(ItemContainer container, Item oldItem, Item newItem, int index, boolean refresh) {
 			if(refresh)
 				sendItemsToWidget(container);
 			updateBonus(oldItem, newItem);
@@ -317,31 +317,43 @@ public final class Equipment extends ItemContainer {
 	/**
 	 * Updates the bonuses array for single equipment index.
 	 */
-	private void updateBonus(Optional<Item> oldItem, Optional<Item> newItem) {
-		Optional<Integer> oldId = oldItem.map(Item::getId);
-		Optional<Integer> newId = newItem.map(Item::getId);
-		if(oldId.equals(newId)) {
+	private void updateBonus(Item oldItem, Item newItem) {
+		int oldId = -1;
+		int newId = -1;
+		if(oldItem != null)
+			oldId = oldItem.getId();
+		if(newItem != null)
+			newId = newItem.getId();
+		if(oldId == newId) {
 			return;
 		}
-		IntStream indexes = IntStream.range(0, bonuses.length);
-		applyBonuses(oldItem).ifPresent(it -> indexes.forEach(index -> bonuses[index] -= it[index]));
-		applyBonuses(newItem).ifPresent(it -> indexes.forEach(index -> bonuses[index] += it[index]));
-	}
-	
-	/**
-	 * Takes an {@code Optional<Item>} and returns a {@code ImmutableList<Integer>} from it. Used under-the-hood to reduce
-	 * boilerplate.
-	 */
-	private Optional<int[]> applyBonuses(Optional<Item> item) {
-		return item.map(Item::getDefinition).map(ItemDefinition::getBonus);
+		int[] oldBonuses = null;
+		int[] newBonuses = null;
+		if(oldItem != null && oldItem.getDefinition() != null)
+			oldBonuses = oldItem.getDefinition().getBonus();
+		if(newItem != null && newItem.getDefinition() != null)
+			newBonuses = newItem.getDefinition().getBonus();
+		if(oldBonuses != null || newBonuses != null) {
+			int older = oldBonuses == null ? 0 : oldBonuses.length;
+			int newer = newBonuses == null ? 0 : newBonuses.length;
+			for(int i = 0; i < (older > newer ? older : newer); i++) {
+				if(oldBonuses != null && oldBonuses.length <= i)
+					bonuses[i] -= oldBonuses[i];
+				if(newBonuses != null && newBonuses.length <= i)
+					bonuses[i] += newBonuses[i];
+			}
+		}
 	}
 	
 	/**
 	 * Updates the bonuses array for all of the equipment indexes.
 	 */
 	private void updateAllBonuses() {
-		Arrays.fill(bonuses, 0);
-		stream().filter(Objects::nonNull).forEach(it -> updateBonus(Optional.empty(), Optional.of(it)));
+		for(int i = 0; i < bonuses.length; i++)
+			bonuses[i] = 0;
+		for(Item item : getItems()) {
+			updateBonus(null, item);
+		}
 	}
 	
 	/**
@@ -359,7 +371,7 @@ public final class Equipment extends ItemContainer {
 	/**
 	 * Forces a refresh of {@code Equipment} items to the {@code EQUIPMENT_DISPLAY_ID} widget.
 	 */
-	private void forceRefresh() {
+	public void refresh() {
 		refresh(player, EQUIPMENT_DISPLAY_ID);
 	}
 	
