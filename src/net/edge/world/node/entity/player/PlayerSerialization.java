@@ -648,9 +648,12 @@ public final class PlayerSerialization {
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			int familiar = n.getAsInt();
-			if(familiar != 0)
-				p.setFamiliar(Optional.of(Summoning.FAMILIARS.get(n.getAsInt())));
+			int id = n.getAsInt();
+			if(id != 0) {
+				Optional<Familiar> familiar = Summoning.FAMILIARS.stream().filter(def -> def.getData().getNpcId() == id).findAny();
+				p.setFamiliar(familiar);
+			} else
+				p.setFamiliar(Optional.empty());
 		}
 	}, new Token("familiar-life") {
 		@Override

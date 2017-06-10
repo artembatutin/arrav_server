@@ -235,7 +235,6 @@ public class ItemContainer implements Iterable<Item> {
 				fireItemUpdatedEvent(null, newItem, preferredIndex++, refresh);
 			}
 		}
-		System.out.println("size: " + size);
 		return true;
 	}
 	
@@ -356,7 +355,6 @@ public class ItemContainer implements Iterable<Item> {
 				size--;
 			}
 		}
-		System.out.println("size: " + size);
 		return true;
 	}
 	
@@ -568,6 +566,8 @@ public class ItemContainer implements Iterable<Item> {
 	public final boolean containsAll(Item... check) {
 		for(Item it : check) {
 			boolean found = false;
+			if(it == null)
+				continue;
 			for(Item item : items) {
 				if(item == null)
 					continue;
@@ -606,6 +606,8 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public final boolean containsAny(Item... check) {
 		for(Item it : check) {
+			if(it == null)
+				continue;
 			for(Item item : items) {
 				if(item == null)
 					continue;

@@ -62,7 +62,7 @@ public class NpcMovementTask extends Task {
 			if(npc.getMovementQueue().isMovementDone()) {
 				if(!move.getBoundary().inside(npc.getPosition(), npc.size())) {
 					Path pathHome = World.getAStarPathFinder().find(npc, npc.getOriginalPosition());
-					if(pathHome.isPossible())
+					if(pathHome != null && pathHome.isPossible())
 						npc.getMovementQueue().walk(pathHome.getMoves());
 				} else {
 					Direction dir = RandomUtils.random(Direction.values());
@@ -74,7 +74,7 @@ public class NpcMovementTask extends Task {
 					boolean traversable = traverse.isTraversable(generated_random_position, boundary, dir, npc.size());
 					if(traversable) {
 						Path pathHome = World.getSimplePathFinder().find(npc, generated_random_position);
-						if(pathHome.isPossible())
+						if(pathHome != null && pathHome.isPossible())
 							npc.getMovementQueue().walk(pathHome.getMoves());
 						else
 							break;

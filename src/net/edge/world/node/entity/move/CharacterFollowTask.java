@@ -137,17 +137,17 @@ class CharacterFollowTask extends Task {
 		}
 		
 		//returns if path calculated is next to the leader.
-		if(destination != null && boundary.within(destination, leader.size(), leader.size())) {
+		if(destination != null && boundary.within(destination, leader.size(), character.size())) {
 			return;
 		}
 		
 		//Setting new path depending on the follower's type.
 		Path path = character.isPlayer() || (character.isNpc() && character.toNpc().isSmart()) ? World.getAStarPathFinder().find(character, leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
-		if(path.isPossible()) {
+		if(path != null && path.isPossible()) {
+			destination = path.getDestination();
 			//removing the points overlapping the leader's boundaries.
 			while(boundary.inside(path.poll(), leader.size()));
 			character.getMovementQueue().walk(path.getMoves());
-			destination = path.getDestination();
 		} else {
 			character.getMovementQueue().reset();
 			destination = null;

@@ -30,7 +30,6 @@ public final class DiggingHandler extends Task {
 	 */
 	public DiggingHandler(Player player, Consumer<Player> action) {
 		super(1, false);
-		
 		this.player = player;
 		this.action = action;
 	}

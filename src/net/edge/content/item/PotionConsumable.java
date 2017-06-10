@@ -500,10 +500,11 @@ public enum PotionConsumable {
 	private static void onBasicEffect(Player player, int skill, BoostType type) {
 		Skill s = player.getSkills()[skill];
 		int realLevel = s.getRealLevel();
+		if(skill == Skills.HITPOINTS)
+			realLevel *= 10;//constitution check.
 		
 		int boostLevel = Math.round(realLevel * type.getAmount() + type.getBase());
 		int cap = realLevel + boostLevel;
-		
 		if((s.getLevel() + boostLevel) > (realLevel + boostLevel + 1)) {
 			boostLevel = (realLevel + boostLevel) - s.getLevel();
 		}

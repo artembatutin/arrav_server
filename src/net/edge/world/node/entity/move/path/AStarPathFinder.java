@@ -68,19 +68,18 @@ public final class AStarPathFinder extends PathFinder {
 		Node active;
 		
 		int distance = (int) origin.getDistance(target);
-		
+		boolean found = false;
 		int count = 0, count2 = 0;
 		do {
 			active = getCheapest(sorted);
 			Position position = active.getPosition();
 			if(position.same(target)) {
-				break;// found
-			}
-			if(count++ > 32 * 20 + 1) {
-				//System.out.println("Taking too long 1, breaking. Avoided while-loop deadlock.");
+				found = true;
 				break;
 			}
-			
+			if(count++ > 32 * 20 + 1) {
+				break;
+			}
 			open.remove(active);
 			active.close();
 			
@@ -97,21 +96,23 @@ public final class AStarPathFinder extends PathFinder {
 		} while(!open.isEmpty() && sorted.size() < distance * 20);
 		
 		Deque<Position> shortest = new ArrayDeque<>();
-		if(end.hasParent())
-			active = end;
-		
-		if(active.hasParent()) {
-			Position position = active.getPosition();
-			
-			while(!origin.same(position)) {
-				shortest.addFirst(position);
-				active = active.getParent(); // If the target has a parent then all of the others will.
-				position = active.getPosition();
-				if(count2++ > 100) {
-					break;
+		if(found) {
+			if(end.hasParent())
+				active = end;
+			if(active.hasParent()) {
+				Position position = active.getPosition();
+				
+				while(!origin.same(position)) {
+					shortest.addFirst(position);
+					active = active.getParent(); // If the target has a parent then all of the others will.
+					position = active.getPosition();
+					if(count2++ > 100) {
+						break;
+					}
 				}
 			}
-		}
+		} else
+			return null;
 		return new Path(shortest);
 	}
 	

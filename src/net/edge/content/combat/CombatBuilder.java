@@ -214,7 +214,7 @@ public final class CombatBuilder {
 	 * character, {@code false} otherwise.
 	 */
 	public boolean isBeingAttacked() {
-		return aggressor != null && pjingCheck();
+		return aggressor != null || pjingCheck();
 	}
 	
 	/**

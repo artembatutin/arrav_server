@@ -337,9 +337,9 @@ public final class Equipment extends ItemContainer {
 			int older = oldBonuses == null ? 0 : oldBonuses.length;
 			int newer = newBonuses == null ? 0 : newBonuses.length;
 			for(int i = 0; i < (older > newer ? older : newer); i++) {
-				if(oldBonuses != null && oldBonuses.length <= i)
+				if(oldBonuses != null && oldBonuses.length > i)
 					bonuses[i] -= oldBonuses[i];
-				if(newBonuses != null && newBonuses.length <= i)
+				if(newBonuses != null && newBonuses.length > i)
 					bonuses[i] += newBonuses[i];
 			}
 		}

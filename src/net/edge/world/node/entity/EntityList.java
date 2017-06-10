@@ -259,8 +259,9 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 			indices.offer(normal);
 			entities[normal] = null;
 		}
-		entity.setState(NodeState.INACTIVE);
 		size--;
+		entity.setState(NodeState.INACTIVE);
+		System.out.println("removed: " + entity.toString() + " size is : " + size);
 		if(entity.isPlayer()) {
 			Player player = entity.toPlayer();
 			player.getSession().flushQueue();

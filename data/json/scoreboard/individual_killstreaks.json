@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "username": "Muppet",
+    "highest-killstreak": 1,
+    "current-killstreak": 1,
+    "kills": 1,
+    "deaths": 0
+  },
+  {
+    "username": "Romeo",
+    "highest-killstreak": 0,
+    "current-killstreak": 0,
+    "kills": 0,
+    "deaths": 1
+  }
+]
