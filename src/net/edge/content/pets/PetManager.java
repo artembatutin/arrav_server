@@ -50,6 +50,23 @@ public final class PetManager {
 	}
 	
 	/**
+	 * The player's pet has reaching the growing stage.
+	 */
+	public void progressed() {
+		if(pet == null)
+			return;
+		Optional<PetData> next = pet.getProgress().getData().getPolicy().getNext();
+		if(next.isPresent()) {
+			PetData data = next.get();
+			Pet pet = new Pet(data, this.pet.getPosition());
+			Pet.onLogout(player);
+			this.pet = pet;
+			Pet.onLogin(player);
+			player.message("Your pet has gone bigger!");
+		}
+	}
+	
+	/**
 	 * Resets the current pet the player has spawned.
 	 */
 	public void reset() {

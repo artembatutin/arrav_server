@@ -21,7 +21,7 @@ public final class PetProgress {
 	}
 	
 	public void updateHunger() {
-		this.hunger += this.data.getStage() == 0 ? 0.025 : 0.018;
+		this.hunger += this.data.getStage() == 0 ? 2.5 : 4.18;
 		if(this.hunger < 0.0) {
 			this.hunger = 0.0;
 		} else if(growth > 100.0) {
@@ -31,15 +31,6 @@ public final class PetProgress {
 	
 	public double getGrowth() {
 		return growth;
-	}
-	
-	public void addGrowth(double amount) {
-		this.growth += amount;
-		if(this.growth < 0.0) {
-			this.growth = 0.0;
-		} else if(growth > 100.0) {
-			this.growth = 100.0;
-		}
 	}
 	
 	public void updateGrowth() {

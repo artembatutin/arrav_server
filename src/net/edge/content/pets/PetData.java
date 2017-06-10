@@ -2,6 +2,7 @@ package net.edge.content.pets;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.world.node.item.Item;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -14,7 +15,17 @@ import java.util.Optional;
 public enum PetData {
 	BLACK_AND_GREY_OVERGROWN_CAT(2, new PetPolicy(1567, 774, null), PetType.CAT),
 	BLACK_AND_GREY_CAT(1, new PetPolicy(1561, 768, BLACK_AND_GREY_OVERGROWN_CAT), PetType.CAT),
-	BLACK_AND_GREY_KITTEN(0, new PetPolicy(1555, 761, BLACK_AND_GREY_CAT), PetType.CAT);
+	BLACK_AND_GREY_KITTEN(0, new PetPolicy(1555, 761, BLACK_AND_GREY_CAT), PetType.CAT),
+	
+	//bosses
+	ABYSSAL_ORPHAN(0, new PetPolicy(3904, 3167, null), PetType.ABYSSAL_ORPHAN),
+	JAD_JADIKU(0, new PetPolicy(3906, 3168, null), PetType.JAD_JADIKU),
+	TORAM(0, new PetPolicy(3908, 3169, null), PetType.TORAM),
+	WYRMY(0, new PetPolicy(3910, 3170, null), PetType.WYRMY),
+	KRAA(0, new PetPolicy(3912, 3177, null), PetType.KRAA),
+	GRARY(0, new PetPolicy(3914, 3178, null), PetType.GRARY),
+	ZILZY(0, new PetPolicy(3918, 3180, null), PetType.ZILZY),
+	;
 	
 	/**
 	 * Caches our enum values.
