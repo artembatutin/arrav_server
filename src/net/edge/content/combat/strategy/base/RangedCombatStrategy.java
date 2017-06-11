@@ -151,7 +151,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		}
 
 //			CombatRangedWeapon rangedWeapon = player.getRangedDetails().getWeapon().get();
-//			boolean droppable = !rangedWeapon.getType().isSpecialBow() && CombatRangedAmmoDefinition.NON_DROPPABLE.stream().noneMatch(rangedWeapon.getAmmunition().getDefinition()::equals);
+//			boolean droppable = !rangedWeapon.getType().isSpecialBow() && CombatRangedAmmoDefinition.NON_DROPPABLE.stream().noneMatch(rangedWeapon.getAmmunition().getDefinition()::same);
 //
 //			if(rangedWeapon.getAmmunition().getItem().getAmount() > 0 && droppable) {
 //				if (RandomUtils.inclusive(10) <= 1) {//attempting to drop ammo.

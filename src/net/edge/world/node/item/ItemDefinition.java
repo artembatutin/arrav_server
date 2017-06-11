@@ -418,7 +418,7 @@ public final class ItemDefinition {
 				//System.out.println(check);
 				int index = Integer.parseInt(check.split("-")[0]);
 				String itemName = check.split("-")[1];
-				if(itemName.equals("null"))
+				if(itemName.same("null"))
 					continue;
 				itemName = itemName.toLowerCase();
 				
@@ -583,7 +583,7 @@ public final class ItemDefinition {
 											continue;
 										if(def.getName() == null)
 											continue;
-										if(npc.equals(def.getName().toLowerCase().replace(" ", ""))) {
+										if(npc.same(def.getName().toLowerCase().replace(" ", ""))) {
 											if(combat[0] != -1) {
 												for(int comb : combat) {
 													if(comb == 0)

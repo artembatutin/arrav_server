@@ -1,7 +1,6 @@
 package net.edge.content.combat;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.edge.Server;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.effect.CombatEffect;
@@ -205,7 +204,7 @@ public final class Combat {
 		for(E c : victims) {
 			if(c == null)
 				continue;
-			if(!c.getPosition().withinDistance(position, radius) || c.equals(attacker) || c.equals(attacker.getCombatBuilder().getVictim()) || c.getCurrentHealth() <= 0 || c.isDead())
+			if(!c.getPosition().withinDistance(position, radius) || c.same(attacker) || c.same(attacker.getCombatBuilder().getVictim()) || c.getCurrentHealth() <= 0 || c.isDead())
 				continue;
 			CombatSessionData data = new CombatSessionData(attacker, c, hits, type, checkAccuracy);
 			c.getCombatBuilder().getDamageCache().add(attacker, data.attack());
@@ -1105,7 +1104,7 @@ public final class Combat {
 				continue;
 			}
 			
-			if(character.getPosition().withinDistance(node.getPosition(), radius) && !character.equals(node) && character.getCurrentHealth() > 0 && !character.isDead())
+			if(character.getPosition().withinDistance(node.getPosition(), radius) && !character.same(node) && character.getCurrentHealth() > 0 && !character.isDead())
 				list.add(character);
 		}
 		

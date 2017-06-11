@@ -139,13 +139,13 @@ public final class CombatSession extends Task {
 				return false;
 			}
 		}
-		if(!Location.inMultiCombat(builder.getCharacter()) && builder.isBeingAttacked() && !builder.getVictim().equals(builder.getAggressor())) {
+		if(!Location.inMultiCombat(builder.getCharacter()) && builder.isBeingAttacked() && !builder.getVictim().same(builder.getAggressor())) {
 			if(builder.getCharacter().isPlayer())
 				builder.getCharacter().toPlayer().message("You are already under attack!");
 			builder.reset();
 			return false;
 		}
-		if(!Location.inMultiCombat(builder.getCharacter()) && builder.getVictim().getCombatBuilder().isBeingAttacked() && !builder.getVictim().getCombatBuilder().getAggressor().equals(builder.getCharacter())) {
+		if(!Location.inMultiCombat(builder.getCharacter()) && builder.getVictim().getCombatBuilder().isBeingAttacked() && !builder.getVictim().getCombatBuilder().getAggressor().same(builder.getCharacter())) {
 			if(builder.getCharacter().isPlayer())
 				builder.getCharacter().toPlayer().message("They are already under attack!");
 			builder.reset();

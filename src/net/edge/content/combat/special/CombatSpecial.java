@@ -192,7 +192,7 @@ public enum CombatSpecial {
 						for(EntityNode character : local) {
 							if(character == null)
 								continue;
-							if(character.getPosition().withinDistance(target.getPosition(), 1) && !character.equals(target) && !character.equals(player) && character.getCurrentHealth() > 0 && !character.isDead()) {
+							if(character.getPosition().withinDistance(target.getPosition(), 1) && !character.same(target) && !character.same(player) && character.getCurrentHealth() > 0 && !character.isDead()) {
 								Hit hit = Combat.calculateRandomHit(player, target, CombatType.MELEE, 0, true);
 								character.damage(hit);
 								character.getCombatBuilder().getDamageCache().add(player, hit.getDamage());

@@ -20,7 +20,7 @@ public final class FollowPlayerPacket implements PacketReader {
 		int index = payload.getShort(false, ByteOrder.LITTLE);
 		Player follow = World.get().getPlayers().get(index - 1);
 		
-		if(follow == null || !follow.getPosition().isViewableFrom(player.getPosition()) || follow.equals(player))
+		if(follow == null || !follow.getPosition().isViewableFrom(player.getPosition()) || follow.same(player))
 			return;
 		player.getMovementQueue().follow(follow);
 		player.getActivityManager().execute(ActivityManager.ActivityType.FOLLOW_PLAYER);

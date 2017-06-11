@@ -70,7 +70,7 @@ public final class RequestPacket implements PacketReader {
 	 * otherwise.
 	 */
 	private boolean validate(Player player, Player other) {
-		if(!other.getPosition().isViewableFrom(player.getPosition()) || other.equals(player))
+		if(!other.getPosition().isViewableFrom(player.getPosition()) || other.same(player))
 			return false;
 		return true;
 	}

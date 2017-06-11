@@ -942,7 +942,9 @@ public final class PacketWriter {
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 51, MessageType.VARIABLE);
 		msg.putShort(members.size());
 		for(ClanMember m : members) {
-			msg.putString(m.getRank().toIcon(player, m.getPlayer()) + (m.isMuted() ? "@red@" : "") + m.getPlayer().getUsername());
+			msg.putString(m.getPlayer().getUsername());
+			msg.put(m.isMuted() ? 1 : 0);
+			msg.put(m.getRank().toIcon(player, m.getPlayer()));
 		}
 		player.queue(msg);
 		
@@ -957,7 +959,9 @@ public final class PacketWriter {
 			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 52, MessageType.VARIABLE);
 		msg.putShort(bans.size());
-		bans.forEach(msg::putString);
+		for(String s : bans) {
+			msg.putString(s);
+		}
 		player.queue(msg);
 		
 	}

@@ -268,7 +268,7 @@ public final class DuelMinigame extends Minigame {
 		if(victim.getType().equals(NodeType.NPC)) {
 			return true;
 		}
-		if(!session.getOther(player).equals(victim)) {
+		if(!session.getOther(player).same(victim)) {
 			player.message("You can't attack this person.");
 			return false;
 		}

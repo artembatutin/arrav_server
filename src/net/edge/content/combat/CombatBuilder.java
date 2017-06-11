@@ -85,13 +85,13 @@ public final class CombatBuilder {
 	 */
 	public void attack(EntityNode target) {
 		
-		if(character.equals(target))
+		if(character.same(target))
 			return;
 		
 		if(character.isPlayer() && target.isNpc() && character.toPlayer().getRights().equals(Rights.DEVELOPER)) {
 			character.toPlayer().message("[DEBUG NPC ID] Npc = " + target.toNpc().getId() + ", position = " + target.toNpc().getPosition().toString());
 		}
-		if(target.equals(currentVictim)) {
+		if(target.same(currentVictim)) {
 			determineStrategy();
 			if(new Boundary(character.getPosition(), character.size()).within(currentVictim.getPosition(), currentVictim.size(), strategy.attackDistance(character))) {
 				character.getMovementQueue().reset();
@@ -141,17 +141,23 @@ public final class CombatBuilder {
 			distanceTask.cancel();
 		if(combatTask != null)
 			combatTask.cancel();
+		if(currentVictim != null) {
+			EntityNode aggressor = currentVictim.getCombatBuilder().getAggressor();
+			if(aggressor.same(character))
+				aggressor.getCombatBuilder().setAggressor(null);
+		}
 		currentVictim = null;
 		combatTask = null;
 		combatType = null;
-		attackTimer = 0;
 		strategy = null;
 		cooldown = 0;
+		attackTimer = 0;
 		character.faceEntity(null);
 		character.setFollowing(false);
 		if(character.isNpc() && !character.isDead()) {
 			character.getMovementQueue().smartWalk(character.toNpc().getOriginalPosition());
 		}
+		
 	}
 	
 	/**
@@ -394,7 +400,7 @@ public final class CombatBuilder {
 				return false;
 			}
 			
-			if(!Location.inMultiCombat(builder.getCharacter()) && victim.getCombatBuilder().isBeingAttacked() && !victim.getCombatBuilder().getAggressor().equals(builder.getCharacter())) {
+			if(!Location.inMultiCombat(builder.getCharacter()) && victim.getCombatBuilder().isBeingAttacked() && !victim.getCombatBuilder().getAggressor().same(builder.getCharacter())) {
 				if(builder.getCharacter().isPlayer())
 					builder.getCharacter().toPlayer().message("They are already under attack!");
 				builder.reset();
