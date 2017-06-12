@@ -84,6 +84,11 @@ public enum Direction {
 	private final int opposite;
 	
 	/**
+	 * Flag if this direction is diagonal.
+	 */
+	private final boolean diagonal;
+	
+	/**
 	 * Creates a new {@link Direction}.
 	 * @param id       the identification of this direction.
 	 * @param x        the {@code x} movement of this direction.
@@ -95,6 +100,7 @@ public enum Direction {
 		this.x = x;
 		this.y = y;
 		this.opposite = opposite;
+		this.diagonal = name().contains("_");
 	}
 	
 	/**
@@ -130,6 +136,14 @@ public enum Direction {
 	}
 	
 	/**
+	 * Gets the {@code diagonal} flag from this direction.
+	 * @return diagonal flag.
+	 */
+	public final boolean isDiagonal() {
+		return diagonal;
+	}
+	
+	/**
 	 * Returns a {@link Direction} wrapped in an {@link Optional}
 	 * for the specified {@code id}.
 	 * @param id The game object orientation id.
@@ -141,12 +155,36 @@ public enum Direction {
 	
 	/**
 	 * Creates a direction from the differences between X and Y.
-	 * @param deltaX The difference between two X coordinates.
-	 * @param deltaY The difference between two Y coordinates.
+	 * @param dx The difference between two X coordinates.
+	 * @param dy The difference between two Y coordinates.
 	 * @return The direction.
 	 */
-	public static Direction fromDeltas(int deltaX, int deltaY) {
-		return fromDeltas(new Position(deltaX, deltaY));
+	public static Direction fromDeltas(int dx, int dy) {
+		if(dx < 0) {
+			if(dy < 0) {
+				return SOUTH_WEST;
+			} else if(dy > 0) {
+				return NORTH_WEST;
+			} else {
+				return WEST;
+			}
+		} else if(dx > 0) {
+			if(dy < 0) {
+				return SOUTH_EAST;
+			} else if(dy > 0) {
+				return NORTH_EAST;
+			} else {
+				return EAST;
+			}
+		} else {
+			if(dy < 0) {
+				return SOUTH;
+			} else if(dy > 0) {
+				return NORTH;
+			} else {
+				return NONE;
+			}
+		}
 	}
 	
 	/**

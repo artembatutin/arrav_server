@@ -69,7 +69,7 @@ public class ItemNode extends Node {
 		switch(state) {
 			case SEEN_BY_OWNER:
 				World.getRegions().getAllSurroundingRegions(getPosition().getRegion()).forEach(r -> r.getPlayers().forEach((i, p) -> {
-					if(!p.equals(player) && p.getPosition().getZ() == super.getPosition().getZ() && p.getInstance() == super.getInstance())
+					if(!p.same(player) && p.getPosition().getZ() == super.getPosition().getZ() && p.getInstance() == super.getInstance())
 						p.getMessages().sendGroundItem(new ItemNode(item, super.getPosition(), null));
 				}));
 				player = null;

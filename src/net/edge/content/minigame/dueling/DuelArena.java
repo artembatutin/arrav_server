@@ -119,7 +119,7 @@ package net.edge.content.minigame.dueling;
 //		} else {
 //			CombatType type = player.getCombatBuilder().getStrategy().getCombatType();
 //			if(player.getDuelSession().rules.has(DuelingRules.WHIP_DDS_ONLY.value)) {
-//				if(!type.equals(CombatType.MELEE)) {
+//				if(!type.same(CombatType.MELEE)) {
 //					player.message("You can only hit the opponent with a whip or dds.");
 //					return false;
 //				}
@@ -129,19 +129,19 @@ package net.edge.content.minigame.dueling;
 //				}
 //			}
 //			if(player.getDuelSession().rules.has(DuelingRules.NO_MAGIC.value)) {
-//				if(type.equals(CombatType.MAGIC)) {
+//				if(type.same(CombatType.MAGIC)) {
 //					player.message("Magical attacks have been disabled during this duel.");
 //					return false;
 //				}
 //			}
 //			if(player.getDuelSession().rules.has(DuelingRules.NO_RANGED.value)) {
-//				if(type.equals(CombatType.RANGED)) {
+//				if(type.same(CombatType.RANGED)) {
 //					player.message("Ranged attacks have been disabled during this duel.");
 //					return false;
 //				}
 //			}
 //			if(player.getDuelSession().rules.has(DuelingRules.NO_MELEE.value)) {
-//				if(type.equals(CombatType.MELEE)) {
+//				if(type.same(CombatType.MELEE)) {
 //					player.message("Melee attacks have been disabled during this duel.");
 //					return false;
 //				}
@@ -194,7 +194,7 @@ package net.edge.content.minigame.dueling;
 //				return false;
 //			}
 //			player.getDialogueChain().append(new OptionDialogue(t -> {
-//				if(t.equals(OptionType.FIRST_OPTION)) {
+//				if(t.same(OptionType.FIRST_OPTION)) {
 //					this.applyWin(player, rival, false);
 //				}
 //			}, "Yes, I want to forfeit.", "Nevermind."));
@@ -284,11 +284,11 @@ package net.edge.content.minigame.dueling;
 //			player.message("They are already in a dueling session!");
 //			return;
 //		}
-//		if(player.equals(other)) {
+//		if(player.same(other)) {
 //			player.message("You cannot initiate a duel session with yourself!");
 //			return;
 //		}
-//		if(player.equals(other.getDuelSession().rival)) {
+//		if(player.same(other.getDuelSession().rival)) {
 //			this.rival = other;
 //			other.getDuelSession().rival = player;
 //			player.getDuelSession().stage = DuelStage.OFFER;

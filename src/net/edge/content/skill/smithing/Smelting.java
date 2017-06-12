@@ -125,6 +125,7 @@ public final class Smelting extends ProducingSkillAction {
 			}
 		};
 		for(int o : FURNACE_IDS) {
+			smelt.registerFirst(o);
 			smelt.registerSecond(o);
 		}
 	}

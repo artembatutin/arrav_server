@@ -69,11 +69,12 @@ public final class Enchanting extends ProducingSkillAction {
 		if(data == null) {
 			return false;
 		}
-		
 		if(interfaceId != 3186) {
 			return false;
 		}
-		
+		if(player.getSkillActionTask().isPresent()) {
+			return false;
+		}
 		if(!data.canCast(player, item)) {
 			return false;
 		}

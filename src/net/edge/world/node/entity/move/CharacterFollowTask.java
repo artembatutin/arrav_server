@@ -54,7 +54,7 @@ class CharacterFollowTask extends Task {
 		//Familiar calling back.
 		boolean familiar = false;
 		if(character.isNpc()) {
-			Npc npc = (Npc) character;
+			Npc npc = character.toNpc();
 			if(npc.isFamiliar() || npc.isPet()) {
 				if(!character.getPosition().withinDistance(leader.getPosition(), 15)) {
 					if(leader.isPlayer()) {
@@ -94,13 +94,18 @@ class CharacterFollowTask extends Task {
 			return;
 		}
 		
+		Boundary boundary = new Boundary(leader.getPosition(), leader.size());
+		
 		//Randomized walk away from leader's tile.
-		if(new Boundary(leader.getPosition(), leader.size()).inside(character.getPosition(), character.size())) {
-			character.getMovementQueue().reset();
-			ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(leader.getPosition(), leader.size(), character.size());
-			if(pos.size() > 0) {
-				Position p = RandomUtils.random(pos);
-				character.getMovementQueue().walk(p);
+		if(boundary.inside(character.getPosition(), character.size())) {
+			//Only moving when movement is done.
+			if(character.getMovementQueue().isMovementDone()) {
+				character.getMovementQueue().reset();
+				ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(leader.getPosition(), leader.size(), character.size());
+				if(pos.size() > 0) {
+					Position p = RandomUtils.random(pos);
+					character.getMovementQueue().walk(p);
+				}
 			}
 			return;
 		}
@@ -109,7 +114,6 @@ class CharacterFollowTask extends Task {
 		if(character.getCombatBuilder().isAttacking()) {
 			if(character.isPlayer()) {
 				character.getCombatBuilder().determineStrategy();
-				
 				if(Combat.checkAttackDistance(character.getCombatBuilder())) {
 					return;
 				}
@@ -117,31 +121,33 @@ class CharacterFollowTask extends Task {
 		}
 		
 		//Resets if character next to the player.
-		if(new Boundary(leader.getPosition(), leader.size()).within(character.getPosition(), character.size(), 1)) {
+		if(boundary.within(character.getPosition(), character.size(), 1)) {
 			character.getMovementQueue().reset();
 			//Combat diagonal fighting.
 			if(character.getCombatBuilder().isAttacking()) {
 				Direction facing = Direction.fromDeltas(Position.delta(character.getPosition(), leader.getPosition()));
-				if(facing.toString().contains("_")) {//Diagonal
-					Optional<Position> pos = World.getTraversalMap().getNonDiagonalNearbyTraversableTiles(character.getPosition(), character.size()).stream().filter(p -> new Boundary(leader.getPosition(), leader.size()).within(p, character.size(), 1)).findFirst();
-					if(pos.isPresent())
-						character.getMovementQueue().walk(pos.get());
+				if(facing.isDiagonal()) {//Moving player if diagonal fighting
+					Position pos = World.getTraversalMap().getRandomNearby(character.getPosition(), leader.getPosition(), character.size());
+					if(pos != null)
+						character.getMovementQueue().walk(pos);
 				}
 				return;
 			}
 			return;
 		}
 		
-		//returns if path calculate is next to the leader.
-		if(destination != null && new Boundary(leader.getPosition(), leader.size()).inside(destination, character.size())) {
+		//returns if path calculated is next to the leader.
+		if(destination != null && boundary.within(destination, leader.size(), character.size())) {
 			return;
 		}
 		
-		//Setting new path.
+		//Setting new path depending on the follower's type.
 		Path path = character.isPlayer() || (character.isNpc() && character.toNpc().isSmart()) ? World.getAStarPathFinder().find(character, leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
-		if(path.isPossible()) {
-			character.getMovementQueue().walk(path.getMoves());
+		if(path != null && path.isPossible()) {
 			destination = path.getDestination();
+			//removing the points overlapping the leader's boundaries.
+			while(boundary.inside(path.poll(), leader.size()));
+			character.getMovementQueue().walk(path.getMoves());
 		} else {
 			character.getMovementQueue().reset();
 			destination = null;

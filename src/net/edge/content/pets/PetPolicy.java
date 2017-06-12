@@ -10,12 +10,15 @@ public final class PetPolicy {
 	
 	private final int npcId;
 	
+	private final boolean last;
+	
 	private final Optional<PetData> next;
 	
 	PetPolicy(int itemId, int npcId, PetData next) {
 		this.item = new Item(itemId);
 		this.npcId = npcId;
 		this.next = next == null ? Optional.empty() : Optional.of(next);
+		this.last = next == null;
 	}
 	
 	public Item getItem() {
@@ -29,4 +32,9 @@ public final class PetPolicy {
 	public Optional<PetData> getNext() {
 		return next;
 	}
+	
+	public boolean isLast() {
+		return last;
+	}
+	
 }

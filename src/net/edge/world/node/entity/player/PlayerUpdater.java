@@ -54,7 +54,7 @@ public final class PlayerUpdater {
 			for(Player other : World.getRegions().getPriorityPlayers(player)) {
 				if(added == 15 || player.getLocalPlayers().size() >= 255)
 					break;
-				if(other == null || other.equals(player))
+				if(other == null || other.same(player))
 					continue;
 				if(other.getState() != NodeState.ACTIVE)
 					continue;

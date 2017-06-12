@@ -258,7 +258,7 @@ public abstract class ExchangeSession {
 	 */
 	public Player getOther(Player player) {
 		for(Player p : players) {
-			if(player.equals(p))
+			if(player.same(p))
 				continue;
 			return p;
 		}

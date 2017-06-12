@@ -87,7 +87,7 @@ public final class AttackPlayerPacket implements PacketReader {
 	 * @return {@code true} if an attack can be made, {@code false} otherwise.
 	 */
 	private boolean checkAttack(Player attacker, Player victim) {
-		if(victim == null || victim.equals(attacker))
+		if(victim == null || victim.same(attacker))
 			return false;
 		if(!Location.inMultiCombat(attacker) && attacker.getCombatBuilder().isBeingAttacked() && attacker.getCombatBuilder().getAggressor() != victim && attacker.getCombatBuilder().pjingCheck()) {
 			attacker.message("You are already under attack!");

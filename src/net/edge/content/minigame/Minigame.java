@@ -336,6 +336,15 @@ public abstract class Minigame {
 	}
 	
 	/**
+	 * Does an action on a player before starting teleport.
+	 * @param player player teleporting out.
+	 * @param position position teleporting to.
+	 */
+	public void onTeleportBefore(Player player, Position position) {
+		player.setInstance(0);
+	}
+	
+	/**
 	 * Determines if {@code player} can keep their items on death.
 	 * @param player the player attempting to keep their items.
 	 * @return <true> if the player can keep their items, <false> otherwise.

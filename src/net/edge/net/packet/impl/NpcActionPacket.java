@@ -232,7 +232,7 @@ public final class NpcActionPacket implements PacketReader {
 	private boolean checkAttack(Player player, Npc npc) {
 		if(!NpcDefinition.DEFINITIONS[npc.getId()].isAttackable())
 			return false;
-		if(!Location.inMultiCombat(player) && player.getCombatBuilder().isBeingAttacked() && !npc.equals(player.getCombatBuilder().getAggressor())) {
+		if(!Location.inMultiCombat(player) && player.getCombatBuilder().isBeingAttacked() && !npc.same(player.getCombatBuilder().getAggressor())) {
 			player.message("You are already under attack!");
 			return false;
 		}

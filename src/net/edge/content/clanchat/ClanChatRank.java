@@ -66,13 +66,13 @@ public enum ClanChatRank {
 	 * @param player the player to be checked for friendship..
 	 * @return the formatted icon format
 	 */
-	public String toIcon(Player parent, Player player) {
+	public int toIcon(Player parent, Player player) {
 		if(player.getClan().get().getRank() == MEMBER) {
 			if(parent.getFriends().contains(player.getUsernameHash())) {
-				return "@ra1@";
+				return 1;
 			}
 		}
-		return !this.equals(MEMBER) ? "@ra" + this.ordinal() + "@" : "";
+		return this.ordinal();
 	}
 	
 	/**

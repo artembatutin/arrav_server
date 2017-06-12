@@ -190,18 +190,12 @@ public final class BowCarving extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		if(!checkFletching()) {
-			return false;
-		}
-		return true;
+		return checkFletching();
 	}
 	
 	@Override
 	public boolean canExecute() {
-		if(!checkFletching()) {
-			return false;
-		}
-		return true;
+		return checkFletching();
 	}
 	
 	@Override
@@ -265,7 +259,7 @@ public final class BowCarving extends ProducingSkillAction {
 		OAK(1521, new ProduciblePolicy(54, 20, 16.5, FIRST_THREE_MENU), new ProduciblePolicy(56, 25, 25, SECOND_THREE_MENU), new ProduciblePolicy(9442, 24, 16.0, THIRD_THREE_MENU)),
 		WILLOW(1519, new ProduciblePolicy(60, 35, 33.3, FIRST_THREE_MENU), new ProduciblePolicy(58, 40, 41.5, SECOND_THREE_MENU), new ProduciblePolicy(9444, 39, 22, THIRD_THREE_MENU)),
 		MAPLE(1517, new ProduciblePolicy(64, 50, 50, FIRST_THREE_MENU), new ProduciblePolicy(62, 55, 58.3, SECOND_THREE_MENU), new ProduciblePolicy(9448, 54, 32, THIRD_THREE_MENU)),
-		YEW(1515, new ProduciblePolicy(68, 65, 67.5, FIRST_THREE_MENU), new ProduciblePolicy(66, 70, 75), new ProduciblePolicy(9452, 69, 50)),
+		YEW(1515, new ProduciblePolicy(68, 65, 67.5, FIRST_THREE_MENU), new ProduciblePolicy(66, 70, 75, SECOND_THREE_MENU), new ProduciblePolicy(9452, 69, 50, THIRD_THREE_MENU)),
 		MAGIC(1513, new ProduciblePolicy(72, 80, 83.3, new ButtonConfiguration(34170, 1), new ButtonConfiguration(34169, 5), new ButtonConfiguration(34168, 10), new ButtonConfiguration(34167, 28)), new ProduciblePolicy(70, 85, 91.5, new ButtonConfiguration(34174, 1), new ButtonConfiguration(34173, 5), new ButtonConfiguration(34172, 10), new ButtonConfiguration(34171, 28)));
 		
 		/**
@@ -309,6 +303,7 @@ public final class BowCarving extends ProducingSkillAction {
 		 * @return a producible policy wrapped in an optional, {@link Optional#empty()} otherwise.
 		 */
 		public static Optional<ProduciblePolicy> getProducibles(BowCarving bowCarving, int button) {
+			System.out.println(button);
 			for(Log log : VALUES) {
 				for(ProduciblePolicy pol : log.producibles) {
 					for(ButtonConfiguration buttons : pol.button) {
@@ -368,7 +363,7 @@ public final class BowCarving extends ProducingSkillAction {
 		private final ButtonConfiguration[] button;
 		
 		/**
-		 * Constructs a new {@link FletchingPolicy}.
+		 * Constructs a new {@link ProduciblePolicy}.
 		 * @param producible  {@link #producible}.
 		 * @param requirement {@link #requirement}.
 		 * @param experience  {@link #experience}.
@@ -382,7 +377,7 @@ public final class BowCarving extends ProducingSkillAction {
 		}
 		
 		/**
-		 * Constructs a new {@link FletchingPolicy}.
+		 * Constructs a new {@link ProduciblePolicy}.
 		 * @param producibleId {@link #producible}.
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.

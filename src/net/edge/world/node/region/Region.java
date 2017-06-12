@@ -1,6 +1,5 @@
 package net.edge.world.node.region;
 
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -166,7 +165,7 @@ public final class Region extends Node {
 					player.getMessages().sendGroundItem(item);
 					continue;
 				}
-				if(item.getPlayer().equals(player) && item.getItemState() == ItemState.SEEN_BY_OWNER) {
+				if(item.getPlayer().same(player) && item.getItemState() == ItemState.SEEN_BY_OWNER) {
 					player.getMessages().sendGroundItem(item);
 				}
 			}
@@ -244,7 +243,7 @@ public final class Region extends Node {
 					continue;
 				if(!next.getPosition().same(item.getPosition()))
 					continue;
-				if(next.getItem().getId() == item.getItem().getId() && next.getPlayer().equals(item.getPlayer())) {
+				if(next.getItem().getId() == item.getItem().getId() && next.getPlayer().same(item.getPlayer())) {
 					next.getItem().incrementAmountBy(item.getItem().getAmount());
 					if(next.getItem().getAmount() <= 5) {
 						next.dispose();

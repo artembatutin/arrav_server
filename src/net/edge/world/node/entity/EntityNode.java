@@ -217,7 +217,7 @@ public abstract class EntityNode extends Node {
 		super.setPosition(position);
 	}
 	
-	public boolean equals(EntityNode other) {
+	public boolean same(EntityNode other) {
 		return other != null && getType().equals(other.getType()) && getSlot() == other.getSlot();
 	}
 	
@@ -230,7 +230,7 @@ public abstract class EntityNode extends Node {
 		if(!(obj instanceof EntityNode))
 			return false;
 		EntityNode other = (EntityNode) obj;
-		return this.equals(other);
+		return this.same(other);
 	}
 	
 	@Override

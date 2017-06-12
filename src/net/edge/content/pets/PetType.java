@@ -1,10 +1,22 @@
 package net.edge.content.pets;
 
+import net.edge.content.item.FoodConsumable;
+
 public enum PetType {
-	CAT(0.0154320987654321, PetFoodType.FISH),
-	DOG(0.0033333333333333, PetFoodType.MEAT),
-	BIRD(0.00698888, PetFoodType.FISH),
-	DRAGON(0.0052, PetFoodType.FISH, PetFoodType.MEAT);
+	CAT(1.54320987654321, "Miew", PetFoodType.FISH),
+	DOG(0.33333333333333, "Wouf", PetFoodType.MEAT),
+	BIRD(0.698888, "Piw", PetFoodType.FISH),
+	DRAGON(0.52, "Rawr", PetFoodType.FISH, PetFoodType.MEAT),
+	
+	//bosses
+	ABYSSAL_ORPHAN("Pss"),
+	JAD_JADIKU("Warg"),
+	TORAM("Grrr"),
+	WYRMY("Whim"),
+	KRAA("Wsss"),
+	GRARY("Babadum"),
+	ZILZY("Leader"),
+	;
 	
 	/**
 	 * The growth rate for this pet.
@@ -14,15 +26,28 @@ public enum PetType {
 	/**
 	 * The food types for this pet.
 	 */
-	private final PetFoodType[] consumables;
+	private final PetFoodType[] foods;
+	
+	/**
+	 * Shouting message.
+	 */
+	private String shout;
+	
+	PetType(String shout) {
+		this.growthRate = 0;
+		this.shout = shout;
+		this.foods = new PetFoodType[]{PetFoodType.FISH, PetFoodType.MEAT};
+	}
 	
 	/**
 	 * Constructs a new {@link PetType}.
 	 * @param growthRate  {@link #growthRate}.
-	 * @param consumables {@link #consumables}.
+	 * @param shout {@link #shout}.
+	 * @param foods {@link #foods}.
 	 */
-	PetType(double growthRate, PetFoodType... consumables) {
-		this.consumables = consumables;
+	PetType(double growthRate, String shout, PetFoodType... foods) {
+		this.foods = foods;
+		this.shout = shout;
 		this.growthRate = growthRate;
 	}
 	
@@ -30,12 +55,24 @@ public enum PetType {
 		return growthRate;
 	}
 	
-	public PetFoodType[] getConsumables() {
-		return consumables;
+	public String getShout() {
+		return shout;
+	}
+	
+	public PetFoodType[] getFood() {
+		return foods;
 	}
 	
 	@Override
 	public String toString() {
 		return name().toLowerCase();
+	}
+	
+	public boolean eat(FoodConsumable eat) {
+		for(PetFoodType food : foods) {
+			if(food.possible(eat))
+				return true;
+		}
+		return false;
 	}
 }

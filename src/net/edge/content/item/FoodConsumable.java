@@ -97,7 +97,23 @@ public enum FoodConsumable {
 	PINEAPPLE_PIZZA(81, 2301, 2303),
 	PINEAPPLE_CHUNKS(20, 2116),
 	PINEAPPLE_RING(20, 2118),
-	ROCKTAIL(230, 15272),
+	ROCKTAIL(230, 15272) {
+		@Override
+		public int getHealAmount(Player player) {
+			int hp = player.getSkills()[Skills.HITPOINTS].getRealLevel() * 10;
+			if(hp < 120) {
+				return 30;
+			} else if(hp > 92) {
+				return 230;
+			} else {
+				return (int) (hp * 2.5);
+			}
+		}
+		@Override
+		public int maximumCap(Player player) {
+			return (int) (player.getMaximumHealth() * 1.10);
+		}
+	},
 	REDBERRY_PIE(12, 2325, 2333) {
 		@Override
 		public long getDelay() {
@@ -349,10 +365,7 @@ public enum FoodConsumable {
 	 * @param player the player that has consumed the food.
 	 */
 	public void onEffect(Player player) {
-		if(player.getCurrentHealth() >= player.getMaximumHealth()) {
-			return;
-		}
-		player.getSkills()[Skills.HITPOINTS].increaseLevel(getHealAmount(), player.getMaximumHealth());
+		player.getSkills()[Skills.HITPOINTS].increaseLevel(getHealAmount(player), maximumCap(player));
 	}
 	
 	/**
@@ -383,6 +396,15 @@ public enum FoodConsumable {
 	}
 	
 	/**
+	 * The max cap to heal hitpoints upon to.
+	 * @param player player eating.
+	 * @return hitpoints max cap.
+	 */
+	public int maximumCap(Player player) {
+		return player.getMaximumHealth();
+	}
+	
+	/**
 	 * Retrieves the chatbox message printed when a food is consumed. This
 	 * method may be overridden to provide a different functionality for foods
 	 * which have a different chatbox message.
@@ -396,7 +418,7 @@ public enum FoodConsumable {
 	 * Gets the amount of hit points this food heals.
 	 * @return the amount this food heals.
 	 */
-	public final int getHealAmount() {
+	public int getHealAmount(Player player) {
 		return healAmount;
 	}
 	

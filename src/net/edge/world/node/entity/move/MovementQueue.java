@@ -185,7 +185,7 @@ public final class MovementQueue {
 	 */
 	public void smartWalk(Position position) {
 		Path path = World.getAStarPathFinder().find(character, position);
-		if(path.isPossible()) {
+		if(path != null && path.isPossible()) {
 			walk(path.getMoves());
 		} else {
 			reset();
@@ -278,10 +278,10 @@ public final class MovementQueue {
 	 * @param leader the character being followed.
 	 */
 	public void follow(EntityNode leader) {
-		if(character.getFollowEntity() != null && character.getFollowEntity().equals(leader)) {
+		if(character.getFollowEntity() != null && character.getFollowEntity().same(leader)) {
 			return;
 		}
-		if(character.isFollowing() && !leader.equals(character.getFollowEntity())) {
+		if(character.isFollowing() && !leader.same(character.getFollowEntity())) {
 			character.faceEntity(null);
 			character.setFollowing(false);
 			character.setFollowEntity(null);

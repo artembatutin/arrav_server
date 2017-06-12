@@ -333,9 +333,10 @@ public final class ClickButtonPacket implements PacketReader {
 					break;
 				}
 				if(player.getActivityManager().contains(ActivityManager.ActivityType.LOG_OUT)) {
+					player.message("You can't log out right now.");
 					break;
 				}
-				World.get().logout(player, false);
+				World.get().queueLogout(player);
 				break;
 			case 153:
 			case 152:

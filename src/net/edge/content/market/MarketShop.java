@@ -336,6 +336,8 @@ public class MarketShop {
 		ItemDefinition def = ItemDefinition.get(item);
 		if(def == null)
 			return false;
+		if(def.isLended())
+			return false;
 		if(def.isNoted())
 			item = def.getNoted();
 		MarketItem marketItem = MarketItem.get(item);

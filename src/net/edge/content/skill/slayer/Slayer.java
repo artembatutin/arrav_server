@@ -2,6 +2,7 @@ package net.edge.content.skill.slayer;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.event.impl.ItemEvent;
 import net.edge.event.impl.NpcEvent;
 import net.edge.util.TextUtils;
@@ -24,6 +25,11 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/Stand+Up/">Stan</a>
  */
 public final class Slayer {
+	
+	/**
+	 * A map containing all the slayer masters with the possible tasks they can give.
+	 */
+	public static final ObjectList<SlayerBoss> SLAYER_BOSSES = new ObjectArrayList<>();
 	
 	/**
 	 * A map containing all the slayer masters with the possible tasks they can give.
@@ -56,6 +62,11 @@ public final class Slayer {
 	private final SlayerDifficulty difficulty;
 	
 	/**
+	 * Rewards for this slayer task.
+	 */
+	//private final Item[] rewards;
+	
+	/**
 	 * The amount of points received at the end of the task.
 	 */
 	public final int points;
@@ -73,7 +84,8 @@ public final class Slayer {
 		this.key = policy.getKey();
 		this.amount = RandomUtils.random(policy.getAmount());
 		this.difficulty = policy.getDifficulty();
-		this.points = (int) (amount * 0.2 * ((difficulty.ordinal() + 1) * 2.4));
+		//this.rewards = policy.getRewards();
+		this.points = (int) (amount * 0.4 * ((difficulty.getValue() + 1) * 2.4));
 	}
 	
 	/**
@@ -128,9 +140,7 @@ public final class Slayer {
 					player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "'Ello, and what are you after, then?"), new OptionDialogue(t -> {
 						if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 							Optional<Slayer> task = getTask(player, master);
-							
 							Dialogue[] dialogues = player.getSlayer().isPresent() ? new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "You already have a slayer task.", "Speak to me once you have completed it.")} : !task.isPresent() ? new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "There was no task found, please try again shortly.")} : new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "Excellent, you're doing great, your new task", "is to kill " + task.get().amount + " " + TextUtils.capitalize(task.get().getKey().toLowerCase() + ".")).attach(() -> player.setSlayer(Optional.of(task.get())))};
-							
 							player.getDialogueBuilder().append(dialogues);
 						} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
 							teleport(player, master);
@@ -139,7 +149,7 @@ public final class Slayer {
 						} else {
 							player.getDialogueBuilder().last();
 						}
-					}, "I need another assignment.", "I want to teleport to my assignment.", "Can I buy a slayer gem?", "Nevermind."), new PlayerDialogue("Can I buy a slayer gem?"), new NpcDialogue(master.getNpcId(), "Yes, it costs 10,000 gp."), new OptionDialogue(t -> {
+					}, "I need another assignment.", "I want to teleport to my assignment.", "Can I buy a slayer gem?", "Give me a boss task."), new PlayerDialogue("Can I buy a slayer gem?"), new NpcDialogue(master.getNpcId(), "Yes, it costs 10,000 gp."), new OptionDialogue(t -> {
 						if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 							player.getDialogueBuilder().advance();
 						} else {
@@ -180,7 +190,6 @@ public final class Slayer {
 		}
 		
 		Slayer slayer = player.getSlayer().get();
-		
 		if(!slayer.getKey().equals(npc.getDefinition().getSlayerKey())) {
 			return false;
 		}

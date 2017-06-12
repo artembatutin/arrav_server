@@ -377,6 +377,28 @@
     ]
   },
   {
+    "item": 13405,
+    "type": "LONGBOW",
+    "delay": 8,
+    "ammunitions": [
+      "BRONZE_ARROW",
+      "IRON_ARROW",
+      "STEEL_ARROW",
+      "MITHRIL_ARROW",
+      "BROAD_ARROW",
+      "ADAMANT_ARROW",
+      "RUNE_ARROW",
+      "DRAGON_ARROW",
+      "SARADOMIN_ARROW",
+      "GUTHIX_ARROW",
+      "ZAMORAK_ARROW",
+      "ABYSSALBANE_ARROW",
+      "BASILISKBANE_ARROW",
+      "DRAGONBANE_ARROW",
+      "WALLASALKIBANE_ARROW"
+    ]
+  },
+  {
     "item": 15701,
     "type": "LONGBOW",
     "delay": 8,

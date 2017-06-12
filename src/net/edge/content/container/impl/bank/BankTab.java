@@ -154,8 +154,8 @@ final class BankTab extends ItemContainer {
 		for(IndexedItem i : equip.toIndexedArray()) {
 			equip.unequip(i.getIndex(), player.getBank().container(player.getBank().contains(i.getId())), false);
 		}
-		equip.refresh(player, Equipment.EQUIPMENT_DISPLAY_ID);
 		forceRefresh(player);
+		equip.refresh();
 	}
 	
 	/**

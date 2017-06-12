@@ -50,6 +50,13 @@ public enum PotionConsumable {
 			player.applyOverloadEffect();
 		}
 	},
+	COMBAT(9739, 9741, 9743, 9745) {
+		@Override
+		public void onEffect(Player player) {
+			PotionConsumable.onBasicEffect(player, Skills.STRENGTH, BoostType.MODERATE);
+			PotionConsumable.onBasicEffect(player, Skills.ATTACK, BoostType.MODERATE);
+		}
+	},
 	EXTREME_STRENGTH(15312, 15313, 15314, 15315) {
 		@Override
 		public boolean canDrink(Player player) {
@@ -252,12 +259,12 @@ public enum PotionConsumable {
 		@Override
 		public void onEffect(Player player) {
 			PotionConsumable.onRestoreEffect(player, true);
-
+			
 			Skill skill = player.getSkills()[Skills.PRAYER];
 			int realLevel = skill.getRealLevel();
-
+			
 			skill.increaseLevel((int) Math.floor(8 + (realLevel * 0.25)), realLevel);
-
+			
 			Skills.refresh(player, Skills.PRAYER);
 		}
 	},
@@ -297,22 +304,22 @@ public enum PotionConsumable {
 			PotionConsumable.onAntiPoisonEffect(player, true, 500);
 		}
 	};
-
+	
 	/**
 	 * Caches our enum values.
 	 */
 	private static final ImmutableSet<PotionConsumable> VALUES = Sets.immutableEnumSet(EnumSet.allOf(PotionConsumable.class));
-
+	
 	/**
 	 * The default item representing the final potion dose.
 	 */
 	private static final Item VIAL = new Item(229);
-
+	
 	/**
 	 * The identifiers which represent this potion type.
 	 */
 	private final int[] ids;
-
+	
 	/**
 	 * Create a new {@link PotionConsumable}.
 	 * @param ids the identifiers which represent this potion type.
@@ -320,7 +327,7 @@ public enum PotionConsumable {
 	PotionConsumable(int... ids) {
 		this.ids = ids;
 	}
-
+	
 	public static void event() {
 		for(PotionConsumable potion : PotionConsumable.values()) {
 			ItemEvent e = new ItemEvent() {
@@ -353,7 +360,7 @@ public enum PotionConsumable {
 				e.registerInventory(p);
 		}
 	}
-
+	
 	/**
 	 * The method that executes the fishing potion action.
 	 * @param player the player to do this action for.
@@ -363,7 +370,7 @@ public enum PotionConsumable {
 		fishing.increaseLevelReal(3);
 		Skills.refresh(player, Skills.FISHING);
 	}
-
+	
 	/**
 	 * The method that executes the agility potion action.
 	 * @param player the player to do this action for.
@@ -373,7 +380,7 @@ public enum PotionConsumable {
 		agility.increaseLevelReal(3);
 		Skills.refresh(player, Skills.AGILITY);
 	}
-
+	
 	/**
 	 * The method that executes the Saradomin brew action.
 	 * @param player the player to do this action for.
@@ -393,7 +400,7 @@ public enum PotionConsumable {
 		ranged.decreaseLevelReal((int) Math.floor(0.10 * ranged.getRealLevel()));
 		Skills.refresh(player, Skills.ATTACK, Skills.STRENGTH, Skills.DEFENCE, Skills.HITPOINTS, Skills.RANGED, Skills.MAGIC);
 	}
-
+	
 	/**
 	 * The method that executes the Zamorak brew action.
 	 * @param player the player to do this action for.
@@ -411,7 +418,7 @@ public enum PotionConsumable {
 		prayer.increaseLevel((int) Math.floor(0.10 * prayer.getRealLevel()), prayer.getRealLevel());
 		Skills.refresh(player, Skills.ATTACK, Skills.STRENGTH, Skills.DEFENCE, Skills.HITPOINTS, Skills.PRAYER);
 	}
-
+	
 	/**
 	 * The method that executes the prayer potion action.
 	 * @param player        the player to do this action for.
@@ -420,12 +427,12 @@ public enum PotionConsumable {
 	private static void onPrayerEffect(Player player, boolean superPrayer) {
 		Skill skill = player.getSkills()[Skills.PRAYER];
 		int realLevel = skill.getRealLevel();
-
+		
 		skill.increaseLevel((int) Math.floor(7 + (realLevel * (superPrayer ? 0.35 : 0.25))), realLevel);
-
+		
 		Skills.refresh(player, Skills.PRAYER);
 	}
-
+	
 	/**
 	 * The method that executes the anti-poison potion action.
 	 * @param player      the player to do this action for.
@@ -453,7 +460,7 @@ public enum PotionConsumable {
 						if(player.getPoisonImmunity().get() <= 0)
 							this.cancel();
 					}
-
+					
 					@Override
 					public void onCancel() {
 						player.message("Your resistance to poison has worn off!");
@@ -466,7 +473,7 @@ public enum PotionConsumable {
 			}
 		}
 	}
-
+	
 	/**
 	 * The method that executes the energy potion action.
 	 * @param player      the player to do this action for.
@@ -478,7 +485,7 @@ public enum PotionConsumable {
 		player.setRunEnergy(player.getRunEnergy() + amount);
 		player.getMessages().sendRunEnergy();
 	}
-
+	
 	/**
 	 * The method that executes the restore potion action.
 	 * @param player the player to do this action for.
@@ -488,20 +495,20 @@ public enum PotionConsumable {
 			if((index == Skills.PRAYER) || (index == Skills.HITPOINTS)) {
 				continue;
 			}
-
+			
 			Skill skill = player.getSkills()[index];
 			int realLevel = skill.getRealLevel();
-
+			
 			if(skill.getLevel() >= realLevel) {
 				continue;
 			}
-
+			
 			int formula = superRestore ? (int) Math.floor(8 + (realLevel * 0.25)) : (int) Math.floor(10 + (realLevel * 0.30));
 			skill.increaseLevel(formula, realLevel);
 			Skills.refresh(player, index);
 		}
 	}
-
+	
 	/**
 	 * The method that executes the anti-fire potion action.
 	 * @param player       the player to do this action for.
@@ -511,7 +518,7 @@ public enum PotionConsumable {
 		player.message("You take a sip of the" + (superVariant ? " super" : "") + " antifire potion.");
 		Combat.effect(player, superVariant ? CombatEffectType.SUPER_ANTIFIRE_POTION : CombatEffectType.ANTIFIRE_POTION);
 	}
-
+	
 	/**
 	 * The method that executes the basic effect potion action that will
 	 * increment the level of {@code skill}.
@@ -520,6 +527,9 @@ public enum PotionConsumable {
 	private static void onBasicEffect(Player player, int skill, BoostType type) {
 		Skill s = player.getSkills()[skill];
 		int realLevel = s.getRealLevel();
+
+		if(skill == Skills.HITPOINTS)
+			realLevel *= 10;//constitution check.
 
 		int boostLevel = Math.round(realLevel * type.getAmount() + type.getBase());
 		int cap = realLevel + boostLevel;
@@ -606,6 +616,7 @@ public enum PotionConsumable {
 	 */
 	public enum BoostType {
 		NORMAL(1, .08F),
+		MODERATE(3, 0.10F),//combat potion
 		SUPER(2, .12F),
 		EXTREME(3, .15F),
 		OVERLOAD(3, .24F);

@@ -19,7 +19,7 @@ public interface ItemContainerListener {
 	 * @param index     The index the update is occurring on.
 	 * @param refresh   The condition if we have to refresh this container.
 	 */
-	default void itemUpdated(ItemContainer container, Optional<Item> oldItem, Optional<Item> newItem, int index, boolean refresh) {
+	default void itemUpdated(ItemContainer container, Item oldItem, Item newItem, int index, boolean refresh) {
 	}
 	
 	/**

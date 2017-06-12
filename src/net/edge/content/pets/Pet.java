@@ -14,7 +14,6 @@ import net.edge.world.node.entity.npc.impl.Follower;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -29,16 +28,16 @@ public final class Pet extends Follower {
 	private final PetProgress progress;
 	
 	/**
-	 * The optional task running for this pet.
+	 * The task running for this pet.
 	 */
-	private Optional<PetTask> task;
+	private PetTask task;
 	
 	/**
 	 * Constructs a new {@link Pet}.
 	 * @param data     the data to construct this pet from.
 	 * @param position the position this pet should be spawned at.
 	 */
-	private Pet(PetData data, Position position) {
+	public Pet(PetData data, Position position) {
 		super(data.getPolicy().getNpcId(), position);
 		this.progress = new PetProgress(data);
 	}
@@ -85,15 +84,10 @@ public final class Pet extends Follower {
 		}
 		
 		FoodConsumable consumable = FoodConsumable.forId(food.getId()).orElse(null);
-		Optional<PetFoodType> type = PetFoodType.getType(consumable);
+		boolean possible = data.getType().eat(consumable);
 		
-		if(consumable == null || !type.isPresent()) {
+		if(!possible) {
 			player.message("You can't feed " + TextUtils.appendIndefiniteArticle(food.getDefinition().getName()) + " to your " + pet.progress.getData().getType().toString() + ".");
-			return false;
-		}
-		
-		if(Arrays.stream(pet.progress.getData().getType().getConsumables()).noneMatch(t -> t.equals(type.get()))) {
-			player.message("Your pet wont eat " + TextUtils.appendIndefiniteArticle(food.getDefinition().getName()) + ".");
 			return false;
 		}
 		
@@ -103,6 +97,7 @@ public final class Pet extends Follower {
 		pet.getProgress().setHunger(pet.getProgress().getHunger() - 15D);
 		pet.forceChat("yum!");
 		player.message("Your pet happily eats the " + food.getDefinition().getName() + ".");
+		player.getMessages().sendString(((int) pet.getProgress().getHunger()) + "%", 19032);
 		return true;
 	}
 	
@@ -120,33 +115,27 @@ public final class Pet extends Follower {
 		}
 		
 		Optional<Pet> hasPet = player.getPetManager().getPet();
-		
 		if(hasPet.isPresent()) {
 			player.message("You already have a pet summoned.");
 			return true;
 		}
 		
 		Optional<Familiar> hasFamiliar = player.getFamiliar();
-		
 		if(hasFamiliar.isPresent()) {
 			player.message("You already have a familiar summoned.");
 			return true;
 		}
 		
+		
+		
 		Pet pet = new Pet(data, player.getPosition());
-		
 		pet = player.getPetManager().put(pet);
-		
 		World.get().getNpcs().add(pet);
-		
 		pet.getMovementQueue().follow(player);
-		
 		setInterface(player, pet);
-		
-		pet.task = pet.getProgress().getData().getPolicy().getNext().isPresent() ? Optional.of(new PetTask(player, pet)) : Optional.empty();
-		
-		pet.task.ifPresent(World.get().getTask()::submit);
-		
+		pet.forceChat(pet.getProgress().getData().getType().getShout());
+		pet.task = new PetTask(player, pet);
+		World.get().submit(pet.task);
 		player.getInventory().remove(item);
 		return true;
 	}
@@ -163,16 +152,12 @@ public final class Pet extends Follower {
 		}
 		
 		pet.setPosition(player.getPosition());
-		
 		World.get().getNpcs().add(pet);
-		
 		pet.getMovementQueue().follow(player);
-		
 		setInterface(player, pet);
-		
-		pet.task = pet.getProgress().getData().getPolicy().getNext().isPresent() ? Optional.of(new PetTask(player, pet)) : Optional.empty();
-		
-		pet.task.ifPresent(World.get().getTask()::submit);
+		pet.forceChat(pet.getProgress().getData().getType().getShout());
+		pet.task = new PetTask(player, pet);
+		World.get().submit(pet.task);
 	}
 	
 	/**
@@ -181,15 +166,14 @@ public final class Pet extends Follower {
 	 */
 	public static void onLogout(Player player) {
 		Pet pet = player.getPetManager().getPet().orElse(null);
-		
 		if(pet == null) {
 			return;
 		}
 		World.get().getNpcs().remove(pet);
-		
-		pet.task.ifPresent(t -> t.setRunning(false));
-		
-		pet.task = Optional.empty();
+		pet.task.cancel();
+		TabInterface.SUMMONING.sendInterface(player, -1);
+		player.getMessages().sendForceTab(4);
+		pet.reset();
 	}
 	
 	/**
@@ -200,7 +184,6 @@ public final class Pet extends Follower {
 	 */
 	public static boolean pickup(Player player, Npc npc) {
 		PetData data = PetData.getNpc(npc.getId()).orElse(null);
-		
 		if(data == null) {
 			return false;
 		}
@@ -211,23 +194,20 @@ public final class Pet extends Follower {
 			player.message("This is not your pet.");
 			return false;
 		}
-		
+		if(pet.getSlot() != npc.getSlot()) {
+			player.message("This is not your pet.");
+			return false;
+		}
 		if(!player.getInventory().add(data.getPolicy().getItem())) {
 			player.message("You don't have enough space in your inventory!");
 			return false;
 		}
 		
 		World.get().getNpcs().remove(pet);
-		
 		player.getPetManager().reset();
-		
 		TabInterface.SUMMONING.sendInterface(player, -1);
-		
 		player.message("You picked up your pet.");
-		
-		pet.task.ifPresent(t -> t.setRunning(false));
-		
-		pet.task = Optional.empty();
+		pet.task.cancel();
 		return true;
 	}
 	
@@ -238,16 +218,14 @@ public final class Pet extends Follower {
 	 */
 	private static void setInterface(Player player, Pet pet) {
 		PacketWriter encoder = player.getMessages();
-		
 		encoder.sendString(pet.getDefinition().getName(), 19021);
-		
-		encoder.sendString(pet.progress.getGrowth() + "%", 19030);
-		
-		encoder.sendString(pet.progress.getHunger() + "%", 19032);
-		
+		encoder.sendString((int) pet.progress.getGrowth() + "%", 19030);
+		if(pet.getProgress().getData().getPolicy().isLast())
+			encoder.sendString("-", 19032);
+		else
+			encoder.sendString((int) pet.progress.getHunger() + "%", 19032);
 		encoder.sendNpcModelOnInterface(19019, pet.getId());
 		encoder.sendInterfaceAnimation(19019, Expression.CALM.getExpression());
-		
 		TabInterface.SUMMONING.sendInterface(player, 19017);
 	}
 	
@@ -261,14 +239,14 @@ public final class Pet extends Follower {
 	/**
 	 * @return the task
 	 */
-	public Optional<PetTask> getTask() {
+	public PetTask getTask() {
 		return task;
 	}
 	
 	/**
 	 * @param task the task to set
 	 */
-	public void setTask(Optional<PetTask> task) {
+	public void setTask(PetTask task) {
 		this.task = task;
 	}
 }

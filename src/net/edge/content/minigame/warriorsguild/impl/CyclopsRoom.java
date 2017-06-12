@@ -281,27 +281,15 @@ public final class CyclopsRoom extends GuildRoom {
 		private static final ImmutableSet<Defender> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Defender.class));
 
 		/**
-		 * The index this enumerator is on.
-		 */
-		private final int index;
-
-		/**
 		 * The item for this defender.
 		 */
 		private final Item item;
 
 		/**
-		 * The comperator which will sort the defenders based on item ids.
-		 */
-		private static final Comparator<Defender> COMPERATOR = (m1, m2) -> Integer.compare(m1.index, m2.index);
-
-		/**
 		 * Constructs a new {@link Defender}.
-		 * @param index {@link #index}.
 		 * @param id    {@link #item}.
 		 */
 		Defender(int index, int id) {
-			this.index = index;
 			this.item = new Item(id);
 		}
 
@@ -316,24 +304,13 @@ public final class CyclopsRoom extends GuildRoom {
 		 * @return the next {@link Defender} that should be obtained by the player.
 		 */
 		public static Defender getNext(Player player) {
-			ObjectList<Defender> col = new ObjectArrayList<>();
-
-			player.getEquipment().stream().filter(Objects::nonNull).filter(item -> getDefender(item.getId()).isPresent()).forEach(item -> col.add(getDefender(item.getId()).get()));
-			player.getInventory().stream().filter(Objects::nonNull).filter(item -> getDefender(item.getId()).isPresent()).forEach(item -> col.add(getDefender(item.getId()).get()));
-
-			if(col.isEmpty()) {
-				return BRONZE_DEFENDER;
+			for(Defender defender : VALUES) {
+				if(!player.getEquipment().contains(defender.item) && !player.getInventory().contains(defender.item)) {
+					return defender;
+				}
 			}
-
-			return valueOf(col.stream().max(COMPERATOR).get().index + 1).orElse(DRAGON_DEFENDER);
+			return BRONZE_DEFENDER;
 		}
-
-		public static Optional<Defender> valueOf(int index) {
-			return VALUES.stream().filter(defender -> defender.index == index).findAny();
-		}
-
-		public static Optional<Defender> getDefender(int id) {
-			return VALUES.stream().filter(defender -> defender.item.getId() == id).findAny();
-		}
+		
 	}
 }
