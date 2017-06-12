@@ -5,6 +5,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.Server;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
+import net.edge.content.item.OverloadEffectTask;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.packet.PacketWriter;
 import net.edge.net.session.GameSession;
@@ -174,7 +175,12 @@ public final class Player extends EntityNode {
 	 * The godwars killcount that can be increased by this player.
 	 */
 	private int[] godwarsKillcount = new int[4];
-	
+
+	/**
+	 * The overload effect for this player.
+	 */
+	private OverloadEffectTask overloadEffect;
+
 	/**
 	 * The array of skills that can be trained by this player.
 	 */
@@ -686,6 +692,7 @@ public final class Player extends EntityNode {
 		World.get().getTask().cancel(this);
 		World.getExchangeSessionManager().reset(this);
 		setSkillAction(Optional.empty());
+		resetOverloadEffect(true);
 		MinigameHandler.executeVoid(this, m -> m.onLogout(this));
 		getPrivateMessage().updateOtherList(false);
 		getClan().ifPresent(c -> c.getClan().remove(this, true));
@@ -774,13 +781,13 @@ public final class Player extends EntityNode {
 	
 	public int getMaximumHealth() {
 		int hitpoints = skills[Skills.HITPOINTS].getRealLevel();
-		if(Arrays.stream(new int[]{20135, 20147, 20159}).anyMatch(v -> equipment.contains(v))) {//nex helms
+		if(Arrays.stream(new int[]{20135, 20147, 20159}).anyMatch(equipment::contains)) {//nex helms
 			hitpoints += 13;
 		}
-		if(Arrays.stream(new int[]{20139, 20151, 20163}).anyMatch(v -> equipment.contains(v))) {//nex bodies
+		if(Arrays.stream(new int[]{20139, 20151, 20163}).anyMatch(equipment::contains)) {//nex bodies
 			hitpoints += 20;
 		}
-		if(Arrays.stream(new int[]{20143, 20155, 20167}).anyMatch(v -> equipment.contains(v))) {//nex platelegs
+		if(Arrays.stream(new int[]{20143, 20155, 20167}).anyMatch(equipment::contains)) {//nex platelegs
 			hitpoints += 7;
 		}
 		return hitpoints * 10;
@@ -1170,7 +1177,37 @@ public final class Player extends EntityNode {
 	public void setGodwarsKillcount(int[] godwarsKillcount) {
 		this.godwarsKillcount = godwarsKillcount;
 	}
-	
+
+	/**
+	 * Gets the overload effect if there is any.
+	 * @return the overload effect.
+	 */
+	public OverloadEffectTask getOverloadEffect() {
+		return overloadEffect;
+	}
+
+	/**
+	 * Applies the overload effect for the specified player.
+	 */
+	public void applyOverloadEffect() {
+		OverloadEffectTask effect = new OverloadEffectTask(this);
+		overloadEffect = effect;
+		effect.submit();
+	}
+
+	/**
+	 * Resets the overload effect.
+	 */
+	public void resetOverloadEffect(boolean stopTask) {
+		if(overloadEffect != null) {
+			if(overloadEffect.isRunning() && stopTask) {
+				overloadEffect.cancel();
+			}
+
+			overloadEffect = null;
+		}
+	}
+
 	/**
 	 * Gets the array of skills that can be trained by this player.
 	 * @return the skills that can be trained.
