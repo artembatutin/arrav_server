@@ -207,7 +207,7 @@ public enum PlayerPanel {
 		PlayerPanel.TOOLS.refresh(player, "@or1@Quickies:");
 		PlayerPanel.COMMUNITY.refresh(player, "@or2@ - Forums");
 		PlayerPanel.DISCORD.refresh(player, "@or2@ - Discord");
-		PlayerPanel.TOTAL_VOTES.refresh(player, "@or@ - Total votes: @yel@" + player.getTotalVotes());
+		PlayerPanel.TOTAL_VOTES.refresh(player, "@or2@ - Total votes: @yel@" + player.getTotalVotes());
 		PlayerPanel.VOTE.refresh(player, "@or2@ - Vote points: @yel@" + player.getVotePoints() + " points");
 		PlayerPanel.DONATE.refresh(player, "@or2@ - Donate");
 		PlayerPanel.NPC_TOOL.refresh(player, "@or2@ - Monster Database");

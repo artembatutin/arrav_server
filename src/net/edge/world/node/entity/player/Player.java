@@ -1034,7 +1034,7 @@ public final class Player extends EntityNode {
 	 */
 	public void setTotalVotes(int vote) {
 		this.totalVotes = vote;
-		PlayerPanel.TOTAL_VOTES.refresh(this, "@or@ - Total votes: @yel@" + this.getTotalVotes());
+		PlayerPanel.TOTAL_VOTES.refresh(this, "@or2@ - Total votes: @yel@" + this.getTotalVotes());
 	}
 
 	/**
