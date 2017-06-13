@@ -26,7 +26,7 @@ import static com.google.common.base.Preconditions.*;
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author lare96 <http://github.org/lare96>
  */
-public final class EntityList<E extends EntityNode> implements Iterable<E> {
+public class EntityList<E extends EntityNode> implements Iterable<E> {
 	
 	/**
 	 * An {@link Iterator} implementation designed specifically {@link EntityList}s.
@@ -236,20 +236,11 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * @param entity The entity to remove from this list.
 	 */
 	public boolean remove(E entity) {
-		return remove(entity, false);
-	}
-	
-	/**
-	 * Removes {@code entity} from this list.
-	 * @param entity The entity to remove from this list.
-	 * @param forced If the entity is forced to get out from the list.
-	 */
-	public boolean remove(E entity, boolean forced) {
-		if(!forced && entity.getState() != NodeState.ACTIVE) {
+		if(entity.getState() != NodeState.ACTIVE) {
 			System.out.println("Couldn't remove: " + entity.toString() + " because not active.");
 			return true;
 		}
-		if(!forced && entity.getSlot() == -1) {
+		if(entity.getSlot() == -1) {
 			System.out.println("Couldn't remove: " + entity.toString() + " because of slot.");
 			return false;
 		}
@@ -268,9 +259,15 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 			player.getSession().getChannel().close();
 			if(player.getRights() != Rights.DEVELOPER && player.getRights() != Rights.ADMINISTRATOR)
 				new Hiscores(World.getScore(), player).submit();
-			
 		}
 		return true;
+	}
+	
+	/**
+	 * Disposing the list, used for players on restart.
+	 */
+	public void dispose() {
+	
 	}
 	
 	/**
@@ -334,6 +331,14 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	}
 	
 	/**
+	 * Sets the size for this list.
+	 * @param size size to set.
+	 */
+	public void setSize(int size) {
+		this.size = size;
+	}
+	
+	/**
 	 * @return The amount of free spaces remaining in this list.
 	 */
 	public int remaining() {
@@ -354,6 +359,14 @@ public final class EntityList<E extends EntityNode> implements Iterable<E> {
 	 */
 	public E[] toArray() {
 		return Arrays.copyOf(entities, capacity);
+	}
+	
+	/**
+	 * Gets a raw array of all of the entities.
+	 * @return entities array.
+	 */
+	public E[] getEntities() {
+		return entities;
 	}
 	
 	/**

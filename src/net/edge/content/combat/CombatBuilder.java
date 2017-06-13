@@ -142,9 +142,9 @@ public final class CombatBuilder {
 		if(combatTask != null)
 			combatTask.cancel();
 		if(currentVictim != null) {
-			EntityNode aggressor = currentVictim.getCombatBuilder().getAggressor();
-			if(aggressor.same(character))
-				aggressor.getCombatBuilder().setAggressor(null);
+			EntityNode ag = currentVictim.getCombatBuilder().getAggressor();
+			if(ag != null && ag.same(character))
+				ag.getCombatBuilder().setAggressor(null);
 		}
 		currentVictim = null;
 		combatTask = null;

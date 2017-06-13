@@ -186,10 +186,10 @@ public final class BarrowsMinigame extends Minigame {
 			}
 			if(!container.getCurrent().isPresent()) {
 				NpcDropTable table = NpcDropManager.TABLES.get(-1);//barrows custom.
-				int expected = RandomUtils.inclusive(4, 8);
+				int expected = RandomUtils.inclusive(3, 6);
 				ObjectList<Item> loot = new ObjectArrayList<>();
 				int items = 0;
-				while(items < expected) {
+				for(int i = 0; i < 20; i++) {
 					NpcDropCache cache = RandomUtils.random(table.getCommon());
 					NpcDrop drop = RandomUtils.random(NpcDropManager.COMMON.get(cache));
 					if(drop.roll(ThreadLocalRandom.current())) {

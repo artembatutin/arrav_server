@@ -18,9 +18,7 @@ public class ShopEditing extends EventInitializer {
 					if(player.getMarketShop() != null && player.getMarketShop().getId() != -1) {
 						int shopId = player.getMarketShop().getId();
 						MarketShop shop = MarketCounter.getShops().get(shopId);
-						int[] items = new int[shop.getItems().length + 1];
-						items[items.length - 1] = id;
-						MarketCounter.getShops().put(id, new MarketShop(shopId, shop.getTitle(), shop.getCurrency(), items));
+						shop.getItems().add(id);
 					}
 				});
 				return true;

@@ -25,26 +25,20 @@ import java.util.concurrent.TimeUnit;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum PlayerPanel {
-	TOOLS(62154),
-	COMMUNITY(62155) {
+	TOOLS(),
+	COMMUNITY() {
 		@Override
 		public void onClick(Player player) {
 			player.getMessages().sendLink("community/");
 		}
 	},
-	DISCORD(62156) {
+	DISCORD() {
 		@Override
 		public void onClick(Player player) {
 			player.getMessages().sendLink("discord");
 		}
 	},
-	TOTAL_VOTES(62157) {
-		@Override
-		public void onClick(Player player) {
-			player.message("You have voted " + player.getTotalVotes() + "x for Edgeville.");
-		}
-	},
-	VOTE(62158) {
+	VOTE() {
 		@Override
 		public void onClick(Player player) {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
@@ -65,29 +59,29 @@ public enum PlayerPanel {
 			
 		}
 	},
-	DONATE(62159) {
+	DONATE() {
 		@Override
 		public void onClick(Player player) {
 			player.getMessages().sendLink("donate/");
 		}
 	},
-	NPC_TOOL(62160) {
+	NPC_TOOL() {
 		@Override
 		public void onClick(Player player) {
 			player.getMessages().sendNpcInformation(0, null);
 		}
 	},
-	TOOL3(62161),
+	TOOL3(),
 	
-	SERVER_STATISTICS(62162),
-	UPTIME(621563),
-	PLAYERS_ONLINE(62164) {
+	SERVER_STATISTICS(),
+	UPTIME(),
+	PLAYERS_ONLINE() {
 		@Override
 		public void onClick(Player player) {
 			player.message("There is currently " + World.get().getPlayers().size() + " players online.");
 		}
 	},
-	STAFF_ONLINE(62165) {
+	STAFF_ONLINE() {
 		@Override
 		public void onClick(Player player) {
 			List<Player> staff = World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff());
@@ -105,23 +99,22 @@ public enum PlayerPanel {
 			}
 		}
 	},
-	PLAYERS_IN_WILD(62166),
+	PLAYERS_IN_WILD(),
 	
-	EMPTY(62167),
+	EMPTY(),
 	
-	PLAYER_STATISTICS(62168),
-	USERNAME(62169),
-	PASSWORD(62170) {
+	PLAYER_STATISTICS(),
+	USERNAME(),
+	PASSWORD() {
 		@Override
 		public void onClick(Player player) {
 			player.getDialogueBuilder().append(new StatementDialogue("You sure you want to change your password?"), new OptionDialogue(t -> {
 				if(t == OptionDialogue.OptionType.FIRST_OPTION) {
 					player.getMessages().sendCloseWindows();
 					player.getMessages().sendEnterName("Your new password to set:", s -> () -> {
-						String name = s;
-						player.setPassword(name);
+						player.setPassword(s);
 						player.message("You have successfully changed your password. Log out to save it.");
-						PlayerPanel.PASSWORD.refresh(player, "@or2@ - Password: " + TextUtils.passwordCheck(name));
+						PlayerPanel.PASSWORD.refresh(player, "@or2@ - Password: " + TextUtils.passwordCheck(s));
 					});
 				} else if(t == OptionDialogue.OptionType.SECOND_OPTION) {
 					player.getMessages().sendCloseWindows();
@@ -129,8 +122,8 @@ public enum PlayerPanel {
 			}, "Yes please!", "No thanks."));
 		}
 	},
-	RANK(62171),
-	NIGHT(62172) {
+	RANK(),
+	NIGHT() {
 		@Override
 		public void onClick(Player player) {
 			if(player.isNight()) {
@@ -146,29 +139,35 @@ public enum PlayerPanel {
 			player.message("You can only become a night's watch member in the beginning.");
 		}
 	},
-	SLAYER_POINTS(62173),
-	SLAYER_TASK(62174),
-	SLAYER_COUNT(62175),
+	SLAYER_POINTS(),
+	SLAYER_TASK(),
+	SLAYER_COUNT(),
+	TOTAL_VOTES() {
+		@Override
+		public void onClick(Player player) {
+			player.message("You have voted " + player.getTotalVotes() + "x for Edgeville.");
+		}
+	},
 	
-	EMPTY1(62176),
+	EMPTY1(),
 	
-	PVE_HEADER(62177),
+	PVE_HEADER(),
 	
-	HIGHEST_KILLSTREAK(62178),
-	CURRENT_KILLSTREAK(62179),
-	TOTAL_PLAYER_KILLS(62180),
-	TOTAL_PLAYER_DEATHS(62181),
-	TOTAL_NPC_KILLS(62182),
-	TOTAL_NPC_DEATHS(62183),
+	HIGHEST_KILLSTREAK(),
+	CURRENT_KILLSTREAK(),
+	TOTAL_PLAYER_KILLS(),
+	TOTAL_PLAYER_DEATHS(),
+	TOTAL_NPC_KILLS(),
+	TOTAL_NPC_DEATHS(),
 	
-	EMPTY2(62184),
+	EMPTY2(),
 	
-	INDIVIDUAL_SCOREBOARD_STATISTICS(62185),
+	INDIVIDUAL_SCOREBOARD_STATISTICS(),
 	
-	INDIVIDUAL_HIGHEST_KILLSTREAKS(62186),
-	INDIVIDUAL_CURRENT_KILLSTREAKS(62187),
-	INDIVIDUAL_KILLS(62188),
-	INDIVIDUAL_DEATHS(62189);
+	INDIVIDUAL_HIGHEST_KILLSTREAKS(),
+	INDIVIDUAL_CURRENT_KILLSTREAKS(),
+	INDIVIDUAL_KILLS(),
+	INDIVIDUAL_DEATHS();
 	
 	/**
 	 * Caches our enum values.
@@ -182,10 +181,9 @@ public enum PlayerPanel {
 	
 	/**
 	 * Constructs a new {@link PlayerPanel}.
-	 * @param buttonId {@link #buttonId}.
 	 */
-	PlayerPanel(int buttonId) {
-		this.buttonId = buttonId;
+	PlayerPanel() {
+		this.buttonId = 62154 + ordinal();
 	}
 	
 	/**
@@ -207,7 +205,6 @@ public enum PlayerPanel {
 		PlayerPanel.TOOLS.refresh(player, "@or1@Quickies:");
 		PlayerPanel.COMMUNITY.refresh(player, "@or2@ - Forums");
 		PlayerPanel.DISCORD.refresh(player, "@or2@ - Discord");
-		PlayerPanel.TOTAL_VOTES.refresh(player, "@or2@ - Total votes: @yel@" + player.getTotalVotes());
 		PlayerPanel.VOTE.refresh(player, "@or2@ - Vote points: @yel@" + player.getVotePoints() + " points");
 		PlayerPanel.DONATE.refresh(player, "@or2@ - Donate");
 		PlayerPanel.NPC_TOOL.refresh(player, "@or2@ - Monster Database");
@@ -216,6 +213,7 @@ public enum PlayerPanel {
 		PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + World.get().getPlayers().findAll(p -> p != null && Location.inWilderness(p)).size());
 		PlayerPanel.STAFF_ONLINE.refreshAll("@or2@ - Staff online: @yel@" + World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff()).size());
 		PlayerPanel.PLAYER_STATISTICS.refresh(player, "@or1@Player Information:");
+		
 		PlayerPanel.EMPTY.refresh(player, "");
 		PlayerPanel.USERNAME.refresh(player, "@or2@ - Username: @yel@" + TextUtils.capitalize(player.getUsername()));
 		PlayerPanel.PASSWORD.refresh(player, "@or2@ - Password: " + TextUtils.capitalize(TextUtils.passwordCheck(player.getPassword())));
@@ -224,6 +222,7 @@ public enum PlayerPanel {
 		PlayerPanel.SLAYER_POINTS.refresh(player, "@or2@ - Slayer points: @yel@" + player.getSlayerPoints());
 		PlayerPanel.SLAYER_TASK.refresh(player, "@or2@ - Slayer task: @yel@" + (player.getSlayer().isPresent() ? (player.getSlayer().get().toString()) : "none"));
 		PlayerPanel.SLAYER_COUNT.refresh(player, "@or2@ - Completed tasks: @yel@" + player.getAttr().get("slayer_tasks").getInt());
+		PlayerPanel.TOTAL_VOTES.refresh(player, "@or2@ - Total votes: @yel@" + player.getTotalVotes());
 		
 		PlayerPanel.PVE_HEADER.refresh(player, "@or1@PvE Statistics:");
 		PlayerPanel.HIGHEST_KILLSTREAK.refresh(player, "@or2@ - Highest Killstreak: @yel@" + player.getHighestKillstreak().get());
@@ -234,7 +233,6 @@ public enum PlayerPanel {
 		PlayerPanel.TOTAL_NPC_DEATHS.refresh(player, "@or2@ - Total Npc deaths: @yel@" + player.getDeathsByNpc().get());
 		
 		PlayerPanel.EMPTY2.refresh(player, "");
-		
 		PlayerPanel.INDIVIDUAL_SCOREBOARD_STATISTICS.refresh(player, "@or1@Indiv. Scoreboard Statistics:");
 		PlayerScoreboardStatistic s = World.getScoreboardManager().getPlayerScoreboard().get(player.getFormatUsername());
 		PlayerPanel.INDIVIDUAL_HIGHEST_KILLSTREAKS.refresh(player, "@or2@ - Highest Killstreak: @yel@" + (s == null ? 0 : s.getHighestKillstreak()));

@@ -1,5 +1,6 @@
 package net.edge.content.market;
 
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.edge.util.json.JsonSaver;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.ItemDefinition;
@@ -100,47 +101,46 @@ public class MarketItem {
 	 * @param search the searching name.
 	 * @return requested items based on name.
 	 */
-	public static int[] search(Player player, String search) {
+	public static IntArrayList search(Player player, String search) {
+		IntArrayList out = new IntArrayList();
 		//searching by id.
 		if(search.matches("[0-9]+") && search.length() > 0) {
-			int[] item = new int[1];
 			int id = Integer.parseInt(search);
 			if(!valid(id)) {
 				player.message("Can't find this item.");
-				return item;
+				return out;
 			}
 			if(!VALUES[id].isSearchable()) {
 				player.message("You can't buy this item.");
-				return item;
+				return out;
 			}
-			item[0] = id;
-			return item;
+			out.add(id);
+			return out;
 		}
 		//searching by name.
 		final int max = player.getRights().isStaff() ? 500 : 30;
 		int count = 0;
 		boolean found = false;
-		int[] items = new int[max];
-		for(MarketItem v : VALUES) {
-			if(v == null || !valid(v.getId()))
+		for(MarketItem m : VALUES) {
+			if(count >= max) {
+				player.message("Your search is too vague.");
+				break;//max cap reached.
+			}
+			if(m == null || !valid(m.getId()))
 				continue;
-			if(!v.isSearchable())
+			if(!m.isSearchable())
 				continue;
-			if(v.getName().toLowerCase().contains(search.toLowerCase())) {
-				items[count] = v.getId();
-				count++;
+			if(m.getName().toLowerCase().contains(search.toLowerCase())) {
+				out.add(m.getId());
 				found = true;
-				if(count == max) {
-					player.message("Your search is too vague.");
-					break;//max cap reached.
-				}
+				count++;
 			}
 		}
 		if(!found)
 			player.message("No items found under that name.");
-		int[] res = new int[count];
-		System.arraycopy(items, 0, res, 0, count);
-		return res;
+		else
+			player.message("Found " + count + " items under the name: " + search);
+		return out;
 	}
 	
 	public void updateStock() {

@@ -157,11 +157,6 @@ public final class Skills {
 	public static final int DUNGEONEERING = 24;
 	
 	/**
-	 * The array containing all the combat skills in order.
-	 */
-	public static final int[] COMBAT_SKILLS = new int[]{ATTACK, DEFENCE, HITPOINTS, STRENGTH, RANGED, MAGIC};
-	
-	/**
 	 * The experience multiplier that skill related skills experience will be calculated with.
 	 */
 	private static final int SKILL_EXPERIENCE_MULTIPLIER = 40;
@@ -195,10 +190,10 @@ public final class Skills {
 		if(amount <= 0)
 			return;
 		int oldLevel = player.getSkills()[skill].getRealLevel();
-		boolean combatLevel = IntStream.rangeClosed(0, COMBAT_SKILLS.length).anyMatch(id -> id == skill);
-		amount *= skill == Skills.PRAYER ? Skills.PRAYER_EXPERIENCE_MULTIPLIER : combatLevel ? Skills.COMBAT_EXPERIENCE_MULTIPLER : Skills.SKILL_EXPERIENCE_MULTIPLIER;
-		amount = amount * GameConstants.EXPERIENCE_MULTIPLIER;
-		amount = amount * (combatLevel && player.getSkills()[skill].getRealLevel() < 99 ? 100 : 0);
+		boolean combatLevel = skill == ATTACK || skill == DEFENCE || skill == HITPOINTS || skill == STRENGTH || skill == RANGED || skill == MAGIC;
+		amount *= skill == PRAYER ? PRAYER_EXPERIENCE_MULTIPLIER : combatLevel ? COMBAT_EXPERIENCE_MULTIPLER : SKILL_EXPERIENCE_MULTIPLIER;
+		amount *= GameConstants.EXPERIENCE_MULTIPLIER;
+		amount *= (player.getSkills()[skill].getRealLevel() <= 99 ? 0.2 : 1);
 		player.getSkills()[skill].increaseExperience(amount);
 		if(oldLevel < 99) {
 			int newLevel = player.getSkills()[skill].getLevelForExperience();

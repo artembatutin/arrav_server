@@ -33848,6 +33848,12 @@
         "minimum": 1,
         "maximum": 2889,
         "chance": "COMMON"
+      },
+      {
+        "id": 4740,
+        "minimum": 10,
+        "maximum": 120,
+        "chance": "COMMON"
       }
     ],
     "common": [
