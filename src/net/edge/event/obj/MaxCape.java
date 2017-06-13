@@ -31,7 +31,7 @@ public class MaxCape extends EventInitializer {
 					} else {
 						player.getMessages().sendCloseWindows();
 					}
-				}, "Claim max cape for 100,000 coins", "Nevermind") : new PlayerDialogue(Expression.CONFUSED, "A strange feeling is telling me I do not meet", "the requirements for this cape.");
+				}, "Claim max cape for 100,000 coins", "Nevermind") : new PlayerDialogue(Expression.CONFUSED, "A strange feeling is telling me I do not meet", "the requirements for this cape.").attachAfter(() -> player.getMessages().sendCloseWindows());
 				app.chain(dialogue);
 				app.chain(new RequestItemDialogue(new Item(995, 100_000), Optional.of(new Item(20769)), "You offer your coins up and receive the cape in return.", Optional.empty(), true));
 				app.start();
