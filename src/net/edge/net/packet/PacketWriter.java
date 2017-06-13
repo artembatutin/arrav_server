@@ -1,6 +1,7 @@
 package net.edge.net.packet;
 
 import com.google.common.base.Preconditions;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
@@ -314,7 +315,7 @@ public final class PacketWriter {
 	 * @param id    the interface that the items will be sent on.
 	 * @param items the items that will be sent on the panel.
 	 */
-	public void sendShopItemsOnInterface(int id, int[] items) {
+	public void sendShopItemsOnInterface(int id, IntArrayList items) {
 		if(player.getState() == INACTIVE)
 			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 53, MessageType.VARIABLE_SHORT);
@@ -325,7 +326,7 @@ public final class PacketWriter {
 			msg.putShort(0, ByteTransform.A, ByteOrder.LITTLE);
 			player.queue(msg);
 		} else {
-			msg.putShort(items.length);
+			msg.putShort(items.size());
 			for(int i : items) {
 				MarketItem item = MarketItem.get(i);
 				if(item != null) {

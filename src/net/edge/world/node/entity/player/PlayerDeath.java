@@ -197,7 +197,7 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		getCharacter().setSpecialActivated(false);
 		getCharacter().getSkullTimer().set(0);
 		getCharacter().setAntifireDetail(Optional.empty());
-		getCharacter().resetOverloadEffect(true);
+		//getCharacter().resetOverloadEffect(true);
 		//character.setSkullIcon(FightCavesHandler.isChampion(character) ? Player.RED_SKULL : -1);
 		getCharacter().getTeleblockTimer().set(0);
 		getCharacter().animation(new Animation(65535));

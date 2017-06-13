@@ -1,5 +1,6 @@
 package net.edge.content.market;
 
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.edge.util.TextUtils;
 import net.edge.game.GameConstants;
 import net.edge.content.TabInterface;
@@ -42,7 +43,7 @@ public class MarketShop {
 	/**
 	 * The result of our search.
 	 */
-	private int[] items;
+	private IntArrayList items;
 	
 	/**
 	 * Creates a {@link MarketShop} out of saved shops.
@@ -53,7 +54,7 @@ public class MarketShop {
 		this.id = id;
 		this.currency = currency;
 		this.title = title;
-		this.items = items;
+		this.items = new IntArrayList(items);
 	}
 	
 	/**
@@ -105,7 +106,9 @@ public class MarketShop {
 		player.getMessages().sendString(getCurrency().ordinal() + "", 259);
 		player.getMessages().sendItemsOnInterface(3823, player.getInventory().toArray());
 		player.getMessages().sendShopItemsOnInterface(3900, getItems());
-		player.getMessages().sendInventoryInterface(-2, 3822);
+		int x = player.getPosition().getX();
+		boolean counter = x == 3081 || x == 3082;
+		player.getMessages().sendInventoryInterface(counter ? -4 : -2, 3822);
 		player.getMessages().sendString(getTitle(), 3901);
 		player.getMessages().sendForceTab(TabInterface.INVENTORY.getNew());
 		if(player.getMarketShop().getItems() != null) {
@@ -354,15 +357,8 @@ public class MarketShop {
 		return item.getValue().getPrice();
 	}
 	
-	public int[] getItems() {
+	public IntArrayList getItems() {
 		return items;
-	}
-	
-	public void addItem(int item) {
-		int[] arr = new int[items.length + 1];
-		System.arraycopy(items, 0, arr, 0, items.length);
-		arr[items.length] = item;
-		items = arr;
 	}
 	
 	public int getId() {

@@ -6,6 +6,7 @@ import net.edge.game.GameConstants;
 import net.edge.game.GameExecutor;
 import net.edge.game.GamePulseHandler;
 import net.edge.net.database.Database;
+import net.edge.net.database.connection.use.Hiscores;
 import net.edge.net.database.pool.ConnectionPool;
 import net.edge.task.Task;
 import net.edge.task.TaskManager;
@@ -33,6 +34,7 @@ import net.edge.world.node.entity.npc.NpcMovementTask;
 import net.edge.world.node.entity.npc.NpcUpdater;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerUpdater;
+import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.node.region.Region;
 import net.edge.world.node.region.RegionManager;
@@ -81,16 +83,6 @@ public final class World {
 	private final TaskManager taskManager = new TaskManager();
 	
 	/**
-	 * The collection of active players.
-	 */
-	private final EntityList<Player> players = new EntityList<>(2048);
-	
-	/**
-	 * The collection of active NPCs.
-	 */
-	private final EntityList<Npc> npcs = new EntityList<>(16384);
-	
-	/**
 	 * The queue of {@link Player}s waiting to be logged in.
 	 */
 	private final Queue<Player> logins = new ConcurrentLinkedQueue<>();
@@ -99,6 +91,28 @@ public final class World {
 	 * The queue of {@link Player}s waiting to be logged out.
 	 */
 	private final Queue<Player> logouts = new ConcurrentLinkedQueue<>();
+	
+	/**
+	 * The collection of active NPCs.
+	 */
+	private final EntityList<Npc> npcs = new EntityList<>(16384);
+	
+	/**
+	 * The collection of active players.
+	 */
+	private final EntityList<Player> players = new EntityList<Player>(2048){
+		@Override
+		public void dispose() {
+			for(Player p : this.getEntities()) {
+				p.setState(NodeState.INACTIVE);
+				p.getSession().flushQueue();
+				p.getSession().getChannel().close();
+				if(p.getRights() != Rights.DEVELOPER && p.getRights() != Rights.ADMINISTRATOR)
+					new Hiscores(World.getScore(), p).submit();
+			}
+			setSize(0);
+		}
+	};
 	
 	/**
 	 * The regional tick counter for processing such as {@link ItemNode} in a region.
@@ -215,7 +229,7 @@ public final class World {
 			Player player = $it.next();
 			if(player == null || amount >= GameConstants.LOGOUT_THRESHOLD)
 				break;
-			if(logout(player, false)) {
+			if(logout(player)) {
 				$it.remove();
 				amount++;
 			}
@@ -337,16 +351,14 @@ public final class World {
 	 * @return {@code true} if the player was logged out, {@code false}
 	 * otherwise.
 	 */
-	public boolean logout(Player player, boolean forced) {
+	public boolean logout(Player player) {
 		try {
 			// If the player x-logged, don't log the player out. Keep the
 			// player queued until they are out of combat to prevent x-logging.
-			if(!forced) {
-				if(!player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombatBuilder().isBeingAttacked()) {
-					return false;
-				}
+			if(!player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombatBuilder().isBeingAttacked()) {
+				return false;
 			}
-			boolean response = players.remove(player, forced);
+			boolean response = players.remove(player);
 			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + players.size());
 			List<Npc> npcs = this.npcs.findAll(n -> n != null && n.isSpawnedFor(player));
 			for(Npc n : npcs) {
