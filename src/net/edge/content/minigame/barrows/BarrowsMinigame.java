@@ -171,7 +171,6 @@ public final class BarrowsMinigame extends Minigame {
 		
 		BarrowsContainer container = player.getMinigameContainer().getBarrowsContainer();
 		if(object.getId() == 10284 || object.getId() == 6775) {
-			player.message("clicked");
 			if(!container.getCurrent().isPresent()) {
 				container.setCurrent(getRandom(player));
 			}
