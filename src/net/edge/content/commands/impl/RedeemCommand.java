@@ -6,6 +6,7 @@ import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.item.Item;
 
 /**
  * The assist command for staff members.
@@ -24,6 +25,7 @@ public final class RedeemCommand implements Command {
 		Result r2 = platform.redeem(SearchField.USER_NAME, player.getUsername());
 		if (r2.success()) {
 			int total = r2.votes().size();
+			player.getInventory().addOrBank(new Item(6829));
 			player.setVotePoints(player.getVotePoints() + total);
 			player.setTotalVotes(player.getTotalVotes() + total);
 		} else {
