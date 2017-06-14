@@ -146,6 +146,7 @@ public final class CombatBuilder {
 			if(ag != null && ag.same(character))
 				ag.getCombatBuilder().setAggressor(null);
 		}
+		aggressor = null;
 		currentVictim = null;
 		combatTask = null;
 		combatType = null;

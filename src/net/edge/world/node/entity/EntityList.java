@@ -267,7 +267,19 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * Disposing the list, used for players on restart.
 	 */
 	public void dispose() {
-	
+		for(E e : entities) {
+			if(e == null)
+				continue;
+			if(e.isNpc())
+				continue;
+			Player p = e.toPlayer();
+			e.setState(NodeState.INACTIVE);
+			p.getSession().flushQueue();
+			p.getSession().getChannel().close();
+			if(p.getRights() != Rights.DEVELOPER && p.getRights() != Rights.ADMINISTRATOR)
+				new Hiscores(World.getScore(), p).submit();
+		}
+		size = 0;
 	}
 	
 	/**
@@ -331,14 +343,6 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	}
 	
 	/**
-	 * Sets the size for this list.
-	 * @param size size to set.
-	 */
-	public void setSize(int size) {
-		this.size = size;
-	}
-	
-	/**
 	 * @return The amount of free spaces remaining in this list.
 	 */
 	public int remaining() {
@@ -359,14 +363,6 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	 */
 	public E[] toArray() {
 		return Arrays.copyOf(entities, capacity);
-	}
-	
-	/**
-	 * Gets a raw array of all of the entities.
-	 * @return entities array.
-	 */
-	public E[] getEntities() {
-		return entities;
 	}
 	
 	/**

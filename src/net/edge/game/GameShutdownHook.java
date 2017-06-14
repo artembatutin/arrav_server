@@ -1,5 +1,8 @@
 package net.edge.game;
 
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import net.edge.content.market.MarketItem;
 import net.edge.net.packet.impl.NpcInformationPacket;
 import net.edge.world.World;
@@ -10,6 +13,8 @@ import net.edge.world.node.entity.player.PlayerSerialization;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,29 +24,47 @@ import java.util.concurrent.TimeUnit;
  */
 public final class GameShutdownHook extends Thread {
 	
+	/**
+	 * The {@link ExecutorService} that will execute exit tasks.
+	 */
+	private final ListeningExecutorService exit;
+	
+	public GameShutdownHook() {
+		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleShutdown").build());
+		exit = MoreExecutors.listeningDecorator(delegateService);
+	}
+	
 	@Override
 	public void run() {
 		try {
-			for(Player p : World.get().getPlayers()) {
-				new PlayerSerialization(p).serialize();
-			}
-			World.getClanManager().save();
-			World.getScoreboardManager().serializeIndividualScoreboard();
-			MarketItem.serializeMarketItems();
-			
-			//drops
-			NpcDropManager.serializeDrops();
-			try {
-				BufferedWriter out = new BufferedWriter(new FileWriter("./data/suggested_drops.txt", true));
-				for(NpcDrop d : NpcInformationPacket.SUGGESTED) {
-					out.write(d.toString());
-					out.newLine();
+			exit.submit(() -> {
+				for(Player p : World.get().getPlayers()) {
+					new PlayerSerialization(p).serialize();
 				}
-				NpcInformationPacket.SUGGESTED.clear();
-				out.close();
-			} catch(Exception ignored) { }
+			});
+			exit.submit(() -> {
+				World.getClanManager().save();
+				World.getScoreboardManager().serializeIndividualScoreboard();
+				MarketItem.serializeMarketItems();
+			});
+			exit.submit(() -> {
+				//drops
+				NpcDropManager.serializeDrops();
+				try {
+					BufferedWriter out = new BufferedWriter(new FileWriter("./data/suggested_drops.txt", true));
+					for(NpcDrop d : NpcInformationPacket.SUGGESTED) {
+						out.write(d.toString());
+						out.newLine();
+					}
+					NpcInformationPacket.SUGGESTED.clear();
+					out.close();
+				} catch(Exception ignored) { }
+			});
 			
-			TimeUnit.SECONDS.sleep(5);
+			
+			exit.shutdown();
+			exit.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+			TimeUnit.SECONDS.sleep(10);
 			//this is necessary, otherwise the thread is closed without
 			//saving all character files properly.
 		} catch(InterruptedException e) {

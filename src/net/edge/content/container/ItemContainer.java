@@ -192,6 +192,8 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public boolean add(Item item, int preferredIndex, boolean refresh) {
 		checkArgument(preferredIndex >= -1, "invalid index identifier");
+		if(item == null)
+			return false;
 		ItemDefinition def = item.getDefinition();
 		if(def == null) {
 			return false;

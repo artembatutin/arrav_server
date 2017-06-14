@@ -100,19 +100,7 @@ public final class World {
 	/**
 	 * The collection of active players.
 	 */
-	private final EntityList<Player> players = new EntityList<Player>(2048){
-		@Override
-		public void dispose() {
-			for(Player p : this.getEntities()) {
-				p.setState(NodeState.INACTIVE);
-				p.getSession().flushQueue();
-				p.getSession().getChannel().close();
-				if(p.getRights() != Rights.DEVELOPER && p.getRights() != Rights.ADMINISTRATOR)
-					new Hiscores(World.getScore(), p).submit();
-			}
-			setSize(0);
-		}
-	};
+	private final EntityList<Player> players = new EntityList<>(2048);
 	
 	/**
 	 * The regional tick counter for processing such as {@link ItemNode} in a region.
