@@ -12,6 +12,8 @@ import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -28,7 +30,12 @@ public final class NpcDeath extends EntityDeath<Npc> {
 	public NpcDeath(Npc npc) {
 		super(npc);
 	}
-	
+
+	/**
+	 * An array of npcs which don't drop any items.
+	 */
+	private static final List<Integer> NON_DROPPABLES = Arrays.asList(2025, 2026, 2027, 2028, 2029, 2030);
+
 	@Override
 	public void preDeath() {
 		if(getCharacter().getCombatBuilder().getVictim() != null) {
@@ -45,7 +52,9 @@ public final class NpcDeath extends EntityDeath<Npc> {
 			GodwarsFaction.increment(player, getCharacter());
 			Slayer.decrement(player, getCharacter());
 			MinigameHandler.getMinigame(player).ifPresent(m -> m.onKill(player, getCharacter()));
-			NpcDropManager.dropItems(player, getCharacter());
+			if(NON_DROPPABLES.stream().noneMatch(t -> t == getCharacter().getId())) {
+				NpcDropManager.dropItems(player, getCharacter());
+			}
 			if(player.getRights().less(Rights.ADMINISTRATOR)) {
 				player.getNpcKills().incrementAndGet();
 				PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Npcs killed: @yel@" + player.getNpcKills().get());
