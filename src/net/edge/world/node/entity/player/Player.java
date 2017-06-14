@@ -118,6 +118,11 @@ public final class Player extends EntityNode {
 	private int votePoints;
 
 	/**
+	 * The last username that killed this player.
+	 */
+	private String lastKiller = "[NOBODY]";
+
+	/**
 	 * The hash collection of the local players.
 	 */
 	private final Set<Player> localPlayers = new LinkedHashSet<>(255);
@@ -1053,7 +1058,15 @@ public final class Player extends EntityNode {
 		this.votePoints = vote;
 		PlayerPanel.VOTE.refresh(this, "@or2@ - Vote points: @yel@" + this.getVotePoints() + " points");
 	}
-	
+
+	public String getLastKiller() {
+		return lastKiller;
+	}
+
+	public void setLastKiller(String lastKiller) {
+		this.lastKiller = lastKiller;
+	}
+
 	/**
 	 * Gets the hash collection of the local players.
 	 * @return the local players.

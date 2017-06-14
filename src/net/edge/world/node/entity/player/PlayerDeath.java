@@ -3,6 +3,7 @@ package net.edge.world.node.entity.player;
 import com.google.common.collect.Ordering;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.net.PunishmentHandler;
 import net.edge.util.rand.RandomUtils;
 import net.edge.game.GameConstants;
 import net.edge.content.PlayerPanel;
@@ -137,8 +138,16 @@ public final class PlayerDeath extends EntityDeath<Player> {
 			calculateDropItems(getCharacter(), killer, false);
 			getCharacter().move(new Position(3084, 3514));
 		}
-		
+
 		killer.ifPresent(k -> {
+			if(PunishmentHandler.same(getCharacter(), k)) {
+				k.message("You don't receive any points because you and " + getCharacter().getFormatUsername() + " are connected from the same network.");
+				return;
+			}
+			if(getCharacter().getLastKiller().equalsIgnoreCase(k.getFormatUsername())) {
+				k.message("You don't receive any points because you have killed " + getCharacter().getFormatUsername() + " twice in a row.");
+				return;
+			}
 			//deaths
 			PlayerScoreboardStatistic characterStatistic = World.getScoreboardManager().getPlayerScoreboard().putIfAbsent(getCharacter().getFormatUsername(), new PlayerScoreboardStatistic(getCharacter().getFormatUsername()));
 			
@@ -244,7 +253,11 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		ObjectList<Item> keep = new ObjectArrayList<>();
 		ObjectList<Item> items = new ObjectArrayList<>();
 		Region region = character.getRegion();
-		killer.ifPresent(player -> items.add(new Item(19000, RandomUtils.inclusive(10, 50) * (GameConstants.DOUBLE_BLOOD_MONEY_EVENT ? 2 : 1))));
+		killer.ifPresent(player -> {
+            if(!getCharacter().getLastKiller().equalsIgnoreCase(player.getFormatUsername())) {
+                items.add(new Item(19000, RandomUtils.inclusive(10, 50) * (GameConstants.DOUBLE_BLOOD_MONEY_EVENT ? 2 : 1)));
+            }
+        });
 		character.getEquipment().forEach($it -> {
 			if($it.getDefinition().isTradable()) {
 				items.add($it);

@@ -1,7 +1,7 @@
 package net.edge.net;
 
 import com.google.common.collect.Sets;
-import net.edge.world.World;
+import net.edge.world.node.entity.player.Player;
 
 import java.io.FileWriter;
 import java.nio.file.Paths;
@@ -64,6 +64,16 @@ public final class PunishmentHandler {
 	 */
 	public static boolean recievedStarter(String host) {
 		return !PunishmentHandler.isLocal(host) && STARTERS.contains(host);
+	}
+
+	/**
+	 * Determines if two players are connected from the same network.
+	 * @param player	the player to determine for.
+	 * @param other		the other player to determine for.
+	 * @return {@code true} if the two players are connected from same network, {@code false} otherwise.
+	 */
+	public static boolean same(Player player, Player other) {
+		return player.getSession().getHost().equals(other.getSession().getHost());
 	}
 	
 	/**

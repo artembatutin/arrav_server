@@ -344,7 +344,17 @@ public final class PlayerSerialization {
 		public void fromJson(Gson b, Player p, JsonElement n) {
 			p.setSpellbook(Spellbook.valueOf(n.getAsString()));
 		}
-	}, new Token("fight-type") {
+	}, new Token("last-killer") {
+		@Override
+		public Object toJson(Player p) {
+			return p.getLastKiller();
+		}
+
+		@Override
+		public void fromJson(Gson b, Player p, JsonElement n) {
+			p.setLastKiller(n.getAsString());
+		}
+	},new Token("fight-type") {
 		@Override
 		public Object toJson(Player p) {
 			return p.getFightType();
