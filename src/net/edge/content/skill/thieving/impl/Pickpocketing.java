@@ -115,6 +115,10 @@ public final class Pickpocketing extends Thieving {
 			return false;
 		}
 
+		if(!getPlayer().getInventory().hasCapacityFor(definition.loot)) {
+			player.message("You don't have enough inventory space for the loot.");
+			return false;
+		}
 		if(!getPlayer().isStunned()) {
 			return false;
 		}

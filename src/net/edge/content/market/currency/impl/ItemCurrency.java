@@ -61,7 +61,12 @@ public final class ItemCurrency implements GeneralCurrency {
 	public boolean canRecieveCurrency(Player player) {
 		return player.getInventory().contains(id);
 	}
-	
+
+	@Override
+	public boolean tangible() {
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		return format.orElse(ItemDefinition.DEFINITIONS[id].getName());

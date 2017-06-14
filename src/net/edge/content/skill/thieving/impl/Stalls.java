@@ -93,6 +93,11 @@ public final class Stalls extends Thieving {
 			getPlayer().message("You need a thieving level of " + requirement() + " to steal from " + TextUtils.appendIndefiniteArticle(name) + ".");
 			return false;
 		}
+
+		if(!getPlayer().getInventory().hasCapacityFor(stall.loot)) {
+			player.message("You don't have enough inventory space for the loot.");
+			return false;
+		}
 		
 		if(!player.getSkills()[skill().getId()].getDelay().elapsed(1200)) {
 			return false;

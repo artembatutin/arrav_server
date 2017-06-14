@@ -40,7 +40,15 @@ public interface GeneralCurrency {
 	 * otherwise.
 	 */
 	boolean canRecieveCurrency(Player player);
-	
+
+	/**
+	 * Determines if this currency is tangible.
+	 * @return {@code true} if it is, {@code false} otherwise.
+	 */
+	default boolean tangible() {
+		return false;
+	}
+
 	/**
 	 * Gets the name of the currency.
 	 */
