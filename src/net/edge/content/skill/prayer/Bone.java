@@ -15,7 +15,8 @@ public enum Bone {
 	BIG_BONES(532, 15),
 	BABYDRAGON_BONES(534, 30),
 	DRAGON_BONES(536, 72),
-	OURG_BONES(4834, 140);
+	OURG_BONES(4834, 140),
+	DAGANNOTH_BONES(6729, 125);
 
 	public static final ImmutableSet<Bone> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Bone.class));
 
