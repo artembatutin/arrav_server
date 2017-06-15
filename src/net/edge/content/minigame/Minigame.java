@@ -168,7 +168,7 @@ public abstract class Minigame {
 	}
 	
 	/**
-	 * The method executed when {@code player} utilises the {@link InterfaceClickMessage}.
+	 * The method executed when {@code player}.
 	 * @param player the player clicking the interface.
 	 */
 	public void onInterfaceClick(Player player) {
@@ -271,7 +271,7 @@ public abstract class Minigame {
 	/**
 	 * Determines if {@code player} can equip {@code item} to
 	 * {@code equipmentSlot}.
-	 * @param playe the player attempting to equip the item.
+	 * @param player the player attempting to equip the item.
 	 * @param item  the item that is being equipped.
 	 * @param type  the type of equipment being equipped.
 	 * @return <true> if the player can equip the item, <false> otherwise.
@@ -368,7 +368,7 @@ public abstract class Minigame {
 	 * @return the position the player will be moved to on death.
 	 */
 	public Position deathPosition(Player player) {
-		return new Position(3217 + RandomUtils.inclusive(4), 3430 + RandomUtils.inclusive(4));
+		return new Position(3104 + RandomUtils.inclusive(4), 3515 + RandomUtils.inclusive(4));
 	}
 	
 	/**
