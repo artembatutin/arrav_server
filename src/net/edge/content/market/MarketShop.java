@@ -1,6 +1,7 @@
 package net.edge.content.market;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import net.edge.content.market.currency.impl.ItemCurrency;
 import net.edge.util.TextUtils;
 import net.edge.game.GameConstants;
 import net.edge.content.TabInterface;
@@ -227,16 +228,22 @@ public class MarketShop {
 				return false;
 			}
 		}
-		if(!marketItem.isUnlimitedStock() && item.getAmount() > marketItem.getStock())
+		if(!marketItem.isUnlimitedStock() && item.getAmount() > marketItem.getStock()) {
 			item.setAmount(marketItem.getStock());
-		if(!player.getInventory().hasCapacityFor(item)) {
+		}
+
+		int currencyId = this.getCurrency().getCurrency().tangible() ? ((ItemCurrency) this.getCurrency().getCurrency()).getId() : -1;
+		boolean hasSpace = currencyId != -1 && player.getInventory().hasCapacityAfter(new Item[]{new Item(currencyId, item.getAmount() * value)}, item);
+
+		if(!hasSpace && !player.getInventory().hasCapacityFor(item)) {
 			item.setAmount(player.getInventory().remaining());
 			if(item.getAmount() == 0) {
 				player.message("You do not have enough space in your inventory to buy this item!");
 				return false;
 			}
 		}
-		if(player.getInventory().remaining() >= item.getAmount() && !item.getDefinition().isStackable() || player.getInventory().remaining() >= 1 && item.getDefinition().isStackable() || player.getInventory().contains(item.getId()) && item.getDefinition().isStackable()) {
+
+		if(hasSpace || player.getInventory().remaining() >= item.getAmount() && !item.getDefinition().isStackable() || player.getInventory().remaining() >= 1 && item.getDefinition().isStackable() || player.getInventory().contains(item.getId()) && item.getDefinition().isStackable()) {
 			if(!marketItem.isUnlimitedStock()) {
 				marketItem.decreaseStock(item.getAmount());
 				marketItem.updateStock();

@@ -528,6 +528,20 @@ public class ItemContainer implements Iterable<Item> {
 		int indexCount = computeIndexCount(item);
 		return remaining() >= indexCount;
 	}
+
+	/**
+	 * Creates a copy of the underlying container and removes the items specified from it
+	 * and after tries to deposit the specified items to it.
+	 *
+	 * @param add    the items to deposit to this container.
+	 * @param remove the items that should be removed before adding.
+	 * @return {@code true} if {@code item} can be added, {@code false} otherwise.
+	 */
+	public final boolean hasCapacityAfter(Item[] add, Item... remove) {
+		ItemContainer container = new ItemContainer(this.capacity, this.policy, this.toArray());
+		container.removeAll(Arrays.copyOf(remove, remove.length));
+		return container.hasCapacityFor(add);
+	}
 	
 	/**
 	 * Determines if this container contains {@code id}.
