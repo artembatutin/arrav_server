@@ -345,7 +345,7 @@ public enum FoodConsumable {
 					}
 					if(replacement.isPresent()) {
 						player.getInventory().set(slot, replacement.get(), true);
-						player.getInventory().refresh(player, Inventory.INVENTORY_DISPLAY_ID);
+						player.getInventory().refresh(player);
 					}
 					player.message(food.getMessage());
 					food.onEffect(player);

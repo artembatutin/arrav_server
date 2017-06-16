@@ -39,30 +39,38 @@ public abstract class ProducingSkillAction extends SkillAction {
 	@Override
 	public final boolean canRun(Task t) {
 		Optional<Item[]> removeItem = removeItem();
-		ItemContainer container = getPlayer().getInventory().copy();
-		if(container.removeAll(removeItem.get()) && !container.hasCapacityFor(produceItem().get())) {
-			container.fireCapacityExceededEvent();
+		getPlayer().getInventory().test();
+		//removing items from the test container.
+		if(removeItem.isPresent()) {
+			//if player missing any items check.
+			if(!getPlayer().getInventory().containsAll(removeItem.get())) {
+				//loop checking specifics if message not present.
+				if(!message().isPresent()) {
+					for(Item item : removeItem.get()) {
+						if(!getPlayer().getInventory().contains(item)) {
+							String anyOrEnough = item.getAmount() == 1 ? "any" : "enough";
+							getPlayer().message("You don't have " + anyOrEnough + " " + TextUtils.appendPluralCheck(item.getDefinition().getName()) + ".");
+							return false;
+						}
+					}
+				} else {
+					player.message(message().get());
+				}
+				return false;
+			}
+			//removing items from the test container.
+			getPlayer().getInventory().removeAll(removeItem.get());
+		}
+		
+		//Looking if player has empty space for produce items.
+		if(produceItem().isPresent() && !getPlayer().getInventory().hasCapacityFor(produceItem().get())) {
+			getPlayer().getInventory().fireCapacityExceededEvent();
 			return false;
 		}
-		if(!removeItem.isPresent())
-			return true;
-		if(getPlayer().getInventory().containsAll(removeItem.get()))
-			return true;
-		
-		if(!message().isPresent()) {
-			for(Item item : removeItem.get()) {
-				if(!getPlayer().getInventory().contains(item)) {
-					String anyOrEnough = item.getAmount() == 1 ? "any" : "enough";
-					getPlayer().message("You don't have " + anyOrEnough + " " + TextUtils.appendPluralCheck(item.getDefinition().getName()) + " left.");
-					return false;
-				}
-			}
-		} else {
-			player.message(message().get());
-		}
-		
+		getPlayer().getInventory().untest();
+		//producing action
 		onProduce(t, false);
-		return false;
+		return true;
 	}
 	
 	@Override
@@ -108,10 +116,9 @@ public abstract class ProducingSkillAction extends SkillAction {
 		return Optional.empty();
 	}
 	
-	;
-	
 	@Override
 	public boolean isPrioritized() {
 		return false;
 	}
+	
 }

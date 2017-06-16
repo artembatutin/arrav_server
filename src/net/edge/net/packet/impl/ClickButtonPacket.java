@@ -79,11 +79,12 @@ public final class ClickButtonPacket implements PacketReader {
 	@Override
 	public void handle(Player player, int opcode, int size, ByteMessage payload) {
 		int button = PROPER_READ ? payload.getShort() : hexToInt(payload.getBytes(2));
-		
 		if(Server.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}
-		
+		if(button != 9154 && player.getActivityManager().contains(ActivityManager.ActivityType.CLICK_BUTTON)) {
+			return;
+		}
 		if(button == 123) {
 			player.getMessages().sendCloseWindows();
 			if(player.getMarketShop() != null) {
@@ -102,9 +103,6 @@ public final class ClickButtonPacket implements PacketReader {
 			return;
 		}
 		if(Prayer.toggleQuickPrayer(player, button)) {
-			return;
-		}
-		if(button != 9154 && player.getActivityManager().contains(ActivityManager.ActivityType.CLICK_BUTTON)) {
 			return;
 		}
 		if(EnchantCrossbowBolts.openInterface(player, button) || EnchantCrossbowBolts.enchant(player, button)) {

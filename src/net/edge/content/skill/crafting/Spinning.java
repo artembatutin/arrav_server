@@ -62,11 +62,9 @@ public final class Spinning extends ProducingSkillAction {
 			player.getMessages().sendEnterAmount("How many you would like to spin?", s -> () -> Spinning.create(player, (SpinningData) player.getAttr().get("crafting_spinning").get(), Integer.parseInt(s)));
 			return true;
 		}
-		
 		if(amount == -2) {
 			amount = player.getInventory().computeAmountForId(((SpinningData) player.getAttr().get("crafting_spinning").get()).item.getId());
 		}
-		
 		create(player, (SpinningData) player.getAttr().get("crafting_spinning").get(), amount);
 		return true;
 	}

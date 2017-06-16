@@ -20,7 +20,7 @@ public final class GetStarterCommand implements Command {
 		if(!PunishmentHandler.recievedStarter(player.getSession().getHost())) {
 			player.getInventory().setItems(GameConstants.STARTER_PACKAGE);
 			PunishmentHandler.addStarter(player.getSession().getHost());
-			player.getInventory().refresh(player, Inventory.INVENTORY_DISPLAY_ID);
+			player.getInventory().refresh(player);
 		} else {
 			player.message("You already received a starter package before.");
 		}

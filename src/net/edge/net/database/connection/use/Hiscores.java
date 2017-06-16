@@ -40,7 +40,7 @@ public class Hiscores extends ConnectionUse {
 		stmt2.setInt(30, player.getCurrentKillstreak().get());
 		stmt2.setInt(31, player.getPlayerKills().get());
 		stmt2.setInt(32, player.getDeathsByPlayer().get());
-		stmt2.setBoolean(33, player.isNight());
+		stmt2.setBoolean(33, player.isIronMan());
 		stmt2.execute();
 	}
 	
@@ -50,7 +50,7 @@ public class Hiscores extends ConnectionUse {
 	}
 	
 	private static String generateQuery() {
-		return "INSERT INTO hs_users (username, rights, combat_level, overall_xp, attack_xp, defence_xp, strength_xp, constitution_xp, ranged_xp, prayer_xp, magic_xp, cooking_xp, woodcutting_xp, fletching_xp, fishing_xp, firemaking_xp, crafting_xp, smithing_xp, mining_xp, herblore_xp, agility_xp, thieving_xp, slayer_xp, farming_xp, runecrafting_xp, hunter_xp, construction_xp, summoning_xp, dungeoneering_xp, killstreak, kills, deaths, night) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		return "INSERT INTO hs_users (username, rights, combat_level, overall_xp, attack_xp, defence_xp, strength_xp, constitution_xp, ranged_xp, prayer_xp, magic_xp, cooking_xp, woodcutting_xp, fletching_xp, fishing_xp, firemaking_xp, crafting_xp, smithing_xp, mining_xp, herblore_xp, agility_xp, thieving_xp, slayer_xp, farming_xp, runecrafting_xp, hunter_xp, construction_xp, summoning_xp, dungeoneering_xp, killstreak, kills, deaths, iron) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	}
 	
 }

@@ -15,7 +15,7 @@ public class HomeLadder extends EventInitializer {
 		ObjectEvent l = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
-				if(player.isNight())
+				if(player.isIronMan())
 					player.teleport(new Position(3099, 3497, 1), LADDER);
 				return true;
 			}

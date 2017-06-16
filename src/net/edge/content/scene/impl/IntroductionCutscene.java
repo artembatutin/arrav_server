@@ -57,7 +57,7 @@ public final class IntroductionCutscene extends Cutscene {
 	public void execute(Task t) {
 		player.setPosition(new Position(3088, 3509));
 		if(player.getPosition().same(new Position(3088, 3509))) {
-			if((int) player.getAttr().get("introduction_stage").get() == 1) {
+			if(player.getAttr().get("introduction_stage").getInt() == 1) {
 				player.getDialogueBuilder().append(new StatementDialogue("Welcome to the World of @blu@Edgeville!").attach(() -> {
 					player.getMessages().sendCameraMovement(new Position(3085, 3510), 310, 2, 10);
 					player.getMessages().sendCameraAngle(new Position(3093, 3509), 300, 2, 10);
@@ -98,15 +98,11 @@ public final class IntroductionCutscene extends Cutscene {
 				}), new StatementDialogue("A good start would be thieving on the second floor", "However be aware of guards!").attach(() -> {
 					player.getMessages().sendCameraMovement(new Position(3088, 3482), 1200, 2, 10);
 					player.getMessages().sendCameraAngle(new Position(3094, 3476), 1400, 2, 10);
-				}), new StatementDialogue("This is the @red@Night's watch.", "It's exclusive to nightmare mode members.").attach(() -> {
+				}), new StatementDialogue("This is the @red@Iron man house.", "It's exclusive to iron man members.").attach(() -> {
 					player.getMessages().sendCameraMovement(new Position(3099, 3496), 1200, 2, 10);
 					player.getMessages().sendCameraAngle(new Position(3102, 3499), 1400, 2, 10);
-				}), new StatementDialogue("@red@Nightmare mode:", "Levels decrease on death, only access to the night watch's shop,", "can't trade nor drop and tougher monsters.").attach(() -> {
-				}), new StatementDialogue("@red@Benefits when maxed out:", "Restrictions removed, 10% bonus monsters drops,", "unlimited run outside of wilderness", "and exclusive night watch items.").attach(() -> {}), new OptionDialogue(t2 -> {
-						if(t2.equals(OptionType.FIRST_OPTION))
-							setNight(player);
-						player.getDialogueBuilder().advance();
-					}, "I want to join the night's watch!", "I'll prefer playing without this mode.").attach(() -> {
+				}), new StatementDialogue("@red@Iron man mode:", "Levels decrease on death, can't search global market,", "can't trade nor drop and tougher monsters.").attach(() -> {
+				}), new StatementDialogue("@red@Benefits when maxed out:", "Restrictions removed, 10% bonus monsters drops,", "unlimited run outside of wilderness", "and exclusive iron man items.").attach(() -> {
 				}), new StatementDialogue("Another place on the list is the @red@Camp.", "Most of holidays activities will be held here.").attach(() -> {
 					player.getMessages().sendCameraMovement(new Position(3106, 3504), 1900, 2, 10);
 					player.getMessages().sendCameraAngle(new Position(3107, 3512), 2100, 2, 10);
@@ -128,51 +124,57 @@ public final class IntroductionCutscene extends Cutscene {
 	private Dialogue complete() {
 		return new StatementDialogue("You're on your own now. Goodluck!").attach(() -> {
 			player.setInstance(0);
-			player.getMessages().sendMinimapState(0);
 			player.getMessages().sendFade(10, 100, 120);
 			player.move(new Position(3088, 3509));
 			player.facePosition(new Position(3221, 3432));
 			player.getMessages().sendResetCameraPosition();
-			player.getActivityManager().enable();
 			player.setVisible(true);
 			player.getAttr().get("introduction_stage").set(2);
 			player.graphic(new Graphic(2189));
-			player.sendDefaultSidebars();
-			player.getInventory().refresh(player, Inventory.INVENTORY_DISPLAY_ID);
+			player.getInventory().refresh(player);
 			if(firstLogin) {
 				player.getInventory().setItems(GameConstants.STARTER_PACKAGE);
-				player.getInventory().refresh(player, Inventory.INVENTORY_DISPLAY_ID);
+				player.getInventory().refresh(player);
 				PunishmentHandler.addStarter(player.getSession().getHost());
 			} else {
 				player.message("You already received a starter package before.");
 			}
 			World.getClanManager().join(player, "avro");
+			if(player.getAttr().get("introduction_stage").getInt() < 3) {
+				player.getMessages().sendInterface(-5);
+			}
 		});
 	}
 	
 	public void prerequisites() {
-		player.setVisible(false);
-		player.getMessages().sendMinimapState(2);
-		player.getActivityManager().setAllExcept(ActivityType.CLICK_BUTTON, ActivityType.LOG_OUT, ActivityType.CHARACTER_SELECTION, ActivityType.DIALOGUE_INTERACTION, ActivityType.FACE_POSITION);
-		if(firstLogin) {
-			new IntroductionCutscene(player).submit();
-			return;
-		}
-		player.getDialogueBuilder().append(new OptionDialogue(t -> {
-			if(t.equals(OptionType.FIRST_OPTION)) {
+		player.resetSidebars();
+		player.getActivityManager().setAllExcept(ActivityType.LOG_OUT, ActivityType.CHARACTER_SELECTION, ActivityType.DIALOGUE_INTERACTION, ActivityType.FACE_POSITION);
+		if(player.getAttr().get("introduction_stage").getInt() < 2) {
+			player.setVisible(false);
+			if(firstLogin) {
 				new IntroductionCutscene(player).submit();
-			} else {
-				player.getDialogueBuilder().advance();
-				player.getMessages().sendInterface(3559);
-				if(t.equals(OptionType.SECOND_OPTION))
-					setNight(player);
+				return;
 			}
-		}, "I want a quick tour.", "Skip, start as nightmare.", "Skip, start as regular"), complete());
+			player.getDialogueBuilder().append(new OptionDialogue(t -> {
+				if(t.equals(OptionType.FIRST_OPTION)) {
+					new IntroductionCutscene(player).submit();
+				} else {
+					player.getDialogueBuilder().advance();
+					player.getMessages().sendInterface(3559);
+					player.getAttr().get("introduction_stage").set(2);
+				}
+			}, "I want a quick tour.", "Skip the introduction."), complete());
+		}
+		if(player.getAttr().get("introduction_stage").getInt() < 3) {
+			//player.getMessages().sendInterface(-5);
+		}
+		player.getActivityManager().enable();
+		player.sendDefaultSidebars();
 	}
 	
-	private void setNight(Player player) {
+	private void setIron(Player player) {
 		player.setNight(1);
-		player.message("You received a special package from the night's watch. It's in your bank!");
+		player.message("You received a special package from the iron man house. It's in your bank!");
 		player.getBank().add(0, new Item(15246));
 	}
 

@@ -334,7 +334,7 @@ public final class ItemInterfacePacket implements PacketReader {
 		switch(interfaceId) {
 			case 3214:
 				player.getInventory().swap(fromSlot, toSlot);
-				player.getInventory().refresh(player, Inventory.INVENTORY_DISPLAY_ID);
+				player.getInventory().refresh(player);
 				break;
 			case 5382:
 				player.getBank().refresh();

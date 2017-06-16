@@ -147,6 +147,10 @@ public final class Tanning extends ProducingSkillAction {
 		if(this.amount > amount) {
 			this.amount = amount;
 		}
+		if(this.amount == 0) {
+			//no hides found, will throw message after.
+			this.amount = 1;
+		}
 		return Optional.of(spell ? new Item[]{new Item(data.required.getId(), this.amount)} : new Item[]{new Item(data.required.getId(), this.amount), data.cost});
 	}
 	

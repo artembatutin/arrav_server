@@ -5,7 +5,6 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.Server;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
-import net.edge.event.obj.WeaponRack;
 import net.edge.content.item.OverloadEffectTask;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.packet.PacketWriter;
@@ -100,12 +99,12 @@ public final class Player extends EntityNode {
 	private static Logger logger = LoggerUtils.getLogger(Player.class);
 	
 	/**
-	 * Determines if this player is playing in nightmare mode.
+	 * Determines if this player is playing in iron man mode.
 	 * 0 - not
-	 * 1 - nightmare mode
-	 * 2 - nightmare maxed
+	 * 1 - iron man mode
+	 * 2 - iron man maxed
 	 */
-	private int nightMode;
+	private int ironMan;
 
 	/**
 	 * The total amount of times this player has voted.
@@ -599,6 +598,23 @@ public final class Player extends EntityNode {
 		TabInterface.ATTACK.sendInterface(this, 2423);
 	}
 	
+	public void resetSidebars() {
+		TabInterface.ATTACK.sendInterface(this, -1);
+		TabInterface.CLAN_CHAT.sendInterface(this, -1);
+		TabInterface.SKILL.sendInterface(this, -1);
+		TabInterface.QUEST.sendInterface(this, -1);
+		TabInterface.INVENTORY.sendInterface(this, -1);
+		TabInterface.EQUIPMENT.sendInterface(this, -1);
+		TabInterface.PRAYER.sendInterface(this, -1);
+		TabInterface.MAGIC.sendInterface(this, -1);
+		TabInterface.FRIEND.sendInterface(this, -1);
+		TabInterface.IGNORE.sendInterface(this, -1);
+		TabInterface.LOGOUT.sendInterface(this, -1);
+		TabInterface.SETTING.sendInterface(this, -1);
+		TabInterface.EMOTE.sendInterface(this, -1);
+		TabInterface.ATTACK.sendInterface(this, -1);
+	}
+	
 	@Override
 	public void register() {
 		PacketWriter encoder = getMessages();
@@ -606,13 +622,13 @@ public final class Player extends EntityNode {
 		this.getMessages().sendMapRegion();
 		super.getFlags().flag(UpdateFlag.APPEARANCE);
 		Smelting.clearInterfaces(this);
-		if((int) getAttr().get("introduction_stage").get() == 2) {
+		if(getAttr().get("introduction_stage").getInt() == 3) {
 			sendDefaultSidebars();
 		}
 		move(super.getPosition());
 		Skills.refreshAll(this);
-		equipment.refresh(this, Equipment.EQUIPMENT_DISPLAY_ID);
-		inventory.refresh(this, Inventory.INVENTORY_DISPLAY_ID);
+		equipment.refresh(this);
+		inventory.refresh(this);
 		encoder.sendPrivateMessageListStatus(2);
 		privateMessage.updateThisList();
 		privateMessage.updateOtherList(true);
@@ -652,8 +668,7 @@ public final class Player extends EntityNode {
 		if(!clan.isPresent()) {
 			World.getClanManager().join(this, "avro");
 		}
-		if((int) attr.get("introduction_stage").get() != 2) {
-			activityManager.enable();
+		if(attr.get("introduction_stage").getInt() != 3) {
 			new IntroductionCutscene(this).prerequisites();
 		}
 		if(World.getFirepitEvent().getFirepit().isActive()) {
@@ -995,34 +1010,34 @@ public final class Player extends EntityNode {
 	
 	/**
 	 * Determines whether this player is in the nightmare mode.
-	 * @return {@link #nightMode}.
+	 * @return {@link #ironMan}.
 	 */
-	public boolean isNight() {
-		return nightMode == 1 || nightMode == 2;
+	public boolean isIronMan() {
+		return ironMan == 1 || ironMan == 2;
 	}
 	
 	/**
 	 * Gets this player nightmare mode stage.
-	 * @return {@link #nightMode}.
+	 * @return {@link #ironMan}.
 	 */
-	public int getNightMode() {
-		return nightMode;
+	public int getIronMan() {
+		return ironMan;
 	}
 	
 	/**
 	 * Determines whether this player is maxed out in the nightmare mode.
-	 * @return {@link #nightMode} maxed out.
+	 * @return {@link #ironMan} maxed out.
 	 */
-	public boolean isNightMaxed() {
-		return nightMode == 2;
+	public boolean isIronMaxed() {
+		return ironMan == 2;
 	}
 	
 	/**
-	 * Sets the {@link #nightMode} to the new value.
+	 * Sets the {@link #ironMan} to the new value.
 	 */
 	public void setNight(int value) {
-		this.nightMode = value;
-		PlayerPanel.NIGHT.refresh(this, "@or2@ - Nightmare: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
+		this.ironMan = value;
+		PlayerPanel.IRON.refresh(this, "@or2@ - Iron man: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
 	}
 
 	/**
@@ -2322,4 +2337,5 @@ public final class Player extends EntityNode {
 	public void setMarketShop(MarketShop marketShop) {
 		this.marketShop = marketShop;
 	}
+	
 }

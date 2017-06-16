@@ -22,8 +22,6 @@ import static net.edge.content.container.ItemContainer.StackPolicy.STANDARD;
  */
 public class ItemContainer implements Iterable<Item> {
 	
-	// TODO: Unit tests for various functions
-	
 	/**
 	 * An {@link Iterator} implementation for this container.
 	 */
@@ -124,6 +122,11 @@ public class ItemContainer implements Iterable<Item> {
 	private boolean firingEvents = true;
 	
 	/**
+	 * If the container is immutable in test mode.
+	 */
+	private boolean test;
+	
+	/**
 	 * The size of this container, counting occupied slots.
 	 */
 	private int size;
@@ -212,7 +215,7 @@ public class ItemContainer implements Iterable<Item> {
 			return false;
 		}
 		
-		if(stackable) {
+		if(stackable && !test) {
 			Item current = items[preferredIndex];
 			if(current == null) {
 				items[preferredIndex] = item;
@@ -231,10 +234,12 @@ public class ItemContainer implements Iterable<Item> {
 					fireCapacityExceededEvent();
 					return false;
 				}
-				Item newItem = new Item(item.getId());
-				items[preferredIndex] = newItem;
-				size++;
-				fireItemUpdatedEvent(null, newItem, preferredIndex++, refresh);
+				if(!test) {
+					Item newItem = new Item(item.getId());
+					items[preferredIndex] = newItem;
+					size++;
+					fireItemUpdatedEvent(null, newItem, preferredIndex++, refresh);
+				}
 			}
 		}
 		return true;
@@ -306,7 +311,7 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public boolean remove(Item item, int preferredIndex, boolean refresh) {
 		checkArgument(preferredIndex >= -1, "invalid index identifier");
-
+		
 		ItemDefinition def = item.getDefinition();
 		if(def == null) {
 			items[preferredIndex] = null;
@@ -327,7 +332,7 @@ public class ItemContainer implements Iterable<Item> {
 		if(preferredIndex == -1) { // Item isn't present within this container.
 			return false;
 		}
-		if(stackable) {
+		if(stackable && !test) {
 			Item current = items[preferredIndex];
 			if(current.getAmount() > item.getAmount()) {
 				items[preferredIndex] = current.createAndDecrement(item.getAmount());
@@ -336,7 +341,7 @@ public class ItemContainer implements Iterable<Item> {
 				size--;
 			}
 			fireItemUpdatedEvent(current, items[preferredIndex], preferredIndex, refresh);
-		} else {
+		} else if(!test) {
 			int until = computeAmountForId(item.getId());
 			until = (item.getAmount() > until) ? until : item.getAmount();
 			
@@ -445,8 +450,8 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param index The index to compute the identifier for.
 	 * @return The identifier wrapped in an optional.
 	 */
-	public final Optional<Integer> computeIdForIndex(int index) {
-		return retrieve(index).map(Item::getId);
+	public final int computeIdForIndex(int index) {
+		return retrieve(index).map(Item::getId).orElse(-1);
 	}
 	
 	/**
@@ -457,6 +462,8 @@ public class ItemContainer implements Iterable<Item> {
 	 * @return {@code true} if the replace operation was successful, {@code false otherwise}.
 	 */
 	public final boolean replace(int oldId, int newId, boolean refresh) {
+		if(test)
+			return false;
 		int index = computeIndexForId(oldId);
 		if(index == -1) {
 			return false;
@@ -473,8 +480,9 @@ public class ItemContainer implements Iterable<Item> {
 	 * @return {@code true} if the replace operation was successful at least once, {@code false otherwise}.
 	 */
 	public final boolean replaceAll(int oldId, int newId) {
+		if(test)
+			return false;
 		boolean replaced = false;
-		
 		firingEvents = false;
 		try {
 			while(replace(oldId, newId, false)) {
@@ -581,18 +589,19 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public final boolean containsAll(Item... check) {
 		for(Item it : check) {
-			boolean found = false;
 			if(it == null)
 				continue;
+			int am = it.getAmount();
 			for(Item item : items) {
 				if(item == null)
 					continue;
-				if(item.getId() == it.getId() && item.getAmount() >= it.getAmount()) {
-					found = true;
-					break;
+				if(item.getId() == it.getId()) {
+					am -= item.getAmount();
+					if(am <= 0)
+						break;
 				}
 			}
-			if(!found)
+			if(am > 0)
 				return false;
 		}
 		return true;
@@ -652,9 +661,15 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
+	 * Sends the items on the interface using the declared {@link #widget()}.
+	 */
+	public void refresh(Player player) {
+		player.getMessages().sendItemsOnInterface(widget(), items);
+	}
+	
+	/**
 	 * Sends the items on the interface.
 	 * @param widget The widget to send the {@code Item}s on.
-	 * @return The constructed {@code SendWidgetItemGroupMessage}.
 	 */
 	public final void refresh(Player player, int widget) {
 		player.getMessages().sendItemsOnInterface(widget, items);
@@ -899,16 +914,6 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
-	 * Creates a copy of the underlying item container.
-	 * @return a copy of the unterlying item container.
-	 */
-	public ItemContainer copy() {
-		ItemContainer container = new ItemContainer(this.capacity, this.policy, this.toArray());
-		this.listeners.forEach(container::addListener);
-		return container;
-	}
-	
-	/**
 	 * Removes all of the items from this container.
 	 */
 	public final void clear() {
@@ -1026,4 +1031,34 @@ public class ItemContainer implements Iterable<Item> {
 	public final StackPolicy policy() {
 		return policy;
 	}
+	
+	/**
+	 * A widget id to refresh this container.
+	 * @return -1 for no widgets.
+	 */
+	public int widget() {
+		return -1;
+	}
+	
+	/**
+	 * @return {@link #test}.
+	 */
+	public boolean isTest() {
+		return test;
+	}
+	
+	/**
+	 * Sets the test flag to true.
+	 */
+	public void test() {
+		test = true;
+	}
+	
+	/**
+	 * Sets the tast flag to false.
+	 */
+	public void untest() {
+		test = false;
+	}
+	
 }

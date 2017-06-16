@@ -550,7 +550,7 @@ public final class Combat {
 				max = character.getCurrentlyCasting().maximumHit();
 				if(victim.isPlayer() && character.isNpc()) {
 					Player p = victim.toPlayer();
-					if(p.isNight())//Nightmare monsters tougher.
+					if(p.isIronMan())//Iron man monsters tougher.
 						max *= 1.2;
 				}
 				hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);
@@ -828,7 +828,7 @@ public final class Combat {
 			maxHit = npc.getDefinition().getMaxHit();
 			if(victim.isPlayer()) {
 				Player p = victim.toPlayer();
-				if(p.isNight())//Nightmare monsters tougher.
+				if(p.isIronMan())//Iron man monsters tougher.
 					maxHit *= 1.2;
 			}
 			if(npc.getWeakenedBy() == CombatWeaken.STRENGTH_LOW || npc.getWeakenedBy() == CombatWeaken.STRENGTH_HIGH)
@@ -938,7 +938,7 @@ public final class Combat {
 			maxHit = npc.getDefinition().getMaxHit();
 			if(victim.isPlayer()) {
 				Player p = victim.toPlayer();
-				if(p.isNight())//Nightmare monsters tougher.
+				if(p.isIronMan())//Iron man monsters tougher.
 					maxHit *= 1.2;
 			}
 			return maxHit;

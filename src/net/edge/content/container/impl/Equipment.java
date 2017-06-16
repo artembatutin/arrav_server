@@ -42,11 +42,6 @@ public final class Equipment extends ItemContainer {
 		}
 		
 		@Override
-		public int getWidgetId() {
-			return EQUIPMENT_DISPLAY_ID;
-		}
-		
-		@Override
 		public String getCapacityExceededMsg() {
 			throw new IllegalStateException(EXCEPTION_MESSAGE);
 		}
@@ -198,10 +193,11 @@ public final class Equipment extends ItemContainer {
 		if(type == WEAPON) { // If we're equipping a 2h sword, unequip shield.
 			unequipSecondary = def.isTwoHanded() && getItems()[SHIELD_SLOT] != null ? Optional.of(getItems()[SHIELD_SLOT]) : Optional.empty();
 		} else if(type == EquipmentType.SHIELD) { // If we're equipping a shield while wearing a 2h sword, unequip sword.
-			boolean weaponTwoHanded = computeIdForIndex(WEAPON_SLOT).
-					map(ItemDefinition::get).
-					map(ItemDefinition::isTwoHanded).
-					orElse(false);
+			int weapon = computeIdForIndex(WEAPON_SLOT);
+			boolean weaponTwoHanded = false;
+			if(weapon != -1 && Item.valid(weapon)) {
+				weaponTwoHanded = ItemDefinition.get(weapon).isTwoHanded();
+			}
 			unequipSecondary = weaponTwoHanded && getItems()[WEAPON_SLOT] != null ? Optional.of(getItems()[WEAPON_SLOT]) : Optional.empty();
 		}
 		
@@ -372,7 +368,15 @@ public final class Equipment extends ItemContainer {
 	 * Forces a refresh of {@code Equipment} items to the {@code EQUIPMENT_DISPLAY_ID} widget.
 	 */
 	public void refresh() {
-		refresh(player, EQUIPMENT_DISPLAY_ID);
+		refresh(player);
+	}
+	
+	/**
+	 * @return widget id.
+	 */
+	@Override
+	public int widget() {
+		return isTest() ? -1 : EQUIPMENT_DISPLAY_ID;
 	}
 	
 	/**

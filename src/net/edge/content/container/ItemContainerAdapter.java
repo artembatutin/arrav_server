@@ -45,13 +45,8 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	 * Queues a message that displays items from an {@link ItemContainer} on a widget.
 	 */
 	protected void sendItemsToWidget(ItemContainer container) {
-		container.refresh(player, getWidgetId());
+		container.refresh(player);
 	}
-	
-	/**
-	 * @return The widget to display items on.
-	 */
-	public abstract int getWidgetId();
 	
 	/**
 	 * @return The message sent when the {@link ItemContainer} exceeds its capacity.

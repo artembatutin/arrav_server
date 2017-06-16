@@ -49,16 +49,16 @@ public final class ExchangeSessionManager {
 			return false;
 		}
 		
-		if(player.isNight() && !player.isNightMaxed()) {
-			if(requested.isNight()) {
-				player.message("You cannot start an exchange session because you're a night's watch member.");
+		if(player.isIronMan() && !player.isIronMaxed()) {
+			if(requested.isIronMan()) {
+				player.message("You cannot start an exchange session because you're an iron man member.");
 				return false;
 			}
 		}
 		
-		if(requested.isNight() && !requested.isNightMaxed()) {
-			if(!player.isNight()) {
-				player.message("This player is in nightmare mode and can't start an exchange session.");
+		if(requested.isIronMan() && !requested.isIronMaxed()) {
+			if(!player.isIronMan()) {
+				player.message("This player is in iron man mode and can't start an exchange session.");
 				return false;
 			}
 		}
