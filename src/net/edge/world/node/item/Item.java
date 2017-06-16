@@ -145,6 +145,15 @@ public final class Item {
 	}
 	
 	/**
+	 * Determines if {@code item} is valid. In other words, determines if {@code item} is above {@code 0} and def not null.
+	 * @param item the item to determine if valid.
+	 * @return {@code true} if the item is valid, {@code false} otherwise.
+	 */
+	public static boolean valid(int item) {
+		return item > 0 && item < ItemDefinition.DEFINITIONS.length && ItemDefinition.get(item) != null;
+	}
+	
+	/**
 	 * A substitute for {@link Object#clone()} that creates another 'copy' of
 	 * this instance. The created copy <i>safe</i> meaning it does not hold
 	 * <b>any</b> references to the original instance.

@@ -122,6 +122,11 @@ public class ItemContainer implements Iterable<Item> {
 	private boolean firingEvents = true;
 	
 	/**
+	 * If the container is immutable in test mode.
+	 */
+	private boolean test;
+	
+	/**
 	 * The size of this container, counting occupied slots.
 	 */
 	private int size;
@@ -210,7 +215,7 @@ public class ItemContainer implements Iterable<Item> {
 			return false;
 		}
 		
-		if(stackable) {
+		if(stackable && !test) {
 			Item current = items[preferredIndex];
 			if(current == null) {
 				items[preferredIndex] = item;
@@ -229,10 +234,12 @@ public class ItemContainer implements Iterable<Item> {
 					fireCapacityExceededEvent();
 					return false;
 				}
-				Item newItem = new Item(item.getId());
-				items[preferredIndex] = newItem;
-				size++;
-				fireItemUpdatedEvent(null, newItem, preferredIndex++, refresh);
+				if(!test) {
+					Item newItem = new Item(item.getId());
+					items[preferredIndex] = newItem;
+					size++;
+					fireItemUpdatedEvent(null, newItem, preferredIndex++, refresh);
+				}
 			}
 		}
 		return true;
@@ -325,7 +332,7 @@ public class ItemContainer implements Iterable<Item> {
 		if(preferredIndex == -1) { // Item isn't present within this container.
 			return false;
 		}
-		if(stackable) {
+		if(stackable && !test) {
 			Item current = items[preferredIndex];
 			if(current.getAmount() > item.getAmount()) {
 				items[preferredIndex] = current.createAndDecrement(item.getAmount());
@@ -334,7 +341,7 @@ public class ItemContainer implements Iterable<Item> {
 				size--;
 			}
 			fireItemUpdatedEvent(current, items[preferredIndex], preferredIndex, refresh);
-		} else {
+		} else if(!test) {
 			int until = computeAmountForId(item.getId());
 			until = (item.getAmount() > until) ? until : item.getAmount();
 			
@@ -443,8 +450,8 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param index The index to compute the identifier for.
 	 * @return The identifier wrapped in an optional.
 	 */
-	public final Optional<Integer> computeIdForIndex(int index) {
-		return retrieve(index).map(Item::getId);
+	public final int computeIdForIndex(int index) {
+		return retrieve(index).map(Item::getId).orElse(-1);
 	}
 	
 	/**
@@ -455,6 +462,8 @@ public class ItemContainer implements Iterable<Item> {
 	 * @return {@code true} if the replace operation was successful, {@code false otherwise}.
 	 */
 	public final boolean replace(int oldId, int newId, boolean refresh) {
+		if(test)
+			return false;
 		int index = computeIndexForId(oldId);
 		if(index == -1) {
 			return false;
@@ -471,8 +480,9 @@ public class ItemContainer implements Iterable<Item> {
 	 * @return {@code true} if the replace operation was successful at least once, {@code false otherwise}.
 	 */
 	public final boolean replaceAll(int oldId, int newId) {
+		if(test)
+			return false;
 		boolean replaced = false;
-		
 		firingEvents = false;
 		try {
 			while(replace(oldId, newId, false)) {
@@ -1028,6 +1038,27 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public int widget() {
 		return -1;
+	}
+	
+	/**
+	 * @return {@link #test}.
+	 */
+	public boolean isTest() {
+		return test;
+	}
+	
+	/**
+	 * Sets the test flag to true.
+	 */
+	public void test() {
+		test = true;
+	}
+	
+	/**
+	 * Sets the tast flag to false.
+	 */
+	public void untest() {
+		test = false;
 	}
 	
 }

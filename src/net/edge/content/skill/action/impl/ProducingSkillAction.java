@@ -1,6 +1,5 @@
 package net.edge.content.skill.action.impl;
 
-import net.edge.content.container.impl.Inventory;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.container.ItemContainer;
@@ -40,15 +39,15 @@ public abstract class ProducingSkillAction extends SkillAction {
 	@Override
 	public final boolean canRun(Task t) {
 		Optional<Item[]> removeItem = removeItem();
-		ItemContainer test = getPlayer().getInventory().test();
+		getPlayer().getInventory().test();
 		//removing items from the test container.
 		if(removeItem.isPresent()) {
 			//if player missing any items check.
-			if(!test.containsAll(removeItem.get())) {
+			if(!getPlayer().getInventory().containsAll(removeItem.get())) {
 				//loop checking specifics if message not present.
 				if(!message().isPresent()) {
 					for(Item item : removeItem.get()) {
-						if(!test.contains(item)) {
+						if(!getPlayer().getInventory().contains(item)) {
 							String anyOrEnough = item.getAmount() == 1 ? "any" : "enough";
 							getPlayer().message("You don't have " + anyOrEnough + " " + TextUtils.appendPluralCheck(item.getDefinition().getName()) + ".");
 							return false;
@@ -60,15 +59,15 @@ public abstract class ProducingSkillAction extends SkillAction {
 				return false;
 			}
 			//removing items from the test container.
-			test.removeAll(removeItem.get());
+			getPlayer().getInventory().removeAll(removeItem.get());
 		}
 		
 		//Looking if player has empty space for produce items.
-		if(produceItem().isPresent() && !test.hasCapacityFor(produceItem().get())) {
-			test.fireCapacityExceededEvent();
+		if(produceItem().isPresent() && !getPlayer().getInventory().hasCapacityFor(produceItem().get())) {
+			getPlayer().getInventory().fireCapacityExceededEvent();
 			return false;
 		}
-		
+		getPlayer().getInventory().untest();
 		//producing action
 		onProduce(t, false);
 		return true;

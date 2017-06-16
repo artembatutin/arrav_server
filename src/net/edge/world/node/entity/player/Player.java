@@ -149,7 +149,7 @@ public final class Player extends EntityNode {
 	/**
 	 * The container that holds the inventory items.
 	 */
-	private final Inventory inventory = new Inventory(this, false);
+	private final Inventory inventory = new Inventory(this);
 	
 	/**
 	 * The container that holds the bank items.

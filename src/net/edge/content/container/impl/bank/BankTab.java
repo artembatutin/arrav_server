@@ -189,6 +189,10 @@ final class BankTab extends ItemContainer {
 		player.getMessages().sendItemsOnInterface(270 + slot, toArray());
 	}
 	
+	public int widget() {
+		return isTest() ? -1 : 270 + slot;
+	}
+	
 	/**
 	 * Gets the bank tab slot.
 	 * @return bank tab slot.

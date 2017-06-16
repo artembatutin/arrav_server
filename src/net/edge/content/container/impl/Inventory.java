@@ -51,11 +51,10 @@ public class Inventory extends ItemContainer {
 	 * @param player The {@link Player} this instance is dedicated to.
 	 * @param test test condition flag.
 	 */
-	public Inventory(Player player, boolean test) {
+	public Inventory(Player player) {
 		super(28, StackPolicy.STANDARD);
 		addListener(new InventoryListener(player));
-		if(!test)
-			addListener(new ItemWeightListener(player));
+		addListener(new ItemWeightListener(player));
 		this.player = player;
 	}
 	
@@ -189,21 +188,7 @@ public class Inventory extends ItemContainer {
 	 */
 	@Override
 	public int widget() {
-		return INVENTORY_DISPLAY_ID;
+		return isTest() ? -1 : INVENTORY_DISPLAY_ID;
 	}
 	
-	/**
-	 * Creates a testing container of the underlying item container.
-	 * @return a testing container.
-	 */
-	public Inventory test() {
-		Inventory inv = new Inventory(player, true) {
-			@Override
-			public int widget() {
-				return -1;
-			}
-		};
-		inv.setItems(this.getItems());
-		return inv;
-	}
 }
