@@ -50,7 +50,7 @@ public final class CharacterSelectionPacket implements PacketReader {
 		player.getAppearance().setValues(values);
 		player.getFlags().flag(UpdateFlag.APPEARANCE);
 		player.getMessages().sendCloseWindows();
-		if((int) player.getAttr().get("introduction_stage").get() == 0) {
+		if(player.getAttr().get("introduction_stage").getInt() == 0) {
 			player.getAttr().get("introduction_stage").set(1);
 		}
 		player.getActivityManager().execute(ActivityType.CHARACTER_SELECTION);

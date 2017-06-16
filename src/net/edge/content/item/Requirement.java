@@ -62,7 +62,7 @@ public final class Requirement {
 			return false;
 		if(item.getDefinition().isLended())
 			return true;
-		if((item.getId() == 18741 && !player.isNight()) || (item.getId() == 18740 && !player.isNightMaxed())) {
+		if((item.getId() == 18741 && !player.isIronMan()) || (item.getId() == 18740 && !player.isIronMaxed())) {
 			player.message("The cape vanishes as you touch it.");
 			player.getInventory().remove(item);
 			return false;

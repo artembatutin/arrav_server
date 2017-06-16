@@ -22,8 +22,6 @@ import static net.edge.content.container.ItemContainer.StackPolicy.STANDARD;
  */
 public class ItemContainer implements Iterable<Item> {
 	
-	// TODO: Unit tests for various functions
-	
 	/**
 	 * An {@link Iterator} implementation for this container.
 	 */
@@ -306,7 +304,7 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public boolean remove(Item item, int preferredIndex, boolean refresh) {
 		checkArgument(preferredIndex >= -1, "invalid index identifier");
-
+		
 		ItemDefinition def = item.getDefinition();
 		if(def == null) {
 			items[preferredIndex] = null;
@@ -581,18 +579,19 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public final boolean containsAll(Item... check) {
 		for(Item it : check) {
-			boolean found = false;
 			if(it == null)
 				continue;
+			int am = it.getAmount();
 			for(Item item : items) {
 				if(item == null)
 					continue;
-				if(item.getId() == it.getId() && item.getAmount() >= it.getAmount()) {
-					found = true;
-					break;
+				if(item.getId() == it.getId()) {
+					am -= item.getAmount();
+					if(am <= 0)
+						break;
 				}
 			}
-			if(!found)
+			if(am > 0)
 				return false;
 		}
 		return true;
@@ -652,9 +651,15 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
+	 * Sends the items on the interface using the declared {@link #widget()}.
+	 */
+	public void refresh(Player player) {
+		player.getMessages().sendItemsOnInterface(widget(), items);
+	}
+	
+	/**
 	 * Sends the items on the interface.
 	 * @param widget The widget to send the {@code Item}s on.
-	 * @return The constructed {@code SendWidgetItemGroupMessage}.
 	 */
 	public final void refresh(Player player, int widget) {
 		player.getMessages().sendItemsOnInterface(widget, items);
@@ -899,16 +904,6 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
-	 * Creates a copy of the underlying item container.
-	 * @return a copy of the unterlying item container.
-	 */
-	public ItemContainer copy() {
-		ItemContainer container = new ItemContainer(this.capacity, this.policy, this.toArray());
-		this.listeners.forEach(container::addListener);
-		return container;
-	}
-	
-	/**
 	 * Removes all of the items from this container.
 	 */
 	public final void clear() {
@@ -1026,4 +1021,13 @@ public class ItemContainer implements Iterable<Item> {
 	public final StackPolicy policy() {
 		return policy;
 	}
+	
+	/**
+	 * A widget id to refresh this container.
+	 * @return -1 for no widgets.
+	 */
+	public int widget() {
+		return -1;
+	}
+	
 }

@@ -273,10 +273,10 @@ public final class PlayerSerialization {
 		public void fromJson(Gson b, Player p, JsonElement n) {
 			p.setRights(Rights.valueOf(n.getAsString()));
 		}
-	}, new Token("nightmare") {
+	}, new Token("ironman") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getNightMode();
+			return p.getIronMan();
 		}
 		
 		@Override

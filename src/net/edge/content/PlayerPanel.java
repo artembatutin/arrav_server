@@ -123,20 +123,20 @@ public enum PlayerPanel {
 		}
 	},
 	RANK(),
-	NIGHT() {
+	IRON() {
 		@Override
 		public void onClick(Player player) {
-			if(player.isNight()) {
-				player.getDialogueBuilder().append(new StatementDialogue("You want to quit the night's watch?"), new OptionDialogue(t -> {
+			if(player.isIronMan()) {
+				player.getDialogueBuilder().append(new StatementDialogue("You want to quit the iron man mode?"), new OptionDialogue(t -> {
 					if(t == OptionDialogue.OptionType.FIRST_OPTION) {
 						player.setNight(0);
 						player.teleport(GameConstants.STARTING_POSITION);
 					}
 					player.getMessages().sendCloseWindows();
-				}, "Yes, want to be a regular player.", "No, I want to keep the nightmare mode."));
+				}, "Yes, want to be a regular player.", "No, I want to keep the iron man mode."));
 				return;
 			}
-			player.message("You can only become a night's watch member in the beginning.");
+			player.message("You can only select iron man mode in the beginning.");
 		}
 	},
 	SLAYER_POINTS(),
@@ -217,7 +217,7 @@ public enum PlayerPanel {
 		PlayerPanel.EMPTY.refresh(player, "");
 		PlayerPanel.USERNAME.refresh(player, "@or2@ - Username: @yel@" + TextUtils.capitalize(player.getUsername()));
 		PlayerPanel.PASSWORD.refresh(player, "@or2@ - Password: " + TextUtils.capitalize(TextUtils.passwordCheck(player.getPassword())));
-		PlayerPanel.NIGHT.refresh(player, "@or2@ - Nightmare: @yel@" + (player.isNight() ? "@gre@yes" : "@red@no"));
+		PlayerPanel.IRON.refresh(player, "@or2@ - Iron man: @yel@" + (player.isIronMan() ? "@gre@yes" : "@red@no"));
 		PlayerPanel.RANK.refresh(player, "@or2@ - Rank: @yel@" + TextUtils.capitalize(player.getRights().toString()));
 		PlayerPanel.SLAYER_POINTS.refresh(player, "@or2@ - Slayer points: @yel@" + player.getSlayerPoints());
 		PlayerPanel.SLAYER_TASK.refresh(player, "@or2@ - Slayer task: @yel@" + (player.getSlayer().isPresent() ? (player.getSlayer().get().toString()) : "none"));

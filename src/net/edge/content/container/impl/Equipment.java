@@ -42,11 +42,6 @@ public final class Equipment extends ItemContainer {
 		}
 		
 		@Override
-		public int getWidgetId() {
-			return EQUIPMENT_DISPLAY_ID;
-		}
-		
-		@Override
 		public String getCapacityExceededMsg() {
 			throw new IllegalStateException(EXCEPTION_MESSAGE);
 		}
@@ -372,7 +367,15 @@ public final class Equipment extends ItemContainer {
 	 * Forces a refresh of {@code Equipment} items to the {@code EQUIPMENT_DISPLAY_ID} widget.
 	 */
 	public void refresh() {
-		refresh(player, EQUIPMENT_DISPLAY_ID);
+		refresh(player);
+	}
+	
+	/**
+	 * @return widget id.
+	 */
+	@Override
+	public int widget() {
+		return EQUIPMENT_DISPLAY_ID;
 	}
 	
 	/**

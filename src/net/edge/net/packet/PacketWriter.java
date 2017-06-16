@@ -403,6 +403,8 @@ public final class PacketWriter {
 	public void sendItemsOnInterface(int id, Item[] items) {
 		if(player.getState() == INACTIVE)
 			return;
+		if(id == -1)
+			return;
 		int length = (items == null) ? 0 : items.length;
 		sendItemsOnInterface(id, items, length);
 	}
@@ -1256,8 +1258,10 @@ public final class PacketWriter {
 	 */
 	public void sendLogout() {
 		World.get().queueLogout(player);
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 109);
-		player.queue(msg);
+		if(player.getSession().getChannel().isActive()) {
+			ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 109);
+			player.queue(msg);
+		}
 	}
 	
 	/**

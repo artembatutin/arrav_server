@@ -78,7 +78,7 @@ public class TraderStan extends EventInitializer {
 			}
 		};
 		e.registerFirst(4650);
-		Task yell = new Task(250, false) {
+		Task yell = new Task(200, false) {
 			@Override
 			protected void execute() {
 				stan.forceChat(RandomUtils.random(chats));

@@ -16,7 +16,7 @@ import java.util.function.Consumer;
  * An {@link ItemContainer} implementation that manages the inventory for a {@link Player}.
  * @author lare96 <http://github.com/lare96>
  */
-public final class Inventory extends ItemContainer {
+public class Inventory extends ItemContainer {
 	
 	/**
 	 * An {@link ItemContainerAdapter} implementation that listens for changes to the inventory.
@@ -28,11 +28,6 @@ public final class Inventory extends ItemContainer {
 		 */
 		InventoryListener(Player player) {
 			super(player);
-		}
-		
-		@Override
-		public int getWidgetId() {
-			return INVENTORY_DISPLAY_ID;
 		}
 		
 		@Override
@@ -54,11 +49,13 @@ public final class Inventory extends ItemContainer {
 	/**
 	 * Creates a new {@link Inventory}.
 	 * @param player The {@link Player} this instance is dedicated to.
+	 * @param test test condition flag.
 	 */
-	public Inventory(Player player) {
+	public Inventory(Player player, boolean test) {
 		super(28, StackPolicy.STANDARD);
 		addListener(new InventoryListener(player));
-		addListener(new ItemWeightListener(player));
+		if(!test)
+			addListener(new ItemWeightListener(player));
 		this.player = player;
 	}
 	
@@ -184,5 +181,29 @@ public final class Inventory extends ItemContainer {
 	 */
 	public void addOrBank(Item... items) {
 		addOrBank(Arrays.asList(items));
+	}
+	
+	/**
+	 * The inventory widget id.
+	 * @return widget id.
+	 */
+	@Override
+	public int widget() {
+		return INVENTORY_DISPLAY_ID;
+	}
+	
+	/**
+	 * Creates a testing container of the underlying item container.
+	 * @return a testing container.
+	 */
+	public Inventory test() {
+		Inventory inv = new Inventory(player, true) {
+			@Override
+			public int widget() {
+				return -1;
+			}
+		};
+		inv.setItems(this.getItems());
+		return inv;
 	}
 }

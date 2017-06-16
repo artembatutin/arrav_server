@@ -16,7 +16,7 @@ public final class EmptyInventoryCommand implements Command {
 		player.getDialogueBuilder().append(new StatementDialogue("Are you sure you want to empty your inventory?"), new OptionDialogue(t -> {
 			if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 				player.getInventory().clear();
-				player.getInventory().refresh(player, Inventory.INVENTORY_DISPLAY_ID);
+				player.getInventory().refresh(player);
 				player.getMessages().sendCloseWindows();
 			} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION) || t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
 				player.getMessages().sendCloseWindows();

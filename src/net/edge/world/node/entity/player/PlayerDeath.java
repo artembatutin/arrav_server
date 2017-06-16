@@ -206,27 +206,20 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		getCharacter().setSpecialActivated(false);
 		getCharacter().getSkullTimer().set(0);
 		getCharacter().setAntifireDetail(Optional.empty());
-		//getCharacter().resetOverloadEffect(true);
-		//character.setSkullIcon(FightCavesHandler.isChampion(character) ? Player.RED_SKULL : -1);
 		getCharacter().getTeleblockTimer().set(0);
 		getCharacter().animation(new Animation(65535));
 		WeaponInterface.execute(getCharacter(), getCharacter().getEquipment().get(Equipment.WEAPON_SLOT));
 		if(deathMessage) {
 			getCharacter().message(getCharacter().getRights().less(Rights.ADMINISTRATOR) ? "Oh dear, you're dead!" : "You are unaffected by death because of your rank.");
 		}
-
 		getCharacter().getMessages().sendWalkable(-1);
 		Prayer.deactivateAll(getCharacter());
 
-		if(getCharacter().isNight() && !getCharacter().isNightMaxed()) {
+		if(getCharacter().isIronMan() && !getCharacter().isIronMaxed()) {
 			for(int index = 0; index < getCharacter().getSkills().length; index++) {
 				Skill skill = getCharacter().getSkills()[index];
-
 				int experience = (int) (skill.getExperience() * 0.75);
-
 				int newLevel = Skills.getLevelForExperience(experience);
-
-
 				if(index == Skills.HITPOINTS && newLevel < 10) {
 					newLevel = 10;
 				} else if(newLevel < 1) {
@@ -237,7 +230,6 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		}
 
 		Skills.restoreAll(getCharacter());
-
 		getCharacter().getActivityManager().enable();
 		getCharacter().getFlags().flag(UpdateFlag.APPEARANCE);
 	}
@@ -275,8 +267,8 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		if(items.size() > 0) {
 			character.getEquipment().clear();
 			character.getInventory().clear();
-			character.getEquipment().refresh(character, Equipment.EQUIPMENT_DISPLAY_ID);
-			character.getInventory().refresh(character, Inventory.INVENTORY_DISPLAY_ID);
+			character.getEquipment().refresh(character);
+			character.getInventory().refresh(character);
 			int amount = dropAll ? 0 : character.getSkullTimer().get() > 0 ? 0 : 3;
 			if(Prayer.isActivated(character, Prayer.PROTECT_ITEM) || Prayer.isActivated(character, Prayer.CURSES_PROTECT_ITEM)) {
 				if(!dropAll) {

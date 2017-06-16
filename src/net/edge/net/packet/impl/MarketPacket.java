@@ -16,8 +16,8 @@ public final class MarketPacket implements PacketReader {
 	@Override
 	public void handle(Player player, int opcode, int size, ByteMessage payload) {
 		String search = TextUtils.hashToName(payload.getLong());
-		if(player.isNight() && !player.isNightMaxed()) {
-			player.getDialogueBuilder().append(new StatementDialogue("You are in the nightmare mode.", "Therefore you can't search the global market.", "Once you max-out you will be able to."));
+		if(player.isIronMan() && !player.isIronMaxed()) {
+			player.getDialogueBuilder().append(new StatementDialogue("You are in iron man mode.", "Therefore you can't search the global market.", "Once you max-out you will be able to."));
 			return;
 		}
 		new MarketShop(player, search);

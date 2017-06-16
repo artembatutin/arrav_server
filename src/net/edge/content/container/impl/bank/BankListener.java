@@ -9,21 +9,10 @@ import net.edge.world.node.entity.player.Player;
 public class BankListener extends ItemContainerAdapter {
 	
 	/**
-	 * The slot of this bank tab listener.
-	 */
-	private final int slot;
-	
-	/**
 	 * Creates a new {@link BankListener}.
 	 */
-	public BankListener(Player player, int slot) {
+	public BankListener(Player player) {
 		super(player);
-		this.slot = slot;
-	}
-	
-	@Override
-	public int getWidgetId() {
-		return 270 + slot;
 	}
 	
 	@Override
