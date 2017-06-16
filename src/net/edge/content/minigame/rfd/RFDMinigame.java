@@ -145,14 +145,12 @@ public final class RFDMinigame extends SequencedMinigame {
 	
 	@Override
 	public boolean canPot(Player player, PotionConsumable potion) {
-		player.getDialogueBuilder().append(new NpcDialogue(3400, Expression.MAD, "You cannot consume potions in here!"));
-		return false;
+		return true;
 	}
 	
 	@Override
 	public boolean canEat(Player player, FoodConsumable food) {
-		player.getDialogueBuilder().append(new NpcDialogue(3400, Expression.MAD, "You cannot consume food in here!"));
-		return false;
+		return true;
 	}
 	
 	@Override
