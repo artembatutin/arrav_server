@@ -539,7 +539,7 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public final boolean hasCapacityAfter(Item[] add, Item... remove) {
 		ItemContainer container = new ItemContainer(this.capacity, this.policy, this.toArray());
-		container.removeAll(remove);
+		container.removeAll(Arrays.copyOf(remove, remove.length));
 		return container.hasCapacityFor(add);
 	}
 	
