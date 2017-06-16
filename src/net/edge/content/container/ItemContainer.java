@@ -306,7 +306,7 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public boolean remove(Item item, int preferredIndex, boolean refresh) {
 		checkArgument(preferredIndex >= -1, "invalid index identifier");
-		
+
 		ItemDefinition def = item.getDefinition();
 		if(def == null) {
 			items[preferredIndex] = null;
@@ -539,7 +539,7 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public final boolean hasCapacityAfter(Item[] add, Item... remove) {
 		ItemContainer container = new ItemContainer(this.capacity, this.policy, this.toArray());
-		container.removeAll(Arrays.copyOf(remove, remove.length));
+		container.removeAll(remove);
 		return container.hasCapacityFor(add);
 	}
 	
@@ -903,7 +903,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * @return a copy of the unterlying item container.
 	 */
 	public ItemContainer copy() {
-		ItemContainer container = new ItemContainer(this.capacity, this.policy, this.items);
+		ItemContainer container = new ItemContainer(this.capacity, this.policy, this.toArray());
 		this.listeners.forEach(container::addListener);
 		return container;
 	}

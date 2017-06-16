@@ -18,11 +18,6 @@ import java.util.function.Consumer;
  */
 public final class Inventory extends ItemContainer {
 	
-	@Override
-	public ItemContainer copy() {
-		return new Inventory(player);
-	}
-	
 	/**
 	 * An {@link ItemContainerAdapter} implementation that listens for changes to the inventory.
 	 */

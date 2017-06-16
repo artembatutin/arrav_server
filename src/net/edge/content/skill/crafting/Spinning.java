@@ -52,12 +52,12 @@ public final class Spinning extends ProducingSkillAction {
 	 * @return {@code true} if the player created any products, {@code false} otherwise.
 	 */
 	public static boolean create(Player player, int buttonId) {
-		if(BUTTON_FOR_AMOUNT.containsKey(buttonId) || !player.getAttr().get("crafting_spin").getBoolean()) {
+		if(!BUTTON_FOR_AMOUNT.containsKey(buttonId) || !player.getAttr().get("crafting_spin").getBoolean()) {
 			return false;
 		}
-		
+
 		int amount = BUTTON_FOR_AMOUNT.get(buttonId);
-		
+
 		if(amount == -1) {
 			player.getMessages().sendEnterAmount("How many you would like to spin?", s -> () -> Spinning.create(player, (SpinningData) player.getAttr().get("crafting_spinning").get(), Integer.parseInt(s)));
 			return true;
