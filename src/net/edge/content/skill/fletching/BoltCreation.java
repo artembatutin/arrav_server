@@ -53,12 +53,12 @@ public final class BoltCreation extends ProducingSkillAction {
 	
 	@Override
 	public Optional<Item[]> removeItem() {
-		return Optional.of(new Item[]{data.unfinished, data.required});
+		return Optional.of(new Item[]{new Item(data.unfinished.getId(), 15), new Item(data.required.getId(), 15)});
 	}
 	
 	@Override
 	public Optional<Item[]> produceItem() {
-		return Optional.of(new Item[]{data.product});
+		return Optional.of(new Item[]{new Item(data.product.getId(), 15)});
 	}
 	
 	@Override
@@ -79,7 +79,16 @@ public final class BoltCreation extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		return checkFletching();
+		if(!checkFletching()) {
+			return false;
+		}
+
+		if(player.getInventory().computeAmountForId(data.unfinished.getId()) < 15 || player.getInventory().computeAmountForId(data.required.getId()) < 15) {
+			player.message("You must have atleast 15 of each item to fletch this bolt.");
+			return false;
+		}
+
+		return true;
 	}
 	
 	@Override
