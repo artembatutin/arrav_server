@@ -1,4 +1,4 @@
-package net.edge.content.container.session;
+package net.edge.world.node.item.container.session;
 
 /**
  * The enumerated type whose elements represent the exchange action types.

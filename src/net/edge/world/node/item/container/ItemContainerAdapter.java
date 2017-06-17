@@ -1,9 +1,7 @@
-package net.edge.content.container;
+package net.edge.world.node.item.container;
 
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-
-import java.util.Optional;
 
 /**
  * An adapter for {@link ItemContainerListener} that updates {@link Item}s on a widget whenever items change, and sends the
@@ -26,14 +24,14 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	}
 	
 	@Override
-	public void itemUpdated(ItemContainer container, Item oldItem, Item newItem, int index, boolean refresh) {
-		if(refresh)
-			sendItemsToWidget(container);
+	public void singleUpdate(ItemContainer container, Item oldItem, Item newItem, int slot, boolean update) {
+		if(update)
+			updateItem(newItem, slot);
 	}
 	
 	@Override
-	public void bulkItemsUpdated(ItemContainer container) {
-		sendItemsToWidget(container);
+	public void bulkUpdate(ItemContainer container) {
+		updateItems(container);
 	}
 	
 	@Override
@@ -42,11 +40,23 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	}
 	
 	/**
-	 * Queues a message that displays items from an {@link ItemContainer} on a widget.
+	 * Updates many items on a widget.
 	 */
-	protected void sendItemsToWidget(ItemContainer container) {
-		container.refresh(player);
+	protected void updateItems(ItemContainer container) {
+		player.getMessages().sendItemsOnInterface(widget(), container.getItems());
 	}
+	
+	/**
+	 * Updates a single item on a widget.
+	 */
+	protected void updateItem(Item item, int slot) {
+		player.getMessages().sendItemOnInterfaceSlot(widget(), item, slot);
+	}
+	
+	/**
+	 * @return The id number of the widget this adapter is assigned to
+	 */
+	public abstract int widget();
 	
 	/**
 	 * @return The message sent when the {@link ItemContainer} exceeds its capacity.

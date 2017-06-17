@@ -1,9 +1,8 @@
 package net.edge.net.packet.impl;
 
 import net.edge.content.Attributes;
-import net.edge.content.container.impl.Inventory;
-import net.edge.content.container.session.ExchangeSession;
-import net.edge.content.container.session.ExchangeSessionType;
+import net.edge.world.node.item.container.session.ExchangeSession;
+import net.edge.world.node.item.container.session.ExchangeSessionType;
 import net.edge.content.skill.crafting.JewelleryMoulding;
 import net.edge.content.skill.smithing.Smithing;
 import net.edge.event.EventContainer;
@@ -334,7 +333,6 @@ public final class ItemInterfacePacket implements PacketReader {
 		switch(interfaceId) {
 			case 3214:
 				player.getInventory().swap(fromSlot, toSlot);
-				player.getInventory().refresh(player);
 				break;
 			case 5382:
 				player.getBank().refresh();

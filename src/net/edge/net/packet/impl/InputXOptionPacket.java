@@ -1,7 +1,7 @@
 package net.edge.net.packet.impl;
 
-import net.edge.content.container.session.ExchangeSession;
-import net.edge.content.container.session.ExchangeSessionType;
+import net.edge.world.node.item.container.session.ExchangeSession;
+import net.edge.world.node.item.container.session.ExchangeSessionType;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;

@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.event.impl.ItemEvent;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.container.impl.Inventory;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.SkillData;
@@ -343,10 +342,7 @@ public enum FoodConsumable {
 							replacement = Optional.of(new Item(food.getIds()[index + 1]));
 						}
 					}
-					if(replacement.isPresent()) {
-						player.getInventory().set(slot, replacement.get(), true);
-						player.getInventory().refresh(player);
-					}
+					replacement.ifPresent(item1 -> player.getInventory().set(slot, item1, true));
 					player.message(food.getMessage());
 					food.onEffect(player);
 					Skills.refresh(player, Skills.HITPOINTS);

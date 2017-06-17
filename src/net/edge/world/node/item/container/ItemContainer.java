@@ -1,4 +1,4 @@
-package net.edge.content.container;
+package net.edge.world.node.item.container;
 
 import com.google.common.base.Preconditions;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -13,8 +13,8 @@ import java.util.function.Consumer;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
-import static net.edge.content.container.ItemContainer.StackPolicy.ALWAYS;
-import static net.edge.content.container.ItemContainer.StackPolicy.STANDARD;
+import static net.edge.world.node.item.container.ItemContainer.StackPolicy.ALWAYS;
+import static net.edge.world.node.item.container.ItemContainer.StackPolicy.STANDARD;
 
 /**
  * An abstraction model representing a group of {@link Item}s.
@@ -68,7 +68,7 @@ public class ItemContainer implements Iterable<Item> {
 			checkState(lastIndex != -1, "can only be called once after 'next'");
 			Item oldItem = container.items[lastIndex];
 			container.items[lastIndex] = null;
-			container.fireItemUpdatedEvent(oldItem, null, lastIndex, true);
+			container.updateSingle(oldItem, null, lastIndex, true);
 			index = lastIndex;
 			lastIndex = -1;
 		}
@@ -200,7 +200,6 @@ public class ItemContainer implements Iterable<Item> {
 		ItemDefinition def = item.getDefinition();
 		if(def == null)
 			return -1;
-		
 		boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;
 		if(stackable) {
 			preferredIndex = computeIndexForId(item.getId());
@@ -226,7 +225,7 @@ public class ItemContainer implements Iterable<Item> {
 			} else if(!test) {
 				items[preferredIndex] = current.createAndIncrement(item.getAmount());
 			}
-			fireItemUpdatedEvent(current, items[preferredIndex], preferredIndex, refresh);
+			updateSingle(current, items[preferredIndex], preferredIndex, refresh);
 		} else {
 			int remaining = remaining();
 			int until = (remaining > item.getAmount()) ? item.getAmount() : remaining;
@@ -241,7 +240,7 @@ public class ItemContainer implements Iterable<Item> {
 					Item newItem = new Item(item.getId());
 					items[preferredIndex] = newItem;
 					size++;
-					fireItemUpdatedEvent(null, newItem, preferredIndex++, refresh);
+					updateSingle(null, newItem, preferredIndex++, refresh);
 				}
 				filled++;
 			}
@@ -254,12 +253,15 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param items The {@link Item}s to add.
 	 * @return amount of slots filled.
 	 */
-	public <I extends Item> int addAll(I... items) {
+	public int addAll(Item... items) {
+		if(items == null)
+			return 0;
 		if(items.length == 1) {
-			// No bulk update on one item.
-			return add(items[0]);
+			if(!Item.valid(items[0]))
+				return 0;
+			if(!items[0].getDefinition().isStackable() && items[0].getAmount() == 1)
+				return add(items[0]);
 		}
-		
 		firingEvents = false;
 		int added = 0;
 		try {
@@ -273,7 +275,7 @@ public class ItemContainer implements Iterable<Item> {
 		} finally {
 			firingEvents = true;
 		}
-		fireBulkItemsUpdatedEvent();
+		updateBulk();
 		return added;
 	}
 	
@@ -282,7 +284,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param items items to be added for the check.
 	 * @return {@code true} if successful, otherwise {@code false}.
 	 */
-	public <I extends Item> boolean canAdd(I... items) {
+	public boolean canAdd(Item... items) {
 		test();
 		firingEvents = false;
 		int slots = slotCount(false, false, items);
@@ -344,7 +346,7 @@ public class ItemContainer implements Iterable<Item> {
 		ItemDefinition def = item.getDefinition();
 		if(def == null) {
 			items[preferredIndex] = null;
-			fireItemUpdatedEvent(items[preferredIndex], null, preferredIndex, refresh);
+			updateSingle(items[preferredIndex], null, preferredIndex, refresh);
 			size--;
 			return -1;
 		}
@@ -375,7 +377,7 @@ public class ItemContainer implements Iterable<Item> {
 				}
 				cleared++;
 			}
-			fireItemUpdatedEvent(current, items[preferredIndex], preferredIndex, refresh);
+			updateSingle(current, items[preferredIndex], preferredIndex, refresh);
 		} else {
 			int until = computeAmountForId(item.getId());
 			until = (item.getAmount() > until) ? until : item.getAmount();
@@ -394,7 +396,7 @@ public class ItemContainer implements Iterable<Item> {
 				if(!test) {
 					Item oldItem = items[preferredIndex];
 					items[preferredIndex] = null;
-					fireItemUpdatedEvent(oldItem, null, preferredIndex++, refresh);
+					updateSingle(oldItem, null, preferredIndex++, refresh);
 					size--;
 				}
 				cleared++;
@@ -408,12 +410,15 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param items The {@link Item}s to remove.
 	 * @return amount of slots cleared.
 	 */
-	public <I extends Item> int removeAll(I... items) {
+	public int removeAll(Item... items) {
+		if(items == null)
+			return 0;
 		if(items.length == 1) {
-			// No bulk update on one item.
-			return remove(items[0]);
+			if(!Item.valid(items[0]))
+				return 0;
+			if(!items[0].getDefinition().isStackable() && items[0].getAmount() == 1)
+				return remove(items[0]);
 		}
-		
 		firingEvents = false;
 		int removed = 0;
 		try {
@@ -426,7 +431,7 @@ public class ItemContainer implements Iterable<Item> {
 		} finally {
 			firingEvents = true;
 		}
-		fireBulkItemsUpdatedEvent();
+		updateBulk();
 		return removed;
 	}
 	
@@ -435,7 +440,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param items items to be removed for the check.
 	 * @return {@code true} if successful, otherwise {@code false}.
 	 */
-	public <I extends Item> boolean canRemove(I... items) {
+	public boolean canRemove(Item... items) {
 		test();
 		firingEvents = false;
 		int slots = slotCount(true, false, items);
@@ -566,7 +571,7 @@ public class ItemContainer implements Iterable<Item> {
 		} finally {
 			firingEvents = true;
 		}
-		fireBulkItemsUpdatedEvent();
+		updateBulk();
 		return replaced;
 	}
 	
@@ -575,9 +580,11 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param raw The flag if container beholds aren't considered.
 	 * @param negate if the stacking changes must be negated.
 	 * @param forItems The items to compute the index count for.
-	 * @return The index count.
+	 * @return The slot count the items would take in this container.
 	 */
 	public final int slotCount(boolean raw, boolean negate, Item... forItems) {
+		if(forItems == null)
+			return 0;
 		int indexCount = 0;
 		for(Item item : forItems) {
 			if(item == null)
@@ -751,18 +758,22 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
-	 * Sends the items on the interface using the declared {@link #widget()}.
+	 * Sends the items on the interface.
+	 * @param player The player sending the update to.
+	 * @param widget The widget to send the {@code Item}s on.
 	 */
-	public void refresh(Player player) {
-		player.getMessages().sendItemsOnInterface(widget(), items);
+	public final void refreshBulk(Player player, int widget) {
+		player.getMessages().sendItemsOnInterface(widget, items);
 	}
 	
 	/**
-	 * Sends the items on the interface.
+	 * Sends one item on the interface at a specific slot.
+	 * @param player The player sending the update to.
 	 * @param widget The widget to send the {@code Item}s on.
+	 * @param slot   The slot id of the new item to be sent.
 	 */
-	public final void refresh(Player player, int widget) {
-		player.getMessages().sendItemsOnInterface(widget, items);
+	public final void refreshSingle(Player player, int widget, int slot) {
+		player.getMessages().sendItemOnInterfaceSlot(widget, items[slot], slot);
 	}
 	
 	/**
@@ -788,13 +799,15 @@ public class ItemContainer implements Iterable<Item> {
 		if(insert) {
 			if(newIndex > oldIndex) {
 				for(int index = oldIndex; index < newIndex; index++) {
-					swap(index, index + 1);
+					swap(false, index, index + 1, false);
 				}
 			} else if(oldIndex > newIndex) {
 				for(int index = oldIndex; index > newIndex; index--) {
-					swap(index, index - 1);
+					swap(false, index, index - 1, false);
 				}
 			}
+			if(refresh)
+				updateBulk();
 		} else {
 			Item itemOld = items[oldIndex];
 			Item itemNew = items[newIndex];
@@ -802,8 +815,8 @@ public class ItemContainer implements Iterable<Item> {
 			items[oldIndex] = itemNew;
 			items[newIndex] = itemOld;
 			
-			fireItemUpdatedEvent(itemOld, items[oldIndex], oldIndex, refresh);
-			fireItemUpdatedEvent(itemNew, items[newIndex], newIndex, refresh);
+			updateSingle(itemOld, items[oldIndex], oldIndex, refresh);
+			updateSingle(itemNew, items[newIndex], newIndex, refresh);
 		}
 	}
 	
@@ -865,6 +878,83 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
+	 * Determines if this item container is empty.
+	 * @return {@code true} if this container is, {@code false} otherwise.
+	 */
+	public final boolean isEmpty() {
+		return size() == 0;
+	}
+	
+	/**
+	 * Adds an {@link ItemContainerListener} to this container.
+	 * @param listener The listener to add to this container.
+	 * @return {@code true} if the listener was added, {@code false} otherwise.
+	 */
+	public final boolean addListener(ItemContainerListener listener) {
+		return listeners.add(listener);
+	}
+	
+	/**
+	 * Removes an {@link ItemContainerListener} from this container.
+	 * @param listener The listener to remove from this container.
+	 * @return {@code true} if the listener was removed, {@code false} otherwise.
+	 */
+	public final boolean removeListener(ItemContainerListener listener) {
+		return listeners.remove(listener);
+	}
+	
+	/**
+	 * Fires the {@code ItemContainerListener.bulkUpdate(ItemContainer)} event.
+	 */
+	public final void updateBulk() {
+		if(firingEvents) {
+			listeners.forEach(evt -> evt.bulkUpdate(this));
+		}
+	}
+	
+	/**
+	 * Fires the {@code ItemContainerListener.singleUpdate(ItemContainer, int)} event.
+	 */
+	public final void updateSingle(Item oldItem, Item newItem, int index, boolean refresh) {
+		if(firingEvents && !test) {
+			listeners.forEach(evt -> evt.singleUpdate(this, oldItem, newItem, index, refresh));
+		}
+	}
+	
+	/**
+	 * Fires the {@code ItemContainerListener.capacityExceeded(ItemContainer)} event.
+	 */
+	public final void fireCapacityExceededEvent() {
+		if(firingEvents) {
+			listeners.forEach(evt -> evt.capacityExceeded(this));
+		}
+	}
+	
+	/**
+	 * Removes all of the items from this container.
+	 */
+	public final void clear() {
+		clear(true);
+	}
+	
+	/**
+	 * Removes all of the items from this container.
+	 */
+	public final void clear(boolean refresh) {
+		Arrays.fill(items, null);
+		if(refresh)
+			updateBulk();
+		size = 0;
+	}
+	
+	/**
+	 * @return The item array in this container.
+	 */
+	public Item[] getItems() {
+		return items;
+	}
+	
+	/**
 	 * Sets the container of items to {@code items}. The container will not hold
 	 * any references to the array, nor the item instances in the array.
 	 * @param items the new array of items, the capacities of this must be equal
@@ -878,30 +968,7 @@ public class ItemContainer implements Iterable<Item> {
 				size++;
 			this.items[i] = items[i] == null ? null : items[i].copy();
 		}
-		fireBulkItemsUpdatedEvent();
-	}
-	
-	/**
-	 * Returns a <strong>shallow copy</strong> of the backing array. Changes made to the returned array will not be reflected
-	 * on the backing array.
-	 * @return A shallow copy of the backing array.
-	 */
-	public final Item[] toArray() {
-		return Arrays.copyOf(items, items.length);
-	}
-	
-	/**
-	 * Sets the {@code index} to {@code item}.
-	 * @param index   The index to set.
-	 * @param item    The {@link Item} to set on the index.
-	 * @param refresh The condition if the container must be refreshed.
-	 */
-	public final void set(int index, Item item, boolean refresh) {
-		Item oldItem = items[index];
-		items[index] = item;
-		if(item == null)
-			size--;
-		fireItemUpdatedEvent(oldItem, items[index], index, refresh);
+		updateBulk();
 	}
 	
 	/**
@@ -937,6 +1004,33 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
+	 * Gets the slot index by the item id.
+	 * @param id item id searching the {@code Item} for.
+	 * @return the slot id found, otherwise -1.
+	 */
+	public final int getSlot(int id) {
+		for(int i = 0; i < items.length; i++){
+			if(items[i] != null && items[i].getId() == id)
+				return i;
+		}
+		return -1;
+	}
+	
+	/**
+	 * Sets the {@code index} to {@code item}.
+	 * @param index   The index to set.
+	 * @param item    The {@link Item} to set on the index.
+	 * @param refresh The condition if the container must be refreshed.
+	 */
+	public final void set(int index, Item item, boolean refresh) {
+		Item oldItem = items[index];
+		items[index] = item;
+		if(item == null)
+			size--;
+		updateSingle(oldItem, items[index], index, refresh);
+	}
+	
+	/**
 	 * Sets the container of items to {@code newItems}. The only difference between this and {@code setItems(Item[])} is that
 	 * this method takes a wrapper class named {@link IndexedItem} that holds the index of items.
 	 * @param newItems The new array of items.
@@ -963,121 +1057,6 @@ public class ItemContainer implements Iterable<Item> {
 			indexedItems.add(new IndexedItem(item, index));
 		}
 		return indexedItems.toArray(new IndexedItem[indexedItems.size()]);
-	}
-	
-	/**
-	 * Returns {@code true} if {@code index} is occupied (non-{@code null}).
-	 */
-	public final boolean indexOccupied(int index) {
-		return retrieve(index).isPresent();
-	}
-	
-	/**
-	 * Returns {@code true} if all {@code indexes} are occupied (non-{@code null}).
-	 */
-	public final boolean allIndexesOccupied(int... indexes) {
-		for(int index : indexes) {
-			if(!indexOccupied(index)) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Returns {@code true} if {@code index} is not occupied ({@code null}).
-	 */
-	public final boolean indexFree(int index) {
-		return !indexOccupied(index);
-	}
-	
-	/**
-	 * Returns {@code true} if all {@code indexes} are free ({@code null}).
-	 */
-	public final boolean allIndexesFree(int... indexes) {
-		for(int index : indexes) {
-			if(!indexFree(index)) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Removes all of the items from this container.
-	 */
-	public final void clear() {
-		clear(true);
-	}
-	
-	/**
-	 * Removes all of the items from this container.
-	 */
-	public final void clear(boolean refresh) {
-		Arrays.fill(items, null);
-		if(refresh)
-			fireBulkItemsUpdatedEvent();
-		size = 0;
-	}
-	
-	/**
-	 * Determines if this item container is empty.
-	 * @return {@code true} if this container is, {@code false} otherwise.
-	 */
-	public final boolean isEmpty() {
-		return size() == 0;
-	}
-	
-	/**
-	 * Adds an {@link ItemContainerListener} to this container.
-	 * @param listener The listener to add to this container.
-	 * @return {@code true} if the listener was added, {@code false} otherwise.
-	 */
-	public final boolean addListener(ItemContainerListener listener) {
-		return listeners.add(listener);
-	}
-	
-	/**
-	 * Removes an {@link ItemContainerListener} from this container.
-	 * @param listener The listener to remove from this container.
-	 * @return {@code true} if the listener was removed, {@code false} otherwise.
-	 */
-	public final boolean removeListener(ItemContainerListener listener) {
-		return listeners.remove(listener);
-	}
-	
-	/**
-	 * Fires the {@code ItemContainerListener.itemUpdated(ItemContainer, int)} event.
-	 */
-	public final void fireItemUpdatedEvent(Item oldItem, Item newItem, int index, boolean refresh) {
-		if(firingEvents && !test) {
-			listeners.forEach(evt -> evt.itemUpdated(this, oldItem, newItem, index, refresh));
-		}
-	}
-	
-	/**
-	 * Fires the {@code ItemContainerListener.bulkItemsUpdated(ItemContainer)} event.
-	 */
-	public final void fireBulkItemsUpdatedEvent() {
-		if(firingEvents) {
-			listeners.forEach(evt -> evt.bulkItemsUpdated(this));
-		}
-	}
-	
-	/**
-	 * Fires the {@code ItemContainerListener.capacityExceeded(ItemContainer)} event.
-	 */
-	public final void fireCapacityExceededEvent() {
-		if(firingEvents) {
-			listeners.forEach(evt -> evt.capacityExceeded(this));
-		}
-	}
-	
-	/**
-	 * @return The item array in this container.
-	 */
-	public Item[] getItems() {
-		return items;
 	}
 	
 	/**

@@ -3,7 +3,7 @@ package net.edge.content.combat.ranged;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.util.TextUtils;
 import net.edge.content.combat.weapon.FightStyle;
-import net.edge.content.container.impl.Equipment;
+import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;

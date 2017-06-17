@@ -2,7 +2,7 @@ package net.edge.world.node.entity.npc.drop;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.content.container.impl.Equipment;
+import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.game.GameConstants;
 import net.edge.util.log.Log;
 import net.edge.util.log.impl.DropLog;

@@ -1,9 +1,9 @@
-package net.edge.content.container.session;
+package net.edge.world.node.item.container.session;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.content.container.ItemContainer;
+import net.edge.world.node.item.container.ItemContainer;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;

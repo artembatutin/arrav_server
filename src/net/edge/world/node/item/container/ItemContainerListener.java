@@ -1,8 +1,6 @@
-package net.edge.content.container;
+package net.edge.world.node.item.container;
 
 import net.edge.world.node.item.Item;
-
-import java.util.Optional;
 
 /**
  * A listener that is fired by {@link ItemContainer}. One should aim to extend {@link ItemContainerAdapter} for generic use
@@ -16,18 +14,18 @@ public interface ItemContainerListener {
 	 * @param container The {@link ItemContainer} firing the event.
 	 * @param oldItem   The old item being removed from this container.
 	 * @param newItem   The new item being added to this container.
-	 * @param index     The index the update is occurring on.
-	 * @param refresh   The condition if we have to refresh this container.
+	 * @param slot     The slot the update is occurring on.
+	 * @param update   The condition if we have to update this container.
 	 */
-	default void itemUpdated(ItemContainer container, Item oldItem, Item newItem, int index, boolean refresh) {
+	default void singleUpdate(ItemContainer container, Item oldItem, Item newItem, int slot, boolean update) {
 	}
 	
 	/**
 	 * Fired when an {@link Item}s are added, removed, or replaced in bulk. This is to prevent firing multiple {@code
-	 * itemUpdated(ItemContainer, int)} events for a single operation.
+	 * singleUpdate(ItemContainer, int)} events for a single operation.
 	 * @param container The {@link ItemContainer} firing the event.
 	 */
-	default void bulkItemsUpdated(ItemContainer container) {
+	default void bulkUpdate(ItemContainer container) {
 	}
 	
 	/**

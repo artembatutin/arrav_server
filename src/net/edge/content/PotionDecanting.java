@@ -1,6 +1,5 @@
 package net.edge.content;
 
-import net.edge.content.container.impl.Inventory;
 import net.edge.content.item.PotionConsumable;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
@@ -53,7 +52,7 @@ public final class PotionDecanting {
 			player.getInventory().replace(usedOn.getId(), second.getIdForDose(doses - 4), false);
 		}
 		
-		player.getInventory().refresh(player);
+		player.getInventory().updateBulk();
 		return true;
 	}
 	

@@ -1,8 +1,8 @@
 package net.edge.net.packet.impl;
 
-import net.edge.content.container.session.ExchangeSession;
-import net.edge.content.container.session.impl.DuelSession;
-import net.edge.content.container.session.impl.TradeSession;
+import net.edge.world.node.item.container.session.ExchangeSession;
+import net.edge.world.node.item.container.session.impl.DuelSession;
+import net.edge.world.node.item.container.session.impl.TradeSession;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;

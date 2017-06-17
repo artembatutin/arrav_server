@@ -71,7 +71,7 @@ public final class GameSession extends Session {
 	public void queue(ByteMessage msg) {
 		Channel channel = getChannel();
 		if(channel.isActive()) {
-			if(msg.getOpcode() == 53)
+			if(msg.getOpcode() == 53 || msg.getOpcode() == 34)
 				channel.writeAndFlush(new Packet(msg.getOpcode(), msg.getType(), msg));
 			else
 				channel.write(new Packet(msg.getOpcode(), msg.getType(), msg), channel.voidPromise());

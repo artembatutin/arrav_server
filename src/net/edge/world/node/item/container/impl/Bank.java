@@ -1,6 +1,6 @@
-package net.edge.content.container.impl.bank;
+package net.edge.world.node.item.container.impl;
 
-import net.edge.content.container.ItemContainer;
+import net.edge.world.node.item.container.ItemContainer;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
@@ -31,7 +31,7 @@ public final class Bank {
 		this.player = player;
 		this.selectedTab = 0;
 		for(int i = 0; i < SIZE; i++) {
-			tabs[i] = new BankTab(player, i, i == 0 ? 245 : 63);
+			tabs[i] = new BankTab(player, i, i == 0 ? 200 : 60);
 		}
 	}
 	
@@ -68,8 +68,8 @@ public final class Bank {
 		player.getMessages().sendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0);
 		player.getMessages().sendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0);
 		player.getMessages().sendInventoryInterface(-3, 5063);
+		player.getMessages().sendItemsOnInterface(5064, this.player.getInventory().getItems());
 		refreshAll();
-		player.getMessages().sendItemsOnInterface(5064, this.player.getInventory().toArray());
 	}
 	
 	/**
@@ -97,8 +97,12 @@ public final class Bank {
 				if(tabs[nextTab].canAdd(item) && tabs[tab].canRemove(item)) {
 					tabs[nextTab].add(item);
 					tabs[tab].remove(item);
-					tabs[nextTab].refresh(player);
-					tabs[tab].refresh(player);
+					int newSlot = tabs[nextTab].getSlot(item.getId());
+					if(newSlot == -1)
+						tabs[nextTab].updateBulk();
+					else
+						tabs[tab].updateSingle(null, item, newSlot, true);
+					tabs[tab].updateSingle(item, null, slot, true);
 				}
 				return true;
 			}
@@ -190,7 +194,7 @@ public final class Bank {
 	 * Refreshes the contents of this bank tab container to the interface.
 	 */
 	public void refresh() {
-		tabs[getSelectedTab()].refresh(player);
+		tabs[getSelectedTab()].updateBulk();
 	}
 	
 	/**
@@ -198,7 +202,7 @@ public final class Bank {
 	 */
 	public void refreshAll() {
 		for(BankTab t : tabs)
-			t.refresh(player);
+			t.updateBulk();
 	}
 	
 	/**
@@ -270,7 +274,7 @@ public final class Bank {
 	 * @return the items contained within this container.
 	 */
 	public final Item[] items(int index) {
-		return tabs[index].toArray();
+		return tabs[index].getItems();
 	}
 	
 	/**

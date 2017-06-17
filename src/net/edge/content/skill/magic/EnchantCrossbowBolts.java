@@ -2,7 +2,7 @@ package net.edge.content.skill.magic;
 
 import com.google.common.collect.ImmutableMap;
 import net.edge.net.packet.PacketWriter;
-import net.edge.content.container.impl.Inventory;
+import net.edge.world.node.item.container.impl.Inventory;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;

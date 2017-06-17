@@ -2,7 +2,7 @@ package net.edge.content.skill.runecrafting;
 
 import net.edge.event.impl.ObjectEvent;
 import net.edge.task.Task;
-import net.edge.content.container.impl.Inventory;
+import net.edge.world.node.item.container.impl.Inventory;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.Animation;

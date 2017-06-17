@@ -1,7 +1,7 @@
 package net.edge.content.item;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.content.container.ItemContainer;
+import net.edge.world.node.item.container.ItemContainer;
 import net.edge.content.skill.Skills;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;

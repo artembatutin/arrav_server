@@ -9,8 +9,7 @@ import net.edge.game.GameConstants;
 import net.edge.content.PlayerPanel;
 import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.content.container.impl.Equipment;
-import net.edge.content.container.impl.Inventory;
+import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.scoreboard.PlayerScoreboardStatistic;
@@ -267,8 +266,8 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		if(items.size() > 0) {
 			character.getEquipment().clear();
 			character.getInventory().clear();
-			character.getEquipment().refresh(character);
-			character.getInventory().refresh(character);
+			character.getEquipment().updateBulk();
+			character.getInventory().updateBulk();
 			int amount = dropAll ? 0 : character.getSkullTimer().get() > 0 ? 0 : 3;
 			if(Prayer.isActivated(character, Prayer.PROTECT_ITEM) || Prayer.isActivated(character, Prayer.CURSES_PROTECT_ITEM)) {
 				if(!dropAll) {

@@ -2,7 +2,6 @@ package net.edge.content.commands.impl;
 
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
-import net.edge.content.container.impl.Inventory;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.world.node.entity.player.Player;
@@ -16,7 +15,7 @@ public final class EmptyInventoryCommand implements Command {
 		player.getDialogueBuilder().append(new StatementDialogue("Are you sure you want to empty your inventory?"), new OptionDialogue(t -> {
 			if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 				player.getInventory().clear();
-				player.getInventory().refresh(player);
+				player.getInventory().updateBulk();
 				player.getMessages().sendCloseWindows();
 			} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION) || t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
 				player.getMessages().sendCloseWindows();

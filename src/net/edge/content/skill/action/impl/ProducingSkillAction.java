@@ -2,7 +2,6 @@ package net.edge.content.skill.action.impl;
 
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
-import net.edge.content.container.ItemContainer;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.SkillAction;
 import net.edge.locale.Position;
@@ -40,6 +39,14 @@ public abstract class ProducingSkillAction extends SkillAction {
 	public final boolean canRun(Task t) {
 		Optional<Item[]> removeItem = removeItem();
 		getPlayer().getInventory().test();
+		
+		//Looking if player has empty space for produce items.
+		if(!player.getInventory().hasCapacityAfter(produceItem().orElse(null), removeItem.orElse(null))) {
+			System.out.println("low");
+			getPlayer().getInventory().fireCapacityExceededEvent();
+			return false;
+		}
+		
 		//removing items from the test container.
 		if(removeItem.isPresent()) {
 			//if player missing any items check.
@@ -58,14 +65,6 @@ public abstract class ProducingSkillAction extends SkillAction {
 				}
 				return false;
 			}
-			//removing items from the test container.
-			getPlayer().getInventory().removeAll(removeItem.get());
-		}
-		
-		//Looking if player has empty space for produce items.
-		if(produceItem().isPresent() && !getPlayer().getInventory().hasCapacityFor(produceItem().get())) {
-			getPlayer().getInventory().fireCapacityExceededEvent();
-			return false;
 		}
 		getPlayer().getInventory().untest();
 		//producing action

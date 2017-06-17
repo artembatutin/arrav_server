@@ -1,4 +1,4 @@
-package net.edge.content.container.session;
+package net.edge.world.node.item.container.session;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;

@@ -1,5 +1,6 @@
 package net.edge.event.but;
 
+import net.edge.content.scene.impl.IntroductionCutscene;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.ButtonEvent;
 import net.edge.game.GameConstants;
@@ -13,7 +14,7 @@ public class IronManSelection extends EventInitializer {
 		ButtonEvent e = new ButtonEvent() {
 			@Override
 			public boolean click(Player player, int button) {
-				boolean iron = button == 100;
+				boolean iron = button == 200;
 				if(iron)
 					player.setIron(1);
 				else
@@ -21,22 +22,23 @@ public class IronManSelection extends EventInitializer {
 				player.getActivityManager().enable();
 				player.sendDefaultSidebars();
 				player.getMessages().sendCloseWindows();
-				if(!PunishmentHandler.recievedStarter(player.getSession().getHost() + "-" + (iron ? "iron" : "reg"))) {
-					if(iron)
-						player.getInventory().setItems(GameConstants.IRON_STARTER);
-					else
-						player.getInventory().setItems(GameConstants.REGULAR_STARTER);
-					player.getInventory().refresh(player);
-					PunishmentHandler.addStarter(player.getSession().getHost() + "-" + (iron ? "iron" : "reg"));
+				player.getInventory().clear(false);
+				if(iron) {
+					player.getInventory().setItems(GameConstants.IRON_STARTER);
+				} else if(!PunishmentHandler.recievedStarter(player.getSession().getHost())) {
+					player.getInventory().setItems(GameConstants.REGULAR_STARTER);
+					PunishmentHandler.addStarter(player.getSession().getHost());
 				} else {
-					player.message("You already received a starter package before.");
+					player.message("You already received your regular starter package before.");
 				}
+				player.getInventory().updateBulk();
 				player.getAttr().get("introduction_stage").set(3);
+				player.getActivityManager().enable();
 				return true;
 			}
 		};
-		e.register(100);
-		e.register(101);
+		e.register(200);
+		e.register(201);
 
 	}
 	

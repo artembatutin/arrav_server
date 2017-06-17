@@ -1,7 +1,7 @@
 package net.edge.world.node.item;
 
 import com.google.gson.Gson;
-import net.edge.content.container.impl.EquipmentType;
+import net.edge.world.node.item.container.impl.EquipmentType;
 import net.edge.util.json.JsonSaver;
 
 import java.util.Arrays;

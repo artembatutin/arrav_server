@@ -1,6 +1,6 @@
 package net.edge.net.packet.impl;
 
-import net.edge.content.container.impl.Inventory;
+import net.edge.world.node.item.container.impl.Inventory;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.event.EventContainer;
 import net.edge.event.impl.ItemEvent;

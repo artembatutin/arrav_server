@@ -1,8 +1,8 @@
-package net.edge.content.container.impl;
+package net.edge.world.node.item.container.impl;
 
-import net.edge.content.container.ItemContainer;
-import net.edge.content.container.ItemContainerAdapter;
-import net.edge.content.container.ItemWeightListener;
+import net.edge.world.node.item.container.ItemContainer;
+import net.edge.world.node.item.container.ItemContainerAdapter;
+import net.edge.world.node.item.container.ItemWeightListener;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
@@ -28,6 +28,11 @@ public class Inventory extends ItemContainer {
 		 */
 		InventoryListener(Player player) {
 			super(player);
+		}
+		
+		@Override
+		public int widget() {
+			return INVENTORY_DISPLAY_ID;
 		}
 		
 		@Override
@@ -153,8 +158,6 @@ public class Inventory extends ItemContainer {
 	 * Attempts to add an item to the players inventory, if there is no space
 	 * it'll bank the item instead.
 	 * @param items the items to add.
-	 * @return <true> if the item was added to the inventory or bank, <false> if even the bank
-	 * had no space.
 	 */
 	public void addOrDrop(Item... items) {
 		addOrDrop(Arrays.asList(items));
@@ -164,8 +167,6 @@ public class Inventory extends ItemContainer {
 	 * Attempts to add an item to the players inventory, if there is no space
 	 * it'll bank the item instead.
 	 * @param items the items to add.
-	 * @return <true> if the item was added to the inventory or bank, <false> if even the bank
-	 * had no space.
 	 */
 	public void addOrBank(List<Item> items) {
 		addOrExecute(t -> player.getBank().add(0, t), "Some of the items were banked instead...", items);
@@ -175,20 +176,9 @@ public class Inventory extends ItemContainer {
 	 * Attempts to add an item to the players inventory, if there is no space
 	 * it'll bank the item instead.
 	 * @param items the items to add.
-	 * @return <true> if the item was added to the inventory or bank, <false> if even the bank
-	 * had no space.
 	 */
 	public void addOrBank(Item... items) {
 		addOrBank(Arrays.asList(items));
-	}
-	
-	/**
-	 * The inventory widget id.
-	 * @return widget id.
-	 */
-	@Override
-	public int widget() {
-		return isTest() ? -1 : INVENTORY_DISPLAY_ID;
 	}
 	
 }

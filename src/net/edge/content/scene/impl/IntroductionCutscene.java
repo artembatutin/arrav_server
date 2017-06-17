@@ -117,25 +117,26 @@ public final class IntroductionCutscene extends Cutscene {
 
 	@Override
 	public void onCancel() {
-
+	
 	}
 
 	private Dialogue complete() {
 		return new StatementDialogue("You're on your own now. Goodluck!").attach(() -> {
 			player.setInstance(0);
 			player.getMessages().sendFade(10, 100, 120);
-			player.move(new Position(3088, 3509));
 			player.facePosition(new Position(3221, 3432));
 			player.getMessages().sendResetCameraPosition();
 			player.setVisible(true);
 			player.getAttr().get("introduction_stage").set(2);
 			player.graphic(new Graphic(2189));
-			player.getInventory().refresh(player);
 			World.getClanManager().join(player, "avro");
-			if(player.getAttr().get("introduction_stage").getInt() < 3) {
-				player.getMessages().sendInterface(-5);
-			}
+			System.out.println("before");
+		}).attachAfter(() -> {
+			System.out.println("after");
+			player.move(new Position(3088, 3509));
+			player.getMessages().sendInterface(-5);
 		});
+		
 	}
 	
 	public void prerequisites() {
@@ -153,11 +154,11 @@ public final class IntroductionCutscene extends Cutscene {
 				} else {
 					player.getDialogueBuilder().advance();
 					player.getMessages().sendInterface(3559);
-					player.getAttr().get("introduction_stage").set(2);
+					player.getAttr().get("introduction_stage").set(3);
 				}
 			}, "I want a quick tour.", "Skip the introduction."), complete());
 		}
-		if(player.getAttr().get("introduction_stage").getInt() < 3) {
+		if(player.getAttr().get("introduction_stage").getInt() == 2) {
 			player.getMessages().sendInterface(-5);
 		}
 	}

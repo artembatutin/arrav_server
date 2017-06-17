@@ -1,13 +1,12 @@
-package net.edge.content.container.impl.bank;
+package net.edge.world.node.item.container.impl;
 
-import net.edge.content.container.ItemContainer;
-import net.edge.content.container.impl.Equipment;
-import net.edge.content.container.impl.Inventory;
+import net.edge.world.node.item.container.ItemContainer;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.IndexedItem;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.node.item.container.ItemContainerAdapter;
 
 import java.util.OptionalInt;
 
@@ -34,7 +33,7 @@ final class BankTab extends ItemContainer {
 	 */
 	BankTab(Player player, int slot, int capacity) {
 		super(capacity, StackPolicy.ALWAYS);
-		addListener(new BankListener(player));
+		addListener(new BankListener(player, slot));
 		this.slot = slot;
 	}
 	
@@ -143,8 +142,8 @@ final class BankTab extends ItemContainer {
 				inv.remove(new Item(i.getId(), i.getAmount()), i.getIndex(), false);
 			}
 		}
-		player.getMessages().sendItemsOnInterface(5064, inv.toArray());
-		player.getMessages().sendItemsOnInterface(3214, inv.toArray());
+		player.getMessages().sendItemsOnInterface(5064, inv.getItems());
+		player.getMessages().sendItemsOnInterface(3214, inv.getItems());
 		forceRefresh(player);
 	}
 	
@@ -157,7 +156,7 @@ final class BankTab extends ItemContainer {
 			equip.unequip(i.getIndex(), player.getBank().container(player.getBank().contains(i.getId())), false);
 		}
 		forceRefresh(player);
-		equip.refresh();
+		equip.updateBulk();
 	}
 	
 	/**
@@ -172,7 +171,7 @@ final class BankTab extends ItemContainer {
 						container.remove(new Item(i.getId(), i.getAmount()), i.getIndex(), false);
 					}
 				}
-				container.refresh(player, 2702);
+				container.refreshBulk(player, 2702);
 				forceRefresh(player);
 			}
 		});
@@ -184,21 +183,9 @@ final class BankTab extends ItemContainer {
 	 */
 	private void forceRefresh(Player player) {
 		Inventory inventory = player.getInventory();
-		inventory.refresh(player, BANKING_INVENTORY);
-		inventory.refresh(player);
-		refresh(player, 270 + slot);
-	}
-	
-	/**
-	 * Sends the items on the interface.
-	 */
-	@Override
-	public void refresh(Player player) {
-		player.getMessages().sendItemsOnInterface(270 + slot, toArray());
-	}
-	
-	public int widget() {
-		return isTest() ? -1 : 270 + slot;
+		inventory.refreshBulk(player, BANKING_INVENTORY);
+		inventory.updateBulk();
+		updateBulk();
 	}
 	
 	/**
@@ -207,5 +194,34 @@ final class BankTab extends ItemContainer {
 	 */
 	public int getSlot() {
 		return slot;
+	}
+	
+	/**
+	 * An {@link ItemContainerAdapter} implementation that listens for changes to the bank.
+	 */
+	public static class BankListener extends ItemContainerAdapter {
+		
+		/**
+		 * The slot of this bank listener.
+		 */
+		private final int slot;
+		
+		/**
+		 * Creates a new {@link BankListener}.
+		 */
+		public BankListener(Player player, int slot) {
+			super(player);
+			this.slot = slot;
+		}
+		
+		@Override
+		public int widget() {
+			return 270 + slot;
+		}
+		
+		@Override
+		public String getCapacityExceededMsg() {
+			return "You do not have enough bank space to deposit that.";
+		}
 	}
 }

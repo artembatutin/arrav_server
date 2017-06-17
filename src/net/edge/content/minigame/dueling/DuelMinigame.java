@@ -8,7 +8,7 @@ import net.edge.util.log.impl.DuelLog;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.special.CombatSpecial;
-import net.edge.content.container.session.impl.DuelSession;
+import net.edge.world.node.item.container.session.impl.DuelSession;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
@@ -115,8 +115,7 @@ public final class DuelMinigame extends Minigame {
 		winner.getMessages().sendString(loser.getFormatUsername(), 6840);
 		winner.getMessages().sendString(Integer.toString(loser.determineCombatLevel()), 6839);
 		
-		winner.getMessages().sendItemsOnInterface(6822, session.getExchangeSession().get(loser).toArray());
-		
+		winner.getMessages().sendItemsOnInterface(6822, session.getExchangeSession().get(loser).getItems());
 		winner.getMessages().sendInterface(6733);
 		claim = true;
 	}

@@ -11,14 +11,12 @@ import net.edge.content.combat.magic.lunars.LunarSpells;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.content.container.impl.Equipment;
+import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.dialogue.Dialogues;
-import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.Skillcape;
 import net.edge.content.market.MarketShop;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.SkillData;
-import net.edge.content.skill.Skills;
 import net.edge.content.skill.cooking.Cooking;
 import net.edge.content.skill.cooking.CookingData;
 import net.edge.content.skill.cooking.DoughCreation;
@@ -82,7 +80,7 @@ public final class ClickButtonPacket implements PacketReader {
 		if(Server.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}
-		if(button != 9154 && button != 100 && button != 101 && player.getActivityManager().contains(ActivityManager.ActivityType.CLICK_BUTTON)) {
+		if(button != 9154 && button != 200 && button != 201 && player.getActivityManager().contains(ActivityManager.ActivityType.CLICK_BUTTON)) {
 			return;
 		}
 		if(button == 123) {

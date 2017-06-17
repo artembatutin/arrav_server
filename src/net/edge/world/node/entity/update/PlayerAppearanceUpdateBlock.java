@@ -2,7 +2,7 @@ package net.edge.world.node.entity.update;
 
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteTransform;
-import net.edge.content.container.impl.Equipment;
+import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerAppearance;
 

@@ -4,7 +4,7 @@ import com.google.gson.*;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.edge.content.combat.weapon.FightType;
-import net.edge.content.container.ItemContainer;
+import net.edge.world.node.item.container.ItemContainer;
 import net.edge.content.minigame.barrows.BarrowsData;
 import net.edge.content.pets.Pet;
 import net.edge.content.pets.PetManager;
@@ -468,7 +468,7 @@ public final class PlayerSerialization {
 	}, new Token("inventory") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getInventory().toArray();
+			return p.getInventory().getItems();
 		}
 		
 		@Override
@@ -478,7 +478,7 @@ public final class PlayerSerialization {
 	}, new Token("equipment") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getEquipment().toArray();
+			return p.getEquipment().getItems();
 		}
 		
 		@Override
@@ -691,7 +691,7 @@ public final class PlayerSerialization {
 		public Object toJson(Player p) {
 			Familiar familiar = p.getFamiliar().orElse(null);
 			ItemContainer storage = familiar != null ? ((FamiliarContainer) familiar.getAbilityType()).getContainer() : new ItemContainer(30, ItemContainer.StackPolicy.STANDARD);
-			return storage.toArray();
+			return storage.getItems();
 		}
 		
 		@Override

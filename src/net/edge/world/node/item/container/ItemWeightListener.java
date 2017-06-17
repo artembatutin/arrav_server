@@ -1,10 +1,8 @@
-package net.edge.content.container;
+package net.edge.world.node.item.container;
 
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemDefinition;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -27,13 +25,13 @@ public final class ItemWeightListener implements ItemContainerListener {
 	}
 	
 	@Override
-	public void itemUpdated(ItemContainer container, Item oldItem, Item newItem, int index, boolean refresh) {
+	public void singleUpdate(ItemContainer container, Item oldItem, Item newItem, int slot, boolean update) {
 		updateWeight(oldItem, newItem);
 		queueWeight();
 	}
 	
 	@Override
-	public void bulkItemsUpdated(ItemContainer container) {
+	public void bulkUpdate(ItemContainer container) {
 		updateAllWeight();
 		queueWeight();
 	}

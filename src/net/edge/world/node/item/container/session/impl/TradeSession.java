@@ -1,10 +1,10 @@
-package net.edge.content.container.session.impl;
+package net.edge.world.node.item.container.session.impl;
 
 import net.edge.util.log.Log;
 import net.edge.util.log.impl.TradeLog;
-import net.edge.content.container.session.ExchangeSession;
-import net.edge.content.container.session.ExchangeSessionActionType;
-import net.edge.content.container.session.ExchangeSessionType;
+import net.edge.world.node.item.container.session.ExchangeSession;
+import net.edge.world.node.item.container.session.ExchangeSessionActionType;
+import net.edge.world.node.item.container.session.ExchangeSessionType;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.player.Player;
@@ -106,12 +106,12 @@ public final class TradeSession extends ExchangeSession {
 		Player other = this.getOther(player);
 		switch(stage) {
 			case OFFER_ITEMS:
-				if(!player.getInventory().hasCapacityFor(getExchangeSession().get(other).toArray())) {
+				if(!player.getInventory().hasCapacityFor(getExchangeSession().get(other).getItems())) {
 					player.message("You don't have enough free slots for this many items.");
 					break;
 				}
 
-				if(!other.getInventory().hasCapacityFor(getExchangeSession().get(player).toArray())) {
+				if(!other.getInventory().hasCapacityFor(getExchangeSession().get(player).getItems())) {
 					String username = other.getFormatUsername();
 					player.message(username + " doesn't have enough free slots for this many items");
 					break;
@@ -139,8 +139,8 @@ public final class TradeSession extends ExchangeSession {
 				break;
 			case FINALIZE:
 				if(other.getState() == NodeState.ACTIVE && player.getState() == NodeState.ACTIVE) {
-					player.getInventory().addAll(this.getExchangeSession().get(other).toArray());
-					other.getInventory().addAll(this.getExchangeSession().get(player).toArray());
+					player.getInventory().addAll(this.getExchangeSession().get(other).getItems());
+					other.getInventory().addAll(this.getExchangeSession().get(player).getItems());
 					World.getLoggingManager().write(Log.create(new TradeLog(player, this.getExchangeSession().get(player), other, this.getExchangeSession().get(other))));
 					World.getLoggingManager().write(Log.create(new TradeLog(other, this.getExchangeSession().get(other), player, this.getExchangeSession().get(player))));
 					this.getPlayers().forEach(p -> p.message("Trade successfully completed with " + this.getOther(p).getFormatUsername()));
@@ -156,22 +156,21 @@ public final class TradeSession extends ExchangeSession {
 			this.getPlayers().forEach(player -> {
 				Player recipient = getOther(player);
 				int remaining = recipient.getInventory().remaining();
-
-				this.getExchangeSession().get(player).refresh(player, 3415);
-				this.getExchangeSession().get(player).refresh(player, 3416);
+				player.getMessages().sendItemsOnInterface(3415, this.getExchangeSession().get(player).getItems());
+				player.getMessages().sendItemsOnInterface(3416, this.getExchangeSession().get(player).getItems());
 				player.getMessages().sendString("", 3431);
 				player.getMessages().sendString("Trading with: " + name(recipient) + " " + "who has @gre@" + remaining + " free slots", 3417);
 				player.getMessages().sendString("Are you sure you want to make this trade?", 3535);
 				player.getMessages().sendInventoryInterface(3323, 3321);
-				player.getMessages().sendItemsOnInterface(3322, player.getInventory().toArray());
+				player.getMessages().sendItemsOnInterface(3322, player.getInventory().getItems());
 			});
 		} else if(getStage() == CONFIRM_DECISION) {
 			this.getPlayers().forEach(player -> {
 				Player recipient = getOther(player);
 
-				player.getMessages().sendItemsOnInterface(3214, player.getInventory().toArray());
-				player.getMessages().sendString(getItemNames(player, this.getExchangeSession().get(player).toArray()), 3557);
-				player.getMessages().sendString(getItemNames(recipient, this.getExchangeSession().get(recipient).toArray()), 3558);
+				player.getMessages().sendItemsOnInterface(3214, player.getInventory().getItems());
+				player.getMessages().sendString(getItemNames(player, this.getExchangeSession().get(player).getItems()), 3557);
+				player.getMessages().sendString(getItemNames(recipient, this.getExchangeSession().get(recipient).getItems()), 3558);
 				player.getMessages().sendInventoryInterface(3443, 3213);
 			});
 		}
@@ -183,9 +182,9 @@ public final class TradeSession extends ExchangeSession {
 			Player recipient = getOther(player);
 			int remaining = recipient.getInventory().remaining();
 
-			player.getMessages().sendItemsOnInterface(3322, player.getInventory().toArray());
-			this.getExchangeSession().get(player).refresh(player, 3415);
-			this.getExchangeSession().get(player).refresh(recipient, 3416);
+			player.getMessages().sendItemsOnInterface(3322, player.getInventory().getItems());
+			player.getMessages().sendItemsOnInterface(3415, this.getExchangeSession().get(player).getItems());
+			recipient.getMessages().sendItemsOnInterface(3416, this.getExchangeSession().get(player).getItems());
 			player.getMessages().sendString("", 3431);
 			player.getMessages().sendString("Trading with: " + name(recipient) + " " + "who has @gre@" + remaining + " free slots", 3417);
 		}

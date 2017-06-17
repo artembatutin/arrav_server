@@ -1,7 +1,7 @@
 package net.edge.content.skill.summoning.familiar;
 
 import com.google.common.collect.ImmutableList;
-import net.edge.content.container.ItemContainer;
+import net.edge.world.node.item.container.ItemContainer;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
@@ -114,8 +114,6 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 			this.getContainer().shift();
 			player.getInventory().remove(item);
 			this.onStore(player);
-			this.getContainer().refresh(player, 2702);
-			player.getMessages().sendItemsOnInterface(5064, player.getInventory().toArray());
 		}
 	}
 	
@@ -146,8 +144,6 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 			this.getContainer().remove(item);
 			this.getContainer().shift();
 			this.onWithdraw(player);
-			this.getContainer().refresh(player, 2702);
-			player.getMessages().sendItemsOnInterface(5064, player.getInventory().toArray());
 		}
 	}
 	

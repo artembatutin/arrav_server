@@ -10,7 +10,7 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.combat.weapon.FightStyle;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.content.container.impl.Equipment;
+import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.node.entity.EntityNode;
@@ -206,12 +206,12 @@ public final class RangedCombatStrategy implements CombatStrategy {
 				WeaponInterface.execute(player, null);
 				WeaponAnimation.execute(player, new Item(0));
 			}
+		} else {
+			player.getEquipment().set(slot, item, true);
 		}
 		
 		if(slot == Equipment.WEAPON_SLOT) {
 			player.getFlags().flag(UpdateFlag.APPEARANCE);
 		}
-		
-		player.getEquipment().refresh();
 	}
 }

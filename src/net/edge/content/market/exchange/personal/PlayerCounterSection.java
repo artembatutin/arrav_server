@@ -1,6 +1,6 @@
 package net.edge.content.market.exchange.personal;
 
-import net.edge.content.container.ItemContainer;
+import net.edge.world.node.item.container.ItemContainer;
 import net.edge.content.market.exchange.item.ExchangeItem;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;

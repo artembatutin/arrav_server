@@ -99,7 +99,7 @@ public final class DialogueBuilder {
 	
 	/**
 	 * Sends a conversation to a player.
-	 * @param conv the conversation to send.
+	 * @param ap the conversation to send.
 	 */
 	public void send(DialogueAppender ap) {
 		interrupt();

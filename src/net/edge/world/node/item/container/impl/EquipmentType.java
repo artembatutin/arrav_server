@@ -1,4 +1,4 @@
-package net.edge.content.container.impl;
+package net.edge.world.node.item.container.impl;
 
 /**
  * An enumeration of equipment types.

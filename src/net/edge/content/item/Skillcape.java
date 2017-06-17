@@ -2,7 +2,7 @@ package net.edge.content.item;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.content.container.impl.Equipment;
+import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.GiveItemDialogue;
 import net.edge.content.dialogue.impl.NpcDialogue;
@@ -16,7 +16,6 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Optional;
 

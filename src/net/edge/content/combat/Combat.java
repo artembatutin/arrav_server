@@ -14,7 +14,7 @@ import net.edge.content.combat.strategy.base.MeleeCombatStrategy;
 import net.edge.content.combat.strategy.base.RangedCombatStrategy;
 import net.edge.content.combat.weapon.FightStyle;
 import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.content.container.impl.Equipment;
+import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.locale.Boundary;

@@ -231,13 +231,13 @@ public final class PacketWriter {
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 34, MessageType.VARIABLE_SHORT);
 		msg.putShort(id);
 		msg.put(slot);
-		msg.putShort(item.getId() + 1);
-		
-		if(item.getAmount() > 254) {
+		msg.putShort(item == null ? 0 : item.getId() + 1);
+		int am = item == null ? 0 : item.getAmount();
+		if(am > 254) {
 			msg.put(255);
-			msg.putShort(item.getAmount());
+			msg.putInt(am);
 		} else {
-			msg.put(item.getAmount());
+			msg.put(am);
 		}
 		
 		player.queue(msg);

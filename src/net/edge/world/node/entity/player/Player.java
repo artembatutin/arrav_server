@@ -30,9 +30,9 @@ import net.edge.content.combat.weapon.FightType;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.commands.impl.UpdateCommand;
-import net.edge.content.container.impl.Equipment;
-import net.edge.content.container.impl.Inventory;
-import net.edge.content.container.impl.bank.Bank;
+import net.edge.world.node.item.container.impl.Equipment;
+import net.edge.world.node.item.container.impl.Inventory;
+import net.edge.world.node.item.container.impl.Bank;
 import net.edge.content.dialogue.DialogueBuilder;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.PotionConsumable;
@@ -627,8 +627,8 @@ public final class Player extends EntityNode {
 		}
 		move(super.getPosition());
 		Skills.refreshAll(this);
-		equipment.refresh(this);
-		inventory.refresh(this);
+		equipment.updateBulk();
+		inventory.updateBulk();
 		encoder.sendPrivateMessageListStatus(2);
 		privateMessage.updateThisList();
 		privateMessage.updateOtherList(true);

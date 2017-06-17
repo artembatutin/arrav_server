@@ -1,7 +1,7 @@
 package net.edge.util.log.impl;
 
 import net.edge.util.log.LogDetails;
-import net.edge.content.container.ItemContainer;
+import net.edge.world.node.item.container.ItemContainer;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

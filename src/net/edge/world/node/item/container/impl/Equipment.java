@@ -1,12 +1,12 @@
-package net.edge.content.container.impl;
+package net.edge.world.node.item.container.impl;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.content.container.ItemContainer;
-import net.edge.content.container.ItemContainerAdapter;
-import net.edge.content.container.ItemWeightListener;
+import net.edge.world.node.item.container.ItemContainer;
+import net.edge.world.node.item.container.ItemContainerAdapter;
+import net.edge.world.node.item.container.ItemWeightListener;
 import net.edge.content.item.Requirement;
 import net.edge.content.item.Skillcape;
 import net.edge.content.minigame.MinigameHandler;
@@ -16,12 +16,9 @@ import net.edge.world.node.entity.update.UpdateFlag;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
 
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
-import static net.edge.content.container.impl.EquipmentType.WEAPON;
+import static net.edge.world.node.item.container.impl.EquipmentType.WEAPON;
 
 /**
  * The container that manages the equipment for a player.
@@ -47,18 +44,23 @@ public final class Equipment extends ItemContainer {
 		}
 		
 		@Override
-		public void itemUpdated(ItemContainer container, Item oldItem, Item newItem, int index, boolean refresh) {
-			if(refresh)
-				sendItemsToWidget(container);
+		public void singleUpdate(ItemContainer container, Item oldItem, Item newItem, int slot, boolean update) {
+			if(update)
+				updateItem(newItem, slot);
 			updateBonus(oldItem, newItem);
 			writeBonuses();
 		}
 		
 		@Override
-		public void bulkItemsUpdated(ItemContainer container) {
-			sendItemsToWidget(container);
+		public void bulkUpdate(ItemContainer container) {
+			updateItems(container);
 			updateAllBonuses();
 			writeBonuses();
+		}
+		
+		@Override
+		public int widget() {
+			return EQUIPMENT_DISPLAY_ID;
 		}
 	}
 	
@@ -70,7 +72,7 @@ public final class Equipment extends ItemContainer {
 	/**
 	 * The equipment item display widget identifier.
 	 */
-	public static final int EQUIPMENT_DISPLAY_ID = 1688;
+	private static final int EQUIPMENT_DISPLAY_ID = 1688;
 	
 	/**
 	 * The error message printed when certain functions from the superclass are utilized.
@@ -356,27 +358,10 @@ public final class Equipment extends ItemContainer {
 	 * Writes a specific the bonus value on the equipment interface.
 	 */
 	private void writeBonuses() {
-		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < bonuses.length; i++) {
 			boolean percentage = (i >= 11 && i <= 13) || i == 17;
 			player.getMessages().sendString(Combat.BONUS_NAMES[i] + ": " + (bonuses[i] >= 0 ? "+" : "") + bonuses[Combat.BONUS[i]] + (percentage ? "%" : i == 14 ? ".0" : ""), Combat.BONUS_IDS[i]);
-			sb.setLength(0);
 		}
-	}
-	
-	/**
-	 * Forces a refresh of {@code Equipment} items to the {@code EQUIPMENT_DISPLAY_ID} widget.
-	 */
-	public void refresh() {
-		refresh(player);
-	}
-	
-	/**
-	 * @return widget id.
-	 */
-	@Override
-	public int widget() {
-		return EQUIPMENT_DISPLAY_ID;
 	}
 	
 	/**
