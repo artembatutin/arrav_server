@@ -281,7 +281,7 @@ public final class PlayerSerialization {
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setNight(n.getAsInt());
+			p.setIron(n.getAsInt());
 		}
 	}, new Token("totalVotes") {
 

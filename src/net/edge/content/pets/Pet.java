@@ -198,7 +198,7 @@ public final class Pet extends Follower {
 			player.message("This is not your pet.");
 			return false;
 		}
-		if(!player.getInventory().add(data.getPolicy().getItem())) {
+		if(!player.getInventory().canAdd(data.getPolicy().getItem())) {
 			player.message("You don't have enough space in your inventory!");
 			return false;
 		}

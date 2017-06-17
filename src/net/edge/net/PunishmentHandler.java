@@ -45,7 +45,7 @@ public final class PunishmentHandler {
 	 * @return {@code true} if the host is, {@code false} otherwise.
 	 */
 	static boolean isIPBanned(String host) {
-		return !PunishmentHandler.isLocal(host) && IP_BANNED.contains(host);
+		return IP_BANNED.contains(host);
 	}
 	
 	/**
@@ -54,7 +54,7 @@ public final class PunishmentHandler {
 	 * @return {@code true} if the host is, {@code false} otherwise.
 	 */
 	public static boolean isIPMuted(String host) {
-		return !PunishmentHandler.isLocal(host) && IP_MUTED.contains(host);
+		return IP_MUTED.contains(host);
 	}
 	
 	/**
@@ -63,7 +63,7 @@ public final class PunishmentHandler {
 	 * @return {@code true} if the host is, {@code false} otherwise.
 	 */
 	public static boolean recievedStarter(String host) {
-		return !PunishmentHandler.isLocal(host) && STARTERS.contains(host);
+		return STARTERS.contains(host);
 	}
 
 	/**
@@ -83,9 +83,6 @@ public final class PunishmentHandler {
 	 * @throws IllegalStateException if the host is already banned.
 	 */
 	public static void addIPBan(String host, String username) {
-		if(PunishmentHandler.isLocal(host)) {
-			return;
-		}
 		if(IP_BANNED.contains(host))
 			return;
 		try(FileWriter out = new FileWriter(Paths.get("./data/", "banned_ips.txt").toFile(), true)) {
@@ -104,8 +101,6 @@ public final class PunishmentHandler {
 	 * @throws IllegalStateException if the host is already muted.
 	 */
 	public static void addIPMute(String host, String username) {
-		if(PunishmentHandler.isLocal(host))
-			return;
 		if(IP_MUTED.contains(host))
 			return;
 		try(FileWriter out = new FileWriter(Paths.get("./data/", "muted_ips.txt").toFile(), true)) {
@@ -123,8 +118,6 @@ public final class PunishmentHandler {
 	 * @throws IllegalStateException if the host is already muted.
 	 */
 	public static void addStarter(String host) {
-		if(PunishmentHandler.isLocal(host))
-			return;
 		if(STARTERS.contains(host))
 			return;
 		try(FileWriter out = new FileWriter(Paths.get("./data/", "starters.txt").toFile(), true)) {
@@ -174,16 +167,6 @@ public final class PunishmentHandler {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	/**
-	 * Determines if the specified host is connecting locally.
-	 * @param host the host to check if connecting locally.
-	 * @return {@code true} if the host is connecting locally, {@code false}
-	 * otherwise.
-	 */
-	public static boolean isLocal(String host) {
-		return host.equals("127.0.0.1") || host.equals("localhost");
 	}
 	
 }

@@ -157,7 +157,8 @@ public abstract class ExchangeSession {
 			item.setAmount(count);
 		}
 		
-		if(exchangeSession.get(player).add(item)) {
+		if(exchangeSession.get(player).canAdd(item) && player.getInventory().canRemove(item)) {
+			exchangeSession.get(player).add(item);
 			player.getInventory().remove(item, slot);
 			this.attachment = null;
 			updateOfferComponents();
@@ -196,7 +197,8 @@ public abstract class ExchangeSession {
 		if(item.getAmount() > amount) {
 			item = item.createWithAmount(amount);
 		}
-		if(container.remove(item)) {
+		if(container.canRemove(item) && player.getInventory().canAdd(item)) {
+			container.remove(item);
 			player.getInventory().add(item);
 			this.attachment = null;
 			container.shift();

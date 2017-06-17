@@ -88,7 +88,7 @@ public class ItemNode extends Node {
 	 * @param player the player attempting to pickup this item.
 	 */
 	public void onPickup(Player player) {
-		if(player.getInventory().add(item)) {
+		if(player.getInventory().add(item) != -1) {
 			this.setState(NodeState.INACTIVE);
 		}
 	}

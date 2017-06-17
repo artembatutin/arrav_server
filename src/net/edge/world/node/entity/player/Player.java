@@ -1009,15 +1009,7 @@ public final class Player extends EntityNode {
 	}
 	
 	/**
-	 * Determines whether this player is in the nightmare mode.
-	 * @return {@link #ironMan}.
-	 */
-	public boolean isIronMan() {
-		return ironMan == 1 || ironMan == 2;
-	}
-	
-	/**
-	 * Gets this player nightmare mode stage.
+	 * Gets this player iron man mode stage.
 	 * @return {@link #ironMan}.
 	 */
 	public int getIronMan() {
@@ -1025,7 +1017,15 @@ public final class Player extends EntityNode {
 	}
 	
 	/**
-	 * Determines whether this player is maxed out in the nightmare mode.
+	 * Determines whether this player is in the iron man mode.
+	 * @return {@link #ironMan}.
+	 */
+	public boolean isIronMan() {
+		return ironMan == 1 || ironMan == 2;
+	}
+	
+	/**
+	 * Determines whether this player is maxed out in the iron man mode.
 	 * @return {@link #ironMan} maxed out.
 	 */
 	public boolean isIronMaxed() {
@@ -1035,7 +1035,7 @@ public final class Player extends EntityNode {
 	/**
 	 * Sets the {@link #ironMan} to the new value.
 	 */
-	public void setNight(int value) {
+	public void setIron(int value) {
 		this.ironMan = value;
 		PlayerPanel.IRON.refresh(this, "@or2@ - Iron man: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
 	}

@@ -6,7 +6,6 @@ import net.edge.content.dialogue.impl.PlayerDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.skill.Skills;
-import net.edge.content.skill.slayer.Slayer;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.NpcEvent;
 import net.edge.world.Graphic;
@@ -77,7 +76,7 @@ public class NightCaptain extends EventInitializer {
 				ap.chain(new PlayerDialogue("Yes, please..."));
 				ap.chain(new NpcDialogue(3705, "Very well, you've been prestiged and your restrictions have", "been removed...").attach(() -> {
 					player.graphic(new Graphic(2189));
-					player.setNight(2);
+					player.setIron(2);
 				}));
 				ap.start();
 				return true;

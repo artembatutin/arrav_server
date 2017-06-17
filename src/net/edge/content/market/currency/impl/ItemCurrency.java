@@ -44,7 +44,11 @@ public final class ItemCurrency implements GeneralCurrency {
 
 	@Override
 	public boolean takeCurrency(Player player, int amount) {
-		return player.getInventory().remove(new Item(id, amount));
+		if(player.getInventory().canRemove(new Item(id, amount))) {
+			player.getInventory().remove(new Item(id, amount));
+			return true;
+		}
+		return false;
 	}
 
 	@Override

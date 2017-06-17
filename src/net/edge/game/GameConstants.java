@@ -85,9 +85,14 @@ public final class GameConstants {
 	public static final String WELCOME_MESSAGE = "@blu@Welcome to Edgeville - Report any bugs on the forums when found.";
 	
 	/**
-	 * The items received when a player logs in for the first time.
+	 * The items received when a player logs in for the first time in regular mode.
 	 */
-	public static final Item STARTER_PACKAGE[] = {new Item(995, 5000000), new Item(19000, 50), new Item(362, 200), new Item(1351), new Item(590), new Item(1265), new Item(946), new Item(1333), new Item(841), new Item(1379), new Item(3105), new Item(1153), new Item(1115), new Item(1067), new Item(1191), new Item(579), new Item(577), new Item(1011), new Item(4405), new Item(884, 500), new Item(554, 250), new Item(555, 250), new Item(556, 250), new Item(557, 250), new Item(558, 250), new Item(560, 150), new Item(562, 250)};
+	public static final Item REGULAR_STARTER[] = {new Item(995, 5000000), new Item(19000, 50), new Item(362, 400), new Item(386, 200), new Item(1351), new Item(590), new Item(1265), new Item(946), new Item(1333), new Item(841), new Item(1379), new Item(3105), new Item(1153), new Item(1115), new Item(1067), new Item(1191), new Item(579), new Item(577), new Item(1011), new Item(4405), new Item(884, 500), new Item(554, 250), new Item(555, 250), new Item(556, 250), new Item(557, 250), new Item(558, 250), new Item(560, 150), new Item(562, 250)};
+	
+	/**
+	 * The items received when a player logs in for the first time in iron mode.
+	 */
+	public static final Item IRON_STARTER[] = {new Item(995, 200000), new Item(1351), new Item(590), new Item(1265), new Item(946), new Item(1755), new Item(2347), new Item(303), new Item(18741)};
 	
 	/**
 	 * Messages chosen a random to be sent to a player that has killed another

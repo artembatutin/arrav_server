@@ -187,13 +187,11 @@ public final class Server {
 	private void initTasks() throws Exception {
 		FileSystem fs = FileSystem.create("data/cache");
 		AttributeKey.init();
-		//Object decoding.
-		launch.execute(() -> {
-			new ObjectDefinitionDecoder(fs).run();
-			new MapDefinitionDecoder(fs).run();
-			new RegionDecoder(fs).run();
-			World.getFirepitEvent().register();
-		});
+		//object/region decoding must be done before parallel.
+		new ObjectDefinitionDecoder(fs).run();
+		new MapDefinitionDecoder(fs).run();
+		new RegionDecoder(fs).run();
+		World.getFirepitEvent().register();
 		//Item decoding.
 		launch.execute(() -> {
 			new ItemDefinitionLoader().load();

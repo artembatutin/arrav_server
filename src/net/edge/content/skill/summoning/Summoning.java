@@ -238,7 +238,7 @@ public final class Summoning {
 		}
 		
 		ability.getContainer().forEach(item -> {
-			if(!player.getInventory().add(item)) {
+			if(!player.getInventory().canAdd(item)) {
 				player.message("Your inventory is currently full.");
 				return;
 			}

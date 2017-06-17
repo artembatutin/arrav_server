@@ -228,32 +228,27 @@ public class MarketShop {
 				return false;
 			}
 		}
+		//buy out all the stock left.
 		if(!marketItem.isUnlimitedStock() && item.getAmount() > marketItem.getStock()) {
 			item.setAmount(marketItem.getStock());
 		}
-
-		int currencyId = this.getCurrency().getCurrency().tangible() ? ((ItemCurrency) this.getCurrency().getCurrency()).getId() : -1;
-		boolean hasSpace = currencyId != -1 && player.getInventory().hasCapacityAfter(new Item[]{new Item(currencyId, item.getAmount() * value)}, item);
-
-		if(!hasSpace && !player.getInventory().hasCapacityFor(item)) {
+		boolean tangible = this.getCurrency().getCurrency().tangible();
+		int currencyId = tangible ? ((ItemCurrency) this.getCurrency().getCurrency()).getId() : -1;
+		
+		int spacesFill = player.getInventory().slotCount(false, false, item);
+		int spacesEmpty = tangible ? 0 : player.getInventory().slotCount(false, true, new Item(currencyId, item.getAmount() * value));
+		boolean hasSpace = player.getInventory().remaining() - spacesEmpty >= spacesFill;
+		
+		if(!hasSpace) {
 			item.setAmount(player.getInventory().remaining());
 			if(item.getAmount() == 0) {
 				player.message("You do not have enough space in your inventory to buy this item!");
 				return false;
 			}
 		}
-
-		if(hasSpace || player.getInventory().remaining() >= item.getAmount() && !item.getDefinition().isStackable() || player.getInventory().remaining() >= 1 && item.getDefinition().isStackable() || player.getInventory().contains(item.getId()) && item.getDefinition().isStackable()) {
-			if(!marketItem.isUnlimitedStock()) {
-				marketItem.decreaseStock(item.getAmount());
-				marketItem.updateStock();
-			}
-			getCurrency().getCurrency().takeCurrency(player, item.getAmount() * value);
-			player.getInventory().add(item);
-		} else {
-			player.message("You don't have enough space in your inventory.");
-			return false;
-		}
+		
+		getCurrency().getCurrency().takeCurrency(player, item.getAmount() * value);
+		player.getInventory().add(item);
 		player.getMessages().sendItemsOnInterface(3823, player.getInventory().toArray());
 		return true;
 	}

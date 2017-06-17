@@ -4,7 +4,6 @@ import net.edge.net.PunishmentHandler;
 import net.edge.task.Task;
 import net.edge.game.GameConstants;
 import net.edge.content.TabInterface;
-import net.edge.content.container.impl.Inventory;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.impl.GiveItemDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -132,13 +131,6 @@ public final class IntroductionCutscene extends Cutscene {
 			player.getAttr().get("introduction_stage").set(2);
 			player.graphic(new Graphic(2189));
 			player.getInventory().refresh(player);
-			if(firstLogin) {
-				player.getInventory().setItems(GameConstants.STARTER_PACKAGE);
-				player.getInventory().refresh(player);
-				PunishmentHandler.addStarter(player.getSession().getHost());
-			} else {
-				player.message("You already received a starter package before.");
-			}
 			World.getClanManager().join(player, "avro");
 			if(player.getAttr().get("introduction_stage").getInt() < 3) {
 				player.getMessages().sendInterface(-5);
@@ -152,12 +144,12 @@ public final class IntroductionCutscene extends Cutscene {
 		if(player.getAttr().get("introduction_stage").getInt() < 2) {
 			player.setVisible(false);
 			if(firstLogin) {
-				new IntroductionCutscene(player).submit();
+				submit();
 				return;
 			}
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionType.FIRST_OPTION)) {
-					new IntroductionCutscene(player).submit();
+					submit();
 				} else {
 					player.getDialogueBuilder().advance();
 					player.getMessages().sendInterface(3559);
@@ -166,16 +158,8 @@ public final class IntroductionCutscene extends Cutscene {
 			}, "I want a quick tour.", "Skip the introduction."), complete());
 		}
 		if(player.getAttr().get("introduction_stage").getInt() < 3) {
-			//player.getMessages().sendInterface(-5);
+			player.getMessages().sendInterface(-5);
 		}
-		player.getActivityManager().enable();
-		player.sendDefaultSidebars();
-	}
-	
-	private void setIron(Player player) {
-		player.setNight(1);
-		player.message("You received a special package from the iron man house. It's in your bank!");
-		player.getBank().add(0, new Item(15246));
 	}
 
 }

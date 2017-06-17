@@ -159,13 +159,13 @@ public final class Equipment extends ItemContainer {
 	}
 	
 	@Override
-	public boolean add(Item item, int preferredIndex, boolean refresh) {
-		return true;
+	public int add(Item item, int preferredIndex, boolean refresh) {
+		return -1;
 	}
 	
 	@Override
-	public boolean remove(Item item, int preferredIndex, boolean refresh) {
-		return true;
+	public int remove(Item item, int preferredIndex, boolean refresh) {
+		return -1;
 	}
 	
 	/**
@@ -279,7 +279,7 @@ public final class Equipment extends ItemContainer {
 		}
 		if(!MinigameHandler.execute(player, m -> m.canUnequip(player, unequip, unequip.getDefinition().getEquipmentType())))
 			return false;
-		if(container.add(unequip, -1, refresh)) {
+		if(container.add(unequip, -1, refresh) >= 0) {
 			set(equipmentIndex, null, refresh);
 			appearanceForIndex(equipmentIndex);
 			if(equipmentIndex == Equipment.SHIELD_SLOT) {
@@ -376,7 +376,7 @@ public final class Equipment extends ItemContainer {
 	 */
 	@Override
 	public int widget() {
-		return isTest() ? -1 : EQUIPMENT_DISPLAY_ID;
+		return EQUIPMENT_DISPLAY_ID;
 	}
 	
 	/**

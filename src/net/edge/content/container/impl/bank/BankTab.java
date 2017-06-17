@@ -17,6 +17,11 @@ import java.util.OptionalInt;
 final class BankTab extends ItemContainer {
 	
 	/**
+	 * The inventory item display widget identifier.
+	 */
+	private static final int BANKING_INVENTORY = 5064;
+	
+	/**
 	 * The slot of this tab in the bank.
 	 */
 	private final int slot;
@@ -64,7 +69,9 @@ final class BankTab extends ItemContainer {
 			return false;
 		}
 		
-		if(add(newDepositItem, -1, refresh)) {
+		System.out.println(canAdd(newDepositItem) +" - " + container.canRemove(depositItem));
+		if(canAdd(newDepositItem) && container.canRemove(depositItem)) {
+			add(newDepositItem, -1, refresh);
 			container.remove(depositItem, inventoryIndex, refresh);
 			if(refresh)
 				forceRefresh(player);
@@ -117,7 +124,8 @@ final class BankTab extends ItemContainer {
 			inventory.fireCapacityExceededEvent();
 			return false;
 		}
-		if(remove(withdrawItem, -1, refresh)) {
+		if(canRemove(withdrawItem) && inventory.canAdd(newWithdrawItem)) {
+			remove(withdrawItem, -1, refresh);
 			inventory.add(newWithdrawItem, -1, refresh);
 			if(refresh)
 				forceRefresh(player);
@@ -177,6 +185,7 @@ final class BankTab extends ItemContainer {
 	 */
 	private void forceRefresh(Player player) {
 		Inventory inventory = player.getInventory();
+		inventory.refresh(player, BANKING_INVENTORY);
 		inventory.refresh(player);
 		refresh(player, 270 + slot);
 	}

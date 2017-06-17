@@ -34,22 +34,23 @@ public class Shops extends EventInitializer {
 		;
 		
 		private final int owner, shop;
-		private final boolean first, second, third;
+		private final boolean first, second, third, fourth;
 		
 		Shop(int owner, int shop, int action) {
-			this(owner, shop, action == 1, action == 2, action == 3);
+			this(owner, shop, action == 1, action == 2, action == 3, action == 4);
 		}
 		
 		Shop(int owner, int shop, boolean first, boolean second) {
-			this(owner, shop, first, second, false);
+			this(owner, shop, first, second, false, false);
 		}
 		
-		Shop(int owner, int shop, boolean first, boolean second, boolean third) {
+		Shop(int owner, int shop, boolean first, boolean second, boolean third, boolean fourth) {
 			this.owner = owner;
 			this.shop = shop;
 			this.first = first;
 			this.second = second;
 			this.third = third;
+			this.fourth = fourth;
 		}
 	}
 	
@@ -69,6 +70,8 @@ public class Shops extends EventInitializer {
 				e.registerSecond(s.owner);
 			if(s.third)
 				e.registerThird(s.owner);
+			if(s.fourth)
+				e.registerFourth(s.owner);
 		}
 	}
 }
