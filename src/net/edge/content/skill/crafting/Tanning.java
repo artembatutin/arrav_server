@@ -117,7 +117,8 @@ public final class Tanning extends ProducingSkillAction {
 	public static void openInterface(Player player) {
 		VALUES.forEach((b, t) -> {
 			if(t.nameFrame != -1) {
-				player.getMessages().sendString("@or1@" + t.required.getDefinition().getName(), t.nameFrame);
+			    String name = b == 57225 ? "Soft leather" : b == 57226 ? "Hard leather" : t.required.getDefinition().getName();
+				player.getMessages().sendString("@or1@" + name, t.nameFrame);
 			}
 			if(t.priceFrame != -1) {
 				String color = player.getInventory().contains(t.required) && player.getInventory().contains(t.cost) ? "@gre@" : "@red@";
