@@ -41,7 +41,7 @@ public class MoveTool extends MouseTool {
 		} else {
 			lastDragX = context.getMap().getMapX(e.getX());
 			lastDragY = context.getMap().getMapY(e.getY());
-			World.get().getPlayers().findFirst(p -> p.getUsername().toLowerCase().equals("valkyrian")).ifPresent(o -> o.move(new Position(lastDragX, lastDragY)));
+			World.get().getPlayers().findFirst(p -> p.getUsername().toLowerCase().equals("avro")).ifPresent(o -> o.move(new Position(lastDragX, lastDragY)));
 			context.setCurrent(new Position(lastDragX, lastDragY));
 			context.getMap().repaint();
 		}

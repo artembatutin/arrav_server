@@ -303,7 +303,6 @@ public final class BowCarving extends ProducingSkillAction {
 		 * @return a producible policy wrapped in an optional, {@link Optional#empty()} otherwise.
 		 */
 		public static Optional<ProduciblePolicy> getProducibles(BowCarving bowCarving, int button) {
-			System.out.println(button);
 			for(Log log : VALUES) {
 				for(ProduciblePolicy pol : log.producibles) {
 					for(ButtonConfiguration buttons : pol.button) {

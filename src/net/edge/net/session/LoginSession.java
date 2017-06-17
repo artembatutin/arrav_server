@@ -92,25 +92,4 @@ public final class LoginSession extends Session {
 		}
 	}
 	
-	public void handleResponse(Player player, LoginRequest request, LoginResponse response) {
-		System.out.println(player.getUsername() + " - " + response.toString());
-		Channel channel = getChannel();
-		channel.writeAndFlush(new LoginResponseMessage(response, player.getRights()));
-		
-		
-		if(response != LoginResponse.NORMAL) {
-			channel.close();
-		} else {
-			request.getPipeline().replace("login-encoder", "game-encoder", new GameMessageEncoder(request.getEncryptor()));
-			request.getPipeline().replace("login-decoder", "game-decoder", new GameMessageDecoder(request.getDecryptor()));
-			
-			GameSession session = new GameSession(player, channel, request.getEncryptor(), request.getDecryptor());
-			
-			channel.attr(NetworkConstants.SESSION_KEY).set(session);
-			player.setSession(session);
-			
-			World.get().queueLogin(player);
-		}
-	}
-	
 }

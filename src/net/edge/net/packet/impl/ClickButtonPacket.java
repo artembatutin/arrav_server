@@ -181,25 +181,6 @@ public final class ClickButtonPacket implements PacketReader {
 			case 40:
 				player.teleport(new Position(2844, 3542), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				break;
-			//Bosses 50-67
-			case 54://tormented demons
-				player.teleport(new Position(2601, 5706), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
-				break;
-			case 56://king black dragon
-				player.teleport(new Position(2272, 4682), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
-				break;
-			case 61://jad
-				player.teleport(new Position(2439, 5170), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
-				break;
-			case 62://corp
-				player.teleport(new Position(2968, 4387, 2), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
-				break;
-			case 64://god wars
-				player.teleport(new Position(2871, 5318, 2), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
-				break;
-			case 65:
-				player.teleport(new Position(1910, 4371), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
-				break;
 			//Clan chat
 			case 240:
 				player.getClan().filter(c -> c.getRank() == ClanChatRank.OWNER).ifPresent(clan -> player.getMessages().sendEnterName("The new clan chat name to set:", s -> () -> {

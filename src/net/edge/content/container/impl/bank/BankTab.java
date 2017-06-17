@@ -69,7 +69,6 @@ final class BankTab extends ItemContainer {
 			return false;
 		}
 		
-		System.out.println(canAdd(newDepositItem) +" - " + container.canRemove(depositItem));
 		if(canAdd(newDepositItem) && container.canRemove(depositItem)) {
 			add(newDepositItem, -1, refresh);
 			container.remove(depositItem, inventoryIndex, refresh);
