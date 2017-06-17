@@ -37,7 +37,8 @@ public final class GiveItemDialogue extends Dialogue {
 	
 	@Override
 	public void accept(DialogueBuilder t) {
-		if(t.getPlayer().getInventory().add(item)) {
+		if(t.getPlayer().getInventory().canAdd(item)) {
+			t.getPlayer().getInventory().add(item);
 			action.ifPresent(ActionListener::execute);
 			t.getPlayer().getMessages().sendString(getText()[0], 308);
 			t.getPlayer().getMessages().sendItemModelOnInterface(307, 200, item.getId());

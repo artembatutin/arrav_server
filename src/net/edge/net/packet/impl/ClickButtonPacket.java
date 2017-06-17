@@ -82,7 +82,7 @@ public final class ClickButtonPacket implements PacketReader {
 		if(Server.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}
-		if(button != 9154 && player.getActivityManager().contains(ActivityManager.ActivityType.CLICK_BUTTON)) {
+		if(button != 9154 && button != 100 && button != 101 && player.getActivityManager().contains(ActivityManager.ActivityType.CLICK_BUTTON)) {
 			return;
 		}
 		if(button == 123) {

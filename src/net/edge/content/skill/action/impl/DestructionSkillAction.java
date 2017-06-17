@@ -52,7 +52,7 @@ public abstract class DestructionSkillAction extends SkillAction {
 	
 	@Override
 	public final void execute(Task t) {
-		if(getPlayer().getInventory().remove(destructItem())) {
+		if(getPlayer().getInventory().remove(destructItem()) >= 0) {
 			onDestruct(t, true);
 			Skills.experience(getPlayer(), experience(), skill().getId());
 			return;

@@ -180,9 +180,9 @@ public class ItemContainer implements Iterable<Item> {
 	/**
 	 * Attempts to add {@code item} into this container.
 	 * @param item The {@link Item} to add.
-	 * @return {@code true} the {@code Item} was added, {@code false} if there was not enough space left.
+	 * @return amount of slots filled, -1 if failed, 0 if added stackable portion.
 	 */
-	public boolean add(Item item) {
+	public int add(Item item) {
 		return add(item, -1, true);
 	}
 	
@@ -191,16 +191,15 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param item           The {@link Item} to add.
 	 * @param preferredIndex The preferable index to add {@code item} to.
 	 * @param refresh        The condition if we will be refreshing our container.
-	 * @return {@code true} if the {@code Item} was added, {@code false} if there was not enough space left.
+	 * @return amount of slots filled, -1 if failed, 0 if added stackable portion.
 	 */
-	public boolean add(Item item, int preferredIndex, boolean refresh) {
+	public int add(Item item, int preferredIndex, boolean refresh) {
 		checkArgument(preferredIndex >= -1, "invalid index identifier");
 		if(item == null)
-			return false;
+			return -1;
 		ItemDefinition def = item.getDefinition();
-		if(def == null) {
-			return false;
-		}
+		if(def == null)
+			return -1;
 		
 		boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;
 		if(stackable) {
@@ -212,15 +211,19 @@ public class ItemContainer implements Iterable<Item> {
 		preferredIndex = preferredIndex == -1 ? computeFreeIndex() : preferredIndex;
 		if(preferredIndex == -1) { // Not enough space in container.
 			fireCapacityExceededEvent();
-			return false;
+			return -1;
 		}
 		
-		if(stackable && !test) {
+		int filled = 0;
+		if(stackable) {
 			Item current = items[preferredIndex];
 			if(current == null) {
-				items[preferredIndex] = item;
-				size++;
-			} else {
+				if(!test) {
+					items[preferredIndex] = item;
+					size++;
+				}
+				filled++;
+			} else if(!test) {
 				items[preferredIndex] = current.createAndIncrement(item.getAmount());
 			}
 			fireItemUpdatedEvent(current, items[preferredIndex], preferredIndex, refresh);
@@ -232,7 +235,7 @@ public class ItemContainer implements Iterable<Item> {
 				preferredIndex = (preferredIndex > capacity || preferredIndex < 0 || items[preferredIndex] == null) ? preferredIndex : computeFreeIndex();
 				if(preferredIndex == -1) {//Couldn't find an empty spot.
 					fireCapacityExceededEvent();
-					return false;
+					return filled;
 				}
 				if(!test) {
 					Item newItem = new Item(item.getId());
@@ -240,32 +243,32 @@ public class ItemContainer implements Iterable<Item> {
 					size++;
 					fireItemUpdatedEvent(null, newItem, preferredIndex++, refresh);
 				}
+				filled++;
 			}
 		}
-		return true;
+		return filled;
 	}
 	
 	/**
 	 * Attempts to add {@code items} in bulk into this container.
 	 * @param items The {@link Item}s to add.
-	 * @return {@code true} if at least {@code 1} of the {@code Item}s were added, {@code false} if none could be added.
+	 * @return amount of slots filled.
 	 */
-	public <I extends Item> boolean addAll(I... items) {
+	public <I extends Item> int addAll(I... items) {
 		if(items.length == 1) {
 			// No bulk update on one item.
 			return add(items[0]);
 		}
 		
 		firingEvents = false;
-		boolean added = false;
+		int added = 0;
 		try {
 			for(Item item : items) {
-				if(item == null) {
+				if(item == null)
 					continue;
-				}
-				if(add(item, -1, false)) {
-					added = true;
-				}
+				int filled = add(item, -1, false);
+				if(filled != -1)
+					added += filled;
 			}
 		} finally {
 			firingEvents = true;
@@ -275,20 +278,46 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
+	 * Looks if all of the items can be added.
+	 * @param items items to be added for the check.
+	 * @return {@code true} if successful, otherwise {@code false}.
+	 */
+	public <I extends Item> boolean canAdd(I... items) {
+		test();
+		firingEvents = false;
+		int slots = slotCount(false, false, items);
+		int added = 0;
+		for(Item item : items) {
+			if(item == null)
+				continue;
+			int filled = add(item, -1, false);
+			if(filled == -1) {
+				firingEvents = true;
+				untest();
+				return false;
+			}
+			added += filled;
+		}
+		firingEvents = true;
+		untest();
+		return slots == added;
+	}
+	
+	/**
 	 * Attempts to add {@code items} in bulk into this container.
 	 * @param items The {@link Item}s to add.
-	 * @return {@code true} if at least {@code 1} of the {@code Item}s were added, {@code false} if none could be added.
+	 * @return amount of slots filled.
 	 */
-	public boolean addAll(ItemContainer items) {
+	public int addAll(ItemContainer items) {
 		return addAll(items.items);
 	}
 	
 	/**
 	 * Attempts to remove {@code item} from this container.
 	 * @param item The {@link Item} to remove.
-	 * @return {@code true} if the {@code Item} was removed, {@code false} if it isn't present in this container.
+	 * @return amount of slots cleared, -1 if failed, 0 if removed stackable portion.
 	 */
-	public boolean remove(Item item) {
+	public int remove(Item item) {
 		return remove(item, -1, true);
 	}
 	
@@ -296,9 +325,9 @@ public class ItemContainer implements Iterable<Item> {
 	 * Attempts to remove {@code item} from this container, preferably from {@code preferredIndex}.
 	 * @param item           The {@link Item} to remove.
 	 * @param preferredIndex The preferable index to remove {@code item} from.
-	 * @return {@code true} if the {@code Item} was removed, {@code false} if it isn't present in this container.
+	 * @return amount of slots cleared, -1 if failed, 0 if removed stackable portion.
 	 */
-	public boolean remove(Item item, int preferredIndex) {
+	public int remove(Item item, int preferredIndex) {
 		return remove(item, preferredIndex, true);
 	}
 	
@@ -307,9 +336,9 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param item           The {@link Item} to remove.
 	 * @param preferredIndex The preferable index to remove {@code item} from.
 	 * @param refresh        The condition if we will be refreshing our container.
-	 * @return {@code true} if the {@code Item} was removed, {@code false} if it isn't present in this container.
+	 * @return amount of slots cleared, -1 if failed, 0 if removed stackable portion.
 	 */
-	public boolean remove(Item item, int preferredIndex, boolean refresh) {
+	public int remove(Item item, int preferredIndex, boolean refresh) {
 		checkArgument(preferredIndex >= -1, "invalid index identifier");
 		
 		ItemDefinition def = item.getDefinition();
@@ -317,7 +346,7 @@ public class ItemContainer implements Iterable<Item> {
 			items[preferredIndex] = null;
 			fireItemUpdatedEvent(items[preferredIndex], null, preferredIndex, refresh);
 			size--;
-			return true;
+			return -1;
 		}
 		boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;
 		if(stackable) {
@@ -330,18 +359,24 @@ public class ItemContainer implements Iterable<Item> {
 		}
 		
 		if(preferredIndex == -1) { // Item isn't present within this container.
-			return false;
+			return -1;
 		}
-		if(stackable && !test) {
+		
+		int cleared = 0;
+		if(stackable) {
 			Item current = items[preferredIndex];
 			if(current.getAmount() > item.getAmount()) {
-				items[preferredIndex] = current.createAndDecrement(item.getAmount());
+				if(!test)
+					items[preferredIndex] = current.createAndDecrement(item.getAmount());
 			} else {
-				items[preferredIndex] = null;
-				size--;
+				if(!test) {
+					items[preferredIndex] = null;
+					size--;
+				}
+				cleared++;
 			}
 			fireItemUpdatedEvent(current, items[preferredIndex], preferredIndex, refresh);
-		} else if(!test) {
+		} else {
 			int until = computeAmountForId(item.getId());
 			until = (item.getAmount() > until) ? until : item.getAmount();
 			
@@ -356,36 +391,37 @@ public class ItemContainer implements Iterable<Item> {
 				if(preferredIndex == -1) {
 					break;
 				}
-				Item oldItem = items[preferredIndex];
-				items[preferredIndex] = null;
-				fireItemUpdatedEvent(oldItem, null, preferredIndex++, refresh);
-				size--;
+				if(!test) {
+					Item oldItem = items[preferredIndex];
+					items[preferredIndex] = null;
+					fireItemUpdatedEvent(oldItem, null, preferredIndex++, refresh);
+					size--;
+				}
+				cleared++;
 			}
 		}
-		return true;
+		return cleared;
 	}
 	
 	/**
 	 * Attempts to remove {@code items} in bulk from this container.
 	 * @param items The {@link Item}s to remove.
-	 * @return {@code true} if at least {@code 1} of the {@code Item}s were remove, {@code false} if none could be removed.
+	 * @return amount of slots cleared.
 	 */
-	public <I extends Item> boolean removeAll(I... items) {
+	public <I extends Item> int removeAll(I... items) {
 		if(items.length == 1) {
 			// No bulk update on one item.
 			return remove(items[0]);
 		}
 		
 		firingEvents = false;
-		boolean removed = false;
+		int removed = 0;
 		try {
 			for(Item item : items) {
-				if(item == null) {
+				if(item == null)
 					continue;
-				}
-				if(remove(item, -1, false)) {
-					removed = true;
-				}
+				int cleared = remove(item, -1, false);
+				removed += cleared;
 			}
 		} finally {
 			firingEvents = true;
@@ -395,11 +431,39 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
+	 * Looks if all of the items can be removed.
+	 * @param items items to be removed for the check.
+	 * @return {@code true} if successful, otherwise {@code false}.
+	 */
+	public <I extends Item> boolean canRemove(I... items) {
+		test();
+		firingEvents = false;
+		int slots = slotCount(true, false, items);
+		int removed = 0;
+		for(Item item : items) {
+			if(item == null)
+				continue;
+			int cleared = remove(item, -1, false);
+			if(cleared == 0)
+				cleared = 1;//can be removed.
+			if(cleared == -1) {
+				firingEvents = true;
+				untest();
+				return false;
+			}
+			removed += cleared;
+		}
+		firingEvents = true;
+		untest();
+		return slots == removed;
+	}
+	
+	/**
 	 * Attempts to remove {@code items} in bulk from this container.
 	 * @param items The {@link Item}s to remove.
-	 * @return {@code true} if at least {@code 1} of the {@code Item}s were remove, {@code false} if none could be removed.
+	 * @return amount of slots cleared.
 	 */
-	public boolean removeAll(ItemContainer items) {
+	public int removeAll(ItemContainer items) {
 		return removeAll(items.items);
 	}
 	
@@ -422,10 +486,16 @@ public class ItemContainer implements Iterable<Item> {
 	 * @return The first index found, {@code -1} if no {@link Item} with {@code id} is in this container.
 	 */
 	public final int computeIndexForId(int id) {
+		int found = 0;
 		for(int index = 0; index < capacity; index++) {
-			if(items[index] != null && items[index].getId() == id) {
+			if(items[index] == null)
+				continue;
+			found++;
+			if(items[index].getId() == id) {
 				return index;
 			}
+			if(found == size)
+				break;
 		}
 		return -1;
 	}
@@ -437,10 +507,15 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public final int computeAmountForId(int id) {
 		int amount = 0;
+		int found = 0;
 		for(Item item : items) {
-			if(item == null || item.getId() != id)
+			if(item == null)
 				continue;
-			amount += item.getAmount();
+			found++;
+			if(item.getId() == id)
+				amount += item.getAmount();
+			if(found == size)
+				break;
 		}
 		return amount;
 	}
@@ -470,7 +545,7 @@ public class ItemContainer implements Iterable<Item> {
 		}
 		Item oldItem = items[index];
 		Item newItem = oldItem.createWithId(newId);
-		return remove(oldItem, index, refresh) && add(newItem, index, refresh);
+		return slotCount(false, false, oldItem) == remove(oldItem, index, refresh) && slotCount(false, false, newItem) == add(newItem, index, refresh);
 	}
 	
 	/**
@@ -497,10 +572,12 @@ public class ItemContainer implements Iterable<Item> {
 	
 	/**
 	 * Computes the amount of indexes required to hold {@code items} in this container.
+	 * @param raw The flag if container beholds aren't considered.
+	 * @param negate if the stacking changes must be negated.
 	 * @param forItems The items to compute the index count for.
 	 * @return The index count.
 	 */
-	public final int computeIndexCount(Item... forItems) {
+	public final int slotCount(boolean raw, boolean negate, Item... forItems) {
 		int indexCount = 0;
 		for(Item item : forItems) {
 			if(item == null)
@@ -508,16 +585,19 @@ public class ItemContainer implements Iterable<Item> {
 			ItemDefinition def = item.getDefinition();
 			if(def == null)
 				continue;
-			
 			boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;
 			if(stackable) {
+				if(raw) {
+					indexCount++;
+					continue;
+				}
 				int index = computeIndexForId(item.getId());
 				if(index == -1) {
 					indexCount++;
 					continue;
 				}
 				Item existing = items[index];
-				if((existing.getAmount() + item.getAmount()) <= 0) {
+				if((existing.getAmount() + (negate ? -item.getAmount() : item.getAmount())) <= 0) {
 					indexCount++;
 				}
 			} else {
@@ -533,22 +613,32 @@ public class ItemContainer implements Iterable<Item> {
 	 * @return {@code true} if {@code item} can be added, {@code false} otherwise.
 	 */
 	public final boolean hasCapacityFor(Item... item) {
-		int indexCount = computeIndexCount(item);
-		return remaining() >= indexCount;
+		return hasCapacityFor(0, item);
+	}
+	
+	/**
+	 * Determines if this container has the capacity for {@code item}.
+	 * @param cleared The amount of items cleared taken in consideration.
+	 * @param item The {@link Item} to determine this for.
+	 * @return {@code true} if {@code item} can be added, {@code false} otherwise.
+	 */
+	public final boolean hasCapacityFor(int cleared, Item... item) {
+		int indexCount = slotCount(false, false, item);
+		return remaining() >= indexCount - cleared;
 	}
 
 	/**
 	 * Creates a copy of the underlying container and removes the items specified from it
 	 * and after tries to deposit the specified items to it.
-	 *
 	 * @param add    the items to deposit to this container.
 	 * @param remove the items that should be removed before adding.
 	 * @return {@code true} if {@code item} can be added, {@code false} otherwise.
 	 */
 	public final boolean hasCapacityAfter(Item[] add, Item... remove) {
-		ItemContainer container = new ItemContainer(this.capacity, this.policy, this.toArray());
-		container.removeAll(Arrays.copyOf(remove, remove.length));
-		return container.hasCapacityFor(add);
+		test();
+		int cleared = removeAll(remove);
+		untest();
+		return hasCapacityFor(cleared, add);
 	}
 	
 	/**
@@ -960,7 +1050,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * Fires the {@code ItemContainerListener.itemUpdated(ItemContainer, int)} event.
 	 */
 	public final void fireItemUpdatedEvent(Item oldItem, Item newItem, int index, boolean refresh) {
-		if(firingEvents) {
+		if(firingEvents && !test) {
 			listeners.forEach(evt -> evt.itemUpdated(this, oldItem, newItem, index, refresh));
 		}
 	}

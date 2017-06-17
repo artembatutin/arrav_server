@@ -66,7 +66,7 @@ public final class ItemNodeStatic extends ItemNode {
 	
 	@Override
 	public void onPickup(Player player) {
-		if(player.getInventory().add(super.getItem())) {
+		if(player.getInventory().add(super.getItem()) != -1) {
 			switch(policy) {
 				case TIMEOUT:
 					getRegion().unregister(this);

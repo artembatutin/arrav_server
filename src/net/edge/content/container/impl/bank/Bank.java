@@ -94,7 +94,8 @@ public final class Bank {
 		if(nextTab >= 0 && nextTab <= 9) {
 			Item item = tabs[tab].get(slot);
 			if(item != null) {
-				if(tabs[nextTab].add(item)) {
+				if(tabs[nextTab].canAdd(item) && tabs[tab].canRemove(item)) {
+					tabs[nextTab].add(item);
 					tabs[tab].remove(item);
 					tabs[nextTab].refresh(player);
 					tabs[tab].refresh(player);
@@ -141,7 +142,6 @@ public final class Bank {
 	public boolean deposit(int slot, int amount, ItemContainer from, boolean refresh) {
 		if(from.get(slot) == null)
 			return false;
-		///return tabs[getSelectedTab()].deposit(slot, amount, refresh, from);
 		int tab = contains(from.get(slot));
 		if(tab == -1)
 			return tabs[getSelectedTab()].deposit(player, slot, amount, refresh, from);
@@ -155,7 +155,7 @@ public final class Bank {
 	 * @param item the item to be added to.
 	 * @return {@code true} if it went successful, {@code false} otherwise.
 	 */
-	public boolean add(int slot, Item item) {
+	public int add(int slot, Item item) {
 		return tabs[slot].add(item);
 	}
 	

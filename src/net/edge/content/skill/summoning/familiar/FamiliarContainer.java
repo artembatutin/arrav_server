@@ -108,8 +108,9 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 			item.setAmount(remain);
 		}
 		
-		/** if the item can be added to the container, remove the item from the inventory. */
-		if(this.getContainer().add(item)) {
+		/* if the item can be added to the container, remove the item from the inventory. */
+		if(this.getContainer().canAdd(item) && player.getInventory().canRemove(item)) {
+			this.getContainer().add(item);
 			this.getContainer().shift();
 			player.getInventory().remove(item);
 			this.onStore(player);
@@ -140,7 +141,8 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 			item.setAmount(amount);
 		}
 		/* if the item is added, remove it from the container. */
-		if(player.getInventory().add(item)) {
+		if(player.getInventory().canAdd(item) && this.getContainer().canRemove(item)) {
+			player.getInventory().add(item);
 			this.getContainer().remove(item);
 			this.getContainer().shift();
 			this.onWithdraw(player);
