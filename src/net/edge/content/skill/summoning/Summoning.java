@@ -2,6 +2,8 @@ package net.edge.content.skill.summoning;
 
 import com.google.common.collect.ImmutableList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.event.impl.ButtonEvent;
+import net.edge.event.impl.ItemEvent;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.pets.Pet;
@@ -319,51 +321,43 @@ public final class Summoning {
 	}
 	
 	/**
-	 * Attempts to summon this familiar for the {@code player} dependant on the
-	 * {@code login} flag.
-	 * @param player the player we're summoning this familiar for.
-	 * @param item   the item this player clicked.
-	 * @param login  checks if we're summoning this familiar back on login.
-	 * @return <true> if the player successfully summoned this npc, <false> otherwise.
+	 * Attemps to summon familiar on login.
+	 * @param player the player logging in.
 	 */
-	public static boolean summon(Player player, Item item, boolean login) {
-		if(login) {
-			Optional<Familiar> familiar = player.getFamiliar();
-			
-			if(!familiar.isPresent()) {
-				return false;
-			}
-			
-			familiar.get().summon(player, true);
-			return true;
+	public static void login(Player player) {
+		Optional<Familiar> familiar = player.getFamiliar();
+		familiar.ifPresent(familiar1 -> familiar1.summon(player, true));
+	}
+	
+	public static void event() {
+		for(Familiar f : FAMILIARS) {
+			ItemEvent e = new ItemEvent() {
+				@Override
+				public boolean click(Player player, Item item, int container, int slot, int click) {
+					if(click == 3) {
+						Optional<Familiar> hasFamiliar = player.getFamiliar();
+						if(hasFamiliar.isPresent()) {
+							player.message("You already have a familiar summoned.");
+							return false;
+						}
+						
+						Optional<Pet> hasPet = player.getPetManager().getPet();
+						if(hasPet.isPresent()) {
+							player.message("You already have a pet spawned.");
+							return false;
+						}
+						
+						if(!f.canSummon(player)) {
+							return false;
+						}
+						
+						f.summon(player, false);
+					}
+					return true;
+				}
+			};
+			e.registerInventory(f.getData().getPouchId());
 		}
-		
-		Optional<Familiar> familiar = FAMILIARS.stream().filter(def -> def.getData().getPouchId() == item.getId()).findAny();
-		
-		if(!familiar.isPresent()) {
-			return false;
-		}
-		
-		Optional<Familiar> hasFamiliar = player.getFamiliar();
-		
-		if(hasFamiliar.isPresent()) {
-			player.message("You already have a familiar summoned.");
-			return false;
-		}
-		
-		Optional<Pet> hasPet = player.getPetManager().getPet();
-		
-		if(hasPet.isPresent()) {
-			player.message("You already have a pet spawned.");
-			return false;
-		}
-		
-		if(!familiar.get().canSummon(player)) {
-			return false;
-		}
-		
-		familiar.get().summon(player, false);
-		return true;
 	}
 	
 	/**

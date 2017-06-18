@@ -57,6 +57,12 @@
   },
   {
     "opcodes": [
+      186
+    ],
+    "class": "net.edge.net.packet.impl.SummoningCreationPacket"
+  },
+  {
+    "opcodes": [
       3
     ],
     "class": "net.edge.net.packet.impl.FocusChangePacket"

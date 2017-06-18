@@ -657,11 +657,10 @@ public final class Player extends EntityNode {
 		encoder.sendRunEnergy();
 		Prayer.VALUES.forEach(c -> encoder.sendConfig(c.getConfig(), 0));
 		logger.info(this + " has logged in.");
-		if(getFamiliar().isPresent())
-			Summoning.summon(this, new Item(-1), true);
 		if(getPetManager().getPet().isPresent()) {
 			Pet.onLogin(this);
 		}
+		Summoning.login(this);
 		MinigameHandler.executeVoid(this, m -> m.onLogin(this));
 		PlayerPanel.refreshAll(this);
 		

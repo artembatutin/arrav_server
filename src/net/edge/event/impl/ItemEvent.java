@@ -6,6 +6,7 @@ import net.edge.content.item.PotionConsumable;
 import net.edge.content.skill.herblore.Herb;
 import net.edge.content.skill.prayer.PrayerBoneBury;
 import net.edge.content.skill.slayer.Slayer;
+import net.edge.content.skill.summoning.Summoning;
 import net.edge.event.Event;
 import net.edge.net.packet.impl.ItemActionPacket;
 import net.edge.net.packet.impl.ItemInterfacePacket;
@@ -25,7 +26,7 @@ public abstract class ItemEvent extends Event {
 		ItemActionPacket.INVENTORY.register(item, this);
 	}
 	
-	public void registerInterface(int item) {
+	public void registerEquip(int item) {
 		ItemInterfacePacket.EQUIP.register(item, this);
 	}
 	
@@ -36,6 +37,7 @@ public abstract class ItemEvent extends Event {
 		Herb.event();
 		Slayer.eventItem();
 		Dice.event();
+		Summoning.event();
 	}
 	
 }

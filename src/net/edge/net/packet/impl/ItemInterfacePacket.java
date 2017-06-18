@@ -306,10 +306,11 @@ public final class ItemInterfacePacket implements PacketReader {
 			return;
 		}
 		ItemEvent e = EQUIP.get(item.getId());
-		if(e != null)
-			e.click(player, item, interfaceId, slot, 5);
-		player.getEquipment().equip(slot);
 		player.getCombatBuilder().cooldown(false);
+		if(e != null)
+			if(e.click(player, item, interfaceId, slot, 5))
+				return;
+		player.getEquipment().equip(slot);
 	}
 	
 	/**

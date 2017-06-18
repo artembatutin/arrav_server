@@ -78,9 +78,6 @@ public final class ItemActionPacket implements PacketReader {
 			if(e != null)
 				e.click(player, item, container, slot, 3);
 		}
-		if(Summoning.summon(player, item, false)) {
-			return;
-		}
 		if(item.getDefinition().getName().contains("Black mask")) {
 			player.getInventory().replace(item.getId(), 8921, true);//black mask discharge
 		}
