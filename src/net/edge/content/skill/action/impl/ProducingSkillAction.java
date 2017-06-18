@@ -42,7 +42,6 @@ public abstract class ProducingSkillAction extends SkillAction {
 		
 		//Looking if player has empty space for produce items.
 		if(!player.getInventory().hasCapacityAfter(produceItem().orElse(null), removeItem.orElse(null))) {
-			System.out.println("low");
 			getPlayer().getInventory().fireCapacityExceededEvent();
 			return false;
 		}

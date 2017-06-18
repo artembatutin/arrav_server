@@ -518,7 +518,7 @@ public enum Prayer {
 		}
 		if(buttonId == 49) {//selecting
 			TabInterface.PRAYER.sendInterface(player, player.getPrayerBook() == PrayerBook.CURSES ? 18200 : 17200);
-			player.getMessages().sendForceTab(TabInterface.PRAYER.getNew());
+			player.getMessages().sendForceTab(TabInterface.PRAYER);
 			VALUES.stream().filter(p -> p.getType() == player.getPrayerBook()).forEach(p -> {
 				if(player.getQuickPrayers().contains(p)) {
 					player.getMessages().sendConfig(p.getCheckmark(), 1);

@@ -59,4 +59,8 @@ public enum TabInterface {
 	public int getNew() {
 		return newId;
 	}
+	
+	public int getOld() {
+		return oldId;
+	}
 }

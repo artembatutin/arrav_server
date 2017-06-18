@@ -193,7 +193,7 @@ public final class Skills {
 		boolean combatLevel = skill == ATTACK || skill == DEFENCE || skill == HITPOINTS || skill == STRENGTH || skill == RANGED || skill == MAGIC;
 		amount *= skill == PRAYER ? PRAYER_EXPERIENCE_MULTIPLIER : combatLevel ? COMBAT_EXPERIENCE_MULTIPLER : SKILL_EXPERIENCE_MULTIPLIER;
 		amount *= GameConstants.EXPERIENCE_MULTIPLIER;
-		amount *= (player.getSkills()[skill].getRealLevel() <= 99 ? 0.2 : 1);
+		amount *= (player.getSkills()[skill].getRealLevel() == 99 && combatLevel ? 0.2 : 1);
 		player.getSkills()[skill].increaseExperience(amount);
 		if(oldLevel < 99) {
 			int newLevel = player.getSkills()[skill].getLevelForExperience();

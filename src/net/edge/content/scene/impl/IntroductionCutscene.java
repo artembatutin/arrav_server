@@ -58,6 +58,7 @@ public final class IntroductionCutscene extends Cutscene {
 		if(player.getPosition().same(new Position(3088, 3509))) {
 			if(player.getAttr().get("introduction_stage").getInt() == 1) {
 				player.getDialogueBuilder().append(new StatementDialogue("Welcome to the World of @blu@Edgeville!").attach(() -> {
+					player.getActivityManager().set(ActivityType.CLICK_BUTTON);
 					player.getMessages().sendCameraMovement(new Position(3085, 3510), 310, 2, 10);
 					player.getMessages().sendCameraAngle(new Position(3093, 3509), 300, 2, 10);
 				}), new StatementDialogue("Here is the @red@home@bla@ area.", "You can use the bank booths to store your goods.", "There are the stores also at the back."), new StatementDialogue("By the way, this is you.", "But lets proceed...").attach(() -> {
@@ -71,7 +72,7 @@ public final class IntroductionCutscene extends Cutscene {
 					player.getMessages().sendCameraAngle(new Position(3089, 3514), 300, 6, 10);
 				}), new StatementDialogue("Those @red@3@bla@ with the highest streak at the @red@end of the week@bla@", "will gain a reward.", " Those @red@3@bla@ with the most recent @red@on-going@bla@ streaks", "will also gain rewards!").attach(() -> {
 					TabInterface.QUEST.sendInterface(player, 638);
-					player.getMessages().sendForceTab(2);
+					player.getMessages().sendForceTab(TabInterface.QUEST);
 				}),	new GiveItemDialogue(new Item(19000, 200), "Each player kill will give you blood money.", Optional.empty()).attach(() -> {
 				}), new StatementDialogue("You can view your personal individual statistics by", "clicking the quest tab which is just next to your skill tab.").attach(() -> {
 				}), new StatementDialogue("This shiny portal allows you to", "get anywhere: @red@skills, minigames, bosses.").attach(() -> {
@@ -130,9 +131,7 @@ public final class IntroductionCutscene extends Cutscene {
 			player.getAttr().get("introduction_stage").set(2);
 			player.graphic(new Graphic(2189));
 			World.getClanManager().join(player, "avro");
-			System.out.println("before");
 		}).attachAfter(() -> {
-			System.out.println("after");
 			player.move(new Position(3088, 3509));
 			player.getMessages().sendInterface(-5);
 		});
@@ -141,7 +140,7 @@ public final class IntroductionCutscene extends Cutscene {
 	
 	public void prerequisites() {
 		player.resetSidebars();
-		player.getActivityManager().setAllExcept(ActivityType.LOG_OUT, ActivityType.CHARACTER_SELECTION, ActivityType.DIALOGUE_INTERACTION, ActivityType.FACE_POSITION);
+		player.getActivityManager().setAllExcept(ActivityType.CLICK_BUTTON, ActivityType.LOG_OUT, ActivityType.CHARACTER_SELECTION, ActivityType.DIALOGUE_INTERACTION, ActivityType.FACE_POSITION);
 		if(player.getAttr().get("introduction_stage").getInt() < 2) {
 			player.setVisible(false);
 			if(firstLogin) {

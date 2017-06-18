@@ -11,7 +11,7 @@ public class SummoningObelisk extends EventInitializer {
 		ObjectEvent l = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
-				player.message("Summoning will be released soon.");
+				player.getMessages().sendInterface(-8);
 				return true;
 			}
 		};

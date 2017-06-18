@@ -111,7 +111,7 @@ public class MarketShop {
 		boolean counter = x == 3081 || x == 3082;
 		player.getMessages().sendInventoryInterface(counter ? -4 : -2, 3822);
 		player.getMessages().sendString(getTitle(), 3901);
-		player.getMessages().sendForceTab(TabInterface.INVENTORY.getNew());
+		player.getMessages().sendForceTab(TabInterface.INVENTORY);
 		if(player.getMarketShop().getItems() != null) {
 			for(int id : player.getMarketShop().getItems()) {
 				MarketItem item = MarketItem.get(id);

@@ -3,6 +3,7 @@ package net.edge.net.packet;
 import com.google.common.base.Preconditions;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.TabInterface;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
@@ -57,11 +58,12 @@ public final class PacketWriter {
 	 * The message that forces the player to view {@code id} tab.
 	 * @param id the tab to force on the player.
 	 */
-	public void sendForceTab(int id) {
+	public void sendForceTab(TabInterface tab) {
 		if(player.getState() == INACTIVE)
 			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 106);
-		msg.put(id, ByteTransform.C);
+		msg.put(tab.getOld());
+		msg.put(tab.getNew());
 		player.queue(msg);
 		
 	}

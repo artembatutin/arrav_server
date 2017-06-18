@@ -74,7 +74,7 @@ public final class ViewingOrb {
 		IntStream.rangeClosed(0, 13).filter(v -> v != 7 && v != 10).forEach(v -> player.getMessages().sendSidebarInterface(v, -1, 2));
 		player.getMessages().sendSidebarInterface(10, 3209, 0);
 		player.getMessages().sendSidebarInterface(5, 3209, 1);
-		player.getMessages().sendForceTab(TabInterface.INVENTORY.getNew());
+		player.getMessages().sendForceTab(TabInterface.INVENTORY);
 		player.getMessages().sendString("@yel@Centre", 15239);
 		player.getMessages().sendString("@yel@North-West", 15240);
 		player.getMessages().sendString("@yel@North-East", 15241);

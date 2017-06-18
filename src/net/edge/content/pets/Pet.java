@@ -172,7 +172,7 @@ public final class Pet extends Follower {
 		World.get().getNpcs().remove(pet);
 		pet.task.cancel();
 		TabInterface.SUMMONING.sendInterface(player, -1);
-		player.getMessages().sendForceTab(4);
+		player.getMessages().sendForceTab(TabInterface.INVENTORY);
 		pet.reset();
 	}
 	

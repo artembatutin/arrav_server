@@ -10,7 +10,7 @@ import net.edge.content.dialogue.Expression;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
-import net.edge.content.skill.summoning.specials.SummoningData;
+import net.edge.content.skill.summoning.SummoningData;
 import net.edge.locale.Position;
 import net.edge.world.Graphic;
 import net.edge.world.World;
@@ -20,7 +20,6 @@ import net.edge.world.node.entity.npc.impl.Follower;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.List;
 import java.util.Optional;
 
 /**

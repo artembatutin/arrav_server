@@ -10,7 +10,7 @@ import net.edge.content.skill.summoning.familiar.ability.Healer;
 import net.edge.content.skill.summoning.familiar.ability.Teleporter;
 import net.edge.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
-import net.edge.content.skill.summoning.specials.SummoningData;
+import net.edge.content.skill.summoning.SummoningData;
 import net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType;
 import net.edge.locale.loc.Location;
 import net.edge.world.node.entity.npc.Npc;
