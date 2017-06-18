@@ -94,7 +94,7 @@ public enum Hatchet {
 
 	/**
 	 * Gets the definition for this hatchet.
-	 * @param identifier the identifier to check for.
+	 * @param player Player using the hatchet.
 	 * @return an optional holding the {@link Hatchet} value found,
 	 * {@link Optional#empty} otherwise.
 	 */

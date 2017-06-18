@@ -7,6 +7,7 @@ import net.edge.content.skill.action.impl.DestructionSkillAction;
 import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
+import net.edge.world.node.item.container.impl.Inventory;
 
 import java.util.Optional;
 
@@ -27,12 +28,14 @@ public final class PrayerBoneBury extends DestructionSkillAction {
 			ItemEvent e = new ItemEvent() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
+					if(container != Inventory.INVENTORY_DISPLAY_ID)
+						return true;
 					PrayerBoneBury buryAction = new PrayerBoneBury(player, item.getId(), b);
 					buryAction.start();
 					return true;
 				}
 			};
-			e.registerInventory(b.getId());
+			e.register(b.getId());
 		}
 	}
 	

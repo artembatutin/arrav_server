@@ -22,8 +22,8 @@ public abstract class ItemEvent extends Event {
 	
 	public abstract boolean click(Player player, Item item, int container, int slot, int click);
 	
-	public void registerInventory(int item) {
-		ItemActionPacket.INVENTORY.register(item, this);
+	public void register(int item) {
+		ItemActionPacket.ITEM_ACTION.register(item, this);
 	}
 	
 	public void registerEquip(int item) {

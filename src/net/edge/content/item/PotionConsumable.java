@@ -13,6 +13,7 @@ import net.edge.world.Animation;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
+import net.edge.world.node.item.container.impl.Inventory;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -333,6 +334,8 @@ public enum PotionConsumable {
 			ItemEvent e = new ItemEvent() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
+					if(container != Inventory.INVENTORY_DISPLAY_ID)
+						return true;
 					if(player.isDead() || !player.getPotionTimer().elapsed(1200))
 						return false;
 					if(!MinigameHandler.execute(player, m -> m.canPot(player, potion))) {
@@ -357,7 +360,7 @@ public enum PotionConsumable {
 				}
 			};
 			for(int p : potion.getIds())
-				e.registerInventory(p);
+				e.register(p);
 		}
 	}
 	

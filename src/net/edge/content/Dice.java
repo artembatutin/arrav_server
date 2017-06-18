@@ -10,6 +10,7 @@ import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
+import net.edge.world.node.item.container.impl.Inventory;
 
 /**
  * The class which is responsible for dicing actions.
@@ -68,10 +69,12 @@ public final class Dice {
 			ItemEvent e = new ItemEvent() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
+					if(container != Inventory.INVENTORY_DISPLAY_ID)
+						return true;
 					return roll(player, data, false);
 				}
 			};
-			e.registerInventory(data.item.getId());
+			e.register(data.item.getId());
 			e = new ItemEvent() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
@@ -83,6 +86,8 @@ public final class Dice {
 		ItemEvent bag = new ItemEvent() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
+				if(container != Inventory.INVENTORY_DISPLAY_ID)
+					return true;
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 							if(!t.equals(OptionDialogue.OptionType.FIFTH_OPTION)) {
 								player.getInventory().remove(DiceData.DICE_BAG.item);
@@ -135,7 +140,7 @@ public final class Dice {
 				return true;
 			}
 		};
-		bag.registerInventory(DiceData.DICE_BAG.item.getId());
+		bag.register(DiceData.DICE_BAG.item.getId());
 	}
 	
 	/**

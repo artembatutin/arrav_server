@@ -8,6 +8,7 @@ import net.edge.world.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
+import net.edge.world.node.item.container.impl.Inventory;
 
 import static net.edge.world.node.entity.npc.drop.NpcDropCache.*;
 
@@ -29,6 +30,8 @@ public class Casket extends EventInitializer {
 		ItemEvent e = new ItemEvent() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
+				if(container != Inventory.INVENTORY_DISPLAY_ID)
+					return true;
 				NpcDropCache table = RandomUtils.random(tables);
 				player.getInventory().remove(item, slot);
 				//three items.
@@ -46,6 +49,6 @@ public class Casket extends EventInitializer {
 				return true;
 			}
 		};
-		e.registerInventory(405);
+		e.register(405);
 	}
 }

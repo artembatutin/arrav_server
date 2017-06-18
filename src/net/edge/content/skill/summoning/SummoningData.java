@@ -2,6 +2,7 @@ package net.edge.content.skill.summoning;
 
 import net.edge.world.node.item.Item;
 
+
 /**
  * An enumeration of all {@link Summoning} pouches.
  */
@@ -394,6 +395,11 @@ public enum SummoningData {
 	STEEL_TITAN(76, 12790, 99, 435.2, 7343, 4.9, 10, 64, new Item(12160), new Item(1119), new Item(12155), new Item(12183, 178));
 	
 	/**
+	 * Cached our enum values in array.
+	 */
+	public static final SummoningData[] VALUES = values();
+	
+	/**
 	 * The slot id.
 	 */
 	private final int slot;
@@ -523,4 +529,5 @@ public enum SummoningData {
 	public int getSlot() {
 		return slot;
 	}
+	
 }

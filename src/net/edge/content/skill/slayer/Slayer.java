@@ -17,6 +17,7 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
+import net.edge.world.node.item.container.impl.Inventory;
 
 import java.util.Optional;
 
@@ -101,6 +102,8 @@ public final class Slayer {
 		ItemEvent activate = new ItemEvent() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
+				if(container != Inventory.INVENTORY_DISPLAY_ID)
+					return true;
 				SlayerMaster master = player.getSlayer().isPresent() ? player.getSlayer().get().getMaster() : SlayerMaster.SPRIA;
 				player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "Ughh, what do you want?"), new OptionDialogue(t -> {
 							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
@@ -115,7 +118,7 @@ public final class Slayer {
 				return true;
 			}
 		};
-		activate.registerInventory(4155);
+		activate.register(4155);
 		ItemEvent killsLeft = new ItemEvent() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {

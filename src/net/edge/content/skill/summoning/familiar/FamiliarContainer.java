@@ -122,17 +122,17 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 	 * @param player the player we're withdrawing this item for.
 	 * @param item   the item we are withdrawing.
 	 */
-	public final void withdraw(Player player, Item item) {
+	public final boolean withdraw(Player player, Item item) {
 		if(player == null || item == null)
-			return;
+			return false;
 		if(!Item.valid(item) || !this.getContainer().contains(item.getId()))
-			return;
+			return false;
 		if(!this.canWithdraw(player, item))
-			return;
+			return false;
 		ItemDefinition def = item.getDefinition();
 		if(player.getInventory().remaining() < 1 && !def.isStackable()) {
 			player.message("Your inventory is currently full.");
-			return;
+			return false;
 		}
 		int amount = container.computeAmountForId(item.getId());
 		if(item.getAmount() > amount) {
@@ -145,6 +145,7 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 			this.getContainer().shift();
 			this.onWithdraw(player);
 		}
+		return true;
 	}
 	
 	/**

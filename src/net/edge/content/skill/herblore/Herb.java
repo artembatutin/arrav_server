@@ -6,6 +6,7 @@ import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
+import net.edge.world.node.item.container.impl.Inventory;
 
 import java.util.Optional;
 
@@ -35,12 +36,14 @@ public final class Herb extends ProducingSkillAction {
 			ItemEvent e = new ItemEvent() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
+					if(container != Inventory.INVENTORY_DISPLAY_ID)
+						return true;
 					Herb herb = new Herb(player, h);
 					herb.start();
 					return true;
 				}
 			};
-			e.registerInventory(h.grimy.getId());
+			e.register(h.grimy.getId());
 		}
 	}
 	

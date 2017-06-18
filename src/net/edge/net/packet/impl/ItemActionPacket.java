@@ -1,7 +1,5 @@
 package net.edge.net.packet.impl;
 
-import net.edge.world.node.item.container.impl.Inventory;
-import net.edge.content.skill.summoning.Summoning;
 import net.edge.event.EventContainer;
 import net.edge.event.impl.ItemEvent;
 import net.edge.net.codec.ByteMessage;
@@ -19,7 +17,7 @@ import net.edge.world.node.item.ItemDefinition;
  */
 public final class ItemActionPacket implements PacketReader {
 	
-	public static final EventContainer<ItemEvent> INVENTORY = new EventContainer<>();
+	public static final EventContainer<ItemEvent> ITEM_ACTION = new EventContainer<>();
 	
 	@Override
 	public void handle(Player player, int opcode, int size, ByteMessage payload) {
@@ -52,11 +50,9 @@ public final class ItemActionPacket implements PacketReader {
 		if(item == null || item.getId() != id)
 			return;
 		player.getCombatBuilder().cooldown(true);
-		if(container == Inventory.INVENTORY_DISPLAY_ID) {
-			ItemEvent e = INVENTORY.get(item.getId());
-			if(e != null)
-				e.click(player, item, container, slot, 1);
-		}
+		ItemEvent e = ITEM_ACTION.get(item.getId());
+		if(e != null)
+			e.click(player, item, container, slot, 1);
 	}
 	
 	/**
@@ -73,11 +69,9 @@ public final class ItemActionPacket implements PacketReader {
 		}
 		Item item = player.getInventory().get(slot);
 		player.getCombatBuilder().cooldown(true);
-		if(container == Inventory.INVENTORY_DISPLAY_ID) {
-			ItemEvent e = INVENTORY.get(item.getId());
-			if(e != null)
-				e.click(player, item, container, slot, 3);
-		}
+		ItemEvent e = ITEM_ACTION.get(item.getId());
+		if(e != null)
+			e.click(player, item, container, slot, 3);
 		if(item.getDefinition().getName().contains("Black mask")) {
 			player.getInventory().replace(item.getId(), 8921, true);//black mask discharge
 		}

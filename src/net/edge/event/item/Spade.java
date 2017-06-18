@@ -6,8 +6,8 @@ import net.edge.event.impl.ItemEvent;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.Item;
+import net.edge.world.node.item.container.impl.Inventory;
 
 public class Spade extends EventInitializer {
 	@Override
@@ -15,6 +15,8 @@ public class Spade extends EventInitializer {
 		ItemEvent e = new ItemEvent() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
+				if(container != Inventory.INVENTORY_DISPLAY_ID)
+					return true;
 				LinkedTaskSequence seq = new LinkedTaskSequence();
 				seq.connect(1, () -> player.animation(new Animation(830)));
 				seq.connect(3, () -> {
@@ -27,6 +29,6 @@ public class Spade extends EventInitializer {
 				return true;
 			}
 		};
-		e.registerInventory(952);
+		e.register(952);
 	}
 }

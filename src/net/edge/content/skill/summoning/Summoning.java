@@ -2,7 +2,6 @@ package net.edge.content.skill.summoning;
 
 import com.google.common.collect.ImmutableList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.event.impl.ButtonEvent;
 import net.edge.event.impl.ItemEvent;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.minigame.MinigameHandler;
@@ -23,7 +22,6 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -50,11 +48,13 @@ public final class Summoning {
 			//pet is already close enough.
 			return;
 		}
-		ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), pet.size());
+		ObjectList<Position> pos = World.getTraversalMap()
+				.getSurroundedTraversableTiles(player.getPosition(), player.size(), pet.size());
 		if(pos.size() > 0) {
 			Position p = RandomUtils.random(pos);
 			pet.move(p);
 		}
+		pet.forceChat(pet.getProgress().getData().getType().getShout());
 	}
 	
 	/**
@@ -71,7 +71,8 @@ public final class Summoning {
 			//familiar is already close enough.
 			return;
 		}
-		ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), familiar.size());
+		ObjectList<Position> pos = World.getTraversalMap()
+				.getSurroundedTraversableTiles(player.getPosition(), player.size(), familiar.size());
 		if(pos.size() > 0) {
 			Position p = RandomUtils.random(pos);
 			familiar.move(p);
@@ -356,7 +357,7 @@ public final class Summoning {
 					return true;
 				}
 			};
-			e.registerInventory(f.getData().getPouchId());
+			e.register(f.getData().getPouchId());
 		}
 	}
 	
@@ -391,11 +392,10 @@ public final class Summoning {
 	 * Attempts to dismiss this familiar for the {@code player} dependant on the
 	 * {@code login} flag.
 	 * @param player the player we're dismissing this familiar for.
-	 * @param button the button this player clicked.
 	 * @param logout checks if we're dismissing because of logout.
 	 * @return <true> if the player successfully dismissed this npc, <false> otherwise.
 	 */
-	public static boolean dismiss(Player player, int button, boolean logout) {
+	public static boolean dismiss(Player player, boolean logout) {
 		if(logout) {
 			Optional<Familiar> familiar = player.getFamiliar();
 			
