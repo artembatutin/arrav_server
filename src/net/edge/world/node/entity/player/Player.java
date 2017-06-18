@@ -660,7 +660,6 @@ public final class Player extends EntityNode {
 		if(getPetManager().getPet().isPresent()) {
 			Pet.onLogin(this);
 		}
-		Summoning.login(this);
 		MinigameHandler.executeVoid(this, m -> m.onLogin(this));
 		PlayerPanel.refreshAll(this);
 		
@@ -680,6 +679,7 @@ public final class Player extends EntityNode {
 		if(Server.UPDATING > 0) {
 			encoder.sendSystemUpdate((int) (Server.UPDATING * 50 / 30));
 		}
+		Summoning.login(this);
 	}
 	
 	@Override
@@ -705,7 +705,7 @@ public final class Player extends EntityNode {
 	public void dispose() {
 		setVisible(false);
 		Pet.onLogout(this);
-		Summoning.dismiss(this, -1, true);
+		Summoning.dismiss(this, true);
 		World.getExchangeSessionManager().reset(this);
 		if(getMarketShop() != null)
 			MarketShop.clearFromShop(this);

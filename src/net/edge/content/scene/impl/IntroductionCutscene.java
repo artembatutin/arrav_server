@@ -152,7 +152,6 @@ public final class IntroductionCutscene extends Cutscene {
 					submit();
 				} else {
 					player.getDialogueBuilder().advance();
-					player.getMessages().sendInterface(3559);
 					player.getAttr().get("introduction_stage").set(3);
 				}
 			}, "I want a quick tour.", "Skip the introduction."), complete());

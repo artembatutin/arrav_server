@@ -15,7 +15,7 @@ public enum TabInterface {
 	EQUIPMENT(5, 4),
 	PRAYER(6, 5),
 	MAGIC(7, 6),
-	SUMMONING(8, 15),
+	SUMMONING(8, 13),
 	FRIEND(9, 8),
 	IGNORE(10, 9),
 	LOGOUT(16, 10),
@@ -50,10 +50,7 @@ public enum TabInterface {
 	 * @param id     The id of the interface to send.
 	 */
 	public void sendInterface(Player player, int id) {
-		if(newId != -1)
-			player.getMessages().sendSidebarInterface(newId, id, 1);
-		if(oldId != -1)
-			player.getMessages().sendSidebarInterface(oldId, id, 0);
+		player.getMessages().sendSidebarInterface(id, this);
 	}
 	
 	public int getNew() {

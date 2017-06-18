@@ -38,6 +38,8 @@ public class FamiliarControls extends EventInitializer {
 				}
 				
 				for(Item item : storage.getContainer().getItems()) {
+					if(item == null)
+						continue;
 					int amount = storage.getContainer().computeAmountForId(item.getId());
 					if(item.getAmount() > amount) {
 						item.setAmount(amount);

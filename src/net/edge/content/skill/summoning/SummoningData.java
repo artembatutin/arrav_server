@@ -1,7 +1,16 @@
 package net.edge.content.skill.summoning;
 
+import net.edge.content.pets.Pet;
+import net.edge.content.skill.summoning.familiar.Familiar;
+import net.edge.content.skill.summoning.familiar.FamiliarAbility;
+import net.edge.content.skill.summoning.familiar.impl.*;
+import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
+import net.edge.event.impl.ItemEvent;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
+import java.util.Optional;
 
 /**
  * An enumeration of all {@link Summoning} pouches.
@@ -11,162 +20,322 @@ public enum SummoningData {
 	/**
 	 * Represents a spirit wolf familiar.
 	 */
-	SPIRIT_WOLF(0, 12047, 1, 4.8, 6829, 0.1, 1, 6, new Item(12158), new Item(2859), new Item(12155), new Item(12183, 7)),
+	SPIRIT_WOLF(0, 12047, 1, 4.8, 6829, 0.1, 1, 6, new Item(12158), new Item(2859), new Item(12155), new Item(12183, 7)) {
+		@Override
+		public SpiritWolf create() {
+			return new SpiritWolf();
+		}
+	},
 	
 	/**
 	 * Represents a dreadfowl familiar.
 	 */
-	DREADFOWL(1, 12043, 4, 9.3, 6825, 0.1, 1, 4, new Item(12158), new Item(2138), new Item(12155), new Item(12183, 8)),
+	DREADFOWL(1, 12043, 4, 9.3, 6825, 0.1, 1, 4, new Item(12158), new Item(2138), new Item(12155), new Item(12183, 8)) {
+		@Override
+		public DreadFowl create() {
+			return new DreadFowl();
+		}
+	},
 	
 	/**
 	 * Represents a spirit spider familiar.
 	 */
-	SPIRIT_SPIDER(2, 12059, 10, 12.6, 6841, 0.2, 2, 15, new Item(12158), new Item(6291), new Item(12155), new Item(12183, 8)),
+	SPIRIT_SPIDER(2, 12059, 10, 12.6, 6841, 0.2, 2, 15, new Item(12158), new Item(6291), new Item(12155), new Item(12183, 8)) {
+		@Override
+		public SpiritSpider create() {
+			return new SpiritSpider();
+		}
+	},
 	
 	/**
 	 * Represents a thorny snail familiar.
 	 */
-	THORNY_SNAIL(3, 12019, 13, 12.6, 6806, 0.2, 2, 16, new Item(12158), new Item(3363), new Item(12155), new Item(12183, 9)),
+	THORNY_SNAIL(3, 12019, 13, 12.6, 6806, 0.2, 2, 16, new Item(12158), new Item(3363), new Item(12155), new Item(12183, 9)) {
+		@Override
+		public ThornySnail create() {
+			return new ThornySnail();
+		}
+	},
 	
 	/**
 	 * Represents a granite crab familiar.
 	 */
-	GRANITE_CRAB(4, 12009, 16, 31.6, 6796, 0.2, 2, 18, new Item(12158), new Item(440), new Item(12155), new Item(12183, 7)),
+	GRANITE_CRAB(4, 12009, 16, 31.6, 6796, 0.2, 2, 18, new Item(12158), new Item(440), new Item(12155), new Item(12183, 7)) {
+		@Override
+		public GraniteCrab create() {
+			return new GraniteCrab();
+		}
+	},
 	
 	/**
 	 * Represents a spirit mosquito familiar.
 	 */
-	SPIRIT_MOSQUITO(5, 12778, 17, 46.5, 7331, 0.5, 2, 12, new Item(12158), new Item(6319), new Item(12155), new Item(12183, 1)),
+	SPIRIT_MOSQUITO(5, 12778, 17, 46.5, 7331, 0.5, 2, 12, new Item(12158), new Item(6319), new Item(12155), new Item(12183, 1)) {
+		@Override
+		public SpiritMosquito create() {
+			return new SpiritMosquito();
+		}
+	},
 	
 	/**
 	 * Represents a desrrt wyrm familiar.
 	 */
-	DESERT_WYRM(6, 12049, 18, 31.2, 6831, 0.4, 1, 19, new Item(12159), new Item(1783), new Item(12155), new Item(12183, 45)),
+	DESERT_WYRM(6, 12049, 18, 31.2, 6831, 0.4, 1, 19, new Item(12159), new Item(1783), new Item(12155), new Item(12183, 45)) {
+		@Override
+		public DesertWyrm create() {
+			return new DesertWyrm();
+		}
+	},
 	
 	/**
 	 * Represents a spirit scorpion familiar.
 	 */
-	SPIRIT_SCORPION(7, 12055, 19, 83.2, 6837, 0.9, 2, 17, new Item(12160), new Item(3095), new Item(12155), new Item(12183, 57)),
+	SPIRIT_SCORPION(7, 12055, 19, 83.2, 6837, 0.9, 2, 17, new Item(12160), new Item(3095), new Item(12155), new Item(12183, 57)) {
+		@Override
+		public SpiritScorpion create() {
+			return new SpiritScorpion();
+		}
+	},
 	
 	/**
 	 * Represents a spirit tz-kih familiar.
 	 */
-	SPIRIT_TZ_KIH(8, 12808, 22, 96.8, 7361, 1.1, 3, 18, new Item(12160), new Item(12168), new Item(12155), new Item(12183, 64)),
+	SPIRIT_TZ_KIH(8, 12808, 22, 96.8, 7361, 1.1, 3, 18, new Item(12160), new Item(12168), new Item(12155), new Item(12183, 64)) {
+		@Override
+		public SpiritTzKih create() {
+			return new SpiritTzKih();
+		}
+	},
 	
 	/**
 	 * Represents an albino rat familiar.
 	 */
-	ALBINO_RAT(9, 12067, 23, 202.4, 6847, 2.3, 1, 22, new Item(12163), new Item(2134), new Item(12155), new Item(12183, 75)),
+	ALBINO_RAT(9, 12067, 23, 202.4, 6847, 2.3, 1, 22, new Item(12163), new Item(2134), new Item(12155), new Item(12183, 75)) {
+		@Override
+		public AlbinoRat create() {
+			return new AlbinoRat();
+		}
+	},
 	
 	/**
 	 * Represents a spirit kalphite familiar.
 	 */
-	SPIRIT_KALPHITE(10, 12063, 25, 220, 6994, 2.5, 3, 22, new Item(12163), new Item(3138), new Item(12155), new Item(12183, 51)),
+	SPIRIT_KALPHITE(10, 12063, 25, 220, 6994, 2.5, 3, 22, new Item(12163), new Item(3138), new Item(12155), new Item(12183, 51)) {
+		@Override
+		public SpiritKalphite create() {
+			return new SpiritKalphite();
+		}
+	},
 	
 	/**
 	 * Represents a compost mound familiar.
 	 */
-	COMPOST_MOUND(11, 12091, 28, 49.8, 6871, 0.6, 6, 24, new Item(12159), new Item(6032), new Item(12155), new Item(12183, 47)),
+	COMPOST_MOUND(11, 12091, 28, 49.8, 6871, 0.6, 6, 24, new Item(12159), new Item(6032), new Item(12155), new Item(12183, 47)) {
+		@Override
+		public CompostMound create() {
+			return new CompostMound();
+		}
+	},
 	
 	/**
 	 * Represents a giant chinchompa familiar.
 	 */
-	GIANT_CHINCHOMPA(12, 12800, 29, 255.2, 7353, 2.9, 1, 31, new Item(12163), new Item(10033), new Item(12155), new Item(12183, 84)),
+	GIANT_CHINCHOMPA(12, 12800, 29, 255.2, 7353, 2.9, 1, 31, new Item(12163), new Item(10033), new Item(12155), new Item(12183, 84)) {
+		@Override
+		public GiantChinchompa create() {
+			return new GiantChinchompa();
+		}
+	},
 	
 	/**
 	 * Represents a vampire bat familiar.
 	 */
-	VAMPYRE_BAT(13, 12053, 31, 136, 6835, 1.5, 4, 33, new Item(12160), new Item(3325), new Item(12155), new Item(12183, 81)),
+	VAMPYRE_BAT(13, 12053, 31, 136, 6835, 1.5, 4, 33, new Item(12160), new Item(3325), new Item(12155), new Item(12183, 81)) {
+		@Override
+		public VampyreBat create() {
+			return new VampyreBat();
+		}
+	},
 	
 	/**
 	 * Represents a honey badger familiar.
 	 */
-	HONEY_BADGER(14, 12065, 32, 140.8, 6845, 1.6, 4, 25, new Item(12160), new Item(12156), new Item(12155), new Item(12183, 84)),
+	HONEY_BADGER(14, 12065, 32, 140.8, 6845, 1.6, 4, 25, new Item(12160), new Item(12156), new Item(12155), new Item(12183, 84)) {
+		@Override
+		public HoneyBadger create() {
+			return new HoneyBadger();
+		}
+	},
 	
 	/**
 	 * Represents a beaver familiar.
 	 */
-	BEAVER(15, 12021, 33, 57.6, 6808, 0.7, 4, 27, new Item(12159), new Item(1519), new Item(12155), new Item(12183, 72)),
+	BEAVER(15, 12021, 33, 57.6, 6808, 0.7, 4, 27, new Item(12159), new Item(1519), new Item(12155), new Item(12183, 72)) {
+		@Override
+		public Beaver create() {
+			return new Beaver();
+		}
+	},
 	
 	/**
 	 * Represents a void ravager familiar.
 	 */
-	VOID_RAVAGER(16, 12818, 34, 59.6, 7370, 0.7, 4, 27, new Item(12159), new Item(12164), new Item(12155), new Item(12183, 74)),
+	VOID_RAVAGER(16, 12818, 34, 59.6, 7370, 0.7, 4, 27, new Item(12159), new Item(12164), new Item(12155), new Item(12183, 74)) {
+		@Override
+		public VoidFamiliar.VoidRavager create() {
+			return new VoidFamiliar.VoidRavager();
+		}
+	},
 	
 	/**
 	 * Represents a void spinner familiar.
 	 */
-	VOID_SPINNER(17, 12780, 34, 59.6, 7333, 0.7, 4, 27, new Item(12163), new Item(12166), new Item(12155), new Item(12183, 74)),
+	VOID_SPINNER(17, 12780, 34, 59.6, 7333, 0.7, 4, 27, new Item(12163), new Item(12166), new Item(12155), new Item(12183, 74)) {
+		@Override
+		public VoidFamiliar.VoidSpinner create() {
+			return new VoidFamiliar.VoidSpinner();
+		}
+	},
 	
 	/**
 	 * Represents a void torcher familiar.
 	 */
-	VOID_TORCHER(18, 12798, 34, 59.6, 7351, 0.7, 4, 94, new Item(12163), new Item(12167), new Item(12155), new Item(12183, 74)),
+	VOID_TORCHER(18, 12798, 34, 59.6, 7351, 0.7, 4, 94, new Item(12163), new Item(12167), new Item(12155), new Item(12183, 74)) {
+		@Override
+		public VoidFamiliar.VoidTorcher create() {
+			return new VoidFamiliar.VoidTorcher();
+		}
+	},
 	
 	/**
 	 * Represents a void shifter familiar.
 	 */
-	VOID_SHIFTER(19, 12814, 34, 59.6, 7367, 0.7, 4, 94, new Item(12163), new Item(12165), new Item(12155), new Item(12183, 74)),
+	VOID_SHIFTER(19, 12814, 34, 59.6, 7367, 0.7, 4, 94, new Item(12163), new Item(12165), new Item(12155), new Item(12183, 74)) {
+		@Override
+		public VoidFamiliar.VoidShifter create() {
+			return new VoidFamiliar.VoidShifter();
+		}
+	},
 	
 	/**
 	 * Represents a bronze minotaur familiar.
 	 */
-	BRONZE_MINOTAUR(64, 12073, 36, 316.8, 6853, 3.6, 3, 30, new Item(12163), new Item(2349), new Item(12155), new Item(12183, 102)),
+	BRONZE_MINOTAUR(64, 12073, 36, 316.8, 6853, 3.6, 3, 30, new Item(12163), new Item(2349), new Item(12155), new Item(12183, 102)) {
+		@Override
+		public MinotaurFamiliar.BronzeMinotaur create() {
+			return new MinotaurFamiliar.BronzeMinotaur();
+		}
+	},
 	
 	/**
 	 * Represents a bull ant familiar.
 	 */
-	BULL_ANT(20, 12087, 40, 52.8, 6867, 0.6, 5, 30, new Item(12158), new Item(6010), new Item(12155), new Item(12183, 11)),
+	BULL_ANT(20, 12087, 40, 52.8, 6867, 0.6, 5, 30, new Item(12158), new Item(6010), new Item(12155), new Item(12183, 11)) {
+		@Override
+		public BullAnt create() {
+			return new BullAnt();
+		}
+	},
 	
 	/**
 	 * Represents a macaw familiar.
 	 */
-	MACAW(21, 12071, 41, 72.4, 6851, 0.8, 5, 31, new Item(12159), new Item(249), new Item(12155), new Item(12183, 78)),
+	MACAW(21, 12071, 41, 72.4, 6851, 0.8, 5, 31, new Item(12159), new Item(249), new Item(12155), new Item(12183, 78)) {
+		@Override
+		public Macaw create() {
+			return new Macaw();
+		}
+	},
 	
 	/**
 	 * Represents an evil turnip familiar.
 	 */
-	EVIL_TURNIP(22, 12051, 42, 184.8, 6833, 2.1, 5, 30, new Item(12160), new Item(12153), new Item(12155), new Item(12183, 104)),
+	EVIL_TURNIP(22, 12051, 42, 184.8, 6833, 2.1, 5, 30, new Item(12160), new Item(12153), new Item(12155), new Item(12183, 104)) {
+		@Override
+		public EvilTurnip create() {
+			return new EvilTurnip();
+		}
+	},
 	
 	/**
 	 * Represents a spirit cockatrice familiar.
 	 */
-	SPIRIT_COCKATRICE(23, 12095, 43, 75.2, 6875, 0.9, 5, 36, new Item(12159), new Item(12109), new Item(12155), new Item(12183, 88)),
+	SPIRIT_COCKATRICE(23, 12095, 43, 75.2, 6875, 0.9, 5, 36, new Item(12159), new Item(12109), new Item(12155), new Item(12183, 88)) {
+		@Override
+		public SpiritTriceFamiliar.SpiritCockatrice create() {
+			return new SpiritTriceFamiliar.SpiritCockatrice();
+		}
+	},
 	
 	/**
 	 * Represents a spirit guthatrice familiar.
 	 */
-	SPIRIT_GUTHATRICE(24, 12097, 43, 75.2, 6877, 0.9, 5, 36, new Item(12159), new Item(12111), new Item(12155), new Item(12183, 88)),
+	SPIRIT_GUTHATRICE(24, 12097, 43, 75.2, 6877, 0.9, 5, 36, new Item(12159), new Item(12111), new Item(12155), new Item(12183, 88)) {
+		@Override
+		public SpiritTriceFamiliar.SpiritGuthatrice create() {
+			return new SpiritTriceFamiliar.SpiritGuthatrice();
+		}
+	},
 	
 	/**
 	 * Represents a spirit saratrice familiar.
 	 */
-	SPIRIT_SARATRICE(25, 12099, 43, 75.2, 6879, 0.9, 5, 36, new Item(12159), new Item(12113), new Item(12155), new Item(12183, 88)),
+	SPIRIT_SARATRICE(25, 12099, 43, 75.2, 6879, 0.9, 5, 36, new Item(12159), new Item(12113), new Item(12155), new Item(12183, 88)) {
+		@Override
+		public SpiritTriceFamiliar.SpiritSaratrice create() {
+			return new SpiritTriceFamiliar.SpiritSaratrice();
+		}
+	},
 	
 	/**
 	 * Represents a spirit zamatrice familiar.
 	 */
-	SPIRIT_ZAMATRICE(26, 12101, 43, 75.2, 6881, 0.9, 5, 36, new Item(12159), new Item(12115), new Item(12155), new Item(12183, 88)),
+	SPIRIT_ZAMATRICE(26, 12101, 43, 75.2, 6881, 0.9, 5, 36, new Item(12159), new Item(12115), new Item(12155), new Item(12183, 88)) {
+		@Override
+		public SpiritTriceFamiliar.SpiritZamatrice create() {
+			return new SpiritTriceFamiliar.SpiritZamatrice();
+		}
+	},
 	
 	/**
 	 * Represents a spirit pengatrice familiar.
 	 */
-	SPIRIT_PENGATRICE(27, 12103, 43, 75.2, 6883, 0.9, 5, 36, new Item(12159), new Item(12117), new Item(12155), new Item(12183, 88)),
+	SPIRIT_PENGATRICE(27, 12103, 43, 75.2, 6883, 0.9, 5, 36, new Item(12159), new Item(12117), new Item(12155), new Item(12183, 88)) {
+		@Override
+		public SpiritTriceFamiliar.SpiritPengatrice create() {
+			return new SpiritTriceFamiliar.SpiritPengatrice();
+		}
+	},
 	
 	/**
 	 * Represents a coraxatrice familiar.
 	 */
-	SPIRIT_CORAXATRICE(28, 12105, 43, 75.2, 6885, 0.9, 5, 36, new Item(12159), new Item(12119), new Item(12155), new Item(12183, 88)),
+	SPIRIT_CORAXATRICE(28, 12105, 43, 75.2, 6885, 0.9, 5, 36, new Item(12159), new Item(12119), new Item(12155), new Item(12183, 88)) {
+		@Override
+		public SpiritTriceFamiliar.SpiritCoraxatrice create() {
+			return new SpiritTriceFamiliar.SpiritCoraxatrice();
+		}
+	},
 	
 	/**
 	 * Represents a vulatrice familiar.
 	 */
-	SPIRIT_VULATRICE(29, 12107, 43, 75.2, 6887, 0.9, 5, 36, new Item(12159), new Item(12121), new Item(12155), new Item(12183, 88)),
+	SPIRIT_VULATRICE(29, 12107, 43, 75.2, 6887, 0.9, 5, 36, new Item(12159), new Item(12121), new Item(12155), new Item(12183, 88)) {
+		@Override
+		public SpiritTriceFamiliar.SpiritVulatrice create() {
+			return new SpiritTriceFamiliar.SpiritVulatrice();
+		}
+	},
 	
 	/**
 	 * Represents an iron minotaur familiar.
 	 */
-	IRON_MINOTAUR(65, 12075, 46, 404.8, 6855, 4.6, 9, 37, new Item(12163), new Item(2351), new Item(12155), new Item(12183, 125)),
+	IRON_MINOTAUR(65, 12075, 46, 404.8, 6855, 4.6, 9, 37, new Item(12163), new Item(2351), new Item(12155), new Item(12183, 125)) {
+		@Override
+		public MinotaurFamiliar.IronMinotaur create() {
+			return new MinotaurFamiliar.IronMinotaur();
+		}
+	},
 	
 	/**
 	 * Represents a pyrelord familiar.
@@ -528,6 +697,65 @@ public enum SummoningData {
 	 */
 	public int getSlot() {
 		return slot;
+	}
+	
+	/**
+	 * Creates a new instance of the familiar.
+	 * @return familiar instance.
+	 */
+	public Familiar create() {
+		return new Familiar(this) {
+			@Override
+			public FamiliarAbility getAbilityType() {
+				return null;
+			}
+			
+			@Override
+			public Optional<PassiveAbility> getPassiveAbility() {
+				return null;
+			}
+			
+			@Override
+			public boolean isCombatic() {
+				return false;
+			}
+			
+			@Override
+			public void interact(Player player, Npc npc, int id) {
+			
+			}
+		};
+	}
+	
+	public static void event() {
+		for(SummoningData data : VALUES) {
+			ItemEvent e = new ItemEvent() {
+				@Override
+				public boolean click(Player player, Item item, int container, int slot, int click) {
+					if(click == 3) {
+						Optional<Familiar> hasFamiliar = player.getFamiliar();
+						if(hasFamiliar.isPresent()) {
+							player.message("You already have a familiar summoned.");
+							return false;
+						}
+						
+						Optional<Pet> hasPet = player.getPetManager().getPet();
+						if(hasPet.isPresent()) {
+							player.message("You already have a pet spawned.");
+							return false;
+						}
+						Familiar familiar = data.create();
+						if(!familiar.canSummon(player)) {
+							return false;
+						}
+						familiar.summon(player, false);
+						player.getInventory().remove(item);
+					}
+					return true;
+				}
+			};
+			e.register(data.getPouchId());
+		}
 	}
 	
 }

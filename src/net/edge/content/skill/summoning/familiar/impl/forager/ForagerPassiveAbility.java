@@ -108,7 +108,7 @@ public class ForagerPassiveAbility extends Forager {
 				this.setDelay(RandomUtils.inclusive(10, 20));
 				return;
 			}
-			getForager().setProduced(getForager().getCollectables()[RandomUtils.inclusive(getForager().getCollectables().length)]);
+			getForager().setProduced(getForager().getCollectables()[RandomUtils.inclusive(getForager().getCollectables().length - 1)]);
 			if(getForager().getContainer().canAdd(getForager().getProduced())) {
 				getForager().getContainer().add(getForager().getProduced());
 				this.getForager().onStore(player, getForager().getProduced());

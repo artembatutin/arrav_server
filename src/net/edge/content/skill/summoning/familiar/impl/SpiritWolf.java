@@ -47,5 +47,10 @@ public final class SpiritWolf extends Familiar {
 		return true;
 	}
 	
+	@Override
+	public Familiar create() {
+		return null;
+	}
+	
 	private final String[] RANDOM_DIALOGUE = new String[]{"What are you doing?", "Danger!", "I smell something good! Hunting time!"};
 }

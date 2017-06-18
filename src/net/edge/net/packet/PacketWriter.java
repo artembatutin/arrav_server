@@ -1226,17 +1226,16 @@ public final class PacketWriter {
 	
 	/**
 	 * The message that sends an interface to a certain sidebar.
-	 * @param sidebar the sidebar to send the interface on.
-	 * @param id      the interface to send on the sidebar.
-	 * @param type    0 for old game-frames, 1 for new game-frames and 2 for both.
+	 * @param id interface sending.
+	 * @param tab The tab being sent.
 	 */
-	public void sendSidebarInterface(int sidebar, int id, int type) {
+	public void sendSidebarInterface(int id, TabInterface tab) {
 		if(player.getState() == INACTIVE)
 			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 71);
 		msg.putShort(id);
-		msg.put(sidebar, ByteTransform.A);
-		msg.put(type, ByteTransform.A);
+		msg.put(tab.getOld(), ByteTransform.A);
+		msg.put(tab.getNew(), ByteTransform.A);
 		player.queue(msg);
 	}
 	

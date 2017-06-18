@@ -82,11 +82,9 @@ public abstract class Familiar extends Follower {
 	 */
 	private void activatePassiveAbilities(Player player) {
 		Optional<PassiveAbility> ability = this.getPassiveAbility();
-		
 		if(!ability.isPresent()) {
 			return;
 		}
-		
 		if(ability.get().getPassiveAbilityType().equals(PassiveAbility.PassiveAbilityType.PERIODICAL)) {
 			PeriodicalAbility periodical_ability = (PeriodicalAbility) ability.get();
 			periodical_ability.onExecute(player);
@@ -104,7 +102,7 @@ public abstract class Familiar extends Follower {
 		ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), size());
 		if(!pos.isEmpty()) {
 			Position p = RandomUtils.random(pos);
-			this.setPosition(p);
+			this.move(p);
 		} else {
 			player.message("You cannot summon this familiar on this position.");
 			return;
@@ -178,6 +176,8 @@ public abstract class Familiar extends Follower {
 			this.setFollowEntity(null);
 			/* Remove this npc from the world */
 			World.get().getNpcs().remove(this);
+			/* Closing the task */
+			task.ifPresent(Task::cancel);
 			/* Disable the familiars task. */
 			task = Optional.empty();
 			return;
@@ -188,6 +188,8 @@ public abstract class Familiar extends Follower {
 		this.setFollowing(false);
 		/* Set the follow task to null */
 		this.setFollowEntity(null);
+		/* Don't want familiar to respawn if dead */
+		this.setRespawn(false);
 		/* Remove this npc from the world */
 		World.get().submit(new NpcDeath(this));
 		/* Check if the familiar can hold items */
@@ -199,11 +201,13 @@ public abstract class Familiar extends Follower {
 				/* We drop all the item this familiar holds. */
 				ability.dropAll(this.getPosition());
 				/* Tell the player the familiar dropped all it's items */
-				player.message("<col=ff0000>Your familiar has dropped all the items it was holding.");
+				player.message("@red@Your familiar dropped all the items it was holding.");
 			}
 		}
 		/* Set the players familiar instance to empty */
 		player.setFamiliar(Optional.empty());
+		/* Closing the task */
+		task.ifPresent(Task::cancel);
 		/* Disable the familiars task. */
 		task = Optional.empty();
 		/* Set the side bar */

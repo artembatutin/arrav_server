@@ -4,6 +4,8 @@ import com.google.gson.*;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.edge.content.combat.weapon.FightType;
+import net.edge.content.skill.summoning.SummoningData;
+import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.node.item.container.ItemContainer;
 import net.edge.content.minigame.barrows.BarrowsData;
 import net.edge.content.pets.Pet;
@@ -38,6 +40,7 @@ import java.util.EnumSet;
 import java.util.Map;
 import java.util.Optional;
 
+import static net.edge.content.skill.summoning.familiar.FamiliarAbility.FamiliarAbilityType.BEAST_OF_BURDEN;
 import static net.edge.net.codec.login.LoginResponse.ACCOUNT_DISABLED;
 import static net.edge.net.codec.login.LoginResponse.COULD_NOT_COMPLETE_LOGIN;
 import static net.edge.net.codec.login.LoginResponse.INVALID_CREDENTIALS;
@@ -653,15 +656,15 @@ public final class PlayerSerialization {
 		@Override
 		public Object toJson(Player p) {
 			Familiar familiar = p.getFamiliar().orElse(null);
-			return familiar != null ? familiar.getId() : 0;
+			return familiar != null ? familiar.getData() : null;
 		}
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			int id = n.getAsInt();
-			if(id != 0) {
-				Optional<Familiar> familiar = Summoning.FAMILIARS.stream().filter(def -> def.getData().getNpcId() == id).findAny();
-				p.setFamiliar(familiar);
+			if(!n.isJsonNull()) {
+				SummoningData data = SummoningData.valueOf(n.getAsString());
+				Familiar familiar = data.create();
+				p.setFamiliar(Optional.of(familiar));
 			} else
 				p.setFamiliar(Optional.empty());
 		}
@@ -690,15 +693,19 @@ public final class PlayerSerialization {
 		@Override
 		public Object toJson(Player p) {
 			Familiar familiar = p.getFamiliar().orElse(null);
-			ItemContainer storage = familiar != null ? ((FamiliarContainer) familiar.getAbilityType()).getContainer() : new ItemContainer(30, ItemContainer.StackPolicy.STANDARD);
-			return storage.getItems();
+			return familiar != null && familiar.getAbilityType().getType() == BEAST_OF_BURDEN ? ((FamiliarContainer) familiar.getAbilityType()).getContainer().getItems() : null;
 		}
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getFamiliar()
-					.ifPresent(ffs -> ((FamiliarContainer) ffs.getAbilityType()).getContainer()
-							.setItems((b.fromJson(n, Item[].class))));
+			if(!n.isJsonNull()) {
+				p.getFamiliar().ifPresent(ffs -> {
+					FamiliarAbility ability = ffs.getAbilityType();
+					if(ability.getType() == BEAST_OF_BURDEN) {
+						((FamiliarContainer) ability).getContainer().setItems((b.fromJson(n, Item[].class)));
+					}
+				});
+			}
 		}
 	}};
 	

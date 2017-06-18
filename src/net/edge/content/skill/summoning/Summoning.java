@@ -71,8 +71,7 @@ public final class Summoning {
 			//familiar is already close enough.
 			return;
 		}
-		ObjectList<Position> pos = World.getTraversalMap()
-				.getSurroundedTraversableTiles(player.getPosition(), player.size(), familiar.size());
+		ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), familiar.size());
 		if(pos.size() > 0) {
 			Position p = RandomUtils.random(pos);
 			familiar.move(p);
@@ -330,37 +329,6 @@ public final class Summoning {
 		familiar.ifPresent(familiar1 -> familiar1.summon(player, true));
 	}
 	
-	public static void event() {
-		for(Familiar f : FAMILIARS) {
-			ItemEvent e = new ItemEvent() {
-				@Override
-				public boolean click(Player player, Item item, int container, int slot, int click) {
-					if(click == 3) {
-						Optional<Familiar> hasFamiliar = player.getFamiliar();
-						if(hasFamiliar.isPresent()) {
-							player.message("You already have a familiar summoned.");
-							return false;
-						}
-						
-						Optional<Pet> hasPet = player.getPetManager().getPet();
-						if(hasPet.isPresent()) {
-							player.message("You already have a pet spawned.");
-							return false;
-						}
-						
-						if(!f.canSummon(player)) {
-							return false;
-						}
-						
-						f.summon(player, false);
-					}
-					return true;
-				}
-			};
-			e.register(f.getData().getPouchId());
-		}
-	}
-	
 	/**
 	 * Interacts with the familiar and sends it's respective dialogue.
 	 * @param player the player interacting with the {@code npc}.
@@ -420,5 +388,6 @@ public final class Summoning {
 	/**
 	 * The collection of familiars a player can summon.
 	 */
-	public static final ImmutableList<Familiar> FAMILIARS = ImmutableList.of(new SpiritWolf(), new DreadFowl(), new SpiritSpider(), new ThornySnail(), new GraniteCrab(), new SpiritMosquito(), new DesertWyrm(), new SpiritScorpion(), new SpiritTzKih(), new AlbinoRat(), new SpiritKalphite(), new CompostMound(), new GiantChinchompa(), new VampyreBat(), new HoneyBadger(), new Beaver(), new VoidFamiliar.VoidRavager(), new VoidFamiliar.VoidSpinner(), new VoidFamiliar.VoidShifter(), new VoidFamiliar.VoidTorcher(), new BronzeMinotaur(), new BullAnt(), new Macaw(), new SpiritTriceFamiliar.SpiritCockatrice(), new SpiritTriceFamiliar.SpiritGuthatrice(), new SpiritTriceFamiliar.SpiritSaratrice(), new SpiritTriceFamiliar.SpiritZamatrice(), new SpiritTriceFamiliar.SpiritPengatrice(), new SpiritTriceFamiliar.SpiritCoraxatrice(), new SpiritTriceFamiliar.SpiritVulatrice(), new IronMinotaur());
+	//public static final ImmutableList<Familiar> FAMILIARS = ImmutableList.of(new SpiritWolf(), new DreadFowl(), new SpiritSpider(), new ThornySnail(), new GraniteCrab(), new SpiritMosquito(), new DesertWyrm(), new SpiritScorpion(), new SpiritTzKih(), new AlbinoRat(), new SpiritKalphite(), new CompostMound(), new GiantChinchompa(), new VampyreBat(), new HoneyBadger(), new Beaver(), new VoidFamiliar.VoidRavager(), new VoidFamiliar.VoidSpinner(), new VoidFamiliar.VoidShifter(), new VoidFamiliar.VoidTorcher(), new BronzeMinotaur(), new BullAnt(), new Macaw(), new SpiritTriceFamiliar.SpiritCockatrice(), new SpiritTriceFamiliar.SpiritGuthatrice(), new SpiritTriceFamiliar.SpiritSaratrice(), new SpiritTriceFamiliar.SpiritZamatrice(), new SpiritTriceFamiliar.SpiritPengatrice(), new SpiritTriceFamiliar.SpiritCoraxatrice(), new SpiritTriceFamiliar.SpiritVulatrice(), new IronMinotaur());
+
 }
