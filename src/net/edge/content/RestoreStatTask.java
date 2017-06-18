@@ -63,7 +63,7 @@ public final class RestoreStatTask extends Task {
 				if(i == Skills.HITPOINTS)
 					continue;
 				int realLevel = player.getSkills()[i].getRealLevel();
-				if(player.getSkills()[i].getLevel() < realLevel && i != Skills.PRAYER) {
+				if(player.getSkills()[i].getLevel() < realLevel && i != Skills.PRAYER && i != Skills.SUMMONING) {
 					player.getSkills()[i].increaseLevel(1);
 					
 					if(Prayer.isActivated(player, Prayer.RAPID_RESTORE)) {
@@ -72,7 +72,7 @@ public final class RestoreStatTask extends Task {
 						}
 					}
 					Skills.refresh(player, i);
-				} else if(player.getSkills()[i].getLevel() > realLevel && i != Skills.PRAYER) {
+				} else if(player.getSkills()[i].getLevel() > realLevel && i != Skills.PRAYER && i != Skills.SUMMONING) {
 					player.getSkills()[i].decreaseLevel(1);
 					Skills.refresh(player, i);
 				}
