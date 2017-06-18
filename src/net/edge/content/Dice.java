@@ -78,7 +78,7 @@ public final class Dice {
 					return roll(player, data, true);
 				}
 			};
-			e.registerInterface(data.item.getId());
+			e.registerEquip(data.item.getId());
 		}
 		ItemEvent bag = new ItemEvent() {
 			@Override

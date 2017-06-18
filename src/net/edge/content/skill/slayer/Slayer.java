@@ -98,33 +98,37 @@ public final class Slayer {
 	}
 	
 	public static void eventItem() {
-		ItemEvent e = new ItemEvent() {
+		ItemEvent activate = new ItemEvent() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
 				SlayerMaster master = player.getSlayer().isPresent() ? player.getSlayer().get().getMaster() : SlayerMaster.SPRIA;
-				if(click == 1) {
-					player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "Ughh, what do you want?"), new OptionDialogue(t -> {
-								if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-									player.getDialogueBuilder().go(3);
-								} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-									player.getDialogueBuilder().advance();
-								} else {
-									player.getDialogueBuilder().last();
-								}
-							}, "Can I get a new task?", "Howmany kills are left?", "Nevermind"), new PlayerDialogue("Howmany kills are left?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."} : new String[]{"You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."}).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Can I get a new task?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You already are assigned to a slayer task..."} : new String[]{"Come speak to me or another slayer master ", "in order to get assigned to a task."}).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Nevermind").attach(() -> player.getMessages().sendCloseWindows())
-					
-					);
-				} else if(click == 2) {
-					if(player.getSlayer().isPresent()) {
-						player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."));
-					} else {
-						player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."));
-					}
+				player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "Ughh, what do you want?"), new OptionDialogue(t -> {
+							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+								player.getDialogueBuilder().go(3);
+							} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
+								player.getDialogueBuilder().advance();
+							} else {
+								player.getDialogueBuilder().last();
+							}
+						}, "Can I get a new task?", "How many kills are left?", "Nevermind"), new PlayerDialogue("How many kills are left?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."} : new String[]{"You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."}).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Can I get a new task?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You already are assigned to a slayer task..."} : new String[]{"Come speak to me or another slayer master ", "in order to get assigned to a task."}).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Nevermind").attach(() -> player.getMessages().sendCloseWindows())
+				);
+				return true;
+			}
+		};
+		activate.registerInventory(4155);
+		ItemEvent killsLeft = new ItemEvent() {
+			@Override
+			public boolean click(Player player, Item item, int container, int slot, int click) {
+				SlayerMaster master = player.getSlayer().isPresent() ? player.getSlayer().get().getMaster() : SlayerMaster.SPRIA;
+				if(player.getSlayer().isPresent()) {
+					player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."));
+				} else {
+					player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."));
 				}
 				return true;
 			}
 		};
-		e.registerInventory(4155);
+		killsLeft.registerEquip(4155);
 	}
 	
 	public static void eventNpc() {
