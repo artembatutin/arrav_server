@@ -65,11 +65,11 @@ public abstract class Familiar extends Follower {
 	 * @return <true> if the player can summon this familiar, <false> otherwise.
 	 */
 	public boolean canSummon(Player player) {
-		if(!player.getSkills()[Skills.SUMMONING].reqLevel(data.getLevelRequired())) {
+		if(data.getLevelRequired() > player.getSkills()[Skills.SUMMONING].getRealLevel()) {
 			player.message("You need a summoning level of " + data.getLevelRequired() + " to summon this familiar.");
 			return false;
 		}
-		if(player.getSkills()[Skills.SUMMONING].getLevel() < data.getSummonCost()) {
+		if(data.getSummonCost() > player.getSkills()[Skills.SUMMONING].getLevel()) {
 			player.message("You don't have enough summoning points to summon this familiar.");
 			return false;
 		}
