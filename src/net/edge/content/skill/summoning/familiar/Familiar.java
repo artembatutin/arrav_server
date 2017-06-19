@@ -28,17 +28,17 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public abstract class Familiar extends Follower {
-	
+
 	/**
 	 * The data of this summoned familiar.
 	 */
 	private final SummoningData data;
-	
+
 	/**
 	 * Life of the current familiar.
 	 */
 	private int duration;
-	
+
 	/**
 	 * Constructs a new {@link Familiar}.
 	 * @param data the summoning data.
@@ -48,17 +48,17 @@ public abstract class Familiar extends Follower {
 		this.data = data;
 		duration = data.getLife();
 	}
-	
+
 	/**
 	 * The spawn task chained to this familiar.
 	 */
 	private Optional<FamiliarSpawnTask> task;
-	
+
 	@Override
 	public boolean isFamiliar() {
 		return true;
 	}
-	
+
 	/**
 	 * Checks if this player has the requirements to summon this npc.
 	 * @param player the player to check for.
@@ -75,7 +75,7 @@ public abstract class Familiar extends Follower {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Activates the passive abilities which are non combatant linked to this familiar.
 	 * @param player the player this ability is for.
@@ -90,7 +90,7 @@ public abstract class Familiar extends Follower {
 			periodical_ability.onExecute(player);
 		}
 	}
-	
+
 	/**
 	 * Attempts to summon this familiar dependant on the {@code login} flag.
 	 * @param player the player to summon this familiar for.
@@ -124,7 +124,8 @@ public abstract class Familiar extends Follower {
 			player.message("You summon " + TextUtils.appendIndefiniteArticle(this.getDefinition().getName()) + ".");
 		}
 		/* Adding experience for summoning. */
-		player.getSkills()[Skills.SUMMONING].increaseExperience(data.getSummonExperience());
+		if(!login)
+			player.getSkills()[Skills.SUMMONING].increaseExperience(data.getSummonExperience());
 		/* Get the specific ability type for this familiar. */
 		FamiliarAbility ability = this.getAbilityType();
 		/* Activate the familiars ability */
@@ -133,7 +134,7 @@ public abstract class Familiar extends Follower {
 		task = Optional.of(new FamiliarSpawnTask(player, this));
 		World.get().submit(task.get());
 	}
-	
+
 	/**
 	 * Sets the interface and the variables that have to be set on the interface.
 	 * @param player the player we're setting this for.
@@ -158,7 +159,7 @@ public abstract class Familiar extends Follower {
 		/* Set the side bar */
 		TabInterface.SUMMONING.sendInterface(player, 18017);
 	}
-	
+
 	/**
 	 * Attempts to dismiss this familiar dependant on the {@code logout} flag.
 	 * @param player the player to dismiss this familiar for.
@@ -213,7 +214,7 @@ public abstract class Familiar extends Follower {
 		/* Set the side bar */
 		TabInterface.SUMMONING.sendInterface(player, -1);
 	}
-	
+
 	/**
 	 * The method which should be overriden if this familiar has an
 	 * ability where an item can be used on it.
@@ -225,26 +226,26 @@ public abstract class Familiar extends Follower {
 	public boolean itemOnNpc(Player player, Npc npc, Item item) {
 		return false;
 	}
-	
+
 	/**
 	 * The ability type chained to this familiar.
 	 * @return the familiar ability type.
 	 */
 	public abstract FamiliarAbility getAbilityType();
-	
+
 	/**
 	 * The passive ability chained to this familiar.
 	 * @return the passive ability instance wrapped in an
 	 * optional if theres a value present, {@link Optional#empty()} otherwise.
 	 */
 	public abstract Optional<PassiveAbility> getPassiveAbility();
-	
+
 	/**
 	 * Checks if this familiar is combatic or not.
 	 * @return <true> if this familiar is combatic, <false> otherwise.
 	 */
 	public abstract boolean isCombatic();
-	
+
 	/**
 	 * The non passive ability which can be executed when a player
 	 * executes an action with his familiar.
@@ -252,7 +253,7 @@ public abstract class Familiar extends Follower {
 	public void getNonPassiveAbility() {
 		//on default nothing is done.
 	}
-	
+
 	/**
 	 * Attempts to interact with this familiar
 	 * @param player the player whom is interacting with the familiar.
@@ -260,14 +261,14 @@ public abstract class Familiar extends Follower {
 	 * @param id     the action id being interacted with.
 	 */
 	public abstract void interact(Player player, Npc npc, int id);
-	
+
 	/**
 	 * @return {@link #data}.
 	 */
 	public SummoningData getData() {
 		return data;
 	}
-	
+
 	/**
 	 * Gets the duration of this familiar in minutes.
 	 * @return duration of this familiar.
@@ -275,7 +276,7 @@ public abstract class Familiar extends Follower {
 	public int getDuration() {
 		return duration;
 	}
-	
+
 	/**
 	 * Sets the new {@link #duration}.
 	 * @param duration new value to set.
@@ -283,29 +284,29 @@ public abstract class Familiar extends Follower {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
-	
+
 	/**
 	 * Holds functionality for the amount of time this familiar has left
 	 * to live.
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class FamiliarSpawnTask extends Task {
-		
+
 		/**
 		 * The player this familiar belongs too.
 		 */
 		private final Player player;
-		
+
 		/**
 		 * The familiar this task is for.
 		 */
 		private final Familiar familiar;
-		
+
 		/**
 		 * An interval state to remove points each 30 seconds.
 		 */
 		private boolean interval;
-		
+
 		/**
 		 * Constructs a new {@link FamiliarSpawnTask}.
 		 * @param player   the player this familiar belongs too.
@@ -316,7 +317,7 @@ public abstract class Familiar extends Follower {
 			this.player = player;
 			this.familiar = familiar;
 		}
-		
+
 		@Override
 		public void execute() {
 			if(!player.getFamiliar().isPresent()) {
@@ -331,13 +332,13 @@ public abstract class Familiar extends Follower {
 			player.getSkills()[Skills.SUMMONING].decreaseLevel(1);
 			player.getMessages().sendString(Integer.toString(player.getSkills()[Skills.SUMMONING].getLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()), 18045);
 			Skills.refresh(player, Skills.SUMMONING);
-			
+
 			interval = !interval;
 			if(interval)
 				return;
 			familiar.setDuration(familiar.getDuration() - 1);
 			player.getMessages().sendString(familiar.getDuration() + " minutes", 18043);
-			
+
 			if(familiar.getDuration() < 1 || player.getSkills()[Skills.SUMMONING].getLevel() == 0) {
 				familiar.dismiss(player, false);
 				player.message("@red@Your familiar has vanished.");
@@ -346,6 +347,6 @@ public abstract class Familiar extends Follower {
 				player.message("@red@You have " + familiar.getDuration() + " minute before your familiar vanishes.");
 			}
 		}
-		
+
 	}
 }
