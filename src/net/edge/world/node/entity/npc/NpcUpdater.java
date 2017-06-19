@@ -35,7 +35,7 @@ public final class NpcUpdater {
 			Iterator<Npc> $it = player.getLocalNpcs().iterator();
 			while($it.hasNext()) {
 				Npc npc = $it.next();
-				if(npc.getState() == NodeState.ACTIVE && npc.isVisible() && player.getInstance() == npc.getInstance() && npc.getPosition().isViewableFrom(player.getPosition())) {
+				if(npc.getState() == NodeState.ACTIVE && npc.isVisible() && player.getInstance() == npc.getInstance() && npc.getPosition().isViewableFrom(player.getPosition()) && !npc.isNeedsPlacement()) {
 					handleMovement(npc, msg);
 					blockSet.encodeUpdateBlocks(player, npc, blockMsg, UpdateState.UPDATE_LOCAL);
 				} else {
