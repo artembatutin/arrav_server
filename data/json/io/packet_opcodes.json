@@ -19,6 +19,12 @@
   },
   {
     "opcodes": [
+      10
+    ],
+    "class": "net.edge.net.packet.impl.ConstructionPacket"
+  },
+  {
+    "opcodes": [
       135
     ],
     "class": "net.edge.net.packet.impl.InputXOptionPacket"

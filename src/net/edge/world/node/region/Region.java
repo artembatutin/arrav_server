@@ -178,6 +178,8 @@ public final class Region extends Node {
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
 	public <T extends EntityNode> boolean addChar(T e) {
+		if(e.getState() == NodeState.INACTIVE)
+			return false;
 		if(e.isPlayer()) {
 			if(players.containsKey(e.getSlot()))
 				return false;

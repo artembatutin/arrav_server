@@ -2,8 +2,13 @@ package net.edge.net.packet;
 
 import com.google.common.base.Preconditions;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.TabInterface;
+import net.edge.content.skill.construction.Palette;
+import net.edge.content.skill.construction.Palette.PaletteTile;
+import net.edge.content.skill.construction.furniture.Furniture;
+import net.edge.content.skill.construction.furniture.HotSpots;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
@@ -13,7 +18,6 @@ import net.edge.content.clanchat.ClanMember;
 import net.edge.content.market.MarketItem;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
@@ -23,11 +27,11 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
+import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -56,7 +60,7 @@ public final class PacketWriter {
 	
 	/**
 	 * The message that forces the player to view {@code id} tab.
-	 * @param id the tab to force on the player.
+	 * @param tab the tab to force on the player.
 	 */
 	public void sendForceTab(TabInterface tab) {
 		if(player.getState() == INACTIVE)
@@ -839,7 +843,47 @@ public final class PacketWriter {
 		msg.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.C);
 		msg.put(0);
 		player.queue(msg);
-		
+	}
+	
+	/**
+	 * Sends a removal of an object chunk.
+	 * @param chunkX chunk x.
+	 * @param chunkY chunk y.
+	 * @param height height.
+	 */
+	public void sendObjectsRemoval(int chunkX, int chunkY, int height) {
+		if(player.getState() == INACTIVE)
+			return;
+		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 153);
+		msg.put(chunkX);
+		msg.put(chunkY);
+		msg.put(height);
+		player.queue(msg);
+	}
+	
+	/**
+	 * Sending a construction panel for the player.
+	 * @param spot the hotspot object clicked.
+	 */
+	public void sendConstruction(HotSpots spot) {
+		if(player.getState() == INACTIVE)
+			return;
+		ObjectArrayList<Furniture> panel = Furniture.getForHotSpotId(spot.getHotSpotId());
+		if(panel == null)
+			return;
+		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 130, MessageType.VARIABLE);
+		msg.put(panel.size());
+		for(Furniture furniture : panel) {
+			msg.putShort(furniture.getItemId());
+			msg.put(furniture.getLevel());
+			msg.put(furniture.getRequiredItems().length);
+			for(Item req : furniture.getRequiredItems()) {
+				msg.putShort(req.getId());
+				msg.putShort(req.getAmount());
+			}
+		}
+		player.getHouse().get().getPlan().setPanel(panel);
+		player.queue(msg);
 	}
 	
 	/**
@@ -879,7 +923,54 @@ public final class PacketWriter {
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 219);
 		player.queue(msg);
 		player.getDialogueBuilder().interrupt();
-		
+	}
+	
+	/**
+	 * Sends an object construction object.
+	 */
+	public void sendObject_cons(int objectX, int objectY, int objectId, int face, int objectType, int height) {
+		if(player.getState() == INACTIVE)
+			return;
+		Optional<ObjectDirection> dir = ObjectDirection.valueOf(face);
+		Optional<ObjectType> type = ObjectType.valueOf(objectType);
+		if(!dir.isPresent()) {
+			if(player.getRights() == Rights.DEVELOPER)
+				player.message("Couldn't find direction, " + face);
+			return;
+		}
+		if(!type.isPresent()) {
+			if(player.getRights() == Rights.DEVELOPER)
+				player.message("Couldn't find type, " + objectType);
+			return;
+		}
+		sendObject(new DynamicObject(objectId, new Position(objectX, objectY, height), ObjectDirection.valueOf(face).get(), ObjectType.valueOf(objectType).get(), false, 0, player.getInstance()));
+	}
+	
+	/**
+	 * Constructs a palette map. Used for construction.
+	 * @param palette palette to be sent.
+	 */
+	public void constructMapRegion(Palette palette) {
+		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 241, MessageType.VARIABLE_SHORT);
+		msg.putShort(player.getPosition().getRegionX() + 6, ByteTransform.A);
+		msg.putShort(player.getPosition().getRegionY() + 6);
+		for (int z = 0; z < 4; z++) {
+			for (int x = 0; x < 13; x++) {
+				for (int y = 0; y < 13; y++) {
+					PaletteTile tile = palette.getTile(x, y, z);
+					boolean b = false;
+					if (x < 2 || x > 10 || y < 2 || y > 10)
+						b = true;
+					int toWrite = !b && tile != null ? 5 : 0;
+					msg.put(toWrite);
+					if(toWrite == 5) {
+						int val = tile.getX() << 14 | tile.getY() << 3 | tile.getZ() << 24 | tile.getRotation() << 1;
+						msg.putInt(val);
+					}
+				}
+			}
+		}
+		player.queue(msg);
 	}
 	
 	/**

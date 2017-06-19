@@ -47,7 +47,7 @@ public final class SpiritSpider extends Familiar {
 		if(!t.getFamiliar().isPresent()) {
 			return;
 		}
-		if(ThreadLocalRandom.current().nextInt(100) < 40) {
+		if(RandomUtils.inclusive(100) < 40) {
 			t.getFamiliar().get().forceChat("Rawrgh, my eggs won't come out!");
 			return;
 		}

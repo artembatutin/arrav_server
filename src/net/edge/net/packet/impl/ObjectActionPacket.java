@@ -16,7 +16,7 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.*;
 
 import java.util.Optional;
 
@@ -27,6 +27,7 @@ import java.util.Optional;
  */
 public final class ObjectActionPacket implements PacketReader {
 	
+	
 	/*
 	 * All of the object events.
 	 */
@@ -35,6 +36,7 @@ public final class ObjectActionPacket implements PacketReader {
 	public static final EventContainer<ObjectEvent> THIRD = new EventContainer<>();
 	public static final EventContainer<ObjectEvent> FOURTH = new EventContainer<>();
 	public static final EventContainer<ObjectEvent> FIFTH = new EventContainer<>();
+	public static final EventContainer<ObjectEvent> CONSTRUCTION = new EventContainer<>();
 	
 	@Override
 	public void handle(Player player, int opcode, int size, ByteMessage payload) {
@@ -79,10 +81,18 @@ public final class ObjectActionPacket implements PacketReader {
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(objectId < 0 || objectX < 0 || objectY < 0)
 			return;
+		player.facePosition(position);
+		//construction clicks.
+		if(player.getHouse().isOwnerHome()) {
+			ObjectEvent e = CONSTRUCTION.get(objectId);
+			player.getHouse().get().getPlan().setObjectX(objectX);
+			player.getHouse().get().getPlan().setObjectY(objectY);
+			if(e != null && e.click(player, new DynamicObject(objectId, new Position(objectX, objectY, player.getPosition().getZ()), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, player.getInstance()), action))
+				return;
+		}
 		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
-		player.facePosition(position);
 		final ObjectNode object = o.get();
 		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
 			player.message("[OBJ"+action+"]:" + object.getId() + " - " + object.getGlobalPos().toString());

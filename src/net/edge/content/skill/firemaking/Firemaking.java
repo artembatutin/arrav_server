@@ -6,6 +6,7 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.DestructionSkillAction;
 import net.edge.locale.loc.Location;
 import net.edge.locale.Position;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
 import net.edge.world.World;
@@ -92,7 +93,7 @@ public final class Firemaking extends DestructionSkillAction {
 	
 	@Override
 	public int delay() {
-		return ThreadLocalRandom.current().nextInt(2, 6);
+		return RandomUtils.inclusive(2, 6);
 	}
 	
 	@Override

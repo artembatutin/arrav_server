@@ -1,5 +1,7 @@
 package net.edge.world.node.item;
 
+import net.edge.util.rand.RandomUtils;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -34,7 +36,7 @@ public final class ItemSet {
 	 * @return an item from the item set.
 	 */
 	public Item getRandom() {
-		return set[ThreadLocalRandom.current().nextInt(set.length - 1)];
+		return set[RandomUtils.inclusive(set.length - 1)];
 	}
 	
 	/**

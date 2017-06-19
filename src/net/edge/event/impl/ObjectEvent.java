@@ -7,6 +7,8 @@ import net.edge.content.skill.agility.impl.Shortcuts;
 import net.edge.content.skill.agility.impl.barb.BarbarianOutpostAgility;
 import net.edge.content.skill.agility.impl.gnome.GnomeStrongholdAgility;
 import net.edge.content.skill.agility.impl.wild.WildernessAgility;
+import net.edge.content.skill.construction.furniture.Furniture;
+import net.edge.content.skill.construction.furniture.HotSpots;
 import net.edge.content.skill.crafting.PotClaying;
 import net.edge.content.skill.mining.Mining;
 import net.edge.content.skill.runecrafting.Runecrafting;
@@ -47,6 +49,8 @@ public abstract class ObjectEvent extends Event {
 		ObjectActionPacket.FIFTH.register(object, this);
 	}
 	
+	public void registerCons(int object) { ObjectActionPacket.CONSTRUCTION.register(object, this);}
+	
 	public static void init() {
 		WebSlashing.event();
 		WarriorsGuild.event();
@@ -62,6 +66,7 @@ public abstract class ObjectEvent extends Event {
 		PotClaying.objects();
 		Stalls.event();
 		Smelting.event();
+		HotSpots.event();
 	}
 	
 }

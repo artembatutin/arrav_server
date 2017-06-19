@@ -17,6 +17,7 @@ public final class SummoningCreationPacket implements PacketReader {
 	@Override
 	public void handle(Player player, int opcode, int size, ByteMessage payload) {
 		int click = payload.get();
+		System.out.println(click);
 		if(click < 0 || click >= VALUES.length)
 			return;
 		SummoningData data = VALUES[click];

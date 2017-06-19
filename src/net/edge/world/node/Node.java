@@ -133,7 +133,6 @@ public abstract class Node {
 	 * @throws IllegalArgumentException If the value being set is equal to the current value.
 	 */
 	public final void setState(NodeState state) {
-		checkArgument(state != NodeState.IDLE, "IDLE state cannot be explicitly set");
 		this.state = requireNonNull(state);
 		switch(state) {
 			case ACTIVE:

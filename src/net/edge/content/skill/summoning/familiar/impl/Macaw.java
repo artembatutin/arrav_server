@@ -32,7 +32,7 @@ public final class Macaw extends Familiar {
 	private final ForagerPassiveAbility ability = new ForagerPassiveAbility(199, 201, 203, 205) {
 		@Override
 		public boolean canForage(Player player) {
-			if(ThreadLocalRandom.current().nextInt(100) > 10) {
+			if(RandomUtils.inclusive(100) > 10) {
 				return false;
 			}
 			return true;

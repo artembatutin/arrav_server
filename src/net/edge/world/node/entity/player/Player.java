@@ -6,6 +6,8 @@ import net.edge.Server;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.item.OverloadEffectTask;
+import net.edge.content.skill.construction.Construction;
+import net.edge.content.skill.construction.House;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.packet.PacketWriter;
 import net.edge.net.session.GameSession;
@@ -572,6 +574,11 @@ public final class Player extends EntityNode {
 	private MarketShop marketShop;
 	
 	/**
+	 * The house instance of this player.
+	 */
+	private House house = new House(this);
+	
+	/**
 	 * Creates a new {@link Player}.
 	 * @param usernameHash the username hash of this player.
 	 */
@@ -705,6 +712,7 @@ public final class Player extends EntityNode {
 	public void dispose() {
 		setVisible(false);
 		Pet.onLogout(this);
+		Construction.onLogout(this);
 		Summoning.dismiss(this, true);
 		World.getExchangeSessionManager().reset(this);
 		if(getMarketShop() != null)
@@ -2337,4 +2345,19 @@ public final class Player extends EntityNode {
 		this.marketShop = marketShop;
 	}
 	
+	/**
+	 * Gets the house instance of this player.
+	 * @return house instance.
+	 */
+	public House getHouse() {
+		return house;
+	}
+	
+	/**
+	 * Sets the house instance of this player.
+	 * @param house this player's house instance.
+	 */
+	public void setHouse(House house) {
+		this.house = house;
+	}
 }
