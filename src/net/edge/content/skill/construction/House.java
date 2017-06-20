@@ -5,6 +5,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.skill.construction.data.Butlers;
 import net.edge.content.skill.construction.data.Constants;
 import net.edge.content.skill.construction.room.Room;
+import net.edge.content.skill.construction.room.RoomFurniture;
 import net.edge.world.World;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
@@ -78,27 +79,24 @@ public class House {
 			return;
 		if(myTiles[0] == -1 || myTiles[1] == -1)
 			return;
-		Room r = house.get().getRooms()[house.get().isDungeon() ? 4 : owner.getPosition()
-				.getZ()][myTiles[0] - 1][myTiles[1] - 1];
+		Room r = house.get().getRooms()[house.get().isDungeon() ? 4 : owner.getPosition().getZ()][myTiles[0] - 1][myTiles[1] - 1];
 		if(r == null)
 			return;
 		if(r.data().getId() == Constants.OUBLIETTE) {
 			int xOnTile = Construction.getXTilesOnTile(myTiles, owner.getPosition().getX());
 			int yOnTile = Construction.getYTilesOnTile(myTiles, owner.getPosition().getY());
-			if(xOnTile >= 2 && xOnTile <= 5 && yOnTile >= 2 && yOnTile <= 5) {
-				HouseFurniture pf = null;
-				for(HouseFurniture pf_ : house.get().getFurniture()) {
-					if(pf_.getRoomX() == myTiles[0] - 1 && pf_.getRoomY() == myTiles[1] - 1 && pf_.getHotSpotId() == 85) {
-						pf = pf_;
+			if(xOnTile >= 2 && xOnTile <= 5 && yOnTile >= 2 && yOnTile <= 5 && r.getFurniture() != null) {
+				for(RoomFurniture f : r.getFurniture()) {
+					if(f == null)
+						continue;
+					if(f.getFurniture().getHotSpotId() == 85) {
+						if(f.getFurniture().getId() == 13334 || f.getFurniture().getId() == 13337) {
+							//if(player.getConstitution() > 0) {
+							//p.getCombat().appendHit(p, 20, 0, 2, false);
+							//	p.setDamage(new Damage(new Hit(20, CombatIcon.NONE, Hitmask.NONE)));
+							//}
+						}
 						break;
-					}
-				}
-				if(pf != null) {
-					if(pf.getFurnitureId() == 13334 || pf.getFurnitureId() == 13337) {
-						//if(player.getConstitution() > 0) {
-						//p.getCombat().appendHit(p, 20, 0, 2, false);
-						//	p.setDamage(new Damage(new Hit(20, CombatIcon.NONE, Hitmask.NONE)));
-						//}
 					}
 				}
 			}
@@ -109,27 +107,25 @@ public class House {
 			int[] converted_1 = Construction.getConvertedCoords(4, 2, myTiles, r);
 			int[] converted_2 = Construction.getConvertedCoords(3, 5, myTiles, r);
 			int[] converted_3 = Construction.getConvertedCoords(4, 5, myTiles, r);
-			if(owner.getPosition().getX() == converted[0] && owner.getPosition()
+			if(r.getFurniture() != null && (owner.getPosition().getX() == converted[0] && owner.getPosition()
 					.getY() == converted[1] || owner.getPosition().getX() == converted_1[0] && owner.getPosition()
 					.getY() == converted_1[1] || owner.getPosition().getX() == converted_2[0] && owner.getPosition()
 					.getY() == converted_2[1] || owner.getPosition().getX() == converted_3[0] && owner.getPosition()
-					.getY() == converted_3[1]) {
-				HouseFurniture pf = null;
-				for(HouseFurniture furniture : house.get().getFurniture()) {
-					if(furniture.getRoomX() == myTiles[0] && furniture.getRoomY() == myTiles[1] && furniture.getHotSpotId() == 91) {
-						int[] coords = Construction.getConvertedCoords(furniture.getStandardXOff(), furniture.getStandardYOff(), myTiles, r);
+					.getY() == converted_3[1])) {
+				for(RoomFurniture f : r.getFurniture()) {
+					if(f == null)
+						continue;
+					if(f.getFurniture().getHotSpotId() == 91) {
+						int[] coords = Construction.getConvertedCoords(f.getStandardXOff(), f.getStandardYOff(), myTiles, r);
 						if(coords[0] == myTiles[0] && coords[1] == myTiles[1]) {
-							pf = furniture;
+							if(f.getFurniture().getId() >= 13356 || f.getFurniture().getId() <= 13360) {
+								//if(player.getConstitution() > 0) {
+								//p.getCombat().appendHit(p, 20, 0, 2, false);
+								//p.setDamage(new Damage(new Hit(20, CombatIcon.NONE, Hitmask.NONE)));
+								//}
+							}
 							break;
 						}
-					}
-				}
-				if(pf != null) {
-					if(pf.getFurnitureId() >= 13356 || pf.getFurnitureId() <= 13360) {
-						//if(player.getConstitution() > 0) {
-						//p.getCombat().appendHit(p, 20, 0, 2, false);
-						//p.setDamage(new Damage(new Hit(20, CombatIcon.NONE, Hitmask.NONE)));
-						//}
 					}
 				}
 			}
@@ -217,7 +213,7 @@ public class House {
 					if (controller.getRooms()[z][x][y].getX() == 0)
 						continue;
 					Room room = controller.getRooms()[z][x][y];
-					Palette.PaletteTile tile = new Palette.PaletteTile(room.getX(), room.getY(), room.getZ(), room.getRotation());
+					Palette.PaletteTile tile = new Palette.PaletteTile(room.getX(), room.getY(), room.getZ() + 1, room.getRotation());
 					palette.setTile(x, y, z, tile);
 				}
 			}

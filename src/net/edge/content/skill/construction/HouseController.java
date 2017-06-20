@@ -44,11 +44,6 @@ public class HouseController {
 	private Room[][][] rooms = new Room[5][13][13];
 	
 	/**
-	 * All of the player's housed furniture.
-	 */
-	private final ObjectList<HouseFurniture> furniture = new ObjectArrayList<>();
-	
-	/**
 	 * All of the built portals.
 	 */
 	private final ObjectList<Portal> portals = new ObjectArrayList<>();
@@ -72,10 +67,6 @@ public class HouseController {
 	
 	public ObjectList<Portal> getPortals() {
 		return portals;
-	}
-	
-	public ObjectList<HouseFurniture> getFurniture() {
-		return furniture;
 	}
 	
 	/**
@@ -142,7 +133,7 @@ public class HouseController {
 	 * @param plan new plan.
 	 */
 	public void setPlan(ConstructionPlan plan) {
-		this.plan.getPanel().clear();
+		this.plan.setPanel(null);
 		this.plan = plan;
 	}
 	

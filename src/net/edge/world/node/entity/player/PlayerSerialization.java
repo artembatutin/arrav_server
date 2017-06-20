@@ -5,7 +5,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.skill.construction.House;
-import net.edge.content.skill.construction.HouseFurniture;
 import net.edge.content.skill.construction.Portal;
 import net.edge.content.skill.construction.room.Room;
 import net.edge.content.skill.summoning.SummoningData;
@@ -720,42 +719,6 @@ public final class PlayerSerialization {
 		public void fromJson(Gson b, Player p, JsonElement n) {
 			if(!n.isJsonNull()) {
 				p.getHouse().get().setRooms(b.fromJson(n, Room[][][].class));
-			}
-		}
-	}, new Token("house-furniture") {
-		@Override
-		public Object toJson(Player p) {
-			House house = p.getHouse();
-			if(house.get().getFurniture().isEmpty())
-				return null;
-			return house.get().getFurniture().toArray(new HouseFurniture[house.get().getFurniture().size()]);
-		}
-		
-		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			if(!n.isJsonNull()) {
-				House house = p.getHouse();
-				HouseFurniture[] furnitures = b.fromJson(n, HouseFurniture[].class);
-				for(HouseFurniture furniture : furnitures)
-					house.get().getFurniture().add(furniture);
-			}
-		}
-	}, new Token("house-portal") {
-		@Override
-		public Object toJson(Player p) {
-			House house = p.getHouse();
-			if(house.get().getPortals().isEmpty())
-				return null;
-			return house.get().getPortals().toArray(new Portal[house.get().getPortals().size()]);
-		}
-		
-		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			if(!n.isJsonNull()) {
-				House house = p.getHouse();
-				Portal[] portals = b.fromJson(n, Portal[].class);
-				for(Portal portal : portals)
-					house.get().getPortals().add(portal);
 			}
 		}
 	}};

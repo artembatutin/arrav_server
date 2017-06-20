@@ -846,18 +846,12 @@ public final class PacketWriter {
 	}
 	
 	/**
-	 * Sends a removal of an object chunk.
-	 * @param chunkX chunk x.
-	 * @param chunkY chunk y.
-	 * @param height height.
+	 * Removes all spawned objects.
 	 */
-	public void sendObjectsRemoval(int chunkX, int chunkY, int height) {
+	public void removeAllObjects() {
 		if(player.getState() == INACTIVE)
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 153);
-		msg.put(chunkX);
-		msg.put(chunkY);
-		msg.put(height);
+		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 131);
 		player.queue(msg);
 	}
 	
@@ -868,11 +862,11 @@ public final class PacketWriter {
 	public void sendConstruction(HotSpots spot) {
 		if(player.getState() == INACTIVE)
 			return;
-		ObjectArrayList<Furniture> panel = Furniture.getForHotSpotId(spot.getHotSpotId());
-		if(panel == null)
+		Furniture[] panel = spot.getFurnitures();
+		if(panel == null || panel.length == 0)
 			return;
 		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 130, MessageType.VARIABLE);
-		msg.put(panel.size());
+		msg.put(panel.length);
 		for(Furniture furniture : panel) {
 			msg.putShort(furniture.getItemId());
 			msg.put(furniture.getLevel());

@@ -85,10 +85,17 @@ public final class ObjectActionPacket implements PacketReader {
 		//construction clicks.
 		if(player.getHouse().isOwnerHome()) {
 			ObjectEvent e = CONSTRUCTION.get(objectId);
-			player.getHouse().get().getPlan().setObjectX(objectX);
-			player.getHouse().get().getPlan().setObjectY(objectY);
-			if(e != null && e.click(player, new DynamicObject(objectId, new Position(objectX, objectY, player.getPosition().getZ()), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, player.getInstance()), action))
-				return;
+			player.message(objectId+"");
+			if(e != null) {
+				player.getHouse().get().getPlan().setObjectX(objectX);
+				player.getHouse().get().getPlan().setObjectY(objectY);
+				Boundary boundary = new Boundary(position, ObjectDefinition.DEFINITIONS[objectId].getSize());
+				player.getMovementListener().append(() -> {
+					if(boundary.within(player.getPosition(), player.size(), 1)) {
+						e.click(player, new DynamicObject(objectId, new Position(objectX, objectY, player.getPosition().getZ()), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, player.getInstance()), action);
+					}
+				});
+			}
 		}
 		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
@@ -97,8 +104,9 @@ public final class ObjectActionPacket implements PacketReader {
 		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
 			player.message("[OBJ"+action+"]:" + object.getId() + " - " + object.getGlobalPos().toString());
 		boolean distanceIgnore = (action == 1 && (objectId == 85584 || objectId == 85532 || objectId == 85534));
+		Boundary boundary = new Boundary(position, object.getDefinition().getSize());
 		player.getMovementListener().append(() -> {
-			if(distanceIgnore || new Boundary(position, object.getDefinition().getSize()).within(player.getPosition(), player.size(), 1)) {
+			if(distanceIgnore || boundary.within(player.getPosition(), player.size(), 1)) {
 				switch(action) {
 					case 1:
 						if(!MinigameHandler.execute(player, m -> m.onFirstClickObject(player, object))) {

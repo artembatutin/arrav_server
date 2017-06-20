@@ -2,11 +2,8 @@ package net.edge.content.skill.construction.furniture;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.skill.construction.Construction;
 import net.edge.content.skill.construction.data.Constants;
-import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.EnumSet;
@@ -575,21 +572,9 @@ public enum Furniture {
 		this.setFurnitureRequired(furnitureRequired);
 	}
 	
-	public static ObjectArrayList<Furniture> getForHotSpotId(int hotspotId) {
-		ObjectArrayList<Furniture> toReturn = new ObjectArrayList<>();
-		for(Furniture f : values()) {
-			if(f.hotspotId == hotspotId) {
-				toReturn.add(f);
-			}
-		}
-		if(toReturn.isEmpty())
-			return null;
-		return toReturn;
-	}
-	
 	public static Furniture forFurnitureId(int furnitureId) {
 		for(Furniture f : VALUES) {
-			if(f.getFurnitureId() == furnitureId) {
+			if(f.getId() == furnitureId) {
 				return f;
 			}
 		}
@@ -625,7 +610,7 @@ public enum Furniture {
 		return hotspotId;
 	}
 	
-	public int getFurnitureId() {
+	public int getId() {
 		return furnitureId;
 	}
 	

@@ -1,7 +1,5 @@
 package net.edge.content.skill.construction.furniture;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-
 /**
  * Represents a plan to build a furniture, caching values to avoid loops.
  * @author Artem Batutin <artembatutin@gmail.com>
@@ -16,7 +14,7 @@ public class ConstructionPlan {
 	/**
 	 * The furniture displayed on the player's panel.
 	 */
-	private ObjectArrayList<Furniture> panel = new ObjectArrayList<>();
+	private Furniture[] panel = null;
 	
 	/**
 	 * The clicked object coordinates.
@@ -27,7 +25,7 @@ public class ConstructionPlan {
 	 * Gets the furniture displayed on the construction panel.
 	 * @return displayed furniture.
 	 */
-	public ObjectArrayList<Furniture> getPanel() {
+	public Furniture[] getPanel() {
 		return panel;
 	}
 	
@@ -35,7 +33,7 @@ public class ConstructionPlan {
 	 * Sets a new panel furniture list.
 	 * @param panel furniture list displayed.
 	 */
-	public void setPanel(ObjectArrayList<Furniture> panel) {
+	public void setPanel(Furniture[] panel) {
 		this.panel = panel;
 	}
 	

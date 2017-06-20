@@ -50,7 +50,10 @@ public final class ConstructionPacket implements PacketReader {
 		int click = payload.get();
 		if(click < 0 || click >= DATA.length) {
 			click -= 40;
-			player.getHouse().get().getPlan().setSelected(player.getHouse().get().getPlan().getPanel().get(click));
+			Furniture[] plans = player.getHouse().get().getPlan().getPanel();
+			if(plans == null)
+				return;
+			player.getHouse().get().getPlan().setSelected(plans[click]);
 			ConstructFurniture cons = new ConstructFurniture(player, player.getHouse().get().getPlan());
 			cons.start();
 		} else {

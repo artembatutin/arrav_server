@@ -6,12 +6,14 @@ package net.edge.content.skill.construction.room;
 public class Room {
 	
 	private final RoomData data;
+	private final RoomFurniture[] furniture;
 	private int rotation, theme;
 	
 	public Room(RoomData data, int rotation, int theme) {
 		this.rotation = rotation;
 		this.theme = theme;
 		this.data = data;
+		this.furniture = new RoomFurniture[data.getSpots().length];
 	}
 	
 	public RoomData data() {
@@ -40,5 +42,18 @@ public class Room {
 	
 	public boolean[] getDoors() {
 		return data.getRotatedDoors(rotation);
+	}
+	
+	public RoomFurniture[] getFurniture() {
+		return furniture;
+	}
+	
+	public void addFurniture(RoomFurniture furniture) {
+		for(int i = 0; i < data.getSpots().length; i++) {
+			if(data.getSpots()[i].getHotSpotId() == furniture.getFurniture().getHotSpotId()) {
+				this.furniture[i] = furniture;
+				break;
+			}
+		}
 	}
 }

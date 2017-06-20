@@ -13,6 +13,8 @@ import java.util.Iterator;
 import static net.edge.content.skill.construction.Construction.getMyChunk;
 import static net.edge.content.skill.construction.Construction.getXTilesOnTile;
 import static net.edge.content.skill.construction.Construction.getYTilesOnTile;
+import static net.edge.content.skill.construction.furniture.Furniture.OAK_LADDER;
+import static net.edge.content.skill.construction.furniture.Furniture.OAK_STAIRCASE;
 
 /**
  * Handles room manipulations.
@@ -57,34 +59,42 @@ public class RoomManipulation {
 		if(toHeight == 100) {
 			direction = SAME;
 			toHeight = 1;
-			rotation = house.get().getRooms()[0][myTiles[0] - 1][myTiles[1] - 1].getRotation();
+			Room room = house.get().getRooms()[0][myTiles[0] - 1][myTiles[1] - 1];
+			rotation = room.getRotation();
 			int stairId = 0;
-			for(HouseFurniture furn : house.get().getFurniture()) {
-				if(furn.getRoomX() == myTiles[0] - 1 && furn.getRoomY() == myTiles[1] - 1 && furn.getRoomZ() == 0) {
-					if(furn.getStandardXOff() == 3 && furn.getStandardYOff() == 3) {
-						stairId = furn.getFurnitureId() + 1;
+			//TODO TEST THIS.
+			if(room.getFurniture() != null) {
+				for(RoomFurniture f : room.getFurniture()) {
+					if(f == null)
+						continue;
+					if(f.getStandardXOff() == 3 && f.getStandardYOff() == 3) {
+						stairId = f.getFurniture().getId() + 1;
 					}
 				}
 			}
-			Construction.doFurniturePlace(HotSpots.SKILL_HALL_STAIRS_1, Furniture.forFurnitureId(stairId), null, myTiles, Constants.BASE_X + (myTiles[0] * 8) + 3, Constants.BASE_Y + (myTiles[1] * 8) + 3, rotation, p, false, 1);
-			HouseFurniture pf = new HouseFurniture(myTiles[0] - 1, myTiles[1] - 1, 1, 37, stairId, 3, 3);
-			house.get().getFurniture().add(pf);
+			Furniture stairs = Furniture.forFurnitureId(stairId);
+			Construction.doFurniturePlace(HotSpots.SKILL_HALL_STAIRS_1, stairs, null, myTiles, Constants.BASE_X + (myTiles[0] * 8) + 3, Constants.BASE_Y + (myTiles[1] * 8) + 3, rotation, p, false, 1);
+			room.addFurniture(new RoomFurniture(stairs, 3, 3));
 		}
 		if(toHeight == 101) {
 			direction = SAME;
 			toHeight = 0;
-			rotation = house.get().getRooms()[1][myTiles[0] - 1][myTiles[1] - 1].getRotation();
+			Room room = house.get().getRooms()[1][myTiles[0] - 1][myTiles[1] - 1];
+			rotation = room.getRotation();
 			int stairId = 0;
-			for(HouseFurniture furn : house.get().getFurniture()) {
-				if(furn.getRoomX() == myTiles[0] - 1 && furn.getRoomY() == myTiles[1] - 1 && furn.getRoomZ() == 1) {
-					if(furn.getStandardXOff() == 3 && furn.getStandardYOff() == 3) {
-						stairId = furn.getFurnitureId() + 1;
+			//TODO TEST THIS.
+			if(room.getFurniture() != null) {
+				for(RoomFurniture f : room.getFurniture()) {
+					if(f == null)
+						continue;
+					if(f.getStandardXOff() == 3 && f.getStandardYOff() == 3) {
+						stairId = f.getFurniture().getId() + 1;
 					}
 				}
 			}
-			Construction.doFurniturePlace(HotSpots.SKILL_HALL_STAIRS, Furniture.forFurnitureId(stairId), null, myTiles, Constants.BASE_X + (myTiles[0] * 8) + 3, Constants.BASE_Y + (myTiles[1] * 8) + 3, rotation, p, false, 1);
-			HouseFurniture pf = new HouseFurniture(myTiles[0] - 1, myTiles[1] - 1, 0, 36, stairId, 3, 3);
-			house.get().getFurniture().add(pf);
+			Furniture stairs = Furniture.forFurnitureId(stairId);
+			Construction.doFurniturePlace(HotSpots.SKILL_HALL_STAIRS, stairs, null, myTiles, Constants.BASE_X + (myTiles[0] * 8) + 3, Constants.BASE_Y + (myTiles[1] * 8) + 3, rotation, p, false, 1);
+			room.addFurniture(new RoomFurniture(stairs, 3, 3));
 			house.createPalette();
 		}
 		
@@ -94,15 +104,15 @@ public class RoomManipulation {
 		if(toHeight == 102 || toHeight == 103) {
 			direction = SAME;
 			toHeight = 4;
-			rotation = house.get().getRooms()[0][myTiles[0] - 1][myTiles[1] - 1].getRotation();
-			HouseFurniture pf;
+			Room room = house.get().getRooms()[0][myTiles[0] - 1][myTiles[1] - 1];
+			rotation = room.getRotation();
+			RoomFurniture pf;
 			if(toHeight == 102) {
-				int stairId = 13497;
-				pf = new HouseFurniture(myTiles[0] - 1, myTiles[1] - 1, 4, 36, stairId, 3, 3);
+				pf = new RoomFurniture(OAK_STAIRCASE, 3, 3);
 			} else {
-				pf = new HouseFurniture(myTiles[0] - 1, myTiles[1] - 1, 4, 88, 13328, 1, 6);
+				pf = new RoomFurniture(OAK_LADDER, 1, 6);
 			}
-			house.get().getFurniture().add(pf);
+			room.addFurniture(pf);
 		}
 		
 		Room room = new Room(data, rotation, 0);
@@ -173,7 +183,7 @@ public class RoomManipulation {
 		RoomData rd = r.data();
 		int toRot = (wise == 0 ? RoomData.getNextEligibleRotationClockWise(rd, direction, r.getRotation()) : RoomData.getNextEligibleRotationCounterClockWise(rd, direction, r.getRotation()));
 		PaletteTile tile = new PaletteTile(rd.getX(), rd.getY(), 0, toRot);
-		//p.getMessages().sendObjectsRemoval(chunkX, chunkY, p.getPosition().getZ());
+		p.getMessages().removeAllObjects();
 		if(house.get().isDungeon()) {
 			house.getSecondaryPalette().setTile(chunkX, chunkY, 0, tile);
 		} else {
@@ -203,7 +213,6 @@ public class RoomManipulation {
 		
 		Room room = new Room(house.get().isDungeon() ? RoomData.DUNGEON_EMPTY : RoomData.EMPTY, 0, 0);
 		PaletteTile tile = new PaletteTile(room.getX(), room.getY(), room.getZ(), room.getRotation());
-		
 		int xOff = 0, yOff = 0;
 		if(direction == LEFT) {
 			xOff = -1;
@@ -240,7 +249,7 @@ public class RoomManipulation {
 				return;
 			}
 		}
-		//p.getMessages().sendObjectsRemoval(chunkX, chunkY, p.getPosition().getZ());
+		p.getMessages().removeAllObjects();
 		if(p.getPosition().getZ() == 0) {
 			if(house.get().isDungeon()) {
 				house.getSecondaryPalette().setTile(chunkX, chunkY, 0, tile);
@@ -257,17 +266,6 @@ public class RoomManipulation {
 			house.get().getRooms()[house.get().isDungeon() ? 4 : toHeight][chunkX][chunkY] = null;
 		}
 		house.get().setBuildPosition(p.getPosition().copy());
-		house.createPalette();
-		Iterator<HouseFurniture> iterator = house.get().getFurniture().iterator();
-		while(iterator.hasNext()) {
-			HouseFurniture pf = iterator.next();
-			if(pf.getRoomX() == chunkX && pf.getRoomY() == chunkY && pf.getRoomZ() == toHeight)
-				iterator.remove();
-		}
-		for(Portal port : house.get().getPortals()) {
-			if(port.getRoomX() == chunkX && port.getRoomY() == chunkY && port.getRoomZ() == toHeight)
-				iterator.remove();
-		}
 		house.createPalette();
 		house.refresh();
 	}

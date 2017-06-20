@@ -2,6 +2,8 @@ package net.edge.content.skill.construction.data;
 
 import net.edge.content.skill.construction.Construction;
 import net.edge.content.skill.construction.furniture.HotSpots;
+import net.edge.content.skill.construction.room.Room;
+import net.edge.content.skill.construction.room.RoomData;
 import net.edge.locale.Position;
 import net.edge.world.object.ObjectDefinition;
 
@@ -68,22 +70,20 @@ public class Constants {
 		return roomType == GARDEN || roomType == FORMAL_GARDEN;
 	}
 	
-	public static int getXOffsetForObjectId(int objectId, int hsId, int rotation) {
-		HotSpots hs = HotSpots.forObjectId(hsId);
+	public static int getXOffsetForObjectId(RoomData room, int objectId, int hsId, int rotation) {
+		HotSpots hs = room.getSpot(hsId);
 		if(hs == null)
 			return 0;
 		ObjectDefinition objectDef = ObjectDefinition.DEFINITIONS[objectId];
-		return getRotatedLandscapeChunkX(rotation, objectDef.getSizeY(), hs.getXOffset(), hs.getYOffset(), objectDef.getSizeX(), hs
-				.getRotation(0));
+		return getRotatedLandscapeChunkX(rotation, objectDef.getSizeY(), hs.getXOffset(), hs.getYOffset(), objectDef.getSizeX(), hs.getRotation(0));
 	}
 	
-	public static int getYOffsetForObjectId(int objectId, int hsId, int rotation) {
-		HotSpots hs = HotSpots.forObjectId(hsId);
+	public static int getYOffsetForObjectId(RoomData room, int objectId, int hsId, int rotation) {
+		HotSpots hs = room.getSpot(hsId);
 		if(hs == null)
 			return 0;
 		ObjectDefinition objectDef = ObjectDefinition.DEFINITIONS[objectId];
-		return getRotatedLandscapeChunkY(hs.getYOffset(), objectDef.getSizeY(), rotation, objectDef.getSizeX(), hs.getXOffset(), hs
-				.getRotation(0));
+		return getRotatedLandscapeChunkY(hs.getYOffset(), objectDef.getSizeY(), rotation, objectDef.getSizeX(), hs.getXOffset(), hs.getRotation(0));
 	}
 	
 	public static int getYOffsetForObjectId(int objectId, int offsetX, int offsetY, int rotation, int objectRot) {

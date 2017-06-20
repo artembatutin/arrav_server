@@ -5,7 +5,8 @@ import com.google.common.collect.Sets;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.construction.Construction;
 import net.edge.content.skill.construction.House;
-import net.edge.content.skill.construction.HouseFurniture;
+import net.edge.content.skill.construction.room.Room;
+import net.edge.content.skill.construction.room.RoomFurniture;
 import net.edge.content.skill.construction.Portal;
 import net.edge.content.skill.construction.data.Constants;
 import net.edge.locale.Position;
@@ -14,6 +15,9 @@ import net.edge.world.node.item.Item;
 
 import java.util.EnumSet;
 import java.util.Iterator;
+
+import static net.edge.content.skill.construction.data.Constants.FORMAL_GARDEN;
+import static net.edge.content.skill.construction.data.Constants.GARDEN;
 
 public enum Portals {
 	VARROCK(1, new Position(Constants.VARROCK_X, Constants.VARROCK_Y), 25, new Item[]{new Item(563, 100), new Item(554, 100), new Item(556, 300)}, new int[]{13615, 13622, 13629}),
@@ -130,13 +134,20 @@ public enum Portals {
 		p.getMessages().sendCloseWindows();
 	}
 	
-	public static HouseFurniture findNearestPortal(House house) {
-		for(HouseFurniture pf : house.get().getFurniture()) {
-			if(pf.getFurnitureId() != 13405)
-				continue;
-			if(pf.getRoomZ() != 0)
-				continue;
-			return pf;
+	public static Position findNearestPortal(House house) {
+		for(int x = 0; x < house.get().getRooms()[0].length; x++) {
+			for(int y = 0; y < house.get().getRooms()[0][x].length; y++) {
+				Room room = house.get().getRooms()[0][x][y];
+				if(room.getFurniture() != null && (room.data().getId() == GARDEN || room.data().getId() == FORMAL_GARDEN)) {
+					for(RoomFurniture pf : house.get().getRooms()[0][x][y].getFurniture()) {
+						if(pf == null)
+							continue;
+						if(pf.getFurniture().getId() != 13405)
+							continue;
+						return new Position(x, y);
+					}
+				}
+			}
 		}
 		return null;
 	}
