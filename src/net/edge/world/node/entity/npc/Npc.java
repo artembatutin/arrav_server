@@ -20,6 +20,7 @@ import net.edge.world.node.entity.npc.impl.gwd.CommanderZilyana;
 import net.edge.world.node.entity.npc.impl.gwd.GeneralGraardor;
 import net.edge.world.node.entity.npc.impl.gwd.KreeArra;
 import net.edge.world.node.entity.npc.strategy.impl.TormentedDemonCombatStrategy;
+import net.edge.world.node.entity.npc.strategy.impl.WildyWyrmCombatStrategy;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.update.UpdateFlag;
 
@@ -45,7 +46,7 @@ public abstract class Npc extends EntityNode {
 			.put(6260, s -> new GeneralGraardor())
 			.put(6222, s -> new KreeArra())
 			.put(8133, s -> new CorporealBeast())
-			.put(14301, s -> new Glacor(s)).build());
+			.put(14301, Glacor::new).build());
 	
 	/**
 	 * Gets a certain npc by the specified {@code id} and supplies it's position.
@@ -57,6 +58,10 @@ public abstract class Npc extends EntityNode {
 		if(id >= 8349 && id <= 8351) {
 			Npc npc = new DefaultNpc(id, pos);
 			return npc.setStrategy(Optional.of(new TormentedDemonCombatStrategy(npc)));
+		}
+		if(id == 3334) {
+			Npc npc = new DefaultNpc(id, pos);
+			return npc.setStrategy(Optional.of(new WildyWyrmCombatStrategy(npc)));
 		}
 		return CUSTOM_NPCS.containsKey(id) ? CUSTOM_NPCS.get(id).apply(pos).create() : new DefaultNpc(id, pos);
 	}
