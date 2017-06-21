@@ -145,7 +145,7 @@ public final class CombatSession extends Task {
 			builder.reset();
 			return false;
 		}
-		if(!Location.inMultiCombat(builder.getCharacter()) && builder.getVictim().getCombatBuilder().isBeingAttacked() && !builder.getVictim().getCombatBuilder().getAggressor().same(builder.getCharacter())) {
+		if(!Location.inMultiCombat(builder.getCharacter()) && builder.getVictim() != null && builder.getVictim().getCombatBuilder().isBeingAttacked() && !builder.getVictim().getCombatBuilder().getAggressor().same(builder.getCharacter())) {
 			if(builder.getCharacter().isPlayer())
 				builder.getCharacter().toPlayer().message("They are already under attack!");
 			builder.reset();
