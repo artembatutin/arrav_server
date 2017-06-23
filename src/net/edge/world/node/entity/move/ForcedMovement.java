@@ -5,6 +5,7 @@ import net.edge.locale.Position;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
 
+import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
@@ -57,7 +58,9 @@ public final class ForcedMovement {
 	 * The flag which checks if a forced movement is active.
 	 */
 	private boolean active = false;
-	
+
+	protected Optional<Runnable> onDestination;
+
 	/**
 	 * The walking speed.
 	 */
@@ -129,7 +132,7 @@ public final class ForcedMovement {
 		Position delta = Position.delta(start, destination);
 		return ForcedMovementDirection.getDirection(delta.getX(), delta.getY());
 	}
-	
+
 	/**
 	 * Submits this forced movement.
 	 */
@@ -279,5 +282,9 @@ public final class ForcedMovement {
 	public EntityNode getCharacter() {
 		return character;
 	}
-	
+
+	public ForcedMovement onDestination(Runnable execute) {
+		this.onDestination = Optional.of(execute);
+		return this;
+	}
 }

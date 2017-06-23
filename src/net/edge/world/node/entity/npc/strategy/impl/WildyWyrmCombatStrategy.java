@@ -23,6 +23,11 @@ import static net.edge.util.rand.RandomUtils.*;
 public final class WildyWyrmCombatStrategy extends DynamicCombatStrategy<Npc> {
 
     /**
+     * Determines if the wildywyrm is stomping.
+     */
+    private boolean stomping;
+
+    /**
      * Constructs a new {@link DynamicCombatStrategy}.
      *
      * @param npc {@link #npc}.
@@ -48,6 +53,47 @@ public final class WildyWyrmCombatStrategy extends DynamicCombatStrategy<Npc> {
                 return magic(victim);
         }
     }
+
+//    private CombatSessionData stomp() {FIXME
+//        stomping = true;
+//
+//        Position target = null;
+//        npc.animation(new Animation(12796, Animation.AnimationPriority.HIGH));
+//
+//        for(Player p : World.get().getPlayers()) {
+//            if(p.isDead() || !npc.getPosition().withinDistance(p.getPosition(), 12)) {
+//                continue;
+//            }
+//
+//            target = p.getPosition();
+//        }
+//
+//        if(target == null) {
+//            npc.untransform();
+//            return null;
+//        }
+//
+//        final Position finalPosition = target;
+//
+//        LinkedTaskSequence seq = new LinkedTaskSequence();
+//        seq.connect(2, () -> {
+//            npc.transform(2417);
+//        });
+//        seq.connect(1, () -> {
+//            ForcedMovement movement = new ForcedMovement(npc);
+//
+//            movement.setFirst(npc.getPosition());
+//            movement.setSecond(finalPosition);
+//            movement.setSecondSpeed(40);
+//            movement.onDestination(() -> {
+//                npc.untransform();
+//                npc.animation(new Animation(12795, Animation.AnimationPriority.HIGH));
+//            });
+//            movement.submit();
+//        });
+//        seq.start();
+//        return null;
+//    }
 
     private CombatSessionData melee(EntityNode victim) {
         npc.animation(new Animation(12791, Animation.AnimationPriority.HIGH));
@@ -77,7 +123,7 @@ public final class WildyWyrmCombatStrategy extends DynamicCombatStrategy<Npc> {
      */
     @Override
     public boolean canOutgoingAttack(EntityNode victim) {
-        return true;
+        return !stomping;
     }
 
     /**
@@ -90,7 +136,7 @@ public final class WildyWyrmCombatStrategy extends DynamicCombatStrategy<Npc> {
     @Override
     public CombatSessionData outgoingAttack(EntityNode victim) {
         CombatType[] types = npc.getPosition().withinDistance(victim.getPosition(), 4) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
-        return type(victim, random(types));
+        return /*RandomUtils.inclusive(100) < 60 ? stomp() : */type(victim, random(types));
     }
 
     /**
@@ -101,7 +147,9 @@ public final class WildyWyrmCombatStrategy extends DynamicCombatStrategy<Npc> {
      */
     @Override
     public void incomingAttack(EntityNode attacker, CombatSessionData data) {
-
+        if(stomping) {
+            data.ignore();
+        }
     }
 
     /**

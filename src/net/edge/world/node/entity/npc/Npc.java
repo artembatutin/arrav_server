@@ -275,7 +275,12 @@ public abstract class Npc extends EntityNode {
 		transform = OptionalInt.of(id);
 		getFlags().flag(UpdateFlag.TRANSFORM);
 	}
-	
+
+	public void untransform() {
+		transform = OptionalInt.empty();
+		getFlags().flag(UpdateFlag.TRANSFORM);
+	}
+
 	/**
 	 * Gets the identification for this NPC.
 	 * @return the identification.

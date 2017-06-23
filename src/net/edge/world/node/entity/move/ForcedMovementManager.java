@@ -7,6 +7,8 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.node.entity.update.UpdateFlag;
 
+import java.util.Optional;
+
 /**
  * Holds functionality for the 0x400 mask.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -151,6 +153,7 @@ public final class ForcedMovementManager {
 
 		@Override
 		public void onCancel() {
+			movement.onDestination.ifPresent(Runnable::run);
 			movement.getCharacter().getMovementQueue().setLockMovement(false);
 		}
 	}

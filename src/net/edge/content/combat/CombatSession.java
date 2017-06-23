@@ -76,7 +76,10 @@ public final class CombatSession extends Task {
 				return;
 			}
 			CombatSessionData data = builder.getStrategy().outgoingAttack(builder.getCharacter(), builder.getVictim());
-			
+
+			if(data == null) {
+				return;
+			}
 			if(builder.getCharacter().isPlayer() && !data.isIgnored()) {
 				Player player = (Player) builder.getCharacter();
 				player.getMessages().sendCloseWindows();
@@ -145,7 +148,7 @@ public final class CombatSession extends Task {
 			builder.reset();
 			return false;
 		}
-		if(!Location.inMultiCombat(builder.getCharacter()) && builder.getVictim() != null && builder.getVictim().getCombatBuilder().isBeingAttacked() && !builder.getVictim().getCombatBuilder().getAggressor().same(builder.getCharacter())) {
+		if(!Location.inMultiCombat(builder.getCharacter()) && builder.getVictim() != null && builder.getVictim().getCombatBuilder().isBeingAttacked() && builder.getVictim().getCombatBuilder().getAggressor() != null && !builder.getVictim().getCombatBuilder().getAggressor().same(builder.getCharacter())) {
 			if(builder.getCharacter().isPlayer())
 				builder.getCharacter().toPlayer().message("They are already under attack!");
 			builder.reset();
