@@ -35,32 +35,32 @@ public class SimpleDoor {
 		if(!appended) {
 			if(getObjectType() == ObjectType.STRAIGHT_WALL) {
 				if(closed) {
-					if(original.getDirection() == ObjectDirection.WEST && getDirection() == ObjectDirection.WEST) {
+					if(getDirection() == ObjectDirection.WEST) {
 						xAdjustment = -1;
 						direction = ObjectDirection.NORTH;
-					} else if(original.getDirection() == ObjectDirection.NORTH && getDirection() == ObjectDirection.NORTH) {
+					} else if(getDirection() == ObjectDirection.NORTH) {
 						yAdjustment = 1;
 						direction = ObjectDirection.EAST;
-					} else if(original.getDirection() == ObjectDirection.EAST && getDirection() == ObjectDirection.EAST) {
+					} else if(getDirection() == ObjectDirection.EAST) {
 						xAdjustment = 1;
 						direction = ObjectDirection.SOUTH;
-					} else if(original.getDirection() == ObjectDirection.SOUTH && getDirection() == ObjectDirection.SOUTH) {
+					} else if(getDirection() == ObjectDirection.SOUTH) {
 						yAdjustment = -1;
 						direction = ObjectDirection.WEST;
 					} else if(original.getDirection() != getDirection()) {
 						direction = original.getDirection();
 					}
 				} else {
-					if(original.getDirection() == ObjectDirection.WEST && getDirection() == ObjectDirection.WEST) {
+					if(getDirection() == ObjectDirection.WEST) {
 						yAdjustment = 1;
 						direction = ObjectDirection.SOUTH;
-					} else if(original.getDirection() == ObjectDirection.NORTH && getDirection() == ObjectDirection.NORTH) {
+					} else if(getDirection() == ObjectDirection.NORTH) {
 						xAdjustment = 1;
 						direction = ObjectDirection.WEST;
-					} else if(original.getDirection() == ObjectDirection.EAST && getDirection() == ObjectDirection.EAST) {
+					} else if(getDirection() == ObjectDirection.EAST) {
 						yAdjustment = -1;
 						direction = ObjectDirection.NORTH;
-					} else if(original.getDirection() == ObjectDirection.SOUTH && getDirection() == ObjectDirection.SOUTH) {
+					} else if(getDirection() == ObjectDirection.SOUTH) {
 						xAdjustment = -1;
 						direction = ObjectDirection.EAST;
 					} else if(original.getDirection() != getDirection()) {
@@ -69,32 +69,32 @@ public class SimpleDoor {
 				}
 			} else if(getObjectType() == ObjectType.DIAGONAL_WALL) {
 				if(closed) {
-					if(original.getDirection() == ObjectDirection.WEST && getDirection() == ObjectDirection.WEST) {
+					if(getDirection() == ObjectDirection.WEST) {
 						xAdjustment = 1;
 						direction = ObjectDirection.SOUTH;
-					} else if(original.getDirection() == ObjectDirection.NORTH && getDirection() == ObjectDirection.NORTH) {
+					} else if(getDirection() == ObjectDirection.NORTH) {
 						xAdjustment = 1;
 						direction = ObjectDirection.EAST;
-					} else if(original.getDirection() == ObjectDirection.EAST && getDirection() == ObjectDirection.EAST) {
+					} else if(getDirection() == ObjectDirection.EAST) {
 						xAdjustment = -1;
 						direction = ObjectDirection.NORTH;
-					} else if(original.getDirection() == ObjectDirection.SOUTH && getDirection() == ObjectDirection.SOUTH) {
+					} else if(getDirection() == ObjectDirection.SOUTH) {
 						xAdjustment = -1;
 						direction = ObjectDirection.WEST;
 					} else if(original.getDirection() != getDirection()) {
 						direction = original.getDirection();
 					}
 				} else {
-					if(original.getDirection() == ObjectDirection.WEST && getDirection() == ObjectDirection.WEST) {
+					if(getDirection() == ObjectDirection.WEST) {
 						xAdjustment = 1;
 						direction = ObjectDirection.SOUTH;
-					} else if(original.getDirection() == ObjectDirection.NORTH && getDirection() == ObjectDirection.NORTH) {
+					} else if(getDirection() == ObjectDirection.NORTH) {
 						xAdjustment = 1;
 						direction = ObjectDirection.WEST;
-					} else if(original.getDirection() == ObjectDirection.EAST && getDirection() == ObjectDirection.EAST) {
+					} else if(getDirection() == ObjectDirection.EAST) {
 						xAdjustment = -1;
 						direction = ObjectDirection.NORTH;
-					} else if(original.getDirection() == ObjectDirection.SOUTH && getDirection() == ObjectDirection.SOUTH) {
+					} else if(getDirection() == ObjectDirection.SOUTH) {
 						xAdjustment = -1;
 						direction = ObjectDirection.EAST;
 					} else if(original.getDirection() != getDirection()) {

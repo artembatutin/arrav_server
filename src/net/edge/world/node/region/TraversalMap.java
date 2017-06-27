@@ -381,7 +381,7 @@ public final class TraversalMap {
 	 * @param impenetrable Whether or not this occupation can be passed through.
 	 * @param add          Flag if the occupant is added or removed.
 	 */
-	private void markOccupant(Region region, int height, int x, int y, int sizeX, int sizeY, boolean impenetrable, boolean add) {
+	public void markOccupant(Region region, int height, int x, int y, int sizeX, int sizeY, boolean impenetrable, boolean add) {
 		int flag = TraversalConstants.BLOCKED;
 		if(impenetrable) {
 			flag += TraversalConstants.IMPENETRABLE_BLOCKED;

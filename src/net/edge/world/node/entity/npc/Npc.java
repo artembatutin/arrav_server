@@ -222,7 +222,7 @@ public abstract class Npc extends EntityNode {
 	
 	@Override
 	public int getBaseAttack(CombatType type) {
-		int value = 0;
+		int value;
 		if(type == CombatType.MAGIC)
 			value = getDefinition().getMagicLevel();
 		else if(type == CombatType.RANGED)

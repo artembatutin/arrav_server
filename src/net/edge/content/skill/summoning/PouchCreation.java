@@ -1,24 +1,14 @@
 package net.edge.content.skill.summoning;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.task.Task;
-import net.edge.util.TextUtils;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.EnumSet;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Holds functionality for creating pouch items..
@@ -45,7 +35,7 @@ public final class PouchCreation extends ProducingSkillAction {
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			t.cancel();
-			getPlayer().animation(new Animation(725));
+			getPlayer().animation(new Animation(9068));
 			getPlayer().graphic(new Graphic(1207));
 		}
 	}

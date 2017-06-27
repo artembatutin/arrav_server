@@ -99,6 +99,7 @@ public abstract class MinigameLobby {
 			return;
 		}
 		
+		onEnter(player);
 		task = Optional.of(new MinigameLobbyTask(this));
 		World.get().submit(task.get());
 	}
@@ -146,6 +147,7 @@ public abstract class MinigameLobby {
 		
 		@Override
 		public void execute() {
+			minigame.onCountdown(minigame.players, this);
 			if(current.decrementAndGet() < 1) {
 				if(!minigame.canStart(players)) {
 					this.setDelay(minigame.restartTimer());
