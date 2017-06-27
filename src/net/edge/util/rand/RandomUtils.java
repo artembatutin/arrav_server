@@ -93,7 +93,7 @@ public final class RandomUtils {
 	 * @param array The array to retrieve an {@code int} from.
 	 * @return The {@code int} retrieved from the array.
 	 */
-	public static int random(int[] array) {
+	public static int random(int... array) {
 		return array[(int) (ThreadLocalRandom.current().nextDouble() * array.length)];
 	}
 	
@@ -102,7 +102,7 @@ public final class RandomUtils {
 	 * @param array The array to retrieve an {@code long} from.
 	 * @return The {@code long} retrieved from the array.
 	 */
-	public static long random(long[] array) {
+	public static long random(long... array) {
 		return array[(int) (ThreadLocalRandom.current().nextDouble() * array.length)];
 	}
 	
@@ -111,7 +111,7 @@ public final class RandomUtils {
 	 * @param array The array to retrieve an {@code double} from.
 	 * @return The {@code double} retrieved from the array.
 	 */
-	public static double random(double[] array) {
+	public static double random(double... array) {
 		return array[(int) (ThreadLocalRandom.current().nextDouble() * array.length)];
 	}
 	
@@ -120,7 +120,7 @@ public final class RandomUtils {
 	 * @param array The array to retrieve an {@code short} from.
 	 * @return The {@code short} retrieved from the array.
 	 */
-	public static short random(short[] array) {
+	public static short random(short... array) {
 		return array[(int) (ThreadLocalRandom.current().nextDouble() * array.length)];
 	}
 	
@@ -129,7 +129,7 @@ public final class RandomUtils {
 	 * @param array The array to retrieve an {@code byte} from.
 	 * @return The {@code byte} retrieved from the array.
 	 */
-	public static byte random(byte[] array) {
+	public static byte random(byte... array) {
 		return array[(int) (ThreadLocalRandom.current().nextDouble() * array.length)];
 	}
 	
@@ -138,7 +138,7 @@ public final class RandomUtils {
 	 * @param array The array to retrieve an {@code float} from.
 	 * @return The {@code float} retrieved from the array.
 	 */
-	public static float random(float[] array) {
+	public static float random(float... array) {
 		return array[(int) (ThreadLocalRandom.current().nextDouble() * array.length)];
 	}
 	
@@ -147,7 +147,7 @@ public final class RandomUtils {
 	 * @param array The array to retrieve an {@code boolean} from.
 	 * @return The {@code boolean} retrieved from the array.
 	 */
-	public static boolean random(boolean[] array) {
+	public static boolean random(boolean... array) {
 		return array[(int) (ThreadLocalRandom.current().nextDouble() * array.length)];
 	}
 	
@@ -156,7 +156,7 @@ public final class RandomUtils {
 	 * @param array The array to retrieve an {@code char} from.
 	 * @return The {@code char} retrieved from the array.
 	 */
-	public static char random(char[] array) {
+	public static char random(char... array) {
 		return array[(int) (ThreadLocalRandom.current().nextDouble() * array.length)];
 	}
 	

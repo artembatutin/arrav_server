@@ -41,9 +41,11 @@ public final class AreaLoader extends JsonLoader {
 		
 		while(iterator.hasNext()) {
 			JsonElement element = iterator.next();
-			multi = !element.getAsJsonObject().has("multi") ? false : element.getAsJsonObject().get("multi").getAsBoolean();
-			teleport = !element.getAsJsonObject().has("teleport") ? true : element.getAsJsonObject().get("teleport").getAsBoolean();
-			summon = !element.getAsJsonObject().has("summon") ? true : element.getAsJsonObject().get("summon").getAsBoolean();
+			multi = element.getAsJsonObject().has("multi") && element.getAsJsonObject().get("multi").getAsBoolean();
+			teleport = !element.getAsJsonObject().has("teleport") || element.getAsJsonObject()
+					.get("teleport")
+					.getAsBoolean();
+			summon = !element.getAsJsonObject().has("summon") || element.getAsJsonObject().get("summon").getAsBoolean();
 			boolean square = element.getAsJsonObject().has("square");
 			locations.add(new Area.AreaLocation(builder.fromJson(square ? element.getAsJsonObject().get("square") : element.getAsJsonObject().get("circle"), square ? SquareLocation.class : CircleLocation.class), multi, teleport, summon));
 		}

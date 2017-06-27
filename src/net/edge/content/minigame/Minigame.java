@@ -465,7 +465,7 @@ public abstract class Minigame {
 		/**
 		 * Indicates the minigame is fully safe and no items will be lost on death
 		 */
-		SAFE;
+		SAFE
 	}
 	
 	/**

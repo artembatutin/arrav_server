@@ -59,14 +59,12 @@ public abstract class SequencedMinigame extends Minigame {
 	@Override
 	public final void onLogout(Player player) {
 		this.logout(player);
-		this.destruct(player);
 	}
 	
 	/**
 	 * Destructs the backing task for this sequenced minigame.
-	 * @param player the player to destruct for.
 	 */
-	public final void destruct(Player player) {
+	public final void destruct() {
 		if(!task.isPresent()) {
 			return;
 		}

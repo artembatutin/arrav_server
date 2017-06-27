@@ -175,5 +175,38 @@
         }
       }
     ]
+  },
+  {
+    "name": "PEST_CONTROL",
+    "location": [
+      {
+        "square": {
+          "swX": 2618,
+          "swY": 2556,
+          "neX": 2692,
+          "neY": 2624,
+          "z": 0
+        },
+        "summon": false,
+        "multi": true,
+        "teleport": false
+      }
+    ]
+  },
+  {
+    "name": "PEST_LOBBY",
+    "location": [
+      {
+        "square": {
+          "swX": 2659,
+          "swY": 2637,
+          "neX": 2664,
+          "neY": 2644,
+          "z": 0
+        },
+        "summon": false,
+        "teleport": false
+      }
+    ]
   }
 ]

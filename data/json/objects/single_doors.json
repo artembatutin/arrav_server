@@ -9589,7 +9589,7 @@
     "type": "STRAIGHT_WALL",
     "open": {
       "id": 14234,
-      "dir": "WEST"
+      "dir": "EAST"
     },
     "mod_y": -1,
     "is_closed": true
