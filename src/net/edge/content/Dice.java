@@ -9,6 +9,7 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.container.impl.Inventory;
 
@@ -29,7 +30,15 @@ public final class Dice {
 		if(player.getCombatBuilder().inCombat()) {
 			return true;
 		}
-		
+
+		if(player.getRights().less(Rights.EXTREME_DONATOR)) {
+			return true;
+		}
+
+		if(!player.getDiceTimer().elapsed(1800)) {
+			return true;
+		}
+		player.getDiceTimer().reset();
 		if(clanchat) {
 			if(!player.getClan().isPresent()) {
 				player.message("You have to be in a clan chat to do this.");
@@ -47,7 +56,9 @@ public final class Dice {
 			player.graphic(data.graphic);
 			
 			LinkedTaskSequence seq = new LinkedTaskSequence();
-			seq.connect(1, () -> member.message(data.clanChatformat(), "[Dice: " + player.getFormatUsername() + "]"));
+			seq.connect(1, () -> {
+				member.message(data.clanChatformat(), "[Dice: " + player.getFormatUsername() + "]");
+			});
 			seq.start();
 			return true;
 		}
@@ -194,11 +205,11 @@ public final class Dice {
 		}
 		
 		public final String clanChatformat() {
-			return this.amount == 26 ? "just rolled a " + RandomUtils.inclusive(6) + " and " + RandomUtils.inclusive(6) + " on the " + this.format + "." : "just rolled a " + RandomUtils.inclusive(this.amount) + " on the " + this.format + ".";
+			return this.amount == 26 ? "just rolled a " + RandomUtils.inclusive(1, 6) + " and " + RandomUtils.inclusive(1, 6) + " on the " + this.format + "." : "just rolled a " + RandomUtils.inclusive(1, this.amount) + " on the " + this.format + ".";
 		}
 		
 		public final String privateChatFormat(String username) {
-			return this.amount == 26 ? "You rolled a @red@" + RandomUtils.inclusive(6) + "@bla@ and @red@" + RandomUtils.inclusive(6) + "@bla@ on the " + this.format + "." : "You rolled a @red@" + RandomUtils.inclusive(this.amount) + "@bla@ on the " + this.format + ".";
+			return this.amount == 26 ? "You rolled a @red@" + RandomUtils.inclusive(1, 6) + "@bla@ and @red@" + RandomUtils.inclusive(1, 6) + "@bla@ on the " + this.format + "." : "You rolled a @red@" + RandomUtils.inclusive(1, this.amount) + "@bla@ on the " + this.format + ".";
 		}
 	}
 }
