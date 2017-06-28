@@ -60,18 +60,20 @@ public final class RFDMinigame extends SequencedMinigame {
 	private int timer;
 	
 	@Override
-	public void onSequence(Player player) {
-		if(player.getMinigame().isPresent() && !((RFDMinigame) (player.getMinigame().get())).currentNpc.isPresent() && ++timer >= DELAY_BETWEEN_ROUNDS) {
-			RFDData data = ((RFDMinigame) player.getMinigame().get()).wave;
-			this.currentNpc = Optional.of(new DefaultNpc(data.getNpcId(), new Position(1900, 5354, 2)));
-			Npc npc = this.currentNpc.get();
-			
-			World.getInstanceManager().isolate(npc, instance);
-			World.get().getNpcs().add(npc);
-			
-			npc.getCombatBuilder().attack(player);
-			
-			timer = 0;
+	public void onSequence() {
+		for(Player player : getPlayers()) {//there is one player.
+			if(player.getMinigame().isPresent() && !((RFDMinigame) (player.getMinigame().get())).currentNpc.isPresent() && ++timer >= DELAY_BETWEEN_ROUNDS) {
+				RFDData data = ((RFDMinigame) player.getMinigame().get()).wave;
+				this.currentNpc = Optional.of(new DefaultNpc(data.getNpcId(), new Position(1900, 5354, 2)));
+				Npc npc = this.currentNpc.get();
+				
+				World.getInstanceManager().isolate(npc, instance);
+				World.get().getNpcs().add(npc);
+				
+				npc.getCombatBuilder().attack(player);
+				
+				timer = 0;
+			}
 		}
 	}
 	
@@ -186,10 +188,10 @@ public final class RFDMinigame extends SequencedMinigame {
 	}
 	
 	private void leave(Player player) {
-		this.destruct(player);
 		player.setMinigame(Optional.empty());
 		player.setInstance(0);
 		World.getInstanceManager().open(instance);
 		player.teleport(GameConstants.STARTING_POSITION);
+		this.destruct();
 	}
 }

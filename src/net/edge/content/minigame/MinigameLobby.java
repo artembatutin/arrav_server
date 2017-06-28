@@ -2,6 +2,7 @@ package net.edge.content.minigame;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.minigame.pestcontrol.PestControlWaitingLobby;
 import net.edge.task.Task;
 import net.edge.util.MutableNumber;
 import net.edge.world.World;
@@ -41,15 +42,21 @@ public abstract class MinigameLobby {
 	/**
 	 * The functionality which should occur as soon as the player enters
 	 * the lobby.
+	 * @param player the player entering.
 	 */
 	public abstract void onEnter(Player player);
 	
 	/**
+	 * The functionality which should occur as soon as the player leaves the lobby.
+	 * @param player the player leaving.
+	 */
+	public abstract void onLeave(Player player);
+	
+	/**
 	 * The functionality which should occur as soon as the lobby's
 	 * countdown timer has hit zero.
-	 * @param player the player to handle the functionality for.
 	 */
-	public abstract void onStart(ObjectList<Player> player);
+	public abstract void onStart();
 	
 	/**
 	 * The flag which identifies if this player can enter the minigame lobby.
@@ -61,10 +68,9 @@ public abstract class MinigameLobby {
 	/**
 	 * The flag which identifies if this minigame can start as soon as the
 	 * timer hits zero.
-	 * @param players the players in the lobby.
 	 * @return <true> if the minigame can start, <false> otherwise.
 	 */
-	public abstract boolean canStart(ObjectList<Player> players);
+	public abstract boolean canStart();
 	
 	/**
 	 * The restart timer if this lobby can't start.
@@ -80,11 +86,19 @@ public abstract class MinigameLobby {
 	
 	/**
 	 * Any functionality that should occur while the task is running.
-	 * @param player the player in the lobby.
+	 * @param current the current timing.
 	 * @param t      the task running for this lobby.
 	 */
-	public void onCountdown(ObjectList<Player> player, Task t) {
+	public void onCountdown(int current, Task t) {
 		
+	}
+	
+	/**
+	 * Gets the players waiting in the lobby.
+	 * @return players waiting.
+	 */
+	public ObjectList<Player> getPlayers() {
+		return players;
 	}
 	
 	/**
@@ -94,14 +108,15 @@ public abstract class MinigameLobby {
 		if(task.isPresent()) {
 			throw new IllegalStateException("Minigame lobby has already started.");
 		}
-		
 		if(!canEnter(player)) {
 			return;
 		}
 		
 		onEnter(player);
-		task = Optional.of(new MinigameLobbyTask(this));
-		World.get().submit(task.get());
+		if(!task.isPresent()) {
+			task = Optional.of(new MinigameLobbyTask(this));
+			World.get().submit(task.get());
+		}
 	}
 	
 	/**
@@ -116,24 +131,18 @@ public abstract class MinigameLobby {
 		private final MinigameLobby minigame;
 		
 		/**
-		 * The players this task is running for.
-		 */
-		private final ObjectList<Player> players;
-		
-		/**
 		 * Constructs a new {@link MinigameLobbyTask}.
 		 * @param minigame {@link #minigame}.
 		 */
 		public MinigameLobbyTask(MinigameLobby minigame) {
 			super(1, false);
 			this.minigame = minigame;
-			this.players = minigame.players;
 		}
 		
 		/**
 		 * The current ticks this task is at.
 		 */
-		private MutableNumber current;
+		private int current;
 		
 		/**
 		 * Whether this lobby was executed or not.
@@ -142,14 +151,14 @@ public abstract class MinigameLobby {
 		
 		@Override
 		public void onSubmit() {
-			this.current.set(minigame.timer);
+			this.current = minigame.restartTimer();
 		}
 		
 		@Override
 		public void execute() {
-			minigame.onCountdown(minigame.players, this);
-			if(current.decrementAndGet() < 1) {
-				if(!minigame.canStart(players)) {
+			minigame.onCountdown(current, this);
+			if(--current < 1) {
+				if(!minigame.canStart()) {
 					this.setDelay(minigame.restartTimer());
 					return;
 				}
@@ -167,7 +176,7 @@ public abstract class MinigameLobby {
 		@Override
 		public void onCancel() {
 			if(executed) {
-				minigame.onStart(players);
+				minigame.onStart();
 				minigame.task = Optional.empty();
 				return;
 			}

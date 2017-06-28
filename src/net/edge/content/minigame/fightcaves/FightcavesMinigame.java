@@ -98,23 +98,25 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public void onSequence(Player player) {
-		if(timer-- < 1 && !started) {
-			if(player.getAttr().get("fight_caves_advanced").getBoolean()) {
-				otherJad.setRespawn(false);
-				otherJad.setSpawnedFor(player.getUsername());
-				World.get().getNpcs().add(otherJad);
-				World.getInstanceManager().isolate(otherJad, instance);
-				otherJad.getCombatBuilder().attack(player);
+	public void onSequence() {
+		for(Player player : getPlayers()) {
+			if(timer-- < 1 && !started) {
+				if(player.getAttr().get("fight_caves_advanced").getBoolean()) {
+					otherJad.setRespawn(false);
+					otherJad.setSpawnedFor(player.getUsername());
+					World.get().getNpcs().add(otherJad);
+					World.getInstanceManager().isolate(otherJad, instance);
+					otherJad.getCombatBuilder().attack(player);
+				}
+				jad.setRespawn(false);
+				jad.setSpawnedFor(player.getUsername());
+				World.get().getNpcs().add(jad);
+				World.getInstanceManager().isolate(jad, instance);
+				jad.getCombatBuilder().attack(player);
+				started = true;
+			} else if(timer == 8) {
+				player.getDialogueBuilder().append(new NpcDialogue(2617, "You're on your own, JalYt", "Prepare to fight for your life!"));
 			}
-			jad.setRespawn(false);
-			jad.setSpawnedFor(player.getUsername());
-			World.get().getNpcs().add(jad);
-			World.getInstanceManager().isolate(jad, instance);
-			jad.getCombatBuilder().attack(player);
-			started = true;
-		} else if(timer == 8) {
-			player.getDialogueBuilder().append(new NpcDialogue(2617, "You're on your own, JalYt", "Prepare to fight for your life!"));
 		}
 	}
 	
@@ -135,7 +137,6 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		}
 		killed += 1;
 		if(player.getAttr().get("fight_caves_advanced").getBoolean() ? killed == 2 : killed == 1) {
-			this.destruct(player);
 			player.setMinigame(Optional.empty());
 			player.message("You have successfully completed the minigame...");
 			int reward = player.getAttr().get("fight_caves_advanced").getBoolean() ? 19111 : 6570;
@@ -143,6 +144,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			player.move(new Position(2436, 5169, 0));
 			World.get().getNpcs().remove(jad);
 			World.get().getNpcs().remove(otherJad);
+			this.destruct();
 		}
 	}
 	
@@ -176,10 +178,10 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		World.get().getNpcs().remove(otherJad);
 		player.move(GameConstants.STARTING_POSITION);
 		player.message("You failed to complete the fight cave...");
-		this.destruct(player);
 		player.setMinigame(Optional.empty());
 		player.setInstance(0);
 		World.getInstanceManager().open(instance);
+		this.destruct();
 	}
 	
 	@Override

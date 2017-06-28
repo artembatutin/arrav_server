@@ -2,6 +2,7 @@ package net.edge.event.impl;
 
 import net.edge.content.WebSlashing;
 import net.edge.content.minigame.fightcaves.FightcavesMinigame;
+import net.edge.content.minigame.pestcontrol.PestControlWaitingLobby;
 import net.edge.content.minigame.warriorsguild.WarriorsGuild;
 import net.edge.content.skill.agility.impl.Shortcuts;
 import net.edge.content.skill.agility.impl.barb.BarbarianOutpostAgility;
@@ -67,6 +68,7 @@ public abstract class ObjectEvent extends Event {
 		Stalls.event();
 		Smelting.event();
 		HotSpots.event();
+		PestControlWaitingLobby.event();
 	}
 	
 }

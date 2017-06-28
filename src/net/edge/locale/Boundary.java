@@ -17,6 +17,16 @@ public class Boundary {
 	private final Position end;
 	
 	/**
+	 * Constructs a single rectangle boundary check.
+	 * @param start  the start position.
+	 * @param end  the end position
+	 */
+	public Boundary(Position start, Position end) {
+		this.start = start;
+		this.end = end;
+	}
+	
+	/**
 	 * Constructs a single square boundary check.
 	 * @param pos  the start position.
 	 * @param size the size of the entity.

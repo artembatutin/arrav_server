@@ -1,5 +1,7 @@
 package net.edge.content.minigame;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.util.MutableNumber;
 import net.edge.world.World;
@@ -15,6 +17,11 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public abstract class SequencedMinigame extends Minigame {
+	
+	/**
+	 * The list of all players in this minigame.
+	 */
+	private final ObjectList<Player> players = new ObjectArrayList<>();
 	
 	/**
 	 * The counter that conceals the tick amount.
@@ -37,22 +44,21 @@ public abstract class SequencedMinigame extends Minigame {
 	
 	@Override
 	public final void onEnter(Player player) {
-		if(task.isPresent()) {
-			throw new IllegalStateException("Sequenced Minigame Task is already started.");
+		players.add(player);
+		if(!task.isPresent()) {
+			task = Optional.of(new SequencedMinigameTask(this));
+			World.get().submit(task.get());
 		}
-		task = Optional.of(new SequencedMinigameTask(player, this));
-		World.get().submit(task.get());
 		player.setMinigame(Optional.of(this));
 		enter(player);
 	}
 	
 	@Override
 	public final void onLogin(Player player) {
-		if(task.isPresent()) {
-			throw new IllegalStateException("Sequenced Minigame Task is already started.");
+		if(!task.isPresent()) {
+			task = Optional.of(new SequencedMinigameTask(this));
+			World.get().submit(task.get());
 		}
-		task = Optional.of(new SequencedMinigameTask(player, this));
-		World.get().submit(task.get());
 		this.login(player);
 	}
 	
@@ -73,9 +79,8 @@ public abstract class SequencedMinigame extends Minigame {
 	
 	/**
 	 * The method executed when this minigame is sequenced.
-	 * @param player the player whom this sequencer is running for.
 	 */
-	public abstract void onSequence(Player player);
+	public abstract void onSequence();
 	
 	/**
 	 * The method executed when the player enters the minigame.
@@ -110,15 +115,18 @@ public abstract class SequencedMinigame extends Minigame {
 	}
 	
 	/**
+	 * Gets the players participating in this minigame.
+	 * @return players in this minigame.
+	 */
+	public ObjectList<Player> getPlayers() {
+		return players;
+	}
+	
+	/**
 	 * The backing task chained to the {@link SequencedMinigame}.
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class SequencedMinigameTask extends Task {
-		
-		/**
-		 * The player this task is running for.
-		 */
-		private final Player player;
 		
 		/**
 		 * The sequencer this task is running for.
@@ -129,16 +137,15 @@ public abstract class SequencedMinigame extends Minigame {
 		 * Constructs a new {@link SequencedMinigame}.
 		 * @param sequencer {@link #sequencer}.
 		 */
-		public SequencedMinigameTask(Player player, SequencedMinigame sequencer) {
+		public SequencedMinigameTask(SequencedMinigame sequencer) {
 			super(1, false);
-			this.player = player;
 			this.sequencer = sequencer;
 		}
 		
 		@Override
 		public void execute() {
 			if(sequencer.getCounter().incrementAndGet() == sequencer.delay()) {
-				sequencer.onSequence(player);
+				sequencer.onSequence();
 				sequencer.getCounter().set(0);
 			}
 		}

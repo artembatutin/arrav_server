@@ -1,8 +1,7 @@
 package net.edge.content.minigame.pestcontrol;
 
-import net.edge.content.minigame.pestcontrol.pest.Brawler;
-import net.edge.content.minigame.pestcontrol.pest.Defiler;
-import net.edge.content.minigame.pestcontrol.pest.Pest;
+import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.minigame.pestcontrol.pest.*;
 
 import net.edge.locale.Position;
 import net.edge.util.rand.RandomUtils;
@@ -29,7 +28,9 @@ public class PestPortal extends DefaultNpc {
 		return spawn;
 	}
 	
-	public void spawn() {
+	public void spawn(ObjectList<Pest> pests) {
+		if(getCurrentHealth() == 0)
+			return;
 		int type = RandomUtils.inclusive(0, 6);
 		Pest pest = null;
 		switch(type) {
@@ -39,9 +40,23 @@ public class PestPortal extends DefaultNpc {
 			case 1:
 				pest = new Defiler(DEFILER.random(), getSpawn(), getInstance());
 				break;
+			case 2:
+				pest = new Ravager(RAVAGER.random(), getSpawn(), getInstance());
+				break;
+			case 3:
+				pest = new Shifter(SHIFTER.random(), getSpawn(), getInstance());
+				break;
+			case 4:
+				pest = new Spinner(SPINNER.random(), this);
+				break;
+			case 5:
+				pest = new Splatter(SPLATTER.random(), getSpawn(), getInstance());
+				break;
 		}
-		if(pest != null)
+		if(pest != null) {
 			World.get().getNpcs().add(pest);
+			pests.add(pest);
+		}
 	}
 	
 }

@@ -6,6 +6,7 @@ import net.edge.Server;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.item.OverloadEffectTask;
+import net.edge.content.minigame.MinigameLobby;
 import net.edge.content.skill.construction.Construction;
 import net.edge.content.skill.construction.House;
 import net.edge.net.codec.ByteMessage;
@@ -333,6 +334,11 @@ public final class Player extends EntityNode {
 	 * The highest killstreak this player has ever had.
 	 */
 	private final MutableNumber highestKillstreak = new MutableNumber();
+	
+	/**
+	 * The amount of pest points the player has.
+	 */
+	private int pestPoints;
 	
 	/**
 	 * The amount of slayer points the player has.
@@ -2253,6 +2259,23 @@ public final class Player extends EntityNode {
 	}
 	
 	/**
+	 * Updates the value for {@link Player#pestPoints}.
+	 * @param points the new value to update.
+	 */
+	public void updatePest(int points) {
+		this.pestPoints += points;
+		PlayerPanel.PEST_POINTS.refresh(this, "@or2@ - Pest points: @yel@" + pestPoints);
+	}
+	
+	/**
+	 * Gets the amount of pest points the player has.
+	 * @return the pest points amount.
+	 */
+	public int getPest() {
+		return pestPoints;
+	}
+	
+	/**
 	 * Updates the value for {@link Player#slayerPoints}.
 	 * @param points the new value to update.
 	 */
@@ -2263,8 +2286,8 @@ public final class Player extends EntityNode {
 	}
 	
 	/**
-	 * Gets the amount of credits the player has.
-	 * @return the credit's amount.
+	 * Gets the amount of slayer points the player has.
+	 * @return the slayer points amount.
 	 */
 	public int getSlayerPoints() {
 		return slayerPoints;

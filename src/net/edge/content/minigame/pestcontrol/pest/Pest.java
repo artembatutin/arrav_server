@@ -1,10 +1,13 @@
 package net.edge.content.minigame.pestcontrol.pest;
 
+import net.edge.locale.Boundary;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.impl.DefaultNpc;
 
 public abstract class Pest extends DefaultNpc {
+	
+	private static final Boundary pestBoundary = new Boundary(new Position(2623, 2558), new Position(2689, 2625));
 	
 	/**
 	 * Creates a new {@link Npc}.
@@ -15,6 +18,7 @@ public abstract class Pest extends DefaultNpc {
 		super(id, position);
 		setInstance(instance);
 		setAutoRetaliate(true);
+		getMovementCoordinator().setBoundary(pestBoundary);
 	}
 	
 	/**

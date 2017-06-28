@@ -15,6 +15,7 @@ public class Defiler extends Pest {
 	
 	@Override
 	public void sequence(Npc knight) {
+		//ranged attack, ignoring walls and attacking knight.
 		if(!getCombatBuilder().isAttacking())
 			getCombatBuilder().attack(knight);
 	}

@@ -45,11 +45,6 @@ public final class PestControlMinigame extends SequencedMinigame {
 	private final PestPortal[] portals;
 	
 	/**
-	 * Playing in the minigame.
-	 */
-	private ObjectList<Player> players = new ObjectArrayList<>();
-	
-	/**
 	 * The pests in the minigame.
 	 */
 	private ObjectList<Pest> pests = new ObjectArrayList<>();
@@ -64,12 +59,22 @@ public final class PestControlMinigame extends SequencedMinigame {
 	 */
 	private int time = 200;
 	
+	/**
+	 * Amount of respawns there are.
+	 */
+	private int respawns = 200;
+	
+	/**
+	 * Amount of pests killed.
+	 */
+	private int killed = 0;
+	
 	PestControlMinigame(String minigame, MinigameSafety safety) {
 		super(minigame, safety);
 		instance = World.getInstanceManager().closeNext();
 		voidKnight = new DefaultNpc(RandomUtils.random(3782, 3784, 3785), new Position(2656, 2592));
 		portals = new PestPortal[] {
-				new PestPortal(6142, new Position(2628, 2951), new Position(2631, 2591), instance),
+				new PestPortal(6142, new Position(2628, 2591), new Position(2631, 2591), instance),
 				new PestPortal(6145, new Position(2645, 2569), new Position(2645, 2572), instance),
 				new PestPortal(6144, new Position(2669, 2570), new Position(2669, 2573), instance),
 				new PestPortal(6143, new Position(2680, 2588), new Position(2679, 2589), instance)
@@ -77,23 +82,20 @@ public final class PestControlMinigame extends SequencedMinigame {
 	}
 
 	@Override
-	public void onSequence(Player player) {
+	public void onSequence() {
+		System.out.println("pest: " + time);
 		if(time == 200)
 			start();
-		time--;
-		if(time == 0) {
-			//kept void alive, won.
-			end(true);
-		}
-		if(time % 8 == 7) {
-			voidKnight.forceChat(RandomUtils.random(YELLS));
+		time(--time);
+		portals();
+		for(PestPortal portal : portals) {
+			if(RandomUtils.inclusive(3) == 1)
+				portal.spawn(pests);
 		}
 	}
 
 	@Override
 	public void enter(Player player) {
-		player.setMinigame(Optional.of(this));
-		players.add(player);
 		player.setInstance(instance);
 	}
 
@@ -104,26 +106,29 @@ public final class PestControlMinigame extends SequencedMinigame {
 
 	@Override
 	public void login(Player player) {
-		players.remove(player);
+		logout(player);
 	}
 
 	@Override
 	public void logout(Player player) {
-		player.move(new Position(2659, 2649));
-		players.remove(player);
+		player.move(new Position(2657, 2639));
+		getPlayers().remove(player);
 		player.setMinigame(Optional.empty());
 		player.setInstance(0);
+		player.getMessages().sendString("" + respawns, 21115);
+		player.getMessages().sendWalkable(-1);
 	}
 
 	@Override
 	public boolean contains(Player player) {
-		return players.contains(player);
+		return getPlayers().contains(player);
 	}
 	
 	
 	public void onDeath(Player player) {
 		spawn(player);
 		player.getDialogueBuilder().append(new NpcDialogue(voidKnight.getId(), Expression.ANGRY, "Try harder!"));
+		respawns(--respawns);
 		
 	}
 	
@@ -143,6 +148,8 @@ public final class PestControlMinigame extends SequencedMinigame {
 		} else if(other.same(portals[3])) {
 			voidKnight.setCurrentHealth(voidKnight.getCurrentHealth() + 50);
 			message("The grey portal has been destroyed.");
+		} else if(other.isNpc()) {
+			killed(--killed);
 		}
 		
 		if(!portalsAlive()) {
@@ -153,7 +160,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	
 	private void end(boolean won) {
 		World.getInstanceManager().open(instance);
-		for(Player p : players) {
+		for(Player p : getPlayers()) {
 			//dialogue lost.
 			logout(p);
 			if(won) {
@@ -177,17 +184,22 @@ public final class PestControlMinigame extends SequencedMinigame {
 	}
 	
 	private void start() {
-		for(Player p : players) {
+		for(Player p : getPlayers()) {
 			spawn(p);
+		}
+		for(PestPortal portal : portals) {
+			World.get().getNpcs().add(portal);
+			portal.spawn(pests);
 		}
 	}
 	
 	private void spawn(Player p) {
-		p.setPosition(new Position(2656 + RandomUtils.inclusive(3), 2609 + RandomUtils.inclusive(4)));
+		p.move(new Position(2656 + RandomUtils.inclusive(3), 2609 + RandomUtils.inclusive(4)));
+		p.getMessages().sendWalkable(21100);
 	}
 	
 	private void message(String message) {
-		for(Player p : players) {
+		for(Player p : getPlayers()) {
 			p.message(message);
 		}
 	}
@@ -219,6 +231,47 @@ public final class PestControlMinigame extends SequencedMinigame {
 		}
 		player.message("What are you doing? Go fight soldier!");
 		return false;
+	}
+	
+	private void respawns(int respawns) {
+		this.respawns = respawns;
+		for(Player p : getPlayers()) {
+			p.getMessages().sendString("" + respawns, 21115);
+		}
+		if(respawns == 0) {
+			//no respawns left.
+			end(false);
+		}
+	}
+	
+	private void time(int time) {
+		this.time = time;
+		for(Player p : getPlayers()) {
+			p.getMessages().sendString("Time Remaining: " + (time * 6) + " seconds", 21117);
+		}
+		if(time == 0) {
+			//kept void alive, won.
+			end(true);
+		}
+		if(time % 8 == 7) {
+			voidKnight.forceChat(RandomUtils.random(YELLS));
+		}
+	}
+	
+	private void killed(int killed) {
+		this.killed = killed;
+		for(Player p : getPlayers()) {
+			p.getMessages().sendString("" + killed, 21116);
+		}
+	}
+	
+	private void portals() {
+		for(Player p : getPlayers()) {
+			p.getMessages().sendString("" + portals[0].getCurrentHealth(), 21111);
+			p.getMessages().sendString("" + portals[3].getCurrentHealth(), 21112);
+			p.getMessages().sendString("" + portals[2].getCurrentHealth(), 21113);
+			p.getMessages().sendString("" + portals[1].getCurrentHealth(), 21114);
+		}
 	}
 
 }

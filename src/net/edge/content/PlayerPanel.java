@@ -142,6 +142,7 @@ public enum PlayerPanel {
 	SLAYER_POINTS(),
 	SLAYER_TASK(),
 	SLAYER_COUNT(),
+	PEST_POINTS(),
 	TOTAL_VOTES() {
 		@Override
 		public void onClick(Player player) {
@@ -222,6 +223,7 @@ public enum PlayerPanel {
 		PlayerPanel.SLAYER_POINTS.refresh(player, "@or2@ - Slayer points: @yel@" + player.getSlayerPoints());
 		PlayerPanel.SLAYER_TASK.refresh(player, "@or2@ - Slayer task: @yel@" + (player.getSlayer().isPresent() ? (player.getSlayer().get().toString()) : "none"));
 		PlayerPanel.SLAYER_COUNT.refresh(player, "@or2@ - Completed tasks: @yel@" + player.getAttr().get("slayer_tasks").getInt());
+		PlayerPanel.PEST_POINTS.refresh(player, "@or2@ - Pest points: @yel@" + player.getPest());
 		PlayerPanel.TOTAL_VOTES.refresh(player, "@or2@ - Total votes: @yel@" + player.getTotalVotes());
 		
 		PlayerPanel.PVE_HEADER.refresh(player, "@or1@PvE Statistics:");
