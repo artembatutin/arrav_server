@@ -1,7 +1,7 @@
 package net.edge.event.impl;
 
 import net.edge.content.Dice;
-import net.edge.content.MithrilSeeds;
+import net.edge.content.item.MithrilSeeds;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.skill.herblore.Herb;
