@@ -17,7 +17,7 @@ public class Spinner extends Pest {
 	 * @param portal   the portal to defend.
 	 */
 	public Spinner(int id, PestPortal portal) {
-		super(id, portal.getSpawn(), portal.getInstance());
+		super(id, portal.getSpawn());
 		this.portal = portal;
 	}
 	

@@ -130,7 +130,7 @@ public final class ObjectDefinitionDecoder implements Runnable {
 			} else if(code == 16) {
 				buffer.get();
 			} else if(code >= 40 && code < 50) {
-				final String action = ByteBufferUtil.getJString(buffer);
+				final String action = ByteBufferUtil.getJString(buffer).toLowerCase();
 				if(!action.equalsIgnoreCase("hidden")) {
 					actions[code - 40] = action;
 				}

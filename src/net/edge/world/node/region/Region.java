@@ -16,6 +16,7 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.node.item.ItemState;
 import net.edge.world.object.ObjectNode;
+import net.edge.world.object.ObjectType;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -346,6 +347,20 @@ public final class Region extends Node {
 	 */
 	public Optional<ObjectNode> getObject(int id, Position position) {
 		return getObject(id, position.toLocalPacked());
+	}
+	
+	/**
+	 * Gets the an {@link Optional} of {@link ObjectNode}s on the specified {@link Position} with the specified {@code type}.
+	 * @param type       The type of the object to seek for.
+	 * @param position The position.
+	 * @return A {@link Optional} of {@link ObjectNode} on the specified position.
+	 */
+	public Optional<ObjectNode> getObject(ObjectType type, Position position) {
+		RegionTiledObjects tile = getObjectsFrompacked(position.toLocalPacked());
+		ObjectNode o = tile.getType(type);
+		if(o != null)
+			return Optional.of(o);
+		return Optional.empty();
 	}
 	
 	/**

@@ -18,7 +18,7 @@ public class DoorHandler {
 	/**
 	 * The list of doors
 	 */
-	private static Object2ObjectArrayMap<Position, SimpleDoor> doors = new Object2ObjectArrayMap<>();
+	private static Object2ObjectArrayMap<Position, Door> doors = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * The door appender event.
@@ -32,15 +32,27 @@ public class DoorHandler {
 			if(exception(player, object))
 				return false;
 			if(doors.containsKey(object.getGlobalPos())) {
-				SimpleDoor door = doors.get(object.getGlobalPos());
-				doors.remove(door.getCurrent().getGlobalPos(), door);
+				Door door = doors.get(object.getGlobalPos());
+				doors.remove(door.getCurrentOne(), door);
+				Position sec = door.getCurrentSecond();
+				if(sec != null) {
+					doors.remove(sec, door);
+				}
 				door.append(player);
-				doors.put(door.getCurrent().getGlobalPos(), door);
-			} else {
-				SimpleDoor door = new SimpleDoor(object);
-				door.append(player);
-				doors.put(door.getCurrent().getGlobalPos(), door);
+				doors.put(door.getCurrentOne(), door);
+				sec = door.getCurrentSecond();
+				if(sec != null) {
+					doors.put(sec, door);
+				}
 				
+			} else {
+				Door door = new Door(object);
+				door.append(player);
+				doors.put(door.getCurrentOne(), door);
+				Position sec = door.getCurrentSecond();
+				if(sec != null) {
+					doors.put(sec, door);
+				}
 			}
 			return true;
 		}
@@ -50,6 +62,8 @@ public class DoorHandler {
 	 * All exceptions to door opening.
 	 */
 	private static boolean exception(Player player, ObjectNode object) {
+		
+		
 		if(object.getId() == 34811 && object.getGlobalPos().same(new Position(3104, 3498))) {
 			if(player.isIronMan()) {
 				player.teleport(new Position(player.getPosition().getX() >= 3104 ? 3103 : 3104, 3498), DOOR);
@@ -59,6 +73,8 @@ public class DoorHandler {
 				player.getLocalNpcs().stream().filter(n -> n.getId() == 6184).findFirst().ifPresent(e -> e.forceChat("Only iron man members can enter, sir."));
 			return true;
 		}
+		
+		
 		switch(object.getId()) {
 			case 68429://armadyl gwd door
 				return object.getGlobalPos().same(new Position(2839, 5296, 2)) || object.getGlobalPos().same(new Position(2839, 5295, 2));

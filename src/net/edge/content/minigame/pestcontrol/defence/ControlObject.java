@@ -14,10 +14,10 @@ public class ControlObject extends DynamicObject {
 	}
 	
 	
-	public ControlObject prepare(ObjectNode obj, Npc knight) {
+	public ControlObject prepare(ObjectNode obj) {
 		int id = obj.getId();
 		if(id >= 14226 && id <= 14224) {
-			return new ControlObject(obj.getId(), obj.getGlobalPos(), obj.getDirection(), obj.getObjectType(), false, 100, knight.getInstance());
+			return new ControlObject(obj.getId(), obj.getGlobalPos(), obj.getDirection(), obj.getObjectType(), false, 100, 0);
 		}
 		return null;
 	}

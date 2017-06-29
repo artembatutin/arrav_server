@@ -10,8 +10,8 @@ public class Torcher extends Pest {
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
-	public Torcher(int id, Position position, int instance) {
-		super(id, position, instance);
+	public Torcher(int id, Position position) {
+		super(id, position);
 	}
 	
 	@Override

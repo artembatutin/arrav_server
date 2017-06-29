@@ -8,6 +8,8 @@ import net.edge.world.node.region.Region;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+import static net.edge.world.object.ObjectDirection.*;
+
 /**
  * The node that represents an object anywhere in the world.
  * @author Artem Batutin <artembatutin@gmail.com>
@@ -297,5 +299,46 @@ public abstract class ObjectNode {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * Finds if this object is an anchor point for the door.
+	 * @param direction direction of the door.
+	 * @return flag.
+	 */
+	public boolean isAdjacantDoor(ObjectNode obj) {
+		
+		int dx = getX() - obj.getX();
+		int dy = getY() - obj.getY();
+		if(dx >= 1 && direction == EAST) {
+			return false;
+		}
+		if(dx <= -1 && direction == WEST) {
+			return false;
+		}
+		if(dy <= -1 && direction == SOUTH) {
+			return false;
+		}
+		if(dy >= 1 && direction == NORTH) {
+			return false;
+		}
+		if(obj.getDirection() == NORTH && dy <= -1) {
+			return false;
+		}
+		if(obj.getDirection() == SOUTH && dy >= 1) {
+			return false;
+		}
+		if(obj.getDirection() == EAST && dx <= -1) {
+			return false;
+		}
+		if(obj.getDirection() == WEST && dx >= 1) {
+			return false;
+		}
+		if(dx == 0 && (obj.getDirection() == EAST || obj.getDirection() == WEST) && direction != obj.getDirection()) {
+			return false;
+		}
+		if(dy == 0 && (obj.getDirection() == SOUTH || obj.getDirection() == NORTH) && direction != obj.getDirection()) {
+			return false;
+		}
+		return true;
+	}
 }

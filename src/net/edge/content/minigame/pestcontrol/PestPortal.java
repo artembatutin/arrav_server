@@ -14,13 +14,12 @@ public class PestPortal extends DefaultNpc {
 	
 	private final Position spawn;
 	
-	public PestPortal(int id, Position position, Position spawn, int instance) {
+	public PestPortal(int id, Position position, Position spawn) {
 		super(id, position);
 		setOriginalRandomWalk(false);
 		setAutoRetaliate(false);
 		setCurrentHealth(250);
 		setRespawn(false);
-		setInstance(instance);
 		this.spawn = spawn;
 	}
 	
@@ -35,22 +34,22 @@ public class PestPortal extends DefaultNpc {
 		Pest pest = null;
 		switch(type) {
 			case 0:
-				pest = new Brawler(BRAWLER.random(), getSpawn(), getInstance());
+				pest = new Brawler(BRAWLER.random(), getSpawn());
 				break;
 			case 1:
-				pest = new Defiler(DEFILER.random(), getSpawn(), getInstance());
+				pest = new Defiler(DEFILER.random(), getSpawn());
 				break;
 			case 2:
-				pest = new Ravager(RAVAGER.random(), getSpawn(), getInstance());
+				pest = new Ravager(RAVAGER.random(), getSpawn());
 				break;
 			case 3:
-				pest = new Shifter(SHIFTER.random(), getSpawn(), getInstance());
+				pest = new Shifter(SHIFTER.random(), getSpawn());
 				break;
 			case 4:
 				pest = new Spinner(SPINNER.random(), this);
 				break;
 			case 5:
-				pest = new Splatter(SPLATTER.random(), getSpawn(), getInstance());
+				pest = new Splatter(SPLATTER.random(), getSpawn());
 				break;
 		}
 		if(pest != null) {

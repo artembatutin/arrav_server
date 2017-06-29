@@ -14,9 +14,8 @@ public abstract class Pest extends DefaultNpc {
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
-	public Pest(int id, Position position, int instance) {
+	public Pest(int id, Position position) {
 		super(id, position);
-		setInstance(instance);
 		setAutoRetaliate(true);
 		getMovementCoordinator().setBoundary(pestBoundary);
 	}

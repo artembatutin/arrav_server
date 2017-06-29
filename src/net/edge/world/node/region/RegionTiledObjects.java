@@ -3,6 +3,7 @@ package net.edge.world.node.region;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.object.ObjectNode;
+import net.edge.world.object.ObjectType;
 
 import static net.edge.world.object.ObjectGroup.INTERACTABLE_OBJECT;
 import static net.edge.world.object.ObjectGroup.WALL;
@@ -77,6 +78,10 @@ public class RegionTiledObjects {
 				return o;
 		}
 		return null;
+	}
+	
+	public ObjectNode getType(ObjectType type) {
+		return objects[type.getId()];
 	}
 	
 	public boolean hasInteractive() {
