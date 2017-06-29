@@ -31,7 +31,6 @@ public final class MithrilSeeds {
      */
     private static final ImmutableMap<Integer, Integer> FLOWER_OBJECT_IDS = ImmutableMap.<Integer, Integer>builder()
             .put(2980, 2460)
-            .put(2980, 2460)
             .put(2981, 2462)
             .put(2982, 2464)
             .put(2983, 2466)
@@ -41,9 +40,7 @@ public final class MithrilSeeds {
             .put(2987, 2474).build();
 
     public static void event() {
-        for(Map.Entry<Integer, Integer> entry : FLOWER_OBJECT_IDS.entrySet()) {
-            int objectId = entry.getKey();
-            int itemId = entry.getValue();
+        for(int objectId : FLOWER_OBJECT_IDS.keySet()) {
             ObjectEvent objEvent = new ObjectEvent() {
                 @Override
                 public boolean click(Player player, ObjectNode object, int click) {
@@ -52,16 +49,16 @@ public final class MithrilSeeds {
             };
 
             objEvent.registerFirst(objectId);
-
-            ItemEvent itemEvent = new ItemEvent() {
-                @Override
-                public boolean click(Player player, Item item, int container, int slot, int click) {
-                    return plant(player);
-                }
-            };
-
-            itemEvent.register(299);//mithril seed item id.
         }
+
+        ItemEvent itemEvent = new ItemEvent() {
+            @Override
+            public boolean click(Player player, Item item, int container, int slot, int click) {
+                return plant(player);
+            }
+        };
+
+        itemEvent.register(299);//mithril seed item id.
     }
 
     /**
