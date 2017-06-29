@@ -23,6 +23,7 @@ import java.util.Map;
 /**
  * The class which is responsible for mithril seeds.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
+ * @author Artem Batutin <artembatutin@gmail.com>
  * @since 27-6-2017.
  */
 public final class MithrilSeeds {
@@ -49,7 +50,10 @@ public final class MithrilSeeds {
                         player.message("You don't have enough inventory slots to pick these flowers up.");
                         return true;
                     }
-    
+                    if(object.toDynamic().getElements() != player.getSlot()) {
+                        player.message("You didn't plant these flowers.");
+                        return true;
+                    }
                     int itemId = FLOWER_OBJECT_IDS.get(objectId);
     
                     player.animation(new Animation(827, Animation.AnimationPriority.HIGH));
@@ -66,10 +70,12 @@ public final class MithrilSeeds {
             @Override
             public boolean click(Player player, Item item, int container, int slot, int click) {
                 if(player.getCombatBuilder().inCombat()) {
+                    player.message("You are currently in combat.");
                     return true;
                 }
     
                 if(player.getRights().less(Rights.EXTREME_DONATOR)) {
+                    player.message("You need to be an extreme donator to do plant this.");
                     return true;
                 }
     
@@ -78,9 +84,9 @@ public final class MithrilSeeds {
                 }
                 player.getDiceTimer().reset();
     
-                player.getInventory().remove(new Item(299));
+                player.getInventory().remove(new Item(299), slot);
                 player.animation(new Animation(827, Animation.AnimationPriority.HIGH));
-                getRandomFlowerObject(player.getPosition()).publish(120, ObjectNode::remove);
+                getRandomFlowerObject(player).publish(120, ObjectNode::remove);
                 Position p = player.getPosition();
                 if(World.getTraversalMap().isTraversable(p, Direction.WEST, player.size())) {
                     player.getMovementQueue().walk(Direction.WEST.getX(), Direction.WEST.getY());
@@ -95,7 +101,7 @@ public final class MithrilSeeds {
         itemEvent.register(299);//mithril seed item id.
     }
 
-    private static DynamicObject getRandomFlowerObject(Position position) {
-        return new DynamicObject(RandomUtils.random(FLOWER_OBJECT_IDS.values().toIntArray()), position, ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, 0);
+    private static DynamicObject getRandomFlowerObject(Player player) {
+        return new DynamicObject(RandomUtils.random(FLOWER_OBJECT_IDS.keySet().toIntArray()), player.getPosition(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, player.getSlot(), 0);
     }
 }
