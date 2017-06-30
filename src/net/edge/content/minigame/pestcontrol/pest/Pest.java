@@ -26,4 +26,10 @@ public abstract class Pest extends DefaultNpc {
 	 */
 	public abstract void sequence(Npc knight);
 	
+	public abstract boolean aggressive();
+	
+	public boolean ranged() {
+		return false;
+	}
+	
 }

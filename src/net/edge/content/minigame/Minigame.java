@@ -4,6 +4,7 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.weapon.WeaponInterface;
+import net.edge.world.Hit;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.world.node.item.container.impl.EquipmentType;
 import net.edge.content.item.FoodConsumable;
@@ -176,12 +177,29 @@ public abstract class Minigame {
 	}
 	
 	/**
+	 * The method executed when {@code player} hits {@code other}.
+	 * @param player the player who inflicts damage on another character.
+	 * @param other  the character that gets the damage by the player.
+	 */
+	public void onInflictDamage(Player player, EntityNode other, Hit[] inflicted) {
+	
+	}
+	
+	/**
 	 * The method executed when {@code player} kills {@code other}.
 	 * @param player the player that killed another character.
 	 * @param other  the character that was killed by the player.
 	 */
 	public void onKill(Player player, EntityNode other) {
 		
+	}
+	
+	/**
+	 * The method executed when {@code player} dies.
+	 * @param player the player that dies.
+	 */
+	public void postDeath(Player player) {
+	
 	}
 	
 	/**
@@ -378,6 +396,13 @@ public abstract class Minigame {
 	 */
 	public void onDestruct(Player player) {
 		
+	}
+	
+	/**
+	 * Method handling npc aggression, cutting out regular aggression if returned true.
+	 */
+	public boolean aggression() {
+		return true;
 	}
 	
 	/**

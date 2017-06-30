@@ -2,17 +2,23 @@ package net.edge.content.minigame.pestcontrol;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.content.dialogue.Expression;
+import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.dialogue.impl.NpcDialogue;
+import net.edge.content.door.DoorHandler;
+import net.edge.content.item.FoodConsumable;
+import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.SequencedMinigame;
+import net.edge.content.minigame.pestcontrol.defence.PestGate;
 import net.edge.content.minigame.pestcontrol.pest.Pest;
+import net.edge.content.skill.Skills;
 import net.edge.locale.Position;
 import net.edge.util.rand.RandomUtils;
+import net.edge.world.Hit;
 import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.impl.DefaultNpc;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
+import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
@@ -20,6 +26,11 @@ import java.util.Optional;
 import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.LADDER;
 
 public final class PestControlMinigame extends SequencedMinigame {
+	
+	/**
+	 * All the pest gates, there is 3 of them.
+	 */
+	private static ObjectList<PestGate> gates = new ObjectArrayList<>();
 	
 	/**
 	 * The strings that the knight yells out.
@@ -35,7 +46,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	/**
 	 * The middle void knight.
 	 */
-	private final Npc voidKnight;
+	private final VoidKnight voidKnight;
 	
 	/**
 	 * All of the portals.
@@ -56,24 +67,14 @@ public final class PestControlMinigame extends SequencedMinigame {
 	 */
 	private int time = 200;
 	
-	/**
-	 * Amount of respawns there are.
-	 */
-	private int respawns = 200;
-	
-	/**
-	 * Amount of pests killed.
-	 */
-	private int killed = 0;
-	
 	PestControlMinigame(String minigame, MinigameSafety safety) {
 		super(minigame, safety);
-		voidKnight = new DefaultNpc(RandomUtils.random(3782, 3784, 3785), new Position(2656, 2592));
+		voidKnight = new VoidKnight();
 		portals = new PestPortal[] {
-				new PestPortal(6142, new Position(2628, 2591), new Position(2631, 2591)),
-				new PestPortal(6145, new Position(2645, 2569), new Position(2645, 2572)),
-				new PestPortal(6144, new Position(2669, 2570), new Position(2669, 2573)),
-				new PestPortal(6143, new Position(2680, 2588), new Position(2679, 2589))
+				new PestPortal(6142, new Position(2628, 2591), new Position(2632, 2594), 21111, voidKnight),
+				new PestPortal(6145, new Position(2645, 2569), new Position(2647, 2573), 21114, voidKnight),
+				new PestPortal(6144, new Position(2669, 2570), new Position(2671, 2574), 21113, voidKnight),
+				new PestPortal(6143, new Position(2680, 2588), new Position(2679, 2589), 21112, voidKnight)
 		};
 	}
 
@@ -83,10 +84,12 @@ public final class PestControlMinigame extends SequencedMinigame {
 		if(time == 200)
 			start();
 		time(--time);
-		portals();
 		for(PestPortal portal : portals) {
 			if(RandomUtils.inclusive(3) == 1)
 				portal.spawn(pests);
+		}
+		for(Pest pest : pests) {
+			pest.sequence(voidKnight);
 		}
 	}
 
@@ -107,12 +110,21 @@ public final class PestControlMinigame extends SequencedMinigame {
 
 	@Override
 	public void logout(Player player) {
-		player.move(new Position(2657, 2639));
+		player.move(new Position(2657, 2638 + RandomUtils.inclusive(5)));
 		getPlayers().remove(player);
 		player.setMinigame(Optional.empty());
 		player.setInstance(0);
-		player.getMessages().sendString("" + respawns, 21115);
 		player.getMessages().sendWalkable(-1);
+		if(player.isPoisoned()) {
+			player.getPoisonDamage().set(0);
+			player.getMessages().sendConfig(174, 0);
+		}
+		player.getAttr().get("participation").set(0);
+		player.getAttr().get("master_archery").set(false);
+		CombatSpecial.restore(player, 100);
+		Skills.restoreAll(player);
+		player.getCombatBuilder().reset();
+		player.getInventory().remove(new Item(1511, 28));//removing logs.
 	}
 
 	@Override
@@ -133,52 +145,140 @@ public final class PestControlMinigame extends SequencedMinigame {
 				.same(new Position(2666, 2585)) || position.same(new Position(2666, 2587));
 	}
 	
-	
-	public void onDeath(Player player) {
-		spawn(player);
-		player.getDialogueBuilder().append(new NpcDialogue(voidKnight.getId(), Expression.ANGRY, "Try harder!"));
-		respawns(--respawns);
-		
+	@Override
+	public boolean onFirstClickObject(Player player, ObjectNode object) {
+		Position pos = object.getGlobalPos();
+		//west north ladder.
+		if(object.getId() == 14296 && pos.getX() == 2644) {
+			player.teleport(new Position(player.getPosition().getX() <= 2643 ? 2645 : 2643, 2601), LADDER);
+			player.getAttr().get("master_archery").set(player.getPosition().getX() <= 2643);
+			return false;
+		}
+		//east north ladder.
+		if(object.getId() == 14296 && pos.getX() == 2669) {
+			player.teleport(new Position(player.getPosition().getX() >= 2670 ? 2668 : 2670, 2601), LADDER);
+			player.getAttr().get("master_archery").set(player.getPosition().getX() < 2670);
+			return false;
+		}
+		//west south ladder
+		if(object.getId() == 14296 && pos.getX() == 2647) {
+			player.teleport(new Position(2647, player.getPosition().getY() <= 2585 ? 2587 : 2585), LADDER);
+			player.getAttr().get("master_archery").set(!(player.getPosition().getY() <= 2585));
+			return false;
+		}
+		//east south ladder
+		if(object.getId() == 14296 && pos.getX() == 2666) {
+			player.teleport(new Position(2666, player.getPosition().getY() <= 2585 ? 2587 : 2585), LADDER);
+			player.getAttr().get("master_archery").set(!(player.getPosition().getY() <= 2585));
+			return false;
+		}
+		for(PestGate gate : gates) {
+			if(gate.clicked(object.getGlobalPos())) {
+				gate.click(player);
+				return false;
+			}
+		}
+		if(DoorHandler.isDoor(object.getDefinition())) {
+			PestGate gate = new PestGate(object);
+			gates.add(gate);
+			System.out.println("added gate");
+			gate.click(player);
+			return false;
+		}
+		return true;
 	}
 	
-	public void onKill(Player player, EntityNode other) {
-		if(other.same(voidKnight)) {
-			//lost because knight is dead.
-			end(false);
-		} else if(other.same(portals[0])) {
-			voidKnight.setCurrentHealth(voidKnight.getCurrentHealth() + 50);
-			message("The purple portal has been destroyed.");
-		} else if(other.same(portals[1])) {
-			voidKnight.setCurrentHealth(voidKnight.getCurrentHealth() + 50);
-			message("The red portal has been destroyed.");
-		} else if(other.same(portals[2])) {
-			voidKnight.setCurrentHealth(voidKnight.getCurrentHealth() + 50);
-			message("The yellow portal has been destroyed.");
-		} else if(other.same(portals[3])) {
-			voidKnight.setCurrentHealth(voidKnight.getCurrentHealth() + 50);
-			message("The grey portal has been destroyed.");
-		} else if(other.isNpc()) {
-			killed(--killed);
+	@Override
+	public boolean onThirdClickObject(Player player, ObjectNode object) {
+		for(PestGate gate : gates) {
+			if(gate.clicked(object.getGlobalPos())) {
+				gate.repair(player);
+				return true;
+			}
 		}
-		
-		if(!portalsAlive()) {
-			//all portals down.
-			end(true);
+		if(DoorHandler.isDoor(object.getDefinition())) {
+			PestGate gate = new PestGate(object);
+			gates.add(gate);
+			gate.repair(player);
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean aggression() {
+		for(Pest pest : pests) {
+			if(pest.isDead())
+				continue;
+			if(!pest.aggressive())
+				continue;
+			if(!pest.getCombatBuilder().isAttacking()) {
+				if(pest.getPosition().withinDistance(voidKnight.getPosition(), pest.ranged() ? 15 : 5)) {
+					pest.getCombatBuilder().attack(voidKnight);
+					continue;
+				}
+				for(Player p : pest.getRegion().getPlayers().values()) {
+					if(p.getPosition().withinDistance(pest.getPosition(), pest.ranged() ? 10 : 5)) {
+						pest.getCombatBuilder().attack(p);
+						break;
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean canPickup(Player player, ItemNode node) {
+		return true;
+	}
+	
+	@Override
+	public boolean canPot(Player player, PotionConsumable potion) {
+		return true;
+	}
+	
+	@Override
+	public boolean canEat(Player player, FoodConsumable food) {
+		return true;
+	}
+	
+	@Override
+	public Position deathPosition(Player player) {
+		return new Position(2656 + RandomUtils.inclusive(3), 2609 + RandomUtils.inclusive(4));
+	}
+	
+	@Override
+	public void postDeath(Player player) {
+		player.getMovementQueue().reset();
+		player.getMessages().sendWalkable(21100);
+	}
+	
+	@Override
+	public void onInflictDamage(Player player, EntityNode other, Hit[] inflicted) {
+		int add = 0;
+		for(Hit hit : inflicted) {
+			add += hit.getDamage();
+		}
+		if(add != 0) {
+			player.getAttr().get("participation").set(player.getAttr().get("participation").getInt() + (add / 10));
+			player.getMessages().sendString("" + player.getAttr().get("participation").getInt(), 21116);
 		}
 	}
 	
-	private void end(boolean won) {
+	void end(boolean won) {
 		for(Player p : getPlayers()) {
 			//dialogue lost.
 			logout(p);
 			if(won) {
-				p.getDialogueBuilder().append(new NpcDialogue(voidKnight.getId(), "Congratulations " + p.getFormatUsername() +"!",  "Your won the pest control match", "You been awarded, well done."));
+				p.getDialogueBuilder().append(new NpcDialogue(3784, "Congratulations " + p.getFormatUsername() +"!",  "You won the pest control match", "You been awarded, well done."));
 				//reward
 			} else if(voidKnight.getCurrentHealth() > 0) {
-				p.getDialogueBuilder().append(new NpcDialogue(voidKnight.getId(), p.getFormatUsername() +" you have Failed.", "You did participate enough to take down", "the portals. ", "Try Harder next time."));
+				p.getDialogueBuilder().append(new NpcDialogue(3784, p.getFormatUsername() +" you have Failed.", "You did participate enough to take down", "the portals. ", "Try Harder next time."));
 			} else {
-				p.getDialogueBuilder().append(new NpcDialogue(voidKnight.getId(), "All is Lost!", "You could not take down the portals in time.", "", "Try Harder next time."));
+				p.getDialogueBuilder().append(new NpcDialogue(3784, "All is Lost!", "You could not take down the portals in time.", "Try Harder next time."));
 			}
+			p.updatePest(p.getAttr().get("participation").getInt() / 300);
 		}
 		World.get().getNpcs().remove(voidKnight);
 		for(PestPortal portal : portals) {
@@ -187,10 +287,13 @@ public final class PestControlMinigame extends SequencedMinigame {
 		for(Pest pest : pests) {
 			World.get().getNpcs().remove(pest);
 		}
+		for(PestGate gate : gates) {
+			gate.reset();
+		}
 		destruct();
 	}
 	
-	private boolean portalsAlive() {
+	boolean portalsAlive() {
 		for(PestPortal portal : portals) {
 			if(portal.getCurrentHealth() > 0)
 				return true;
@@ -199,11 +302,13 @@ public final class PestControlMinigame extends SequencedMinigame {
 	}
 	
 	private void start() {
+		voidKnight.setGame(this);
 		World.get().getNpcs().add(voidKnight);
 		for(Player p : getPlayers()) {
 			spawn(p);
 		}
 		for(PestPortal portal : portals) {
+			portal.setGame(this);
 			World.get().getNpcs().add(portal);
 			portal.spawn(pests);
 		}
@@ -211,82 +316,37 @@ public final class PestControlMinigame extends SequencedMinigame {
 	
 	private void spawn(Player p) {
 		p.move(new Position(2656 + RandomUtils.inclusive(3), 2609 + RandomUtils.inclusive(4)));
+		p.getMessages().sendString("" + p.getAttr().get("participation").getInt(), 21116);
 		p.getMessages().sendWalkable(21100);
-	}
-	
-	private void message(String message) {
-		for(Player p : getPlayers()) {
-			p.message(message);
-		}
-	}
-	
-	/*
-	 * Ladders, barricades and gates.
-	 */
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
-		Position pos = object.getGlobalPos();
-		//east north ladder.
-		if(object.getId() == 14296 && pos.getX() == 2644) {
-			player.teleport(new Position(player.getPosition().getX() <= 2643 ? 2645 : 2643, 2601), LADDER);
-			return false;
-		}
-		//west north ladder.
-		if(object.getId() == 14296 && pos.getX() == 2669) {
-			player.teleport(new Position(player.getPosition().getX() >= 2670 ? 2668 : 2670, 2601), LADDER);
-			return false;
-		}
-		//east south ladder
-		if(object.getId() == 14296 && pos.getX() == 2647) {
-			player.teleport(new Position(2647, player.getPosition().getY() <= 2585 ? 2587 : 2585), LADDER);
-			return false;
-		}
-		//west south ladder
-		if(object.getId() == 14296 && pos.getX() == 2666) {
-			player.teleport(new Position(2666, player.getPosition().getY() <= 2585 ? 2587 : 2585), LADDER);
-			return false;
-		}
-		return true;
-	}
-	
-	private void respawns(int respawns) {
-		this.respawns = respawns;
-		for(Player p : getPlayers()) {
-			p.getMessages().sendString("" + respawns, 21115);
-		}
-		if(respawns == 0) {
-			//no respawns left.
-			end(false);
-		}
+		p.getMovementQueue().reset();
 	}
 	
 	private void time(int time) {
 		this.time = time;
 		for(Player p : getPlayers()) {
-			p.getMessages().sendString("Time Remaining: " + (time * 6) + " seconds", 21117);
+			p.getMessages().sendString((time * 6) + " seconds", 21117);
 		}
 		if(time == 0) {
-			//kept void alive, won.
-			end(true);
+			//kept void alive, lost.
+			end(false);
 		}
-		if(time % 8 == 7) {
+		if(time % 3 == 0) {
 			voidKnight.forceChat(RandomUtils.random(YELLS));
 		}
 	}
 	
-	private void killed(int killed) {
-		this.killed = killed;
-		for(Player p : getPlayers()) {
-			p.getMessages().sendString("" + killed, 21116);
+	public static PestGate getNearestGate(Position position) {
+		double distance = 0;
+		PestGate selected = null;
+		for(PestGate gate : gates) {
+			double dis = gate.getPos().getDistance(position);
+			System.out.println("distance " + dis);
+			if(distance == 0 || dis < distance) {
+				selected = gate;
+				distance = dis;
+			}
 		}
-	}
-	
-	private void portals() {
-		for(Player p : getPlayers()) {
-			p.getMessages().sendString("" + portals[0].getCurrentHealth(), 21111);
-			p.getMessages().sendString("" + portals[3].getCurrentHealth(), 21112);
-			p.getMessages().sendString("" + portals[2].getCurrentHealth(), 21113);
-			p.getMessages().sendString("" + portals[1].getCurrentHealth(), 21114);
-		}
+		return selected;
 	}
 
 }

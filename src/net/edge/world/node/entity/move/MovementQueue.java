@@ -35,7 +35,7 @@ public final class MovementQueue {
 	/**
 	 * The task ran when following another character.
 	 */
-	private Optional<Task> followTask = Optional.empty();
+	private Optional<CharacterFollowTask> followTask = Optional.empty();
 	
 	/**
 	 * The flag that determines if the run button is toggled.
@@ -200,6 +200,7 @@ public final class MovementQueue {
 		waypoints.clear();
 		Position p = character.getPosition();
 		waypoints.add(new Point(p.getX(), p.getY(), Direction.NONE));
+		followTask.ifPresent(t -> t.setDestination(null));
 	}
 	
 	/**
@@ -356,7 +357,7 @@ public final class MovementQueue {
 	 * Sets the value for {@link MovementQueue#followTask}.
 	 * @param followTask the new value to set.
 	 */
-	public void setFollowTask(Optional<Task> followTask) {
+	public void setFollowTask(Optional<CharacterFollowTask> followTask) {
 		this.followTask = followTask;
 	}
 	

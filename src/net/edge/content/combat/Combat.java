@@ -344,6 +344,17 @@ public final class Combat {
 				return CombatSpells.SHADOW_RUSH;
 			case 2025:
 				return CombatSpells.FIRE_WAVE;
+			case 3752:
+			case 3753:
+			case 3754:
+			case 3755:
+			case 3756:
+			case 3757:
+			case 3758:
+			case 3759:
+			case 3760:
+			case 376:
+				return CombatSpells.FIRE_STRIKE_TORCHER;
 			case 13:
 			case 172:
 			case 174:
@@ -1032,6 +1043,8 @@ public final class Combat {
 				return false;
 			}
 		} else {//Projectile clipping.
+			if(builder.getCharacter().getAttr().get("master_archery").getBoolean())
+				return true;
 			if(!World.getSimplePathChecker().checkProjectile(attacker, victim)) {
 				if(!builder.getCharacter().isFollowing()) {
 					builder.getCharacter().getMovementQueue().follow(builder.getVictim());

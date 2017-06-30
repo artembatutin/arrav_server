@@ -59,7 +59,6 @@ public class Door {
 			originalSecond = null;
 		}
 		
-		System.out.println(originalSecond);
 		//finding appended door
 		int xAdjustment = 0;
 		int yAdjustment = 0;
@@ -119,7 +118,6 @@ public class Door {
 				second = original.getId() == first.getId() && original.getGlobalPos().same(first.getGlobalPos()) ? originalSecond : original;
 				pos = first.getGlobalPos();
 				
-				System.out.println("clicked on first? " + (first.getId() == original.getId()));
 				if(closed) {
 					if(first.getDirection() == WEST || first.getDirection() == EAST) {
 						xAdjustment = first.getDirection() == EAST ? 1 : -1;
@@ -241,12 +239,48 @@ public class Door {
 		isAppend = !isAppend;
 	}
 	
-	Position getCurrentOne() {
+	public Position getCurrentOne() {
 		return isAppend ? appended.getGlobalPos() : original.getGlobalPos();
 	}
 	
-	Position getCurrentSecond() {
+	public Position getCurrentSecond() {
 		return isAppend ? appendedSecond == null ? null : appendedSecond.getGlobalPos() : originalSecond == null ? null : originalSecond.getGlobalPos();
+	}
+	
+	public void setAppendId(int id) {
+		appended.restore();
+		appended.setId(id);
+	}
+	
+	public void setAppendedSecondId(int id) {
+		appendedSecond.restore();
+		appendedSecond.setId(id);
+	}
+	
+	public void setOriginalId(int id) {
+		original.restore();
+		original.setId(id);
+	}
+	
+	public void setOriginalSecondId(int id) {
+		originalSecond.restore();
+		originalSecond.setId(id);
+	}
+	
+	public void publish() {
+		if(isAppend) {
+			appended.publish();
+			if(appendedSecond != null)
+				appendedSecond.publish();
+		} else {
+			original.publish();
+			if(originalSecond != null)
+				originalSecond.publish();
+		}
+	}
+	
+	public boolean isAppend() {
+		return isAppend;
 	}
 
 }

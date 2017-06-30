@@ -77,8 +77,8 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			player.message("You can't enter with a pet aboard.");
 			return false;
 		}
-		if(!player.getInventory().isEmpty()) {
-			player.message("Your inventory has to be empty.");
+		if(player.getInventory().contains(1511)) {
+			player.message("You cannot bring any logs in the boat.");
 			return false;
 		}
 		return true;

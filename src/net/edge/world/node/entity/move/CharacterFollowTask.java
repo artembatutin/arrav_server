@@ -162,6 +162,10 @@ class CharacterFollowTask extends Task {
 		character.getMovementQueue().setFollowTask(Optional.empty());
 	}
 	
+	public void setDestination(Position destination) {
+		this.destination = destination;
+	}
+	
 	@Override
 	public void onException(Exception e) {
 		onCancel();

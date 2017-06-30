@@ -30,6 +30,9 @@ public final class NpcAggression {
 	 * @param player the player that will be targeted.
 	 */
 	public static void sequence(Player player) {
+		if(player.getMinigame().isPresent() && player.getMinigame().get().aggression()) {
+			return;
+		}
 		if(RandomUtils.inclusive(10) == 3 && (!player.getCombatBuilder().inCombat() || Location.inMultiCombat(player))) {
 			for(Npc npc : player.getLocalNpcs()) {
 				//if(GodwarsFaction.attack(npc)) {

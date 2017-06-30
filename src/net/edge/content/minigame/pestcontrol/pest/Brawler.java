@@ -18,12 +18,17 @@ public class Brawler extends Pest {
 	}
 	
 	@Override
+	public boolean aggressive() {
+		return true;
+	}
+	
+	@Override
 	public void setPosition(Position position) {
 		//removing clipped positions of this brawler.
-		if(getPosition() != null) {
-			Region prev = World.getRegions().getRegion(getPosition());
-			World.getTraversalMap().markOccupant(prev, 0, getPosition().getX(), getPosition().getY(), size(), size(), true, false);
-		}
+		//if(getPosition() != null) {
+		//	Region prev = World.getRegions().getRegion(getPosition());
+		//	World.getTraversalMap().markOccupant(prev, 0, getPosition().getX(), getPosition().getY(), size(), size(), true, false);
+		//}
 		//updating region, might not even need.
 		if(getSlot() != -1 && getPosition() != null && getPosition().getRegion() != position.getRegion()) {
 			World.getRegions().getRegion(getPosition().getRegion()).removeChar(this);
@@ -33,8 +38,8 @@ public class Brawler extends Pest {
 		super.setPosition(position);
 		
 		//Clipping the brawler positions.
-		Region prev = World.getRegions().getRegion(getPosition());
-		World.getTraversalMap().markOccupant(prev, 0, getPosition().getX(), getPosition().getY(), size(), size(), true, true);
+		//Region prev = World.getRegions().getRegion(getPosition());
+		//World.getTraversalMap().markOccupant(prev, 0, getPosition().getX(), getPosition().getY(), size(), size(), true, true);
 	}
 	
 }

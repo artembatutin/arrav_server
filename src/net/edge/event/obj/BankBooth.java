@@ -32,6 +32,7 @@ public class BankBooth extends EventInitializer {
 		open.registerFirst(35647);
 		open.registerFirst(44216);
 		open.registerFirst(27663);
+		open.registerFirst(14367);
 		//second
 		open.registerSecond(3193);
 		open.registerSecond(2213);
@@ -43,5 +44,6 @@ public class BankBooth extends EventInitializer {
 		open.registerSecond(72931);
 		open.registerSecond(35647);
 		open.registerSecond(44216);
+		open.registerSecond(14367);
 	}
 }

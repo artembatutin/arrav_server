@@ -33,6 +33,8 @@ import net.edge.world.node.region.Region;
 import java.util.Iterator;
 import java.util.Optional;
 
+import static net.edge.content.minigame.Minigame.MinigameSafety.SAFE;
+
 /**
  * The {@link EntityDeath} implementation that is dedicated to managing the
  * death process for all {@link Player}s.
@@ -129,8 +131,8 @@ public final class PlayerDeath extends EntityDeath<Player> {
 					calculateDropItems(getCharacter(), killer, true);
 				}
 			}
-			killer.ifPresent(k -> optional.get().onKill(k, getCharacter()));
 			getCharacter().move(optional.get().deathPosition(getCharacter()));
+			killer.ifPresent(k -> optional.get().onKill(k, getCharacter()));
 			return;
 		}
 		if(getCharacter().getRights().less(Rights.ADMINISTRATOR)) {
@@ -213,24 +215,28 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		}
 		getCharacter().getMessages().sendWalkable(-1);
 		Prayer.deactivateAll(getCharacter());
-
-		if(getCharacter().isIronMan() && !getCharacter().isIronMaxed()) {
-			for(int index = 0; index < getCharacter().getSkills().length; index++) {
-				Skill skill = getCharacter().getSkills()[index];
-				int experience = (int) (skill.getExperience() * 0.75);
-				int newLevel = Skills.getLevelForExperience(experience);
-				if(index == Skills.HITPOINTS && newLevel < 10) {
-					newLevel = 10;
-				} else if(newLevel < 1) {
-					newLevel = 1;
+		
+		Optional<Minigame> minigame = MinigameHandler.getMinigame(getCharacter());
+		if(!minigame.isPresent() || minigame.get().getSafety() != SAFE) {
+			if(getCharacter().isIronMan() && !getCharacter().isIronMaxed()) {
+				for(int index = 0; index < getCharacter().getSkills().length; index++) {
+					Skill skill = getCharacter().getSkills()[index];
+					int experience = (int) (skill.getExperience() * 0.75);
+					int newLevel = Skills.getLevelForExperience(experience);
+					if(index == Skills.HITPOINTS && newLevel < 10) {
+						newLevel = 10;
+					} else if(newLevel < 1) {
+						newLevel = 1;
+					}
+					skill.setRealLevel(newLevel);
 				}
-				skill.setRealLevel(newLevel);
 			}
 		}
 
 		Skills.restoreAll(getCharacter());
 		getCharacter().getActivityManager().enable();
 		getCharacter().getFlags().flag(UpdateFlag.APPEARANCE);
+		minigame.ifPresent(m -> m.postDeath(getCharacter()));
 	}
 	
 	/**

@@ -103,6 +103,8 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public int attackDistance(EntityNode character) {
+		if(character.getAttr().get("master_archery").getBoolean())
+			return 15;
 		if(character.isNpc())
 			return 6;
 		Player player = (Player) character;
@@ -111,7 +113,9 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public int[] getNpcs() {
-		return new int[]{6276, 6256, 6220, 688, 1183, 8781, 8776};
+		return new int[]{6276, 6256, 6220, 688, 1183, 8781, 8776,
+				3762, 3763, 3764, 3765, 3766, 3767, 3768, 3769, 3770, 3771//pest defilers
+		};
 	}
 	
 	private void startAnimation(Player player) {
@@ -130,6 +134,17 @@ public final class RangedCombatStrategy implements CombatStrategy {
 				return CombatRangedAmmoDefinition.CRYSTAL_ARROW;
 			case 8781:
 				return CombatRangedAmmoDefinition.BLACK_BOLTS;
+			case 3762:
+			case 3763:
+			case 3764:
+			case 3765:
+			case 3766:
+			case 3767:
+			case 3768:
+			case 3769:
+			case 3770:
+			case 3771:
+				return CombatRangedAmmoDefinition.STEEL_KNIFE;
 			default:
 				return CombatRangedAmmoDefinition.BRONZE_ARROW;
 		}
@@ -149,25 +164,6 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		if(item == null) {
 			throw new IllegalStateException("Player doesn't have ammunition at this stage which is not permissible.");
 		}
-
-//			CombatRangedWeapon rangedWeapon = player.getRangedDetails().getWeapon().get();
-//			boolean droppable = !rangedWeapon.getType().isSpecialBow() && CombatRangedAmmoDefinition.NON_DROPPABLE.stream().noneMatch(rangedWeapon.getAmmunition().getDefinition()::same);
-//
-//			if(rangedWeapon.getAmmunition().getItem().getAmount() > 0 && droppable) {
-//				if (RandomUtils.inclusive(10) <= 1) {//attempting to drop ammo.
-//					int ava = player.getEquipment().getId(Equipment.CAPE_SLOT);
-//					int chance = ava == 10498 ? 25 : ava == 10499 ? 50 : 75;
-//					boolean collected = false;
-//					if (ava == 10498 || ava == 10499 || ava == 20068) {//gathering with accumulator.
-//						if (RandomUtils.inclusive(100) <= chance) {
-//							collected = true;
-//						}
-//					}
-//					if (!collected) {//dropping arrow if not gathered.
-//						ItemNodeManager.register(new ItemNode(new Item(rangedWeapon.getAmmunition().getItem().getId()), victim.getPosition(), player), true);
-//					}
-//				}
-//			}
 
 		boolean collected = false;
 		Item wep = player.getEquipment().get(Equipment.WEAPON_SLOT);

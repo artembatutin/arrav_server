@@ -165,6 +165,10 @@ public class CombatSessionData {
 			container[index++] = hit;
 		}
 		if(hits.length > 0 && victim != null && !victim.isDead() && !isIgnored()) {
+			if(attacker.isPlayer()) {
+				Player p = attacker.toPlayer();
+				p.getMinigame().ifPresent(m -> m.onInflictDamage(p, victim, container));
+			}
 			victim.damage(container);
 		}
 		Combat.handleExperience(attacker.getCombatBuilder(), this, counter);

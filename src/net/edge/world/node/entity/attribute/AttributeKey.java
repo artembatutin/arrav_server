@@ -50,11 +50,13 @@ public final class AttributeKey<T> {
 		AttributeKey.forPersistent("introduction_stage", 0);
 		
 		//Minigame
+		AttributeKey.forPersistent("participation", 0);
 		AttributeKey.forPersistent("fight_caves_advanced", false);
 		AttributeKey.forPersistent("rfd_wave", RFDData.WAVE_ONE);
 		
 		//Combat
 		AttributeKey.forPersistent("fight_type", FightType.UNARMED_PUNCH);
+		AttributeKey.forTransient("master_archery", false);
 		
 		//Availability
 		AttributeKey.forTransient("destroy_item_slot", -1);
