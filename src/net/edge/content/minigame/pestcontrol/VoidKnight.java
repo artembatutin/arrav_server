@@ -16,7 +16,7 @@ public class VoidKnight extends DefaultNpc {
 		super(RandomUtils.random(3782, 3784, 3785), new Position(2656, 2592));
 		setOriginalRandomWalk(false);
 		setAutoRetaliate(false);
-		setCurrentHealth(20000);
+		setCurrentHealth(2000);
 		setRespawn(false);
 	}
 	
