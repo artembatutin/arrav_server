@@ -4,11 +4,9 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
-import net.edge.net.database.connection.use.Donating;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
+import net.edge.world.node.entity.npc.drop.ItemCache;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.node.entity.player.Player;
@@ -30,7 +28,7 @@ public final class TestCommand implements Command {
 		while(gathered != expect) {
 			
 			//random cache
-			NpcDropCache cache = RandomUtils.random(table.getCommon());
+			ItemCache cache = RandomUtils.random(table.getCommon());
 			
 			//random item from cache
 			NpcDrop drop = RandomUtils.random(NpcDropManager.COMMON.get(cache));

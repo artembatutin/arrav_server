@@ -2,7 +2,6 @@ package net.edge.net.packet;
 
 import com.google.common.base.Preconditions;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.TabInterface;
 import net.edge.content.skill.construction.Palette;
@@ -20,8 +19,8 @@ import net.edge.locale.Position;
 import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.NpcDefinition;
+import net.edge.world.node.entity.npc.drop.ItemCache;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
@@ -1292,7 +1291,7 @@ public final class PacketWriter {
 				return;
 			msg.putShort(drop.getCommon() == null ? 0 : drop.getCommon().size());
 			if(drop.getCommon() != null) {
-				for(NpcDropCache c : drop.getCommon()) {
+				for(ItemCache c : drop.getCommon()) {
 					msg.putShort(c.ordinal());
 				}
 			}

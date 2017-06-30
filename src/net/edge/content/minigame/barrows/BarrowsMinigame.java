@@ -14,8 +14,8 @@ import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.npc.drop.ItemCache;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.npc.drop.NpcDropTable;
 import net.edge.world.node.entity.player.Player;
@@ -188,7 +188,7 @@ public final class BarrowsMinigame extends Minigame {
 				NpcDropTable table = NpcDropManager.TABLES.get(-1);//barrows custom.
 				ObjectList<Item> loot = new ObjectArrayList<>();
 				for(int i = 0; i < 20; i++) {
-					NpcDropCache cache = RandomUtils.random(table.getCommon());
+					ItemCache cache = RandomUtils.random(table.getCommon());
 					NpcDrop drop = RandomUtils.random(NpcDropManager.COMMON.get(cache));
 					if(drop.roll(ThreadLocalRandom.current())) {
 						loot.add(new Item(drop.getId(), RandomUtils.inclusive(drop.getMinimum(), drop.getMaximum())));

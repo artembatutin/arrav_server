@@ -21,13 +21,13 @@ import java.util.*;
  */
 public final class NpcDropManager {
 	
-	static final NpcDropTable DEFAULT = new NpcDropTable(new NpcDrop[]{}, new NpcDropCache[]{NpcDropCache.CASKETS, NpcDropCache.HERB_SEEDS, NpcDropCache.FLOWER_SEEDS, NpcDropCache.ALLOTMENT_SEEDS, NpcDropCache.CHARMS, NpcDropCache.LOW_RUNES, NpcDropCache.LOW_GEMS});
+	static final NpcDropTable DEFAULT = new NpcDropTable(new NpcDrop[]{}, new ItemCache[]{ItemCache.CASKETS, ItemCache.HERB_SEEDS, ItemCache.FLOWER_SEEDS, ItemCache.ALLOTMENT_SEEDS, ItemCache.CHARMS, ItemCache.LOW_RUNES, ItemCache.LOW_GEMS});
 	
 	/**
 	 * The {@link EnumMap} consisting of the cached common {@link NpcDrop}s used
 	 * across many {@link NpcDropTable}s.
 	 */
-	public static final EnumMap<NpcDropCache, NpcDrop[]> COMMON = new EnumMap<>(NpcDropCache.class);
+	public static final EnumMap<ItemCache, NpcDrop[]> COMMON = new EnumMap<>(ItemCache.class);
 	
 	/**
 	 * The {@link HashMap} that consists of the drops for {@link Npc}s.

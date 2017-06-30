@@ -29,36 +29,6 @@
     ]
   },
   {
-    "name": "GLACORS",
-    "location": [
-      {
-        "square": {
-          "swX": 4150,
-          "swY": 5691,
-          "neX": 4239,
-          "neY": 5765,
-          "z": 0
-        },
-        "multi": true
-      }
-    ]
-  },
-  {
-    "name": "CHAOS_DWARF_BATTLEFIELD",
-    "location": [
-      {
-        "square": {
-          "swX": 1486,
-          "swY": 4692,
-          "neX": 1522,
-          "neY": 4716,
-          "z": 0
-        },
-        "multi": true
-      }
-    ]
-  },
-  {
     "name": "CORPOREAL_BEAST",
     "location": [
       {
@@ -68,21 +38,6 @@
           "neX": 3003,
           "neY": 4400,
           "z": 2
-        },
-        "multi": true
-      }
-    ]
-  },
-  {
-    "name": "DAGANNOTH_KINGS",
-    "location": [
-      {
-        "square": {
-          "swX": 2890,
-          "swY": 4427,
-          "neX": 2937,
-          "neY": 4466,
-          "z": 0
         },
         "multi": true
       }
