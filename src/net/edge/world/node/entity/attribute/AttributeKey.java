@@ -50,7 +50,8 @@ public final class AttributeKey<T> {
 		AttributeKey.forPersistent("introduction_stage", 0);
 		
 		//Minigame
-		AttributeKey.forPersistent("participation", 0);
+		AttributeKey.forTransient("participation", 0);
+		AttributeKey.forPersistent("fight_caves_wave", 0);
 		AttributeKey.forPersistent("fight_caves_advanced", false);
 		AttributeKey.forPersistent("rfd_wave", RFDData.WAVE_ONE);
 		

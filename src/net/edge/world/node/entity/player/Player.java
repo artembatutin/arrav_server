@@ -123,7 +123,12 @@ public final class Player extends EntityNode {
 	 * The last username that killed this player.
 	 */
 	private String lastKiller = "[NOBODY]";
-
+	
+	/**
+	 * Uniquely spawned mob/npcs for this player.
+	 */
+	private final ObjectList<Npc> mobs = new ObjectArrayList<>();
+	
 	/**
 	 * The hash collection of the local players.
 	 */
@@ -2386,5 +2391,13 @@ public final class Player extends EntityNode {
 	 */
 	public void setHouse(House house) {
 		this.house = house;
+	}
+	
+	/**
+	 * Gets the list of spawned npcs specifically for this player.
+	 * @return mobs list.
+	 */
+	public ObjectList<Npc> getMobs() {
+		return mobs;
 	}
 }

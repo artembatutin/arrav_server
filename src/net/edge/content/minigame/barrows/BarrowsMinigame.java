@@ -70,7 +70,7 @@ public final class BarrowsMinigame extends Minigame {
 		if(data == null)
 			return;
 		
-		BarrowBrother current = new BarrowBrother(data, player.getUsername(), data.getSpawn());
+		BarrowBrother current = new BarrowBrother(data, player, data.getSpawn());
 		player.getMinigameContainer().getBarrowsContainer().setCurrent(current);
 		World.get().getNpcs().add(current);
 		current.forceChat("How dare you disturb our grave!");
@@ -100,7 +100,7 @@ public final class BarrowsMinigame extends Minigame {
 		if(data == null)
 			return Optional.empty();
 		else
-			return Optional.of(new BarrowBrother(data, player.getUsername(), new Position(3552, 9694, 0)));
+			return Optional.of(new BarrowBrother(data, player, new Position(3552, 9694, 0)));
 	}
 	
 	@Override

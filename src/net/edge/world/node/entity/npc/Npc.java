@@ -107,9 +107,9 @@ public abstract class Npc extends EntityNode {
 	private CombatWeaken weakenedBy;
 	
 	/**
-	 * The player's username this npc was spawned for.
+	 * The player slot this npc was spawned for.
 	 */
-	private String spawnedFor;
+	private int owner = -1;
 	
 	/**
 	 * The transformation identifier.
@@ -150,7 +150,7 @@ public abstract class Npc extends EntityNode {
 		this.originalPosition = position.copy();
 		this.maxHealth = getDefinition().getHitpoints();
 		this.currentHealth = maxHealth;
-		this.spawnedFor = null;
+		this.owner = -1;
 	}
 	
 	/**
@@ -399,10 +399,10 @@ public abstract class Npc extends EntityNode {
 	}
 	
 	/**
-	 * @return the player's username this npc was spawned for.
+	 * @return the player's slot this npc was spawned for.
 	 */
-	public String getSpawnedFor() {
-		return spawnedFor;
+	public int getOwner() {
+		return owner;
 	}
 	
 	/**
@@ -410,16 +410,17 @@ public abstract class Npc extends EntityNode {
 	 * @param spawnedFor the player to check for.
 	 * @return <true> if the npc was spawned for the player, <false> otherwise.
 	 */
-	public boolean isSpawnedFor(Player spawnedFor) {
-		return Objects.equals(this.spawnedFor, spawnedFor.getUsername());
+	public boolean isOwner(Player spawnedFor) {
+		return this.owner != -1 && this.owner == spawnedFor.getSlot();
 	}
 	
 	/**
-	 * Sets the player's username this npc was spawned for.
-	 * @param spawnedFor the player we're spawning this npc for.
+	 * Sets the player's slot this npc was spawned for.
+	 * @param player the player we're spawning this npc for.
 	 */
-	public void setSpawnedFor(String spawnedFor) {
-		this.spawnedFor = spawnedFor;
+	public void setOwner(Player player) {
+		this.owner = player.getSlot();
+		player.getMobs().add(this);
 	}
 	
 	/**

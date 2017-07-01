@@ -346,10 +346,10 @@ public final class World {
 			}
 			boolean response = players.remove(player);
 			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + players.size());
-			List<Npc> npcs = this.npcs.findAll(n -> n != null && n.isSpawnedFor(player));
-			for(Npc n : npcs) {
-				this.npcs.remove(n);
+			for(Npc mob : player.getMobs()) {
+				npcs.remove(mob);
 			}
+			player.getMobs().clear();
 			if(response)
 				logger.info(player.toString() + " has logged out.");
 			else

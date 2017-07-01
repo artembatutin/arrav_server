@@ -13,14 +13,13 @@ public final class SpawnNpcCommand implements Command {
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Npc n = Npc.getNpc(Integer.parseInt(cmd[1]), player.getPosition());
-		n.setSpawnedFor(player.getUsername());
 		boolean coordinate = true;
+		n.setOwner(player);
 		n.setOriginalRandomWalk(coordinate);
 		n.getMovementCoordinator().setCoordinate(coordinate);
 		n.getMovementCoordinator().setRadius(3);
 		n.setRespawn(false);
 		World.get().getNpcs().add(n);
-		n.setSpecial(20);
 	}
 	
 }

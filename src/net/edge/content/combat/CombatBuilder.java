@@ -100,7 +100,7 @@ public final class CombatBuilder {
 		if(character.isPlayer() && target.isNpc()) {
 			Npc npc = target.toNpc();
 			Player player = (Player) character;
-			if(!npc.isSpawnedFor(player) && npc.getSpawnedFor() != null) {
+			if(npc.getOwner() != -1 && !npc.isOwner(player)) {
 				player.message("I should mind my own business...");
 				return;
 			}
