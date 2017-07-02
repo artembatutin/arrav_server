@@ -1,6 +1,73 @@
 [
   {
     "ids": [
+      3334
+    ],
+    "unique": [
+      {
+        "id": 20429,
+        "minimum": 5,
+        "maximum": 5,
+        "chance": "ALWAYS"
+      },
+      {
+        "id": 1748,
+        "minimum": 10,
+        "maximum": 15,
+        "chance": "COMMON"
+      },
+      {
+        "id": 9194,
+        "minimum": 25,
+        "maximum": 30,
+        "chance": "COMMON"
+      },
+      {
+        "id": 1514,
+        "minimum": 25,
+        "maximum": 30,
+        "chance": "COMMON"
+      },
+      {
+        "id": 450,
+        "minimum": 25,
+        "maximum": 30,
+        "chance": "COMMON"
+      },
+      {
+        "id": 452,
+        "minimum": 5,
+        "maximum": 10,
+        "chance": "UNCOMMON"
+      },
+      {
+        "id": 5315,
+        "minimum": 5,
+        "maximum": 20,
+        "chance": "UNCOMMON"
+      },
+      {
+        "id": 1392,
+        "minimum": 5,
+        "maximum": 5,
+        "chance": "UNCOMMON"
+      }
+    ],
+    "common": [
+      "CASKETS",
+      "CHARMS",
+      "ALLOTMENT_SEEDS",
+      "FLOWER_SEEDS",
+      "HERB_SEEDS",
+      "MED_HERBS",
+      "LOW_HERBS",
+      "LOW_RUNES",
+      "MED_RUNES",
+      "HIGH_HERBS"
+    ]
+  },
+  {
+    "ids": [
       1158
     ],
     "unique": [

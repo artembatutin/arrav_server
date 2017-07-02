@@ -38,6 +38,24 @@ public class BossPanel extends EventInitializer {
 			}
 		};
 		e.register(56);
+		//kalphite queen
+		e = new ButtonEvent() {
+			@Override
+			public boolean click(Player player, int button) {
+				player.teleport(new Position(3508, 9493), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				return true;
+			}
+		};
+		e.register(58);
+		//wildywyrm
+		e = new ButtonEvent() {
+			@Override
+			public boolean click(Player player, int button) {
+				player.teleport(new Position(3197, 3873), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				return true;
+			}
+		};
+		e.register(59);
 		//jad
 		e = new ButtonEvent() {
 			@Override
