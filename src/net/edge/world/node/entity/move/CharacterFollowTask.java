@@ -70,7 +70,7 @@ class CharacterFollowTask extends Task {
 		}
 		
 		//First checks.
-		if(!character.isFollowing() || (!character.getPosition().withinDistance(leader.getPosition(), 30) && !familiar) || character.isDead() || leader.isDead()) {//Death and away check.
+		if(!character.isFollowing() || character.isDead() || leader.isDead()) {//Death and away check.
 			character.faceEntity(null);
 			character.setFollowing(false);
 			character.setFollowEntity(null);

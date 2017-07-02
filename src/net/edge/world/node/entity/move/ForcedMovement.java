@@ -58,8 +58,11 @@ public final class ForcedMovement {
 	 * The flag which checks if a forced movement is active.
 	 */
 	private boolean active = false;
-
-	protected Optional<Runnable> onDestination;
+	
+	/**
+	 * On destination process.
+	 */
+	protected Optional<Runnable> onDestination = Optional.empty();
 
 	/**
 	 * The walking speed.

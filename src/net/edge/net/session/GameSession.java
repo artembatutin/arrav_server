@@ -17,7 +17,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  * A {@link Session} implementation that handles networking for a {@link Player} during gameplay.
  * @author lare96 <http://github.org/lare96>
  */
-public final class GameSession extends Session {
+public class GameSession extends Session {
 	
 	/**
 	 * The player assigned to this {@code GameSession}.

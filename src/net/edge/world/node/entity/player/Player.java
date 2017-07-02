@@ -590,13 +590,19 @@ public final class Player extends EntityNode {
 	private House house = new House(this);
 	
 	/**
+	 * Flag determining if the player is a human.
+	 */
+	private final boolean human;
+	
+	/**
 	 * Creates a new {@link Player}.
 	 * @param usernameHash the username hash of this player.
 	 */
-	public Player(Long usernameHash) {
+	public Player(Long usernameHash, boolean human) {
 		super(GameConstants.STARTING_POSITION, NodeType.PLAYER);
 		this.usernameHash = usernameHash;
 		this.messages = new PacketWriter(this);
+		this.human = human;
 	}
 	
 	public void sendDefaultSidebars() {
@@ -681,10 +687,10 @@ public final class Player extends EntityNode {
 		MinigameHandler.executeVoid(this, m -> m.onLogin(this));
 		PlayerPanel.refreshAll(this);
 		
-		if(!clan.isPresent()) {
+		if(!clan.isPresent() && isHuman()) {
 			World.getClanManager().join(this, "avro");
 		}
-		if(attr.get("introduction_stage").getInt() != 3) {
+		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
 			new IntroductionCutscene(this).prerequisites();
 		}
 		if(World.getFirepitEvent().getFirepit().isActive()) {
@@ -918,7 +924,8 @@ public final class Player extends EntityNode {
 	 * Saves the character file for this player.
 	 */
 	private void save() {
-		new PlayerSerialization(this).serialize();
+		if(isHuman())
+			new PlayerSerialization(this).serialize();
 	}
 	
 	/**
@@ -2023,6 +2030,14 @@ public final class Player extends EntityNode {
 	 */
 	public long getUsernameHash() {
 		return usernameHash;
+	}
+	
+	/**
+	 * Getting the {@Link #human} flag.
+	 * @return human flag.
+	 */
+	public boolean isHuman() {
+		return human;
 	}
 	
 	/**

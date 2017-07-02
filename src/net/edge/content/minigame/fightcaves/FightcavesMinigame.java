@@ -151,8 +151,10 @@ public final class FightcavesMinigame extends SequencedMinigame {
 					monsters[i].setOwner(player);
 					World.getInstanceManager().isolate(monsters[i], instance);
 					World.get().getNpcs().add(monsters[i]);
+					monsters[i].getCombatBuilder().attack(player);
 				}
 				started = true;
+				timer = DELAY;
 			}
 		}
 	}
@@ -185,7 +187,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			player.message("You have successfully completed the minigame...");
 			int reward = player.getAttr().get("fight_caves_advanced").getBoolean() ? 19111 : 6570;
 			player.getInventory().addOrBank(new Item(reward, 1));
-			player.move(new Position(2436, 5169, 0));
+			player.move(new Position(2436, 5169));
 			this.destruct();
 		} else if(empty) {
 			player.getAttr().get("fight_caves_wave").set(current + 1);
@@ -228,7 +230,6 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		}
 		World.getInstanceManager().open(instance);
 		player.setInstance(0);
-		
 		this.destruct();
 	}
 	
@@ -256,7 +257,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		logout(player);
 		if(out) {
 			player.setMinigame(Optional.empty());
-			player.move(GameConstants.STARTING_POSITION);
+			player.move(new Position(2436, 5169));
 			player.message("You failed to complete the fight cave...");
 		}
 	}

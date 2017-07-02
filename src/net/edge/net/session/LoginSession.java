@@ -44,7 +44,7 @@ public final class LoginSession extends Session {
 	 * @throws Exception If any errors occur while handling credentials.
 	 */
 	private void handleRequest(final LoginRequest request) throws Exception {
-		Player player = new Player(TextUtils.nameToHash(request.getUsername()));
+		Player player = new Player(TextUtils.nameToHash(request.getUsername()), true);
 		LoginResponse response = LoginResponse.NORMAL;
 		Channel channel = getChannel();
 		
