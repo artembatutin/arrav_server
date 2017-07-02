@@ -93,7 +93,7 @@ public final class KalphiteQueenCombatStrategy extends DynamicCombatStrategy<Kal
                 this.cancel();
                 if(npc.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || npc.isDead() || victim.isDead())
                     return;
-                new Projectile(npc, victim, 473, 50, 16, 61, 41, 16).sendProjectile();
+                new Projectile(npc, victim, 473, 50, 16, 61, 41, 0).sendProjectile();
             }
         });
         return new CombatSessionData(npc, victim, 1, CombatType.RANGED, false);
@@ -190,7 +190,7 @@ public final class KalphiteQueenCombatStrategy extends DynamicCombatStrategy<Kal
 
         @Override
         public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
-            return Optional.of(new Projectile(cast, castOn, 280, 50, 16, 61, 41, 16));
+            return Optional.of(new Projectile(cast, castOn, 280, 50, 16, 61, 41, 0));
         }
 
         @Override
