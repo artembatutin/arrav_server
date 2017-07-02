@@ -28,13 +28,16 @@ public class Session {
 	 */
 	public Session(Channel channel) {
 		this.channel = channel;
-		this.hostAddress = ((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress();
+		if(channel == null)
+			this.hostAddress = "";
+		else
+			this.hostAddress = ((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress();
 	}
 	
 	/**
 	 * Disposes of this {@code Session} by closing the {@link Channel} and executing the {@code onDispose()} listener.
 	 */
-	public final void dispose() {
+	public void dispose() {
 		Channel channel = getChannel();
 		checkState(!channel.isActive(), "call getChannel().close() instead!");
 		onDispose();

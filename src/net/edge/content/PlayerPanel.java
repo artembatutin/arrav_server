@@ -200,6 +200,8 @@ public enum PlayerPanel {
 	 * @param player the player logging in.
 	 */
 	public static void refreshAll(Player player) {
+		if(!player.isHuman())
+			return;
 		for(int i = 16016; i < 16016 + VALUES.size(); i++) {
 			player.getMessages().sendString("", i);
 		}

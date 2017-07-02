@@ -7,6 +7,7 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.minigame.SequencedMinigame;
 import net.edge.locale.Position;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
@@ -20,8 +21,53 @@ import java.util.Optional;
 /**
  * Holds functionality for the fight caves minigame.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class FightcavesMinigame extends SequencedMinigame {
+	
+	/*
+	 * Fight cave monsters identifiers.
+	 */
+	private static final int TZ_KIH = 2627;
+	private static final int TZ_KEK = 2629;
+	private static final int TOK_XIL = 2631;
+	private static final int YT_MEJKOT = 2741;
+	private static final int KET_ZEK = 2743;
+	private static final int TZTOK_JAD = 2745;
+	
+	/**
+	 * The wave enumeration.
+	 */
+	private static final int[][] WAVES = {
+			{TZ_KIH, TZ_KEK},
+			{TOK_XIL, TZ_KIH},
+			{TOK_XIL, TZ_KEK, TZ_KIH, TZ_KIH},
+			{YT_MEJKOT, TZ_KIH},
+			{YT_MEJKOT, TZ_KEK, TZ_KIH, TZ_KIH},
+			{YT_MEJKOT, TOK_XIL, TZ_KIH, TZ_KIH},
+			{YT_MEJKOT, TOK_XIL, TZ_KEK, TZ_KEK},
+			{KET_ZEK, TZ_KIH},
+			{KET_ZEK, TZ_KEK, TZ_KIH, TZ_KIH},
+			{KET_ZEK, TOK_XIL, TZ_KIH, TZ_KIH},
+			{KET_ZEK, TOK_XIL, TZ_KEK, TZ_KEK},
+			{KET_ZEK, YT_MEJKOT, TZ_KIH, TZ_KIH},
+			{KET_ZEK, YT_MEJKOT, TOK_XIL, TZ_KIH},
+			{KET_ZEK, KET_ZEK}
+	};
+	
+	/**
+	 * Wave spawns enumeration.
+	 */
+	private final static Position[] SPAWNS = {
+			new Position(2403, 5094),
+			new Position(2390, 5096),
+			new Position(2392, 5077),
+			new Position(2408, 5080),
+			new Position(2413, 5108),
+			new Position(2381, 5106),
+			new Position(2379, 5072),
+			new Position(2420, 5082)
+	};
 	
 	/**
 	 * The current timer.
@@ -29,29 +75,19 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	private int timer;
 	
 	/**
-	 * The count of jads killed.
-	 */
-	private int killed;
-	
-	/**
 	 * The instance of the current fightcave minigame.
 	 */
 	private final int instance = World.getInstanceManager().closeNext();
 	
 	/**
+	 * The array of active monsters.
+	 */
+	private Npc[] monsters;
+	
+	/**
 	 * The flag to determines if the fight is started.
 	 */
 	private boolean started;
-	
-	/**
-	 * The first jad which is set to be killed.
-	 */
-	private final Npc jad = new DefaultNpc(2745, new Position(2408, 5092));
-	
-	/**
-	 * The second jad if it's in advanced mode.
-	 */
-	private final Npc otherJad = new DefaultNpc(2745, new Position(2398, 5092));
 	
 	/**
 	 * The delay before the wave spawns.
@@ -69,23 +105,20 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		ObjectEvent e = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
-				player.getDialogueBuilder().append(new OptionDialogue(t -> {
+				player.getDialogueBuilder().append(
+		        new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+						player.getAttr().get("fight_caves_wave").set(0);
+						player.getAttr().get("fight_caves_advanced").set(false);
+						new FightcavesMinigame().onEnter(player);
+					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
+						player.getAttr().get("fight_caves_wave").set(0);
+						player.getAttr().get("fight_caves_advanced").set(true);
 						new FightcavesMinigame().onEnter(player);
 					}
 					player.getMessages().sendCloseWindows();
-				}, "Kill one Jad for a Fire cape.", "I'll wait here."));
-				/*player.getDialogueChain().append(
-		        new OptionDialogue(t -> {
-					if(t.equals(OptionType.FIRST_OPTION)) {
-						MinigameContainer.FIGHT_CAVES.onEnter(player);
-					} else if(t.equals(OptionType.SECOND_OPTION)) {
-						MinigameContainer.FIGHT_CAVES.onEnter(player);
-						player.getAttr().get("fight_caves_advanced").set(true);
-					}
-					player.getMessages().sendCloseWindows();
-				}, "Fire cape", "TokHaar-kal cape", "I'll wait here")
-				);*/
+				}, "Fire cape", "TokHaar-kal cape (two jads)", "I'll wait here")
+				);
 				return true;
 			}
 		};
@@ -100,22 +133,28 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	@Override
 	public void onSequence() {
 		for(Player player : getPlayers()) {
-			if(timer-- < 1 && !started) {
-				if(player.getAttr().get("fight_caves_advanced").getBoolean()) {
-					otherJad.setRespawn(false);
-					otherJad.setSpawnedFor(player.getUsername());
-					World.get().getNpcs().add(otherJad);
-					World.getInstanceManager().isolate(otherJad, instance);
-					otherJad.getCombatBuilder().attack(player);
+			if(!started && timer-- < 1) {
+				int[] wave;
+				int current = player.getAttr().get("fight_caves_wave").getInt();
+				if(current >= WAVES.length) {
+					if(player.getAttr().get("fight_caves_advanced").getBoolean())
+						wave = new int[] { TZTOK_JAD, TZTOK_JAD };//two jads.
+					else
+						wave = new int[] { TZTOK_JAD };
+				} else {
+					wave = WAVES[current];
 				}
-				jad.setRespawn(false);
-				jad.setSpawnedFor(player.getUsername());
-				World.get().getNpcs().add(jad);
-				World.getInstanceManager().isolate(jad, instance);
-				jad.getCombatBuilder().attack(player);
+				monsters = new Npc[wave.length];
+				for(int i = 0; i < wave.length; i++) {
+					monsters[i] = new DefaultNpc(wave[i], RandomUtils.random(SPAWNS));
+					monsters[i].setRespawn(false);
+					monsters[i].setOwner(player);
+					World.getInstanceManager().isolate(monsters[i], instance);
+					World.get().getNpcs().add(monsters[i]);
+					monsters[i].getCombatBuilder().attack(player);
+				}
 				started = true;
-			} else if(timer == 8) {
-				player.getDialogueBuilder().append(new NpcDialogue(2617, "You're on your own, JalYt", "Prepare to fight for your life!"));
+				timer = DELAY;
 			}
 		}
 	}
@@ -128,23 +167,33 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	@Override
 	public void onKill(Player player, EntityNode victim) {
 		if(victim.isPlayer()) {
-			logout(player);
+			over(player, true);
 			return;
 		}
 		Npc npc = victim.toNpc();
-		if(npc.getId() != 2745) {
-			return;
+		boolean empty = true;
+		for(int i = 0; i < monsters.length; i++) {
+			if(monsters[i] == null)
+				continue;
+			if(monsters[i].getId() == npc.getId() && monsters[i].getSlot() == npc.getSlot()) {
+				monsters[i] = null;
+				continue;
+			}
+			empty = false;
 		}
-		killed += 1;
-		if(player.getAttr().get("fight_caves_advanced").getBoolean() ? killed == 2 : killed == 1) {
+		int current = player.getAttr().get("fight_caves_wave").getInt();
+		if(current == 15 && empty) {
 			player.setMinigame(Optional.empty());
 			player.message("You have successfully completed the minigame...");
 			int reward = player.getAttr().get("fight_caves_advanced").getBoolean() ? 19111 : 6570;
 			player.getInventory().addOrBank(new Item(reward, 1));
-			player.move(new Position(2436, 5169, 0));
-			World.get().getNpcs().remove(jad);
-			World.get().getNpcs().remove(otherJad);
+			player.move(new Position(2436, 5169));
 			this.destruct();
+		} else if(empty) {
+			player.getAttr().get("fight_caves_wave").set(current + 1);
+			started = false;
+			timer = DELAY;
+			player.getDialogueBuilder().append(new NpcDialogue(2617, (current + 1 == 15 ? "Prepare to fight for your life!" : "Prepare for wave " + (current + 1) + "!")));
 		}
 	}
 	
@@ -155,7 +204,8 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	
 	@Override
 	public void login(Player player) {
-		this.logout(player);
+		if(contains(player))
+			new FightcavesMinigame().onEnter(player);
 	}
 	
 	@Override
@@ -164,7 +214,6 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		player.move(new Position(2413, 5117));
 		timer = DELAY;
 		started = false;
-		killed = 0;
 	}
 	
 	@Override
@@ -174,13 +223,13 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	
 	@Override
 	public void logout(Player player) {
-		World.get().getNpcs().remove(jad);
-		World.get().getNpcs().remove(otherJad);
-		player.move(GameConstants.STARTING_POSITION);
-		player.message("You failed to complete the fight cave...");
-		player.setMinigame(Optional.empty());
-		player.setInstance(0);
+		for(Npc monster : monsters) {
+			if(monster == null)
+				continue;
+			World.get().getNpcs().remove(monster);
+		}
 		World.getInstanceManager().open(instance);
+		player.setInstance(0);
 		this.destruct();
 	}
 	
@@ -202,6 +251,15 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	@Override
 	public Position deathPosition(Player player) {
 		return GameConstants.STARTING_POSITION;
+	}
+	
+	public void over(Player player, boolean out) {
+		logout(player);
+		if(out) {
+			player.setMinigame(Optional.empty());
+			player.move(new Position(2436, 5169));
+			player.message("You failed to complete the fight cave...");
+		}
 	}
 	
 }

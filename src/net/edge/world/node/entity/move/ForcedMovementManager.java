@@ -153,8 +153,10 @@ public final class ForcedMovementManager {
 
 		@Override
 		public void onCancel() {
-			movement.onDestination.ifPresent(Runnable::run);
-			movement.getCharacter().getMovementQueue().setLockMovement(false);
+			if(movement != null) {
+				movement.onDestination.ifPresent(Runnable::run);
+				movement.getCharacter().getMovementQueue().setLockMovement(false);
+			}
 		}
 	}
 }

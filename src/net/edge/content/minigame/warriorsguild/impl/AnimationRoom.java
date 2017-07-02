@@ -139,7 +139,7 @@ public final class AnimationRoom extends GuildRoom {
 		});
 		seq.connect(3, () -> {
 			World.get().getNpcs().add(arm);
-			arm.setSpawnedFor(player.getUsername());
+			arm.setOwner(player);
 			arm.forceChat("I'M ALIVE!!!!");
 		});
 		seq.connect(1, () -> arm.getCombatBuilder().attack(player));

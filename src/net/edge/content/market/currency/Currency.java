@@ -1,6 +1,7 @@
 package net.edge.content.market.currency;
 
 import net.edge.content.market.currency.impl.ItemCurrency;
+import net.edge.content.market.currency.impl.PestCurrency;
 import net.edge.content.market.currency.impl.SlayerCurrency;
 import net.edge.content.market.currency.impl.VoteCurrency;
 
@@ -19,7 +20,8 @@ public enum Currency {
 	AGILITY_ARENA_TICKETS(new ItemCurrency(2996)),
 	BLOOD_MONEY(new ItemCurrency(19000, Optional.of("blood money"))),
 	EDGE_TOKENS(new ItemCurrency(7478, Optional.of("edge tokens"))),
-	VOTE_POINTS(new VoteCurrency());
+	VOTE_POINTS(new VoteCurrency()),
+	PEST_POINTS(new PestCurrency()),;
 
 	/**
 	 * The currency that is represented by this element.

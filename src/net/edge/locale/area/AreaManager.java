@@ -1,7 +1,11 @@
 package net.edge.locale.area;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.locale.Position;
+import net.edge.locale.area.Area.AreaLocation;
+import net.edge.locale.loc.Location;
 import net.edge.world.node.Node;
 import java.util.Optional;
 
@@ -12,9 +16,14 @@ import java.util.Optional;
 public final class AreaManager {
 	
 	/**
-	 * The mapping of all the areas on the world.
+	 * The mapping of all the areas in the world.
 	 */
 	private static final Object2ObjectArrayMap<String, Area> AREAS = new Object2ObjectArrayMap<>();
+	
+	/**
+	 * The list of all the multi zones in the world.
+	 */
+	private static final ObjectList<Location> MULTI_ZONES = new ObjectArrayList<>();
 	
 	/**
 	 * Checks if the specified {@code node} is in the area specified {@code area}.
@@ -33,24 +42,13 @@ public final class AreaManager {
 	 * @return <true> if the node is, <false> otherwise.
 	 */
 	public boolean inArea(Position pos, String area) {
-		return AREAS.containsKey(area) && AREAS.get(area).getAreaLocations().stream().anyMatch(loc -> loc.getLocation().inLocation(pos));
-	}
-	
-	/**
-	 * Gets the area the node is in.
-	 * @param node the node to get the area for.
-	 * @return the area wrapped in an optional, {@link Optional#empty()} otherwise.
-	 */
-	public Optional<Area> getArea(Node node) {
-		Optional<Area> area = Optional.empty();
-		for(Area ar : AREAS.values()) {
-			for(Area.AreaLocation att : ar.getAreaLocations()) {
-				if(att.getLocation().inLocation(node.getPosition())) {
-					area = Optional.of(ar);
-				}
-			}
+		if(!AREAS.containsKey(area))
+			return false;
+		for(AreaLocation loc : AREAS.get(area).getAreaLocations()) {
+			if(loc.getLocation().inLocation(pos))
+				return true;
 		}
-		return area;
+		return false;
 	}
 	
 	/**
@@ -59,16 +57,27 @@ public final class AreaManager {
 	 * @return {@code true} if the node is, {@code false} otherwise.
 	 */
 	public boolean inMulti(Node node) {
-		Optional<Area> area = getArea(node);
-		return area.isPresent() && area.get().getAreaLocations().stream().anyMatch(loc -> loc.isMulti() && loc.getLocation().inLocation(node.getPosition()));
+		for(Location zone : MULTI_ZONES) {
+			if(zone.inLocation(node.getPosition()))
+				return true;
+		}
+		return false;
 		
 	}
 	
 	/**
 	 * Gets the mapping which contains all areas loaded on startup.
-	 * @return the tool.mapviewer which contains all areas.
+	 * @return the map which contains all areas.
 	 */
 	public Object2ObjectArrayMap<String, Area> getAreas() {
 		return AREAS;
+	}
+	
+	/**
+	 * Gets the list of all multi zones loaded on startup.
+	 * @return the list which contains all multi zones.
+	 */
+	public ObjectList<Location> getMultiZones() {
+		return MULTI_ZONES;
 	}
 }

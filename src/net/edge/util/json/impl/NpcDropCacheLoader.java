@@ -3,8 +3,8 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
+import net.edge.world.node.entity.npc.drop.ItemCache;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.node.entity.npc.drop.NpcDropManager;
 
 import java.util.Objects;
@@ -24,7 +24,7 @@ public final class NpcDropCacheLoader extends JsonLoader {
 	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
-		NpcDropCache table = Objects.requireNonNull(builder.fromJson(reader.get("table"), NpcDropCache.class));
+		ItemCache table = Objects.requireNonNull(builder.fromJson(reader.get("table"), ItemCache.class));
 		NpcDrop[] items = Objects.requireNonNull(builder.fromJson(reader.get("items"), NpcDrop[].class));
 		NpcDropManager.COMMON.put(table, items);
 	}

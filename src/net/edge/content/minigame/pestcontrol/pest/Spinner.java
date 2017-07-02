@@ -32,7 +32,7 @@ public class Spinner extends Pest {
 	@Override
 	public void sequence(Npc knight) {
 		//heal portals and explode when portal is down.
-		//portal.healEntity(portal.getMaxHealth() / 5);
+		portal.healEntity(portal.getMaxHealth() / 10);
 		if(portal.isDead()) {
 			damage(new Hit(getCurrentHealth(), Hit.HitType.NORMAL, Hit.HitIcon.NONE));
 			//hitting players.

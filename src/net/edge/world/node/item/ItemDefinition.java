@@ -596,7 +596,7 @@ public final class ItemDefinition {
 																drops += 1;
 															}
 														} else {
-															NpcDropTable drop = new NpcDropTable(new NpcDrop[]{new NpcDrop(index, minQuant, maxQuant, rarity)}, new NpcDropCache[]{NpcDropCache.LOW_RUNES});
+															NpcDropTable drop = new NpcDropTable(new NpcDrop[]{new NpcDrop(index, minQuant, maxQuant, rarity)}, new ItemCache[]{ItemCache.LOW_RUNES});
 															NpcDropManager.getTables().put(def.getId(), drop);
 															drops += 1;
 														}
@@ -610,7 +610,7 @@ public final class ItemDefinition {
 														drops += 1;
 													}
 												} else {
-													NpcDropTable drop = new NpcDropTable(new NpcDrop[]{new NpcDrop(index, minQuant, maxQuant, rarity)}, new NpcDropCache[]{NpcDropCache.LOW_RUNES});
+													NpcDropTable drop = new NpcDropTable(new NpcDrop[]{new NpcDrop(index, minQuant, maxQuant, rarity)}, new ItemCache[]{ItemCache.LOW_RUNES});
 													NpcDropManager.getTables().put(def.getId(), drop);
 													drops += 1;
 												}

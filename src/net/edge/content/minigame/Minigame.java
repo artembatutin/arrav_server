@@ -402,7 +402,7 @@ public abstract class Minigame {
 	 * Method handling npc aggression, cutting out regular aggression if returned true.
 	 */
 	public boolean aggression() {
-		return true;
+		return false;
 	}
 	
 	/**

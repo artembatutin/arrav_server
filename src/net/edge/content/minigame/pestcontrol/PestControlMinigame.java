@@ -7,6 +7,7 @@ import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.door.DoorHandler;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
+import net.edge.content.market.currency.Currency;
 import net.edge.content.minigame.SequencedMinigame;
 import net.edge.content.minigame.pestcontrol.defence.PestGate;
 import net.edge.content.minigame.pestcontrol.pest.Pest;
@@ -268,17 +269,15 @@ public final class PestControlMinigame extends SequencedMinigame {
 	
 	void end(boolean won) {
 		for(Player p : getPlayers()) {
-			//dialogue lost.
+			Currency.PEST_POINTS.getCurrency().recieveCurrency(p, p.getAttr().get("participation").getInt() / 300);
 			logout(p);
 			if(won) {
 				p.getDialogueBuilder().append(new NpcDialogue(3784, "Congratulations " + p.getFormatUsername() +"!",  "You won the pest control match", "You been awarded, well done."));
-				//reward
 			} else if(voidKnight.getCurrentHealth() > 0) {
 				p.getDialogueBuilder().append(new NpcDialogue(3784, p.getFormatUsername() +" you have Failed.", "You did participate enough to take down", "the portals. ", "Try Harder next time."));
 			} else {
 				p.getDialogueBuilder().append(new NpcDialogue(3784, "All is Lost!", "You could not take down the portals in time.", "Try Harder next time."));
 			}
-			p.updatePest(p.getAttr().get("participation").getInt() / 300);
 		}
 		World.get().getNpcs().remove(voidKnight);
 		for(PestPortal portal : portals) {
@@ -290,6 +289,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 		for(PestGate gate : gates) {
 			gate.reset();
 		}
+		PestControlWaitingLobby.PEST_LOBBY.pestGameOn = false;
 		destruct();
 	}
 	

@@ -30,19 +30,19 @@ public final class NpcDropTable {
 	/**
 	 * The common drop table that is shared with other tables.
 	 */
-	private final ObjectList<NpcDropCache> common;
+	private final ObjectList<ItemCache> common;
 	
 	/**
 	 * Creates a new {@link NpcDropTable}.
 	 * @param unique the unique drop table.
 	 * @param common the common drop table.
 	 */
-	public NpcDropTable(NpcDrop[] unique, NpcDropCache[] common) {
+	public NpcDropTable(NpcDrop[] unique, ItemCache[] common) {
 		this.unique = new ObjectArrayList<>(unique);
 		this.common = new ObjectArrayList<>(common);
 	}
 	
-	public NpcDropTable(ObjectList<NpcDrop> unique, ObjectList<NpcDropCache> common) {
+	public NpcDropTable(ObjectList<NpcDrop> unique, ObjectList<ItemCache> common) {
 		this.unique = unique;
 		this.common = common;
 	}
@@ -62,7 +62,7 @@ public final class NpcDropTable {
 		// for the rare items, the common table, and a list that contains a
 		// shuffled copy of the unique table.
 		ObjectList<Item> items = new ObjectArrayList<>();
-		NpcDropCache cache = RandomUtils.random(!common.isEmpty() ? common : NpcDropManager.DEFAULT.common);
+		ItemCache cache = RandomUtils.random(!common.isEmpty() ? common : NpcDropManager.DEFAULT.common);
 		
 		// Determines if the rare, common, and dynamic tables should be rolled.
 		// The breakdown of each of the formulas are touched upon later on.
@@ -139,7 +139,7 @@ public final class NpcDropTable {
 		return unique;
 	}
 	
-	public ObjectList<NpcDropCache> getCommon() {
+	public ObjectList<ItemCache> getCommon() {
 		return common;
 	}
 	

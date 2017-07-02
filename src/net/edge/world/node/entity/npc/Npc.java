@@ -37,7 +37,7 @@ import java.util.function.Function;
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class Npc extends EntityNode {
-
+	
 	/**
 	 * A mapping which contains all the custom npcs by their id.
 	 */
@@ -67,72 +67,72 @@ public abstract class Npc extends EntityNode {
 		}
 		return CUSTOM_NPCS.containsKey(id) ? CUSTOM_NPCS.get(id).apply(pos).create() : new DefaultNpc(id, pos);
 	}
-
+	
 	/**
 	 * The identification for this NPC.
 	 */
 	private final int id;
-
+	
 	/**
 	 * The maximum health of this NPC.
 	 */
 	private final int maxHealth;
-
+	
 	/**
 	 * The original position that this NPC was created on.
 	 */
 	private final Position originalPosition;
-
+	
 	/**
 	 * The movement coordinator for this NPC.
 	 */
 	private final NpcMovementCoordinator movementCoordinator = new NpcMovementCoordinator(this);
-
+	
 	/**
 	 * The current health of this NPC.
 	 */
 	private int currentHealth;
-
+	
 	/**
 	 * Determines if this NPC was originally random walking.
 	 */
 	private boolean originalRandomWalk;
-
+	
 	/**
 	 * Determines if this NPC respawns.
 	 */
 	private boolean respawn;
-
+	
 	/**
 	 * The spell that this NPC is weakened by.
 	 */
 	private CombatWeaken weakenedBy;
-
+	
 	/**
-	 * The player's username this npc was spawned for.
+	 * The player slot this npc was spawned for.
 	 */
-	private String spawnedFor;
-
+	private int owner = -1;
+	
 	/**
 	 * The transformation identifier.
 	 */
 	private OptionalInt transform = OptionalInt.empty();
-
+	
 	/**
 	 * The flag determining if this {@link Npc} is active in his region.
 	 */
 	private boolean active = false;
-
+	
 	/**
 	 * The flag determining if the {@link Npc} is a smart npc.
 	 */
 	private boolean smart;
-
+	
 	/**
 	 * The special amount of this npc, between 0 and 100. 101 sets it off.
 	 */
 	private OptionalInt special = OptionalInt.empty();
-
+	
 	/**
 	 * The cached field to determine this npcs dynamic combat strategy.
 	 * <p></p>
@@ -140,7 +140,7 @@ public abstract class Npc extends EntityNode {
 	 * will have it's own strategy instead of sharing it on a global state.
 	 */
 	private Optional<CombatStrategy> strategy = Optional.empty();
-
+	
 	/**
 	 * Creates a new {@link Npc}.
 	 * @param id       the identification for this NPC.
@@ -152,20 +152,20 @@ public abstract class Npc extends EntityNode {
 		this.originalPosition = position.copy();
 		this.maxHealth = getDefinition().getHitpoints();
 		this.currentHealth = maxHealth;
-		this.spawnedFor = null;
+		this.owner = -1;
 	}
-
+	
 	/**
 	 * Creates the particular {@link Npc instance}.
 	 * @return new {@link Npc} instance.
 	 */
 	public abstract Npc create();
-
+	
 	@Override
 	public void register() {
-
+		
 	}
-
+	
 	@Override
 	public void dispose() {
 		setVisible(false);
@@ -173,25 +173,25 @@ public abstract class Npc extends EntityNode {
 		World.get().getTask().cancel(this);
 		getRegion().removeChar(this);
 	}
-
+	
 	@Override
 	public void move(Position destination) {
 		getMovementQueue().reset();
 		super.setPosition(destination.copy());
 		setUpdates(true, true);
 	}
-
+	
 	@Override
 	public void sequence() {
 		//No sequencing.
 	}
-
+	
 	@Override
 	public void appendDeath() {
 		setDead(true);
 		World.get().submit(new NpcDeath(this));
 	}
-
+	
 	@Override
 	public Hit decrementHealth(Hit hit) {
 		if(hit.getDamage() > currentHealth) {
@@ -206,22 +206,22 @@ public abstract class Npc extends EntityNode {
 		}
 		return hit;
 	}
-
+	
 	@Override
 	public int getAttackSpeed() {
 		return this.getDefinition().getAttackSpeed();
 	}
-
+	
 	@Override
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
-
+	
 	@Override
 	public CombatStrategy determineStrategy() {
 		return strategy.orElse(Combat.determineStrategy(id));
 	}
-
+	
 	@Override
 	public int getBaseAttack(CombatType type) {
 		int value;
@@ -235,7 +235,7 @@ public abstract class Npc extends EntityNode {
 			value -= (int) ((weakenedBy.getRate()) * (value));
 		return value;
 	}
-
+	
 	@Override
 	public int getBaseDefence(CombatType type) {
 		int value = getDefinition().getDefenceLevel();
@@ -243,13 +243,13 @@ public abstract class Npc extends EntityNode {
 			value -= (int) ((weakenedBy.getRate()) * (value));
 		return value;
 	}
-
+	
 	@Override
 	public void onSuccessfulHit(EntityNode victim, CombatType type) {
 		if(getDefinition().isPoisonous())
 			victim.poison(CombatPoisonEffect.getPoisonType(id).orElse(PoisonType.DEFAULT_NPC));
 	}
-
+	
 	@Override
 	public void healEntity(int damage) {
 		if((currentHealth + damage) > maxHealth) {
@@ -258,7 +258,7 @@ public abstract class Npc extends EntityNode {
 		}
 		currentHealth += damage;
 	}
-
+	
 	@Override
 	public boolean weaken(CombatWeaken effect) {
 		if(weakenedBy == null) {
@@ -267,7 +267,7 @@ public abstract class Npc extends EntityNode {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Activates the {@code TRANSFORM} update mask for this non-player
 	 * character.
@@ -290,7 +290,7 @@ public abstract class Npc extends EntityNode {
 	public int getId() {
 		return id;
 	}
-
+	
 	/**
 	 * Gets the maximum health of this NPC.
 	 * @return the maximum health.
@@ -298,7 +298,7 @@ public abstract class Npc extends EntityNode {
 	public int getMaxHealth() {
 		return maxHealth;
 	}
-
+	
 	/**
 	 * Sets the value for {@link Npc#currentHealth}.
 	 * @param currentHealth the new value to set.
@@ -311,7 +311,7 @@ public abstract class Npc extends EntityNode {
 			}
 		}
 	}
-
+	
 	/**
 	 * Gets the special amount for this NPC.
 	 * @return the special amount.
@@ -319,7 +319,7 @@ public abstract class Npc extends EntityNode {
 	public OptionalInt getSpecial() {
 		return special;
 	}
-
+	
 	/**
 	 * Sets the value for {@link Npc#special}.
 	 * @param special the new value to set.
@@ -327,14 +327,14 @@ public abstract class Npc extends EntityNode {
 	public void setSpecial(int special) {
 		this.special = OptionalInt.of(special);
 	}
-
+	
 	/**
 	 * Resets the {@link Npc#special}.
 	 */
 	public void resetSpecial() {
 		this.special = OptionalInt.empty();
 	}
-
+	
 	/**
 	 * Gets the original position that this NPC was created on.
 	 * @return the original position.
@@ -342,7 +342,7 @@ public abstract class Npc extends EntityNode {
 	public Position getOriginalPosition() {
 		return originalPosition;
 	}
-
+	
 	/**
 	 * Gets the movement coordinator for this NPC.
 	 * @return the movement coordinator.
@@ -350,7 +350,7 @@ public abstract class Npc extends EntityNode {
 	public NpcMovementCoordinator getMovementCoordinator() {
 		return movementCoordinator;
 	}
-
+	
 	/**
 	 * Determines if this NPC was originally random walking.
 	 * @return {@code true} if this NPC was originally walking, {@code false}
@@ -359,7 +359,7 @@ public abstract class Npc extends EntityNode {
 	public boolean isOriginalRandomWalk() {
 		return originalRandomWalk;
 	}
-
+	
 	/**
 	 * Sets the value for {@link Npc#originalRandomWalk}.
 	 * @param originalRandomWalk the new value to set.
@@ -367,7 +367,7 @@ public abstract class Npc extends EntityNode {
 	public void setOriginalRandomWalk(boolean originalRandomWalk) {
 		this.originalRandomWalk = originalRandomWalk;
 	}
-
+	
 	/**
 	 * Gets the spell that this NPC is weakened by.
 	 * @return the weakening spell.
@@ -375,7 +375,7 @@ public abstract class Npc extends EntityNode {
 	public CombatWeaken getWeakenedBy() {
 		return weakenedBy;
 	}
-
+	
 	/**
 	 * Sets the value for {@link Npc#weakenedBy}.
 	 * @param weakenedBy the new value to set.
@@ -383,7 +383,7 @@ public abstract class Npc extends EntityNode {
 	public void setWeakenedBy(CombatWeaken weakenedBy) {
 		this.weakenedBy = weakenedBy;
 	}
-
+	
 	/**
 	 * Determines if this NPC respawns.
 	 * @return {@code true} if this NPC respawns, {@code false} otherwise.
@@ -391,7 +391,7 @@ public abstract class Npc extends EntityNode {
 	public boolean isRespawn() {
 		return respawn;
 	}
-
+	
 	/**
 	 * Sets the value for {@link Npc#respawn}.
 	 * @param respawn the new value to set.
@@ -399,31 +399,32 @@ public abstract class Npc extends EntityNode {
 	public void setRespawn(boolean respawn) {
 		this.respawn = respawn;
 	}
-
+	
 	/**
-	 * @return the player's username this npc was spawned for.
+	 * @return the player's slot this npc was spawned for.
 	 */
-	public String getSpawnedFor() {
-		return spawnedFor;
+	public int getOwner() {
+		return owner;
 	}
-
+	
 	/**
 	 * The flag which identifies if this npc was spawned for the player by the username.
 	 * @param spawnedFor the player to check for.
 	 * @return <true> if the npc was spawned for the player, <false> otherwise.
 	 */
-	public boolean isSpawnedFor(Player spawnedFor) {
-		return Objects.equals(this.spawnedFor, spawnedFor.getUsername());
+	public boolean isOwner(Player spawnedFor) {
+		return this.owner != -1 && this.owner == spawnedFor.getSlot();
 	}
-
+	
 	/**
-	 * Sets the player's username this npc was spawned for.
-	 * @param spawnedFor the player we're spawning this npc for.
+	 * Sets the player's slot this npc was spawned for.
+	 * @param player the player we're spawning this npc for.
 	 */
-	public void setSpawnedFor(String spawnedFor) {
-		this.spawnedFor = spawnedFor;
+	public void setOwner(Player player) {
+		this.owner = player.getSlot();
+		player.getMobs().add(this);
 	}
-
+	
 	/**
 	 * Determines if the npc is active in his region.
 	 * @return {@code true} if the npc is active, {@code false} otherwise.
@@ -431,7 +432,7 @@ public abstract class Npc extends EntityNode {
 	public boolean isActive() {
 		return active;
 	}
-
+	
 	/**
 	 * Sets the new value for {@link Npc#active}.
 	 * @param active the new value to set.
@@ -444,7 +445,7 @@ public abstract class Npc extends EntityNode {
 			World.getNpcMovementTask().getNpcs().offer(this);
 		}
 	}
-
+	
 	/**
 	 * Determines if the npc is a smart npc.
 	 * @return {@code true} if the npc is smart, {@code false} otherwise.
@@ -452,7 +453,7 @@ public abstract class Npc extends EntityNode {
 	public boolean isSmart() {
 		return smart;
 	}
-
+	
 	/**
 	 * Sets the new value for {@link Npc#smart}.
 	 * @param smart the new value to set.
@@ -460,7 +461,7 @@ public abstract class Npc extends EntityNode {
 	public void setSmart(boolean smart) {
 		this.smart = smart;
 	}
-
+	
 	/**
 	 * Gets the definition for this NPC.
 	 * @return the definition.
@@ -468,7 +469,7 @@ public abstract class Npc extends EntityNode {
 	public NpcDefinition getDefinition() {
 		return NpcDefinition.DEFINITIONS[transform.orElse(id)];
 	}
-
+	
 	/**
 	 * Gets the transformation identifier.
 	 * @return the transformation id.
@@ -476,7 +477,7 @@ public abstract class Npc extends EntityNode {
 	public OptionalInt getTransform() {
 		return transform;
 	}
-
+	
 	/**
 	 * Gets the combat strategy.
 	 * @return combat strategy.
@@ -484,7 +485,7 @@ public abstract class Npc extends EntityNode {
 	public Optional<CombatStrategy> getStrategy() {
 		return strategy;
 	}
-
+	
 	/**
 	 * Sets a new value for {@link #strategy}.
 	 * @param strategy the new value to set.
@@ -493,7 +494,7 @@ public abstract class Npc extends EntityNode {
 		this.strategy = strategy;
 		return this;
 	}
-
+	
 	/**
 	 * Determines if this npc is a familiar.
 	 * @return <true> if the npc is a familiar, <false> otherwise.
@@ -501,7 +502,7 @@ public abstract class Npc extends EntityNode {
 	public boolean isFamiliar() {
 		return false;
 	}
-
+	
 	/**
 	 * Determines if this npc is a pet.
 	 * @return <true> if the npc is a pet, <false> otherwise.
@@ -509,7 +510,7 @@ public abstract class Npc extends EntityNode {
 	public boolean isPet() {
 		return false;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Npc) {
@@ -518,15 +519,15 @@ public abstract class Npc extends EntityNode {
 		}
 		return false;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(getId(), getSlot());
 	}
-
+	
 	@Override
 	public String toString() {
 		return "NPC[slot= " + getSlot() + ", name=" + getDefinition().getName() + "]";
 	}
-
+	
 }

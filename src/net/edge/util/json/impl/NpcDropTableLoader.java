@@ -3,8 +3,8 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
+import net.edge.world.node.entity.npc.drop.ItemCache;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropCache;
 import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.npc.drop.NpcDropTable;
 
@@ -48,7 +48,7 @@ public final class NpcDropTableLoader extends JsonLoader {
 	public void load(JsonObject reader, Gson builder) {
 		int[] array = builder.fromJson(reader.get("ids"), int[].class);
 		NpcDrop[] unique = Objects.requireNonNull(builder.fromJson(reader.get("unique"), NpcDrop[].class));
-		NpcDropCache[] common = Objects.requireNonNull(builder.fromJson(reader.get("common"), NpcDropCache[].class));
+		ItemCache[] common = Objects.requireNonNull(builder.fromJson(reader.get("common"), ItemCache[].class));
 		if(Arrays.stream(common).anyMatch(Objects::isNull))
 			throw new NullPointerException("Invalid common drop table [" + array[0] + "]," + " npc_drops.json");
 		Arrays.stream(array).forEach(id -> NpcDropManager.TABLES.put(id, new NpcDropTable(unique, common)));

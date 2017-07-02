@@ -165,20 +165,6 @@ public final class ClickButtonPacket implements PacketReader {
 			player.getBank().setTab(button - 100);
 		}
 		switch(button) {
-			
-			//Minigames 30-47
-			case 31://barrows
-				player.teleport(new Position(3565, 3306), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
-				break;
-			case 34://duel arena
-				player.teleport(new Position(3363, 3275), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
-				break;
-			case 39:
-				player.teleport(new Position(2399, 5178), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
-				break;
-			case 40:
-				player.teleport(new Position(2844, 3542), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
-				break;
 			//Clan chat
 			case 240:
 				player.getClan().filter(c -> c.getRank() == ClanChatRank.OWNER).ifPresent(clan -> player.getMessages().sendEnterName("The new clan chat name to set:", s -> () -> {

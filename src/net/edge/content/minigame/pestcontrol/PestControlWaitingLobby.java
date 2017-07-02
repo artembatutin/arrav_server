@@ -1,13 +1,24 @@
 package net.edge.content.minigame.pestcontrol;
 
+import net.edge.content.market.currency.Currency;
 import net.edge.content.minigame.MinigameLobby;
+import net.edge.content.skill.Skills;
+import net.edge.event.impl.ButtonEvent;
+import net.edge.event.impl.NpcEvent;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
 import net.edge.task.Task;
+import net.edge.util.rand.RandomUtils;
+import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.npc.drop.ItemCache;
+import net.edge.world.node.entity.npc.drop.NpcDrop;
+import net.edge.world.node.entity.npc.drop.NpcDropManager;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
 
 import static net.edge.content.minigame.Minigame.MinigameSafety.SAFE;
+import static net.edge.world.node.entity.npc.drop.ItemCache.*;
 
 public final class PestControlWaitingLobby extends MinigameLobby {
 	
@@ -16,17 +27,21 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	 */
 	public static final PestControlWaitingLobby PEST_LOBBY = new PestControlWaitingLobby();
 	
+	/**
+	 * Condition if the pest control game is currently on.
+	 */
+	boolean pestGameOn = false;
+	
 	private int count;
 	private int timer;
 	
 	public PestControlWaitingLobby() {
-		super(10); // 5 minutes
+		super(540); // 5 minutes
 	}
 	
 	@Override
 	public void onCountdown(int current, Task t) {
 		timer = current;
-		System.out.println(current);
 		if(timer % 10 == 0) {
 			for(Player p : getPlayers()) {
 				p.getMessages().sendString("@whi@Next Departure: " + seconds() + " seconds.", 21120);
@@ -60,9 +75,9 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	public void onStart() {
 		PestControlMinigame game = new PestControlMinigame("Pest control", SAFE);
 		for(Player p : getPlayers()) {
-			System.out.println("moving to pest: " + p.getFormatUsername());
 			game.onEnter(p);
 		}
+		pestGameOn = true;
 		getPlayers().clear();
 		count = 0;
 	}
@@ -87,12 +102,12 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	@Override
 	public boolean canStart() {
 		//if enough players are in the room.
-		return true;
+		return getPlayers().size() >= 5 && !pestGameOn;
 	}
 	
 	@Override
 	public int restartTimer() {
-		return 10;
+		return 540;
 	}
 	
 	@Override
@@ -111,6 +126,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	}
 	
 	public static void event() {
+		//boat entering/exiting.
 		ObjectEvent plank = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
@@ -119,7 +135,6 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			}
 		};
 		plank.registerFirst(14315);
-		
 		ObjectEvent ladder = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
@@ -128,6 +143,91 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			}
 		};
 		ladder.registerFirst(14314);
+		
+		//accessing shop.
+		NpcEvent shop = new NpcEvent() {
+			@Override
+			public boolean click(Player player, Npc npc, int click) {
+				player.getMessages().sendInterface(37000);
+				player.updatePest(321);
+				player.getMessages().sendString(player.getPest() + " points", 37007);
+				return true;
+			}
+		};
+		shop.registerFirst(3786);
+		shop.registerSecond(3786);
+		
+		//skill rewards
+		int[] skills = { Skills.ATTACK, Skills.DEFENCE, Skills.MAGIC, Skills.PRAYER, Skills.STRENGTH, Skills.RANGED, Skills.HITPOINTS };
+		int button = 144150;
+		for(int skill : skills) {
+			for(int i = 0; i < 3; i++) {
+				final int cost = i == 0 ? 1 : i == 1 ? 10 : 100;
+				ButtonEvent attack = new ButtonEvent() {
+					@Override
+					public boolean click(Player player, int button) {
+						if(Currency.PEST_POINTS.getCurrency().takeCurrency(player, cost)) {
+							player.getSkills()[skill].increaseExperience(cost * 4);//not exactly right.
+						}
+						return true;
+					}
+				};
+				attack.register(button);
+				button++;
+			}
+			button += 3;
+		}
+		
+		//pack rewards
+		button = 144189;
+		ItemCache[] packs = {
+				HIGH_HERBS,
+				MED_MINERALS,
+				HERB_SEEDS
+		};
+		for(int i = 0; i < 3; i++) {
+			int index = i;
+			ButtonEvent attack = new ButtonEvent() {
+				@Override
+				public boolean click(Player player, int button) {
+					if(player.getInventory().remaining() < 1) {
+						player.message("You do not have space in your inventory.");
+						return true;
+					}
+					if(Currency.PEST_POINTS.getCurrency().takeCurrency(player, (index == 0 ? 30 : 15))) {
+						//three items.
+						NpcDrop pack = RandomUtils.random(NpcDropManager.COMMON.get(packs[index]));
+						player.getInventory().add(new Item(pack.getId(), RandomUtils.inclusive(pack.getMinimum(), pack.getMaximum())));
+					}
+					return true;
+				}
+			};
+			attack.register(button);
+			button += 3;
+		}
+		
+		//void rewards
+		final int[] items = { 8841, 8840, 11663, 11665, 8839, 8842, 11664 };
+		final int[] costs = { 250, 250, 200, 200, 200, 250, 150, 200 };
+		button = 144198;
+		for(int i = 0; i < items.length; i++) {
+			int index = i;
+			ButtonEvent attack = new ButtonEvent() {
+				@Override
+				public boolean click(Player player, int button) {
+					if(player.getInventory().remaining() < 1) {
+						player.message("You do not have space in your inventory.");
+						return true;
+					}
+					if(Currency.PEST_POINTS.getCurrency().takeCurrency(player, costs[index])) {
+						player.getInventory().add(new Item(items[index]));
+					}
+					return true;
+				}
+			};
+			attack.register(button);
+			button += 3;
+		}
 	}
 	
 }

@@ -32,7 +32,6 @@ public final class PlayerUpdater {
 		
 		try {
 			msg.startBitAccess();
-			
 			handleMovement(player, msg);
 			blockSet.encodeUpdateBlocks(player, player, blockMsg, UpdateState.UPDATE_SELF);
 			

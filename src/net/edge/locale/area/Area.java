@@ -1,5 +1,6 @@
 package net.edge.locale.area;
 
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.locale.loc.Location;
 
 import java.util.List;
@@ -18,14 +19,14 @@ public final class Area {
 	/**
 	 * The locations for this area.
 	 */
-	private final List<AreaLocation> location;
+	private final ObjectList<AreaLocation> location;
 
 	/**
 	 * Constructs a new {@link Area}.
 	 * @param name     {@link #name}.
 	 * @param location {@link #location}.
 	 */
-	public Area(String name, List<AreaLocation> location) {
+	public Area(String name, ObjectList<AreaLocation> location) {
 		this.name = name;
 		this.location = location;
 	}
@@ -42,11 +43,6 @@ public final class Area {
 		private final Location location;
 
 		/**
-		 * Determines if this area is multi.
-		 */
-		private final boolean multi;
-
-		/**
 		 * Determines if players can teleport in this area.
 		 */
 		private final boolean teleport;
@@ -58,15 +54,12 @@ public final class Area {
 
 		/**
 		 * Constructs a new {@link AreaLocation}.
-		 * @param name     {@link #name}.
 		 * @param location {@link #location}.
-		 * @param multi    {@link #multi}.
 		 * @param teleport {@link #teleport}.
 		 * @param summon   {@link #summon}.
 		 */
-		public AreaLocation(Location location, boolean multi, boolean teleport, boolean summon) {
+		public AreaLocation(Location location, boolean teleport, boolean summon) {
 			this.location = location;
-			this.multi = multi;
 			this.teleport = teleport;
 			this.summon = summon;
 		}
@@ -76,13 +69,6 @@ public final class Area {
 		 */
 		public Location getLocation() {
 			return location;
-		}
-
-		/**
-		 * @return the multi
-		 */
-		public boolean isMulti() {
-			return multi;
 		}
 
 		/**

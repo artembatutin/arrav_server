@@ -206,6 +206,7 @@ public final class Server {
 			new NpcDropCacheLoader().load();
 		});
 		launch.execute(new AreaLoader());
+		launch.execute(new AreaMultiLoader());
 		launch.execute(new ShopLoader());
 		launch.execute(new ClanChatLoader());
 		launch.execute(new WeaponPoisonLoader());

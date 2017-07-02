@@ -16,7 +16,7 @@ public final class DummyCommand implements Command {
 		int npcId = Integer.parseInt(cmd[1]);
 		Npc npc = new DefaultNpc(npcId, player.getPosition().copy());
 		npc.setCurrentHealth(1000);
-		npc.setSpawnedFor(player.getUsername());
+		npc.setOwner(player);
 		npc.getMovementQueue().setLockMovement(true);
 		World.get().getNpcs().add(npc);
 	}

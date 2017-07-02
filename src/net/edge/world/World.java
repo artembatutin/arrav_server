@@ -113,8 +113,8 @@ public final class World {
 	static {
 		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-			donation = new Database("127.0.0.1", "edge_donation", "edge_local", "%GL5{)hAJBU(MB3h", amtCpu);
-			score = new Database("127.0.0.1", "edge_score", "edge_local", "%GL5{)hAJBU(MB3h", amtCpu);
+			//donation = new Database("127.0.0.1", "edge_donation", "edge_local", "%GL5{)hAJBU(MB3h", amtCpu);
+			//score = new Database("127.0.0.1", "edge_score", "edge_local", "%GL5{)hAJBU(MB3h", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -138,7 +138,7 @@ public final class World {
 			Player player = logins.poll();
 			if(player == null)
 				break;
-			if(!players.add(player)) {
+			if(!players.add(player) && player.isHuman()) {
 				player.getSession().getChannel().close();
 			}
 		}
@@ -154,7 +154,8 @@ public final class World {
 		// Pre synchronization
 		while((p = pi.next()) != null) {
 			try {
-				p.getSession().dequeue();
+				if(p.isHuman())
+					p.getSession().dequeue();
 				p.getMovementQueue().sequence();
 				p.sequence();
 			} catch(Exception e) {
@@ -178,8 +179,10 @@ public final class World {
 		// Synchronization
 		while((p = pi.next()) != null) {
 			try {
-				p.getSession().queue(new PlayerUpdater().write(p));
-				p.getSession().queue(new NpcUpdater().write(p));
+				if(p.isHuman()) {
+					p.getSession().queue(new PlayerUpdater().write(p));
+					p.getSession().queue(new NpcUpdater().write(p));
+				}
 			} catch(Exception e) {
 				queueLogout(p);
 				logger.log(Level.WARNING, "Couldn't sync player " + p.toString(), e);
@@ -189,7 +192,8 @@ public final class World {
 		
 		// Post synchronization
 		while((p = pi.next()) != null) {
-			p.getSession().flushQueue();
+			if(p.isHuman())
+				p.getSession().flushQueue();
 			p.reset();
 			p.setCachedUpdateBlock(null);
 		}
@@ -346,10 +350,10 @@ public final class World {
 			}
 			boolean response = players.remove(player);
 			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + players.size());
-			List<Npc> npcs = this.npcs.findAll(n -> n != null && n.isSpawnedFor(player));
-			for(Npc n : npcs) {
-				this.npcs.remove(n);
+			for(Npc mob : player.getMobs()) {
+				npcs.remove(mob);
 			}
+			player.getMobs().clear();
 			if(response)
 				logger.info(player.toString() + " has logged out.");
 			else
