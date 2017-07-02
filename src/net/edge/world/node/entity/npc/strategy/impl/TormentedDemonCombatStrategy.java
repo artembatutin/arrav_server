@@ -376,7 +376,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 		
 		@Override
 		public int maximumHit() {
-			return 28;
+			return 280;
 		}
 		
 		@Override

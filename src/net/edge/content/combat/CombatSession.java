@@ -63,6 +63,9 @@ public final class CombatSession extends Task {
 			if(!Combat.checkAttackDistance(builder)) {
 				return;
 			}
+			if(!builder.getStrategy().canIncomingAttack(builder.getCharacter(), builder.getVictim())) {
+				return;
+			}
 			if(!builder.getStrategy().canOutgoingAttack(builder.getCharacter(), builder.getVictim())) {
 				return;
 			}

@@ -19,7 +19,16 @@ public interface CombatStrategy {
 	default void incomingAttack(EntityNode character, EntityNode attacker, CombatSessionData data) {
 		
 	}
-	
+
+	/**
+	 * Executed when the {@code character} is hit by the {@code attacker}.
+	 * @param character	the character being hit.
+	 * @param attacker	the attacker whom hit the character.
+	 */
+	default boolean canIncomingAttack(EntityNode character, EntityNode attacker) {
+		return true;
+	}
+
 	/**
 	 * Determines if {@code character} is able to make an attack on
 	 * {@code victim}.

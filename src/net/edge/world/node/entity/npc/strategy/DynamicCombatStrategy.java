@@ -36,7 +36,16 @@ public abstract class DynamicCombatStrategy<T extends Npc> implements CombatStra
 	 * @return {@code true} if the {@link #npc} can, {@code false} otherwise.
 	 */
 	public abstract boolean canOutgoingAttack(EntityNode victim);
-	
+
+	/**
+	 * Determines if {@link #npc} can be attacked by the specified {@code attacker}.
+	 * @param attacker	the attacker who is trying to attack.
+	 * @return {@code true} if {@code attacker} can
+	 */
+	public boolean canIncomingAttack(EntityNode attacker) {
+		return true;
+	}
+
 	/**
 	 * Executed when {@link #npc} has passed the initial {@code canAttack}
 	 * check and is about to attack {@code victim}.
@@ -68,7 +77,12 @@ public abstract class DynamicCombatStrategy<T extends Npc> implements CombatStra
 	public final boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
 		return canOutgoingAttack(victim);
 	}
-	
+
+	@Override
+	public final boolean canIncomingAttack(EntityNode character, EntityNode attacker) {
+		return canIncomingAttack(attacker);
+	}
+
 	@Override
 	public final CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
 		return outgoingAttack(victim);
