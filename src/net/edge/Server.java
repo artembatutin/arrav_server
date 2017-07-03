@@ -169,14 +169,14 @@ public final class Server {
 //			EventLoopGroup loopGroup = new EpollEventLoopGroup();
 //			bootstrap.channel(EpollServerSocketChannel.class);
 //		}
-		LOGGER.info("Binding Edgeville on port " + (DEBUG ? NetworkConstants.PORT_DEV : NetworkConstants.PORT_ONLINE) + ".");
+		LOGGER.info("Binding Edgeville on port " + NetworkConstants.PORT_ONLINE + ".");
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		EventLoopGroup loopGroup = new NioEventLoopGroup();
 		ResourceLeakDetector.setLevel(DEBUG ? ResourceLeakDetector.Level.PARANOID : ResourceLeakDetector.Level.DISABLED);
 		bootstrap.group(loopGroup);
 		bootstrap.channel(NioServerSocketChannel.class);
 		bootstrap.childHandler(new EdgevilleChannelInitializer());
-		bootstrap.bind(DEBUG ? NetworkConstants.PORT_DEV : NetworkConstants.PORT_ONLINE).syncUninterruptibly();
+		bootstrap.bind(NetworkConstants.PORT_ONLINE).syncUninterruptibly();
 		
 	}
 	

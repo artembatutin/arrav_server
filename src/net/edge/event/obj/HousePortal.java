@@ -15,7 +15,8 @@ public class HousePortal extends EventInitializer {
 		ObjectEvent e = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
-				player.getDialogueBuilder().append(new OptionDialogue(t -> {
+				player.message("Construction will soon be released.");
+				/*player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						if(!Construction.hasHouse(player)) {
 							player.getDialogueBuilder().go(1);
@@ -39,7 +40,7 @@ public class HousePortal extends EventInitializer {
 						Construction.buyHouse(player);
 					}
 					player.getMessages().sendCloseWindows();
-				}, "Yes I'll buy", " No, too expensive."));
+				}, "Yes I'll buy", " No, too expensive."));*/
 				return true;
 			}
 		};

@@ -27,8 +27,7 @@ public final class EdgevilleUpstreamHandler extends SimpleChannelInboundHandler<
 	/**
 	 * A default access level constructor to discourage external instantiation outside of the {@code io.luna.org} package.
 	 */
-	EdgevilleUpstreamHandler() {
-	}
+	EdgevilleUpstreamHandler() { }
 	
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
@@ -37,7 +36,7 @@ public final class EdgevilleUpstreamHandler extends SimpleChannelInboundHandler<
 			Optional<String> msg = Optional.ofNullable(e.getMessage());
 			msg.filter(it -> !NetworkConstants.IGNORED_EXCEPTIONS.contains(it)).ifPresent(it -> LOGGER.log(Level.WARNING, "Exception in upstream.", e));
 		}
-		ctx.channel().close();
+		getSession(ctx).onDispose();
 	}
 	
 	@Override

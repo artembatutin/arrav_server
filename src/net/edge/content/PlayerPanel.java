@@ -44,14 +44,17 @@ public enum PlayerPanel {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 					player.getMessages().sendLink("vote");
+					player.getMessages().sendCloseWindows();
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-					try {
-						new RedeemCommand().execute(player, null, null);
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
+					player.getMessages().sendEnterName("Auth code:", s -> () -> {
+						try {
+							new RedeemCommand().execute(player, new String[] {"", s}, "");
+							player.getMessages().sendCloseWindows();
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+					});
 				}
-				player.getMessages().sendCloseWindows();
 				if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 					MarketCounter.getShops().get(27).openShop(player);
 				}
