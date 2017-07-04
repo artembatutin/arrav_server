@@ -21,11 +21,6 @@ public final class NetworkConstants {
 	public static final int PORT_ONLINE = 43594;
 	
 	/**
-	 * The developer port that this server will bind to.
-	 */
-	public static final int PORT_DEV = 43593;
-	
-	/**
 	 * The input timeout value that determines how long a session can go without
 	 * reading data from the client in {@code SECONDS}.
 	 */

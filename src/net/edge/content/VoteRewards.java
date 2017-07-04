@@ -11,11 +11,11 @@ import java.util.Optional;
  * @since 13-6-2017.
  */
 public enum VoteRewards {
-    ONYX(0.10, 6571, 6573, 6575, 6585),
-    ONYX_ENCHANTED(0.05, 15017, 19335),
-    FREMENNIK_RINGS(0.15, 6731, 6733, 6735, 6737),
+    ONYX(0.05, 6571, 6573, 6575, 6585),
+    ONYX_ENCHANTED(0.02, 15017, 19335),
+    FREMENNIK_RINGS(0.1, 6731, 6733, 6735, 6737),
     FREMENNIK_RINGS_I(0.01, 13426, 13427, 15020, 15220),
-    DEFENDERS(0.5, 8844, 8845, 8846, 8847, 8848, 8849, 8850),
+    DEFENDERS(0.2, 8844, 8845, 8846, 8847, 8848, 8849, 8850),
     FOOD(0.8, new Item(384, 75), new Item(390, 50), new Item(396, 50), new Item(15271, 25));
 
     private static final ImmutableSet<VoteRewards> REWARDS = ImmutableSet.copyOf(values());

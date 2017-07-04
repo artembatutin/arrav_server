@@ -149,7 +149,6 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			@Override
 			public boolean click(Player player, Npc npc, int click) {
 				player.getMessages().sendInterface(37000);
-				player.updatePest(321);
 				player.getMessages().sendString(player.getPest() + " points", 37007);
 				return true;
 			}

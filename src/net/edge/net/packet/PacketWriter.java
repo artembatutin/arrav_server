@@ -8,6 +8,7 @@ import net.edge.content.skill.construction.Palette;
 import net.edge.content.skill.construction.Palette.PaletteTile;
 import net.edge.content.skill.construction.furniture.Furniture;
 import net.edge.content.skill.construction.furniture.HotSpots;
+import net.edge.content.wilderness.WildernessActivity;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
@@ -68,7 +69,6 @@ public final class PacketWriter {
 		msg.put(tab.getOld());
 		msg.put(tab.getNew());
 		player.queue(msg);
-		
 	}
 	
 	/**
@@ -83,7 +83,6 @@ public final class PacketWriter {
 		msg.put(hide ? 1 : 0);
 		msg.putShort(id);
 		player.queue(msg);
-		
 	}
 	
 	/**
@@ -100,7 +99,6 @@ public final class PacketWriter {
 		msg.putShort(0, ByteOrder.LITTLE);
 		msg.putShort(id, ByteOrder.LITTLE);
 		player.queue(msg);
-		
 	}
 	
 	/**
@@ -113,7 +111,30 @@ public final class PacketWriter {
 		sendString(str, 357);
 		sendString("Click here to continue", 358);
 		sendChatInterface(356);
-		
+	}
+	
+	/**
+	 * The message that shows player activity on pvp panel.
+	 * @param pkers the players active in wilderness
+	 */
+	public void sendWildernessActivity(ObjectList<Player> pkers) {
+		if(player.getState() == INACTIVE || !player.isHuman())
+			return;
+		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 150, MessageType.VARIABLE_SHORT);
+		int fools = WildernessActivity.getFooledCount(player);
+		msg.put(pkers.size() + fools);
+		for(Player p : pkers) {
+			msg.put(WildernessActivity.getX(p.getPosition()));
+			msg.put(WildernessActivity.getY(p.getPosition()));
+		}
+		if(fools > 0) {//fooled map activity.
+			while(fools != 0) {
+				msg.put(WildernessActivity.fooledX());
+				msg.put(WildernessActivity.fooledY());
+				fools--;
+			}
+		}
+		player.queue(msg);
 	}
 	
 	/**
@@ -133,7 +154,6 @@ public final class PacketWriter {
 		msg.put((type.getId() << 2) + (direction.getId() & 3), ByteTransform.S);
 		msg.putShort(animation, ByteTransform.A);
 		player.queue(msg);
-		
 	}
 	
 	/**

@@ -22,12 +22,12 @@ public final class RedeemCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Result r2 = platform.redeem(SearchField.USER_NAME, player.getUsername());
-		if (r2.success()) {
-			int total = r2.votes().size();
-			player.getInventory().addOrBank(new Item(6829));
-			player.setVotePoints(player.getVotePoints() + total);
-			player.setTotalVotes(player.getTotalVotes() + total);
+		Result r1 = platform.redeem(SearchField.AUTH_CODE, cmd[1]);
+		if (r1.success()) {
+			int voted = r1.votes().size();
+			player.getInventory().addOrBank(new Item(6829, voted));
+			player.setVotePoints(player.getVotePoints() + voted);
+			player.setTotalVotes(player.getTotalVotes() + voted);
 		} else {
 			player.message("Nothing found, you can vote by clicking the link in the quest tab.");
 		}

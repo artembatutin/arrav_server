@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.content.commands.impl.RedeemCommand;
 import net.edge.content.market.MarketCounter;
+import net.edge.content.wilderness.WildernessActivity;
 import net.edge.game.GameConstants;
 import net.edge.util.TextUtils;
 import net.edge.util.Utility;
@@ -44,14 +45,17 @@ public enum PlayerPanel {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 					player.getMessages().sendLink("vote");
+					player.getMessages().sendCloseWindows();
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-					try {
-						new RedeemCommand().execute(player, null, null);
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
+					player.getMessages().sendEnterName("Auth code:", s -> () -> {
+						try {
+							new RedeemCommand().execute(player, new String[] {"", s}, "");
+							player.getMessages().sendCloseWindows();
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+					});
 				}
-				player.getMessages().sendCloseWindows();
 				if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 					MarketCounter.getShops().get(27).openShop(player);
 				}
@@ -213,7 +217,7 @@ public enum PlayerPanel {
 		PlayerPanel.NPC_TOOL.refresh(player, "@or2@ - Monster Database");
 		PlayerPanel.SERVER_STATISTICS.refresh(player, "@or1@Server Information:");
 		PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
-		PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + World.get().getPlayers().findAll(p -> p != null && Location.inWilderness(p)).size());
+		PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + WildernessActivity.getPlayers().size());
 		PlayerPanel.STAFF_ONLINE.refreshAll("@or2@ - Staff online: @yel@" + World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff()).size());
 		PlayerPanel.PLAYER_STATISTICS.refresh(player, "@or1@Player Information:");
 		

@@ -95,6 +95,8 @@ public final class Slayer {
 	 */
 	public static void openPanel(Player player) {
 		player.getMessages().sendInterface(-10);
+		player.getMessages().sendString(player.getSlayerPoints() + "", 252);
+		player.getMessages().sendString(player.getSlayer().isPresent() ? (TextUtils.capitalize(player.getSlayer().get().getKey().toLowerCase() + " x " + player.getSlayer().get().getAmount())) : "none", 253);
 		updateBlocked(player);
 	}
 	

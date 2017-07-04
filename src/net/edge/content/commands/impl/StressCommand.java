@@ -113,9 +113,7 @@ public final class StressCommand implements Command {
 			s.setRealLevel(99);
 			s.setLevel(99, true);
 		}
-		bot.getSkills()[Skills.ATTACK].setRealLevel(20);
-		bot.getSkills()[Skills.STRENGTH].setRealLevel(20);
-		bot.healEntity(990);
+		bot.healEntity(90);
 		bot.setSession(new BotSession(bot));
 		bot.setVisible(true);
 		bot.setPosition(pos);

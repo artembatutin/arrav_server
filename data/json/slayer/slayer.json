@@ -39,12 +39,12 @@
       },
       {
         "key": "BLUE DRAGONS",
-        "difficulty": "EASY",
+        "difficulty": "MODERATE",
         "amount": [
           25,
           50
         ],
-        "requirement": 30
+        "requirement": 70
       },
       {
         "key": "LESSER DEMONS",

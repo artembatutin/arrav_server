@@ -2,6 +2,7 @@ package net.edge.event.but;
 
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.teleport.impl.DefaultTeleportSpell;
+import net.edge.content.wilderness.WildernessActivity;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.ButtonEvent;
 import net.edge.locale.Position;
@@ -76,30 +77,8 @@ public class Spellbook extends EventInitializer {
 		e = new ButtonEvent() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.getDialogueBuilder().append(new OptionDialogue(t -> {
-					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.teleport(new Position(3087, 3492), DefaultTeleportSpell.TeleportType.PVP_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(2539, 4716), DefaultTeleportSpell.TeleportType.PVP_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(2986, 3598), DefaultTeleportSpell.TeleportType.PVP_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
-						player.teleport(new Position(3308, 3908), DefaultTeleportSpell.TeleportType.PVP_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.FIFTH_OPTION)) {
-						player.getDialogueBuilder().advance();
-					}
-				}, "Edgeville", "Mage bank", "Green dragons (Level-14 wild)", "Level-50 Obelisks", "@red@Next page"), new OptionDialogue(t -> {
-					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.getDialogueBuilder().previous();
-					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(3211, 3681), DefaultTeleportSpell.TeleportType.PVP_PORTAL);
-					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(3240, 3611), DefaultTeleportSpell.TeleportType.PVP_PORTAL);
-					} else {
-						player.getMessages().sendCloseWindows();
-						player.message("Suggest more on the forums!");
-					}
-				}, "@red@Previous page", "Graveyard", "Chaos Altar (Multi)", "@red@Suggest more!"));
+				player.getMessages().sendInterface(-15);
+				player.getMessages().sendWildernessActivity(WildernessActivity.getPlayers());
 				return true;
 			}
 		};

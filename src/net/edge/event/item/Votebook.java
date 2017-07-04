@@ -17,13 +17,13 @@ public class Votebook extends EventInitializer {
 				if(container != Inventory.INVENTORY_DISPLAY_ID)
 					return true;
 				Item reward = VoteRewards.getReward().orElse(null);
+				player.getInventory().remove(item);
 				if(reward == null) {
 					player.message("You were unlucky and didn't receive a extra reward...");
 					return true;
 				}
 				String name = reward.getDefinition().getName();
 				player.message("You were lucky and received x" + item.getAmount() + " " + TextUtils.capitalize(name));
-				player.getInventory().remove(item);
 				player.getInventory().addOrBank(reward);
 				return true;
 			}

@@ -3,6 +3,7 @@ package net.edge.content.market;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.edge.util.json.JsonSaver;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.ItemDefinition;
 
 import java.util.HashSet;
@@ -193,8 +194,6 @@ public class MarketItem {
 			return false;
 		MarketItem i = MarketItem.get(id);
 		if(i == null)
-			return false;
-		if(!i.isSearchable())
 			return false;
 		String name = i.getName();
 		if(name == null)

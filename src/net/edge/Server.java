@@ -133,7 +133,6 @@ public final class Server {
 				@Override
 				public void execute() {
 					PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
-					PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + World.get().getPlayers().findAll(p -> p != null && Location.inWilderness(p)).size());
 					PlayerPanel.STAFF_ONLINE.refreshAll("@or2@ - Staff online: @yel@" + World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff()).size());
 					
 					LocalDate date = LocalDate.now();
@@ -169,14 +168,14 @@ public final class Server {
 //			EventLoopGroup loopGroup = new EpollEventLoopGroup();
 //			bootstrap.channel(EpollServerSocketChannel.class);
 //		}
-		LOGGER.info("Binding Edgeville on port " + (DEBUG ? NetworkConstants.PORT_DEV : NetworkConstants.PORT_ONLINE) + ".");
+		LOGGER.info("Binding Edgeville on port " + NetworkConstants.PORT_ONLINE + ".");
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		EventLoopGroup loopGroup = new NioEventLoopGroup();
 		ResourceLeakDetector.setLevel(DEBUG ? ResourceLeakDetector.Level.PARANOID : ResourceLeakDetector.Level.DISABLED);
 		bootstrap.group(loopGroup);
 		bootstrap.channel(NioServerSocketChannel.class);
 		bootstrap.childHandler(new EdgevilleChannelInitializer());
-		bootstrap.bind(DEBUG ? NetworkConstants.PORT_DEV : NetworkConstants.PORT_ONLINE).syncUninterruptibly();
+		bootstrap.bind(NetworkConstants.PORT_ONLINE).syncUninterruptibly();
 		
 	}
 	
