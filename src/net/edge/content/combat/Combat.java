@@ -178,9 +178,8 @@ public final class Combat {
 			}
 			exp = (((counter / 10.0) * 4d) / data.getExperience().length);
 			hitpointsExp = (exp / 3d);
-			
-			for(int amount : data.getExperience()) {
-				Skills.experience(player, exp, amount);
+			for(int skills : data.getExperience()) {
+				Skills.experience(player, exp, skills);
 			}
 			Skills.experience(player, hitpointsExp, Skills.HITPOINTS);
 		}

@@ -99,7 +99,6 @@ public abstract class LunarSpell extends Spell {
 		}
 
 		player.getInventory().removeAll(MagicStaff.suppressRunes(player, this.itemsRequired(player).get()));
-
 		Skills.experience(player, this.baseExperience(), Skills.MAGIC);
 		
 		startAnimation().ifPresent(player::animation);

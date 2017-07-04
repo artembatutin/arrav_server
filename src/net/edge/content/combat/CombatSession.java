@@ -79,10 +79,10 @@ public final class CombatSession extends Task {
 				return;
 			}
 			CombatSessionData data = builder.getStrategy().outgoingAttack(builder.getCharacter(), builder.getVictim());
-
 			if(data == null) {
 				return;
 			}
+			data.experience();
 			if(builder.getCharacter().isPlayer() && !data.isIgnored()) {
 				Player player = (Player) builder.getCharacter();
 				player.getMessages().sendCloseWindows();

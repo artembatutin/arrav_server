@@ -46,6 +46,11 @@ public class CombatSessionData {
 	private final boolean checkAccuracy;
 	
 	/**
+	 * Total damage dealt by this data.
+	 */
+	private final int damage;
+	
+	/**
 	 * The flag that determines if at least one hit is accurate.
 	 */
 	private boolean accurate;
@@ -69,82 +74,74 @@ public class CombatSessionData {
 	 * @param amount        the amount of hits to calculate.
 	 * @param type          the combat type the attacker is using.
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
+	 * @param delay         the delay of the hit.
 	 */
-	public CombatSessionData(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy) {
+	public CombatSessionData(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy, OptionalInt delay) {
 		this.attacker = attacker;
 		this.victim = victim;
 		this.type = type;
 		this.checkAccuracy = checkAccuracy;
-		this.delay = OptionalInt.empty();
-		this.hits = calculateHits(amount);
+		this.delay = delay;
 		this.experience = determineExperience();
-	}
-	
-	public CombatSessionData(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy, int delay) {
-		this.attacker = attacker;
-		this.victim = victim;
-		this.type = type;
-		this.checkAccuracy = checkAccuracy;
-		this.delay = OptionalInt.of(delay);
-		this.hits = calculateHits(amount);
-		this.experience = determineExperience();
-	}
-	
-	/**
-	 * Creates a new {@link CombatSessionData} with an {@code amount} of
-	 * {@code 0}.
-	 * @param attacker      the attacker in this combat session.
-	 * @param victim        the victim in this combat session.
-	 * @param type          the combat type the attacker is using.
-	 * @param checkAccuracy determines if accuracy should be calculated for hits.
-	 */
-	public CombatSessionData(EntityNode attacker, EntityNode victim, CombatType type, boolean checkAccuracy) {
-		this(attacker, victim, 0, type, checkAccuracy);
-	}
-	
-	/**
-	 * Calculates all of the hits that will be dealt before the attack is
-	 * launched.
-	 * @param amount the amount of hits to calculate, with minimum of {@code 0} and
-	 *               a maximum of {@code 1}.
-	 * @return an array of the calculated hits.
-	 */
-	private Hit[] calculateHits(int amount) {
-		Preconditions.checkArgument(amount >= 0 && amount <= 4);
+		
 		this.getAttacker().getCombatBuilder().resetAttackTimer();
+		int counter = 0;
 		// No hit for this turn, but we still need to calculate accuracy.
 		if(amount == 0) {
 			accurate = !checkAccuracy || Combat.isAccurate(attacker, victim, type);
-			return new Hit[]{};
-		}
-		
-		// Create the new array of hits, and populate it. Here we do the maximum
-		// hit and accuracy calculations.
-		Hit[] array = new Hit[amount];
-		for(int i = 0; i < array.length; i++) {
-			array[i] = Combat.calculateRandomHit(attacker, victim, type, 0/**i == 0 ? 0 : (delay * (i * 2))*/, checkAccuracy);
-			if(array[i].isAccurate())
-				accurate = true;
-		}
-		
-		// special attacks
-		if(getAttacker().isPlayer() && getAttacker().toPlayer().isSpecialActivated()) {
-			Player player = getAttacker().toPlayer();
-			if(player.getCombatSpecial().equals(CombatSpecial.DRAGON_CLAWS) && amount == 4) {
-				int first = array[0].getDamage();
-				if(first > 360) {
-					first = 360 + RandomUtils.inclusive(10);
+			this.hits = new Hit[]{};
+			this.damage = 0;
+		} else {
+			// Create the new array of hits, and populate it. Here we do the maximum
+			// hit and accuracy calculations.
+			this.hits = new Hit[amount];
+			for(int i = 0; i < hits.length; i++) {
+				hits[i] = Combat.calculateRandomHit(attacker, victim, type, 0/**i == 0 ? 0 : (delay * (i * 2))*/, checkAccuracy);
+				if(hits[i].isAccurate()) {
+					accurate = true;
+					counter += hits[i].getDamage();
 				}
-				int second = first <= 0 ? array[1].getDamage() : first / 2;
-				int third = first <= 0 && second > 0 ? second / 2 : first <= 0 && second <= 0 ? array[2].getDamage() : RandomUtils.inclusive(second);
-				int fourth = first <= 0 && second <= 0 && third <= 0 ? array[3].getDamage() + RandomUtils.inclusive(7) : first <= 0 && second <= 0 ? array[3].getDamage() : third;
-				array[0].setDamage(first);
-				array[1].setDamage(second);
-				array[2].setDamage(third);
-				array[3].setDamage(fourth);
 			}
+			
+			// dragon claws special attack
+			if(getAttacker().isPlayer() && getAttacker().toPlayer().isSpecialActivated()) {
+				Player player = getAttacker().toPlayer();
+				if(player.getCombatSpecial().equals(CombatSpecial.DRAGON_CLAWS) && amount == 4) {
+					int first = hits[0].getDamage();
+					if(first > 360) {
+						first = 360 + RandomUtils.inclusive(10);
+					}
+					int second = first <= 0 ? hits[1].getDamage() : first / 2;
+					int third = first <= 0 && second > 0 ? second / 2 : first <= 0 && second <= 0 ? hits[2].getDamage() : RandomUtils.inclusive(second);
+					int fourth = first <= 0 && second <= 0 && third <= 0 ? hits[3].getDamage() + RandomUtils.inclusive(7) : first <= 0 && second <= 0 ? hits[3].getDamage() : third;
+					hits[0].setDamage(first);
+					hits[1].setDamage(second);
+					hits[2].setDamage(third);
+					hits[3].setDamage(fourth);
+					if(hits[0].isAccurate())
+						counter += hits[0].getDamage();
+					if(hits[1].isAccurate())
+						counter += hits[1].getDamage();
+					if(hits[2].isAccurate())
+						counter += hits[2].getDamage();
+					if(hits[3].isAccurate())
+						counter += hits[3].getDamage();
+				}
+			}
+			this.damage = counter;
 		}
-		return array;
+	}
+	
+	public CombatSessionData(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy) {
+		this(attacker, victim, amount, type, checkAccuracy, OptionalInt.empty());
+	}
+	
+	public CombatSessionData(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy, int delay) {
+		this(attacker, victim, amount, type, checkAccuracy, OptionalInt.of(delay));
+	}
+	
+	public CombatSessionData(EntityNode attacker, EntityNode victim, CombatType type, boolean checkAccuracy) {
+		this(attacker, victim, 0, type, checkAccuracy);
 	}
 	
 	/**
@@ -153,7 +150,6 @@ public class CombatSessionData {
 	 */
 	public final int attack() {
 		CombatSessionAttack.applyPrayerEffects(this);
-		int counter = 0;
 		int index = 0;
 		Hit[] container = new Hit[hits.length];
 		for(Hit hit : hits) {
@@ -161,7 +157,6 @@ public class CombatSessionData {
 				hit = new Hit(0);
 				hit.setAccurate(false);
 			}
-			counter += hit.getDamage();
 			container[index++] = hit;
 		}
 		if(hits.length > 0 && victim != null && !victim.isDead() && !isIgnored()) {
@@ -171,8 +166,11 @@ public class CombatSessionData {
 			}
 			victim.damage(container);
 		}
-		Combat.handleExperience(attacker.getCombatBuilder(), this, counter);
-		return counter;
+		return damage;
+	}
+	
+	public void experience() {
+		Combat.handleExperience(attacker.getCombatBuilder(), this, damage);
 	}
 	
 	/**
