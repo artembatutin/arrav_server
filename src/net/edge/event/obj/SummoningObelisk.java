@@ -20,9 +20,11 @@ public class SummoningObelisk extends EventInitializer {
 				return true;
 			}
 		};
-		for(int i = 29938; i < 20060; i++) {
+		for(int i = 29938; i < 29960; i++) {
 			l.registerFirst(i);
+			l.registerFirst(i + 42003);
 			l.registerSecond(i);
+			l.registerSecond(i + 42003);
 		}
 	}
 }
