@@ -133,7 +133,6 @@ public final class Server {
 				@Override
 				public void execute() {
 					PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
-					PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + World.get().getPlayers().findAll(p -> p != null && Location.inWilderness(p)).size());
 					PlayerPanel.STAFF_ONLINE.refreshAll("@or2@ - Staff online: @yel@" + World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff()).size());
 					
 					LocalDate date = LocalDate.now();

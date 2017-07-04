@@ -9,6 +9,7 @@ import net.edge.content.item.OverloadEffectTask;
 import net.edge.content.minigame.MinigameLobby;
 import net.edge.content.skill.construction.Construction;
 import net.edge.content.skill.construction.House;
+import net.edge.content.wilderness.WildernessActivity;
 import net.edge.net.codec.ByteMessage;
 import net.edge.net.packet.PacketWriter;
 import net.edge.net.session.GameSession;
@@ -446,9 +447,9 @@ public final class Player extends EntityNode {
 	private int wildernessLevel;
 	
 	/**
-	 * The weapon interface this player currently has openShop.
+	 * The weapon interface this player currently has.
 	 */
-	private WeaponInterface weapon;
+	private WeaponInterface weapon = WeaponInterface.UNARMED;
 	
 	/**
 	 * The current teleport stage that this player is in.
@@ -606,7 +607,6 @@ public final class Player extends EntityNode {
 	}
 	
 	public void sendDefaultSidebars() {
-		TabInterface.ATTACK.sendInterface(this, 2423);
 		TabInterface.CLAN_CHAT.sendInterface(this, 50128);
 		TabInterface.SKILL.sendInterface(this, 3917);
 		TabInterface.QUEST.sendInterface(this, 638);
@@ -619,7 +619,7 @@ public final class Player extends EntityNode {
 		TabInterface.LOGOUT.sendInterface(this, 2449);
 		TabInterface.SETTING.sendInterface(this, 904);
 		TabInterface.EMOTE.sendInterface(this, 147);
-		TabInterface.ATTACK.sendInterface(this, 2423);
+		TabInterface.ATTACK.sendInterface(this, weapon.getId());
 	}
 	
 	public void resetSidebars() {
@@ -743,6 +743,7 @@ public final class Player extends EntityNode {
 		getClan().ifPresent(c -> c.getClan().remove(this, true));
 		messages.sendLogout();
 		getRegion().removeChar(this);
+		WildernessActivity.leave(this);
 		save();
 	}
 	
@@ -985,6 +986,7 @@ public final class Player extends EntityNode {
 				encoder.sendWalkable(197);
 				encoder.sendContextMenu(2, true, "Attack");
 				wildernessInterface = true;
+				WildernessActivity.enter(this);
 			}
 			encoder.sendString("@yel@Level: " + wildernessLevel, 199);
 		} else if(Location.inFunPvP(this)) {
@@ -992,6 +994,7 @@ public final class Player extends EntityNode {
 				encoder.sendWalkable(197);
 				encoder.sendContextMenu(2, true, "Attack");
 				wildernessInterface = true;
+				WildernessActivity.enter(this);
 			}
 			encoder.sendString("@yel@Fun PvP", 199);
 		} else if(wildernessInterface) {
@@ -999,6 +1002,7 @@ public final class Player extends EntityNode {
 			encoder.sendWalkable(-1);
 			wildernessInterface = false;
 			wildernessLevel = 0;
+			WildernessActivity.leave(this);
 		}
 		if(Location.inMultiCombat(this)) {
 			if(!multicombatInterface) {
@@ -1868,28 +1872,12 @@ public final class Player extends EntityNode {
 	}
 	
 	/**
-	 * Sets the value for {@link Player#wildernessInterface}.
-	 * @param wildernessInterface the new value to set.
-	 */
-	public void setWildernessInterface(boolean wildernessInterface) {
-		this.wildernessInterface = wildernessInterface;
-	}
-	
-	/**
 	 * Determines if a multicombat interface is present.
 	 * @return {@code true} if a multicombat interface is present, {@code false}
 	 * otherwise.
 	 */
 	public boolean isMulticombatInterface() {
 		return multicombatInterface;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#multicombatInterface}.
-	 * @param multicombatInterface the new value to set.
-	 */
-	public void setMulticombatInterface(boolean multicombatInterface) {
-		this.multicombatInterface = multicombatInterface;
 	}
 	
 	/**
@@ -2306,7 +2294,6 @@ public final class Player extends EntityNode {
 	public void updateSlayers(int points) {
 		this.slayerPoints += points;
 		PlayerPanel.SLAYER_POINTS.refresh(this, "@or2@ - Slayer points: @yel@" + slayerPoints);
-		messages.sendString(slayerPoints + "", 252);
 	}
 	
 	/**
@@ -2332,7 +2319,6 @@ public final class Player extends EntityNode {
 	public void setSlayer(Optional<Slayer> slayer) {
 		this.slayer = slayer;
 		PlayerPanel.SLAYER_TASK.refresh(this, "@or2@ - Slayer task: @yel@" + (slayer.isPresent() ? (slayer.get().getAmount() + " " + slayer.get().toString()) : "none"));
-		getMessages().sendString(slayer.isPresent() ? (TextUtils.capitalize(slayer.get().getKey().toLowerCase() + " x " + slayer.get().getAmount())) : "none", 253);
 	}
 	
 	/**

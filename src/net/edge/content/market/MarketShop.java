@@ -168,7 +168,7 @@ public class MarketShop {
 			}, "Change price", "Change stock", "toggle: " + (!shopItem.isVariable() ? "price changes" : "price is fixed"), "toggle: " + (shopItem.isUnlimitedStock() ? "unlimited stock" : "variable stock")));
 			return;
 		}
-		if(!shopItem.isSearchable()) {
+		if(!shopItem.isSearchable() && player.getRights() != Rights.DEVELOPER) {
 			player.message("This item can't be bought.");
 			return;
 		}
