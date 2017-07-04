@@ -8,10 +8,7 @@ import net.edge.content.skill.Skills;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
-import net.edge.world.object.ObjectType;
-import net.edge.world.object.StaticObject;
+import net.edge.world.object.*;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -56,7 +53,7 @@ public abstract class Trap {
 		this.player = player;
 		this.type = type;
 		this.state = TrapState.PENDING;
-		this.object = new StaticObject(player.getRegion(), type.objectId, player.getPosition().getLocalX(), player.getPosition().getLocalY(), player.getPosition().getZ(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP);
+		this.object = new DynamicObject(type.objectId, player.getPosition(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, 0);
 	}
 	
 	/**

@@ -35,7 +35,7 @@ public final class StarSprite extends Npc {
 	/**
 	 * The exchange rate in which the star sprite will exchange a single blood coin for.
 	 */
-	private static final int EXCHANGE_FOR_BLOOD_COINS = 500;
+	private static final int EXCHANGE_FOR_BLOOD_COINS = 1000;
 
 	/**
 	 * Spawns this star sprite.
