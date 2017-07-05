@@ -53,7 +53,7 @@ public abstract class ObjectNode {
 	}
 	
 	public void visible(boolean on) {
-		World.getRegions().getAllSurroundingRegions(getRegion().getRegionId()).forEach(r -> r.getPlayers().forEach((i, p) -> {
+		World.getRegions().getAllSurroundingRegions(getRegion().getRegionId()).forEach(r -> r.getPlayers().forEach(p -> {
 			if(getZ() == p.getPosition().getZ() && getInstance() == p.getInstance()) {
 				if(on)
 					p.getMessages().sendObject(this);

@@ -113,7 +113,7 @@ public final class Projectile {
 	 * container.
 	 */
 	public Projectile sendProjectile() {
-		World.getRegions().getSurroundingRegions(start).forEach(r -> r.getPlayers().forEach((i, p) -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
+		World.getRegions().getSurroundingRegions(start).forEach(r -> r.getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
 		return this;
 	}
 	

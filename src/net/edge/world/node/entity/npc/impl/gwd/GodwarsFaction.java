@@ -175,10 +175,6 @@ public enum GodwarsFaction {
 		if(!target.isPlayer() && (soldier.faction == target.faction)) {
 			return false;
 		}
-		//if the target is a player but hes wearing items which will protect him they will not attack.
-		if(target.isPlayer() && GodwarsFaction.isProtected(target.toPlayer(), soldier.faction)) {
-			return false;
-		}
 		return true;
 	}
 
@@ -275,9 +271,19 @@ public enum GodwarsFaction {
 		@Override
 		public void sequence() {
 			check++;
-			if(check >= 500 && !getCombatBuilder().inCombat()) {
+			if(getCombatBuilder().inCombat())
+				return;
+			if(check % 20 == 1) {
+				for(Player player : getRegion().getPlayers()) {
+					//if the target is a player but hes wearing items which will protect him they will not attack.
+					if(!GodwarsFaction.isProtected(player, faction)) {
+						getCombatBuilder().attack(player);
+					}
+				}
+			}
+			if(check >= 150) {
 				int count = 0;
-				for(Npc npc : getRegion().getNpcs().values()) {
+				for(Npc npc : getRegion().getNpcs()) {
 					count++;
 					if(count >= 10)
 						break;

@@ -122,7 +122,7 @@ public final class CorporealBeast extends Npc {
 		
 		@Override
 		protected void execute() {
-			Collection<Player> players = beast.getRegion().getPlayers().values();
+			Collection<Player> players = beast.getRegion().getPlayers();
 			if(players.isEmpty() || players.stream().noneMatch(player -> World.getAreaManager().inArea(player.getPosition(), "CORPOREAL_BEAST"))) {
 				beast.healEntity(beast.getMaxHealth());//this is capped.
 				beast.task.ifPresent(t -> {

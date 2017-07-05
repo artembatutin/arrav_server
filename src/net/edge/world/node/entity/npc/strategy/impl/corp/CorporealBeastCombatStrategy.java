@@ -56,7 +56,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 		CombatType[] data = npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE} : new CombatType[]{CombatType.MAGIC};
 		CombatType c = RandomUtils.random(data);
 
-		List<Player> players = npc.getRegion().getPlayers().values().stream().filter(p -> World.getAreaManager().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList());
+		List<Player> players = npc.getRegion().getPlayers().stream().filter(p -> World.getAreaManager().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList());
 		return type(victim, c, players);
 	}
 
@@ -185,11 +185,10 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 					@Override
 					protected void execute() {
 						this.cancel();
-						for(Player player : npc.getRegion().getPlayers().values()) {
+						for(Player player : npc.getRegion().getPlayers()) {
 							if(player == null) {
 								continue;
 							}
-
 							if(positions.stream().anyMatch(p -> p.equals(player.getPosition()))) {
 								player.damage(new Hit(RandomUtils.inclusive(40), Hit.HitType.NORMAL, Hit.HitIcon.MAGIC, player.getSlot()));
 							}

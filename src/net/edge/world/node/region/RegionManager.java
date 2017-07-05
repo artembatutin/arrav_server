@@ -66,7 +66,7 @@ public final class RegionManager {
 		ObjectList<Region> allRegions = getSurroundingRegions(player.getPosition());
 		ObjectSet<Player> localPlayers = new ObjectAVLTreeSet<>(new RegionPriorityComparator(player));
 		for(Region region : allRegions) {
-			localPlayers.addAll(region.getPlayers().values());
+			localPlayers.addAll(region.getPlayers());
 		}
 		return localPlayers;
 	}
@@ -80,7 +80,7 @@ public final class RegionManager {
 		ObjectList<Region> allRegions = getAllSurroundingRegions(pos.getRegion());
 		ObjectSet<Player> localPlayers = new ObjectOpenHashSet<>();
 		for(Region region : allRegions) {
-			localPlayers.addAll(region.getPlayers().values());
+			localPlayers.addAll(region.getPlayers());
 		}
 		return localPlayers;
 	}
@@ -95,7 +95,7 @@ public final class RegionManager {
 		ObjectList<Region> allRegions = getSurroundingRegions(player.getPosition());
 		ObjectSet<Npc> localNpcs = new ObjectAVLTreeSet<>(new RegionPriorityComparator(player));
 		for(Region region : allRegions) {
-			localNpcs.addAll(region.getNpcs().values());
+			localNpcs.addAll(region.getNpcs());
 		}
 		return localNpcs;
 	}

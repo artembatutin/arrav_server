@@ -45,7 +45,7 @@ public final class ItemNodeStatic extends ItemNode {
 	
 	@Override
 	public void register() {
-		World.getRegions().getAllSurroundingRegions(getPosition().getRegion()).forEach(r -> r.getPlayers().forEach((i, p) -> p.getMessages().sendGroundItem(this)));
+		World.getRegions().getAllSurroundingRegions(getPosition().getRegion()).forEach(r -> r.getPlayers().forEach(p -> p.getMessages().sendGroundItem(this)));
 	}
 	
 	@Override

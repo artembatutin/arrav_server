@@ -153,6 +153,7 @@ public abstract class Npc extends EntityNode {
 		this.maxHealth = getDefinition().getHitpoints();
 		this.currentHealth = maxHealth;
 		this.owner = -1;
+		getMovementCoordinator().setRadius(3);
 	}
 	
 	/**

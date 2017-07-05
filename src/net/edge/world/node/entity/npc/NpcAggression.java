@@ -78,11 +78,9 @@ public final class NpcAggression {
 			retreat(npc);
 			return false;
 		}
-		if(npc.getMovementCoordinator().getBoundary() != null) {
-			if(!npc.getMovementCoordinator().getBoundary().within(player.getPosition(), npc.size(), GameConstants.TARGET_DISTANCE) && retreats) {
-				retreat(npc);//Retreats check.
-				return false;
-			}
+		if(!npc.getMovementCoordinator().getBoundary().within(player.getPosition(), npc.size(), GameConstants.TARGET_DISTANCE) && retreats) {
+			retreat(npc);//Retreats check.
+			return false;
 		}
 		if(!multi && player.getCombatBuilder().isAttacking() || player.getCombatBuilder().isBeingAttacked())
 			return false;

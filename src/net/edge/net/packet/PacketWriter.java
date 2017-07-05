@@ -213,7 +213,7 @@ public final class PacketWriter {
 	 * @param level    the height of the graphic that will be created.
 	 */
 	public static void sendAllGraphic(int id, Position position, int level) {
-		World.getRegions().getSurroundingRegions(position).forEach(r -> r.getPlayers().forEach((i, p) -> p.getMessages().sendGraphic(id, position, level)));
+		World.getRegions().getSurroundingRegions(position).forEach(r -> r.getPlayers().forEach(p -> p.getMessages().sendGraphic(id, position, level)));
 	}
 	
 	/**
