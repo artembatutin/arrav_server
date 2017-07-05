@@ -8,6 +8,8 @@ import net.edge.event.impl.ButtonEvent;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.player.Player;
 
+import java.util.concurrent.TimeUnit;
+
 public class Spellbook extends EventInitializer {
 	
 	@Override
@@ -78,7 +80,11 @@ public class Spellbook extends EventInitializer {
 			@Override
 			public boolean click(Player player, int button) {
 				player.getMessages().sendInterface(-15);
-				player.getMessages().sendWildernessActivity(WildernessActivity.getPlayers());
+				if(player.getWildernessActivity().elapsed(5, TimeUnit.MINUTES)) {
+					player.message("Wilderness map has been updated! Next update in 5 minutes.");
+					player.getMessages().sendWildernessActivity(WildernessActivity.getPlayers());
+					player.getWildernessActivity().reset();
+				}
 				return true;
 			}
 		};

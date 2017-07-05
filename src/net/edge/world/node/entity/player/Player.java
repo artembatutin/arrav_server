@@ -249,7 +249,7 @@ public final class Player extends EntityNode {
 	/**
 	 * The collection of stopwatches used for various timing operations.
 	 */
-	private final Stopwatch slashTimer = new Stopwatch().reset(), eatingTimer = new Stopwatch().reset(), potionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch().reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
+	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), eatingTimer = new Stopwatch().reset(), potionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch().reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
 	
 	/**
 	 * The collection of counters used for various counting operations.
@@ -1325,6 +1325,14 @@ public final class Player extends EntityNode {
 	 */
 	public void setSkillAction(Optional<SkillActionTask> action) {
 		this.action = action;
+	}
+	
+	/**
+	 * Gets the activity watcher stopwatch timer.
+	 * @return the activity timer.
+	 */
+	public Stopwatch getWildernessActivity() {
+		return wildernessActivity;
 	}
 	
 	/**
