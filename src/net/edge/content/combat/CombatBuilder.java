@@ -84,10 +84,10 @@ public final class CombatBuilder {
 	 * @param target the character that this controller will be prompted to attack.
 	 */
 	public void attack(EntityNode target) {
-		
-		if(character.same(target))
+		if(character.same(target)) {
+			character.getMovementQueue().reset();
 			return;
-		
+		}
 		if(character.isPlayer() && target.isNpc() && character.toPlayer().getRights().equals(Rights.DEVELOPER)) {
 			character.toPlayer().message("[DEBUG NPC ID] Npc = " + target.toNpc().getId() + ", position = " + target.toNpc().getPosition().toString());
 		}
@@ -102,12 +102,12 @@ public final class CombatBuilder {
 			Player player = (Player) character;
 			if(npc.getOwner() != -1 && !npc.isOwner(player)) {
 				player.message("I should mind my own business...");
+				character.getMovementQueue().reset();
 				return;
 			}
 		}
 		
 		character.getMovementQueue().follow(target);
-		
 		if(combatTask != null && combatTask.isRunning()) {
 			currentVictim = target;
 			if(character.isPlayer()) {

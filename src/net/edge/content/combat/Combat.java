@@ -371,24 +371,27 @@ public final class Combat {
 	
 	/**
 	 * Gets the delay for the specified {@code type}.
+	 * @param character the character doing the hit.
+	 * @param victim the victim being hit.
 	 * @param type the combat type to retrieve the delay for.
 	 * @return the delay for the combat type.
 	 * @throws IllegalArgumentException if the combat type is invalid.
 	 */
-	public static int getDelay(EntityNode character, CombatType type) {
+	public static int getDelay(EntityNode character, EntityNode victim, CombatType type) {
+		int delay = character.isPlayer() && victim.isNpc() ? 1: 0;
 		if(character.isPlayer() && character.toPlayer().getWeapon().equals(WeaponInterface.SALAMANDER)) {
-			return 1;
+			return 1 + delay;
 		}
-		switch(type) {
-			case MELEE:
-				return 1;
-			case RANGED:
-				return 2;
-			case MAGIC:
-				return 3;
-			default:
-				throw new IllegalArgumentException("Invalid combat type!");
+		if(type.equals(CombatType.MELEE)) {
+			return 1 + delay;
 		}
+		if(type.equals(CombatType.RANGED)) {
+			return 2 + delay;
+		}
+		if(type.equals(CombatType.MAGIC)) {
+			return 3 + delay;
+		}
+		return 1 + delay;
 	}
 	
 	/**

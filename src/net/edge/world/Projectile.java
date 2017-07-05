@@ -1,5 +1,6 @@
 package net.edge.world;
 
+import net.edge.content.combat.CombatType;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.EntityNode;
 
@@ -9,6 +10,40 @@ import net.edge.world.node.entity.EntityNode;
  * @author lare96 <http://github.com/lare96>
  */
 public final class Projectile {
+	
+	/**
+	 * Magic combat projectile delays.
+	 */
+	public static final int[] MAGIC_DELAYS = {
+			2,
+			2,
+			3,
+			3,
+			3,
+			4,
+			4,
+			4,
+			5,
+			5,
+			15
+	};
+	
+	/**
+	 * Ranged combat projectile delays.
+	 */
+	public static final int[] RANGED_DELAYS = {
+			2,
+			2,
+			2,
+			3,
+			3,
+			3,
+			3,
+			3,
+			3,
+			4,
+			4
+	};
 	
 	/**
 	 * The starting position of the projectile.
@@ -77,8 +112,9 @@ public final class Projectile {
 	 * @param endHeight    the ending height of the projectile.
 	 * @param curve        the curve angle of the projectile.
 	 * @param instance     the world instance on which the projectile is active.
+	 * @param type         the combat type of this projectile
 	 */
-	public Projectile(Position start, Position end, int lockon, int projectileId, int speed, int delay, int startHeight, int endHeight, int curve, int instance) {
+	public Projectile(Position start, Position end, int lockon, int projectileId, int speed, int delay, int startHeight, int endHeight, int curve, int instance, CombatType type) {
 		this.start = start;
 		this.offset = new Position((end.getX() - start.getX()), (end.getY() - start.getY()));
 		this.lockon = lockon;
@@ -89,7 +125,30 @@ public final class Projectile {
 		this.endHeight = endHeight;
 		this.curve = curve;
 		this.instance = instance;
-		this.travelTime = (int) ((delay + speed + start.getDistance(end) * 5) * .02857);
+		int distance = (int) start.getDistance(end);
+		if(type != null && type.equals(CombatType.MAGIC)) {
+			this.travelTime = MAGIC_DELAYS[distance > 10 ? 10 : distance];
+		} else {
+			this.travelTime = RANGED_DELAYS[distance > 10 ? 10 : distance];
+		}
+		//this.travelTime = (int) ((delay + speed + start.getDistance(end) * 5) * .02857);
+	}
+	
+	/**
+	 * Creates a new {@link Projectile} based on the difference between the
+	 * {@code source} and {@code victim}.
+	 * @param source       the character that is firing this projectile.
+	 * @param victim       the victim that this projectile is being fired at.
+	 * @param projectileId the id of the projectile.
+	 * @param speed        the speed of the projectile.
+	 * @param delay        the delay of the projectile.
+	 * @param startHeight  the starting height of the projectile.
+	 * @param endHeight    the ending height of the projectile.
+	 * @param curve        the curve angle of the projectile.
+	 * @param type         the combat type of this projectile
+	 */
+	public Projectile(EntityNode source, EntityNode victim, int projectileId, int speed, int delay, int startHeight, int endHeight, int curve, CombatType type) {
+		this(source.getCenterPosition(), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), projectileId, speed, delay, startHeight, endHeight, curve, source.getInstance(), type);
 	}
 	
 	/**
@@ -105,7 +164,7 @@ public final class Projectile {
 	 * @param curve        the curve angle of the projectile.
 	 */
 	public Projectile(EntityNode source, EntityNode victim, int projectileId, int speed, int delay, int startHeight, int endHeight, int curve) {
-		this(source.getCenterPosition(), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), projectileId, speed, delay, startHeight, endHeight, curve, source.getInstance());
+		this(source.getCenterPosition(), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), projectileId, speed, delay, startHeight, endHeight, curve, source.getInstance(), null);
 	}
 	
 	/**

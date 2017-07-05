@@ -10,6 +10,7 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.combat.weapon.FightStyle;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
+import net.edge.task.Task;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.util.rand.RandomUtils;
@@ -71,23 +72,31 @@ public final class RangedCombatStrategy implements CombatStrategy {
 			if(!player.isVisible()) {
 				return new CombatHit(character, victim, 1, CombatType.RANGED, true);
 			}
-			
 			if(weapon.getWeapon() == ItemIdentifiers.DARK_BOW) {
 				delay = new Projectile(character, victim, ammo.getDefinition().getProjectile(), 64, 36, 40, 31, 0).sendProjectile().getTravelTime();
 			} else {
 				if(ammo.getDefinition().getProjectile() != -1) {
+					System.out.println("RANGE");
 					delay = new Projectile(character, victim, ammo.getDefinition().getProjectile(), ammo.getDefinition().getDelay(), ammo.getDefinition().getSpeed(), ammo.getDefinition().getStartHeight(), ammo.getDefinition().getEndHeight(), 0).sendProjectile().getTravelTime();
 				}
 			}
-			
+		} else {
+			int distance = (int) character.getCenterPosition().getDistance(victim.getCenterPosition());
+			delay = Projectile.RANGED_DELAYS[distance > 10 ? 10 : distance];
 		}
+		
 		startAnimation(player);
 		if(ammo.getDefinition().getGraphic(player).getId() != 0)
 			player.graphic(ammo.getDefinition().getGraphic(player));
 		
 		CombatHit data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatHit(character, victim, 1, CombatType.RANGED, true, delay));
-		decrementAmmo(player, victim, weapon, ammo);
-		
+		new Task(delay, false) {
+			@Override
+			protected void execute() {
+				decrementAmmo(player, victim, weapon, ammo);
+				this.cancel();
+			}
+		}.submit();
 		return data;
 	}
 	
