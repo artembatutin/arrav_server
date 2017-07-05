@@ -14,22 +14,27 @@ import java.util.Optional;
 public abstract class CombatSpell extends Spell {
 	
 	@Override
-	public final void startCast(EntityNode cast, EntityNode castOn) {
+	public final int startCast(EntityNode cast, EntityNode castOn) {
 		if(!cast.isVisible() || !castOn.isVisible())
-			return;
+			return 0;
 		Optional<Animation> optional = castAnimation();
 		if(optional.isPresent()) {
 			Animation animation = new Animation(optional.get().getId(), optional.get().getDelay(), Animation.AnimationPriority.NORMAL);
 			cast.animation(animation);
 		}
 		startGraphic().ifPresent(cast::graphic);
-		projectile(cast, castOn).ifPresent(g -> World.get().submit(new Task(2, false) {
-			@Override
-			public void execute() {
-				g.sendProjectile();
-				this.cancel();
-			}
-		}));
+		Optional<Projectile> p = projectile(cast, castOn);
+		if(p.isPresent()) {
+			World.get().submit(new Task(2, false) {
+				@Override
+				public void execute() {
+					p.get().sendProjectile();
+					this.cancel();
+				}
+			});
+			return p.get().getTravelTime();
+		}
+		return 0;
 	}
 	
 	/**

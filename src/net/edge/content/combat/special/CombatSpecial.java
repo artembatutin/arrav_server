@@ -58,7 +58,7 @@ public enum CombatSpecial {
 				public void postAttack(int counter) {
 					if(target.isPlayer() && counter != 0) {
 						//Finalizing with the anchor effect. (decreasing random combat skill).
-						int skill = RandomUtils.random(new int[]{Skills.DEFENCE, Skills.ATTACK, Skills.MAGIC, Skills.RANGED});
+						int skill = RandomUtils.random(Skills.DEFENCE, Skills.ATTACK, Skills.MAGIC, Skills.RANGED);
 						double decreaseValue = (counter / 100.0) * 10.0;
 						Player victim = target.toPlayer();
 						victim.getSkills()[skill].decreaseLevel((int) decreaseValue);
@@ -104,11 +104,9 @@ public enum CombatSpecial {
 							//Changing the damage left to decrease.
 							counter -= removeFromSkill;
 							SkillData data = SkillData.forId(s);
-							if(data != null) {
-								String skill = data.toString();
-								player.message("You've drained " + victim.getUsername() + "'s " + skill + " level by " + removeFromSkill + ".");
-								victim.message("Your " + skill + " level has been drained.");
-							}
+							String skill = data.toString();
+							player.message("You've drained " + victim.getUsername() + "'s " + skill + " level by " + removeFromSkill + ".");
+							victim.message("Your " + skill + " level has been drained.");
 						}
 					}
 				}

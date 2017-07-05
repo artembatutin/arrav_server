@@ -61,6 +61,11 @@ public final class Projectile {
 	private final int instance;
 	
 	/**
+	 * The time to travel in ticks.
+	 */
+	private final int travelTime;
+	
+	/**
 	 * Creates a new {@link Projectile}.
 	 * @param start        the starting position of the projectile.
 	 * @param end          the ending position of the projectile.
@@ -84,6 +89,7 @@ public final class Projectile {
 		this.endHeight = endHeight;
 		this.curve = curve;
 		this.instance = instance;
+		this.travelTime = (int) ((delay + speed + start.getDistance(end) * 5) * .02857);
 	}
 	
 	/**
@@ -106,8 +112,9 @@ public final class Projectile {
 	 * Sends a projectile for everyone in the world based on the values in this
 	 * container.
 	 */
-	public void sendProjectile() {
+	public Projectile sendProjectile() {
 		World.getRegions().getSurroundingRegions(start).forEach(r -> r.getPlayers().forEach((i, p) -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
+		return this;
 	}
 	
 	/**
@@ -188,5 +195,13 @@ public final class Projectile {
 	 */
 	public int getInstance() {
 		return instance;
+	}
+	
+	/**
+	 * Gets the travel time of this projectile depending on it's configuration.
+	 * @return the travel time in ticks.
+	 */
+	public int getTravelTime() {
+		return travelTime;
 	}
 }

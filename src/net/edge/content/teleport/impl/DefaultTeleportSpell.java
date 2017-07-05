@@ -163,8 +163,9 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 	}
 	
 	@Override
-	public final void startCast(EntityNode cast, EntityNode castOn) {
+	public final int startCast(EntityNode cast, EntityNode castOn) {
 		// This class holds no support for teleport other.
+		return 0;
 	}
 	
 	/**

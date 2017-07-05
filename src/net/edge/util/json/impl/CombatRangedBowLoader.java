@@ -3,7 +3,7 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.content.combat.ranged.CombatRangedAmmoDefinition;
+import net.edge.content.combat.ranged.CombatRangedAmmunition;
 import net.edge.content.combat.ranged.CombatRangedDetails;
 import net.edge.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
 import net.edge.content.combat.ranged.CombatRangedType;
@@ -30,7 +30,7 @@ public final class CombatRangedBowLoader extends JsonLoader {
 		int[] ids = reader.get("item").isJsonArray() ? builder.fromJson(reader.get("item"), int[].class) : new int[]{reader.get("item").getAsInt()};
 		CombatRangedType type = Objects.requireNonNull(builder.fromJson(reader.get("type"), CombatRangedType.class));
 		int delay = reader.get("delay").getAsInt();
-		CombatRangedAmmoDefinition[] ammunitions = Objects.requireNonNull(builder.fromJson(reader.get("ammunitions"), CombatRangedAmmoDefinition[].class));
+		CombatRangedAmmunition[] ammunitions = Objects.requireNonNull(builder.fromJson(reader.get("ammunitions"), CombatRangedAmmunition[].class));
 		if(type == null) {
 			throw new IllegalStateException("Invalid bow type for [id = " + ids[0] + ", name = " + ItemDefinition.DEFINITIONS[ids[0]].getName() + "]");
 		}

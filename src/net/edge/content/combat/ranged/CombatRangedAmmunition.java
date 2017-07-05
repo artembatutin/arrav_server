@@ -25,7 +25,7 @@ import net.edge.world.node.item.ItemIdentifiers;
  * that each ammunition has.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
-public enum CombatRangedAmmoDefinition {
+public enum CombatRangedAmmunition {
 	TRAINING_ARROWS(9706, 1051, 64, 36, 40, 31, 806),
 	BRONZE_ARROW(new int[]{882, 883, 5616, 5622}, 10, 64, 36, 40, 31, 19) {
 		@Override
@@ -675,7 +675,7 @@ public enum CombatRangedAmmoDefinition {
 	/**
 	 * A set of constants that can never be recovered when fired.
 	 */
-	public static final ImmutableSet<CombatRangedAmmoDefinition> NON_DROPPABLE = ImmutableSet.of(SARADOMIN_ARROW, ZAMORAK_ARROW, GUTHIX_ARROW, CHINCHOMPA, RED_CHINCHOMPA, HAND_CANNON_SHOT, BOLT_RACK, GUAM_TAR, MARRENTIL_TAR, HARRALANDER_TAR, TARROMIN_TAR);
+	public static final ImmutableSet<CombatRangedAmmunition> NON_DROPPABLE = ImmutableSet.of(SARADOMIN_ARROW, ZAMORAK_ARROW, GUTHIX_ARROW, CHINCHOMPA, RED_CHINCHOMPA, HAND_CANNON_SHOT, BOLT_RACK, GUAM_TAR, MARRENTIL_TAR, HARRALANDER_TAR, TARROMIN_TAR);
 	
 	/**
 	 * The item identifications for this ammunition.
@@ -714,7 +714,7 @@ public enum CombatRangedAmmoDefinition {
 	private final Graphic graphic;
 	
 	/**
-	 * Constructs a new {@link CombatRangedAmmoDefinition}.
+	 * Constructs a new {@link CombatRangedAmmunition}.
 	 * @param ids         {@link #ids}.
 	 * @param projectile  {@link #projectile}.
 	 * @param delay       {@link #delay}.
@@ -723,7 +723,7 @@ public enum CombatRangedAmmoDefinition {
 	 * @param endHeight   {@link #endHeight}.
 	 * @param graphic     {@link #graphic}.
 	 */
-	CombatRangedAmmoDefinition(int[] ids, int projectile, int delay, int speed, int startHeight, int endHeight, int graphic) {
+	CombatRangedAmmunition(int[] ids, int projectile, int delay, int speed, int startHeight, int endHeight, int graphic) {
 		this.ids = Item.convert(ids);
 		this.projectile = projectile;
 		this.delay = delay;
@@ -734,7 +734,7 @@ public enum CombatRangedAmmoDefinition {
 	}
 	
 	/**
-	 * Constructs a new {@link CombatRangedAmmoDefinition}.
+	 * Constructs a new {@link CombatRangedAmmunition}.
 	 * @param ids         {@link #ids}.
 	 * @param projectile  {@link #projectile}.
 	 * @param delay       {@link #delay}.
@@ -743,7 +743,7 @@ public enum CombatRangedAmmoDefinition {
 	 * @param endHeight   {@link #endHeight}.
 	 * @param graphic     {@link #graphic}.
 	 */
-	CombatRangedAmmoDefinition(int[] ids, int projectile, int delay, int speed, int startHeight, int endHeight, Graphic graphic) {
+	CombatRangedAmmunition(int[] ids, int projectile, int delay, int speed, int startHeight, int endHeight, Graphic graphic) {
 		this.ids = Item.convert(ids);
 		this.projectile = projectile;
 		this.delay = delay;
@@ -754,7 +754,7 @@ public enum CombatRangedAmmoDefinition {
 	}
 	
 	/**
-	 * Constructs a new {@link CombatRangedAmmoDefinition}.
+	 * Constructs a new {@link CombatRangedAmmunition}.
 	 * @param id          {@link #ids}.
 	 * @param projectile  {@link #projectile}.
 	 * @param delay       {@link #delay}.
@@ -763,7 +763,7 @@ public enum CombatRangedAmmoDefinition {
 	 * @param endHeight   {@link #endHeight}.
 	 * @param graphic     {@link #graphic}.
 	 */
-	CombatRangedAmmoDefinition(int id, int projectile, int delay, int speed, int startHeight, int endHeight, int graphic) {
+	CombatRangedAmmunition(int id, int projectile, int delay, int speed, int startHeight, int endHeight, int graphic) {
 		this.ids = new Item[]{new Item(id)};
 		this.projectile = projectile;
 		this.delay = delay;
@@ -774,7 +774,7 @@ public enum CombatRangedAmmoDefinition {
 	}
 	
 	/**
-	 * Constructs a new {@link CombatRangedAmmoDefinition}.
+	 * Constructs a new {@link CombatRangedAmmunition}.
 	 * @param id          {@link #ids}.
 	 * @param projectile  {@link #projectile}.
 	 * @param delay       {@link #delay}.
@@ -783,7 +783,7 @@ public enum CombatRangedAmmoDefinition {
 	 * @param endHeight   {@link #endHeight}.
 	 * @param graphic     {@link #graphic}.
 	 */
-	CombatRangedAmmoDefinition(int id, int projectile, int delay, int speed, int startHeight, int endHeight, Graphic graphic) {
+	CombatRangedAmmunition(int id, int projectile, int delay, int speed, int startHeight, int endHeight, Graphic graphic) {
 		this.ids = new Item[]{new Item(id)};
 		this.projectile = projectile;
 		this.delay = delay;

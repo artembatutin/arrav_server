@@ -144,7 +144,6 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 		npc.animation(new Animation(10410));
 
 		Position originalVictimPosition = victim.getPosition();
-
 		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
@@ -152,7 +151,6 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 				if(npc.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || npc.isDead() || victim.isDead()) {
 					return;
 				}
-
 				if(spell.equals(TRANSCULENT_BALL_OF_ENERGY)) {
 					new Projectile(npc.getCenterPosition(), originalVictimPosition, 0, 1824, 44, 3, 60, 36, 0, npc.getInstance()).sendProjectile();
 				} else {
@@ -161,6 +159,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 			}
 		});
 		npc.setCurrentlyCasting(spell);
+		
 		return new CombatHit(npc, victim, 1, CombatType.MAGIC, false) {
 			@Override
 			public CombatHit preAttack() {
