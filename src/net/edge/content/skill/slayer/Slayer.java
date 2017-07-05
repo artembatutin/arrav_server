@@ -3,6 +3,7 @@ package net.edge.content.skill.slayer;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.event.impl.ItemEvent;
 import net.edge.event.impl.NpcEvent;
 import net.edge.util.TextUtils;
@@ -316,37 +317,45 @@ public final class Slayer {
 	 * @param master the master associated to the task.
 	 */
 	public static void teleport(Player player, SlayerMaster master) {
-		ObjectArrayList<Dialogue> dialogues = new ObjectArrayList<>();
-		
-		dialogues.add(new PlayerDialogue("I want to teleport to my assignment."));
-		
+		DialogueAppender app = new DialogueAppender(player);
+
+		app.chain(new PlayerDialogue("I want to teleport to my assignment."));
+
 		if(!player.getSlayer().isPresent()) {
-			dialogues.add(new NpcDialogue(master.getNpcId(), "You currently don't have a slayer task."));
-			player.getDialogueBuilder().append(dialogues.toArray(new Dialogue[dialogues.size()]));
+			app.chain(new NpcDialogue(master.getNpcId(), "You currently don't have a slayer task."));
+			app.start();
 			return;
 		}
 		
 		SlayerLocationPolicy location = SLAYER_LOCATIONS.get(player.getSlayer().get().getKey());
 		
 		if(location == null) {
-			dialogues.add(new NpcDialogue(master.getNpcId(), "This location currently doesn't exist, please report", "it on the forums."));
-			player.getDialogueBuilder().append(dialogues.toArray(new Dialogue[dialogues.size()]));
+			app.chain(new NpcDialogue(master.getNpcId(), "This location currently doesn't exist, please report", "it on the forums."));
+			app.start();
 			return;
 		}
 		
 		if(location.getPrice() == 0) {
-			dialogues.add(new NpcDialogue(master.getNpcId(), "Alright, teleporting to this task will be free."));
+			app.chain(new NpcDialogue(master.getNpcId(), "Alright, teleporting to this task will be free."));
 		} else {
-			dialogues.add(new NpcDialogue(master.getNpcId(), "Alright, that will be " + location.getPrice() + " coins."));
+			app.chain(new NpcDialogue(master.getNpcId(), "Alright, that will be " + location.getPrice() + " coins."));
 		}
+
+		app.chain(new OptionDialogue(t -> {
+			if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+				app.getBuilder().go(2);
+			} else {
+				app.getBuilder().advance();
+			}
+		}, "Yes, teleport me", "No, i'll stay here"));
+
+		app.chain(new PlayerDialogue("Nah, i'll stay here").attachAfter(() -> player.getMessages().sendCloseWindows()));
+
+		Dialogue dialogue = location.getPrice() == 0 ? new StatementDialogue("You teleport to your task for free.").attach(() -> player.move(RandomUtils.random(location.getPositions()))) : new RequestItemDialogue(new Item(995, location.getPrice()), "You handed over " + location.getPrice() + " coins to be \\nteleported to your assignment.", Optional.of(() -> player.move(RandomUtils.random(location.getPositions())))).attachAfter(() -> player.getMessages().sendCloseWindows());
 		
-		Dialogue dialogue = location.getPrice() == 0 ? new StatementDialogue("You teleport to your task for free.").attach(() -> player.move(RandomUtils.random(location.getPositions()))) : new RequestItemDialogue(new Item(995, location.getPrice()), "You handed over " + location.getPrice() + " coins to be \\nteleported to your assignment.", Optional.of(() -> player.move(RandomUtils.random(location.getPositions()))));
-		
-		player.getMessages().sendInterface(-1);
-		
-		dialogues.add(dialogue);
-		
-		player.getDialogueBuilder().append(dialogues.toArray(new Dialogue[dialogues.size()]));
+		app.chain(dialogue);
+
+		app.start();
 	}
 	
 	/**
