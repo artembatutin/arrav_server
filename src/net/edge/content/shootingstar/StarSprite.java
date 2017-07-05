@@ -75,7 +75,7 @@ public final class StarSprite extends Npc {
 					ap.start();
 				} else if(click == 2) {
 					sendInstant(player);
-				} else if(click == 3) {
+				} else if(click == 4) {
 					MarketCounter.getShops().get(28).openShop(player);
 				}
 				return true;
