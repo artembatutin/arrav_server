@@ -17,6 +17,7 @@ import net.edge.world.node.item.container.impl.Inventory;
 
 import java.util.EnumSet;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The enumerated type managing consumable potion types.
@@ -24,6 +25,17 @@ import java.util.Optional;
  * @author lare96 <http://github.com/lare96>
  */
 public enum PotionConsumable {
+	OVERLOAD_FLASKS(14301, 14299, 14297, 14295, 14293, 14291) {
+		@Override
+		public void onEffect(Player player) {
+			OVERLOAD.onEffect(player);
+		}
+
+		@Override
+		public boolean canDrink(Player player) {
+			return OVERLOAD.canDrink(player);
+		}
+	},
 	OVERLOAD(15332, 15333, 15334, 15335) {
 		@Override
 		public boolean canDrink(Player player) {
@@ -58,6 +70,17 @@ public enum PotionConsumable {
 			PotionConsumable.onBasicEffect(player, Skills.ATTACK, BoostType.MODERATE);
 		}
 	},
+	EXTREME_STRENGTH_FLASKS(14361, 14359, 14357, 14355, 14353, 14351) {
+		@Override
+		public boolean canDrink(Player player) {
+			return EXTREME_STRENGTH.canDrink(player);
+		}
+
+		@Override
+		public void onEffect(Player player) {
+			EXTREME_STRENGTH.onEffect(player);
+		}
+	},
 	EXTREME_STRENGTH(15312, 15313, 15314, 15315) {
 		@Override
 		public boolean canDrink(Player player) {
@@ -71,6 +94,17 @@ public enum PotionConsumable {
 		@Override
 		public void onEffect(Player player) {
 			PotionConsumable.onBasicEffect(player, Skills.STRENGTH, BoostType.EXTREME);
+		}
+	},
+	EXTREME_ATTACK_FLASKS(14373, 14371, 14369, 14367, 14365, 14363) {
+		@Override
+		public boolean canDrink(Player player) {
+			return EXTREME_ATTACK.canDrink(player);
+		}
+
+		@Override
+		public void onEffect(Player player) {
+			EXTREME_ATTACK_FLASKS.onEffect(player);
 		}
 	},
 	EXTREME_ATTACK(15308, 15309, 15310, 15311) {
@@ -88,6 +122,17 @@ public enum PotionConsumable {
 			PotionConsumable.onBasicEffect(player, Skills.ATTACK, BoostType.EXTREME);
 		}
 	},
+	EXTREME_DEFENCE_FLASKS(14349, 14347, 14345, 14343, 14341, 14339) {
+		@Override
+		public boolean canDrink(Player player) {
+			return EXTREME_DEFENCE.canDrink(player);
+		}
+
+		@Override
+		public void onEffect(Player player) {
+			EXTREME_DEFENCE.onEffect(player);
+		}
+	},
 	EXTREME_DEFENCE(15316, 15317, 15318, 15319) {
 		@Override
 		public boolean canDrink(Player player) {
@@ -101,6 +146,17 @@ public enum PotionConsumable {
 		@Override
 		public void onEffect(Player player) {
 			PotionConsumable.onBasicEffect(player, Skills.DEFENCE, BoostType.EXTREME);
+		}
+	},
+	EXTREME_RANGING_FLASKS(14325, 14323, 14321, 14319, 14317, 14315) {
+		@Override
+		public void onEffect(Player player) {
+			EXTREME_RANGING.onEffect(player);
+		}
+
+		@Override
+		public boolean canDrink(Player player) {
+			return EXTREME_RANGING.canDrink(player);
 		}
 	},
 	EXTREME_RANGING(15324, 15325, 15326, 15327) {
@@ -118,6 +174,17 @@ public enum PotionConsumable {
 			PotionConsumable.onBasicEffect(player, Skills.RANGED, BoostType.EXTREME);
 		}
 	},
+	EXTREME_MAGIC_FLASKS(14337, 14335, 14333, 14331, 14329, 14327) {
+		@Override
+		public void onEffect(Player player) {
+			EXTREME_MAGIC.onEffect(player);
+		}
+
+		@Override
+		public boolean canDrink(Player player) {
+			return EXTREME_MAGIC.canDrink(player);
+		}
+	},
 	EXTREME_MAGIC(15320, 15321, 15322, 15323) {
 		@Override
 		public boolean canDrink(Player player) {
@@ -133,11 +200,25 @@ public enum PotionConsumable {
 			PotionConsumable.onBasicEffect(player, Skills.MAGIC, BoostType.EXTREME);
 		}
 	},
+	RECOVER_SPECIAL_FLASKS(14385, 14383, 14381, 14379, 14377, 14375) {
+		@Override
+		public boolean canDrink(Player player) {
+			return RECOVER_SPECIAL.canDrink(player);
+		}
+
+		@Override
+		public void onEffect(Player player) {
+			RECOVER_SPECIAL.onEffect(player);
+		}
+	},
 	RECOVER_SPECIAL(15300, 15301, 15302, 15303) {
 		@Override
 		public boolean canDrink(Player player) {
 			if(World.getAreaManager().inArea(player, "WILDERNESS")) {
 				player.message("You can't drink this potion in the wilderness.");
+				return false;
+			}
+			if(!player.getSpecialAttackRestoreTimer().elapsed(30, TimeUnit.SECONDS)) {
 				return false;
 			}
 			return true;
@@ -152,12 +233,19 @@ public enum PotionConsumable {
 			}
 
 			player.getSpecialPercentage().set(value);
+			player.getSpecialAttackRestoreTimer().reset();
 		}
 	},
 	ZAMORAK_BREW(2450, 189, 191, 193) {
 		@Override
 		public void onEffect(Player player) {
 			PotionConsumable.onZamorakEffect(player);
+		}
+	},
+	SARADOMIN_BREW_FLASKS(14128, 14126, 14124, 14122, 14419, 14417) {
+		@Override
+		public void onEffect(Player player) {
+			SARADOMIN_BREW.onEffect(player);
 		}
 	},
 	SARADOMIN_BREW(6685, 6687, 6689, 6691) {
@@ -190,6 +278,12 @@ public enum PotionConsumable {
 			PotionConsumable.onFishingEffect(player);
 		}
 	},
+	RANGE_FLASKS(14152, 14150, 14148, 14146, 14144, 14142) {
+		@Override
+		public void onEffect(Player player) {
+			RANGE_POTIONS.onEffect(player);
+		}
+	},
 	RANGE_POTIONS(2444, 169, 171, 173) {
 		@Override
 		public void onEffect(Player player) {
@@ -206,6 +300,12 @@ public enum PotionConsumable {
 		@Override
 		public void onEffect(Player player) {
 			PotionConsumable.onEnergyEffect(player, true);
+		}
+	},
+	MAGIC_FLASKS(14403, 14401, 14399, 14397, 14395, 14393) {
+		@Override
+		public void onEffect(Player player) {
+			MAGIC_POTIONS.onEffect(player);
 		}
 	},
 	MAGIC_POTIONS(3040, 3042, 3044, 3046) {
@@ -232,16 +332,34 @@ public enum PotionConsumable {
 			PotionConsumable.onBasicEffect(player, Skills.ATTACK, BoostType.NORMAL);
 		}
 	},
+	SUPER_DEFENCE_FLASKS(14164, 14162, 14160, 14158, 14156, 14154) {
+		@Override
+		public void onEffect(Player player) {
+			SUPER_DEFENCE_POTIONS.onEffect(player);
+		}
+	},
 	SUPER_DEFENCE_POTIONS(2442, 163, 165, 167) {
 		@Override
 		public void onEffect(Player player) {
 			PotionConsumable.onBasicEffect(player, Skills.DEFENCE, BoostType.SUPER);
 		}
 	},
+	SUPER_ATTACK_FLASKS(14188, 14186, 14184, 14182, 14180, 14178) {
+		@Override
+		public void onEffect(Player player) {
+			SUPER_ATTACK_POTIONS.onEffect(player);
+		}
+	},
 	SUPER_ATTACK_POTIONS(2436, 145, 147, 149) {
 		@Override
 		public void onEffect(Player player) {
 			PotionConsumable.onBasicEffect(player, Skills.ATTACK, BoostType.SUPER);
+		}
+	},
+	SUPER_STRENGTH_FLASKS(14176, 14174, 14172, 14170, 14168, 14166) {
+		@Override
+		public void onEffect(Player player) {
+			SUPER_STRENGTH_POTIONS.onEffect(player);
 		}
 	},
 	SUPER_STRENGTH_POTIONS(2440, 157, 159, 161) {
@@ -254,6 +372,12 @@ public enum PotionConsumable {
 		@Override
 		public void onEffect(Player player) {
 			onRestoreEffect(player, false);
+		}
+	},
+	SUPER_RESTORE_FLASKS(14415, 14413, 14411, 14409, 14407, 14405) {
+		@Override
+		public void onEffect(Player player) {
+			SUPER_RESTORE_POTIONS.onEffect(player);
 		}
 	},
 	SUPER_RESTORE_POTIONS(3024, 3026, 3028, 3030) {
@@ -269,10 +393,22 @@ public enum PotionConsumable {
 			Skills.refresh(player, Skills.PRAYER);
 		}
 	},
+	PRAYER_FLASKS(14200, 14198, 14196, 14194, 14192, 14190) {
+		@Override
+		public void onEffect(Player player) {
+			PRAYER_POTIONS.onEffect(player);
+		}
+	},
 	PRAYER_POTIONS(2434, 139, 141, 143) {
 		@Override
 		public void onEffect(Player player) {
 			PotionConsumable.onPrayerEffect(player, false);
+		}
+	},
+	SUPER_PRAYER_FLASKS(14313, 14311, 14309, 14307, 14305, 14303) {
+		@Override
+		public void onEffect(Player player) {
+			SUPER_PRAYER_POTIONS.onEffect(player);
 		}
 	},
 	SUPER_PRAYER_POTIONS(15328, 15329, 15330, 15331) {
@@ -299,6 +435,12 @@ public enum PotionConsumable {
 			PotionConsumable.onAntiPoisonEffect(player, false, 0);
 		}
 	},
+	SUPER_ANTIPOISON_FLASKS(14140, 14138, 14136, 14134, 14132, 14130) {
+		@Override
+		public void onEffect(Player player) {
+			SUPER_ANTIFIRE_POTIONS.onEffect(player);
+		}
+	},
 	SUPER_ANTIPOISON_POTIONS(2448, 181, 183, 185) {
 		@Override
 		public void onEffect(Player player) {
@@ -315,6 +457,11 @@ public enum PotionConsumable {
 	 * The default item representing the final potion dose.
 	 */
 	private static final Item VIAL = new Item(229);
+
+	/**
+	 * The default item representing the final flask dose.
+	 */
+	private static final Item FLASK = new Item(14207);
 	
 	/**
 	 * The identifiers which represent this potion type.
@@ -347,8 +494,8 @@ public enum PotionConsumable {
 					player.animation(new Animation(829));
 					player.getPotionTimer().reset();
 					player.getInventory().remove(item, slot);
-					Item replace = VIAL;
 					int length = potion.getIds().length;
+					Item replace = length > 4 ? FLASK : VIAL;
 					for(int index = 0; index < length; index++) {
 						if(potion.getIds()[index] == item.getId() && index + 1 < length) {
 							replace = new Item(potion.getIds()[index + 1]);
@@ -398,10 +545,10 @@ public enum PotionConsumable {
 		defence.increaseLevelReal((int) Math.floor(2 + (0.20 * defence.getRealLevel())));
 		int hpCalc = (int) Math.floor(20 + (0.15 * (hp.getRealLevel() * 10)));
 		hp.increaseLevel(hpCalc, (hp.getRealLevel() * 10) + hpCalc);
-		attack.decreaseLevelReal((int) Math.floor(0.10 * attack.getRealLevel()));
-		strength.decreaseLevelReal((int) Math.floor(0.10 * strength.getRealLevel()));
-		magic.decreaseLevelReal((int) Math.floor(0.10 * magic.getRealLevel()));
-		ranged.decreaseLevelReal((int) Math.floor(0.10 * ranged.getRealLevel()));
+		attack.decreaseLevel((int) Math.floor(0.10 * attack.getLevel()));
+		strength.decreaseLevel((int) Math.floor(0.10 * strength.getLevel()));
+		magic.decreaseLevel((int) Math.floor(0.10 * magic.getLevel()));
+		ranged.decreaseLevel((int) Math.floor(0.10 * ranged.getLevel()));
 		Skills.refresh(player, Skills.ATTACK, Skills.STRENGTH, Skills.DEFENCE, Skills.HITPOINTS, Skills.RANGED, Skills.MAGIC);
 	}
 	
