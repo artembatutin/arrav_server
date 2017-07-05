@@ -396,7 +396,8 @@ public enum PotionConsumable {
 		Skill ranged = player.getSkills()[Skills.RANGED];
 		Skill magic = player.getSkills()[Skills.MAGIC];
 		defence.increaseLevelReal((int) Math.floor(2 + (0.20 * defence.getRealLevel())));
-		hp.increaseLevelReal((int) Math.floor(20 + (0.15 * hp.getRealLevel())));
+		int hpCalc = (int) Math.floor(20 + (0.15 * (hp.getRealLevel() * 10)));
+		hp.increaseLevel(hpCalc, (hp.getRealLevel() * 10) + hpCalc);
 		attack.decreaseLevelReal((int) Math.floor(0.10 * attack.getRealLevel()));
 		strength.decreaseLevelReal((int) Math.floor(0.10 * strength.getRealLevel()));
 		magic.decreaseLevelReal((int) Math.floor(0.10 * magic.getRealLevel()));

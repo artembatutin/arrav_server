@@ -1,5 +1,6 @@
 package net.edge.content;
 
+import net.edge.content.skill.Skill;
 import net.edge.task.Task;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.skill.Skills;
@@ -18,7 +19,7 @@ public final class RestoreStatTask extends Task {
 	/**
 	 * The amount running amount to exclude the other restores.
 	 */
-	int run = 0;
+    private int run = 0;
 	
 	/**
 	 * Creates a new {@link RestoreStatTask}.
@@ -38,16 +39,15 @@ public final class RestoreStatTask extends Task {
 			if(player.isDead()) {
 				continue;
 			}
-			int maxCons = player.getSkills()[Skills.HITPOINTS].getRealLevel() * 10;
-
-			//Dream
-			if(player.getSkills()[Skills.HITPOINTS].getRealLevel() < maxCons) {
+			Skill hp = player.getSkills()[Skills.HITPOINTS];
+			int maxCons = player.getMaximumHealth();
+			int currentCons = hp.getLevel();
+			if(currentCons > maxCons) {
+				hp.decreaseLevel(1);
+				Skills.refresh(player, Skills.HITPOINTS);
+			} else if(currentCons < maxCons) {
 				int amount = player.getAttr().get("lunar_dream").getBoolean() ? 5 : 1;
-				player.getSkills()[Skills.HITPOINTS].increaseLevel(amount, maxCons);
-			}
-			//Aid
-			if(player.getSkills()[Skills.HITPOINTS].getRealLevel() < maxCons && ((Boolean) player.getAttr().get("accept_aid").get())) {
-				player.getSkills()[Skills.HITPOINTS].increaseLevel(1, maxCons);
+				hp.increaseLevel(amount, maxCons);
 				if(Prayer.isActivated(player, Prayer.RAPID_HEAL)) {
 					if(player.getSkills()[Skills.HITPOINTS].getLevel() < maxCons) {
 						player.getSkills()[Skills.HITPOINTS].increaseLevel(1, maxCons);
@@ -55,7 +55,7 @@ public final class RestoreStatTask extends Task {
 				}
 				Skills.refresh(player, Skills.HITPOINTS);
 			}
-			
+
 			if(run != 6)//Excluding the other skills to restore.
 				continue;
 			
