@@ -83,6 +83,7 @@ public final class StarSprite extends Npc {
 		};
 		e.registerFirst(8091);
 		e.registerSecond(8091);
+		e.registerFourth(8091);
 	}
 
 	private static void sendInstant(Player player) {
