@@ -1,5 +1,6 @@
 package net.edge.world.node.entity.npc.impl.corp;
 
+import net.edge.content.combat.CombatType;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.locale.Boundary;
@@ -113,10 +114,9 @@ public final class DarkEnergyCore extends Npc {
 			
 			core.setVisible(false);
 			core.getMovementQueue().setLockMovement(false);
-			
 			Position position = victim.getPosition();
 			
-			new Projectile(core.getCenterPosition(), position, 0, 1828, 44, 4, 60, 43, 0, core.getInstance()).sendProjectile();
+			new Projectile(core.getCenterPosition(), position, 0, 1828, 44, 4, 60, 43, 0, core.getInstance(), CombatType.MAGIC).sendProjectile();
 			World.get().submit(new Task(2) {
 				@Override
 				protected void execute() {

@@ -392,14 +392,15 @@ public enum CombatSpecial {
 		@Override
 		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(426));
+			final int[] delay = {0};
 			World.get().submit(new Task(1, false) {
 				int tick = 0;
 				
 				@Override
 				public void execute() {
 					if(tick == 0) {
-						new Projectile(player, target, 1099, 44, 3, 43, 31, 0).sendProjectile();
-						new Projectile(player, target, 1099, 60, 3, 43, 31, 0).sendProjectile();
+						delay[0] = new Projectile(player, target, 1099, 44, 3, 43, 31, 0, CombatType.RANGED).sendProjectile().getTravelTime();
+						new Projectile(player, target, 1099, 60, 3, 43, 31, 0, CombatType.RANGED).sendProjectile();
 					} else if(tick >= 1) {
 						target.graphic(new Graphic(1100, 100));
 						this.cancel();
@@ -407,7 +408,7 @@ public enum CombatSpecial {
 					tick++;
 				}
 			});
-			return new CombatHit(player, target, 2, CombatType.RANGED, true) {
+			return new CombatHit(player, target, 2, CombatType.RANGED, true, delay[0]) {
 				@Override
 				public void postAttack(int counter) {
 					for(Hit h : getHits()) {
@@ -424,18 +425,17 @@ public enum CombatSpecial {
 		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(426, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(250, 100));
-			new Projectile(player, target, 249, 58, 40, 43, 31, 0).sendProjectile();
-			
+			int delay = new Projectile(player, target, 249, 58, 40, 43, 31, 0, CombatType.RANGED).sendProjectile().getTravelTime();
 			World.get().submit(new Task(1, false) {
 				@Override
 				public void execute() {
 					player.animation(new Animation(426, Animation.AnimationPriority.HIGH));
 					//player.graphic(new Graphic(250, 100));
-					new Projectile(player, target, 249, 48, 30, 43, 31, 0).sendProjectile();
+					new Projectile(player, target, 249, 48, 30, 43, 31, 0, CombatType.RANGED).sendProjectile();
 					this.cancel();
 				}
 			});
-			return new CombatHit(player, target, 2, CombatType.RANGED, true, 1);
+			return new CombatHit(player, target, 2, CombatType.RANGED, true, delay);
 		}
 	},
 	MAGIC_LONGBOW(new int[]{859}, 35, 1, 5, CombatType.RANGED, WeaponInterface.LONGBOW) {
@@ -443,8 +443,7 @@ public enum CombatSpecial {
 		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(426, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(250, 100));
-			new Projectile(player, target, 249, 44, 3, 43, 31, 0).sendProjectile();
-			return new CombatHit(player, target, 1, CombatType.RANGED, true);
+			return new CombatHit(player, target, 1, CombatType.RANGED, true, new Projectile(player, target, 249, 44, 3, 43, 31, 0, CombatType.RANGED).sendProjectile().getTravelTime());
 		}
 	},
 	MORRIGANS_JAVELIN(new int[]{13879}, 50, 1.40, 1.30, CombatType.RANGED, WeaponInterface.JAVELIN) {

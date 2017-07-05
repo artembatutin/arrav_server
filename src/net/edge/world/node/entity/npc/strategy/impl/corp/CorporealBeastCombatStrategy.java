@@ -84,8 +84,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 
 		Position pos = victim.getPosition();
 
-		new Projectile(npc.getCenterPosition(), pos, 0, 1828, 44, 4, 60, 43, 0, npc.getInstance()).sendProjectile();
-
+		new Projectile(npc.getCenterPosition(), pos, 0, 1828, 44, 4, 60, 43, 0, npc.getInstance(), CombatType.RANGED).sendProjectile();
 		World.get().submit(new Task(2) {
 
 			@Override
@@ -152,7 +151,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 					return;
 				}
 				if(spell.equals(TRANSCULENT_BALL_OF_ENERGY)) {
-					new Projectile(npc.getCenterPosition(), originalVictimPosition, 0, 1824, 44, 3, 60, 36, 0, npc.getInstance()).sendProjectile();
+					new Projectile(npc.getCenterPosition(), originalVictimPosition, 0, 1824, 44, 3, 60, 36, 0, npc.getInstance(), CombatType.MAGIC).sendProjectile();
 				} else {
 					spell.projectile(npc, victim).get().sendProjectile();
 				}
@@ -179,9 +178,8 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 				}
 
 				ObjectList<Position> positions = World.getTraversalMap().getNonDiagonalNearbyTraversableTiles(originalVictimPosition, 3);
-				positions.forEach(p -> new Projectile(originalVictimPosition, p, 0, 1824, 44, 4, 60, 43, 0, npc.getInstance()).sendProjectile());
+				positions.forEach(p -> new Projectile(originalVictimPosition, p, 0, 1824, 44, 4, 60, 43, 0, npc.getInstance(), CombatType.MAGIC).sendProjectile());
 				World.get().submit(new Task(1, false) {
-
 					@Override
 					protected void execute() {
 						this.cancel();

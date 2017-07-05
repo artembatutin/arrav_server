@@ -43,7 +43,7 @@ public final class CombatHitTask extends Task {
 	 * @param hit    the combat hit from the combat session.
 	 */
 	public CombatHitTask(CombatBuilder builder, CombatHit hit) {
-		super(hit.delay.orElse(Combat.getDelay(builder.getCharacter(), hit.getType())), hit.getType() == CombatType.MELEE);
+		super(hit.delay.orElse(Combat.getDelay(builder.getCharacter(), builder.getVictim(), hit.getType())), hit.getType() == CombatType.MELEE);
 		this.builder = builder;
 		this.data = hit;
 	}

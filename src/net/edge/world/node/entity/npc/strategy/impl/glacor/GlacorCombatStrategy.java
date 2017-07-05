@@ -86,10 +86,9 @@ public final class GlacorCombatStrategy extends DynamicCombatStrategy<Glacor> {
 
 	private CombatHit icycleSpecialAttack(EntityNode victim) {
 		npc.animation(new Animation(9955));
-
 		Position tile = victim.getPosition().copy();
 
-		new Projectile(npc.getPosition(), tile, 0, 2314, 50, 16, 61, 41, 16, npc.getInstance()).sendProjectile();
+		new Projectile(npc.getPosition(), tile, 0, 2314, 50, 16, 61, 41, 16, npc.getInstance(), CombatType.RANGED).sendProjectile();
 		return new CombatHit(npc, victim, 1, CombatType.RANGED, false, 12) {
 			@Override
 			public CombatHit preAttack() {
