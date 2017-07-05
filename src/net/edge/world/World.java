@@ -115,8 +115,8 @@ public final class World {
 	static {
 		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-			donation = new Database(Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
-			score = new Database(Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
+			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
+			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
