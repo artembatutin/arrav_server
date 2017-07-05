@@ -75,6 +75,11 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	private int timer;
 	
 	/**
+	 * Current fighting wave.
+	 */
+	private int wave;
+	
+	/**
 	 * The instance of the current fightcave minigame.
 	 */
 	private final int instance = World.getInstanceManager().closeNext();
@@ -108,11 +113,9 @@ public final class FightcavesMinigame extends SequencedMinigame {
 				player.getDialogueBuilder().append(
 		        new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.getAttr().get("fight_caves_wave").set(0);
 						player.getAttr().get("fight_caves_advanced").set(false);
 						new FightcavesMinigame().onEnter(player);
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.getAttr().get("fight_caves_wave").set(0);
 						player.getAttr().get("fight_caves_advanced").set(true);
 						new FightcavesMinigame().onEnter(player);
 					}
@@ -135,14 +138,13 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		for(Player player : getPlayers()) {
 			if(!started && timer-- < 1) {
 				int[] wave;
-				int current = player.getAttr().get("fight_caves_wave").getInt();
-				if(current >= WAVES.length) {
+				if(this.wave >= WAVES.length) {
 					if(player.getAttr().get("fight_caves_advanced").getBoolean())
 						wave = new int[] { TZTOK_JAD, TZTOK_JAD };//two jads.
 					else
 						wave = new int[] { TZTOK_JAD };
 				} else {
-					wave = WAVES[current];
+					wave = WAVES[this.wave];
 				}
 				monsters = new Npc[wave.length];
 				for(int i = 0; i < wave.length; i++) {
@@ -151,6 +153,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 					monsters[i].setOwner(player);
 					World.getInstanceManager().isolate(monsters[i], instance);
 					World.get().getNpcs().add(monsters[i]);
+					monsters[i].getMovementQueue().smartWalk(player.getPosition());
 					monsters[i].getCombatBuilder().attack(player);
 				}
 				started = true;
@@ -167,7 +170,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	@Override
 	public void onKill(Player player, EntityNode victim) {
 		if(victim.isPlayer()) {
-			over(player, true);
+			logout(player);
 			return;
 		}
 		Npc npc = victim.toNpc();
@@ -181,8 +184,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			}
 			empty = false;
 		}
-		int current = player.getAttr().get("fight_caves_wave").getInt();
-		if(current == 15 && empty) {
+		if(this.wave == 15 && empty) {
 			player.setMinigame(Optional.empty());
 			player.message("You have successfully completed the minigame...");
 			int reward = player.getAttr().get("fight_caves_advanced").getBoolean() ? 19111 : 6570;
@@ -190,10 +192,10 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			player.move(new Position(2436, 5169));
 			this.destruct();
 		} else if(empty) {
-			player.getAttr().get("fight_caves_wave").set(current + 1);
 			started = false;
 			timer = DELAY;
-			player.getDialogueBuilder().append(new NpcDialogue(2617, (current + 1 == 15 ? "Prepare to fight for your life!" : "Prepare for wave " + (current + 1) + "!")));
+			this.wave += 1;
+			player.getDialogueBuilder().append(new NpcDialogue(2617, (this.wave == 15 ? "Prepare to fight for your life!" : "Prepare for wave " + (this.wave + 1) + "!")));
 		}
 	}
 	
@@ -204,8 +206,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	
 	@Override
 	public void login(Player player) {
-		if(contains(player))
-			new FightcavesMinigame().onEnter(player);
+	
 	}
 	
 	@Override
@@ -230,6 +231,9 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		}
 		World.getInstanceManager().open(instance);
 		player.setInstance(0);
+		player.setMinigame(Optional.empty());
+		player.move(new Position(2436, 5169));
+		player.message("You failed to complete the fight cave...");
 		this.destruct();
 	}
 	
@@ -251,15 +255,6 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	@Override
 	public Position deathPosition(Player player) {
 		return GameConstants.STARTING_POSITION;
-	}
-	
-	public void over(Player player, boolean out) {
-		logout(player);
-		if(out) {
-			player.setMinigame(Optional.empty());
-			player.move(new Position(2436, 5169));
-			player.message("You failed to complete the fight cave...");
-		}
 	}
 	
 }

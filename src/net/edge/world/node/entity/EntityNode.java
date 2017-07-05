@@ -798,7 +798,7 @@ public abstract class EntityNode extends Node {
 	 * Sets the value for {@link EntityNode#autoRetaliate}.
 	 * @param autoRetaliate the new value to set.
 	 */
-	public final void setAutoRetaliate(boolean autoRetaliate) {
+	public void setAutoRetaliate(boolean autoRetaliate) {
 		this.autoRetaliate = autoRetaliate;
 	}
 	

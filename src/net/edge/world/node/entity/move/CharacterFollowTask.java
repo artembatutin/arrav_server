@@ -52,7 +52,6 @@ class CharacterFollowTask extends Task {
 	@Override
 	public void execute() {
 		//Familiar calling back.
-		boolean familiar = false;
 		if(character.isNpc()) {
 			Npc npc = character.toNpc();
 			if(npc.isFamiliar() || npc.isPet()) {
@@ -65,7 +64,6 @@ class CharacterFollowTask extends Task {
 						}
 					}
 				}
-				familiar = true;
 			}
 		}
 		
@@ -124,7 +122,7 @@ class CharacterFollowTask extends Task {
 		if(boundary.within(character.getPosition(), character.size(), 1)) {
 			character.getMovementQueue().reset();
 			//Combat diagonal fighting.
-			if(character.getCombatBuilder().isAttacking()) {
+			/*if(character.getCombatBuilder().isAttacking()) {
 				Direction facing = Direction.fromDeltas(Position.delta(character.getPosition(), leader.getPosition()));
 				if(facing.isDiagonal()) {//Moving player if diagonal fighting
 					Position pos = World.getTraversalMap().getRandomNearby(character.getPosition(), leader.getPosition(), character.size());
@@ -132,7 +130,7 @@ class CharacterFollowTask extends Task {
 						character.getMovementQueue().walk(pos);
 				}
 				return;
-			}
+			}*/
 			return;
 		}
 		

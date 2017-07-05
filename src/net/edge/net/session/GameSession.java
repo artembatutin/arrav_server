@@ -60,7 +60,12 @@ public class GameSession extends Session {
 	@Override
 	public void handleUpstreamMessage(Object msg) {
 		if(msg instanceof Packet) {
-			inboundQueue.offer((Packet) msg);
+			Packet packet = (Packet) msg;
+			if(packet.getOpcode() == 41) {
+				process(packet);
+				return;
+			}
+			inboundQueue.offer(packet);
 		}
 	}
 	
@@ -96,15 +101,21 @@ public class GameSession extends Session {
 	public void dequeue() {
 		while (!inboundQueue.isEmpty()) {
 			Packet msg = inboundQueue.poll();
-			try {
-				NetworkConstants.MESSAGES[msg.getOpcode()].handle(player, msg.getOpcode(), msg.getSize(), msg.getPayload());
-			} catch(Exception e) {
-				e.printStackTrace();
-			} finally {
-				ByteMessage payload = msg.getPayload();
-				if (payload.refCnt() > 0) {
-					payload.release();
-				}
+			process(msg);
+		}
+	}
+	
+	/**
+	 * Instantly handles the process of a packet.
+	 * @param packet packet received.
+	 */
+	public void process(Packet packet) {
+		try {
+			NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.getSize(), packet.getPayload());
+		} finally {
+			ByteMessage payload = packet.getPayload();
+			if (payload.refCnt() > 0) {
+				payload.release();
 			}
 		}
 	}

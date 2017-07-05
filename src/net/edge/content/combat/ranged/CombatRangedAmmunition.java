@@ -27,7 +27,7 @@ import net.edge.world.node.item.ItemIdentifiers;
  */
 public enum CombatRangedAmmunition {
 	TRAINING_ARROWS(9706, 1051, 64, 36, 40, 31, 806),
-	BRONZE_ARROW(new int[]{882, 883, 5616, 5622}, 10, 64, 36, 40, 31, 19) {
+	BRONZE_ARROW(new int[]{882, 883, 5616, 5622}, 10, 4, 36, 40, 31, 19) {
 		@Override
 		public Graphic getGraphic(Player player) {
 			return player.getRangedDetails().getWeapon().isPresent() && player.getRangedDetails().getWeapon().get().getWeapon() == ItemIdentifiers.DARK_BOW ? new Graphic(1104, 100) : new Graphic(19, 100);

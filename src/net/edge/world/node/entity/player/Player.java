@@ -867,6 +867,12 @@ public final class Player extends EntityNode {
 		Skills.refresh(this, Skills.HITPOINTS);
 	}
 	
+	@Override
+	public void setAutoRetaliate(boolean autoRetaliate) {
+		super.setAutoRetaliate(autoRetaliate);
+		messages.sendConfig(172, super.isAutoRetaliate() ? 1 : 0);
+	}
+	
 	/**
 	 * Player being completely healed by a healer.
 	 */
