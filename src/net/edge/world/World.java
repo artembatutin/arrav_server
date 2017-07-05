@@ -1,6 +1,7 @@
 package net.edge.world;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.edge.Server;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.game.GameConstants;
 import net.edge.game.GameExecutor;
@@ -114,8 +115,8 @@ public final class World {
 	static {
 		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-			donation = new Database("192.95.33.132", "edge_donate", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
-			score = new Database("192.95.33.132", "edge_score", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
+			donation = new Database(Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
+			score = new Database(Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
