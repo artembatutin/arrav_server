@@ -1,6 +1,6 @@
 package net.edge.world.node.entity.npc.strategy;
 
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
@@ -52,14 +52,14 @@ public abstract class DynamicCombatStrategy<T extends Npc> implements CombatStra
 	 * @param victim the character being attacked.
 	 * @return a container holding the data for the attack.
 	 */
-	public abstract CombatSessionData outgoingAttack(EntityNode victim);
+	public abstract CombatHit outgoingAttack(EntityNode victim);
 	
 	/**
 	 * Executed when the {@link #npc} is hit by the {@code attacker}.
 	 * @param attacker the attacker whom hit the character.
 	 * @param data     the combat session data chained to this hit.
 	 */
-	public abstract void incomingAttack(EntityNode attacker, CombatSessionData data);
+	public abstract void incomingAttack(EntityNode attacker, CombatHit data);
 	
 	/**
 	 * Determines the delay for when {@link #npc} will attack.
@@ -84,12 +84,12 @@ public abstract class DynamicCombatStrategy<T extends Npc> implements CombatStra
 	}
 
 	@Override
-	public final CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public final CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		return outgoingAttack(victim);
 	}
 	
 	@Override
-	public final void incomingAttack(EntityNode character, EntityNode attacker, CombatSessionData data) {
+	public final void incomingAttack(EntityNode character, EntityNode attacker, CombatHit data) {
 		incomingAttack(attacker, data);
 	}
 	

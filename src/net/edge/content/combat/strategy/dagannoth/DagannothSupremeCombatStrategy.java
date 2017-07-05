@@ -1,7 +1,7 @@
 package net.edge.content.combat.strategy.dagannoth;
 
+import net.edge.content.combat.CombatHit;
 import net.edge.task.Task;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.World;
@@ -21,7 +21,7 @@ public final class DagannothSupremeCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public void incomingAttack(EntityNode character, EntityNode attacker, CombatSessionData data) {
+	public void incomingAttack(EntityNode character, EntityNode attacker, CombatHit data) {
 		if(data.getType().equals(CombatType.RANGED) || data.getType().equals(CombatType.MAGIC)) {
 			attacker.toPlayer().message("Your attacks are completely blocked...");
 			Arrays.stream(data.getHits()).filter(Objects::nonNull).forEach(h -> h.setAccurate(false));
@@ -30,7 +30,7 @@ public final class DagannothSupremeCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(character.toNpc().getDefinition().getAttackAnimation()));
 		World.get().submit(new Task(1, false) {
 			@Override
@@ -41,7 +41,7 @@ public final class DagannothSupremeCombatStrategy implements CombatStrategy {
 				new Projectile(character, victim, 1937, 44, 4, 60, 43, 0).sendProjectile();
 			}
 		});
-		return new CombatSessionData(character, victim, 1, CombatType.RANGED, true, 2);
+		return new CombatHit(character, victim, 1, CombatType.RANGED, true, 2);
 	}
 
 	@Override

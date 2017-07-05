@@ -1,7 +1,7 @@
 package net.edge.content.combat.strategy.base;
 
 import net.edge.content.combat.Combat;
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatSpell;
 import net.edge.content.combat.special.CombatSpecial;
@@ -36,7 +36,7 @@ public final class MagicCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		if(character.isPlayer()) {
 			Player player = (Player) character;
 			
@@ -51,9 +51,9 @@ public final class MagicCombatStrategy implements CombatStrategy {
 		}
 		
 		if(character.getCurrentlyCasting().maximumHit() == -1) {
-			return new CombatSessionData(character, victim, CombatType.MAGIC, true);
+			return new CombatHit(character, victim, CombatType.MAGIC, true);
 		}
-		return new CombatSessionData(character, victim, 1, CombatType.MAGIC, true);
+		return new CombatHit(character, victim, 1, CombatType.MAGIC, true);
 	}
 	
 	@Override

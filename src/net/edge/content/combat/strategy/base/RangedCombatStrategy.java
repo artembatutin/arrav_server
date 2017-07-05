@@ -1,7 +1,7 @@
 package net.edge.content.combat.strategy.base;
 
 import net.edge.content.combat.Combat;
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.ranged.CombatRangedAmmoDefinition;
 import net.edge.content.combat.ranged.CombatRangedDetails.CombatRangedAmmo;
@@ -51,7 +51,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		if(character.isNpc()) {
 			Npc npc = character.toNpc();
 			character.animation(new Animation(npc.getDefinition().getAttackAnimation()));
@@ -62,7 +62,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 				character.graphic(ammo.getGraphic());
 			
 			new Projectile(character, victim, ammo.getProjectile(), ammo.getDelay(), ammo.getSpeed(), ammo.getStartHeight(), ammo.getEndHeight(), 0).sendProjectile();
-			return new CombatSessionData(character, victim, 1, CombatType.RANGED, true);
+			return new CombatHit(character, victim, 1, CombatType.RANGED, true);
 		}
 		
 		Player player = character.toPlayer();
@@ -73,7 +73,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		
 		if(!player.isSpecialActivated()) {
 			if(!player.isVisible()) {
-				return new CombatSessionData(character, victim, 1, CombatType.RANGED, true);
+				return new CombatHit(character, victim, 1, CombatType.RANGED, true);
 			}
 			
 			if(weapon.getWeapon() == ItemIdentifiers.DARK_BOW) {
@@ -89,7 +89,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		if(ammo.getDefinition().getGraphic(player).getId() != 0)
 			player.graphic(ammo.getDefinition().getGraphic(player));
 		
-		CombatSessionData data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatSessionData(character, victim, 1, CombatType.RANGED, true));
+		CombatHit data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatHit(character, victim, 1, CombatType.RANGED, true));
 		
 		decrementAmmo(player, victim, weapon, ammo);
 		

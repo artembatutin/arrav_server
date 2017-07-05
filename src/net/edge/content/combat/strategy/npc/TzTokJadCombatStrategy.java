@@ -1,8 +1,8 @@
 package net.edge.content.combat.strategy.npc;
 
+import net.edge.content.combat.CombatHit;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
@@ -25,13 +25,13 @@ public final class TzTokJadCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		CombatType[] data = character.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.RANGED, CombatType.MAGIC} : new CombatType[]{CombatType.RANGED, CombatType.MAGIC};
 		CombatType c = RandomUtils.random(data);
 		return type(character, victim, c);
 	}
 
-	private CombatSessionData type(EntityNode character, EntityNode victim, CombatType type) {
+	private CombatHit type(EntityNode character, EntityNode victim, CombatType type) {
 		switch(type) {
 			case MELEE:
 				return melee(character, victim);
@@ -44,12 +44,12 @@ public final class TzTokJadCombatStrategy implements CombatStrategy {
 		}
 	}
 
-	private CombatSessionData melee(EntityNode character, EntityNode victim) {
+	private CombatHit melee(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(9277));
-		return new CombatSessionData(character, victim, 1, CombatType.MELEE, true, 2);
+		return new CombatHit(character, victim, 1, CombatType.MELEE, true, 2);
 	}
 
-	private CombatSessionData ranged(EntityNode character, EntityNode victim) {
+	private CombatHit ranged(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(9276));
 		character.graphic(new Graphic(1625));
 		World.get().submit(new Task(2, false) {
@@ -61,10 +61,10 @@ public final class TzTokJadCombatStrategy implements CombatStrategy {
 				victim.graphic(new Graphic(451));
 			}
 		});
-		return new CombatSessionData(character, victim, 1, CombatType.RANGED, true, 5);
+		return new CombatHit(character, victim, 1, CombatType.RANGED, true, 5);
 	}
 
-	private CombatSessionData magic(EntityNode character, EntityNode victim) {
+	private CombatHit magic(EntityNode character, EntityNode victim) {
 		character.setCurrentlyCasting(SPELL);
 		character.animation(new Animation(9278));
 		World.get().submit(new Task(4, false) {
@@ -76,7 +76,7 @@ public final class TzTokJadCombatStrategy implements CombatStrategy {
 				SPELL.projectile(character, victim).get().sendProjectile();
 			}
 		});
-		return new CombatSessionData(character, victim, 1, CombatType.MAGIC, true, 6);
+		return new CombatHit(character, victim, 1, CombatType.MAGIC, true, 6);
 	}
 
 	@Override

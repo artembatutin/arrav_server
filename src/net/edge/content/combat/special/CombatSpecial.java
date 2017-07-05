@@ -1,9 +1,9 @@
 package net.edge.content.combat.special;
 
+import net.edge.content.combat.CombatHit;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.Combat;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.node.item.container.impl.Equipment;
@@ -31,7 +31,7 @@ public enum CombatSpecial {
 	//int[] ids, int amount, double strength, double accuracy, CombatType combat, WeaponInterface weapon
 	ABYSSAL_WHIP(new int[]{4151, 13444, 15441, 15442, 15443, 15444}, 50, 1, 1, CombatType.MELEE, WeaponInterface.WHIP) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(1658, Animation.AnimationPriority.HIGH));
 			target.graphic(new Graphic(341, 140));
 			if(target.isPlayer()) {
@@ -45,15 +45,15 @@ public enum CombatSpecial {
 				victimPlayer.setRunEnergy(victimPlayer.getRunEnergy() - energy);
 				player.setRunEnergy(player.getRunEnergy() + energy);
 			}
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, false);
+			return new CombatHit(player, target, 1, CombatType.MELEE, false);
 		}
 	},
 	ANCHOR(new int[]{10887}, 50, 1.1, 1.30, CombatType.MELEE, WeaponInterface.WARHAMMER) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(5870, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1027, 50));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true, 3) {
+			return new CombatHit(player, target, 1, CombatType.MELEE, true, 3) {
 				@Override
 				public void postAttack(int counter) {
 					if(target.isPlayer() && counter != 0) {
@@ -70,18 +70,18 @@ public enum CombatSpecial {
 	},
 	ARMADYL_GODSWORD(new int[]{11694, 13450}, 50, 1.375, 2, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(11989, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(2113));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true);
+			return new CombatHit(player, target, 1, CombatType.MELEE, true);
 		}
 	},
 	BANDOS_GODSWORD(new int[]{11696}, 50, 1.21, 1.5, CombatType.MELEE, WeaponInterface.WARHAMMER) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(11991, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(2114));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true) {
+			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
 					if(target.isPlayer() && counter != 0) {
@@ -117,9 +117,9 @@ public enum CombatSpecial {
 	},
 	ZAMORAK_GODSWORD(new int[]{11700}, 50, 1.1, 1.4, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(7070, Animation.AnimationPriority.HIGH));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true) {
+			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
 					if(counter > 0) {
@@ -139,10 +139,10 @@ public enum CombatSpecial {
 	},
 	SARADOMIN_GODSWORD(new int[]{11698}, 60, 1.1, 1.8, CombatType.MELEE, WeaponInterface.WARHAMMER) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(7071, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1220));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true) {
+			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
 					//Healing blade effect
@@ -156,10 +156,10 @@ public enum CombatSpecial {
 	},
 	SARADOMIN_SWORD(new int[]{11730}, 65, 1.1, 1, CombatType.MELEE, WeaponInterface.WARHAMMER) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(11993, Animation.AnimationPriority.HIGH));
 			
-			return new CombatSessionData(player, target, 2, CombatType.MELEE, true) {
+			return new CombatHit(player, target, 2, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
 					getHits()[1].setIcon(Hit.HitIcon.MAGIC);
@@ -174,10 +174,10 @@ public enum CombatSpecial {
 	},
 	DRAGON_2H_SWORD(new int[]{7158}, 60, 1, 1, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(3157, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(559));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, false) {
+			return new CombatHit(player, target, 1, CombatType.MELEE, false) {
 				@Override
 				public void postAttack(int counter) {
 					if(Location.inMultiCombat(player)) {
@@ -229,56 +229,56 @@ public enum CombatSpecial {
 		}
 		
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			throw new UnsupportedOperationException("Dragon battleaxe does not have a special attack!");
 		}
 	},
 	DRAGON_CLAWS(new int[]{14484, 14486}, 50, 1.05, 6, CombatType.MELEE, WeaponInterface.CLAWS) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(10961, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1950, 50));
-			return new CombatSessionData(player, target, 4, CombatType.MELEE, true);
+			return new CombatHit(player, target, 4, CombatType.MELEE, true);
 		}
 	},
 	DRAGON_DAGGER(new int[]{1215, 1231, 5680, 5698}, 25, 1.15, 1.25, CombatType.MELEE, WeaponInterface.DAGGER) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(1062, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(252, 100));
-			return new CombatSessionData(player, target, 2, CombatType.MELEE, true, 2);
+			return new CombatHit(player, target, 2, CombatType.MELEE, true, 2);
 		}
 	},
 	DRAGON_HALBERD(new int[]{3204, 11716}, 30, 1, 1, CombatType.MELEE, WeaponInterface.HALBERD) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(1203, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(282, 100));
-			return new CombatSessionData(player, target, 2, CombatType.MELEE, true);
+			return new CombatHit(player, target, 2, CombatType.MELEE, true);
 		}
 	},
 	DRAGON_LONGSWORD(new int[]{1305}, 25, 1.15, 1, CombatType.MELEE, WeaponInterface.LONGSWORD) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(1058, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(248, 100));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true);
+			return new CombatHit(player, target, 1, CombatType.MELEE, true);
 		}
 	},
 	DRAGON_MACE(new int[]{1434}, 25, 1.50, 1.25, CombatType.MELEE, WeaponInterface.MACE) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(1060, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(251, 100));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true);
+			return new CombatHit(player, target, 1, CombatType.MELEE, true);
 		}
 	},
 	DRAGON_PICKAXE(new int[]{15259}, 100, 1, 1, CombatType.MELEE, WeaponInterface.PICKAXE) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(12031, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(2144));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true) {
+			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
 					if(target.isPlayer() && counter != 0) {
@@ -299,10 +299,10 @@ public enum CombatSpecial {
 	},
 	DRAGON_SCIMITAR(new int[]{4587}, 55, 1, 1, CombatType.MELEE, WeaponInterface.SCIMITAR) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(12031, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(2118, 100));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true) {
+			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
 					if(target.isPlayer() && counter != 0) {
@@ -318,10 +318,10 @@ public enum CombatSpecial {
 	},
 	DRAGON_SPEAR(new int[]{1249, 1263, 3176, 5716, 5730, 13772, 11716}, 25, 1, 1, CombatType.MELEE, WeaponInterface.SPEAR) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(1064, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(253));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true) {
+			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
 					Position pos = World.getTraversalMap().getRandomNearby(target.getPosition(), player.getPosition(), target.size());
@@ -338,18 +338,18 @@ public enum CombatSpecial {
 	},
 	GRANITE_MAUL(new int[]{4153}, 50, 1, 1, CombatType.MELEE, WeaponInterface.WARHAMMER) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(1667, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(340, 40));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true);
+			return new CombatHit(player, target, 1, CombatType.MELEE, true);
 		}
 	},
 	KORASI_SWORD(new int[]{19780}, 60, 1.2, 1.1, CombatType.MAGIC, WeaponInterface.LONGSWORD) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(14788, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(target.isPlayer() ? 1729 : 1730));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true) {
+			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
 					if(Location.inMultiCombat(player)) {
@@ -363,17 +363,17 @@ public enum CombatSpecial {
 	},
 	VESTAS_LONGSWORD(new int[]{13899}, 25, 1.28, 1.25, CombatType.MELEE, WeaponInterface.LONGSWORD) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(10502, Animation.AnimationPriority.HIGH));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true);
+			return new CombatHit(player, target, 1, CombatType.MELEE, true);
 		}
 	},
 	STATIUS_WARHAMMER(new int[]{13902}, 30, 1.25, 1.23, CombatType.MELEE, WeaponInterface.WARHAMMER) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(10505, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1840));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true) {
+			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
 					if(target.isPlayer() && counter > 0) {
@@ -392,7 +392,7 @@ public enum CombatSpecial {
 	},
 	DARK_BOW(new int[]{11235, 15701, 15702, 15703, 15704, 13405}, 55, 1.45, 1.22, CombatType.RANGED, WeaponInterface.LONGBOW) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(426));
 			World.get().submit(new Task(1, false) {
 				int tick = 0;
@@ -409,7 +409,7 @@ public enum CombatSpecial {
 					tick++;
 				}
 			});
-			return new CombatSessionData(player, target, 2, CombatType.RANGED, true) {
+			return new CombatHit(player, target, 2, CombatType.RANGED, true) {
 				@Override
 				public void postAttack(int counter) {
 					for(Hit h : getHits()) {
@@ -423,7 +423,7 @@ public enum CombatSpecial {
 	},
 	MAGIC_SHORTBOW(new int[]{861}, 50, 1, 1.1, CombatType.RANGED, WeaponInterface.SHORTBOW) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(426, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(250, 100));
 			new Projectile(player, target, 249, 58, 40, 43, 31, 0).sendProjectile();
@@ -437,40 +437,40 @@ public enum CombatSpecial {
 					this.cancel();
 				}
 			});
-			return new CombatSessionData(player, target, 2, CombatType.RANGED, true, 1);
+			return new CombatHit(player, target, 2, CombatType.RANGED, true, 1);
 		}
 	},
 	MAGIC_LONGBOW(new int[]{859}, 35, 1, 5, CombatType.RANGED, WeaponInterface.LONGBOW) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(426, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(250, 100));
 			new Projectile(player, target, 249, 44, 3, 43, 31, 0).sendProjectile();
-			return new CombatSessionData(player, target, 1, CombatType.RANGED, true);
+			return new CombatHit(player, target, 1, CombatType.RANGED, true);
 		}
 	},
 	MORRIGANS_JAVELIN(new int[]{13879}, 50, 1.40, 1.30, CombatType.RANGED, WeaponInterface.JAVELIN) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(10501, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1836));
-			return new CombatSessionData(player, target, 1, CombatType.RANGED, true);
+			return new CombatHit(player, target, 1, CombatType.RANGED, true);
 		}
 	},
 	MORRIGANS_THROWNAXE(new int[]{13883}, 50, 1.38, 1.30, CombatType.RANGED, WeaponInterface.THROWNAXE) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(10504, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1838));
-			return new CombatSessionData(player, target, 1, CombatType.RANGED, true);
+			return new CombatHit(player, target, 1, CombatType.RANGED, true);
 		}
 	},
 	DARKLIGHT(new int[]{6746}, 50, 1.15, 1, CombatType.MELEE, WeaponInterface.LONGSWORD) {
 		@Override
-		public CombatSessionData container(Player player, EntityNode target) {
+		public CombatHit container(Player player, EntityNode target) {
 			player.animation(new Animation(2890, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(483, 100));
-			return new CombatSessionData(player, target, 1, CombatType.MELEE, true) {
+			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
 					if(!target.isPlayer()) {
@@ -552,7 +552,7 @@ public enum CombatSpecial {
 	 * @param target the main target of the attack.
 	 * @return the combat data.
 	 */
-	public abstract CombatSessionData container(Player player, EntityNode target);
+	public abstract CombatHit container(Player player, EntityNode target);
 	
 	/**
 	 * Drains the special bar for {@code player}.

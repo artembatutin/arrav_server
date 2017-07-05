@@ -1,6 +1,6 @@
 package net.edge.content.combat.strategy.npc;
 
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.node.entity.EntityNode;
 
@@ -32,7 +32,7 @@ public final class RevenantCombatStrategy implements CombatStrategy {
      * @return a container holding the data for the attack.
      */
     @Override
-    public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+    public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
         return null;
     }
 

@@ -1,7 +1,7 @@
 package net.edge.content.combat.strategy.rfd;
 
+import net.edge.content.combat.CombatHit;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
@@ -22,27 +22,27 @@ public final class Karamel implements CombatStrategy {
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		CombatType[] data = character.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
 		CombatType type = RandomUtils.random(data);
 		return type(character, victim, type);
 	}
 	
-	private CombatSessionData melee(EntityNode character, EntityNode victim) {
+	private CombatHit melee(EntityNode character, EntityNode victim) {
 		Animation animation = new Animation(422);
 		character.animation(animation);
-		return new CombatSessionData(character, victim, 1, CombatType.MELEE, true);
+		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
 	}
 	
-	private CombatSessionData magic(EntityNode character, EntityNode victim) {
+	private CombatHit magic(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(1979));
 		//TODO walk away only if the victim is using melee (basically if hes within 1 tile distance)
 		character.forceChat("Semolina-Go!");
 		CombatNormalSpell spell = SPELL;
 		character.setCurrentlyCasting(spell);
-		return new CombatSessionData(character, victim, 1, CombatType.MAGIC, false) {
+		return new CombatHit(character, victim, 1, CombatType.MAGIC, false) {
 			@Override
-			public CombatSessionData preAttack() {
+			public CombatHit preAttack() {
 				if(this.getType() == CombatType.MAGIC && victim.isPlayer() && this.isAccurate()) {
 					Player player = (Player) victim;
 					player.freeze(15);
@@ -52,7 +52,7 @@ public final class Karamel implements CombatStrategy {
 		};
 	}
 	
-	private CombatSessionData type(EntityNode character, EntityNode victim, CombatType type) {
+	private CombatHit type(EntityNode character, EntityNode victim, CombatType type) {
 		switch(type) {
 			case MELEE:
 				return melee(character, victim);

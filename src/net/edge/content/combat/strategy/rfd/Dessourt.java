@@ -1,6 +1,6 @@
 package net.edge.content.combat.strategy.rfd;
 
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.node.entity.EntityNode;
@@ -17,13 +17,13 @@ public final class Dessourt implements CombatStrategy {
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		victim.animation(new Animation(3508));
-		return new CombatSessionData(character, victim, 1, CombatType.MELEE, false);
+		return new CombatHit(character, victim, 1, CombatType.MELEE, false);
 	}
 	
 	@Override
-	public void incomingAttack(EntityNode character, EntityNode victim, CombatSessionData data) {
+	public void incomingAttack(EntityNode character, EntityNode victim, CombatHit data) {
 		if(data.getType() == CombatType.MELEE) {
 			Arrays.stream(data.getHits()).forEach(hit -> hit.setDamage(hit.getDamage() / 2));
 			character.graphic(new Graphic(550));

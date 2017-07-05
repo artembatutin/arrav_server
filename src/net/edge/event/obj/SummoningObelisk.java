@@ -12,7 +12,7 @@ public class SummoningObelisk extends EventInitializer {
 		ObjectEvent l = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
-				if(click == 1 && object.getId() == 29447) {
+				if(click == 3 && object.getId() == 29447) {
 					player.getMessages().sendInterface(-8);
 					return true;
 				}

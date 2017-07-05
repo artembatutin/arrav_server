@@ -1,7 +1,7 @@
 package net.edge.world.node.item.container.impl;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.content.combat.Combat;
+import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.node.item.container.ItemContainer;
@@ -360,7 +360,7 @@ public final class Equipment extends ItemContainer {
 	private void writeBonuses() {
 		for(int i = 0; i < bonuses.length; i++) {
 			boolean percentage = (i >= 11 && i <= 13) || i == 17;
-			player.getMessages().sendString(Combat.BONUS_NAMES[i] + ": " + (bonuses[i] >= 0 ? "+" : "") + bonuses[Combat.BONUS[i]] + (percentage ? "%" : i == 14 ? ".0" : ""), Combat.BONUS_IDS[i]);
+			player.getMessages().sendString(CombatConstants.BONUS_NAMES[i] + ": " + (bonuses[i] >= 0 ? "+" : "") + bonuses[CombatConstants.BONUS[i]] + (percentage ? "%" : i == 14 ? ".0" : ""), CombatConstants.BONUS_IDS[i]);
 		}
 	}
 	

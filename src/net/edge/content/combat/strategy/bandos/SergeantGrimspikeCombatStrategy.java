@@ -1,7 +1,7 @@
 package net.edge.content.combat.strategy.bandos;
 
 import net.edge.task.Task;
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.World;
@@ -19,7 +19,7 @@ public final class SergeantGrimspikeCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(6154));
 		World.get().submit(new Task(1, false) {
 			@Override
@@ -30,7 +30,7 @@ public final class SergeantGrimspikeCombatStrategy implements CombatStrategy {
 				new Projectile(character, victim, 37, 44, 3, 43, 43, 0).sendProjectile();
 			}
 		});
-		return new CombatSessionData(character, victim, 1, CombatType.RANGED, true);
+		return new CombatHit(character, victim, 1, CombatType.RANGED, true);
 	}
 
 	@Override

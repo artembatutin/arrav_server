@@ -1,6 +1,5 @@
 package net.edge.content.combat;
 
-import com.google.common.base.Preconditions;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.world.node.entity.EntityNode;
@@ -13,7 +12,7 @@ import java.util.OptionalInt;
  * The container that holds data for an entire combat session attack.
  * @author lare96 <http://github.com/lare96>
  */
-public class CombatSessionData {
+public class CombatHit {
 	
 	/**
 	 * The attacker in this combat session.
@@ -68,7 +67,7 @@ public class CombatSessionData {
 	private boolean ignore;
 	
 	/**
-	 * Creates a new {@link CombatSessionData}.
+	 * Creates a new {@link CombatHit}.
 	 * @param attacker      the attacker in this combat session.
 	 * @param victim        the victim in this combat session.
 	 * @param amount        the amount of hits to calculate.
@@ -76,7 +75,7 @@ public class CombatSessionData {
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 * @param delay         the delay of the hit.
 	 */
-	public CombatSessionData(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy, OptionalInt delay) {
+	public CombatHit(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy, OptionalInt delay) {
 		this.attacker = attacker;
 		this.victim = victim;
 		this.type = type;
@@ -132,15 +131,15 @@ public class CombatSessionData {
 		}
 	}
 	
-	public CombatSessionData(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy) {
+	public CombatHit(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy) {
 		this(attacker, victim, amount, type, checkAccuracy, OptionalInt.empty());
 	}
 	
-	public CombatSessionData(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy, int delay) {
+	public CombatHit(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy, int delay) {
 		this(attacker, victim, amount, type, checkAccuracy, OptionalInt.of(delay));
 	}
 	
-	public CombatSessionData(EntityNode attacker, EntityNode victim, CombatType type, boolean checkAccuracy) {
+	public CombatHit(EntityNode attacker, EntityNode victim, CombatType type, boolean checkAccuracy) {
 		this(attacker, victim, 0, type, checkAccuracy);
 	}
 	
@@ -149,7 +148,7 @@ public class CombatSessionData {
 	 * @return the amount of damage that was dealt.
 	 */
 	public final int attack() {
-		CombatSessionAttack.applyPrayerEffects(this);
+		CombatHitTask.applyPrayerEffects(this);
 		int index = 0;
 		Hit[] container = new Hit[hits.length];
 		for(Hit hit : hits) {
@@ -202,7 +201,7 @@ public class CombatSessionData {
 	 * the container before hits are dealt to the victim.
 	 * @return the modified combat session data container.
 	 */
-	public CombatSessionData preAttack() {
+	public CombatHit preAttack() {
 		return this;
 	}
 	
@@ -241,7 +240,7 @@ public class CombatSessionData {
 	}
 	
 	/**
-	 * Sets the value for {@link CombatSessionData#accurate}.
+	 * Sets the value for {@link CombatHit#accurate}.
 	 * @param accurate the new value to set.
 	 */
 	public final void setAccurate(boolean accurate) {

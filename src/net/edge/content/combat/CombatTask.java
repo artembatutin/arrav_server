@@ -19,7 +19,7 @@ import net.edge.world.node.entity.player.Player;
  * the builder will attack.
  * @author lare96 <http://github.com/lare96>
  */
-public final class CombatSession extends Task {
+public final class CombatTask extends Task {
 	
 	/**
 	 * The builder assigned to this combat session.
@@ -27,10 +27,10 @@ public final class CombatSession extends Task {
 	private final CombatBuilder builder;
 	
 	/**
-	 * Create a new {@link CombatSession}.
+	 * Create a new {@link CombatTask}.
 	 * @param builder the builder assigned to this combat session.
 	 */
-	CombatSession(CombatBuilder builder) {
+	CombatTask(CombatBuilder builder) {
 		super(1, false);
 		super.attach(builder.getCharacter().isPlayer() ? builder.getCharacter().toPlayer() : builder.getCharacter().toNpc());
 		this.builder = builder;
@@ -78,7 +78,7 @@ public final class CombatSession extends Task {
 				this.cancel();
 				return;
 			}
-			CombatSessionData data = builder.getStrategy().outgoingAttack(builder.getCharacter(), builder.getVictim());
+			CombatHit data = builder.getStrategy().outgoingAttack(builder.getCharacter(), builder.getVictim());
 			if(data == null) {
 				return;
 			}
@@ -115,7 +115,7 @@ public final class CombatSession extends Task {
 						builder.determineStrategy();
 					}
 				}
-				World.get().submit(new CombatSessionAttack(builder, data));
+				World.get().submit(new CombatHitTask(builder, data));
 			}
 			builder.resetAttackTimer();
 			builder.getCharacter().faceEntity(builder.getVictim());

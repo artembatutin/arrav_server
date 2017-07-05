@@ -1,9 +1,9 @@
 package net.edge.content.combat.ranged;
 
 import com.google.common.collect.ImmutableSet;
+import net.edge.content.combat.CombatHit;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.Combat;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
 import net.edge.content.combat.weapon.FightType;
@@ -66,7 +66,7 @@ public enum CombatRangedAmmoDefinition {
 	
 	GUAM_TAR(10142, -1, -1, -1, -1, -1, new Graphic(952, 70)) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			CombatType type = player.getFightType().equals(FightType.FLARE) ? CombatType.RANGED : player.getFightType().equals(FightType.SCORCH) ? CombatType.MELEE : CombatType.MAGIC;
 			
 			if(type.equals(CombatType.MAGIC)) {
@@ -75,13 +75,13 @@ public enum CombatRangedAmmoDefinition {
 				player.setCurrentlyCasting(Combat.emptySpell(hit));
 			}
 			
-			data = new CombatSessionData(player, victim, 1, type, false);
+			data = new CombatHit(player, victim, 1, type, false);
 			return data;
 		}
 	},
 	MARRENTIL_TAR(10143, -1, -1, -1, -1, -1, new Graphic(952, 70)) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			CombatType type = player.getFightType().equals(FightType.FLARE) ? CombatType.RANGED : player.getFightType().equals(FightType.SCORCH) ? CombatType.MELEE : CombatType.MAGIC;
 			
 			if(type.equals(CombatType.MAGIC)) {
@@ -90,13 +90,13 @@ public enum CombatRangedAmmoDefinition {
 				player.setCurrentlyCasting(Combat.emptySpell(hit));
 			}
 			
-			data = new CombatSessionData(player, victim, 1, type, false);
+			data = new CombatHit(player, victim, 1, type, false);
 			return data;
 		}
 	},
 	TARROMIN_TAR(10144, -1, -1, -1, -1, -1, new Graphic(952, 70)) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			CombatType type = player.getFightType().equals(FightType.FLARE) ? CombatType.RANGED : player.getFightType().equals(FightType.SCORCH) ? CombatType.MELEE : CombatType.MAGIC;
 			
 			if(type.equals(CombatType.MAGIC)) {
@@ -105,13 +105,13 @@ public enum CombatRangedAmmoDefinition {
 				player.setCurrentlyCasting(Combat.emptySpell(hit));
 			}
 			
-			data = new CombatSessionData(player, victim, 1, type, false);
+			data = new CombatHit(player, victim, 1, type, false);
 			return data;
 		}
 	},
 	HARRALANDER_TAR(10145, -1, -1, -1, -1, -1, new Graphic(952, 70)) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			CombatType type = player.getFightType().equals(FightType.FLARE) ? CombatType.RANGED : player.getFightType().equals(FightType.SCORCH) ? CombatType.MELEE : CombatType.MAGIC;
 			
 			if(type.equals(CombatType.MAGIC)) {
@@ -120,7 +120,7 @@ public enum CombatRangedAmmoDefinition {
 				player.setCurrentlyCasting(Combat.emptySpell(hit));
 			}
 			
-			data = new CombatSessionData(player, victim, 1, type, false);
+			data = new CombatHit(player, victim, 1, type, false);
 			return data;
 		}
 	},
@@ -134,7 +134,7 @@ public enum CombatRangedAmmoDefinition {
 	
 	ABYSSALBANE_ARROW(new int[]{21655, 21733, 21734, 21735}, 15, 64, 36, 40, 31, 24) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
 				return data;
 			}
@@ -155,7 +155,7 @@ public enum CombatRangedAmmoDefinition {
 	},
 	BASILISKBANE_ARROW(new int[]{21650, 21719, 21720, 21721}, 15, 64, 36, 40, 31, 24) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
 				return data;
 			}
@@ -178,7 +178,7 @@ public enum CombatRangedAmmoDefinition {
 		final ImmutableSet<Integer> affectedNpcs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363);
 		
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
 				return data;
 			}
@@ -199,7 +199,7 @@ public enum CombatRangedAmmoDefinition {
 	},
 	WALLASALKIBANE_ARROW(new int[]{21645, 21726, 21727, 21728}, 15, 64, 36, 40, 31, 24) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
 				return data;
 			}
@@ -221,7 +221,7 @@ public enum CombatRangedAmmoDefinition {
 	
 	ABYSSALBANE_BOLT(new int[]{21675, 21701, 21702, 21703}, 27, 86, 42, 43, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
 				return data;
 			}
@@ -242,7 +242,7 @@ public enum CombatRangedAmmoDefinition {
 	},
 	BASILISKBANE_BOLT(new int[]{21670, 21687, 21688, 21689}, 27, 86, 42, 43, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
 				return data;
 			}
@@ -265,7 +265,7 @@ public enum CombatRangedAmmoDefinition {
 		final ImmutableSet<Integer> affectedNpcs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363);
 		
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
 				return data;
 			}
@@ -286,7 +286,7 @@ public enum CombatRangedAmmoDefinition {
 	},
 	WALLASALKIBANE_BOLT(new int[]{21665, 21694, 21695, 21696}, 27, 86, 42, 43, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
 				return data;
 			}
@@ -339,7 +339,7 @@ public enum CombatRangedAmmoDefinition {
 	IRON_BOLTS(9140, 27, 86, 42, 43, 31, 0),
 	OPAL_BOLTS(new int[]{879, 9236}, 27, 86, 42, 43, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9236) {
 				return data;
 			}
@@ -365,7 +365,7 @@ public enum CombatRangedAmmoDefinition {
 		final ImmutableSet<Integer> affectedNpcs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363, 110, 1633, 1634, 1635, 1636, 1019, 2591, 2592, 2593, 2594, 2595, 2596, 2597, 2598, 2599, 2600, 2601, 2602, 2603, 2604, 2605, 2606, 2607, 2608, 2609, 2610, 2611, 2612, 2613, 2614, 2615, 2616, 2627, 2628, 2629, 2630, 2631, 2631, 2734, 2735, 2736, 2737, 2738, 2739, 2740, 2741, 2742, 2743, 2744, 2745, 2746);
 		
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9238) {
 				return data;
 			}
@@ -402,7 +402,7 @@ public enum CombatRangedAmmoDefinition {
 	BLACK_BOLTS(13083, 27, 86, 42, 43, 31, 0),
 	JADE_BOLTS(new int[]{9335, 9237}, 27, 86, 42, 43, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9237) {
 				return data;
 			}
@@ -419,7 +419,7 @@ public enum CombatRangedAmmoDefinition {
 	MITHRIL_BOLTS(9142, 27, 86, 42, 43, 31, 0),
 	TOPAZ_BOLTS(new int[]{9336, 9239}, 27, 86, 42, 43, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9239) {
 				return data;
 			}
@@ -440,7 +440,7 @@ public enum CombatRangedAmmoDefinition {
 	ADAMANT_BOLTS(9143, 27, 86, 42, 43, 31, 0),
 	SAPPHIRE_BOLTS(new int[]{9337, 9240}, 27, 86, 42, 43, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9240) {
 				return data;
 			}
@@ -469,7 +469,7 @@ public enum CombatRangedAmmoDefinition {
 	RUNITE_BOLTS(9144, 27, 86, 42, 43, 31, 0),
 	EMERALD_BOLTS(new int[]{9338, 9241}, 27, 86, 42, 43, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9241) {
 				return data;
 			}
@@ -494,7 +494,7 @@ public enum CombatRangedAmmoDefinition {
 	},
 	RUBY_BOLTS(new int[]{9339, 9242}, 27, 86, 42, 43, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9242) {
 				return data;
 			}
@@ -514,7 +514,7 @@ public enum CombatRangedAmmoDefinition {
 	BROAD_TIPPED_BOLTS(13280, 27, 86, 42, 43, 31, 0),
 	DIAMOND_BOLTS(new int[]{9340, 9243}, 27, 86, 42, 43, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9243) {
 				return data;
 			}
@@ -536,7 +536,7 @@ public enum CombatRangedAmmoDefinition {
 	},
 	DRAGON_BOLTS(new int[]{9341, 9244}, 27, 86, 42, 43, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9244) {
 				return data;
 			}
@@ -567,7 +567,7 @@ public enum CombatRangedAmmoDefinition {
 	BOLT_RACK(4740, 27, 86, 42, 43, 31, 0),
 	ONYX_BOLTS(new int[]{9342, 9245}, 27, 86, 42, 43, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9245) {
 				return data;
 			}
@@ -598,7 +598,7 @@ public enum CombatRangedAmmoDefinition {
 	
 	CHINCHOMPA(new int[]{10033, 10034}, 908, 64, 36, 40, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode attacker, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode attacker, CombatHit data) {
 			int baseHit = data.getHits()[0].getDamage();
 			
 			if(baseHit < 1) {
@@ -619,7 +619,7 @@ public enum CombatRangedAmmoDefinition {
 	},
 	RED_CHINCHOMPA(10034, 909, 64, 36, 40, 31, 0) {
 		@Override
-		public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode attacker, CombatSessionData data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode attacker, CombatHit data) {
 			int baseHit = data.getHits()[0].getDamage();
 			
 			if(baseHit < 1) {
@@ -801,7 +801,7 @@ public enum CombatRangedAmmoDefinition {
 	 * @param victim the victim being hit by this ammunition.
 	 * @param data   the data of the hit that would of been applied.
 	 */
-	public CombatSessionData applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatSessionData data) {
+	public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 		return data;
 	}
 	

@@ -1,6 +1,5 @@
 package net.edge.content.combat;
 
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.Server;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.effect.CombatEffect;
@@ -37,115 +36,6 @@ import java.util.function.Consumer;
 public final class Combat {
 	
 	/**
-	 * The attack stab bonus identifier.
-	 */
-	public static final int ATTACK_STAB = 0;
-	
-	/**
-	 * The attack slash bonus identifier.
-	 */
-	public static final int ATTACK_SLASH = 1;
-	
-	/**
-	 * The attack crush bonus identifier.
-	 */
-	public static final int ATTACK_CRUSH = 2;
-	
-	/**
-	 * The attack magic bonus identifier.
-	 */
-	public static final int ATTACK_MAGIC = 3;
-	
-	/**
-	 * The attack ranged bonus identifier.
-	 */
-	public static final int ATTACK_RANGED = 4;
-	
-	/**
-	 * The defence stab bonus identifier.
-	 */
-	public static final int DEFENCE_STAB = 5;
-	
-	/**
-	 * The defence slash bonus identifier.
-	 */
-	public static final int DEFENCE_SLASH = 6;
-	
-	/**
-	 * The defence crush bonus identifier.
-	 */
-	public static final int DEFENCE_CRUSH = 7;
-	
-	/**
-	 * The defence magic bonus identifier.
-	 */
-	public static final int DEFENCE_MAGIC = 8;
-	
-	/**
-	 * The defence ranged bonus identifier.
-	 */
-	public static final int DEFENCE_RANGED = 9;
-	
-	/**
-	 * The summoning bonus identifier.
-	 */
-	public static final int DEFENCE_SUMMONING = 10;
-	
-	/**
-	 * The absorb melee bonus identifier.
-	 */
-	public static final int ABSORB_MELEE = 11;
-	
-	/**
-	 * The absorb magic identifier.
-	 */
-	public static final int ABSORB_MAGIC = 12;
-	
-	/**
-	 * The absorb ranged bonus identifier.
-	 */
-	public static final int ABSORB_RANGED = 13;
-	
-	/**
-	 * The strength bonus identifier.
-	 */
-	public static final int BONUS_STRENGTH = 14;
-	
-	/**
-	 * The ranged strength bonus identifier.
-	 */
-	public static final int BONUS_RANGED_STRENGTH = 15;
-	
-	/**
-	 * The prayer bonus identifier.
-	 */
-	public static final int BONUS_PRAYER = 16;
-	
-	/**
-	 * The magic damage bonus identifier.
-	 */
-	public static final int BONUS_MAGIC_DAMAGE = 17;
-	
-	/**
-	 * The bonus
-	 */
-	public static final int[] BONUS = {ATTACK_STAB, ATTACK_SLASH, ATTACK_CRUSH, ATTACK_MAGIC, ATTACK_RANGED, DEFENCE_STAB, DEFENCE_SLASH, DEFENCE_CRUSH, DEFENCE_MAGIC, DEFENCE_RANGED, DEFENCE_SUMMONING, ABSORB_MELEE, ABSORB_MAGIC, ABSORB_RANGED, BONUS_STRENGTH, BONUS_RANGED_STRENGTH, BONUS_PRAYER, BONUS_MAGIC_DAMAGE};
-	/**
-	 * The names of all the bonuses in their exact identified slots.
-	 */
-	public static final String[] BONUS_NAMES = {"Stab", "Slash", "Crush", "Magic", "Range", "Stab", "Slash", "Crush", "Magic", "Range", "Summoning", "Absorb Melee", "Absorb Magic", "Absorb Ranged", "Strength", "Ranged Strength", "Prayer", "Magic Damage"};
-	
-	/**
-	 * The names of all the bonuses in their exact identified slots.
-	 */
-	public static final int[] BONUS_IDS = {1675, 1676, 1677, 1678, 1679, 1680, 1681, 1682, 1683, 1684, 19148, 19149, 19150, 19151, 1686, 19152, 1687, 19153};
-	
-	/**
-	 * The hash collection of all the default NPCs mapped to their combat strategies.
-	 */
-	public static final Int2ObjectArrayMap<CombatStrategy> DEFAULT_STRATEGIES = new Int2ObjectArrayMap<>();
-	
-	/**
 	 * The default constructor.
 	 * @throws UnsupportedOperationException if this class is instantiated.
 	 */
@@ -160,7 +50,7 @@ public final class Combat {
 	 * @param data    the data for this combat session.
 	 * @param counter the total amount of damage dealt.
 	 */
-	protected static void handleExperience(CombatBuilder builder, CombatSessionData data, int counter) {
+	static void handleExperience(CombatBuilder builder, CombatHit data, int counter) {
 		if(builder.getCharacter().isPlayer()) {
 			if(data.getExperience().length == 0 && data.getType() != CombatType.MAGIC) {
 				return;
@@ -205,7 +95,7 @@ public final class Combat {
 				continue;
 			if(!c.getPosition().withinDistance(position, radius) || c.same(attacker) || c.same(attacker.getCombatBuilder().getVictim()) || c.getCurrentHealth() <= 0 || c.isDead())
 				continue;
-			CombatSessionData data = new CombatSessionData(attacker, c, hits, type, checkAccuracy);
+			CombatHit data = new CombatHit(attacker, c, hits, type, checkAccuracy);
 			c.getCombatBuilder().getDamageCache().add(attacker, data.attack());
 			if(action != null)
 				action.accept(c);
@@ -319,7 +209,7 @@ public final class Combat {
 	 * @return the combat strategy.
 	 */
 	public static CombatStrategy determineStrategy(int npc) {
-		CombatStrategy combat = DEFAULT_STRATEGIES.get(npc);
+		CombatStrategy combat = CombatConstants.DEFAULT_STRATEGIES.get(npc);
 		if(combat == null)
 			return Combat.newDefaultMeleeStrategy();
 		return combat;
@@ -649,7 +539,7 @@ public final class Combat {
 		if(type != CombatType.NONE && victim.isPlayer()) {
 			Player player = victim.toPlayer();
 			int i = type == CombatType.MAGIC ? 2 : type == CombatType.RANGED ? 1 : 0;
-			int reducedDamage = (int) ((hit.getDamage() - 200) * player.getEquipment().getBonuses()[ABSORB_MELEE + i] / 100.D);
+			int reducedDamage = (int) ((hit.getDamage() - 200) * player.getEquipment().getBonuses()[CombatConstants.ABSORB_MELEE + i] / 100.D);
 			if(hit.getDamage() - reducedDamage > 200 && victim.getCurrentHealth() > 200) {
 				if(reducedDamage > 0) {
 					hit.setDamage(hit.getDamage() - reducedDamage);
@@ -686,7 +576,7 @@ public final class Combat {
 		if(attacker.isPlayer()) {
 			Player player = (Player) attacker;
 			
-			equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[Combat.ATTACK_MAGIC] : player.getEquipment().getBonuses()[player.getFightType().getBonus()];
+			equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[CombatConstants.ATTACK_MAGIC] : player.getEquipment().getBonuses()[player.getFightType().getBonus()];
 			bonusType = player.getFightType().getCorrespondingBonus();
 			if(type == CombatType.MELEE) {
 				if(Prayer.isActivated(player, Prayer.CLARITY_OF_THOUGHT)) {
@@ -772,9 +662,9 @@ public final class Combat {
 			Player player = (Player) victim;
 			
 			if(bonusType == -1) {
-				equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[Combat.DEFENCE_MAGIC] : player.getSkills()[Skills.DEFENCE].getLevel();
+				equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[CombatConstants.DEFENCE_MAGIC] : player.getSkills()[Skills.DEFENCE].getLevel();
 			} else {
-				equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[Combat.DEFENCE_MAGIC] : player.getEquipment().getBonuses()[bonusType];
+				equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[CombatConstants.DEFENCE_MAGIC] : player.getEquipment().getBonuses()[bonusType];
 			}
 			
 			if(Prayer.isActivated(player, Prayer.THICK_SKIN)) {
@@ -855,7 +745,7 @@ public final class Combat {
 		// TODO: void melee = 1.2, slayer helm = 1.15, salve amulet = 1.15,
 		// salve amulet(e) = 1.2
 		int level = player.getSkills()[Skills.STRENGTH].getLevel();
-		int bonus = player.getEquipment().getBonuses()[Combat.BONUS_STRENGTH];
+		int bonus = player.getEquipment().getBonuses()[CombatConstants.BONUS_STRENGTH];
 		double prayer = 1.0;
 		if(Prayer.isActivated(player, Prayer.BURST_OF_STRENGTH)) {
 			prayer = 1.05;
@@ -959,7 +849,7 @@ public final class Combat {
 		double specialMultiplier = 1;
 		double prayerMultiplier = 1;
 		double otherBonusMultiplier = 1;
-		int rangedStrength = player.getEquipment().getBonuses()[Combat.BONUS_RANGED_STRENGTH];
+		int rangedStrength = player.getEquipment().getBonuses()[CombatConstants.BONUS_RANGED_STRENGTH];
 		int rangeLevel = player.getSkills()[Skills.RANGED].getLevel();
 		int combatStyleBonus = 0;
 		

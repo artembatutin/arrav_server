@@ -1,6 +1,6 @@
 package net.edge.world.node.entity.npc.strategy.impl;
 
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.task.Task;
@@ -43,7 +43,7 @@ public final class WildyWyrmCombatStrategy extends DynamicCombatStrategy<Npc> {
      * @param type      the type of combat being attacked with.
      * @return the combat session data.
      */
-    private CombatSessionData type(EntityNode victim, CombatType type) {
+    private CombatHit type(EntityNode victim, CombatType type) {
         switch(type) {
             case MELEE:
                 return melee(victim);
@@ -54,7 +54,7 @@ public final class WildyWyrmCombatStrategy extends DynamicCombatStrategy<Npc> {
         }
     }
 
-//    private CombatSessionData stomp() {FIXME
+//    private CombatHit stomp() {FIXME
 //        stomping = true;
 //
 //        Position target = null;
@@ -95,12 +95,12 @@ public final class WildyWyrmCombatStrategy extends DynamicCombatStrategy<Npc> {
 //        return null;
 //    }
 
-    private CombatSessionData melee(EntityNode victim) {
+    private CombatHit melee(EntityNode victim) {
         npc.animation(new Animation(12791, Animation.AnimationPriority.HIGH));
-        return new CombatSessionData(npc, victim, 1, CombatType.MELEE, false);
+        return new CombatHit(npc, victim, 1, CombatType.MELEE, false);
     }
 
-    private CombatSessionData magic(EntityNode victim) {
+    private CombatHit magic(EntityNode victim) {
         npc.animation(new Animation(12794));
         World.get().submit(new Task(1, false) {
             @Override
@@ -112,7 +112,7 @@ public final class WildyWyrmCombatStrategy extends DynamicCombatStrategy<Npc> {
             }
         });
         npc.setCurrentlyCasting(SPELL);
-        return new CombatSessionData(npc, victim, 1, CombatType.MAGIC, false);
+        return new CombatHit(npc, victim, 1, CombatType.MAGIC, false);
     }
 
     /**
@@ -134,7 +134,7 @@ public final class WildyWyrmCombatStrategy extends DynamicCombatStrategy<Npc> {
      * @return a container holding the data for the attack.
      */
     @Override
-    public CombatSessionData outgoingAttack(EntityNode victim) {
+    public CombatHit outgoingAttack(EntityNode victim) {
         CombatType[] types = npc.getPosition().withinDistance(victim.getPosition(), 4) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
         return /*RandomUtils.inclusive(100) < 60 ? stomp() : */type(victim, random(types));
     }
@@ -146,7 +146,7 @@ public final class WildyWyrmCombatStrategy extends DynamicCombatStrategy<Npc> {
      * @param data     the combat session data chained to this hit.
      */
     @Override
-    public void incomingAttack(EntityNode attacker, CombatSessionData data) {
+    public void incomingAttack(EntityNode attacker, CombatHit data) {
         if(stomping) {
             data.ignore();
         }

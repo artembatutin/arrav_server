@@ -21,7 +21,8 @@ public enum Currency {
 	BLOOD_MONEY(new ItemCurrency(19000, Optional.of("blood money"))),
 	EDGE_TOKENS(new ItemCurrency(7478, Optional.of("edge tokens"))),
 	VOTE_POINTS(new VoteCurrency()),
-	PEST_POINTS(new PestCurrency()),;
+	PEST_POINTS(new PestCurrency()),
+	STAR_DUST(new ItemCurrency(13727));
 
 	/**
 	 * The currency that is represented by this element.

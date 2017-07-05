@@ -20,7 +20,7 @@ import java.util.Objects;
  * An attack on the builder's victim that is sent completely separate from the main combat session.
  * @author lare96 <http://github.com/lare96>
  */
-public final class CombatSessionAttack extends Task {
+public final class CombatHitTask extends Task {
 
 	/**
 	 * The builder this attack is executed for.
@@ -30,7 +30,7 @@ public final class CombatSessionAttack extends Task {
 	/**
 	 * The combat data from the combat session.
 	 */
-	private CombatSessionData data;
+	private CombatHit data;
 
 	/**
 	 * The total amount of damage dealt during this attack.
@@ -38,14 +38,14 @@ public final class CombatSessionAttack extends Task {
 	private int counter;
 
 	/**
-	 * Creates a new {@link CombatSessionAttack}.
+	 * Creates a new {@link CombatHitTask}.
 	 * @param builder the builder this attack is executed for.
-	 * @param data    the combat data from the combat session.
+	 * @param hit    the combat hit from the combat session.
 	 */
-	public CombatSessionAttack(CombatBuilder builder, CombatSessionData data) {
-		super(data.delay.orElse(Combat.getDelay(builder.getCharacter(), data.getType())), data.getType() == CombatType.MELEE);
+	public CombatHitTask(CombatBuilder builder, CombatHit hit) {
+		super(hit.delay.orElse(Combat.getDelay(builder.getCharacter(), hit.getType())), hit.getType() == CombatType.MELEE);
 		this.builder = builder;
-		this.data = data;
+		this.data = hit;
 	}
 
 	@Override
@@ -247,10 +247,10 @@ public final class CombatSessionAttack extends Task {
 
 	/**
 	 * Applies combat prayer accuracy and damage reductions before executing the
-	 * {@link CombatSessionAttack}, this method shouldn't be confused with #handlePrayerEffects
+	 * {@link CombatHitTask}, this method shouldn't be confused with #handlePrayerEffects
 	 * which handles the prayer effects after the damage is dealt.
 	 */
-	public static void applyPrayerEffects(CombatSessionData data) {
+	public static void applyPrayerEffects(CombatHit data) {
 		if(data.getHits().length != 0) {
 			EntityNode victim = data.getVictim();
 			EntityNode attacker = data.getAttacker();
