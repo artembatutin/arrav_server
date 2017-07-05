@@ -15,6 +15,22 @@ import java.util.logging.Logger;
 public class Donating {
 	
 	/**
+	 * Amount of tokens receivable.
+	 */
+	private static final int[] TOKENS = {
+			500,
+			1050,
+			2100,
+			3150,
+			4200,
+			5250,
+			7800,
+			10350,
+			15400,
+			20500
+	};
+	
+	/**
 	 * The logger to log the donating errors just in-case we will need them later.
 	 */
 	private static final Logger logger = Logger.getLogger(Donating.class.getName());
@@ -49,19 +65,17 @@ public class Donating {
 		try {
 			boolean received = false;
 			Statement st = con.createStatement();
-			String sql = ("SELECT amount FROM donations WHERE username='" + player.getUsername().toLowerCase().replace(" ", "_") + "'  and claimed=0");
+			String sql = ("SELECT * FROM purchase_history WHERE LOWER(username) = '"+player.getUsername().toLowerCase()+"' and claimed = 0 and payment_status = 'Completed'");
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
-				int amount = rs.getInt("amount");
-				if(amount > 0) {
-					player.getBank().add(0, new Item(7478, amount));
-					player.message("We added " + amount + " edge tokens to your bank, thank you for donating!");
-					PreparedStatement stmt1 = con.prepareStatement("UPDATE donations SET claimed = 1 WHERE username=? and amount=? and claimed=0");
-					stmt1.setString(1, player.getFormatUsername());
-					stmt1.setInt(2, amount);
-					stmt1.execute();
-					received = true;
-				}
+				int id = rs.getInt("id");
+				int product = rs.getInt("tokens");
+				player.getBank().add(0, new Item(7478, TOKENS[product]));
+				player.message("We added " + TOKENS[product] + " edge tokens to your bank, thank you for donating!");
+				PreparedStatement stmt1 = con.prepareStatement("UPDATE purchase_history SET claimed = 1 WHERE id= ?");
+				stmt1.setInt(1, id);
+				stmt1.execute();
+				received = true;
 			}
 			if(!received) {
 				player.message("We could not find any donation under your name");

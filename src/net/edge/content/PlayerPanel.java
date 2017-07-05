@@ -11,7 +11,6 @@ import net.edge.util.Utility;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.scoreboard.PlayerScoreboardStatistic;
-import net.edge.locale.loc.Location;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
@@ -63,10 +62,10 @@ public enum PlayerPanel {
 			
 		}
 	},
-	DONATE() {
+	STORE() {
 		@Override
 		public void onClick(Player player) {
-			player.getMessages().sendLink("donate/");
+			player.getMessages().sendLink("store/");
 		}
 	},
 	NPC_TOOL() {
@@ -213,7 +212,7 @@ public enum PlayerPanel {
 		PlayerPanel.COMMUNITY.refresh(player, "@or2@ - Forums");
 		PlayerPanel.DISCORD.refresh(player, "@or2@ - Discord");
 		PlayerPanel.VOTE.refresh(player, "@or2@ - Vote points: @yel@" + player.getVotePoints() + " points");
-		PlayerPanel.DONATE.refresh(player, "@or2@ - Donate");
+		PlayerPanel.STORE.refresh(player, "@or2@ - Store");
 		PlayerPanel.NPC_TOOL.refresh(player, "@or2@ - Monster Database");
 		PlayerPanel.SERVER_STATISTICS.refresh(player, "@or1@Server Information:");
 		PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
