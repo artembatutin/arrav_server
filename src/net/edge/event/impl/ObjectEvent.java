@@ -19,6 +19,7 @@ import net.edge.content.skill.woodcutting.Woodcutting;
 import net.edge.content.wilderness.Obelisk;
 import net.edge.event.Event;
 import net.edge.net.packet.impl.ObjectActionPacket;
+import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectNode;
 
@@ -69,6 +70,7 @@ public abstract class ObjectEvent extends Event {
 		Smelting.event();
 		HotSpots.event();
 		PestControlWaitingLobby.event();
+		GodwarsFaction.event();
 	}
 	
 }

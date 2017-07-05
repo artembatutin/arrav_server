@@ -1,6 +1,6 @@
 package net.edge.world.node.entity.npc.strategy.impl;
 
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.task.Task;
@@ -58,13 +58,13 @@ public final class KalphiteQueenCombatStrategy extends DynamicCombatStrategy<Kal
      * @return a container holding the data for the attacnpk.
      */
     @Override
-    public CombatSessionData outgoingAttack(EntityNode victim) {
+    public CombatHit outgoingAttack(EntityNode victim) {
         CombatType[] data = npc.getPosition().withinDistance(victim.getPosition(), 4) ? new CombatType[]{CombatType.MELEE, CombatType.RANGED, CombatType.MAGIC} : new CombatType[]{CombatType.RANGED, CombatType.MAGIC};
         CombatType c = RandomUtils.random(data);
         return type(victim, c);
     }
 
-    private CombatSessionData type(EntityNode victim, CombatType type) {
+    private CombatHit type(EntityNode victim, CombatType type) {
         switch(type) {
             case MELEE:
                 return melee(victim);
@@ -77,13 +77,13 @@ public final class KalphiteQueenCombatStrategy extends DynamicCombatStrategy<Kal
         }
     }
 
-    private CombatSessionData melee(EntityNode victim) {
+    private CombatHit melee(EntityNode victim) {
         int animationId = npc.getDefinition().getAttackAnimation();
         npc.animation(new Animation(animationId, Animation.AnimationPriority.HIGH));
-        return new CombatSessionData(npc, victim, 1, CombatType.MELEE, true);
+        return new CombatHit(npc, victim, 1, CombatType.MELEE, true);
     }
 
-    private CombatSessionData ranged(EntityNode victim) {
+    private CombatHit ranged(EntityNode victim) {
         int animationId = npc.phase.equals(KalphiteQueen.Phase.PHASE_ONE) ? 6240 : 6234;
 
         npc.animation(new Animation(animationId, Animation.AnimationPriority.HIGH));
@@ -96,10 +96,10 @@ public final class KalphiteQueenCombatStrategy extends DynamicCombatStrategy<Kal
                 new Projectile(npc, victim, 473, 50, 16, 61, 41, 0).sendProjectile();
             }
         });
-        return new CombatSessionData(npc, victim, 1, CombatType.RANGED, false);
+        return new CombatHit(npc, victim, 1, CombatType.RANGED, false);
     }
 
-    private CombatSessionData magic(EntityNode victim) {
+    private CombatHit magic(EntityNode victim) {
         npc.setCurrentlyCasting(KALPHITE_QUEEN_BLAST);
         int animationId = npc.phase.equals(KalphiteQueen.Phase.PHASE_ONE) ? 6240 : 6234;
         int graphicId = npc.phase.equals(KalphiteQueen.Phase.PHASE_ONE) ? 278 : 279;
@@ -116,7 +116,7 @@ public final class KalphiteQueenCombatStrategy extends DynamicCombatStrategy<Kal
                 KALPHITE_QUEEN_BLAST.projectile(npc, victim).get().sendProjectile();
             }
         });
-        return new CombatSessionData(npc, victim, 1, CombatType.MAGIC, false);
+        return new CombatHit(npc, victim, 1, CombatType.MAGIC, false);
     }
     /**
      * Executed when the {@link #npc} is hit by the {@code attacker}.
@@ -124,7 +124,7 @@ public final class KalphiteQueenCombatStrategy extends DynamicCombatStrategy<Kal
      * @param data     the combat session data chained to this hit.
      */
     @Override
-    public void incomingAttack(EntityNode attacker, CombatSessionData data) {
+    public void incomingAttack(EntityNode attacker, CombatHit data) {
         KalphiteQueen.Phase phase = npc.phase;
         switch(data.getType()) {
             case MELEE:

@@ -2,8 +2,8 @@ package net.edge.world.node.entity.npc.strategy.impl.gwd;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.combat.CombatHit;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
@@ -34,7 +34,7 @@ public final class GeneralGraardorCombatStrategy extends DynamicCombatStrategy<G
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode victim) {
 		CombatType[] data = npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.RANGED} : new CombatType[]{CombatType.RANGED};
 		CombatType c = RandomUtils.random(data);
 		GeneralGraardor.SERGEANTS.forEach(sergeant -> {
@@ -46,12 +46,12 @@ public final class GeneralGraardorCombatStrategy extends DynamicCombatStrategy<G
 		return type(victim, c);
 	}
 
-	private CombatSessionData melee(EntityNode victim) {
+	private CombatHit melee(EntityNode victim) {
 		npc.animation(new Animation(7060));
-		return new CombatSessionData(npc, victim, 1, CombatType.MELEE, true);
+		return new CombatHit(npc, victim, 1, CombatType.MELEE, true);
 	}
 
-	private CombatSessionData ranged(EntityNode victim) {
+	private CombatHit ranged(EntityNode victim) {
 		ObjectList<Player> toHit = new ObjectArrayList<>();
 		npc.animation(new Animation(7063));
 		World.get().getLocalPlayers(victim).forEachRemaining(player -> {
@@ -60,7 +60,7 @@ public final class GeneralGraardorCombatStrategy extends DynamicCombatStrategy<G
 			}
 		});
 		toHit.forEach(player -> new Projectile(npc, player, 1200, 44, 3, 43, 31, 0).sendProjectile());
-		return new CombatSessionData(npc, victim, 1, CombatType.RANGED, true) {
+		return new CombatHit(npc, victim, 1, CombatType.RANGED, true) {
 			@Override
 			public void postAttack(int counter) {
 				toHit.forEach(player -> player.damage(this.getHits()));
@@ -68,7 +68,7 @@ public final class GeneralGraardorCombatStrategy extends DynamicCombatStrategy<G
 		};
 	}
 
-	private CombatSessionData type(EntityNode victim, CombatType type) {
+	private CombatHit type(EntityNode victim, CombatType type) {
 		switch(type) {
 			case MELEE:
 				return melee(victim);
@@ -80,7 +80,7 @@ public final class GeneralGraardorCombatStrategy extends DynamicCombatStrategy<G
 	}
 
 	@Override
-	public void incomingAttack(EntityNode attacker, CombatSessionData data) {
+	public void incomingAttack(EntityNode attacker, CombatHit data) {
 
 	}
 

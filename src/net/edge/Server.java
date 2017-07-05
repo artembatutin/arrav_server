@@ -12,6 +12,7 @@ import net.edge.cache.FileSystem;
 import net.edge.cache.decoder.MapDefinitionDecoder;
 import net.edge.cache.decoder.ObjectDefinitionDecoder;
 import net.edge.cache.decoder.RegionDecoder;
+import net.edge.content.combat.CombatConstants;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.ButtonEvent;
 import net.edge.event.impl.ItemEvent;
@@ -27,11 +28,9 @@ import net.edge.util.Utility;
 import net.edge.util.json.impl.*;
 import net.edge.content.PlayerPanel;
 import net.edge.content.RestoreStatTask;
-import net.edge.content.combat.Combat;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.scoreboard.ScoreboardManager;
-import net.edge.locale.loc.Location;
 import net.edge.world.World;
 import net.edge.world.node.entity.attribute.AttributeKey;
 
@@ -119,12 +118,11 @@ public final class Server {
 	public void init() throws Exception {
 		try {
 			LOGGER.info("Main is being initialized...");
-			
+			prepare();
 			bind();
 			initTasks();
 			launch.shutdown();
 			launch.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			prepare();
 			
 			World.getInstanceManager().close(0);
 			World.get().submit(World.getNpcMovementTask());
@@ -225,7 +223,7 @@ public final class Server {
 					List<CombatStrategy> s = Utility.getClassesInDirectory(CombatStrategy.class.getPackage().getName() + "." + directory).stream().map(clazz -> (CombatStrategy) clazz).collect(Collectors.toList());
 					s.forEach(c -> {
 						for(int n : c.getNpcs()) {
-							Combat.DEFAULT_STRATEGIES.put(n, c);
+							CombatConstants.DEFAULT_STRATEGIES.put(n, c);
 						}
 					});
 				} catch(Exception e) {

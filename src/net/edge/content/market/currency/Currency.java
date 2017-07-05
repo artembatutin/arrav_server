@@ -22,7 +22,7 @@ public enum Currency {
 	EDGE_TOKENS(new ItemCurrency(7478, Optional.of("edge tokens"))),
 	VOTE_POINTS(new VoteCurrency()),
 	PEST_POINTS(new PestCurrency()),
-	STARDUST(new ItemCurrency(13727));
+	STAR_DUST(new ItemCurrency(13727));
 
 	/**
 	 * The currency that is represented by this element.

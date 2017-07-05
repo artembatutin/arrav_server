@@ -2,8 +2,8 @@ package net.edge.content.skill.prayer;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
+import net.edge.content.combat.CombatConstants;
 import net.edge.task.Task;
-import net.edge.content.combat.Combat;
 import net.edge.content.skill.Skills;
 import net.edge.world.node.entity.player.Player;
 
@@ -87,7 +87,7 @@ public final class PrayerTask extends Task {
 		double rate = prayer.getDrainRate();
 		double addFactor = 1;
 		double divideFactor = 30;
-		double bonus = player.getEquipment().getBonuses()[Combat.BONUS_PRAYER];
+		double bonus = player.getEquipment().getBonuses()[CombatConstants.BONUS_PRAYER];
 		double tick = 600;
 		double second = 1000;
 		return (int) (((rate + (addFactor + bonus / divideFactor)) * second) / tick);

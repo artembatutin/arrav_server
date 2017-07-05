@@ -1,8 +1,8 @@
 package net.edge.content.combat.strategy.npc;
 
+import net.edge.content.combat.CombatHit;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
@@ -28,18 +28,18 @@ public final class MetallicDragonCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		CombatType[] data = character.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
 		CombatType c = RandomUtils.random(data);
 		return type(character, victim, c);
 	}
 	
-	private CombatSessionData melee(EntityNode character, EntityNode victim) {
+	private CombatHit melee(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(character.toNpc().getDefinition().getAttackAnimation()));
-		return new CombatSessionData(character, victim, 1, CombatType.MELEE, true);
+		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
 	}
 	
-	private CombatSessionData magic(EntityNode character, EntityNode victim) {
+	private CombatHit magic(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(14246));
 		CombatNormalSpell spell = FIRE_BLAST;
 		World.get().submit(new Task(1, false) {
@@ -52,9 +52,9 @@ public final class MetallicDragonCombatStrategy implements CombatStrategy {
 			}
 		});
 		character.setCurrentlyCasting(spell);
-		return new CombatSessionData(character, victim, 1, CombatType.MAGIC, false) {
+		return new CombatHit(character, victim, 1, CombatType.MAGIC, false) {
 			@Override
-			public CombatSessionData preAttack() {
+			public CombatHit preAttack() {
 				if(this.getType() == CombatType.MAGIC && victim.isPlayer() && this.isAccurate()) {
 					Player player = (Player) victim;
 					if(!player.getEquipment().containsAny(1540, 11283) && !player.getAntifireDetails().isPresent()) {
@@ -96,7 +96,7 @@ public final class MetallicDragonCombatStrategy implements CombatStrategy {
 		};
 	}
 	
-	private CombatSessionData type(EntityNode character, EntityNode victim, CombatType type) {
+	private CombatHit type(EntityNode character, EntityNode victim, CombatType type) {
 		switch(type) {
 			case MELEE:
 				return melee(character, victim);

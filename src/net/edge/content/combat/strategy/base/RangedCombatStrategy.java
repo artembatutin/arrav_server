@@ -1,9 +1,9 @@
 package net.edge.content.combat.strategy.base;
 
 import net.edge.content.combat.Combat;
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
-import net.edge.content.combat.ranged.CombatRangedAmmoDefinition;
+import net.edge.content.combat.ranged.CombatRangedAmmunition;
 import net.edge.content.combat.ranged.CombatRangedDetails.CombatRangedAmmo;
 import net.edge.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
 import net.edge.content.combat.strategy.CombatStrategy;
@@ -51,36 +51,32 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		if(character.isNpc()) {
 			Npc npc = character.toNpc();
 			character.animation(new Animation(npc.getDefinition().getAttackAnimation()));
-			
-			CombatRangedAmmoDefinition ammo = prepareAmmo(npc.getId());
+			CombatRangedAmmunition ammo = prepareAmmo(npc.getId());
 			
 			if(ammo.getGraphic().getId() != 0)
 				character.graphic(ammo.getGraphic());
-			
-			new Projectile(character, victim, ammo.getProjectile(), ammo.getDelay(), ammo.getSpeed(), ammo.getStartHeight(), ammo.getEndHeight(), 0).sendProjectile();
-			return new CombatSessionData(character, victim, 1, CombatType.RANGED, true);
+			return new CombatHit(character, victim, 1, CombatType.RANGED, true, new Projectile(character, victim, ammo.getProjectile(), ammo.getDelay(), ammo.getSpeed(), ammo.getStartHeight(), ammo.getEndHeight(), 0).getTravelTime());
 		}
 		
+		int delay = 0;
 		Player player = character.toPlayer();
-		
 		CombatRangedWeapon weapon = player.getRangedDetails().getWeapon().get();
-		
 		CombatRangedAmmo ammo = weapon.getAmmunition();
 		
 		if(!player.isSpecialActivated()) {
 			if(!player.isVisible()) {
-				return new CombatSessionData(character, victim, 1, CombatType.RANGED, true);
+				return new CombatHit(character, victim, 1, CombatType.RANGED, true);
 			}
 			
 			if(weapon.getWeapon() == ItemIdentifiers.DARK_BOW) {
-				new Projectile(character, victim, ammo.getDefinition().getProjectile(), 64, 36, 40, 31, 0).sendProjectile();
+				delay = new Projectile(character, victim, ammo.getDefinition().getProjectile(), 64, 36, 40, 31, 0).sendProjectile().getTravelTime();
 			} else {
 				if(ammo.getDefinition().getProjectile() != -1) {
-					new Projectile(character, victim, ammo.getDefinition().getProjectile(), ammo.getDefinition().getDelay(), ammo.getDefinition().getSpeed(), ammo.getDefinition().getStartHeight(), ammo.getDefinition().getEndHeight(), 0).sendProjectile();
+					delay = new Projectile(character, victim, ammo.getDefinition().getProjectile(), ammo.getDefinition().getDelay(), ammo.getDefinition().getSpeed(), ammo.getDefinition().getStartHeight(), ammo.getDefinition().getEndHeight(), 0).sendProjectile().getTravelTime();
 				}
 			}
 			
@@ -89,8 +85,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		if(ammo.getDefinition().getGraphic(player).getId() != 0)
 			player.graphic(ammo.getDefinition().getGraphic(player));
 		
-		CombatSessionData data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatSessionData(character, victim, 1, CombatType.RANGED, true));
-		
+		CombatHit data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatHit(character, victim, 1, CombatType.RANGED, true, delay));
 		decrementAmmo(player, victim, weapon, ammo);
 		
 		return data;
@@ -126,14 +121,14 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		}
 	}
 	
-	private CombatRangedAmmoDefinition prepareAmmo(int id) {
+	private CombatRangedAmmunition prepareAmmo(int id) {
 		switch(id) {
 			case 8776:
-				return CombatRangedAmmoDefinition.HAND_CANNON_SHOT;
+				return CombatRangedAmmunition.HAND_CANNON_SHOT;
 			case 1183:
-				return CombatRangedAmmoDefinition.CRYSTAL_ARROW;
+				return CombatRangedAmmunition.CRYSTAL_ARROW;
 			case 8781:
-				return CombatRangedAmmoDefinition.BLACK_BOLTS;
+				return CombatRangedAmmunition.BLACK_BOLTS;
 			case 3762:
 			case 3763:
 			case 3764:
@@ -144,9 +139,9 @@ public final class RangedCombatStrategy implements CombatStrategy {
 			case 3769:
 			case 3770:
 			case 3771:
-				return CombatRangedAmmoDefinition.STEEL_KNIFE;
+				return CombatRangedAmmunition.STEEL_KNIFE;
 			default:
-				return CombatRangedAmmoDefinition.BRONZE_ARROW;
+				return CombatRangedAmmunition.BRONZE_ARROW;
 		}
 	}
 	
@@ -174,7 +169,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 			item.decrementAmount();
 			collected = true;//skip shots on ground.
 		} else if(ava_collector) {
-			boolean droppable = !weapon.getType().isSpecialBow() && CombatRangedAmmoDefinition.NON_DROPPABLE.stream().noneMatch(weapon.getAmmunition().getDefinition()::equals);
+			boolean droppable = !weapon.getType().isSpecialBow() && CombatRangedAmmunition.NON_DROPPABLE.stream().noneMatch(weapon.getAmmunition().getDefinition()::equals);
 			if(weapon.getAmmunition().getItem().getAmount() > 0 && droppable && RandomUtils.nextBoolean()) {
 				double chance = cape.getId() == 10498 ? 0.25 : cape.getId() == 10499 ? 0.50 : 0.75;
 				collected = RandomUtils.success(chance);

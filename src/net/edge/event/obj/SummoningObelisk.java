@@ -12,22 +12,19 @@ public class SummoningObelisk extends EventInitializer {
 		ObjectEvent l = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
-				if(click == 2) {
-					Skills.restore(player, Skills.SUMMONING);
+				if(click == 3 && object.getId() == 29447) {
+					player.getMessages().sendInterface(-8);
 					return true;
 				}
-				player.getMessages().sendInterface(-8);
-				return true;
-			}
-		};
-		l.registerFirst(29947);
-		l = new ObjectEvent() {
-			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
 				Skills.restore(player, Skills.SUMMONING);
 				return true;
 			}
 		};
-		l.registerFirst(29955);
+		for(int i = 29938; i < 29960; i++) {
+			l.registerFirst(i);
+			l.registerFirst(i + 42003);
+			l.registerSecond(i);
+			l.registerSecond(i + 42003);
+		}
 	}
 }

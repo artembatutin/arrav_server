@@ -67,8 +67,8 @@ public final class AuburyTeleport extends TeleportSpell {
 	}
 	
 	@Override
-	public void startCast(EntityNode cast, EntityNode castOn) {
-		
+	public int startCast(EntityNode cast, EntityNode castOn) {
+		return 0;
 	}
 	
 	private static final class TeleportTask extends Task {

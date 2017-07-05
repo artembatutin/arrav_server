@@ -11,6 +11,7 @@ import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.entity.npc.impl.DefaultNpc;
 import net.edge.world.node.entity.player.Player;
 
 public class TraderStan extends EventInitializer {
@@ -42,7 +43,17 @@ public class TraderStan extends EventInitializer {
 				"May the gold be with you.",
 				"I aint gonna say I had a small loan of a million dollars from my Dad."
 		};
-		Npc stan = World.get().getNpcs().stream().filter(n -> n.getId() == 4650).findAny().get();
+		Npc.CUSTOM_NPCS.put(4650, s -> new DefaultNpc(4650, s) {
+			private int timer = 0;
+			@Override
+			public void sequence() {
+				timer++;
+				if(timer >= 200) {
+					forceChat(RandomUtils.random(chats));
+					timer = 0;
+				}
+			}
+		});
 		NpcEvent e = new NpcEvent() {
 			@Override
 			public boolean click(Player player, Npc npc, int click) {
@@ -77,13 +88,5 @@ public class TraderStan extends EventInitializer {
 				return true;
 			}
 		};
-		e.registerFirst(4650);
-		Task yell = new Task(200, false) {
-			@Override
-			protected void execute() {
-				stan.forceChat(RandomUtils.random(chats));
-			}
-		};
-		yell.submit();
 	}
 }

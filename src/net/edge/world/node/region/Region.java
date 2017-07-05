@@ -3,6 +3,7 @@ package net.edge.world.node.region;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.edge.util.LoggerUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.locale.Position;
@@ -60,12 +61,12 @@ public final class Region extends Node {
 	/**
 	 * A {@link Int2ObjectOpenHashMap} of active {@link Player}s in this {@code Region}.
 	 */
-	private final Int2ObjectOpenHashMap<Player> players = new Int2ObjectOpenHashMap<>();
+	private final ObjectArrayList<Player> players = new ObjectArrayList<>();
 	
 	/**
 	 * A {@link Int2ObjectOpenHashMap} of active {@link Npc}s in this {@code Region}.
 	 */
-	private final Int2ObjectOpenHashMap<Npc> npcs = new Int2ObjectOpenHashMap<>();
+	private final ObjectArrayList<Npc> npcs = new ObjectArrayList<>();
 	
 	/**
 	 * A {@link Int2ObjectOpenHashMap} of active {@link ObjectNode}s in this {@code Region}.
@@ -137,14 +138,18 @@ public final class Region extends Node {
 	@Override
 	public void register() {
 		//activating all npcs.
-		npcs.forEach((i, n) -> n.setActive(true));
+		for(Npc n : npcs) {
+			n.setActive(true);
+		}
 		LOGGER.info("Loaded Region: [" + regionId + "] on the fly.");
 	}
 	
 	@Override
 	public void dispose() {
 		//deactivating all npcs.
-		npcs.forEach((i, n) -> n.setActive(false));
+		for(Npc n : npcs) {
+			n.setActive(false);
+		}
 		LOGGER.info("Disposed Region: [" + regionId + "] on the fly.");
 	}
 	
@@ -182,26 +187,21 @@ public final class Region extends Node {
 		if(e.getState() == NodeState.INACTIVE)
 			return false;
 		if(e.isPlayer()) {
-			if(players.containsKey(e.getSlot()))
-				return false;
-			players.put(e.getSlot(), e.toPlayer());
+			return players.add(e.toPlayer());
 		} else {
-			if(npcs.containsKey(e.getSlot()))
-				return false;
-			npcs.put(e.getSlot(), e.toNpc());
+			return npcs.add(e.toNpc());
 		}
-		return true;
 	}
 	
 	/**
 	 * Removes an {@link EntityNode} from the backing queue.
 	 * @param e The entity to remove.
 	 */
-	public <T extends EntityNode> void removeChar(T e) {
+	public <T extends EntityNode> boolean removeChar(T e) {
 		if(e.isPlayer()) {
-			players.remove(e.getSlot());
+			return players.remove(e.toPlayer());
 		} else {
-			npcs.remove(e.getSlot());
+			return npcs.remove(e.toNpc());
 		}
 	}
 	
@@ -209,7 +209,7 @@ public final class Region extends Node {
 	 * Retrieves and returns an {@link Int2ObjectOpenHashMap} of {@link Player}s.
 	 * @return all the players inside the region.
 	 */
-	public Int2ObjectOpenHashMap<Player> getPlayers() {
+	public ObjectArrayList<Player> getPlayers() {
 		return players;
 	}
 	
@@ -217,7 +217,7 @@ public final class Region extends Node {
 	 * Retrieves and returns an {@link Int2ObjectOpenHashMap} of {@link Npc}s.
 	 * @return all the npcs inside the region.
 	 */
-	public Int2ObjectOpenHashMap<Npc> getNpcs() {
+	public ObjectArrayList<Npc> getNpcs() {
 		return npcs;
 	}
 	

@@ -1,10 +1,10 @@
 package net.edge.content.combat.strategy.npc;
 
 import com.google.common.collect.ImmutableList;
+import net.edge.content.combat.CombatHit;
 import net.edge.world.*;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
@@ -25,7 +25,7 @@ public final class KingBlackDragonCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		CombatType[] data = character.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
 		CombatType c = RandomUtils.random(data);
 		return type(character, victim, c);
@@ -46,10 +46,10 @@ public final class KingBlackDragonCombatStrategy implements CombatStrategy {
 		return new int[]{50};
 	}
 	
-	private CombatSessionData melee(EntityNode character, EntityNode victim) {
+	private CombatHit melee(EntityNode character, EntityNode victim) {
 		Animation animation[] = new Animation[]{new Animation(80), new Animation(91)};
 		character.animation(RandomUtils.random(animation));
-		return new CombatSessionData(character, victim, 1, CombatType.MELEE, true);
+		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
 	}
 	
 	private CombatNormalSpell getSpell() {
@@ -57,7 +57,7 @@ public final class KingBlackDragonCombatStrategy implements CombatStrategy {
 		return RandomUtils.random(spells);
 	}
 	
-	private CombatSessionData magic(EntityNode character, EntityNode victim) {
+	private CombatHit magic(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(81));
 		CombatNormalSpell spell = getSpell();
 		World.get().submit(new Task(1, false) {
@@ -70,9 +70,9 @@ public final class KingBlackDragonCombatStrategy implements CombatStrategy {
 			}
 		});
 		character.setCurrentlyCasting(spell);
-		return new CombatSessionData(character, victim, 1, CombatType.MAGIC, false) {
+		return new CombatHit(character, victim, 1, CombatType.MAGIC, false) {
 			@Override
-			public CombatSessionData preAttack() {
+			public CombatHit preAttack() {
 				if(this.getType() == CombatType.MAGIC && victim.isPlayer() && this.isAccurate()) {
 					Player player = (Player) victim;
 					if(spell.equals(POISON_BLAST) && !player.isPoisoned() && RandomUtils.inclusive(1000) < 100) {
@@ -117,7 +117,7 @@ public final class KingBlackDragonCombatStrategy implements CombatStrategy {
 		};
 	}
 	
-	private CombatSessionData type(EntityNode character, EntityNode victim, CombatType type) {
+	private CombatHit type(EntityNode character, EntityNode victim, CombatType type) {
 		switch(type) {
 			case MELEE:
 				return melee(character, victim);

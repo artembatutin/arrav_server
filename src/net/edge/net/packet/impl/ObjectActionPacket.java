@@ -122,8 +122,6 @@ public final class ObjectActionPacket implements PacketReader {
 							return;
 						if(Hunter.pickup(player, object))
 							return;
-						if(GodwarsFaction.enterChamber(player, objectId))
-							return;
 						break;
 					case 2:
 						if(!MinigameHandler.execute(player, m -> m.onSecondClickObject(player, object)))

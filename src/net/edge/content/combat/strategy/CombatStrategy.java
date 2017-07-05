@@ -1,6 +1,6 @@
 package net.edge.content.combat.strategy;
 
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.world.node.entity.EntityNode;
 
 /**
@@ -16,7 +16,7 @@ public interface CombatStrategy {
 	 * @param attacker  the attacker whom hit the character.
 	 * @param data      the combat session data chained to this hit.
 	 */
-	default void incomingAttack(EntityNode character, EntityNode attacker, CombatSessionData data) {
+	default void incomingAttack(EntityNode character, EntityNode attacker, CombatHit data) {
 		
 	}
 
@@ -45,7 +45,7 @@ public interface CombatStrategy {
 	 * @param victim    the character being attacked.
 	 * @return a container holding the data for the attack.
 	 */
-	CombatSessionData outgoingAttack(EntityNode character, EntityNode victim);
+	CombatHit outgoingAttack(EntityNode character, EntityNode victim);
 	
 	/**
 	 * Determines the delay for when {@code character} will attack.

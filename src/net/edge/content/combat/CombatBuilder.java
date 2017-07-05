@@ -43,7 +43,7 @@ public final class CombatBuilder {
 	/**
 	 * The task that handles the entire combat process.
 	 */
-	private CombatSession combatTask;
+	private CombatTask combatTask;
 	
 	/**
 	 * The combat strategy this character attacking with.
@@ -349,7 +349,7 @@ public final class CombatBuilder {
 	 * Gets the task that handles the entire combat process.
 	 * @return the task for the combat process.
 	 */
-	public CombatSession getCombatTask() {
+	public CombatTask getCombatTask() {
 		return combatTask;
 	}
 	
@@ -426,7 +426,7 @@ public final class CombatBuilder {
 			builder.currentVictim = victim;
 			
 			if(builder.combatTask == null || !builder.combatTask.isRunning()) {
-				builder.combatTask = new CombatSession(builder);
+				builder.combatTask = new CombatTask(builder);
 				World.get().submit(builder.combatTask);
 			}
 		}

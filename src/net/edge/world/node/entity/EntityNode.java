@@ -545,10 +545,11 @@ public abstract class EntityNode extends Node {
 	 * Prepares to cast the {@code spell} on {@code victim}.
 	 * @param spell  the spell to cast on the victim.
 	 * @param victim the victim that the spell will be cast on.
+	 * @return the delay of the hit depending on projectile.
 	 */
-	public final void prepareSpell(CombatSpell spell, EntityNode victim) {
+	public final int prepareSpell(CombatSpell spell, EntityNode victim) {
 		currentlyCasting = spell;
-		currentlyCasting.startCast(this, victim);
+		return currentlyCasting.startCast(this, victim);
 	}
 	
 	/**

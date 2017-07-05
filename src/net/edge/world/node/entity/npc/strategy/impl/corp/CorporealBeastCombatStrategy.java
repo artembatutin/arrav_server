@@ -2,9 +2,9 @@ package net.edge.world.node.entity.npc.strategy.impl.corp;
 
 import com.google.common.collect.ImmutableList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.combat.CombatHit;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.weapon.WeaponInterface;
@@ -45,7 +45,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode victim) {
 		if(!npc.getTask().isPresent()) {
 			npc.setTask();
 		}
@@ -56,12 +56,12 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 		CombatType[] data = npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE} : new CombatType[]{CombatType.MAGIC};
 		CombatType c = RandomUtils.random(data);
 
-		List<Player> players = npc.getRegion().getPlayers().values().stream().filter(p -> World.getAreaManager().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList());
+		List<Player> players = npc.getRegion().getPlayers().stream().filter(p -> World.getAreaManager().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList());
 		return type(victim, c, players);
 	}
 
 	@Override
-	public void incomingAttack(EntityNode attacker, CombatSessionData data) {
+	public void incomingAttack(EntityNode attacker, CombatHit data) {
 		if(!attacker.isPlayer()) {
 			return;
 		}
@@ -98,15 +98,15 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 		});
 	}
 
-	private CombatSessionData melee(EntityNode victim, List<Player> players) {
+	private CombatHit melee(EntityNode victim, List<Player> players) {
 		List<Player> stompables = players.stream().filter(p -> new Boundary(p.getPosition(), p.size()).inside(npc.getPosition(), npc.size() + 1)).collect(Collectors.toList());
 
 		if(!stompables.isEmpty()) {
 
-			return new CombatSessionData(npc, stompables.get(0), 1, CombatType.MELEE, true) {
+			return new CombatHit(npc, stompables.get(0), 1, CombatType.MELEE, true) {
 
 				@Override
-				public CombatSessionData preAttack() {
+				public CombatHit preAttack() {
 					Arrays.fill(this.getHits(), null);
 
 					this.getHits()[0] = new Hit(RandomUtils.inclusive(200, 450), Hit.HitType.NORMAL, Hit.HitIcon.MELEE, victim.getSlot());
@@ -130,7 +130,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 
 		Animation animation = new Animation(RandomUtils.random(id));
 		npc.animation(animation);
-		return new CombatSessionData(npc, victim, 1, CombatType.MELEE, true);
+		return new CombatHit(npc, victim, 1, CombatType.MELEE, true);
 	}
 
 	private CombatNormalSpell getSpell() {
@@ -138,13 +138,12 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 		return RandomUtils.random(spells);
 	}
 
-	private CombatSessionData magic(EntityNode victim, List<Player> players) {
+	private CombatHit magic(EntityNode victim, List<Player> players) {
 		CombatNormalSpell spell = getSpell();
 
 		npc.animation(new Animation(10410));
 
 		Position originalVictimPosition = victim.getPosition();
-
 		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
@@ -152,7 +151,6 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 				if(npc.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || npc.isDead() || victim.isDead()) {
 					return;
 				}
-
 				if(spell.equals(TRANSCULENT_BALL_OF_ENERGY)) {
 					new Projectile(npc.getCenterPosition(), originalVictimPosition, 0, 1824, 44, 3, 60, 36, 0, npc.getInstance()).sendProjectile();
 				} else {
@@ -161,10 +159,11 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 			}
 		});
 		npc.setCurrentlyCasting(spell);
-		return new CombatSessionData(npc, victim, 1, CombatType.MAGIC, false) {
+		
+		return new CombatHit(npc, victim, 1, CombatType.MAGIC, false) {
 			@Override
-			public CombatSessionData preAttack() {
-				CombatSessionData data = this;
+			public CombatHit preAttack() {
+				CombatHit data = this;
 
 				if(spell.equals(TRANSCULENT_BALL_OF_ENERGY) && !victim.getPosition().equals(originalVictimPosition)) {
 					data.ignore();
@@ -186,11 +185,10 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 					@Override
 					protected void execute() {
 						this.cancel();
-						for(Player player : npc.getRegion().getPlayers().values()) {
+						for(Player player : npc.getRegion().getPlayers()) {
 							if(player == null) {
 								continue;
 							}
-
 							if(positions.stream().anyMatch(p -> p.equals(player.getPosition()))) {
 								player.damage(new Hit(RandomUtils.inclusive(40), Hit.HitType.NORMAL, Hit.HitIcon.MAGIC, player.getSlot()));
 							}
@@ -202,7 +200,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 		};
 	}
 
-	private CombatSessionData ranged(EntityNode victim, List<Player> players) {
+	private CombatHit ranged(EntityNode victim, List<Player> players) {
 		npc.animation(new Animation(10410));
 
 		World.get().submit(new Task(1, false) {
@@ -215,10 +213,10 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 			}
 		});
 
-		return new CombatSessionData(npc, victim, 1, CombatType.RANGED, false);
+		return new CombatHit(npc, victim, 1, CombatType.RANGED, false);
 	}
 
-	private CombatSessionData type(EntityNode victim, CombatType type, List<Player> players) {
+	private CombatHit type(EntityNode victim, CombatType type, List<Player> players) {
 		switch(type) {
 			case MELEE:
 				return melee(victim, players);

@@ -1,6 +1,6 @@
 package net.edge.world.node.entity.npc.strategy.impl.glacor;
 
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.skill.Skills;
 import net.edge.world.World;
@@ -32,8 +32,8 @@ public final class GlacyteCombatStrategy extends DynamicCombatStrategy<Glacyte> 
 	}
 	
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode victim) {
-		CombatSessionData session = new CombatSessionData(npc, victim, 1, CombatType.MELEE, true);
+	public CombatHit outgoingAttack(EntityNode victim) {
+		CombatHit session = new CombatHit(npc, victim, 1, CombatType.MELEE, true);
 		
 		if(npc.getGlacyteData().equals(GlacyteData.UNSTABLE)) {
 			if(!npc.getSpecial().isPresent()) {
@@ -57,7 +57,7 @@ public final class GlacyteCombatStrategy extends DynamicCombatStrategy<Glacyte> 
 	}
 	
 	@Override
-	public void incomingAttack(EntityNode victim, CombatSessionData data) {
+	public void incomingAttack(EntityNode victim, CombatHit data) {
 		if(npc.getId() == GlacyteData.ENDURING.getNpcId()) {
 			int distance = npc.getPosition().getLongestDelta(npc.getGlacor().getPosition());
 			

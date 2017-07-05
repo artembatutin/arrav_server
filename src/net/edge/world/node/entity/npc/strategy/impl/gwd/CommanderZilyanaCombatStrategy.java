@@ -1,7 +1,7 @@
 package net.edge.world.node.entity.npc.strategy.impl.gwd;
 
+import net.edge.content.combat.CombatHit;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.world.node.NodeState;
@@ -36,7 +36,7 @@ public final class CommanderZilyanaCombatStrategy extends DynamicCombatStrategy<
 	}
 	
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode victim) {
 		CombatType[] data = npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
 		CombatType c = RandomUtils.random(data);
 		CommanderZilyana.MINIONS.forEach(minion -> {
@@ -47,19 +47,19 @@ public final class CommanderZilyanaCombatStrategy extends DynamicCombatStrategy<
 		return type(victim, c);
 	}
 	
-	private CombatSessionData melee(EntityNode victim) {
+	private CombatHit melee(EntityNode victim) {
 		npc.animation(new Animation(6964));
-		return new CombatSessionData(npc, victim, 1, CombatType.MELEE, true);
+		return new CombatHit(npc, victim, 1, CombatType.MELEE, true);
 	}
 	
-	private CombatSessionData magic(EntityNode victim) {
+	private CombatHit magic(EntityNode victim) {
 		npc.setCurrentlyCasting(SPELL);
 		npc.animation(new Animation(6967));
 		npc.graphic(new Graphic(1220));
-		return new CombatSessionData(npc, victim, 2, CombatType.MAGIC, true, 3);
+		return new CombatHit(npc, victim, 2, CombatType.MAGIC, true, 3);
 	}
 	
-	private CombatSessionData type(EntityNode victim, CombatType type) {
+	private CombatHit type(EntityNode victim, CombatType type) {
 		switch(type) {
 			case MELEE:
 				return melee(victim);
@@ -125,7 +125,7 @@ public final class CommanderZilyanaCombatStrategy extends DynamicCombatStrategy<
 	};
 	
 	@Override
-	public void incomingAttack(EntityNode attacker, CombatSessionData data) {
+	public void incomingAttack(EntityNode attacker, CombatHit data) {
 		
 	}
 	

@@ -26,7 +26,7 @@ public final class CombatRangedDetails {
 	/**
 	 * A mapping which contains every combat ranged weapon by the combat ranged ammo definitions.
 	 */
-	public static final Int2ObjectArrayMap<CombatRangedAmmoDefinition[]> RANGED_AMMUNITION = new Int2ObjectArrayMap<>();
+	public static final Int2ObjectArrayMap<CombatRangedAmmunition[]> RANGED_AMMUNITION = new Int2ObjectArrayMap<>();
 	
 	static {
 		for(CombatRangedWeapon weapon : RANGED_WEAPONS.values()) {
@@ -64,9 +64,7 @@ public final class CombatRangedDetails {
 		FightStyle style = player.getFightType().getStyle();
 		
 		int delay = weapon.get().getDelay();
-		
 		int fightStyle = style.equals(FightStyle.ACCURATE) || style.equals(FightStyle.DEFENSIVE) ? 1 : 0;
-		
 		return delay + fightStyle;
 	}
 	
@@ -74,9 +72,9 @@ public final class CombatRangedDetails {
 	 * Determines the players ammunition.
 	 * @param ammunition the ammunition this player is using.
 	 * @param def        the definition of this ammunition.
-	 * @return {@link CombatRangedAmmoDefinition} or null if no value is found.
+	 * @return {@link CombatRangedAmmunition} or null if no value is found.
 	 */
-	public CombatRangedAmmoDefinition determineAmmo(Item ammunition, CombatRangedWeapon def) {
+	public CombatRangedAmmunition determineAmmo(Item ammunition, CombatRangedWeapon def) {
 		if(def.type.equals(CombatRangedType.SPECIAL_BOW)) {
 			return CombatRangedDetails.RANGED_WEAPONS.get(def.getWeapon()).ammunitions[0];
 		}
@@ -110,7 +108,7 @@ public final class CombatRangedDetails {
 			return false;
 		}
 		
-		CombatRangedAmmoDefinition def = determineAmmo(ammunition, weapon);
+		CombatRangedAmmunition def = determineAmmo(ammunition, weapon);
 		if(def == null) {
 			player.message("You cannot use " + TextUtils.appendPluralCheck(ammunition.getDefinition().getName().toLowerCase()) + " with this ranged weapon.");
 			player.getCombatBuilder().reset();
@@ -149,14 +147,14 @@ public final class CombatRangedDetails {
 		/**
 		 * The definition of this ranged ammunition.
 		 */
-		private final CombatRangedAmmoDefinition definition;
+		private final CombatRangedAmmunition definition;
 		
 		/**
 		 * Constructs a new {@link CombatRangedAmmo}.
 		 * @param item       {@link #item}.
 		 * @param definition {@link #definition}.
 		 */
-		public CombatRangedAmmo(Item item, CombatRangedAmmoDefinition definition) {
+		public CombatRangedAmmo(Item item, CombatRangedAmmunition definition) {
 			this.item = item;
 			this.definition = definition;
 		}
@@ -176,7 +174,7 @@ public final class CombatRangedDetails {
 		/**
 		 * @return the definition
 		 */
-		public CombatRangedAmmoDefinition getDefinition() {
+		public CombatRangedAmmunition getDefinition() {
 			return definition;
 		}
 	}
@@ -190,7 +188,7 @@ public final class CombatRangedDetails {
 		/**
 		 * The ammunitions which this weapon can use.
 		 */
-		private final CombatRangedAmmoDefinition[] ammunitions;
+		private final CombatRangedAmmunition[] ammunitions;
 		
 		/**
 		 * The identification of this weapon.
@@ -218,7 +216,7 @@ public final class CombatRangedDetails {
 		 * @param type        {@link #type}.
 		 * @param delay       {@link #delay}.
 		 */
-		public CombatRangedWeapon(CombatRangedAmmoDefinition[] ammunitions, CombatRangedType type, int delay) {
+		public CombatRangedWeapon(CombatRangedAmmunition[] ammunitions, CombatRangedType type, int delay) {
 			this.ammunitions = ammunitions;
 			this.type = type;
 			this.delay = delay;
@@ -227,7 +225,7 @@ public final class CombatRangedDetails {
 		/**
 		 * @return the ammunition
 		 */
-		public CombatRangedAmmoDefinition[] getAmmunitions() {
+		public CombatRangedAmmunition[] getAmmunitions() {
 			return ammunitions;
 		}
 		

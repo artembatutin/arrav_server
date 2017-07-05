@@ -119,6 +119,11 @@ public final class Player extends EntityNode {
 	 * Player's voting points.
 	 */
 	private int votePoints;
+	
+	/**
+	 * The aggression tick timer to not check npc aggression each tick.
+	 */
+	private int aggressionTick;
 
 	/**
 	 * The last username that killed this player.
@@ -244,7 +249,7 @@ public final class Player extends EntityNode {
 	/**
 	 * The collection of stopwatches used for various timing operations.
 	 */
-	private final Stopwatch slashTimer = new Stopwatch().reset(), eatingTimer = new Stopwatch().reset(), potionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch().reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
+	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), eatingTimer = new Stopwatch().reset(), potionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch().reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
 	
 	/**
 	 * The collection of counters used for various counting operations.
@@ -1320,6 +1325,14 @@ public final class Player extends EntityNode {
 	 */
 	public void setSkillAction(Optional<SkillActionTask> action) {
 		this.action = action;
+	}
+	
+	/**
+	 * Gets the activity watcher stopwatch timer.
+	 * @return the activity timer.
+	 */
+	public Stopwatch getWildernessActivity() {
+		return wildernessActivity;
 	}
 	
 	/**
@@ -2400,5 +2413,21 @@ public final class Player extends EntityNode {
 	 */
 	public ObjectList<Npc> getMobs() {
 		return mobs;
+	}
+	
+	/**
+	 * Gets the aggression tick timer.
+	 * @return aggression tick timer.
+	 */
+	public int getAggressionTick() {
+		return aggressionTick;
+	}
+	
+	/**
+	 * Sets a new aggression tick timer.
+	 * @param aggressionTick new value to set.
+	 */
+	public void setAggressionTick(int aggressionTick) {
+		this.aggressionTick = aggressionTick;
 	}
 }

@@ -1,8 +1,8 @@
 package net.edge.world.node.entity.npc.strategy.impl;
 
+import net.edge.content.combat.CombatHit;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.world.World;
@@ -82,7 +82,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 	 * @param type      the type of combat being attacked with.
 	 * @return the combat session data.
 	 */
-	private CombatSessionData type(EntityNode character, EntityNode victim, CombatType type) {
+	private CombatHit type(EntityNode character, EntityNode victim, CombatType type) {
 		switch(type) {
 			case MELEE:
 				return melee(character, victim);
@@ -111,10 +111,10 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 	 * @param victim    the victim being hit.
 	 * @return the combat session data for a melee attack.
 	 */
-	private CombatSessionData melee(EntityNode character, EntityNode victim) {
+	private CombatHit melee(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(10922));
 		character.graphic(new Graphic(1886));
-		return new CombatSessionData(character, victim, 1, CombatType.MELEE, true);
+		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
 	}
 	
 	/**
@@ -123,7 +123,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 	 * @param victim    the victim being hit.
 	 * @return the combat session data for a ranged attack.
 	 */
-	private CombatSessionData ranged(EntityNode character, EntityNode victim) {
+	private CombatHit ranged(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(10919));
 		character.graphic(new Graphic(1888));
 		World.get().submit(new Task(1, false) {
@@ -135,7 +135,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 				new Projectile(character, victim, 1887, 30, 35, 34, 16, 16).sendProjectile();
 			}
 		});
-		return new CombatSessionData(character, victim, 1, CombatType.RANGED, false);
+		return new CombatHit(character, victim, 1, CombatType.RANGED, false);
 	}
 	
 	/**
@@ -144,7 +144,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 	 * @param victim    the victim being hit.
 	 * @return the combat session data for a magic attack.
 	 */
-	private CombatSessionData magic(EntityNode character, EntityNode victim) {
+	private CombatHit magic(EntityNode character, EntityNode victim) {
 		character.setCurrentlyCasting(TORMENTED_DEMON_BLAST);
 		TORMENTED_DEMON_BLAST.castAnimation().ifPresent(character::animation);
 		World.get().submit(new Task(1, false) {
@@ -156,7 +156,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 				TORMENTED_DEMON_BLAST.projectile(character, victim).get().sendProjectile();
 			}
 		});
-		return new CombatSessionData(character, victim, 1, CombatType.MAGIC, false);
+		return new CombatHit(character, victim, 1, CombatType.MAGIC, false);
 	}
 	
 	/**
@@ -190,14 +190,14 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 	}
 	
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode victim) {
 		CombatType[] types = new CombatType[]{CombatType.MELEE, CombatType.RANGED, CombatType.MAGIC};
 		
 		if(combatType == null) {
 			combatType = RandomUtils.random(types);
 		}
 		
-		CombatSessionData data = type(npc, victim, combatType);
+		CombatHit data = type(npc, victim, combatType);
 		
 		if(!switchAttackTask.isPresent()) {
 			switchAttackTask = Optional.of(new SwitchAttackTask(this));
@@ -212,7 +212,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Np
 	}
 	
 	@Override
-	public void incomingAttack(EntityNode attacker, CombatSessionData data) {
+	public void incomingAttack(EntityNode attacker, CombatHit data) {
 		CombatType type = getProtectedFrom(npc);
 		
 		if(!shieldRestorationTask.isPresent()) {

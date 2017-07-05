@@ -49,7 +49,8 @@ public final class Herb extends ProducingSkillAction {
 	
 	@Override
 	public void onProduce(Task t, boolean success) {
-		t.cancel();
+		if(success)
+			t.cancel();
 	}
 	
 	@Override

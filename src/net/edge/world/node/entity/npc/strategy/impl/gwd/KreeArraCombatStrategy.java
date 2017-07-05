@@ -1,9 +1,8 @@
 package net.edge.world.node.entity.npc.strategy.impl.gwd;
 
-import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.combat.CombatHit;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.locale.Position;
@@ -18,9 +17,7 @@ import net.edge.world.node.entity.npc.strategy.DynamicCombatStrategy;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * The dynamic combat strategy for the kree'arra boss.
@@ -42,7 +39,7 @@ public final class KreeArraCombatStrategy extends DynamicCombatStrategy<KreeArra
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode victim) {
 		npc.animation(new Animation(npc.getDefinition().getAttackAnimation()));
 		CombatType[] data = npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC, CombatType.RANGED} : new CombatType[]{CombatType.MAGIC, CombatType.RANGED};
 		CombatType c = RandomUtils.random(data);
@@ -54,13 +51,13 @@ public final class KreeArraCombatStrategy extends DynamicCombatStrategy<KreeArra
 		return type(victim, c);
 	}
 
-	private CombatSessionData melee(EntityNode victim) {
-		return new CombatSessionData(npc, victim, 1, CombatType.MELEE, true);
+	private CombatHit melee(EntityNode victim) {
+		return new CombatHit(npc, victim, 1, CombatType.MELEE, true);
 	}
 
-	private CombatSessionData ranged(EntityNode victim) {
+	private CombatHit ranged(EntityNode victim) {
 		new Projectile(npc, victim, 1197, 44, 3, 43, 43, 0).sendProjectile();
-		return new CombatSessionData(npc, victim, 1, CombatType.RANGED, true) {
+		return new CombatHit(npc, victim, 1, CombatType.RANGED, true) {
 			@Override
 			public void postAttack(int counter) {
 				if(RandomUtils.inclusive(100) < 60) {
@@ -76,7 +73,7 @@ public final class KreeArraCombatStrategy extends DynamicCombatStrategy<KreeArra
 		};
 	}
 
-	private CombatSessionData magic(EntityNode victim) {
+	private CombatHit magic(EntityNode victim) {
 		npc.setCurrentlyCasting(SPELL);
 		World.get().submit(new Task(1, false) {
 			@Override
@@ -88,10 +85,10 @@ public final class KreeArraCombatStrategy extends DynamicCombatStrategy<KreeArra
 				SPELL.projectile(npc, victim).ifPresent(Projectile::sendProjectile);
 			}
 		});
-		return new CombatSessionData(npc, victim, 1, CombatType.MAGIC, true);
+		return new CombatHit(npc, victim, 1, CombatType.MAGIC, true);
 	}
 
-	private CombatSessionData type(EntityNode victim, CombatType c) {
+	private CombatHit type(EntityNode victim, CombatType c) {
 		switch(c) {
 			case MAGIC:
 				return magic(victim);
@@ -159,7 +156,7 @@ public final class KreeArraCombatStrategy extends DynamicCombatStrategy<KreeArra
 	};
 
 	@Override
-	public void incomingAttack(EntityNode attacker, CombatSessionData data) {
+	public void incomingAttack(EntityNode attacker, CombatHit data) {
 
 	}
 

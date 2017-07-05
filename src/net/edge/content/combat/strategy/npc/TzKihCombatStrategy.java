@@ -1,6 +1,6 @@
 package net.edge.content.combat.strategy.npc;
 
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.skill.Skill;
@@ -16,7 +16,7 @@ public final class TzKihCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		if(victim.isPlayer()) {
 			Player player = victim.toPlayer();
 			String type = character.toNpc().isFamiliar() ? "Spirit tz-kih" : "Tz-kih";
@@ -25,7 +25,7 @@ public final class TzKihCombatStrategy implements CombatStrategy {
 			Skills.refresh(player, Skills.PRAYER);
 			player.message("The " + type + " drained your prayer level...");
 		}
-		return new CombatSessionData(character, victim, 1, CombatType.MELEE, true);
+		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
 	}
 
 	@Override

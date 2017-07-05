@@ -1,6 +1,6 @@
 package net.edge.content.combat.strategy.rfd;
 
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.node.entity.EntityNode;
@@ -14,9 +14,9 @@ public final class AgrithNaNa implements CombatStrategy {
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(3501));
-		return new CombatSessionData(character, victim, 1, CombatType.MELEE, false);
+		return new CombatHit(character, victim, 1, CombatType.MELEE, false);
 	}
 
 	@Override

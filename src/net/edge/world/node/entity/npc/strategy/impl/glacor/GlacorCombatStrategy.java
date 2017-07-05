@@ -1,8 +1,8 @@
 package net.edge.world.node.entity.npc.strategy.impl.glacor;
 
 import com.google.common.collect.ImmutableSet;
+import net.edge.content.combat.CombatHit;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.magic.CombatSpells;
@@ -40,11 +40,11 @@ public final class GlacorCombatStrategy extends DynamicCombatStrategy<Glacor> {
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode victim) {
 		CombatType[] data = npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.RANGED, CombatType.MAGIC} : new CombatType[]{CombatType.RANGED, CombatType.MAGIC};
 		CombatType c = RandomUtils.random(data);
 
-		CombatSessionData session = type(victim, c);
+		CombatHit session = type(victim, c);
 
 		if(this.npc.getSpeciality().isPresent()) {
 			if(this.npc.getSpeciality().get().equals(GlacyteData.UNSTABLE)) {
@@ -73,27 +73,27 @@ public final class GlacorCombatStrategy extends DynamicCombatStrategy<Glacor> {
 		return session;
 	}
 
-	private CombatSessionData melee(EntityNode victim) {
+	private CombatHit melee(EntityNode victim) {
 		npc.animation(new Animation(npc.getDefinition().getAttackAnimation()));
-		return new CombatSessionData(npc, victim, 1, CombatType.MELEE, false, 2);
+		return new CombatHit(npc, victim, 1, CombatType.MELEE, false, 2);
 	}
 
-	private CombatSessionData ranged(EntityNode victim) {
+	private CombatHit ranged(EntityNode victim) {
 		npc.animation(new Animation(9968));
 		new Projectile(npc, victim, 962, 50, 16, 61, 41, 16).sendProjectile();
-		return new CombatSessionData(npc, victim, 1, CombatType.RANGED, true, 5);
+		return new CombatHit(npc, victim, 1, CombatType.RANGED, true, 5);
 	}
 
-	private CombatSessionData icycleSpecialAttack(EntityNode victim) {
+	private CombatHit icycleSpecialAttack(EntityNode victim) {
 		npc.animation(new Animation(9955));
 
 		Position tile = victim.getPosition().copy();
 
 		new Projectile(npc.getPosition(), tile, 0, 2314, 50, 16, 61, 41, 16, npc.getInstance()).sendProjectile();
-		return new CombatSessionData(npc, victim, 1, CombatType.RANGED, false, 12) {
+		return new CombatHit(npc, victim, 1, CombatType.RANGED, false, 12) {
 			@Override
-			public CombatSessionData preAttack() {
-				CombatSessionData data = this;
+			public CombatHit preAttack() {
+				CombatHit data = this;
 
 				if(!victim.getPosition().same(tile) || npc.isDead()) {
 					data.ignore();
@@ -114,14 +114,14 @@ public final class GlacorCombatStrategy extends DynamicCombatStrategy<Glacor> {
 		};
 	}
 
-	private CombatSessionData magic(EntityNode victim) {
+	private CombatHit magic(EntityNode victim) {
 		npc.setCurrentlyCasting(SPELL);
 		npc.animation(new Animation(9967));
 		new Projectile(npc, victim, 634, 50, 16, 61, 41, 16).sendProjectile();
-		return new CombatSessionData(npc, victim, 1, CombatType.MAGIC, false, 5);
+		return new CombatHit(npc, victim, 1, CombatType.MAGIC, false, 5);
 	}
 
-	private CombatSessionData type(EntityNode victim, CombatType type) {
+	private CombatHit type(EntityNode victim, CombatType type) {
 		switch(type) {
 			case MELEE:
 				return melee(victim);
@@ -135,7 +135,7 @@ public final class GlacorCombatStrategy extends DynamicCombatStrategy<Glacor> {
 	}
 
 	@Override
-	public void incomingAttack(EntityNode attacker, CombatSessionData data) {
+	public void incomingAttack(EntityNode attacker, CombatHit data) {
 		if(npc.hasSummoned() && npc.getGlacytes().size() != 0) {
 			Arrays.stream(data.getHits()).forEach(h -> h.setAccurate(false));
 			attacker.toPlayer().message("Your hits have no effect on the glacor.");

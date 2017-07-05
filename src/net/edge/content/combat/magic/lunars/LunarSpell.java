@@ -74,38 +74,38 @@ public abstract class LunarSpell extends Spell {
 	}
 
 	@Override
-	public void startCast(EntityNode cast, EntityNode castOn) {
+	public int startCast(EntityNode cast, EntityNode castOn) {
 		if(!cast.isPlayer()) {
-			return;
+			return 0;
 		}
 
 		Player player = cast.toPlayer();
 
 		if(!player.getSpellbook().equals(Spellbook.LUNAR)) {
-			return;
+			return 0;
 		}
 
 		if(!delay.elapsed(delay(), TimeUnit.MILLISECONDS)) {
 			player.message("You must wait " + (TimeUnit.MILLISECONDS.toSeconds(delay() - delay.elapsedTime())) + " seconds before casting " + name() + " again...");
-			return;
+			return 0;
 		}
 
 		if(!this.canCast(player, false)) {
-			return;
+			return 0;
 		}
 
 		if(!prerequisites(player, castOn)) {
-			return;
+			return 0;
 		}
 
 		player.getInventory().removeAll(MagicStaff.suppressRunes(player, this.itemsRequired(player).get()));
-
 		Skills.experience(player, this.baseExperience(), Skills.MAGIC);
 		
 		startAnimation().ifPresent(player::animation);
 		startGraphic().ifPresent(player::graphic);
 		effect(player, castOn);
 		delay.reset();
+		return 0;
 	}
 
 }

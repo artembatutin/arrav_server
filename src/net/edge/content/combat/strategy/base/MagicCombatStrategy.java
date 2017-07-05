@@ -1,7 +1,7 @@
 package net.edge.content.combat.strategy.base;
 
 import net.edge.content.combat.Combat;
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatSpell;
 import net.edge.content.combat.special.CombatSpecial;
@@ -36,24 +36,23 @@ public final class MagicCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+		int delay = 0;
 		if(character.isPlayer()) {
 			Player player = (Player) character;
-			
 			if(player.getAttr().get("lunar_spellbook_swap").getBoolean()) {
 				player.getAttr().get("lunar_spellbook_swap").set(false);
 			}
-			
-			player.prepareSpell(get(player), victim);
+			delay = player.prepareSpell(get(player), victim);
 		} else if(character.isNpc()) {
 			Npc npc = (Npc) character;
-			npc.prepareSpell(Combat.prepareSpellCast(npc).getSpell(), victim);
+			delay = npc.prepareSpell(Combat.prepareSpellCast(npc).getSpell(), victim);
 		}
 		
 		if(character.getCurrentlyCasting().maximumHit() == -1) {
-			return new CombatSessionData(character, victim, CombatType.MAGIC, true);
+			return new CombatHit(character, victim, 0, CombatType.MAGIC, true, delay);
 		}
-		return new CombatSessionData(character, victim, 1, CombatType.MAGIC, true);
+		return new CombatHit(character, victim, 1, CombatType.MAGIC, true, delay);
 	}
 	
 	@Override

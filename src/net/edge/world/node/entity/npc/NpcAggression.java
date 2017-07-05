@@ -4,6 +4,7 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.game.GameConstants;
 import net.edge.locale.loc.Location;
 import net.edge.world.World;
+import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.HashSet;
@@ -30,14 +31,15 @@ public final class NpcAggression {
 	 * @param player the player that will be targeted.
 	 */
 	public static void sequence(Player player) {
+		if(player.getAggressionTick() > 5)
+			player.setAggressionTick(0);
+		else
+			player.setAggressionTick(player.getAggressionTick() + 1);
 		if(player.getMinigame().isPresent() && player.getMinigame().get().aggression()) {
 			return;
 		}
-		if(RandomUtils.inclusive(10) == 3 && (!player.getCombatBuilder().inCombat() || Location.inMultiCombat(player))) {
+		if(player.getAggressionTick() == 1 && (!player.getCombatBuilder().inCombat() || Location.inMultiCombat(player))) {
 			for(Npc npc : player.getLocalNpcs()) {
-				//if(GodwarsFaction.attack(npc)) {
-				//	return;
-				//}
 				if(validate(npc, player, Location.inMultiCombat(npc)) && !World.getAreaManager().inArea(player, "GODWARS")) {
 					npc.getCombatBuilder().attack(player);
 				}/* else if(GodwarsFaction.attack(npc)) {
@@ -76,11 +78,9 @@ public final class NpcAggression {
 			retreat(npc);
 			return false;
 		}
-		if(npc.getMovementCoordinator().getBoundary() != null) {
-			if(!npc.getMovementCoordinator().getBoundary().within(player.getPosition(), npc.size(), GameConstants.TARGET_DISTANCE) && retreats) {
-				retreat(npc);//Retreats check.
-				return false;
-			}
+		if(!npc.getMovementCoordinator().getBoundary().within(player.getPosition(), npc.size(), GameConstants.TARGET_DISTANCE) && retreats) {
+			retreat(npc);//Retreats check.
+			return false;
 		}
 		if(!multi && player.getCombatBuilder().isAttacking() || player.getCombatBuilder().isBeingAttacked())
 			return false;

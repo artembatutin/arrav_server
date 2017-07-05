@@ -1,6 +1,6 @@
 package net.edge.content.combat.strategy.dagannoth;
 
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.node.entity.EntityNode;
@@ -16,7 +16,7 @@ public final class DagannothRexCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public void incomingAttack(EntityNode character, EntityNode attacker, CombatSessionData data) {
+	public void incomingAttack(EntityNode character, EntityNode attacker, CombatHit data) {
 		if(data.getType().equals(CombatType.RANGED) || data.getType().equals(CombatType.MELEE)) {
 			attacker.toPlayer().message("Your attacks are completely blocked...");
 			Arrays.stream(data.getHits()).filter(Objects::nonNull).forEach(h -> h.setAccurate(false));
@@ -25,8 +25,8 @@ public final class DagannothRexCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
-		return new CombatSessionData(character, victim, 1, CombatType.MELEE, true);
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
 	}
 
 	@Override

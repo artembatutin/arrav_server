@@ -1,8 +1,8 @@
 package net.edge.content.combat.strategy.armadyl;
 
+import net.edge.content.combat.CombatHit;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatSessionData;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
@@ -30,14 +30,14 @@ public final class AviansieCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		character.animation(new Animation(character.toNpc().getDefinition().getAttackAnimation()));
 		CombatType[] data = getCombatType(character.toNpc(), victim);
 		CombatType c = RandomUtils.random(data);
 		return type(character, victim, c);
 	}
 
-	private CombatSessionData type(EntityNode character, EntityNode victim, CombatType c) {
+	private CombatHit type(EntityNode character, EntityNode victim, CombatType c) {
 		switch(c) {
 			case MAGIC:
 				return magic(character, victim);
@@ -63,16 +63,16 @@ public final class AviansieCombatStrategy implements CombatStrategy {
 		}
 	}
 
-	private CombatSessionData melee(EntityNode character, EntityNode victim) {
-		return new CombatSessionData(character, victim, 1, CombatType.MELEE, true);
+	private CombatHit melee(EntityNode character, EntityNode victim) {
+		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
 	}
 
-	private CombatSessionData ranged(EntityNode character, EntityNode victim) {
+	private CombatHit ranged(EntityNode character, EntityNode victim) {
 		new Projectile(character, victim, 1837, 44, 3, 120, 43, 0).sendProjectile();
-		return new CombatSessionData(character, victim, 1, CombatType.RANGED, true);
+		return new CombatHit(character, victim, 1, CombatType.RANGED, true);
 	}
 
-	private CombatSessionData magic(EntityNode character, EntityNode victim) {
+	private CombatHit magic(EntityNode character, EntityNode victim) {
 		character.setCurrentlyCasting(SPELL);
 		World.get().submit(new Task(1, false) {
 			@Override
@@ -84,7 +84,7 @@ public final class AviansieCombatStrategy implements CombatStrategy {
 				new Projectile(character, victim, 2729, 44, 3, 120, 43, 0).sendProjectile();
 			}
 		});
-		return new CombatSessionData(character, victim, 1, CombatType.MAGIC, true);
+		return new CombatHit(character, victim, 1, CombatType.MAGIC, true);
 	}
 
 	@Override

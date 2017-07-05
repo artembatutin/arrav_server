@@ -1,6 +1,6 @@
 package net.edge.content.combat.strategy.npc;
 
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.node.entity.EntityNode;
@@ -13,8 +13,8 @@ public final class WaterfiendCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
-		return new CombatSessionData(character, victim, CombatType.MELEE, true);//FIXME waterfiend uses ranged and magic.
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+		return new CombatHit(character, victim, CombatType.MELEE, true);//FIXME waterfiend uses ranged and magic.
 	}
 	
 	@Override

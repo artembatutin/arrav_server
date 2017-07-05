@@ -218,7 +218,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 					pest.getCombatBuilder().attack(voidKnight);
 					continue;
 				}
-				for(Player p : pest.getRegion().getPlayers().values()) {
+				for(Player p : pest.getRegion().getPlayers()) {
 					if(p.getPosition().withinDistance(pest.getPosition(), pest.ranged() ? 10 : 5)) {
 						pest.getCombatBuilder().attack(p);
 						break;

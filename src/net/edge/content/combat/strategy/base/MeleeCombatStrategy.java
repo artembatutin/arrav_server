@@ -1,6 +1,6 @@
 package net.edge.content.combat.strategy.base;
 
-import net.edge.content.combat.CombatSessionData;
+import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.combat.weapon.WeaponInterface;
@@ -28,7 +28,7 @@ public final class MeleeCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatSessionData outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
 		if(character.isNpc()) {
 			Npc npc = (Npc) character;
 			npc.animation(new Animation(npc.getDefinition().getAttackAnimation()));
@@ -40,7 +40,7 @@ public final class MeleeCombatStrategy implements CombatStrategy {
 				player.animation(new Animation(player.getFightType().getAnimation(), Animation.AnimationPriority.HIGH));
 			}
 		}
-		return new CombatSessionData(character, victim, 1, CombatType.MELEE, true);
+		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
 	}
 	
 	@Override

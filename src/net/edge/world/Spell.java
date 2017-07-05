@@ -113,8 +113,8 @@ public abstract class Spell {
 	/**
 	 * The dynamic method executed when the spell is cast.
 	 * @param cast   the character casting the spell.
-	 * @param castOn the character the spell is being cast on, this may be
-	 *               {@code null}.
+	 * @param castOn the character the spell is being cast on, this may be {@code null}.
+	 * @return the delay of the casting.
 	 */
-	public abstract void startCast(EntityNode cast, EntityNode castOn);
+	public abstract int startCast(EntityNode cast, EntityNode castOn);
 }

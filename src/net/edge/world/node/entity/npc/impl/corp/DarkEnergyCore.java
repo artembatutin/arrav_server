@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
  */
 public final class DarkEnergyCore extends Npc {
 	
+	//TODO: Create a player ObjectList and hold players in the corp area?
+	
 	/**
 	 * The corporeal beast this dark core is summoned by.
 	 */
@@ -100,8 +102,7 @@ public final class DarkEnergyCore extends Npc {
 		
 		@Override
 		protected void execute() {
-			Player victim = RandomUtils.random(core.getRegion().getPlayers().values().stream().filter(p -> World.getAreaManager().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList()));
-			
+			Player victim = RandomUtils.random(core.getRegion().getPlayers().stream().filter(p -> World.getAreaManager().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList()));
 			if(core.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || core.isDead() || victim.isDead()) {
 				return;
 			}
@@ -165,7 +166,7 @@ public final class DarkEnergyCore extends Npc {
 				return;
 			}
 			
-			List<Player> possibleVictims = core.getRegion().getPlayers().values().stream().filter(p -> World.getAreaManager().inArea(p.getPosition(), "CORPOREAL_BEAST") && new Boundary(p.getPosition(), p.size()).inside(core.getPosition(), 3)).collect(Collectors.toList());
+			List<Player> possibleVictims = core.getRegion().getPlayers().stream().filter(p -> World.getAreaManager().inArea(p.getPosition(), "CORPOREAL_BEAST") && new Boundary(p.getPosition(), p.size()).inside(core.getPosition(), 3)).collect(Collectors.toList());
 			
 			if(possibleVictims.isEmpty()) {
 				return;
