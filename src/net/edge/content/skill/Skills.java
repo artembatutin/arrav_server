@@ -159,7 +159,7 @@ public final class Skills {
 	/**
 	 * The experience multiplier that skill related skills experience will be calculated with.
 	 */
-	private static final int SKILL_EXPERIENCE_MULTIPLIER = 40;
+	private static final int SKILL_EXPERIENCE_MULTIPLIER = 25;
 	
 	/**
 	 * The experience multiplier that combat related skills experience will be calculated with.
@@ -169,7 +169,7 @@ public final class Skills {
 	/**
 	 * The experience multiplier that combat related skills experience will be calculated with.
 	 */
-	private static final int COMBAT_EXPERIENCE_MULTIPLER = 1500;
+	private static final int COMBAT_EXPERIENCE_MULTIPLER = 500;
 	
 	/**
 	 * The default constructor.
