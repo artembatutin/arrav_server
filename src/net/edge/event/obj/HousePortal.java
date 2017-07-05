@@ -15,7 +15,7 @@ public class HousePortal extends EventInitializer {
 		ObjectEvent e = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
-				player.message("Construction will soon be released.");
+				player.message("Construction to be released soon.");
 				/*player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						if(!Construction.hasHouse(player)) {

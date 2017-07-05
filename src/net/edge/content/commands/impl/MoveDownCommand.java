@@ -5,7 +5,7 @@ import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-@CommandSignature(alias = {"movedown"}, rights = {Rights.DEVELOPER, Rights.ADMINISTRATOR}, syntax = "Use this command as ::movedown")
+@CommandSignature(alias = {"movedown"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Use this command as ::movedown")
 public final class MoveDownCommand implements Command {
 
 	@Override

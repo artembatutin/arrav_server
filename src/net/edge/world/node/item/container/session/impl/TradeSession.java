@@ -65,7 +65,7 @@ public final class TradeSession extends ExchangeSession {
 	 * @return the trade display name.
 	 */
 	private String name(Player player) {
-		return player.getFormatUsername().concat("@cr" + player.getRights().getProtocolValue() + "@");
+		return player.getFormatUsername();
 	}
 
 	/**
@@ -76,7 +76,7 @@ public final class TradeSession extends ExchangeSession {
 	 */
 	private String getItemNames(Player player, Item[] items) {
 		String tradeItems = "Absolutely nothing!";
-		String tradeAmount = "";
+		String tradeAmount;
 		int count = 0;
 		for(Item item : items) {
 			if(item == null || (item != null && tradeItems.contains(item.getDefinition().getName()))) {

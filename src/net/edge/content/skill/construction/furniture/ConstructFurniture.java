@@ -119,7 +119,7 @@ public final class ConstructFurniture extends ProducingSkillAction {
 	
 	@Override
 	public Optional<Item[]> removeItem() {
-		if(getPlayer().getRights() == Rights.DEVELOPER)
+		if(getPlayer().getRights() == Rights.ADMINISTRATOR)
 			return Optional.empty();
 		return Optional.of(plan.getSelected().getRequiredItems());
 	}

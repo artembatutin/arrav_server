@@ -7,7 +7,7 @@ import net.edge.locale.Position;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-@CommandSignature(alias = {"tele", "teleport"}, rights = {Rights.DEVELOPER, Rights.ADMINISTRATOR, Rights.SUPER_MODERATOR, Rights.MODERATOR}, syntax = "Use this command as ::tele or ::teleport x y [[z/height axis is optional]")
+@CommandSignature(alias = {"tele", "teleport"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Use this command as ::tele or ::teleport x y [[z/height axis is optional]")
 public final class TeleportCommand implements Command {
 	
 	@Override

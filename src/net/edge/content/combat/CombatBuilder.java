@@ -88,7 +88,7 @@ public final class CombatBuilder {
 			character.getMovementQueue().reset();
 			return;
 		}
-		if(character.isPlayer() && target.isNpc() && character.toPlayer().getRights().equals(Rights.DEVELOPER)) {
+		if(character.isPlayer() && target.isNpc() && character.toPlayer().getRights().equals(Rights.ADMINISTRATOR)) {
 			character.toPlayer().message("[DEBUG NPC ID] Npc = " + target.toNpc().getId() + ", position = " + target.toNpc().getPosition().toString());
 		}
 		if(target.same(currentVictim)) {

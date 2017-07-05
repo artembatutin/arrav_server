@@ -5,7 +5,7 @@ import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-@CommandSignature(alias = {"interface"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::interface interfaceId")
+@CommandSignature(alias = {"interface"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::interface interfaceId")
 public final class OpenInterfaceCommand implements Command {
 	
 	@Override

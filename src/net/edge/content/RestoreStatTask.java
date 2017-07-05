@@ -78,7 +78,7 @@ public final class RestoreStatTask extends Task {
 				}
 			}
 			if(player.getSpecialPercentage().get() < 100) {
-				if(player.getRights().equal(Rights.DEVELOPER)) {
+				if(player.getRights().equal(Rights.ADMINISTRATOR)) {
 					CombatSpecial.restore(player, 100);
 					return;
 				}

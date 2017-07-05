@@ -257,7 +257,7 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 			Player player = entity.toPlayer();
 			player.getSession().flushQueue();
 			player.getSession().getChannel().close();
-			if(player.getRights() != Rights.DEVELOPER && player.getRights() != Rights.ADMINISTRATOR)
+			if(player.getRights() != Rights.ADMINISTRATOR && player.getRights() != Rights.ADMINISTRATOR)
 				new Hiscores(World.getScore(), player).submit();
 		}
 		return true;
@@ -276,7 +276,7 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 			e.setState(NodeState.INACTIVE);
 			p.getSession().flushQueue();
 			p.getSession().getChannel().close();
-			if(p.getRights() != Rights.DEVELOPER && p.getRights() != Rights.ADMINISTRATOR)
+			if(p.getRights() != Rights.ADMINISTRATOR && p.getRights() != Rights.ADMINISTRATOR)
 				new Hiscores(World.getScore(), p).submit();
 		}
 		size = 0;

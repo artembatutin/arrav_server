@@ -6,7 +6,7 @@ import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-@CommandSignature(alias = {"viewbank"}, rights = {Rights.DEVELOPER, Rights.ADMINISTRATOR}, syntax = "Use this command as ::viewbank username")
+@CommandSignature(alias = {"viewbank"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Use this command as ::viewbank username")
 public final class ViewBankCommand implements Command {
 	
 	@Override

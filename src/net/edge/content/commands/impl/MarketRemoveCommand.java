@@ -6,7 +6,7 @@ import net.edge.content.market.MarketItem;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-@CommandSignature(alias = {"marketremove"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::marketadd itemId")
+@CommandSignature(alias = {"marketremove"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::marketadd itemId")
 public final class MarketRemoveCommand implements Command {
 	
 	@Override

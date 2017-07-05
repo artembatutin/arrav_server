@@ -947,12 +947,12 @@ public final class PacketWriter {
 		Optional<ObjectDirection> dir = ObjectDirection.valueOf(face);
 		Optional<ObjectType> type = ObjectType.valueOf(objectType);
 		if(!dir.isPresent()) {
-			if(player.getRights() == Rights.DEVELOPER)
+			if(player.getRights() == Rights.ADMINISTRATOR)
 				player.message("Couldn't find direction, " + face);
 			return;
 		}
 		if(!type.isPresent()) {
-			if(player.getRights() == Rights.DEVELOPER)
+			if(player.getRights() == Rights.ADMINISTRATOR)
 				player.message("Couldn't find type, " + objectType);
 			return;
 		}
@@ -1393,6 +1393,19 @@ public final class PacketWriter {
 		msg.putString(author);
 		msg.putString(message);
 		msg.putString(clanName);
+		msg.putShort(rank.getProtocolValue());
+		player.queue(msg);
+	}
+	
+	/**
+	 * The message that sends a yell message.
+	 */
+	public void sendYell(String author, String message, Rights rank) {
+		if(player.getState() == INACTIVE || !player.isHuman())
+			return;
+		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 210, MessageType.VARIABLE);
+		msg.putString(author);
+		msg.putString(message);
 		msg.putShort(rank.getProtocolValue());
 		player.queue(msg);
 	}

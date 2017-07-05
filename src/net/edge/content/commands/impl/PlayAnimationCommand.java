@@ -6,7 +6,7 @@ import net.edge.world.Animation;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-@CommandSignature(alias = {"emote", "animation", "anim"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::emote, ::animation or ::anim animationId")
+@CommandSignature(alias = {"emote", "animation", "anim"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::emote, ::animation or ::anim animationId")
 public final class PlayAnimationCommand implements Command {
 	
 	@Override

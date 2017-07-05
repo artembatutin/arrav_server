@@ -51,7 +51,7 @@ public enum RFDData {
 	 * @param npcId {@link #npcId}.
 	 * @param ids   {@link #ids}.
 	 */
-	private RFDData(int index, int npcId, int... ids) {
+	RFDData(int index, int npcId, int... ids) {
 		this.index = index;
 		this.npcId = npcId;
 		this.ids = Item.convert(ids);

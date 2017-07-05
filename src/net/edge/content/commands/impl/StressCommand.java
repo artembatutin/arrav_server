@@ -1,26 +1,19 @@
 package net.edge.content.commands.impl;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
-import it.unimi.dsi.fastutil.objects.ObjectSet;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
-import net.edge.game.GameConstants;
 import net.edge.locale.Position;
 import net.edge.net.session.BotSession;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.NpcAggression;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-import java.util.Optional;
-
-@CommandSignature(alias = {"stress"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::stress")
+@CommandSignature(alias = {"stress"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::stress")
 public final class StressCommand implements Command {
 
 	private static int id = 0;

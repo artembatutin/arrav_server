@@ -6,7 +6,7 @@ import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-@CommandSignature(alias = {"pinstance"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::pinstance player #")
+@CommandSignature(alias = {"pinstance"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::pinstance player #")
 public final class SetPlayerInstanceCommand implements Command {
 	
 	@Override

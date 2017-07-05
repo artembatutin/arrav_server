@@ -16,7 +16,7 @@ import net.edge.world.node.item.ItemDefinition;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
-@CommandSignature(alias = {"save"}, rights = {Rights.DEVELOPER, Rights.ADMINISTRATOR}, syntax = "Use this command as ::save type")
+@CommandSignature(alias = {"save"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Use this command as ::save type")
 public final class SaveCommand implements Command {
 	
 	@Override

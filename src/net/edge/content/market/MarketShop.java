@@ -150,7 +150,7 @@ public class MarketShop {
 		MarketItem shopItem = MarketItem.get(item.getId());
 		if(shopItem == null)
 			return;
-		if(player.getRights() == Rights.DEVELOPER) {
+		if(player.getRights() == Rights.ADMINISTRATOR) {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 					player.getMessages().sendEnterAmount(shopItem.getName() + ": set price to:", s -> () -> {
@@ -168,7 +168,7 @@ public class MarketShop {
 			}, "Change price", "Change stock", "toggle: " + (!shopItem.isVariable() ? "price changes" : "price is fixed"), "toggle: " + (shopItem.isUnlimitedStock() ? "unlimited stock" : "variable stock")));
 			return;
 		}
-		if(!shopItem.isSearchable() && player.getRights() != Rights.DEVELOPER) {
+		if(!shopItem.isSearchable() && player.getRights() != Rights.ADMINISTRATOR) {
 			player.message("This item can't be bought.");
 			return;
 		}

@@ -8,7 +8,7 @@ import net.edge.world.node.entity.npc.impl.DefaultNpc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-@CommandSignature(alias = {"dummy"}, rights = {Rights.ADMINISTRATOR, Rights.DEVELOPER}, syntax = "Use this command as ::dummy npcId")
+@CommandSignature(alias = {"dummy"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Use this command as ::dummy npcId")
 public final class DummyCommand implements Command {
 	
 	@Override

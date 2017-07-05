@@ -8,16 +8,18 @@ import java.util.Arrays;
  * @author lare96 <http://github.com/lare96>
  */
 public enum Rights {
-	PLAYER(0, 0, ""),
-	DESIGNER(5, 1, "@blu@"),
-	RESPECTED_MEMBER(6, 2, "@blu@"),
-	DONATOR(7, 3, "@red@"),
-	SUPER_DONATOR(8, 4, "@red@"),
-	EXTREME_DONATOR(9, 5, "@gre@"),
-	MODERATOR(1, 6, "@or1@"),
-	SUPER_MODERATOR(2, 7, "@or2@"),
-	ADMINISTRATOR(3, 8, "@or3@"),
-	DEVELOPER(4, 9, "@or3@");
+	PLAYER(0, 0),
+	RESPECTED_MEMBER(1, 1),
+	DESIGNER(2, 1),
+	YOUTUBER(3, 1),
+	HELPER(8, 1),
+	DONATOR(4, 2),
+	SUPER_DONATOR(5, 3),
+	EXTREME_DONATOR(6, 4),
+	GOLDEN_DONATOR(7, 5),
+	MODERATOR(9, 7),
+	SENIOR_MODERATOR(10, 9),
+	ADMINISTRATOR(11, 10);
 	
 	/**
 	 * The value of this rank as seen by the protocol.
@@ -31,20 +33,13 @@ public enum Rights {
 	private final int value;
 	
 	/**
-	 * The yell-prefix for this right.
-	 */
-	private final String yell;
-	
-	/**
 	 * Create a new {@link Rights}.
 	 * @param protocolValue the value of this rank as seen by the protocol.
 	 * @param value         the value of this rank as seen by the server.
-	 * @param yell          {@link #yell}.
 	 */
-	Rights(int protocolValue, int value, String yell) {
+	Rights(int protocolValue, int value) {
 		this.protocolValue = protocolValue;
 		this.value = value;
-		this.yell = yell;
 	}
 	
 	/**
@@ -96,11 +91,11 @@ public enum Rights {
 	}
 	
 	public final boolean isStaff() {
-		return this.equals(MODERATOR) || this.equals(SUPER_MODERATOR) || this.equals(ADMINISTRATOR) || this.equals(DEVELOPER);
+		return this.equals(MODERATOR) || this.equals(SENIOR_MODERATOR) || this.equals(ADMINISTRATOR) || this.equals(ADMINISTRATOR);
 	}
 	
 	public final boolean isDonator() {
-		return this.equals(DONATOR) || this.equals(SUPER_DONATOR) || this.equals(EXTREME_DONATOR);
+		return this.equals(DONATOR) || this.equals(SUPER_DONATOR) || this.equals(EXTREME_DONATOR) || this.equals(GOLDEN_DONATOR);
 	}
 	
 	/**
@@ -109,14 +104,6 @@ public enum Rights {
 	 */
 	public final int getValue() {
 		return value;
-	}
-	
-	/**
-	 * Gets the yell prefix of this rank as seen by the server.
-	 * @return the yell prefix of this rank.
-	 */
-	public final String getYellPrefix() {
-		return yell;
 	}
 	
 	@Override

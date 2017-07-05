@@ -353,7 +353,7 @@ public final class DuelSession extends ExchangeSession {
 	 * @return the duel display name.
 	 */
 	private String name(Player player) {
-		return player.getFormatUsername().concat("@cr" + player.getRights().getProtocolValue() + "@");
+		return player.getFormatUsername();
 	}
 	
 	/**

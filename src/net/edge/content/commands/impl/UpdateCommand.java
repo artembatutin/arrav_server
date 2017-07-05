@@ -8,9 +8,7 @@ import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-import java.util.concurrent.TimeUnit;
-
-@CommandSignature(alias = {"update"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::update seconds")
+@CommandSignature(alias = {"update"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::update seconds")
 public final class UpdateCommand implements Command {
 	
 	/**

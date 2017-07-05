@@ -6,7 +6,7 @@ import net.edge.world.Direction;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-@CommandSignature(alias = {"face", "facedir", "facedirection"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::face, ::facedir or ::facedirection direction")
+@CommandSignature(alias = {"face", "facedir", "facedirection"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::face, ::facedir or ::facedirection direction")
 public final class FaceDirection implements Command {
 	
 	@Override

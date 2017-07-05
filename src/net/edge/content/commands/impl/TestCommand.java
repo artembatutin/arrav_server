@@ -15,7 +15,7 @@ import net.edge.world.node.item.Item;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-@CommandSignature(alias = {"test"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::test")
+@CommandSignature(alias = {"test"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::test")
 public final class TestCommand implements Command {
 
 	@Override

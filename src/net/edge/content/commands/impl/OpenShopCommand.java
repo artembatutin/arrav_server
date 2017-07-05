@@ -6,7 +6,7 @@ import net.edge.content.market.MarketCounter;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-@CommandSignature(alias = {"shop"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as just ::shop id")
+@CommandSignature(alias = {"shop"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::shop id")
 public final class OpenShopCommand implements Command {
 	
 	@Override

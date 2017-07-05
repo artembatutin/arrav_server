@@ -15,6 +15,7 @@ import net.edge.util.ThreadUtil;
 import net.edge.util.log.LoggingManager;
 import net.edge.content.PlayerPanel;
 import net.edge.content.clanchat.ClanManager;
+import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.container.session.ExchangeSessionManager;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.shootingstar.ShootingStarManager;
@@ -327,11 +328,21 @@ public final class World {
 	}
 	
 	/**
-	 * Sends {@code message} to all online players without an announcement.
-	 * @param message the message to send to all online players.
+	 * Sends {@code message} to all online players.
+	 * @param message      the message to send to all online players.
 	 */
 	public void message(String message) {
 		message(message, false);
+	}
+	
+	/**
+	 * Sends {@code message} to all online players as a yell.
+	 * @param author author yelling.
+	 * @param message the message being yelled.
+	 * @param rights the rights of the author.
+	 */
+	public void yell(String author, String message, Rights rights) {
+		players.forEach(p -> p.getMessages().sendYell(author, message, rights));
 	}
 	
 	/**

@@ -8,7 +8,7 @@ import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-@CommandSignature(alias = {"setplevel"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::setplevel playername skill level")
+@CommandSignature(alias = {"setplevel"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::setplevel playername skill level")
 public final class SetPlayerlevelCommand implements Command {
 	
 	@Override

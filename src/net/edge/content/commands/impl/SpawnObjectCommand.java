@@ -8,7 +8,7 @@ import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectType;
 
-@CommandSignature(alias = {"object", "spawnobject"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as ::object or ::spawnobject id")
+@CommandSignature(alias = {"object", "spawnobject"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::object or ::spawnobject id")
 public final class SpawnObjectCommand implements Command {
 	
 	@Override

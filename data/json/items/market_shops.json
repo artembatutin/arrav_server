@@ -1023,7 +1023,7 @@
   {
     "id": 28,
     "name": "Stardust shop",
-    "currency": "STARDUST",
+    "currency": "STAR_DUST",
     "items": [
       21472,
       21462,

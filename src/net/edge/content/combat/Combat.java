@@ -378,7 +378,8 @@ public final class Combat {
 	 * @throws IllegalArgumentException if the combat type is invalid.
 	 */
 	public static int getDelay(EntityNode character, EntityNode victim, CombatType type) {
-		int delay = character.isPlayer() && victim.isNpc() ? 1: 0;
+		int delay = character.isPlayer() && victim.isNpc() ? 1 : 0;
+		System.out.println(delay);
 		if(character.isPlayer() && character.toPlayer().getWeapon().equals(WeaponInterface.SALAMANDER)) {
 			return 1 + delay;
 		}

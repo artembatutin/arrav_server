@@ -6,7 +6,7 @@ import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-@CommandSignature(alias = {"debug", "debugmode"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as just ::debug or ::debugmode")
+@CommandSignature(alias = {"debug", "debugmode"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::debug or ::debugmode")
 public final class SetDebugMode implements Command {
 	
 	@Override

@@ -7,12 +7,10 @@ import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
-import java.util.Optional;
-
 /**
  * The assist command for staff members.
  */
-@CommandSignature(alias = {"assist", "help"}, rights = {Rights.DEVELOPER, Rights.ADMINISTRATOR, Rights.SUPER_MODERATOR, Rights.MODERATOR}, syntax = "Use this command as ::assist username")
+@CommandSignature(alias = {"assist", "help"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Use this command as ::assist username")
 public final class AssistCommand implements Command {
 	
 	@Override

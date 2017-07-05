@@ -10,7 +10,7 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.object.ObjectNode;
 
-@CommandSignature(alias = {"reload"}, rights = {Rights.DEVELOPER}, syntax = "Use this command as just ::reload")
+@CommandSignature(alias = {"reload"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::reload")
 public final class ReloadCommand implements Command {
 	
 	@Override

@@ -145,7 +145,7 @@ public abstract class ExchangeSession {
 		if(!canAddItem(player, invItem, slot)) {
 			return false;
 		}
-		if(!invItem.getDefinition().isTradable() && player.getRights().less(Rights.DEVELOPER)) {
+		if(!invItem.getDefinition().isTradable() && player.getRights().less(Rights.ADMINISTRATOR)) {
 			player.message("You can't offer this item.");
 			return false;
 		}

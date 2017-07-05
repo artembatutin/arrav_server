@@ -31,7 +31,7 @@ public final class NpcInformationPacket implements PacketReader {
 			int min = payload.getShort();
 			int max = payload.getShort();
 			SuggestedDrop suggested = new SuggestedDrop(npc, item, min, max, chance);
-			if(player.getRights() == Rights.DEVELOPER) {
+			if(player.getRights() == Rights.ADMINISTRATOR) {
 				NpcDropTable table = NpcDropManager.getTables().get(npc);
 				if(table == null) {
 					player.message("No table found.");
