@@ -7,7 +7,7 @@ import net.edge.content.skill.crafting.JewelleryMoulding;
 import net.edge.content.skill.smithing.Smithing;
 import net.edge.event.EventContainer;
 import net.edge.event.impl.ItemEvent;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.PacketReader;
@@ -32,7 +32,7 @@ public final class ItemInterfacePacket implements PacketReader {
 	public static final EventContainer<ItemEvent> EQUIP = new EventContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_INTERFACE))
 			return;
 		
@@ -67,7 +67,7 @@ public final class ItemInterfacePacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
-	private void firstSlot(Player player, ByteMessage payload) {
+	private void firstSlot(Player player, IncomingMsg payload) {
 		int interfaceId = payload.getShort(ByteTransform.A);
 		int slot = payload.getShort(ByteTransform.A);
 		int itemId = payload.getShort(ByteTransform.A);
@@ -133,7 +133,7 @@ public final class ItemInterfacePacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
-	private void secondSlot(Player player, ByteMessage payload) {
+	private void secondSlot(Player player, IncomingMsg payload) {
 		int interfaceId = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int itemId = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int slot = payload.getShort(true, ByteOrder.LITTLE);
@@ -189,7 +189,7 @@ public final class ItemInterfacePacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
-	private void thirdSlot(Player player, ByteMessage payload) {
+	private void thirdSlot(Player player, IncomingMsg payload) {
 		int interfaceId = payload.getShort(ByteOrder.LITTLE);
 		int itemId = payload.getShort(ByteTransform.A);
 		int slot = payload.getShort(ByteTransform.A);
@@ -244,7 +244,7 @@ public final class ItemInterfacePacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
-	private void fourthSlot(Player player, ByteMessage payload) {
+	private void fourthSlot(Player player, IncomingMsg payload) {
 		int slot = payload.getShort(ByteTransform.A);
 		int interfaceId = payload.getShort();
 		int itemId = payload.getShort(ByteTransform.A);
@@ -294,7 +294,7 @@ public final class ItemInterfacePacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
-	private void equipItem(Player player, ByteMessage payload) {
+	private void equipItem(Player player, IncomingMsg payload) {
 		int itemId = payload.getShort(false);
 		int slot = payload.getShort(false, ByteTransform.A);
 		int interfaceId = payload.getShort(false, ByteTransform.A);
@@ -318,7 +318,7 @@ public final class ItemInterfacePacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
-	private void swapSlots(Player player, ByteMessage payload) {
+	private void swapSlots(Player player, IncomingMsg payload) {
 		int interfaceId = payload.getShort(ByteTransform.A, ByteOrder.LITTLE);
 		int fromSlot = payload.getShort(ByteTransform.A, ByteOrder.LITTLE);
 		int toSlot = payload.getShort(ByteOrder.LITTLE);
@@ -346,7 +346,7 @@ public final class ItemInterfacePacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
-	private void bankTab(Player player, ByteMessage payload) {
+	private void bankTab(Player player, IncomingMsg payload) {
 		int tab = payload.getShort(ByteTransform.A, ByteOrder.LITTLE);
 		int fromSlot = payload.getShort(ByteTransform.A, ByteOrder.LITTLE);
 		int toTab = payload.getShort(ByteTransform.A, ByteOrder.LITTLE);

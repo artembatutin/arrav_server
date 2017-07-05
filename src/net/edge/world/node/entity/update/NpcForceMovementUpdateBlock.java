@@ -1,6 +1,7 @@
 package net.edge.world.node.entity.update;
 
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.locale.Position;
@@ -22,7 +23,7 @@ public final class NpcForceMovementUpdateBlock extends NpcUpdateBlock {
 	}
 
 	@Override
-	public int write(Player player, Npc npc, ByteMessage msg) {
+	public int write(Player player, Npc npc, GameBuffer msg) {
 		ForcedMovement movement = npc.getForcedMovement();
 		Position lastRegion = player.getLastRegion();
 		Position position = npc.getPosition();

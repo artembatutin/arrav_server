@@ -1,6 +1,7 @@
 package net.edge.world.node.entity.update;
 
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
@@ -19,7 +20,7 @@ final class NpcAnimationUpdateBlock extends NpcUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Npc npc, ByteMessage msg) {
+	public int write(Player player, Npc npc, GameBuffer msg) {
 		msg.putShort(npc.getAnimation().getId(), ByteOrder.LITTLE);
 		msg.put(npc.getAnimation().getDelay());
 		return -1;

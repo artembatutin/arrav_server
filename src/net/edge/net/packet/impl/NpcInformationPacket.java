@@ -2,7 +2,7 @@ package net.edge.net.packet.impl;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.PacketReader;
 import net.edge.util.rand.Chance;
 import net.edge.world.node.entity.npc.NpcDefinition;
@@ -23,7 +23,7 @@ public final class NpcInformationPacket implements PacketReader {
 	public static final ObjectList<SuggestedDrop> SUGGESTED = new ObjectArrayList<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(opcode == 19) {
 			Chance chance = Chance.values()[payload.get()];
 			int npc = player.getAttr().get("npcInformation").getInt();

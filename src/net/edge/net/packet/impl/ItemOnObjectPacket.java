@@ -10,7 +10,7 @@ import net.edge.content.skill.prayer.PrayerBoneAltar;
 import net.edge.content.skill.smithing.Smithing;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.PacketReader;
@@ -32,7 +32,7 @@ public final class ItemOnObjectPacket implements PacketReader {
 	// TODO: When cache reading is done, check position of objects.
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ON_OBJECT)) {
 			return;
 		}

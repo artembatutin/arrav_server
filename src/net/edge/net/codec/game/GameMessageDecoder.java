@@ -5,7 +5,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import net.edge.net.NetworkConstants;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.IsaacCipher;
 import net.edge.net.codec.MessageType;
 import net.edge.net.packet.Packet;
@@ -158,7 +158,7 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 				return;
 			}
 			payload.retain();
-			currentMessage = Optional.of(new Packet(opcode, type, ByteMessage.wrap(payload)));
+			currentMessage = Optional.of(new Packet(opcode, type, IncomingMsg.wrap(payload)));
 		} finally {
 			resetState();
 		}

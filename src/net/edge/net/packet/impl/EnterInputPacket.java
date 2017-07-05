@@ -1,6 +1,6 @@
 package net.edge.net.packet.impl;
 
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.PacketReader;
 import net.edge.util.TextUtils;
 import net.edge.world.node.entity.player.Player;
@@ -13,7 +13,7 @@ public final class EnterInputPacket implements PacketReader {
 	public static final int ENTER_AMOUNT_OPCODE = 208, ENTER_SYNTAX_OPCODE = 60;
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ENTER_INPUT)) {
 			return;
 		}
@@ -34,7 +34,7 @@ public final class EnterInputPacket implements PacketReader {
 	 * @param player  the player this packet is sent for.
 	 * @param payload the payload chained to this packet.
 	 */
-	private void enterAmount(Player player, ByteMessage payload) {
+	private void enterAmount(Player player, IncomingMsg payload) {
 		int amount = payload.getInt();
 		if(amount < 1) {
 			return;
@@ -48,7 +48,7 @@ public final class EnterInputPacket implements PacketReader {
 	 * @param player  the player this packet is sent for.
 	 * @param payload the payload chained to this packet.
 	 */
-	private void enterSyntax(Player player, ByteMessage payload) {
+	private void enterSyntax(Player player, IncomingMsg payload) {
 		String name = TextUtils.hashToName(payload.getLong());
 		if(name.isEmpty()) {
 			return;

@@ -1,6 +1,6 @@
 package net.edge.net.packet;
 
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.MessageType;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -29,7 +29,7 @@ public final class Packet {
 	/**
 	 * The payload of this message.
 	 */
-	private final ByteMessage payload;
+	private final IncomingMsg payload;
 	
 	/**
 	 * Creates a new {@link Packet}.
@@ -37,7 +37,7 @@ public final class Packet {
 	 * @param type    The type of this message.
 	 * @param payload The payload of this message.
 	 */
-	public Packet(int opcode, MessageType type, ByteMessage payload) {
+	public Packet(int opcode, MessageType type, IncomingMsg payload) {
 		this.opcode = opcode;
 		this.type = type;
 		this.payload = payload;
@@ -68,7 +68,7 @@ public final class Packet {
 	/**
 	 * @return The payload of this message.
 	 */
-	public ByteMessage getPayload() {
+	public IncomingMsg getPayload() {
 		return payload;
 	}
 }

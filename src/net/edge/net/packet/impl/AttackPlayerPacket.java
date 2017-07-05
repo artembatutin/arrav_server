@@ -8,7 +8,7 @@ import net.edge.world.node.item.container.session.impl.DuelSession;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.locale.loc.Location;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.PacketReader;
@@ -25,7 +25,7 @@ import java.util.Optional;
 public final class AttackPlayerPacket implements PacketReader {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ATTACK_PLAYER))
 			return;
 		switch(opcode) {
@@ -44,7 +44,7 @@ public final class AttackPlayerPacket implements PacketReader {
 	 * @param player  the player to attempt to attack.
 	 * @param payload the payloadfer for reading the sent data.
 	 */
-	private void attackMagic(Player player, ByteMessage payload) {
+	private void attackMagic(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteTransform.A);
 		int spellId = payload.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
@@ -70,7 +70,7 @@ public final class AttackPlayerPacket implements PacketReader {
 	 * @param player  the player to attempt to attack.
 	 * @param payload the payloadfer for reading the sent data.
 	 */
-	private void attackOther(Player player, ByteMessage payload) {
+	private void attackOther(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
 		if(index < 0 || index > World.get().getPlayers().capacity() || !checkAttack(player, victim))

@@ -6,7 +6,6 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import net.edge.net.NetworkConstants;
 import net.edge.net.codec.game.GameMessageDecoder;
-import net.edge.net.codec.game.GameMessageEncoder;
 import net.edge.net.codec.login.LoginRequest;
 import net.edge.net.codec.login.LoginResponse;
 import net.edge.net.codec.login.LoginResponseMessage;
@@ -78,7 +77,7 @@ public final class LoginSession extends Session {
 		} else {
 			final JsonObject reader = serial.getReader();
 			future.addListener(it -> {
-				request.getPipeline().replace("login-encoder", "game-encoder", new GameMessageEncoder(request.getEncryptor()));
+				request.getPipeline().remove("login-encoder");
 				request.getPipeline().replace("login-decoder", "game-decoder", new GameMessageDecoder(request.getDecryptor()));
 				
 				GameSession session = new GameSession(player, channel, request.getEncryptor(), request.getDecryptor());

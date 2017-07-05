@@ -1,6 +1,7 @@
 package net.edge.world.node.entity.update;
 
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.world.Hit;
 import net.edge.world.node.entity.player.Player;
 
@@ -18,7 +19,7 @@ public final class PlayerPrimaryHitUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Player mob, ByteMessage msg) {
+	public int write(Player player, Player mob, GameBuffer msg) {
 		Hit hit = mob.getPrimaryHit();
 		boolean local = mob == player || (hit.hasSource() && hit.getSource() == player.getSlot());
 		msg.putShort(hit.getDamage());

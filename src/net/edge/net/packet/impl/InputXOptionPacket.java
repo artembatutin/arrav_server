@@ -3,7 +3,7 @@ package net.edge.net.packet.impl;
 import net.edge.world.node.item.container.session.ExchangeSession;
 import net.edge.world.node.item.container.session.ExchangeSessionType;
 import net.edge.content.skill.summoning.Summoning;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.PacketReader;
@@ -15,7 +15,7 @@ import net.edge.world.node.item.ItemDefinition;
 public final class InputXOptionPacket implements PacketReader {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		int slot = payload.getShort(ByteOrder.LITTLE);
 		int interfaceId = payload.getShort(ByteTransform.A);
 		int itemId = payload.getShort(ByteOrder.LITTLE);

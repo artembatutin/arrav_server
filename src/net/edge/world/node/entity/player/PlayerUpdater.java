@@ -1,7 +1,8 @@
 package net.edge.world.node.entity.player;
 
 import io.netty.buffer.ByteBufAllocator;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.MessageType;
 import net.edge.locale.Position;
 import net.edge.world.World;
@@ -20,15 +21,13 @@ import java.util.Iterator;
  */
 public final class PlayerUpdater {
 	
-	/**
-	 * The set of {@link UpdateBlockSet} that will manage all of the updates.
-	 */
-	private final UpdateBlockSet<Player> blockSet = UpdateBlockSet.PLAYER_BLOCK_SET;
-	
-	public ByteMessage write(Player player) {
+	public static void write(Player player) {
+		UpdateBlockSet<Player> blockSet = UpdateBlockSet.PLAYER_BLOCK_SET;
+
 		ByteBufAllocator alloc = player.getSession().alloc();
-		ByteMessage msg = ByteMessage.message(alloc, 81, MessageType.VARIABLE_SHORT);
-		ByteMessage blockMsg = ByteMessage.message(alloc);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(81, MessageType.VARIABLE_SHORT);
+		GameBuffer blockMsg = new GameBuffer(alloc.buffer(64));
 		
 		try {
 			msg.startBitAccess();
@@ -81,7 +80,8 @@ public final class PlayerUpdater {
 		} finally {
 			blockMsg.release();
 		}
-		return msg;
+
+		msg.endVarSize();
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public final class PlayerUpdater {
 	 * @param player    The {@link Player} this update message is being sent for.
 	 * @param addPlayer The {@code Player} being added.
 	 */
-	private void addPlayer(ByteMessage msg, Player player, Player addPlayer) {
+	private static void addPlayer(GameBuffer msg, Player player, Player addPlayer) {
 		msg.putBits(11, addPlayer.getSlot());
 		msg.putBit(true);
 		msg.putBit(true);
@@ -106,7 +106,7 @@ public final class PlayerUpdater {
 	 * @param player The {@link Player} to handle running and walking for.
 	 * @param msg    The main update message.
 	 */
-	private void handleMovement(Player player, ByteMessage msg) {
+	private static void handleMovement(Player player, GameBuffer msg) {
 		boolean needsUpdate = !player.getFlags().isEmpty();
 		if(player.isNeedsPlacement()) {
 			Position position = player.getPosition();

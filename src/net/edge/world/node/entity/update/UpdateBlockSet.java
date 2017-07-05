@@ -1,6 +1,7 @@
 package net.edge.world.node.entity.update;
 
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
@@ -77,7 +78,7 @@ public final class UpdateBlockSet<E extends EntityNode> {
 	 * @param msg    The main update buffer.
 	 * @param state  The {@link UpdateState} that the underlying {@link Player} is in.
 	 */
-	public void encodeUpdateBlocks(Player player, E forEntity, ByteMessage msg, UpdateState state) {
+	public void encodeUpdateBlocks(Player player, E forEntity, GameBuffer msg, UpdateState state) {
 		if(forEntity.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
 		}
@@ -97,7 +98,7 @@ public final class UpdateBlockSet<E extends EntityNode> {
 	 * @param msg        The main update buffer.
 	 * @param state      The {@link UpdateState} that the underlying {@code Player} is in.
 	 */
-	private void encodePlayerBlocks(Player thisPlayer, E forMob, ByteMessage msg, UpdateState state) {
+	private void encodePlayerBlocks(Player thisPlayer, E forMob, GameBuffer msg, UpdateState state) {
 		Player player = (Player) forMob;
 		boolean cacheBlocks = (state != UpdateState.ADD_LOCAL && state != UpdateState.UPDATE_SELF);
 		
@@ -105,8 +106,8 @@ public final class UpdateBlockSet<E extends EntityNode> {
 			msg.putBytes(player.getCachedUpdateBlock());
 			return;
 		}
-		
-		ByteMessage encodedBlocks = encodeBlocks(thisPlayer, forMob, state);
+
+		GameBuffer encodedBlocks = encodeBlocks(thisPlayer, forMob, state);
 		msg.putBytes(encodedBlocks);
 		if(cacheBlocks) {
 			player.setCachedUpdateBlock(encodedBlocks);
@@ -120,8 +121,8 @@ public final class UpdateBlockSet<E extends EntityNode> {
 	 * @param msg    The main update buffer.
 	 * @param state  The {@link UpdateState} that the underlying {@code Npc} is in.
 	 */
-	private void encodeNpcBlocks(Player player, E forMob, ByteMessage msg, UpdateState state) {
-		ByteMessage encodedBlocks = encodeBlocks(player, forMob, state);
+	private void encodeNpcBlocks(Player player, E forMob, GameBuffer msg, UpdateState state) {
+		GameBuffer encodedBlocks = encodeBlocks(player, forMob, state);
 		msg.putBytes(encodedBlocks);
 		encodedBlocks.release();
 	}
@@ -133,8 +134,8 @@ public final class UpdateBlockSet<E extends EntityNode> {
 	 * @param state  The {@link UpdateState} that the underlying {@link Player} is in.
 	 * @return The buffer containing the data.
 	 */
-	private ByteMessage encodeBlocks(Player player, E forMob, UpdateState state) {
-		ByteMessage encodedBlock = ByteMessage.message(player.getSession().alloc());
+	private GameBuffer encodeBlocks(Player player, E forMob, UpdateState state) {
+		GameBuffer encodedBlock = new GameBuffer(player.getSession().alloc().buffer(64));
 		
 		int mask = 0;
 		Set<UpdateBlock<E>> writeBlocks = new LinkedHashSet<>();

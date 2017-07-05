@@ -1,6 +1,6 @@
 package net.edge.net.packet;
 
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.world.node.entity.player.Player;
 
 /**
@@ -17,5 +17,5 @@ public interface PacketReader {
 	 * @param size    the size of this message.
 	 * @param payload the data contained within this message.
 	 */
-	void handle(Player player, int opcode, int size, ByteMessage payload);
+	void handle(Player player, int opcode, int size, IncomingMsg payload);
 }

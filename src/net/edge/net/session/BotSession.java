@@ -1,7 +1,6 @@
 package net.edge.net.session;
 
-import io.netty.channel.Channel;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
@@ -36,11 +35,6 @@ public final class BotSession extends GameSession {
 	
 	@Override
 	public void handleUpstreamMessage(Object msg) {
-	
-	}
-	
-	@Override
-	public void queue(ByteMessage msg) {
 	
 	}
 	

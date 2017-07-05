@@ -3,10 +3,10 @@ package net.edge.net.session;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.Channel;
 import net.edge.net.NetworkConstants;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.IsaacCipher;
 import net.edge.net.packet.Packet;
-import net.edge.net.packet.PacketReader;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
@@ -18,6 +18,10 @@ import java.util.concurrent.ArrayBlockingQueue;
  * @author lare96 <http://github.org/lare96>
  */
 public class GameSession extends Session {
+	/**
+	 * The capacity of the stream.
+	 */
+	private static final int STREAM_CAP = 5000;
 	
 	/**
 	 * The player assigned to this {@code GameSession}.
@@ -33,6 +37,11 @@ public class GameSession extends Session {
 	 * The message decryptor.
 	 */
 	private final IsaacCipher decryptor;
+
+	/**
+	 * The game stream.
+	 */
+	private final GameBuffer stream;
 	
 	/**
 	 * A bounded queue of inbound {@link Packet}s.
@@ -50,11 +59,14 @@ public class GameSession extends Session {
 		this.player = player;
 		this.encryptor = encryptor;
 		this.decryptor = decryptor;
+		this.stream = new GameBuffer(channel.alloc().buffer(STREAM_CAP), encryptor);
 	}
 	
 	@Override
 	public void onDispose() {
 		World.get().queueLogout(player);
+
+		stream.release();
 	}
 	
 	@Override
@@ -70,20 +82,6 @@ public class GameSession extends Session {
 	}
 	
 	/**
-	 * Writes {@code msg} to the underlying channel; The channel is not flushed.
-	 * @param msg The message to queue.
-	 */
-	public void queue(ByteMessage msg) {
-		Channel channel = getChannel();
-		if(channel.isActive()) {
-			if(msg.getOpcode() == 53 || msg.getOpcode() == 34)
-				channel.writeAndFlush(new Packet(msg.getOpcode(), msg.getType(), msg));
-			else
-				channel.write(new Packet(msg.getOpcode(), msg.getType(), msg), channel.voidPromise());
-		}
-	}
-	
-	/**
 	 * Flushes all pending {@link Packet}s within the channel's queue. Repeated calls to this method are relatively
 	 * expensive, which is why messages should be queued up with {@code queue(MessageWriter)} and flushed once at the end of
 	 * the cycle.
@@ -91,7 +89,10 @@ public class GameSession extends Session {
 	public void flushQueue() {
 		Channel channel = getChannel();
 		if(channel.isActive()) {
-			channel.flush();
+			channel.eventLoop().execute(() -> {
+				channel.writeAndFlush(stream.retain(), channel.voidPromise());
+				stream.clear();
+			});
 		}
 	}
 	
@@ -113,7 +114,7 @@ public class GameSession extends Session {
 		try {
 			NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.getSize(), packet.getPayload());
 		} finally {
-			ByteMessage payload = packet.getPayload();
+			IncomingMsg payload = packet.getPayload();
 			if (payload.refCnt() > 0) {
 				payload.release();
 			}
@@ -132,6 +133,13 @@ public class GameSession extends Session {
 	 */
 	public IsaacCipher getDecryptor() {
 		return decryptor;
+	}
+
+	/**
+	 * @return The game stream.
+	 */
+	public GameBuffer getStream() {
+		return stream;
 	}
 	
 	/**

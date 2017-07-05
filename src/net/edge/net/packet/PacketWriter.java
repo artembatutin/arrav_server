@@ -9,10 +9,7 @@ import net.edge.content.skill.construction.Palette.PaletteTile;
 import net.edge.content.skill.construction.furniture.Furniture;
 import net.edge.content.skill.construction.furniture.HotSpots;
 import net.edge.content.wilderness.WildernessActivity;
-import net.edge.net.codec.ByteMessage;
-import net.edge.net.codec.ByteOrder;
-import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.*;
 import net.edge.util.ActionListener;
 import net.edge.content.clanchat.ClanMember;
 import net.edge.content.market.MarketItem;
@@ -39,7 +36,7 @@ import java.util.function.Function;
 import static net.edge.world.node.NodeState.INACTIVE;
 
 /**
- * The utility class used to queue {@link ByteMessage}s to be encoded and
+ * The utility class used to queue {@link IncomingMsg}s to be encoded and
  * written to the Client.
  * @author lare96 <http://github.com/lare96>
  */
@@ -65,10 +62,10 @@ public final class PacketWriter {
 	public void sendForceTab(TabInterface tab) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 106);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(106);
 		msg.put(tab.getOld());
 		msg.put(tab.getNew());
-		player.queue(msg);
 	}
 	
 	/**
@@ -79,10 +76,10 @@ public final class PacketWriter {
 	public void sendInterfaceLayer(int id, boolean hide) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 171);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(171);
 		msg.put(hide ? 1 : 0);
 		msg.putShort(id);
-		player.queue(msg);
 	}
 	
 	/**
@@ -94,11 +91,11 @@ public final class PacketWriter {
 	public void sendUpdateSpecial(int id, int amount) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 70);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(70);
 		msg.putShort(amount);
 		msg.putShort(0, ByteOrder.LITTLE);
 		msg.putShort(id, ByteOrder.LITTLE);
-		player.queue(msg);
 	}
 	
 	/**
@@ -120,7 +117,8 @@ public final class PacketWriter {
 	public void sendWildernessActivity(ObjectList<Player> pkers) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 150, MessageType.VARIABLE_SHORT);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(150, MessageType.VARIABLE_SHORT);
 		int fools = WildernessActivity.getFooledCount(player);
 		msg.put(pkers.size() + fools);
 		for(Player p : pkers) {
@@ -134,7 +132,7 @@ public final class PacketWriter {
 				fools--;
 			}
 		}
-		player.queue(msg);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -149,11 +147,11 @@ public final class PacketWriter {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
 		sendCoordinates(position);
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 160);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(160);
 		msg.put(((0 & 7) << 4) + (0 & 7), ByteTransform.S);
 		msg.put((type.getId() << 2) + (direction.getId() & 3), ByteTransform.S);
 		msg.putShort(animation, ByteTransform.A);
-		player.queue(msg);
 	}
 	
 	/**
@@ -183,13 +181,12 @@ public final class PacketWriter {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
 		sendCoordinates(position);
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 4);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(4);
 		msg.put(0);
 		msg.putShort(id);
 		msg.put(level);
 		msg.putShort(0);
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -224,11 +221,10 @@ public final class PacketWriter {
 	public void sendInterfaceAnimation(int id, int animation) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 200);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(200);
 		msg.putShort(id);
 		msg.putShort(animation);
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -238,10 +234,9 @@ public final class PacketWriter {
 	public void sendMultiIcon(boolean hide) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 61);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(61);
 		msg.put(hide ? 0 : 1);
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -253,7 +248,8 @@ public final class PacketWriter {
 	public void sendItemOnInterfaceSlot(int id, Item item, int slot) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 34, MessageType.VARIABLE_SHORT);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(34, MessageType.VARIABLE_SHORT);
 		msg.putShort(id);
 		msg.put(slot);
 		msg.putShort(item == null ? 0 : item.getId() + 1);
@@ -264,9 +260,7 @@ public final class PacketWriter {
 		} else {
 			msg.put(am);
 		}
-		
-		player.queue(msg);
-		
+		msg.endVarSize();
 	}
 	
 	/**
@@ -279,10 +273,10 @@ public final class PacketWriter {
 	public void sendItemModelOnInterface(int id, int zoom, int model) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 246);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(246);
 		msg.putShort(id, ByteOrder.LITTLE);
 		msg.putShort(zoom).putShort(model);
-		player.queue(msg);
 		
 	}
 	
@@ -295,14 +289,13 @@ public final class PacketWriter {
 	public void sendItemsOnInterface(int id, Item[] items, int length) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 53, MessageType.VARIABLE_SHORT);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(53, MessageType.VARIABLE_SHORT);
 		msg.putShort(id);
 		if(items == null) {
 			msg.putShort(0);
 			msg.put(0);
 			msg.putShort(0, ByteTransform.A, ByteOrder.LITTLE);
-			
-			player.queue(msg);
 		} else {
 			msg.putShort(length);
 			for(Item item : items) {
@@ -332,7 +325,7 @@ public final class PacketWriter {
 				}
 			}
 		}
-		player.queue(msg);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -343,13 +336,13 @@ public final class PacketWriter {
 	public void sendShopItemsOnInterface(int id, IntArrayList items) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 53, MessageType.VARIABLE_SHORT);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(53, MessageType.VARIABLE_SHORT);
 		msg.putShort(id);
 		if(items == null) {
 			msg.putShort(0);
 			msg.put(0);
 			msg.putShort(0, ByteTransform.A, ByteOrder.LITTLE);
-			player.queue(msg);
 		} else {
 			msg.putShort(items.size());
 			for(int i : items) {
@@ -380,7 +373,7 @@ public final class PacketWriter {
 				}
 			}
 		}
-		player.queue(msg);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -390,7 +383,8 @@ public final class PacketWriter {
 	public void sendShopItemPrice(MarketItem item) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 54, MessageType.VARIABLE_SHORT);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(54, MessageType.VARIABLE_SHORT);
 		if(item.getPrice() > 254) {
 			msg.put(255);
 			msg.putInt(item.getPrice(), ByteOrder.INVERSE_MIDDLE);
@@ -398,7 +392,7 @@ public final class PacketWriter {
 			msg.put(item.getPrice());
 		}
 		msg.putShort(item.getId() + 1, ByteTransform.A, ByteOrder.LITTLE);
-		player.queue(msg);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -408,7 +402,8 @@ public final class PacketWriter {
 	public void sendShopItemStock(MarketItem item) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 55, MessageType.VARIABLE_SHORT);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(55, MessageType.VARIABLE_SHORT);
 		if(item.getStock() > 254) {
 			msg.put(255);
 			msg.putInt(item.getStock(), ByteOrder.INVERSE_MIDDLE);
@@ -416,7 +411,7 @@ public final class PacketWriter {
 			msg.put(item.getStock());
 		}
 		msg.putShort(item.getId() + 1, ByteTransform.A, ByteOrder.LITTLE);
-		player.queue(msg);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -443,10 +438,10 @@ public final class PacketWriter {
 	public void sendNpcModelOnInterface(int id, int model) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 75);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(75);
 		msg.putShort(model, ByteTransform.A, ByteOrder.LITTLE);
 		msg.putShort(id, ByteTransform.A, ByteOrder.LITTLE);
-		player.queue(msg);
 		
 	}
 	
@@ -457,10 +452,9 @@ public final class PacketWriter {
 	public void sendPlayerModelOnInterface(int id) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 185);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(185);
 		msg.putShort(id, ByteTransform.A, ByteOrder.LITTLE);
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -502,10 +496,9 @@ public final class PacketWriter {
 	public void sendFlashSidebar(int code) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 24);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(24);
 		msg.put(code, ByteTransform.A);
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -525,9 +518,9 @@ public final class PacketWriter {
 	public void sendMinimapState(int code) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 99);
-		msg.put(code);
-		player.queue(msg);
+		GameBuffer str = player.getSession().getStream();
+		str.message(99);
+		str.put(code);
 		
 	}
 	
@@ -541,13 +534,13 @@ public final class PacketWriter {
 	public void sendCameraAngle(Position position, int height, int movementSpeed, int rotationSpeed) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 177);
-		msg.put(position.getLocalX(player.getPosition()));
-		msg.put(position.getLocalY(player.getPosition()));
-		msg.putShort(height);
-		msg.put(movementSpeed);
-		msg.put(rotationSpeed);
-		player.queue(msg);
+		GameBuffer str = player.getSession().getStream();
+		str.message(177);
+		str.put(position.getLocalX(player.getPosition()));
+		str.put(position.getLocalY(player.getPosition()));
+		str.putShort(height);
+		str.put(movementSpeed);
+		str.put(rotationSpeed);
 		
 	}
 	
@@ -561,13 +554,13 @@ public final class PacketWriter {
 	public void sendCameraMovement(Position position, int height, int movementSpeed, int rotationSpeed) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 166);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(166);
 		msg.put(position.getLocalX(player.getPosition()));
 		msg.put(position.getLocalY(player.getPosition()));
 		msg.putShort(height);
 		msg.put(movementSpeed);
 		msg.put(rotationSpeed);
-		player.queue(msg);
 		
 	}
 	
@@ -600,12 +593,12 @@ public final class PacketWriter {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
 		Preconditions.checkArgument(parameter <= 4);
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 35);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(35);
 		msg.put(parameter);
 		msg.put(jitter);
 		msg.put(amplitude);
 		msg.put(frequency);
-		player.queue(msg);
 		
 	}
 	
@@ -615,8 +608,8 @@ public final class PacketWriter {
 	public void sendResetCameraPosition() {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 107);
-		player.queue(msg);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(107);
 		
 	}
 	
@@ -633,10 +626,9 @@ public final class PacketWriter {
 	public void sendSystemUpdate(int amount) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 114);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(114);
 		msg.putShort(amount, ByteOrder.LITTLE);
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -646,9 +638,9 @@ public final class PacketWriter {
 	public void sendRunEnergy() {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 110);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(110);
 		msg.put((int) player.getRunEnergy());
-		player.queue(msg);
 		
 	}
 	
@@ -683,10 +675,10 @@ public final class PacketWriter {
 	public void sendInterfaceColor(int id, int color) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 122);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(122);
 		msg.putShort(id, ByteTransform.A, ByteOrder.LITTLE);
 		msg.putShort(color, ByteTransform.A, ByteOrder.LITTLE);
-		player.queue(msg);
 		
 	}
 	
@@ -707,7 +699,8 @@ public final class PacketWriter {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
 		sendCoordinates(position);
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 117);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(117);
 		msg.put(0);
 		msg.put(offset.getX());
 		msg.put(offset.getY());
@@ -719,7 +712,6 @@ public final class PacketWriter {
 		msg.putShort(speed);
 		msg.put(16);
 		msg.put(64);
-		player.queue(msg);
 		
 	}
 	
@@ -739,7 +731,16 @@ public final class PacketWriter {
 	public void sendAllProjectile(Position position, Position offset, int speed, int gfxMoving, int startHeight, int endHeight, int lockon, int time) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		player.getLocalPlayers().stream().filter(Objects::nonNull).forEach(p -> p.getMessages().sendProjectile(position, offset, speed, gfxMoving, startHeight, endHeight, lockon, time));
+
+		// Sino: what did i say about this; filter creates a new arraylist each iteration.
+
+		for(Player p : player.getLocalPlayers()) {
+			if(p == null) {
+				continue;
+			}
+			p.getMessages().sendProjectile(position, offset, speed, gfxMoving, startHeight, endHeight, lockon, time);
+		}
+//		player.getLocalPlayers().stream().filter(Objects::nonNull).forEach(p -> );
 	}
 	
 	/**
@@ -751,18 +752,18 @@ public final class PacketWriter {
 	public void sendConfig(int id, int state) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
+		GameBuffer msg = player.getSession().getStream();
+
 		if(state < Byte.MIN_VALUE || state > Byte.MAX_VALUE) {
-			ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 87);
+			msg.message(87);
 			msg.putShort(id, ByteOrder.LITTLE);
 			msg.putInt(state, ByteOrder.MIDDLE);
-			player.queue(msg);
-			return;
+			return; // Sino: y u no } else {, ik vind block statements mooier idk why
 		}
-		
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 36);
+
+		msg.message(36);
 		msg.putShort(id, ByteOrder.LITTLE);
 		msg.put(state);
-		player.queue(msg);
 		
 	}
 	
@@ -774,10 +775,10 @@ public final class PacketWriter {
 	public void sendSkillGoal(int id, int goal) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 135);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(135);
 		msg.put(id);
 		msg.put(goal);
-		player.queue(msg);
 	}
 	
 	/**
@@ -787,10 +788,11 @@ public final class PacketWriter {
 	public void sendEnterName(String title, Function<String, ActionListener> action) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 187, MessageType.VARIABLE);
-		msg.putString(title);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(187, MessageType.VARIABLE);
+		msg.putCString(title);
+		msg.endVarSize();
 		player.setEnterInputListener(Optional.of(action));
-		player.queue(msg);
 	}
 	
 	/**
@@ -800,9 +802,10 @@ public final class PacketWriter {
 	public void sendLink(String link) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 100, MessageType.VARIABLE);
-		msg.putString(link);
-		player.queue(msg);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(100, MessageType.VARIABLE);
+		msg.putCString(link);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -811,11 +814,13 @@ public final class PacketWriter {
 	 */
 	public void sendEnterAmount(String title, Function<String, ActionListener> listener) {
 		if(player.getState() == INACTIVE || !player.isHuman())
-			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 27, MessageType.VARIABLE);
-		msg.putString(title);
+			return; // ik denk nu ook dat je cycle times wat beter zijn, iiedere keer je write() oproept of writeAndFlush() gaat t wat langer duren
+
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(27, MessageType.VARIABLE);
+		msg.putCString(title);
+		msg.endVarSize();
 		player.setEnterInputListener(Optional.of(listener));
-		player.queue(msg);
 	}
 	
 	/**
@@ -825,13 +830,14 @@ public final class PacketWriter {
 	public void sendScoreInput(int index, String title, int kills, int deaths, int killstreak) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 30, MessageType.VARIABLE);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(30, MessageType.VARIABLE);
 		msg.putShort(index);
 		msg.putShort(kills);
 		msg.putShort(deaths);
 		msg.putShort(killstreak);
-		msg.putString(title);
-		player.queue(msg);
+		msg.putCString(title);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -842,12 +848,11 @@ public final class PacketWriter {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
 		sendCoordinates(object.getGlobalPos());
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 151);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(151);
 		msg.put(0, ByteTransform.S);
 		msg.putInt(object.getId());
 		msg.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.S);
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -858,10 +863,10 @@ public final class PacketWriter {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
 		sendCoordinates(object.getGlobalPos());
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 101);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(101);
 		msg.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.C);
 		msg.put(0);
-		player.queue(msg);
 	}
 	
 	/**
@@ -870,8 +875,8 @@ public final class PacketWriter {
 	public void removeAllObjects() {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 131);
-		player.queue(msg);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(131);
 	}
 	
 	/**
@@ -884,7 +889,8 @@ public final class PacketWriter {
 		Furniture[] panel = spot.getFurnitures();
 		if(panel == null || panel.length == 0)
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 130, MessageType.VARIABLE);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(130, MessageType.VARIABLE);
 		msg.put(panel.length);
 		for(Furniture furniture : panel) {
 			msg.putShort(furniture.getItemId());
@@ -895,8 +901,9 @@ public final class PacketWriter {
 				msg.putShort(req.getAmount());
 			}
 		}
+		msg.endVarSize();
+
 		player.getHouse().get().getPlan().setPanel(panel);
-		player.queue(msg);
 	}
 	
 	/**
@@ -923,8 +930,11 @@ public final class PacketWriter {
 	public void sendSkill(int id, int level, int exp) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 134).put(id).putInt(exp, ByteOrder.MIDDLE).putInt(level);
-		player.queue(msg);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(134);
+		msg.put(id);
+		msg.putInt(exp, ByteOrder.MIDDLE);
+		msg.putInt(level);
 	}
 	
 	/**
@@ -933,8 +943,9 @@ public final class PacketWriter {
 	public void sendCloseWindows() {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 219);
-		player.queue(msg);
+
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(219);
 		player.getDialogueBuilder().interrupt();
 	}
 	
@@ -964,7 +975,8 @@ public final class PacketWriter {
 	 * @param palette palette to be sent.
 	 */
 	public void constructMapRegion(Palette palette) {
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 241, MessageType.VARIABLE_SHORT);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(241, MessageType.VARIABLE_SHORT);
 		msg.putShort(player.getPosition().getRegionX() + 6, ByteTransform.A);
 		msg.putShort(player.getPosition().getRegionY() + 6);
 		for (int z = 0; z < 4; z++) {
@@ -983,7 +995,7 @@ public final class PacketWriter {
 				}
 			}
 		}
-		player.queue(msg);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -995,12 +1007,12 @@ public final class PacketWriter {
 	public void sendFade(int start, int duration, int end) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 80);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(80);
 		msg.put(start);
 		msg.put(duration);
 		msg.put(end);
-		player.queue(msg);
-		
+
 	}
 	
 	/**
@@ -1011,11 +1023,11 @@ public final class PacketWriter {
 	public void sendItemOnInterface(int widget, int itemId) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 82);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(82);
 		msg.putInt(widget);
 		msg.putInt(itemId);
-		player.queue(msg);
-		
+
 	}
 	
 	/**
@@ -1035,10 +1047,10 @@ public final class PacketWriter {
 	public void sendPrivateMessageListStatus(int code) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 221);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(221);
 		msg.put(code);
-		player.queue(msg);
-		
+
 	}
 	
 	/**
@@ -1048,15 +1060,15 @@ public final class PacketWriter {
 	public void sendClanMemberList(ObjectList<ClanMember> members) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 51, MessageType.VARIABLE);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(51, MessageType.VARIABLE);
 		msg.putShort(members.size());
 		for(ClanMember m : members) {
-			msg.putString(m.getPlayer().getUsername());
+			msg.putCString(m.getPlayer().getUsername());
 			msg.put(m.isMuted() ? 1 : 0);
 			msg.put(m.getRank().toIcon(player, m.getPlayer()));
 		}
-		player.queue(msg);
-		
+		msg.endVarSize();
 	}
 	
 	/**
@@ -1066,13 +1078,13 @@ public final class PacketWriter {
 	public void sendClanBanList(ObjectList<String> bans) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 52, MessageType.VARIABLE);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(52, MessageType.VARIABLE);
 		msg.putShort(bans.size());
 		for(String s : bans) {
-			msg.putString(s);
+			msg.putCString(s);
 		}
-		player.queue(msg);
-		
+		msg.endVarSize();
 	}
 	
 	/**
@@ -1086,11 +1098,10 @@ public final class PacketWriter {
 		int value = online ? 1 : 0;
 		if(value != 0)
 			value += 9;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 50);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(50);
 		msg.putLong(name);
 		msg.put(value);
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -1115,13 +1126,12 @@ public final class PacketWriter {
 	public void sendPositionHintArrow(Position position, int direction) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 254);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(254);
 		msg.put(direction);
 		msg.putShort(position.getX());
 		msg.putShort(position.getY());
 		msg.put(position.getZ());
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -1131,11 +1141,11 @@ public final class PacketWriter {
 	public void sendCharacterHintArrow(EntityNode character) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 254).put(character.isNpc() ? 1 : 10);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(248);
+		msg.put(character.isNpc() ? 1 : 10);
 		msg.putShort(character.getSlot());
 		msg.put(0);
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -1148,14 +1158,13 @@ public final class PacketWriter {
 	public void sendPrivateMessage(long name, int rights, byte[] message, int size) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 196, MessageType.VARIABLE);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(196, MessageType.VARIABLE);
 		msg.putLong(name);
 		msg.putInt(player.getPrivateMessage().getLastMessage().getAndIncrement());
 		msg.put(rights);
 		msg.putBytes(message, size);
-		
-		player.queue(msg);
-		
+		msg.endVarSize();
 	}
 	
 	/**
@@ -1169,10 +1178,10 @@ public final class PacketWriter {
 			return;
 		if(player.getLastRegion() == null)
 			player.setLastRegion(player.getPosition().copy());
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 85);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(85);
 		msg.put(position.getY() - (player.getLastRegion().getRegionY() * 8), ByteTransform.C);
 		msg.put(position.getX() - (player.getLastRegion().getRegionX() * 8), ByteTransform.C);
-		player.queue(msg);
 	}
 	
 	/**
@@ -1182,10 +1191,9 @@ public final class PacketWriter {
 	public void sendWalkable(int id) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 208);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(208);
 		msg.putInt(id);
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -1198,12 +1206,11 @@ public final class PacketWriter {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
 		sendCoordinates(item.getPosition());
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 44);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(44);
 		msg.putShort(item.getItem().getId(), ByteTransform.A, ByteOrder.LITTLE);
 		msg.putShort(item.getItem().getAmount());
 		msg.put(0);
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -1214,11 +1221,10 @@ public final class PacketWriter {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
 		sendCoordinates(item.getPosition());
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 156);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(156);
 		msg.put(0, ByteTransform.S);
 		msg.putShort(item.getItem().getId());
-		player.queue(msg);
-		
 	}
 	
 	/**
@@ -1230,13 +1236,12 @@ public final class PacketWriter {
 	public void sendContextMenu(int slot, boolean top, String option) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 104, MessageType.VARIABLE);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(104, MessageType.VARIABLE);
 		msg.put(slot, ByteTransform.C);
 		msg.put(top ? 1 : 0, ByteTransform.A);
-		msg.putString(option);
-		
-		player.queue(msg);
-		
+		msg.putCString(option);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -1247,11 +1252,12 @@ public final class PacketWriter {
 	public void sendString(String text, int id) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 126, MessageType.VARIABLE_SHORT);
-		msg.putString(text);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(126, MessageType.VARIABLE_SHORT);
+		msg.putCString(text);
 		msg.putShort(id, ByteTransform.A);
-		player.queue(msg);
-		
+		msg.endVarSize();
+		msg.endVarSize();
 	}
 	
 	/**
@@ -1263,10 +1269,10 @@ public final class PacketWriter {
 	public void sendInventoryInterface(int open, int overlay) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 248);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(248);
 		msg.putShort(open, ByteTransform.A);
 		msg.putShort(overlay);
-		player.queue(msg);
 	}
 	
 	/**
@@ -1276,9 +1282,9 @@ public final class PacketWriter {
 	public void sendInterface(int id) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 97);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(97);
 		msg.putShort(id);
-		player.queue(msg);
 	}
 	
 	/**
@@ -1288,9 +1294,10 @@ public final class PacketWriter {
 	public void sendMessage(String message) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 253, MessageType.VARIABLE);
-		msg.putString(message);
-		player.queue(msg);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(253, MessageType.VARIABLE);
+		msg.putCString(message);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -1301,7 +1308,8 @@ public final class PacketWriter {
 	public void sendNpcInformation(int id, NpcDropTable drop) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 121, MessageType.VARIABLE_SHORT);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(121, MessageType.VARIABLE_SHORT);
 		msg.putInt(id);
 		if(id != 0) {
 			if(id > NpcDefinition.DEFINITIONS.length)
@@ -1325,7 +1333,7 @@ public final class PacketWriter {
 				}
 			}
 		}
-		player.queue(msg);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -1336,11 +1344,11 @@ public final class PacketWriter {
 	public void sendSidebarInterface(int id, TabInterface tab) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 71);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(71);
 		msg.putShort(id);
 		msg.put(tab.getOld(), ByteTransform.A);
 		msg.put(tab.getNew(), ByteTransform.A);
-		player.queue(msg);
 	}
 	
 	/**
@@ -1352,10 +1360,10 @@ public final class PacketWriter {
 		player.setLastRegion(player.getPosition().copy());
 		player.setUpdates(true, false);
 		player.setUpdateRegion(true);
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 73);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(73);
 		msg.putShort(player.getPosition().getRegionX() + 6, ByteTransform.A);
 		msg.putShort(player.getPosition().getRegionY() + 6);
-		player.queue(msg);
 	}
 	
 	/**
@@ -1366,8 +1374,9 @@ public final class PacketWriter {
 			return;
 		World.get().queueLogout(player);
 		if(player.getSession().getChannel().isActive()) {
-			ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 109);
-			player.queue(msg);
+			GameBuffer msg = player.getSession().getStream();
+			msg.message(109, MessageType.VARIABLE_SHORT);
+			msg.endVarSize();
 		}
 	}
 	
@@ -1377,10 +1386,10 @@ public final class PacketWriter {
 	public void sendDetails() {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 249);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(249);
 		msg.put(1, ByteTransform.A);
 		msg.putShort(player.getSlot(), ByteTransform.A, ByteOrder.LITTLE);
-		player.queue(msg);
 	}
 	
 	/**
@@ -1389,12 +1398,13 @@ public final class PacketWriter {
 	public void sendClanMessage(String author, String message, String clanName, Rights rank) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 217, MessageType.VARIABLE);
-		msg.putString(author);
-		msg.putString(message);
-		msg.putString(clanName);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(217, MessageType.VARIABLE);
+		msg.putCString(author);
+		msg.putCString(message);
+		msg.putCString(clanName);
 		msg.putShort(rank.getProtocolValue());
-		player.queue(msg);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -1403,11 +1413,12 @@ public final class PacketWriter {
 	public void sendYell(String author, String message, Rights rank) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 210, MessageType.VARIABLE);
-		msg.putString(author);
-		msg.putString(message);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(210, MessageType.VARIABLE);
+		msg.putCString(author);
+		msg.putCString(message);
 		msg.putShort(rank.getProtocolValue());
-		player.queue(msg);
+		msg.endVarSize();
 	}
 	
 	/**
@@ -1417,9 +1428,9 @@ public final class PacketWriter {
 	public void sendChatInterface(int id) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
-		ByteMessage msg = ByteMessage.message(player.getSession().alloc(), 164);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(164);
 		msg.putShort(id, ByteOrder.LITTLE);
-		player.queue(msg);
 	}
 	
 }

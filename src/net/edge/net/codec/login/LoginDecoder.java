@@ -5,8 +5,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.Attribute;
 import net.edge.net.NetworkConstants;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.IsaacCipher;
+import net.edge.net.packet.PacketHelper;
 import net.edge.net.session.LoginSession;
 import net.edge.net.session.Session;
 
@@ -76,7 +77,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			buf.writeLong(0);
 			buf.writeByte(0);
 			buf.writeLong(RANDOM.nextLong());
-			ctx.writeAndFlush(buf);
+			ctx.writeAndFlush(buf, ctx.voidPromise());
 		}
 	}
 	
@@ -121,33 +122,39 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			
 			byte[] rsaBytes = new byte[rsaBlockSize - 41];
 			in.readBytes(rsaBytes);
-			
-			ByteBuf rsaBuffer = ctx.alloc().buffer();
-			rsaBuffer.writeBytes(new BigInteger(rsaBytes).modPow(NetworkConstants.RSA_EXPONENT, NetworkConstants.RSA_MODULUS).toByteArray());
-			
-			int rsaOpcode = rsaBuffer.readUnsignedByte();
-			checkState(rsaOpcode == 10, "rsaOpcode != 10");
-			
-			long clientHalf = rsaBuffer.readLong();
-			long serverHalf = rsaBuffer.readLong();
-			
-			int[] isaacSeed = {(int) (clientHalf >> 32), (int) clientHalf, (int) (serverHalf >> 32), (int) serverHalf};
-			
-			IsaacCipher decryptor = new IsaacCipher(isaacSeed);
-			for(int i = 0; i < isaacSeed.length; i++) {
-				isaacSeed[i] += 50;
+
+			byte[] rsaData = new BigInteger(rsaBytes).modPow(NetworkConstants.RSA_EXPONENT, NetworkConstants.RSA_MODULUS).toByteArray();
+
+			ByteBuf rsaBuffer = ctx.alloc().buffer(rsaData.length);
+			rsaBuffer.writeBytes(rsaData);
+
+			try {
+				int rsaOpcode = rsaBuffer.readUnsignedByte();
+
+				checkState(rsaOpcode == 10, "rsaOpcode != 10");
+
+				long clientHalf = rsaBuffer.readLong();
+				long serverHalf = rsaBuffer.readLong();
+
+				int[] isaacSeed = {(int) (clientHalf >> 32), (int) clientHalf, (int) (serverHalf >> 32), (int) serverHalf};
+
+				IsaacCipher decryptor = new IsaacCipher(isaacSeed);
+				for (int i = 0; i < isaacSeed.length; i++) {
+					isaacSeed[i] += 50;
+				}
+				IsaacCipher encryptor = new IsaacCipher(isaacSeed);
+
+				@SuppressWarnings("unused") int uid = rsaBuffer.readInt();
+
+				String username = PacketHelper.getCString(rsaBuffer).toLowerCase();
+				String password = PacketHelper.getCString(rsaBuffer).toLowerCase();
+
+				out.add(new LoginRequest(username, password, build, encryptor, decryptor, ctx.channel().pipeline()));
+			} finally {
+				if (rsaBuffer.isReadable()) {
+					rsaBuffer.release();
+				}
 			}
-			IsaacCipher encryptor = new IsaacCipher(isaacSeed);
-			
-			@SuppressWarnings("unused") int uid = rsaBuffer.readInt();
-			
-			ByteMessage msg = ByteMessage.wrap(rsaBuffer);
-			String username = msg.getString().toLowerCase();
-			String password = msg.getString().toLowerCase();
-			
-			rsaBuffer.release();
-			
-			out.add(new LoginRequest(username, password, build, encryptor, decryptor, ctx.channel().pipeline()));
 		}
 	}
 	

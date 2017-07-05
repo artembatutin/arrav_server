@@ -2,7 +2,7 @@ package net.edge.net.packet.impl;
 
 import net.edge.event.EventContainer;
 import net.edge.event.impl.ItemEvent;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.PacketReader;
@@ -20,7 +20,7 @@ public final class ItemActionPacket implements PacketReader {
 	public static final EventContainer<ItemEvent> ITEM_ACTION = new EventContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ACTION))
 			return;
 		
@@ -40,7 +40,7 @@ public final class ItemActionPacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
-	private void firstClick(Player player, ByteMessage payload) {
+	private void firstClick(Player player, IncomingMsg payload) {
 		int container = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int slot = payload.getShort(false, ByteTransform.A);
 		int id = payload.getShort(false, ByteOrder.LITTLE);
@@ -60,7 +60,7 @@ public final class ItemActionPacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
-	private void thirdClick(Player player, ByteMessage payload) {
+	private void thirdClick(Player player, IncomingMsg payload) {
 		int container = payload.getShort(true, ByteTransform.A);
 		int slot = payload.getShort(true, ByteOrder.LITTLE);
 		int id = payload.getShort(true, ByteTransform.A);

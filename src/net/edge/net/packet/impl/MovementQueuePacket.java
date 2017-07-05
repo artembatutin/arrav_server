@@ -4,7 +4,7 @@ import net.edge.Server;
 import net.edge.content.market.MarketShop;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.locale.Position;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.PacketReader;
@@ -20,7 +20,7 @@ import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 public final class MovementQueuePacket implements PacketReader {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.WALKING)) {
 			return;
 		}

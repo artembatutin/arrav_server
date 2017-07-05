@@ -1,6 +1,6 @@
 package net.edge.net.packet.impl;
 
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.PacketReader;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
@@ -13,7 +13,7 @@ import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 public final class SocialPacket implements PacketReader {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.PRIVATE_MESSAGE))
 			return;
 		
@@ -42,7 +42,7 @@ public final class SocialPacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payloadfer used for reading sent data.
 	 */
-	private void addFriend(Player player, ByteMessage payload) {
+	private void addFriend(Player player, IncomingMsg payload) {
 		long name = payload.getLong();
 		if(name < 0)
 			return;
@@ -54,7 +54,7 @@ public final class SocialPacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payloadfer used for reading sent data.
 	 */
-	private void removeFriend(Player player, ByteMessage payload) {
+	private void removeFriend(Player player, IncomingMsg payload) {
 		long name = payload.getLong();
 		if(name < 0)
 			return;
@@ -66,7 +66,7 @@ public final class SocialPacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payloadfer used for reading sent data.
 	 */
-	private void addIgnore(Player player, ByteMessage payload) {
+	private void addIgnore(Player player, IncomingMsg payload) {
 		long name = payload.getLong();
 		if(name < 0)
 			return;
@@ -78,7 +78,7 @@ public final class SocialPacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payloadfer used for reading sent data.
 	 */
-	private void removeIgnore(Player player, ByteMessage payload) {
+	private void removeIgnore(Player player, IncomingMsg payload) {
 		long name = payload.getLong();
 		if(name < 0)
 			return;
@@ -90,7 +90,7 @@ public final class SocialPacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payloadfer used for reading sent data.
 	 */
-	private void sendMessage(Player player, int size, ByteMessage payload) {
+	private void sendMessage(Player player, int size, IncomingMsg payload) {
 		long to = payload.getLong();
 		int newSize = size - 8;
 		byte[] message = payload.getBytes(newSize);

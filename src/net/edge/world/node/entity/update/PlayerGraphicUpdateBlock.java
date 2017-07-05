@@ -1,6 +1,7 @@
 package net.edge.world.node.entity.update;
 
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.world.Graphic;
 import net.edge.world.node.entity.player.Player;
@@ -19,7 +20,7 @@ public final class PlayerGraphicUpdateBlock extends PlayerUpdateBlock {
 	}
 
 	@Override
-	public int write(Player player, Player mob, ByteMessage msg) {
+	public int write(Player player, Player mob, GameBuffer msg) {
 		msg.putShort(mob.getGraphic().getId(), ByteOrder.LITTLE);
 		msg.putInt(mob.getGraphic().getDelay() | mob.getGraphic().getHeight() << 16);
 		return -1;

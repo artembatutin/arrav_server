@@ -1,6 +1,7 @@
 package net.edge.world.node.entity.update;
 
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.world.node.entity.npc.Npc;
@@ -20,7 +21,7 @@ public final class NpcTransformUpdateBlock extends NpcUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Npc npc, ByteMessage msg) {
+	public int write(Player player, Npc npc, GameBuffer msg) {
 		msg.putShort(npc.getTransform().orElse(-1), ByteTransform.A, ByteOrder.LITTLE);
 		return -1;
 	}

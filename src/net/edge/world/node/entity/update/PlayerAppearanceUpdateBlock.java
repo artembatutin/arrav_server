@@ -1,6 +1,7 @@
 package net.edge.world.node.entity.update;
 
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteTransform;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.world.node.entity.player.Player;
@@ -20,9 +21,9 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 	}
 
 	@Override
-	public int write(Player player, Player mob, ByteMessage msg) {
+	public int write(Player player, Player mob, GameBuffer msg) {
 		PlayerAppearance appearance = mob.getAppearance();
-		ByteMessage buf = ByteMessage.message(player.getSession().alloc());
+		GameBuffer buf = new GameBuffer(player.getSession().alloc().buffer(32));
 		buf.put(appearance.getGender());
 		buf.put(mob.getHeadIcon());
 		buf.put(mob.getSkullIcon());

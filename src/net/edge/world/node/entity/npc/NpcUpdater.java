@@ -1,7 +1,8 @@
 package net.edge.world.node.entity.npc;
 
 import io.netty.buffer.ByteBufAllocator;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.MessageType;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
@@ -19,16 +20,13 @@ import java.util.Iterator;
  * @author lare96 <http://github.org/lare96>
  */
 public final class NpcUpdater {
-	
-	/**
-	 * The {@link UpdateBlockSet} that will manage all of the {@link UpdateBlock}s.
-	 */
-	private final UpdateBlockSet<Npc> blockSet = UpdateBlockSet.NPC_BLOCK_SET;
-	
-	public ByteMessage write(Player player) {
+	public static void write(Player player) {
+		UpdateBlockSet<Npc> blockSet = UpdateBlockSet.NPC_BLOCK_SET;
+
 		ByteBufAllocator alloc = player.getSession().alloc();
-		ByteMessage msg = ByteMessage.message(alloc, 65, MessageType.VARIABLE_SHORT);
-		ByteMessage blockMsg = ByteMessage.message(alloc);
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(65, MessageType.VARIABLE_SHORT);
+		GameBuffer blockMsg = new GameBuffer(alloc.buffer(64));
 		try {
 			msg.startBitAccess();
 			msg.putBits(8, player.getLocalNpcs().size());
@@ -76,7 +74,8 @@ public final class NpcUpdater {
 		} finally {
 			blockMsg.release();
 		}
-		return msg;
+
+		msg.endVarSize();
 	}
 	
 	/**
@@ -85,10 +84,11 @@ public final class NpcUpdater {
 	 * @param player The {@link Player} this update message is being sent for.
 	 * @param addNpc The {@link Npc} being added.
 	 */
-	private void addNpc(Player player, Npc addNpc, ByteMessage msg) {
+	private static void addNpc(Player player, Npc addNpc, GameBuffer msg) {
 		boolean updateRequired = !addNpc.getFlags().isEmpty();
 		int deltaX = addNpc.getPosition().getX() - player.getPosition().getX();
 		int deltaY = addNpc.getPosition().getY() - player.getPosition().getY();
+
 		msg.putBits(14, addNpc.getSlot());
 		msg.putBits(5, deltaY);
 		msg.putBits(5, deltaX);
@@ -102,7 +102,7 @@ public final class NpcUpdater {
 	 * @param npc The {@link Player} to handle running and walking for.
 	 * @param msg The main update message.
 	 */
-	private void handleMovement(Npc npc, ByteMessage msg) {
+	private static void handleMovement(Npc npc, GameBuffer msg) {
 		boolean updateRequired = !npc.getFlags().isEmpty();
 		if(npc.getPrimaryDirection() == Direction.NONE) {
 			if(updateRequired) {

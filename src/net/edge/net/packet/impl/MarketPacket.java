@@ -2,7 +2,7 @@ package net.edge.net.packet.impl;
 
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.market.MarketShop;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.PacketReader;
 import net.edge.util.TextUtils;
 import net.edge.world.node.entity.player.Player;
@@ -14,7 +14,7 @@ import net.edge.world.node.entity.player.Player;
 public final class MarketPacket implements PacketReader {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		String search = TextUtils.hashToName(payload.getLong());
 		if(player.isIronMan() && !player.isIronMaxed()) {
 			player.getDialogueBuilder().append(new StatementDialogue("You are in iron man mode.", "Therefore you can't search the global market.", "Once you max-out you will be able to."));

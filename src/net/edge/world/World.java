@@ -182,8 +182,8 @@ public final class World {
 		while((p = pi.next()) != null) {
 			try {
 				if(p.isHuman()) {
-					p.getSession().queue(new PlayerUpdater().write(p));
-					p.getSession().queue(new NpcUpdater().write(p));
+					PlayerUpdater.write(p);
+					NpcUpdater.write(p);
 				}
 			} catch(Exception e) {
 				queueLogout(p);
@@ -228,6 +228,8 @@ public final class World {
 		}
 		
 		millis = System.currentTimeMillis() - start;
+
+		System.out.println("Took " + millis + " ms");
 	}
 	
 	/**

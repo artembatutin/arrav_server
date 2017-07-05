@@ -11,7 +11,7 @@ import net.edge.event.impl.NpcEvent;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
 import net.edge.locale.loc.Location;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.PacketReader;
@@ -39,7 +39,7 @@ public final class NpcActionPacket implements PacketReader {
 	public static final EventContainer<NpcEvent> FOURTH = new EventContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.NPC_ACTION))
 			return;
 		switch(opcode) {
@@ -70,7 +70,7 @@ public final class NpcActionPacket implements PacketReader {
 	 * @param player  the player this will be handled for.
 	 * @param payload the payload that will read the sent data.
 	 */
-	private void attackOther(Player player, ByteMessage payload) {
+	private void attackOther(Player player, IncomingMsg payload) {
 		int index = payload.getShort(false, ByteTransform.A);
 		Npc npc = World.get().getNpcs().get(index - 1);
 		if(npc == null || !checkAttack(player, npc))
@@ -84,7 +84,7 @@ public final class NpcActionPacket implements PacketReader {
 	 * @param player  the player this will be handled for.
 	 * @param payload the payload that will read the sent data.
 	 */
-	private void attackMagic(Player player, ByteMessage payload) {
+	private void attackMagic(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int spellId = payload.getShort(true, ByteTransform.A);
 		Npc npc = World.get().getNpcs().get(index - 1);
@@ -101,7 +101,7 @@ public final class NpcActionPacket implements PacketReader {
 	 * @param player  the player this will be handled for.
 	 * @param payload the payload that will read the sent data.
 	 */
-	private void firstClick(Player player, ByteMessage payload) {
+	private void firstClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
 		Npc npc = World.get().getNpcs().get(index - 1);
 		if(npc == null)
@@ -138,7 +138,7 @@ public final class NpcActionPacket implements PacketReader {
 	 * @param player  the player this will be handled for.
 	 * @param payload the payload that will read the sent data.
 	 */
-	private void secondClick(Player player, ByteMessage payload) {
+	private void secondClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(false, ByteTransform.A, ByteOrder.LITTLE);
 		Npc npc = World.get().getNpcs().get(index - 1);
 		if(npc == null)
@@ -169,7 +169,7 @@ public final class NpcActionPacket implements PacketReader {
 	 * @param player  the player this will be handled for.
 	 * @param payload the payload that will read the sent data.
 	 */
-	private void thirdClick(Player player, ByteMessage payload) {
+	private void thirdClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true);
 		Npc npc = World.get().getNpcs().get(index - 1);
 		if(npc == null)
@@ -197,7 +197,7 @@ public final class NpcActionPacket implements PacketReader {
 	 * @param player  the player this will be handled for.
 	 * @param payload the payload that will read the sent data.
 	 */
-	private void fourthClick(Player player, ByteMessage payload) {
+	private void fourthClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
 		Npc npc = World.get().getNpcs().get(index - 1);
 		if(npc == null)

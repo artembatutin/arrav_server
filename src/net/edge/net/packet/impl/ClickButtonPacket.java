@@ -27,11 +27,9 @@ import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.summoning.Summoning;
-import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.event.EventContainer;
 import net.edge.event.impl.ButtonEvent;
-import net.edge.locale.Position;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.PacketReader;
 import net.edge.task.Task;
 import net.edge.util.ActionListener;
@@ -75,7 +73,7 @@ public final class ClickButtonPacket implements PacketReader {
 	}
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		int button = PROPER_READ ? payload.getShort() : hexToInt(payload.getBytes(2));
 		if(Server.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");

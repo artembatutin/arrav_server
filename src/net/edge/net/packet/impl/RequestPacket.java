@@ -4,7 +4,7 @@ import net.edge.world.node.item.container.session.ExchangeSession;
 import net.edge.world.node.item.container.session.impl.DuelSession;
 import net.edge.world.node.item.container.session.impl.TradeSession;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.packet.PacketReader;
 import net.edge.world.World;
@@ -19,7 +19,7 @@ import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 public final class RequestPacket implements PacketReader {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.REQUEST_MESSAGE))
 			return;
 		
@@ -39,7 +39,7 @@ public final class RequestPacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payloadfer for reading the sent data.
 	 */
-	private void tradeRequest(Player player, ByteMessage payload) {
+	private void tradeRequest(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
 		Player other = World.get().getPlayers().get(index - 1);
 		if(other == null || !validate(player, other))
@@ -54,7 +54,7 @@ public final class RequestPacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
-	private void duelRequest(Player player, ByteMessage payload) {
+	private void duelRequest(Player player, IncomingMsg payload) {
 		int index = payload.getShort(false);
 		Player other = World.get().getPlayers().get(index - 1);
 		if(other == null || !validate(player, other))

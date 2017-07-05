@@ -4,8 +4,7 @@ import net.edge.content.skill.construction.furniture.ConstructFurniture;
 import net.edge.content.skill.construction.furniture.Furniture;
 import net.edge.content.skill.construction.room.RoomData;
 import net.edge.content.skill.construction.room.RoomManipulation;
-import net.edge.content.skill.summoning.PouchCreation;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.PacketReader;
 import net.edge.world.node.entity.player.Player;
 
@@ -46,7 +45,7 @@ public final class ConstructionPacket implements PacketReader {
 	};
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		int click = payload.get();
 		if(click < 0 || click >= DATA.length) {
 			click -= 40;

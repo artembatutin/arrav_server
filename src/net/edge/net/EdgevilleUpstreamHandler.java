@@ -2,6 +2,7 @@ package net.edge.net;
 
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.ReadTimeoutException;
 import net.edge.net.session.Session;
@@ -13,11 +14,11 @@ import java.util.logging.Logger;
 import static java.util.Objects.requireNonNull;
 
 /**
- * A {@link SimpleChannelInboundHandler} implementation that handles upstream messages from Netty.
+ * A {@link ChannelInboundHandlerAdapter} implementation that handles upstream messages from Netty.
  * @author lare96 <http://github.com/lare96>
  */
 @Sharable
-public final class EdgevilleUpstreamHandler extends SimpleChannelInboundHandler<Object> {
+public final class EdgevilleUpstreamHandler extends ChannelInboundHandlerAdapter {
 	
 	/**
 	 * The asynchronous logger.
@@ -40,13 +41,13 @@ public final class EdgevilleUpstreamHandler extends SimpleChannelInboundHandler<
 	}
 	
 	@Override
-	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
 		Session session = getSession(ctx);
 		session.dispose();
 	}
 	
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		Session session = getSession(ctx);
 		session.handleUpstreamMessage(msg);
 	}

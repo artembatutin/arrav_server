@@ -3,19 +3,6 @@ package net.edge.world.node.entity.player;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.Server;
-import net.edge.content.dialogue.Dialogue;
-import net.edge.content.dialogue.test.DialogueAppender;
-import net.edge.content.item.OverloadEffectTask;
-import net.edge.content.minigame.MinigameLobby;
-import net.edge.content.skill.construction.Construction;
-import net.edge.content.skill.construction.House;
-import net.edge.content.wilderness.WildernessActivity;
-import net.edge.net.codec.ByteMessage;
-import net.edge.net.packet.PacketWriter;
-import net.edge.net.session.GameSession;
-import net.edge.task.Task;
-import net.edge.util.*;
-import net.edge.game.GameConstants;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
 import net.edge.content.ViewingOrb;
@@ -34,11 +21,11 @@ import net.edge.content.combat.weapon.FightType;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.commands.impl.UpdateCommand;
-import net.edge.world.node.item.container.impl.Equipment;
-import net.edge.world.node.item.container.impl.Inventory;
-import net.edge.world.node.item.container.impl.Bank;
+import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.DialogueBuilder;
 import net.edge.content.dialogue.impl.OptionDialogue;
+import net.edge.content.dialogue.test.DialogueAppender;
+import net.edge.content.item.OverloadEffectTask;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.market.MarketShop;
 import net.edge.content.minigame.Minigame;
@@ -52,26 +39,38 @@ import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.SkillActionTask;
 import net.edge.content.skill.agility.AgilityCourseBonus;
+import net.edge.content.skill.construction.Construction;
+import net.edge.content.skill.construction.House;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.teleport.impl.DefaultTeleportSpell;
-import net.edge.locale.loc.Location;
+import net.edge.content.wilderness.WildernessActivity;
+import net.edge.game.GameConstants;
 import net.edge.locale.Position;
+import net.edge.locale.loc.Location;
+import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.IncomingMsg;
+import net.edge.net.packet.PacketWriter;
+import net.edge.net.session.GameSession;
+import net.edge.task.Task;
+import net.edge.util.*;
+import net.edge.world.Graphic;
+import net.edge.world.Hit;
 import net.edge.world.World;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.Graphic;
-import net.edge.world.Hit;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcAggression;
 import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.node.entity.player.assets.*;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.node.entity.update.UpdateFlag;
-import net.edge.world.node.item.Item;
+import net.edge.world.node.item.container.impl.Bank;
+import net.edge.world.node.item.container.impl.Equipment;
+import net.edge.world.node.item.container.impl.Inventory;
 
 import java.util.*;
 import java.util.function.Function;
@@ -543,7 +542,7 @@ public final class Player extends EntityNode {
 	/**
 	 * The cached player update block for updating.
 	 */
-	private ByteMessage cachedUpdateBlock;
+	private GameBuffer cachedUpdateBlock;
 	
 	/**
 	 * The stand index for this player.
@@ -1221,14 +1220,6 @@ public final class Player extends EntityNode {
 	 */
 	public void setEnterInputListener(Optional<Function<String, ActionListener>> enterInputListener) {
 		this.enterInputListener = enterInputListener;
-	}
-	
-	/**
-	 * A shortcut function to {@link GameSession#queue(ByteMessage)}.
-	 */
-	public void queue(ByteMessage msg) {
-		if(session != null)
-			session.queue(msg);
 	}
 	
 	/**
@@ -2019,7 +2010,7 @@ public final class Player extends EntityNode {
 	 * Gets the cached player update block for updating.
 	 * @return the cached update block.
 	 */
-	public ByteMessage getCachedUpdateBlock() {
+	public GameBuffer getCachedUpdateBlock() {
 		return cachedUpdateBlock;
 	}
 	
@@ -2027,7 +2018,7 @@ public final class Player extends EntityNode {
 	 * Sets the value for {@link Player#cachedUpdateBlock}.
 	 * @param cachedUpdateBlock the new value to set.
 	 */
-	public void setCachedUpdateBlock(ByteMessage cachedUpdateBlock) {
+	public void setCachedUpdateBlock(GameBuffer cachedUpdateBlock) {
 		/* Release reference to old cached block. */
 		if(this.cachedUpdateBlock != null) {
 			this.cachedUpdateBlock.release();

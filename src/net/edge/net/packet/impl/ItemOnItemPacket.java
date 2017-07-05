@@ -13,7 +13,7 @@ import net.edge.content.skill.herblore.FinishedPotion;
 import net.edge.content.skill.herblore.Grinding;
 import net.edge.content.skill.herblore.TarCreation;
 import net.edge.content.skill.herblore.UnfinishedPotion;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.PacketReader;
 import net.edge.world.node.entity.player.Player;
@@ -27,7 +27,7 @@ import net.edge.world.node.item.Item;
 public final class ItemOnItemPacket implements PacketReader {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ON_ITEM))
 			return;
 		int secondSlot = payload.getShort();

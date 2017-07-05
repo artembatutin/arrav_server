@@ -8,10 +8,9 @@ import net.edge.event.EventContainer;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
-import net.edge.net.codec.ByteMessage;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.PacketReader;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
@@ -39,7 +38,7 @@ public final class ObjectActionPacket implements PacketReader {
 	public static final EventContainer<ObjectEvent> CONSTRUCTION = new EventContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, ByteMessage payload) {
+	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.OBJECT_ACTION))
 			return;
 		switch(opcode) {
@@ -71,7 +70,7 @@ public final class ObjectActionPacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
-	private void click(int action, Player player, ByteMessage payload) {
+	private void click(int action, Player player, IncomingMsg payload) {
 		//Getting data.
 		int objectId = payload.getMedium();
 		int objectX = payload.getShort(false);
@@ -173,7 +172,7 @@ public final class ObjectActionPacket implements PacketReader {
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
-	private void spellObject(Player player, ByteMessage payload) {
+	private void spellObject(Player player, IncomingMsg payload) {
 		//Getting data.
 		int objectId = payload.getMedium();
 		int objectX = payload.getShort(false);
