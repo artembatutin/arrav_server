@@ -73,7 +73,6 @@ public final class AttackPlayerPacket implements PacketReader {
 	private void attackOther(Player player, ByteMessage payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
-		
 		if(index < 0 || index > World.get().getPlayers().capacity() || !checkAttack(player, victim))
 			return;
 		player.getCombatBuilder().attack(victim);
@@ -87,14 +86,18 @@ public final class AttackPlayerPacket implements PacketReader {
 	 * @return {@code true} if an attack can be made, {@code false} otherwise.
 	 */
 	private boolean checkAttack(Player attacker, Player victim) {
-		if(victim == null || victim.same(attacker))
+		if(victim == null || victim.same(attacker)) {
+			attacker.getMovementQueue().reset();
 			return false;
+		}
 		if(!Location.inMultiCombat(attacker) && attacker.getCombatBuilder().isBeingAttacked() && attacker.getCombatBuilder().getAggressor() != victim && attacker.getCombatBuilder().pjingCheck()) {
 			attacker.message("You are already under attack!");
+			attacker.getMovementQueue().reset();
 			return false;
 		}
 		if(Location.inDuelArena(attacker)) {
 			World.getExchangeSessionManager().request(new DuelSession(attacker, victim, ExchangeSession.REQUEST));
+			attacker.getMovementQueue().reset();
 			return false;
 		}
 		Optional<Minigame> optional = MinigameHandler.getMinigame(attacker);
@@ -102,14 +105,15 @@ public final class AttackPlayerPacket implements PacketReader {
 			if(Location.inFunPvP(attacker) && Location.inFunPvP(victim)) {
 				return true;
 			}
-			
 			if(!Location.inWilderness(attacker) || !Location.inWilderness(victim)) {
 				attacker.message("Both you and " + victim.getFormatUsername() + " need to be in the wilderness" + " to fight!");
+				attacker.getMovementQueue().reset();
 				return false;
 			}
 			int combatDifference = Combat.combatLevelDifference(attacker.determineCombatLevel(), victim.determineCombatLevel());
 			if(combatDifference > attacker.getWildernessLevel() || combatDifference > victim.getWildernessLevel()) {
 				attacker.message("Your combat level " + "difference is too great to attack that player here.");
+				attacker.getMovementQueue().reset();
 				return false;
 			}
 		}
