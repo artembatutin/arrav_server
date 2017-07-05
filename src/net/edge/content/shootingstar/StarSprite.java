@@ -18,12 +18,12 @@ import net.edge.world.node.item.Item;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class StarSprite extends Npc {
-	
+
 	/**
 	 * The shooting star this star sprite is summoned from.
 	 */
 	private final ShootingStar star;
-	
+
 	/**
 	 * Constructs a new {@link StarSprite}.
 	 * @param star {@link #star}.
@@ -34,6 +34,11 @@ public final class StarSprite extends Npc {
 	}
 
 	/**
+	 * The exchange rate in which the star sprite will exchange a single blood coin for.
+	 */
+	private static final int EXCHANGE_FOR_BLOOD_COINS = 1000;
+
+	/**
 	 * Spawns this star sprite.
 	 * @param player the last player to get stardust from the rock.
 	 */
@@ -42,7 +47,7 @@ public final class StarSprite extends Npc {
 		star.remove();
 		World.get().getNpcs().add(star.sprite);
 	}
-	
+
 	public static void event() {
 		NpcEvent e = new NpcEvent() {
 			@Override
@@ -51,13 +56,26 @@ public final class StarSprite extends Npc {
 					DialogueAppender ap = new DialogueAppender(player);
 					ap.chain(new NpcDialogue(8091, "Hello " + player.getFormatUsername() + ", I had been trapped inside this rock", "for a few decades, I can now finally return."));
 					ap.chain(new PlayerDialogue(Expression.CONFUSED, "Ehh? This is where you say, \"Thank you for saving me", "oh noble warrior, do you want a reward in return?\""));
-					ap.chain(new NpcDialogue(8091, "Eh, I see you have stardust on you, perhaps you", "would want to see my store?").attachAfter(() -> {
-						player.getMessages().sendCloseWindows();
-						MarketCounter.getShops().get(28).openShop(player);
+
+					boolean stardust = player.getInventory().contains(new Item(StarMining.STARDUST.getId(), EXCHANGE_FOR_BLOOD_COINS));
+					String[] message = stardust ? new String[]{"Eh, I see you have stardust on you, perhaps you", "would want to trade it for blood coins?"} : player.getInventory().contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of " + EXCHANGE_FOR_BLOOD_COINS +  " stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
+
+					ap.chain(new NpcDialogue(8091, message).attachAfter(() -> {
+						if(!stardust) {
+							player.getMessages().sendCloseWindows();
+						}
+					}));
+
+					ap.chain(new PlayerDialogue("Mhm, sounds interesting, what's the conversion rate?"));
+					ap.chain(new NpcDialogue(8091, "Ehh, I guess " + EXCHANGE_FOR_BLOOD_COINS + " stardust for 1 blood coin would be fair?"));
+					ap.chain(new PlayerDialogue("Alright, let's do it."));
+					ap.chain(new NpcDialogue(8091, "How much stardust would you like to convert?").attachAfter(() -> {
+						sendEnterAmount(player);
 					}));
 					ap.start();
 				} else if(click == 2) {
-					player.getMessages().sendCloseWindows();
+					sendInstant(player);
+				} else if(click == 3) {
 					MarketCounter.getShops().get(28).openShop(player);
 				}
 				return true;
@@ -66,28 +84,80 @@ public final class StarSprite extends Npc {
 		e.registerFirst(8091);
 		e.registerSecond(8091);
 	}
-	
+
+	private static void sendInstant(Player player) {
+		DialogueAppender ap = new DialogueAppender(player);
+
+		boolean stardust = player.getInventory().contains(new Item(StarMining.STARDUST.getId(), EXCHANGE_FOR_BLOOD_COINS));
+		String[] message = stardust ? new String[]{"Howmuch stardust would you like to convert to", "blood coins?"} : player.getInventory().contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of " + EXCHANGE_FOR_BLOOD_COINS + " stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
+
+		ap.chain(new NpcDialogue(8091, message).attachAfter(() -> {
+			if(!stardust) {
+				player.getMessages().sendCloseWindows();
+				return;
+			}
+			sendEnterAmount(player);
+		}));
+		ap.start();
+	}
+
+	private static void sendEnterAmount(Player player) {
+		player.getMessages().sendEnterAmount("How much would you like to convert?", s -> () -> {
+			int selectedAmount = Integer.parseInt(s);
+
+			if(selectedAmount < EXCHANGE_FOR_BLOOD_COINS) {
+				player.getDialogueBuilder().append(new NpcDialogue(8091, "I only accept a minimum of " + EXCHANGE_FOR_BLOOD_COINS +  " stardust per blood coin."));
+				return;
+			}
+			if(!player.getInventory().contains(new Item(StarMining.STARDUST.getId(), selectedAmount))) {
+				player.getDialogueBuilder().append(new NpcDialogue(8091, "You don't have " + s + " stardust on you.").attachAfter(() -> player.getMessages().sendCloseWindows()));
+				return;
+			}
+
+			int amountRemovable = (int) (selectedAmount * 0.15);
+
+			DialogueAppender a = new DialogueAppender(player);
+
+			a.chain(new NpcDialogue(8091, "Alright I can do " + amountRemovable + ", are you sure about it though?"));
+			a.chain(new OptionDialogue(t -> {
+				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+					a.getBuilder().skip();
+					return;
+				}
+
+				a.getBuilder().advance();
+			}, "Yes", "No"));
+			a.chain(new PlayerDialogue("No, nevermind sorry."));
+			a.chain(new PlayerDialogue("Yes, let's do it.").attachAfter(() -> {
+				player.getInventory().remove(new Item(StarMining.STARDUST.getId(), selectedAmount));
+				player.getInventory().addOrBank(new Item(19000, amountRemovable));
+			}));
+			a.chain(new NpcDialogue(8091, "Very well, your blood coins have been added to your", "inventory or have been banked."));
+			a.start();
+		});
+	}
+
 	@Override
 	public void register() {
 		World.get().submit(new StarSpriteLifeTask(star.sprite));
 	}
-	
+
 	@Override
 	public Npc create() {
 		return new StarSprite(star);
 	}
-	
+
 	/**
 	 * Represents the task that is ran when the star sprite is summoned.
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class StarSpriteLifeTask extends Task {
-		
+
 		/**
 		 * The sprite this task is dependent of.
 		 */
 		private final StarSprite sprite;
-		
+
 		/**
 		 * Constructs a new {@link StarSprite}.
 		 * @param sprite {@link #sprite}.
@@ -96,14 +166,14 @@ public final class StarSprite extends Npc {
 			super(1000);
 			this.sprite = sprite;
 		}
-		
+
 		@Override
 		protected void execute() {
 			this.cancel();
 			World.get().getNpcs().remove(sprite);
 			World.getShootingStarEvent().stopwatch.reset();
 		}
-		
+
 	}
-	
+
 }
