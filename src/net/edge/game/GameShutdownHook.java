@@ -3,6 +3,7 @@ package net.edge.game;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import net.edge.content.commands.impl.BugCommand;
 import net.edge.content.market.MarketItem;
 import net.edge.net.packet.impl.NpcInformationPacket;
 import net.edge.world.World;
@@ -57,6 +58,16 @@ public final class GameShutdownHook extends Thread {
 						out.newLine();
 					}
 					NpcInformationPacket.SUGGESTED.clear();
+					out.close();
+				} catch(Exception ignored) { }
+			});
+			exit.submit(() -> {
+				try {
+					BufferedWriter out = new BufferedWriter(new FileWriter("./bugs.txt", true));
+					for(String b : BugCommand.REPORT_LINES) {
+						out.write(b+"");
+						out.newLine();
+					}
 					out.close();
 				} catch(Exception ignored) { }
 			});
