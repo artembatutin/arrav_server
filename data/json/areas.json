@@ -29,6 +29,21 @@
     ]
   },
   {
+    "name": "KALPHITE_QUEEN",
+    "location": [
+      {
+        "square": {
+          "swX": 3456,
+          "swY": 9477,
+          "neX": 3519,
+          "neY": 9533,
+          "z": 0
+        },
+        "multi": true
+      }
+    ]
+  },
+  {
     "name": "CORPOREAL_BEAST",
     "location": [
       {
