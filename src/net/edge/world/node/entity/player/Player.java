@@ -119,6 +119,11 @@ public final class Player extends EntityNode {
 	 * Player's voting points.
 	 */
 	private int votePoints;
+	
+	/**
+	 * The aggression tick timer to not check npc aggression each tick.
+	 */
+	private int aggressionTick;
 
 	/**
 	 * The last username that killed this player.
@@ -2400,5 +2405,21 @@ public final class Player extends EntityNode {
 	 */
 	public ObjectList<Npc> getMobs() {
 		return mobs;
+	}
+	
+	/**
+	 * Gets the aggression tick timer.
+	 * @return aggression tick timer.
+	 */
+	public int getAggressionTick() {
+		return aggressionTick;
+	}
+	
+	/**
+	 * Sets a new aggression tick timer.
+	 * @param aggressionTick new value to set.
+	 */
+	public void setAggressionTick(int aggressionTick) {
+		this.aggressionTick = aggressionTick;
 	}
 }

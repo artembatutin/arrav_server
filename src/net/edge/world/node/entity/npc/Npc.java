@@ -41,7 +41,7 @@ public abstract class Npc extends EntityNode {
 	/**
 	 * A mapping which contains all the custom npcs by their id.
 	 */
-	private static final Int2ObjectArrayMap<Function<Position, Npc>> CUSTOM_NPCS = new Int2ObjectArrayMap<>(
+	public static final Int2ObjectArrayMap<Function<Position, Npc>> CUSTOM_NPCS = new Int2ObjectArrayMap<>(
 			ImmutableMap.<Integer, Function<Position, Npc>>builder()
 					.put(6247, s -> new CommanderZilyana())
 					.put(6260, s -> new GeneralGraardor())
@@ -277,18 +277,29 @@ public abstract class Npc extends EntityNode {
 		transform = OptionalInt.of(id);
 		getFlags().flag(UpdateFlag.TRANSFORM);
 	}
-
+	
+	/**
+	 * Removes the {@code TRANSFORM} update mask for this non-player character.
+	 */
 	public void untransform() {
 		transform = OptionalInt.empty();
 		getFlags().flag(UpdateFlag.TRANSFORM);
 	}
 
 	/**
-	 * Gets the identification for this NPC.
+	 * Gets the identification of this NPC.
 	 * @return the identification.
 	 */
 	public int getId() {
 		return id;
+	}
+	
+	/**
+	 * Gets the {@link NpcType} of this npc.
+	 * @return type.
+	 */
+	public NpcType getNpcType() {
+		return NpcType.NONE;
 	}
 	
 	/**

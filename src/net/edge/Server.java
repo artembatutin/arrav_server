@@ -118,12 +118,11 @@ public final class Server {
 	public void init() throws Exception {
 		try {
 			LOGGER.info("Main is being initialized...");
-			
+			prepare();
 			bind();
 			initTasks();
 			launch.shutdown();
 			launch.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			prepare();
 			
 			World.getInstanceManager().close(0);
 			World.get().submit(World.getNpcMovementTask());
