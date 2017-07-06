@@ -17,6 +17,7 @@ import net.edge.content.skill.Skills;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.container.impl.Inventory;
 
@@ -210,7 +211,9 @@ public final class Slayer {
 			player.message("You have completed your slayer task.");
 			player.message("To get another slayer task go talk to a slayer master.");
 			Skills.experience(player, slayer.getDifficulty().getValue() * (100 + RandomUtils.inclusive(5, 5 + (15 * (slayer.getAmount() / 2)))), Skills.SLAYER);
-			player.updateSlayers(slayer.points);
+			Rights right = player.getRights();
+			int donatorBonus = right.equals(Rights.EXTREME_DONATOR) ? RandomUtils.inclusive(1, 10) : right.equals(Rights.SUPER_DONATOR) ? RandomUtils.inclusive(1, 5) : right.equals(Rights.DONATOR) ? RandomUtils.inclusive(1, 3) : 0;
+			Currency.SLAYER_POINTS.getCurrency().recieveCurrency(player, slayer.points + donatorBonus);
 			player.setSlayer(Optional.empty());
 			player.getAttr().get("slayer_tasks").set(player.getAttr().get("slayer_tasks").getInt() + 1);
 			PlayerPanel.SLAYER_COUNT.refresh(player, "@or2@ - Completed tasks: @yel@" + player.getAttr().get("slayer_tasks").getInt());
