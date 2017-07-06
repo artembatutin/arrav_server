@@ -51,7 +51,8 @@ public final class LoginSession extends Session {
 		// for invalid credentials or the world being full.
 		boolean invalidCredentials = !request.getUsername().matches("^[a-zA-Z0-9_ ]{1,12}$") || request.getPassword().isEmpty() || request.getPassword().length() > 20;
 		response = invalidCredentials ? LoginResponse.INVALID_CREDENTIALS : World.get().getPlayers().remaining() == 0 ? LoginResponse.WORLD_FULL : response;
-		
+
+		System.out.println(response);
 		// Validating login before deserialization.
 		if(response == LoginResponse.NORMAL) {
 			player.setUsername(request.getUsername().toLowerCase());
@@ -70,20 +71,23 @@ public final class LoginSession extends Session {
 			serial = new PlayerSerialization(player).loginCheck(request.getPassword());
 			response = serial.getResponse();
 		}
+
+		System.out.println(response);
 		
 		ChannelFuture future = channel.writeAndFlush(new LoginResponseMessage(response, player.getRights()));
 		if(response != LoginResponse.NORMAL) {
+			System.out.println(response);
 			future.addListener(ChannelFutureListener.CLOSE);
 		} else {
 			final JsonObject reader = serial.getReader();
 			future.addListener(it -> {
-				request.getPipeline().remove("login-encoder");
-				request.getPipeline().replace("login-decoder", "game-decoder", new GameMessageDecoder(request.getDecryptor()));
-				
 				GameSession session = new GameSession(player, channel, request.getEncryptor(), request.getDecryptor());
-				
+
 				channel.attr(NetworkConstants.SESSION_KEY).set(session);
 				player.setSession(session);
+
+				request.getPipeline().remove("login-encoder");
+				request.getPipeline().replace("login-decoder", "game-decoder", new GameMessageDecoder(request.getDecryptor(), session));
 				
 				new PlayerSerialization(player).deserialize(reader);
 				World.get().queueLogin(player);

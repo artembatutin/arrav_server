@@ -1,63 +1,15 @@
 package net.edge.net.codec;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.DefaultByteBufHolder;
-
-import static com.google.common.base.Preconditions.checkState;
+import net.edge.net.packet.PacketHelper;
 
 /**
  * A {@link ByteBuf} wrapper tailored to the specifications of the Runescape protocol. These wrappers are backed by pooled
  * direct buffers when possible, otherwise they're backed by pooled heap buffers.
  * @author lare96 <http://github.org/lare96>
  */
-public final class IncomingMsg extends DefaultByteBufHolder {
-	/**
-	 * @return Creates a {@link IncomingMsg} used to read and write raw messages.
-	 * @param alloc the buffer allocator.
-	 */
-	public static IncomingMsg message(ByteBufAllocator alloc) {
-		return new IncomingMsg(alloc.buffer(128), -1, MessageType.RAW);
-	}
-
-	/**
-	 * Creates a new {@link IncomingMsg} with the {@code cap} as the
-	 * capacity.
-	 * @param alloc the buffer allocator.
-	 * @param cap the capacity of the buffer.
-	 * @return the newly created buffer.
-	 */
-	public static IncomingMsg create(ByteBufAllocator alloc, int cap) {
-		return new IncomingMsg(alloc.buffer(cap), -1, MessageType.RAW);
-	}
-
-	/**
-	 * @return Creates a {@link IncomingMsg} used to read and write game messages.
-	 * @param alloc the buffer allocator.
-	 * @param opcode the opcode of this message.
-	 * @param type the type of this message.
-	 */
-	public static IncomingMsg message(ByteBufAllocator alloc, int opcode, MessageType type) {
-		return new IncomingMsg(alloc.buffer(128), opcode, type);
-	}
-
-	/**
-	 * @return Creates a fixed type {@link IncomingMsg} used to read and write game messages.
-	 * @param alloc the buffer allocator.
-	 * @param opcode the opcode of this message.
-	 */
-	public static IncomingMsg message(ByteBufAllocator alloc, int opcode) {
-		return message(alloc, opcode, MessageType.FIXED);
-	}
-
-	/**
-	 * @return Creates a raw {@link IncomingMsg} wrapped around the specified {@link ByteBuf}.
-	 * @param buf the buffer wrapped in this message.
-	 */
-	public static IncomingMsg wrap(ByteBuf buf) {
-		return new IncomingMsg(buf, -1, MessageType.RAW);
-	}
-	
+public final class IncomingMsg {
 	/**
 	 * The backing byte buffer used to read and write data.
 	 */
@@ -72,9 +24,11 @@ public final class IncomingMsg extends DefaultByteBufHolder {
 	 * The header type of this message.
 	 */
 	private final MessageType type;
-	
-	private IncomingMsg(ByteBuf buf, int opcode, MessageType type) {
-		super(buf);
+
+	/**
+	 * Creates a new {@link IncomingMsg}.
+	 */
+	public IncomingMsg(int opcode, MessageType type, ByteBuf buf) {
 		this.buf = buf;
 		this.opcode = opcode;
 		this.type = type;
@@ -404,13 +358,8 @@ public final class IncomingMsg extends DefaultByteBufHolder {
 	 * Reads a RuneScape {@code String} value.
 	 * @return The value of the string.
 	 */
-	public String getString() { // very weird
-		byte temp;
-		StringBuilder b = new StringBuilder();
-		while(buf.isReadable() && (temp = (byte) get()) != 10) {
-			b.append((char) temp);
-		}
-		return b.toString();
+	public String getCString() { // very weird
+		return PacketHelper.getCString(buf);
 	}
 	
 	/**
@@ -478,6 +427,13 @@ public final class IncomingMsg extends DefaultByteBufHolder {
 	 */
 	public int getOpcode() {
 		return opcode;
+	}
+
+	/**
+	 * @return The size of the payload.
+	 */
+	public int getSize() {
+		return buf.capacity();
 	}
 	
 	/**

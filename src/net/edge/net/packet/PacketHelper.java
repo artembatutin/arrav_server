@@ -24,6 +24,14 @@ public final class PacketHelper {
         return b.toString();
     }
 
+    public static void writeCString(ByteBuf buf, String value) {
+        for (int i = 0; i < value.length(); i++) {
+            buf.writeByte(value.charAt(i));
+        }
+
+        buf.writeByte(TERMINATOR_VALUE);
+    }
+
     /**
      * Prevents external instantiation.
      */

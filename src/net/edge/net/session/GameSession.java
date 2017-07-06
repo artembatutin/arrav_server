@@ -6,7 +6,6 @@ import net.edge.net.NetworkConstants;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.IsaacCipher;
-import net.edge.net.packet.Packet;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
@@ -42,12 +41,7 @@ public class GameSession extends Session {
 	 * The game stream.
 	 */
 	private final GameBuffer stream;
-	
-	/**
-	 * A bounded queue of inbound {@link Packet}s.
-	 */
-	private final Queue<Packet> inboundQueue = new ArrayBlockingQueue<>(NetworkConstants.MESSAGE_LIMIT);
-	
+
 	/**
 	 * Creates a new {@link GameSession}.
 	 * @param channel   The channel for this session.
@@ -71,18 +65,19 @@ public class GameSession extends Session {
 	
 	@Override
 	public void handleUpstreamMessage(Object msg) {
-		if(msg instanceof Packet) {
-			Packet packet = (Packet) msg;
-			if(packet.getOpcode() == 41) {
-				process(packet);
-				return;
-			}
-			inboundQueue.offer(packet);
+		if(msg instanceof IncomingMsg) {
+			IncomingMsg packet = (IncomingMsg) msg;
+
+			World.get().run(() -> {
+				NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.getSize(), packet);
+
+				packet.getBuffer().release();
+			});
 		}
 	}
-	
+
 	/**
-	 * Flushes all pending {@link Packet}s within the channel's queue. Repeated calls to this method are relatively
+	 * Flushes all pending {@link IncomingMsg}s within the channel's queue. Repeated calls to this method are relatively
 	 * expensive, which is why messages should be queued up with {@code queue(MessageWriter)} and flushed once at the end of
 	 * the cycle.
 	 */
@@ -93,31 +88,6 @@ public class GameSession extends Session {
 				channel.writeAndFlush(stream.retain(), channel.voidPromise());
 				stream.clear();
 			});
-		}
-	}
-	
-	/**
-	 * Dequeues the inbound queue, handling all logic accordingly.
-	 */
-	public void dequeue() {
-		while (!inboundQueue.isEmpty()) {
-			Packet msg = inboundQueue.poll();
-			process(msg);
-		}
-	}
-	
-	/**
-	 * Instantly handles the process of a packet.
-	 * @param packet packet received.
-	 */
-	public void process(Packet packet) {
-		try {
-			NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.getSize(), packet.getPayload());
-		} finally {
-			IncomingMsg payload = packet.getPayload();
-			if (payload.refCnt() > 0) {
-				payload.release();
-			}
 		}
 	}
 	

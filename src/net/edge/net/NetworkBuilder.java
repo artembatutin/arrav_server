@@ -43,7 +43,7 @@ public final class NetworkBuilder {
 	 * @throws IOException if any issues occur while starting the net.
 	 */
 	public void initialize(int port) throws IOException {
-		ResourceLeakDetector.setLevel(Server.DEBUG ? Level.PARANOID : NetworkConstants.RESOURCE_DETECTION);
+		ResourceLeakDetector.setLevel(Level.SIMPLE);
 		bootstrap.group(loopGroup);
 		bootstrap.channel(NioServerSocketChannel.class);
 		bootstrap.childHandler(channelInitializer);

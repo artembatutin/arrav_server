@@ -46,12 +46,12 @@ public final class NetworkConstants {
 	/**
 	 * An array of the message opcodes mapped to their respective listeners.
 	 */
-	public static final PacketReader[] MESSAGES = new PacketReader[257];
+	public static final PacketReader[] MESSAGES = new PacketReader[256];
 	
 	/**
 	 * An array of message opcodes mapped to their respective sizes.
 	 */
-	public static final int MESSAGE_SIZES[] = new int[257];
+	public static final int MESSAGE_SIZES[] = new int[256];
 	
 	/**
 	 * The {@link AttributeKey} value that is used to retrieve the session

@@ -274,8 +274,6 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 				continue;
 			Player p = e.toPlayer();
 			e.setState(NodeState.INACTIVE);
-			p.getSession().flushQueue();
-			p.getSession().getChannel().close();
 			if(p.getRights() != Rights.ADMINISTRATOR && p.getRights() != Rights.ADMINISTRATOR)
 				new Hiscores(World.getScore(), p).submit();
 		}

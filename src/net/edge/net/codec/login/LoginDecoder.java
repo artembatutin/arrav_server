@@ -1,6 +1,7 @@
 package net.edge.net.codec.login;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.Attribute;
@@ -110,6 +111,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			checkState(magicId == 255, "magicId != 255");
 			
 			int build = in.readUnsignedShort();
+
+			System.out.println(magicId + ", " + build);
 			
 			@SuppressWarnings("unused") int memoryVersion = in.readUnsignedByte();
 			
@@ -118,23 +121,28 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			}
 			
 			int expectedSize = in.readUnsignedByte();
-			checkState(expectedSize == (rsaBlockSize - 41), "expectedSize != (rsaBlockSize - 41)");
-			
+			System.out.println("rsa size " + expectedSize);
+			checkState(expectedSize == (rsaBlockSize - 41), "expectedSize != (rsaBlockSize - 41) -> " + rsaBlockSize);
+
 			byte[] rsaBytes = new byte[rsaBlockSize - 41];
 			in.readBytes(rsaBytes);
 
 			byte[] rsaData = new BigInteger(rsaBytes).modPow(NetworkConstants.RSA_EXPONENT, NetworkConstants.RSA_MODULUS).toByteArray();
 
-			ByteBuf rsaBuffer = ctx.alloc().buffer(rsaData.length);
-			rsaBuffer.writeBytes(rsaData);
+			ByteBuf rsaBuffer = Unpooled.wrappedBuffer(rsaData);
 
 			try {
 				int rsaOpcode = rsaBuffer.readUnsignedByte();
+
+				System.out.println(rsaOpcode);
 
 				checkState(rsaOpcode == 10, "rsaOpcode != 10");
 
 				long clientHalf = rsaBuffer.readLong();
 				long serverHalf = rsaBuffer.readLong();
+
+				System.out.println(clientHalf);
+				System.out.println(serverHalf);
 
 				int[] isaacSeed = {(int) (clientHalf >> 32), (int) clientHalf, (int) (serverHalf >> 32), (int) serverHalf};
 
@@ -146,8 +154,13 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 				@SuppressWarnings("unused") int uid = rsaBuffer.readInt();
 
+				System.out.println(uid);
+
 				String username = PacketHelper.getCString(rsaBuffer).toLowerCase();
 				String password = PacketHelper.getCString(rsaBuffer).toLowerCase();
+
+				System.out.println(username);
+				System.out.println(password);
 
 				out.add(new LoginRequest(username, password, build, encryptor, decryptor, ctx.channel().pipeline()));
 			} finally {

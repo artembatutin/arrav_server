@@ -17,7 +17,7 @@ public final class ClanChatPacket implements PacketReader {
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.CHAT_MESSAGE))
 			return;
-		String input = payload.getString();
+		String input = payload.getCString();
 		if(input.equalsIgnoreCase("may luck be yours on halloween.") || input.equalsIgnoreCase("may luck be yours on halloween")) {
 			player.getQuestManager().start(QuestManager.Quests.HALLOWEEN);
 			return;

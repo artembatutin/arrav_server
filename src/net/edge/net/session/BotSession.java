@@ -1,6 +1,5 @@
 package net.edge.net.session;
 
-import net.edge.net.codec.IncomingMsg;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
@@ -42,10 +41,4 @@ public final class BotSession extends GameSession {
 	public void flushQueue() {
 
 	}
-	
-	@Override
-	public void dequeue() {
-
-	}
-
 }

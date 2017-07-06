@@ -8,16 +8,15 @@ import net.edge.net.NetworkConstants;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.IsaacCipher;
 import net.edge.net.codec.MessageType;
-import net.edge.net.packet.Packet;
+import net.edge.net.session.GameSession;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * A {@link ByteToMessageDecoder} implementation that decodes all {@link ByteBuf}s into {@link Packet}s.
+ * A {@link ByteToMessageDecoder} implementation that decodes all {@link ByteBuf}s into {@link IncomingMsg}s.
  * @author lare96 <http://github.org/lare96>
  */
 public final class GameMessageDecoder extends ByteToMessageDecoder {
@@ -31,7 +30,12 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 	 * The ISAAC that will decrypt incoming messages.
 	 */
 	private final IsaacCipher decryptor;
-	
+
+	/**
+	 * The game session.
+	 */
+	private final GameSession session;
+
 	/**
 	 * The state of the message currently being decoded.
 	 */
@@ -53,42 +57,34 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 	private MessageType type = MessageType.RAW;
 	
 	/**
-	 * The message that was decoded and needs to be queued.
-	 */
-	private Optional<Packet> currentMessage = Optional.empty();
-	
-	/**
 	 * Creates a new {@link GameMessageDecoder}.
 	 * @param decryptor The decryptor for this decoder.
 	 */
-	public GameMessageDecoder(IsaacCipher decryptor) {
+	public GameMessageDecoder(IsaacCipher decryptor, GameSession session) {
 		this.decryptor = decryptor;
+		this.session = session;
 	}
 	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 		switch(state) {
 			case OPCODE:
-				opcode(in);
+				opcode(in, out);
 				break;
 			case SIZE:
 				size(in);
 				break;
 			case PAYLOAD:
-				payload(in);
+				payload(in, out);
 				break;
 		}
-		currentMessage.ifPresent(m -> {
-			out.add(m);
-			currentMessage = Optional.empty();
-		});
 	}
 	
 	/**
-	 * Decodes the opcode of the {@link Packet}.
+	 * Decodes the opcode of the {@link IncomingMsg}.
 	 * @param in The data being decoded.
 	 */
-	private void opcode(ByteBuf in) {
+	private void opcode(ByteBuf in, List<Object> out) {
 		if(in.isReadable()) {
 			opcode = in.readUnsignedByte();
 			opcode = (opcode - decryptor.nextInt()) & 0xFF;
@@ -103,15 +99,16 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 			}
 			
 			if(size == 0) {
-				queueMessage(Unpooled.EMPTY_BUFFER);
+				queueMessage(Unpooled.EMPTY_BUFFER, out);
 				return;
 			}
+
 			state = size == -1 || size == -2 ? State.SIZE : State.PAYLOAD;
 		}
 	}
 	
 	/**
-	 * Decodes the size of the {@link Packet}.
+	 * Decodes the size of the {@link IncomingMsg}.
 	 * @param in The data being decoded.
 	 */
 	private void size(ByteBuf in) {
@@ -127,38 +124,33 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 	}
 	
 	/**
-	 * Decodes the payload of the {@link Packet}.
+	 * Decodes the payload of the {@link IncomingMsg}.
 	 * @param in The data being decoded.
 	 */
-	private void payload(ByteBuf in) {
+	private void payload(ByteBuf in, List<Object> out) {
 		if (in.isReadable(size)) {
 			ByteBuf newBuffer = in.readBytes(size);
-			try {
-				queueMessage(newBuffer);
-			} finally {
-				newBuffer.release();
-			}
+
+			queueMessage(newBuffer, out);
 		}
 	}
 	
 	/**
-	 * Prepares a {@link Packet} to be queued upstream and handled on the main game thread.
+	 * Prepares a {@link IncomingMsg} to be queued upstream and handled on the main game thread.
 	 * @param payload The payload of the {@code Packet}.
 	 */
-	private void queueMessage(ByteBuf payload) {
+	private void queueMessage(ByteBuf payload, List<Object> out) {
 		checkState(opcode >= 0, "opcode < 0");
 		checkState(size >= 0, "size < 0");
 		checkState(type != MessageType.RAW, "type == MessageType.RAW");
-		checkState(!currentMessage.isPresent(), "message already in queue");
 		
 		try {
 			if(NetworkConstants.MESSAGES[opcode] == null) {
 				LOGGER.info("Unhandled packet " + opcode + " - " + size);
-				currentMessage = null;
 				return;
 			}
-			payload.retain();
-			currentMessage = Optional.of(new Packet(opcode, type, IncomingMsg.wrap(payload)));
+
+			session.handleUpstreamMessage(new IncomingMsg(opcode, type, payload));
 		} finally {
 			resetState();
 		}

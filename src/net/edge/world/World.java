@@ -115,15 +115,19 @@ public final class World {
 	static {
 		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
-			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
+//			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
+//			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
+		} // kan je me horen? ik moet ff me oortjes pakken, 2 sec ben zo back
 	}
 
 	public void start() {
 		sync.scheduleAtFixedRate(new GamePulseHandler(this), 600, 600, TimeUnit.MILLISECONDS);
+	}
+
+	public void run(Runnable r) {
+		sync.submit(r);
 	}
 	
 	public void shutdown() {
@@ -156,8 +160,6 @@ public final class World {
 		// Pre synchronization
 		while((p = pi.next()) != null) {
 			try {
-				if(p.isHuman())
-					p.getSession().dequeue();
 				p.getMovementQueue().sequence();
 				p.sequence();
 			} catch(Exception e) {
@@ -181,7 +183,7 @@ public final class World {
 		// Synchronization
 		while((p = pi.next()) != null) {
 			try {
-				if(p.isHuman()) {
+				if(p.isHuman()) { // player wordt geupdate terwij hij logged out is
 					PlayerUpdater.write(p);
 					NpcUpdater.write(p);
 				}

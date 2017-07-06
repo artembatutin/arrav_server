@@ -17,7 +17,7 @@ public final class CommandPacket implements PacketReader {
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.COMMAND_MESSAGE))
 			return;
-		String command = payload.getString();
+		String command = payload.getCString();
 		String[] parts = command.toLowerCase().split(" ");
 		CommandDispatcher.execute(player, parts, command);
 		player.getActivityManager().execute(ActivityManager.ActivityType.COMMAND_MESSAGE);
