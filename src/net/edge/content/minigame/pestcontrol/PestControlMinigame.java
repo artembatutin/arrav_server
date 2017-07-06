@@ -18,6 +18,7 @@ import net.edge.world.Hit;
 import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
@@ -267,10 +268,12 @@ public final class PestControlMinigame extends SequencedMinigame {
 	
 	void end(boolean won) {
 		for(Player p : getPlayers()) {
-			Currency.PEST_POINTS.getCurrency().recieveCurrency(p, p.getAttr().get("participation").getInt() / 300);
 			logout(p);
 			if(won) {
 				p.getDialogueBuilder().append(new NpcDialogue(3784, "Congratulations " + p.getFormatUsername() +"!",  "You won the pest control match", "You been awarded, well done."));
+				Rights right = p.getRights();
+				int donatorBonus = right.equals(Rights.EXTREME_DONATOR) ? 3 : right.equals(Rights.SUPER_DONATOR) ? 2 : right.equals(Rights.DONATOR) ? 1 : 0;
+				Currency.PEST_POINTS.getCurrency().recieveCurrency(p, (p.getAttr().get("participation").getInt() / 300) + donatorBonus);
 			} else if(voidKnight.getCurrentHealth() > 0) {
 				p.getDialogueBuilder().append(new NpcDialogue(3784, p.getFormatUsername() +" you have Failed.", "You did participate enough to take down", "the portals. ", "Try Harder next time."));
 			} else {
