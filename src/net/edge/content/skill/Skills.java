@@ -17,6 +17,7 @@ import net.edge.content.skill.woodcutting.Woodcutting;
 import net.edge.world.Graphic;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.entity.update.UpdateFlag;
 import net.edge.world.object.ObjectNode;
 
@@ -194,6 +195,8 @@ public final class Skills {
 		amount *= skill == PRAYER ? PRAYER_EXPERIENCE_MULTIPLIER : combatLevel ? COMBAT_EXPERIENCE_MULTIPLER : SKILL_EXPERIENCE_MULTIPLIER;
 		amount *= GameConstants.EXPERIENCE_MULTIPLIER;
 		amount *= (player.getSkills()[skill].getRealLevel() == 99 && combatLevel ? 0.2 : 1);
+		Rights right = player.getRights();
+		amount *= right.equals(Rights.EXTREME_DONATOR) ? 1.10 : right.equals(Rights.SUPER_DONATOR) ? 1.05 : right.equals(Rights.DONATOR) ? 1.025 : 1;
 		player.getSkills()[skill].increaseExperience(amount);
 		if(oldLevel < 99) {
 			int newLevel = player.getSkills()[skill].getLevelForExperience();
