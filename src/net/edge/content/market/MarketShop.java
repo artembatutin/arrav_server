@@ -172,10 +172,6 @@ public class MarketShop {
 			}, "Change price", "Change stock", "toggle: " + (!shopItem.isVariable() ? "price changes" : "price is fixed"), "toggle: " + (shopItem.isUnlimitedStock() ? "unlimited stock" : "variable stock")));
 			return;
 		}
-		if(!shopItem.isSearchable() && player.getRights() != Rights.ADMINISTRATOR) {
-			player.message("This item can't be bought.");
-			return;
-		}
 		if(shopItem.getStock() <= 0 && !shopItem.isUnlimitedStock()) {
 			player.message("There is none of this item left in stock!");
 			return;
