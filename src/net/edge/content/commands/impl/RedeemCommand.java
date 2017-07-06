@@ -26,8 +26,6 @@ public final class RedeemCommand implements Command {
 		if (r1.success()) {
 			int voted = r1.votes().size();
 			player.getInventory().addOrBank(new Item(6829, voted));
-			player.setVotePoints(player.getVotePoints() + voted);
-			player.setTotalVotes(player.getTotalVotes() + voted);
 		} else {
 			player.message("Nothing found, you can vote by clicking the link in the quest tab.");
 		}

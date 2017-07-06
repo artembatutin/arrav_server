@@ -16,14 +16,18 @@ public class Votebook extends EventInitializer {
 			public boolean click(Player player, Item item, int container, int slot, int click) {
 				if(container != Inventory.INVENTORY_DISPLAY_ID)
 					return true;
+
+				player.setVotePoints(player.getVotePoints() + 1);
+				player.setTotalVotes(player.getTotalVotes() + 1);
+				player.message("You received a vote point...");
 				Item reward = VoteRewards.getReward().orElse(null);
 				player.getInventory().remove(item);
 				if(reward == null) {
-					player.message("You were unlucky and didn't receive a extra reward...");
+					player.message("... but you were unlucky and didn't receive a extra reward.");
 					return true;
 				}
 				String name = reward.getDefinition().getName();
-				player.message("You were lucky and received x" + item.getAmount() + " " + TextUtils.capitalize(name));
+				player.message("... and you were lucky and received x" + item.getAmount() + " " + TextUtils.capitalize(name) + ".");
 				player.getInventory().addOrBank(reward);
 				return true;
 			}
