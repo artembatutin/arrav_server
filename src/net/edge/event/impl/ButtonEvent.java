@@ -2,7 +2,7 @@ package net.edge.event.impl;
 
 import net.edge.event.Event;
 import net.edge.event.but.Spellbook;
-import net.edge.net.packet.impl.ClickButtonPacket;
+import net.edge.net.packet.in.ClickButtonPacket;
 import net.edge.world.node.entity.player.Player;
 
 /**

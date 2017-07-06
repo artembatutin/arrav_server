@@ -1,6 +1,5 @@
 package net.edge.event.but;
 
-import net.edge.content.scene.impl.IntroductionCutscene;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.ButtonEvent;
 import net.edge.game.GameConstants;
@@ -24,9 +23,9 @@ public class IronManSelection extends EventInitializer {
 				player.getMessages().sendCloseWindows();
 				player.getInventory().clear(false);
 				if(iron) {
-					player.getInventory().setItems(GameConstants.IRON_STARTER);
+					player.getInventory().fillItems(GameConstants.IRON_STARTER);
 				} else if(!PunishmentHandler.recievedStarter(player.getSession().getHost())) {
-					player.getInventory().setItems(GameConstants.REGULAR_STARTER);
+					player.getInventory().fillItems(GameConstants.REGULAR_STARTER);
 					PunishmentHandler.addStarter(player.getSession().getHost());
 				} else {
 					player.message("You already received your regular starter package before.");

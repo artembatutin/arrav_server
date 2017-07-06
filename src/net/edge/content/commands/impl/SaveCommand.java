@@ -2,7 +2,7 @@ package net.edge.content.commands.impl;
 
 import net.edge.content.market.MarketCounter;
 import net.edge.content.market.MarketItem;
-import net.edge.net.packet.impl.NpcInformationPacket;
+import net.edge.net.packet.in.NpcInformationPacket;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.World;

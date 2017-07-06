@@ -23,6 +23,11 @@ public final class Bank {
 	private final BankTab[] tabs = new BankTab[SIZE];
 	
 	/**
+	 * Flag if initially all items were sent.
+	 */
+	private boolean bulkStartSent = false;
+	
+	/**
 	 * The currently selected tab index.
 	 */
 	private int selectedTab;
@@ -68,8 +73,11 @@ public final class Bank {
 		player.getMessages().sendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0);
 		player.getMessages().sendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0);
 		player.getMessages().sendInventoryInterface(-3, 5063);
-		player.getMessages().sendItemsOnInterface(5064, this.player.getInventory().getItems());
-		refreshAll();
+		player.getMessages().sendItemsOnInterface(5064, this.player.getInventory());
+		if(!bulkStartSent) {
+			refreshAll();
+			bulkStartSent = true;
+		}
 	}
 	
 	/**
@@ -95,14 +103,9 @@ public final class Bank {
 			Item item = tabs[tab].get(slot);
 			if(item != null) {
 				if(tabs[nextTab].canAdd(item) && tabs[tab].canRemove(item)) {
-					tabs[nextTab].add(item);
 					tabs[tab].remove(item);
-					int newSlot = tabs[nextTab].getSlot(item.getId());
-					if(newSlot == -1)
-						tabs[nextTab].updateBulk();
-					else
-						tabs[tab].updateSingle(null, item, newSlot, true);
-					tabs[tab].updateSingle(item, null, slot, true);
+					tabs[nextTab].add(item);
+					tabs[tab].shifting(player);
 				}
 				return true;
 			}
@@ -201,8 +204,9 @@ public final class Bank {
 	 * Refreshes the contents of this bank tab container to the interface.
 	 */
 	public void refreshAll() {
-		for(BankTab t : tabs)
+		for(BankTab t : tabs) {
 			t.updateBulk();
+		}
 	}
 	
 	/**
@@ -216,8 +220,12 @@ public final class Bank {
 	 * Shifts all items in this container to the left to fill any {@code null} slots.
 	 */
 	public void shiftAll() {
-		for(BankTab t : tabs)
-			t.shift();
+		boolean force = player.getAttr().get("shifting_req").getBoolean();
+		for(BankTab t : tabs) {
+			if(force || t.isShiftingReq())
+				t.shift();
+		}
+		player.getAttr().get("shifting_req").set(false);
 	}
 	
 	/**
@@ -246,7 +254,7 @@ public final class Bank {
 	 *              to or lesser than the container.
 	 */
 	public final void setItems(int i, Item[] items) {
-		tabs[i].setItems(items);
+		tabs[i].fillItems(items);
 	}
 	
 	/**
@@ -256,7 +264,7 @@ public final class Bank {
 	 *              to or lesser than the container.
 	 */
 	public final void setItems(Item[] items) {
-		tabs[getSelectedTab()].setItems(items);
+		tabs[getSelectedTab()].fillItems(items);
 	}
 	
 	/**

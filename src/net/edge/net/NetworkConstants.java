@@ -3,7 +3,7 @@ package net.edge.net;
 import com.google.common.collect.ImmutableList;
 import io.netty.util.AttributeKey;
 import io.netty.util.ResourceLeakDetector.Level;
-import net.edge.net.packet.PacketReader;
+import net.edge.net.packet.IncomingPacket;
 import net.edge.net.session.Session;
 
 import java.math.BigInteger;
@@ -46,7 +46,7 @@ public final class NetworkConstants {
 	/**
 	 * An array of the message opcodes mapped to their respective listeners.
 	 */
-	public static final PacketReader[] MESSAGES = new PacketReader[256];
+	public static final IncomingPacket[] MESSAGES = new IncomingPacket[256];
 	
 	/**
 	 * An array of message opcodes mapped to their respective sizes.

@@ -5,7 +5,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import net.edge.content.commands.impl.BugCommand;
 import net.edge.content.market.MarketItem;
-import net.edge.net.packet.impl.NpcInformationPacket;
+import net.edge.net.packet.in.NpcInformationPacket;
 import net.edge.world.World;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
 import net.edge.world.node.entity.npc.drop.NpcDropManager;

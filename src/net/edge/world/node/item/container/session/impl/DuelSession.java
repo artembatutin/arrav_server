@@ -218,13 +218,13 @@ public final class DuelSession extends ExchangeSession {
 				Player recipient = getOther(player);
 				int remaining = recipient.getInventory().remaining();
 				
-				recipient.getMessages().sendItemsOnInterface(6669, getExchangeSession().get(player).getItems());
-				recipient.getMessages().sendItemsOnInterface(6670, getExchangeSession().get(player).getItems());
+				recipient.getMessages().sendItemsOnInterface(6669, getExchangeSession().get(player));
+				recipient.getMessages().sendItemsOnInterface(6670, getExchangeSession().get(player));
 				
-				player.getMessages().sendItemsOnInterface(6669, getExchangeSession().get(player).getItems());
-				player.getMessages().sendItemsOnInterface(6670, getExchangeSession().get(player).getItems());
+				player.getMessages().sendItemsOnInterface(6669, getExchangeSession().get(player));
+				player.getMessages().sendItemsOnInterface(6670, getExchangeSession().get(player));
 				
-				player.getMessages().sendItemsOnInterface(3322, player.getInventory().getItems());
+				player.getMessages().sendItemsOnInterface(3322, player.getInventory());
 				player.getMessages().sendInventoryInterface(37888, 3321);
 				player.getMessages().sendString("", 37927);
 				player.getMessages().sendString("Dueling with: " + name(recipient) + " (level-" + recipient.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots", 37928);
@@ -277,7 +277,7 @@ public final class DuelSession extends ExchangeSession {
 				player.getMessages().sendString(getItemNames(recipient, this.getExchangeSession().get(recipient).getItems()), 6517);
 				player.getMessages().sendString(getItemNames(player, this.getExchangeSession().get(player).getItems()), 6516);
 				
-				player.getMessages().sendItemsOnInterface(3322, player.getInventory().getItems());
+				player.getMessages().sendItemsOnInterface(3322, player.getInventory());
 				player.getMessages().sendInventoryInterface(6412, 3321);
 			}
 		}
@@ -312,10 +312,10 @@ public final class DuelSession extends ExchangeSession {
 			Player recipient = getOther(player);
 			int remaining = recipient.getInventory().remaining();
 			
-			player.getMessages().sendItemsOnInterface(3322, player.getInventory().getItems());
+			player.getMessages().sendItemsOnInterface(3322, player.getInventory());
 			player.getMessages().sendInventoryInterface(37888, 3321);
-			player.getMessages().sendItemsOnInterface(6669, getExchangeSession().get(player).getItems(), getExchangeSession().get(player).size());
-			player.getMessages().sendItemsOnInterface(6670, getExchangeSession().get(recipient).getItems(), getExchangeSession().get(recipient).size());
+			player.getMessages().sendItemsOnInterface(6669, getExchangeSession().get(player));
+			player.getMessages().sendItemsOnInterface(6670, getExchangeSession().get(recipient));
 			player.getMessages().sendString("", 37927);
 			player.getMessages().sendString("Dueling with: " + name(recipient) + " (level-" + recipient.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots", 6671);
 		}

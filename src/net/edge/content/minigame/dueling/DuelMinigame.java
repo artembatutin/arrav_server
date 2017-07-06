@@ -115,7 +115,7 @@ public final class DuelMinigame extends Minigame {
 		winner.getMessages().sendString(loser.getFormatUsername(), 6840);
 		winner.getMessages().sendString(Integer.toString(loser.determineCombatLevel()), 6839);
 		
-		winner.getMessages().sendItemsOnInterface(6822, session.getExchangeSession().get(loser).getItems());
+		winner.getMessages().sendItemsOnInterface(6822, session.getExchangeSession().get(loser));
 		winner.getMessages().sendInterface(6733);
 		claim = true;
 	}

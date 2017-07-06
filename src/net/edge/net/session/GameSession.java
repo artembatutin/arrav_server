@@ -59,18 +59,14 @@ public class GameSession extends Session {
 	@Override
 	public void onDispose() {
 		World.get().queueLogout(player);
-
-		stream.release();
 	}
 	
 	@Override
 	public void handleUpstreamMessage(Object msg) {
 		if(msg instanceof IncomingMsg) {
 			IncomingMsg packet = (IncomingMsg) msg;
-
 			World.get().run(() -> {
 				NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.getSize(), packet);
-
 				packet.getBuffer().release();
 			});
 		}

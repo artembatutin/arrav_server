@@ -115,11 +115,11 @@ public final class World {
 	static {
 		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-//			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
-//			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", "edge_avro", "%GL5{)hAJBU(MB3h", amtCpu);
+			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j": "%GL5{)hAJBU(MB3h", amtCpu);
+			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j": "%GL5{)hAJBU(MB3h", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
-		} // kan je me horen? ik moet ff me oortjes pakken, 2 sec ben zo back
+		}
 	}
 
 	public void start() {
@@ -231,7 +231,7 @@ public final class World {
 		
 		millis = System.currentTimeMillis() - start;
 
-		//System.out.println("Took " + millis + " ms");
+		System.out.println("Took " + millis + " ms");
 	}
 	
 	/**
@@ -272,7 +272,13 @@ public final class World {
 	 * not found.
 	 */
 	public Optional<Player> getPlayer(long username) {
-		return players.findFirst(it -> Objects.equals(it.getUsernameHash(), username));
+		Iterator<Player> it = players.entityIterator();
+		Player p;
+		while((p = it.next()) != null) {
+			if(p.getUsernameHash() == username)
+				return Optional.of(p);
+		}
+		return Optional.empty();
 	}
 	
 	/**
@@ -283,7 +289,13 @@ public final class World {
 	 * not found.
 	 */
 	public Optional<Player> getPlayer(String username) {
-		return players.findFirst(it -> Objects.equals(it.getUsername(), username));
+		Iterator<Player> it = players.entityIterator();
+		Player p;
+		while((p = it.next()) != null) {
+			if(Objects.equals(p.getUsername(), username))
+				return Optional.of(p);
+		}
+		return Optional.empty();
 	}
 	
 	/**
@@ -329,7 +341,11 @@ public final class World {
 	 * @param announcement determines if this message is an announcement.
 	 */
 	public void message(String message, boolean announcement) {
-		players.forEach(p -> p.message((announcement ? "@red@[ANNOUNCEMENT]: " : "") + message));
+		Iterator<Player> it = players.entityIterator();
+		Player p;
+		while((p = it.next()) != null) {
+			p.message((announcement ? "@red@[ANNOUNCEMENT]: " : "") + message);
+		}
 	}
 	
 	/**
@@ -347,7 +363,11 @@ public final class World {
 	 * @param rights the rights of the author.
 	 */
 	public void yell(String author, String message, Rights rights) {
-		players.forEach(p -> p.getMessages().sendYell(author, message, rights));
+		Iterator<Player> it = players.entityIterator();
+		Player p;
+		while((p = it.next()) != null) {
+			p.getMessages().sendYell(author, message, rights);
+		}
 	}
 	
 	/**

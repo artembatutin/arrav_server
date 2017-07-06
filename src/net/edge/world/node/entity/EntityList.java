@@ -255,9 +255,9 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		System.out.println("removed: " + entity.toString() + " size is : " + size);
 		if(entity.isPlayer()) {
 			Player player = entity.toPlayer();
-			player.getSession().flushQueue();
+			player.getSession().getStream().release();
 			player.getSession().getChannel().close();
-			if(player.getRights() != Rights.ADMINISTRATOR && player.getRights() != Rights.ADMINISTRATOR)
+			if(player.getRights() != Rights.ADMINISTRATOR)
 				new Hiscores(World.getScore(), player).submit();
 		}
 		return true;
@@ -274,7 +274,7 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 				continue;
 			Player p = e.toPlayer();
 			e.setState(NodeState.INACTIVE);
-			if(p.getRights() != Rights.ADMINISTRATOR && p.getRights() != Rights.ADMINISTRATOR)
+			if(p.getRights() != Rights.ADMINISTRATOR)
 				new Hiscores(World.getScore(), p).submit();
 		}
 		size = 0;

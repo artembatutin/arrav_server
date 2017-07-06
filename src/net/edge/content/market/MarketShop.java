@@ -109,7 +109,7 @@ public class MarketShop {
 		clearFromShop(player);
 		player.setMarketShop(this);
 		player.getMessages().sendString(getCurrency().ordinal() + "", 259);
-		player.getMessages().sendItemsOnInterface(3823, player.getInventory().getItems());
+		player.getMessages().sendItemsOnInterface(3823, player.getInventory());
 		player.getMessages().sendShopItemsOnInterface(3900, getItems());
 		int x = player.getPosition().getX();
 		boolean counter = x == 3081 || x == 3082;
@@ -253,7 +253,7 @@ public class MarketShop {
 		
 		getCurrency().getCurrency().takeCurrency(player, item.getAmount() * value);
 		player.getInventory().add(item);
-		player.getMessages().sendItemsOnInterface(3823, player.getInventory().getItems());
+		player.getMessages().sendItemsOnInterface(3823, player.getInventory());
 		return true;
 	}
 	
@@ -307,7 +307,7 @@ public class MarketShop {
 			marketItem.increaseStock(item.getAmount());
 			marketItem.updateStock();
 		}
-		player.getMessages().sendItemsOnInterface(3823, player.getInventory().getItems());
+		player.getMessages().sendItemsOnInterface(3823, player.getInventory());
 		return true;
 	}
 	

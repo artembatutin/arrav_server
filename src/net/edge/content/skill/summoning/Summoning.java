@@ -203,9 +203,9 @@ public final class Summoning {
 		
 		player.getAttr().get("bob").set(true);
 		FamiliarContainer storage = (FamiliarContainer) ability;
-		player.getMessages().sendItemsOnInterface(2702, storage.getContainer().getItems());
+		player.getMessages().sendItemsOnInterface(2702, storage.getContainer());
 		player.getMessages().sendInventoryInterface(2700, 5063);
-		player.getMessages().sendItemsOnInterface(5064, player.getInventory().getItems());
+		player.getMessages().sendItemsOnInterface(5064, player.getInventory());
 		return true;
 	}
 	
@@ -247,8 +247,8 @@ public final class Summoning {
 			ability.getContainer().remove(item);
 		});
 		ability.getContainer().shift();
-		player.getMessages().sendItemsOnInterface(2702, ability.getContainer().getItems());
-		player.getMessages().sendItemsOnInterface(5064, player.getInventory().getItems());
+		player.getMessages().sendItemsOnInterface(2702, ability.getContainer());
+		player.getMessages().sendItemsOnInterface(5064, player.getInventory());
 		return true;
 	}
 	

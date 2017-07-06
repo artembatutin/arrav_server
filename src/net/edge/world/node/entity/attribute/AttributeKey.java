@@ -74,6 +74,7 @@ public final class AttributeKey<T> {
 		AttributeKey.forTransient("enter_x_item_slot", -1);
 		AttributeKey.forTransient("insert_item", false);
 		AttributeKey.forTransient("withdraw_as_note", false);
+		AttributeKey.forPersistent("shifting_req", false);
 		
 		//Shopping
 		AttributeKey.forTransient("shop_item", -1);

@@ -43,7 +43,7 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	 * Updates many items on a widget.
 	 */
 	protected void updateItems(ItemContainer container) {
-		player.getMessages().sendItemsOnInterface(widget(), container.getItems());
+		player.getMessages().sendItemsOnInterface(widget(), container);
 	}
 	
 	/**

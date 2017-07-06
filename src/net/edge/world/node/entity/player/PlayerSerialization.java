@@ -5,7 +5,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.skill.construction.House;
-import net.edge.content.skill.construction.Portal;
 import net.edge.content.skill.construction.room.Room;
 import net.edge.content.skill.summoning.SummoningData;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
@@ -477,7 +476,7 @@ public final class PlayerSerialization {
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getInventory().setItems(b.fromJson(n, Item[].class));
+			p.getInventory().fillItems(b.fromJson(n, Item[].class));
 		}
 	}, new Token("equipment") {
 		@Override
@@ -487,7 +486,7 @@ public final class PlayerSerialization {
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getEquipment().setItems(b.fromJson(n, Item[].class));
+			p.getEquipment().fillItems(b.fromJson(n, Item[].class));
 		}
 	}, bank(0), bank(1), bank(2), bank(3), bank(4), bank(5), bank(6), bank(7), bank(8), new Token("friends") {
 		@Override
@@ -703,7 +702,7 @@ public final class PlayerSerialization {
 				p.getFamiliar().ifPresent(ffs -> {
 					FamiliarAbility ability = ffs.getAbilityType();
 					if(ability.getType() == BEAST_OF_BURDEN) {
-						((FamiliarContainer) ability).getContainer().setItems((b.fromJson(n, Item[].class)));
+						((FamiliarContainer) ability).getContainer().fillItems((b.fromJson(n, Item[].class)));
 					}
 				});
 			}

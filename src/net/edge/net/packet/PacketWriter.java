@@ -24,6 +24,7 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.container.ItemContainer;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectNode;
@@ -277,29 +278,52 @@ public final class PacketWriter {
 		msg.message(246);
 		msg.putShort(id, ByteOrder.LITTLE);
 		msg.putShort(zoom).putShort(model);
+	}
+	
+	/**
+	 * The message that sends to clear a container.
+	 * @param id    the interface id clear.
+	 */
+	public void clearItemsOnInterface(int id) {
+		if(player.getState() == INACTIVE || !player.isHuman())
+			return;
+		GameBuffer msg = player.getSession().getStream();
+		msg.message(40);
+		msg.putShort(id);
 		
 	}
 	
 	/**
 	 * The message that sends an array of items on an interface.
 	 * @param id     the interface that the items will be sent on.
-	 * @param items  the items that will be sent on the interface.
-	 * @param length the amount of items that will be sent on the interface.
+	 * @param container  the item container that will be sent on the interface.
 	 */
-	public void sendItemsOnInterface(int id, Item[] items, int length) {
+	public void sendItemsOnInterface(int id, ItemContainer container) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
+		if(id == -1)
+			return;
+		if(container.size() == 0) {
+			clearItemsOnInterface(id);
+			return;
+		}
 		GameBuffer msg = player.getSession().getStream();
 		msg.message(53, MessageType.VARIABLE_SHORT);
 		msg.putShort(id);
-		if(items == null) {
+		if(container.getItems() == null) {
+			msg.putShort(0);
 			msg.putShort(0);
 			msg.put(0);
 			msg.putShort(0, ByteTransform.A, ByteOrder.LITTLE);
 		} else {
-			msg.putShort(length);
-			for(Item item : items) {
+			int count = container.size();
+			msg.putShort(container.capacity());
+			msg.putShort(count);
+			for(Item item : container.getItems()) {
+				if(count == 0)
+					break;
 				if(item != null) {
+					count--;
 					if(item.getAmount() > 254) {
 						msg.put(255);
 						msg.putInt(item.getAmount(), ByteOrder.INVERSE_MIDDLE);
@@ -412,21 +436,6 @@ public final class PacketWriter {
 		}
 		msg.putShort(item.getId() + 1, ByteTransform.A, ByteOrder.LITTLE);
 		msg.endVarSize();
-	}
-	
-	/**
-	 * The message that sends an array of items on an interface, with the length
-	 * being the capacity of {@code items}.
-	 * @param id    the interface that the items will be sent on.
-	 * @param items the items that will be sent on the interface.
-	 */
-	public void sendItemsOnInterface(int id, Item[] items) {
-		if(player.getState() == INACTIVE || !player.isHuman())
-			return;
-		if(id == -1)
-			return;
-		int length = (items == null) ? 0 : items.length;
-		sendItemsOnInterface(id, items, length);
 	}
 	
 	/**

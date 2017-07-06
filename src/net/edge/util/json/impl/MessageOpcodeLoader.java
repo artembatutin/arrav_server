@@ -3,7 +3,7 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.net.NetworkConstants;
-import net.edge.net.packet.PacketReader;
+import net.edge.net.packet.IncomingPacket;
 import net.edge.util.json.JsonLoader;
 
 import java.util.Arrays;
@@ -37,14 +37,14 @@ public final class MessageOpcodeLoader extends JsonLoader {
 	 * {@code opcodes}.
 	 * @param opcodes the opcodes of the message.
 	 * @param name    the name and path to the class.
-	 * @throws IllegalStateException if the class isn't implementing {@link PacketReader}.
+	 * @throws IllegalStateException if the class isn't implementing {@link IncomingPacket}.
 	 */
 	private static void execute(int[] opcodes, String name) {
 		try {
 			Class<?> c = Class.forName(name);
-			if(!(Arrays.stream(c.getInterfaces()).anyMatch($it -> $it == PacketReader.class)))
-				throw new IllegalStateException("Class must be implementing PacketReader!");
-			PacketReader message = (PacketReader) c.newInstance();
+			if(!(Arrays.stream(c.getInterfaces()).anyMatch($it -> $it == IncomingPacket.class)))
+				throw new IllegalStateException("Class must be implementing IncomingPacket!");
+			IncomingPacket message = (IncomingPacket) c.newInstance();
 			Arrays.stream(opcodes).forEach(op -> NetworkConstants.MESSAGES[op] = message);
 		} catch(Exception e) {
 			e.printStackTrace();

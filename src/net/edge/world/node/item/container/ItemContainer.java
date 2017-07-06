@@ -763,7 +763,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param widget The widget to send the {@code Item}s on.
 	 */
 	public final void refreshBulk(Player player, int widget) {
-		player.getMessages().sendItemsOnInterface(widget, items);
+		player.getMessages().sendItemsOnInterface(widget, this);
 	}
 	
 	/**
@@ -866,15 +866,24 @@ public class ItemContainer implements Iterable<Item> {
 	 * Shifts {@link Item}s to the left to fill any empty ({@code null}) indexes.
 	 */
 	public final void shift() {
-		Item[] newItems = new Item[capacity];
-		int newIndex = 0;
+		Item[] newItems = new Item[items.length];
+		if(size() == 0) {
+			return;
+		}
+		int count = 0;
+		boolean update = false;
 		for(Item item : items) {
 			if(item == null) {
+				update = true;
 				continue;
 			}
-			newItems[newIndex++] = item;
+			newItems[count++] = item.copy();
+			if(count == size) {
+				break;
+			}
 		}
-		setItems(newItems);
+		if(update)
+			reformat(newItems);
 	}
 	
 	/**
@@ -941,7 +950,9 @@ public class ItemContainer implements Iterable<Item> {
 	 * Removes all of the items from this container.
 	 */
 	public final void clear(boolean refresh) {
-		Arrays.fill(items, null);
+		for(int i = 0; i < items.length; i++) {
+			items[i] = null;
+		}
 		if(refresh)
 			updateBulk();
 		size = 0;
@@ -955,19 +966,28 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
-	 * Sets the container of items to {@code items}. The container will not hold
+	 * Fills the container of items to {@code items}. The container will not hold
 	 * any references to the array, nor the item instances in the array.
 	 * @param items the new array of items, the capacities of this must be equal
 	 *              to or lesser than the container.
 	 */
-	public final void setItems(Item[] items) {
+	public final void fillItems(Item[] items) {
 		Preconditions.checkArgument(items.length <= capacity);
-		clear();
+		clear(false);
 		for(int i = 0; i < items.length; i++) {
 			if(items[i] != null)
 				size++;
 			this.items[i] = items[i] == null ? null : items[i].copy();
 		}
+		updateBulk();
+	}
+	
+	/**
+	 * Reformatting the container, keeping same item array but different indexing.
+	 * @param items the new array item setting.
+	 */
+	public final void reformat(Item[] items) {
+		System.arraycopy(items, 0, this.items, 0, items.length);
 		updateBulk();
 	}
 	
@@ -1031,7 +1051,7 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
-	 * Sets the container of items to {@code newItems}. The only difference between this and {@code setItems(Item[])} is that
+	 * Sets the container of items to {@code newItems}. The only difference between this and {@code fillItems(Item[])} is that
 	 * this method takes a wrapper class named {@link IndexedItem} that holds the index of items.
 	 * @param newItems The new array of items.
 	 */

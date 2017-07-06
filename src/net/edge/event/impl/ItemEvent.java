@@ -9,8 +9,8 @@ import net.edge.content.skill.prayer.PrayerBoneBury;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.summoning.SummoningData;
 import net.edge.event.Event;
-import net.edge.net.packet.impl.ItemActionPacket;
-import net.edge.net.packet.impl.ItemInterfacePacket;
+import net.edge.net.packet.in.ItemActionPacket;
+import net.edge.net.packet.in.ItemInterfacePacket;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 

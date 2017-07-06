@@ -26,6 +26,11 @@ final class BankTab extends ItemContainer {
 	private final int slot;
 	
 	/**
+	 * Flag if shifting is required.
+	 */
+	private boolean shiftingReq = true;
+	
+	/**
 	 * Creates a new bank tab.
 	 * @param player   the player instance.
 	 * @param slot     the slot of our bank tab.
@@ -123,7 +128,9 @@ final class BankTab extends ItemContainer {
 			return false;
 		}
 		if(canRemove(withdrawItem) && inventory.canAdd(newWithdrawItem)) {
-			remove(withdrawItem, -1, refresh);
+			if(remove(withdrawItem, -1, refresh) > 0) {
+				shiftingReq = true;
+			}
 			inventory.add(newWithdrawItem, -1, refresh);
 			if(refresh)
 				forceRefresh(player);
@@ -142,8 +149,8 @@ final class BankTab extends ItemContainer {
 				inv.remove(new Item(i.getId(), i.getAmount()), i.getIndex(), false);
 			}
 		}
-		player.getMessages().sendItemsOnInterface(5064, inv.getItems());
-		player.getMessages().sendItemsOnInterface(3214, inv.getItems());
+		player.getMessages().sendItemsOnInterface(5064, inv);
+		player.getMessages().sendItemsOnInterface(3214, inv);
 		forceRefresh(player);
 	}
 	
@@ -194,6 +201,22 @@ final class BankTab extends ItemContainer {
 	 */
 	public int getSlot() {
 		return slot;
+	}
+	
+	/**
+	 * Condition if shifting is required.
+	 * @return flag.
+	 */
+	public boolean isShiftingReq() {
+		return shiftingReq;
+	}
+	
+	/**
+	 * Sets the {@link #shiftingReq} condition.
+	 */
+	public void shifting(Player player) {
+		this.shiftingReq = true;
+		player.getAttr().get("shifting_req").set(true);
 	}
 	
 	/**

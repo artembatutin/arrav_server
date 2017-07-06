@@ -3,15 +3,9 @@ package net.edge.content.wilderness;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.PlayerPanel;
-import net.edge.content.skill.summoning.Summoning;
 import net.edge.locale.Position;
-import net.edge.locale.loc.Location;
-import net.edge.net.packet.impl.ItemInterfacePacket;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemDefinition;
 
 /**
  * Handles some parts of wilderness activity.

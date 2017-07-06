@@ -745,7 +745,6 @@ public final class Player extends EntityNode {
 		MinigameHandler.executeVoid(this, m -> m.onLogout(this));
 		getPrivateMessage().updateOtherList(false);
 		getClan().ifPresent(c -> c.getClan().remove(this, true));
-		messages.sendLogout();
 		getRegion().removeChar(this);
 		WildernessActivity.leave(this);
 		save();

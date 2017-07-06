@@ -7,7 +7,7 @@ import net.edge.content.skill.hunter.butterfly.ButterflyCatching;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.thieving.impl.Pickpocketing;
 import net.edge.event.Event;
-import net.edge.net.packet.impl.NpcActionPacket;
+import net.edge.net.packet.in.NpcActionPacket;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 
