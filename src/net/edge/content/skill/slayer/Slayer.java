@@ -337,11 +337,14 @@ public final class Slayer {
 			app.start();
 			return;
 		}
-		
+
+		Rights right = player.getRights();
+		int basePrice = location.getPrice();
+		int price = right.equals(Rights.EXTREME_DONATOR) ? ((int) (basePrice * 0.50)) : right.equals(Rights.SUPER_DONATOR) ? ((int) (basePrice * 0.80)) : right.equals(Rights.DONATOR) ? ((int) (basePrice * 0.90)) : basePrice;
 		if(location.getPrice() == 0) {
 			app.chain(new NpcDialogue(master.getNpcId(), "Alright, teleporting to this task will be free."));
 		} else {
-			app.chain(new NpcDialogue(master.getNpcId(), "Alright, that will be " + location.getPrice() + " coins."));
+			app.chain(new NpcDialogue(master.getNpcId(), "Alright, that will be " + price + " coins."));
 		}
 
 		app.chain(new OptionDialogue(t -> {
@@ -354,7 +357,7 @@ public final class Slayer {
 
 		app.chain(new PlayerDialogue("Nah, i'll stay here").attachAfter(() -> player.getMessages().sendCloseWindows()));
 
-		Dialogue dialogue = location.getPrice() == 0 ? new StatementDialogue("You teleport to your task for free.").attach(() -> player.move(RandomUtils.random(location.getPositions()))) : new RequestItemDialogue(new Item(995, location.getPrice()), "You handed over " + location.getPrice() + " coins to be \\nteleported to your assignment.", Optional.of(() -> player.move(RandomUtils.random(location.getPositions())))).attachAfter(() -> player.getMessages().sendCloseWindows());
+		Dialogue dialogue = location.getPrice() == 0 ? new StatementDialogue("You teleport to your task for free.").attach(() -> player.move(RandomUtils.random(location.getPositions()))) : new RequestItemDialogue(new Item(995, price), "You handed " + price + " coins over to be \\nteleported to your assignment.", Optional.of(() -> player.move(RandomUtils.random(location.getPositions())))).attachAfter(() -> player.getMessages().sendCloseWindows());
 		
 		app.chain(dialogue);
 
