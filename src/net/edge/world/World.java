@@ -231,7 +231,7 @@ public final class World {
 		
 		millis = System.currentTimeMillis() - start;
 
-		System.out.println("Took " + millis + " ms");
+		//System.out.println("Took " + millis + " ms");
 	}
 	
 	/**
