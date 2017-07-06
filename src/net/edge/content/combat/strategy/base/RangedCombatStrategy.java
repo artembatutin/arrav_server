@@ -76,7 +76,6 @@ public final class RangedCombatStrategy implements CombatStrategy {
 				delay = new Projectile(character, victim, ammo.getDefinition().getProjectile(), 64, 36, 40, 31, 0).sendProjectile().getTravelTime();
 			} else {
 				if(ammo.getDefinition().getProjectile() != -1) {
-					System.out.println("RANGE");
 					delay = new Projectile(character, victim, ammo.getDefinition().getProjectile(), ammo.getDefinition().getDelay(), ammo.getDefinition().getSpeed(), ammo.getDefinition().getStartHeight(), ammo.getDefinition().getEndHeight(), 0).sendProjectile().getTravelTime();
 				}
 			}

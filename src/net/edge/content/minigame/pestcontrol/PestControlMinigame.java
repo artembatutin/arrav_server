@@ -81,7 +81,6 @@ public final class PestControlMinigame extends SequencedMinigame {
 
 	@Override
 	public void onSequence() {
-		System.out.println("pest: " + time);
 		if(time == 200)
 			start();
 		time(--time);
@@ -182,7 +181,6 @@ public final class PestControlMinigame extends SequencedMinigame {
 		if(DoorHandler.isDoor(object.getDefinition())) {
 			PestGate gate = new PestGate(object);
 			gates.add(gate);
-			System.out.println("added gate");
 			gate.click(player);
 			return false;
 		}
@@ -340,7 +338,6 @@ public final class PestControlMinigame extends SequencedMinigame {
 		PestGate selected = null;
 		for(PestGate gate : gates) {
 			double dis = gate.getPos().getDistance(position);
-			System.out.println("distance " + dis);
 			if(distance == 0 || dis < distance) {
 				selected = gate;
 				distance = dis;
