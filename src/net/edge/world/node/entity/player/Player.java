@@ -1029,7 +1029,7 @@ public final class Player extends EntityNode {
 	 */
 	public void restoreRunEnergy() {
 		PacketWriter encoder = getMessages();
-		if(lastEnergy.elapsed(3500) && runEnergy < 100 && this.getMovementQueue().isMovementDone()) {
+		if(lastEnergy.elapsed(3500) && runEnergy < 100 && !this.getMovementQueue().isRunning()) {
 			double restoreRate = 0.45D;
 			double agilityFactor = 0.01 * skills[Skills.AGILITY].getLevel();
 			setRunEnergy(runEnergy + (restoreRate + agilityFactor));
