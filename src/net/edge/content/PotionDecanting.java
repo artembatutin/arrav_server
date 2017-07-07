@@ -52,7 +52,7 @@ public final class PotionDecanting {
 			player.getInventory().replace(usedOn.getId(), second.getIdForDose(doses - 4), false);
 		}
 		
-		player.getInventory().updateBulk();
+		//player.getInventory().updateBulk();
 		return true;
 	}
 	

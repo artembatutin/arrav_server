@@ -4,6 +4,8 @@ import net.edge.util.MutableNumber;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
+import java.util.Iterator;
+
 /**
  * The class that contains functions for managing private messaging lists.
  * @author lare96 <http://github.com/lare96>
@@ -46,11 +48,11 @@ public final class PrivateMessage {
 	 * @param online the status to update the other players friends lists with.
 	 */
 	public void updateOtherList(boolean online) {
-		for(Player players : World.get().getPlayers()) {
-			if(players == null)
-				continue;
-			if(players.getFriends().contains(player.getUsernameHash()))
-				players.getMessages().sendPrivateMessageFriend(player.getUsernameHash(), online);
+		Player p;
+		Iterator<Player> it = World.get().getPlayers().entityIterator();
+		while((p = it.next()) != null) {
+			if(p.getFriends().contains(player.getUsernameHash()))
+				p.getMessages().sendPrivateMessageFriend(player.getUsernameHash(), online);
 		}
 	}
 	

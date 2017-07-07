@@ -67,17 +67,20 @@ public final class MovementQueuePacket implements IncomingPacket {
 			path[i][0] = payload.get();
 			path[i][1] = payload.get();
 		}
-		int firstStepY = payload.getShort(ByteOrder.LITTLE);
-		player.getMovementQueue().reset();
-		player.getMovementQueue().setRunPath(payload.get(ByteTransform.C) == 1);
-		player.getMovementQueue().addToPath(new Position(firstStepX, firstStepY));
 		
-		for(int i = 0; i < steps; i++) {
-			path[i][0] += firstStepX;
-			path[i][1] += firstStepY;
-			player.getMovementQueue().addToPath(new Position(path[i][0], path[i][1]));
+		if(player.getMovementQueue().check()) {
+			int firstStepY = payload.getShort(ByteOrder.LITTLE);
+			player.getMovementQueue().reset();
+			player.getMovementQueue().setRunPath(payload.get(ByteTransform.C) == 1);
+			player.getMovementQueue().addToPath(new Position(firstStepX, firstStepY));
+			
+			for(int i = 0; i < steps; i++) {
+				path[i][0] += firstStepX;
+				path[i][1] += firstStepY;
+				player.getMovementQueue().addToPath(new Position(path[i][0], path[i][1]));
+			}
+			player.getMovementQueue().finish();
 		}
-		player.getMovementQueue().finish();
 		
 		if(Server.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("DEBUG[walking= " + player.getPosition().getRegion() + "]");

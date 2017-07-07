@@ -2,7 +2,6 @@ package net.edge.world.node.entity.player;
 
 import io.netty.buffer.ByteBufAllocator;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.MessageType;
 import net.edge.locale.Position;
 import net.edge.world.World;
@@ -10,6 +9,8 @@ import net.edge.world.node.NodeState;
 import net.edge.world.Direction;
 import net.edge.world.node.entity.update.UpdateBlockSet;
 import net.edge.world.node.entity.update.UpdateState;
+import net.edge.world.node.region.Region;
+import net.edge.world.node.region.RegionManager;
 
 import java.util.Iterator;
 
@@ -49,21 +50,44 @@ public final class PlayerUpdater {
 			}
 			
 			int added = 0;
-			for(Player other : World.getRegions().getPriorityPlayers(player)) {
-				if(added == 15 || player.getLocalPlayers().size() >= 255)
-					break;
-				if(other == null || other.same(player))
-					continue;
-				if(other.getState() != NodeState.ACTIVE)
-					continue;
-				if(other.getInstance() != player.getInstance())
-					continue;
-				if(other.isVisible() && other.getPosition().isViewableFrom(player.getPosition())) {
-					if(player.getLocalPlayers().add(other)) {
-						added++;
-						addPlayer(msg, player, other);
-						blockSet.encodeUpdateBlocks(player, other, blockMsg, UpdateState.ADD_LOCAL);
-					}
+			int x = player.getPosition().getX() & 63;
+			int y = player.getPosition().getY() & 63;
+			int regionId = player.getPosition().getRegion();
+			RegionManager m = World.getRegions();
+			processPlayers(m.getRegion(regionId), player, blockMsg, msg, blockSet, added);
+			if(y > 48) {
+				//top part of region.
+				if(m.exists(regionId + 1))
+					processPlayers(m.getRegion(regionId + 1), player, blockMsg, msg, blockSet, added);
+				if(x > 48) {
+					//top-right of region.
+					if(m.exists(regionId + 256))
+						processPlayers(m.getRegion(regionId + 256), player, blockMsg, msg, blockSet, added);
+					if(m.exists(regionId + 257))
+						processPlayers(m.getRegion(regionId + 257), player, blockMsg, msg, blockSet, added);
+				} else if(x < 16) {
+					//top-left of region.
+					if(m.exists(regionId - 256))
+						processPlayers(m.getRegion(regionId - 256), player, blockMsg, msg, blockSet, added);
+					if(m.exists(regionId - 255))
+						processPlayers(m.getRegion(regionId - 255), player, blockMsg, msg, blockSet, added);
+				}
+			} else if(y < 16) {
+				//bottom part of region.
+				if(m.exists(regionId - 1))
+					processPlayers(m.getRegion(regionId - 1), player, blockMsg, msg, blockSet, added);
+				if(x > 48) {
+					//bottom-right of region.
+					if(m.exists(regionId + 256))
+						processPlayers(m.getRegion(regionId + 256), player, blockMsg, msg, blockSet, added);
+					if(m.exists(regionId + 255))
+						processPlayers(m.getRegion(regionId + 255), player, blockMsg, msg, blockSet, added);
+				} else if(x < 16) {
+					//bottom-left of region.
+					if(m.exists(regionId - 256))
+						processPlayers(m.getRegion(regionId - 256), player, blockMsg, msg, blockSet, added);
+					if(m.exists(regionId - 257))
+						processPlayers(m.getRegion(regionId - 257), player, blockMsg, msg, blockSet, added);
 				}
 			}
 			
@@ -82,6 +106,31 @@ public final class PlayerUpdater {
 		}
 
 		msg.endVarSize();
+	}
+	
+	/**
+	 * Processing the addition of player from a region.
+	 */
+	private static void processPlayers(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, UpdateBlockSet<Player> blockSet, int added) {
+		if(!region.getPlayers().isEmpty()) {
+			for(Player other : region.getPlayers()) {
+				if(added == 15 || player.getLocalPlayers().size() >= 255)
+					break;
+				if(other == null || other.same(player))
+					continue;
+				if(other.getState() != NodeState.ACTIVE)
+					continue;
+				if(other.getInstance() != player.getInstance())
+					continue;
+				if(other.isVisible() && other.getPosition().isViewableFrom(player.getPosition())) {
+					if(player.getLocalPlayers().add(other)) {
+						added++;
+						addPlayer(msg, player, other);
+						blockSet.encodeUpdateBlocks(player, other, blockMsg, UpdateState.ADD_LOCAL);
+					}
+				}
+			}
+		}
 	}
 	
 	/**

@@ -25,6 +25,7 @@ import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.node.item.container.ItemContainer;
+import net.edge.world.node.region.RegionManager;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectNode;
@@ -211,7 +212,45 @@ public final class PacketWriter {
 	 * @param level    the height of the graphic that will be created.
 	 */
 	public static void sendAllGraphic(int id, Position position, int level) {
-		World.getRegions().getSurroundingRegions(position).forEach(r -> r.getPlayers().forEach(p -> p.getMessages().sendGraphic(id, position, level)));
+		int x = position.getX() & 63;
+		int y = position.getY() & 63;
+		int regionId = position.getRegion();
+		RegionManager m = World.getRegions();
+		if(y > 48) {
+			//top part of region.
+			if(m.exists(regionId + 1))
+				m.getRegion(regionId + 1).getPlayers().forEach(p -> p.getMessages().sendGraphic(id, position, level));
+			if(x > 48) {
+				//top-right of region.
+				if(m.exists(regionId + 256))
+					m.getRegion(regionId + 256).getPlayers().forEach(p -> p.getMessages().sendGraphic(id, position, level));
+				if(m.exists(regionId + 257))
+					m.getRegion(regionId + 257).getPlayers().forEach(p -> p.getMessages().sendGraphic(id, position, level));
+			} else if(x < 16) {
+				//top-left of region.
+				if(m.exists(regionId - 256))
+					m.getRegion(regionId - 256).getPlayers().forEach(p -> p.getMessages().sendGraphic(id, position, level));
+				if(m.exists(regionId - 255))
+					m.getRegion(regionId - 255).getPlayers().forEach(p -> p.getMessages().sendGraphic(id, position, level));
+			}
+		} else if(y < 16) {
+			//bottom part of region.
+			if(m.exists(regionId - 1))
+				m.getRegion(regionId - 1).getPlayers().forEach(p -> p.getMessages().sendGraphic(id, position, level));
+			if(x > 48) {
+				//bottom-right of region.
+				if(m.exists(regionId + 256))
+					m.getRegion(regionId + 256).getPlayers().forEach(p -> p.getMessages().sendGraphic(id, position, level));
+				if(m.exists(regionId + 255))
+					m.getRegion(regionId + 255).getPlayers().forEach(p -> p.getMessages().sendGraphic(id, position, level));
+			} else if(x < 16) {
+				//bottom-left of region.
+				if(m.exists(regionId - 256))
+					m.getRegion(regionId - 256).getPlayers().forEach(p -> p.getMessages().sendGraphic(id, position, level));
+				if(m.exists(regionId - 257))
+					m.getRegion(regionId - 257).getPlayers().forEach(p -> p.getMessages().sendGraphic(id, position, level));
+			}
+		}
 	}
 	
 	/**
@@ -365,9 +404,11 @@ public final class PacketWriter {
 		msg.putShort(id);
 		if(items == null) {
 			msg.putShort(0);
+			msg.putShort(0);
 			msg.put(0);
 			msg.putShort(0, ByteTransform.A, ByteOrder.LITTLE);
 		} else {
+			msg.putShort(items.size());
 			msg.putShort(items.size());
 			for(int i : items) {
 				MarketItem item = MarketItem.get(i);

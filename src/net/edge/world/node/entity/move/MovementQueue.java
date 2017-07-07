@@ -164,8 +164,10 @@ public final class MovementQueue {
 	 */
 	public void walk(Position position) {
 		reset();
-		addToPath(position);
-		finish();
+		if(check()) {
+			addToPath(position);
+			finish();
+		}
 	}
 	
 	/**
@@ -174,8 +176,21 @@ public final class MovementQueue {
 	 */
 	public void walk(Deque<Position> path) {
 		reset();
-		path.forEach(this::addToPath);
-		finish();
+		if(check()) {
+			path.forEach(p -> {
+				if(waypoints.size() >= 100) {
+					return;
+				}
+				Point last = waypoints.peekLast();
+				int deltaX = p.getX() - last.getX();
+				int deltaY = p.getY() - last.getY();
+				Direction dir = Direction.fromDeltas(deltaX, deltaY);
+				if(dir.getId() > -1) {
+					waypoints.add(new Point(p.getX(), p.getY(), dir));
+				}
+			});
+			finish();
+		}
 	}
 	
 	/**
@@ -220,10 +235,10 @@ public final class MovementQueue {
 	}
 	
 	/**
-	 * Adds a new position to the walking queue.
-	 * @param position the position to add.
+	 * Checks some few conditions before adding path.
+	 * @return pass flag.
 	 */
-	public void addToPath(Position position) {
+	public boolean check() {
 		if(lockMovement || character.isFrozen() || character.isStunned()) {
 			if(character.isPlayer()) {
 				Player player = (Player) character;
@@ -232,8 +247,16 @@ public final class MovementQueue {
 				if(player.isStunned())
 					player.message("You're currently stunned and you cannot move.");
 			}
-			return;
+			return false;
 		}
+		return true;
+	}
+	
+	/**
+	 * Adds a new position to the walking queue.
+	 * @param position the position to add.
+	 */
+	public void addToPath(Position position) {
 		if(waypoints.size() == 0) {
 			reset();
 		}

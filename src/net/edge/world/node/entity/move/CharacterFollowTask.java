@@ -8,6 +8,7 @@ import net.edge.content.skill.summoning.Summoning;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
 import net.edge.world.World;
+import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Direction;
 import net.edge.world.node.entity.move.path.Path;
@@ -51,6 +52,15 @@ class CharacterFollowTask extends Task {
 	
 	@Override
 	public void execute() {
+		//First checks.
+		if(character.getState() != NodeState.ACTIVE || !character.isFollowing() || character.isDead() || leader.isDead()) {//Death and away check.
+			character.faceEntity(null);
+			character.setFollowing(false);
+			character.setFollowEntity(null);
+			this.cancel();
+			return;
+		}
+		
 		//Familiar calling back.
 		if(character.isNpc()) {
 			Npc npc = character.toNpc();
@@ -67,17 +77,9 @@ class CharacterFollowTask extends Task {
 			}
 		}
 		
-		//First checks.
-		if(!character.isFollowing() || character.isDead() || leader.isDead()) {//Death and away check.
-			character.faceEntity(null);
-			character.setFollowing(false);
-			character.setFollowEntity(null);
-			this.cancel();
-			return;
-		}
-		
 		//Entity facing.
-		character.faceEntity(leader);
+		if(character.getFaceIndex() == 65535)
+			character.faceEntity(leader);
 		
 		//Movement locks.
 		if(character.getMovementQueue().isLockMovement() || character.isFrozen() || character.isStunned()) {//Requirement check.

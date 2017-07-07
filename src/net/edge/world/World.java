@@ -103,6 +103,11 @@ public final class World {
 	private final EntityList<Player> players = new EntityList<>(2048);
 	
 	/**
+	 * Amount of staff players online.
+	 */
+	private int staffCount;
+	
+	/**
 	 * The regional tick counter for processing such as {@link ItemNode} in a region.
 	 */
 	private int regionalTick;
@@ -121,15 +126,25 @@ public final class World {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Starts the synchronized pulser.
+	 */
 	public void start() {
 		sync.scheduleAtFixedRate(new GamePulseHandler(this), 600, 600, TimeUnit.MILLISECONDS);
 	}
-
+	
+	/**
+	 * Sends a task to the synchronized pulser.
+	 * @param r task to be sent.
+	 */
 	public void run(Runnable r) {
 		sync.submit(r);
 	}
 	
+	/**
+	 * Closes the synchronized pulser.
+	 */
 	public void shutdown() {
 		sync.shutdownNow();
 	}
@@ -183,7 +198,7 @@ public final class World {
 		// Synchronization
 		while((p = pi.next()) != null) {
 			try {
-				if(p.isHuman()) { // player wordt geupdate terwij hij logged out is
+				if(p.isHuman()) {
 					PlayerUpdater.write(p);
 					NpcUpdater.write(p);
 				}
@@ -272,8 +287,8 @@ public final class World {
 	 * not found.
 	 */
 	public Optional<Player> getPlayer(long username) {
-		Iterator<Player> it = players.entityIterator();
 		Player p;
+		Iterator<Player> it = players.entityIterator();
 		while((p = it.next()) != null) {
 			if(p.getUsernameHash() == username)
 				return Optional.of(p);
@@ -289,8 +304,8 @@ public final class World {
 	 * not found.
 	 */
 	public Optional<Player> getPlayer(String username) {
-		Iterator<Player> it = players.entityIterator();
 		Player p;
+		Iterator<Player> it = players.entityIterator();
 		while((p = it.next()) != null) {
 			if(Objects.equals(p.getUsername(), username))
 				return Optional.of(p);
@@ -385,7 +400,6 @@ public final class World {
 				return false;
 			}
 			boolean response = players.remove(player);
-			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + players.size());
 			for(Npc mob : player.getMobs()) {
 				npcs.remove(mob);
 			}
@@ -424,6 +438,22 @@ public final class World {
 	 */
 	public EntityList<Player> getPlayers() {
 		return players;
+	}
+	
+	/**
+	 * Gets the staff count online.
+	 * @return staff count.
+	 */
+	public int getStaffCount() {
+		return staffCount;
+	}
+	
+	/**
+	 * Sets a new staff count.
+	 * @param staffCount staff count to set.
+	 */
+	public void setStaffCount(int staffCount) {
+		this.staffCount = staffCount;
 	}
 	
 	/**
@@ -526,8 +556,6 @@ public final class World {
 	 * The donation database connection.
 	 */
 	private static Database donation;
-	
-	
 	
 	
 	/* ASSETS GATHERS METHODS. */
@@ -671,7 +699,8 @@ public final class World {
 	 * Returns the singleton pattern implementation.
 	 * @return The returned implementation.
 	 */
-	public static final World get() {
+	public static World get() {
 		return singleton;
 	}
+	
 }

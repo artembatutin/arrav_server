@@ -10,6 +10,8 @@ import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
+import java.util.Iterator;
+
 /**
  * The class that handles the restoration of weakened skills.
  * @author lare96 <http://github.com/lare96>
@@ -30,9 +32,9 @@ public final class RestoreStatTask extends Task {
 	
 	@Override
 	public void execute() {
-		for(Player player : World.get().getPlayers()) {
-			if(player == null)
-				continue;
+		Player player;
+		Iterator<Player> it = World.get().getPlayers().entityIterator();
+		while((player = it.next()) != null) {
 			if(player.getState() != NodeState.ACTIVE) {
 				continue;
 			}

@@ -3,6 +3,7 @@ package net.edge.world;
 import net.edge.content.combat.CombatType;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.region.RegionManager;
 
 /**
  * A container representing a graphic propelled through the air by some sort of
@@ -172,7 +173,45 @@ public final class Projectile {
 	 * container.
 	 */
 	public Projectile sendProjectile() {
-		World.getRegions().getSurroundingRegions(start).forEach(r -> r.getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
+		int x = start.getX() & 63;
+		int y = start.getY() & 63;
+		int regionId = start.getRegion();
+		RegionManager m = World.getRegions();
+		if(y > 48) {
+			//top part of region.
+			if(m.exists(regionId + 1))
+				m.getRegion(regionId + 1).getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay));
+			if(x > 48) {
+				//top-right of region.
+				if(m.exists(regionId + 256))
+					m.getRegion(regionId + 256).getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay));
+				if(m.exists(regionId + 257))
+					m.getRegion(regionId + 257).getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay));
+			} else if(x < 16) {
+				//top-left of region.
+				if(m.exists(regionId - 256))
+					m.getRegion(regionId - 256).getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay));
+				if(m.exists(regionId - 255))
+					m.getRegion(regionId - 255).getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay));
+			}
+		} else if(y < 16) {
+			//bottom part of region.
+			if(m.exists(regionId - 1))
+				m.getRegion(regionId - 1).getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay));
+			if(x > 48) {
+				//bottom-right of region.
+				if(m.exists(regionId + 256))
+					m.getRegion(regionId + 256).getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay));
+				if(m.exists(regionId + 255))
+					m.getRegion(regionId + 255).getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay));
+			} else if(x < 16) {
+				//bottom-left of region.
+				if(m.exists(regionId - 256))
+					m.getRegion(regionId - 256).getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay));
+				if(m.exists(regionId - 257))
+					m.getRegion(regionId - 257).getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay));
+			}
+		}
 		return this;
 	}
 	

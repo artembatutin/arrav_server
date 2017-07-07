@@ -8,6 +8,8 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectNode;
 
+import java.util.function.Consumer;
+
 /**
  * Manages all of the cached {@link Region}s and the {@link EntityNode}s contained within them.
  * @author lare96 <http://github.org/lare96>
@@ -57,21 +59,6 @@ public final class RegionManager {
 	}
 	
 	/**
-	 * Gets all of the {@link Player}s relevant to {@code player}, prioritized in an order somewhat identical to Runescape.
-	 * This is done so that staggered updating does not interfere negatively with gameplay.
-	 * @param player The {@link Player}.
-	 * @return The local, prioritized, {@code Player}s.
-	 */
-	public ObjectSet<Player> getPriorityPlayers(Player player) {
-		ObjectList<Region> allRegions = getSurroundingRegions(player.getPosition());
-		ObjectSet<Player> localPlayers = new ObjectAVLTreeSet<>(new RegionPriorityComparator(player));
-		for(Region region : allRegions) {
-			localPlayers.addAll(region.getPlayers());
-		}
-		return localPlayers;
-	}
-	
-	/**
 	 * Gets all of the {@link Player}s relevant to a single {@code Position}.
 	 * @param pos The {@link Position}.
 	 * @return The local, prioritized, {@code Player}s.
@@ -83,21 +70,6 @@ public final class RegionManager {
 			localPlayers.addAll(region.getPlayers());
 		}
 		return localPlayers;
-	}
-	
-	/**
-	 * Gets all of the {@link Npc}s relevant to {@code player}, prioritized in an order somewhat identical to Runescape. This
-	 * is done so that staggered updating does not interfere negatively with gameplay.
-	 * @param player The {@link Player}.
-	 * @return The local, prioritized, {@code Npc}s.
-	 */
-	public ObjectSet<Npc> getPriorityNpcs(Player player) {
-		ObjectList<Region> allRegions = getSurroundingRegions(player.getPosition());
-		ObjectSet<Npc> localNpcs = new ObjectAVLTreeSet<>(new RegionPriorityComparator(player));
-		for(Region region : allRegions) {
-			localNpcs.addAll(region.getNpcs());
-		}
-		return localNpcs;
 	}
 	
 	/**
@@ -114,61 +86,6 @@ public final class RegionManager {
 					player.getMessages().sendObject(o);
 			}
 		}
-	}
-	
-	/**
-	 * Gets the {@link Region}s surrounding {@code pos}.
-	 * @param pos The {@link Position}.
-	 * @return The surrounding regions.
-	 */
-	public ObjectList<Region> getSurroundingRegions(Position pos) {
-		int regionId = pos.getRegion();
-		
-		ObjectList<Region> regions = new ObjectArrayList<>();
-		regions.add(getRegion(regionId)); // Initial region.
-		
-		int x = pos.getX() % 64;
-		int y = pos.getY() % 64;
-		
-		if(x >= 16 && x <= 48 && y >= 16 && y <= 48) {
-			//in the middle of the region.
-			return regions;
-		} else if(y > 48) {
-			//top part of region.
-			if(exists(regionId + 1))
-				regions.add(getRegion(regionId + 1));
-			if(x > 48) {
-				//top-right of region.
-				if(exists(regionId + 256))
-					regions.add(getRegion(regionId + 256));
-				if(exists(regionId + 257))
-					regions.add(getRegion(regionId + 257));
-			} else if(x < 16) {
-				//top-left of region.
-				if(exists(regionId - 256))
-					regions.add(getRegion(regionId - 256));
-				if(exists(regionId - 255))
-					regions.add(getRegion(regionId - 255));
-			}
-		} else if(y < 16) {
-			//bottom part of region.
-			if(exists(regionId - 1))
-				regions.add(getRegion(regionId - 1));
-			if(x > 48) {
-				//bottom-right of region.
-				if(exists(regionId + 256))
-					regions.add(getRegion(regionId + 256));
-				if(exists(regionId + 255))
-					regions.add(getRegion(regionId + 255));
-			} else if(x < 16) {
-				//bottom-left of region.
-				if(exists(regionId - 256))
-					regions.add(getRegion(regionId - 256));
-				if(exists(regionId - 257))
-					regions.add(getRegion(regionId - 257));
-			}
-		}
-		return regions;
 	}
 	
 	/**
