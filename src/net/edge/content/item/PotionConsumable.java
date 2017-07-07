@@ -501,7 +501,7 @@ public enum PotionConsumable {
 							replace = new Item(potion.getIds()[index + 1]);
 						}
 					}
-					player.getInventory().add(replace);
+					player.getInventory().add(replace, slot, true);
 					potion.onEffect(player);
 					return true;
 				}
