@@ -114,6 +114,14 @@ public final class CyclopsRoom extends GuildRoom {
 			player.move(new Position(2844, 3540));
 		}
 	}
+	
+	@Override
+	public void onTeleportBefore(Player player, Position position) {
+		if(entered.isPresent()) {
+			entered = Optional.empty();
+			player.setMinigame(Optional.empty());
+		}
+	}
 
 	@Override
 	public boolean canPickup(Player player, ItemNode node) {

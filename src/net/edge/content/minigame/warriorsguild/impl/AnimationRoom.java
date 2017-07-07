@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.event.impl.ObjectEvent;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.content.combat.CombatType;
 import net.edge.content.dialogue.impl.StatementDialogue;
@@ -64,16 +65,13 @@ public final class AnimationRoom extends GuildRoom {
 	@Override
 	public boolean onItemOnObject(Player player, ObjectNode object, Item item) {
 		Optional<AnimatedArmour.ArmourData> data = AnimatedArmour.ArmourData.getArmour(item.getId());
-		
 		if(!data.isPresent()) {
 			return false;
 		}
-		
 		if(!player.getInventory().containsAll(data.get().set)) {
 			player.message("You are missing some items in order to animate this armour set.");
 			return false;
 		}
-		
 		armour = Optional.of(new AnimatedArmour(data.get(), object.getGlobalPos()));
 		onEnter(player);
 		return true;
@@ -92,8 +90,8 @@ public final class AnimationRoom extends GuildRoom {
 	@Override
 	public boolean onFirstClickObject(Player player, ObjectNode node) {
 		switch(node.getId()) {
-			case 15641:
-			case 15644:
+			case 57647:
+			case 57644:
 				onLogout(player);
 				player.setMinigame(Optional.empty());
 				player.move(new Position(player.getPosition().getX(), 3546));
@@ -101,6 +99,12 @@ public final class AnimationRoom extends GuildRoom {
 			default:
 				return false;
 		}
+	}
+	
+	@Override
+	public void onTeleportBefore(Player player, Position position) {
+		onLogout(player);
+		player.setMinigame(Optional.empty());
 	}
 	
 	@Override
@@ -123,15 +127,11 @@ public final class AnimationRoom extends GuildRoom {
 		if(!armour.isPresent()) {
 			return;
 		}
-		
 		AnimatedArmour arm = armour.get();
-		
 		player.getActivityManager().setAllExcept(ActivityManager.ActivityType.LOG_OUT, ActivityManager.ActivityType.DIALOGUE_INTERACTION);
-		
 		player.animation(new Animation(827));
 		player.getDialogueBuilder().append(new StatementDialogue("You place your armour on the platform where it", "disappears..."));
 		player.getInventory().removeAll(arm.data.set);
-		
 		LinkedTaskSequence seq = new LinkedTaskSequence();
 		seq.connect(5, () -> {
 			player.getDialogueBuilder().append(new StatementDialogue("The animator hums, something appears to be working.", "You stand back..."));
