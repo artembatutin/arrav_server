@@ -131,8 +131,6 @@ public final class Server {
 				@Override
 				public void execute() {
 					PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
-					PlayerPanel.STAFF_ONLINE.refreshAll("@or2@ - Staff online: @yel@" + World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff()).size());
-					
 					LocalDate date = LocalDate.now();
 					ScoreboardManager score = World.getScoreboardManager();
 					if(date.getDayOfWeek().equals(DayOfWeek.MONDAY) && !score.isResetPlayerScoreboardStatistic()) {
@@ -140,7 +138,6 @@ public final class Server {
 					} else if(!date.getDayOfWeek().equals(DayOfWeek.MONDAY) && score.isResetPlayerScoreboardStatistic()) {
 						score.setResetPlayerScoreboardStatistic(false);
 					}
-					
 					World.getShootingStarEvent().process();
 				}
 			});

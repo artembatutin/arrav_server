@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import net.edge.content.commands.impl.RedeemCommand;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.wilderness.WildernessActivity;
+import net.edge.event.impl.ButtonEvent;
 import net.edge.game.GameConstants;
 import net.edge.util.TextUtils;
 import net.edge.util.Utility;
@@ -25,7 +26,8 @@ import java.util.concurrent.TimeUnit;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum PlayerPanel {
-	TOOLS(),
+	TAB,
+	TOOLS,
 	COMMUNITY() {
 		@Override
 		public void onClick(Player player) {
@@ -74,10 +76,10 @@ public enum PlayerPanel {
 			player.getMessages().sendNpcInformation(0, null);
 		}
 	},
-	TOOL3(),
+	TOOL3,
 	
-	SERVER_STATISTICS(),
-	UPTIME(),
+	SERVER_STATISTICS,
+	UPTIME,
 	PLAYERS_ONLINE() {
 		@Override
 		public void onClick(Player player) {
@@ -102,12 +104,12 @@ public enum PlayerPanel {
 			}
 		}
 	},
-	PLAYERS_IN_WILD(),
+	PLAYERS_IN_WILD,
 	
-	EMPTY(),
+	EMPTY,
 	
-	PLAYER_STATISTICS(),
-	USERNAME(),
+	PLAYER_STATISTICS,
+	USERNAME,
 	PASSWORD() {
 		@Override
 		public void onClick(Player player) {
@@ -117,7 +119,7 @@ public enum PlayerPanel {
 					player.getMessages().sendEnterName("Your new password to set:", s -> () -> {
 						player.setPassword(s);
 						player.message("You have successfully changed your password. Log out to save it.");
-						PlayerPanel.PASSWORD.refresh(player, "@or2@ - Password: " + TextUtils.passwordCheck(s));
+						PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.passwordCheck(s));
 					});
 				} else if(t == OptionDialogue.OptionType.SECOND_OPTION) {
 					player.getMessages().sendCloseWindows();
@@ -125,7 +127,7 @@ public enum PlayerPanel {
 			}, "Yes please!", "No thanks."));
 		}
 	},
-	RANK(),
+	RANK,
 	IRON() {
 		@Override
 		public void onClick(Player player) {
@@ -142,10 +144,10 @@ public enum PlayerPanel {
 			player.message("You can only select iron man mode in the beginning.");
 		}
 	},
-	SLAYER_POINTS(),
-	SLAYER_TASK(),
-	SLAYER_COUNT(),
-	PEST_POINTS(),
+	SLAYER_POINTS,
+	SLAYER_TASK,
+	SLAYER_COUNT,
+	PEST_POINTS,
 	TOTAL_VOTES() {
 		@Override
 		public void onClick(Player player) {
@@ -153,24 +155,24 @@ public enum PlayerPanel {
 		}
 	},
 	
-	EMPTY1(),
+	EMPTY1,
 	
-	PVE_HEADER(),
+	PVE_HEADER,
 	
-	HIGHEST_KILLSTREAK(),
-	CURRENT_KILLSTREAK(),
-	TOTAL_PLAYER_KILLS(),
-	TOTAL_PLAYER_DEATHS(),
-	TOTAL_NPC_KILLS(),
-	TOTAL_NPC_DEATHS(),
+	HIGHEST_KILLSTREAK,
+	CURRENT_KILLSTREAK,
+	TOTAL_PLAYER_KILLS,
+	TOTAL_PLAYER_DEATHS,
+	TOTAL_NPC_KILLS,
+	TOTAL_NPC_DEATHS,
 	
-	EMPTY2(),
+	EMPTY2,
 	
-	INDIVIDUAL_SCOREBOARD_STATISTICS(),
+	INDIVIDUAL_SCOREBOARD_STATISTICS,
 	
-	INDIVIDUAL_HIGHEST_KILLSTREAKS(),
-	INDIVIDUAL_CURRENT_KILLSTREAKS(),
-	INDIVIDUAL_KILLS(),
+	INDIVIDUAL_HIGHEST_KILLSTREAKS,
+	INDIVIDUAL_CURRENT_KILLSTREAKS,
+	INDIVIDUAL_KILLS,
 	INDIVIDUAL_DEATHS();
 	
 	/**
@@ -208,22 +210,23 @@ public enum PlayerPanel {
 		for(int i = 16016; i < 16016 + VALUES.size(); i++) {
 			player.getMessages().sendString("", i);
 		}
+		PlayerPanel.TAB.refresh(player, "@or2@Informative @or1@- @or3@Clickable");
 		PlayerPanel.TOOLS.refresh(player, "@or1@Quickies:");
-		PlayerPanel.COMMUNITY.refresh(player, "@or2@ - Forums");
-		PlayerPanel.DISCORD.refresh(player, "@or2@ - Discord");
-		PlayerPanel.VOTE.refresh(player, "@or2@ - Vote points: @yel@" + player.getVotePoints() + " points");
-		PlayerPanel.STORE.refresh(player, "@or2@ - Store");
-		PlayerPanel.NPC_TOOL.refresh(player, "@or2@ - Monster Database");
+		PlayerPanel.COMMUNITY.refresh(player, "@or3@ - Forums");
+		PlayerPanel.DISCORD.refresh(player, "@or3@ - Discord");
+		PlayerPanel.VOTE.refresh(player, "@or3@ - Vote points: @yel@" + player.getVotePoints() + " points");
+		PlayerPanel.STORE.refresh(player, "@or3@ - Store");
+		PlayerPanel.NPC_TOOL.refresh(player, "@or3@ - Monster Database");
 		PlayerPanel.SERVER_STATISTICS.refresh(player, "@or1@Server Information:");
 		PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
-		PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + WildernessActivity.getPlayers().size() + 1);
-		PlayerPanel.STAFF_ONLINE.refreshAll("@or2@ - Staff online: @yel@" + World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff()).size());
+		PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + WildernessActivity.getPlayers().size());
+		PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 		PlayerPanel.PLAYER_STATISTICS.refresh(player, "@or1@Player Information:");
 		
 		PlayerPanel.EMPTY.refresh(player, "");
 		PlayerPanel.USERNAME.refresh(player, "@or2@ - Username: @yel@" + TextUtils.capitalize(player.getUsername()));
-		PlayerPanel.PASSWORD.refresh(player, "@or2@ - Password: " + TextUtils.capitalize(TextUtils.passwordCheck(player.getPassword())));
-		PlayerPanel.IRON.refresh(player, "@or2@ - Iron man: @yel@" + (player.isIronMan() ? "@gre@yes" : "@red@no"));
+		PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.capitalize(TextUtils.passwordCheck(player.getPassword())));
+		PlayerPanel.IRON.refresh(player, "@or3@ - Iron man: @yel@" + (player.isIronMan() ? "@gre@yes" : "@red@no"));
 		PlayerPanel.RANK.refresh(player, "@or2@ - Rank: @yel@" + TextUtils.capitalize(player.getRights().toString()));
 		PlayerPanel.SLAYER_POINTS.refresh(player, "@or2@ - Slayer points: @yel@" + player.getSlayerPoints());
 		PlayerPanel.SLAYER_TASK.refresh(player, "@or2@ - Slayer task: @yel@" + (player.getSlayer().isPresent() ? (player.getSlayer().get().toString()) : "none"));
@@ -249,20 +252,19 @@ public enum PlayerPanel {
 	}
 	
 	/**
-	 * Loops the button click interactions.
-	 * @param player   the player clicking a button.
-	 * @param buttonId the button id he clicked.
-	 * @return {@code true} of he clicked a tab id, {@code false} otherwise.
+	 * Sets up event clicks.
 	 */
-	public static boolean interaction(Player player, int buttonId) {
-		Optional<PlayerPanel> panel = VALUES.stream().filter(def -> def.getButtonId() == buttonId).findAny();
-		
-		if(!panel.isPresent()) {
-			return false;
+	public static void event() {
+		for(PlayerPanel p : PlayerPanel.values()) {
+			ButtonEvent e = new ButtonEvent() {
+				@Override
+				public boolean click(Player player, int button) {
+					p.onClick(player);
+					return true;
+				}
+			};
+			e.register(p.buttonId);
 		}
-		panel.get().onClick(player);
-		return true;
-		
 	}
 	
 	/**

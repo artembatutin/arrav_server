@@ -708,6 +708,10 @@ public final class Player extends EntityNode {
 			encoder.sendSystemUpdate((int) (Server.UPDATING * 50 / 30));
 		}
 		Summoning.login(this);
+		if(getRights().isStaff()) {
+			World.get().setStaffCount(World.get().getStaffCount() + 1);
+			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
+		}
 	}
 	
 	@Override
@@ -1075,7 +1079,7 @@ public final class Player extends EntityNode {
 	 */
 	public void setIron(int value) {
 		this.ironMan = value;
-		PlayerPanel.IRON.refresh(this, "@or2@ - Iron man: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
+		PlayerPanel.IRON.refresh(this, "@or3@ - Iron man: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
 	}
 
 	/**
@@ -1109,7 +1113,7 @@ public final class Player extends EntityNode {
 	 */
 	public void setVotePoints(int vote) {
 		this.votePoints = vote;
-		PlayerPanel.VOTE.refresh(this, "@or2@ - Vote points: @yel@" + this.getVotePoints() + " points");
+		PlayerPanel.VOTE.refresh(this, "@or3@ - Vote points: @yel@" + this.getVotePoints() + " points");
 	}
 
 	public String getLastKiller() {

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
+import net.edge.content.PlayerPanel;
 import net.edge.net.NetworkConstants;
 import net.edge.net.codec.game.GameMessageDecoder;
 import net.edge.net.codec.login.LoginRequest;

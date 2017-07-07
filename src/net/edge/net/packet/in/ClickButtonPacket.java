@@ -104,9 +104,6 @@ public final class ClickButtonPacket implements IncomingPacket {
 		if(EnchantCrossbowBolts.openInterface(player, button) || EnchantCrossbowBolts.enchant(player, button)) {
 			return;
 		}
-		if(PlayerPanel.interaction(player, button)) {
-			return;
-		}
 		if(Emote.handle(player, button)) {
 			return;
 		}

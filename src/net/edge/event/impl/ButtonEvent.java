@@ -1,5 +1,6 @@
 package net.edge.event.impl;
 
+import net.edge.content.PlayerPanel;
 import net.edge.event.Event;
 import net.edge.event.but.Spellbook;
 import net.edge.net.packet.in.ClickButtonPacket;
@@ -19,6 +20,7 @@ public abstract class ButtonEvent extends Event {
 	
 	public static void init() {
 		new Spellbook();
+		PlayerPanel.event();
 	}
 	
 }
