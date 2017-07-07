@@ -110,16 +110,18 @@ public final class Region extends Node {
 		cleanup++;
 		
 		//sequencing active item nodes.
-		Iterator<ItemNode> it = items.iterator();
-		while (it.hasNext()) {
-			ItemNode item = it.next();
-			if (item.getCounter().incrementAndGet(10) >= SEQUENCE_TICKS) {
-				item.onSequence();
-				item.getCounter().set(0);
-			}
-			if (item.getState() != NodeState.ACTIVE) {
-				item.dispose();
-				it.remove();
+		if(!items.isEmpty()) {
+			Iterator<ItemNode> it = items.iterator();
+			while(it.hasNext()) {
+				ItemNode item = it.next();
+				if(item.getCounter().incrementAndGet(10) >= SEQUENCE_TICKS) {
+					item.onSequence();
+					item.getCounter().set(0);
+				}
+				if(item.getState() != NodeState.ACTIVE) {
+					item.dispose();
+					it.remove();
+				}
 			}
 		}
 		
