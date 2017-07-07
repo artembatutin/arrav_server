@@ -1,5 +1,6 @@
 package net.edge.content.minigame.fightcaves;
 
+import net.edge.content.item.PotionConsumable;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.game.GameConstants;
 import net.edge.content.dialogue.impl.NpcDialogue;
@@ -241,7 +242,11 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	public boolean canEat(Player player, FoodConsumable food) {
 		return true;
 	}
-	
+
+	@Override
+	public boolean canPot(Player player, PotionConsumable potion) {
+		return true;
+	}
 	@Override
 	public boolean onFirstClickObject(Player player, ObjectNode object) {
 		if(object.getId() == 9357) {//Exit
