@@ -206,6 +206,7 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		getCharacter().getMessages().sendConfig(301, 0);
 		getCharacter().setSpecialActivated(false);
 		getCharacter().getSkullTimer().set(0);
+		getCharacter().setRunEnergy(100);
 		getCharacter().setAntifireDetail(Optional.empty());
 		getCharacter().getTeleblockTimer().set(0);
 		getCharacter().animation(new Animation(65535));
