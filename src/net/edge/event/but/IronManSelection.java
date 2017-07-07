@@ -5,6 +5,7 @@ import net.edge.event.impl.ButtonEvent;
 import net.edge.game.GameConstants;
 import net.edge.net.PunishmentHandler;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.item.Item;
 
 public class IronManSelection extends EventInitializer {
 	
@@ -28,6 +29,7 @@ public class IronManSelection extends EventInitializer {
 					player.getInventory().fillItems(GameConstants.REGULAR_STARTER);
 					PunishmentHandler.addStarter(player.getSession().getHost());
 				} else {
+					player.getInventory().add(new Item(995, 500000));
 					player.message("You already received your regular starter package before.");
 				}
 				player.getInventory().updateBulk();
