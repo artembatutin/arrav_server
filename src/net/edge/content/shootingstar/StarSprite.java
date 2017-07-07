@@ -40,9 +40,8 @@ public final class StarSprite extends Npc {
 
 	/**
 	 * Spawns this star sprite.
-	 * @param player the last player to get stardust from the rock.
 	 */
-	public void spawn(Player player) {
+	public void spawn() {
 		star.setDisabled(true);
 		star.remove();
 		World.get().getNpcs().add(star.sprite);
@@ -115,7 +114,7 @@ public final class StarSprite extends Npc {
 				return;
 			}
 
-			int amountRemovable = (int) (selectedAmount * 0.15);
+			int amountRemovable = ((selectedAmount + 500) / EXCHANGE_FOR_BLOOD_COINS);
 
 			DialogueAppender a = new DialogueAppender(player);
 
@@ -130,7 +129,7 @@ public final class StarSprite extends Npc {
 			}, "Yes", "No"));
 			a.chain(new PlayerDialogue("No, nevermind sorry."));
 			a.chain(new PlayerDialogue("Yes, let's do it.").attachAfter(() -> {
-				player.getInventory().remove(new Item(StarMining.STARDUST.getId(), selectedAmount));
+				player.getInventory().remove(new Item(StarMining.STARDUST.getId(), amountRemovable * EXCHANGE_FOR_BLOOD_COINS));
 				player.getInventory().addOrBank(new Item(19000, amountRemovable));
 			}));
 			a.chain(new NpcDialogue(8091, "Very well, your blood coins have been added to your", "inventory or have been banked."));
