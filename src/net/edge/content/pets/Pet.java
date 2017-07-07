@@ -204,6 +204,7 @@ public final class Pet extends Follower {
 		}
 		
 		World.get().getNpcs().remove(pet);
+		player.getInventory().add(data.getPolicy().getItem());
 		player.getPetManager().reset();
 		TabInterface.SUMMONING.sendInterface(player, -1);
 		player.message("You picked up your pet.");
