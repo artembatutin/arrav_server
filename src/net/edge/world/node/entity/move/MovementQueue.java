@@ -317,7 +317,7 @@ public final class MovementQueue {
 			character.setFollowing(true);
 			character.setFollowEntity(leader);
 			followTask = Optional.of(new CharacterFollowTask(character, leader));
-			World.get().submit(followTask.get());
+			followTask.get().submit();
 		}
 	}
 	

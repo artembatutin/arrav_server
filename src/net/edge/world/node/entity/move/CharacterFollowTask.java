@@ -53,7 +53,7 @@ class CharacterFollowTask extends Task {
 	@Override
 	public void execute() {
 		//First checks.
-		if(character.getState() != NodeState.ACTIVE || !character.isFollowing() || character.isDead() || leader.isDead()) {//Death and away check.
+		if(character.getState() != NodeState.ACTIVE || leader.getState() != NodeState.ACTIVE || !character.isFollowing() || character.isDead() || leader.isDead()) {//Death and away check.
 			character.faceEntity(null);
 			character.setFollowing(false);
 			character.setFollowEntity(null);
@@ -147,6 +147,7 @@ class CharacterFollowTask extends Task {
 			destination = path.getDestination();
 			//removing the points overlapping the leader's boundaries.
 			while(boundary.inside(path.poll(), leader.size()));
+			System.out.println("adding path - follower: " + character.toString() + " - leader: " + leader.toString());
 			character.getMovementQueue().walk(path.getMoves());
 		} else {
 			character.getMovementQueue().reset();
