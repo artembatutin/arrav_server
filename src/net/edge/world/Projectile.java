@@ -177,6 +177,7 @@ public final class Projectile {
 		int y = start.getY() & 63;
 		int regionId = start.getRegion();
 		RegionManager m = World.getRegions();
+		m.getRegion(regionId).getPlayers().forEach(p -> p.getMessages().sendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay));
 		if(y > 48) {
 			//top part of region.
 			if(m.exists(regionId + 1))
