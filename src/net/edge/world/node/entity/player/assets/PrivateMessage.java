@@ -6,6 +6,9 @@ import net.edge.world.node.entity.player.Player;
 
 import java.util.Iterator;
 
+import static net.edge.world.node.entity.player.assets.Rights.IRON_MAN;
+import static net.edge.world.node.entity.player.assets.Rights.PLAYER;
+
 /**
  * The class that contains functions for managing private messaging lists.
  * @author lare96 <http://github.com/lare96>
@@ -112,7 +115,7 @@ public final class PrivateMessage {
 	 * @param size    the size of the message to send.
 	 */
 	public void sendPrivateMessage(long name, byte[] message, int size) {
-		int rights = player.getRights().getProtocolValue();
+		int rights = player.getRights() == PLAYER && player.isIronMan() ? IRON_MAN.getProtocolValue() : player.getRights().getProtocolValue();
 		long hash = player.getUsernameHash();
 		World.get().getPlayer(name).ifPresent(p -> p.getMessages().sendPrivateMessage(hash, rights, message, size));
 	}

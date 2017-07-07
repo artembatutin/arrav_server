@@ -73,7 +73,7 @@ public class IronmanCaptain extends EventInitializer {
 					ap.chain(new PlayerDialogue("Yes, please..."));
 					ap.chain(new NpcDialogue(3705, "Very well, you've been prestiged and your restrictions have", "been removed...").attach(() -> {
 						player.graphic(new Graphic(2189));
-						player.setIron(2);
+						player.setIron(2, true);
 					}));
 					ap.start();
 				}

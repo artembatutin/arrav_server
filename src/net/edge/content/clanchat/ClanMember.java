@@ -139,6 +139,8 @@ public final class ClanMember {
 			return;
 		}
 		Rights rank = player.getRights();
+		if(rank == Rights.PLAYER && player.isIronMan())
+			rank = Rights.IRON_MAN;
 		String clanName = clan.getName();
 		for(ClanMember member : clan.getMembers()) {
 			if(member == null)

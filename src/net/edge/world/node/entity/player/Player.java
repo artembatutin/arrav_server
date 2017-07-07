@@ -1079,9 +1079,10 @@ public final class Player extends EntityNode {
 	/**
 	 * Sets the {@link #ironMan} to the new value.
 	 */
-	public void setIron(int value) {
+	public void setIron(int value, boolean update) {
 		this.ironMan = value;
-		PlayerPanel.IRON.refresh(this, "@or3@ - Iron man: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
+		if(update)
+			PlayerPanel.IRON.refresh(this, "@or3@ - Iron man: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
 	}
 
 	/**
@@ -1097,7 +1098,7 @@ public final class Player extends EntityNode {
 	 * @param vote	the amount to set.
 	 */
 	public void setTotalVotes(int vote) {
-		this.totalVotes = vote;
+		this.totalVotes += vote;
 		PlayerPanel.TOTAL_VOTES.refresh(this, "@or2@ - Total votes: @yel@" + this.getTotalVotes());
 	}
 
@@ -1114,7 +1115,7 @@ public final class Player extends EntityNode {
 	 * @param vote
 	 */
 	public void setVotePoints(int vote) {
-		this.votePoints = vote;
+		this.votePoints += vote;
 		PlayerPanel.VOTE.refresh(this, "@or3@ - Vote points: @yel@" + this.getVotePoints() + " points");
 	}
 

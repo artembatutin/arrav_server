@@ -3,6 +3,7 @@ package net.edge.net.database.connection.use;
 import net.edge.net.database.connection.ConnectionUse;
 import net.edge.net.database.pool.ConnectionPool;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +29,7 @@ public class Hiscores extends ConnectionUse {
 		
 		PreparedStatement stmt2 = con.prepareStatement(generateQuery());
 		stmt2.setString(1, player.getFormatUsername());
-		stmt2.setInt(2, player.getRights().getProtocolValue());
+		stmt2.setInt(2, player.getRights() == Rights.PLAYER && player.isIronMan() ? Rights.IRON_MAN.getProtocolValue() : player.getRights().getProtocolValue());
 		stmt2.setInt(3, player.determineCombatLevel());
 		long totalExperience = 0;
 		for(int i = 0; i < 25; i++) {

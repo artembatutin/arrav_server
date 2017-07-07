@@ -16,9 +16,9 @@ public class IronManSelection extends EventInitializer {
 			public boolean click(Player player, int button) {
 				boolean iron = button == 200;
 				if(iron)
-					player.setIron(1);
+					player.setIron(1, true);
 				else
-					player.setIron(0);
+					player.setIron(0, true);
 				player.getActivityManager().enable();
 				player.sendDefaultSidebars();
 				player.getMessages().sendCloseWindows();
