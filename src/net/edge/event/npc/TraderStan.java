@@ -46,7 +46,7 @@ public class TraderStan extends EventInitializer {
 		Npc.CUSTOM_NPCS.put(4650, s -> new DefaultNpc(4650, s) {
 			private int timer = 0;
 			@Override
-			public void sequence() {
+			public void update() {
 				timer++;
 				if(timer >= 200) {
 					forceChat(RandomUtils.random(chats));

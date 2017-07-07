@@ -15,7 +15,6 @@ import net.edge.util.LoggerUtils;
 import net.edge.util.Stopwatch;
 import net.edge.util.ThreadUtil;
 import net.edge.util.log.LoggingManager;
-import net.edge.content.PlayerPanel;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.container.session.ExchangeSessionManager;
@@ -155,93 +154,99 @@ public final class World {
 	 */
 	public void pulse() {
 		long start = System.currentTimeMillis();
+
 		// Handle queued logins.
-		for(int amount = 0; amount < GameConstants.LOGIN_THRESHOLD; amount++) {
-			Player player = logins.poll();
-			if(player == null)
-				break;
-			if(!players.add(player) && player.isHuman()) {
-				player.getSession().getChannel().close();
+		if (!logins.isEmpty()) {
+			for (int amount = 0; amount < GameConstants.LOGIN_THRESHOLD; amount++) {
+				Player player = logins.poll();
+				if (player == null)
+					break;
+				if (!players.add(player) && player.isHuman()) {
+					player.getSession().getChannel().close();
+				}
 			}
 		}
 		
 		// Handle task processing.
 		taskManager.sequence();
-		
-		Npc n;
-		Player p;
-		EntityList.EntityListIterator<Npc> ni = npcs.entityIterator();
-		EntityList.EntityListIterator<Player> pi = players.entityIterator();
-		
+
 		// Pre synchronization
-		while((p = pi.next()) != null) {
-			try {
-				p.getMovementQueue().sequence();
-				p.sequence();
-			} catch(Exception e) {
-				queueLogout(p);
-				logger.log(Level.WARNING, "Couldn't pre sync player " + p.toString(), e);
-			}
-		}
-		pi.reset();
-		while((n = ni.next()) != null) {
-			if(n.isActive()) {
+		for (Player player : players) {
+			if (player != null) {
 				try {
-					n.sequence();
-					n.getMovementQueue().sequence();
+					player.update();
 				} catch(Exception e) {
-					logger.log(Level.WARNING, "Couldn't pre sync npc " + n.toString(), e);
+					queueLogout(player);
+					logger.log(Level.WARNING, "Couldn't pre sync player " + player.toString(), e);
 				}
 			}
 		}
-		ni.reset();
+
+		for (Npc npc : npcs) {
+			if (npc != null && npc.isActive()) {
+				try {
+					npc.update();
+					npc.getMovementQueue().sequence();
+				} catch(Exception e) {
+					logger.log(Level.WARNING, "Couldn't pre sync npc " + npc.toString(), e);
+				}
+			}
+		}
 		
 		// Synchronization
-		while((p = pi.next()) != null) {
-			try {
-				if(p.isHuman()) {
-					PlayerUpdater.write(p);
-					NpcUpdater.write(p);
+		for (Player player : players) {
+			if (player != null) {
+				try {
+					if(player.isHuman()) {
+						PlayerUpdater.write(player);
+						NpcUpdater.write(player);
+					}
+				} catch(Exception e) {
+					queueLogout(player);
+					logger.log(Level.WARNING, "Couldn't sync player " + player.toString(), e);
 				}
-			} catch(Exception e) {
-				queueLogout(p);
-				logger.log(Level.WARNING, "Couldn't sync player " + p.toString(), e);
 			}
 		}
-		pi.reset();
-		
+
 		// Post synchronization
-		while((p = pi.next()) != null) {
-			if(p.isHuman())
-				p.getSession().flushQueue();
-			p.reset();
-			p.setCachedUpdateBlock(null);
+		for (Player player : players) {
+			if (player != null) {
+				if (player.isHuman())
+					player.getSession().flushQueue();
+				player.reset();
+				player.setCachedUpdateBlock(null);
+			}
 		}
-		pi.reset();
-		while((n = ni.next()) != null) {
-			n.reset();
+
+		for (Npc npc : npcs) {
+			if (npc != null) {
+				npc.reset();
+			}
 		}
-		ni.reset();
 		
 		// Region tick
 		regionalTick++;
 		if(regionalTick == 10) {
 			for(Int2ObjectMap.Entry<Region> entry : World.getRegions().getRegions().int2ObjectEntrySet()) {
-				entry.getValue().sequence();
+				entry.getValue().update();
+
 			}
 			regionalTick = 0;
 		}
 		
 		// Handle queued logouts.
-		int amount = 0;
-		Iterator<Player> $it = logouts.iterator();
-		while($it.hasNext()) {
-			Player player = $it.next();
-			if(player == null || amount >= GameConstants.LOGOUT_THRESHOLD)
-				break;
-			if(logout(player)) {
-				$it.remove();
-				amount++;
+		if (!logouts.isEmpty()) {
+			int amount = 0;
+
+			Iterator<Player> $it = logouts.iterator();
+			while ($it.hasNext()) {
+				Player player = $it.next();
+				if (player == null || amount >= GameConstants.LOGOUT_THRESHOLD)
+					break;
+				if (logout(player)) {
+					$it.remove();
+					amount++;
+				}
 			}
 		}
 		

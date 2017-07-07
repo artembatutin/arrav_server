@@ -1,5 +1,6 @@
 package net.edge.world.node.entity;
 
+import it.unimi.dsi.fastutil.ints.IntArrayFIFOQueue;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.database.connection.use.Hiscores;
@@ -33,7 +34,7 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * @param <E> The specific type of {@link EntityNode} being managed within this {@code Iterator}.
 	 * @author Artem Batutin <artembatutin@gmail.com>
 	 */
-	public static final class EntityListIterator<E extends EntityNode> implements Iterator<E> {
+	public final class EntityListIterator<E extends EntityNode> implements Iterator<E> {
 		
 		/**
 		 * The {@link EntityList} this {@link Iterator} is dedicated to.
@@ -41,9 +42,9 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		private final EntityList<E> list;
 		
 		/**
-		 * The current index.
+		 * The cursor.
 		 */
-		private int current;
+		private int cursor;
 		
 		/**
 		 * The last index found.
@@ -59,36 +60,39 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		}
 		
 		public void reset() {
-			current = 0;
+			cursor = 0;
 		}
 		
 		@Override
 		public boolean hasNext() {
-			//Looking for a not nulled
-			int index = current;
-			int out = 200;
-			while (index <= list.size()) {
-				E mob = list.entities[index++];
-				if (mob != null) {
-					return true;
-				}
-				if(out == 0)
-					return false;
-				out--;
-			}
-			return false;
+			return size > 0  && cursor <= limit;
+
+//			//Looking for a not nulled, ff kijke naar mijn shit
+//			int index = cursor;
+//			int out = 200; // natuurlijk is je cycle time trash
+//			while (index <= list.size()) { // hier een loop (binnen een loop)
+//				E mob = list.entities[index++]; // kijk dit bedoel ik
+//				if (mob != null) {
+//					return true;
+//				}
+//				if(out == 0)
+//					return false;
+//				out--;
+//			}
+//			return false;
 		}
 		
 		@Override
 		public E next() {
-			while (current <= list.size()) {
-				E mob = list.entities[current++];
-				if (mob != null) {
-					last = current;
-					return mob;
-				}
-			}
-			return null;
+			return list.entities[cursor++];
+//			while (cursor <= list.size()) {  // hier een loop (binnen een loop)
+//				E mob = list.entities[cursor++];
+//				if (mob != null) {
+//					last = cursor;
+//					return mob;
+//				}
+//			}
+//			return null;
 		}
 		
 		@Override
@@ -102,9 +106,14 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	}
 	
 	/**
-	 * A {@link Queue} of available indices.
+	 * A {@link IntArrayFIFOQueue} of available indices.
 	 */
-	private final Queue<Integer> indices = new PriorityQueue<>();
+	private final IntArrayFIFOQueue indices = new IntArrayFIFOQueue();
+
+	/**
+	 * The cached iterator instance.
+	 */
+	private final EntityListIterator<E> itr = new EntityListIterator<>(this);
 	
 	/**
 	 * The entities contained within this list.
@@ -115,6 +124,11 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * The capacity of this repository.
 	 */
 	private final int capacity;
+
+	/**
+	 * The iterator limit.
+	 */
+	private int limit;
 	
 	/**
 	 * The internal size of this list.
@@ -129,15 +143,18 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	public EntityList(int capacity) {
 		this.capacity = capacity;
 		entities = (E[]) Array.newInstance(EntityNode.class, capacity);
-		IntStream.rangeClosed(0, capacity).boxed().forEachOrdered(indices::offer);
+		IntStream.rangeClosed(0, capacity).boxed().forEachOrdered((Integer i) -> {
+			indices.enqueue((int) i);
+		});
 	}
 	
 	@Override
 	public Iterator<E> iterator() {
-		return new EntityListIterator<>(this);
+		itr.reset();
+		return itr;
 	}
 	
-	public EntityListIterator<E> entityIterator() {
+	public Iterator<E> entityIterator() {
 		return new EntityListIterator<>(this);
 	}
 	
@@ -209,11 +226,14 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 			return false;
 		if (size == capacity())
 			return false;
-		Integer index = indices.poll();
-		if (index == null)
-			return false;
+		int index = indices.dequeueInt();
 		if (entities[index] != null)
 			return false;
+
+		if (index >= limit) {
+			limit++;
+		}
+
 		entities[index] = entity;
 		entity.setSlot(index + 1);
 		entity.setState(NodeState.ACTIVE);
@@ -246,9 +266,14 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		int index = entity.getSlot();
 		int normal = index - 1;
 		if(entity.getSlot() != -1) {
-			indices.offer(normal);
+			indices.enqueue(normal);
 			entities[normal] = null;
 		}
+
+		if (index >= limit) {
+			limit--;
+		}
+
 		size--;
 		entity.setState(NodeState.INACTIVE);
 		System.out.println("removed: " + entity.toString() + " size is : " + size);

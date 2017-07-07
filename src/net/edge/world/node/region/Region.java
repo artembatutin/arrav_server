@@ -105,7 +105,7 @@ public final class Region extends Node {
 	}
 	
 	@Override
-	public void sequence() {
+	public void update() {
 		//cleanup timer increased.
 		cleanup++;
 		

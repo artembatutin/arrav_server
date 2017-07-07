@@ -269,7 +269,7 @@ public enum GodwarsFaction {
 		}
 		
 		@Override
-		public void sequence() {
+		public void update() {
 			check++;
 			if(getCombatBuilder().inCombat())
 				return;
