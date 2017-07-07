@@ -16,7 +16,6 @@ public class Votebook extends EventInitializer {
 			public boolean click(Player player, Item item, int container, int slot, int click) {
 				if(container != Inventory.INVENTORY_DISPLAY_ID)
 					return true;
-
 				player.setVotePoints(player.getVotePoints() + 1);
 				player.setTotalVotes(player.getTotalVotes() + 1);
 				player.message("You received a vote point...");
