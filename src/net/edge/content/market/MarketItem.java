@@ -1,6 +1,8 @@
 package net.edge.content.market;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.json.JsonSaver;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
@@ -41,16 +43,6 @@ public class MarketItem {
 	private int stock;
 	
 	/**
-	 * The demand of this item.
-	 */
-	private int demand;
-	
-	/**
-	 * Condition if this item's price gets changed with demand.
-	 */
-	private boolean variable;
-	
-	/**
 	 * Condition if this item is on unlimited stock as an unlimitedStock item.
 	 */
 	private boolean unlimitedStock;
@@ -63,7 +55,7 @@ public class MarketItem {
 	/**
 	 * Players viewing this item in a shop.
 	 */
-	private final Set<Player> viewers;
+	private final ObjectList<Player> viewers;
 	
 	/**
 	 * Creating the {@link MarketItem}.
@@ -71,21 +63,17 @@ public class MarketItem {
 	 * @param value          the value of this item.
 	 * @param price          the price of this item.
 	 * @param stock          the stock amount of this item.
-	 * @param demand         the demand of this item.
-	 * @param variable       the variable condition.
 	 * @param unlimitedStock the unlimitedStock condition.
 	 * @param searchable   the searchable condition.
 	 */
-	public MarketItem(int id, int value, int price, int stock, int demand, boolean variable, boolean unlimitedStock, boolean searchable) {
+	public MarketItem(int id, int value, int price, int stock, boolean unlimitedStock, boolean searchable) {
 		this.id = id;
 		this.value = value;
 		this.price = price;
 		this.stock = stock;
-		this.demand = demand;
-		this.variable = variable;
 		this.unlimitedStock = unlimitedStock;
 		this.searchable = searchable;
-		viewers = new HashSet<>();
+		viewers = new ObjectArrayList<>();
 	}
 	
 	/**
@@ -176,8 +164,6 @@ public class MarketItem {
 			item_values_saver.current().addProperty("stock", v.getStock());
 			item_values_saver.current().addProperty("value", v.getValue());
 			item_values_saver.current().addProperty("price", v.getPrice());
-			item_values_saver.current().addProperty("demand", v.getDemand());
-			item_values_saver.current().addProperty("variable", v.isVariable());
 			item_values_saver.current().addProperty("unlimited", v.isUnlimitedStock());
 			item_values_saver.current().addProperty("searchable", v.isSearchable());
 			item_values_saver.split();
@@ -249,43 +235,11 @@ public class MarketItem {
 	public void increaseStock(int amount) {
 		this.stock += amount;
 		updateStock();
-		//sold
-		demand -= amount;
-		if(demand <= -100) {
-			demand += 100;
-			decreasePrice(0.01);
-		}
 	}
 	
 	public void decreaseStock(int amount) {
 		this.stock -= amount;
 		updateStock();
-		//bought
-		demand += amount;
-		if(demand >= 100) {
-			demand -= 100;
-			increasePrice(0.01);
-		}
-	}
-	
-	public int getDemand() {
-		return demand;
-	}
-	
-	public void setDemand(int demand) {
-		this.demand = demand;
-	}
-	
-	public void increaseDemand(int amount) {
-		this.demand += amount;
-	}
-	
-	public void decreaseDemand(int amount) {
-		this.demand -= amount;
-	}
-	
-	public boolean isVariable() {
-		return variable;
 	}
 	
 	public boolean isUnlimitedStock() {
@@ -300,12 +254,8 @@ public class MarketItem {
 		this.searchable = searchable;
 	}
 	
-	public Set<Player> getViewers() {
+	public ObjectList<Player> getViewers() {
 		return viewers;
-	}
-	
-	public void toggleVariable() {
-		variable = !variable;
 	}
 	
 	public void toggleUnlimited() {
