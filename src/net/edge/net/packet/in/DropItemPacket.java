@@ -38,6 +38,10 @@ public final class DropItemPacket implements IncomingPacket {
 		if(!MinigameHandler.execute(player, m -> m.canDrop(player, item, slot))) {
 			return;
 		}
+		if(id == 21432) {//book of diplomacy.
+			player.message("This item cannot be dropped.");
+			return;
+		}
 		if(Pet.canDrop(player, item)) {
 			return;
 		}

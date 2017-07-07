@@ -92,7 +92,7 @@ public final class GameConstants {
 	/**
 	 * The items received when a player logs in for the first time in iron mode.
 	 */
-	public static final Item IRON_STARTER[] = {new Item(995, 750000), new Item(1351), new Item(590), new Item(1265), new Item(946), new Item(1755), new Item(2347), new Item(303), new Item(18741)};
+	public static final Item IRON_STARTER[] = {new Item(995, 750000), new Item(21432), new Item(1351), new Item(590), new Item(1265), new Item(946), new Item(1755), new Item(2347), new Item(303), new Item(18741)};
 	
 	/**
 	 * Messages chosen a random to be sent to a player that has killed another
