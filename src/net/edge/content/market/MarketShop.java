@@ -165,11 +165,16 @@ public class MarketShop {
 						shopItem.setStock(Integer.parseInt(s));
 					});
 				} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-					shopItem.toggleVariable();
-				} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
 					shopItem.toggleUnlimited();
+				} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
+					if(player.getMarketShop() != null && player.getMarketShop().getId() != -1) {
+						int shopId = player.getMarketShop().getId();
+						MarketShop shop = MarketCounter.getShops().get(shopId);
+						System.out.println("removing: " + item.getId());
+						shop.getItems().rem(item.getId());
+					}
 				}
-			}, "Change price", "Change stock", "toggle: " + (!shopItem.isVariable() ? "price changes" : "price is fixed"), "toggle: " + (shopItem.isUnlimitedStock() ? "unlimited stock" : "variable stock")));
+			}, "Change price", "Change stock", "toggle: " + (shopItem.isUnlimitedStock() ? "unlimited stock" : "variable stock"), "Remove from shop"));
 			return;
 		}
 		if(shopItem.getStock() <= 0 && !shopItem.isUnlimitedStock()) {
@@ -250,6 +255,9 @@ public class MarketShop {
 		getCurrency().getCurrency().takeCurrency(player, item.getAmount() * value);
 		player.getInventory().add(item);
 		player.getMessages().sendItemsOnInterface(3823, player.getInventory());
+		if(!marketItem.isUnlimitedStock()) {
+			marketItem.setStock(marketItem.getStock() - item.getAmount());
+		}
 		return true;
 	}
 	

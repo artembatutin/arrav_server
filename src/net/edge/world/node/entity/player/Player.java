@@ -646,6 +646,7 @@ public final class Player extends EntityNode {
 	@Override
 	public void register() {
 		PacketWriter encoder = getMessages();
+		encoder.sendResetCameraPosition();
 		encoder.sendDetails();
 		this.getMessages().sendMapRegion();
 		super.getFlags().flag(UpdateFlag.APPEARANCE);
@@ -674,6 +675,7 @@ public final class Player extends EntityNode {
 		WeaponInterface.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		WeaponAnimation.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		ShieldAnimation.execute(this, equipment.get(Equipment.SHIELD_SLOT));
+		equipment.updateRange();
 		encoder.sendConfig(173, super.getMovementQueue().isRunning() ? 0 : 1);
 		encoder.sendConfig(174, super.isPoisoned() ? 1 : 0);
 		encoder.sendConfig(172, super.isAutoRetaliate() ? 1 : 0);
@@ -1078,9 +1080,10 @@ public final class Player extends EntityNode {
 	/**
 	 * Sets the {@link #ironMan} to the new value.
 	 */
-	public void setIron(int value) {
+	public void setIron(int value, boolean update) {
 		this.ironMan = value;
-		PlayerPanel.IRON.refresh(this, "@or3@ - Iron man: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
+		if(update)
+			PlayerPanel.IRON.refresh(this, "@or3@ - Iron man: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
 	}
 
 	/**
@@ -1096,7 +1099,7 @@ public final class Player extends EntityNode {
 	 * @param vote	the amount to set.
 	 */
 	public void setTotalVotes(int vote) {
-		this.totalVotes = vote;
+		this.totalVotes += vote;
 		PlayerPanel.TOTAL_VOTES.refresh(this, "@or2@ - Total votes: @yel@" + this.getTotalVotes());
 	}
 
@@ -1113,7 +1116,7 @@ public final class Player extends EntityNode {
 	 * @param vote
 	 */
 	public void setVotePoints(int vote) {
-		this.votePoints = vote;
+		this.votePoints += vote;
 		PlayerPanel.VOTE.refresh(this, "@or3@ - Vote points: @yel@" + this.getVotePoints() + " points");
 	}
 

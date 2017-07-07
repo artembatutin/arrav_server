@@ -26,8 +26,6 @@ public final class MarketValueLoader extends JsonLoader {
 		int value = reader.get("value").getAsInt();
 		int price = reader.get("price").getAsInt();
 		int stock = reader.get("stock").getAsInt();
-		int demand = reader.get("demand").getAsInt();
-		boolean variable = reader.get("variable").getAsBoolean();
 		boolean provided = reader.get("unlimited").getAsBoolean();
 		boolean searchable = reader.get("searchable").getAsBoolean();
 		ItemDefinition def = ItemDefinition.get(index);
@@ -38,6 +36,6 @@ public final class MarketValueLoader extends JsonLoader {
 		if(def != null && def.isNoted()) {
 			searchable = false;
 		}
-		MarketItem.VALUES[index] = new MarketItem(index, value, price, stock, demand, variable, provided, searchable);
+		MarketItem.VALUES[index] = new MarketItem(index, value, price, stock, provided, searchable);
 	}
 }

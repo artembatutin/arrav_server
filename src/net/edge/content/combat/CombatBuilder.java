@@ -91,12 +91,12 @@ public final class CombatBuilder {
 		if(character.isPlayer() && target.isNpc() && character.toPlayer().getRights().equals(Rights.ADMINISTRATOR)) {
 			character.toPlayer().message("[DEBUG NPC ID] Npc = " + target.toNpc().getId() + ", position = " + target.toNpc().getPosition().toString());
 		}
-		if(target.same(currentVictim)) {
-			determineStrategy();
-			if(new Boundary(character.getPosition(), character.size()).within(currentVictim.getPosition(), currentVictim.size(), strategy.attackDistance(character))) {
-				character.getMovementQueue().reset();
-			}
-		}
+		//if(target.same(currentVictim)) {
+		//	determineStrategy();
+		//	if(new Boundary(character.getPosition(), character.size()).within(currentVictim.getPosition(), currentVictim.size(), strategy.attackDistance(character))) {
+		//		character.getMovementQueue().reset();
+		//	}
+		//}
 		if(character.isPlayer() && target.isNpc()) {
 			Npc npc = target.toNpc();
 			Player player = (Player) character;
@@ -395,15 +395,18 @@ public final class CombatBuilder {
 			builder.attackTimer = 0;
 			builder.cooldown = 0;
 			
-			if(!builder.character.getPosition().isViewableFrom(victim.getPosition())) {
+			if(!builder.character.getPosition().withinDistance(victim.getPosition(), 30)) {
 				builder.reset();
 				this.cancel();
 				return false;
 			}
 			
 			if(!Location.inMultiCombat(builder.getCharacter()) && victim.getCombatBuilder().isBeingAttacked() && !victim.getCombatBuilder().getAggressor().same(builder.getCharacter())) {
-				if(builder.getCharacter().isPlayer())
-					builder.getCharacter().toPlayer().message("They are already under attack!");
+				if(builder.getCharacter().isPlayer()) {
+					Player player = builder.getCharacter().toPlayer();
+					player.message("They are already under attack!");
+					player.getMovementQueue().reset();
+				}
 				builder.reset();
 				this.cancel();
 				return false;

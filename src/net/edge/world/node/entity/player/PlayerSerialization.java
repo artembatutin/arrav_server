@@ -163,6 +163,9 @@ public final class PlayerSerialization {
 				if(decoded.has("rights")) {
 					player.setRights(Rights.valueOf(decoded.get("rights").getAsString()));
 				}
+				if(decoded.has("ironman")) {
+					player.setIron(decoded.get("ironman").getAsInt(), false);
+				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -284,7 +287,7 @@ public final class PlayerSerialization {
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setIron(n.getAsInt());
+			p.setIron(n.getAsInt(), true);
 		}
 	}, new Token("totalVotes") {
 

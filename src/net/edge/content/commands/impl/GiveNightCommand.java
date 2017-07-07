@@ -14,7 +14,7 @@ public final class GiveNightCommand implements Command {
 		Player night = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(night == null)
 			return;
-		night.setIron(1);
+		night.setIron(1, true);
 		night.message(player.getFormatUsername() + " set you to nightmare mode.");
 	}
 	

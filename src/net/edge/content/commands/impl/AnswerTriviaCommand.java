@@ -10,7 +10,7 @@ import net.edge.world.node.entity.player.assets.Rights;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  * @since 3-6-2017.
  */
-@CommandSignature(alias = {"answer", "trivia", "answertrivia"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR, Rights.GOLDEN_DONATOR, Rights.EXTREME_DONATOR, Rights.SUPER_DONATOR, Rights.DONATOR, Rights.RESPECTED_MEMBER, Rights.DESIGNER, Rights.YOUTUBER, Rights.HELPER, Rights.PLAYER}, syntax = "Use this command as ::trivia or ::answer answer here")
+@CommandSignature(alias = {"answer", "trivia", "answertrivia"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR, Rights.GOLDEN_DONATOR, Rights.EXTREME_DONATOR, Rights.SUPER_DONATOR, Rights.DONATOR, Rights.IRON_MAN, Rights.DESIGNER, Rights.YOUTUBER, Rights.HELPER, Rights.PLAYER}, syntax = "Use this command as ::trivia or ::answer answer here")
 public final class AnswerTriviaCommand implements Command {
 
     /**

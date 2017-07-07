@@ -15,7 +15,7 @@ public final class GiveVoteCommand implements Command {
 		if(vote == null)
 			return;
 		int amount = Integer.parseInt(cmd[2]);
-		vote.setVotePoints(vote.getVotePoints() + amount);
+		vote.setVotePoints(amount);
 		player.message("You gave " + amount + " vote points to " + vote.getFormatUsername());
 		vote.message("You received " + amount + " vote points from " + player.getFormatUsername());
 	}

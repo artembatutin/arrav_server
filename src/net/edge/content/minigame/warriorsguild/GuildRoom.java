@@ -6,6 +6,7 @@ import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.skill.prayer.Prayer;
+import net.edge.locale.Position;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.PrayerBook;
 
@@ -29,6 +30,11 @@ public abstract class GuildRoom extends Minigame {
 			player.getDialogueBuilder().append(new NpcDialogue(4286, Expression.ANGRY, "What? You're not allowed to use those kind of", "black magicks in here!"));
 			return false;
 		}
+		return true;
+	}
+	
+	@Override
+	public boolean canTeleport(Player player, Position position) {
 		return true;
 	}
 	

@@ -350,7 +350,7 @@ public final class TraversalMap {
 		int localY = y & 0x3F;
 		
 		if(region == null)
-			region = World.getRegions().getRegion(new Position(x, y));
+			region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6));
 		if(region == null)
 			return;
 		
@@ -799,7 +799,7 @@ public final class TraversalMap {
 	 */
 	public void set(Region region, int height, int x, int y, int flag) {
 		if(region == null)
-			region = World.getRegions().getRegion(new Position(x, y));
+			region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6));
 		if(region == null)
 			return;
 		region.getTile(height, x & 0x3F, y & 0x3F).set(flag);
@@ -819,7 +819,7 @@ public final class TraversalMap {
 		int localX = x & 0x3F;
 		int localY = y & 0x3F;
 		
-		Region region = World.getRegions().getRegion(new Position(x, y));
+		Region region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6));
 		if(region == null) {
 			return false;
 		}
@@ -848,7 +848,7 @@ public final class TraversalMap {
 	 */
 	private void unset(Region region, int height, int x, int y, int flag) {
 		if(region == null)
-			region = World.getRegions().getRegion(new Position(x, y));
+			region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6));
 		if(region == null)
 			return;
 		region.getTile(height, x & 0x3F, y & 0x3F).unset(flag);

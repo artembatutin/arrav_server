@@ -953,9 +953,9 @@ public class ItemContainer implements Iterable<Item> {
 		for(int i = 0; i < items.length; i++) {
 			items[i] = null;
 		}
+		size = 0;
 		if(refresh)
 			updateBulk();
-		size = 0;
 	}
 	
 	/**

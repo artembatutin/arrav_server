@@ -72,7 +72,7 @@ public final class LoginSession extends Session {
 			response = serial.getResponse();
 		}
 		
-		ChannelFuture future = channel.writeAndFlush(new LoginResponseMessage(response, player.getRights()));
+		ChannelFuture future = channel.writeAndFlush(new LoginResponseMessage(response, player.getRights(), player.isIronMan()));
 		if(response != LoginResponse.NORMAL) {
 			future.addListener(ChannelFutureListener.CLOSE);
 		} else {

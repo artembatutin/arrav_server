@@ -71,7 +71,7 @@ public final class RegionDecoder implements Runnable {
 		final int x = (hash >> 8 & 0xFF) * 64;
 		final int y = (hash & 0xFF) * 64;
 		final boolean isNew = def.isNew();
-		Region region = World.getRegions().getRegion(new Position(x, y));
+		Region region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6));
 		try {
 			ObjectList<Position> downHeights = new ObjectArrayList<>();
 			ByteBuffer terrainData = fs.getFile(FileSystem.MAP_INDEX, def.getTerrainFile());

@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public enum Rights {
 	PLAYER(0, 0),
-	RESPECTED_MEMBER(1, 1),
+	IRON_MAN(1, 1),
 	DESIGNER(2, 1),
 	YOUTUBER(3, 1),
 	HELPER(8, 1),

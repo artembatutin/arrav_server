@@ -21,13 +21,20 @@ public final class LoginResponseMessage {
 	private final Rights rights;
 	
 	/**
+	 * If the player is iron man.
+	 */
+	private final boolean iron;
+	
+	/**
 	 * Creates a new {@link LoginResponseMessage}.
 	 * @param response The actual login response.
 	 * @param rights   The {@link Player}s authority level.
+	 * @param iron     The iron man flag condition.
 	 */
-	public LoginResponseMessage(LoginResponse response, Rights rights) {
+	public LoginResponseMessage(LoginResponse response, Rights rights, boolean iron) {
 		this.response = response;
 		this.rights = rights;
+		this.iron = iron;
 	}
 	
 	/**
@@ -36,7 +43,7 @@ public final class LoginResponseMessage {
 	 * @param response The actual login response.
 	 */
 	public LoginResponseMessage(LoginResponse response) {
-		this(response, Rights.PLAYER);
+		this(response, Rights.PLAYER, false);
 	}
 	
 	/**
@@ -51,6 +58,14 @@ public final class LoginResponseMessage {
 	 */
 	public Rights getRights() {
 		return rights;
+	}
+	
+	/**
+	 * If the player is iron man.
+	 * @return iron man.
+	 */
+	public boolean isIron() {
+		return iron;
 	}
 	
 }
