@@ -2,15 +2,15 @@ package net.edge.world.node.entity.npc;
 
 import io.netty.buffer.ByteBufAllocator;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.MessageType;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.Direction;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.update.UpdateBlock;
 import net.edge.world.node.entity.update.UpdateBlockSet;
 import net.edge.world.node.entity.update.UpdateState;
+import net.edge.world.node.region.Region;
+import net.edge.world.node.region.RegionManager;
 
 import java.util.Iterator;
 
@@ -42,22 +42,46 @@ public final class NpcUpdater {
 					$it.remove();
 				}
 			}
+			
 			int added = 0;
-			for(Npc npc : World.getRegions().getPriorityNpcs(player)) {
-				if(added == 15 || player.getLocalNpcs().size() >= 255)
-					break;
-				if(npc == null)
-					continue;
-				if(npc.getState() != NodeState.ACTIVE)
-					continue;
-				if(npc.getInstance() != player.getInstance())
-					continue;
-				if(npc.isVisible() && npc.getPosition().isViewableFrom(player.getPosition())) {
-					if(player.getLocalNpcs().add(npc)) {
-						addNpc(player, npc, msg);
-						blockSet.encodeUpdateBlocks(player, npc, blockMsg, UpdateState.ADD_LOCAL);
-						added++;
-					}
+			int x = player.getPosition().getX() & 63;
+			int y = player.getPosition().getY() & 63;
+			int regionId = player.getPosition().getRegion();
+			RegionManager m = World.getRegions();
+			processNpcs(m.getRegion(regionId), player, blockMsg, msg, blockSet, added);
+			if(y > 48) {
+				//top part of region.
+				if(m.exists(regionId + 1))
+					processNpcs(m.getRegion(regionId + 1), player, blockMsg, msg, blockSet, added);
+				if(x > 48) {
+					//top-right of region.
+					if(m.exists(regionId + 256))
+						processNpcs(m.getRegion(regionId + 256), player, blockMsg, msg, blockSet, added);
+					if(m.exists(regionId + 257))
+						processNpcs(m.getRegion(regionId + 257), player, blockMsg, msg, blockSet, added);
+				} else if(x < 16) {
+					//top-left of region.
+					if(m.exists(regionId - 256))
+						processNpcs(m.getRegion(regionId - 256), player, blockMsg, msg, blockSet, added);
+					if(m.exists(regionId - 255))
+						processNpcs(m.getRegion(regionId - 255), player, blockMsg, msg, blockSet, added);
+				}
+			} else if(y < 16) {
+				//bottom part of region.
+				if(m.exists(regionId - 1))
+					processNpcs(m.getRegion(regionId - 1), player, blockMsg, msg, blockSet, added);
+				if(x > 48) {
+					//bottom-right of region.
+					if(m.exists(regionId + 256))
+						processNpcs(m.getRegion(regionId + 256), player, blockMsg, msg, blockSet, added);
+					if(m.exists(regionId + 255))
+						processNpcs(m.getRegion(regionId + 255), player, blockMsg, msg, blockSet, added);
+				} else if(x < 16) {
+					//bottom-left of region.
+					if(m.exists(regionId - 256))
+						processNpcs(m.getRegion(regionId - 256), player, blockMsg, msg, blockSet, added);
+					if(m.exists(regionId - 257))
+						processNpcs(m.getRegion(regionId - 257), player, blockMsg, msg, blockSet, added);
 				}
 			}
 			
@@ -76,6 +100,31 @@ public final class NpcUpdater {
 		}
 
 		msg.endVarSize();
+	}
+	
+	/**
+	 * Processing the addition of npc from a region.
+	 */
+	private static void processNpcs(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, UpdateBlockSet<Npc> blockSet, int added) {
+		if(!region.getNpcs().isEmpty()) {
+			for(Npc npc : region.getNpcs()) {
+				if(added == 15 || player.getLocalNpcs().size() >= 255)
+					break;
+				if(npc == null)
+					continue;
+				if(npc.getState() != NodeState.ACTIVE)
+					continue;
+				if(npc.getInstance() != player.getInstance())
+					continue;
+				if(npc.isVisible() && npc.getPosition().isViewableFrom(player.getPosition())) {
+					if(player.getLocalNpcs().add(npc)) {
+						addNpc(player, npc, msg);
+						blockSet.encodeUpdateBlocks(player, npc, blockMsg, UpdateState.ADD_LOCAL);
+						added++;
+					}
+				}
+			}
+		}
 	}
 	
 	/**
