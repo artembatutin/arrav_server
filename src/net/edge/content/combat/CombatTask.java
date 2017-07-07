@@ -146,22 +146,28 @@ public final class CombatTask extends Task {
 			}
 		}
 		if(!Location.inMultiCombat(builder.getCharacter()) && builder.isBeingAttacked() && !builder.getVictim().same(builder.getAggressor())) {
-			if(builder.getCharacter().isPlayer())
-				builder.getCharacter().toPlayer().message("You are already under attack!");
+			if(builder.getCharacter().isPlayer()) {
+				Player player = builder.getCharacter().toPlayer();
+				player.message("You are already under attack!");
+				player.getMovementQueue().reset();
+			}
 			builder.reset();
 			return false;
 		}
 		if(!Location.inMultiCombat(builder.getCharacter()) && builder.getVictim() != null && builder.getVictim().getCombatBuilder().isBeingAttacked() && builder.getVictim().getCombatBuilder().getAggressor() != null && !builder.getVictim().getCombatBuilder().getAggressor().same(builder.getCharacter())) {
-			if(builder.getCharacter().isPlayer())
-				builder.getCharacter().toPlayer().message("They are already under attack!");
+			if(builder.getCharacter().isPlayer()) {
+				Player player = builder.getCharacter().toPlayer();
+				player.message("You are already under attack!");
+				player.getMovementQueue().reset();
+			}
 			builder.reset();
 			return false;
 		}
 		if(builder.getCharacter().isPlayer()) {
 			Player player = (Player) builder.getCharacter();
-			
 			if(Location.inWilderness(builder.getCharacter()) && !Location.inWilderness(builder.getVictim())) {
 				player.message("They are not in the wilderness!");
+				player.getMovementQueue().reset();
 				builder.reset();
 				return false;
 			}

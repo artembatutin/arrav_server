@@ -37,6 +37,8 @@ public final class RegionManager {
 	 * @return The region in accordance with {@code coordinates}.
 	 */
 	public Region getRegion(int regionId) {
+		if(regionId < 0 || regionId >= regions.length)
+			return null;
 		if(regions[regionId] == null)
 			regions[regionId] = new Region(regionId);
 		return regions[regionId];
@@ -48,7 +50,7 @@ public final class RegionManager {
 	 * @return {@code true} if a {@code Region} exists, {@code false} otherwise.
 	 */
 	public boolean exists(Position pos) {
-		return regions[pos.getRegion()] != null;
+		return exists(pos.getRegion());
 	}
 	
 	/**

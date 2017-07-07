@@ -255,6 +255,9 @@ public class MarketShop {
 		getCurrency().getCurrency().takeCurrency(player, item.getAmount() * value);
 		player.getInventory().add(item);
 		player.getMessages().sendItemsOnInterface(3823, player.getInventory());
+		if(!marketItem.isUnlimitedStock()) {
+			marketItem.setStock(marketItem.getStock() - item.getAmount());
+		}
 		return true;
 	}
 	
