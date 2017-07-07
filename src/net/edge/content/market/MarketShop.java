@@ -102,7 +102,7 @@ public class MarketShop {
 	 * Opens the shop.
 	 */
 	public void openShop(Player player) {
-		if(player.isIronMan() && !player.isIronMaxed() && !(id == 24 || id == 27 || id == 1 || id == 22 || id == 28)) {
+		if(player.isIronMan() && !player.isIronMaxed() && !(id == 24 || id == 27 || id == 1 || id == 22 || id == 28 || id == 2 || id == 3)) {
 			player.dialogue(new NpcDialogue(3705, "Your an iron man and you haven't maxed your skills yet.", "You can only open the iron man shop located in the iron", "man building on the second floor."));
 			return;
 		}
