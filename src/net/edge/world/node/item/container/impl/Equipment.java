@@ -1,7 +1,10 @@
 package net.edge.world.node.item.container.impl;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import net.edge.content.combat.CombatConstants;
+import net.edge.content.combat.ranged.CombatRangedAmmunition;
+import net.edge.content.combat.ranged.CombatRangedDetails;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.node.item.container.ItemContainer;
@@ -72,7 +75,7 @@ public final class Equipment extends ItemContainer {
 	/**
 	 * The equipment item display widget identifier.
 	 */
-	private static final int EQUIPMENT_DISPLAY_ID = 1688;
+	public static final int EQUIPMENT_DISPLAY_ID = 1688;
 	
 	/**
 	 * The error message printed when certain functions from the superclass are utilized.
@@ -205,7 +208,7 @@ public final class Equipment extends ItemContainer {
 		
 		//Stacking arrows if exist.
 		if(getItems()[type.getSlot()] != null) {
-			if(def.isStackable() && getItems()[type.getSlot()].getId() == equipItem.getId()) {
+			if(def.isStackable() && type.getSlot() == inventoryIndex && getItems()[type.getSlot()].getId() == equipItem.getId()) {
 				equipItem = equipItem.createAndIncrement(getItems()[type.getSlot()].getAmount());
 				unequipPrimary = Optional.empty();
 			} else {
@@ -252,7 +255,9 @@ public final class Equipment extends ItemContainer {
 			player.getMessages().sendConfig(108, 0);
 			player.getMessages().sendConfig(301, 0);
 			player.setSpecialActivated(false);
+			updateRange();
 		}
+		
 		return true;
 	}
 	
@@ -296,6 +301,7 @@ public final class Equipment extends ItemContainer {
 				WeaponAnimation.execute(player, new Item(0));
 				player.getMessages().sendConfig(301, 0);
 				player.setSpecialActivated(false);
+				updateRange();
 			}
 			return true;
 		}
@@ -339,6 +345,31 @@ public final class Equipment extends ItemContainer {
 					bonuses[i] -= oldBonuses[i];
 				if(newBonuses != null && newBonuses.length > i)
 					bonuses[i] += newBonuses[i];
+			}
+		}
+	}
+	
+	/**
+	 * Updating ranged weaponry and ammunition if present.
+	 */
+	public void updateRange() {
+		Item wep = get(Equipment.WEAPON_SLOT);
+		if(wep == null)
+			return;
+		if(!wep.getDefinition().isWeapon())
+			return;
+		if(wep.getDefinition().getEquipmentType() != WEAPON)
+			return;
+		//Updating ranged weapon
+		CombatRangedDetails.CombatRangedWeapon ranged = CombatRangedDetails.RANGED_WEAPONS.get(wep.getId());
+		player.getRangedDetails().setWeapon(ranged);
+		if(ranged != null) {
+			int slot = ranged.getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
+			Item ammunition = player.getEquipment().get(slot);
+			CombatRangedAmmunition ammu = player.getRangedDetails().determineAmmo(ammunition, ranged);
+			player.getRangedDetails().setAmmunition(ammu);
+			if(ammu != null) {
+				player.getRangedDetails().getWeapon().get().setAmmunition(new CombatRangedDetails.CombatRangedAmmo(ammunition, ammu));
 			}
 		}
 	}

@@ -20,7 +20,7 @@ public final class RegionManager {
 	/**
 	 * The map of cached {@link Region}s.
 	 */
-	private final Int2ObjectOpenHashMap<Region> regions = new Int2ObjectOpenHashMap<>();
+	private final Region[] regions = new Region[30000];
 	
 	/**
 	 * Returns a {@link Region} based on the given {@code pos}.
@@ -37,7 +37,9 @@ public final class RegionManager {
 	 * @return The region in accordance with {@code coordinates}.
 	 */
 	public Region getRegion(int regionId) {
-		return regions.computeIfAbsent(regionId, Region::new);
+		if(regions[regionId] == null)
+			regions[regionId] = new Region(regionId);
+		return regions[regionId];
 	}
 	
 	/**
@@ -46,7 +48,7 @@ public final class RegionManager {
 	 * @return {@code true} if a {@code Region} exists, {@code false} otherwise.
 	 */
 	public boolean exists(Position pos) {
-		return regions.containsKey(pos.getRegion());
+		return regions[pos.getRegion()] != null;
 	}
 	
 	/**
@@ -115,7 +117,7 @@ public final class RegionManager {
 		return regions;
 	}
 	
-	public Int2ObjectOpenHashMap<Region> getRegions() {
+	public Region[] getRegions() {
 		return regions;
 	}
 	

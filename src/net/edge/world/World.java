@@ -226,8 +226,11 @@ public final class World {
 		// Region tick
 		regionalTick++;
 		if(regionalTick == 10) {
-			for(Int2ObjectMap.Entry<Region> entry : World.getRegions().getRegions().int2ObjectEntrySet()) {
-				entry.getValue().sequence();
+			Region[] regions = World.getRegions().getRegions();
+			for(int r = 0; r < regions.length; r++) {
+				if(regions[r] != null) {
+					regions[r].sequence();
+				}
 			}
 			regionalTick = 0;
 		}
