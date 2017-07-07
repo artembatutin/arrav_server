@@ -2,6 +2,7 @@ package net.edge.world;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.edge.Server;
+import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.game.GameConstants;
 import net.edge.game.GameExecutor;
@@ -396,7 +397,7 @@ public final class World {
 		try {
 			// If the player x-logged, don't log the player out. Keep the
 			// player queued until they are out of combat to prevent x-logging.
-			if(!player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombatBuilder().isBeingAttacked()) {
+			if(player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombatBuilder().isBeingAttacked() && UpdateCommand.inProgess == 0) {
 				return false;
 			}
 			boolean response = players.remove(player);

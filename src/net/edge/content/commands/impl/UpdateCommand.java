@@ -31,17 +31,15 @@ public final class UpdateCommand implements Command {
 					inProgess = 2;
 					System.out.println("Setting player into updating mode.");
 					System.out.println("Logging players out... - Players online: " + World.get().getPlayers().size());
-					World.get().getPlayers().dispose();
+					World.get().getPlayers().forEach(p -> p.getMessages().sendLogout());
 					System.out.println("Waiting for shutdown.");
-					World.get().getTask().submit(new Task(5, false) {
+					World.get().getTask().submit(new Task(10, false) {
 						@Override
 						protected void execute() {
-							if(World.get().getPlayers().size() == 0) {
-								System.out.println("Terminating server instance - Players online: " + World.get().getPlayers().size());
-								World.get().shutdown();
-								System.exit(0);
-								this.cancel();
-							}
+							System.out.println("Terminating server instance - Players online: " + World.get().getPlayers().size());
+							World.get().shutdown();
+							System.exit(0);
+							this.cancel();
 						}
 					});
 				}

@@ -268,23 +268,6 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	}
 	
 	/**
-	 * Disposing the list, used for players on restart.
-	 */
-	public void dispose() {
-		for(E e : entities) {
-			if(e == null)
-				continue;
-			if(e.isNpc())
-				continue;
-			Player p = e.toPlayer();
-			e.setState(NodeState.INACTIVE);
-			if(p.getRights() != Rights.ADMINISTRATOR)
-				new Hiscores(World.getScore(), p).submit();
-		}
-		size = 0;
-	}
-	
-	/**
 	 * Removes a {@link EntityNode} from this list at {@code index}. Will throw an exception if the entity being removed does
 	 * not have a state of {@code ACTIVE}.
 	 * @param index The index to remove the {@link EntityNode} at.
