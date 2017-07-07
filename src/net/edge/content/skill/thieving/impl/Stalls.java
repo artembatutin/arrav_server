@@ -109,7 +109,7 @@ public final class Stalls extends Thieving {
 	
 	@Override
 	public void onSubmit() {
-		if(stall.requirement > 40 && RandomUtils.inclusive(200) < 40) {
+		if(stall.requirement > 40 && RandomUtils.inclusive(200) < 10) {
 			Optional<Npc> guard = player.getLocalNpcs().stream().filter(g -> g.getId() == 3408 && !g.getCombatBuilder().inCombat()).findFirst();
 			if(guard.isPresent()) {
 				guard.get().forceChat("Get your hands off there!");
