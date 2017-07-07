@@ -646,6 +646,7 @@ public final class Player extends EntityNode {
 	@Override
 	public void register() {
 		PacketWriter encoder = getMessages();
+		encoder.sendResetCameraPosition();
 		encoder.sendDetails();
 		this.getMessages().sendMapRegion();
 		super.getFlags().flag(UpdateFlag.APPEARANCE);
@@ -674,6 +675,7 @@ public final class Player extends EntityNode {
 		WeaponInterface.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		WeaponAnimation.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		ShieldAnimation.execute(this, equipment.get(Equipment.SHIELD_SLOT));
+		equipment.updateRange();
 		encoder.sendConfig(173, super.getMovementQueue().isRunning() ? 0 : 1);
 		encoder.sendConfig(174, super.isPoisoned() ? 1 : 0);
 		encoder.sendConfig(172, super.isAutoRetaliate() ? 1 : 0);

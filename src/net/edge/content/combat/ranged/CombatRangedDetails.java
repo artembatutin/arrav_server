@@ -40,17 +40,22 @@ public final class CombatRangedDetails {
 	private final Player player;
 	
 	/**
+	 * The weapon this player is using.
+	 */
+	private Optional<CombatRangedWeapon> weapon;
+	
+	/**
+	 * The player's ammunition.
+	 */
+	private Optional<CombatRangedAmmunition> ammunition;
+	
+	/**
 	 * Constructs a new {@link CombatRangedDetails}.
 	 * @param player {@link #player}.
 	 */
 	public CombatRangedDetails(Player player) {
 		this.player = player;
 	}
-	
-	/**
-	 * The weapon this player is using.
-	 */
-	private Optional<CombatRangedWeapon> weapon;
 	
 	/**
 	 * Gets the delay for this weapon.
@@ -62,7 +67,6 @@ public final class CombatRangedDetails {
 		}
 		
 		FightStyle style = player.getFightType().getStyle();
-		
 		int delay = weapon.get().getDelay();
 		int fightStyle = style.equals(FightStyle.ACCURATE) || style.equals(FightStyle.DEFENSIVE) ? 1 : 0;
 		return delay + fightStyle;
@@ -78,44 +82,36 @@ public final class CombatRangedDetails {
 		if(def.type.equals(CombatRangedType.SPECIAL_BOW)) {
 			return CombatRangedDetails.RANGED_WEAPONS.get(def.getWeapon()).ammunitions[0];
 		}
-		return Arrays.stream(def.getAmmunitions()).filter(t -> Arrays.stream(t.getAmmus()).anyMatch(a -> a.getId() == ammunition.getId())).findFirst().orElse(null);
+		for(CombatRangedAmmunition ammo : def.getAmmunitions()) {
+			for(Item i : ammo.getAmmus()) {
+				if(ammunition.getId() == i.getId())
+					return ammo;
+			}
+		}
+		return null;
 	}
 	
 	/**
 	 * Determines the weapon to use for the player.
 	 */
 	public boolean determine() {
-		int weaponId = player.getEquipment().get(Equipment.WEAPON_SLOT).getId();
-		
-		CombatRangedWeapon mappedWeapon = CombatRangedDetails.RANGED_WEAPONS.get(weaponId);
-		
-		weapon = Optional.ofNullable(mappedWeapon);
-		
 		if(!weapon.isPresent()) {
 			player.message("This ranged weapon hasn't been configured yet, please report on our forums...");
 			player.getCombatBuilder().reset();
 			return false;
 		}
-		
-		CombatRangedWeapon weapon = this.weapon.get();
-		
-		weapon.setId(weaponId);
-		int slot = weapon.getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
-		Item ammunition = player.getEquipment().get(slot);
-		if(ammunition == null) {
+		int slot = weapon.get().getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
+		Item ammo = player.getEquipment().get(slot);
+		if(ammo == null) {
 			player.message("You don't have any ammunition to shoot with...");
 			player.getCombatBuilder().reset();
 			return false;
 		}
-		
-		CombatRangedAmmunition def = determineAmmo(ammunition, weapon);
-		if(def == null) {
-			player.message("You cannot use " + TextUtils.appendPluralCheck(ammunition.getDefinition().getName().toLowerCase()) + " with this ranged weapon.");
+		if(!ammunition.isPresent()) {
+			player.message("You cannot use " + TextUtils.appendPluralCheck(ammo.getDefinition().getName().toLowerCase()) + " with this ranged weapon.");
 			player.getCombatBuilder().reset();
 			return false;
 		}
-		
-		weapon.setAmmunition(new CombatRangedAmmo(ammunition, def));
 		return true;
 	}
 	
@@ -129,10 +125,29 @@ public final class CombatRangedDetails {
 	/**
 	 * @param weapon the weapon to set
 	 */
-	public void setWeapon(Optional<CombatRangedWeapon> weapon) {
-		this.weapon = weapon;
+	public void setWeapon(CombatRangedWeapon weapon) {
+		if(weapon == null)
+			this.weapon = Optional.empty();
+		else
+			this.weapon = Optional.of(weapon);
 	}
 	
+	/**
+	 * @return the ammunition
+	 */
+	public Optional<CombatRangedAmmunition> getAmmunition() {
+		return ammunition;
+	}
+	
+	/**
+	 * @param ammunition the ammunition to set
+	 */
+	public void setAmmunition(CombatRangedAmmunition ammunition) {
+		if(ammunition == null)
+			this.ammunition = Optional.empty();
+		else
+			this.ammunition = Optional.of(ammunition);
+	}
 	/**
 	 * Represents a single ranged ammunition.
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>

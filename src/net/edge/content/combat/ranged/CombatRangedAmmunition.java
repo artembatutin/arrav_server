@@ -26,45 +26,45 @@ import net.edge.world.node.item.ItemIdentifiers;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum CombatRangedAmmunition {
-	TRAINING_ARROWS(9706, 1051, 64, 36, 40, 31, 806),
-	BRONZE_ARROW(new int[]{882, 883, 5616, 5622}, 10, 4, 36, 40, 31, 19) {
+	TRAINING_ARROWS(9706, 1051, 64, 36, 40, 31, 806, true),
+	BRONZE_ARROW(new int[]{882, 883, 5616, 5622}, 10, 4, 36, 40, 31, 19, true) {
 		@Override
 		public Graphic getGraphic(Player player) {
 			return player.getRangedDetails().getWeapon().isPresent() && player.getRangedDetails().getWeapon().get().getWeapon() == ItemIdentifiers.DARK_BOW ? new Graphic(1104, 100) : new Graphic(19, 100);
 		}
 	},
-	IRON_ARROW(new int[]{884, 885, 5617, 5623}, 9, 64, 36, 40, 31, 18) {
+	IRON_ARROW(new int[]{884, 885, 5617, 5623}, 9, 64, 36, 40, 31, 18, true) {
 		@Override
 		public Graphic getGraphic(Player player) {
 			return player.getRangedDetails().getWeapon().isPresent() && player.getRangedDetails().getWeapon().get().getWeapon() == ItemIdentifiers.DARK_BOW ? new Graphic(1105, 100) : new Graphic(18, 100);
 		}
 	},
-	STEEL_ARROW(new int[]{886, 887, 5618, 5624}, 11, 64, 36, 40, 31, 20) {
+	STEEL_ARROW(new int[]{886, 887, 5618, 5624}, 11, 64, 36, 40, 31, 20, true) {
 		@Override
 		public Graphic getGraphic(Player player) {
 			return player.getRangedDetails().getWeapon().isPresent() && player.getRangedDetails().getWeapon().get().getWeapon() == ItemIdentifiers.DARK_BOW ? new Graphic(1106, 100) : new Graphic(20, 100);
 		}
 	},
-	MITHRIL_ARROW(new int[]{888, 889, 5619, 5625}, 12, 64, 36, 40, 31, 21) {
+	MITHRIL_ARROW(new int[]{888, 889, 5619, 5625}, 12, 64, 36, 40, 31, 21, true) {
 		@Override
 		public Graphic getGraphic(Player player) {
 			return player.getRangedDetails().getWeapon().isPresent() && player.getRangedDetails().getWeapon().get().getWeapon() == ItemIdentifiers.DARK_BOW ? new Graphic(1107, 100) : new Graphic(21, 100);
 		}
 	},
-	ADAMANT_ARROW(new int[]{890, 891, 5620, 5626}, 13, 64, 36, 40, 31, 22) {
+	ADAMANT_ARROW(new int[]{890, 891, 5620, 5626}, 13, 64, 36, 40, 31, 22, true) {
 		@Override
 		public Graphic getGraphic(Player player) {
 			return player.getRangedDetails().getWeapon().isPresent() && player.getRangedDetails().getWeapon().get().getWeapon() == ItemIdentifiers.DARK_BOW ? new Graphic(1108, 100) : new Graphic(22, 100);
 		}
 	},
-	RUNE_ARROW(new int[]{892, 893, 5621, 5627}, 15, 64, 36, 40, 31, 24) {
+	RUNE_ARROW(new int[]{892, 893, 5621, 5627}, 15, 64, 36, 40, 31, 24, true) {
 		@Override
 		public Graphic getGraphic(Player player) {
 			return player.getRangedDetails().getWeapon().isPresent() && player.getRangedDetails().getWeapon().get().getWeapon() == ItemIdentifiers.DARK_BOW ? new Graphic(1109, 100) : new Graphic(24, 100);
 		}
 	},
 	
-	GUAM_TAR(10142, -1, -1, -1, -1, -1, new Graphic(952, 70)) {
+	GUAM_TAR(10142, -1, -1, -1, -1, -1, new Graphic(952, 70), false) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			CombatType type = player.getFightType().equals(FightType.FLARE) ? CombatType.RANGED : player.getFightType().equals(FightType.SCORCH) ? CombatType.MELEE : CombatType.MAGIC;
@@ -79,7 +79,7 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	MARRENTIL_TAR(10143, -1, -1, -1, -1, -1, new Graphic(952, 70)) {
+	MARRENTIL_TAR(10143, -1, -1, -1, -1, -1, new Graphic(952, 70), false) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			CombatType type = player.getFightType().equals(FightType.FLARE) ? CombatType.RANGED : player.getFightType().equals(FightType.SCORCH) ? CombatType.MELEE : CombatType.MAGIC;
@@ -94,7 +94,7 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	TARROMIN_TAR(10144, -1, -1, -1, -1, -1, new Graphic(952, 70)) {
+	TARROMIN_TAR(10144, -1, -1, -1, -1, -1, new Graphic(952, 70), false) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			CombatType type = player.getFightType().equals(FightType.FLARE) ? CombatType.RANGED : player.getFightType().equals(FightType.SCORCH) ? CombatType.MELEE : CombatType.MAGIC;
@@ -109,7 +109,7 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	HARRALANDER_TAR(10145, -1, -1, -1, -1, -1, new Graphic(952, 70)) {
+	HARRALANDER_TAR(10145, -1, -1, -1, -1, -1, new Graphic(952, 70), false) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			CombatType type = player.getFightType().equals(FightType.FLARE) ? CombatType.RANGED : player.getFightType().equals(FightType.SCORCH) ? CombatType.MELEE : CombatType.MAGIC;
@@ -125,14 +125,14 @@ public enum CombatRangedAmmunition {
 		}
 	},
 	
-	CRYSTAL_ARROW(-1, 249, 64, 36, 40, 31, 250),
-	ZARYTE_ARROW(-1, 249, 64, 36, 40, 31, 250),
+	CRYSTAL_ARROW(-1, 249, 64, 36, 40, 31, 250, true),
+	ZARYTE_ARROW(-1, 249, 64, 36, 40, 31, 250, true),
 	
-	DRAGON_ARROW(new int[]{11212, 11227, 11228, 11229}, 1120, 64, 36, 40, 31, 1111),
+	DRAGON_ARROW(new int[]{11212, 11227, 11228, 11229}, 1120, 64, 36, 40, 31, 1111, true),
 	
-	HAND_CANNON_SHOT(new int[]{15243}, 2143, 8, 3, 43, 31, new Graphic(2141, 13)),
+	HAND_CANNON_SHOT(new int[]{15243}, 2143, 8, 3, 43, 31, new Graphic(2141, 13), false),
 	
-	ABYSSALBANE_ARROW(new int[]{21655, 21733, 21734, 21735}, 15, 64, 36, 40, 31, 24) {
+	ABYSSALBANE_ARROW(new int[]{21655, 21733, 21734, 21735}, 15, 64, 36, 40, 31, 2, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
@@ -153,7 +153,7 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	BASILISKBANE_ARROW(new int[]{21650, 21719, 21720, 21721}, 15, 64, 36, 40, 31, 24) {
+	BASILISKBANE_ARROW(new int[]{21650, 21719, 21720, 21721}, 15, 64, 36, 40, 31, 24, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
@@ -174,7 +174,7 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	DRAGONBANE_ARROW(new int[]{21640, 21712, 21713, 21714}, 15, 64, 36, 40, 31, 24) {
+	DRAGONBANE_ARROW(new int[]{21640, 21712, 21713, 21714}, 15, 64, 36, 40, 31, 24, true) {
 		final ImmutableSet<Integer> affectedNpcs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363);
 		
 		@Override
@@ -197,7 +197,7 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	WALLASALKIBANE_ARROW(new int[]{21645, 21726, 21727, 21728}, 15, 64, 36, 40, 31, 24) {
+	WALLASALKIBANE_ARROW(new int[]{21645, 21726, 21727, 21728}, 15, 64, 36, 40, 31, 24, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
@@ -219,7 +219,7 @@ public enum CombatRangedAmmunition {
 		}
 	},
 	
-	ABYSSALBANE_BOLT(new int[]{21675, 21701, 21702, 21703}, 27, 86, 42, 43, 31, 0) {
+	ABYSSALBANE_BOLT(new int[]{21675, 21701, 21702, 21703}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
@@ -240,7 +240,7 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	BASILISKBANE_BOLT(new int[]{21670, 21687, 21688, 21689}, 27, 86, 42, 43, 31, 0) {
+	BASILISKBANE_BOLT(new int[]{21670, 21687, 21688, 21689}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
@@ -261,7 +261,7 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	DRAGONBANE_BOLT(new int[]{21660, 21680, 21681, 21682}, 27, 86, 42, 43, 31, 0) {
+	DRAGONBANE_BOLT(new int[]{21660, 21680, 21681, 21682}, 27, 86, 42, 43, 31, 0, true) {
 		final ImmutableSet<Integer> affectedNpcs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363);
 		
 		@Override
@@ -284,7 +284,7 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	WALLASALKIBANE_BOLT(new int[]{21665, 21694, 21695, 21696}, 27, 86, 42, 43, 31, 0) {
+	WALLASALKIBANE_BOLT(new int[]{21665, 21694, 21695, 21696}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(!victim.isNpc()) {
@@ -306,38 +306,38 @@ public enum CombatRangedAmmunition {
 		}
 	},
 	
-	BRUTAL_BRONZE_ARROW(4773, 10, 64, 36, 40, 31, 19),
-	BRUTAL_IRON_ARROW(4778, 9, 64, 36, 40, 31, 18),
-	BRUTAL_STEEL_ARROW(4783, 11, 64, 36, 40, 31, 20),
-	BRUTAL_BLACK_ARROW(4788, 11, 64, 36, 40, 31, 20),
+	BRUTAL_BRONZE_ARROW(4773, 10, 64, 36, 40, 31, 19, true),
+	BRUTAL_IRON_ARROW(4778, 9, 64, 36, 40, 31, 18, true),
+	BRUTAL_STEEL_ARROW(4783, 11, 64, 36, 40, 31, 20, true),
+	BRUTAL_BLACK_ARROW(4788, 11, 64, 36, 40, 31, 20, true),
 	//TODO
-	BRUTAL_MITHRIL_ARROW(4793, 12, 64, 36, 40, 31, 21),
-	BRUTAL_ADAMANT_ARROW(4798, 13, 64, 36, 40, 31, 22),
-	BRUTAL_RUNE_ARROW(4803, 15, 64, 36, 40, 31, 24),
+	BRUTAL_MITHRIL_ARROW(4793, 12, 64, 36, 40, 31, 21, true),
+	BRUTAL_ADAMANT_ARROW(4798, 13, 64, 36, 40, 31, 22, true),
+	BRUTAL_RUNE_ARROW(4803, 15, 64, 36, 40, 31, 24, true),
 	
-	KEBBIT_BOLT(10158, 27, 86, 42, 43, 31, 0),
-	LONG_KEBBIT_BOLT(10159, 27, 86, 42, 43, 31, 0),
+	KEBBIT_BOLT(10158, 27, 86, 42, 43, 31, 0, true),
+	LONG_KEBBIT_BOLT(10159, 27, 86, 42, 43, 31, 0, true),
 	
-	BONE_BOLT(8882, 27, 86, 42, 43, 31, 0),
+	BONE_BOLT(8882, 27, 86, 42, 43, 31, 0, true),
 	
-	ICE_ARROW(78, 9, 64, 36, 40, 31, 18),
-	//TODO
-	
-	OGRE_ARROW(2866, 9, 64, 36, 40, 31, 18),
+	ICE_ARROW(78, 9, 64, 36, 40, 31, 18, true),
 	//TODO
 	
-	BROAD_ARROW(4160, 9, 64, 36, 40, 31, 18),
+	OGRE_ARROW(2866, 9, 64, 36, 40, 31, 18, true),
 	//TODO
 	
-	SARADOMIN_ARROW(19152, 99, 64, 36, 40, 31, 96),
-	GUTHIX_ARROW(19157, 98, 64, 36, 40, 31, 95),
-	ZAMORAK_ARROW(19162, 100, 64, 36, 40, 31, 97),
+	BROAD_ARROW(4160, 9, 64, 36, 40, 31, 18, true),
+	//TODO
+	
+	SARADOMIN_ARROW(19152, 99, 64, 36, 40, 31, 96, false),
+	GUTHIX_ARROW(19157, 98, 64, 36, 40, 31, 95, false),
+	ZAMORAK_ARROW(19162, 100, 64, 36, 40, 31, 97, false),
 	
 	//TODO: brutal/ogre arrows.
 	
-	BRONZE_BOLTS(877, 27, 86, 42, 43, 31, 0),
-	IRON_BOLTS(9140, 27, 86, 42, 43, 31, 0),
-	OPAL_BOLTS(new int[]{879, 9236}, 27, 86, 42, 43, 31, 0) {
+	BRONZE_BOLTS(877, 27, 86, 42, 43, 31, 0, true),
+	IRON_BOLTS(9140, 27, 86, 42, 43, 31, 0, true),
+	OPAL_BOLTS(new int[]{879, 9236}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9236) {
@@ -359,8 +359,8 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	STEEL_BOLTS(9141, 27, 86, 42, 43, 31, 0),
-	PEARL_BOLTS(new int[]{880, 9238}, 27, 86, 42, 43, 31, 0) {
+	STEEL_BOLTS(9141, 27, 86, 42, 43, 31, 0, true),
+	PEARL_BOLTS(new int[]{880, 9238}, 27, 86, 42, 43, 31, 0, true) {
 		
 		final ImmutableSet<Integer> affectedNpcs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363, 110, 1633, 1634, 1635, 1636, 1019, 2591, 2592, 2593, 2594, 2595, 2596, 2597, 2598, 2599, 2600, 2601, 2602, 2603, 2604, 2605, 2606, 2607, 2608, 2609, 2610, 2611, 2612, 2613, 2614, 2615, 2616, 2627, 2628, 2629, 2630, 2631, 2631, 2734, 2735, 2736, 2737, 2738, 2739, 2740, 2741, 2742, 2743, 2744, 2745, 2746);
 		
@@ -399,8 +399,8 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	BLACK_BOLTS(13083, 27, 86, 42, 43, 31, 0),
-	JADE_BOLTS(new int[]{9335, 9237}, 27, 86, 42, 43, 31, 0) {
+	BLACK_BOLTS(13083, 27, 86, 42, 43, 31, 0, true),
+	JADE_BOLTS(new int[]{9335, 9237}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9237) {
@@ -416,8 +416,8 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	MITHRIL_BOLTS(9142, 27, 86, 42, 43, 31, 0),
-	TOPAZ_BOLTS(new int[]{9336, 9239}, 27, 86, 42, 43, 31, 0) {
+	MITHRIL_BOLTS(9142, 27, 86, 42, 43, 31, 0, true),
+	TOPAZ_BOLTS(new int[]{9336, 9239}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9239) {
@@ -437,8 +437,8 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	ADAMANT_BOLTS(9143, 27, 86, 42, 43, 31, 0),
-	SAPPHIRE_BOLTS(new int[]{9337, 9240}, 27, 86, 42, 43, 31, 0) {
+	ADAMANT_BOLTS(9143, 27, 86, 42, 43, 31, 0, true),
+	SAPPHIRE_BOLTS(new int[]{9337, 9240}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9240) {
@@ -466,8 +466,8 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	RUNITE_BOLTS(9144, 27, 86, 42, 43, 31, 0),
-	EMERALD_BOLTS(new int[]{9338, 9241}, 27, 86, 42, 43, 31, 0) {
+	RUNITE_BOLTS(9144, 27, 86, 42, 43, 31, 0, true),
+	EMERALD_BOLTS(new int[]{9338, 9241}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9241) {
@@ -492,7 +492,7 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	RUBY_BOLTS(new int[]{9339, 9242}, 27, 86, 42, 43, 31, 0) {
+	RUBY_BOLTS(new int[]{9339, 9242}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9242) {
@@ -511,8 +511,8 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	BROAD_TIPPED_BOLTS(13280, 27, 86, 42, 43, 31, 0),
-	DIAMOND_BOLTS(new int[]{9340, 9243}, 27, 86, 42, 43, 31, 0) {
+	BROAD_TIPPED_BOLTS(13280, 27, 86, 42, 43, 31, 0, true),
+	DIAMOND_BOLTS(new int[]{9340, 9243}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9243) {
@@ -534,7 +534,7 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	DRAGON_BOLTS(new int[]{9341, 9244}, 27, 86, 42, 43, 31, 0) {
+	DRAGON_BOLTS(new int[]{9341, 9244}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9244) {
@@ -564,8 +564,8 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	BOLT_RACK(4740, 27, 86, 42, 43, 31, 0),
-	ONYX_BOLTS(new int[]{9342, 9245}, 27, 86, 42, 43, 31, 0) {
+	BOLT_RACK(4740, 27, 86, 42, 43, 31, 0, false),
+	ONYX_BOLTS(new int[]{9342, 9245}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9245) {
@@ -592,11 +592,11 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	BARBED_BOLTS(881, 27, 86, 42, 43, 31, 0),
-	BLURITE_BOLTS(9139, 27, 86, 42, 43, 31, 0),
-	SILVER_BOLTS(9145, 27, 86, 42, 43, 31, 0),
+	BARBED_BOLTS(881, 27, 86, 42, 43, 31, 0, true),
+	BLURITE_BOLTS(9139, 27, 86, 42, 43, 31, 0, true),
+	SILVER_BOLTS(9145, 27, 86, 42, 43, 31, 0, true),
 	
-	CHINCHOMPA(new int[]{10033, 10034}, 908, 64, 36, 40, 31, 0) {
+	CHINCHOMPA(new int[]{10033, 10034}, 908, 64, 36, 40, 31, 0, false) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode attacker, CombatHit data) {
 			int baseHit = data.getHits()[0].getDamage();
@@ -617,7 +617,7 @@ public enum CombatRangedAmmunition {
 			return data;
 		}
 	},
-	RED_CHINCHOMPA(10034, 909, 64, 36, 40, 31, 0) {
+	RED_CHINCHOMPA(10034, 909, 64, 36, 40, 31, 0, false) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, EntityNode attacker, CombatHit data) {
 			int baseHit = data.getHits()[0].getDamage();
@@ -639,43 +639,38 @@ public enum CombatRangedAmmunition {
 		}
 	},
 	
-	BRONZE_KNIFE(new int[]{864, 870, 5654, 5661}, 212, 46, 30, 40, 37, 219),
-	IRON_KNIFE(new int[]{863, 871, 5655, 5662}, 213, 46, 30, 40, 37, 220),
-	STEEL_KNIFE(new int[]{865, 872, 5656, 5663}, 214, 46, 30, 40, 37, 221),
-	BLACK_KNIFE(new int[]{869, 874, 5658, 5665}, 215, 46, 30, 40, 37, 222),
-	MITHRIL_KNIFE(new int[]{866, 873, 5657, 5664}, 216, 46, 30, 40, 37, 223),
-	ADAMANT_KNIFE(new int[]{867, 875, 5659, 5666}, 217, 46, 30, 40, 37, 224),
-	RUNE_KNIFE(new int[]{868, 876, 5660, 5667}, 218, 46, 30, 40, 37, 225),
+	BRONZE_KNIFE(new int[]{864, 870, 5654, 5661}, 212, 46, 30, 40, 37, 219, true),
+	IRON_KNIFE(new int[]{863, 871, 5655, 5662}, 213, 46, 30, 40, 37, 220, true),
+	STEEL_KNIFE(new int[]{865, 872, 5656, 5663}, 214, 46, 30, 40, 37, 221, true),
+	BLACK_KNIFE(new int[]{869, 874, 5658, 5665}, 215, 46, 30, 40, 37, 222, true),
+	MITHRIL_KNIFE(new int[]{866, 873, 5657, 5664}, 216, 46, 30, 40, 37, 223, true),
+	ADAMANT_KNIFE(new int[]{867, 875, 5659, 5666}, 217, 46, 30, 40, 37, 224, true),
+	RUNE_KNIFE(new int[]{868, 876, 5660, 5667}, 218, 46, 30, 40, 37, 225, true),
 	
-	BRONZE_DART(new int[]{806, 812, 5628, 5635}, 226, 40, 16, 45, 37, 232),
-	IRON_DART(new int[]{807, 813, 5629, 5636}, 227, 40, 16, 45, 37, 233),
-	STEEL_DART(new int[]{808, 814, 5630, 5637}, 228, 40, 16, 45, 37, 234),
-	BLACK_DART(new int[]{3093, 3094, 5631, 5638}, 273, 40, 16, 45, 37, 273),
-	MITHRIL_DART(new int[]{809, 815, 5632, 5639}, 229, 40, 16, 45, 37, 235),
-	ADAMANT_DART(new int[]{810, 816, 5633, 5640}, 230, 40, 16, 45, 37, 236),
-	RUNE_DART(new int[]{811, 817, 5634, 5641}, 231, 40, 16, 45, 37, 237),
+	BRONZE_DART(new int[]{806, 812, 5628, 5635}, 226, 40, 16, 45, 37, 232, true),
+	IRON_DART(new int[]{807, 813, 5629, 5636}, 227, 40, 16, 45, 37, 233, true),
+	STEEL_DART(new int[]{808, 814, 5630, 5637}, 228, 40, 16, 45, 37, 234, true),
+	BLACK_DART(new int[]{3093, 3094, 5631, 5638}, 273, 40, 16, 45, 37, 273, true),
+	MITHRIL_DART(new int[]{809, 815, 5632, 5639}, 229, 40, 16, 45, 37, 235, true),
+	ADAMANT_DART(new int[]{810, 816, 5633, 5640}, 230, 40, 16, 45, 37, 236, true),
+	RUNE_DART(new int[]{811, 817, 5634, 5641}, 231, 40, 16, 45, 37, 237, true),
 	
-	BRONZE_JAVELIN(new int[]{825, 831, 5642, 5648}, 200, 80, 50, 45, 37, 0),
-	IRON_JAVELIN(new int[]{826, 832, 5643, 5649}, 201, 80, 50, 45, 37, 0),
-	STEEL_JAVELIN(new int[]{827, 833, 5644, 5650}, 202, 80, 50, 45, 37, 0),
-	MITHRIL_JAVELIN(new int[]{828, 834, 5645, 5651}, 203, 80, 50, 45, 37, 0),
-	ADAMANT_JAVELIN(new int[]{829, 835, 5646, 5652}, 204, 80, 50, 45, 37, 0),
-	RUNE_JAVELIN(new int[]{830, 836, 5647, 5653}, 205, 80, 50, 45, 37, 0),
-	MORRIGAN_JAVELIN(new int[]{13879, 13880, 13881, 13882}, 1837, 70, 50, 45, 37, 1836),
+	BRONZE_JAVELIN(new int[]{825, 831, 5642, 5648}, 200, 80, 50, 45, 37, 0, true),
+	IRON_JAVELIN(new int[]{826, 832, 5643, 5649}, 201, 80, 50, 45, 37, 0, true),
+	STEEL_JAVELIN(new int[]{827, 833, 5644, 5650}, 202, 80, 50, 45, 37, 0, true),
+	MITHRIL_JAVELIN(new int[]{828, 834, 5645, 5651}, 203, 80, 50, 45, 37, 0, true),
+	ADAMANT_JAVELIN(new int[]{829, 835, 5646, 5652}, 204, 80, 50, 45, 37, 0, true),
+	RUNE_JAVELIN(new int[]{830, 836, 5647, 5653}, 205, 80, 50, 45, 37, 0, true),
+	MORRIGAN_JAVELIN(new int[]{13879, 13880, 13881, 13882}, 1837, 70, 50, 45, 37, 1836, true),
 	
-	BRONZE_THROWNAXE(800, 36, 80, 50, 43, 31, 0),
-	IRON_THROWNAXE(801, 35, 80, 50, 43, 31, 0),
-	STEEL_THROWNAXE(802, 37, 80, 50, 43, 31, 0),
-	MITHRIL_THROWNAXE(803, 38, 80, 50, 43, 31, 0),
-	ADAMANT_THROWNAXE(804, 39, 80, 50, 43, 31, 0),
-	RUNE_THROWNAXE(805, 41, 80, 50, 43, 31, 0),
-	MORRIGAN_THROWNAXE(13883, 1839, 80, 50, 18, 31, 0),
-	TOKTZ_XIL_UL(6522, 442, 68, 32, 32, 32, 0);
-	
-	/**
-	 * A set of constants that can never be recovered when fired.
-	 */
-	public static final ImmutableSet<CombatRangedAmmunition> NON_DROPPABLE = ImmutableSet.of(SARADOMIN_ARROW, ZAMORAK_ARROW, GUTHIX_ARROW, CHINCHOMPA, RED_CHINCHOMPA, HAND_CANNON_SHOT, BOLT_RACK, GUAM_TAR, MARRENTIL_TAR, HARRALANDER_TAR, TARROMIN_TAR);
+	BRONZE_THROWNAXE(800, 36, 80, 50, 43, 31, 0, true),
+	IRON_THROWNAXE(801, 35, 80, 50, 43, 31, 0, true),
+	STEEL_THROWNAXE(802, 37, 80, 50, 43, 31, 0, true),
+	MITHRIL_THROWNAXE(803, 38, 80, 50, 43, 31, 0, true),
+	ADAMANT_THROWNAXE(804, 39, 80, 50, 43, 31, 0, true),
+	RUNE_THROWNAXE(805, 41, 80, 50, 43, 31, 0, true),
+	MORRIGAN_THROWNAXE(13883, 1839, 80, 50, 18, 31, 0, true),
+	TOKTZ_XIL_UL(6522, 442, 68, 32, 32, 32, 0, true);
 	
 	/**
 	 * The item identifications for this ammunition.
@@ -714,6 +709,12 @@ public enum CombatRangedAmmunition {
 	private final Graphic graphic;
 	
 	/**
+	 * Droppable flag.
+	 */
+	private final boolean droppable;
+	
+	
+	/**
 	 * Constructs a new {@link CombatRangedAmmunition}.
 	 * @param ids         {@link #ids}.
 	 * @param projectile  {@link #projectile}.
@@ -723,7 +724,7 @@ public enum CombatRangedAmmunition {
 	 * @param endHeight   {@link #endHeight}.
 	 * @param graphic     {@link #graphic}.
 	 */
-	CombatRangedAmmunition(int[] ids, int projectile, int delay, int speed, int startHeight, int endHeight, int graphic) {
+	CombatRangedAmmunition(int[] ids, int projectile, int delay, int speed, int startHeight, int endHeight, int graphic, boolean droppable) {
 		this.ids = Item.convert(ids);
 		this.projectile = projectile;
 		this.delay = delay;
@@ -731,6 +732,7 @@ public enum CombatRangedAmmunition {
 		this.startHeight = startHeight;
 		this.endHeight = endHeight;
 		this.graphic = new Graphic(graphic, 100);
+		this.droppable = droppable;
 	}
 	
 	/**
@@ -743,7 +745,7 @@ public enum CombatRangedAmmunition {
 	 * @param endHeight   {@link #endHeight}.
 	 * @param graphic     {@link #graphic}.
 	 */
-	CombatRangedAmmunition(int[] ids, int projectile, int delay, int speed, int startHeight, int endHeight, Graphic graphic) {
+	CombatRangedAmmunition(int[] ids, int projectile, int delay, int speed, int startHeight, int endHeight, Graphic graphic, boolean droppable) {
 		this.ids = Item.convert(ids);
 		this.projectile = projectile;
 		this.delay = delay;
@@ -751,6 +753,7 @@ public enum CombatRangedAmmunition {
 		this.startHeight = startHeight;
 		this.endHeight = endHeight;
 		this.graphic = graphic;
+		this.droppable = droppable;
 	}
 	
 	/**
@@ -763,7 +766,7 @@ public enum CombatRangedAmmunition {
 	 * @param endHeight   {@link #endHeight}.
 	 * @param graphic     {@link #graphic}.
 	 */
-	CombatRangedAmmunition(int id, int projectile, int delay, int speed, int startHeight, int endHeight, int graphic) {
+	CombatRangedAmmunition(int id, int projectile, int delay, int speed, int startHeight, int endHeight, int graphic, boolean droppable) {
 		this.ids = new Item[]{new Item(id)};
 		this.projectile = projectile;
 		this.delay = delay;
@@ -771,6 +774,7 @@ public enum CombatRangedAmmunition {
 		this.startHeight = startHeight;
 		this.endHeight = endHeight;
 		this.graphic = new Graphic(graphic, 100);
+		this.droppable = droppable;
 	}
 	
 	/**
@@ -783,7 +787,7 @@ public enum CombatRangedAmmunition {
 	 * @param endHeight   {@link #endHeight}.
 	 * @param graphic     {@link #graphic}.
 	 */
-	CombatRangedAmmunition(int id, int projectile, int delay, int speed, int startHeight, int endHeight, Graphic graphic) {
+	CombatRangedAmmunition(int id, int projectile, int delay, int speed, int startHeight, int endHeight, Graphic graphic, boolean droppable) {
 		this.ids = new Item[]{new Item(id)};
 		this.projectile = projectile;
 		this.delay = delay;
@@ -791,6 +795,7 @@ public enum CombatRangedAmmunition {
 		this.startHeight = startHeight;
 		this.endHeight = endHeight;
 		this.graphic = graphic;
+		this.droppable = droppable;
 	}
 	
 	/**
@@ -859,5 +864,12 @@ public enum CombatRangedAmmunition {
 	 */
 	public Graphic getGraphic(Player player) {
 		return graphic;
+	}
+	
+	/**
+	 * @return droppable flag
+	 */
+	public boolean isDroppable() {
+		return droppable;
 	}
 }

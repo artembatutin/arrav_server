@@ -38,15 +38,12 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		}
 		
 		Player player = character.toPlayer();
-		
 		if(!MinigameHandler.execute(player, m -> m.canHit(player, victim, CombatType.RANGED))) {
 			return false;
 		}
-		
 		if(!prerequisites(player)) {
 			return false;
 		}
-		
 		player.getCombatBuilder().setCombatType(CombatType.RANGED);
 		return true;
 	}
@@ -169,15 +166,10 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		}
 
 		boolean collected = false;
-		Item wep = player.getEquipment().get(Equipment.WEAPON_SLOT);
 		Item cape = player.getEquipment().get(Equipment.CAPE_SLOT);
 		boolean ava_collector = cape != null && (cape.getId() == 1098 || cape.getId() == 10499 || cape.getId() == 20068);
-		boolean cannon = wep != null && wep.getId() == 15241;
-		if(cannon) {
-			item.decrementAmount();
-			collected = true;//skip shots on ground.
-		} else if(ava_collector) {
-			boolean droppable = !weapon.getType().isSpecialBow() && CombatRangedAmmunition.NON_DROPPABLE.stream().noneMatch(weapon.getAmmunition().getDefinition()::equals);
+		if(ava_collector) {
+			boolean droppable = !weapon.getType().isSpecialBow() && ammo.getDefinition().isDroppable();
 			if(weapon.getAmmunition().getItem().getAmount() > 0 && droppable && RandomUtils.nextBoolean()) {
 				double chance = cape.getId() == 10498 ? 0.25 : cape.getId() == 10499 ? 0.50 : 0.75;
 				collected = RandomUtils.success(chance);
@@ -186,29 +178,23 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		
 		if(!collected) {//if not collected decrement arrow count
 			item.decrementAmount();
-			
 			double chance = ava_collector ? 0.35 : 0.70;
-			if(RandomUtils.success(chance)) {//register item to floor
+			if(ammo.getDefinition().isDroppable() && RandomUtils.success(chance)) {//register item to floor
 				ItemNode am = new ItemNode(new Item(item.getId()), victim.getPosition(), player);
 				am.getRegion().register(am, true);
 			}
 		}
 
 		int slot = weapon.getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
-		
-		if(item.getAmount() == 0) {
+		if(item.getAmount() == 0 && player.getEquipment().get(slot).getId() == item.getId()) {
 			player.message("That was your last piece of ammunition!");
-			
 			player.getEquipment().set(slot, null, true);
-			
 			if(slot == Equipment.WEAPON_SLOT) {
 				WeaponInterface.execute(player, null);
 				WeaponAnimation.execute(player, new Item(0));
 			}
-		} else {
-			player.getEquipment().set(slot, item, true);
 		}
-		
+		player.getEquipment().refreshSingle(player, Equipment.EQUIPMENT_DISPLAY_ID, slot);
 		if(slot == Equipment.WEAPON_SLOT) {
 			player.getFlags().flag(UpdateFlag.APPEARANCE);
 		}
