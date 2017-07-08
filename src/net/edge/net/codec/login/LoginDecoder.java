@@ -111,9 +111,6 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			checkState(magicId == 255, "magicId != 255");
 			
 			int build = in.readUnsignedShort();
-
-			System.out.println(magicId + ", " + build);
-			
 			@SuppressWarnings("unused") int memoryVersion = in.readUnsignedByte();
 			
 			for(int i = 0; i < 9; i++) {
@@ -121,47 +118,31 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			}
 			
 			int expectedSize = in.readUnsignedByte();
-			System.out.println("rsa size " + expectedSize);
 			checkState(expectedSize == (rsaBlockSize - 41), "expectedSize != (rsaBlockSize - 41) -> " + rsaBlockSize);
 
 			byte[] rsaBytes = new byte[rsaBlockSize - 41];
 			in.readBytes(rsaBytes);
 
 			byte[] rsaData = new BigInteger(rsaBytes).modPow(NetworkConstants.RSA_EXPONENT, NetworkConstants.RSA_MODULUS).toByteArray();
-
 			ByteBuf rsaBuffer = Unpooled.wrappedBuffer(rsaData);
 
 			try {
 				int rsaOpcode = rsaBuffer.readUnsignedByte();
-
-				System.out.println(rsaOpcode);
-
 				checkState(rsaOpcode == 10, "rsaOpcode != 10");
-
 				long clientHalf = rsaBuffer.readLong();
 				long serverHalf = rsaBuffer.readLong();
 
-				System.out.println(clientHalf);
-				System.out.println(serverHalf);
-
 				int[] isaacSeed = {(int) (clientHalf >> 32), (int) clientHalf, (int) (serverHalf >> 32), (int) serverHalf};
-
 				IsaacCipher decryptor = new IsaacCipher(isaacSeed);
 				for (int i = 0; i < isaacSeed.length; i++) {
 					isaacSeed[i] += 50;
 				}
 				IsaacCipher encryptor = new IsaacCipher(isaacSeed);
-
 				@SuppressWarnings("unused") int uid = rsaBuffer.readInt();
 
-				System.out.println(uid);
 
 				String username = PacketHelper.getCString(rsaBuffer).toLowerCase();
 				String password = PacketHelper.getCString(rsaBuffer).toLowerCase();
-
-				System.out.println(username);
-				System.out.println(password);
-
 				out.add(new LoginRequest(username, password, build, encryptor, decryptor, ctx.channel().pipeline()));
 			} finally {
 				if (rsaBuffer.isReadable()) {

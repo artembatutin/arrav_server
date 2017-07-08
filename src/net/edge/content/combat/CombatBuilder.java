@@ -394,10 +394,13 @@ public final class CombatBuilder {
 			builder.determineStrategy();
 			builder.attackTimer = 0;
 			builder.cooldown = 0;
-			
-			if(!builder.character.getPosition().withinDistance(victim.getPosition(), 30)) {
+			if(!builder.character.getPosition().withinDistance(victim.getPosition(), builder.character.getViewingDistance())) {
 				builder.reset();
 				this.cancel();
+				if(builder.character.isNpc()) {
+					Npc npc = builder.character.toNpc();
+					NpcAggression.retreat(npc);
+				}
 				return false;
 			}
 			
@@ -411,16 +414,8 @@ public final class CombatBuilder {
 				this.cancel();
 				return false;
 			}
-			
-			if(builder.character.isNpc()) {
-				Npc npc = builder.character.toNpc();
-				if(!npc.getPosition().isViewableFrom(npc.getOriginalPosition()) && npc.getDefinition().retreats()) {
-					NpcAggression.retreat(npc);
-					this.cancel();
-					return false;
-				}
-			}
-			return new Boundary(builder.character.getPosition(), builder.character.size()).within(victim.getPosition(), victim.size(), builder.strategy.attackDistance(builder.getCharacter()));
+			return true;
+			//return new Boundary(builder.character.getPosition(), builder.character.size()).within(victim.getPosition(), victim.size(), builder.strategy.attackDistance(builder.getCharacter()));
 		}
 		
 		@Override

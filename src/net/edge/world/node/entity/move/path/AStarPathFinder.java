@@ -77,7 +77,7 @@ public final class AStarPathFinder extends PathFinder {
 				found = true;
 				break;
 			}
-			if(count++ > 32 * 20 + 1) {
+			if(count++ > 1400) {
 				break;
 			}
 			open.remove(active);
@@ -93,7 +93,7 @@ public final class AStarPathFinder extends PathFinder {
 				}
 				
 			}
-		} while(!open.isEmpty() && sorted.size() < distance * 20);
+		} while(!open.isEmpty() && sorted.size() < distance * 50);
 		
 		Deque<Position> shortest = new ArrayDeque<>();
 		if(found) {

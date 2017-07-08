@@ -238,8 +238,8 @@ public final class Equipment extends ItemContainer {
 		}
 		
 		inventory.set(inventoryIndex, null, true);
-		unequipPrimary.ifPresent(i -> this.unequip(i.getDefinition().getEquipmentType().getSlot(), player.getInventory(), true));
-		unequipSecondary.ifPresent(i -> this.unequip(i.getDefinition().getEquipmentType().getSlot(), player.getInventory(), true));
+		unequipPrimary.ifPresent(i -> this.unequip(i.getDefinition().getEquipmentType().getSlot(), player.getInventory(), true, inventoryIndex));
+		unequipSecondary.ifPresent(i -> this.unequip(i.getDefinition().getEquipmentType().getSlot(), player.getInventory(), true, -1));
 		set(type.getSlot(), equipItem, true);
 		appearanceForIndex(type.getSlot());
 		
@@ -267,7 +267,7 @@ public final class Equipment extends ItemContainer {
 	 * @return {@code true} if the item was unequipped, {@code false} otherwise.
 	 */
 	public boolean unequip(int equipmentIndex) {
-		return unequip(equipmentIndex, player.getInventory(), true);
+		return unequip(equipmentIndex, player.getInventory(), true, -1);
 	}
 	
 	/**
@@ -275,9 +275,10 @@ public final class Equipment extends ItemContainer {
 	 * @param equipmentIndex The {@code Equipment} index to unequip the {@code Item} from.
 	 * @param container      The container to which we are putting the items on.
 	 * @param refresh        the condition if the container must be refreshed instantly.
+	 * @param preferredSlot   The slot id that may be preferred.
 	 * @return {@code true} if the item was unequipped, {@code false} otherwise.
 	 */
-	public boolean unequip(int equipmentIndex, ItemContainer container, boolean refresh) {
+	public boolean unequip(int equipmentIndex, ItemContainer container, boolean refresh, int preferredSlot) {
 		if(equipmentIndex == -1)
 			return false;
 		Item unequip = get(equipmentIndex);
@@ -286,7 +287,7 @@ public final class Equipment extends ItemContainer {
 		}
 		if(!MinigameHandler.execute(player, m -> m.canUnequip(player, unequip, unequip.getDefinition().getEquipmentType())))
 			return false;
-		if(container.add(unequip, -1, refresh) >= 0) {
+		if(container.add(unequip, preferredSlot, refresh) >= 0) {
 			set(equipmentIndex, null, refresh);
 			appearanceForIndex(equipmentIndex);
 			if(equipmentIndex == Equipment.SHIELD_SLOT) {

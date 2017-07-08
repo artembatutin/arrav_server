@@ -119,7 +119,7 @@ public final class MetallicDragonCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public int[] getNpcs() {
-		return new int[]{941, 5362, 54, 1590, 1591, 1592, 5363};
+		return new int[]{1590, 1591, 1592, 5363};
 	}
 	
 	private static final CombatNormalSpell FIRE_BLAST = new CombatNormalSpell() {

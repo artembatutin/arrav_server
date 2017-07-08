@@ -16,6 +16,7 @@ import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -89,14 +90,17 @@ public enum PlayerPanel {
 	STAFF_ONLINE() {
 		@Override
 		public void onClick(Player player) {
-			List<Player> staff = World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff());
-			if(staff.isEmpty()) {
+			if(World.get().getStaffCount() == 0) {
 				player.message("There is currently no staff online to assist you.");
 				player.message("You can post a thread on our forums in the support section.");
 			} else {
 				player.getDialogueBuilder().append(new StatementDialogue("Are you requesting staff assistance?"), new OptionDialogue(t -> {
 					if(t == OptionDialogue.OptionType.FIRST_OPTION) {
-						staff.forEach(s -> s.message(player.getFormatUsername() + " is requesting assistance. Do ::assist " + player.getUsername() + " to help him."));
+						Player p;
+						Iterator<Player> it = World.get().getPlayers().iterator();
+						while((p = it.next()) != null) {
+							p.message(player.getFormatUsername() + " is requesting assistance. Do ::assist " + player.getUsername() + " to help him.");
+						}
 						player.message("A staff member should contact you shortly.");
 					}
 					player.getMessages().sendCloseWindows();

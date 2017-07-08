@@ -45,6 +45,8 @@ public class Boundary {
 	public boolean inside(Position other, int size) {
 		if(other == null)
 			return false;
+		if(start.getX() == other.getX() && start.getY() == other.getY())
+			return true;
 		final Position otherEnd = new Position(other.getX() + size - 1, other.getY() + size - 1);
 		return !(start.getX() - otherEnd.getX() > 0) && !(end.getX() - other.getX() < 0) && !(end.getY() - other.getY() < 0) && !(start.getY() - otherEnd.getY() > 0);
 	}

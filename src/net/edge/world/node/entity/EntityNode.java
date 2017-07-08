@@ -78,6 +78,11 @@ public abstract class EntityNode extends Node {
 	private boolean visible = true;
 	
 	/**
+	 * The viewing distance of a {@link EntityNode}.
+	 */
+	private int viewingDistance = 30;
+	
+	/**
 	 * The amount of poison damage this entity has.
 	 */
 	private final MutableNumber poisonDamage = new MutableNumber();
@@ -1038,5 +1043,21 @@ public abstract class EntityNode extends Node {
 	public final Npc toNpc() {
 		Preconditions.checkArgument(isNpc(), "Cannot cast this entity to npc.");
 		return (Npc) this;
+	}
+	
+	/**
+	 * Gets the viewing distance.
+	 * @return viewing distance.
+	 */
+	public int getViewingDistance() {
+		return viewingDistance;
+	}
+	
+	/**
+	 * Viewing distance.
+	 * @param viewingDistance viewing distance.
+	 */
+	public void setViewingDistance(int viewingDistance) {
+		this.viewingDistance = viewingDistance;
 	}
 }

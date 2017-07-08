@@ -30,7 +30,6 @@ public final class MovementQueuePacket implements IncomingPacket {
 		if(!MinigameHandler.execute(player, m -> m.canWalk(player))) {
 			return;
 		}
-		
 		player.faceEntity(null);
 		
 		if(opcode == 248) {
