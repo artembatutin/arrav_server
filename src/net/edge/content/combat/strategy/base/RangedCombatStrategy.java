@@ -25,6 +25,8 @@ import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemIdentifiers;
 import net.edge.world.node.item.ItemNode;
 
+import java.util.OptionalInt;
+
 /**
  * The strategy class which holds support for ranged combat.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -85,7 +87,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		if(ammo.getDefinition().getGraphic(player).getId() != 0)
 			player.graphic(ammo.getDefinition().getGraphic(player));
 		
-		CombatHit data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatHit(character, victim, 1, CombatType.RANGED, true, delay));
+		CombatHit data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatHit(character, victim, 1, CombatType.RANGED, true, delay == 0 ? OptionalInt.empty() : OptionalInt.of(delay)));
 		new Task(delay, false) {
 			@Override
 			protected void execute() {
