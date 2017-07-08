@@ -38,7 +38,6 @@ public final class PlayerUpdater {
 			Iterator<Player> $it = player.getLocalPlayers().iterator();
 			while($it.hasNext()) {
 				Player other = $it.next();
-				System.out.println("other tele:"  + other.getTeleportStage());
 				if(other.isVisible() && other.getInstance() == player.getInstance() && other.getPosition().isViewableFrom(player.getPosition()) && other.getState() == NodeState.ACTIVE && !other.isNeedsPlacement()) {
 					handleMovement(other, msg);
 					blockSet.encodeUpdateBlocks(player, other, blockMsg, UpdateState.UPDATE_LOCAL);

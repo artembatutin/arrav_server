@@ -386,8 +386,6 @@ public abstract class EntityNode extends Node {
 		needsRegionUpdate = false;
 		needsPlacement = false;
 		animation = null;
-		if(teleportStage == -1)
-			teleportStage = 0;
 		flags.clear();
 	}
 	

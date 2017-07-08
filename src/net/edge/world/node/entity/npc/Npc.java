@@ -180,6 +180,7 @@ public abstract class Npc extends EntityNode {
 		getMovementQueue().reset();
 		super.setPosition(destination.copy());
 		setUpdates(true, true);
+		setTeleportStage(-1);
 	}
 	
 	@Override

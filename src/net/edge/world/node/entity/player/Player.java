@@ -757,15 +757,16 @@ public final class Player extends EntityNode {
 		getMovementQueue().sequence();
 		NpcAggression.sequence(this);
 		restoreRunEnergy();
-		
 		int deltaX = getPosition().getX() - getLastRegion().getRegionX() * 8;
 		int deltaY = getPosition().getY() - getLastRegion().getRegionY() * 8;
 		
-		if(deltaX < 16 || deltaX >= 88 || deltaY < 16 || deltaY > 88 || isNeedsRegionUpdate()) {
+		if(deltaX < 16 || deltaX >= 88 || deltaY < 16 || deltaY > 88 || isNeedsRegionUpdate() || getTeleportStage() == -1) {
 			setLastRegion(getPosition().copy());
 			setUpdates(true, false);
 			setUpdateRegion(true);
 			write(new SendMapRegion(getLastRegion().copy()));
+			if(getTeleportStage() == -1)
+				setTeleportStage(0);
 		}
 	}
 	
@@ -938,6 +939,7 @@ public final class Player extends EntityNode {
 			setLastRegion(getPosition().copy());
 		super.setPosition(destination.copy());
 		setNeedsPlacement(true);
+		setTeleportStage(-1);
 	}
 	
 	/**
