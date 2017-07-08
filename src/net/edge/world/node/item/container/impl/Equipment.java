@@ -373,10 +373,12 @@ public final class Equipment extends ItemContainer {
 		if(ranged != null) {
 			int slot = ranged.getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
 			Item ammunition = player.getEquipment().get(slot);
-			CombatRangedAmmunition ammu = player.getRangedDetails().determineAmmo(ammunition, ranged);
-			player.getRangedDetails().setAmmunition(ammu);
-			if(ammu != null) {
-				player.getRangedDetails().getWeapon().get().setAmmunition(new CombatRangedDetails.CombatRangedAmmo(ammunition, ammu));
+			if(ammunition != null) {
+				CombatRangedAmmunition ammu = player.getRangedDetails().determineAmmo(ammunition, ranged);
+				player.getRangedDetails().setAmmunition(ammu);
+				if (ammu != null) {
+					player.getRangedDetails().getWeapon().ifPresent(w -> w.setAmmunition(new CombatRangedDetails.CombatRangedAmmo(ammunition, ammu)));
+				}
 			}
 		}
 	}
