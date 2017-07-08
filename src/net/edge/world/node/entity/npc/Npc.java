@@ -183,7 +183,7 @@ public abstract class Npc extends EntityNode {
 	}
 	
 	@Override
-	public void sequence() {
+	public void update() {
 		//No sequencing.
 	}
 	

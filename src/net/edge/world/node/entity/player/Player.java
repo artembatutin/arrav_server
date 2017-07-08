@@ -757,7 +757,8 @@ public final class Player extends EntityNode {
 	}
 	
 	@Override
-	public void sequence() {
+	public void update() {
+		getMovementQueue().sequence();
 		NpcAggression.sequence(this);
 		restoreRunEnergy();
 	}

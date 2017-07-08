@@ -20,20 +20,22 @@ public final class TaskManager {
 	 * Runs an iteration of the {@link Task} processing logic. All {@link Exception}s thrown by {@code Task}s.
 	 */
 	public void sequence() {
-		Iterator<Task> $it = tasks.iterator();
-		while($it.hasNext()) {
-			Task it = $it.next();
-			
-			if(!it.isRunning()) {
-				$it.remove();
-				continue;
-			}
-			it.onSequence();
-			if(it.needsExecute() && it.canExecute()) {
-				try {
-					it.execute();
-				} catch(Exception e) {
-					it.onException(e);
+		if (!tasks.isEmpty()) {
+			Iterator<Task> $it = tasks.iterator();
+			while ($it.hasNext()) {
+				Task it = $it.next();
+
+				if (!it.isRunning()) {
+					$it.remove();
+					continue;
+				}
+				it.onSequence();
+				if (it.needsExecute() && it.canExecute()) {
+					try {
+						it.execute();
+					} catch (Exception e) {
+						it.onException(e);
+					}
 				}
 			}
 		}

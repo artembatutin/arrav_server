@@ -52,7 +52,7 @@ public abstract class Node {
 	/**
 	 * Fired on each game tick, perhaps has some few exceptions.
 	 */
-	public void sequence() {
+	public void update() {
 		
 	}
 	
