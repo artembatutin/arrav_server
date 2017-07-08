@@ -65,7 +65,7 @@ public class Donating {
 		try {
 			boolean received = false;
 			Statement st = con.createStatement();
-			String sql = ("SELECT * FROM purchase_history WHERE LOWER(username) = '"+player.getUsername().toLowerCase()+"' and claimed = 0 and payment_status = 'Completed'");
+			String sql = ("SELECT * FROM purchase_history WHERE LOWER(username) = '"+player.getCredentials().getUsername().toLowerCase()+"' and claimed = 0 and payment_status = 'Completed'");
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");

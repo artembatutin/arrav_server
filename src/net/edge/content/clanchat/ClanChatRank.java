@@ -68,7 +68,7 @@ public enum ClanChatRank {
 	 */
 	public int toIcon(Player parent, Player player) {
 		if(player.getClan().get().getRank() == MEMBER) {
-			if(parent.getFriends().contains(player.getUsernameHash())) {
+			if(parent.getFriends().contains(player.getCredentials().getUsernameHash())) {
 				return 1;
 			}
 		}

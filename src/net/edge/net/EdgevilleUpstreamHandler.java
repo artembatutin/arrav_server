@@ -32,13 +32,7 @@ public final class EdgevilleUpstreamHandler extends ChannelInboundHandlerAdapter
 	
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
-		boolean channelReadTimeout = e instanceof ReadTimeoutException;
-
-		if(!channelReadTimeout) {
-			Optional<String> msg = Optional.ofNullable(e.getMessage());
-
-			msg.filter(it -> !NetworkConstants.IGNORED_EXCEPTIONS.contains(it)).ifPresent(it -> LOGGER.log(Level.WARNING, "Exception in upstream.", e));
-		}
+		e.printStackTrace();
 	}
 	
 	@Override

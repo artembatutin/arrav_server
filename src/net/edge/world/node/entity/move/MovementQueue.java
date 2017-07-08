@@ -203,7 +203,7 @@ public final class MovementQueue {
 	public void smartWalk(Position position) {
 		if(!World.getRegions().exists(position))
 			return;
-		Path path = World.getAStarPathFinder().find(character, position);
+		Path path = character.getAStarPathFinder().find(position);
 		if(path != null && path.isPossible()) {
 			walk(path.getMoves());
 		} else {

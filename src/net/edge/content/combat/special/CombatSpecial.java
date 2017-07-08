@@ -105,7 +105,7 @@ public enum CombatSpecial {
 							counter -= removeFromSkill;
 							SkillData data = SkillData.forId(s);
 							String skill = data.toString();
-							player.message("You've drained " + victim.getUsername() + "'s " + skill + " level by " + removeFromSkill + ".");
+							player.message("You've drained " + victim.getCredentials().getUsername() + "'s " + skill + " level by " + removeFromSkill + ".");
 							victim.message("Your " + skill + " level has been drained.");
 						}
 					}

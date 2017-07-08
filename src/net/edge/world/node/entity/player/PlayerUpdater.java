@@ -114,8 +114,11 @@ public final class PlayerUpdater {
 	private static void processPlayers(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, UpdateBlockSet<Player> blockSet, int added) {
 		if(!region.getPlayers().isEmpty()) {
 			for(Player other : region.getPlayers()) {
-				if(added == 15 || player.getLocalPlayers().size() >= 255)
+				if(added == 15 || player.getLocalPlayers().size() >= 255) {
+					System.out.println("added enough players for this tick");
 					break;
+				}
+
 				if(other == null || other.same(player))
 					continue;
 				if(other.getState() != NodeState.ACTIVE)

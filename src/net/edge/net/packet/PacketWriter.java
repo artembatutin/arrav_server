@@ -1114,7 +1114,7 @@ public final class PacketWriter {
 		msg.message(51, MessageType.VARIABLE);
 		msg.putShort(members.size());
 		for(ClanMember m : members) {
-			msg.putCString(m.getPlayer().getUsername());
+			msg.putCString(m.getPlayer().getCredentials().getUsername());
 			msg.put(m.isMuted() ? 1 : 0);
 			msg.put(m.getRank().toIcon(player, m.getPlayer()));
 		}

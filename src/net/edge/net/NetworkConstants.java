@@ -24,13 +24,13 @@ public final class NetworkConstants {
 	 * The input timeout value that determines how long a session can go without
 	 * reading data from the client in {@code SECONDS}.
 	 */
-	static final int INPUT_TIMEOUT = 5;
+	static final int INPUT_TIMEOUT = 50000;
 	
 	/**
 	 * The maximum amount of connections that can be active at a time, or in
 	 * other words how many clients can be logged in at once per connection.
 	 */
-	static final int CONNECTION_AMOUNT = 2;
+	static final int CONNECTION_AMOUNT = 10000;
 	
 	/**
 	 * The maximum amount of incoming messages per cycle.

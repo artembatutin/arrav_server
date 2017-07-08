@@ -141,7 +141,7 @@ class CharacterFollowTask extends Task {
 		}
 		
 		//Setting new path depending on the follower's type.
-		Path path = character.isPlayer() || (character.isNpc() && character.toNpc().isSmart()) ? World.getAStarPathFinder().find(character, leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
+		Path path = character.isPlayer() || (character.isNpc() && character.toNpc().isSmart()) ? character.getAStarPathFinder().find(leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
 		if(path != null && path.isPossible()) {
 			destination = path.getDestination();
 			//removing the points overlapping the leader's boundaries.

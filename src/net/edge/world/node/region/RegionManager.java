@@ -1,14 +1,12 @@
 package net.edge.world.node.region;
 
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.*;
+import it.unimi.dsi.fastutil.objects.ObjectList;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+import it.unimi.dsi.fastutil.objects.ObjectSet;
 import net.edge.locale.Position;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectNode;
-
-import java.util.function.Consumer;
 
 /**
  * Manages all of the cached {@link Region}s and the {@link EntityNode}s contained within them.
@@ -16,7 +14,6 @@ import java.util.function.Consumer;
  * @author Graham
  */
 public final class RegionManager {
-	
 	/**
 	 * The map of cached {@link Region}s.
 	 */
@@ -40,7 +37,7 @@ public final class RegionManager {
 		if(regionId < 0 || regionId >= regions.length)
 			return null;
 		if(regions[regionId] == null)
-			regions[regionId] = new Region(regionId);
+			regions[regionId] = new Region(regionId, this);
 		return regions[regionId];
 	}
 	
@@ -98,25 +95,7 @@ public final class RegionManager {
 	 * @return The surrounding regions.
 	 */
 	public ObjectList<Region> getAllSurroundingRegions(int region) {
-		ObjectList<Region> regions = new ObjectArrayList<>();
-		regions.add(getRegion(region));
-		if(exists(region + 256))
-			regions.add(getRegion(region + 256));
-		if(exists(region - 256))
-			regions.add(getRegion(region - 256));
-		if(exists(region + 1))
-			regions.add(getRegion(region + 1));
-		if(exists(region - 1))
-			regions.add(getRegion(region - 1));
-		if(exists(region + 257))
-			regions.add(getRegion(region + 257));
-		if(exists(region - 255))
-			regions.add(getRegion(region - 255));
-		if(exists(region + 255))
-			regions.add(getRegion(region + 255));
-		if(exists(region - 257))
-			regions.add(getRegion(region - 257));
-		return regions;
+		return getRegion(region).getSurroundingRegions();
 	}
 	
 	public Region[] getRegions() {

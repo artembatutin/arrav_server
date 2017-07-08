@@ -9,6 +9,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import net.edge.net.NetworkConstants;
 import net.edge.net.packet.PacketHelper;
+import net.edge.util.rand.RandomUtils;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -58,7 +59,7 @@ public final class FakeClient {
 
                             rsa.writeInt(0); // uid
 
-                            PacketHelper.writeCString(rsa, "standhdhdh3");
+                            PacketHelper.writeCString(rsa, "Bot " + RandomUtils.inclusive(1000));
                             PacketHelper.writeCString(rsa, "123456");
 
                             byte[] rsaBytes = new byte[rsa.readableBytes()];
@@ -69,7 +70,7 @@ public final class FakeClient {
                             ByteBuf payload = ctx.alloc().buffer();
 
                             payload.writeByte(255); // magic value
-                            payload.writeShort(22); // revision
+                            payload.writeShort(24); // revision
                             payload.writeBoolean(false); // low mem
 
                             for (int i = 0; i < 9; i++) {
@@ -97,14 +98,16 @@ public final class FakeClient {
             }
         });
 
-        // Start the client.
-        Channel f = b.connect("127.0.0.1", 43594).sync().channel(); // (5)
+        for (int i = 0; i < 30; i++) {
+            // Start the client.
+            Channel f = b.connect("127.0.0.1", 43594).sync().channel(); // (5)
 
-        ByteBuf buffer = f.alloc().buffer();
+            ByteBuf buffer = f.alloc().buffer();
 
-        buffer.writeByte(14);
-        buffer.writeByte(0);
+            buffer.writeByte(14);
+            buffer.writeByte(0);
 
-        f.writeAndFlush(buffer, f.voidPromise());
+            f.writeAndFlush(buffer, f.voidPromise());
+        }
     }
 }

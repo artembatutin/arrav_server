@@ -54,8 +54,8 @@ public final class PrivateMessage {
 		Player p;
 		Iterator<Player> it = World.get().getPlayers().entityIterator();
 		while((p = it.next()) != null) {
-			if(p.getFriends().contains(player.getUsernameHash()))
-				p.getMessages().sendPrivateMessageFriend(player.getUsernameHash(), online);
+			if(p.getFriends().contains(player.getCredentials().getUsernameHash()))
+				p.getMessages().sendPrivateMessageFriend(player.getCredentials().getUsernameHash(), online);
 		}
 	}
 	
@@ -116,7 +116,7 @@ public final class PrivateMessage {
 	 */
 	public void sendPrivateMessage(long name, byte[] message, int size) {
 		int rights = player.getRights() == PLAYER && player.isIronMan() ? IRON_MAN.getProtocolValue() : player.getRights().getProtocolValue();
-		long hash = player.getUsernameHash();
+		long hash = player.getCredentials().getUsernameHash();
 		World.get().getPlayer(name).ifPresent(p -> p.getMessages().sendPrivateMessage(hash, rights, message, size));
 	}
 	

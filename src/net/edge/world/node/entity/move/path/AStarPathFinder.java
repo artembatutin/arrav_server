@@ -22,23 +22,31 @@ public final class AStarPathFinder extends PathFinder {
 	 * The Heuristic used by this {@code PathFinder}.
 	 */
 	private final Distance heuristic;
-	
+
+	private final EntityNode character;
+
+	private final Object2ObjectArrayMap<Position, Node> nodes = new Object2ObjectArrayMap<>();
+
+	private final Set<Node> open = new HashSet<>();
+
+	private final Queue<Node> sorted = new PriorityQueue<>();
+
+	private final Deque<Position> shortest = new ArrayDeque<>();
+
 	/**
 	 * Constructs a new {@link AStarPathFinder} with the specified traversal tool.mapviewer.
-	 * @param traversalMap The traversal tool.mapviewer.
 	 */
-	public AStarPathFinder(TraversalMap traversalMap, Distance heuristic) {
-		super(traversalMap);
+	public AStarPathFinder(EntityNode character, Distance heuristic) {
+		this.character = character;
 		this.heuristic = heuristic;
 	}
 	
 	/**
 	 * A default method to find a path for the specified {@link EntityNode}.
-	 * @param character   The character to find the path for.
 	 * @param destination The destination of the path.
 	 * @return A {@link Deque} of {@link Position steps} to the specified destination.
 	 */
-	public Path find(EntityNode character, Position destination) {
+	public Path find(Position destination) {
 		Position origin = character.getPosition();
 		if(origin.getZ() != destination.getZ())
 			return new Path(null);
@@ -56,13 +64,13 @@ public final class AStarPathFinder extends PathFinder {
 	public Path find(Position origin, Position target, int size) {
 		if(origin.getZ() != target.getZ())
 			return new Path(null);
-		Object2ObjectArrayMap<Position, Node> nodes = new Object2ObjectArrayMap<>();
+		nodes.clear();
 		Node start = new Node(origin), end = new Node(target);
 		nodes.put(origin, start);
 		nodes.put(target, end);
 		
-		Set<Node> open = new HashSet<>();
-		Queue<Node> sorted = new PriorityQueue<>();
+		open.clear();
+		sorted.clear();
 		open.add(start);
 		sorted.add(start);
 		Node active;
@@ -94,8 +102,8 @@ public final class AStarPathFinder extends PathFinder {
 				
 			}
 		} while(!open.isEmpty() && sorted.size() < distance * 20);
-		
-		Deque<Position> shortest = new ArrayDeque<>();
+
+		shortest.clear();
 		if(found) {
 			if(end.hasParent())
 				active = end;

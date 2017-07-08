@@ -8,15 +8,6 @@ import net.edge.world.node.region.TraversalMap;
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class SimplePathChecker extends PathFinder {
-	
-	/**
-	 * Constructs a new {@code SimplePathChecker} with the specified traversal tool.mapviewer.
-	 * @param traversalMap The specified traversal tool.mapviewer to use.
-	 */
-	public SimplePathChecker(TraversalMap traversalMap) {
-		super(traversalMap);
-	}
-	
 	@Override
 	public Path find(Position start, Position end, int size) {
 		return new Path(null);//Empty path.

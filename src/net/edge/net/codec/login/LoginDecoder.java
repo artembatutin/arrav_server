@@ -11,6 +11,7 @@ import net.edge.net.codec.IsaacCipher;
 import net.edge.net.packet.PacketHelper;
 import net.edge.net.session.LoginSession;
 import net.edge.net.session.Session;
+import net.edge.util.TextUtils;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -71,6 +72,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			int opcode = in.readUnsignedByte(); // TODO Ondemand?
 			
 			@SuppressWarnings("unused") int nameHash = in.readUnsignedByte();
+
+			System.out.println(opcode);
 			
 			checkState(opcode == 14, "id != 14");
 			
@@ -79,6 +82,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			buf.writeByte(0);
 			buf.writeLong(RANDOM.nextLong());
 			ctx.writeAndFlush(buf, ctx.voidPromise());
+
+			System.out.println("Handshake");
 		}
 	}
 	
@@ -92,9 +97,11 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	private void decodeLoginType(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 		if(in.readableBytes() >= 2) {
 			int loginType = in.readUnsignedByte();
+			System.out.println(loginType);
 			checkState(loginType == 16 || loginType == 18, "loginType != 16 or 18");
 			
 			rsaBlockSize = in.readUnsignedByte();
+			System.out.println(rsaBlockSize);
 			checkState((rsaBlockSize - 40) > 0, "(rsaBlockSize - 40) <= 0");
 		}
 	}
@@ -159,10 +166,9 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 				String username = PacketHelper.getCString(rsaBuffer).toLowerCase();
 				String password = PacketHelper.getCString(rsaBuffer).toLowerCase();
 
-				System.out.println(username);
-				System.out.println(password);
+				long usernameHash = TextUtils.nameToHash(username);
 
-				out.add(new LoginRequest(username, password, build, encryptor, decryptor, ctx.channel().pipeline()));
+				out.add(new LoginRequest(username, usernameHash, password, build, encryptor, decryptor, ctx.channel().pipeline()));
 			} finally {
 				if (rsaBuffer.isReadable()) {
 					rsaBuffer.release();

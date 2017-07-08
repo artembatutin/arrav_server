@@ -11,6 +11,7 @@ import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.PlayerCredentials;
 import net.edge.world.node.entity.player.assets.Rights;
 
 @CommandSignature(alias = {"stress"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::stress")
@@ -24,6 +25,7 @@ public final class StressCommand implements Command {
 			@Override
 			protected void execute() {
 				for(int i = 0; i < 40; i++) {
+
 					int x = 3072 + RandomUtils.inclusive(20);
 					int y = 3539 + RandomUtils.inclusive(20);
 					id++;Player p1 = createBot(id, new Position(x, y));
@@ -97,9 +99,7 @@ public final class StressCommand implements Command {
 	
 	public Player createBot(int id, Position pos) {
 		String name = "bot" + id;
-		Player bot = new Player(TextUtils.nameToHash(name), false);
-		bot.setUsername(name);
-		bot.setPassword("123");
+		Player bot = new Player(new PlayerCredentials(name, "123"), false);
 		bot.setRights(Rights.PLAYER);
 		Skills.create(bot);
 		for(Skill s : bot.getSkills()) {

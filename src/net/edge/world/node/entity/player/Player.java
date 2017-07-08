@@ -100,6 +100,8 @@ public final class Player extends EntityNode {
 	 * The logger that will print important information.
 	 */
 	private static Logger logger = LoggerUtils.getLogger(Player.class);
+
+	private final PlayerCredentials credentials;
 	
 	/**
 	 * Determines if this player is playing in iron man mode.
@@ -299,21 +301,6 @@ public final class Player extends EntityNode {
 	 * The amount of authority this player has over others.
 	 */
 	private Rights rights = Rights.PLAYER;
-	
-	/**
-	 * The current username of this player.
-	 */
-	private String username;
-	
-	/**
-	 * The username hash for this player.
-	 */
-	private final long usernameHash;
-	
-	/**
-	 * The current password of this player.
-	 */
-	private String password;
 	
 	/**
 	 * The total amount of npcs this player has killed.
@@ -601,15 +588,18 @@ public final class Player extends EntityNode {
 	
 	/**
 	 * Creates a new {@link Player}.
-	 * @param usernameHash the username hash of this player.
 	 */
-	public Player(Long usernameHash, boolean human) {
+	public Player(PlayerCredentials credentials, boolean human) {
 		super(GameConstants.STARTING_POSITION, NodeType.PLAYER);
-		this.usernameHash = usernameHash;
+		this.credentials = credentials;
 		this.messages = new PacketWriter(this);
 		this.human = human;
 	}
-	
+
+	public PlayerCredentials getCredentials() {
+		return credentials;
+	}
+
 	public void sendDefaultSidebars() {
 		TabInterface.CLAN_CHAT.sendInterface(this, 50128);
 		TabInterface.SKILL.sendInterface(this, 3917);
@@ -697,7 +687,7 @@ public final class Player extends EntityNode {
 			World.getClanManager().join(this, "avro");
 		}
 		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
-			new IntroductionCutscene(this).prerequisites();
+//			new IntroductionCutscene(this).prerequisites();
 		}
 		if(World.getFirepitEvent().getFirepit().isActive()) {
 			this.message("@red@[ANNOUNCEMENT]: Enjoy the double experience event for another " + Utility.convertTime(World.getFirepitEvent().getFirepit().getTime()) + ".");
@@ -720,19 +710,19 @@ public final class Player extends EntityNode {
 	public boolean equals(Object obj) {
 		if(obj instanceof Player) {
 			Player other = (Player) obj;
-			return getSlot() == other.getSlot() && getUsernameHash() == other.getUsernameHash();
+			return getSlot() == other.getSlot() && credentials.getUsernameHash() == other.credentials.getUsernameHash();
 		}
 		return false;
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(getSlot(), getUsernameHash());
+		return Objects.hash(getSlot(), credentials.getUsernameHash());
 	}
 	
 	@Override
 	public String toString() {
-		return username == null ? session.toString() : "PLAYER[username= " + username + ", host= " + session.getHost() + ", rights= " + rights + "]";
+		return getCredentials().getUsername() == null ? session.toString() : "PLAYER[username= " + getCredentials().getUsername() + ", host= " + session.getHost() + ", rights= " + rights + "]";
 	}
 	
 	@Override
@@ -1050,7 +1040,7 @@ public final class Player extends EntityNode {
 	 * @return the formatted username.
 	 */
 	public String getFormatUsername() {
-		return TextUtils.capitalize(username);
+		return TextUtils.capitalize(getCredentials().getUsername());
 	}
 	
 	/**
@@ -1544,38 +1534,6 @@ public final class Player extends EntityNode {
 	}
 	
 	/**
-	 * Gets the current username of this player.
-	 * @return the username of this player.
-	 */
-	public String getUsername() {
-		return username;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#username}.
-	 * @param username the new value to set.
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-	/**
-	 * Gets the current password of this player.
-	 * @return the password of this player.
-	 */
-	public String getPassword() {
-		return password;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#password}.
-	 * @param password the new value to set.
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	/**
 	 * Gets the combat spell currently selected.
 	 * @return the selected combat spell.
 	 */
@@ -2035,14 +1993,6 @@ public final class Player extends EntityNode {
 			cachedUpdateBlock.retain();
 		}
 		this.cachedUpdateBlock = cachedUpdateBlock;
-	}
-	
-	/**
-	 * Gets the username hash for this player.
-	 * @return the username hash.
-	 */
-	public long getUsernameHash() {
-		return usernameHash;
 	}
 	
 	/**

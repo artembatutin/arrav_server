@@ -61,7 +61,7 @@ public class NpcMovementTask extends Task {
 			
 			if(npc.getMovementQueue().isMovementDone()) {
 				if(!move.getBoundary().inside(npc.getPosition(), npc.size())) {
-					Path pathHome = World.getAStarPathFinder().find(npc, npc.getOriginalPosition());
+					Path pathHome = npc.getAStarPathFinder().find(npc.getOriginalPosition());
 					if(pathHome != null && pathHome.isPossible())
 						npc.getMovementQueue().walk(pathHome.getMoves());
 				} else {

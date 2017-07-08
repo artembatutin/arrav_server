@@ -96,7 +96,7 @@ public enum PlayerPanel {
 			} else {
 				player.getDialogueBuilder().append(new StatementDialogue("Are you requesting staff assistance?"), new OptionDialogue(t -> {
 					if(t == OptionDialogue.OptionType.FIRST_OPTION) {
-						staff.forEach(s -> s.message(player.getFormatUsername() + " is requesting assistance. Do ::assist " + player.getUsername() + " to help him."));
+						staff.forEach(s -> s.message(player.getFormatUsername() + " is requesting assistance. Do ::assist " + player.getCredentials().getUsername() + " to help him."));
 						player.message("A staff member should contact you shortly.");
 					}
 					player.getMessages().sendCloseWindows();
@@ -117,7 +117,7 @@ public enum PlayerPanel {
 				if(t == OptionDialogue.OptionType.FIRST_OPTION) {
 					player.getMessages().sendCloseWindows();
 					player.getMessages().sendEnterName("Your new password to set:", s -> () -> {
-						player.setPassword(s);
+						player.getCredentials().setPassword(s);
 						player.message("You have successfully changed your password. Log out to save it.");
 						PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.passwordCheck(s));
 					});
@@ -224,8 +224,8 @@ public enum PlayerPanel {
 		PlayerPanel.PLAYER_STATISTICS.refresh(player, "@or1@Player Information:");
 		
 		PlayerPanel.EMPTY.refresh(player, "");
-		PlayerPanel.USERNAME.refresh(player, "@or2@ - Username: @yel@" + TextUtils.capitalize(player.getUsername()));
-		PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.capitalize(TextUtils.passwordCheck(player.getPassword())));
+		PlayerPanel.USERNAME.refresh(player, "@or2@ - Username: @yel@" + TextUtils.capitalize(player.getCredentials().getUsername()));
+		PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.capitalize(TextUtils.passwordCheck(player.getCredentials().getPassword())));
 		PlayerPanel.IRON.refresh(player, "@or3@ - Iron man: @yel@" + (player.isIronMan() ? "@gre@yes" : "@red@no"));
 		PlayerPanel.RANK.refresh(player, "@or2@ - Rank: @yel@" + TextUtils.capitalize(player.getRights().toString()));
 		PlayerPanel.SLAYER_POINTS.refresh(player, "@or2@ - Slayer points: @yel@" + player.getSlayerPoints());
@@ -280,7 +280,11 @@ public enum PlayerPanel {
 	 * @param update the updated string for that tab.
 	 */
 	public void refreshAll(String update) {
-		World.get().getPlayers().forEach(player -> refresh(player, update));
+		for (Player player : World.get().getPlayers()) {
+			if (player != null) {
+				refresh(player, update);
+			}
+		}
 	}
 	
 	/**

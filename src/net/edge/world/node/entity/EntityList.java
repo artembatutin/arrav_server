@@ -234,6 +234,8 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 			limit++;
 		}
 
+		System.out.println("registered");
+
 		entities[index] = entity;
 		entity.setSlot(index + 1);
 		entity.setState(NodeState.ACTIVE);

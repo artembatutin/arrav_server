@@ -18,15 +18,6 @@ import static net.edge.world.Direction.*;
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class SimplePathFinder extends PathFinder {
-	
-	/**
-	 * Constructs the {@code SimplePathFinder} with the specified traversal tool.mapviewer.
-	 * @param traversalMap The traversal tool.mapviewer to use.
-	 */
-	public SimplePathFinder(TraversalMap traversalMap) {
-		super(traversalMap);
-	}
-	
 	/**
 	 * A default method to find a path for the specified {@link EntityNode}.
 	 * @param character   The character to find the path for.

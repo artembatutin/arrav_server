@@ -3,6 +3,7 @@ package net.edge.world.node.entity.move.path;
 import com.google.common.base.Preconditions;
 import net.edge.locale.Position;
 import net.edge.world.Direction;
+import net.edge.world.World;
 import net.edge.world.node.region.TraversalMap;
 
 /**
@@ -10,20 +11,6 @@ import net.edge.world.node.region.TraversalMap;
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public abstract class PathFinder {
-	
-	/**
-	 * The traversal tool.mapviewer used for making sure any direction is traversable.
-	 */
-	private final TraversalMap traversalMap;
-	
-	/**
-	 * Constructs a new {@code PathFinder} with the specified traversal tool.mapviewer.
-	 * @param traversalMap The traversal tool.mapviewer to use.
-	 */
-	protected PathFinder(TraversalMap traversalMap) {
-		this.traversalMap = traversalMap;
-	}
-	
 	/**
 	 * Finds a valid path from the origin {@link Position} to the target one.
 	 * @param origin The origin Position.
@@ -43,6 +30,8 @@ public abstract class PathFinder {
 	 */
 	protected boolean traversable(Position current, int size, Direction... directions) {
 		Preconditions.checkArgument(directions != null && directions.length > 0, "Directions array cannot be null.");
+
+		TraversalMap traversalMap = World.getTraversalMap();
 		for(Direction direction : directions) {
 			if(!traversalMap.isTraversable(current, direction, size)) {
 				return false;// not traversable
@@ -59,6 +48,8 @@ public abstract class PathFinder {
 	 */
 	boolean traversable(Position current, Position going, int size) {
 		Direction first = Direction.fromDeltas(Position.delta(current, going));
+		TraversalMap traversalMap = World.getTraversalMap();
+
 		return traversalMap.isTraversable(current, first, size);
 	}
 	
@@ -72,6 +63,8 @@ public abstract class PathFinder {
 	boolean projectileCheck(Position current, Position going) {
 		Direction first = Direction.fromDeltas(Position.delta(going, current));
 		Direction second = Direction.fromDeltas(Position.delta(current, going));
+		TraversalMap traversalMap = World.getTraversalMap();
+
 		return (traversalMap.isTraversable(current, second, true) && traversalMap.isTraversable(going, first, true));
 	}
 	

@@ -45,13 +45,13 @@ public final class ClanManager {
 			player.message("You are currently in a clan.");
 			return;
 		}
-		if(GLOBAL_CLANS.containsKey(player.getUsername())) {
+		if(GLOBAL_CLANS.containsKey(player.getCredentials().getUsername())) {
 			player.message("You already own a clan.");
 			return;
 		}
-		ClanChat clan = new ClanChat(TextUtils.capitalize(name), player.getUsername());
+		ClanChat clan = new ClanChat(TextUtils.capitalize(name), player.getCredentials().getUsername());
 		clan.add(player, ClanChatRank.OWNER);
-		GLOBAL_CLANS.put(player.getUsername(), clan);
+		GLOBAL_CLANS.put(player.getCredentials().getUsername(), clan);
 	}
 	
 	/**
@@ -72,12 +72,12 @@ public final class ClanManager {
 			player.message("This clan doesn't exist.");
 			return;
 		}
-		if(clan.get().getBanned().contains(player.getUsername())) {
+		if(clan.get().getBanned().contains(player.getCredentials().getUsername())) {
 			player.message("You are banned from this clan.");
 			return;
 		}
 		ClanChat chat = clan.get();
-		if(!chat.add(player, chat.getRank(player.getUsername()))) {
+		if(!chat.add(player, chat.getRank(player.getCredentials().getUsername()))) {
 			player.message("This clan is currently full.");
 		}
 		
@@ -108,12 +108,12 @@ public final class ClanManager {
 			ClanChat clan = player.getClan().get().getClan();
 			ObjectList<ClanMember> list = clan.getMembers();
 			list.forEach(m -> clan.remove(m.getPlayer(), false));
-			GLOBAL_CLANS.remove(player.getUsername());
+			GLOBAL_CLANS.remove(player.getCredentials().getUsername());
 		} else {
 			clearOnLogin(player);
 		}
 	}
-	
+
 	/**
 	 * Attempts to get the clan from the specified {@code name}
 	 * @param name the name to return the clan chat from.

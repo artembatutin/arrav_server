@@ -22,6 +22,7 @@ import net.edge.world.object.ObjectType;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 /**
@@ -77,6 +78,8 @@ public final class Region extends Node {
 	 * A {@link ObjectList} of removed {@link ObjectNode}s in this {@code Region}.
 	 */
 	private final ObjectList<ObjectNode> removeObjects = new ObjectArrayList<>();
+
+	private ObjectList<Region> surroundingRegions = null;
 	
 	//The clipping data and few switches.
 	/**
@@ -94,14 +97,43 @@ public final class Region extends Node {
 	 * The tiles within the region(regional clipping).
 	 */
 	private RegionTile[][] tiles;
+
+	private RegionManager manager;
 	
 	/**
 	 * Creates a new {@link Region}.
 	 * @param regionId The id of this region.
 	 */
-	Region(int regionId) {
+	Region(int regionId, RegionManager manager) {
 		super(new Position((regionId >> 8) << 6, (regionId & 0xFF) << 6), NodeType.REGION);
 		this.regionId = regionId;
+		this.manager = manager;
+	}
+
+	public ObjectList<Region> getSurroundingRegions() {
+		if (surroundingRegions == null) {
+			ObjectList<Region> regions = new ObjectArrayList<>();
+			regions.add(manager.getRegion(regionId));
+			if (manager.exists(regionId + 256))
+				regions.add(manager.getRegion(regionId + 256));
+			if (manager.exists(regionId - 256))
+				regions.add(manager.getRegion(regionId - 256));
+			if (manager.exists(regionId + 1))
+				regions.add(manager.getRegion(regionId + 1));
+			if (manager.exists(regionId - 1))
+				regions.add(manager.getRegion(regionId - 1));
+			if (manager.exists(regionId + 257))
+				regions.add(manager.getRegion(regionId + 257));
+			if (manager.exists(regionId - 255))
+				regions.add(manager.getRegion(regionId - 255));
+			if (manager.exists(regionId + 255))
+				regions.add(manager.getRegion(regionId + 255));
+			if (manager.exists(regionId - 257))
+				regions.add(manager.getRegion(regionId - 257));
+			surroundingRegions = regions;
+		}
+
+		return surroundingRegions;
 	}
 	
 	@Override

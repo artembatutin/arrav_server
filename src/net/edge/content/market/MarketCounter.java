@@ -28,11 +28,11 @@ public class MarketCounter {
 	 * @return the player counter, creates if not cached.
 	 */
 	public static PlayerCounter getCounter(Player player) {
-		if(!COUNTERS.containsKey(player.getUsername())) {
+		if(!COUNTERS.containsKey(player.getCredentials().getUsername())) {
 			PlayerCounter counter = new PlayerCounter(player);
-			COUNTERS.put(player.getUsername(), counter);
+			COUNTERS.put(player.getCredentials().getUsername(), counter);
 		}
-		return COUNTERS.get(player.getUsername());
+		return COUNTERS.get(player.getCredentials().getUsername());
 	}
 	
 	/**

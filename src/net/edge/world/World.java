@@ -1,41 +1,42 @@
 package net.edge.world;
 
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscLinkedAtomicQueue;
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.edge.Server;
+import net.edge.content.clanchat.ClanManager;
 import net.edge.content.commands.impl.UpdateCommand;
+import net.edge.content.scoreboard.ScoreboardManager;
+import net.edge.content.shootingstar.ShootingStarManager;
+import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.game.GameConstants;
 import net.edge.game.GameExecutor;
 import net.edge.game.GamePulseHandler;
+import net.edge.locale.InstanceManager;
+import net.edge.locale.area.AreaManager;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
 import net.edge.task.Task;
 import net.edge.task.TaskManager;
 import net.edge.util.LoggerUtils;
 import net.edge.util.Stopwatch;
+import net.edge.util.TextUtils;
 import net.edge.util.ThreadUtil;
 import net.edge.util.log.LoggingManager;
-import net.edge.content.clanchat.ClanManager;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.item.container.session.ExchangeSessionManager;
-import net.edge.content.scoreboard.ScoreboardManager;
-import net.edge.content.shootingstar.ShootingStarManager;
-import net.edge.content.skill.firemaking.pits.FirepitManager;
-import net.edge.locale.InstanceManager;
-import net.edge.locale.area.AreaManager;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.EntityList;
 import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.move.path.AStarPathFinder;
 import net.edge.world.node.entity.move.path.SimplePathChecker;
 import net.edge.world.node.entity.move.path.impl.SimplePathFinder;
-import net.edge.world.node.entity.move.path.distance.Manhattan;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcMovementTask;
 import net.edge.world.node.entity.npc.NpcUpdater;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerUpdater;
+import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.container.session.ExchangeSessionManager;
 import net.edge.world.node.region.Region;
 import net.edge.world.node.region.RegionManager;
 import net.edge.world.node.region.TraversalMap;
@@ -85,12 +86,12 @@ public final class World {
 	/**
 	 * The queue of {@link Player}s waiting to be logged in.
 	 */
-	private final Queue<Player> logins = new ConcurrentLinkedQueue<>();
+	private final Queue<Player> logins = new MpscLinkedAtomicQueue<>();
 	
 	/**
 	 * The queue of {@link Player}s waiting to be logged out.
 	 */
-	private final Queue<Player> logouts = new ConcurrentLinkedQueue<>();
+	private final Queue<Player> logouts = new MpscLinkedAtomicQueue<>();
 	
 	/**
 	 * The collection of active NPCs.
@@ -101,6 +102,11 @@ public final class World {
 	 * The collection of active players.
 	 */
 	private final EntityList<Player> players = new EntityList<>(2048);
+
+	/**
+	 * A collection of {@link Player}s registered by their username hashes.
+	 */
+	private final Long2ObjectMap<Player> playerByNames = new Long2ObjectOpenHashMap<>();
 	
 	/**
 	 * Amount of staff players online.
@@ -120,8 +126,8 @@ public final class World {
 	static {
 		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j": "%GL5{)hAJBU(MB3h", amtCpu);
-			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j": "%GL5{)hAJBU(MB3h", amtCpu);
+//			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j": "%GL5{)hAJBU(MB3h", amtCpu);
+//			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j": "%GL5{)hAJBU(MB3h", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -155,100 +161,116 @@ public final class World {
 	public void pulse() {
 		long start = System.currentTimeMillis();
 
-		// Handle queued logins.
-		if (!logins.isEmpty()) {
-			for (int amount = 0; amount < GameConstants.LOGIN_THRESHOLD; amount++) {
-				Player player = logins.poll();
-				if (player == null)
-					break;
-				if (!players.add(player) && player.isHuman()) {
-					player.getSession().getChannel().close();
-				}
-			}
-		}
-		
-		// Handle task processing.
-		taskManager.sequence();
+		synchronized (this) {
+			try {
+				// Handle queued logouts.
+				if (!logouts.isEmpty()) {
+					int amount = 0;
 
-		// Pre synchronization
-		for (Player player : players) {
-			if (player != null) {
-				try {
-					player.update();
-				} catch(Exception e) {
-					queueLogout(player);
-					logger.log(Level.WARNING, "Couldn't pre sync player " + player.toString(), e);
-				}
-			}
-		}
+					for (int i = 0; i < GameConstants.LOGOUT_THRESHOLD; i++) {
+						if (logouts.isEmpty()) {
+							break;
+						}
 
-		for (Npc npc : npcs) {
-			if (npc != null && npc.isActive()) {
-				try {
-					npc.update();
-					npc.getMovementQueue().sequence();
-				} catch(Exception e) {
-					logger.log(Level.WARNING, "Couldn't pre sync npc " + npc.toString(), e);
-				}
-			}
-		}
-		
-		// Synchronization
-		for (Player player : players) {
-			if (player != null) {
-				try {
-					if(player.isHuman()) {
-						PlayerUpdater.write(player);
-						NpcUpdater.write(player);
+						Player player = logouts.poll();
+						if (logout(player)) {
+							amount++;
+						} else {
+							logouts.offer(player);
+						}
 					}
-				} catch(Exception e) {
-					queueLogout(player);
-					logger.log(Level.WARNING, "Couldn't sync player " + player.toString(), e);
 				}
-			}
-		}
 
-		// Post synchronization
-		for (Player player : players) {
-			if (player != null) {
-				if (player.isHuman())
-					player.getSession().flushQueue();
-				player.reset();
-				player.setCachedUpdateBlock(null);
-			}
-		}
+				// Handle queued logins.
+				if (!logins.isEmpty()) {
+					for (int amount = 0; amount < GameConstants.LOGIN_THRESHOLD; amount++) {
+						Player player = logins.poll();
+						if (player == null)
+							break;
 
-		for (Npc npc : npcs) {
-			if (npc != null) {
-				npc.reset();
-			}
-		}
-		
-		// Region tick
-		regionalTick++;
-		if(regionalTick == 10) {
-			Region[] regions = World.getRegions().getRegions();
-			for(int r = 0; r < regions.length; r++) {
-				if(regions[r] != null) {
-					regions[r].sequence();
+						boolean added = players.add(player);
+						if (added) {
+							playerByNames.put(player.getCredentials().getUsernameHash(), player);
+						}
+
+						if (!added && player.isHuman()) {
+							player.getSession().getChannel().close();
+						}
+					}
 				}
-			}
-			regionalTick = 0;
-		}
-		
-		// Handle queued logouts.
-		if (!logouts.isEmpty()) {
-			int amount = 0;
 
-			Iterator<Player> $it = logouts.iterator();
-			while ($it.hasNext()) {
-				Player player = $it.next();
-				if (player == null || amount >= GameConstants.LOGOUT_THRESHOLD)
-					break;
-				if (logout(player)) {
-					$it.remove();
-					amount++;
+				// Handle task processing.
+				taskManager.sequence();
+
+				// Pre synchronization
+				for (Player player : players) {
+					if (player != null) {
+						try {
+							player.update();
+						} catch (Exception e) {
+							queueLogout(player);
+							logger.log(Level.WARNING, "Couldn't pre sync player " + player.toString(), e);
+						}
+					}
 				}
+
+				for (Npc npc : npcs) {
+					if (npc != null && npc.isActive()) {
+						try {
+							npc.update();
+							npc.getMovementQueue().sequence();
+						} catch (Exception e) {
+							logger.log(Level.WARNING, "Couldn't pre sync npc " + npc.toString(), e);
+						}
+					}
+				}
+
+				// Synchronization
+				for (Player player : players) {
+					if (player != null) {
+						try {
+							if (player.isHuman()) {
+								PlayerUpdater.write(player);
+								NpcUpdater.write(player);
+							}
+						} catch (Exception e) {
+							queueLogout(player);
+							logger.log(Level.WARNING, "Couldn't sync player " + player.toString(), e);
+						}
+					}
+				}
+
+				// Post synchronization
+				for (Player player : players) {
+					if (player != null) {
+						if (player.isHuman()) {
+							player.getSession().flushQueue();
+						}
+						player.reset();
+						player.setCachedUpdateBlock(null);
+					}
+				}
+
+				for (Npc npc : npcs) {
+					if (npc != null) {
+						npc.reset();
+					}
+				}
+
+				// Region tick
+				regionalTick++;
+				if (regionalTick == 10) {
+					Region[] regions = World.getRegions().getRegions();
+					for (int r = 0; r < regions.length; r++) {
+						if (regions[r] != null) {
+							regions[r].update();
+						}
+					}
+
+					regionalTick = 0;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		
@@ -262,9 +284,7 @@ public final class World {
 	 * @param player the player to log in.
 	 */
 	public void queueLogin(Player player) {
-		if(!logins.contains(player)) {
-			logins.add(player);
-		}
+		logins.offer(player);
 	}
 	
 	/**
@@ -295,13 +315,7 @@ public final class World {
 	 * not found.
 	 */
 	public Optional<Player> getPlayer(long username) {
-		Player p;
-		Iterator<Player> it = players.entityIterator();
-		while((p = it.next()) != null) {
-			if(p.getUsernameHash() == username)
-				return Optional.of(p);
-		}
-		return Optional.empty();
+		return Optional.ofNullable(playerByNames.get(username));
 	}
 	
 	/**
@@ -312,13 +326,7 @@ public final class World {
 	 * not found.
 	 */
 	public Optional<Player> getPlayer(String username) {
-		Player p;
-		Iterator<Player> it = players.entityIterator();
-		while((p = it.next()) != null) {
-			if(Objects.equals(p.getUsername(), username))
-				return Optional.of(p);
-		}
-		return Optional.empty();
+		return getPlayer(TextUtils.nameToHash(username));
 	}
 	
 	/**
@@ -412,10 +420,13 @@ public final class World {
 				npcs.remove(mob);
 			}
 			player.getMobs().clear();
-			if(response)
+			if(response) {
+				playerByNames.remove(player.getCredentials().getUsernameHash());
 				logger.info(player.toString() + " has logged out.");
-			else
+			} else {
 				logger.info(player.toString() + " couldn't be logged out.");
+			}
+
 			return response;
 			
 		} catch(Exception e) {
@@ -521,19 +532,14 @@ public final class World {
 	private static final AreaManager AREA_MANAGER = new AreaManager();
 	
 	/**
-	 * The world's A* path finder use for player's movements.
-	 */
-	private static final AStarPathFinder A_STAR_PATH_FINDER = new AStarPathFinder(TRAVERSAL_MAP, new Manhattan());
-	
-	/**
 	 * This world's straight line pathfinder used for NPCs movements.
 	 */
-	private static final SimplePathFinder SIMPLE_PATH_FINDER = new SimplePathFinder(TRAVERSAL_MAP);
+	private static final SimplePathFinder SIMPLE_PATH_FINDER = new SimplePathFinder();
 	
 	/**
 	 * This world's straight line path checker for combat.
 	 */
-	private static final SimplePathChecker SIMPLE_PATH_CHECKER = new SimplePathChecker(TRAVERSAL_MAP);
+	private static final SimplePathChecker SIMPLE_PATH_CHECKER = new SimplePathChecker();
 	
 	/**
 	 * This world's {@link ExchangeSessionManager} used to handle container sessions.
@@ -651,13 +657,6 @@ public final class World {
 	 */
 	public static AreaManager getAreaManager() {
 		return AREA_MANAGER;
-	}
-	
-	/**
-	 * Returns this world's A* pathfinder.
-	 */
-	public static AStarPathFinder getAStarPathFinder() {
-		return A_STAR_PATH_FINDER;
 	}
 	
 	/**

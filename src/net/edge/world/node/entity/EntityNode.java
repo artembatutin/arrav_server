@@ -20,6 +20,8 @@ import net.edge.world.node.entity.attribute.AttributeMap;
 import net.edge.world.node.entity.move.ForcedMovement;
 import net.edge.world.node.entity.move.MovementQueue;
 import net.edge.world.node.entity.move.MovementQueueListener;
+import net.edge.world.node.entity.move.path.AStarPathFinder;
+import net.edge.world.node.entity.move.path.distance.Manhattan;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
@@ -191,7 +193,9 @@ public abstract class EntityNode extends Node {
 	 * The flag determining if this entity is dead.
 	 */
 	private boolean dead;
-	
+
+	private final AStarPathFinder aStarPathFinder;
+
 	/**
 	 * Creates a new {@link EntityNode}.
 	 * @param position the position of this entity in the world.
@@ -201,6 +205,7 @@ public abstract class EntityNode extends Node {
 		super(position, type);
 		setPosition(position);
 		this.autoRetaliate = (type == NodeType.NPC);
+		this.aStarPathFinder = new AStarPathFinder(this, new Manhattan());
 	}
 	
 	/**
@@ -842,7 +847,10 @@ public abstract class EntityNode extends Node {
 	public final boolean isDead() {
 		return dead;
 	}
-	
+
+	public final AStarPathFinder getAStarPathFinder() {
+		return aStarPathFinder;
+	}
 	/**
 	 * Sets the value for {@link EntityNode#dead}.
 	 * @param dead the new value to set.

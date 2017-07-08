@@ -21,6 +21,7 @@ import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.locale.Position;
 import net.edge.net.codec.login.LoginResponse;
+import net.edge.util.TextUtils;
 import net.edge.util.json.GsonUtils;
 import net.edge.world.World;
 import net.edge.world.node.entity.attribute.AttributeKey;
@@ -72,7 +73,7 @@ public final class PlayerSerialization {
 	 */
 	public PlayerSerialization(Player player) {
 		this.player = player;
-		this.cf = Paths.get("./data/players/" + player.getUsername() + ".json").toFile();
+		this.cf = Paths.get("./data/players/" + player.getCredentials().getUsername() + ".json").toFile();
 	}
 	
 	/**
@@ -131,7 +132,7 @@ public final class PlayerSerialization {
 	public SerializeResponse loginCheck(String password) {
 		SerializeResponse response = new SerializeResponse(LoginResponse.NORMAL);
 		try {
-			File file = Paths.get("./data/players/" + player.getUsername() + ".json").toFile();
+			File file = Paths.get("./data/players/" + player.getCredentials().getUsername() + ".json").toFile();
 			if(!file.exists()) {
 				return response;
 			}
@@ -222,22 +223,22 @@ public final class PlayerSerialization {
 	private static final Token[] TOKENS = {new Token("username") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getUsername();
+			return p.getCredentials().getUsername();
 		}
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setUsername(n.getAsString());
+			p.getCredentials().setUsername(n.getAsString());
 		}
 	}, new Token("password") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getPassword();
+			return p.getCredentials().getPassword();
 		}
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setPassword(n.getAsString());
+			p.getCredentials().setPassword(n.getAsString());
 		}
 	}, new Token("banned") {
 		@Override

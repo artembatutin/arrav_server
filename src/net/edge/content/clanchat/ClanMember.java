@@ -61,7 +61,7 @@ public final class ClanMember {
 			return;
 		}
 		member.setMute(true);
-		clan.getMuted().add(member.getPlayer().getUsername());
+		clan.getMuted().add(member.getPlayer().getCredentials().getUsername());
 		member.sendMessage("You are now muted in the clan chat.");
 		World.getClanManager().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, clan);
 	}
@@ -77,7 +77,7 @@ public final class ClanMember {
 		}
 		ClanMember member = clan.getMembers().get(index);
 		member.setMute(false);
-		member.getClan().getMuted().add(member.getPlayer().getUsername());
+		member.getClan().getMuted().add(member.getPlayer().getCredentials().getUsername());
 		member.sendMessage("You are now unmuted from the clan chat.");
 		World.getClanManager().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, clan);
 	}
@@ -104,7 +104,7 @@ public final class ClanMember {
 			sendMessage("You cannot ban this player from the clan.");
 			return;
 		}
-		clan.getBanned().add(member.getPlayer().getUsername());
+		clan.getBanned().add(member.getPlayer().getCredentials().getUsername());
 		clan.remove(member.getPlayer(), false);
 		World.getClanManager().update(ClanChatUpdate.BAN_MODIFICATION, clan);
 		member.sendMessage("You got banned from the clan.");
@@ -217,15 +217,15 @@ public final class ClanMember {
 	 */
 	public void setRank(ClanChatRank rank) {
 		this.rank = rank;
-		if(!clan.getRanked().containsKey(player.getUsername())) {
+		if(!clan.getRanked().containsKey(player.getCredentials().getUsername())) {
 			if(rank == ClanChatRank.MEMBER) {
-				clan.getRanked().remove(player.getUsername());
+				clan.getRanked().remove(player.getCredentials().getUsername());
 			} else {
-				clan.getRanked().replace(player.getUsername(), rank);
+				clan.getRanked().replace(player.getCredentials().getUsername(), rank);
 			}
-			clan.getRanked().put(player.getUsername(), rank);
+			clan.getRanked().put(player.getCredentials().getUsername(), rank);
 		} else if(rank != ClanChatRank.MEMBER) {
-			clan.getRanked().put(player.getUsername(), rank);
+			clan.getRanked().put(player.getCredentials().getUsername(), rank);
 		}
 	}
 	

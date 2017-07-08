@@ -17,7 +17,7 @@ public final class IPMutingCommand implements Command {
 		if(ipMute != null && (ipMute.getRights().less(Rights.ADMINISTRATOR) || player.getRights().equals(Rights.ADMINISTRATOR)) && ipMute != player) {
 			player.message("Successfully IP muted " + ipMute.getFormatUsername() + ".");
 			ipMute.message("@red@You have been IP-muted by " + player.getFormatUsername() + ".");
-			PunishmentHandler.addIPMute(ipMute.getSession().getHost(), ipMute.getUsername());
+			PunishmentHandler.addIPMute(ipMute.getSession().getHost(), ipMute.getCredentials().getUsername());
 		}
 	}
 	

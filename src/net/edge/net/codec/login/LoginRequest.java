@@ -14,6 +14,11 @@ public final class LoginRequest {
 	 * The username of the player.
 	 */
 	private final String username;
+
+	/**
+	 * The username hash.
+	 */
+	private final long usernameHash;
 	
 	/**
 	 * The password of the player.
@@ -48,8 +53,9 @@ public final class LoginRequest {
 	 * @param encryptor the encryptor for encrypting messages.
 	 * @param decryptor the decryptor for decrypting messages.
 	 */
-	LoginRequest(String username, String password, int build, IsaacCipher encryptor, IsaacCipher decryptor, ChannelPipeline pipeline) {
+	LoginRequest(String username, long usernameHash, String password, int build, IsaacCipher encryptor, IsaacCipher decryptor, ChannelPipeline pipeline) {
 		this.username = username;
+		this.usernameHash = usernameHash;
 		this.password = password;
 		this.build = build;
 		this.encryptor = encryptor;
@@ -63,6 +69,13 @@ public final class LoginRequest {
 	 */
 	public String getUsername() {
 		return username;
+	}
+
+	/**
+	 * Returns the username hash.
+	 */
+	public long getUsernameHash() {
+		return usernameHash;
 	}
 	
 	/**
