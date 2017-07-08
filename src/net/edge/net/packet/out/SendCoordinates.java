@@ -15,9 +15,13 @@ public final class SendCoordinates implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
+	public void onSent(Player player) {
 		if(player.getLastRegion() == null)
 			player.setLastRegion(player.getPosition().copy());
+	}
+	
+	@Override
+	public void write(Player player) {
 		GameBuffer msg = player.getSession().getStream();
 		msg.message(85);
 		msg.put(position.getY() - (player.getLastRegion().getRegionY() * 8), ByteTransform.C);

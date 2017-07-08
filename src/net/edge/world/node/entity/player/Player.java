@@ -644,6 +644,9 @@ public final class Player extends EntityNode {
 	
 	@Override
 	public void register() {
+		setLastRegion(getPosition().copy());
+		setUpdates(true, false);
+		setUpdateRegion(true);
 		write(new SendSlot());
 		write(new SendMapRegion());
 		write(new SendCameraReset());
@@ -1206,6 +1209,7 @@ public final class Player extends EntityNode {
 	 * @param packet packet to be queued.
 	 */
 	public void out(OutgoingPacket packet) {
+		packet.onSent(this);
 		getSession().enqueueForSync(packet);
 	}
 	

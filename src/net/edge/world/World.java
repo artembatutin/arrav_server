@@ -226,11 +226,13 @@ public final class World {
 				}
 			}
 			
+			System.out.println("SYNC");
 			// Synchronization
 			CountDownLatch latch = new CountDownLatch(players.size());
 			for (Player player : players) {
 				synchronizer.submit(() -> {
 					try {
+						System.out.println("sync: " + player);
 						PlayerUpdater.write(player);
 						NpcUpdater.write(player);
 						player.getSession().pollOutgoingMessages();
@@ -244,8 +246,10 @@ public final class World {
 			}
 			latch.await();
 			
+			System.out.println("POST");
 			// Post synchronization
 			for (Player player : players) {
+				System.out.println("post: " + player);
 				if(player.isHuman()) {
 					player.getSession().flushQueue();
 				}

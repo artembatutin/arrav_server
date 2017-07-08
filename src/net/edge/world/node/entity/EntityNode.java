@@ -125,6 +125,11 @@ public abstract class EntityNode extends Node {
 	private boolean needsRegionUpdate;
 	
 	/**
+	 * The flag if region update should be reset
+	 */
+	private boolean regionReset;
+	
+	/**
 	 * The combat spell currently being casted by this entity.
 	 */
 	private CombatSpell currentlyCasting;
@@ -371,8 +376,6 @@ public abstract class EntityNode extends Node {
 	public final void reset() {
 		primaryDirection = Direction.NONE;
 		secondaryDirection = Direction.NONE;
-		needsRegionUpdate = false;
-		needsPlacement = false;
 		animation = null;
 		flags.clear();
 	}
@@ -1067,5 +1070,21 @@ public abstract class EntityNode extends Node {
 	 */
 	public void setViewingDistance(int viewingDistance) {
 		this.viewingDistance = viewingDistance;
+	}
+	
+	/**
+	 * If the region should be reset on player updating.
+	 * @return region reset flag.
+	 */
+	public boolean isRegionReset() {
+		return regionReset;
+	}
+	
+	/**
+	 * Sets a new value for {@link #regionReset}.
+	 * @param regionReset value to set.
+	 */
+	public void setRegionReset(boolean regionReset) {
+		this.regionReset = regionReset;
 	}
 }

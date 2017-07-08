@@ -21,6 +21,7 @@ public final class UpdateRegionPacket implements IncomingPacket {
 			World.getRegions().updateRegionObjects(player);
 			player.sendInterfaces();
 			player.getTolerance().reset();
+			player.setUpdates(false, false);
 			player.setUpdateRegion(false);
 			World.getRegions().getAllSurroundingRegions(player.getPosition().getRegion()).forEach(r -> {
 				if(r.getState() != NodeState.ACTIVE) {

@@ -8,5 +8,9 @@ import net.edge.world.node.entity.player.Player;
  */
 public interface OutgoingPacket {
     
+    default void onSent(Player player) {
+    
+    };
+    
     void write(Player player);
 }
