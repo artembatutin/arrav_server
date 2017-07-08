@@ -95,7 +95,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			attacker.getMovementQueue().reset();
 			return false;
 		}
-		if(Location.inDuelArena(attacker)) {
+		if(Location.inDuelArena(attacker) && !attacker.getMinigame().isPresent()) {
 			World.getExchangeSessionManager().request(new DuelSession(attacker, victim, ExchangeSession.REQUEST));
 			attacker.getMovementQueue().reset();
 			return false;

@@ -16,30 +16,37 @@ import static net.edge.world.node.entity.npc.drop.ItemCache.*;
 public class Casket extends EventInitializer {
 	@Override
 	public void init() {
-		ItemCache[] tables = {
-				HERB_SEEDS,
-				LOW_RUNES,
-				LOW_HERBS,
-				LOW_GEMS,
-				CHARMS
-		};
 		ItemEvent e = new ItemEvent() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
 				if(container != Inventory.INVENTORY_DISPLAY_ID)
 					return true;
-				ItemCache table = RandomUtils.random(tables);
+				Rights right = player.getRights();
 				player.getInventory().remove(item, slot);
-				//three items.
-				NpcDrop[] drop = {
-						RandomUtils.random(NpcDropManager.COMMON.get(table))
-				};
-				int coints = (int) (200_000 * (player.getRights() == Rights.EXTREME_DONATOR ? 2 : player.getRights() == Rights.SUPER_DONATOR ? 1.5 : player.getRights() == Rights.DONATOR ? 1.3 : 1));
-				Item[] items = {
-						new Item(drop[2].getId(), RandomUtils.inclusive(drop[2].getMinimum(), drop[2].getMaximum())),
-						new Item(995, RandomUtils.inclusive(400, coints))
-				};
-				player.getInventory().addOrDrop(items);
+				switch (right) {
+					case PLAYER:
+					case IRON_MAN:
+					case DESIGNER:
+					case YOUTUBER:
+					case HELPER:
+					case MODERATOR:
+					case SENIOR_MODERATOR:
+					case ADMINISTRATOR:
+						player.getInventory().add(new Item(995, RandomUtils.inclusive(50_000, 100_000)));
+						break;
+					case DONATOR:
+						player.getInventory().add(new Item(995, RandomUtils.inclusive(100_000, 200_000)));
+						break;
+					case SUPER_DONATOR:
+						player.getInventory().add(new Item(995, RandomUtils.inclusive(300_000, 400_000)));
+						break;
+					case EXTREME_DONATOR:
+						player.getInventory().add(new Item(995, RandomUtils.inclusive(500_000, 1_000_000)));
+						break;
+					case GOLDEN_DONATOR:
+						player.getInventory().add(new Item(995, RandomUtils.inclusive(750_000, 1_000_000)));
+						break;
+				}
 				return true;
 			}
 		};
