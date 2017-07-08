@@ -86,9 +86,9 @@ public final class Stalls extends Thieving {
 	
 	@Override
 	public boolean canInit() {
-		if(object.isDisabled()) {
-			return false;
-		}
+//		if(object.isDisabled()) {
+//			return false;
+//		}
 		String name = object.getDefinition().getName();
 		if(!getPlayer().getSkills()[skill().getId()].reqLevel(requirement())) {
 			getPlayer().message("You need a thieving level of " + requirement() + " to steal from " + TextUtils.appendIndefiniteArticle(name) + ".");
@@ -100,7 +100,7 @@ public final class Stalls extends Thieving {
 			return false;
 		}
 		
-		if(!player.getSkills()[skill().getId()].getDelay().elapsed(1200)) {
+		if(!player.getSkills()[skill().getId()].getDelay().elapsed(1800)) {
 			return false;
 		}
 		player.getSkills()[skill().getId()].getDelay().reset();
@@ -126,8 +126,8 @@ public final class Stalls extends Thieving {
 	
 	@Override
 	public void onStop(boolean success) {
-		if(success)
-			World.get().submit(new StallTask(this, object));
+//		if(success)
+//			World.get().submit(new StallTask(this, object));
 	}
 	
 	@Override
