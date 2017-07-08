@@ -46,19 +46,17 @@ public final class CombatTask extends Task {
 				builder.reset();
 			return;
 		}
+		builder.getCharacter().faceEntity(builder.getVictim());
 		if(!sessionCanAttack()) {
 			return;
 		}
 		if(builder.getCharacter().isPlayer()) {
 			builder.determineStrategy();
-			
 			Player player = (Player) builder.getCharacter();
-			
 			if(player.isSpecialActivated() && player.getCombatSpecial() == CombatSpecial.GRANITE_MAUL)
 				builder.clearAttackTimer();
 		}
 		builder.decrementAttackTimer();
-		
 		if(builder.getAttackTimer() < 1) {
 			if(!Combat.checkAttackDistance(builder)) {
 				return;
@@ -118,7 +116,6 @@ public final class CombatTask extends Task {
 				World.get().submit(new CombatHitTask(builder, data));
 			}
 			builder.resetAttackTimer();
-			builder.getCharacter().faceEntity(builder.getVictim());
 		}
 	}
 	

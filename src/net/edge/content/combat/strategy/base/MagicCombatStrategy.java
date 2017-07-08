@@ -54,7 +54,7 @@ public final class MagicCombatStrategy implements CombatStrategy {
 		if(character.getCurrentlyCasting().maximumHit() == -1) {
 			return new CombatHit(character, victim, 0, CombatType.MAGIC, true, delay == 0 ? OptionalInt.empty() : OptionalInt.of(delay));
 		}
-		return new CombatHit(character, victim, 1, CombatType.MAGIC, true, delay == 0 ? OptionalInt.empty() : OptionalInt.of(delay));
+		return new CombatHit(character, victim, 1, CombatType.MAGIC, true, delay + 1);
 	}
 	
 	@Override

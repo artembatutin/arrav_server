@@ -29,7 +29,6 @@ public final class PlayerUpdater {
 		GameBuffer msg = player.getSession().getStream();
 		msg.message(81, MessageType.VARIABLE_SHORT);
 		GameBuffer blockMsg = new GameBuffer(alloc.buffer(64));
-		
 		try {
 			msg.startBitAccess();
 			handleMovement(player, msg);
@@ -39,6 +38,7 @@ public final class PlayerUpdater {
 			Iterator<Player> $it = player.getLocalPlayers().iterator();
 			while($it.hasNext()) {
 				Player other = $it.next();
+				System.out.println("other tele:"  + other.getTeleportStage());
 				if(other.isVisible() && other.getInstance() == player.getInstance() && other.getPosition().isViewableFrom(player.getPosition()) && other.getState() == NodeState.ACTIVE && !other.isNeedsPlacement()) {
 					handleMovement(other, msg);
 					blockSet.encodeUpdateBlocks(player, other, blockMsg, UpdateState.UPDATE_LOCAL);
@@ -155,11 +155,13 @@ public final class PlayerUpdater {
 	 */
 	private static void handleMovement(Player player, GameBuffer msg) {
 		boolean needsUpdate = !player.getFlags().isEmpty();
+		System.out.println("UPDATED: " + player.isNeedsPlacement() + " - " + player.isTeleporting());
 		if(player.isNeedsPlacement()) {
 			Position position = player.getPosition();
 			msg.putBit(true);
 			msg.putBits(2, 3);
 			msg.putBits(2, position.getZ());
+			System.out.println("TELEPORTTTTT: =  " + player.isTeleporting());
 			msg.putBit(player.isTeleporting());
 			msg.putBit(needsUpdate);
 			msg.putBits(7, position.getLocalY(player.getLastRegion()));

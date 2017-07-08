@@ -39,6 +39,11 @@ import java.util.function.Consumer;
 public abstract class EntityNode extends Node {
 	
 	/**
+	 * The current teleport stage that this player is in.
+	 */
+	private int teleportStage;
+	
+	/**
 	 * An {@link AttributeMap} instance assigned to this {@code EntityNode}.
 	 */
 	protected final AttributeMap attr = new AttributeMap();
@@ -78,6 +83,11 @@ public abstract class EntityNode extends Node {
 	 * The flag that determines if this entity is visible or not.
 	 */
 	private boolean visible = true;
+	
+	/**
+	 * The aggression tick timer to not check npc aggression each tick.
+	 */
+	private int aggressionTick;
 	
 	/**
 	 * The viewing distance of a {@link EntityNode}.
@@ -123,11 +133,6 @@ public abstract class EntityNode extends Node {
 	 * The flag that determines if this entity needs a region update.
 	 */
 	private boolean needsRegionUpdate;
-	
-	/**
-	 * The flag if region update should be reset
-	 */
-	private boolean regionReset;
 	
 	/**
 	 * The combat spell currently being casted by this entity.
@@ -374,9 +379,15 @@ public abstract class EntityNode extends Node {
 	 * Resets the prepares this entity for the next update sequence.
 	 */
 	public final void reset() {
+		if(isPlayer())
+		System.out.println("RESET: " + this);
 		primaryDirection = Direction.NONE;
 		secondaryDirection = Direction.NONE;
+		needsRegionUpdate = false;
+		needsPlacement = false;
 		animation = null;
+		if(teleportStage == -1)
+			teleportStage = 0;
 		flags.clear();
 	}
 	
@@ -791,6 +802,30 @@ public abstract class EntityNode extends Node {
 	}
 	
 	/**
+	 * Gets the current teleport stage that this player is in.
+	 * @return the teleport stage.
+	 */
+	public int getTeleportStage() {
+		return teleportStage;
+	}
+	
+	/**
+	 * Checks if the player is teleporting.
+	 * @return <true> if the player is, <false> otherwise.
+	 */
+	public boolean isTeleporting() {
+		return teleportStage > 0 || teleportStage == -1;
+	}
+	
+	/**
+	 * Sets the value for {@link Player#teleportStage}.
+	 * @param teleportStage the new value to set.
+	 */
+	public void setTeleportStage(int teleportStage) {
+		this.teleportStage = teleportStage;
+	}
+	
+	/**
 	 * Sets the value for {@link EntityNode#lastRegion}.
 	 * @param lastRegion the new value to set.
 	 */
@@ -1073,18 +1108,19 @@ public abstract class EntityNode extends Node {
 	}
 	
 	/**
-	 * If the region should be reset on player updating.
-	 * @return region reset flag.
+	 * Gets the aggression tick timer.
+	 * @return aggression tick timer.
 	 */
-	public boolean isRegionReset() {
-		return regionReset;
+	public int getAggressionTick() {
+		return aggressionTick;
 	}
 	
 	/**
-	 * Sets a new value for {@link #regionReset}.
-	 * @param regionReset value to set.
+	 * Sets a new aggression tick timer.
+	 * @param aggressionTick new value to set.
 	 */
-	public void setRegionReset(boolean regionReset) {
-		this.regionReset = regionReset;
+	public void setAggressionTick(int aggressionTick) {
+		this.aggressionTick = aggressionTick;
 	}
+	
 }

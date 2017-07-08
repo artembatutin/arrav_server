@@ -1,18 +1,16 @@
 package net.edge.net.packet.out;
 
+import net.edge.locale.Position;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.node.entity.player.Player;
 
 public final class SendMapRegion implements OutgoingPacket {
+	private final Position  position;
 	
-	@Override
-	public void onSent(Player player) {
-		System.out.println("pos change");
-		player.setLastRegion(player.getPosition().copy());
-		player.setUpdates(true, false);
-		player.setUpdateRegion(true);
+	public SendMapRegion(Position position) {
+		this.position = position;
 	}
 	
 	@Override
@@ -20,7 +18,7 @@ public final class SendMapRegion implements OutgoingPacket {
 		System.out.println("written");
 		GameBuffer msg = player.getSession().getStream();
 		msg.message(73);
-		msg.putShort(player.getPosition().getRegionX() + 6, ByteTransform.A);
-		msg.putShort(player.getPosition().getRegionY() + 6);
+		msg.putShort(position.getRegionX() + 6, ByteTransform.A);
+		msg.putShort(position.getRegionY() + 6);
 	}
 }

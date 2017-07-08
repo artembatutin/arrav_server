@@ -140,14 +140,6 @@ public final class MovementQueue {
 			character.setLastDirection(runPoint.getDirection());
 		}
 		
-		if(character.isPlayer()) {
-			int deltaX = character.getPosition().getX() - character.getLastRegion().getRegionX() * 8;
-			int deltaY = character.getPosition().getY() - character.getLastRegion().getRegionY() * 8;
-			
-			if(deltaX < 16 || deltaX >= 88 || deltaY < 16 || deltaY > 88 || character.isNeedsRegionUpdate()) {
-				character.toPlayer().out(new SendMapRegion());
-			}
-		}
 	}
 	
 	/**

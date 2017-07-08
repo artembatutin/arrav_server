@@ -453,11 +453,6 @@ public final class Player extends EntityNode {
 	private WeaponInterface weapon = WeaponInterface.UNARMED;
 	
 	/**
-	 * The current teleport stage that this player is in.
-	 */
-	private int teleportStage;
-	
-	/**
 	 * The pet that this player has spawned.
 	 */
 	private final PetManager petManager = new PetManager(this);
@@ -648,7 +643,7 @@ public final class Player extends EntityNode {
 		setUpdates(true, false);
 		setUpdateRegion(true);
 		write(new SendSlot());
-		write(new SendMapRegion());
+		write(new SendMapRegion(getLastRegion().copy()));
 		write(new SendCameraReset());
 		super.getFlags().flag(UpdateFlag.APPEARANCE);
 		Smelting.clearInterfaces(this);
@@ -762,6 +757,16 @@ public final class Player extends EntityNode {
 		getMovementQueue().sequence();
 		NpcAggression.sequence(this);
 		restoreRunEnergy();
+		
+		int deltaX = getPosition().getX() - getLastRegion().getRegionX() * 8;
+		int deltaY = getPosition().getY() - getLastRegion().getRegionY() * 8;
+		
+		if(deltaX < 16 || deltaX >= 88 || deltaY < 16 || deltaY > 88 || isNeedsRegionUpdate()) {
+			setLastRegion(getPosition().copy());
+			setUpdates(true, false);
+			setUpdateRegion(true);
+			write(new SendMapRegion(getLastRegion().copy()));
+		}
 	}
 	
 	@Override
@@ -1808,30 +1813,6 @@ public final class Player extends EntityNode {
 	 */
 	public void setWeapon(WeaponInterface weapon) {
 		this.weapon = weapon;
-	}
-	
-	/**
-	 * Gets the current teleport stage that this player is in.
-	 * @return the teleport stage.
-	 */
-	public int getTeleportStage() {
-		return teleportStage;
-	}
-	
-	/**
-	 * Checks if the player is teleporting.
-	 * @return <true> if the player is, <false> otherwise.
-	 */
-	public boolean isTeleporting() {
-		return teleportStage > 0;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#teleportStage}.
-	 * @param teleportStage the new value to set.
-	 */
-	public void setTeleportStage(int teleportStage) {
-		this.teleportStage = teleportStage;
 	}
 	
 	/**

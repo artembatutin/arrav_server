@@ -78,7 +78,9 @@ class CharacterFollowTask extends Task {
 		}
 		
 		
+		
 		//Entity facing.
+		if(character.getFaceIndex() == 65535)
 		character.faceEntity(leader);
 		
 		//Movement locks.

@@ -87,7 +87,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		if(ammo.getDefinition().getGraphic(player).getId() != 0)
 			player.graphic(ammo.getDefinition().getGraphic(player));
 		
-		CombatHit data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatHit(character, victim, 1, CombatType.RANGED, true, delay == 0 ? OptionalInt.empty() : OptionalInt.of(delay)));
+		CombatHit data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatHit(character, victim, 1, CombatType.RANGED, true, delay + 1));
 		new Task(delay, false) {
 			@Override
 			protected void execute() {
