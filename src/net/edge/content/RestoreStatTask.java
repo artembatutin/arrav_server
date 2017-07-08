@@ -32,8 +32,10 @@ public final class RestoreStatTask extends Task {
 	
 	@Override
 	public void execute() {
+		if(World.get().getPlayers().isEmpty())
+			return;
 		Player player;
-		Iterator<Player> it = World.get().getPlayers().entityIterator();
+		Iterator<Player> it = World.get().getPlayers().iterator();
 		while((player = it.next()) != null) {
 			if(player.getState() != NodeState.ACTIVE) {
 				continue;

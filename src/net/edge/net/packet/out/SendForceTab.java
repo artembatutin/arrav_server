@@ -5,10 +5,8 @@ import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.node.entity.player.Player;
 
-/**
- * Created by artembatutin on 7/7/17.
- */
 public final class SendForceTab implements OutgoingPacket {
+	
 	private final TabInterface tab;
 	
 	public SendForceTab(TabInterface tab) {

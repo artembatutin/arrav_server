@@ -130,7 +130,6 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 	private void payload(ByteBuf in, List<Object> out) {
 		if (in.isReadable(size)) {
 			ByteBuf newBuffer = in.readBytes(size);
-
 			queueMessage(newBuffer, out);
 		}
 	}
@@ -143,13 +142,12 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 		checkState(opcode >= 0, "opcode < 0");
 		checkState(size >= 0, "size < 0");
 		checkState(type != MessageType.RAW, "type == MessageType.RAW");
-		
 		try {
 			if(NetworkConstants.MESSAGES[opcode] == null) {
 				LOGGER.info("Unhandled packet " + opcode + " - " + size);
+				payload.release();
 				return;
 			}
-
 			session.handleUpstreamMessage(new IncomingMsg(opcode, type, payload));
 		} finally {
 			resetState();

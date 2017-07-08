@@ -15,6 +15,7 @@ import net.edge.world.node.item.ItemDefinition;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.util.Iterator;
 
 @CommandSignature(alias = {"save"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Use this command as ::save type")
 public final class SaveCommand implements Command {
@@ -23,8 +24,10 @@ public final class SaveCommand implements Command {
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		switch(cmd[1].toLowerCase()) {
 			case "players":
-				for(Player world : World.get().getPlayers()) {
-					new PlayerSerialization(world).serialize();
+				Player other;
+				Iterator<Player> it = World.get().getPlayers().iterator();
+				while((other = it.next()) != null) {
+					new PlayerSerialization(other).serialize();
 				}
 				World.getClanManager().save();
 				player.message("Character files have been saved for everyone online!");

@@ -48,7 +48,7 @@ public final class CharacterSelectionPacket implements IncomingPacket {
 		}
 		player.getAppearance().setValues(values);
 		player.getFlags().flag(UpdateFlag.APPEARANCE);
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		if(player.getAttr().get("introduction_stage").getInt() == 0) {
 			player.getAttr().get("introduction_stage").set(1);
 		}

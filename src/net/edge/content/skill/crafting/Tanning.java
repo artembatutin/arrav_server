@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.net.packet.out.SendEnterAmount;
+import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
@@ -67,7 +69,7 @@ public final class Tanning extends ProducingSkillAction {
 		}
 		
 		if(data.count == -1) {
-			player.getMessages().sendEnterAmount("How many would you like to tan?", s -> () -> Tanning.create(player, data, Integer.parseInt(s), false));
+			player.out(new SendEnterAmount("How many would you like to tan?", s -> () -> Tanning.create(player, data, Integer.parseInt(s), false)));
 			return true;
 		}
 		
@@ -118,17 +120,17 @@ public final class Tanning extends ProducingSkillAction {
 		VALUES.forEach((b, t) -> {
 			if(t.nameFrame != -1) {
 			    String name = b == 57225 ? "Soft leather" : b == 57226 ? "Hard leather" : t.required.getDefinition().getName();
-				player.getMessages().sendString("@or1@" + name, t.nameFrame);
+				player.text(t.nameFrame, "@or1@" + name);
 			}
 			if(t.priceFrame != -1) {
 				String color = player.getInventory().contains(t.required) && player.getInventory().contains(t.cost) ? "@gre@" : "@red@";
-				player.getMessages().sendString(color + t.cost.getAmount() + " Coins", t.priceFrame);
+				player.text(t.priceFrame, color + t.cost.getAmount() + " Coins");
 			}
 			if(t.modelFrame != -1) {
-				player.getMessages().sendItemModelOnInterface(t.modelFrame, 250, t.required.getId());
+				player.out(new SendItemModelInterface(t.modelFrame, 250, t.required.getId()));
 			}
 		});
-		player.getMessages().sendInterface(14670);
+		player.widget(14670);
 	}
 
 	@Override
@@ -172,7 +174,7 @@ public final class Tanning extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		return true;
 	}
 	

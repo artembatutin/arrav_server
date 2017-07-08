@@ -295,12 +295,12 @@ package net.edge.content.minigame.dueling;
 //			other.getDuelSession().stage = DuelStage.OFFER;
 //			execute(DuelStage.OFFER);
 //			other.getDuelSession().execute(DuelStage.OFFER);
-//			player.getMessages().sendString("", 6684);
-//			other.getMessages().sendString("", 6684);
-//			player.getMessages().sendString("", 6571);
-//			other.getMessages().sendString("", 6571);
-//			player.getMessages().sendString("Whip & dds only", 669);
-//			other.getMessages().sendString("Whip & dds only", 669);
+//			player.text("", 6684);
+//			other.text("", 6684);
+//			player.text("", 6571);
+//			other.text("", 6571);
+//			player.text("Whip & dds only", 669);
+//			other.text("Whip & dds only", 669);
 //			player.getMessages().sendIntState(286, rules.get());
 //			other.getMessages().sendIntState(286, rules.get());
 //			container.refresh(player, 6669);
@@ -337,8 +337,8 @@ package net.edge.content.minigame.dueling;
 //				}
 //				player.getDuelSession().stage = DuelStage.CONFIRMATION_SCREEN;
 //				rival.getDuelSession().stage = DuelStage.CONFIRMATION_SCREEN;
-//				player.getMessages().sendString("Waiting for other player...", 6571);
-//				rival.getMessages().sendString("Other player has accepted...", 6571);
+//				player.text("Waiting for other player...", 6571);
+//				rival.text("Other player has accepted...", 6571);
 //				if(player.getDuelSession().stage == DuelStage.CONFIRMATION_SCREEN && rival.getDuelSession().stage == DuelStage.CONFIRMATION_SCREEN) {
 //					player.getDuelSession().stage = DuelStage.COUNTDOWN;
 //					rival.getDuelSession().stage = DuelStage.COUNTDOWN;
@@ -372,8 +372,8 @@ package net.edge.content.minigame.dueling;
 //					break;
 //				}
 //				player.getDuelSession().stage = DuelStage.FIRST_SCREEN;
-//				player.getMessages().sendString("Waiting for other player...", 6684);
-//				rival.getMessages().sendString("Other player has accepted", 6684);
+//				player.text("Waiting for other player...", 6684);
+//				rival.text("Other player has accepted", 6684);
 //				if(player.getDuelSession().stage == DuelStage.FIRST_SCREEN && rival.getDuelSession().stage == DuelStage.FIRST_SCREEN) {
 //					rival.getDuelSession().execute(DuelStage.FIRST_SCREEN);
 //					player.getDuelSession().execute(DuelStage.FIRST_SCREEN);
@@ -407,8 +407,8 @@ package net.edge.content.minigame.dueling;
 //			rival.getDuelSession().rules.unset(rule.value);
 //			player.getDuelSession().stage = DuelStage.OFFER;
 //			rival.getDuelSession().stage = DuelStage.OFFER;
-//			player.getMessages().sendString("", 6571);
-//			rival.getMessages().sendString("", 6571);
+//			player.text("", 6571);
+//			rival.text("", 6571);
 //			player.getMessages().sendIntState(286, rules.get());
 //			rival.getMessages().sendIntState(286, rules.get());
 //			return true;
@@ -422,8 +422,8 @@ package net.edge.content.minigame.dueling;
 //		rival.getDuelSession().rules.set(rule.value);
 //		player.getDuelSession().stage = DuelStage.OFFER;
 //		rival.getDuelSession().stage = DuelStage.OFFER;
-//		player.getMessages().sendString("", 6571);
-//		rival.getMessages().sendString("", 6571);
+//		player.text("", 6571);
+//		rival.text("", 6571);
 //		player.getMessages().sendIntState(286, rules.get());
 //		rival.getMessages().sendIntState(286, rules.get());
 //		return true;
@@ -440,7 +440,7 @@ package net.edge.content.minigame.dueling;
 //		switch(stage) {
 //		case OFFER:
 //			int remaining = rival.getInventory().remaining();
-//			player.getMessages().sendString("Dueling with: " + name(rival) + " (level-" + rival.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots", 6671);
+//			player.text("Dueling with: " + name(rival) + " (level-" + rival.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots", 6671);
 //
 //			IntStream.range(0, 14).forEach(order -> {
 //				if(player.getEquipment().get(order) != null) {
@@ -453,15 +453,15 @@ package net.edge.content.minigame.dueling;
 //			break;
 //		case FIRST_SCREEN:
 //			List<DuelingRules> collection = DuelingRules.VALUES.asList();
-//			player.getMessages().sendString("", 8240);
-//			player.getMessages().sendString("", 8241);
+//			player.text("", 8240);
+//			player.text("", 8241);
 //
 //			int interfaceIndex = 8242;
 //
 //			for(int i = DuelingRules.NO_FORFEIT.ordinal(); i < DuelingRules.NO_SPECIAL_ATTACKS.ordinal(); i++) {
 //				if(rules.has(collection.get(i).value)) {
-//					player.getMessages().sendString(getRuleText(i, false), interfaceIndex);
-//					rival.getMessages().sendString(getRuleText(i, false), interfaceIndex);
+//					player.text(getRuleText(i, false), interfaceIndex);
+//					rival.text(getRuleText(i, false), interfaceIndex);
 //					interfaceIndex++;
 //				}
 //			}
@@ -469,27 +469,27 @@ package net.edge.content.minigame.dueling;
 //			boolean worn = false;
 //			for(int i = DuelingRules.HELM.ordinal(); i < DuelingRules.VALUES.size(); i++) {
 //				if(rules.has(collection.get(i).value)) {
-//					player.getMessages().sendString(getRuleText(i - DuelingRules.HELM.ordinal(), true), interfaceIndex);
-//					rival.getMessages().sendString(getRuleText(i - DuelingRules.HELM.ordinal(), true), interfaceIndex);
+//					player.text(getRuleText(i - DuelingRules.HELM.ordinal(), true), interfaceIndex);
+//					rival.text(getRuleText(i - DuelingRules.HELM.ordinal(), true), interfaceIndex);
 //					interfaceIndex++;
 //					worn = true;
 //				}
 //			}
 //
 //			if(worn) {
-//				player.getMessages().sendString("Some worn items will be taken off.", 8238);
-//				player.getMessages().sendString("Existing prayers will be stopped.", 8250);
-//				player.getMessages().sendString("", 8239);
+//				player.text("Some worn items will be taken off.", 8238);
+//				player.text("Existing prayers will be stopped.", 8250);
+//				player.text("", 8239);
 //			} else {
-//				player.getMessages().sendString("Existing prayers will be stopped.", 8250);
-//				player.getMessages().sendString("", 8238);
-//				player.getMessages().sendString("", 8239);
+//				player.text("Existing prayers will be stopped.", 8250);
+//				player.text("", 8238);
+//				player.text("", 8239);
 //			}
 //
 //			if(interfaceIndex < 8254) {
 //				for(int i = interfaceIndex; i < 8254; i++) {
 //					if(i != 8250) {
-//						player.getMessages().sendString("", i);
+//						player.text("", i);
 //					}
 //				}
 //			}
@@ -518,8 +518,8 @@ package net.edge.content.minigame.dueling;
 //				rivalBuilder.append("Absolutely nothing!");
 //			}
 //
-//			player.getMessages().sendString(rivalBuilder.toString(), 6516);
-//			player.getMessages().sendString(playerBuilder.toString(), 6517);
+//			player.text(rivalBuilder.toString(), 6516);
+//			player.text(playerBuilder.toString(), 6517);
 //
 //
 //			player.getMessages().sendItemsOnInterface(3322, player.getInventory().container());
@@ -530,7 +530,7 @@ package net.edge.content.minigame.dueling;
 //			break;
 //		case COUNTDOWN:
 //			player.getCombatBuilder().reset();
-//			player.getMessages().sendCloseWindows();
+//			player.closeInterface();
 //			player.getMessages().sendContextMenu(3, "Attack");
 //			LinkedTaskSequence seq = new LinkedTaskSequence();
 //			seq.connect(2, () -> player.forceChat("3"));
@@ -606,15 +606,15 @@ package net.edge.content.minigame.dueling;
 //			container.shift();
 //			String stake = name(player);
 //			int remaining = player.getInventory().remaining();
-//			rival.getMessages().sendString("Dueling with: " + stake + " (level-" + player.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots", 6671);
+//			rival.text("Dueling with: " + stake + " (level-" + player.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots", 6671);
 //			player.getMessages().sendItemsOnInterface(3322, player.getInventory().container());
 //			int length = container.size();
 //			player.getMessages().sendItemsOnInterface(6669, container.container(), length);
 //			rival.getMessages().sendItemsOnInterface(6670, container.container(), length);
 //			player.getDuelSession().stage = DuelStage.OFFER;
 //			rival.getDuelSession().stage = DuelStage.OFFER;
-//			player.getMessages().sendString("", 6684);
-//			rival.getMessages().sendString("", 6684);
+//			player.text("", 6684);
+//			rival.text("", 6684);
 //		}
 //	}
 //
@@ -643,15 +643,15 @@ package net.edge.content.minigame.dueling;
 //			player.getInventory().remove(item, slot);
 //			String stake = name(player);
 //			int remaining = player.getInventory().remaining();
-//			rival.getMessages().sendString("Dueling with: " + stake + " (level-" + player.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots", 6671);
+//			rival.text("Dueling with: " + stake + " (level-" + player.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots", 6671);
 //			player.getMessages().sendItemsOnInterface(3322, player.getInventory().container());
 //			int length = container.size();
 //			player.getMessages().sendItemsOnInterface(6669, container.container(), length);
 //			rival.getMessages().sendItemsOnInterface(6670, container.container(), length);
 //			player.getDuelSession().stage = DuelStage.OFFER;
 //			rival.getDuelSession().stage = DuelStage.OFFER;
-//			player.getMessages().sendString("", 6684);
-//			rival.getMessages().sendString("", 6684);
+//			player.text("", 6684);
+//			rival.text("", 6684);
 //		}
 //	}
 //
@@ -679,7 +679,7 @@ package net.edge.content.minigame.dueling;
 //			return;
 //		}
 //
-//		player.getMessages().sendCloseWindows();
+//		player.closeInterface();
 //		player.getAttr().get("dueling").set(false);
 //		container.clear();
 //		player.faceEntity(null);

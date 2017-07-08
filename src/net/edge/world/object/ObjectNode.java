@@ -1,5 +1,7 @@
 package net.edge.world.object;
 
+import net.edge.net.packet.out.SendObject;
+import net.edge.net.packet.out.SendObjectRemoval;
 import net.edge.task.Task;
 import net.edge.locale.Position;
 import net.edge.world.World;
@@ -56,9 +58,9 @@ public abstract class ObjectNode {
 		World.getRegions().getAllSurroundingRegions(getRegion().getRegionId()).forEach(r -> r.getPlayers().forEach(p -> {
 			if(getZ() == p.getPosition().getZ() && getInstance() == p.getInstance()) {
 				if(on)
-					p.getMessages().sendObject(this);
+					p.out(new SendObject(this));
 				else
-					p.getMessages().sendRemoveObject(this);
+					p.out(new SendObjectRemoval(this));
 			}
 		}));
 	}

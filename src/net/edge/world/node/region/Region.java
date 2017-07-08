@@ -4,6 +4,8 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+import net.edge.net.packet.out.SendItemNode;
+import net.edge.net.packet.out.SendItemNodeRemoval;
 import net.edge.util.LoggerUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.locale.Position;
@@ -199,14 +201,14 @@ public final class Region extends Node {
 				continue;
 			if(item.getInstance() != player.getInstance())
 				continue;
-			player.getMessages().sendRemoveGroundItem(item);
+			player.out(new SendItemNodeRemoval(item));
 			if(item.getPosition().withinDistance(player.getPosition(), 60)) {
 				if(item.getPlayer() == null && item.getItemState() == ItemState.SEEN_BY_EVERYONE) {
-					player.getMessages().sendGroundItem(item);
+					player.out(new SendItemNode(item));
 					continue;
 				}
 				if(item.getPlayer().same(player) && item.getItemState() == ItemState.SEEN_BY_OWNER) {
-					player.getMessages().sendGroundItem(item);
+					player.out(new SendItemNode(item));
 				}
 			}
 		}

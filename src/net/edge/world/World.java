@@ -17,6 +17,7 @@ import net.edge.locale.InstanceManager;
 import net.edge.locale.area.AreaManager;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
+import net.edge.net.packet.out.SendYell;
 import net.edge.task.Task;
 import net.edge.task.TaskManager;
 import net.edge.util.LoggerUtils;
@@ -44,12 +45,11 @@ import net.edge.world.node.region.TraversalMap;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static net.edge.world.node.NodeState.IDLE;
 
 /**
  * The static utility class that contains functions to manage and process game characters.
@@ -67,7 +67,7 @@ public final class World {
 	 * instantiation of this class file.
 	 */
 	private static final World singleton = new World();
-
+	
 	/**
 	 * The scheduled executor service.
 	 */
@@ -86,12 +86,12 @@ public final class World {
 	/**
 	 * The queue of {@link Player}s waiting to be logged in.
 	 */
-	private final Queue<Player> logins = new MpscLinkedAtomicQueue<>();
+	private final Queue<Player> logins = new ConcurrentLinkedQueue<>();
 	
 	/**
 	 * The queue of {@link Player}s waiting to be logged out.
 	 */
-	private final Queue<Player> logouts = new MpscLinkedAtomicQueue<>();
+	private final Queue<Player> logouts = new ConcurrentLinkedQueue<>();
 	
 	/**
 	 * The collection of active NPCs.
@@ -102,7 +102,7 @@ public final class World {
 	 * The collection of active players.
 	 */
 	private final EntityList<Player> players = new EntityList<>(2048);
-
+	
 	/**
 	 * A collection of {@link Player}s registered by their username hashes.
 	 */
@@ -126,8 +126,8 @@ public final class World {
 	static {
 		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j": "%GL5{)hAJBU(MB3h", amtCpu);
-			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j": "%GL5{)hAJBU(MB3h", amtCpu);
+			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
+			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -159,106 +159,103 @@ public final class World {
 	 * The method that executes the update sequence for all in game characters every cycle.
 	 */
 	public void pulse() {
-		long start = System.currentTimeMillis();
-
-		synchronized (this) {
-			try {
-				// Handle queued logouts.
-				if (!logouts.isEmpty()) {
-					int amount = 0;
-
-					for (int i = 0; i < GameConstants.LOGOUT_THRESHOLD; i++) {
-						if (logouts.isEmpty()) {
-							break;
-						}
-
-						Player player = logouts.poll();
-						if (logout(player)) {
-							amount++;
-						} else {
-							logouts.offer(player);
-						}
+		final long start = System.currentTimeMillis();
+		synchronized(this) {
+			
+			if(!logins.isEmpty()) {
+				for(int i = 0; i < GameConstants.LOGIN_THRESHOLD; i++) {
+					Player player = logins.poll();
+					if(player == null) {
+						break;
+					}
+					boolean added = World.get().getPlayers().add(player);
+					if(added) {
+						World.get().getPlayerByNames().put(player.getCredentials().getUsernameHash(), player);
+					} else if(player.isHuman()) {
+						player.getSession().getChannel().close();
 					}
 				}
-
-				// Handle task processing.
-				taskManager.sequence();
-
-				// Pre synchronization
-				for (Player player : players) {
-					if (player != null) {
-						try {
-							player.update();
-						} catch (Exception e) {
-							queueLogout(player);
-							logger.log(Level.WARNING, "Couldn't pre sync player " + player.toString(), e);
-						}
+			}
+			taskManager.sequence();
+			
+			//enhanced iterations
+			Npc npc;
+			Player player;
+			EntityList.EntityListIterator<Npc> in = npcs.iterator();
+			EntityList.EntityListIterator<Player> ip = players.iterator();
+			
+			// Pre synchronization
+			while((player = ip.next()) != null) {
+				try {
+					player.update();
+				} catch(Exception e) {
+					queueLogout(player);
+					logger.log(Level.WARNING, "Couldn't pre sync player " + player.toString(), e);
+				}
+			}
+			
+			while((npc = in.next()) != null) {
+				if(npc.isActive()) {
+					try {
+						npc.update();
+						npc.getMovementQueue().sequence();
+					} catch(Exception e) {
+						logger.log(Level.WARNING, "Couldn't pre sync npc " + npc.toString(), e);
 					}
 				}
-
-				for (Npc npc : npcs) {
-					if (npc != null && npc.isActive()) {
-						try {
-							npc.update();
-							npc.getMovementQueue().sequence();
-						} catch (Exception e) {
-							logger.log(Level.WARNING, "Couldn't pre sync npc " + npc.toString(), e);
-						}
+			}
+			
+			// Synchronization
+			while((player = ip.next()) != null) {
+				try {
+					PlayerUpdater.write(player);
+					NpcUpdater.write(player);
+					player.getSession().pollOutgoingMessages();
+				} catch(Exception e) {
+					queueLogout(player);
+					logger.log(Level.WARNING, "Couldn't sync player " + player.toString(), e);
+				}
+			}
+			
+			// Post synchronization
+			while((player = ip.next()) != null) {
+				if(player.isHuman()) {
+					player.getSession().flushQueue();
+				}
+				player.reset();
+				player.setCachedUpdateBlock(null);
+			}
+			
+			while((npc = in.next()) != null) {
+				npc.reset();
+			}
+			
+			// Region tick
+			regionalTick++;
+			if(regionalTick == 10) {
+				Region[] regions = World.getRegions().getRegions();
+				for(int r = 0; r < regions.length; r++) {
+					if(regions[r] != null) {
+						regions[r].update();
 					}
 				}
-
-				// Synchronization
-				for (Player player : players) {
-					if (player != null) {
-						try {
-							if (player.isHuman()) {
-								PlayerUpdater.write(player);
-								NpcUpdater.write(player);
-							}
-						} catch (Exception e) {
-							queueLogout(player);
-							logger.log(Level.WARNING, "Couldn't sync player " + player.toString(), e);
-						}
+				regionalTick = 0;
+			}
+			
+			if(!logouts.isEmpty()) {
+				for(int i = 0; i < GameConstants.LOGOUT_THRESHOLD; i++) {
+					Player quittingPlayer = logouts.poll();
+					if(quittingPlayer == null) {
+						break;
+					}
+					if(!logout(quittingPlayer)) {
+						logouts.offer(quittingPlayer);
 					}
 				}
-
-				// Post synchronization
-				for (Player player : players) {
-					if (player != null) {
-						if (player.isHuman()) {
-							player.getSession().flushQueue();
-						}
-						player.reset();
-						player.setCachedUpdateBlock(null);
-					}
-				}
-
-				for (Npc npc : npcs) {
-					if (npc != null) {
-						npc.reset();
-					}
-				}
-
-				// Region tick
-				regionalTick++;
-				if (regionalTick == 10) {
-					Region[] regions = World.getRegions().getRegions();
-					for (int r = 0; r < regions.length; r++) {
-						if (regions[r] != null) {
-							regions[r].update();
-						}
-					}
-
-					regionalTick = 0;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 		
 		millis = System.currentTimeMillis() - start;
-
-		System.out.println("Took " + millis + " ms");
 	}
 	
 	/**
@@ -266,7 +263,9 @@ public final class World {
 	 * @param player the player to log in.
 	 */
 	public void queueLogin(Player player) {
-		logins.offer(player);
+		if (player.getState() == IDLE && !logins.contains(player)) {
+			logins.offer(player);
+		}
 	}
 	
 	/**
@@ -274,7 +273,7 @@ public final class World {
 	 * @param player the player to log out.
 	 */
 	public void queueLogout(Player player) {
-		if(player.getState() == NodeState.ACTIVE) {
+		if(player.getState() == NodeState.ACTIVE && !logouts.contains(player)) {
 			if(player.getCombatBuilder().inCombat())
 				player.getLogoutTimer().reset();
 			logouts.add(player);
@@ -354,8 +353,8 @@ public final class World {
 	 * @param announcement determines if this message is an announcement.
 	 */
 	public void message(String message, boolean announcement) {
-		Iterator<Player> it = players.entityIterator();
 		Player p;
+		Iterator<Player> it = players.iterator();
 		while((p = it.next()) != null) {
 			p.message((announcement ? "@red@[ANNOUNCEMENT]: " : "") + message);
 		}
@@ -363,7 +362,7 @@ public final class World {
 	
 	/**
 	 * Sends {@code message} to all online players.
-	 * @param message      the message to send to all online players.
+	 * @param message the message to send to all online players.
 	 */
 	public void message(String message) {
 		message(message, false);
@@ -371,15 +370,15 @@ public final class World {
 	
 	/**
 	 * Sends {@code message} to all online players as a yell.
-	 * @param author author yelling.
+	 * @param author  author yelling.
 	 * @param message the message being yelled.
-	 * @param rights the rights of the author.
+	 * @param rights  the rights of the author.
 	 */
 	public void yell(String author, String message, Rights rights) {
-		Iterator<Player> it = players.entityIterator();
 		Player p;
+		Iterator<Player> it = players.iterator();
 		while((p = it.next()) != null) {
-			p.getMessages().sendYell(author, message, rights);
+			p.out(new SendYell(author, message, rights));
 		}
 	}
 	
@@ -394,7 +393,9 @@ public final class World {
 		try {
 			// If the player x-logged, don't log the player out. Keep the
 			// player queued until they are out of combat to prevent x-logging.
-			if(player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombatBuilder().isBeingAttacked() && UpdateCommand.inProgess == 0) {
+			if(player.getLogoutTimer()
+					.elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombatBuilder()
+					.isBeingAttacked() && UpdateCommand.inProgess == 0) {
 				return false;
 			}
 			boolean response = players.remove(player);
@@ -408,7 +409,7 @@ public final class World {
 			} else {
 				logger.info(player.toString() + " couldn't be logged out.");
 			}
-
+			
 			return response;
 			
 		} catch(Exception e) {
@@ -416,7 +417,7 @@ public final class World {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Gets the game executor which forwards process.
 	 * @return game executor.
@@ -432,7 +433,7 @@ public final class World {
 	public TaskManager getTask() {
 		return taskManager;
 	}
-
+	
 	/**
 	 * Gets the collection of active players.
 	 * @return the active players.
@@ -562,7 +563,6 @@ public final class World {
 	
 	/**
 	 * Returns the trivia bot handler.
-	 * @return
 	 */
 	public static TriviaTask getTriviaBot() {
 		return TRIVIA_BOT;

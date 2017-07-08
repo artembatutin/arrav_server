@@ -81,6 +81,6 @@ public final class ItemWeightListener implements ItemContainerListener {
 	 */
 	private void queueWeight() {
 		double weight = player.getWeight();
-		player.getMessages().sendString((int) weight + " kg", 19154);
+		player.text(19154, (int) weight + " kg");
 	}
 }

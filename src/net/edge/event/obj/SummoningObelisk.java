@@ -12,9 +12,8 @@ public class SummoningObelisk extends EventInitializer {
 		ObjectEvent l = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
-				System.out.println(click + " - " + object.getId());
 				if(click == 3 && object.getId() == 29447) {
-					player.getMessages().sendInterface(-8);
+					player.widget(-8);
 					return true;
 				}
 				Skills.restore(player, Skills.SUMMONING);

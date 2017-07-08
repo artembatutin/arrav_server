@@ -1,5 +1,6 @@
 package net.edge.content.dialogue.impl;
 
+import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.util.ActionListener;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.DialogueBuilder;
@@ -40,11 +41,13 @@ public final class GiveItemDialogue extends Dialogue {
 		if(t.getPlayer().getInventory().canAdd(item)) {
 			t.getPlayer().getInventory().add(item);
 			action.ifPresent(ActionListener::execute);
-			t.getPlayer().getMessages().sendString(getText()[0], 308);
-			t.getPlayer().getMessages().sendItemModelOnInterface(307, 200, item.getId());
-			t.getPlayer().getMessages().sendChatInterface(306);
+			t.getPlayer().text(308, getText()[0]);
+			t.getPlayer().out(new SendItemModelInterface(307, 200, item.getId()));
+			t.getPlayer().chatWidget(306);
 		} else {
-			t.getPlayer().getMessages().sendChatboxString("You do not have enough space in your inventory!");
+			t.getPlayer().text("You do not have enough space in your inventory!", 357);
+			t.getPlayer().text("Click here to continue", 358);
+			t.getPlayer().chatWidget(356);
 		}
 	}
 	

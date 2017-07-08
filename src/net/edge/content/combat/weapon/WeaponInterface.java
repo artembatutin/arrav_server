@@ -3,6 +3,7 @@ package net.edge.content.combat.weapon;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.content.TabInterface;
 import net.edge.content.combat.special.CombatSpecial;
+import net.edge.net.packet.out.SendConfig;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -142,13 +143,13 @@ public enum WeaponInterface {
 		WeaponInterface weapon = item == null ? null : INTERFACES.get(item.getId());
 		if(item == null || weapon == null) {
 			TabInterface.ATTACK.sendInterface(player, WeaponInterface.UNARMED.id);
-			player.getMessages().sendString("Unarmed", WeaponInterface.UNARMED.nameLine);
+			player.text(WeaponInterface.UNARMED.nameLine, "Unarmed");
 			player.setWeapon(WeaponInterface.UNARMED);
 			CombatSpecial.assign(player);
 			for(FightType type : player.getWeapon().getFightTypes()) {
 				if(type.getStyle() == player.getFightType().getStyle()) {
 					player.setFightType(type);
-					player.getMessages().sendConfig(player.getFightType().getParent(), player.getFightType().getChild());
+					player.out(new SendConfig(player.getFightType().getParent(), player.getFightType().getChild()));
 					return;
 				}
 			}
@@ -156,28 +157,28 @@ public enum WeaponInterface {
 		}
 		if(weapon == WeaponInterface.UNARMED) {
 			TabInterface.ATTACK.sendInterface(player, weapon.id);
-			player.getMessages().sendString("Unarmed", weapon.nameLine);
+			player.text(weapon.nameLine, "Unarmed");
 			player.setWeapon(WeaponInterface.UNARMED);
 			return;
 		} else if(weapon == WeaponInterface.CROSSBOW) {
-			player.getMessages().sendString("Weapon: ", weapon.nameLine - 1);
+			player.text(weapon.nameLine - 1, "Weapon: ");
 		} else if(weapon == WeaponInterface.WHIP) {
-			player.getMessages().sendString("Weapon: ", weapon.nameLine - 1);
+			player.text(weapon.nameLine - 1, "Weapon: ");
 		}
 		TabInterface.ATTACK.sendInterface(player, weapon.id);
-		player.getMessages().sendString(item.getDefinition().getName(), weapon.nameLine);
+		player.text(weapon.nameLine, item.getDefinition().getName());
 		player.setWeapon(weapon);
 		CombatSpecial.assign(player);
 		CombatSpecial.updateSpecialAmount(player);
 		for(FightType type : weapon.getFightTypes()) {
 			if(type.getStyle() == player.getFightType().getStyle()) {
 				player.setFightType(type);
-				player.getMessages().sendConfig(player.getFightType().getParent(), player.getFightType().getChild());
+				player.out(new SendConfig(player.getFightType().getParent(), player.getFightType().getChild()));
 				return;
 			}
 		}
 		player.setFightType(player.getWeapon().getFightTypes()[0]);
-		player.getMessages().sendConfig(player.getFightType().getParent(), player.getFightType().getChild());
+		player.out(new SendConfig(player.getFightType().getParent(), player.getFightType().getChild()));
 	}
 	
 	/**

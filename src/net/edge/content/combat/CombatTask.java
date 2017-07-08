@@ -85,7 +85,7 @@ public final class CombatTask extends Task {
 			data.experience();
 			if(builder.getCharacter().isPlayer() && !data.isIgnored()) {
 				Player player = (Player) builder.getCharacter();
-				player.getMessages().sendCloseWindows();
+				player.closeWidget();
 				
 				if(builder.getVictim().isPlayer() && !MinigameHandler.getMinigame(builder.getVictim().toPlayer()).isPresent()) {
 					if(!builder.getCharacter().getCombatBuilder().isBeingAttacked() || builder.getCharacter().getCombatBuilder().isBeingAttacked() && builder.getCharacter().getCombatBuilder().getAggressor() != builder.getVictim() && Location.inMultiCombat(builder.getCharacter())) {

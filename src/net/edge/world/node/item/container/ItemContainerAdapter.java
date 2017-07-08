@@ -1,5 +1,7 @@
 package net.edge.world.node.item.container;
 
+import net.edge.net.packet.out.SendContainer;
+import net.edge.net.packet.out.SendItemOnInterfaceSlot;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -43,14 +45,14 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	 * Updates many items on a widget.
 	 */
 	protected void updateItems(ItemContainer container) {
-		player.getMessages().sendItemsOnInterface(widget(), container);
+		player.out(new SendContainer(widget(), container));
 	}
 	
 	/**
 	 * Updates a single item on a widget.
 	 */
 	protected void updateItem(Item item, int slot) {
-		player.getMessages().sendItemOnInterfaceSlot(widget(), item, slot);
+		player.out(new SendItemOnInterfaceSlot(widget(), item, slot));
 	}
 	
 	/**

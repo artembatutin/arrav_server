@@ -2,6 +2,8 @@ package net.edge.content.minigame.dueling;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.net.packet.out.SendContainer;
+import net.edge.net.packet.out.SendContextMenu;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.util.log.Log;
 import net.edge.util.log.impl.DuelLog;
@@ -89,7 +91,7 @@ public final class DuelMinigame extends Minigame {
 	 * @param logout whether the duel was won through the opponent logging out.
 	 */
 	public void applyWin(Player loser, Player winner, boolean logout) {
-		loser.getMessages().sendContextMenu(2, false, "Challenge");
+		loser.out(new SendContextMenu(2, false, "Challenge"));
 		loser.move(deathPosition(loser));
 		loser.setMinigame(Optional.empty());
 		this.restore(loser);
@@ -98,7 +100,7 @@ public final class DuelMinigame extends Minigame {
 			loser.message("You have been defeated by " + winner.getFormatUsername() + ".");
 		}
 		
-		winner.getMessages().sendContextMenu(2, false, "Challenge");
+		winner.out(new SendContextMenu(2, false, "Challenge"));
 		winner.move(deathPosition(winner));
 		winner.message("You have successfully defeated " + loser.getFormatUsername() + " to win the duel.");
 		
@@ -112,11 +114,11 @@ public final class DuelMinigame extends Minigame {
 		World.getLoggingManager().write(Log.create(new DuelLog(loser, winner, false, session.getExchangeSession().get(loser), session.getExchangeSession().get(winner))));
 		World.getLoggingManager().write(Log.create(new DuelLog(winner, loser, true, session.getExchangeSession().get(loser), session.getExchangeSession().get(winner))));
 		
-		winner.getMessages().sendString(loser.getFormatUsername(), 6840);
-		winner.getMessages().sendString(Integer.toString(loser.determineCombatLevel()), 6839);
+		winner.text(6840, loser.getFormatUsername());
+		winner.text(6839, Integer.toString(loser.determineCombatLevel()));
 		
-		winner.getMessages().sendItemsOnInterface(6822, session.getExchangeSession().get(loser));
-		winner.getMessages().sendInterface(6733);
+		winner.out(new SendContainer(6822, session.getExchangeSession().get(loser)));
+		winner.widget(6733);
 		claim = true;
 	}
 	
@@ -169,7 +171,7 @@ public final class DuelMinigame extends Minigame {
 	 */
 	private void startCountdown() {
 		session.getPlayers().forEach(player -> {
-			player.getMessages().sendContextMenu(2, true, "Attack");
+			player.out(new SendContextMenu(2, true, "Attack"));
 			LinkedTaskSequence seq = new LinkedTaskSequence();
 			seq.connect(2, () -> player.forceChat("3"));
 			seq.connect(2, () -> player.forceChat("2"));

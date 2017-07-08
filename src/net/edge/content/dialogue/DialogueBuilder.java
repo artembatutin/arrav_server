@@ -62,7 +62,7 @@ public final class DialogueBuilder {
 	 */
 	public void advance() {
 		if(chain.isEmpty()) {
-			player.getMessages().sendCloseWindows();
+			player.closeWidget();
 			return;
 		}
 		if(position >= chain.size()) {
@@ -70,7 +70,7 @@ public final class DialogueBuilder {
 			if(lastAction.isPresent()) {
 				lastAction.get().execute();
 			} else {
-				player.getMessages().sendCloseWindows();
+				player.closeWidget();
 			}
 			return;
 		}

@@ -69,12 +69,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 */
 	private void decodeHandshake(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 		if(in.readableBytes() >= 2) {
-			int opcode = in.readUnsignedByte(); // TODO Ondemand?
-			
+			int opcode = in.readUnsignedByte();
 			@SuppressWarnings("unused") int nameHash = in.readUnsignedByte();
-
-			System.out.println(opcode);
-			
 			checkState(opcode == 14, "id != 14");
 			
 			ByteBuf buf = ctx.alloc().buffer(17);
@@ -82,8 +78,6 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			buf.writeByte(0);
 			buf.writeLong(RANDOM.nextLong());
 			ctx.writeAndFlush(buf, ctx.voidPromise());
-
-			System.out.println("Handshake");
 		}
 	}
 	
@@ -97,11 +91,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	private void decodeLoginType(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 		if(in.readableBytes() >= 2) {
 			int loginType = in.readUnsignedByte();
-			System.out.println(loginType);
 			checkState(loginType == 16 || loginType == 18, "loginType != 16 or 18");
-			
 			rsaBlockSize = in.readUnsignedByte();
-			System.out.println(rsaBlockSize);
 			checkState((rsaBlockSize - 40) > 0, "(rsaBlockSize - 40) <= 0");
 		}
 	}
@@ -116,11 +107,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 		if(in.readableBytes() >= rsaBlockSize) {
 			int magicId = in.readUnsignedByte();
 			checkState(magicId == 255, "magicId != 255");
-			
 			int build = in.readUnsignedShort();
-
-			System.out.println(magicId + ", " + build);
-			
 			@SuppressWarnings("unused") int memoryVersion = in.readUnsignedByte();
 			
 			for(int i = 0; i < 9; i++) {
@@ -128,7 +115,6 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			}
 			
 			int expectedSize = in.readUnsignedByte();
-			System.out.println("rsa size " + expectedSize);
 			checkState(expectedSize == (rsaBlockSize - 41), "expectedSize != (rsaBlockSize - 41) -> " + rsaBlockSize);
 
 			byte[] rsaBytes = new byte[rsaBlockSize - 41];
@@ -141,15 +127,10 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			try {
 				int rsaOpcode = rsaBuffer.readUnsignedByte();
 
-				System.out.println(rsaOpcode);
-
 				checkState(rsaOpcode == 10, "rsaOpcode != 10");
 
 				long clientHalf = rsaBuffer.readLong();
 				long serverHalf = rsaBuffer.readLong();
-
-				System.out.println(clientHalf);
-				System.out.println(serverHalf);
 
 				int[] isaacSeed = {(int) (clientHalf >> 32), (int) clientHalf, (int) (serverHalf >> 32), (int) serverHalf};
 
@@ -161,13 +142,10 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 				@SuppressWarnings("unused") int uid = rsaBuffer.readInt();
 
-				System.out.println(uid);
-
-				String username = PacketHelper.getCString(rsaBuffer).toLowerCase();
+				String username = PacketHelper.getCString(rsaBuffer).toLowerCase().trim();
 				String password = PacketHelper.getCString(rsaBuffer).toLowerCase();
 
 				long usernameHash = TextUtils.nameToHash(username);
-
 				out.add(new LoginRequest(username, usernameHash, password, build, encryptor, decryptor, ctx.channel().pipeline()));
 			} finally {
 				if (rsaBuffer.isReadable()) {

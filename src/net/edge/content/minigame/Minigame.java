@@ -1,5 +1,7 @@
 package net.edge.content.minigame;
 
+import net.edge.net.packet.out.SendConfig;
+import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.special.CombatSpecial;
@@ -438,19 +440,19 @@ public abstract class Minigame {
 	 * hitpoints, special attack amount and more.
 	 */
 	public final void restore(Player player) {
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		player.getCombatBuilder().reset();
 		player.getCombatBuilder().getDamageCache().clear();
 		player.getTolerance().reset();
 		player.getSpecialPercentage().set(100);
 		player.getPoisonDamage().set(0);
 		player.setRunEnergy(100D);
-		player.getMessages().sendConfig(301, 0);
+		player.out(new SendConfig(301, 0));
 		player.setSpecialActivated(false);
 		player.getSkullTimer().set(0);
 		player.getTeleblockTimer().set(0);
 		player.animation(new Animation(65535));
-		player.getMessages().sendWalkable(-1);
+		player.out(new SendWalkable(-1));
 		Prayer.deactivateAll(player);
 		Skills.restoreAll(player);
 		WeaponInterface.execute(player, player.getEquipment().get(Equipment.WEAPON_SLOT));

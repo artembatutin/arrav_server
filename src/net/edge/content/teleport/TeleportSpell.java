@@ -1,5 +1,6 @@
 package net.edge.content.teleport;
 
+import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.ActionListener;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.Skills;
@@ -42,14 +43,14 @@ public abstract class TeleportSpell extends Spell {
 	 */
 	public final void resetPlayerFlags(Player player) {
 		//FightCavesHandler.remove(player);
-		player.getMessages().sendInterface(-1);
-		player.getMessages().sendWalkable(-1);
+		player.widget(-1);
+		player.out(new SendWalkable(-1));
 		player.setTeleportStage(1);
 		player.getCombatBuilder().reset();
 		player.faceEntity(null);
 		player.setFollowing(false);
 		player.setFollowEntity(null);
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		Skills.experience(player, this.baseExperience(), Skills.MAGIC);
 	}
 	

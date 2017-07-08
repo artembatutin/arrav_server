@@ -16,9 +16,9 @@ public final class EmptyBankCommand implements Command {
 			if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 				player.getBank().clear();
 				player.getBank().refreshAll();
-				player.getMessages().sendCloseWindows();
+				player.closeWidget();
 			} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION) || t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
-				player.getMessages().sendCloseWindows();
+				player.closeWidget();
 			} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 				player.getDialogueBuilder().previous();
 			}

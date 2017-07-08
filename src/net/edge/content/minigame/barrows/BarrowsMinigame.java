@@ -2,6 +2,7 @@ package net.edge.content.minigame.barrows;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.net.packet.out.SendMinimapState;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
@@ -86,7 +87,7 @@ public final class BarrowsMinigame extends Minigame {
 			if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 				player.move(CHEST_LOCATION);
 			}
-			player.getMessages().sendCloseWindows();
+			player.closeWidget();
 		}, "Yeah, I'm fearless!", "No way, that looks scary."));
 	}
 	
@@ -105,7 +106,7 @@ public final class BarrowsMinigame extends Minigame {
 	
 	@Override
 	public boolean canTeleport(Player player, Position position) {
-		player.getMessages().sendMinimapState(0);
+		player.out(new SendMinimapState(0));
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
 		if(current.isPresent() && current.get().getState() != NodeState.ACTIVE)
 			return true;
@@ -144,7 +145,7 @@ public final class BarrowsMinigame extends Minigame {
 				if(c.getState() == NodeState.ACTIVE)
 					World.get().getNpcs().remove(c);
 			});
-			player.getMessages().sendMinimapState(0);
+			player.out(new SendMinimapState(0));
 			player.move(new Position(stair.getLocation().getX(), stair.getLocation().getY(), stair.getLocation().getZ()));
 			return true;
 		}
@@ -197,7 +198,7 @@ public final class BarrowsMinigame extends Minigame {
 				
 				Position position = new Position(BarrowsData.AHRIM.getLocation().getX(), BarrowsData.AHRIM.getLocation().getY(), BarrowsData.AHRIM.getLocation().getZ());
 				DefaultTeleportSpell teleport = new DefaultTeleportSpell(position, DefaultTeleportSpell.TeleportType.NORMAL);
-				player.getMessages().sendMinimapState(0);
+				player.out(new SendMinimapState(0));
 				if(loot.isEmpty())
 					player.message("You open the chest and it's... empty?");
 				else {
@@ -217,7 +218,7 @@ public final class BarrowsMinigame extends Minigame {
 	
 	@Override
 	public void onDeath(Player player) {
-		player.getMessages().sendMinimapState(0);
+		player.out(new SendMinimapState(0));
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
 		if(current.isPresent() && current.get().getState() != NodeState.ACTIVE)
 			return;
@@ -238,7 +239,7 @@ public final class BarrowsMinigame extends Minigame {
 	
 	@Override
 	public void onLogin(Player player) {
-		player.getMessages().sendMinimapState(0);
+		player.out(new SendMinimapState(0));
 		Optional<BarrowsData> data = BarrowsData.getDefinitionForCave(player.getPosition());
 		
 		if(!data.isPresent()) {
@@ -272,7 +273,7 @@ public final class BarrowsMinigame extends Minigame {
 	
 	@Override
 	public void onEnter(Player player) {
-		player.getMessages().sendMinimapState(2);
+		player.out(new SendMinimapState(2));
 	}
 	
 }

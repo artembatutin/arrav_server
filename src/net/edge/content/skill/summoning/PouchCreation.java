@@ -62,7 +62,7 @@ public final class PouchCreation extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		return true;
 	}
 	

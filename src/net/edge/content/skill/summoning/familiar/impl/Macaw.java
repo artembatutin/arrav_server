@@ -14,7 +14,6 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Represents the Macaw familiar.
@@ -65,7 +64,7 @@ public final class Macaw extends Familiar {
 				} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 					player.getDialogueBuilder().advance();
 				} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 				}
 			}, "Interact", "View storage", "Remote view", "Nevermind"), new StatementDialogue("This ability has not been added yet."));
 		} else if(id == 2) {

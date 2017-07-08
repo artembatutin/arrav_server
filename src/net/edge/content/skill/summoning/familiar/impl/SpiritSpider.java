@@ -16,7 +16,6 @@ import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNodeStatic;
 
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Represents the SpiritSpider familiar.
@@ -69,7 +68,7 @@ public final class SpiritSpider extends Familiar {
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
 					Summoning.openBeastOfBurden(player, npc);
 				} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 				}
 			}, "Interact", "View storage", "Nevermind"), new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 		}

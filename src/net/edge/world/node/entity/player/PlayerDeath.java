@@ -4,6 +4,9 @@ import com.google.common.collect.Ordering;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.PunishmentHandler;
+import net.edge.net.packet.out.SendConfig;
+import net.edge.net.packet.out.SendGraphic;
+import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.rand.RandomUtils;
 import net.edge.game.GameConstants;
 import net.edge.content.PlayerPanel;
@@ -94,7 +97,7 @@ public final class PlayerDeath extends EntityDeath<Player> {
 				}
 				if(i % 2 == 1)
 					continue;
-				getCharacter().getMessages().sendLocalGraphic(2260, new Position(x, y, getCharacter().getPosition().getZ()), 25);
+				SendGraphic.local(getCharacter(), 2260, new Position(x, y, getCharacter().getPosition().getZ()), 25);
 			}
 			int maxHit = (int) ((getCharacter().getSkills()[Skills.PRAYER].getLevel() / 100.D) * 25);
 			if(Location.inMultiCombat(getCharacter())) {
@@ -198,12 +201,12 @@ public final class PlayerDeath extends EntityDeath<Player> {
 	
 	@Override
 	public void postDeath() {
-		getCharacter().getMessages().sendCloseWindows();
+		getCharacter().closeWidget();
 		getCharacter().getCombatBuilder().reset();
 		getCharacter().getCombatBuilder().getDamageCache().clear();
 		getCharacter().getTolerance().reset();
 		getCharacter().getSpecialPercentage().set(100);
-		getCharacter().getMessages().sendConfig(301, 0);
+		getCharacter().out(new SendConfig(301, 0));
 		getCharacter().setSpecialActivated(false);
 		getCharacter().getSkullTimer().set(0);
 		getCharacter().setRunEnergy(100);
@@ -214,7 +217,7 @@ public final class PlayerDeath extends EntityDeath<Player> {
 		if(deathMessage) {
 			getCharacter().message(getCharacter().getRights().less(Rights.ADMINISTRATOR) ? "Oh dear, you're dead!" : "You are unaffected by death because of your rank.");
 		}
-		getCharacter().getMessages().sendWalkable(-1);
+		getCharacter().out(new SendWalkable(-1));
 		Prayer.deactivateAll(getCharacter());
 		
 		Optional<Minigame> minigame = MinigameHandler.getMinigame(getCharacter());

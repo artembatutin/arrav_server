@@ -1,10 +1,10 @@
 package net.edge.content;
 
 import net.edge.locale.Position;
+import net.edge.net.packet.out.SendForceTab;
+import net.edge.net.packet.out.SendMinimapState;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.update.UpdateFlag;
-
-import java.util.stream.IntStream;
 
 /**
  * The container class that handles the opening, closing, and navigation of
@@ -75,16 +75,16 @@ public final class ViewingOrb {
 		//player.getMessages().sendSidebarInterface(v, -1, 2));
 		//player.getMessages().sendSidebarInterface(10, 3209, 0);
 		//player.getMessages().sendSidebarInterface(5, 3209, 1);
-		player.getMessages().sendForceTab(TabInterface.INVENTORY);
-		player.getMessages().sendString("@yel@Centre", 15239);
-		player.getMessages().sendString("@yel@North-West", 15240);
-		player.getMessages().sendString("@yel@North-East", 15241);
-		player.getMessages().sendString("@yel@South-East", 15242);
-		player.getMessages().sendString("@yel@South-West", 15243);
+		player.out(new SendForceTab(TabInterface.INVENTORY));
+		player.text(15239, "@yel@Centre");
+		player.text(15240, "@yel@North-West");
+		player.text(15241, "@yel@North-East");
+		player.text(15242, "@yel@South-East");
+		player.text(15243, "@yel@South-West");
 		player.getMovementQueue().setLockMovement(true);
 		player.setVisible(false);
 		player.getActivityManager().disable();
-		player.getMessages().sendMinimapState(2);
+		player.out(new SendMinimapState(2));
 		player.setPlayerNpc(2982);
 		player.getFlags().flag(UpdateFlag.APPEARANCE);
 		move("Centre", 15239, centre);
@@ -101,7 +101,7 @@ public final class ViewingOrb {
 		player.getActivityManager().enable();
 		player.setPlayerNpc(-1);
 		player.getFlags().flag(UpdateFlag.APPEARANCE);
-		player.getMessages().sendMinimapState(0);
+		player.out(new SendMinimapState(0));
 		player.move(start);
 	}
 	
@@ -115,12 +115,12 @@ public final class ViewingOrb {
 	public void move(String positionName, int positionLineId, Position position) {
 		if(position.same(player.getPosition()))
 			return;
-		player.getMessages().sendString("@yel@Centre", 15239);
-		player.getMessages().sendString("@yel@North-West", 15240);
-		player.getMessages().sendString("@yel@North-East", 15241);
-		player.getMessages().sendString("@yel@South-East", 15242);
-		player.getMessages().sendString("@yel@South-West", 15243);
-		player.getMessages().sendString("@whi@" + positionName, positionLineId);
+		player.text(15239, "@yel@Centre");
+		player.text(15240, "@yel@North-West");
+		player.text(15241, "@yel@North-East");
+		player.text(15242, "@yel@South-East");
+		player.text(15243, "@yel@South-West");
+		player.text(positionLineId, "@whi@" + positionName);
 		player.move(position);
 	}
 	

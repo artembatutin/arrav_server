@@ -5,10 +5,9 @@ import net.edge.content.skill.construction.Palette.PaletteTile;
 import net.edge.content.skill.construction.data.Constants;
 import net.edge.content.skill.construction.furniture.Furniture;
 import net.edge.content.skill.construction.furniture.HotSpots;
+import net.edge.net.packet.out.SendRemoveObjects;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-
-import java.util.Iterator;
 
 import static net.edge.content.skill.construction.Construction.getMyChunk;
 import static net.edge.content.skill.construction.Construction.getXTilesOnTile;
@@ -183,7 +182,7 @@ public class RoomManipulation {
 		RoomData rd = r.data();
 		int toRot = (wise == 0 ? RoomData.getNextEligibleRotationClockWise(rd, direction, r.getRotation()) : RoomData.getNextEligibleRotationCounterClockWise(rd, direction, r.getRotation()));
 		PaletteTile tile = new PaletteTile(rd.getX(), rd.getY(), 0, toRot);
-		p.getMessages().removeAllObjects();
+		p.out(new SendRemoveObjects());
 		if(house.get().isDungeon()) {
 			house.getSecondaryPalette().setTile(chunkX, chunkY, 0, tile);
 		} else {
@@ -245,11 +244,11 @@ public class RoomManipulation {
 			}
 			if(gardenAmt < 2) {
 				p.message("You need atleast 1 garden or formal garden");
-				p.getMessages().sendCloseWindows();
+				p.closeWidget();
 				return;
 			}
 		}
-		p.getMessages().removeAllObjects();
+		p.out(new SendRemoveObjects());
 		if(p.getPosition().getZ() == 0) {
 			if(house.get().isDungeon()) {
 				house.getSecondaryPalette().setTile(chunkX, chunkY, 0, tile);

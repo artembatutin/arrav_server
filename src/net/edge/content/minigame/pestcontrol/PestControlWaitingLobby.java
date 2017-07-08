@@ -7,6 +7,7 @@ import net.edge.event.impl.ButtonEvent;
 import net.edge.event.impl.NpcEvent;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
+import net.edge.net.packet.out.SendWalkable;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.node.entity.npc.Npc;
@@ -44,7 +45,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		timer = current;
 		if(timer % 10 == 0) {
 			for(Player p : getPlayers()) {
-				p.getMessages().sendString("@whi@Next Departure: " + seconds() + " seconds.", 21120);
+				p.text(21120, "@whi@Next Departure: " + seconds() + " seconds.");
 			}
 		}
 	}
@@ -53,9 +54,9 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	public void onEnter(Player player) {
 		count++;
 		getPlayers().add(player);
-		player.getMessages().sendWalkable(21119);
-		player.getMessages().sendString("@whi@Next Departure: " + seconds() + " seconds", 21120);
-		player.getMessages().sendString("@cya@Pest Points: " + player.getPest(), 21123);
+		player.out(new SendWalkable((21119)));
+		player.text(21120, "@whi@Next Departure: " + seconds() + " seconds");
+		player.text(21123, "@cya@Pest Points: " + player.getPest());
 		updateCounts();
 		player.move(new Position(2661, 2639));
 	}
@@ -66,7 +67,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			return;
 		count--;
 		getPlayers().remove(player);
-		player.getMessages().sendWalkable(-1);
+		player.out(new SendWalkable((-1)));
 		updateCounts();
 		player.move(new Position(2657, 2639));
 	}
@@ -121,7 +122,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	
 	public void updateCounts() {
 		for(Player p : getPlayers()) {
-			p.getMessages().sendString("@gre@Players Ready: " + count, 21121);
+			p.text(21121, "@gre@Players Ready: " + count);
 		}
 	}
 	
@@ -148,8 +149,8 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		NpcEvent shop = new NpcEvent() {
 			@Override
 			public boolean click(Player player, Npc npc, int click) {
-				player.getMessages().sendInterface(37000);
-				player.getMessages().sendString(player.getPest() + " points", 37007);
+				player.widget(37000);
+				player.text(37007, player.getPest() + " points");
 				return true;
 			}
 		};

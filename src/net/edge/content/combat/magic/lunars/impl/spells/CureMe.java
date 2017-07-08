@@ -1,6 +1,7 @@
 package net.edge.content.combat.magic.lunars.impl.spells;
 
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
+import net.edge.net.packet.out.SendConfig;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -35,7 +36,7 @@ public final class CureMe extends LunarButtonSpell {
 	@Override
 	public void effect(Player caster, EntityNode victim) {
 		caster.message("You are no longer poisoned...");
-		caster.getMessages().sendConfig(174, 0);
+		caster.out(new SendConfig(174, 0));
 		caster.getPoisonDamage().set(0);
 	}
 

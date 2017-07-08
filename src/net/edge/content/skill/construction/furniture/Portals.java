@@ -85,13 +85,13 @@ public enum Portals {
 				}
 			}
 			if(!found) {
-				p.getMessages().sendCloseWindows();
+				p.closeWidget();
 				p.message("Can't remove that, doesn't exist.");
 				return false;
 			} else {
 				//p.getPacketSender().sendObjectsRemoval(myTiles[0]-1, myTiles[1]-1, p.inConstructionDungeon() ? 4 : p.getPosition().getZ());
 				//Construction.placeAllFurniture(p, myTiles[0]-1, myTiles[1]-1, p.inConstructionDungeon() ? 4 : p.getPosition().getZ());
-				p.getMessages().sendCloseWindows();
+				p.closeWidget();
 				return true;
 			}
 		}
@@ -131,7 +131,7 @@ public enum Portals {
 		}*/
 		//p.getPacketSender().sendObjectsRemoval(myTiles[0]-1, myTiles[1]-1, p.inConstructionDungeon() ? 4 : p.getPosition().getZ());
 		//Construction.placeAllFurniture(p, myTiles[0]-1, myTiles[1]-1, p.inConstructionDungeon() ? 4 : p.getPosition().getZ());
-		p.getMessages().sendCloseWindows();
+		p.closeWidget();
 	}
 	
 	public static Position findNearestPortal(House house) {

@@ -93,7 +93,7 @@ public class PestPortal extends DefaultNpc {
 		}
 		if(game != null) {
 			for(Player p : game.getPlayers()) {
-				p.getMessages().sendString("" + getCurrentHealth() / 10, widget);
+				p.text(widget, "" + getCurrentHealth() / 10);
 			}
 		}
 		return hit;
@@ -115,7 +115,7 @@ public class PestPortal extends DefaultNpc {
 	public void setGame(PestControlMinigame game) {
 		this.game = game;
 		for(Player p : game.getPlayers()) {
-			p.getMessages().sendString("" + getCurrentHealth() / 10, widget);
+			p.text(widget, "" + getCurrentHealth() / 10);
 		}
 	}
 	

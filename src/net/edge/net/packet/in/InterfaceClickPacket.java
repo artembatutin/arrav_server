@@ -24,7 +24,7 @@ public final class InterfaceClickPacket implements IncomingPacket {
 		}
 		
 		MinigameHandler.executeVoid(player, t -> t.onInterfaceClick(player));
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		player.getActivityManager().execute(ActivityManager.ActivityType.INTERFACE_CLICK);
 	}
 }

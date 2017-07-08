@@ -4,6 +4,8 @@ import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.DialogueBuilder;
 import net.edge.content.dialogue.DialogueType;
 import net.edge.content.dialogue.Expression;
+import net.edge.net.packet.out.SendInterfaceAnimation;
+import net.edge.net.packet.out.SendInterfacePlayerModel;
 
 /**
  * The dialogue chain entry that sends the player a dialogue from a player.
@@ -36,41 +38,41 @@ public final class PlayerDialogue extends Dialogue {
 	
 	@Override
 	public void accept(DialogueBuilder dialogue) {
-		dialogue.getPlayer().getMessages().sendInterfaceAnimation(250, expression.getExpression());
+		dialogue.getPlayer().out(new SendInterfaceAnimation(250, expression.getExpression()));
 		switch(getText().length) {
 			case 1:
-				dialogue.getPlayer().getMessages().sendInterfaceAnimation(969, expression.getExpression());
-				dialogue.getPlayer().getMessages().sendString(dialogue.getPlayer().getFormatUsername(), 970);
-				dialogue.getPlayer().getMessages().sendString(getText()[0], 971);
-				dialogue.getPlayer().getMessages().sendPlayerModelOnInterface(969);
-				dialogue.getPlayer().getMessages().sendChatInterface(968);
+				dialogue.getPlayer().out(new SendInterfaceAnimation(969, expression.getExpression()));
+				dialogue.getPlayer().text(970, dialogue.getPlayer().getFormatUsername());
+				dialogue.getPlayer().text(971, getText()[0]);
+				dialogue.getPlayer().out(new SendInterfacePlayerModel(969));
+				dialogue.getPlayer().chatWidget(968);
 				break;
 			case 2:
-				dialogue.getPlayer().getMessages().sendInterfaceAnimation(974, expression.getExpression());
-				dialogue.getPlayer().getMessages().sendString(dialogue.getPlayer().getFormatUsername(), 975);
-				dialogue.getPlayer().getMessages().sendString(getText()[0], 976);
-				dialogue.getPlayer().getMessages().sendString(getText()[1], 977);
-				dialogue.getPlayer().getMessages().sendPlayerModelOnInterface(974);
-				dialogue.getPlayer().getMessages().sendChatInterface(973);
+				dialogue.getPlayer().out(new SendInterfaceAnimation(974, expression.getExpression()));
+				dialogue.getPlayer().text(975, dialogue.getPlayer().getFormatUsername());
+				dialogue.getPlayer().text(976, getText()[0]);
+				dialogue.getPlayer().text(977, getText()[1]);
+				dialogue.getPlayer().out(new SendInterfacePlayerModel(974));
+				dialogue.getPlayer().chatWidget(973);
 				break;
 			case 3:
-				dialogue.getPlayer().getMessages().sendInterfaceAnimation(980, expression.getExpression());
-				dialogue.getPlayer().getMessages().sendString(dialogue.getPlayer().getFormatUsername(), 981);
-				dialogue.getPlayer().getMessages().sendString(getText()[0], 982);
-				dialogue.getPlayer().getMessages().sendString(getText()[1], 983);
-				dialogue.getPlayer().getMessages().sendString(getText()[2], 984);
-				dialogue.getPlayer().getMessages().sendPlayerModelOnInterface(980);
-				dialogue.getPlayer().getMessages().sendChatInterface(979);
+				dialogue.getPlayer().out(new SendInterfaceAnimation(980, expression.getExpression()));
+				dialogue.getPlayer().text(981, dialogue.getPlayer().getFormatUsername());
+				dialogue.getPlayer().text(982, getText()[0]);
+				dialogue.getPlayer().text(983, getText()[1]);
+				dialogue.getPlayer().text(984, getText()[2]);
+				dialogue.getPlayer().out(new SendInterfacePlayerModel(980));
+				dialogue.getPlayer().chatWidget(979);
 				break;
 			case 4:
-				dialogue.getPlayer().getMessages().sendInterfaceAnimation(987, expression.getExpression());
-				dialogue.getPlayer().getMessages().sendString(dialogue.getPlayer().getFormatUsername(), 988);
-				dialogue.getPlayer().getMessages().sendString(getText()[0], 989);
-				dialogue.getPlayer().getMessages().sendString(getText()[1], 990);
-				dialogue.getPlayer().getMessages().sendString(getText()[2], 991);
-				dialogue.getPlayer().getMessages().sendString(getText()[3], 992);
-				dialogue.getPlayer().getMessages().sendPlayerModelOnInterface(987);
-				dialogue.getPlayer().getMessages().sendChatInterface(986);
+				dialogue.getPlayer().out(new SendInterfaceAnimation(987, expression.getExpression()));
+				dialogue.getPlayer().text(988, dialogue.getPlayer().getFormatUsername());
+				dialogue.getPlayer().text(989, getText()[0]);
+				dialogue.getPlayer().text(990, getText()[1]);
+				dialogue.getPlayer().text(991, getText()[2]);
+				dialogue.getPlayer().text(992, getText()[3]);
+				dialogue.getPlayer().out(new SendInterfacePlayerModel(987));
+				dialogue.getPlayer().chatWidget(986);
 				break;
 			default:
 				throw new IllegalArgumentException("Illegal player dialogue " + "length: " + getText().length);

@@ -5,6 +5,7 @@ import net.edge.content.pets.Pet;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;
+import net.edge.net.packet.out.SendItemOnInterfaceSlot;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager.ActivityType;
 import net.edge.world.node.item.Item;
@@ -46,16 +47,16 @@ public final class DropItemPacket implements IncomingPacket {
 			return;
 		}
 		if(!item.getDefinition().isTradable() || item.getDefinition().destroyable()) {
-			player.getMessages().sendItemOnInterfaceSlot(14171, item, 0);
-			player.getMessages().sendString("Are you sure you want to destroy this item?", 14174);
-			player.getMessages().sendString("Yes", 14175);
-			player.getMessages().sendString("No", 14176);
-			player.getMessages().sendString("", 14177);
-			player.getMessages().sendString("This item is valuable, you will not get it back", 14182);
-			player.getMessages().sendString("once clicked Yes.", 14183);
-			player.getMessages().sendString(item.getDefinition().getName(), 14184);
+			player.out(new SendItemOnInterfaceSlot(14171, item, 0));
+			player.text(14174, "Are you sure you want to destroy this item?");
+			player.text(14175, "Yes");
+			player.text(14176, "No");
+			player.text(14177, "");
+			player.text(14182, "This item is valuable, you will not get it back");
+			player.text(14183, "once clicked Yes.");
+			player.text(14184, item.getDefinition().getName());
 			player.getAttr().get("destroy_item_slot").set(slot);
-			player.getMessages().sendChatInterface(14170);
+			player.chatWidget(14170);
 			return;
 		}
 		

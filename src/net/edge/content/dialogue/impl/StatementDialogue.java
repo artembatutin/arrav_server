@@ -22,26 +22,26 @@ public final class StatementDialogue extends Dialogue {
 	public void accept(DialogueBuilder dialogue) {
 		switch(getText().length) {
 			case 1:
-				dialogue.getPlayer().getMessages().sendString(getText()[0], 357);
-				dialogue.getPlayer().getMessages().sendChatInterface(356);
+				dialogue.getPlayer().text(357, getText()[0]);
+				dialogue.getPlayer().chatWidget(356);
 				break;
 			case 2:
-				dialogue.getPlayer().getMessages().sendString(getText()[0], 360);
-				dialogue.getPlayer().getMessages().sendString(getText()[1], 361);
-				dialogue.getPlayer().getMessages().sendChatInterface(359);
+				dialogue.getPlayer().text(360, getText()[0]);
+				dialogue.getPlayer().text(361, getText()[1]);
+				dialogue.getPlayer().chatWidget(359);
 				break;
 			case 3:
-				dialogue.getPlayer().getMessages().sendString(getText()[0], 364);
-				dialogue.getPlayer().getMessages().sendString(getText()[1], 365);
-				dialogue.getPlayer().getMessages().sendString(getText()[2], 366);
-				dialogue.getPlayer().getMessages().sendChatInterface(363);
+				dialogue.getPlayer().text(364, getText()[0]);
+				dialogue.getPlayer().text(365, getText()[1]);
+				dialogue.getPlayer().text(366, getText()[2]);
+				dialogue.getPlayer().chatWidget(363);
 				break;
 			case 4:
-				dialogue.getPlayer().getMessages().sendString(getText()[0], 369);
-				dialogue.getPlayer().getMessages().sendString(getText()[1], 370);
-				dialogue.getPlayer().getMessages().sendString(getText()[2], 371);
-				dialogue.getPlayer().getMessages().sendString(getText()[3], 372);
-				dialogue.getPlayer().getMessages().sendChatInterface(368);
+				dialogue.getPlayer().text(369, getText()[0]);
+				dialogue.getPlayer().text(370, getText()[1]);
+				dialogue.getPlayer().text(371, getText()[2]);
+				dialogue.getPlayer().text(372, getText()[3]);
+				dialogue.getPlayer().chatWidget(368);
 				break;
 		}
 	}

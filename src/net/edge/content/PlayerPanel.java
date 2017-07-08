@@ -7,6 +7,9 @@ import net.edge.content.market.MarketCounter;
 import net.edge.content.wilderness.WildernessActivity;
 import net.edge.event.impl.ButtonEvent;
 import net.edge.game.GameConstants;
+import net.edge.net.packet.out.SendEnterName;
+import net.edge.net.packet.out.SendLink;
+import net.edge.net.packet.out.SendNpcDrop;
 import net.edge.util.TextUtils;
 import net.edge.util.Utility;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -16,8 +19,8 @@ import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -31,13 +34,13 @@ public enum PlayerPanel {
 	COMMUNITY() {
 		@Override
 		public void onClick(Player player) {
-			player.getMessages().sendLink("community/");
+			player.out(new SendLink("community/"));
 		}
 	},
 	DISCORD() {
 		@Override
 		public void onClick(Player player) {
-			player.getMessages().sendLink("discord");
+			player.out(new SendLink("discord"));
 		}
 	},
 	VOTE() {
@@ -45,17 +48,17 @@ public enum PlayerPanel {
 		public void onClick(Player player) {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-					player.getMessages().sendLink("vote");
-					player.getMessages().sendCloseWindows();
+					player.out(new SendLink("vote"));
+					player.closeWidget();
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-					player.getMessages().sendEnterName("Auth code:", s -> () -> {
+					player.out(new SendEnterName("Auth code:", s -> () -> {
 						try {
 							new RedeemCommand().execute(player, new String[] {"", s}, "");
-							player.getMessages().sendCloseWindows();
+							player.closeWidget();
 						} catch(Exception e) {
 							e.printStackTrace();
 						}
-					});
+					}));
 				}
 				if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 					MarketCounter.getShops().get(27).openShop(player);
@@ -67,13 +70,13 @@ public enum PlayerPanel {
 	STORE() {
 		@Override
 		public void onClick(Player player) {
-			player.getMessages().sendLink("store/");
+			player.out(new SendLink("store/"));
 		}
 	},
 	NPC_TOOL() {
 		@Override
 		public void onClick(Player player) {
-			player.getMessages().sendNpcInformation(0, null);
+			player.out(new SendNpcDrop(0, null));
 		}
 	},
 	TOOL3,
@@ -89,17 +92,23 @@ public enum PlayerPanel {
 	STAFF_ONLINE() {
 		@Override
 		public void onClick(Player player) {
-			List<Player> staff = World.get().getPlayers().findAll(p -> p != null && p.getRights().isStaff());
-			if(staff.isEmpty()) {
+			if(World.get().getStaffCount() == 0) {
 				player.message("There is currently no staff online to assist you.");
 				player.message("You can post a thread on our forums in the support section.");
 			} else {
 				player.getDialogueBuilder().append(new StatementDialogue("Are you requesting staff assistance?"), new OptionDialogue(t -> {
 					if(t == OptionDialogue.OptionType.FIRST_OPTION) {
-						staff.forEach(s -> s.message(player.getFormatUsername() + " is requesting assistance. Do ::assist " + player.getCredentials().getUsername() + " to help him."));
+						if(!World.get().getPlayers().isEmpty()) {
+							Player p;
+							Iterator<Player> it = World.get().getPlayers().iterator();
+							while((p = it.next()) != null) {
+								if(p.getRights().isStaff())
+									p.message(player.getFormatUsername() + " is requesting assistance. Do ::assist " + player.getCredentials().getUsername() + " to help him.");
+							}
+						}
 						player.message("A staff member should contact you shortly.");
 					}
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 				}, "Yes please!", "No thanks."));
 			}
 		}
@@ -115,14 +124,14 @@ public enum PlayerPanel {
 		public void onClick(Player player) {
 			player.getDialogueBuilder().append(new StatementDialogue("You sure you want to change your password?"), new OptionDialogue(t -> {
 				if(t == OptionDialogue.OptionType.FIRST_OPTION) {
-					player.getMessages().sendCloseWindows();
-					player.getMessages().sendEnterName("Your new password to set:", s -> () -> {
+					player.closeWidget();
+					player.out(new SendEnterName("Your new password to set:", s -> () -> {
 						player.getCredentials().setPassword(s);
 						player.message("You have successfully changed your password. Log out to save it.");
 						PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.passwordCheck(s));
-					});
+					}));
 				} else if(t == OptionDialogue.OptionType.SECOND_OPTION) {
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 				}
 			}, "Yes please!", "No thanks."));
 		}
@@ -137,7 +146,7 @@ public enum PlayerPanel {
 						player.setIron(0, true);
 						player.teleport(GameConstants.STARTING_POSITION);
 					}
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 				}, "Yes, want to be a regular player.", "No, I want to keep the iron man mode."));
 				return;
 			}
@@ -208,7 +217,7 @@ public enum PlayerPanel {
 		if(!player.isHuman())
 			return;
 		for(int i = 16016; i < 16016 + VALUES.size(); i++) {
-			player.getMessages().sendString("", i);
+			player.text(i, "");
 		}
 		PlayerPanel.TAB.refresh(player, "@or2@Informative @or1@- @or3@Clickable");
 		PlayerPanel.TOOLS.refresh(player, "@or1@Quickies:");
@@ -280,11 +289,13 @@ public enum PlayerPanel {
 	 * @param update the updated string for that tab.
 	 */
 	public void refreshAll(String update) {
-		/*for (Player player : World.get().getPlayers()) {
-			if (player != null) {
+		if(!World.get().getPlayers().isEmpty()) {
+			Player player;
+			Iterator<Player> it = World.get().getPlayers().iterator();
+			while((player = it.next()) != null) {
 				refresh(player, update);
 			}
-		}*/
+		}
 	}
 	
 	/**
@@ -293,6 +304,6 @@ public enum PlayerPanel {
 	 * @param text   the new string to set.
 	 */
 	public void refresh(Player player, String text) {
-		player.getMessages().sendString(text, 16026 + ordinal());
+		player.text(16026 + ordinal(), text);
 	}
 }

@@ -2,7 +2,8 @@ package net.edge.content.skill.smithing;
 
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import net.edge.content.skill.crafting.HideWorking;
+import net.edge.net.packet.out.SendGraphic;
+import net.edge.net.packet.out.SendItemOnInterfaceSlot;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
@@ -127,10 +128,10 @@ public final class Smithing extends ProducingSkillAction {
 					new StatementDialogue("You set to work, trying to attach the ancient draconic visage to your", "anti-dragonbreath shield. It's not easy to work with the ancient artifact", "and it takes all of your skill as a master smith."), new PlayerDialogue("Here goes nothing...").attach(() -> {
 						player.getActivityManager().disable();
 						
-						player.getMessages().sendCloseWindows();
+						player.closeWidget();
 						
 						player.animation(new Animation(898));
-						player.getMessages().sendLocalGraphic(2123, object.getGlobalPos().copy(), 50);
+						SendGraphic.local(player, 2123, object.getGlobalPos().copy(), 50);
 						LinkedTaskSequence seq = new LinkedTaskSequence();
 						seq.connect(3, () -> {
 							
@@ -171,7 +172,7 @@ public final class Smithing extends ProducingSkillAction {
 				return false;
 			}
 			player.animation(new Animation(898));
-			player.getMessages().sendLocalGraphic(2123, object.getGlobalPos().copy(), 50);
+			SendGraphic.local(player, 2123, object.getGlobalPos().copy(), 50);
 			player.getInventory().removeAll(new Item(11710), new Item(11712), new Item(11714));
 			player.getInventory().add(new Item(11690));
 			return true;
@@ -190,9 +191,9 @@ public final class Smithing extends ProducingSkillAction {
 		
 		for(int i = 0; i < FRAME_DATA.length; i++) {
 			if(i >= values.length) {
-				player.getMessages().sendString("", FRAME_DATA[i][0]);
-				player.getMessages().sendString("", FRAME_DATA[i][1]);
-				player.getMessages().sendItemOnInterfaceSlot(FRAME_DATA[i][3], new Item(-1, 0), FRAME_DATA[i][2]);
+				player.text(FRAME_DATA[i][0], "");
+				player.text(FRAME_DATA[i][1], "");
+				player.out(new SendItemOnInterfaceSlot(FRAME_DATA[i][3], new Item(-1, 0), FRAME_DATA[i][2]));
 				continue;
 			}
 			
@@ -206,16 +207,16 @@ public final class Smithing extends ProducingSkillAction {
 			final String bar_color = !has_bar ? "@red@" : "@gre@";
 			final String name_color = player.getSkills()[Skills.SMITHING].getRealLevel() >= table.getLevelRequirement() && has_bar ? "@whi@" : "@bla@";
 			
-			player.getMessages().sendString(bar_color + table.getBarsRequired() + " Bar" + (table.getBarsRequired() != 1 ? "s" : ""), FRAME_DATA[i][0]);
-			player.getMessages().sendString(name_color + TextUtils.capitalize(table.getName().toLowerCase()), FRAME_DATA[i][1]);
-			player.getMessages().sendItemOnInterfaceSlot(FRAME_DATA[i][3], table.getProduced(), FRAME_DATA[i][2]);
+			player.text(FRAME_DATA[i][0], bar_color + table.getBarsRequired() + " Bar" + (table.getBarsRequired() != 1 ? "s" : ""));
+			player.text(FRAME_DATA[i][1], name_color + TextUtils.capitalize(table.getName().toLowerCase()));
+			player.out(new SendItemOnInterfaceSlot(FRAME_DATA[i][3], table.getProduced(), FRAME_DATA[i][2]));
 		}
 		if(table == null || table.getBar() == null) {
 			return false;
 		}
 		player.getAttr().get("smithing_equipment").set(table.getBar());
 		player.getAttr().get("smithing_position").set(object.getGlobalPos());
-		player.getMessages().sendInterface(994);
+		player.widget(994);
 		return true;
 	}
 	
@@ -223,7 +224,7 @@ public final class Smithing extends ProducingSkillAction {
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			player.animation(new Animation(898));
-			player.getMessages().sendLocalGraphic(2123, (Position) player.getAttr().get("smithing_position").get(), 50);
+			SendGraphic.local(player, 2123, (Position) player.getAttr().get("smithing_position").get(), 50);
 			amount--;
 			if(amount < 1)
 				t.cancel();
@@ -258,7 +259,7 @@ public final class Smithing extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		return canExecute();
 	}
 	

@@ -76,12 +76,9 @@ public final class GameBuffer {
         if (type == MessageType.RAW) {
             throw new IllegalArgumentException();
         }
-
         buf.writeByte(id + encryptor.nextInt());
-
         sizeIndex = buf.writerIndex();
         msgType = type;
-
         if (type == MessageType.VARIABLE) {
             buf.writeByte(0);
         } else if (type == MessageType.VARIABLE_SHORT) {
@@ -92,9 +89,8 @@ public final class GameBuffer {
     /**
      * Ends the building of a message where the size may vary.
      */
-    public void endVarSize() { // daarom dus LMFAO
+    public void endVarSize() {
         int recordedSize = buf.writerIndex() - sizeIndex;
-
         if (msgType == MessageType.VARIABLE) {
             buf.setByte(sizeIndex, recordedSize - 1);
         } else if (msgType == MessageType.VARIABLE_SHORT) {
@@ -106,8 +102,6 @@ public final class GameBuffer {
      * Prepares the buffer for writing bits.
      */
     public void startBitAccess() {
-        checkState(bitIndex == -1, "this ByteMessage instance is already in bit access mode");
-
         bitIndex = buf.writerIndex() << 3;
     }
 
@@ -115,8 +109,6 @@ public final class GameBuffer {
      * Prepares the buffer for writing bytes.
      */
     public void endBitAccess() {
-        checkState(bitIndex != -1, "this ByteMessage instance is not in bit access mode");
-
         buf.writerIndex((bitIndex + 7) >> 3);
         bitIndex = -1;
     }
@@ -181,8 +173,6 @@ public final class GameBuffer {
      * @throws IllegalArgumentException If the number of bits is not between {@code 1} and {@code 32} inclusive.
      */
     public GameBuffer putBits(int amount, int value) {
-        checkState(amount >= 1 || amount <= 32, "Number of bits must be between 1 and 32 inclusive.");
-
         int bytePos = bitIndex >> 3;
         int bitOffset = 8 - (bitIndex & 7);
         bitIndex = bitIndex + amount;
@@ -462,7 +452,6 @@ public final class GameBuffer {
         for(byte value : string.getBytes()) {
             put(value);
         }
-
         put(PacketHelper.TERMINATOR_VALUE);
         return this;
     }

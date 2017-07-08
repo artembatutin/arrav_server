@@ -3,6 +3,8 @@ package net.edge.content.item;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.event.impl.ItemEvent;
+import net.edge.net.packet.out.SendConfig;
+import net.edge.net.packet.out.SendEnergy;
 import net.edge.task.Task;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.effect.CombatEffectType;
@@ -594,7 +596,7 @@ public enum PotionConsumable {
 	public static void onAntiPoisonEffect(Player player, boolean superPotion, int length) {
 		if(player.isPoisoned()) {
 			player.getPoisonDamage().set(0);
-			player.getMessages().sendConfig(174, 0);
+			player.out(new SendConfig(174, 0));
 			player.message("You have been cured of your poison!");
 		}
 		if(superPotion) {
@@ -634,7 +636,7 @@ public enum PotionConsumable {
 	private static void onEnergyEffect(Player player, boolean superPotion) {
 		int amount = superPotion ? 100 : 50;
 		player.setRunEnergy(player.getRunEnergy() + amount);
-		player.getMessages().sendRunEnergy();
+		player.out(new SendEnergy());
 	}
 	
 	/**

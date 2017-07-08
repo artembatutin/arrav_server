@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
+import net.edge.net.packet.out.SendNpcDrop;
 import net.edge.util.rand.Chance;
 import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.npc.drop.NpcDrop;
@@ -48,26 +49,7 @@ public final class NpcInformationPacket implements IncomingPacket {
 								table.getUnique().remove(index);
 								table.sort();
 								player.message("Removed: " + d.toString());
-								player.getMessages().sendNpcInformation(npc, table);
-								return;
-							}
-						}
-						index++;
-					}
-					player.message("Couldn't remove any drop.");
-					return;
-				}
-				if(min == 99) {
-					int index = 0;
-					for(NpcDrop d : table.getUnique()) {
-						String itemName = ItemDefinition.get(item).getName().toLowerCase().replaceAll(" ", "_");
-						if(d != null) {
-							String name = ItemDefinition.get(d.getId()).getName().toLowerCase().replaceAll(" ", "_");
-							if(itemName.equals(name)) {
-								table.getUnique().remove(index);
-								table.sort();
-								player.message("Removed: " + d.toString());
-								player.getMessages().sendNpcInformation(npc, table);
+								player.out(new SendNpcDrop(npc, table));
 								return;
 							}
 						}
@@ -81,7 +63,7 @@ public final class NpcInformationPacket implements IncomingPacket {
 				table.getUnique().add(suggested.toDrop());
 				table.sort();
 				player.message("Added " + suggested.toString());
-				player.getMessages().sendNpcInformation(npc, table);
+				player.out(new SendNpcDrop(npc, table));
 			} else {
 				SUGGESTED.add(suggested);
 				player.message("Your suggestion has been submitted.");
@@ -98,8 +80,8 @@ public final class NpcInformationPacket implements IncomingPacket {
 				player.message("This monster doesn't have any drop table.");
 				return;
 			}
-			player.getMessages().sendNpcInformation(id, drop);
-			player.getMessages().sendInterface(-11);
+			player.out(new SendNpcDrop(id, drop));
+			player.widget(-11);
 		}
 	}
 }

@@ -14,7 +14,7 @@ public final class PestCurrency implements GeneralCurrency {
 	public boolean takeCurrency(Player player, int amount) {
 		if(player.getPest() >= amount) {
 			player.updatePest(-amount);
-			player.getMessages().sendString(player.getPest() + " points", 37007);
+			player.text(37007, player.getPest() + " points");
 			return true;
 		} else {
 			player.message("You do not have enough pest points");
@@ -26,7 +26,7 @@ public final class PestCurrency implements GeneralCurrency {
 	public void recieveCurrency(Player player, int amount) {
 		player.updatePest(amount);
 		player.message("You received " + amount + " pest points!");
-		player.getMessages().sendString(player.getPest() + " points", 37007);
+		player.text(37007, player.getPest() + " points");
 	}
 
 	@Override

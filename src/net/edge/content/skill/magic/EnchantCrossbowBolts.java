@@ -1,7 +1,6 @@
 package net.edge.content.skill.magic;
 
 import com.google.common.collect.ImmutableMap;
-import net.edge.net.packet.PacketWriter;
 import net.edge.world.node.item.container.impl.Inventory;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.SkillData;
@@ -63,62 +62,47 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 		if(buttonId != 75007) {
 			return false;
 		}
-		
 		Skill magic = player.getSkills()[Skills.MAGIC];
-		
 		if(!magic.reqLevel(4)) {
 			player.message("You need a magic level of 4 to cast this spell.");
 			return false;
 		}
 		
-		PacketWriter encoder = player.getMessages();
-		
 		Inventory inventory = player.getInventory();
-		
-		encoder.sendString("@gre@Magic 4", 49009);
-		encoder.sendString((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49012);
-		encoder.sendString((inventory.contains(new Item(556, 20)) ? "@gre@" : "@red@") + "20x", 49013);
-		
-		encoder.sendString((magic.reqLevel(7) ? "@gre@" : "@red@") + "Magic 7", 49017);
-		encoder.sendString((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49020);
-		encoder.sendString((inventory.contains(new Item(558, 10)) ? "@gre@" : "@red@") + "10x", 49021);
-		encoder.sendString((inventory.contains(new Item(555, 10)) ? "@gre@" : "@red@") + "10x", 49088);
-		
-		encoder.sendString((magic.reqLevel(14) ? "@gre@" : "@red@") + "Magic 14", 49025);
-		encoder.sendString((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49028);
-		encoder.sendString((inventory.contains(new Item(557, 20)) ? "@gre@" : "@red@") + "20x", 49029);
-		
-		encoder.sendString((magic.reqLevel(24) ? "@gre@" : "@red@") + "Magic 24", 49033);
-		encoder.sendString((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49036);
-		encoder.sendString((inventory.contains(new Item(555, 20)) ? "@gre@" : "@red@") + "20x", 49037);
-		
-		encoder.sendString((magic.reqLevel(27) ? "@gre@" : "@red@") + "Magic 27", 49041);
-		encoder.sendString((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49044);
-		encoder.sendString((inventory.contains(new Item(556, 30)) ? "@gre@" : "@red@") + "30x", 49089);
-		encoder.sendString((inventory.contains(new Item(561, 10)) ? "@gre@" : "@red@") + "10x", 49045);
-		
-		encoder.sendString((magic.reqLevel(29) ? "@gre@" : "@red@") + "Magic 29", 49049);
-		encoder.sendString((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49052);
-		encoder.sendString((inventory.contains(new Item(554, 20)) ? "@gre@" : "@red@") + "20x", 49053);
-		
-		encoder.sendString((magic.reqLevel(49) ? "@gre@" : "@red@") + "Magic 49", 49057);
-		encoder.sendString((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49090);
-		encoder.sendString((inventory.contains(new Item(554, 50)) ? "@gre@" : "@red@") + "50x", 49060);
-		encoder.sendString((inventory.contains(new Item(565, 10)) ? "@gre@" : "@red@") + "10x", 49061);
-		
-		encoder.sendString((magic.reqLevel(57) ? "@gre@" : "@red@") + "Magic 57", 49065);
-		encoder.sendString((inventory.contains(new Item(557, 100)) ? "@gre@" : "@red@") + "100x", 49068);
-		encoder.sendString((inventory.contains(new Item(563, 20)) ? "@gre@" : "@red@") + "20x", 49069);
-		
-		encoder.sendString((magic.reqLevel(68) ? "@gre@" : "@red@") + "Magic 68", 49073);
-		encoder.sendString((inventory.contains(new Item(563, 150)) ? "@gre@" : "@red@") + "150x", 49076);
-		encoder.sendString((inventory.contains(new Item(566, 10)) ? "@gre@" : "@red@") + "10x", 49077);
-		
-		encoder.sendString((magic.reqLevel(87) ? "@gre@" : "@red@") + "Magic 87", 49081);
-		encoder.sendString((inventory.contains(new Item(554, 200)) ? "@gre@" : "@red@") + "200x", 49084);
-		encoder.sendString((inventory.contains(new Item(560, 10)) ? "@gre@" : "@red@") + "10x", 49085);
-		
-		encoder.sendInterface(49000);
+		player.text("@gre@Magic 4", 49009);
+		player.text((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49012);
+		player.text((inventory.contains(new Item(556, 20)) ? "@gre@" : "@red@") + "20x", 49013);
+		player.text((magic.reqLevel(7) ? "@gre@" : "@red@") + "Magic 7", 49017);
+		player.text((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49020);
+		player.text((inventory.contains(new Item(558, 10)) ? "@gre@" : "@red@") + "10x", 49021);
+		player.text((inventory.contains(new Item(555, 10)) ? "@gre@" : "@red@") + "10x", 49088);
+		player.text((magic.reqLevel(14) ? "@gre@" : "@red@") + "Magic 14", 49025);
+		player.text((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49028);
+		player.text((inventory.contains(new Item(557, 20)) ? "@gre@" : "@red@") + "20x", 49029);
+		player.text((magic.reqLevel(24) ? "@gre@" : "@red@") + "Magic 24", 49033);
+		player.text((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49036);
+		player.text((inventory.contains(new Item(555, 20)) ? "@gre@" : "@red@") + "20x", 49037);
+		player.text((magic.reqLevel(27) ? "@gre@" : "@red@") + "Magic 27", 49041);
+		player.text((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49044);
+		player.text((inventory.contains(new Item(556, 30)) ? "@gre@" : "@red@") + "30x", 49089);
+		player.text((inventory.contains(new Item(561, 10)) ? "@gre@" : "@red@") + "10x", 49045);
+		player.text((magic.reqLevel(29) ? "@gre@" : "@red@") + "Magic 29", 49049);
+		player.text((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49052);
+		player.text((inventory.contains(new Item(554, 20)) ? "@gre@" : "@red@") + "20x", 49053);
+		player.text((magic.reqLevel(49) ? "@gre@" : "@red@") + "Magic 49", 49057);
+		player.text((inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x", 49090);
+		player.text((inventory.contains(new Item(554, 50)) ? "@gre@" : "@red@") + "50x", 49060);
+		player.text((inventory.contains(new Item(565, 10)) ? "@gre@" : "@red@") + "10x", 49061);
+		player.text((magic.reqLevel(57) ? "@gre@" : "@red@") + "Magic 57", 49065);
+		player.text((inventory.contains(new Item(557, 100)) ? "@gre@" : "@red@") + "100x", 49068);
+		player.text((inventory.contains(new Item(563, 20)) ? "@gre@" : "@red@") + "20x", 49069);
+		player.text((magic.reqLevel(68) ? "@gre@" : "@red@") + "Magic 68", 49073);
+		player.text((inventory.contains(new Item(563, 150)) ? "@gre@" : "@red@") + "150x", 49076);
+		player.text((inventory.contains(new Item(566, 10)) ? "@gre@" : "@red@") + "10x", 49077);
+		player.text((magic.reqLevel(87) ? "@gre@" : "@red@") + "Magic 87", 49081);
+		player.text((inventory.contains(new Item(554, 200)) ? "@gre@" : "@red@") + "200x", 49084);
+		player.text((inventory.contains(new Item(560, 10)) ? "@gre@" : "@red@") + "10x", 49085);
+		player.widget(49000);
 		return true;
 	}
 	
@@ -144,7 +128,7 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		return checkMagic();
 	}
 	

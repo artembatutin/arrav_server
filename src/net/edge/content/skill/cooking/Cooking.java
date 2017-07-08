@@ -67,7 +67,7 @@ public final class Cooking extends ProducingSkillAction {
 	@Override
 	public boolean canExecute() {
 		if(!checkCooking()) {
-			player.getMessages().sendCloseWindows();
+			player.closeWidget();
 			return false;
 		}
 		burned = !determineBurn();
@@ -76,7 +76,7 @@ public final class Cooking extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		return checkCooking();
 	}
 	

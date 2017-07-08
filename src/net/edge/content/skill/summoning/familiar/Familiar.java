@@ -1,7 +1,8 @@
 package net.edge.content.skill.summoning.familiar;
 
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.net.packet.PacketWriter;
+import net.edge.net.packet.out.SendInterfaceAnimation;
+import net.edge.net.packet.out.SendInterfaceNpcModel;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
@@ -140,18 +141,17 @@ public abstract class Familiar extends Follower {
 	 * @param player the player we're setting this for.
 	 */
 	public void setInterface(Player player) {
-		PacketWriter encoder = player.getMessages();
 		/* We send the summoning points left out of the total summoning points this player has */
-		encoder.sendString(Integer.toString(player.getSkills()[Skills.SUMMONING].getLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()), 18045);
+		player.text(Integer.toString(player.getSkills()[Skills.SUMMONING].getLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()), 18045);
 		/* We send the special attack points left out of the total amount */
-		encoder.sendString("60/60", 18024);
+		player.text("60/60", 18024);
 		/* We send the familiars name */
-		encoder.sendString(this.getDefinition().getName(), 18028);
+		player.text(this.getDefinition().getName(), 18028);
 		/* Time of our familiar. */
-		player.getMessages().sendString(getDuration() + " minutes", 18043);
+		player.text(18043, getDuration() + " minutes");
 		/* We set the familiars face */
-		encoder.sendNpcModelOnInterface(18021, this.getId());
-		encoder.sendInterfaceAnimation(18021, Expression.CALM.getExpression());
+		player.out(new SendInterfaceNpcModel(18021, this.getId()));
+		player.out(new SendInterfaceAnimation(18021, Expression.CALM.getExpression()));
 		/* We don't know all the face animation for familiars so it's disabled for now TODO */
 		//encoder.sendInterfaceAnimation(18021, Expression.DEFAULT.getExpression());
 		/* We can't force the tab to be viewed because we have multiple gameframes TODO*/
@@ -330,14 +330,14 @@ public abstract class Familiar extends Follower {
 			}
 			//TODO: PROPER DECREASING. Why orb lvl isn't same as skill tab's?
 			player.getSkills()[Skills.SUMMONING].decreaseLevel(1);
-			player.getMessages().sendString(Integer.toString(player.getSkills()[Skills.SUMMONING].getLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()), 18045);
+			player.text(18045, Integer.toString(player.getSkills()[Skills.SUMMONING].getLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()));
 			Skills.refresh(player, Skills.SUMMONING);
 
 			interval = !interval;
 			if(interval)
 				return;
 			familiar.setDuration(familiar.getDuration() - 1);
-			player.getMessages().sendString(familiar.getDuration() + " minutes", 18043);
+			player.text(18043, familiar.getDuration() + " minutes");
 
 			if(familiar.getDuration() < 1 || player.getSkills()[Skills.SUMMONING].getLevel() == 0) {
 				familiar.dismiss(player, false);

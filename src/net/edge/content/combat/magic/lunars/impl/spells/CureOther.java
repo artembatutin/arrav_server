@@ -1,6 +1,7 @@
 package net.edge.content.combat.magic.lunars.impl.spells;
 
 import net.edge.content.combat.magic.lunars.impl.LunarCombatSpell;
+import net.edge.net.packet.out.SendConfig;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -26,7 +27,7 @@ public final class CureOther extends LunarCombatSpell {
 	public void effect(Player caster, EntityNode victim) {
 		if(victim.isPlayer() && caster.isPlayer() && victim.isPoisoned()) {
 			Player player = victim.toPlayer();
-			player.getMessages().sendConfig(174, 0);
+			player.out(new SendConfig(174, 0));
 			player.message("Your poison has been cured by " + caster.toPlayer().getFormatUsername());
 		}
 		

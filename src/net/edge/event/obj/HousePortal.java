@@ -31,7 +31,7 @@ public class HousePortal extends EventInitializer {
 						}
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 						//TODO
-						player.getMessages().sendCloseWindows();
+						player.closeWidget();
 					}
 				}, "Enter your house", " Enter your house (building mode)", "Enter friend's house"),
 				new StatementDialogue("You currently don't own a house,", "want to buy one for 5M?"),
@@ -39,7 +39,7 @@ public class HousePortal extends EventInitializer {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						Construction.buyHouse(player);
 					}
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 				}, "Yes I'll buy", " No, too expensive."));*/
 				return true;
 			}

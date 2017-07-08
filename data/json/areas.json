@@ -112,20 +112,10 @@
     "location": [
       {
         "square": {
-          "swX": 3390,
-          "swY": 3259,
-          "neX": 3362,
-          "neY": 3243,
-          "z": 0
-        },
-        "summon": false
-      },
-      {
-        "square": {
-          "swX": 3359,
-          "swY": 3259,
-          "neX": 3331,
-          "neY": 3243,
+          "swX": 3328,
+          "swY": 3203,
+          "neX": 3394,
+          "neY": 3282,
           "z": 0
         },
         "summon": false

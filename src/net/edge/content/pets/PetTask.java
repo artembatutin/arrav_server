@@ -1,12 +1,9 @@
 package net.edge.content.pets;
 
 import net.edge.task.Task;
-import net.edge.util.Utility;
 import net.edge.content.TabInterface;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
-
-import java.util.Optional;
 
 public final class PetTask extends Task {
 	
@@ -24,7 +21,7 @@ public final class PetTask extends Task {
 	protected void execute() {
 		//hunger update.
 		pet.getProgress().updateHunger();
-		player.getMessages().sendString(((int) pet.getProgress().getHunger()) + "%", 19032);
+		player.text(19032, ((int) pet.getProgress().getHunger()) + "%");
 		if(pet.getProgress().getHunger() >= 100.0) {
 			this.cancel();
 			World.get().getNpcs().remove(pet);
@@ -40,7 +37,7 @@ public final class PetTask extends Task {
 		//growth update if next pet is possible
 		if(pet.getProgress().getData().getPolicy().getNext().isPresent()) {
 			pet.getProgress().updateGrowth();
-			player.getMessages().sendString(((int) pet.getProgress().getGrowth()) + "%", 19030);
+			player.text(19030, ((int) pet.getProgress().getGrowth()) + "%");
 			if(pet.getProgress().getGrowth() >= 100) {
 				this.cancel();
 				player.getPetManager().progressed();

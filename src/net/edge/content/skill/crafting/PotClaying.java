@@ -3,6 +3,8 @@ package net.edge.content.skill.crafting;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.event.impl.ObjectEvent;
+import net.edge.net.packet.out.SendEnterAmount;
+import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
@@ -69,7 +71,7 @@ public final class PotClaying extends ProducingSkillAction {
 		}
 		
 		if(data.amount == -1) {
-			player.getMessages().sendEnterAmount("How many you would like to register?", s -> () -> PotClaying.create(player, data, Integer.parseInt(s), player.getAttr().get("crafting_potfired").getBoolean()));
+			player.out(new SendEnterAmount("How many you would like to register?", s -> () -> PotClaying.create(player, data, Integer.parseInt(s), player.getAttr().get("crafting_potfired").getBoolean())));
 			return true;
 		}
 		create(player, data, data.amount, player.getAttr().get("crafting_potfired").getBoolean());
@@ -93,20 +95,20 @@ public final class PotClaying extends ProducingSkillAction {
 		ObjectEvent click = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
-				player.getMessages().sendString("What would you like to make?", 8879);
-				player.getMessages().sendItemModelOnInterface(8941, 105, 1931);
-				player.getMessages().sendItemModelOnInterface(8942, 120, 2313);
-				player.getMessages().sendItemModelOnInterface(8943, 100, 1923);
-				player.getMessages().sendItemModelOnInterface(8944, 100, 5350);
-				player.getMessages().sendItemModelOnInterface(8945, 150, 4440);
-				player.getMessages().sendString("\\n\\n\\n\\nPot", 8949);
-				player.getMessages().sendString("\\n\\n\\n\\nPie Dish", 8953);
-				player.getMessages().sendString("\\n\\n\\n\\nBowl", 8957);
-				player.getMessages().sendString("\\n\\n\\n\\nPlant pot", 8961);
-				player.getMessages().sendString("\\n\\n\\n\\nPot lid", 8965);
+				player.text(8879, "What would you like to make?");
+				player.out(new SendItemModelInterface(8941, 105, 1931));
+				player.out(new SendItemModelInterface(8942, 120, 2313));
+				player.out(new SendItemModelInterface(8943, 100, 1923));
+				player.out(new SendItemModelInterface(8944, 100, 5350));
+				player.out(new SendItemModelInterface(8945, 150, 4440));
+				player.text(8949, "\\n\\n\\n\\nPot");
+				player.text(8953, "\\n\\n\\n\\nPie Dish");
+				player.text(8957, "\\n\\n\\n\\nBowl");
+				player.text(8961, "\\n\\n\\n\\nPlant pot");
+				player.text(8965, "\\n\\n\\n\\nPot lid");
 				player.getAttr().get("crafting_potfired").set(true);
 				player.getAttr().get("crafting_pots").set(true);
-				player.getMessages().sendChatInterface(8938);
+				player.chatWidget(8938);
 				return true;
 			}
 		};
@@ -125,20 +127,20 @@ public final class PotClaying extends ProducingSkillAction {
 			return false;
 		}
 		
-		player.getMessages().sendString("What would you like to make?", 8879);
-		player.getMessages().sendItemModelOnInterface(8941, 105, 1787);
-		player.getMessages().sendItemModelOnInterface(8942, 120, 1789);
-		player.getMessages().sendItemModelOnInterface(8943, 100, 1791);
-		player.getMessages().sendItemModelOnInterface(8944, 100, 5352);
-		player.getMessages().sendItemModelOnInterface(8945, 150, 4438);
-		player.getMessages().sendString("\\n\\n\\n\\nPot", 8949);
-		player.getMessages().sendString("\\n\\n\\n\\nPie Dish", 8953);
-		player.getMessages().sendString("\\n\\n\\n\\nBowl", 8957);
-		player.getMessages().sendString("\\n\\n\\n\\nPlant pot", 8961);
-		player.getMessages().sendString("\\n\\n\\n\\nPot lid", 8965);
+		player.text(8879, "What would you like to make?");
+		player.out(new SendItemModelInterface(8941, 105, 1787));
+		player.out(new SendItemModelInterface(8942, 120, 1789));
+		player.out(new SendItemModelInterface(8943, 100, 1791));
+		player.out(new SendItemModelInterface(8944, 100, 5352));
+		player.out(new SendItemModelInterface(8945, 150, 4438));
+		player.text(8949, "\\n\\n\\n\\nPot");
+		player.text(8953, "\\n\\n\\n\\nPie Dish");
+		player.text(8957, "\\n\\n\\n\\nBowl");
+		player.text(8961, "\\n\\n\\n\\nPlant pot");
+		player.text(8965, "\\n\\n\\n\\nPot lid");
 		player.getAttr().get("crafting_potfired").set(false);
 		player.getAttr().get("crafting_pots").set(true);
-		player.getMessages().sendChatInterface(8938);
+		player.chatWidget(8938);
 		return true;
 	}
 	
@@ -179,7 +181,7 @@ public final class PotClaying extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		return checkCrafting();
 	}
 	

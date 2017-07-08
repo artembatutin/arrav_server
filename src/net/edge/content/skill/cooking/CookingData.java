@@ -1,6 +1,7 @@
 package net.edge.content.skill.cooking;
 
 import com.google.common.collect.ImmutableSet;
+import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
@@ -52,7 +53,7 @@ public enum CookingData {
 	private final int burntId;
 	private final double experience;
 	
-	private CookingData(int rawId, int level, int cookedId, int masterLevel, int burntId, double experience) {
+	CookingData(int rawId, int level, int cookedId, int masterLevel, int burntId, double experience) {
 		this.rawId = rawId;
 		this.level = level;
 		this.cookedId = cookedId;
@@ -95,9 +96,9 @@ public enum CookingData {
 	}
 	
 	public void openInterface(Player player) {
-		player.getMessages().sendChatInterface(1743);
-		player.getMessages().sendItemModelOnInterface(13716, 190, rawId);
-		player.getMessages().sendString("\\n\\n\\n\\n\\n" + ItemDefinition.DEFINITIONS[rawId].getName(), 13717);
+		player.chatWidget(1743);
+		player.out(new SendItemModelInterface(13716, 190, rawId));
+		player.text(13717, "\\n\\n\\n\\n\\n" + ItemDefinition.DEFINITIONS[rawId].getName());
 	}
 	
 	public static CookingData forItem(Item item) {

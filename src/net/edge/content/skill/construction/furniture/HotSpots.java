@@ -5,6 +5,7 @@ import net.edge.content.skill.construction.Construction;
 import net.edge.content.skill.construction.data.Constants;
 import net.edge.content.skill.construction.room.RoomManipulation;
 import net.edge.event.impl.ObjectEvent;
+import net.edge.net.packet.out.SendObjectsConstruction;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectNode;
 
@@ -537,7 +538,7 @@ public enum HotSpots {
 				public boolean click(Player player, ObjectNode object, int click) {
 					if(!player.getHouse().get().isBuilding())
 						return true;
-					player.getMessages().sendConstruction(spot);
+					player.out(new SendObjectsConstruction(spot));
 					return true;
 				}
 			};
@@ -562,11 +563,11 @@ public enum HotSpots {
 								} else if(t.equals(THIRD_OPTION)) {
 									RoomManipulation.deleteRoom(player, player.getPosition().getZ());
 								}
-								player.getMessages().sendCloseWindows();
+								player.closeWidget();
 							}, "Rotate clockwise", "Rotate counter-clockwise", "Remove")
 					);
 				} else
-					player.getMessages().sendInterface(-14);
+					player.widget(-14);
 				return true;
 			}
 		};

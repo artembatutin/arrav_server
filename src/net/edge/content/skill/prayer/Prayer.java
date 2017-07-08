@@ -1,6 +1,8 @@
 package net.edge.content.skill.prayer;
 
 import com.google.common.collect.ImmutableList;
+import net.edge.net.packet.out.SendConfig;
+import net.edge.net.packet.out.SendForceTab;
 import net.edge.util.TextUtils;
 import net.edge.content.TabInterface;
 import net.edge.content.minigame.MinigameHandler;
@@ -455,7 +457,7 @@ public enum Prayer {
 		}
 		
 		if(!MinigameHandler.execute(player, m -> m.canPray(player, prayer.get()))) {
-			player.getMessages().sendConfig(prayer.get().getConfig(), 0);
+			player.out(new SendConfig(prayer.get().getConfig(), 0));
 			return false;
 		}
 		
@@ -472,7 +474,7 @@ public enum Prayer {
 			sb.append("You need to recharge your prayer at an altar!");
 		}
 		if(sb.length() > 0) {
-			player.getMessages().sendConfig(prayer.get().getConfig(), 0);
+			player.out(new SendConfig(prayer.get().getConfig(), 0));
 			player.message(sb.toString());
 			return false;
 		}
@@ -485,7 +487,7 @@ public enum Prayer {
 		if(prayer.get().deactivate().isPresent())
 			Arrays.stream(prayer.get().deactivate().get()).forEach(it -> it.deactivate(player));
 		player.getPrayerActive().add(prayer.get());
-		player.getMessages().sendConfig(prayer.get().getConfig(), 1);
+		player.out(new SendConfig(prayer.get().getConfig(), 1));
 		if(prayer.get().getHeadIcon() != -1) {
 			player.setHeadIcon(prayer.get().getHeadIcon());
 			player.getFlags().flag(UpdateFlag.APPEARANCE);
@@ -506,11 +508,11 @@ public enum Prayer {
 			} else {
 				if(player.getAttr().get("quick_pray_on").getBoolean()) {
 					player.getQuickPrayers().forEach(prayer -> prayer.deactivate(player));
-					player.getMessages().sendConfig(175, 0);
+					player.out(new SendConfig(175, 0));
 					player.getAttr().get("quick_pray_on").set(false);
 				} else {
 					player.getQuickPrayers().forEach(prayer -> Prayer.activate(player, false, prayer.buttonId));
-					player.getMessages().sendConfig(175, 1);
+					player.out(new SendConfig(175, 1));
 					player.getAttr().get("quick_pray_on").set(true);
 				}
 			}
@@ -518,12 +520,12 @@ public enum Prayer {
 		}
 		if(buttonId == 49) {//selecting
 			TabInterface.PRAYER.sendInterface(player, player.getPrayerBook() == PrayerBook.CURSES ? 18200 : 17200);
-			player.getMessages().sendForceTab(TabInterface.PRAYER);
+			player.out(new SendForceTab(TabInterface.PRAYER));
 			VALUES.stream().filter(p -> p.getType() == player.getPrayerBook()).forEach(p -> {
 				if(player.getQuickPrayers().contains(p)) {
-					player.getMessages().sendConfig(p.getCheckmark(), 1);
+					player.out(new SendConfig(p.getCheckmark(), 1));
 				} else {
-					player.getMessages().sendConfig(p.getCheckmark(), 0);
+					player.out(new SendConfig(p.getCheckmark(), 0));
 				}
 			});
 			
@@ -559,7 +561,7 @@ public enum Prayer {
 		if(prayer.get().deactivate().isPresent())
 			Arrays.stream(pray.deactivate().get()).forEach(it -> it.deselectQuickPrayer(player));
 		player.getSelectedQuickPrayers().add(prayer.get());
-		player.getMessages().sendConfig(prayer.get().getCheckmark(), 1);
+		player.out(new SendConfig(prayer.get().getCheckmark(), 1));
 		return true;
 	}
 	
@@ -572,7 +574,7 @@ public enum Prayer {
 		if(!Prayer.isSelected(player, this))
 			return;
 		player.getSelectedQuickPrayers().remove(this);
-		player.getMessages().sendConfig(checkmark, 0);
+		player.out(new SendConfig(checkmark, 0));
 	}
 	
 	/**
@@ -586,13 +588,13 @@ public enum Prayer {
 		if(!onDeactivation(player))
 			return;
 		player.getPrayerActive().remove(this);
-		player.getMessages().sendConfig(config, 0);
+		player.out(new SendConfig(config, 0));
 		if(headIcon != -1) {
 			player.setHeadIcon(-1);
 			player.getFlags().flag(UpdateFlag.APPEARANCE);
 		}
 		if(player.getPrayerActive().isEmpty()) {
-			player.getMessages().sendConfig(175, 0);
+			player.out(new SendConfig(175, 0));
 			player.getAttr().get("quick_pray_on").set(false);
 		}
 	}

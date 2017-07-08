@@ -2,6 +2,8 @@ package net.edge.content.skill.crafting;
 
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.net.packet.out.SendEnterAmount;
+import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
@@ -13,7 +15,6 @@ import net.edge.world.node.item.Item;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -74,7 +75,7 @@ public final class LeatherWorking extends ProducingSkillAction {
 		LeatherData data = LeatherData.VALUES.get(buttonId);
 		
 		if(buttonId == 9118) {
-			player.getMessages().sendCloseWindows();
+			player.closeWidget();
 			return false;
 		}
 		
@@ -83,10 +84,10 @@ public final class LeatherWorking extends ProducingSkillAction {
 		}
 
 		if(data.amount == -1) {
-			player.getMessages().sendEnterAmount("How many would you like to craft?", s -> () -> {
+			player.out(new SendEnterAmount("How many would you like to craft?", s -> () -> {
 				LeatherWorking leatherWorking = new LeatherWorking(player, data, Integer.parseInt(s));
 				leatherWorking.start();
-			});
+			}));
 			return true;
 		}
 
@@ -104,14 +105,14 @@ public final class LeatherWorking extends ProducingSkillAction {
 	 */
 	public static boolean openInterface(Player player, Item itemUsed, Item usedOn) {
 		if(itemUsed.getId() == NEEDLE.getId() && usedOn.getId() == HARD_LEATHER.getId() || itemUsed.getId() == HARD_LEATHER.getId() && usedOn.getId() == NEEDLE.getId()) {
-			player.getMessages().sendString("\\n\\n\\n\\n\\n" + HARD_LEATHER.getDefinition().getName(), 2799);
-			player.getMessages().sendItemModelOnInterface(1746, 150, 1131);
-			player.getMessages().sendString("How many would you like to make?", 2800);
-			player.getMessages().sendChatInterface(4429);
+			player.text(2799, "\\n\\n\\n\\n\\n" + HARD_LEATHER.getDefinition().getName());
+			player.out(new SendItemModelInterface(1746, 150, 1131));
+			player.text(2800, "How many would you like to make?");
+			player.chatWidget(4429);
 			return true;
 		}
 		if(itemUsed.getId() == NEEDLE.getId() && usedOn.getId() == LEATHER.getId() || itemUsed.getId() == LEATHER.getId() && usedOn.getId() == NEEDLE.getId()) {
-			player.getMessages().sendInterface(2311);
+			player.widget(2311);
 			return true;
 		}
 		return false;
@@ -155,7 +156,7 @@ public final class LeatherWorking extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		return checkCrafting();
 	}
 	

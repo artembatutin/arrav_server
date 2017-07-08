@@ -1,5 +1,6 @@
 package net.edge.content.clanchat;
 
+import net.edge.net.packet.out.SendClanMessage;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
@@ -63,7 +64,7 @@ public final class ClanMember {
 		member.setMute(true);
 		clan.getMuted().add(member.getPlayer().getCredentials().getUsername());
 		member.sendMessage("You are now muted in the clan chat.");
-		World.getClanManager().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, clan);
+		World.getClanManager().update(ClanChatUpdate.MEMBER_REFRESH, index, clan);
 	}
 	
 	/**
@@ -79,7 +80,7 @@ public final class ClanMember {
 		member.setMute(false);
 		member.getClan().getMuted().add(member.getPlayer().getCredentials().getUsername());
 		member.sendMessage("You are now unmuted from the clan chat.");
-		World.getClanManager().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, clan);
+		World.getClanManager().update(ClanChatUpdate.MEMBER_REFRESH, index, clan);
 	}
 	
 	/**
@@ -145,7 +146,7 @@ public final class ClanMember {
 		for(ClanMember member : clan.getMembers()) {
 			if(member == null)
 				continue;
-			member.getPlayer().getMessages().sendClanMessage(author, message, clanName, rank);
+			member.getPlayer().out(new SendClanMessage(author, message, clanName, rank));
 		}
 	}
 	
@@ -177,15 +178,16 @@ public final class ClanMember {
 		} else {
 			rank = ClanChatRank.forAction(action, false, true);
 		}
+		System.out.println(interfaceId);
 		if(rank.isPresent()) {
 			if(member.getRank().getValue() < rank.get().getValue()) {
 				//member.getPlayer().getMessages().sendClanMessage("", "You were promoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER);
 				member.setRank(rank.get());
-				World.getClanManager().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, clan);
+				//World.getClanManager().update(ClanChatUpdate.MEMBER_REFRESH, index, this);
 			} else if(member.getRank().getValue() > rank.get().getValue()) {
 				//member.getPlayer().getMessages().sendClanMessage("", "You were demoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER);
 				member.setRank(rank.get());
-				World.getClanManager().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, clan);
+				//World.getClanManager().update(ClanChatUpdate.MEMBER_REFRESH, index, this);
 			}
 		}
 	}
@@ -249,7 +251,7 @@ public final class ClanMember {
 	 * @param text the text to send.
 	 */
 	public void sendMessage(String text) {
-		player.getMessages().sendClanMessage("", text, clan.getName(), Rights.PLAYER);
+		player.out(new SendClanMessage("", text, clan.getName(), Rights.PLAYER));
 	}
 	
 }

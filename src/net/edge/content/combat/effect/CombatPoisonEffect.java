@@ -1,6 +1,7 @@
 package net.edge.content.combat.effect;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.net.packet.out.SendConfig;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Hit;
 import net.edge.world.PoisonType;
@@ -41,7 +42,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 			Player player = (Player) t;
 			if(player.getPoisonImmunity().get() > 0 || t.isDead())
 				return false;
-			player.getMessages().sendConfig(174, 1);
+			player.out(new SendConfig(174, 1));
 			player.message("You have been poisoned!");
 		}
 		t.getPoisonDamage().set(t.getPoisonType().getDamage());

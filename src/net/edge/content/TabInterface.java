@@ -1,5 +1,6 @@
 package net.edge.content;
 
+import net.edge.net.packet.out.SendTab;
 import net.edge.world.node.entity.player.Player;
 
 /**
@@ -50,7 +51,7 @@ public enum TabInterface {
 	 * @param id     The id of the interface to send.
 	 */
 	public void sendInterface(Player player, int id) {
-		player.getMessages().sendSidebarInterface(id, this);
+		player.out(new SendTab(id, this));
 	}
 	
 	public int getNew() {

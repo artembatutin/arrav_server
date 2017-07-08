@@ -123,7 +123,7 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 					teleport(player, spell);
 				}
-				player.getMessages().sendCloseWindows();
+				player.closeWidget();
 			}, "I don't mind going to the @red@Wilderness@bla@.", "I'd rather stay here."));
 			return false;
 		} else {

@@ -3,6 +3,8 @@ package net.edge.content.skill.crafting;
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.net.packet.out.SendEnterAmount;
+import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
@@ -59,7 +61,7 @@ public final class Spinning extends ProducingSkillAction {
 		int amount = BUTTON_FOR_AMOUNT.get(buttonId);
 
 		if(amount == -1) {
-			player.getMessages().sendEnterAmount("How many you would like to spin?", s -> () -> Spinning.create(player, (SpinningData) player.getAttr().get("crafting_spinning").get(), Integer.parseInt(s)));
+			player.out(new SendEnterAmount("How many you would like to spin?", s -> () -> Spinning.create(player, (SpinningData) player.getAttr().get("crafting_spinning").get(), Integer.parseInt(s))));
 			return true;
 		}
 		if(amount == -2) {
@@ -98,11 +100,11 @@ public final class Spinning extends ProducingSkillAction {
 			return false;
 		}
 		
-		player.getMessages().sendString("\\n\\n\\n\\n\\n" + data.produced.getDefinition().getName(), 2799);
-		player.getMessages().sendItemModelOnInterface(1746, 200, data.produced.getId());
+		player.text(2799, "\\n\\n\\n\\n\\n" + data.produced.getDefinition().getName());
+		player.out(new SendItemModelInterface(1746, 200, data.produced.getId()));
 		player.getAttr().get("crafting_spin").set(true);
 		player.getAttr().get("crafting_spinning").set(data);
-		player.getMessages().sendChatInterface(4429);
+		player.chatWidget(4429);
 		return true;
 	}
 	
@@ -143,7 +145,7 @@ public final class Spinning extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		return checkCrafting();
 	}
 	

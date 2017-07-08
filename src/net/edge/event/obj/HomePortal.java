@@ -19,13 +19,13 @@ public class HomePortal extends EventInitializer {
 			public boolean click(Player player, ObjectNode object, int click) {
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.getMessages().sendInterface(-4);
+						player.widget(-4);
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.getMessages().sendInterface(-6);
+						player.widget(-6);
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.getMessages().sendInterface(-9);
+						player.widget(-9);
 					} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
-						player.getMessages().sendInterface(-7);
+						player.widget(-7);
 					}
 				}, "Skills", "Minigames", "Monsters", "Bosses"));
 				return true;
@@ -60,11 +60,11 @@ public class HomePortal extends EventInitializer {
 			public boolean click(Player player, ObjectNode object, int click) {
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.getMessages().sendInterface(-9);
+						player.widget(-9);
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.getMessages().sendInterface(-7);
+						player.widget(-7);
 					} else {
-						player.getMessages().sendCloseWindows();
+						player.closeWidget();
 					}
 				}, "@red@This will be clan bossing hub soon!", "Monsters", "Bosses"));
 				return true;

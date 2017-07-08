@@ -3,6 +3,7 @@ package net.edge.content.skill.agility.impl.barb;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.event.impl.ObjectEvent;
+import net.edge.net.packet.out.SendObjectAnimation;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.content.skill.Skills;
@@ -112,7 +113,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 
 			@Override
 			public void prerequisites(Player player1) {
-				player1.getMessages().sendObjectAnimation(new Position(player1.getPosition().getX(), 3550), 497, ObjectType.GENERAL_PROP, ObjectDirection.WEST);
+				player1.out(new SendObjectAnimation(new Position(player1.getPosition().getX(), 3550), 497, ObjectType.GENERAL_PROP, ObjectDirection.WEST));
 			}
 		}),
 		LOG_BALANCE(new int[]{43595}, ObstacleType.LOG_BALANCE, player1 -> new Walkable(new Position(2551, 3546, 0), new Position(2541, 3546, 0), ObstacleType.LOG_BALANCE.getAnimation(), 35, 13.7)),
@@ -187,7 +188,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			@Override
 			public void prerequisites(Player player1) {
 				player1.facePosition(new Position(player1.getPosition().getX(), player1.getPosition().getY() + 1));
-				player1.getMessages().sendObjectAnimation(new Position(2532, 3544, 3), 11819, ObjectType.GENERAL_PROP, ObjectDirection.EAST);
+				player1.out(new SendObjectAnimation(new Position(2532, 3544, 3), 11819, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
 			}
 		}),
 		BALANCE_BEAM(new int[]{43527}, ObstacleType.BALANCE_BEAM, player1 -> new BalanceBeam()),

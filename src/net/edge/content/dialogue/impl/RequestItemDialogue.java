@@ -1,5 +1,6 @@
 package net.edge.content.dialogue.impl;
 
+import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.util.ActionListener;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.DialogueBuilder;
@@ -62,12 +63,14 @@ public final class RequestItemDialogue extends Dialogue {
 			dialogue.getPlayer().getInventory().remove(item);
 			action.ifPresent(ActionListener::execute);
 			reward.ifPresent(dialogue.getPlayer().getInventory()::addOrDrop);
-			dialogue.getPlayer().getMessages().sendString(getText()[0], 308);
+			dialogue.getPlayer().text(308, getText()[0]);
 			int id = displayReward && reward.isPresent() ? reward.get().getId() : item.getId();
-			dialogue.getPlayer().getMessages().sendItemModelOnInterface(307, 200, id);
-			dialogue.getPlayer().getMessages().sendChatInterface(306);
+			dialogue.getPlayer().out(new SendItemModelInterface(307, 200, id));
+			dialogue.getPlayer().chatWidget(306);
 		} else {
-			dialogue.getPlayer().getMessages().sendChatboxString("You don't have the requested item...");
+			dialogue.getPlayer().text("You don't have the requested item...", 357);
+			dialogue.getPlayer().text("Click here to continue", 358);
+			dialogue.getPlayer().chatWidget(356);
 		}
 	}
 	

@@ -71,20 +71,20 @@ public class TraderStan extends EventInitializer {
 					}
 				}, "Search all shops.", "Search for item", "Open my shop.", "Nevermind"));
 				app.chain(new PlayerDialogue("I would like to search for all shops.").attachAfter(() -> {
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 					//open all the shops here
 				}));
 				app.chain(new PlayerDialogue("I would like to search for an item.").attachAfter(() -> {
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 					//search for item
 				}));
 				app.chain(new PlayerDialogue("I would like to open my shop.").attachAfter(() -> {
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 					//open own shop
 				}));
 				app.chain(new PlayerDialogue("Nevermind..."));
 				app.start();*/
-				player.getMessages().sendInterface(-13);
+				player.widget(-13);
 				return true;
 			}
 		};

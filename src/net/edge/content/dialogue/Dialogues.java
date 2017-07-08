@@ -32,7 +32,6 @@ public final class Dialogues {
 		}
 		
 		Optional<Consumer<OptionDialogue.OptionType>> value = player.getDialogueBuilder().getOptionListener();
-		
 		if(!value.isPresent() || player.getDialogueBuilder().getChain().isEmpty()) {
 			return false;
 		}

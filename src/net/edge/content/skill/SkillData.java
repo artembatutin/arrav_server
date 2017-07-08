@@ -2,6 +2,8 @@ package net.edge.content.skill;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.net.packet.out.SendEnterAmount;
+import net.edge.net.packet.out.SendSkillGoal;
 import net.edge.util.TextUtils;
 import net.edge.world.node.entity.player.Player;
 
@@ -103,16 +105,16 @@ public enum SkillData {
 		}
 		
 		player.getAttr().get("goalSettingSkill").set(data.getId());
-		player.getMessages().sendEnterAmount("What level you would like to accomplish?", t -> () -> {
+		player.out(new SendEnterAmount("What level you would like to accomplish?", t -> () -> {
 			int skill = data.id;
 			int amount = Integer.parseInt(t);
 			if(amount <= player.getSkills()[skill].getRealLevel() || amount > 99) {
 				player.message("You cannot set this goal.");
 				return;
 			}
-			player.getMessages().sendSkillGoal(skill, amount);
+			player.out(new SendSkillGoal(skill, amount));
 			player.getSkills()[skill].setGoal(amount);
-		});
+		}));
 		return true;
 	}
 	

@@ -111,7 +111,7 @@ public enum GodwarsFaction {
 					
 					player.getGodwarsKillcount()[faction.id] -= 20;
 					player.move(faction.chamberPosition);
-					player.getMessages().sendString(Integer.toString(player.getGodwarsKillcount()[faction.id]), 16216 + faction.id);
+					player.text(16216 + faction.id, Integer.toString(player.getGodwarsKillcount()[faction.id]));
 					return true;
 				}
 			};
@@ -139,11 +139,11 @@ public enum GodwarsFaction {
 			return false;
 		}
 		if(player.getGodwarsKillcount()[s.faction.id] == 100) {
-			player.getMessages().sendString("Max.", 16216 + s.faction.id);
+			player.text(16216 + s.faction.id, "Max.");
 			return true;
 		}
 		player.getGodwarsKillcount()[s.faction.id]++;
-		player.getMessages().sendString(Integer.toString(player.getGodwarsKillcount()[s.faction.id]), 16216 + s.faction.id);
+		player.text(16216 + s.faction.id, Integer.toString(player.getGodwarsKillcount()[s.faction.id]));
 		return true;
 	}
 
@@ -153,7 +153,7 @@ public enum GodwarsFaction {
 	 */
 	public static void refreshInterface(Player player) {
 		for(int i = 0; i <= 3; i++) {
-			player.getMessages().sendString(Integer.toString(player.getGodwarsKillcount()[i]), 16216 + i);
+			player.text(16216 + i, Integer.toString(player.getGodwarsKillcount()[i]));
 		}
 	}
 

@@ -34,7 +34,7 @@ public class WeaponRack extends EventInitializer {
 						player.getInventory().add(new Item(13405));
 						player.getInventory().add(new Item(11212, 200));
 					}
-					player.getMessages().sendCloseWindows();
+					player.closeInterface();
 				}, "Dragon claws", " Armadyl godsword", "Whip", "Dark bow"));
 				player.message("Lended items will be removed when you get out of here.");
 				return true;

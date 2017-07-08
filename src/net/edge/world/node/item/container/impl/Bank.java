@@ -1,5 +1,8 @@
 package net.edge.world.node.item.container.impl;
 
+import net.edge.net.packet.out.SendConfig;
+import net.edge.net.packet.out.SendContainer;
+import net.edge.net.packet.out.SendInventoryInterface;
 import net.edge.world.node.item.container.ItemContainer;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.world.node.entity.player.Player;
@@ -70,10 +73,10 @@ public final class Bank {
 		}
 		shiftAll();
 		player.getAttr().get("banking").set(true);
-		player.getMessages().sendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0);
-		player.getMessages().sendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0);
-		player.getMessages().sendInventoryInterface(-3, 5063);
-		player.getMessages().sendItemsOnInterface(5064, this.player.getInventory());
+		player.out(new SendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0));
+		player.out(new SendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0));
+		player.out(new SendInventoryInterface(-3, 5063));
+		player.out(new SendContainer(5064, this.player.getInventory()));
 		if(!bulkStartSent) {
 			refreshAll();
 			bulkStartSent = true;

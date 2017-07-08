@@ -96,9 +96,9 @@ public final class Slayer {
 	 * @param player the player interacting with the panel.
 	 */
 	public static void openPanel(Player player) {
-		player.getMessages().sendInterface(-10);
-		player.getMessages().sendString(player.getSlayerPoints() + "", 252);
-		player.getMessages().sendString(player.getSlayer().isPresent() ? (TextUtils.capitalize(player.getSlayer().get().getKey().toLowerCase() + " x " + player.getSlayer().get().getAmount())) : "none", 253);
+		player.widget(-10);
+		player.text(252, player.getSlayerPoints() + "");
+		player.text(253, player.getSlayer().isPresent() ? (TextUtils.capitalize(player.getSlayer().get().getKey().toLowerCase() + " x " + player.getSlayer().get().getAmount())) : "none");
 		updateBlocked(player);
 	}
 	
@@ -117,7 +117,7 @@ public final class Slayer {
 							} else {
 								player.getDialogueBuilder().last();
 							}
-						}, "Can I get a new task?", "How many kills are left?", "Nevermind"), new PlayerDialogue("How many kills are left?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."} : new String[]{"You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."}).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Can I get a new task?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You already are assigned to a slayer task..."} : new String[]{"Come speak to me or another slayer master ", "in order to get assigned to a task."}).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Nevermind").attach(() -> player.getMessages().sendCloseWindows())
+						}, "Can I get a new task?", "How many kills are left?", "Nevermind"), new PlayerDialogue("How many kills are left?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."} : new String[]{"You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."}).attach(() -> player.closeWidget()), new PlayerDialogue("Can I get a new task?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You already are assigned to a slayer task..."} : new String[]{"Come speak to me or another slayer master ", "in order to get assigned to a task."}).attach(() -> player.closeWidget()), new PlayerDialogue("Nevermind").attach(() -> player.closeWidget())
 				);
 				return true;
 			}
@@ -166,7 +166,7 @@ public final class Slayer {
 						} else {
 							player.getDialogueBuilder().skip();
 						}
-					}, "Buy the slayer gem", "Nevermind"), new RequestItemDialogue(new Item(995, 10000), new Item(4155), "You hand over 10,000 coins to buy \\na slayer gem.", Optional.empty()).attach(() -> player.getMessages().sendCloseWindows()), new PlayerDialogue("Nevermind").attach(() -> player.getMessages().sendCloseWindows()));
+					}, "Buy the slayer gem", "Nevermind"), new RequestItemDialogue(new Item(995, 10000), new Item(4155), "You hand over 10,000 coins to buy \\na slayer gem.", Optional.empty()).attach(() -> player.closeWidget()), new PlayerDialogue("Nevermind").attach(() -> player.closeWidget()));
 					return true;
 				}
 			};
@@ -308,9 +308,9 @@ public final class Slayer {
 		for(int i = 0; i < 5; i++) {
 			String blocked = player.getBlockedTasks()[i];
 			if(blocked == null)
-				player.getMessages().sendString("empty", 254 + i);
+				player.text(254 + i, "empty");
 			else
-				player.getMessages().sendString(TextUtils.capitalize(blocked.toLowerCase()), 254 + i);
+				player.text(254 + i, TextUtils.capitalize(blocked.toLowerCase()));
 		}
 	}
 	
@@ -355,9 +355,9 @@ public final class Slayer {
 			}
 		}, "Yes, teleport me", "No, i'll stay here"));
 
-		app.chain(new PlayerDialogue("Nah, i'll stay here").attachAfter(() -> player.getMessages().sendCloseWindows()));
+		app.chain(new PlayerDialogue("Nah, i'll stay here").attachAfter(() -> player.closeWidget()));
 
-		Dialogue dialogue = location.getPrice() == 0 ? new StatementDialogue("You teleport to your task for free.").attach(() -> player.move(RandomUtils.random(location.getPositions()))) : new RequestItemDialogue(new Item(995, price), "You handed " + price + " coins over to be \\nteleported to your assignment.", Optional.of(() -> player.move(RandomUtils.random(location.getPositions())))).attachAfter(() -> player.getMessages().sendCloseWindows());
+		Dialogue dialogue = location.getPrice() == 0 ? new StatementDialogue("You teleport to your task for free.").attach(() -> player.move(RandomUtils.random(location.getPositions()))) : new RequestItemDialogue(new Item(995, price), "You handed " + price + " coins over to be \\nteleported to your assignment.", Optional.of(() -> player.move(RandomUtils.random(location.getPositions())))).attachAfter(() -> player.closeWidget());
 		
 		app.chain(dialogue);
 

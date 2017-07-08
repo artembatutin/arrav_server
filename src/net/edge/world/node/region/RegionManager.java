@@ -4,6 +4,8 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 import net.edge.locale.Position;
+import net.edge.net.packet.out.SendObject;
+import net.edge.net.packet.out.SendObjectRemoval;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.object.ObjectNode;
@@ -81,10 +83,10 @@ public final class RegionManager {
 		ObjectList<Region> allRegions = getAllSurroundingRegions(player.getPosition().getRegion());
 		for(Region region : allRegions) {
 			for(ObjectNode obj : region.getRemovedObjects())
-				player.getMessages().sendRemoveObject(obj);
+				player.out(new SendObjectRemoval(obj));
 			for(ObjectNode o : region.getDynamicObjects()) {
 				if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance())
-					player.getMessages().sendObject(o);
+					player.out(new SendObject(o));
 			}
 		}
 	}

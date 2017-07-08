@@ -42,7 +42,7 @@ public final class AuburyTeleport extends TeleportSpell {
 	}
 	
 	public static void move(Player player, Npc aubury) {
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		World.get().submit(new TeleportTask(new AuburyTeleport(player, aubury)));
 	}
 	

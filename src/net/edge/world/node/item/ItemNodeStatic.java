@@ -1,6 +1,7 @@
 package net.edge.world.node.item;
 
 import net.edge.locale.Position;
+import net.edge.net.packet.out.SendItemNode;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.player.Player;
@@ -45,7 +46,7 @@ public final class ItemNodeStatic extends ItemNode {
 	
 	@Override
 	public void register() {
-		World.getRegions().getAllSurroundingRegions(getPosition().getRegion()).forEach(r -> r.getPlayers().forEach(p -> p.getMessages().sendGroundItem(this)));
+		World.getRegions().getAllSurroundingRegions(getPosition().getRegion()).forEach(r -> r.getPlayers().forEach(p -> p.out(new SendItemNode(this))));
 	}
 	
 	@Override

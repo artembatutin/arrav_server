@@ -90,7 +90,6 @@ public final class PlayerUpdater {
 						processPlayers(m.getRegion(regionId - 257), player, blockMsg, msg, blockSet, added);
 				}
 			}
-			
 			if(blockMsg.getBuffer().writerIndex() > 0) {
 				msg.putBits(11, 2047);
 				msg.endBitAccess();
@@ -114,11 +113,8 @@ public final class PlayerUpdater {
 	private static void processPlayers(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, UpdateBlockSet<Player> blockSet, int added) {
 		if(!region.getPlayers().isEmpty()) {
 			for(Player other : region.getPlayers()) {
-				if(added == 15 || player.getLocalPlayers().size() >= 255) {
-					System.out.println("added enough players for this tick");
+				if(added == 15 || player.getLocalPlayers().size() >= 255)
 					break;
-				}
-
 				if(other == null || other.same(player))
 					continue;
 				if(other.getState() != NodeState.ACTIVE)

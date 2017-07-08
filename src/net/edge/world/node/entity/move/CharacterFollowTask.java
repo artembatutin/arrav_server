@@ -157,7 +157,6 @@ class CharacterFollowTask extends Task {
 	
 	@Override
 	public void onCancel() {
-		System.out.println("nulled2");
 		destination = null;
 		character.setFollowing(false);
 		character.setFollowEntity(null);

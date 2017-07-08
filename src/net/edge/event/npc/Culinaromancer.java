@@ -9,7 +9,6 @@ import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.minigame.rfd.RFDData;
 import net.edge.content.minigame.rfd.RFDMinigame;
-import net.edge.content.teleport.impl.AuburyTeleport;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.NpcEvent;
 import net.edge.world.node.entity.npc.Npc;
@@ -44,15 +43,15 @@ public class Culinaromancer extends EventInitializer {
 				ap.chain(new NpcDialogue(3400, "Ugh... I guess you are right, I shouldn't take my", "role so seriously."));
 				ap.chain(new PlayerDialogue("So... what do you do?"));
 				ap.chain(new NpcDialogue(3400, "I sell gloves, untradable should I mention, to players.", "However one must participate to my minigame and for", "each wave one completes, 2 types of gloves will be unlocked."));
-				ap.chain(new PlayerDialogue(Expression.HAPPY, "Ah cool, i'll participate sometime soon...").attachAfter(() -> player.getMessages().sendCloseWindows()));
+				ap.chain(new PlayerDialogue(Expression.HAPPY, "Ah cool, i'll participate sometime soon...").attachAfter(() -> player.closeWidget()));
 				ap.chain(new PlayerDialogue("Can I see your shop?"));
 				ap.chain(new NpcDialogue(3400, "Ofcourse you can!").attachAfter(() -> {
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 					MarketCounter.getShops().get(3).openShop(player);
 				}));
 				ap.chain(new PlayerDialogue("Can I teleport to your minigame?"));
 				if(player.getAttr().get("rfd_wave").get().equals(RFDData.WAVE_SIX)) {
-					ap.chain(new NpcDialogue(3400, "You have already completed my minigame.").attachAfter(() -> player.getMessages().sendCloseWindows()));
+					ap.chain(new NpcDialogue(3400, "You have already completed my minigame.").attachAfter(() -> player.closeWidget()));
 				} else {
 					ap.chain(new NpcDialogue(3400, "Yeah, but it will cost you 10k to be teleported."));
 					ap.chain(new PlayerDialogue("Ehhh let me think about it..."));
@@ -67,8 +66,8 @@ public class Culinaromancer extends EventInitializer {
 					ap.chain(new NpcDialogue(3400, "Very well, goodluck in there!"));
 					ap.chain(new RequestItemDialogue(new Item(995, 10_000), "You hand the Culinaromancer 10,000gp to be \\nteleported to the minigame", Optional.of(() -> {
 						RFDMinigame.enterRFD(player);
-					})).attachAfter(() -> player.getMessages().sendCloseWindows()));
-					ap.chain(new PlayerDialogue("Nah, that's too expensive...").attachAfter(() -> player.getMessages().sendCloseWindows()));
+					})).attachAfter(() -> player.closeWidget()));
+					ap.chain(new PlayerDialogue("Nah, that's too expensive...").attachAfter(() -> player.closeWidget()));
 				}
 				ap.chain(new PlayerDialogue("Nevermind."));
 				ap.start();

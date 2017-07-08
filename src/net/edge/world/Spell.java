@@ -2,6 +2,7 @@ package net.edge.world;
 
 import net.edge.content.MagicStaff;
 import net.edge.content.skill.Skills;
+import net.edge.net.packet.out.SendConfig;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
@@ -77,7 +78,7 @@ public abstract class Spell {
 		if(player.getCombatBuilder().isAttacking() || player.getCombatBuilder().isBeingAttacked() && player.isAutocast()) {
 			player.setAutocastSpell(null);
 			player.setAutocast(false);
-			player.getMessages().sendConfig(108, 0);
+			player.out(new SendConfig(108, 0));
 			player.setCastSpell(null);
 		}
 	}

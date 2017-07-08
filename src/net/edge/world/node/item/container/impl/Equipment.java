@@ -1,12 +1,12 @@
 package net.edge.world.node.item.container.impl;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.ranged.CombatRangedAmmunition;
 import net.edge.content.combat.ranged.CombatRangedDetails;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
+import net.edge.net.packet.out.SendConfig;
 import net.edge.world.node.item.container.ItemContainer;
 import net.edge.world.node.item.container.ItemContainerAdapter;
 import net.edge.world.node.item.container.ItemWeightListener;
@@ -252,8 +252,8 @@ public final class Equipment extends ItemContainer {
 			player.setCastSpell(null);
 			player.setAutocastSpell(null);
 			player.setAutocast(false);
-			player.getMessages().sendConfig(108, 0);
-			player.getMessages().sendConfig(301, 0);
+			player.out(new SendConfig(108, 0));
+			player.out(new SendConfig(301, 0));
 			player.setSpecialActivated(false);
 			updateRange();
 		}
@@ -298,9 +298,9 @@ public final class Equipment extends ItemContainer {
 				player.setCastSpell(null);
 				player.setAutocastSpell(null);
 				player.setAutocast(false);
-				player.getMessages().sendConfig(108, 0);
+				player.out(new SendConfig(108, 0));
 				WeaponAnimation.execute(player, new Item(0));
-				player.getMessages().sendConfig(301, 0);
+				player.out(new SendConfig(301, 0));
 				player.setSpecialActivated(false);
 				updateRange();
 			}
@@ -392,7 +392,7 @@ public final class Equipment extends ItemContainer {
 	private void writeBonuses() {
 		for(int i = 0; i < bonuses.length; i++) {
 			boolean percentage = (i >= 11 && i <= 13) || i == 17;
-			player.getMessages().sendString(CombatConstants.BONUS_NAMES[i] + ": " + (bonuses[i] >= 0 ? "+" : "") + bonuses[CombatConstants.BONUS[i]] + (percentage ? "%" : i == 14 ? ".0" : ""), CombatConstants.BONUS_IDS[i]);
+			player.text(CombatConstants.BONUS_IDS[i], CombatConstants.BONUS_NAMES[i] + ": " + (bonuses[i] >= 0 ? "+" : "") + bonuses[CombatConstants.BONUS[i]] + (percentage ? "%" : i == 14 ? ".0" : ""));
 		}
 	}
 	

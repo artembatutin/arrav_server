@@ -5,6 +5,7 @@ import net.edge.content.skill.Skills;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
+import net.edge.net.packet.out.SendFade;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -27,7 +28,7 @@ public class GodWars extends EventInitializer {
 				boolean north = player.getPosition().getY() < 5334;
 				LinkedTaskSequence seq = new LinkedTaskSequence();
 				seq.connect(2, () -> player.getMovementQueue().walk(new Position(2885, north ? 5333 : 5344, 2)));
-				seq.connect(2, () -> player.getMessages().sendFade(130, 80, 120));
+				seq.connect(2, () -> player.out(new SendFade(130, 80, 120)));
 				seq.connect(1, () -> {
 					ForcedMovement movement = new ForcedMovement(player);
 					movement.setSecond(new Position(2885, north ? 5334 : 5343, 2));

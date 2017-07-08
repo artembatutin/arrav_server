@@ -1,5 +1,8 @@
 package net.edge.world.node.entity.move;
 
+import net.edge.net.packet.out.SendConfig;
+import net.edge.net.packet.out.SendEnergy;
+import net.edge.net.packet.out.SendMapRegion;
 import net.edge.task.Task;
 import net.edge.locale.Position;
 import net.edge.locale.loc.Location;
@@ -124,10 +127,10 @@ public final class MovementQueue {
 						weightFactor = Math.round(weightFactor * 100.0D) / 100.0D;
 						player.setRunEnergy(player.getRunEnergy() - (drainRate + weightFactor));
 						player.sendInterfaces();
-						player.getMessages().sendRunEnergy();
+						player.out(new SendEnergy());
 					} else {
 						running = false;
-						player.getMessages().sendConfig(173, 0);
+						player.out(new SendConfig(173, 0));
 					}
 				}
 			}
@@ -142,7 +145,7 @@ public final class MovementQueue {
 			int deltaY = character.getPosition().getY() - character.getLastRegion().getRegionY() * 8;
 			
 			if(deltaX < 16 || deltaX >= 88 || deltaY < 16 || deltaY > 88 || character.isNeedsRegionUpdate()) {
-				character.toPlayer().getMessages().sendMapRegion();
+				character.toPlayer().out(new SendMapRegion());
 			}
 		}
 	}
@@ -341,7 +344,7 @@ public final class MovementQueue {
 	public void setRunning(boolean runToggled) {
 		if(character.getType().equals(NodeType.PLAYER)) {
 			Player player = (Player) character;
-			player.getMessages().sendConfig(173, runToggled ? 0 : 1);
+			player.out(new SendConfig(173, runToggled ? 0 : 1));
 		}
 		this.running = runToggled;
 	}

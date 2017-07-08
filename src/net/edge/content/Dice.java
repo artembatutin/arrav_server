@@ -102,7 +102,7 @@ public final class Dice {
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 							if(!t.equals(OptionDialogue.OptionType.FIFTH_OPTION)) {
 								player.getInventory().remove(DiceData.DICE_BAG.item);
-								player.getMessages().sendCloseWindows();
+								player.closeWidget();
 							}
 							switch(t) {
 								case FIRST_OPTION:
@@ -126,7 +126,7 @@ public final class Dice {
 						new OptionDialogue(t -> {
 							if(!t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 								player.getInventory().remove(DiceData.DICE_BAG.item);
-								player.getMessages().sendCloseWindows();
+								player.closeWidget();
 							}
 							switch(t) {
 								case FIRST_OPTION:

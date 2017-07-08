@@ -2,7 +2,6 @@ package net.edge.net.packet.in;
 
 import net.edge.Server;
 import net.edge.content.Emote;
-import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
 import net.edge.content.clanchat.ClanChatRank;
 import net.edge.content.clanchat.ClanChatUpdate;
@@ -12,6 +11,9 @@ import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.net.packet.IncomingPacket;
+import net.edge.net.packet.out.SendConfig;
+import net.edge.net.packet.out.SendEnterName;
+import net.edge.net.packet.out.SendLogout;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.dialogue.Dialogues;
 import net.edge.content.item.Skillcape;
@@ -32,7 +34,6 @@ import net.edge.event.EventContainer;
 import net.edge.event.impl.ButtonEvent;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.task.Task;
-import net.edge.util.ActionListener;
 import net.edge.util.TextUtils;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
@@ -43,7 +44,6 @@ import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
 
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 /**
  * The message sent from the client when the player clicks some sort of button or
@@ -78,19 +78,21 @@ public final class ClickButtonPacket implements IncomingPacket {
 		if(Server.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}
+		
 		if(button != 9154 && button != 200 && button != 201 && player.getActivityManager().contains(ActivityManager.ActivityType.CLICK_BUTTON)) {
 			return;
 		}
 		if(button == 123) {
-			player.getMessages().sendCloseWindows();
+			player.closeWidget();
 			if(player.getMarketShop() != null) {
 				MarketShop.clearFromShop(player);
 			}
 		}
 		ButtonEvent e = BUTTONS.get(button);
 		if(e != null) {
-			if(e.click(player, button))
+			if(e.click(player, button)) {
 				return;
+			}
 		}
 		if(Prayer.activate(player, true, button)) {
 			return;
@@ -162,14 +164,14 @@ public final class ClickButtonPacket implements IncomingPacket {
 		switch(button) {
 			//Clan chat
 			case 240:
-				player.getClan().filter(c -> c.getRank() == ClanChatRank.OWNER).ifPresent(clan -> player.getMessages().sendEnterName("The new clan chat name to set:", s -> () -> {
+				player.getClan().filter(c -> c.getRank() == ClanChatRank.OWNER).ifPresent(clan -> player.out(new SendEnterName("The new clan chat name to set:", s -> () -> {
 					if(!player.getClan().isPresent() || player.getClan().get().getRank() != ClanChatRank.OWNER) {
 						player.message("You are unable to do that.");
 					} else {
 						player.getClan().get().getClan().setName(TextUtils.capitalize(s));
 						World.getClanManager().update(ClanChatUpdate.NAME_MODIFICATION, player.getClan().get().getClan());
 					}
-				}));
+				})));
 				break;
 			case 241:
 				World.getClanManager().delete(player);
@@ -182,35 +184,28 @@ public final class ClickButtonPacket implements IncomingPacket {
 				player.getInventory().remove(item);
 				
 				player.getAttr().get("destroy_item_slot").set(-1);
-				player.getMessages().sendCloseWindows();
+				player.closeWidget();
 				break;
 			case 55096:
-				player.getMessages().sendCloseWindows();
+				player.closeWidget();
 				break;
 			case 195212:
 				if(player.getClan().isPresent())
 					if(player.getClan().get().getRank().getValue() >= player.getClan().get().getClan().getLowest().getValue())
-						player.getMessages().sendInterface(-3);
+						player.widget(-3);
 					else
 						player.getClan().get().sendMessage("You don't have the requirements to do that.");
 				else
-					player.getMessages().sendEnterName("Your clan chat name:", new Function<String, ActionListener>() {
-						
-						@Override
-						public ActionListener apply(String t) {
-							return () -> World.getClanManager().create(player, t);
-						}
-						
-					});
+					player.out(new SendEnterName("Your clan chat name:", t -> () -> World.getClanManager().create(player, t)));
 				break;
 			case 83093:
-				player.getMessages().sendInterface(15106);
+				player.widget(15106);
 				break;
 			case 195209:
 				if(player.getClan().isPresent())
 					World.getClanManager().exit(player);
 				else
-					player.getMessages().sendEnterName("Enter the name of the chat you wish to join.", s -> () -> World.getClanManager().join(player, s));
+					player.out(new SendEnterName("Enter the name of the chat you wish to join.", s -> () -> World.getClanManager().join(player, s)));
 				break;
 			
 			case 59135:
@@ -271,7 +266,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 					player.message("Accept aid has been turned off.");
 					player.getAttr().get("accept_aid").set(false);
 				}
-				player.getMessages().sendConfig(427, !acceptAid ? 0 : 1);
+				player.out(new SendConfig(427, !acceptAid ? 0 : 1));
 				break;
 			case 89061:
 			case 93202:
@@ -294,7 +289,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 					player.message("You can't log out right now.");
 					break;
 				}
-				player.getMessages().sendLogout();
+				player.out(new SendLogout());
 				break;
 			case 153:
 			case 152:
@@ -319,11 +314,11 @@ public final class ClickButtonPacket implements IncomingPacket {
 				break;
 			case 231041:
 				player.getAttr().get("withdraw_as_note").set(!(player.getAttr().get("withdraw_as_note").getBoolean()));
-				player.getMessages().sendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0);
+				player.out(new SendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0));
 				break;
 			case 231037:
 				player.getAttr().get("insert_item").set(!(player.getAttr().get("insert_item").getBoolean()));
-				player.getMessages().sendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0);
+				player.out(new SendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0));
 				break;
 			case 24017:
 			case 7212:
@@ -614,302 +609,302 @@ public final class ClickButtonPacket implements IncomingPacket {
 				player.setAutocastSpell(CombatSpells.SMOKE_RUSH.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51185:
 			case 50187:
 				player.setAutocastSpell(CombatSpells.SHADOW_RUSH.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51091:
 			case 50101:
 				player.setAutocastSpell(CombatSpells.BLOOD_RUSH.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 24018:
 			case 50061:
 				player.setAutocastSpell(CombatSpells.ICE_RUSH.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51159:
 			case 50163:
 				player.setAutocastSpell(CombatSpells.SMOKE_BURST.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51211:
 			case 50211:
 				player.setAutocastSpell(CombatSpells.SHADOW_BURST.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51111:
 			case 50119:
 				player.setAutocastSpell(CombatSpells.BLOOD_BURST.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51069:
 			case 50081:
 				player.setAutocastSpell(CombatSpells.ICE_BURST.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51146:
 			case 50151:
 				player.setAutocastSpell(CombatSpells.SMOKE_BLITZ.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51198:
 			case 50199:
 				player.setAutocastSpell(CombatSpells.SHADOW_BLITZ.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51102:
 			case 50111:
 				player.setAutocastSpell(CombatSpells.BLOOD_BLITZ.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51058:
 			case 50071:
 				player.setAutocastSpell(CombatSpells.ICE_BLITZ.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51172:
 			case 50175:
 				player.setAutocastSpell(CombatSpells.SMOKE_BARRAGE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51224:
 			case 50223:
 				player.setAutocastSpell(CombatSpells.SHADOW_BARRAGE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51122:
 			case 50129:
 				player.setAutocastSpell(CombatSpells.BLOOD_BARRAGE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 51080:
 			case 50091:
 				player.setAutocastSpell(CombatSpells.ICE_BARRAGE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7038:
 			case 4128:
 				player.setAutocastSpell(CombatSpells.WIND_STRIKE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7039:
 			case 4130:
 				player.setAutocastSpell(CombatSpells.WATER_STRIKE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7040:
 			case 4132:
 				player.setAutocastSpell(CombatSpells.EARTH_STRIKE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7041:
 			case 4134:
 				player.setAutocastSpell(CombatSpells.FIRE_STRIKE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7042:
 			case 4136:
 				player.setAutocastSpell(CombatSpells.WIND_BOLT.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7043:
 			case 4139:
 				player.setAutocastSpell(CombatSpells.WATER_BOLT.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7044:
 			case 4142:
 				player.setAutocastSpell(CombatSpells.EARTH_BOLT.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7045:
 			case 4145:
 				player.setAutocastSpell(CombatSpells.FIRE_BOLT.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7046:
 			case 4148:
 				player.setAutocastSpell(CombatSpells.WIND_BLAST.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7047:
 			case 4151:
 				player.setAutocastSpell(CombatSpells.WATER_BLAST.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7048:
 			case 4153:
 				player.setAutocastSpell(CombatSpells.EARTH_BLAST.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7049:
 			case 4157:
 				player.setAutocastSpell(CombatSpells.FIRE_BLAST.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7050:
 			case 4159:
 				player.setAutocastSpell(CombatSpells.WIND_WAVE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7051:
 			case 4161:
 				player.setAutocastSpell(CombatSpells.WATER_WAVE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7052:
 			case 4164:
 				player.setAutocastSpell(CombatSpells.EARTH_WAVE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 7053:
 			case 4165:
 				player.setAutocastSpell(CombatSpells.FIRE_WAVE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 4129:
 				player.setAutocastSpell(CombatSpells.CONFUSE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 4133:
 				player.setAutocastSpell(CombatSpells.WEAKEN.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 4137:
 				player.setAutocastSpell(CombatSpells.CURSE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 6036:
 				player.setAutocastSpell(CombatSpells.BIND.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 6003:
 				player.setAutocastSpell(CombatSpells.IBAN_BLAST.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 47005:
 				player.setAutocastSpell(CombatSpells.MAGIC_DART.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 4166:
 				player.setAutocastSpell(CombatSpells.SARADOMIN_STRIKE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 4167:
 				player.setAutocastSpell(CombatSpells.CLAWS_OF_GUTHIX.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 4168:
 				player.setAutocastSpell(CombatSpells.FLAMES_OF_ZAMORAK.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 6006:
 				player.setAutocastSpell(CombatSpells.VULNERABILITY.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 6007:
 				player.setAutocastSpell(CombatSpells.ENFEEBLE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 6056:
 				player.setAutocastSpell(CombatSpells.ENTANGLE.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 6026:
 				player.setAutocastSpell(CombatSpells.STUN.getSpell());
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				player.getMessages().sendConfig(108, 3);
+				player.out(new SendConfig(108, 3));
 				break;
 			case 48147:
 			case 48157:
@@ -923,7 +918,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 				player.setCastSpell(null);
 				player.setAutocastSpell(null);
 				player.setAutocast(false);
-				player.getMessages().sendConfig(108, 0);
+				player.out(new SendConfig(108, 0));
 				break;
 			case 1093:
 			case 1094:
@@ -932,7 +927,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 					player.setCastSpell(null);
 					player.setAutocastSpell(null);
 					player.setAutocast(false);
-					player.getMessages().sendConfig(108, 0);
+					player.out(new SendConfig(108, 0));
 				} else if(!player.isAutocast()) {
 					Item staff = player.getEquipment().get(Equipment.WEAPON_SLOT);
 					if(staff != null && staff.getId() == 4675) {
@@ -996,14 +991,14 @@ public final class ClickButtonPacket implements IncomingPacket {
 				}
 				
 				if(player.isSpecialActivated()) {
-					player.getMessages().sendConfig(301, 0);
+					player.out(new SendConfig(301, 0));
 					player.setSpecialActivated(false);
 				} else {
 					if(player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
 						player.message("You do not have enough special energy left!");
 						break;
 					}
-					player.getMessages().sendConfig(301, 1);
+					player.out(new SendConfig(301, 1));
 					player.setSpecialActivated(true);
 					if(player.getCombatSpecial() == CombatSpecial.GRANITE_MAUL && player.getCombatBuilder().isAttacking() && !player.getCombatBuilder().isCooldown()) {
 						player.getCombatBuilder().instant();

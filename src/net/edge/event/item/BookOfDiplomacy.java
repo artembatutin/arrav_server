@@ -26,7 +26,7 @@ public class BookOfDiplomacy extends EventInitializer {
                         player.setIron(0, true);
                         player.teleport(GameConstants.STARTING_POSITION);
                     }
-                    player.getMessages().sendCloseWindows();
+                    player.closeWidget();
                 }, "Yes, want to be a regular player.", "No, I want to keep the iron man mode."));
                 return true;
             }

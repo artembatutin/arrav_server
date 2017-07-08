@@ -1,5 +1,6 @@
 package net.edge.content.skill.agility;
 
+import net.edge.net.packet.out.SendMessage;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
@@ -142,8 +143,7 @@ public abstract class AgilityCourse extends SkillAction {
 		player.getActivityManager().enable();
 		
 		onSuccess();
-		
-		crossedMessage().ifPresent(getPlayer().getMessages()::sendMessage);
+		crossedMessage().ifPresent(m -> getPlayer().out(new SendMessage(m)));
 	}
 
 	public static void executeForcedMovementAction(Player player, Position beggining_position, Position ending_position, int first_speed, int second_speed, Object animation_id) {

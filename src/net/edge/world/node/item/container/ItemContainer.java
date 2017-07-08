@@ -3,6 +3,8 @@ package net.edge.world.node.item.container;
 import com.google.common.base.Preconditions;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.net.packet.out.SendContainer;
+import net.edge.net.packet.out.SendItemOnInterfaceSlot;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.IndexedItem;
 import net.edge.world.node.item.Item;
@@ -513,11 +515,9 @@ public class ItemContainer implements Iterable<Item> {
 	public final int computeAmountForId(int id) {
 		int amount = 0;
 		int found = 0;
-		System.out.println(size);
 		for(Item item : items) {
 			if(item == null)
 				continue;
-			System.out.println(item.getId());
 			if(item.getId() == id)
 				amount += item.getAmount();
 			found++;
@@ -765,7 +765,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param widget The widget to send the {@code Item}s on.
 	 */
 	public final void refreshBulk(Player player, int widget) {
-		player.getMessages().sendItemsOnInterface(widget, this);
+		player.out(new SendContainer(widget, this));
 	}
 	
 	/**
@@ -775,7 +775,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * @param slot   The slot id of the new item to be sent.
 	 */
 	public final void refreshSingle(Player player, int widget, int slot) {
-		player.getMessages().sendItemOnInterfaceSlot(widget, items[slot], slot);
+		player.out(new SendItemOnInterfaceSlot(widget, items[slot], slot));
 	}
 	
 	/**

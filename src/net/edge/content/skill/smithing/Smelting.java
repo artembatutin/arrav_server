@@ -3,6 +3,8 @@ package net.edge.content.skill.smithing;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.event.impl.ObjectEvent;
+import net.edge.net.packet.out.SendEnterAmount;
+import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
@@ -12,7 +14,6 @@ import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
 
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Optional;
 
@@ -65,7 +66,7 @@ public final class Smelting extends ProducingSkillAction {
 		}
 		
 		if(data.get().amount == -1) {
-			player.getMessages().sendEnterAmount("How many you would like to melt?", s -> () -> Smelting.smelt(player, data.get(), Integer.parseInt(s)));
+			player.out(new SendEnterAmount("How many you would like to melt?", s -> () -> Smelting.smelt(player, data.get(), Integer.parseInt(s))));
 			return true;
 		}
 		smelt(player, data.get(), data.get().amount);
@@ -81,7 +82,7 @@ public final class Smelting extends ProducingSkillAction {
 	 */
 	public static void smelt(Player player, SmeltingData data, int amount) {
 		Smelting smithing = new Smelting(player, data, amount, false);
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		smithing.start();
 	}
 	
@@ -96,7 +97,7 @@ public final class Smelting extends ProducingSkillAction {
 	 */
 	public static void clearInterfaces(Player player) {
 		for(int j = 0; j < SMELT_FRAME.length; j++) {
-			player.getMessages().sendItemModelOnInterface(SMELT_FRAME[j], 150, SMELT_BARS[j]);
+			player.out(new SendItemModelInterface(SMELT_FRAME[j], 150, SMELT_BARS[j]));
 		}
 	}
 	
@@ -120,7 +121,7 @@ public final class Smelting extends ProducingSkillAction {
 		ObjectEvent smelt = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
-				player.getMessages().sendChatInterface(2400);
+				player.chatWidget(2400);
 				return true;
 			}
 		};

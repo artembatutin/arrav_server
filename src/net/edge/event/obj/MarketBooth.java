@@ -15,7 +15,7 @@ public class MarketBooth extends EventInitializer {
 		ObjectEvent m = new ObjectEvent() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
-				player.getMessages().sendInterface(-13);
+				player.widget(-13);
 				return true;
 			}
 		};

@@ -1,8 +1,8 @@
 package net.edge.content.skill.summoning;
 
-import com.google.common.collect.ImmutableList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.event.impl.ItemEvent;
+import net.edge.net.packet.out.SendContainer;
+import net.edge.net.packet.out.SendInventoryInterface;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.pets.Pet;
@@ -10,9 +10,6 @@ import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.content.skill.summoning.familiar.ability.Teleporter;
-import net.edge.content.skill.summoning.familiar.impl.*;
-import net.edge.content.skill.summoning.familiar.impl.MinotaurFamiliar.BronzeMinotaur;
-import net.edge.content.skill.summoning.familiar.impl.MinotaurFamiliar.IronMinotaur;
 import net.edge.locale.Position;
 import net.edge.world.World;
 import net.edge.world.node.NodeType;
@@ -129,14 +126,14 @@ public final class Summoning {
 		Optional<Familiar> has_familiar = player.getFamiliar();
 		
 		if(!has_familiar.isPresent()) {
-			player.getMessages().sendCloseWindows();
+			player.closeWidget();
 			return;
 		}
 		
 		Familiar familiar = has_familiar.get();
 		
 		if(!familiar.getAbilityType().isHoldableContainer()) {
-			player.getMessages().sendCloseWindows();
+			player.closeWidget();
 			return;
 		}
 		
@@ -203,9 +200,9 @@ public final class Summoning {
 		
 		player.getAttr().get("bob").set(true);
 		FamiliarContainer storage = (FamiliarContainer) ability;
-		player.getMessages().sendItemsOnInterface(2702, storage.getContainer());
-		player.getMessages().sendInventoryInterface(2700, 5063);
-		player.getMessages().sendItemsOnInterface(5064, player.getInventory());
+		player.out(new SendContainer(2702, storage.getContainer()));
+		player.out(new SendInventoryInterface(2700, 5063));
+		player.out(new SendContainer(5064, player.getInventory()));
 		return true;
 	}
 	
@@ -247,8 +244,8 @@ public final class Summoning {
 			ability.getContainer().remove(item);
 		});
 		ability.getContainer().shift();
-		player.getMessages().sendItemsOnInterface(2702, ability.getContainer());
-		player.getMessages().sendItemsOnInterface(5064, player.getInventory());
+		player.out(new SendContainer(2702, ability.getContainer()));
+		player.out(new SendContainer(5064, player.getInventory()));
 		return true;
 	}
 	

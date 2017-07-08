@@ -2,8 +2,8 @@ package net.edge.content.minigame.warriorsguild.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.net.packet.out.SendInterfaceItem;
+import net.edge.net.packet.out.SendWalkable;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
@@ -59,9 +59,9 @@ public final class CyclopsRoom extends GuildRoom {
 
 	private void updateInterface(Player player) {
 		Defender defender = Defender.getNext(player);
-		player.getMessages().sendItemOnInterface(34002, defender.item.getId());
-		player.getMessages().sendString("@or1@" + defender.toString(), 34001);
-		player.getMessages().sendWalkable(34000);
+		player.out(new SendInterfaceItem(34002, defender.item.getId()));
+		player.text(34001, "@or1@" + defender.toString());
+		player.out(new SendWalkable(34000));
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public final class CyclopsRoom extends GuildRoom {
 				if(entered.isPresent()) {
 					player.move(new Position(2846, player.getPosition().getY(), 2));//FIXME use the proper walk-through door function.
 					entered = Optional.empty();
-					player.getMessages().sendWalkable(-1);
+					player.out(new SendWalkable(-1));
 					return false;
 				}
 				if(!player.getInventory().contains(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), 200))) {
@@ -188,16 +188,16 @@ public final class CyclopsRoom extends GuildRoom {
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
 					player.getDialogueBuilder().go(6);
 				} else {
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 				}
 			}, "Well, how does it work?", "What defender will be dropped?", "Nevermind."));
 			ap.chain(new PlayerDialogue(Expression.QUESTIONING, "Well how does it work?"));
 			ap.chain(new NpcDialogue(4289, Expression.SAYS_NOTHING, "Ummm..."));
 			ap.chain(new NpcDialogue(4289, Expression.HAPPY, "Ah yeah I remember knight!"));
 			ap.chain(random);
-			ap.chain(new PlayerDialogue(Expression.PRIDEFUL, "I don't think I know that.").attachAfter(() -> player.getMessages().sendCloseWindows()));
+			ap.chain(new PlayerDialogue(Expression.PRIDEFUL, "I don't think I know that.").attachAfter(() -> player.closeWidget()));
 			ap.chain(new PlayerDialogue(Expression.HAPPY, "What defender will be dropped?"));
-			ap.chain(new NpcDialogue(4289, Expression.SERIOUS, "The defender that will be dropped is: ", TextUtils.capitalize(Defender.getNext(player).name().replaceAll("_", " ").toLowerCase()) + ".").attachAfter(() -> player.getMessages().sendCloseWindows()));
+			ap.chain(new NpcDialogue(4289, Expression.SERIOUS, "The defender that will be dropped is: ", TextUtils.capitalize(Defender.getNext(player).name().replaceAll("_", " ").toLowerCase()) + ".").attachAfter(() -> player.closeWidget()));
 			return ap;
 		}
 	}

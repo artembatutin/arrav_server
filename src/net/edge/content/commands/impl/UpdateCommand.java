@@ -3,10 +3,14 @@ package net.edge.content.commands.impl;
 import net.edge.Server;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
+import net.edge.net.packet.out.SendLogout;
+import net.edge.net.packet.out.SendUpdateTimer;
 import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
+
+import java.util.Iterator;
 
 @CommandSignature(alias = {"update"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::update seconds")
 public final class UpdateCommand implements Command {
@@ -20,7 +24,11 @@ public final class UpdateCommand implements Command {
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		inProgess = 1;
 		int timer = Integer.parseInt(cmd[1]);
-		World.get().getPlayers().forEach(p -> p.getMessages().sendSystemUpdate(timer * 50 / 30));
+		Player other;
+		Iterator<Player> it = World.get().getPlayers().iterator();
+		while((other = it.next()) != null) {
+			other.out(new SendUpdateTimer(timer * 50 / 30));
+		}
 		Server.UPDATING = timer;
 		World.get().getTask().submit(new Task(1, true) {
 			@Override
@@ -31,7 +39,11 @@ public final class UpdateCommand implements Command {
 					inProgess = 2;
 					System.out.println("Setting player into updating mode.");
 					System.out.println("Logging players out... - Players online: " + World.get().getPlayers().size());
-					World.get().getPlayers().forEach(p -> p.getMessages().sendLogout());
+					Player other;
+					Iterator<Player> it = World.get().getPlayers().iterator();
+					while((other = it.next()) != null) {
+						other.out(new SendLogout());
+					}
 					System.out.println("Waiting for shutdown.");
 					World.get().getTask().submit(new Task(10, false) {
 						@Override

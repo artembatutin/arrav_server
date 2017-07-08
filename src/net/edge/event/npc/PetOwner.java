@@ -6,7 +6,6 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.PlayerDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.market.MarketCounter;
-import net.edge.content.skill.slayer.Slayer;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.NpcEvent;
 import net.edge.world.node.entity.npc.Npc;
@@ -22,7 +21,7 @@ public class PetOwner extends EventInitializer {
 				pets.chain(new NpcDialogue(6892, "Hello " + player.getFormatUsername() + ", lovely day isn't it?"));
 				pets.chain(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.getMessages().sendCloseWindows();
+						player.closeWidget();
 						MarketCounter.getShops().get(25).openShop(player);
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
 						pets.getBuilder().advance();

@@ -11,7 +11,7 @@ public class MakeOverMage extends EventInitializer {
 		NpcEvent e = new NpcEvent() {
 			@Override
 			public boolean click(Player player, Npc npc, int click) {
-				player.getMessages().sendInterface(3559);
+				player.widget(3559);
 				return true;
 			}
 		};

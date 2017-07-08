@@ -45,7 +45,6 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 	@Override
 	protected boolean accept(ChannelHandlerContext ctx, InetSocketAddress remoteAddress) throws Exception {
 		String address = address(remoteAddress);
-		System.out.println("inbound: " + remoteAddress);
 		if(UpdateCommand.inProgess == 2) {
 			response(ctx, LoginResponse.SERVER_BEING_UPDATED);
 			return false;

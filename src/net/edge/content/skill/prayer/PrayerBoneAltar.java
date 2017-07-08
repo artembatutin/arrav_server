@@ -1,5 +1,6 @@
 package net.edge.content.skill.prayer;
 
+import net.edge.net.packet.out.SendGraphic;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.DestructionSkillAction;
@@ -56,7 +57,7 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 	public void onDestruct(Task t, boolean success) {
 		if(success) {
 			getPlayer().animation(new Animation(713));
-			getPlayer().getMessages().sendLocalGraphic(624, position.get(), 0);
+			SendGraphic.local(getPlayer(), 624, position.get(), 0);
 			getPlayer().message("You offer the " + bone + " to the gods... they seem pleased.");
 		}
 	}

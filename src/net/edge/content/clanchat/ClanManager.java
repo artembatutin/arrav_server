@@ -6,7 +6,8 @@ import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.net.packet.PacketWriter;
+import net.edge.net.packet.out.SendClanBanned;
+import net.edge.net.packet.out.SendClanMembers;
 import net.edge.util.TextUtils;
 import net.edge.util.json.JsonSaver;
 import net.edge.world.node.entity.player.Player;
@@ -26,13 +27,12 @@ public final class ClanManager {
 	private static final Object2ObjectArrayMap<String, ClanChat> GLOBAL_CLANS = new Object2ObjectArrayMap<>();
 	
 	public void clearOnLogin(Player player) {
-		PacketWriter message = player.getMessages();
-		message.sendString("Talking in: ", 50139);
-		message.sendString("Owner: ", 50140);
-		message.sendString("Join Clan", 50135);
-		message.sendString("Clan Setup", 50136);
-		message.sendClanMemberList(new ObjectArrayList<>());
-		message.sendClanBanList(new ObjectArrayList<>());
+		player.text("Talking in: ", 50139);
+		player.text("Owner: ", 50140);
+		player.text("Join Clan", 50135);
+		player.text("Clan Setup", 50136);
+		player.out(new SendClanMembers(null));
+		player.out(new SendClanBanned(new ObjectArrayList<>()));
 	}
 	
 	/**
@@ -147,20 +147,14 @@ public final class ClanManager {
 		}
 	}
 	
-	/**
-	 * Updates the clan chat for the specified {@code member}.
-	 * @param update the clan update to update acting as the update.
-	 * @param member the clan member to update for.
-	 */
+	public void update(ClanChatUpdate update, int index, ClanChat clan) {
+		update.update(index, clan);
+	}
+	
 	public void update(ClanChatUpdate update, ClanMember member) {
 		update.update(member);
 	}
 	
-	/**
-	 * Updates the clan clan for the specified {@code clan}.
-	 * @param update the clan update to update acting as the update.
-	 * @param clan   the clan clan instance to update for.
-	 */
 	public void update(ClanChatUpdate update, ClanChat clan) {
 		update.update(clan);
 	}

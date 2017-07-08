@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.event.impl.NpcEvent;
+import net.edge.net.packet.out.SendScore;
 import net.edge.util.MutableNumber;
 import net.edge.util.json.JsonSaver;
 import net.edge.content.dialogue.impl.NpcDialogue;
@@ -87,9 +88,9 @@ public final class ScoreboardManager {
 		
 		for(int i = 0; i < statistics.size(); i++) {
 			PlayerScoreboardStatistic stat = statistics.get(i);
-			player.getMessages().sendScoreInput(i, stat.getUsername(), stat.getKills().get(), stat.getDeaths().get(), stat.getCurrentKillstreak().get());
+			player.out(new SendScore(i, stat.getUsername(), stat.getKills().get(), stat.getDeaths().get(), stat.getCurrentKillstreak().get()));
 		}
-		player.getMessages().sendInterface(-12);
+		player.widget(-12);
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package net.edge.world.node.item.container.impl;
 
+import net.edge.net.packet.out.SendContainer;
 import net.edge.world.node.item.container.ItemContainer;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.world.node.entity.player.Player;
@@ -149,8 +150,8 @@ final class BankTab extends ItemContainer {
 				inv.remove(new Item(i.getId(), i.getAmount()), i.getIndex(), false);
 			}
 		}
-		player.getMessages().sendItemsOnInterface(5064, inv);
-		player.getMessages().sendItemsOnInterface(3214, inv);
+		player.out(new SendContainer(5064, inv));
+		player.out(new SendContainer(3214, inv));
 		forceRefresh(player);
 	}
 	

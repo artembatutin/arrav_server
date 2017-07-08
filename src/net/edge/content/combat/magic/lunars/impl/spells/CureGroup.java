@@ -2,6 +2,7 @@ package net.edge.content.combat.magic.lunars.impl.spells;
 
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
+import net.edge.net.packet.out.SendConfig;
 import net.edge.world.World;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
@@ -32,7 +33,7 @@ public final class CureGroup extends LunarButtonSpell {
 		for(Player target : local_players) {
 			target.graphic(new Graphic(744, 90));
 			target.getPoisonDamage().set(0);
-			target.getMessages().sendConfig(174, 0);
+			target.out(new SendConfig(174, 0));
 			target.message("Your poison has been cured by " + caster.getFormatUsername());
 		}
 	}

@@ -1,6 +1,7 @@
 package net.edge.net.packet.in;
 
 import net.edge.net.packet.IncomingPacket;
+import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.world.node.item.container.session.ExchangeSession;
 import net.edge.world.node.item.container.session.ExchangeSessionType;
 import net.edge.content.skill.summoning.Summoning;
@@ -28,11 +29,11 @@ public final class InputXOptionPacket implements IncomingPacket {
 		player.getAttr().get("enter_x_item_slot").set(slot);
 		if(interfaceId >= 0 && interfaceId <= 9) {
 			if(player.getAttr().get("banking").getBoolean()) {
-				player.getMessages().sendEnterAmount("How many you would like to withdraw?", s -> () -> {
+				player.out(new SendEnterAmount("How many you would like to withdraw?", s -> () -> {
 					if(player.getAttr().get("banking").getBoolean()) {
 						player.getBank().withdraw(player, player.getAttr().get("enter_x_item_tab").getInt(), player.getAttr().get("enter_x_item_slot").getInt(), Integer.parseInt(s));
 					}
-				});
+				}));
 			}
 		}
 		switch(interfaceId) {
@@ -42,24 +43,24 @@ public final class InputXOptionPacket implements IncomingPacket {
 				if(player.getMarketShop() == null)
 					return;
 				player.getAttr().get("shop_item").set(player.getInventory().get(slot).getId());
-				player.getMessages().sendEnterAmount("How many you would like to sell?", t -> () -> player.getMarketShop().sell(player, new Item(player.getAttr().get("shop_item").getInt(), Integer.parseInt(t)), player.getAttr().get("enter_x_item_slot").getInt()));
+				player.out(new SendEnterAmount("How many you would like to sell?", t -> () -> player.getMarketShop().sell(player, new Item(player.getAttr().get("shop_item").getInt(), Integer.parseInt(t)), player.getAttr().get("enter_x_item_slot").getInt())));
 				break;
 			case 5064://Inventory -> bank or bob
 				if(player.getAttr().get("banking").getBoolean() || player.getAttr().get("bob").getBoolean()) {
-					player.getMessages().sendEnterAmount("How many you would like to deposit?", t -> () -> {
+					player.out(new SendEnterAmount("How many you would like to deposit?", t -> () -> {
 						int amount = Integer.parseInt(t);
 						if(player.getAttr().get("banking").getBoolean()) {
 							player.getBank().deposit(player.getAttr().get("enter_x_item_slot").getInt(), amount, player.getInventory(), true);
 						} else if(player.getAttr().get("bob").getBoolean()) {
 							Summoning.store(player, player.getAttr().get("enter_x_item_slot").getInt(), amount);
 						}
-					});
+					}));
 					return;
 				}
 				break;
 			case 3322://Inventory -> trade or duel
 				if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent() || World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
-					player.getMessages().sendEnterAmount("How many you would like to deposit?", t -> () -> {
+					player.out(new SendEnterAmount("How many you would like to deposit?", t -> () -> {
 						int amount = Integer.parseInt(t);
 						if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
 							//ExchangeSession session = World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.TRADE).get();
@@ -72,33 +73,33 @@ public final class InputXOptionPacket implements IncomingPacket {
 							int slot1 = player.getAttr().get("enter_x_item_slot").getInt();
 							session.add(player, slot1, amount);
 						}
-					});
+					}));
 					return;
 				}
 				break;
 			case 2702:
 				if(player.getAttr().get("bob").getBoolean()) {
-					player.getMessages().sendEnterAmount("How many you would like to withdraw?", t -> () -> {
+					player.out(new SendEnterAmount("How many you would like to withdraw?", t -> () -> {
 						if(player.getAttr().get("bob").getBoolean()) {
 							Summoning.withdraw(player, player.getAttr().get("enter_x_item_slot").getInt(), Integer.parseInt(t));
 						}
-					});
+					}));
 				}
 				break;
 			case 6669://Duel -> inventory
 				if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
-					player.getMessages().sendEnterAmount("How many you would like to withdraw?", t -> () -> {
+					player.out(new SendEnterAmount("How many you would like to withdraw?", t -> () -> {
 						if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
 							ExchangeSession session = World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.DUEL).get();
 							Item item = session.getExchangeSession().get(player).get(player.getAttr().get("enter_x_item_slot").getInt());
 							session.remove(player, new Item(item.getId(), Integer.parseInt(t)));
 						}
-					});
+					}));
 				}
 				break;
 			case 3415://Trade -> inventory
 				if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
-					player.getMessages().sendEnterAmount("How many you would like to withdraw?", t -> () -> {
+					player.out(new SendEnterAmount("How many you would like to withdraw?", t -> () -> {
 						if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
 							//ExchangeSession session = World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.TRADE).get();
 							//Item item = session.getExchangeSession().get(player).get(player.getAttr().get("enter_x_item_slot").getInt());
@@ -106,7 +107,7 @@ public final class InputXOptionPacket implements IncomingPacket {
 							//session.updateMainComponents();
 							player.message("Disabled for now.");
 						}
-					});
+					}));
 				}
 				break;
 		}

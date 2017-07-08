@@ -34,7 +34,7 @@ public class VoidKnight extends DefaultNpc {
 		}
 		if(game != null) {
 			for(Player p : game.getPlayers()) {
-				p.getMessages().sendString("" + getCurrentHealth() / 10, 21115);
+				p.text(21115, "" + getCurrentHealth() / 10);
 			}
 		}
 		return hit;
@@ -52,7 +52,7 @@ public class VoidKnight extends DefaultNpc {
 	public void setGame(PestControlMinigame game) {
 		this.game = game;
 		for(Player p : game.getPlayers()) {
-			p.getMessages().sendString("" + getCurrentHealth() / 10, 21115);
+			p.text(21115, "" + getCurrentHealth() / 10);
 		}
 	}
 	

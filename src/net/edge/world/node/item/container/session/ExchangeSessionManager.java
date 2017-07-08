@@ -182,7 +182,7 @@ public final class ExchangeSessionManager {
 		session.get().getPlayers().forEach(p -> {
 			this.finalize(p, ExchangeSessionActionType.RESTORE_ITEMS);
 			this.resetRequests(p);
-			p.getMessages().sendCloseWindows();
+			p.closeWidget();
 		});
 		Player other = session.get().getOther(player);
 		if(other != null)

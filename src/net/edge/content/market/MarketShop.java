@@ -2,6 +2,7 @@ package net.edge.content.market;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.edge.content.market.currency.impl.ItemCurrency;
+import net.edge.net.packet.out.*;
 import net.edge.util.TextUtils;
 import net.edge.game.GameConstants;
 import net.edge.content.TabInterface;
@@ -108,14 +109,14 @@ public class MarketShop {
 		}
 		clearFromShop(player);
 		player.setMarketShop(this);
-		player.getMessages().sendString(getCurrency().ordinal() + "", 259);
-		player.getMessages().sendItemsOnInterface(3823, player.getInventory());
-		player.getMessages().sendShopItemsOnInterface(3900, getItems());
+		player.text(259, getCurrency().ordinal() + "");
+		player.out(new SendContainer(3823, player.getInventory()));
+		player.out(new SendShop(3900, getItems()));
 		int x = player.getPosition().getX();
 		boolean counter = x == 3081 || x == 3082;
-		player.getMessages().sendInventoryInterface(counter ? -4 : -2, 3822);
-		player.getMessages().sendString(getTitle(), 3901);
-		player.getMessages().sendForceTab(TabInterface.INVENTORY);
+		player.out(new SendInventoryInterface(counter ? -4 : -2, 3822));
+		player.text(3901, getTitle());
+		player.out(new SendForceTab(TabInterface.INVENTORY));
 		if(player.getMarketShop().getItems() != null) {
 			for(int id : player.getMarketShop().getItems()) {
 				MarketItem item = MarketItem.get(id);
@@ -157,13 +158,9 @@ public class MarketShop {
 		if(player.getRights() == Rights.ADMINISTRATOR) {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-					player.getMessages().sendEnterAmount(shopItem.getName() + ": set price to:", s -> () -> {
-						shopItem.setPrice(Integer.parseInt(s));
-					});
+					player.out(new SendEnterAmount(shopItem.getName() + ": set price to:", s -> () -> shopItem.setPrice(Integer.parseInt(s))));
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-					player.getMessages().sendEnterAmount(shopItem.getName() + ": set stock to?", s -> () -> {
-						shopItem.setStock(Integer.parseInt(s));
-					});
+					player.out(new SendEnterAmount(shopItem.getName() + ": set stock to?", s -> () -> shopItem.setStock(Integer.parseInt(s))));
 				} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 					shopItem.toggleUnlimited();
 				} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
@@ -252,7 +249,7 @@ public class MarketShop {
 		}
 		getCurrency().getCurrency().takeCurrency(player, item.getAmount() * value);
 		player.getInventory().add(item);
-		player.getMessages().sendItemsOnInterface(3823, player.getInventory());
+		player.out(new SendContainer(3823, player.getInventory()));
 		if(!marketItem.isUnlimitedStock()) {
 			marketItem.setStock(marketItem.getStock() - item.getAmount());
 		}
@@ -307,7 +304,7 @@ public class MarketShop {
 			marketItem.updateStock();
 		}
 		
-		player.getMessages().sendItemsOnInterface(3823, player.getInventory());
+		player.out(new SendContainer(3823, player.getInventory()));
 		return true;
 	}
 	

@@ -7,5 +7,6 @@ import net.edge.world.node.entity.player.Player;
  * @since 6-7-2017.
  */
 public interface OutgoingPacket {
+    
     void write(Player player);
 }

@@ -1,5 +1,6 @@
 package net.edge.world.node.entity;
 
+import net.edge.net.packet.out.SendConfig;
 import net.edge.task.Task;
 import net.edge.world.World;
 
@@ -57,7 +58,7 @@ public abstract class EntityDeath<T extends EntityNode> extends Task {
 				getCharacter().unfreeze();
 				getCharacter().unStun();
 				if(getCharacter().isPlayer()) {
-					getCharacter().toPlayer().getMessages().sendConfig(174, 0);
+					getCharacter().toPlayer().out(new SendConfig(174, 0));
 				}
 				break;
 			case 1:

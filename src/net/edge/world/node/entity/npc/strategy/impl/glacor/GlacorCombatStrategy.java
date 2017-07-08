@@ -2,6 +2,7 @@ package net.edge.world.node.entity.npc.strategy.impl.glacor;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.content.combat.CombatHit;
+import net.edge.net.packet.out.SendGraphic;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
@@ -108,7 +109,7 @@ public final class GlacorCombatStrategy extends DynamicCombatStrategy<Glacor> {
 
 			@Override
 			public void postAttack(int counter) {
-				victim.toPlayer().getMessages().sendLocalGraphic(2315, tile, 0);
+				SendGraphic.local(victim.toPlayer(), 2315, tile, 0);
 			}
 		};
 	}

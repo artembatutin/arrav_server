@@ -36,7 +36,7 @@ public class Path {
 	 * @return the ending position.
 	 */
 	public Position getDestination() {
-		return moves.getLast();
+		return moves.peekLast();
 	}
 	
 	/**

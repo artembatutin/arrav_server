@@ -31,7 +31,7 @@ public class IronmanCaptain extends EventInitializer {
 						}
 					}, "Who are you?", "I'd like to see your shop", "Nevermind"));
 					night.chain(new PlayerDialogue("I'd like to see your shop.").attachAfter(() -> {
-						player.getMessages().sendCloseWindows();
+						player.closeWidget();
 						MarketCounter.getShops().get(24).openShop(player);
 					}));
 					night.chain(new PlayerDialogue("Who are you?"));
@@ -44,9 +44,9 @@ public class IronmanCaptain extends EventInitializer {
 							night.getBuilder().advance();
 						}
 					}, "Sure", "No"));
-					night.chain(new PlayerDialogue("No thank you...").attachAfter(() -> player.getMessages().sendCloseWindows()));
+					night.chain(new PlayerDialogue("No thank you...").attachAfter(() -> player.closeWidget()));
 					night.chain(new PlayerDialogue("Yeah sure...").attachAfter(() -> {
-						player.getMessages().sendCloseWindows();
+						player.closeWidget();
 						MarketCounter.getShops().get(24).openShop(player);
 					}));
 					night.chain(new PlayerDialogue("Nevermind..."));
@@ -59,7 +59,7 @@ public class IronmanCaptain extends EventInitializer {
 					String[] message = maxed ? new String[]{"Very well warrior, I see that you've accomplished maxing", "out all of your skills. Would you like to prestige to remove", "your restrictions?"} : new String[]{"You have not yet maxed all of your skills warrior."};
 					ap.chain(new NpcDialogue(3705, message).attachAfter(() -> {
 						if(!maxed) {
-							player.getMessages().sendCloseWindows();
+							player.closeWidget();
 						}
 					}));
 					ap.chain(new OptionDialogue(t -> {
@@ -69,7 +69,7 @@ public class IronmanCaptain extends EventInitializer {
 							ap.getBuilder().advance();
 						}
 					}, "Yes please", "No thanks"));
-					ap.chain(new PlayerDialogue("No thanks...").attachAfter(() -> player.getMessages().sendCloseWindows()));
+					ap.chain(new PlayerDialogue("No thanks...").attachAfter(() -> player.closeWidget()));
 					ap.chain(new PlayerDialogue("Yes, please..."));
 					ap.chain(new NpcDialogue(3705, "Very well, you've been prestiged and your restrictions have", "been removed...").attach(() -> {
 						player.graphic(new Graphic(2189));

@@ -1,25 +1,15 @@
 package net.edge.content.skill;
 
 import net.edge.content.item.Skillcape;
+import net.edge.net.packet.out.SendSkill;
+import net.edge.net.packet.out.SendSkillGoal;
 import net.edge.util.TextUtils;
 import net.edge.game.GameConstants;
-import net.edge.content.skill.agility.impl.Shortcuts;
-import net.edge.content.skill.agility.impl.barb.BarbarianOutpostAgility;
-import net.edge.content.skill.agility.impl.gnome.GnomeStrongholdAgility;
-import net.edge.content.skill.agility.impl.wild.WildernessAgility;
-import net.edge.content.skill.crafting.PotClaying;
-import net.edge.content.skill.hunter.Hunter;
-import net.edge.content.skill.mining.Mining;
-import net.edge.content.skill.runecrafting.Runecrafting;
-import net.edge.content.skill.smithing.Smelting;
-import net.edge.content.skill.thieving.impl.Stalls;
-import net.edge.content.skill.woodcutting.Woodcutting;
 import net.edge.world.Graphic;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.entity.update.UpdateFlag;
-import net.edge.world.object.ObjectNode;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -210,10 +200,10 @@ public final class Skills {
 				}
 				SkillData data = SkillData.values()[skill];
 				String append = TextUtils.appendIndefiniteArticle(data.toString());
-				player.getMessages().sendString("@dre@Congratulations, you've just advanced " + append + " level!", 4268);
-				player.getMessages().sendString("You have now reached level " + newLevel + "!", 4269);
+				player.text(4268, "@dre@Congratulations, you've just advanced " + append + " level!");
+				player.text(4269, "You have now reached level " + newLevel + "!");
 				player.message("Congratulations, you've just advanced " + append + " level!");
-				player.getMessages().sendChatInterface(data.getChatbox());
+				player.chatWidget(data.getChatbox());
 				if(newLevel == 99 || newLevel == 120) {
 					String append_max = TextUtils.appendIndefiniteArticleNoVowel(data.toString());
 					player.graphic(new Graphic(MAXED_GRAPHICS));
@@ -224,7 +214,7 @@ public final class Skills {
 				player.getFlags().flag(UpdateFlag.APPEARANCE);
 				if(newLevel >= player.getSkills()[skill].getGoal()) {
 					player.getSkills()[skill].setGoal(0);
-					player.getMessages().sendSkillGoal(skill, 0);
+					player.out(new SendSkillGoal(skill, 0));
 				}
 			}
 		}
@@ -287,8 +277,7 @@ public final class Skills {
 			}
 			player.getSkills()[skill] = s;
 		}
-		
-		player.getMessages().sendSkill(skill, s.getLevel(), (int) s.getExperience());
+		player.out(new SendSkill(skill, s.getLevel(), (int) s.getExperience()));
 	}
 	
 	/**
@@ -308,7 +297,7 @@ public final class Skills {
 	public static void refreshAll(Player player) {
 		for(int i = 0; i < player.getSkills().length; i++) {
 			refresh(player, i);
-			player.getMessages().sendSkillGoal(i, player.getSkills()[i].getGoal());
+			player.out(new SendSkillGoal(i, player.getSkills()[i].getGoal()));
 		}
 	}
 	

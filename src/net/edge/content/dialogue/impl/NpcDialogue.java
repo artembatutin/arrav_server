@@ -4,6 +4,8 @@ import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.DialogueBuilder;
 import net.edge.content.dialogue.DialogueType;
 import net.edge.content.dialogue.Expression;
+import net.edge.net.packet.out.SendInterfaceAnimation;
+import net.edge.net.packet.out.SendInterfaceNpcModel;
 import net.edge.world.node.entity.npc.NpcDefinition;
 
 /**
@@ -47,38 +49,38 @@ public final class NpcDialogue extends Dialogue {
 	public void accept(DialogueBuilder dialogue) {
 		switch(getText().length) {
 			case 1:
-				dialogue.getPlayer().getMessages().sendInterfaceAnimation(4883, expression.getExpression());
-				dialogue.getPlayer().getMessages().sendString(NpcDefinition.DEFINITIONS[npc].getName(), 4884);
-				dialogue.getPlayer().getMessages().sendString(getText()[0], 4885);
-				dialogue.getPlayer().getMessages().sendNpcModelOnInterface(4883, npc);
-				dialogue.getPlayer().getMessages().sendChatInterface(4882);
+				dialogue.getPlayer().out(new SendInterfaceAnimation(4883, expression.getExpression()));
+				dialogue.getPlayer().text(4884, NpcDefinition.DEFINITIONS[npc].getName());
+				dialogue.getPlayer().text(4885, getText()[0]);
+				dialogue.getPlayer().out(new SendInterfaceNpcModel(4883, npc));
+				dialogue.getPlayer().chatWidget(4882);
 				break;
 			case 2:
-				dialogue.getPlayer().getMessages().sendInterfaceAnimation(4888, expression.getExpression());
-				dialogue.getPlayer().getMessages().sendString(NpcDefinition.DEFINITIONS[npc].getName(), 4889);
-				dialogue.getPlayer().getMessages().sendString(getText()[0], 4890);
-				dialogue.getPlayer().getMessages().sendString(getText()[1], 4891);
-				dialogue.getPlayer().getMessages().sendNpcModelOnInterface(4888, npc);
-				dialogue.getPlayer().getMessages().sendChatInterface(4887);
+				dialogue.getPlayer().out(new SendInterfaceAnimation(4888, expression.getExpression()));
+				dialogue.getPlayer().text(4889, NpcDefinition.DEFINITIONS[npc].getName());
+				dialogue.getPlayer().text(4890, getText()[0]);
+				dialogue.getPlayer().text(4891, getText()[1]);
+				dialogue.getPlayer().out(new SendInterfaceNpcModel(4888, npc));
+				dialogue.getPlayer().chatWidget(4887);
 				break;
 			case 3:
-				dialogue.getPlayer().getMessages().sendInterfaceAnimation(4894, expression.getExpression());
-				dialogue.getPlayer().getMessages().sendString(NpcDefinition.DEFINITIONS[npc].getName(), 4895);
-				dialogue.getPlayer().getMessages().sendString(getText()[0], 4896);
-				dialogue.getPlayer().getMessages().sendString(getText()[1], 4897);
-				dialogue.getPlayer().getMessages().sendString(getText()[2], 4898);
-				dialogue.getPlayer().getMessages().sendNpcModelOnInterface(4894, npc);
-				dialogue.getPlayer().getMessages().sendChatInterface(4893);
+				dialogue.getPlayer().out(new SendInterfaceAnimation(4894, expression.getExpression()));
+				dialogue.getPlayer().text(4895, NpcDefinition.DEFINITIONS[npc].getName());
+				dialogue.getPlayer().text(4896, getText()[0]);
+				dialogue.getPlayer().text(4897, getText()[1]);
+				dialogue.getPlayer().text(4898, getText()[2]);
+				dialogue.getPlayer().out(new SendInterfaceNpcModel(4894, npc));
+				dialogue.getPlayer().chatWidget(4893);
 				break;
 			case 4:
-				dialogue.getPlayer().getMessages().sendInterfaceAnimation(4901, expression.getExpression());
-				dialogue.getPlayer().getMessages().sendString(NpcDefinition.DEFINITIONS[npc].getName(), 4902);
-				dialogue.getPlayer().getMessages().sendString(getText()[0], 4903);
-				dialogue.getPlayer().getMessages().sendString(getText()[1], 4904);
-				dialogue.getPlayer().getMessages().sendString(getText()[2], 4905);
-				dialogue.getPlayer().getMessages().sendString(getText()[3], 4906);
-				dialogue.getPlayer().getMessages().sendNpcModelOnInterface(4901, npc);
-				dialogue.getPlayer().getMessages().sendChatInterface(4900);
+				dialogue.getPlayer().out(new SendInterfaceAnimation(4901, expression.getExpression()));
+				dialogue.getPlayer().text(4902, NpcDefinition.DEFINITIONS[npc].getName());
+				dialogue.getPlayer().text(4903, getText()[0]);
+				dialogue.getPlayer().text(4904, getText()[1]);
+				dialogue.getPlayer().text(4905, getText()[2]);
+				dialogue.getPlayer().text(4906, getText()[3]);
+				dialogue.getPlayer().out(new SendInterfaceNpcModel(4901, npc));
+				dialogue.getPlayer().chatWidget(4900);
 				break;
 			default:
 				throw new IllegalArgumentException("Illegal npc dialogue " + "length: " + getText().length);

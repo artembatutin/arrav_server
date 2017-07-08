@@ -61,7 +61,7 @@ public class PestGate {
 		player.getInventory().remove(new Item(1511));
 		player.getSkills()[Skills.CONSTRUCTION].increaseExperience(20);
 		player.getAttr().get("participation").set(player.getAttr().get("participation").getInt() + 25);
-		player.getMessages().sendString("" + player.getAttr().get("participation").getInt(), 21116);
+		player.text(21116, "" + player.getAttr().get("participation").getInt());
 	}
 	
 	public void damage() {

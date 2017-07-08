@@ -2,10 +2,12 @@ package net.edge.net.session;
 
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.Channel;
+import io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscLinkedAtomicQueue;
 import net.edge.net.NetworkConstants;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.IsaacCipher;
+import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
 
@@ -21,6 +23,11 @@ public class GameSession extends Session {
 	 * The capacity of the stream.
 	 */
 	private static final int STREAM_CAP = 5000;
+	
+	/**
+	 * The queue of {@link OutgoingPacket}s.
+	 */
+	private final Queue<OutgoingPacket> outgoing = new MpscLinkedAtomicQueue<>();
 	
 	/**
 	 * The player assigned to this {@code GameSession}.
@@ -71,7 +78,31 @@ public class GameSession extends Session {
 			});
 		}
 	}
-
+	
+	/**
+	 * Enqueues the given {@link OutgoingPacket} for transport.
+	 */
+	public void enqueueForSync(OutgoingPacket pkt) {
+		outgoing.offer(pkt);
+	}
+	
+	/**
+	 * Writes the given {@link OutgoingPacket} to the stream.
+	 */
+	public void writeToStream(OutgoingPacket pkt) {
+		pkt.write(player);
+	}
+	
+	/**
+	 * Writes all enqueued packets to the stream.
+	 */
+	public void pollOutgoingMessages() {
+		while (!outgoing.isEmpty()) {
+			OutgoingPacket packet = outgoing.poll();
+			writeToStream(packet);
+		}
+	}
+	
 	/**
 	 * Flushes all pending {@link IncomingMsg}s within the channel's queue. Repeated calls to this method are relatively
 	 * expensive, which is why messages should be queued up with {@code queue(MessageWriter)} and flushed once at the end of

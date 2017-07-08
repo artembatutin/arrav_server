@@ -25,7 +25,7 @@ public class Hazelmere extends EventInitializer {
 						a.getBuilder().advance();
 					}
 				}, "Open shop", "Nevermind"));
-				a.chain(new PlayerDialogue("Nevermind, I forgot what I wanted to ask.").attachAfter(() -> player.getMessages().sendCloseWindows()));
+				a.chain(new PlayerDialogue("Nevermind, I forgot what I wanted to ask.").attachAfter(() -> player.closeWidget()));
 				a.chain(new PlayerDialogue("Can I see your shop?"));
 				a.chain(new NpcDialogue(669, "Ofcourse!").attachAfter(() -> MarketCounter.getShops().get(0).openShop(player)));
 				a.start();

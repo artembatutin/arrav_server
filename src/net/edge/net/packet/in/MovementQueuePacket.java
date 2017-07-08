@@ -53,7 +53,7 @@ public final class MovementQueuePacket implements IncomingPacket {
 		if(player.getDialogueBuilder() != null && !player.getMovementQueue().isLockMovement())
 			player.getDialogueBuilder().interrupt();
 		
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		if(player.getMarketShop() != null) {
 			MarketShop.clearFromShop(player);
 		}

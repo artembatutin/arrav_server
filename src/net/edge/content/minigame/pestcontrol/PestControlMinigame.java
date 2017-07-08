@@ -13,6 +13,8 @@ import net.edge.content.minigame.pestcontrol.defence.PestGate;
 import net.edge.content.minigame.pestcontrol.pest.Pest;
 import net.edge.content.skill.Skills;
 import net.edge.locale.Position;
+import net.edge.net.packet.out.SendConfig;
+import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Hit;
 import net.edge.world.World;
@@ -115,10 +117,10 @@ public final class PestControlMinigame extends SequencedMinigame {
 		getPlayers().remove(player);
 		player.setMinigame(Optional.empty());
 		player.setInstance(0);
-		player.getMessages().sendWalkable(-1);
+		player.out(new SendWalkable((-1)));
 		if(player.isPoisoned()) {
 			player.getPoisonDamage().set(0);
-			player.getMessages().sendConfig(174, 0);
+			player.out(new SendConfig(174, 0));
 		}
 		player.getAttr().get("participation").set(0);
 		player.getAttr().get("master_archery").set(false);
@@ -251,7 +253,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	@Override
 	public void postDeath(Player player) {
 		player.getMovementQueue().reset();
-		player.getMessages().sendWalkable(21100);
+		player.out(new SendWalkable((21100)));
 	}
 	
 	@Override
@@ -262,7 +264,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 		}
 		if(add != 0) {
 			player.getAttr().get("participation").set(player.getAttr().get("participation").getInt() + (add / 10));
-			player.getMessages().sendString("" + player.getAttr().get("participation").getInt(), 21116);
+			player.text(21116, "" + player.getAttr().get("participation").getInt());
 		}
 	}
 	
@@ -317,15 +319,15 @@ public final class PestControlMinigame extends SequencedMinigame {
 	
 	private void spawn(Player p) {
 		p.move(new Position(2656 + RandomUtils.inclusive(3), 2609 + RandomUtils.inclusive(4)));
-		p.getMessages().sendString("" + p.getAttr().get("participation").getInt(), 21116);
-		p.getMessages().sendWalkable(21100);
+		p.text(21116, "" + p.getAttr().get("participation").getInt());
+		p.out(new SendWalkable((21100)));
 		p.getMovementQueue().reset();
 	}
 	
 	private void time(int time) {
 		this.time = time;
 		for(Player p : getPlayers()) {
-			p.getMessages().sendString((time * 6) + " seconds", 21117);
+			p.text(21117, (time * 6) + " seconds");
 		}
 		if(time == 0) {
 			//kept void alive, lost.

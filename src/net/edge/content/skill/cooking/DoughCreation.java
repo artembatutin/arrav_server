@@ -2,6 +2,8 @@ package net.edge.content.skill.cooking;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.net.packet.out.SendEnterAmount;
+import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
@@ -54,7 +56,7 @@ public final class DoughCreation extends ProducingSkillAction {
 		
 		if(data.get().amount == -1) {
 			player.getAttr().get("creating_dough_data").set(data.get());
-			player.getMessages().sendEnterAmount("How many you would like to make?", s -> () -> DoughCreation.create(player, (DoughData) player.getAttr().get("creating_dough_data").get(), Integer.parseInt(s)));
+			player.out(new SendEnterAmount("How many you would like to make?", s -> () -> DoughCreation.create(player, (DoughData) player.getAttr().get("creating_dough_data").get(), Integer.parseInt(s))));
 			return true;
 		}
 		create(player, data.get(), data.get().amount);
@@ -90,15 +92,15 @@ public final class DoughCreation extends ProducingSkillAction {
 		
 		player.getAttr().get("creating_dough").set(true);
 		
-		player.getMessages().sendString("What sort of dough do you wish to make?", 8922);
+		player.text(8922, "What sort of dough do you wish to make?");
 		
 		DoughData.VALUES.forEach(dough -> {
 			if(dough.amount == 1) {
-				player.getMessages().sendItemModelOnInterface(dough.modelFrame, 150, dough.produced.getId());
-				player.getMessages().sendString("\\n\\n\\n\\n\\n" + dough.toString(), dough.nameFrame);
+				player.out(new SendItemModelInterface(dough.modelFrame, 150, dough.produced.getId()));
+				player.text(dough.nameFrame, "\\n\\n\\n\\n\\n" + dough.toString());
 			}
 		});
-		player.getMessages().sendChatInterface(8899);
+		player.chatWidget(8899);
 		return true;
 	}
 	
@@ -158,7 +160,7 @@ public final class DoughCreation extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		return true;
 	}
 	

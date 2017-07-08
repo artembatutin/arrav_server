@@ -2,6 +2,7 @@ package net.edge.content.commands.impl;
 
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
+import net.edge.net.packet.out.SendLink;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
 
@@ -17,7 +18,7 @@ public final class OpenThreadCommand implements Command {
 			return;
 		}
 		
-		player.getMessages().sendLink("community/index.php?/topic/" + input + "-/");
+		player.out(new SendLink("community/index.php?/topic/" + input + "-/"));
 	}
 	
 }

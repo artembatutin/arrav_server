@@ -9,6 +9,10 @@ import net.edge.content.skill.construction.room.RoomData;
 import net.edge.content.skill.construction.room.RoomFurniture;
 import net.edge.game.GameConstants;
 import net.edge.locale.Position;
+import net.edge.net.packet.out.SendFade;
+import net.edge.net.packet.out.SendMinimapState;
+import net.edge.net.packet.out.SendObject;
+import net.edge.net.packet.out.SendPaletteMap;
 import net.edge.task.Task;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
@@ -37,7 +41,7 @@ public class Construction {
 	}
 	
 	public static void buyHouse(Player p) {
-		p.getMessages().sendCloseWindows();
+		p.closeWidget();
 		House house = p.getHouse();
 		if(hasHouse(p)) {
 			p.message("You already own a house. Use the portal to enter it.");
@@ -59,7 +63,7 @@ public class Construction {
 	}
 	
 	public static void enterHouse(Player p, boolean buildingMode) {
-		p.getMessages().sendCloseWindows();
+		p.closeWidget();
 		House house = p.getHouse();
 		if(house.get().getRooms()[0][0][0] == null) {
 			p.message("You don't own a house. Talk to the Estate agent to buy one.");
@@ -73,9 +77,9 @@ public class Construction {
 		if(house.getPalette() == null)
 			house.createPalette();
 		me.getHouse().get().setBuilding(building);
-		me.getMessages().sendCloseWindows();
-		me.getMessages().sendMinimapState(2);
-		me.getMessages().sendFade(20, 300, 200);
+		me.closeWidget();
+		me.out(new SendMinimapState(2));
+		me.out(new SendFade(20, 300, 200));
 		Task delay = new Task(1) {
 			int x = -1, y = -1, tick = 0;
 			@Override
@@ -86,7 +90,7 @@ public class Construction {
 						me.move(new Position(Constants.MIDDLE_X, Constants.MIDDLE_Y, 0));
 						break;
 					case 3:
-						me.getMessages().constructMapRegion(house.getPalette());
+						me.out(new SendPaletteMap(house.getPalette()));
 						break;
 					case 4:
 						placeAllFurniture(me, 0);
@@ -106,7 +110,7 @@ public class Construction {
 							}
 						}
 						house.addPlayer(me);
-						me.getMessages().sendMinimapState(0);
+						me.out(new SendMinimapState(0));
 						cancel();
 						break;
 				}
@@ -241,28 +245,24 @@ public class Construction {
 			int offsetX = Constants.BASE_X + (myTiles[0] * 8);
 			int offsetY = Constants.BASE_Y + (myTiles[1] * 8);
 			if(s.getObjectId() == 15329 || s.getObjectId() == 15328) {
-				p.getMessages()
-						.sendObject_cons(actualX, actualY, s.getObjectId() == 15328 ? (placeBack ? 15328 : f.getId()) : (placeBack ? 15329 : f
+				SendObject.construction(p, actualX, actualY, s.getObjectId() == 15328 ? (placeBack ? 15328 : f.getId()) : (placeBack ? 15329 : f
 								.getId() + 1), s.getRotation(roomRot), 0, height);
 				offsetX += Constants.getXOffsetForObjectId(f.getId(), s.getXOffset() + (s.getObjectId() == 15329 ? 1 : -1), s
 						.getYOffset(), roomRot, s.getRotation(0));
 				offsetY += Constants.getYOffsetForObjectId(f.getId(), s.getXOffset() + (s.getObjectId() == 15329 ? 1 : -1), s
 						.getYOffset(), roomRot, s.getRotation(0));
-				p.getMessages()
-						.sendObject_cons(offsetX, offsetY, s.getObjectId() == 15329 ? (placeBack ? 15328 : f.getId()) : (placeBack ? 15329 : f
+				SendObject.construction(p, offsetX, offsetY, s.getObjectId() == 15329 ? (placeBack ? 15328 : f.getId()) : (placeBack ? 15329 : f
 								.getId() + 1), s.getRotation(roomRot), 0, height);
 				
 			}
 			if(s.getObjectId() == 15326 || s.getObjectId() == 15327) {
-				p.getMessages()
-						.sendObject_cons(actualX, actualY, s.getObjectId() == 15327 ? (placeBack ? 15327 : f.getId() + 1) : (placeBack ? 15326 : f
+				SendObject.construction(p, actualX, actualY, s.getObjectId() == 15327 ? (placeBack ? 15327 : f.getId() + 1) : (placeBack ? 15326 : f
 								.getId()), s.getRotation(roomRot), 0, height);
 				offsetX += Constants.getXOffsetForObjectId(f.getId(), s.getXOffset() + (s.getObjectId() == 15326 ? 1 : -1), s
 						.getYOffset(), roomRot, s.getRotation(0));
 				offsetY += Constants.getYOffsetForObjectId(f.getId(), s.getXOffset() + (s.getObjectId() == 15326 ? 1 : -1), s
 						.getYOffset(), roomRot, s.getRotation(0));
-				p.getMessages()
-						.sendObject_cons(offsetX, offsetY, s.getObjectId() == 15326 ? (placeBack ? 15327 : f.getId() + 1) : (placeBack ? 15326 : f
+				SendObject.construction(p, offsetX, offsetY, s.getObjectId() == 15326 ? (placeBack ? 15327 : f.getId() + 1) : (placeBack ? 15326 : f
 								.getId()), s.getRotation(roomRot), 0, height);
 				
 			}
@@ -291,141 +291,102 @@ public class Construction {
 			if(placeBack || f.getId() == 13337) {
 				for(int x = 0; x < 4; x++) {
 					for(int y = 0; y < 4; y++) {
-						p.getMessages().sendObject_cons(actualX + x, actualY + y, 6951, 0, 10, height);
-						p.getMessages().sendObject_cons(actualX + x, actualY + y, 6951, 0, 22, height);
+						SendObject.construction(p, actualX + x, actualY + y, 6951, 0, 10, height);
+						SendObject.construction(p, actualX + x, actualY + y, 6951, 0, 22, height);
 					}
 				}
 				
 			}
-			p.getMessages().sendObject_cons(actualX, actualY, placeBack ? 15348 : cornerObject, 1, type, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 1, placeBack ? 15348 : leftObject, 1, type, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 2, placeBack ? 15348 : leftObject, 1, type, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 3, placeBack ? 15348 : cornerObject, 2, type, height);
-			p.getMessages().sendObject_cons(actualX + 1, actualY + 3, placeBack ? 15348 : upperObject, 2, type, height);
-			p.getMessages().sendObject_cons(actualX + 2, actualY + 3, placeBack ? 15348 : upperObject, 2, type, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 3, actualY + 3, placeBack ? 15348 : cornerObject, 3, type, height);
-			p.getMessages().sendObject_cons(actualX + 3, actualY + 2, placeBack ? 15348 : rightObject, 3, type, height);
-			p.getMessages().sendObject_cons(actualX + 3, actualY + 1, placeBack ? 15348 : rightObject, 3, type, height);
-			p.getMessages().sendObject_cons(actualX + 3, actualY, placeBack ? 15348 : cornerObject, 0, type, height);
-			p.getMessages().sendObject_cons(actualX + 2, actualY, placeBack ? 15348 : downObject, 0, type, height);
-			p.getMessages().sendObject_cons(actualX + 1, actualY, placeBack ? 15348 : downObject, 0, type, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 1, actualY + 1, placeBack ? 15348 : middleObject, 0, type, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 2, actualY + 1, placeBack ? 15348 : middleObject, 0, type, height);
+			SendObject.construction(p, actualX, actualY, placeBack ? 15348 : cornerObject, 1, type, height);
+			SendObject.construction(p, actualX, actualY + 1, placeBack ? 15348 : leftObject, 1, type, height);
+			SendObject.construction(p, actualX, actualY + 2, placeBack ? 15348 : leftObject, 1, type, height);
+			SendObject.construction(p, actualX, actualY + 3, placeBack ? 15348 : cornerObject, 2, type, height);
+			SendObject.construction(p, actualX + 1, actualY + 3, placeBack ? 15348 : upperObject, 2, type, height);
+			SendObject.construction(p, actualX + 2, actualY + 3, placeBack ? 15348 : upperObject, 2, type, height);
+			SendObject.construction(p, actualX + 3, actualY + 3, placeBack ? 15348 : cornerObject, 3, type, height);
+			SendObject.construction(p, actualX + 3, actualY + 2, placeBack ? 15348 : rightObject, 3, type, height);
+			SendObject.construction(p, actualX + 3, actualY + 1, placeBack ? 15348 : rightObject, 3, type, height);
+			SendObject.construction(p, actualX + 3, actualY, placeBack ? 15348 : cornerObject, 0, type, height);
+			SendObject.construction(p, actualX + 2, actualY, placeBack ? 15348 : downObject, 0, type, height);
+			SendObject.construction(p, actualX + 1, actualY, placeBack ? 15348 : downObject, 0, type, height);
+			SendObject.construction(p, actualX + 1, actualY + 1, placeBack ? 15348 : middleObject, 0, type, height);
+			SendObject.construction(p, actualX + 2, actualY + 1, placeBack ? 15348 : middleObject, 0, type, height);
 			if(veryMiddleObject != 0)
-				p.getMessages().sendObject_cons(actualX + 1, actualY + 2, veryMiddleObject, 0, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 1, actualY + 2, placeBack ? 15348 : middleObject, 0, type, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 2, actualY + 2, placeBack ? 15348 : middleObject, 0, type, height);
+				SendObject.construction(p, actualX + 1, actualY + 2, veryMiddleObject, 0, 10, height);
+			SendObject.construction(p, actualX + 1, actualY + 2, placeBack ? 15348 : middleObject, 0, type, height);
+			SendObject.construction(p, actualX + 2, actualY + 2, placeBack ? 15348 : middleObject, 0, type, height);
 			
 		} else if(s.getHotSpotId() == 86) {
 			actualX = Constants.BASE_X + (myTiles[0] * 8) + 2;
 			actualY = Constants.BASE_Y + (myTiles[1] * 8) + 2;
 			
-			p.getMessages().sendObject_cons(actualX + 1, actualY, placeBack ? 15352 : f.getId(), 3, 0, height);
-			p.getMessages().sendObject_cons(actualX + 2, actualY, placeBack ? 15352 : f.getId(), 3, 0, height);
-			p.getMessages().sendObject_cons(actualX + 3, actualY, placeBack ? 15352 : f.getId(), 2, 2, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 3, actualY + 1, placeBack ? 15352 : f.getId(), 2, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 3, actualY + 2, placeBack ? 15352 : f.getId() + 1, 2, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 3, actualY + 3, placeBack ? 15352 : f.getId(), 1, 2, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 2, actualY + 3, placeBack ? 15352 : f.getId(), 1, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 1, actualY + 3, placeBack ? 15352 : f.getId(), 1, 0, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 3, placeBack ? 15352 : f.getId(), 0, 2, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 2, placeBack ? 15352 : f.getId(), 0, 0, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 1, placeBack ? 15352 : f.getId(), 0, 0, height);
-			p.getMessages().sendObject_cons(actualX, actualY, placeBack ? 15352 : f.getId(), 3, 2, height);
+			SendObject.construction(p, actualX + 1, actualY, placeBack ? 15352 : f.getId(), 3, 0, height);
+			SendObject.construction(p, actualX + 2, actualY, placeBack ? 15352 : f.getId(), 3, 0, height);
+			SendObject.construction(p, actualX + 3, actualY, placeBack ? 15352 : f.getId(), 2, 2, height);
+			SendObject.construction(p, actualX + 3, actualY + 1, placeBack ? 15352 : f.getId(), 2, 0, height);
+			SendObject.construction(p, actualX + 3, actualY + 2, placeBack ? 15352 : f.getId() + 1, 2, 0, height);
+			SendObject.construction(p, actualX + 3, actualY + 3, placeBack ? 15352 : f.getId(), 1, 2, height);
+			SendObject.construction(p, actualX + 2, actualY + 3, placeBack ? 15352 : f.getId(), 1, 0, height);
+			SendObject.construction(p, actualX + 1, actualY + 3, placeBack ? 15352 : f.getId(), 1, 0, height);
+			SendObject.construction(p, actualX, actualY + 3, placeBack ? 15352 : f.getId(), 0, 2, height);
+			SendObject.construction(p, actualX, actualY + 2, placeBack ? 15352 : f.getId(), 0, 0, height);
+			SendObject.construction(p, actualX, actualY + 1, placeBack ? 15352 : f.getId(), 0, 0, height);
+			SendObject.construction(p, actualX, actualY, placeBack ? 15352 : f.getId(), 3, 2, height);
 			
 		} else if(s.getHotSpotId() == 78) {
 			actualX = Constants.BASE_X + (myTiles[0] * 8);
 			actualY = Constants.BASE_Y + (myTiles[1] * 8);
 			// south walls
-			p.getMessages().sendObject_cons(actualX, actualY, placeBack ? 15369 : f.getId(), 3, 2, height);
-			p.getMessages().sendObject_cons(actualX + 1, actualY, placeBack ? 15369 : f.getId(), 3, 0, height);
-			p.getMessages().sendObject_cons(actualX + 2, actualY, placeBack ? 15369 : f.getId(), 3, 0, height);
-			p.getMessages().sendObject_cons(actualX + 5, actualY, placeBack ? 15369 : f.getId(), 3, 0, height);
-			p.getMessages().sendObject_cons(actualX + 6, actualY, placeBack ? 15369 : f.getId(), 3, 0, height);
-			p.getMessages().sendObject_cons(actualX + 7, actualY, placeBack ? 15369 : f.getId(), 2, 2, height);
+			SendObject.construction(p, actualX, actualY, placeBack ? 15369 : f.getId(), 3, 2, height);
+			SendObject.construction(p, actualX + 1, actualY, placeBack ? 15369 : f.getId(), 3, 0, height);
+			SendObject.construction(p, actualX + 2, actualY, placeBack ? 15369 : f.getId(), 3, 0, height);
+			SendObject.construction(p, actualX + 5, actualY, placeBack ? 15369 : f.getId(), 3, 0, height);
+			SendObject.construction(p, actualX + 6, actualY, placeBack ? 15369 : f.getId(), 3, 0, height);
+			SendObject.construction(p, actualX + 7, actualY, placeBack ? 15369 : f.getId(), 2, 2, height);
 			// north walls
-			p.getMessages().sendObject_cons(actualX, actualY + 7, placeBack ? 15369 : f.getId(), 0, 2, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 1, actualY + 7, placeBack ? 15369 : f.getId(), 1, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 2, actualY + 7, placeBack ? 15369 : f.getId(), 1, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 5, actualY + 7, placeBack ? 15369 : f.getId(), 1, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 6, actualY + 7, placeBack ? 15369 : f.getId(), 1, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 7, actualY + 7, placeBack ? 15369 : f.getId(), 1, 2, height);
+			SendObject.construction(p, actualX, actualY + 7, placeBack ? 15369 : f.getId(), 0, 2, height);
+			SendObject.construction(p, actualX + 1, actualY + 7, placeBack ? 15369 : f.getId(), 1, 0, height);
+			SendObject.construction(p, actualX + 2, actualY + 7, placeBack ? 15369 : f.getId(), 1, 0, height);
+			SendObject.construction(p, actualX + 5, actualY + 7, placeBack ? 15369 : f.getId(), 1, 0, height);
+			SendObject.construction(p, actualX + 6, actualY + 7, placeBack ? 15369 : f.getId(), 1, 0, height);
+			SendObject.construction(p, actualX + 7, actualY + 7, placeBack ? 15369 : f.getId(), 1, 2, height);
 			// left walls
-			p.getMessages().sendObject_cons(actualX, actualY + 1, placeBack ? 15369 : f.getId(), 0, 0, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 2, placeBack ? 15369 : f.getId(), 0, 0, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 5, placeBack ? 15369 : f.getId(), 0, 0, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 6, placeBack ? 15369 : f.getId(), 0, 0, height);
+			SendObject.construction(p, actualX, actualY + 1, placeBack ? 15369 : f.getId(), 0, 0, height);
+			SendObject.construction(p, actualX, actualY + 2, placeBack ? 15369 : f.getId(), 0, 0, height);
+			SendObject.construction(p, actualX, actualY + 5, placeBack ? 15369 : f.getId(), 0, 0, height);
+			SendObject.construction(p, actualX, actualY + 6, placeBack ? 15369 : f.getId(), 0, 0, height);
 			// right walls
-			p.getMessages()
-					.sendObject_cons(actualX + 7, actualY + 1, placeBack ? 15369 : f.getId(), 2, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 7, actualY + 2, placeBack ? 15369 : f.getId(), 2, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 7, actualY + 5, placeBack ? 15369 : f.getId(), 2, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 7, actualY + 6, placeBack ? 15369 : f.getId(), 2, 0, height);
+			SendObject.construction(p, actualX + 7, actualY + 1, placeBack ? 15369 : f.getId(), 2, 0, height);
+			SendObject.construction(p, actualX + 7, actualY + 2, placeBack ? 15369 : f.getId(), 2, 0, height);
+			SendObject.construction(p, actualX + 7, actualY + 5, placeBack ? 15369 : f.getId(), 2, 0, height);
+			SendObject.construction(p, actualX + 7, actualY + 6, placeBack ? 15369 : f.getId(), 2, 0, height);
 		} else if(s.getHotSpotId() == 77) {
 			actualX = Constants.BASE_X + (myTiles[0] * 8);
 			actualY = Constants.BASE_Y + (myTiles[1] * 8);
 			// left down corner
-			p.getMessages()
-					.sendObject_cons(actualX, actualY, placeBack ? 15372 : f.getId() + 1, 3, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 1, actualY, placeBack ? 15371 : f.getId() + 2, 0, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 2, actualY, placeBack ? 15370 : f.getId(), 0, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX, actualY + 1, placeBack ? 15371 : f.getId() + 2, 1, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX, actualY + 2, placeBack ? 15370 : f.getId(), 3, 10, height);
+			SendObject.construction(p, actualX, actualY, placeBack ? 15372 : f.getId() + 1, 3, 10, height);
+			SendObject.construction(p, actualX + 1, actualY, placeBack ? 15371 : f.getId() + 2, 0, 10, height);
+			SendObject.construction(p, actualX + 2, actualY, placeBack ? 15370 : f.getId(), 0, 10, height);
+			SendObject.construction(p, actualX, actualY + 1, placeBack ? 15371 : f.getId() + 2, 1, 10, height);
+			SendObject.construction(p, actualX, actualY + 2, placeBack ? 15370 : f.getId(), 3, 10, height);
 			// right down corner
-			p.getMessages()
-					.sendObject_cons(actualX + 7, actualY, placeBack ? 15372 : f.getId() + 1, 2, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 6, actualY, placeBack ? 15371 : f.getId() + 2, 0, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 5, actualY, placeBack ? 15370 : f.getId(), 2, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 7, actualY + 1, placeBack ? 15371 : f.getId() + 2, 3, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 7, actualY + 2, placeBack ? 15370 : f.getId(), 3, 10, height);
+			SendObject.construction(p, actualX + 7, actualY, placeBack ? 15372 : f.getId() + 1, 2, 10, height);
+			SendObject.construction(p, actualX + 6, actualY, placeBack ? 15371 : f.getId() + 2, 0, 10, height);
+			SendObject.construction(p, actualX + 5, actualY, placeBack ? 15370 : f.getId(), 2, 10, height);
+			SendObject.construction(p, actualX + 7, actualY + 1, placeBack ? 15371 : f.getId() + 2, 3, 10, height);
+			SendObject.construction(p, actualX + 7, actualY + 2, placeBack ? 15370 : f.getId(), 3, 10, height);
 			// upper left corner
-			p.getMessages()
-					.sendObject_cons(actualX, actualY + 7, placeBack ? 15372 : f.getId() + 1, 0, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 1, actualY + 7, placeBack ? 15371 : f.getId() + 2, 0, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 2, actualY + 7, placeBack ? 15370 : f.getId(), 0, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX, actualY + 6, placeBack ? 15371 : f.getId() + 2, 1, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX, actualY + 5, placeBack ? 15370 : f.getId(), 1, 10, height);
+			SendObject.construction(p, actualX, actualY + 7, placeBack ? 15372 : f.getId() + 1, 0, 10, height);
+			SendObject.construction(p, actualX + 1, actualY + 7, placeBack ? 15371 : f.getId() + 2, 0, 10, height);
+			SendObject.construction(p, actualX + 2, actualY + 7, placeBack ? 15370 : f.getId(), 0, 10, height);
+			SendObject.construction(p, actualX, actualY + 6, placeBack ? 15371 : f.getId() + 2, 1, 10, height);
+			SendObject.construction(p, actualX, actualY + 5, placeBack ? 15370 : f.getId(), 1, 10, height);
 			// upper right corner
-			p.getMessages()
-					.sendObject_cons(actualX + 7, actualY + 7, placeBack ? 15372 : f.getId() + 1, 1, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 6, actualY + 7, placeBack ? 15371 : f.getId() + 2, 0, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 5, actualY + 7, placeBack ? 15370 : f.getId(), 2, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 7, actualY + 6, placeBack ? 15371 : f.getId() + 2, 3, 10, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 7, actualY + 5, placeBack ? 15370 : f.getId(), 1, 10, height);
+			SendObject.construction(p, actualX + 7, actualY + 7, placeBack ? 15372 : f.getId() + 1, 1, 10, height);
+			SendObject.construction(p, actualX + 6, actualY + 7, placeBack ? 15371 : f.getId() + 2, 0, 10, height);
+			SendObject.construction(p, actualX + 5, actualY + 7, placeBack ? 15370 : f.getId(), 2, 10, height);
+			SendObject.construction(p, actualX + 7, actualY + 6, placeBack ? 15371 : f.getId() + 2, 3, 10, height);
+			SendObject.construction(p, actualX + 7, actualY + 5, placeBack ? 15370 : f.getId(), 1, 10, height);
 		} else if(s.getHotSpotId() == 44) {
 			int combatringStrings = 6951;
 			int combatringFloorsCorner = 6951;
@@ -454,93 +415,66 @@ public class Construction {
 				}
 			}
 			
-			p.getMessages()
-					.sendObject_cons(actualX + 2, actualY + 3, placeBack ? 15292 : combatringFloorsInner, 0, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 3, actualY + 3, placeBack ? 15292 : combatringFloorsInner, 0, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 3, actualY + 2, placeBack ? 15292 : combatringFloorsInner, 0, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 2, actualY + 2, placeBack ? 15292 : combatringFloorsInner, 0, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 2, actualY + 1, placeBack ? 15291 : combatringFloorsOuter, 3, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 3, actualY + 1, placeBack ? 15291 : combatringFloorsOuter, 3, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 2, actualY + 4, placeBack ? 15291 : combatringFloorsOuter, 1, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 3, actualY + 4, placeBack ? 15291 : combatringFloorsOuter, 1, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 4, actualY + 3, placeBack ? 15291 : combatringFloorsOuter, 2, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 4, actualY + 2, placeBack ? 15291 : combatringFloorsOuter, 2, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 1, actualY + 3, placeBack ? 15291 : combatringFloorsOuter, 0, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 1, actualY + 2, placeBack ? 15291 : combatringFloorsOuter, 0, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 4, actualY + 1, placeBack ? 15289 : combatringFloorsCorner, 3, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 4, actualY + 4, placeBack ? 15289 : combatringFloorsCorner, 2, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 1, actualY + 4, placeBack ? 15289 : combatringFloorsCorner, 1, 22, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 1, actualY + 1, placeBack ? 15289 : combatringFloorsCorner, 0, 22, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 4, placeBack ? 15277 : combatringStrings, 3, 0, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 1, placeBack ? 15277 : combatringStrings, 3, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 5, actualY + 4, placeBack ? 15277 : combatringStrings, 3, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 5, actualY + 1, placeBack ? 15277 : combatringStrings, 0, 3, height);
-			p.getMessages().sendObject_cons(actualX + 1, actualY, placeBack ? 15277 : combatringStrings, 1, 0, height);
-			p.getMessages().sendObject_cons(actualX + 2, actualY, placeBack ? 15277 : combatringStrings, 1, 0, height);
-			p.getMessages().sendObject_cons(actualX + 3, actualY, placeBack ? 15277 : combatringStrings, 1, 0, height);
-			p.getMessages().sendObject_cons(actualX + 4, actualY, placeBack ? 15277 : combatringStrings, 1, 0, height);
-			p.getMessages().sendObject_cons(actualX + 5, actualY, placeBack ? 15277 : combatringStrings, 0, 3, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 1, actualY + 5, placeBack ? 15277 : combatringStrings, 3, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 2, actualY + 5, placeBack ? 15277 : combatringStrings, 3, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 3, actualY + 5, placeBack ? 15277 : combatringStrings, 3, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 4, actualY + 5, placeBack ? 15277 : combatringStrings, 3, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 5, actualY + 5, placeBack ? 15277 : combatringStrings, 3, 3, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 5, placeBack ? 15277 : combatringStrings, 2, 3, height);
-			p.getMessages().sendObject_cons(actualX, actualY, placeBack ? 15277 : combatringStrings, 1, 3, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 4, placeBack ? 15277 : combatringStrings, 2, 0, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 3, placeBack ? 15277 : combatringStrings, 2, 0, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 2, placeBack ? 15277 : combatringStrings, 2, 0, height);
-			p.getMessages().sendObject_cons(actualX, actualY + 1, placeBack ? 15277 : combatringStrings, 2, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 5, actualY + 4, placeBack ? 15277 : combatringStrings, 0, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 5, actualY + 3, placeBack ? 15277 : combatringStrings, 0, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 5, actualY + 2, placeBack ? 15277 : combatringStrings, 0, 0, height);
-			p.getMessages()
-					.sendObject_cons(actualX + 5, actualY + 1, placeBack ? 15277 : combatringStrings, 0, 0, height);
+			SendObject.construction(p, actualX + 2, actualY + 3, placeBack ? 15292 : combatringFloorsInner, 0, 22, height);
+			SendObject.construction(p, actualX + 3, actualY + 3, placeBack ? 15292 : combatringFloorsInner, 0, 22, height);
+			SendObject.construction(p, actualX + 3, actualY + 2, placeBack ? 15292 : combatringFloorsInner, 0, 22, height);
+			SendObject.construction(p, actualX + 2, actualY + 2, placeBack ? 15292 : combatringFloorsInner, 0, 22, height);
+			SendObject.construction(p, actualX + 2, actualY + 1, placeBack ? 15291 : combatringFloorsOuter, 3, 22, height);
+			SendObject.construction(p, actualX + 3, actualY + 1, placeBack ? 15291 : combatringFloorsOuter, 3, 22, height);
+			SendObject.construction(p, actualX + 2, actualY + 4, placeBack ? 15291 : combatringFloorsOuter, 1, 22, height);
+			SendObject.construction(p, actualX + 3, actualY + 4, placeBack ? 15291 : combatringFloorsOuter, 1, 22, height);
+			SendObject.construction(p, actualX + 4, actualY + 3, placeBack ? 15291 : combatringFloorsOuter, 2, 22, height);
+			SendObject.construction(p, actualX + 4, actualY + 2, placeBack ? 15291 : combatringFloorsOuter, 2, 22, height);
+			SendObject.construction(p, actualX + 1, actualY + 3, placeBack ? 15291 : combatringFloorsOuter, 0, 22, height);
+			SendObject.construction(p, actualX + 1, actualY + 2, placeBack ? 15291 : combatringFloorsOuter, 0, 22, height);
+			SendObject.construction(p, actualX + 4, actualY + 1, placeBack ? 15289 : combatringFloorsCorner, 3, 22, height);
+			SendObject.construction(p, actualX + 4, actualY + 4, placeBack ? 15289 : combatringFloorsCorner, 2, 22, height);
+			SendObject.construction(p, actualX + 1, actualY + 4, placeBack ? 15289 : combatringFloorsCorner, 1, 22, height);
+			SendObject.construction(p, actualX + 1, actualY + 1, placeBack ? 15289 : combatringFloorsCorner, 0, 22, height);
+			SendObject.construction(p, actualX, actualY + 4, placeBack ? 15277 : combatringStrings, 3, 0, height);
+			SendObject.construction(p, actualX, actualY + 1, placeBack ? 15277 : combatringStrings, 3, 0, height);
+			SendObject.construction(p, actualX + 5, actualY + 4, placeBack ? 15277 : combatringStrings, 3, 0, height);
+			SendObject.construction(p, actualX + 5, actualY + 1, placeBack ? 15277 : combatringStrings, 0, 3, height);
+			SendObject.construction(p, actualX + 1, actualY, placeBack ? 15277 : combatringStrings, 1, 0, height);
+			SendObject.construction(p, actualX + 2, actualY, placeBack ? 15277 : combatringStrings, 1, 0, height);
+			SendObject.construction(p, actualX + 3, actualY, placeBack ? 15277 : combatringStrings, 1, 0, height);
+			SendObject.construction(p, actualX + 4, actualY, placeBack ? 15277 : combatringStrings, 1, 0, height);
+			SendObject.construction(p, actualX + 5, actualY, placeBack ? 15277 : combatringStrings, 0, 3, height);
+			SendObject.construction(p, actualX + 1, actualY + 5, placeBack ? 15277 : combatringStrings, 3, 0, height);
+			SendObject.construction(p, actualX + 2, actualY + 5, placeBack ? 15277 : combatringStrings, 3, 0, height);
+			SendObject.construction(p, actualX + 3, actualY + 5, placeBack ? 15277 : combatringStrings, 3, 0, height);
+			SendObject.construction(p, actualX + 4, actualY + 5, placeBack ? 15277 : combatringStrings, 3, 0, height);
+			SendObject.construction(p, actualX + 5, actualY + 5, placeBack ? 15277 : combatringStrings, 3, 3, height);
+			SendObject.construction(p, actualX, actualY + 5, placeBack ? 15277 : combatringStrings, 2, 3, height);
+			SendObject.construction(p, actualX, actualY, placeBack ? 15277 : combatringStrings, 1, 3, height);
+			SendObject.construction(p, actualX, actualY + 4, placeBack ? 15277 : combatringStrings, 2, 0, height);
+			SendObject.construction(p, actualX, actualY + 3, placeBack ? 15277 : combatringStrings, 2, 0, height);
+			SendObject.construction(p, actualX, actualY + 2, placeBack ? 15277 : combatringStrings, 2, 0, height);
+			SendObject.construction(p, actualX, actualY + 1, placeBack ? 15277 : combatringStrings, 2, 0, height);
+			SendObject.construction(p, actualX + 5, actualY + 4, placeBack ? 15277 : combatringStrings, 0, 0, height);
+			SendObject.construction(p, actualX + 5, actualY + 3, placeBack ? 15277 : combatringStrings, 0, 0, height);
+			SendObject.construction(p, actualX + 5, actualY + 2, placeBack ? 15277 : combatringStrings, 0, 0, height);
+			SendObject.construction(p, actualX + 5, actualY + 1, placeBack ? 15277 : combatringStrings, 0, 0, height);
 			
 			if(f.getId() == 13145) {
-				p.getMessages().sendObject_cons(actualX + 1, actualY + 1, placeBack ? 6951 : 13145, 0, 0, height);
-				p.getMessages().sendObject_cons(actualX + 2, actualY + 1, placeBack ? 6951 : 13145, 0, 0, height);
-				p.getMessages().sendObject_cons(actualX + 1, actualY, placeBack ? 6951 : 13145, 1, 0, height);
-				p.getMessages().sendObject_cons(actualX + 1, actualY + 2, placeBack ? 6951 : 13145, 3, 0, height);
+				SendObject.construction(p, actualX + 1, actualY + 1, placeBack ? 6951 : 13145, 0, 0, height);
+				SendObject.construction(p, actualX + 2, actualY + 1, placeBack ? 6951 : 13145, 0, 0, height);
+				SendObject.construction(p, actualX + 1, actualY, placeBack ? 6951 : 13145, 1, 0, height);
+				SendObject.construction(p, actualX + 1, actualY + 2, placeBack ? 6951 : 13145, 3, 0, height);
 				if(!placeBack)
-					p.getMessages().sendObject_cons(actualX + 1, actualY + 1, 13147, 0, 22, height);
+					SendObject.construction(p, actualX + 1, actualY + 1, 13147, 0, 22, height);
 				
-				p.getMessages().sendObject_cons(actualX + 3, actualY + 3, placeBack ? 6951 : 13145, 0, 0, height);
-				p.getMessages().sendObject_cons(actualX + 4, actualY + 3, placeBack ? 6951 : 13145, 0, 0, height);
-				p.getMessages().sendObject_cons(actualX + 3, actualY + 2, placeBack ? 6951 : 13145, 1, 0, height);
-				p.getMessages().sendObject_cons(actualX + 3, actualY + 4, placeBack ? 6951 : 13145, 3, 0, height);
+				SendObject.construction(p, actualX + 3, actualY + 3, placeBack ? 6951 : 13145, 0, 0, height);
+				SendObject.construction(p, actualX + 4, actualY + 3, placeBack ? 6951 : 13145, 0, 0, height);
+				SendObject.construction(p, actualX + 3, actualY + 2, placeBack ? 6951 : 13145, 1, 0, height);
+				SendObject.construction(p, actualX + 3, actualY + 4, placeBack ? 6951 : 13145, 3, 0, height);
 				if(!placeBack)
-					p.getMessages().sendObject_cons(actualX + 3, actualY + 3, 13147, 0, 22, height);
+					SendObject.construction(p, actualX + 3, actualY + 3, 13147, 0, 22, height);
 			}
 			if(f.getId() == 13142 && !placeBack) {
-				p.getMessages().sendObject_cons(actualX + 2, actualY + 2, 13142, 0, 22, height);
-				p.getMessages().sendObject_cons(actualX + 2, actualY + 1, 13143, 0, 22, height);
-				p.getMessages().sendObject_cons(actualX + 2, actualY + 3, 13144, 1, 22, height);
+				SendObject.construction(p, actualX + 2, actualY + 2, 13142, 0, 22, height);
+				SendObject.construction(p, actualX + 2, actualY + 1, 13143, 0, 22, height);
+				SendObject.construction(p, actualX + 2, actualY + 3, 13144, 1, 22, height);
 				
 			}
 		} else if(s.getCarpetDim() != null) {
@@ -576,16 +510,13 @@ public class Construction {
 					offsetY += Constants.getYOffsetForObjectId(f.getId(), s.getXOffset() + x - 1, s.getYOffset() + y - 1, roomRot, s
 							.getRotation(roomRot));
 					if(isEdge)
-						p.getMessages()
-								.sendObject_cons(offsetX, offsetY, placeBack ? s.getObjectId() + 2 : f.getId(), HotSpots
+						SendObject.construction(p, offsetX, offsetY, placeBack ? s.getObjectId() + 2 : f.getId(), HotSpots
 										.getRotation_2(rot, roomRot), 22, height);
 					else if(isWall)
-						p.getMessages()
-								.sendObject_cons(offsetX, offsetY, placeBack ? s.getObjectId() + 1 : f.getId() + 1, HotSpots
+						SendObject.construction(p, offsetX, offsetY, placeBack ? s.getObjectId() + 1 : f.getId() + 1, HotSpots
 										.getRotation_2(rot, roomRot), s.getObjectType(), height);
 					else
-						p.getMessages()
-								.sendObject_cons(offsetX, offsetY, placeBack ? s.getObjectId() : f.getId() + 2, HotSpots
+						SendObject.construction(p, offsetX, offsetY, placeBack ? s.getObjectId() : f.getId() + 2, HotSpots
 										.getRotation_2(rot, roomRot), s.getObjectType(), height);
 				}
 			}
@@ -602,11 +533,10 @@ public class Construction {
 				int actualY1 = Constants.BASE_Y + (myTiles[1] * 8);
 				actualY1 += Constants.getYOffsetForObjectId(find.getObjectId(), find, roomRot);
 				
-				p.getMessages().sendObject_cons(actualX1, actualY1, placeBack ? s.getObjectId() : f.getId(), find.getRotation(roomRot), find.getObjectType(), height);
+				SendObject.construction(p, actualX1, actualY1, placeBack ? s.getObjectId() : f.getId(), find.getRotation(roomRot), find.getObjectType(), height);
 			}
 		} else {
-			p.getMessages()
-					.sendObject_cons(actualX, actualY, (portalId != -1 ? portalId : placeBack ? s.getObjectId() : f.getId()), s
+			SendObject.construction(p, actualX, actualY, (portalId != -1 ? portalId : placeBack ? s.getObjectId() : f.getId()), s
 							.getRotation(roomRot), s.getObjectType(), height);
 		}
 	}

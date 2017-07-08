@@ -53,14 +53,15 @@ import net.edge.game.GameConstants;
 import net.edge.locale.Position;
 import net.edge.locale.loc.Location;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.IncomingMsg;
-import net.edge.net.packet.PacketWriter;
+import net.edge.net.packet.OutgoingPacket;
+import net.edge.net.packet.out.*;
 import net.edge.net.session.GameSession;
 import net.edge.task.Task;
 import net.edge.util.*;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
 import net.edge.world.World;
+import net.edge.world.node.NodeState;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
@@ -101,7 +102,10 @@ public final class Player extends EntityNode {
 	 * The logger that will print important information.
 	 */
 	private static Logger logger = LoggerUtils.getLogger(Player.class);
-
+	
+	/**
+	 * The player credentials on login.
+	 */
 	private final PlayerCredentials credentials;
 	
 	/**
@@ -276,11 +280,6 @@ public final class Player extends EntityNode {
 	 * The running energy double.
 	 */
 	private double runEnergy = 100D;
-	
-	/**
-	 * The encoder that will encode and send messages.
-	 */
-	private final PacketWriter messages;
 	
 	/**
 	 * The enter input listener which will execute code when a player submits an input.
@@ -602,7 +601,6 @@ public final class Player extends EntityNode {
 	public Player(PlayerCredentials credentials, boolean human) {
 		super(GameConstants.STARTING_POSITION, NodeType.PLAYER);
 		this.credentials = credentials;
-		this.messages = new PacketWriter(this);
 		this.human = human;
 	}
 
@@ -645,10 +643,9 @@ public final class Player extends EntityNode {
 	
 	@Override
 	public void register() {
-		PacketWriter encoder = getMessages();
-		encoder.sendResetCameraPosition();
-		encoder.sendDetails();
-		this.getMessages().sendMapRegion();
+		write(new SendSlot());
+		write(new SendMapRegion());
+		write(new SendCameraReset());
 		super.getFlags().flag(UpdateFlag.APPEARANCE);
 		Smelting.clearInterfaces(this);
 		if(getAttr().get("introduction_stage").getInt() == 3) {
@@ -658,46 +655,46 @@ public final class Player extends EntityNode {
 		Skills.refreshAll(this);
 		equipment.updateBulk();
 		inventory.updateBulk();
-		encoder.sendPrivateMessageListStatus(2);
-		//privateMessage.updateThisList();
-		//privateMessage.updateOtherList(true);
-		encoder.sendContextMenu(3, false, "Follow");
-		encoder.sendContextMenu(4, false, "Trade with");
-		//CombatEffect.values().forEach($it -> {
-		//	if($it.onLogin(this))
-		//		World.get().submit(new CombatEffectTask(this, $it));
-		//});
+		out(new SendPrivateMessageStatus(2));
+		privateMessage.updateThisList();
+		privateMessage.updateOtherList(true);
+		out(new SendContextMenu(3, false, "Follow"));
+		out(new SendContextMenu(4, false, "Trade with"));
+		CombatEffect.values().forEach($it -> {
+			if($it.onLogin(this))
+				World.get().submit(new CombatEffectTask(this, $it));
+		});
 		World.getExchangeSessionManager().resetRequests(this);
-		encoder.sendMessage(GameConstants.WELCOME_MESSAGE);
+		message(GameConstants.WELCOME_MESSAGE);
 		if(UpdateCommand.inProgess == 1) {
-			encoder.sendMessage("@red@There is currently an update schedule in progress. You'll be kicked off soon.");
+			message("@red@There is currently an update schedule in progress. You'll be kicked off soon.");
 		}
 		WeaponInterface.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		WeaponAnimation.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		ShieldAnimation.execute(this, equipment.get(Equipment.SHIELD_SLOT));
 		equipment.updateRange();
-		encoder.sendConfig(173, super.getMovementQueue().isRunning() ? 0 : 1);
-		encoder.sendConfig(174, super.isPoisoned() ? 1 : 0);
-		encoder.sendConfig(172, super.isAutoRetaliate() ? 1 : 0);
-		encoder.sendConfig(fightType.getParent(), fightType.getChild());
-		encoder.sendConfig(427, ((Boolean) getAttr().get("accept_aid").get()) ? 0 : 1);
-		encoder.sendConfig(108, 0);
-		encoder.sendConfig(301, 0);
-		encoder.sendString((int) runEnergy + "%", 149);
-		encoder.sendRunEnergy();
-		//Prayer.VALUES.forEach(c -> encoder.sendConfig(c.getConfig(), 0));
-		logger.info(this + " has logged in.");
+		out(new SendConfig(173, super.getMovementQueue().isRunning() ? 0 : 1));
+		out(new SendConfig(174, super.isPoisoned() ? 1 : 0));
+		out(new SendConfig(172, super.isAutoRetaliate() ? 1 : 0));
+		out(new SendConfig(fightType.getParent(), fightType.getChild()));
+		out(new SendConfig(427, ((Boolean) getAttr().get("accept_aid").get()) ? 0 : 1));
+		out(new SendConfig(108, 0));
+		out(new SendConfig(301, 0));
+		text((int) runEnergy + "%", 149);
+		out(new SendEnergy());
+		Prayer.VALUES.forEach(c -> out(new SendConfig(c.getConfig(), 0)));
+		//logger.info(this + " has logged in.");
 		if(getPetManager().getPet().isPresent()) {
 			Pet.onLogin(this);
 		}
 		MinigameHandler.executeVoid(this, m -> m.onLogin(this));
-		//PlayerPanel.refreshAll(this);
+		PlayerPanel.refreshAll(this);
 		
 		if(!clan.isPresent() && isHuman()) {
 			//World.getClanManager().join(this, "avro");
 		}
 		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
-//			new IntroductionCutscene(this).prerequisites();
+			new IntroductionCutscene(this).prerequisites();
 		}
 		if(World.getFirepitEvent().getFirepit().isActive()) {
 			this.message("@red@[ANNOUNCEMENT]: Enjoy the double experience event for another " + Utility.convertTime(World.getFirepitEvent().getFirepit().getTime()) + ".");
@@ -705,11 +702,11 @@ public final class Player extends EntityNode {
 		if(World.getShootingStarEvent().getShootingStar() != null && World.getShootingStarEvent().getShootingStar().isReg()) {
 			this.message("@red@[ANNOUNCEMENT]: " + World.getShootingStarEvent().getShootingStar().getLocationData().getMessageWhenActive());
 		}
-		//World.getTriviaBot().onLogin(this);
+		World.getTriviaBot().onLogin(this);
 		if(Server.UPDATING > 0) {
-			encoder.sendSystemUpdate((int) (Server.UPDATING * 50 / 30));
+			out(new SendUpdateTimer((int) (Server.UPDATING * 50 / 30)));
 		}
-		//Summoning.login(this);
+		Summoning.login(this);
 		if(getRights().isStaff()) {
 			World.get().setStaffCount(World.get().getStaffCount() + 1);
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
@@ -771,7 +768,6 @@ public final class Player extends EntityNode {
 	
 	@Override
 	public Hit decrementHealth(Hit hit) {
-		PacketWriter encoder = getMessages();
 		if(hit.getDamage() > skills[Skills.HITPOINTS].getLevel()) {
 			hit.setDamage(skills[Skills.HITPOINTS].getLevel());
 			if(hit.getType() == Hit.HitType.CRITICAL) {
@@ -780,7 +776,7 @@ public final class Player extends EntityNode {
 		}
 		skills[Skills.HITPOINTS].decreaseLevel(hit.getDamage());
 		Skills.refresh(this, Skills.HITPOINTS);
-		encoder.sendCloseWindows();
+		closeWidget();
 		if(getCurrentHealth() <= 0) {
 			getSkills()[Skills.HITPOINTS].setLevel(0, false);
 			if(!isDead()) {
@@ -875,7 +871,7 @@ public final class Player extends EntityNode {
 	@Override
 	public void setAutoRetaliate(boolean autoRetaliate) {
 		super.setAutoRetaliate(autoRetaliate);
-		messages.sendConfig(172, super.isAutoRetaliate() ? 1 : 0);
+		out(new SendConfig(172, super.isAutoRetaliate() ? 1 : 0));
 	}
 	
 	/**
@@ -893,12 +889,11 @@ public final class Player extends EntityNode {
 	
 	@Override
 	public boolean weaken(CombatWeaken effect) {
-		PacketWriter encoder = getMessages();
 		int id = (effect == CombatWeaken.ATTACK_LOW || effect == CombatWeaken.ATTACK_HIGH ? Skills.ATTACK : effect == CombatWeaken.STRENGTH_LOW || effect == CombatWeaken.STRENGTH_HIGH ? Skills.STRENGTH : Skills.DEFENCE);
 		if(skills[id].getLevel() < skills[id].getRealLevel())
 			return false;
 		skills[id].decreaseLevel((int) ((effect.getRate()) * (skills[id].getLevel())));
-		encoder.sendMessage("You feel slightly weakened.");
+		message("You feel slightly weakened.");
 		return true;
 	}
 	
@@ -925,10 +920,9 @@ public final class Player extends EntityNode {
 	 */
 	@Override
 	public void move(Position destination) {
-		PacketWriter encoder = getMessages();
 		dialogueChain.interrupt();
 		getMovementQueue().reset();
-		encoder.sendCloseWindows();
+		closeWidget();
 		if(getRegion().getPosition() == getLastRegion())
 			setUpdateRegion(false);
 		if(getLastRegion() == null)
@@ -975,58 +969,58 @@ public final class Player extends EntityNode {
 	 * Sends wilderness and multi-combat interfaces as needed.
 	 */
 	public void sendInterfaces() {
-		PacketWriter encoder = getMessages();
+		System.out.println(Location.inDuelArena(this));
 		if(Location.inDuelArena(this)) {
 			if(!duelingContext) {
-				encoder.sendContextMenu(2, false, "Challenge");
+				out(new SendContextMenu(2, false, "Challenge"));
 				duelingContext = true;
 			}
 		} else if(duelingContext && !minigame.isPresent()) {
-			encoder.sendContextMenu(2, false, "null");
+			out(new SendContextMenu(2, false, "null"));
 			duelingContext = false;
 		}
 		if(Location.inGodwars(this)) {
 			if(!godwarsInterface) {
 				GodwarsFaction.refreshInterface(this);
-				encoder.sendWalkable(16210);
+				out(new SendWalkable(16210));
 				godwarsInterface = true;
 			}
 		} else if(godwarsInterface) {
-			encoder.sendWalkable(-1);
+			out(new SendWalkable(-1));
 			godwarsInterface = false;
 		}
 		if(Location.inWilderness(this)) {
 			int calculateY = this.getPosition().getY() > 6400 ? super.getPosition().getY() - 6400 : super.getPosition().getY();
 			wildernessLevel = (((calculateY - 3520) / 8) + 1);
 			if(!wildernessInterface) {
-				encoder.sendWalkable(197);
-				encoder.sendContextMenu(2, true, "Attack");
+				out(new SendWalkable(197));
+				out(new SendContextMenu(2, true, "Attack"));
 				wildernessInterface = true;
 				WildernessActivity.enter(this);
 			}
-			encoder.sendString("@yel@Level: " + wildernessLevel, 199);
+			text("@yel@Level: " + wildernessLevel, 199);
 		} else if(Location.inFunPvP(this)) {
 			if(!wildernessInterface) {
-				encoder.sendWalkable(197);
-				encoder.sendContextMenu(2, true, "Attack");
+				out(new SendWalkable(197));
+				out(new SendContextMenu(2, true, "Attack"));
 				wildernessInterface = true;
 				WildernessActivity.enter(this);
 			}
-			encoder.sendString("@yel@Fun PvP", 199);
+			text("@yel@Fun PvP", 199);
 		} else if(wildernessInterface) {
-			encoder.sendContextMenu(2, false, "null");
-			encoder.sendWalkable(-1);
+			out(new SendContextMenu(2, false, "null"));
+			out(new SendWalkable(-1));
 			wildernessInterface = false;
 			wildernessLevel = 0;
 			WildernessActivity.leave(this);
 		}
 		if(Location.inMultiCombat(this)) {
 			if(!multicombatInterface) {
-				encoder.sendMultiIcon(false);
+				out(new SendMultiIcon(false));
 				multicombatInterface = true;
 			}
 		} else {
-			encoder.sendMultiIcon(true);
+			out(new SendMultiIcon(true));
 			multicombatInterface = false;
 		}
 	}
@@ -1035,13 +1029,12 @@ public final class Player extends EntityNode {
 	 * Restores run energy based on the last time it was restored.
 	 */
 	public void restoreRunEnergy() {
-		PacketWriter encoder = getMessages();
 		if(lastEnergy.elapsed(3500) && runEnergy < 100 && !this.getMovementQueue().isRunning()) {
 			double restoreRate = 0.45D;
 			double agilityFactor = 0.01 * skills[Skills.AGILITY].getLevel();
 			setRunEnergy(runEnergy + (restoreRate + agilityFactor));
 			lastEnergy.reset();
-			encoder.sendRunEnergy();
+			out(new SendEnergy());
 		}
 	}
 	
@@ -1208,11 +1201,64 @@ public final class Player extends EntityNode {
 	}
 	
 	/**
-	 * Gets the encoder that will encode and send messages.
-	 * @return the message encoder.
+	 * Queues a {@link OutgoingPacket}.
+	 * @param packet packet to be queued.
 	 */
-	public PacketWriter getMessages() {
-		return messages;
+	public void out(OutgoingPacket packet) {
+		getSession().enqueueForSync(packet);
+	}
+	
+	/**
+	 * Writes a {@link OutgoingPacket}.
+	 * @param packet packet to be written.
+	 */
+	public void write(OutgoingPacket packet) {
+		getSession().writeToStream(packet);
+	}
+	
+	/**
+	 * Opens up a new interface.
+	 */
+	public void widget(int widget) {
+		out(new SendInterface(widget));
+	}
+	
+	/**
+	 * Opens up a new chat interface.
+	 */
+	public void chatWidget(int widget) {
+		out(new SendChatInterface(widget));
+	}
+	
+	/**
+	 * Closes player interface.
+	 */
+	public void closeWidget() {
+		out(new SendCloseInterface());
+	}
+	
+	/**
+	 * A shorter way of sending a player string on interface.
+	 * @param message the text to send.
+	 */
+	public void text(int id, String message) {
+		out(new SendText(id, message));
+	}
+	
+	/**
+	 * A shorter way of sending a player string on interface.
+	 * @param message the text to send.
+	 */
+	public void text(String message, int id) {
+		out(new SendText(id, message));
+	}
+	
+	/**
+	 * A shorter way of sending a player a message.
+	 * @param message the text to send.
+	 */
+	public void message(String message) {
+		out(new SendMessage(message));
 	}
 	
 	/**
@@ -1453,7 +1499,7 @@ public final class Player extends EntityNode {
 	 */
 	public void setRunEnergy(double energy) {
 		this.runEnergy = energy > 100 ? 100 : energy;
-		getMessages().sendString((int) runEnergy + "%", 149);
+		text((int) runEnergy + "%", 149);
 	}
 	
 	/**
@@ -2334,14 +2380,6 @@ public final class Player extends EntityNode {
 	 */
 	public AgilityCourseBonus getAgilityBonus() {
 		return agility_bonus;
-	}
-	
-	/**
-	 * A shorter way of sending a player a message.
-	 * @param text the text to send.
-	 */
-	public void message(String text) {
-		getMessages().sendMessage(text);
 	}
 
 	/**

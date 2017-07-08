@@ -1,5 +1,7 @@
 package net.edge.world.node.item;
 
+import net.edge.net.packet.out.SendItemNode;
+import net.edge.net.packet.out.SendItemNodeRemoval;
 import net.edge.util.MutableNumber;
 import net.edge.locale.Position;
 import net.edge.world.World;
@@ -50,14 +52,14 @@ public class ItemNode extends Node {
 	
 	@Override
 	public void register() {
-		player.getMessages().sendGroundItem(this);
+		player.out(new SendItemNode(this));
 	}
 	
 	@Override
 	public void dispose() {
 		World.getRegions().getAllSurroundingRegions(getPosition().getRegion()).forEach(r -> r.getPlayers().forEach(p -> {
 			if(p.getPosition().getZ() == super.getPosition().getZ() && p.getInstance() == super.getInstance())
-				p.getMessages().sendRemoveGroundItem(this);
+				p.out(new SendItemNodeRemoval(this));
 		}));
 	}
 	
@@ -70,7 +72,7 @@ public class ItemNode extends Node {
 			case SEEN_BY_OWNER:
 				World.getRegions().getAllSurroundingRegions(getPosition().getRegion()).forEach(r -> r.getPlayers().forEach(p -> {
 					if(!p.same(player) && p.getPosition().getZ() == super.getPosition().getZ() && p.getInstance() == super.getInstance())
-						p.getMessages().sendGroundItem(new ItemNode(item, super.getPosition(), null));
+						p.out(new SendItemNode(new ItemNode(item, super.getPosition(), null)));
 				}));
 				player = null;
 				state = ItemState.SEEN_BY_EVERYONE;

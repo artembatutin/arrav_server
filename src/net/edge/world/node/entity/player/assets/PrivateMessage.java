@@ -1,5 +1,7 @@
 package net.edge.world.node.entity.player.assets;
 
+import net.edge.net.packet.out.SendPrivateFriendUpdate;
+import net.edge.net.packet.out.SendPrivateMessage;
 import net.edge.util.MutableNumber;
 import net.edge.world.World;
 import net.edge.world.node.entity.player.Player;
@@ -41,7 +43,7 @@ public final class PrivateMessage {
 		for(long name : player.getFriends()) {
 			if(name == 0)
 				continue;
-			player.getMessages().sendPrivateMessageFriend(name, World.get().getPlayer(name).isPresent());
+			player.out(new SendPrivateFriendUpdate(name, World.get().getPlayer(name).isPresent()));
 		}
 	}
 	
@@ -52,10 +54,10 @@ public final class PrivateMessage {
 	 */
 	public void updateOtherList(boolean online) {
 		Player p;
-		Iterator<Player> it = World.get().getPlayers().entityIterator();
+		Iterator<Player> it = World.get().getPlayers().iterator();
 		while((p = it.next()) != null) {
 			if(p.getFriends().contains(player.getCredentials().getUsernameHash()))
-				p.getMessages().sendPrivateMessageFriend(player.getCredentials().getUsernameHash(), online);
+				p.out(new SendPrivateFriendUpdate(player.getCredentials().getUsernameHash(), online));
 		}
 	}
 	
@@ -69,7 +71,7 @@ public final class PrivateMessage {
 			return;
 		}
 		if(player.getFriends().add(name)) {
-			player.getMessages().sendPrivateMessageFriend(name, World.get().getPlayer(name).isPresent());
+			player.out(new SendPrivateFriendUpdate(name, World.get().getPlayer(name).isPresent()));
 		} else {
 			player.message("They are already on your friends" + " list!");
 		}
@@ -117,7 +119,7 @@ public final class PrivateMessage {
 	public void sendPrivateMessage(long name, byte[] message, int size) {
 		int rights = player.getRights() == PLAYER && player.isIronMan() ? IRON_MAN.getProtocolValue() : player.getRights().getProtocolValue();
 		long hash = player.getCredentials().getUsernameHash();
-		World.get().getPlayer(name).ifPresent(p -> p.getMessages().sendPrivateMessage(hash, rights, message, size));
+		World.get().getPlayer(name).ifPresent(p -> p.out(new SendPrivateMessage(hash, rights, message, size)));
 	}
 	
 	/**

@@ -10,7 +10,7 @@ public final class OpenInterfaceCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		player.getMessages().sendInterface(Integer.parseInt(cmd[1]));
+		player.widget(Integer.parseInt(cmd[1]));
 	}
 	
 }

@@ -2,6 +2,7 @@ package net.edge.content.shootingstar;
 
 import net.edge.content.market.MarketCounter;
 import net.edge.event.impl.NpcEvent;
+import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.task.Task;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
@@ -61,7 +62,7 @@ public final class StarSprite extends Npc {
 
 					ap.chain(new NpcDialogue(8091, message).attachAfter(() -> {
 						if(!stardust) {
-							player.getMessages().sendCloseWindows();
+							player.closeWidget();
 						}
 					}));
 
@@ -93,7 +94,7 @@ public final class StarSprite extends Npc {
 
 		ap.chain(new NpcDialogue(8091, message).attachAfter(() -> {
 			if(!stardust) {
-				player.getMessages().sendCloseWindows();
+				player.closeWidget();
 				return;
 			}
 			sendEnterAmount(player);
@@ -102,7 +103,7 @@ public final class StarSprite extends Npc {
 	}
 
 	private static void sendEnterAmount(Player player) {
-		player.getMessages().sendEnterAmount("How much would you like to convert?", s -> () -> {
+		player.out(new SendEnterAmount("How much would you like to convert?", s -> () -> {
 			int selectedAmount = Integer.parseInt(s);
 
 			if(selectedAmount < EXCHANGE_FOR_BLOOD_COINS) {
@@ -110,7 +111,7 @@ public final class StarSprite extends Npc {
 				return;
 			}
 			if(!player.getInventory().contains(new Item(StarMining.STARDUST.getId(), selectedAmount))) {
-				player.getDialogueBuilder().append(new NpcDialogue(8091, "You don't have " + s + " stardust on you.").attachAfter(() -> player.getMessages().sendCloseWindows()));
+				player.getDialogueBuilder().append(new NpcDialogue(8091, "You don't have " + s + " stardust on you.").attachAfter(() -> player.closeWidget()));
 				return;
 			}
 
@@ -134,7 +135,7 @@ public final class StarSprite extends Npc {
 			}));
 			a.chain(new NpcDialogue(8091, "Very well, your blood coins have been added to your", "inventory or have been banked."));
 			a.start();
-		});
+		}));
 	}
 
 	@Override

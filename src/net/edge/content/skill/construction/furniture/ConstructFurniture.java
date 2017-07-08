@@ -79,7 +79,7 @@ public final class ConstructFurniture extends ProducingSkillAction {
 	@Override
 	public boolean init() {
 		player.animation(new Animation(3684));
-		player.getMessages().sendCloseWindows();
+		player.closeWidget();
 		return true;
 	}
 	

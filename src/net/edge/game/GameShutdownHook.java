@@ -14,6 +14,7 @@ import net.edge.world.node.entity.player.PlayerSerialization;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -39,7 +40,9 @@ public final class GameShutdownHook extends Thread {
 	public void run() {
 		try {
 			exit.submit(() -> {
-				for(Player p : World.get().getPlayers()) {
+				Player p;
+				Iterator<Player> it = World.get().getPlayers().iterator();
+				while((p = it.next()) != null) {
 					new PlayerSerialization(p).serialize();
 				}
 			});

@@ -1,6 +1,8 @@
 package net.edge.content.pets;
 
-import net.edge.net.packet.PacketWriter;
+import net.edge.net.packet.out.SendForceTab;
+import net.edge.net.packet.out.SendInterfaceAnimation;
+import net.edge.net.packet.out.SendInterfaceNpcModel;
 import net.edge.util.TextUtils;
 import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Expression;
@@ -97,7 +99,7 @@ public final class Pet extends Follower {
 		pet.getProgress().setHunger(pet.getProgress().getHunger() - 15D);
 		pet.forceChat("yum!");
 		player.message("Your pet happily eats the " + food.getDefinition().getName() + ".");
-		player.getMessages().sendString(((int) pet.getProgress().getHunger()) + "%", 19032);
+		player.text(19032, ((int) pet.getProgress().getHunger()) + "%");
 		return true;
 	}
 	
@@ -172,7 +174,7 @@ public final class Pet extends Follower {
 		World.get().getNpcs().remove(pet);
 		pet.task.cancel();
 		TabInterface.SUMMONING.sendInterface(player, -1);
-		player.getMessages().sendForceTab(TabInterface.INVENTORY);
+		player.out(new SendForceTab(TabInterface.INVENTORY));
 		pet.reset();
 	}
 	
@@ -218,15 +220,14 @@ public final class Pet extends Follower {
 	 * @param pet    the pet that was spawned.
 	 */
 	private static void setInterface(Player player, Pet pet) {
-		PacketWriter encoder = player.getMessages();
-		encoder.sendString(pet.getDefinition().getName(), 19021);
-		encoder.sendString((int) pet.progress.getGrowth() + "%", 19030);
+		player.text(pet.getDefinition().getName(), 19021);
+		player.text((int) pet.progress.getGrowth() + "%", 19030);
 		if(pet.getProgress().getData().getPolicy().isLast())
-			encoder.sendString("-", 19032);
+			player.text("-", 19032);
 		else
-			encoder.sendString((int) pet.progress.getHunger() + "%", 19032);
-		encoder.sendNpcModelOnInterface(19019, pet.getId());
-		encoder.sendInterfaceAnimation(19019, Expression.CALM.getExpression());
+			player.text((int) pet.progress.getHunger() + "%", 19032);
+		player.out(new SendInterfaceNpcModel(19019, pet.getId()));
+		player.out(new SendInterfaceAnimation(19019, Expression.CALM.getExpression()));
 		TabInterface.SUMMONING.sendInterface(player, 19017);
 	}
 	

@@ -3,13 +3,11 @@ package net.edge.content.market;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.net.packet.out.SendShopPrice;
+import net.edge.net.packet.out.SendShopStock;
 import net.edge.util.json.JsonSaver;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.ItemDefinition;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * The container that represents an item definition.
@@ -90,7 +88,7 @@ public class MarketItem {
 	 * @param search the searching name.
 	 * @return requested items based on name.
 	 */
-	public static IntArrayList search(Player player, String search) {
+	static IntArrayList search(Player player, String search) {
 		IntArrayList out = new IntArrayList();
 		//searching by id.
 		if(search.matches("[0-9]+") && search.length() > 0) {
@@ -132,19 +130,19 @@ public class MarketItem {
 		return out;
 	}
 	
-	public void updateStock() {
+	void updateStock() {
 		for(Player p : viewers) {
 			if(p == null)
 				continue;
-			p.getMessages().sendShopItemStock(this);
+			p.out(new SendShopStock(this));
 		}
 	}
 	
-	public void updatePrice() {
+	private void updatePrice() {
 		for(Player p : viewers) {
 			if(p == null)
 				continue;
-			p.getMessages().sendShopItemPrice(this);
+			p.out(new SendShopPrice(this));
 		}
 	}
 	
@@ -153,12 +151,10 @@ public class MarketItem {
 	 */
 	public static void serializeMarketItems() {
 		JsonSaver item_values_saver = new JsonSaver();
-		
 		for(MarketItem v : VALUES) {
 			if(v == null) {
 				continue;
 			}
-			
 			item_values_saver.current().addProperty("id", v.getId());
 			item_values_saver.current().addProperty("name", v.getName());
 			item_values_saver.current().addProperty("stock", v.getStock());
@@ -168,7 +164,6 @@ public class MarketItem {
 			item_values_saver.current().addProperty("searchable", v.isSearchable());
 			item_values_saver.split();
 		}
-		
 		item_values_saver.publish("./data/json/items/market_values.json");
 	}
 	

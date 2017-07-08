@@ -2,6 +2,10 @@ package net.edge.world.node.item.container.session.impl;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.net.packet.out.SendConfig;
+import net.edge.net.packet.out.SendContainer;
+import net.edge.net.packet.out.SendInventoryInterface;
+import net.edge.net.packet.out.SendItemOnInterfaceSlot;
 import net.edge.util.Stopwatch;
 import net.edge.world.node.item.container.session.ExchangeSession;
 import net.edge.world.node.item.container.session.ExchangeSessionActionType;
@@ -96,7 +100,7 @@ public final class DuelSession extends ExchangeSession {
 	 * @param buttonId the button identification to check for.
 	 * @return <true> if the rule was toggled, <false> otherwise.
 	 */
-	public static boolean toggleRule(Player player, DuelSession session, int buttonId) {
+	private static boolean toggleRule(Player player, DuelSession session, int buttonId) {
 		Optional<DuelingRules> has_rule = DuelingRules.getRules(buttonId);
 		
 		if(!has_rule.isPresent()) {
@@ -109,23 +113,23 @@ public final class DuelSession extends ExchangeSession {
 			session.getPlayers().forEach(p -> {
 				session.rules.remove(rule);
 				session.setAttachment(null);
-				p.getMessages().sendString("", 37927);
-				p.getMessages().sendConfig(780 + rule.ordinal(), 0);
+				p.text(37927, "");
+				p.out(new SendConfig(780 + rule.ordinal(), 0));
 				session.lastRuleModification.reset();
 			});
 			return true;
 		}
 		
 		if(!rule.meets(player, session)) {
-			player.getMessages().sendConfig(780 + rule.ordinal(), 0);
+			player.out(new SendConfig(780 + rule.ordinal(), 0));
 			return false;
 		}
 		
 		session.getPlayers().forEach(p -> {
 			session.rules.add(rule);
 			session.setAttachment(null);
-			p.getMessages().sendString("", 37927);
-			p.getMessages().sendConfig(780 + rule.ordinal(), 1);
+			p.text(37927, "");
+			p.out(new SendConfig(780 + rule.ordinal(), 1));
 		});
 		session.lastRuleModification.reset();
 		return true;
@@ -152,7 +156,7 @@ public final class DuelSession extends ExchangeSession {
 			case OFFER_ITEMS:
 				if(!lastRuleModification.elapsed(1_000)) {
 					player.message("A rule was changed in the last second, you cannot accept yet.");
-					player.getMessages().sendString("A rule was changed in recently, you cannot accept yet.", 37927);
+					player.text(37927, "A rule was changed in recently, you cannot accept yet.");
 					return;
 				}
 				if(!player.getInventory().hasCapacityFor(getExchangeSession().get(other).getItems())) {
@@ -183,8 +187,8 @@ public final class DuelSession extends ExchangeSession {
 					return;
 				}
 				setAttachment(player);
-				player.getMessages().sendString("Waiting for other player...", 37927);
-				getOther(player).getMessages().sendString("Other player has accepted", 37927);
+				player.text(37927, "Waiting for other player...");
+				getOther(player).text(37927, "Other player has accepted");
 				break;
 			case CONFIRM_DECISION:
 				if(hasAttachment() && getAttachment() != player) {
@@ -193,8 +197,8 @@ public final class DuelSession extends ExchangeSession {
 					return;
 				}
 				setAttachment(player);
-				player.getMessages().sendString("Waiting for other player...", 6571);
-				getOther(player).getMessages().sendString("Other player has accepted", 6571);
+				player.text(6571, "Waiting for other player...");
+				getOther(player).text(6571, "Other player has accepted");
 				break;
 			case FINALIZE:
 				DuelMinigame minigame = new DuelMinigame(this);
@@ -211,24 +215,22 @@ public final class DuelSession extends ExchangeSession {
 			for(Player player : getPlayers()) {
 				IntStream.range(0, 14).forEach(order -> {
 					if(player.getEquipment().get(order) != null) {
-						player.getMessages().sendItemOnInterfaceSlot(13824, player.getEquipment().get(order), order);
+						player.out(new SendItemOnInterfaceSlot(13824, player.getEquipment().get(order), order));
 					}
 				});
 				
 				Player recipient = getOther(player);
 				int remaining = recipient.getInventory().remaining();
 				
-				recipient.getMessages().sendItemsOnInterface(6669, getExchangeSession().get(player));
-				recipient.getMessages().sendItemsOnInterface(6670, getExchangeSession().get(player));
-				
-				player.getMessages().sendItemsOnInterface(6669, getExchangeSession().get(player));
-				player.getMessages().sendItemsOnInterface(6670, getExchangeSession().get(player));
-				
-				player.getMessages().sendItemsOnInterface(3322, player.getInventory());
-				player.getMessages().sendInventoryInterface(37888, 3321);
-				player.getMessages().sendString("", 37927);
-				player.getMessages().sendString("Dueling with: " + name(recipient) + " (level-" + recipient.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots", 37928);
-				//player.getMessages().sendString("Whip & dds only", 669);
+				recipient.out(new SendContainer(6669, getExchangeSession().get(player)));
+				recipient.out(new SendContainer(6670, getExchangeSession().get(player)));
+				player.out(new SendContainer(6669, getExchangeSession().get(player)));
+				player.out(new SendContainer(6670, getExchangeSession().get(player)));
+				player.out(new SendContainer(3322, player.getInventory()));
+				player.out(new SendInventoryInterface(37888, 3321));
+				player.text(37927, "");
+				player.text(37928, "Dueling with: " + name(recipient) + " (level-" + recipient.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots");
+				//player.text("Whip & dds only", 669);
 			}
 		} else if(getStage() == CONFIRM_DECISION) {
 			List<DuelingRules> collection = DuelingRules.VALUES.asList();
@@ -237,48 +239,46 @@ public final class DuelSession extends ExchangeSession {
 			for(Player player : getPlayers()) {
 				Player recipient = getOther(player);
 				
-				player.getMessages().sendString("", 6571);
-				player.getMessages().sendString("", 8240);
-				player.getMessages().sendString("", 8241);
+				player.text(6571, "");
+				player.text(8240, "");
+				player.text(8241, "");
 				
 				for(int i = 0; i < DuelingRules.VALUES.size(); i++) {
 					if(rules.contains(collection.get(i))) {
-						player.getMessages().sendString(collection.get(i).getInterfaceMessage(), interfaceIndex);
+						player.text(interfaceIndex, collection.get(i).getInterfaceMessage());
 						interfaceIndex++;
 					}
 				}
 				
 				for(int i = DuelingRules.HELM.ordinal(); i < DuelingRules.VALUES.size(); i++) {
 					if(rules.contains(collection.get(i))) {
-						player.getMessages().sendString(collection.get(i).getInterfaceMessage(), interfaceIndex);
+						player.text(interfaceIndex, collection.get(i).getInterfaceMessage());
 						interfaceIndex++;
 						worn = true;
 					}
 				}
 				
 				if(worn) {
-					player.getMessages().sendString("Some worn items will be taken off.", 8238);
-					player.getMessages().sendString("Combat statistics will be restored.", 8250);
-					player.getMessages().sendString("Existing prayers will be stopped.", 8239);
+					player.text(8238, "Some worn items will be taken off.");
+					player.text(8250, "Combat statistics will be restored.");
+					player.text(8239, "Existing prayers will be stopped.");
 				} else {
-					player.getMessages().sendString("Existing prayers will be stopped.", 8250);
-					player.getMessages().sendString("Combat statistics will be restored.", 8238);
-					player.getMessages().sendString("", 8239);
+					player.text(8250, "Existing prayers will be stopped.");
+					player.text(8238, "Combat statistics will be restored.");
+					player.text(8239, "");
 				}
 				
 				if(interfaceIndex < 8254) {
 					for(int i = interfaceIndex; i < 8254; i++) {
 						if(i != 8250) {
-							player.getMessages().sendString("", i);
+							player.text(i, "");
 						}
 					}
 				}
-				
-				player.getMessages().sendString(getItemNames(recipient, this.getExchangeSession().get(recipient).getItems()), 6517);
-				player.getMessages().sendString(getItemNames(player, this.getExchangeSession().get(player).getItems()), 6516);
-				
-				player.getMessages().sendItemsOnInterface(3322, player.getInventory());
-				player.getMessages().sendInventoryInterface(6412, 3321);
+				player.text(6517, getItemNames(recipient, this.getExchangeSession().get(recipient).getItems()));
+				player.text(6516, getItemNames(player, this.getExchangeSession().get(player).getItems()));
+				player.out(new SendContainer(3322, player.getInventory()));
+				player.out(new SendInventoryInterface(6412, 3321));
 			}
 		}
 	}
@@ -291,10 +291,10 @@ public final class DuelSession extends ExchangeSession {
 	 */
 	private String getItemNames(Player player, Item[] items) {
 		String tradeItems = "Absolutely nothing!";
-		String tradeAmount = "";
+		String tradeAmount;
 		int count = 0;
 		for(Item item : items) {
-			if(item == null || (item != null && tradeItems.contains(item.getDefinition().getName()))) {
+			if(item == null || tradeItems.contains(item.getDefinition().getName())) {
 				continue;
 			}
 			int amount = this.getExchangeSession().get(player).computeAmountForId(item.getId());
@@ -311,13 +311,12 @@ public final class DuelSession extends ExchangeSession {
 		for(Player player : getExchangeSession().keySet()) {
 			Player recipient = getOther(player);
 			int remaining = recipient.getInventory().remaining();
-			
-			player.getMessages().sendItemsOnInterface(3322, player.getInventory());
-			player.getMessages().sendInventoryInterface(37888, 3321);
-			player.getMessages().sendItemsOnInterface(6669, getExchangeSession().get(player));
-			player.getMessages().sendItemsOnInterface(6670, getExchangeSession().get(recipient));
-			player.getMessages().sendString("", 37927);
-			player.getMessages().sendString("Dueling with: " + name(recipient) + " (level-" + recipient.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots", 6671);
+			player.out(new SendContainer(3322, player.getInventory()));
+			player.out(new SendInventoryInterface(37888, 3321));
+			player.out(new SendContainer(6669, getExchangeSession().get(player)));
+			player.out(new SendContainer(6670, getExchangeSession().get(recipient)));
+			player.text(37927, "");
+			player.text(6671, "Dueling with: " + name(recipient) + " (level-" + recipient.determineCombatLevel() + ")" + " who has @gre@" + remaining + " free slots");
 		}
 	}
 	
@@ -326,7 +325,7 @@ public final class DuelSession extends ExchangeSession {
 		this.rules.clear();
 		this.lastRuleModification.reset();
 		for(DuelingRules r : DuelingRules.VALUES) {
-			this.getPlayers().forEach(p -> p.getMessages().sendConfig(780 + r.ordinal(), 0));
+			this.getPlayers().forEach(p -> p.out(new SendConfig(780 + r.ordinal(), 0)));
 		}
 	}
 	

@@ -1,6 +1,9 @@
 package net.edge.content.combat.special;
 
 import net.edge.content.combat.CombatHit;
+import net.edge.net.packet.out.SendConfig;
+import net.edge.net.packet.out.SendInterfaceLayer;
+import net.edge.net.packet.out.SendUpdateSpecial;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.Combat;
@@ -559,7 +562,7 @@ public enum CombatSpecial {
 	public static void drain(Player player, int amount) {
 		player.getSpecialPercentage().decrementAndGet(amount, 0);
 		CombatSpecial.updateSpecialAmount(player);
-		player.getMessages().sendConfig(301, 0);
+		player.out(new SendConfig(301, 0));
 		player.setSpecialActivated(false);
 	}
 	
@@ -588,7 +591,7 @@ public enum CombatSpecial {
 		int specialAmount = player.getSpecialPercentage().get() / 10;
 		
 		for(int i = 0; i < 10; i++) {
-			player.getMessages().sendUpdateSpecial(--specialBar, specialAmount >= specialCheck ? 500 : 0);
+			player.out(new SendUpdateSpecial(--specialBar, specialAmount >= specialCheck ? 500 : 0));
 			specialCheck--;
 		}
 	}
@@ -608,12 +611,11 @@ public enum CombatSpecial {
 		}
 		Optional<CombatSpecial> special = Arrays.stream(CombatSpecial.values()).filter(c -> Arrays.stream(c.getIds()).anyMatch(id -> item.getId() == id)).findFirst();
 		if(special.isPresent()) {
-			player.getMessages().sendInterfaceLayer(player.getWeapon().getSpecialBar(), false);
+			player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), false));
 			player.setCombatSpecial(special.get());
 			return;
 		}
-		
-		player.getMessages().sendInterfaceLayer(player.getWeapon().getSpecialBar(), true);
+		player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), true));
 		player.setCombatSpecial(null);
 	}
 	

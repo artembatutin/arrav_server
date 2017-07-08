@@ -1,6 +1,9 @@
 package net.edge.content.clanchat;
 
-import net.edge.net.packet.PacketWriter;
+import net.edge.net.packet.out.SendClanBanned;
+import net.edge.net.packet.out.SendClanMember;
+import net.edge.net.packet.out.SendClanMembers;
+import net.edge.net.packet.out.SendClanMessage;
 import net.edge.util.TextUtils;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
@@ -16,15 +19,14 @@ public enum ClanChatUpdate {
 		public void update(ClanMember member) {
 			ClanChat clan = member.getClan();
 			Player player = member.getPlayer();
-			PacketWriter message = player.getMessages();
 			if(member.getRank().getValue() >= clan.getSettings().getBan().getValue())
-				message.sendString(clan.getName(), 50306);
-			message.sendString("Talking in: @or1@" + clan.getName(), 50139);
-			message.sendString("Owner: " + TextUtils.capitalize(clan.getOwner()), 50140);
-			message.sendString("Leave Clan", 50135);
-			player.getMessages().sendClanMemberList(clan.getMembers());
+				player.text(clan.getName(), 50306);
+			player.text("Talking in: @or1@" + clan.getName(), 50139);
+			player.text("Owner: " + TextUtils.capitalize(clan.getOwner()), 50140);
+			player.text("Leave Clan", 50135);
+			player.out(new SendClanMembers(clan.getMembers()));
 			if(member.getRank().getValue() >= clan.getSettings().getBan().getValue()) {
-				message.sendString("Manage", 50136);
+				player.text("Manage", 50136);
 			}
 		}
 	},
@@ -33,37 +35,38 @@ public enum ClanChatUpdate {
 		public void update(ClanChat clan) {
 			clan.getMembers().forEach(m -> {
 				if(m.getRank().getValue() >= m.getClan().getLowest().getValue())
-					m.getPlayer().getMessages().sendString(clan.getName(), 50306);
-				m.getPlayer().getMessages().sendString("Talking in: @or1@" + clan.getName(), 50139);
-				m.getPlayer().getMessages().sendClanMessage("The clan name has been changed to", clan.getName(), clan.getName(), Rights.PLAYER);
+					m.getPlayer().text(50306, clan.getName());
+				m.getPlayer().text(50139, "Talking in: @or1@" + clan.getName());
+				m.getPlayer().out(new SendClanMessage("The clan name has been changed to", clan.getName(), clan.getName(), Rights.PLAYER));
 			});
 		}
 	},
 	MEMBER_LIST_MODIFICATION() {
 		@Override
 		public void update(ClanChat clan) {
-			clan.sort();
-			clan.getMembers().forEach(m -> m.getPlayer().getMessages().sendClanMemberList(clan.getMembers()));
+			clan.getMembers().forEach(m -> {
+				m.getPlayer().out(new SendClanMembers(clan.getMembers()));
+			});
 		}
 	},
 	BAN_MODIFICATION() {
 		@Override
 		public void update(ClanChat clan) {
-			clan.getMembers().forEach(m -> m.getPlayer().getMessages().sendClanBanList(clan.getBanned()));
+			clan.getMembers().forEach(m -> m.getPlayer().out(new SendClanBanned(clan.getBanned())));
 		}
 		
 		@Override
 		public void update(ClanMember member) {
-			member.getPlayer().getMessages().sendClanBanList(member.getClan().getBanned());
+			member.getPlayer().out(new SendClanBanned(member.getClan().getBanned()));
 		}
 	},
 	SETTING_MODIFICATION() {
 		@Override
 		public void update(ClanMember member) {
 			ClanChatSettings settings = member.getClan().getSettings();
-			member.getPlayer().getMessages().sendString(settings.getTalk().toPerm(), 50312);
-			member.getPlayer().getMessages().sendString(settings.getMute().toPerm(), 50315);
-			member.getPlayer().getMessages().sendString(settings.getBan().toPerm(), 50318);
+			member.getPlayer().text(50312, settings.getTalk().toPerm());
+			member.getPlayer().text(50315, settings.getMute().toPerm());
+			member.getPlayer().text(50318, settings.getBan().toPerm());
 		}
 	},
 	LOOT_SHARE_MODIFICATION() {
@@ -79,20 +82,22 @@ public enum ClanChatUpdate {
 			// TODO Auto-generated method stub
 			
 		}
-	};
+	},
+	MEMBER_REFRESH() {
+		@Override
+		public void update(int index, ClanChat clan) {
+			clan.getMembers().forEach(m -> m.getPlayer().out(new SendClanMember(index, clan.getMembers().get(index))));
+		}
+	},;
 	
-	/**
-	 * Updates with a single {@link ClanMember} instance.
-	 * @param member the clan member instance
-	 */
+	public void update(int index, ClanChat clan) {
+	
+	}
+	
 	public void update(ClanMember member) {
 		
 	}
 	
-	/**
-	 * Updates with ths {@link ClanChat} instance.
-	 * @param clan the clan chat instance
-	 */
 	public void update(ClanChat clan) {
 		
 	}

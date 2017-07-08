@@ -120,7 +120,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 						player.getAttr().get("fight_caves_advanced").set(true);
 						new FightcavesMinigame().onEnter(player);
 					}
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 				}, "Fire cape", "TokHaar-kal cape (two jads)", "I'll wait here")
 				);
 				return true;

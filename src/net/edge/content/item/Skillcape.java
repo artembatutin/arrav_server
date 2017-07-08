@@ -168,7 +168,7 @@ public enum Skillcape {
 							}
 							
 						} else if(t == OptionDialogue.OptionType.SECOND_OPTION) {
-							player.getMessages().sendCloseWindows();
+							player.closeWidget();
 						}
 					}, "Yes please!", "No thanks."));
 					return true;

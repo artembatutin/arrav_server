@@ -68,7 +68,7 @@ public final class LunarSpells {
 	public static void castSpellbookSwap(Player player) {
 		player.getDialogueBuilder().append(new OptionDialogue(t -> {
 			new SpellbookSwap(t).startCast(player, null);
-			player.getMessages().sendCloseWindows();
+			player.closeWidget();
 		}, "Modern Magicks", "Ancient Magicks", "Nevermind"));
 	}
 

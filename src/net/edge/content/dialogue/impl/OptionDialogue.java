@@ -45,30 +45,30 @@ public final class OptionDialogue extends Dialogue {
 	public void send(Player player) {
 		switch(getText().length) {
 			case 2:
-				player.getMessages().sendString(getText()[0], 14445);
-				player.getMessages().sendString(getText()[1], 14446);
-				player.getMessages().sendChatInterface(14443);
+				player.text(14445, getText()[0]);
+				player.text(14446, getText()[1]);
+				player.chatWidget(14443);
 				break;
 			case 3:
-				player.getMessages().sendString(getText()[0], 2471);
-				player.getMessages().sendString(getText()[1], 2472);
-				player.getMessages().sendString(getText()[2], 2473);
-				player.getMessages().sendChatInterface(2469);
+				player.text(2471, getText()[0]);
+				player.text(2472, getText()[1]);
+				player.text(2473, getText()[2]);
+				player.chatWidget(2469);
 				break;
 			case 4:
-				player.getMessages().sendString(getText()[0], 8209);
-				player.getMessages().sendString(getText()[1], 8210);
-				player.getMessages().sendString(getText()[2], 8211);
-				player.getMessages().sendString(getText()[3], 8212);
-				player.getMessages().sendChatInterface(8207);
+				player.text(8209, getText()[0]);
+				player.text(8210, getText()[1]);
+				player.text(8211, getText()[2]);
+				player.text(8212, getText()[3]);
+				player.chatWidget(8207);
 				break;
 			case 5:
-				player.getMessages().sendString(getText()[0], 8221);
-				player.getMessages().sendString(getText()[1], 8222);
-				player.getMessages().sendString(getText()[2], 8223);
-				player.getMessages().sendString(getText()[3], 8224);
-				player.getMessages().sendString(getText()[4], 8225);
-				player.getMessages().sendChatInterface(8219);
+				player.text(8221, getText()[0]);
+				player.text(8222, getText()[1]);
+				player.text(8223, getText()[2]);
+				player.text(8224, getText()[3]);
+				player.text(8225, getText()[4]);
+				player.chatWidget(8219);
 				break;
 			default:
 				throw new IllegalArgumentException("Illegal dialogue option length: " + getText().length);

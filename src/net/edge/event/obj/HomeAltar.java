@@ -53,7 +53,7 @@ public class HomeAltar extends EventInitializer {
 								}
 							});
 						}
-						player.getMessages().sendCloseWindows();
+						player.closeWidget();
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
 						player.getDialogueBuilder().advance();
 					}
@@ -65,7 +65,7 @@ public class HomeAltar extends EventInitializer {
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 						Spellbook.convert(player, Spellbook.LUNAR);
 					}
-					player.getMessages().sendCloseWindows();
+					player.closeWidget();
 				}, "Normal", "Ancient", "Lunar"));
 				return true;
 			}

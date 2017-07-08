@@ -21,7 +21,7 @@ public class IronManSelection extends EventInitializer {
 					player.setIron(0, true);
 				player.getActivityManager().enable();
 				player.sendDefaultSidebars();
-				player.getMessages().sendCloseWindows();
+				player.closeWidget();
 				player.getInventory().clear(false);
 				if(iron) {
 					player.getInventory().fillItems(GameConstants.IRON_STARTER);
