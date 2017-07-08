@@ -87,7 +87,7 @@ public final class Karamel implements CombatStrategy {
 
 		@Override
 		public int maximumHit() {
-			return 14;
+			return 140;
 		}
 
 		@Override

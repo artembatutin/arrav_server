@@ -6,6 +6,7 @@ import net.edge.Server;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
 import net.edge.content.ViewingOrb;
+import net.edge.content.achievements.AchievementKey;
 import net.edge.content.clanchat.ClanMember;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatType;
@@ -185,7 +186,16 @@ public final class Player extends EntityNode {
 	 * The dialogue builder for this player.
 	 */
 	private final DialogueBuilder dialogueChain = new DialogueBuilder(this);
-	
+
+	/** The achievement. */
+	private HashMap<AchievementKey, Integer> playerAchievements = new HashMap<AchievementKey, Integer>(AchievementKey.values().length) {
+		{
+			for (final AchievementKey achievement : AchievementKey.values()) {
+				put(achievement, 0);
+			}
+		}
+	};
+
 	/**
 	 * The I/O manager that manages I/O operations for this player.
 	 */
@@ -2129,7 +2139,14 @@ public final class Player extends EntityNode {
 	public DialogueBuilder getDialogueBuilder() {
 		return dialogueChain;
 	}
-	
+
+	/**
+	 * Gets the achievements for the player.
+	 * @return the map containing the player achievements.
+	 */
+	public HashMap<AchievementKey, Integer> getAchievements() {
+		return playerAchievements;
+	}
 	/**
 	 * Determines if the region has been updated this sequence.
 	 * @return {@code true} if the region has been updated, {@code false}

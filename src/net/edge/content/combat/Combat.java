@@ -89,7 +89,8 @@ public final class Combat {
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 * @param action        the action to execute for each victim.
 	 */
-	public static <E extends EntityNode> void damageCharactersWithin(EntityNode attacker, Iterable<E> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<E> action) {
+	public static <E extends EntityNode> CombatHit[] damageCharactersWithin(EntityNode attacker, Iterable<E> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<E> action) {
+		List<CombatHit> combatHits = new ArrayList<>();
 		for(E c : victims) {
 			if(c == null)
 				continue;
@@ -99,7 +100,9 @@ public final class Combat {
 			c.getCombatBuilder().getDamageCache().add(attacker, data.attack());
 			if(action != null)
 				action.accept(c);
+			combatHits.add(data);
 		}
+		return combatHits.toArray(new CombatHit[combatHits.size()]);
 	}
 	
 	/**
@@ -115,8 +118,8 @@ public final class Combat {
 	 * @param type          the combat type the attacker is using.
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 */
-	public static void damageCharactersWithin(EntityNode attacker, Iterable<? extends EntityNode> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
-		damageCharactersWithin(attacker, victims, position, radius, hits, type, checkAccuracy, null);
+	public static CombatHit[] damageCharactersWithin(EntityNode attacker, Iterable<? extends EntityNode> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
+		return damageCharactersWithin(attacker, victims, position, radius, hits, type, checkAccuracy, null);
 	}
 	
 	/**
@@ -131,8 +134,8 @@ public final class Combat {
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 * @param action        the action to execute for each victim.
 	 */
-	public static void damagePlayersWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Player> action) {
-		damageCharactersWithin(attacker, () -> World.get().getLocalPlayers(attacker), position, radius, hits, type, checkAccuracy, action);
+	public static CombatHit[] damagePlayersWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Player> action) {
+		return damageCharactersWithin(attacker, () -> World.get().getLocalPlayers(attacker), position, radius, hits, type, checkAccuracy, action);
 	}
 	
 	/**
@@ -147,8 +150,8 @@ public final class Combat {
 	 * @param type          the combat type the attacker is using.
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 */
-	public static void damagePlayersWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
-		damagePlayersWithin(attacker, position, radius, hits, type, checkAccuracy, null);
+	public static CombatHit[] damagePlayersWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
+		return damagePlayersWithin(attacker, position, radius, hits, type, checkAccuracy, null);
 	}
 	
 	/**
@@ -164,8 +167,8 @@ public final class Combat {
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 * @param action        the action to execute for each victim.
 	 */
-	public static void damageNpcsWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Npc> action) {
-		damageCharactersWithin(attacker, () -> World.get().getLocalNpcs(attacker), position, radius, hits, type, checkAccuracy, action);
+	public static CombatHit[] damageNpcsWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Npc> action) {
+		return damageCharactersWithin(attacker, () -> World.get().getLocalNpcs(attacker), position, radius, hits, type, checkAccuracy, action);
 	}
 	
 	/**
@@ -180,8 +183,8 @@ public final class Combat {
 	 * @param type          the combat type the attacker is using.
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 */
-	public static void damageNpcsWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
-		damageNpcsWithin(attacker, position, radius, hits, type, checkAccuracy, null);
+	public static CombatHit[] damageNpcsWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
+		return damageNpcsWithin(attacker, position, radius, hits, type, checkAccuracy, null);
 	}
 	
 	/**

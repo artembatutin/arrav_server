@@ -3,6 +3,7 @@ package net.edge.world.node.entity.player;
 import com.google.gson.*;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
+import net.edge.content.achievements.AchievementKey;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.skill.construction.House;
 import net.edge.content.skill.construction.room.Room;
@@ -95,6 +96,13 @@ public final class PlayerSerialization {
 				for(Token token : TOKENS) {
 					obj.add(token.getName(), gson.toJsonTree(token.toJson(player)));
 				}
+				Object2ObjectArrayMap<AchievementKey, Integer> achievements = new Object2ObjectArrayMap<>();
+				for(Map.Entry<AchievementKey, Integer> it : player.getAchievements().entrySet()) {
+					AchievementKey key = it.getKey();
+					int value = it.getValue();
+					achievements.put(key, value);
+				}
+				obj.add("achievements", gson.toJsonTree(achievements));
 				Object2ObjectArrayMap<String, Object> quests = new Object2ObjectArrayMap<>();
 				for(Map.Entry<Quests, Quest> it : player.getQuestManager().getStartedQuests().entrySet()) {
 					Quests key = it.getKey();

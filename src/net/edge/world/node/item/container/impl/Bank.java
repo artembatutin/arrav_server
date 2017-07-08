@@ -79,7 +79,18 @@ public final class Bank {
 			bulkStartSent = true;
 		}
 	}
-	
+
+	/**
+	 * Deposits a newly created item into the bank.
+	 */
+	public int deposit(Item item) {
+		int tab = contains(item.getId());
+		if(tab == -1)
+			return tabs[getSelectedTab()].add(item);
+		else
+			return tabs[tab].add(item);
+	}
+
 	/**
 	 * Withdraws an item from this banking tab from the {@code bankSlot} slot. This is
 	 * used for when a player is manually withdrawing an item using the banking tab
