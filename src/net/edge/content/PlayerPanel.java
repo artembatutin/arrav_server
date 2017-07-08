@@ -280,11 +280,11 @@ public enum PlayerPanel {
 	 * @param update the updated string for that tab.
 	 */
 	public void refreshAll(String update) {
-		for (Player player : World.get().getPlayers()) {
+		/*for (Player player : World.get().getPlayers()) {
 			if (player != null) {
 				refresh(player, update);
 			}
-		}
+		}*/
 	}
 	
 	/**

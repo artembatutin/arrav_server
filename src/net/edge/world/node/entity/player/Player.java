@@ -649,14 +649,14 @@ public final class Player extends EntityNode {
 		equipment.updateBulk();
 		inventory.updateBulk();
 		encoder.sendPrivateMessageListStatus(2);
-		privateMessage.updateThisList();
-		privateMessage.updateOtherList(true);
+		//privateMessage.updateThisList();
+		//privateMessage.updateOtherList(true);
 		encoder.sendContextMenu(3, false, "Follow");
 		encoder.sendContextMenu(4, false, "Trade with");
-		CombatEffect.values().forEach($it -> {
-			if($it.onLogin(this))
-				World.get().submit(new CombatEffectTask(this, $it));
-		});
+		//CombatEffect.values().forEach($it -> {
+		//	if($it.onLogin(this))
+		//		World.get().submit(new CombatEffectTask(this, $it));
+		//});
 		World.getExchangeSessionManager().resetRequests(this);
 		encoder.sendMessage(GameConstants.WELCOME_MESSAGE);
 		if(UpdateCommand.inProgess == 1) {
@@ -675,16 +675,16 @@ public final class Player extends EntityNode {
 		encoder.sendConfig(301, 0);
 		encoder.sendString((int) runEnergy + "%", 149);
 		encoder.sendRunEnergy();
-		Prayer.VALUES.forEach(c -> encoder.sendConfig(c.getConfig(), 0));
+		//Prayer.VALUES.forEach(c -> encoder.sendConfig(c.getConfig(), 0));
 		logger.info(this + " has logged in.");
 		if(getPetManager().getPet().isPresent()) {
 			Pet.onLogin(this);
 		}
 		MinigameHandler.executeVoid(this, m -> m.onLogin(this));
-		PlayerPanel.refreshAll(this);
+		//PlayerPanel.refreshAll(this);
 		
 		if(!clan.isPresent() && isHuman()) {
-			World.getClanManager().join(this, "avro");
+			//World.getClanManager().join(this, "avro");
 		}
 		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
 //			new IntroductionCutscene(this).prerequisites();
@@ -695,11 +695,11 @@ public final class Player extends EntityNode {
 		if(World.getShootingStarEvent().getShootingStar() != null && World.getShootingStarEvent().getShootingStar().isReg()) {
 			this.message("@red@[ANNOUNCEMENT]: " + World.getShootingStarEvent().getShootingStar().getLocationData().getMessageWhenActive());
 		}
-		World.getTriviaBot().onLogin(this);
+		//World.getTriviaBot().onLogin(this);
 		if(Server.UPDATING > 0) {
 			encoder.sendSystemUpdate((int) (Server.UPDATING * 50 / 30));
 		}
-		Summoning.login(this);
+		//Summoning.login(this);
 		if(getRights().isStaff()) {
 			World.get().setStaffCount(World.get().getStaffCount() + 1);
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());

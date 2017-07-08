@@ -222,6 +222,7 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * @param entity The entity to add to this list.
 	 */
 	public boolean add(E entity) {
+		long before = System.currentTimeMillis();
 		if(entity.getState() == NodeState.ACTIVE)
 			return false;
 		if (size == capacity())
@@ -233,8 +234,6 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		if (index >= limit) {
 			limit++;
 		}
-
-		System.out.println("registered");
 
 		entities[index] = entity;
 		entity.setSlot(index + 1);
@@ -249,6 +248,7 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		//Updating player count.
 		if(entity.isPlayer())
 			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
+		System.out.println("Took (" + (System.currentTimeMillis() - before) + " ms to register " + entity);
 		return true;
 	}
 	

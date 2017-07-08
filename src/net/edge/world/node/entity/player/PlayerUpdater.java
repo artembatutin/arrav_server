@@ -146,7 +146,6 @@ public final class PlayerUpdater {
 		msg.putBits(11, addPlayer.getSlot());
 		msg.putBit(true);
 		msg.putBit(true);
-		
 		int deltaX = addPlayer.getPosition().getX() - player.getPosition().getX();
 		int deltaY = addPlayer.getPosition().getY() - player.getPosition().getY();
 		msg.putBits(5, deltaY);

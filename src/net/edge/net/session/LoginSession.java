@@ -91,7 +91,16 @@ public final class LoginSession extends Session {
 				request.getPipeline().replace("login-decoder", "game-decoder", new GameMessageDecoder(request.getDecryptor(), session));
 				
 				new PlayerSerialization(player).deserialize(reader);
-				World.get().queueLogin(player);
+				World.get().run(() -> {
+					boolean added = World.get().getPlayers().add(player);
+					if (added) {
+						World.get().getPlayerByNames().put(player.getCredentials().getUsernameHash(), player);
+					}
+					
+					if (!added && player.isHuman()) {
+						player.getSession().getChannel().close();
+					}
+				});
 			});
 		}
 	}

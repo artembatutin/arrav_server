@@ -14,6 +14,7 @@ import net.edge.util.rand.RandomUtils;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -22,7 +23,9 @@ import java.util.List;
 public final class FakeClient {
     private static final BigInteger RSA_MODULUS = new BigInteger("94306533927366675756465748344550949689550982334568289470527341681445613288505954291473168510012417401156971344988779343797488043615702971738296505168869556915772193568338164756326915583511871429998053169912492097791139829802309908513249248934714848531624001166946082342750924060600795950241816621880914628143");
     private static final BigInteger RSA_EXPONENT = new BigInteger("65537");
-
+    
+    private static AtomicInteger count = new AtomicInteger();
+    
     public static void main(String[] args) throws Exception {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
@@ -59,7 +62,7 @@ public final class FakeClient {
 
                             rsa.writeInt(0); // uid
 
-                            PacketHelper.writeCString(rsa, "Bot " + RandomUtils.inclusive(1000));
+                            PacketHelper.writeCString(rsa, "Bot" + count.get());
                             PacketHelper.writeCString(rsa, "123456");
 
                             byte[] rsaBytes = new byte[rsa.readableBytes()];
@@ -88,6 +91,7 @@ public final class FakeClient {
                             ctx.writeAndFlush(out, ctx.voidPromise());
 
                             loggedIn = true;
+                            count.incrementAndGet();
                         } else {
                             int pktId = in.readUnsignedByte();
 
@@ -98,7 +102,7 @@ public final class FakeClient {
             }
         });
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 300; i++) {
             // Start the client.
             Channel f = b.connect("127.0.0.1", 43594).sync().channel(); // (5)
 

@@ -126,8 +126,8 @@ public final class World {
 	static {
 		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-//			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j": "%GL5{)hAJBU(MB3h", amtCpu);
-//			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j": "%GL5{)hAJBU(MB3h", amtCpu);
+			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j": "%GL5{)hAJBU(MB3h", amtCpu);
+			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j": "%GL5{)hAJBU(MB3h", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -177,24 +177,6 @@ public final class World {
 							amount++;
 						} else {
 							logouts.offer(player);
-						}
-					}
-				}
-
-				// Handle queued logins.
-				if (!logins.isEmpty()) {
-					for (int amount = 0; amount < GameConstants.LOGIN_THRESHOLD; amount++) {
-						Player player = logins.poll();
-						if (player == null)
-							break;
-
-						boolean added = players.add(player);
-						if (added) {
-							playerByNames.put(player.getCredentials().getUsernameHash(), player);
-						}
-
-						if (!added && player.isHuman()) {
-							player.getSession().getChannel().close();
 						}
 					}
 				}
@@ -292,7 +274,7 @@ public final class World {
 	 * @param player the player to log out.
 	 */
 	public void queueLogout(Player player) {
-		if(player.getState() == NodeState.ACTIVE && !logouts.contains(player)) {
+		if(player.getState() == NodeState.ACTIVE) {
 			if(player.getCombatBuilder().inCombat())
 				player.getLogoutTimer().reset();
 			logouts.add(player);
@@ -457,6 +439,10 @@ public final class World {
 	 */
 	public EntityList<Player> getPlayers() {
 		return players;
+	}
+	
+	public Long2ObjectMap<Player> getPlayerByNames() {
+		return playerByNames;
 	}
 	
 	/**
