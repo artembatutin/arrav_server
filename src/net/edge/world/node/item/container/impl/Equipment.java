@@ -21,6 +21,7 @@ import net.edge.world.node.item.ItemDefinition;
 
 import java.util.Optional;
 
+import static net.edge.world.node.item.container.impl.EquipmentType.ARROWS;
 import static net.edge.world.node.item.container.impl.EquipmentType.WEAPON;
 
 /**
@@ -255,6 +256,9 @@ public final class Equipment extends ItemContainer {
 			player.out(new SendConfig(108, 0));
 			player.out(new SendConfig(301, 0));
 			player.setSpecialActivated(false);
+		}
+
+		if(type == WEAPON || type == ARROWS) {
 			updateRange();
 		}
 		
@@ -302,6 +306,8 @@ public final class Equipment extends ItemContainer {
 				WeaponAnimation.execute(player, new Item(0));
 				player.out(new SendConfig(301, 0));
 				player.setSpecialActivated(false);
+			}
+			if(equipmentIndex == Equipment.WEAPON_SLOT || equipmentIndex == Equipment.ARROWS_SLOT) {
 				updateRange();
 			}
 			return true;

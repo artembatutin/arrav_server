@@ -96,7 +96,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
      */
     @Override
     public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
-        return charge != null;
+        return charge == null;
     }
 
     /**
@@ -114,7 +114,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
         } else if(RandomUtils.inclusive(100) < 5) {
             return superCharge(character);
         }
-        CombatType[] data = character.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
+        CombatType[] data = character.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE} : new CombatType[]{CombatType.MAGIC};
         CombatType type = RandomUtils.random(data);
         return type(character, victim, type);
     }
@@ -199,7 +199,6 @@ public final class NomadCombatStrategy implements CombatStrategy {
     }
 
     private CombatHit magic(EntityNode character, EntityNode victim) {
-        character.graphic(MAGIC_GRAPHIC);
         character.animation(new Animation(12697, Animation.AnimationPriority.HIGH));
         character.forceChat("Freeze!");
         character.setCurrentlyCasting(SPELL);
@@ -208,6 +207,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
             public CombatHit preAttack() {
                 if(this.getType() == CombatType.MAGIC && victim.isPlayer() && this.isAccurate()) {
                     Player player = (Player) victim;
+                    player.graphic(MAGIC_GRAPHIC);
                     player.freeze(15);
                 }
                 return this;
