@@ -11,6 +11,8 @@ import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 
+import java.util.OptionalInt;
+
 public final class MagicCombatStrategy implements CombatStrategy {
 	
 	@Override
@@ -50,9 +52,9 @@ public final class MagicCombatStrategy implements CombatStrategy {
 		}
 		
 		if(character.getCurrentlyCasting().maximumHit() == -1) {
-			return new CombatHit(character, victim, 0, CombatType.MAGIC, true, delay);
+			return new CombatHit(character, victim, 0, CombatType.MAGIC, true, delay == 0 ? OptionalInt.empty() : OptionalInt.of(delay));
 		}
-		return new CombatHit(character, victim, 1, CombatType.MAGIC, true, delay);
+		return new CombatHit(character, victim, 1, CombatType.MAGIC, true, delay == 0 ? OptionalInt.empty() : OptionalInt.of(delay));
 	}
 	
 	@Override
