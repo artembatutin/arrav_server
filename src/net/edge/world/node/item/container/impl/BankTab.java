@@ -160,7 +160,7 @@ final class BankTab extends ItemContainer {
 	void depositeEquipment(Player player) {
 		Equipment equip = player.getEquipment();
 		for(IndexedItem i : equip.toIndexedArray()) {
-			equip.unequip(i.getIndex(), player.getBank().container(player.getBank().contains(i.getId())), false);
+			equip.unequip(i.getIndex(), player.getBank().container(player.getBank().contains(i.getId())), false, -1);
 		}
 		forceRefresh(player);
 		equip.updateBulk();

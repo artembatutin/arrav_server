@@ -170,7 +170,6 @@ public class MarketShop {
 					if(player.getMarketShop() != null && player.getMarketShop().getId() != -1) {
 						int shopId = player.getMarketShop().getId();
 						MarketShop shop = MarketCounter.getShops().get(shopId);
-						System.out.println("removing: " + item.getId());
 						shop.getItems().rem(item.getId());
 					}
 				}
@@ -241,9 +240,9 @@ public class MarketShop {
 		int currencyId = tangible ? ((ItemCurrency) this.getCurrency().getCurrency()).getId() : -1;
 		
 		int spacesFill = player.getInventory().slotCount(false, false, item);
-		int spacesEmpty = tangible ? 0 : player.getInventory().slotCount(false, true, new Item(currencyId, item.getAmount() * value));
+		int spacesEmpty = tangible ? player.getInventory().slotCount(false, true, new Item(currencyId, item.getAmount() * value)) : 0;
 		boolean hasSpace = player.getInventory().remaining() - spacesEmpty >= spacesFill;
-		
+
 		if(!hasSpace) {
 			item.setAmount(player.getInventory().remaining());
 			if(item.getAmount() == 0) {
@@ -251,7 +250,6 @@ public class MarketShop {
 				return false;
 			}
 		}
-		
 		getCurrency().getCurrency().takeCurrency(player, item.getAmount() * value);
 		player.getInventory().add(item);
 		player.getMessages().sendItemsOnInterface(3823, player.getInventory());
@@ -294,9 +292,6 @@ public class MarketShop {
 		ItemDefinition def = ItemDefinition.get(item.getId());
 		if(def == null)
 			return false;
-		if(def.isNoted()) {
-			item.setId(def.getNoted());
-		}
 		int amount = player.getInventory().computeAmountForId(item.getId());
 		if(item.getAmount() > amount && !item.getDefinition().isStackable()) {
 			item.setAmount(amount);
@@ -311,6 +306,7 @@ public class MarketShop {
 			marketItem.increaseStock(item.getAmount());
 			marketItem.updateStock();
 		}
+		
 		player.getMessages().sendItemsOnInterface(3823, player.getInventory());
 		return true;
 	}

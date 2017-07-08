@@ -171,7 +171,7 @@ public final class Stalls extends Thieving {
 		SILK(new int[]{2560}, EMPTY_STALLS[0], 20, new Item[]{new Item(995, 1000)}, 24, 8),
 		WINE(new int[]{14011}, EMPTY_STALLS[0], 22, new Item[]{new Item(995, 2500)}, 27, 16),
 		SEED(new int[]{7053}, EMPTY_STALLS[0], 27, new Item[]{new Item(995, 5000)}, 10, 11),
-		FUR(new int[]{2563} /*4278*/, EMPTY_STALLS[0], 35, new Item[]{new Item(995, 75000)}, 36, 15),
+		FUR(new int[]{2563}, EMPTY_STALLS[0], 35, new Item[]{new Item(995, 75000)}, 36, 15),
 		FISH(new int[]{4277}, EMPTY_STALLS[0], 42, new Item[]{new Item(995, 10000)}, 42, 16),
 		CROSSBOW(new int[]{17031}, EMPTY_STALLS[0], 49, new Item[]{new Item(995, 12500)}, 52, 11),
 		SILVER(new int[]{2565}, EMPTY_STALLS[0], 50, new Item[]{new Item(995, 15000)}, 54, 20),

@@ -77,6 +77,7 @@ class CharacterFollowTask extends Task {
 			}
 		}
 		
+		
 		//Entity facing.
 		character.faceEntity(leader);
 		
@@ -131,8 +132,8 @@ class CharacterFollowTask extends Task {
 						character.getMovementQueue().walk(pos);
 				}
 				return;
-			}*/
-			return;
+			}
+			return;*/
 		}
 		
 		//returns if path calculated is next to the leader.
@@ -140,14 +141,14 @@ class CharacterFollowTask extends Task {
 			return;
 		}
 		
+		
 		//Setting new path depending on the follower's type.
 		Path path = character.isPlayer() || (character.isNpc() && character.toNpc().isSmart()) ? character.getAStarPathFinder().find(leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
 		if(path != null && path.isPossible()) {
-			destination = path.getDestination();
 			//removing the points overlapping the leader's boundaries.
 			while(boundary.inside(path.poll(), leader.size()));
-			System.out.println("adding path - follower: " + character.toString() + " - leader: " + leader.toString());
 			character.getMovementQueue().walk(path.getMoves());
+			destination = path.getDestination();
 		} else {
 			character.getMovementQueue().reset();
 			destination = null;
@@ -156,6 +157,7 @@ class CharacterFollowTask extends Task {
 	
 	@Override
 	public void onCancel() {
+		System.out.println("nulled2");
 		destination = null;
 		character.setFollowing(false);
 		character.setFollowEntity(null);

@@ -513,12 +513,14 @@ public class ItemContainer implements Iterable<Item> {
 	public final int computeAmountForId(int id) {
 		int amount = 0;
 		int found = 0;
+		System.out.println(size);
 		for(Item item : items) {
 			if(item == null)
 				continue;
-			found++;
+			System.out.println(item.getId());
 			if(item.getId() == id)
 				amount += item.getAmount();
+			found++;
 			if(found == size)
 				break;
 		}
