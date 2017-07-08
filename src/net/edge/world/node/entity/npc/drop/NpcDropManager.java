@@ -6,8 +6,10 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.json.JsonSaver;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.node.region.Region;
@@ -20,25 +22,25 @@ import java.util.*;
  * @author lare96 <http://github.org/lare96>
  */
 public final class NpcDropManager {
-	
-	static final NpcDropTable DEFAULT = new NpcDropTable(new NpcDrop[]{}, new ItemCache[]{ItemCache.CASKETS, ItemCache.HERB_SEEDS, ItemCache.FLOWER_SEEDS, ItemCache.ALLOTMENT_SEEDS, ItemCache.CHARMS, ItemCache.LOW_RUNES, ItemCache.LOW_GEMS});
-	
+
+	static final NpcDropTable DEFAULT = new NpcDropTable(new NpcDrop[]{}, new ItemCache[]{ItemCache.HERB_SEEDS, ItemCache.FLOWER_SEEDS, ItemCache.ALLOTMENT_SEEDS, ItemCache.CHARMS, ItemCache.LOW_RUNES, ItemCache.LOW_GEMS});
+
 	/**
 	 * The {@link EnumMap} consisting of the cached common {@link NpcDrop}s used
 	 * across many {@link NpcDropTable}s.
 	 */
 	public static final EnumMap<ItemCache, NpcDrop[]> COMMON = new EnumMap<>(ItemCache.class);
-	
+
 	/**
 	 * The {@link HashMap} that consists of the drops for {@link Npc}s.
 	 */
 	public final static Int2ObjectOpenHashMap<NpcDropTable> TABLES = new Int2ObjectOpenHashMap<>();
-	
+
 	/**
 	 * Npc sharing the same table drop redirects.
 	 */
 	public final static Int2IntArrayMap REDIRECTS = new Int2IntArrayMap();
-	
+
 	/**
 	 * Drops the items in {@code victim}s drop table for {@code killer}. If the
 	 * killer doesn't exist, the items are dropped for everyone to see.
@@ -48,6 +50,11 @@ public final class NpcDropManager {
 	public static void dropItems(Player killer, Npc victim) {
 		NpcDropTable table = TABLES.getOrDefault(victim.getId(), DEFAULT);
 		List<Item> dropItems = table.toItems(killer, victim);
+
+		if(victim.getMaxHealth() >= 500 && RandomUtils.inclusive(50) == 1) {
+			dropItems.add(new Item(450));
+		}
+
 		Region region = victim.getRegion();
 		if(region == null)
 			return;
@@ -57,11 +64,11 @@ public final class NpcDropManager {
 			region.register(new ItemNode(drop, victim.getPosition(), killer));
 		}
 	}
-	
+
 	public static Int2ObjectOpenHashMap<NpcDropTable> getTables() {
 		return TABLES;
 	}
-	
+
 	/**
 	 * Serializes the drops.
 	 */
@@ -87,5 +94,5 @@ public final class NpcDropManager {
 		}
 		drops_saver.publish("./data/json/npcs/npc_drops2.json");
 	}
-	
+
 }

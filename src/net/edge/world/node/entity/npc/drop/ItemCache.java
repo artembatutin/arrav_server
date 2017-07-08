@@ -87,12 +87,6 @@ public enum ItemCache {
 	HIGH_GEMS,
 	
 	/**
-	 * The rewarding caskets that are being dropped by several monster to
-	 * give an 'aid' to the starter players.
-	 */
-	CASKETS,
-	
-	/**
 	 * The barrows items that are the main rare items from the barrow brothers
 	 * minigame.
 	 */

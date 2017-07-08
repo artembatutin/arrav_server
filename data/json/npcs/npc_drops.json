@@ -590,7 +590,6 @@
       }
     ],
     "common": [
-      "CASKETS",
       "CHARMS",
       "MED_RUNES",
       "ALLOTMENT_SEEDS",
@@ -1577,7 +1576,6 @@
       }
     ],
     "common": [
-      "CASKETS",
       "CHARMS",
       "ALLOTMENT_SEEDS",
       "MED_HERBS",
@@ -2283,7 +2281,6 @@
     "common": [
       "CHARMS",
       "MED_RUNES",
-      "CASKETS",
       "HIGH_RUNES"
     ]
   },
@@ -4932,7 +4929,6 @@
       "CHARMS",
       "MED_HERBS",
       "MED_RUNES",
-      "CASKETS",
       "MED_RUNES",
       "LOW_HERBS",
       "MED_HERBS",
@@ -6797,8 +6793,7 @@
       "HERB_SEEDS",
       "ALLOTMENT_SEEDS",
       "LOW_HERBS",
-      "LOW_RUNES",
-      "CASKETS"
+      "LOW_RUNES"
     ]
   },
   {
@@ -6942,7 +6937,6 @@
       "CHARMS",
       "MED_HERBS",
       "MED_RUNES",
-      "CASKETS",
       "LOW_HERBS",
       "MED_RUNES",
       "LOW_RUNES",
@@ -7037,8 +7031,7 @@
       }
     ],
     "common": [
-      "LOW_HERBS",
-      "CASKETS"
+      "LOW_HERBS"
     ]
   },
   {
@@ -7301,8 +7294,7 @@
     "common": [
       "CHARMS",
       "MED_HERBS",
-      "MED_RUNES",
-      "CASKETS"
+      "MED_RUNES"
     ]
   },
   {
@@ -7627,7 +7619,6 @@
     ],
     "common": [
       "CHARMS",
-      "CASKETS",
       "HIGH_RUNES"
     ]
   },
@@ -8102,8 +8093,7 @@
       }
     ],
     "common": [
-      "LOW_HERBS",
-      "CASKETS"
+      "LOW_HERBS"
     ]
   },
   {
@@ -9431,7 +9421,6 @@
       }
     ],
     "common": [
-      "CASKETS",
       "CHARMS",
       "ALLOTMENT_SEEDS",
       "FLOWER_SEEDS",
@@ -13644,7 +13633,6 @@
     "common": [
       "CHARMS",
       "MED_RUNES",
-      "CASKETS",
       "HIGH_RUNES"
     ]
   },
@@ -16099,7 +16087,6 @@
       }
     ],
     "common": [
-      "CASKETS",
       "CHARMS",
       "ALLOTMENT_SEEDS",
       "FLOWER_SEEDS",
@@ -16436,7 +16423,6 @@
       }
     ],
     "common": [
-      "CASKETS",
       "HIGH_RUNES"
     ]
   },
@@ -17317,7 +17303,6 @@
     "common": [
       "CHARMS",
       "MED_RUNES",
-      "CASKETS",
       "LOW_RUNES",
       "MED_RUNES",
       "HIGH_RUNES"
@@ -19498,7 +19483,6 @@
       "MED_HERBS",
       "HIGH_HERBS",
       "HERB_SEEDS",
-      "CASKETS",
       "HIGH_RUNES"
     ]
   },
@@ -19620,7 +19604,6 @@
       "ALLOTMENT_SEEDS",
       "MED_HERBS",
       "MED_RUNES",
-      "CASKETS",
       "LOW_RUNES",
       "MED_RUNES",
       "HIGH_RUNES"
@@ -20355,7 +20338,6 @@
       "CHARMS",
       "MED_HERBS",
       "MED_RUNES",
-      "CASKETS",
       "LOW_HERBS",
       "MED_RUNES",
       "HIGH_RUNES",
@@ -21569,7 +21551,6 @@
       "ALLOTMENT_SEEDS",
       "LOW_HERBS",
       "LOW_RUNES",
-      "CASKETS",
       "HERB_SEEDS",
       "MED_HERBS",
       "MED_RUNES",
@@ -23471,7 +23452,6 @@
     "common": [
       "CHARMS",
       "MED_RUNES",
-      "CASKETS",
       "LOW_RUNES",
       "MED_RUNES",
       "HIGH_RUNES"
@@ -28352,8 +28332,7 @@
     "common": [
       "HERB_SEEDS",
       "LOW_HERBS",
-      "LOW_RUNES",
-      "CASKETS"
+      "LOW_RUNES"
     ]
   },
   {
@@ -29747,8 +29726,7 @@
       "LOW_HERBS",
       "MED_HERBS",
       "HIGH_HERBS",
-      "HERB_SEEDS",
-      "CASKETS"
+      "HERB_SEEDS"
     ]
   },
   {
@@ -30304,7 +30282,6 @@
     ],
     "common": [
       "LOW_HERBS",
-      "CASKETS",
       "MED_GEMS",
       "LOW_GEMS",
       "HIGH_RUNES",
@@ -31008,7 +30985,6 @@
     ],
     "common": [
       "LOW_HERBS",
-      "CASKETS",
       "LOW_HERBS",
       "MED_HERBS",
       "HIGH_RUNES",
@@ -36360,7 +36336,6 @@
       }
     ],
     "common": [
-      "CASKETS"
     ]
   },
   {
@@ -40740,7 +40715,6 @@
       }
     ],
     "common": [
-      "CASKETS",
       "CHARMS",
       "ALLOTMENT_SEEDS",
       "LOW_RUNES",
@@ -41076,7 +41050,6 @@
       "ALLOTMENT_SEEDS",
       "MED_HERBS",
       "MED_RUNES",
-      "CASKETS",
       "FLOWER_SEEDS",
       "MED_HERBS",
       "LOW_HERBS",
@@ -43025,7 +42998,6 @@
       "CHARMS",
       "MED_GEMS",
       "HIGH_HERBS",
-      "CASKETS",
       "LOW_HERBS",
       "HIGH_RUNES",
       "MED_RUNES",
