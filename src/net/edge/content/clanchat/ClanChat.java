@@ -17,11 +17,6 @@ import java.util.Optional;
 public final class ClanChat {
 	
 	/**
-	 * Comparator to compare members to sort the list.
-	 */
-	public static Comparator<ClanMember> comparator = (m1, m2) -> m2.getRank().getValue() - m1.getRank().getValue();
-	
-	/**
 	 * The name of the owner of this clan.
 	 */
 	private final String owner;
@@ -69,6 +64,8 @@ public final class ClanChat {
 	 * @param player the player to add.
 	 */
 	public boolean add(Player player, ClanChatRank rank) {
+		if(true)
+			return false;
 		ClanMember member = new ClanMember(player, this, rank);
 		if(members.add(member)) {
 			player.setClan(Optional.of(member));
@@ -119,13 +116,6 @@ public final class ClanChat {
 			return ranks.get(username);
 		}
 		return ClanChatRank.MEMBER;
-	}
-	
-	/**
-	 * Sorts the array and returns the players
-	 */
-	public void sort() {
-		members.sort(comparator);
 	}
 	
 	/**

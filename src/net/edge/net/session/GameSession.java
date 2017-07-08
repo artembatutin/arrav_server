@@ -97,9 +97,11 @@ public class GameSession extends Session {
 	 * Writes all enqueued packets to the stream.
 	 */
 	public void pollOutgoingMessages() {
-		while (!outgoing.isEmpty()) {
+		int written = 0;
+		while (!outgoing.isEmpty() && written < 50) {
 			OutgoingPacket packet = outgoing.poll();
 			writeToStream(packet);
+			written++;
 		}
 	}
 	

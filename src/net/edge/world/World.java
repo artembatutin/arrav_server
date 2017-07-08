@@ -73,6 +73,8 @@ public final class World {
 	 */
 	private final ScheduledExecutorService sync = Executors.newSingleThreadScheduledExecutor(ThreadUtil.create("GamePulse"));
 	
+	private final ExecutorService synchronizer = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+	
 	/**
 	 * The game executor in charge of managing process.
 	 */
@@ -158,7 +160,7 @@ public final class World {
 	/**
 	 * The method that executes the update sequence for all in game characters every cycle.
 	 */
-	public void pulse() {
+	public void pulse() throws InterruptedException {
 		final long start = System.currentTimeMillis();
 		synchronized(this) {
 			
@@ -175,59 +177,6 @@ public final class World {
 						player.getSession().getChannel().close();
 					}
 				}
-			}
-			taskManager.sequence();
-			
-			//enhanced iterations
-			Npc npc;
-			Player player;
-			EntityList.EntityListIterator<Npc> in = npcs.iterator();
-			EntityList.EntityListIterator<Player> ip = players.iterator();
-			
-			// Pre synchronization
-			while((player = ip.next()) != null) {
-				try {
-					player.update();
-				} catch(Exception e) {
-					queueLogout(player);
-					logger.log(Level.WARNING, "Couldn't pre sync player " + player.toString(), e);
-				}
-			}
-			
-			while((npc = in.next()) != null) {
-				if(npc.isActive()) {
-					try {
-						npc.update();
-						npc.getMovementQueue().sequence();
-					} catch(Exception e) {
-						logger.log(Level.WARNING, "Couldn't pre sync npc " + npc.toString(), e);
-					}
-				}
-			}
-			
-			// Synchronization
-			while((player = ip.next()) != null) {
-				try {
-					PlayerUpdater.write(player);
-					NpcUpdater.write(player);
-					player.getSession().pollOutgoingMessages();
-				} catch(Exception e) {
-					queueLogout(player);
-					logger.log(Level.WARNING, "Couldn't sync player " + player.toString(), e);
-				}
-			}
-			
-			// Post synchronization
-			while((player = ip.next()) != null) {
-				if(player.isHuman()) {
-					player.getSession().flushQueue();
-				}
-				player.reset();
-				player.setCachedUpdateBlock(null);
-			}
-			
-			while((npc = in.next()) != null) {
-				npc.reset();
 			}
 			
 			// Region tick
@@ -253,9 +202,68 @@ public final class World {
 					}
 				}
 			}
+			
+			taskManager.sequence();
+			
+			// Pre synchronization
+			for (Player player : players) {
+				try {
+					player.update();
+				} catch(Exception e) {
+					queueLogout(player);
+					logger.log(Level.WARNING, "Couldn't pre sync player " + player.toString(), e);
+				}
+			}
+			
+			for (Npc npc : npcs) {
+				try {
+					if(npc.isActive()) {
+						npc.update();
+						npc.getMovementQueue().sequence();
+					}
+				} catch(Exception e) {
+					logger.log(Level.WARNING, "Couldn't pre sync npc " + npc.toString(), e);
+				}
+			}
+			
+			// Synchronization
+			CountDownLatch latch = new CountDownLatch(players.size());
+			for (Player player : players) {
+				synchronizer.submit(() -> {
+					try {
+						PlayerUpdater.write(player);
+						NpcUpdater.write(player);
+						player.getSession().pollOutgoingMessages();
+					} catch(Exception e) {
+						queueLogout(player);
+						logger.log(Level.WARNING, "Couldn't sync player " + player.toString(), e);
+					} finally {
+						latch.countDown();
+					}
+				});
+			}
+			latch.await();
+			
+			// Post synchronization
+			for (Player player : players) {
+				if(player.isHuman()) {
+					player.getSession().flushQueue();
+				}
+				player.reset();
+				player.setCachedUpdateBlock(null);
+			}
+			
+			for (Npc npc : npcs) {
+				try {
+					npc.reset();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		millis = System.currentTimeMillis() - start;
+		System.out.println("took: " + millis);
 	}
 	
 	/**

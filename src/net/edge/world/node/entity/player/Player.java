@@ -58,6 +58,7 @@ import net.edge.net.packet.out.*;
 import net.edge.net.session.GameSession;
 import net.edge.task.Task;
 import net.edge.util.*;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
 import net.edge.world.World;

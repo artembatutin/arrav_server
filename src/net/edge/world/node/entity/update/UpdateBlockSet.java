@@ -99,19 +99,8 @@ public final class UpdateBlockSet<E extends EntityNode> {
 	 * @param state      The {@link UpdateState} that the underlying {@code Player} is in.
 	 */
 	private void encodePlayerBlocks(Player thisPlayer, E forMob, GameBuffer msg, UpdateState state) {
-		Player player = (Player) forMob;
-		boolean cacheBlocks = (state != UpdateState.ADD_LOCAL && state != UpdateState.UPDATE_SELF);
-		
-		if(player.getCachedUpdateBlock() != null && cacheBlocks) {
-			msg.putBytes(player.getCachedUpdateBlock());
-			return;
-		}
-
 		GameBuffer encodedBlocks = encodeBlocks(thisPlayer, forMob, state);
 		msg.putBytes(encodedBlocks);
-		if(cacheBlocks) {
-			player.setCachedUpdateBlock(encodedBlocks);
-		}
 		encodedBlocks.release();
 	}
 	
