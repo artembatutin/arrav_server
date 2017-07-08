@@ -209,7 +209,7 @@ public final class Equipment extends ItemContainer {
 		
 		//Stacking arrows if exist.
 		if(getItems()[type.getSlot()] != null) {
-			if(def.isStackable() && type.getSlot() == inventoryIndex && getItems()[type.getSlot()].getId() == equipItem.getId()) {
+			if(def.isStackable() && getItems()[type.getSlot()].getId() == equipItem.getId()) {
 				equipItem = equipItem.createAndIncrement(getItems()[type.getSlot()].getAmount());
 				unequipPrimary = Optional.empty();
 			} else {
