@@ -97,13 +97,14 @@ public final class FakeClient {
             }
         });
 
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 100; i++) {
             // Start the client.
             Channel f = b.connect("127.0.0.1", 43594).sync().channel(); // (5)
             ByteBuf buffer = f.alloc().buffer();
             buffer.writeByte(14);
             buffer.writeByte(0);
             f.writeAndFlush(buffer, f.voidPromise());
+            Thread.sleep(RandomUtils.inclusive(50, 400));
         }
     }
 }

@@ -94,10 +94,10 @@ public final class Hunter {
 		
 		Position p = player.getPosition();
 		
-		if(player.getRegion().getInteractiveObjects().stream().anyMatch(o -> o.getObjectType() == ObjectType.GENERAL_PROP) || !World.getTraversalMap().isTraversable(p, Direction.WEST, player.size()) && !World.getTraversalMap().isTraversable(p, Direction.EAST, player.size()) || Location.isAtHome(player)) {
-			player.message("You can't set-up your trap here.");
-			return false;
-		}
+		//if(player.getRegion().interactAction().stream().anyMatch(o -> o.getObjectType() == ObjectType.GENERAL_PROP) || !World.getTraversalMap().isTraversable(p, Direction.WEST, player.size()) && !World.getTraversalMap().isTraversable(p, Direction.EAST, player.size()) || Location.isAtHome(player)) {
+		//	player.message("You can't set-up your trap here.");
+		//	return false;
+		//}
 		
 		for(Npc npc : player.getLocalNpcs()) {
 			if(npc == null) {

@@ -198,7 +198,6 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		if (index >= limit) {
 			limit++;
 		}
-		System.out.println("REGISTERED " + entity);
 		entities[index] = entity;
 		entity.setSlot(index + 1);
 		entity.setState(NodeState.ACTIVE);
@@ -220,7 +219,7 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * @param entity The entity to remove from this list.
 	 */
 	public boolean remove(E entity) {
-		if(entity.getState() != NodeState.ACTIVE) {
+		if(entity.getState() != NodeState.ACTIVE && entity.getState() != NodeState.AWAITING_REMOVAL) {
 			System.out.println("Couldn't remove: " + entity.toString() + " because not active.");
 			return true;
 		}

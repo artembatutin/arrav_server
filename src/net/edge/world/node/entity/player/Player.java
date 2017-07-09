@@ -710,9 +710,6 @@ public final class Player extends EntityNode {
 			World.get().setStaffCount(World.get().getStaffCount() + 1);
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 		}
-		int x = RandomUtils.inclusive(10);
-		int y = RandomUtils.inclusive(10);
-		getMovementQueue().walk(getPosition().move(RandomUtils.nextBoolean() ? -x : x, RandomUtils.nextBoolean() ? -y : y));
 	}
 	
 	@Override
@@ -737,6 +734,10 @@ public final class Player extends EntityNode {
 	@Override
 	public boolean active() {
 		return getState() == NodeState.ACTIVE;
+	}
+	
+	public void terminate() {
+		session.releaseStream();
 	}
 	
 	@Override
@@ -2436,19 +2437,16 @@ public final class Player extends EntityNode {
 		return mobs;
 	}
 	
-	/**
-	 * Gets the aggression tick timer.
-	 * @return aggression tick timer.
-	 */
-	public int getAggressionTick() {
+	public int processAgressiveTick() {
+		aggressionTick++;
+		if(aggressionTick == 5) {
+			aggressionTick = 0;
+		}
 		return aggressionTick;
 	}
 	
-	/**
-	 * Sets a new aggression tick timer.
-	 * @param aggressionTick new value to set.
-	 */
 	public void setAggressionTick(int aggressionTick) {
 		this.aggressionTick = aggressionTick;
 	}
+	
 }

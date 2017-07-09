@@ -1,5 +1,7 @@
 package net.edge.world.node;
 
+import net.edge.world.node.entity.player.Player;
+
 /**
  * An enumeration that defines the states of an {@link Node}.
  */
@@ -17,6 +19,11 @@ public enum NodeState {
 	/**
 	 * An {@link Node} has just been unregistered.
 	 */
-	INACTIVE
+	INACTIVE,
+	
+	/**
+	 * A specific {@link Player} removal state.
+	 */
+	AWAITING_REMOVAL;
 	
 }

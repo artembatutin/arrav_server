@@ -5,6 +5,8 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
+import java.util.function.Consumer;
+
 import static net.edge.world.object.ObjectGroup.INTERACTABLE_OBJECT;
 import static net.edge.world.object.ObjectGroup.WALL;
 
@@ -59,6 +61,20 @@ public class RegionTiledObjects {
 				list.add(o);
 		}
 		return list;
+	}
+	
+	public void dynamicAction(Consumer<ObjectNode> action) {
+		for(ObjectNode o : objects) {
+			if(o != null && o.isDynamic())
+				action.accept(o);
+		}
+	}
+	
+	public void interactiveAction(int id, Consumer<ObjectNode> action) {
+		for(ObjectNode o : objects) {
+			if(o != null && (o.getId() == id && o.getObjectType().getGroup() == INTERACTABLE_OBJECT || o.getObjectType().getGroup() == WALL))
+				action.accept(o);
+		}
 	}
 	
 	public ObjectList<ObjectNode> getAll() {

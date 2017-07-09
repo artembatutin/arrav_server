@@ -94,11 +94,6 @@ public enum Obelisk {
 		 */
 		private final Region reg;
 		
-		/**
-		 * The obelisks objects.
-		 */
-		private List<ObjectNode> obelisks;
-		
 		ObeliskTask(Obelisk data, Region reg) {
 			super(8, false);
 			this.data = data;
@@ -107,8 +102,7 @@ public enum Obelisk {
 		
 		@Override
 		protected void onSubmit() {
-			obelisks = reg.getInteractiveObjects(data.object);
-			obelisks.forEach(o -> {
+			reg.interactAction(data.object, o -> {
 				o.setId(14825);
 				o.publish();
 			});
@@ -116,8 +110,8 @@ public enum Obelisk {
 		
 		@Override
 		protected void execute() {
-			obelisks.forEach(o -> {
-				o.setId(data.object);
+			reg.interactAction(data.object, o -> {
+				o.setId(14825);
 				o.publish();
 			});
 			Obelisk dest = RandomUtils.random(VALUES.stream().filter(d -> d != data).collect(Collectors.toList()));

@@ -52,6 +52,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static net.edge.net.session.GameSession.outLimit;
+import static net.edge.world.node.NodeState.AWAITING_REMOVAL;
 import static net.edge.world.node.NodeState.IDLE;
 
 /**
@@ -323,6 +324,8 @@ public final class World {
 		if(player.getCombatBuilder().inCombat())
 			player.getLogoutTimer().reset();
 		//player.getSession().setActive(false);
+		System.out.println("QUEUED TO LOGOUT: " + player);
+		player.setState(AWAITING_REMOVAL);
 		logouts.add(player);
 		if(!queued)
 			player.out(new SendLogout(false));
@@ -451,6 +454,7 @@ public final class World {
 			player.getMobs().clear();
 			if(response) {
 				playerByNames.remove(player.getCredentials().getUsernameHash());
+				player.terminate();
 				//logger.info(player.toString() + " has logged out.");
 			} else {
 				//logger.info(player.toString() + " couldn't be logged out.");

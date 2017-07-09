@@ -54,11 +54,6 @@ public class GameSession extends Session {
 	 * The game stream.
 	 */
 	private final GameBuffer stream;
-	
-	/**
-	 * If something is written on the stream
-	 */
-	private boolean written = false;
 
 	/**
 	 * Creates a new {@link GameSession}.
@@ -72,17 +67,14 @@ public class GameSession extends Session {
 		this.encryptor = encryptor;
 		this.decryptor = decryptor;
 		this.stream = new GameBuffer(channel.alloc().buffer(STREAM_CAP), encryptor);
-		written = true;
 	}
 	
 	@Override
 	public void onDispose() {
 		if(player.getState() == NodeState.ACTIVE) {
 			World.get().queueLogout(player, !getChannel().isActive());
-		} else if(written) {
-			System.out.println("REEEEEEELLLLEEEEEEEAAAAAAASSSSEEEEEEEEED buf");
-			stream.release();
 		}
+		setActive(false);
 		outgoing.clear();
 	}
 	
@@ -108,7 +100,6 @@ public class GameSession extends Session {
 	 * Writes the given {@link OutgoingPacket} to the stream.
 	 */
 	public void writeToStream(OutgoingPacket pkt) {
-		written = true;
 		pkt.write(player);
 	}
 	
@@ -138,7 +129,6 @@ public class GameSession extends Session {
 			channel.eventLoop().execute(() -> {
 				channel.writeAndFlush(stream.retain(), channel.voidPromise());
 				stream.clear();
-				written = false;
 			});
 		}
 	}
@@ -170,6 +160,10 @@ public class GameSession extends Session {
 	 */
 	public ByteBufAllocator alloc() {
 		return getChannel().alloc();
+	}
+	
+	public void releaseStream() {
+		stream.release();
 	}
 
 }

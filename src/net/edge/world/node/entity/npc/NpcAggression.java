@@ -1,10 +1,7 @@
 package net.edge.world.node.entity.npc;
 
-import net.edge.util.rand.RandomUtils;
 import net.edge.game.GameConstants;
 import net.edge.locale.loc.Location;
-import net.edge.world.World;
-import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.HashSet;
@@ -31,20 +28,14 @@ public final class NpcAggression {
 	 * @param player the player that will be targeted.
 	 */
 	public static void sequence(Player player) {
-		if(player.getAggressionTick() > 5)
-			player.setAggressionTick(0);
-		else
-			player.setAggressionTick(player.getAggressionTick() + 1);
 		if(player.getMinigame().isPresent() && player.getMinigame().get().aggression()) {
 			return;
 		}
-		if(player.getAggressionTick() == 1 && (!player.getCombatBuilder().inCombat() || Location.inMultiCombat(player))) {
+		if(player.processAgressiveTick() == 1 && (!player.getCombatBuilder().inCombat() || player.isMulticombatInterface())) {
 			for(Npc npc : player.getLocalNpcs()) {
-				if(validate(npc, player, Location.inMultiCombat(npc)) && !World.getAreaManager().inArea(player, "GODWARS")) {
+				if(validate(npc, player)) {
 					npc.getCombatBuilder().attack(player);
-				}/* else if(GodwarsFaction.attack(npc)) {
-					//no need for code.
-				}*/ else {
+				} else {
 					npc.getMovementCoordinator().setCoordinate(npc.isOriginalRandomWalk());
 				}
 			}
@@ -58,7 +49,7 @@ public final class NpcAggression {
 	 * @return {@code true} if the player can be targeted, {@code false}
 	 * otherwise.
 	 */
-	private static boolean validate(Npc npc, Player player, boolean multi) {
+	private static boolean validate(Npc npc, Player player) {
 		boolean wilderness = Location.inWilderness(npc) && Location.inWilderness(player);
 		boolean retreats = npc.getDefinition().retreats() || (player.getCombatBuilder().isBeingAttacked() && player.getCombatBuilder().getVictim() != npc);
 		boolean tolerance = !(wilderness || npc.getDefinition().getCombatLevel() > 126) && player.getTolerance().elapsed(GameConstants.TOLERANCE_SECONDS, TimeUnit.SECONDS);
@@ -82,8 +73,6 @@ public final class NpcAggression {
 			retreat(npc);//Retreats check.
 			return false;
 		}
-		if(!multi && player.getCombatBuilder().isAttacking() || player.getCombatBuilder().isBeingAttacked())
-			return false;
 		if(player.determineCombatLevel() > (npc.getDefinition().getCombatLevel() * 2) && !wilderness)
 			return false;
 		return !npc.getCombatBuilder().isAttacking() && !npc.getCombatBuilder().isBeingAttacked() && !tolerance;

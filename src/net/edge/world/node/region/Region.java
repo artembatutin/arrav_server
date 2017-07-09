@@ -3,7 +3,6 @@ package net.edge.world.node.region;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.edge.net.packet.out.SendItemNode;
 import net.edge.net.packet.out.SendItemNodeRemoval;
 import net.edge.util.LoggerUtils;
@@ -24,7 +23,7 @@ import net.edge.world.object.ObjectType;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Supplier;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 /**
@@ -74,7 +73,7 @@ public final class Region extends Node {
 	/**
 	 * A {@link Int2ObjectOpenHashMap} of active {@link ObjectNode}s in this {@code Region}.
 	 */
-	private final Int2ObjectOpenHashMap<RegionTiledObjects> objects = new Int2ObjectOpenHashMap<>();
+	private final Int2ObjectOpenHashMap<RegionTiledObjects> staticObjects = new Int2ObjectOpenHashMap<>();
 	
 	/**
 	 * A {@link ObjectList} of removed {@link ObjectNode}s in this {@code Region}.
@@ -134,7 +133,6 @@ public final class Region extends Node {
 				regions.add(manager.getRegion(regionId - 257));
 			surroundingRegions = regions;
 		}
-
 		return surroundingRegions;
 	}
 	
@@ -363,7 +361,7 @@ public final class Region extends Node {
 	 * @return A {@link RegionTiledObjects} of {@link ObjectNode}s on the specified position.
 	 */
 	public RegionTiledObjects getObjects(Position position) {
-		return objects.computeIfAbsent(position.toLocalPacked(), key -> new RegionTiledObjects());
+		return staticObjects.computeIfAbsent(position.toLocalPacked(), key -> new RegionTiledObjects());
 	}
 	
 	/**
@@ -372,7 +370,7 @@ public final class Region extends Node {
 	 * @return A {@link RegionTiledObjects} of {@link ObjectNode}s on the specified position.
 	 */
 	public RegionTiledObjects getObjectsFrompacked(int packed) {
-		return objects.computeIfAbsent(packed, key -> new RegionTiledObjects());
+		return staticObjects.computeIfAbsent(packed, key -> new RegionTiledObjects());
 	}
 	
 	/**
@@ -414,74 +412,19 @@ public final class Region extends Node {
 	}
 	
 	/**
-	 * Gets the a set of {@link ObjectNode}s with the specified {@code id}.
+	 * Sends an action to interactive objects with the specified {@code id}.
 	 * @param id The id of the object to seek for.
-	 * @return A {@link ObjectList} of {@link ObjectNode}s on the specified position.
 	 */
-	public ObjectList<ObjectNode> getInteractiveObjects(int id) {
-		ObjectList<ObjectNode> filtered = new ObjectArrayList<>();
-		ObjectList<ObjectNode> active = getInteractiveObjects();
-		for(ObjectNode o : active) {
-			if(o != null && o.getId() == id)
-				filtered.add(o);
-		}
-		return filtered;
+	public void interactAction(int id, Consumer<ObjectNode> action) {
+		staticObjects.forEach((l, c) -> c.interactiveAction(id, action));
 	}
 	
 	/**
-	 * Gets the a set of {@link ObjectNode}s on the specified {@link Position} within a distance.
-	 * @param position The position.
-	 * @return A {@link ObjectList} of {@link ObjectNode}s on the specified position.
-	 */
-	public ObjectList<ObjectNode> getInteractiveObjects(Position position, int id, int distance) {
-		ObjectList<ObjectNode> filtered = new ObjectArrayList<>();
-		ObjectList<ObjectNode> active = getInteractiveObjects();
-		for(ObjectNode o : active) {
-			if(o != null && o.getId() == id && o.getGlobalPos().withinDistance(position, distance))
-				filtered.add(o);
-		}
-		return filtered;
-	}
-	
-	
-	/**
-	 * Gets the a List of {@link ObjectNode} from all {@link Position}s of the region where objects are applied.
+	 * Gets the a List of dynamic {@link ObjectNode} of interactive from all {@link Position}s of the region where staticObjects are applied.
 	 * @return A {@link ObjectList}.
 	 */
-	public ObjectList<ObjectNode> getAllObjects() {
-		ObjectList<ObjectNode> all = new ObjectArrayList<>();
-		objects.forEach((l, c) -> all.addAll(c.getAll()));
-		return all;
-	}
-	
-	/**
-	 * Gets the a List of interactive {@link ObjectNode} from all {@link Position}s of the region where objects are applied.
-	 * @return A {@link ObjectList}.
-	 */
-	public ObjectList<ObjectNode> getInteractiveObjects() {
-		ObjectList<ObjectNode> all = new ObjectArrayList<>();
-		objects.forEach((l, c) -> all.addAll(c.getInteract()));
-		return all;
-	}
-	
-	/**
-	 * Gets the a List of static {@link ObjectNode} of interactive from all {@link Position}s of the region where objects are applied.
-	 * @return A {@link ObjectList}.
-	 */
-	public ObjectList<ObjectNode> getStaticObjects() {
-		ObjectList<ObjectNode> all = new ObjectArrayList<>();
-		objects.forEach((l, c) -> all.addAll(c.getInteract()));
-		return all;
-	}
-	
-	/**
-	 * Gets the a List of dynamic {@link ObjectNode} of interactive from all {@link Position}s of the region where objects are applied.
-	 * @return A {@link ObjectList}.
-	 */
-	public ObjectList<ObjectNode> getDynamicObjects() {
-		ObjectList<ObjectNode> all = new ObjectArrayList<>();
-		objects.forEach((l, c) -> all.addAll(c.getDynamic()));
-		return all;
+	public void dynamicAction(Consumer<ObjectNode> action) {
+		staticObjects.forEach((l, c) -> c.dynamicAction(action));
 	}
 	
 	/**

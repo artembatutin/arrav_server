@@ -82,12 +82,18 @@ public final class RegionManager {
 	public void updateRegionObjects(Player player) {
 		ObjectList<Region> allRegions = getAllSurroundingRegions(player.getPosition().getRegion());
 		for(Region region : allRegions) {
-			for(ObjectNode obj : region.getRemovedObjects())
-				player.out(new SendObjectRemoval(obj));
-			for(ObjectNode o : region.getDynamicObjects()) {
-				if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance())
-					player.out(new SendObject(o));
+			if(!region.getRemovedObjects().isEmpty()) {
+				for(ObjectNode obj : region.getRemovedObjects()) {
+					System.out.println("remove " + obj);
+					player.out(new SendObjectRemoval(obj));
+				}
 			}
+			region.dynamicAction(o -> {
+				if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance()) {
+					System.out.println("add " + o);
+					player.out(new SendObject(o));
+				}
+			});
 		}
 	}
 	

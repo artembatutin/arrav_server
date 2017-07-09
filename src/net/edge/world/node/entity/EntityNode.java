@@ -1116,7 +1116,7 @@ public abstract class EntityNode extends Node {
 	 * Gets the aggression tick timer.
 	 * @return aggression tick timer.
 	 */
-	public int getAggressionTick() {
+	public int processAgressiveTick() {
 		return aggressionTick;
 	}
 	
