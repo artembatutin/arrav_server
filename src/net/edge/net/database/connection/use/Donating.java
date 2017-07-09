@@ -64,9 +64,9 @@ public class Donating {
 	public void append(Player player, Connection con) {
 		try {
 			boolean received = false;
-			Statement st = con.createStatement();
-			String sql = ("SELECT * FROM purchase_history WHERE LOWER(username) = '"+player.getCredentials().getUsername().toLowerCase()+"' and claimed = 0 and payment_status = 'Completed'");
-			ResultSet rs = st.executeQuery(sql);
+			PreparedStatement st = con.prepareStatement("SELECT * FROM purchase_history WHERE LOWER(username) = ? and claimed = 0 and payment_status = 'Completed'");
+			st.setString(1, player.getCredentials().getUsername().toLowerCase());
+			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
 				int id = rs.getInt("id");
 				int product = rs.getInt("tokens");
