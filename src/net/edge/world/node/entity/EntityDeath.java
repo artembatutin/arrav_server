@@ -81,7 +81,7 @@ public abstract class EntityDeath<T extends EntityNode> extends Task {
 	public final void onException(Exception e) {
 		e.printStackTrace();
 		if(getCharacter().isPlayer()) {
-			World.get().queueLogout(getCharacter().toPlayer());
+			World.get().queueLogout(getCharacter().toPlayer(), false);
 		} else if(getCharacter().isNpc()) {
 			World.get().getNpcs().remove(getCharacter().toNpc());
 		}

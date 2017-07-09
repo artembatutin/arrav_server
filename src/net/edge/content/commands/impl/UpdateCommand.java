@@ -42,7 +42,7 @@ public final class UpdateCommand implements Command {
 					Player other;
 					Iterator<Player> it = World.get().getPlayers().iterator();
 					while((other = it.next()) != null) {
-						other.out(new SendLogout());
+						other.out(new SendLogout(true));
 					}
 					System.out.println("Waiting for shutdown.");
 					World.get().getTask().submit(new Task(10, false) {

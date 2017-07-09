@@ -85,7 +85,7 @@ import static com.google.common.base.Preconditions.checkState;
  * The character implementation that represents a node that is operated by an
  * actual person. This type of node functions solely through communication with
  * the client, by reading data from and writing data to non-blocking sockets.
- * @author lare96 <http://github.com/lare96>
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class Player extends EntityNode {
 	
@@ -605,7 +605,7 @@ public final class Player extends EntityNode {
 	}
 
 	public void sendDefaultSidebars() {
-		TabInterface.CLAN_CHAT.sendInterface(this, 50128);
+		//TabInterface.CLAN_CHAT.sendInterface(this, 50128);
 		TabInterface.SKILL.sendInterface(this, 3917);
 		TabInterface.QUEST.sendInterface(this, 638);
 		TabInterface.INVENTORY.sendInterface(this, 3213);
@@ -682,7 +682,7 @@ public final class Player extends EntityNode {
 		text((int) runEnergy + "%", 149);
 		out(new SendEnergy());
 		Prayer.VALUES.forEach(c -> out(new SendConfig(c.getConfig(), 0)));
-		//logger.info(this + " has logged in.");
+		logger.info(this + " has logged in.");
 		if(getPetManager().getPet().isPresent()) {
 			Pet.onLogin(this);
 		}
@@ -710,6 +710,16 @@ public final class Player extends EntityNode {
 			World.get().setStaffCount(World.get().getStaffCount() + 1);
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 		}
+		if(getFormatUsername().contains("Bot")) {
+			Player p  = this;
+			World.get().submit(new Task(RandomUtils.inclusive(50) + 1) {
+				@Override
+				protected void execute() {
+					World.get().queueLogout(p, false);
+					this.cancel();
+				}
+			});
+		}
 	}
 	
 	@Override
@@ -729,6 +739,11 @@ public final class Player extends EntityNode {
 	@Override
 	public String toString() {
 		return getCredentials().getUsername() == null ? session.toString() : "PLAYER[username= " + getCredentials().getUsername() + ", host= " + session.getHost() + ", rights= " + rights + "]";
+	}
+	
+	@Override
+	public boolean active() {
+		return getState() == NodeState.ACTIVE;
 	}
 	
 	@Override
@@ -980,7 +995,6 @@ public final class Player extends EntityNode {
 	 * Sends wilderness and multi-combat interfaces as needed.
 	 */
 	public void sendInterfaces() {
-		System.out.println(Location.inDuelArena(this));
 		if(Location.inDuelArena(this)) {
 			if(!duelingContext) {
 				out(new SendContextMenu(2, false, "Challenge"));
@@ -2037,6 +2051,15 @@ public final class Player extends EntityNode {
 			cachedUpdateBlock.retain();
 		}
 		this.cachedUpdateBlock = cachedUpdateBlock;
+	}
+	
+	/**
+	 * Checks if this player is to be removed from the world.
+	 */
+	public void checkRemoval() {
+		//if(session != null && !session.isActive()) {
+		//	World.get().queueLogout(this, false);
+		//}
 	}
 	
 	/**

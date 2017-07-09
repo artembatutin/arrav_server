@@ -66,12 +66,9 @@ public final class RFDMinigame extends SequencedMinigame {
 				RFDData data = ((RFDMinigame) player.getMinigame().get()).wave;
 				this.currentNpc = Optional.of(new DefaultNpc(data.getNpcId(), new Position(1900, 5354, 2)));
 				Npc npc = this.currentNpc.get();
-				
 				World.getInstanceManager().isolate(npc, instance);
 				World.get().getNpcs().add(npc);
-				
 				npc.getCombatBuilder().attack(player);
-				
 				timer = 0;
 			}
 		}

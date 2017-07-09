@@ -29,7 +29,7 @@ public final class BotSession extends GameSession {
 	
 	@Override
 	public void onDispose() {
-		World.get().queueLogout(player);
+		World.get().queueLogout(player, true);
 	}
 	
 	@Override

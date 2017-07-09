@@ -18,4 +18,5 @@ public enum NodeState {
 	 * An {@link Node} has just been unregistered.
 	 */
 	INACTIVE
+	
 }

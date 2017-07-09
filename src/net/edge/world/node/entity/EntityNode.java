@@ -208,7 +208,10 @@ public abstract class EntityNode extends Node {
 	 * The flag determining if this entity is dead.
 	 */
 	private boolean dead;
-
+	
+	/**
+	 * The pathfinder used by this {@link EntityNode}.
+	 */
 	private final AStarPathFinder aStarPathFinder;
 
 	/**
@@ -272,6 +275,12 @@ public abstract class EntityNode extends Node {
 			return World.get().getNpcs().get(slot - 1).toString();
 		throw new IllegalStateException("Invalid entity node type!");
 	}
+	
+	/**
+	 * Condition if this {@link EntityNode} is active in the world.
+	 * @return {@code true} if it is, false otherwise.
+	 */
+	public abstract boolean active();
 	
 	/**
 	 * Attempts to move this entity node to the {@code destination}.
@@ -379,8 +388,6 @@ public abstract class EntityNode extends Node {
 	 * Resets the prepares this entity for the next update sequence.
 	 */
 	public final void reset() {
-		if(isPlayer())
-		System.out.println("RESET: " + this);
 		primaryDirection = Direction.NONE;
 		secondaryDirection = Direction.NONE;
 		needsRegionUpdate = false;

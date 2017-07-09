@@ -10,9 +10,16 @@ import net.edge.world.node.entity.player.Player;
 
 public final class SendLogout implements OutgoingPacket {
 	
+	private final boolean queue;
+	
+	public SendLogout(boolean queue) {
+		this.queue = queue;
+	}
+	
 	@Override
 	public void write(Player player) {
-		World.get().queueLogout(player);
+		if(queue)
+			World.get().queueLogout(player, true);
 		if(player.getSession().getChannel().isActive()) {
 			GameBuffer msg = player.getSession().getStream();
 			msg.message(109, MessageType.VARIABLE_SHORT);

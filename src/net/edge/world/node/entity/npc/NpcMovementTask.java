@@ -44,17 +44,13 @@ public class NpcMovementTask extends Task {
 		int count = RandomUtils.inclusive(npcs.size());
 		
 		for(int iterator = 0; iterator < npcs.size(); iterator++) {
-			
 			Npc npc = npcs.poll();
-			
 			if(npc == null)
 				break;
-			
-			if(!npc.isActive())
+			if(!npc.active())
 				break;
 			
 			NpcMovementCoordinator move = npc.getMovementCoordinator();
-			
 			if(!move.isCoordinate() || npc.getCombatBuilder().isAttacking() || npc.getCombatBuilder().isBeingAttacked()) {
 				return;
 			}

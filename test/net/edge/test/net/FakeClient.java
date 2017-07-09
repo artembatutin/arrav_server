@@ -61,27 +61,24 @@ public final class FakeClient {
                             rsa.writeInt(random.nextInt());
 
                             rsa.writeInt(0); // uid
-
                             PacketHelper.writeCString(rsa, "Bot" + count.get());
                             PacketHelper.writeCString(rsa, "123456");
 
                             byte[] rsaBytes = new byte[rsa.readableBytes()];
                             rsa.readBytes(rsaBytes);
-
-                            byte[] rsaData = new BigInteger(rsaBytes).modPow(RSA_EXPONENT, RSA_MODULUS).toByteArray();
-
+    
                             ByteBuf payload = ctx.alloc().buffer();
 
                             payload.writeByte(255); // magic value
-                            payload.writeShort(24); // revision
+                            payload.writeShort(26); // revision
                             payload.writeBoolean(false); // low mem
 
                             for (int i = 0; i < 9; i++) {
                                 payload.writeInt(0);
                             }
 
-                            payload.writeByte(rsaData.length); // rsa block size
-                            payload.writeBytes(rsaData);
+                            payload.writeByte(rsaBytes.length); // rsa block size
+                            payload.writeBytes(rsaBytes);
 
                             ByteBuf out = ctx.alloc().buffer();
                             out.writeByte(16); // connection type
@@ -108,7 +105,6 @@ public final class FakeClient {
             buffer.writeByte(14);
             buffer.writeByte(0);
             f.writeAndFlush(buffer, f.voidPromise());
-            Thread.sleep(2000);
         }
     }
 }

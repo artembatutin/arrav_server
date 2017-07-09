@@ -7,8 +7,8 @@ import java.net.InetSocketAddress;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * An abstraction model that determines how I/O operations are handled for a {@link Player}.
- * @author lare96 <http://github.org/lare96>
+ * An abstraction model that determines how I/O operations are handled.
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class Session {
 	
@@ -21,6 +21,11 @@ public class Session {
 	 * The address that the connection was received from.
 	 */
 	private final String hostAddress;
+	
+	/**
+	 * Condition if this session is active.
+	 */
+	private boolean active = true;
 	
 	/**
 	 * Creates a new {@link Session}.
@@ -38,8 +43,6 @@ public class Session {
 	 * Disposes of this {@code Session} by closing the {@link Channel} and executing the {@code onDispose()} listener.
 	 */
 	public void dispose() {
-		Channel channel = getChannel();
-		checkState(!channel.isActive(), "call getChannel().close() instead!");
 		onDispose();
 	}
 	
@@ -70,5 +73,20 @@ public class Session {
 	 */
 	public final String getHost() {
 		return hostAddress;
+	}
+	
+	/**
+	 * @return Active connection condition.
+	 */
+	public boolean isActive() {
+		return active;
+	}
+	
+	/**
+	 * Setting the connection condition.
+	 * @param active flag.
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

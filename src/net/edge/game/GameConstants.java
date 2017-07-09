@@ -15,7 +15,7 @@ public final class GameConstants {
 	/**
 	 * The public client build number for the login authentication.
 	 */
-	public static final int CLIENT_BUILD = 24;
+	public static final int CLIENT_BUILD = 26;
 	
 	/**
 	 * The experience mltiplier for the game.
@@ -49,7 +49,7 @@ public final class GameConstants {
 	 * The maximum amount of players that can be logged in on a single game
 	 * sequence.
 	 */
-	public static final int LOGOUT_THRESHOLD = 50;
+	public static final int LOGOUT_THRESHOLD = 20;
 	
 	/**
 	 * The absolute distance that players must be within to be targeted by

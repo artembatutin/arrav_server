@@ -17,6 +17,7 @@ import net.edge.locale.InstanceManager;
 import net.edge.locale.area.AreaManager;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
+import net.edge.net.packet.out.SendLogout;
 import net.edge.net.packet.out.SendYell;
 import net.edge.task.Task;
 import net.edge.task.TaskManager;
@@ -161,25 +162,127 @@ public final class World {
 	 * The method that executes the update sequence for all in game characters every cycle.
 	 */
 	public void pulse() throws InterruptedException {
+		System.out.println();System.out.println();
 		final long start = System.currentTimeMillis();
 		synchronized(this) {
 			
+			long time = System.currentTimeMillis();
 			if(!logins.isEmpty()) {
 				for(int i = 0; i < GameConstants.LOGIN_THRESHOLD; i++) {
 					Player player = logins.poll();
 					if(player == null) {
 						break;
 					}
-					boolean added = World.get().getPlayers().add(player);
-					if(added) {
-						World.get().getPlayerByNames().put(player.getCredentials().getUsernameHash(), player);
+					//if(player.getSession() != null && !player.getSession().isActive()) {
+					//	queueLogout(player, true);
+					//	continue;
+					//}
+					if(players.add(player)) {
+						playerByNames.put(player.getCredentials().getUsernameHash(), player);
 					} else if(player.isHuman()) {
 						player.getSession().getChannel().close();
 					}
 				}
 			}
+			System.out.println("[LOGINS]: " + (System.currentTimeMillis() - time));
+			
+			// Handle queued logouts.
+			time = System.currentTimeMillis();
+			System.out.println("[LOGOUT START]");
+			if (!logouts.isEmpty()) {
+				for (int i = 0; i < GameConstants.LOGOUT_THRESHOLD; i++) {
+					Player player = logouts.poll();
+					if(player == null) {
+						continue;
+					}
+					if (!logout(player)) {
+						logouts.offer(player);
+					}
+				}
+			}
+			System.out.println("[LOGOUTS]: " + (System.currentTimeMillis() - time));
+			
+			//task ticks
+			time = System.currentTimeMillis();
+			taskManager.sequence();
+			System.out.println("[TASKS]: " + (System.currentTimeMillis() - time));
+			
+			// Pre synchronization
+			time = System.currentTimeMillis();
+			for(Player player : players) {
+				try {
+					if(player != null && player.active()) {
+						player.update();
+					}
+				} catch(Exception e) {
+					queueLogout(player, false);
+					logger.log(Level.WARNING, "Couldn't pre sync player " + player, e);
+				}
+			}
+			System.out.println("[PRE-PLAYER]: " + (System.currentTimeMillis() - time));
+			time = System.currentTimeMillis();
+			for(Npc npc : npcs) {
+				try {
+					if(npc != null && npc.active()) {
+						npc.update();
+						npc.getMovementQueue().sequence();
+					}
+				} catch(Exception e) {
+					logger.log(Level.WARNING, "Couldn't pre sync npc " + npc, e);
+				}
+			}
+			System.out.println("[PRE-NPC]: " + (System.currentTimeMillis() - time));
+			
+			int count = 0;
+			for(Player player : players) {
+				if(player == null)
+					continue;
+				count++;
+			}
+			System.out.println("counted: " + count);
+			
+			// Synchronization
+			time = System.currentTimeMillis();
+			int size = players.size();
+			System.out.println("[UPDATE-START] : " + size);
+			CountDownLatch latch = new CountDownLatch(size);
+			for(Player player : players) {
+				if(player == null) {
+					continue;
+				}
+				--size;
+				System.out.println("[REGISTERED UPDATE TASK] : " + --size + " - " + player);
+				synchronizer.submit(new UpdateTask(player, latch));
+			}
+			latch.await();
+			System.out.println("[UPDATE-" + size + "]: TIME:" + (System.currentTimeMillis() - time));
+			
+			// Post synchronization
+			time = System.currentTimeMillis();
+			for(Player player : players) {
+				if(player == null)
+					continue;
+				if(player.isHuman()) {
+					player.getSession().flushQueue();
+				}
+				player.reset();
+				player.setCachedUpdateBlock(null);
+				player.checkRemoval();
+			}
+			System.out.println("[POST-PLAYER]: " + (System.currentTimeMillis() - time));
+			time = System.currentTimeMillis();
+			for(Npc npc : npcs) {
+				try {
+					if(npc != null)
+						npc.reset();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			System.out.println("[POST-NPC]: " + (System.currentTimeMillis() - time));
 			
 			// Region tick
+			time = System.currentTimeMillis();
 			regionalTick++;
 			if(regionalTick == 10) {
 				Region[] regions = World.getRegions().getRegions();
@@ -190,76 +293,7 @@ public final class World {
 				}
 				regionalTick = 0;
 			}
-			
-			if(!logouts.isEmpty()) {
-				for(int i = 0; i < GameConstants.LOGOUT_THRESHOLD; i++) {
-					Player quittingPlayer = logouts.poll();
-					if(quittingPlayer == null) {
-						break;
-					}
-					if(!logout(quittingPlayer)) {
-						logouts.offer(quittingPlayer);
-					}
-				}
-			}
-			
-			taskManager.sequence();
-			
-			// Pre synchronization
-			for (Player player : players) {
-				try {
-					player.update();
-				} catch(Exception e) {
-					queueLogout(player);
-					logger.log(Level.WARNING, "Couldn't pre sync player " + player.toString(), e);
-				}
-			}
-			
-			for (Npc npc : npcs) {
-				try {
-					if(npc.isActive()) {
-						npc.update();
-						npc.getMovementQueue().sequence();
-					}
-				} catch(Exception e) {
-					logger.log(Level.WARNING, "Couldn't pre sync npc " + npc.toString(), e);
-				}
-			}
-			
-			// Synchronization
-			CountDownLatch latch = new CountDownLatch(players.size());
-			for (Player player : players) {
-				synchronizer.submit(() -> {
-					try {
-						PlayerUpdater.write(player);
-						NpcUpdater.write(player);
-						player.getSession().pollOutgoingMessages();
-					} catch(Exception e) {
-						queueLogout(player);
-						logger.log(Level.WARNING, "Couldn't sync player " + player.toString(), e);
-					} finally {
-						latch.countDown();
-					}
-				});
-			}
-			latch.await();
-			
-			// Post synchronization
-			for (Player player : players) {
-				if(player.isHuman()) {
-					player.getSession().flushQueue();
-				}
-				player.reset();
-				player.setCachedUpdateBlock(null);
-			}
-			
-			for (Npc npc : npcs) {
-				try {
-					npc.reset();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+			System.out.println("[REG]: " + (System.currentTimeMillis() - time));
 		}
 		
 		millis = System.currentTimeMillis() - start;
@@ -271,7 +305,7 @@ public final class World {
 	 * @param player the player to log in.
 	 */
 	public void queueLogin(Player player) {
-		if (player.getState() == IDLE && !logins.contains(player)) {
+		if (player.getState() == IDLE) {
 			logins.offer(player);
 		}
 	}
@@ -280,12 +314,13 @@ public final class World {
 	 * Queues {@code player} to be logged out on the next server sequence.
 	 * @param player the player to log out.
 	 */
-	public void queueLogout(Player player) {
-		if(player.getState() == NodeState.ACTIVE && !logouts.contains(player)) {
-			if(player.getCombatBuilder().inCombat())
-				player.getLogoutTimer().reset();
-			logouts.add(player);
-		}
+	public void queueLogout(Player player, boolean queued) {
+		if(player.getCombatBuilder().inCombat())
+			player.getLogoutTimer().reset();
+		//player.getSession().setActive(false);
+		logouts.add(player);
+		if(!queued)
+			player.out(new SendLogout(false));
 	}
 	
 	/**
@@ -401,9 +436,7 @@ public final class World {
 		try {
 			// If the player x-logged, don't log the player out. Keep the
 			// player queued until they are out of combat to prevent x-logging.
-			if(player.getLogoutTimer()
-					.elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombatBuilder()
-					.isBeingAttacked() && UpdateCommand.inProgess == 0) {
+			if(player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombatBuilder().isBeingAttacked() && UpdateCommand.inProgess != 2) {
 				return false;
 			}
 			boolean response = players.remove(player);
@@ -417,9 +450,7 @@ public final class World {
 			} else {
 				logger.info(player.toString() + " couldn't be logged out.");
 			}
-			
 			return response;
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -702,6 +733,46 @@ public final class World {
 	 */
 	public static World get() {
 		return singleton;
+	}
+	
+	/**
+	 * A model that applies the update procedure within a synchronization block.
+	 */
+	private final class UpdateTask implements Runnable {
+		
+		/**
+		 * The player.
+		 */
+		private final Player player;
+		
+		private final CountDownLatch latch;
+		
+		/**
+		 * Creates a new {@link UpdateTask}.
+		 *
+		 * @param player The player.
+		 */
+		private UpdateTask(Player player, CountDownLatch latch) {
+			this.player = player;
+			this.latch = latch;
+		}
+		
+		@Override
+		public void run() {
+			synchronized(player) {
+				try {
+					System.out.println("UPDATING: " + player);
+					PlayerUpdater.write(player);
+					NpcUpdater.write(player);
+					player.getSession().pollOutgoingMessages();
+				} catch(Exception e) {
+					queueLogout(player, false);
+					logger.log(Level.WARNING, "Couldn't sync player " + player.toString(), e);
+				} finally {
+					latch.countDown();
+				}
+			}
+		}
 	}
 	
 }

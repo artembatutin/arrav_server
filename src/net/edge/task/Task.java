@@ -43,7 +43,8 @@ public abstract class Task {
 	 * @param delay   The dynamic delay of this {@code Task}.
 	 */
 	public Task(int delay, boolean instant) {
-		checkArgument(delay > 0);
+		if(delay <= 0)
+			delay = 1;
 		this.running = true;
 		this.instant = instant;
 		this.delay = delay;

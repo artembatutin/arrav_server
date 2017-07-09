@@ -9,10 +9,10 @@ import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.IsaacCipher;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
+import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.player.Player;
 
 import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during gameplay.
@@ -48,6 +48,11 @@ public class GameSession extends Session {
 	 * The game stream.
 	 */
 	private final GameBuffer stream;
+	
+	/**
+	 * If something is written on the stream
+	 */
+	private boolean written = false;
 
 	/**
 	 * Creates a new {@link GameSession}.
@@ -65,7 +70,12 @@ public class GameSession extends Session {
 	
 	@Override
 	public void onDispose() {
-		World.get().queueLogout(player);
+		if(player.getState() == NodeState.ACTIVE) {
+			World.get().queueLogout(player, !getChannel().isActive());
+		} else if(written) {
+			stream.release();
+		}
+		outgoing.clear();
 	}
 	
 	@Override
@@ -90,6 +100,7 @@ public class GameSession extends Session {
 	 * Writes the given {@link OutgoingPacket} to the stream.
 	 */
 	public void writeToStream(OutgoingPacket pkt) {
+		written = true;
 		pkt.write(player);
 	}
 	
@@ -97,9 +108,14 @@ public class GameSession extends Session {
 	 * Writes all enqueued packets to the stream.
 	 */
 	public void pollOutgoingMessages() {
-		while (!outgoing.isEmpty()) {
+		int written = 0;
+		while (!outgoing.isEmpty() && written < 200) {
 			OutgoingPacket packet = outgoing.poll();
+			if(packet == null) {
+				break;
+			}
 			writeToStream(packet);
+			written++;
 		}
 	}
 	
@@ -114,6 +130,7 @@ public class GameSession extends Session {
 			channel.eventLoop().execute(() -> {
 				channel.writeAndFlush(stream.retain(), channel.voidPromise());
 				stream.clear();
+				written = false;
 			});
 		}
 	}

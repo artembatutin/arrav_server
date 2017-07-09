@@ -17,7 +17,7 @@ public final class IPBanningCommand implements Command {
 		if(ipban != null && (ipban.getRights().less(Rights.ADMINISTRATOR) || player.getRights().equals(Rights.ADMINISTRATOR)) && ipban != player) {
 			player.message("Successfully IP banned " + ipban.getFormatUsername() + ".");
 			PunishmentHandler.addIPBan(ipban.getSession().getHost(), ipban.getCredentials().getUsername());
-			World.get().queueLogout(ipban);
+			World.get().queueLogout(ipban, false);
 		}
 	}
 	

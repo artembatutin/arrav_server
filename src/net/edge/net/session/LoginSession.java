@@ -13,6 +13,7 @@ import net.edge.net.codec.login.LoginResponseMessage;
 import net.edge.util.TextUtils;
 import net.edge.game.GameConstants;
 import net.edge.world.World;
+import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerCredentials;
 import net.edge.world.node.entity.player.PlayerSerialization;
@@ -22,6 +23,7 @@ import net.edge.world.node.entity.player.PlayerSerialization;
  * @author lare96 <http://github.org/lare96>
  */
 public final class LoginSession extends Session {
+	
 	
 	/**
 	 * Creates a new {@link LoginSession}.
@@ -80,7 +82,6 @@ public final class LoginSession extends Session {
 			final JsonObject reader = serial.getReader();
 			future.addListener(it -> {
 				GameSession session = new GameSession(player, channel, request.getEncryptor(), request.getDecryptor());
-				
 				channel.attr(NetworkConstants.SESSION_KEY).set(session);
 				player.setSession(session);
 				
@@ -88,7 +89,7 @@ public final class LoginSession extends Session {
 				request.getPipeline().replace("login-decoder", "game-decoder", new GameMessageDecoder(request.getDecryptor(), session));
 				
 				new PlayerSerialization(player).deserialize(reader);
-				World.get().queueLogin(player);
+				World.get().run(() -> World.get().queueLogin(player));
 			});
 		}
 	}

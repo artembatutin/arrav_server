@@ -442,7 +442,8 @@ public abstract class Npc extends EntityNode {
 	 * Determines if the npc is active in his region.
 	 * @return {@code true} if the npc is active, {@code false} otherwise.
 	 */
-	public boolean isActive() {
+	@Override
+	public boolean active() {
 		return active;
 	}
 	

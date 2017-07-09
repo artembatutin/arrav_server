@@ -119,21 +119,15 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 			byte[] rsaBytes = new byte[rsaBlockSize - 41];
 			in.readBytes(rsaBytes);
-
-			byte[] rsaData = new BigInteger(rsaBytes).modPow(NetworkConstants.RSA_EXPONENT, NetworkConstants.RSA_MODULUS).toByteArray();
-
+			byte[] rsaData = new BigInteger(rsaBytes).toByteArray();
 			ByteBuf rsaBuffer = Unpooled.wrappedBuffer(rsaData);
-
 			try {
 				int rsaOpcode = rsaBuffer.readUnsignedByte();
-
 				checkState(rsaOpcode == 10, "rsaOpcode != 10");
 
 				long clientHalf = rsaBuffer.readLong();
 				long serverHalf = rsaBuffer.readLong();
-
 				int[] isaacSeed = {(int) (clientHalf >> 32), (int) clientHalf, (int) (serverHalf >> 32), (int) serverHalf};
-
 				IsaacCipher decryptor = new IsaacCipher(isaacSeed);
 				for (int i = 0; i < isaacSeed.length; i++) {
 					isaacSeed[i] += 50;
@@ -141,10 +135,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 				IsaacCipher encryptor = new IsaacCipher(isaacSeed);
 
 				@SuppressWarnings("unused") int uid = rsaBuffer.readInt();
-
 				String username = PacketHelper.getCString(rsaBuffer).toLowerCase().trim();
 				String password = PacketHelper.getCString(rsaBuffer).toLowerCase();
-
 				long usernameHash = TextUtils.nameToHash(username);
 				out.add(new LoginRequest(username, usernameHash, password, build, encryptor, decryptor, ctx.channel().pipeline()));
 			} finally {

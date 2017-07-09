@@ -15,7 +15,7 @@ public final class BanningCommand implements Command {
 		if(ban != null && (ban.getRights().less(Rights.MODERATOR) || player.getRights().equals(Rights.ADMINISTRATOR)) && ban != player) {
 			player.message("Successfully banned " + ban.getFormatUsername() + ".");
 			ban.setBanned(true);
-			World.get().queueLogout(ban);
+			World.get().queueLogout(ban, false);
 		}
 	}
 	

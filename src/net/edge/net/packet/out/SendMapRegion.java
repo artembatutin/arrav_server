@@ -15,7 +15,6 @@ public final class SendMapRegion implements OutgoingPacket {
 	
 	@Override
 	public void write(Player player) {
-		System.out.println("written");
 		GameBuffer msg = player.getSession().getStream();
 		msg.message(73);
 		msg.putShort(position.getRegionX() + 6, ByteTransform.A);

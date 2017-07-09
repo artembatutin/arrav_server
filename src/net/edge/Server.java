@@ -184,7 +184,7 @@ public final class Server {
 		//object/region decoding must be done before parallel.
 		new ObjectDefinitionDecoder(fs).run();
 		new MapDefinitionDecoder(fs).run();
-//		new RegionDecoder(fs).run();
+		//new RegionDecoder(fs).run();
 		World.getFirepitEvent().register();
 		//Item decoding.
 		launch.execute(() -> {

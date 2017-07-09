@@ -134,6 +134,7 @@ public abstract class Node {
 	 */
 	public final void setState(NodeState state) {
 		this.state = requireNonNull(state);
+		System.out.println(this + " state : " + state);
 		switch(state) {
 			case ACTIVE:
 				register();

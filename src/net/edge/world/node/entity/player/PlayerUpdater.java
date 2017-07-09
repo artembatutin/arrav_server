@@ -7,6 +7,7 @@ import net.edge.locale.Position;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.Direction;
+import net.edge.world.node.entity.EntityList;
 import net.edge.world.node.entity.update.UpdateBlockSet;
 import net.edge.world.node.entity.update.UpdateState;
 import net.edge.world.node.region.Region;
@@ -24,7 +25,6 @@ public final class PlayerUpdater {
 	
 	public static void write(Player player) {
 		UpdateBlockSet<Player> blockSet = UpdateBlockSet.PLAYER_BLOCK_SET;
-
 		ByteBufAllocator alloc = player.getSession().alloc();
 		GameBuffer msg = player.getSession().getStream();
 		msg.message(81, MessageType.VARIABLE_SHORT);
@@ -49,10 +49,45 @@ public final class PlayerUpdater {
 			}
 			
 			int added = 0;
-			int x = player.getPosition().getX() & 63;
-			int y = player.getPosition().getY() & 63;
-			int regionId = player.getPosition().getRegion();
-			RegionManager m = World.getRegions();
+			for(Player other : World.get().getPlayers()) {
+				if(other == null)
+					continue;
+				if(added == 15 || player.getLocalPlayers().size() >= 255)
+					break;
+				if(other.same(player))
+					continue;
+				if(other.getState() != NodeState.ACTIVE)
+					continue;
+				if(other.getInstance() != player.getInstance())
+					continue;
+				if(other.isVisible() && other.getPosition().isViewableFrom(player.getPosition())) {
+					if(player.getLocalPlayers().add(other)) {
+						added++;
+						addPlayer(msg, player, other);
+						blockSet.encodeUpdateBlocks(player, other, blockMsg, UpdateState.ADD_LOCAL);
+					}
+				}
+			}
+			
+			if(blockMsg.getBuffer().writerIndex() > 0) {
+				msg.putBits(11, 2047);
+				msg.endBitAccess();
+				msg.putBytes(blockMsg);
+			} else {
+				msg.endBitAccess();
+			}
+		} catch(Exception e) {
+			msg.release();
+			throw e;
+		} finally {
+			blockMsg.release();
+		}
+
+		msg.endVarSize();
+	}
+	
+	/*
+	RegionManager m = World.getRegions();
 			processPlayers(m.getRegion(regionId), player, blockMsg, msg, blockSet, added);
 			if(y > 48) {
 				//top part of region.
@@ -89,22 +124,7 @@ public final class PlayerUpdater {
 						processPlayers(m.getRegion(regionId - 257), player, blockMsg, msg, blockSet, added);
 				}
 			}
-			if(blockMsg.getBuffer().writerIndex() > 0) {
-				msg.putBits(11, 2047);
-				msg.endBitAccess();
-				msg.putBytes(blockMsg);
-			} else {
-				msg.endBitAccess();
-			}
-		} catch(Exception e) {
-			msg.release();
-			throw e;
-		} finally {
-			blockMsg.release();
-		}
-
-		msg.endVarSize();
-	}
+	 */
 	
 	/**
 	 * Processing the addition of player from a region.
@@ -154,13 +174,11 @@ public final class PlayerUpdater {
 	 */
 	private static void handleMovement(Player player, GameBuffer msg) {
 		boolean needsUpdate = !player.getFlags().isEmpty();
-		System.out.println("UPDATED: " + player.isNeedsPlacement() + " - " + player.isTeleporting());
 		if(player.isNeedsPlacement()) {
 			Position position = player.getPosition();
 			msg.putBit(true);
 			msg.putBits(2, 3);
 			msg.putBits(2, position.getZ());
-			System.out.println("TELEPORTTTTT: =  " + player.isTeleporting());
 			msg.putBit(player.isTeleporting());
 			msg.putBit(needsUpdate);
 			msg.putBits(7, position.getLocalY(player.getLastRegion()));

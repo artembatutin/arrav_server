@@ -1,5 +1,6 @@
 package net.edge.world.node.entity;
 
+import it.unimi.dsi.fastutil.ints.IntArrayFIFOQueue;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.database.connection.use.Hiscores;
@@ -33,7 +34,7 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * @param <E> The specific type of {@link EntityNode} being managed within this {@code Iterator}.
 	 * @author Artem Batutin <artembatutin@gmail.com>
 	 */
-	public static final class EntityListIterator<E extends EntityNode> implements Iterator<E> {
+	public final class EntityListIterator<E extends EntityNode> implements Iterator<E> {
 		
 		/**
 		 * The {@link EntityList} this {@link Iterator} is dedicated to.
@@ -41,9 +42,9 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		private final EntityList<E> list;
 		
 		/**
-		 * The current index.
+		 * The cursor.
 		 */
-		private int current;
+		private int cursor;
 		
 		/**
 		 * The last index found.
@@ -59,36 +60,17 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		}
 		
 		public void reset() {
-			current = 0;
+			cursor = 0;
 		}
 		
 		@Override
 		public boolean hasNext() {
-			int index = current;
-			int out = 200;
-			while (index <= list.size()) {
-				E mob = list.entities[index++];
-				if (mob != null) {
-					return true;
-				}
-				if(out == 0)
-					return false;
-				out--;
-			}
-			return false;
+			return size > 0  && cursor <= limit;
 		}
 		
 		@Override
 		public E next() {
-			while (current <= list.size()) {
-				E mob = list.entities[current++];
-				if (mob != null) {
-					last = current;
-					return mob;
-				}
-			}
-			reset();
-			return null;
+			return list.entities[cursor++];
 		}
 		
 		@Override
@@ -102,14 +84,9 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	}
 	
 	/**
-	 * A {@link Queue} of available indices.
+	 * A {@link IntArrayFIFOQueue} of available indices.
 	 */
 	private final Queue<Integer> indices = new PriorityQueue<>();
-	
-	/**
-	 * Instance saved iterator.
-	 */
-	private final EntityListIterator<E> iterator;
 	
 	/**
 	 * The entities contained within this list.
@@ -120,6 +97,11 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	 * The capacity of this repository.
 	 */
 	private final int capacity;
+	
+	/**
+	 * The iterator limit.
+	 */
+	private int limit;
 	
 	/**
 	 * The internal size of this list.
@@ -135,13 +117,11 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		this.capacity = capacity;
 		entities = (E[]) Array.newInstance(EntityNode.class, capacity);
 		IntStream.rangeClosed(0, capacity).boxed().forEachOrdered(indices::offer);
-		iterator = new EntityListIterator<>(this);
 	}
 	
 	@Override
-	public EntityListIterator<E> iterator() {
-		iterator.reset();
-		return iterator;
+	public Iterator<E> iterator() {
+		return new EntityListIterator<>(this);
 	}
 	
 	/**
@@ -213,10 +193,13 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		if (size == capacity())
 			return false;
 		Integer index = indices.poll();
-		if (index == null)
-			return false;
 		if (entities[index] != null)
 			return false;
+		if (index >= limit) {
+			limit++;
+		}
+		
+		System.out.println("ADDED: " + entity);
 		entities[index] = entity;
 		entity.setSlot(index + 1);
 		entity.setState(NodeState.ACTIVE);
@@ -250,13 +233,18 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		int normal = index - 1;
 		if(entity.getSlot() != -1) {
 			indices.offer(normal);
+			System.out.println("REMOVED: " + entity);
 			entities[normal] = null;
 		}
+		if (index >= limit) {
+			limit--;
+		}
+		
 		size--;
 		entity.setState(NodeState.INACTIVE);
+		System.out.println("removed: " + entity.toString() + " size is : " + size);
 		if(entity.isPlayer()) {
 			Player player = entity.toPlayer();
-			player.getSession().getStream().release();
 			player.getSession().getChannel().close();
 			if(player.getRights() != Rights.ADMINISTRATOR)
 				new Hiscores(World.getScore(), player).submit();

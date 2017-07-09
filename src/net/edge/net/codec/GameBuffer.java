@@ -483,4 +483,8 @@ public final class GameBuffer {
     public void clear() {
         buf.clear();
     }
+    
+    public int count() {
+        return buf.refCnt();
+    }
 }
