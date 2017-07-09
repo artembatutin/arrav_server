@@ -64,7 +64,10 @@ public final class ClanMember {
 		member.setMute(true);
 		clan.getMuted().add(member.getPlayer().getCredentials().getUsername());
 		member.sendMessage("You are now muted in the clan chat.");
-		World.getClanManager().update(ClanChatUpdate.MEMBER_REFRESH, index, clan);
+		for(ClanMember m : clan.getMembers()) {
+			String rank = m.isMuted() ? "y" : "n";
+			m.getPlayer().text(50144 + index, rank + m.getRank().toIcon(member.getPlayer(), m.getPlayer()) + m.getPlayer().getFormatUsername());
+		}
 	}
 	
 	/**
@@ -80,7 +83,10 @@ public final class ClanMember {
 		member.setMute(false);
 		member.getClan().getMuted().add(member.getPlayer().getCredentials().getUsername());
 		member.sendMessage("You are now unmuted from the clan chat.");
-		World.getClanManager().update(ClanChatUpdate.MEMBER_REFRESH, index, clan);
+		for(ClanMember m : clan.getMembers()) {
+			String mute = m.isMuted() ? "y" : "n";
+			m.getPlayer().text(50144 + index, mute + m.getRank().toIcon(member.getPlayer(), m.getPlayer()) + m.getPlayer().getFormatUsername());
+		}
 	}
 	
 	/**

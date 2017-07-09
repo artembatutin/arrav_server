@@ -68,8 +68,8 @@ public final class RequestItemDialogue extends Dialogue {
 			dialogue.getPlayer().out(new SendItemModelInterface(307, 200, id));
 			dialogue.getPlayer().chatWidget(306);
 		} else {
-			dialogue.getPlayer().text("You don't have the requested item...", 357);
-			dialogue.getPlayer().text("Click here to continue", 358);
+			dialogue.getPlayer().text(357, "You don't have the requested item...");
+			dialogue.getPlayer().text(358, "Click here to continue");
 			dialogue.getPlayer().chatWidget(356);
 		}
 	}

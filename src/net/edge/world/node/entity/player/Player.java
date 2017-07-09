@@ -1,5 +1,6 @@
 package net.edge.world.node.entity.player;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.Server;
@@ -508,6 +509,11 @@ public final class Player extends EntityNode {
 	private final MinigameContainer minigameContainer = new MinigameContainer();
 	
 	/**
+	 * A map of interfaces texts.
+	 */
+	private final Int2ObjectArrayMap<String> interfaceTexts = new Int2ObjectArrayMap<>();
+	
+	/**
 	 * The array of chat text packed into bytes.
 	 */
 	private byte[] chatText;
@@ -605,7 +611,7 @@ public final class Player extends EntityNode {
 	}
 
 	public void sendDefaultSidebars() {
-		//TabInterface.CLAN_CHAT.sendInterface(this, 50128);
+		TabInterface.CLAN_CHAT.sendInterface(this, 50128);
 		TabInterface.SKILL.sendInterface(this, 3917);
 		TabInterface.QUEST.sendInterface(this, 638);
 		TabInterface.INVENTORY.sendInterface(this, 3213);
@@ -679,18 +685,17 @@ public final class Player extends EntityNode {
 		out(new SendConfig(427, ((Boolean) getAttr().get("accept_aid").get()) ? 0 : 1));
 		out(new SendConfig(108, 0));
 		out(new SendConfig(301, 0));
-		text((int) runEnergy + "%", 149);
+		text(149, (int) runEnergy + "%");
 		out(new SendEnergy());
 		Prayer.VALUES.forEach(c -> out(new SendConfig(c.getConfig(), 0)));
-		//logger.info(this + " has logged in.");
+		logger.info(this + " has logged in.");
 		if(getPetManager().getPet().isPresent()) {
 			Pet.onLogin(this);
 		}
 		MinigameHandler.executeVoid(this, m -> m.onLogin(this));
-		//PlayerPanel.refreshAll(this);
-		
+		PlayerPanel.refreshAll(this);
 		if(!clan.isPresent() && isHuman()) {
-			//World.getClanManager().join(this, "avro");
+			World.getClanManager().join(this, "avro");
 		}
 		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
 			//new IntroductionCutscene(this).prerequisites();
@@ -710,6 +715,9 @@ public final class Player extends EntityNode {
 			World.get().setStaffCount(World.get().getStaffCount() + 1);
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 		}
+		int x = RandomUtils.inclusive(10);
+		int y = RandomUtils.inclusive(10);
+		getMovementQueue().walk(getPosition().move(RandomUtils.nextBoolean() ? x : -x, RandomUtils.nextBoolean() ? -y : y));
 	}
 	
 	@Override
@@ -1017,7 +1025,7 @@ public final class Player extends EntityNode {
 				wildernessInterface = true;
 				WildernessActivity.enter(this);
 			}
-			text("@yel@Level: " + wildernessLevel, 199);
+			text(199, "@yel@Level: " + wildernessLevel);
 		} else if(Location.inFunPvP(this)) {
 			if(!wildernessInterface) {
 				out(new SendWalkable(197));
@@ -1025,7 +1033,7 @@ public final class Player extends EntityNode {
 				wildernessInterface = true;
 				WildernessActivity.enter(this);
 			}
-			text("@yel@Fun PvP", 199);
+			text(199, "@yel@Fun PvP");
 		} else if(wildernessInterface) {
 			out(new SendContextMenu(2, false, "null"));
 			out(new SendWalkable(-1));
@@ -1262,14 +1270,13 @@ public final class Player extends EntityNode {
 	 * @param message the text to send.
 	 */
 	public void text(int id, String message) {
-		out(new SendText(id, message));
-	}
-	
-	/**
-	 * A shorter way of sending a player string on interface.
-	 * @param message the text to send.
-	 */
-	public void text(String message, int id) {
+		if(!interfaceTexts.containsKey(id)) {
+			interfaceTexts.put(id, message);
+		} else {
+			if(interfaceTexts.get(id).equals(message)) {
+				return;
+			}
+		}
 		out(new SendText(id, message));
 	}
 	
@@ -1519,7 +1526,7 @@ public final class Player extends EntityNode {
 	 */
 	public void setRunEnergy(double energy) {
 		this.runEnergy = energy > 100 ? 100 : energy;
-		text((int) runEnergy + "%", 149);
+		text(149, (int) runEnergy + "%");
 	}
 	
 	/**

@@ -216,9 +216,6 @@ public enum PlayerPanel {
 	public static void refreshAll(Player player) {
 		if(!player.isHuman())
 			return;
-		for(int i = 16016; i < 16016 + VALUES.size(); i++) {
-			player.text(i, "");
-		}
 		PlayerPanel.TAB.refresh(player, "@or2@Informative @or1@- @or3@Clickable");
 		PlayerPanel.TOOLS.refresh(player, "@or1@Quickies:");
 		PlayerPanel.COMMUNITY.refresh(player, "@or3@ - Forums");

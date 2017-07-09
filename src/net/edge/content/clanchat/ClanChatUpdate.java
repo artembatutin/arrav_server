@@ -1,8 +1,6 @@
 package net.edge.content.clanchat;
 
 import net.edge.net.packet.out.SendClanBanned;
-import net.edge.net.packet.out.SendClanMember;
-import net.edge.net.packet.out.SendClanMembers;
 import net.edge.net.packet.out.SendClanMessage;
 import net.edge.util.TextUtils;
 import net.edge.world.node.entity.player.Player;
@@ -20,13 +18,13 @@ public enum ClanChatUpdate {
 			ClanChat clan = member.getClan();
 			Player player = member.getPlayer();
 			if(member.getRank().getValue() >= clan.getSettings().getBan().getValue())
-				player.text(clan.getName(), 50306);
-			player.text("Talking in: @or1@" + clan.getName(), 50139);
-			player.text("Owner: " + TextUtils.capitalize(clan.getOwner()), 50140);
-			player.text("Leave Clan", 50135);
-			player.out(new SendClanMembers(clan.getMembers()));
+				player.text(50306, clan.getName());
+			player.text(50139, "Talking in: @or1@" + clan.getName());
+			player.text(50140, "Owner: " + TextUtils.capitalize(clan.getOwner()));
+			player.text(50135, "Leave Clan");
+			MEMBER_LIST_MODIFICATION.update(member);
 			if(member.getRank().getValue() >= clan.getSettings().getBan().getValue()) {
-				player.text("Manage", 50136);
+				player.text(50136, "Manage");
 			}
 		}
 	},
@@ -44,9 +42,14 @@ public enum ClanChatUpdate {
 	MEMBER_LIST_MODIFICATION() {
 		@Override
 		public void update(ClanChat clan) {
-			clan.getMembers().forEach(m -> {
-				m.getPlayer().out(new SendClanMembers(clan.getMembers()));
-			});
+			for(ClanMember forM : clan.getMembers()) {
+				int i = 0;
+				for(ClanMember m : clan.getMembers()) {
+					String rank = m.isMuted() ? "y" : "n";
+					forM.getPlayer().text(50144 + i, rank + m.getRank().toIcon(forM.getPlayer(), m.getPlayer()) + m.getPlayer().getFormatUsername());
+					i++;
+				}
+			}
 		}
 	},
 	BAN_MODIFICATION() {
@@ -82,17 +85,7 @@ public enum ClanChatUpdate {
 			// TODO Auto-generated method stub
 			
 		}
-	},
-	MEMBER_REFRESH() {
-		@Override
-		public void update(int index, ClanChat clan) {
-			clan.getMembers().forEach(m -> m.getPlayer().out(new SendClanMember(index, clan.getMembers().get(index))));
-		}
-	},;
-	
-	public void update(int index, ClanChat clan) {
-	
-	}
+	};
 	
 	public void update(ClanMember member) {
 		

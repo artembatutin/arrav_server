@@ -64,8 +64,6 @@ public final class ClanChat {
 	 * @param player the player to add.
 	 */
 	public boolean add(Player player, ClanChatRank rank) {
-		if(true)
-			return false;
 		ClanMember member = new ClanMember(player, this, rank);
 		if(members.add(member)) {
 			player.setClan(Optional.of(member));

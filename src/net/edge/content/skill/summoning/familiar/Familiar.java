@@ -142,11 +142,11 @@ public abstract class Familiar extends Follower {
 	 */
 	public void setInterface(Player player) {
 		/* We send the summoning points left out of the total summoning points this player has */
-		player.text(Integer.toString(player.getSkills()[Skills.SUMMONING].getLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()), 18045);
+		player.text(18045, Integer.toString(player.getSkills()[Skills.SUMMONING].getLevel()) + "/" + Integer.toString(player.getSkills()[Skills.SUMMONING].getRealLevel()));
 		/* We send the special attack points left out of the total amount */
-		player.text("60/60", 18024);
+		player.text(18024, "60/60");
 		/* We send the familiars name */
-		player.text(this.getDefinition().getName(), 18028);
+		player.text(18028, this.getDefinition().getName());
 		/* Time of our familiar. */
 		player.text(18043, getDuration() + " minutes");
 		/* We set the familiars face */

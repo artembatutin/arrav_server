@@ -7,7 +7,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.packet.out.SendClanBanned;
-import net.edge.net.packet.out.SendClanMembers;
 import net.edge.util.TextUtils;
 import net.edge.util.json.JsonSaver;
 import net.edge.world.node.entity.player.Player;
@@ -27,11 +26,13 @@ public final class ClanManager {
 	private static final Object2ObjectArrayMap<String, ClanChat> GLOBAL_CLANS = new Object2ObjectArrayMap<>();
 	
 	public void clearOnLogin(Player player) {
-		player.text("Talking in: ", 50139);
-		player.text("Owner: ", 50140);
-		player.text("Join Clan", 50135);
-		player.text("Clan Setup", 50136);
-		player.out(new SendClanMembers(null));
+		player.text(50139, "Talking in: ");
+		player.text(50140, "Owner: ");
+		player.text(50135, "Join Clan");
+		player.text(50136, "Clan Setup");
+		for(int i = 50144; i < 50244; i++) {
+			player.text(i, "");
+		}
 		player.out(new SendClanBanned(new ObjectArrayList<>()));
 	}
 	
@@ -70,6 +71,10 @@ public final class ClanManager {
 		}
 		if(!clan.isPresent()) {
 			player.message("This clan doesn't exist.");
+			return;
+		}
+		if(clan.get().getMembers().size() >= 100) {
+			player.message("The clan you trying to join is full.");
 			return;
 		}
 		if(clan.get().getBanned().contains(player.getCredentials().getUsername())) {
@@ -145,10 +150,6 @@ public final class ClanManager {
 				continue;
 			update(update, member);
 		}
-	}
-	
-	public void update(ClanChatUpdate update, int index, ClanChat clan) {
-		update.update(index, clan);
 	}
 	
 	public void update(ClanChatUpdate update, ClanMember member) {

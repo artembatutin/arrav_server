@@ -220,12 +220,12 @@ public final class Pet extends Follower {
 	 * @param pet    the pet that was spawned.
 	 */
 	private static void setInterface(Player player, Pet pet) {
-		player.text(pet.getDefinition().getName(), 19021);
-		player.text((int) pet.progress.getGrowth() + "%", 19030);
+		player.text(19021, pet.getDefinition().getName());
+		player.text(19030, (int) pet.progress.getGrowth() + "%");
 		if(pet.getProgress().getData().getPolicy().isLast())
-			player.text("-", 19032);
+			player.text(19032, "-");
 		else
-			player.text((int) pet.progress.getHunger() + "%", 19032);
+			player.text(19032, (int) pet.progress.getHunger() + "%");
 		player.out(new SendInterfaceNpcModel(19019, pet.getId()));
 		player.out(new SendInterfaceAnimation(19019, Expression.CALM.getExpression()));
 		TabInterface.SUMMONING.sendInterface(player, 19017);

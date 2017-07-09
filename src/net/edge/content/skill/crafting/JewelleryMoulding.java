@@ -111,8 +111,8 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 					player.out(new SendItemOnInterfaceSlot(4233, new Item(-1, 1), i));
 				}
 				
-				player.text(player.getInventory()
-						.contains(GOLD_BAR) ? "" : "You need a gold bar to craft rings.", 4230);
+				player.text(4230, player.getInventory()
+						.contains(GOLD_BAR) ? "" : "You need a gold bar to craft rings.");
 				player.out(new SendItemModelInterface(4229, player.getInventory()
 								.contains(GOLD_BAR) ? 0 : 120, player.getInventory()
 								.contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
@@ -141,8 +141,8 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 					player.out(new SendItemOnInterfaceSlot(4239, new Item(-1, 1), i));
 				}
 				
-				player.text(player.getInventory()
-								.contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.", 4236);
+				player.text(4236, player.getInventory()
+								.contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.");
 				player.out(new SendItemModelInterface(4235, player.getInventory()
 								.contains(GOLD_BAR) ? 0 : 120, player.getInventory()
 								.contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
@@ -170,8 +170,8 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 					player.out(new SendItemOnInterfaceSlot(4245, new Item(-1, 1), i));
 				}
 				
-				player.text(player.getInventory()
-								.contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.", 4242);
+				player.text(4242, player.getInventory()
+								.contains(GOLD_BAR) ? "" : "You need a gold bar to craft necklaces.");
 				player.out(new SendItemModelInterface(4241, player.getInventory()
 								.contains(GOLD_BAR) ? 0 : 120, player.getInventory()
 								.contains(GOLD_BAR) ? -1 : GOLD_BAR.getId()));
