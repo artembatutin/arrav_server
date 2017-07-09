@@ -1,5 +1,6 @@
 package net.edge.world.node.entity.player;
 
+import com.google.gson.JsonObject;
 import net.edge.util.TextUtils;
 
 /**
@@ -35,4 +36,5 @@ public final class PlayerCredentials {
     public void setPassword(String password) {
         this.password = password;
     }
+   
 }

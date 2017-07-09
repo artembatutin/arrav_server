@@ -49,7 +49,7 @@ public final class GameConstants {
 	 * The maximum amount of players that can be logged in on a single game
 	 * sequence.
 	 */
-	public static final int LOGOUT_THRESHOLD = 20;
+	public static final int LOGOUT_THRESHOLD = 30;
 	
 	/**
 	 * The absolute distance that players must be within to be targeted by

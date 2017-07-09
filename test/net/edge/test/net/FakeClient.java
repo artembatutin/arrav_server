@@ -104,7 +104,6 @@ public final class FakeClient {
             buffer.writeByte(14);
             buffer.writeByte(0);
             f.writeAndFlush(buffer, f.voidPromise());
-            Thread.sleep(RandomUtils.inclusive(40, 2000));
         }
     }
 }

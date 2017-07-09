@@ -35,6 +35,7 @@ import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcMovementTask;
 import net.edge.world.node.entity.npc.NpcUpdater;
 import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.PlayerSerialization;
 import net.edge.world.node.entity.player.PlayerUpdater;
 import net.edge.world.node.entity.player.assets.Rights;
 import net.edge.world.node.item.ItemNode;
@@ -290,6 +291,8 @@ public final class World {
 		}
 		
 		millis = System.currentTimeMillis() - start;
+		if(millis > 600)
+			over++;
 		if(millis > 400) {
 			outLimit -= 20;
 			if(outLimit < 40)
@@ -297,8 +300,10 @@ public final class World {
 		} else if(outLimit < 200) {
 			outLimit += 20;
 		}
-		System.out.println("took: " + millis + " - players online: " + players.size() + " parsing packets: " + outLimit);
+		System.out.println("took: " + millis + " - players online: " + players.size() + " parsing packets: " + outLimit + " - went over 600ms " + over + " times");
 	}
+	
+	private int over = 0;
 	
 	/**
 	 * Queues {@code player} to be logged in on the next server sequence.
