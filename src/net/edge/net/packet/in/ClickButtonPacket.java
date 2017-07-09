@@ -317,8 +317,9 @@ public final class ClickButtonPacket implements IncomingPacket {
 				player.out(new SendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0));
 				break;
 			case 231037:
-				player.getAttr().get("insert_item").set(!(player.getAttr().get("insert_item").getBoolean()));
-				player.out(new SendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0));
+				//player.getAttr().get("insert_item").set(!(player.getAttr().get("insert_item").getBoolean()));
+				player.message("Temporary disabled feature.");
+				//player.out(new SendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0));
 				break;
 			case 24017:
 			case 7212:

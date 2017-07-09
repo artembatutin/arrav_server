@@ -209,8 +209,8 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		}
 		size++;
 		//Updating player count.
-		//if(entity.isPlayer())
-		//	PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
+		if(entity.isPlayer())
+			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
 		return true;
 	}
 	
@@ -244,10 +244,10 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 			player.getSession().getChannel().close();
 			if(player.getRights() != Rights.ADMINISTRATOR)
 				new Hiscores(World.getScore(), player).submit();
-			//PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
+			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
 			if(player.getRights().isStaff()) {
 				World.get().setStaffCount(World.get().getStaffCount() - 1);
-				//PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
+				PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 			}
 		}
 		return true;

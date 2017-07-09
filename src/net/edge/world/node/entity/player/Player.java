@@ -698,7 +698,7 @@ public final class Player extends EntityNode {
 			World.getClanManager().join(this, "avro");
 		}
 		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
-			//new IntroductionCutscene(this).prerequisites();
+			new IntroductionCutscene(this).prerequisites();
 		}
 		if(World.getFirepitEvent().getFirepit().isActive()) {
 			this.message("@red@[ANNOUNCEMENT]: Enjoy the double experience event for another " + Utility.convertTime(World.getFirepitEvent().getFirepit().getTime()) + ".");
@@ -715,9 +715,6 @@ public final class Player extends EntityNode {
 			World.get().setStaffCount(World.get().getStaffCount() + 1);
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 		}
-		int x = RandomUtils.inclusive(10);
-		int y = RandomUtils.inclusive(10);
-		getMovementQueue().walk(getPosition().move(RandomUtils.nextBoolean() ? x : -x, RandomUtils.nextBoolean() ? -y : y));
 	}
 	
 	@Override

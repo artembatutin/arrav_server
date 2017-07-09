@@ -72,7 +72,7 @@ public final class AttributeKey<T> {
 		//Banking
 		AttributeKey.forTransient("enter_x_item_tab", -1);
 		AttributeKey.forTransient("enter_x_item_slot", -1);
-		AttributeKey.forTransient("insert_item", false);
+		AttributeKey.forTransient("insert_item", true);
 		AttributeKey.forTransient("withdraw_as_note", false);
 		AttributeKey.forPersistent("shifting_req", false);
 		

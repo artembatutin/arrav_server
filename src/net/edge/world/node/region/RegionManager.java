@@ -90,7 +90,6 @@ public final class RegionManager {
 			}
 			region.dynamicAction(o -> {
 				if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance()) {
-					System.out.println("add " + o);
 					player.out(new SendObject(o));
 				}
 			});
