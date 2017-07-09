@@ -3,7 +3,7 @@ package net.edge.world.node.entity.update;
 import net.edge.world.node.entity.player.Player;
 
 /**
- * An {@link UpdateBlock} implementation specific to {@link Player}s contained within an {@link UpdateBlockSet} and sent.
+ * An {@link UpdateBlock} implementation specific to {@link Player}s contained within an {@link UpdateManager} and sent.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public abstract class PlayerUpdateBlock extends UpdateBlock<Player> {

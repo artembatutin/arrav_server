@@ -456,7 +456,7 @@ public abstract class Npc extends EntityNode {
 		if(!active && World.getNpcMovementTask().getNpcs().contains(this)) {
 			World.getNpcMovementTask().getNpcs().remove(this);
 		} else if(active && movementCoordinator.isCoordinate() && !World.getNpcMovementTask().getNpcs().contains(this)) {
-			World.getNpcMovementTask().getNpcs().offer(this);
+			World.getNpcMovementTask().getNpcs().add(this);
 		}
 	}
 	

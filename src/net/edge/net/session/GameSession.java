@@ -19,6 +19,12 @@ import java.util.Queue;
  * @author lare96 <http://github.org/lare96>
  */
 public class GameSession extends Session {
+	
+	/**
+	 * The cap limit of outgoing packets per session.
+	 */
+	public static int outLimit = 200;
+	
 	/**
 	 * The capacity of the stream.
 	 */
@@ -66,6 +72,7 @@ public class GameSession extends Session {
 		this.encryptor = encryptor;
 		this.decryptor = decryptor;
 		this.stream = new GameBuffer(channel.alloc().buffer(STREAM_CAP), encryptor);
+		written = true;
 	}
 	
 	@Override
@@ -73,6 +80,7 @@ public class GameSession extends Session {
 		if(player.getState() == NodeState.ACTIVE) {
 			World.get().queueLogout(player, !getChannel().isActive());
 		} else if(written) {
+			System.out.println("REEEEEEELLLLEEEEEEEAAAAAAASSSSEEEEEEEEED buf");
 			stream.release();
 		}
 		outgoing.clear();
@@ -109,7 +117,7 @@ public class GameSession extends Session {
 	 */
 	public void pollOutgoingMessages() {
 		int written = 0;
-		while (!outgoing.isEmpty() && written < 200) {
+		while (!outgoing.isEmpty() && written < outLimit) {
 			OutgoingPacket packet = outgoing.poll();
 			if(packet == null) {
 				break;

@@ -29,8 +29,6 @@ public abstract class PathFinder {
 	 * @return {@code true} if any of the Directions lead to a traversable tile, otherwise {@code false}.
 	 */
 	protected boolean traversable(Position current, int size, Direction... directions) {
-		Preconditions.checkArgument(directions != null && directions.length > 0, "Directions array cannot be null.");
-
 		TraversalMap traversalMap = World.getTraversalMap();
 		for(Direction direction : directions) {
 			if(!traversalMap.isTraversable(current, direction, size)) {

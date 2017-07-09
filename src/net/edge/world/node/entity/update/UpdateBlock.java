@@ -8,7 +8,7 @@ import net.edge.world.node.entity.player.Player;
 import java.util.Objects;
 
 /**
- * A single update block contained within an {@link UpdateBlockSet} and sent within a {@link Player} or {@link Npc} update
+ * A single update block contained within an {@link UpdateManager} and sent within a {@link Player} or {@link Npc} update
  * message. Implementations <strong>must be stateless</strong> so instances can be shared concurrently.
  * @author lare96 <http://github.org/lare96>
  */

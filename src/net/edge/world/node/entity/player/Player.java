@@ -682,18 +682,18 @@ public final class Player extends EntityNode {
 		text((int) runEnergy + "%", 149);
 		out(new SendEnergy());
 		Prayer.VALUES.forEach(c -> out(new SendConfig(c.getConfig(), 0)));
-		logger.info(this + " has logged in.");
+		//logger.info(this + " has logged in.");
 		if(getPetManager().getPet().isPresent()) {
 			Pet.onLogin(this);
 		}
 		MinigameHandler.executeVoid(this, m -> m.onLogin(this));
-		PlayerPanel.refreshAll(this);
+		//PlayerPanel.refreshAll(this);
 		
 		if(!clan.isPresent() && isHuman()) {
 			//World.getClanManager().join(this, "avro");
 		}
 		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
-			new IntroductionCutscene(this).prerequisites();
+			//new IntroductionCutscene(this).prerequisites();
 		}
 		if(World.getFirepitEvent().getFirepit().isActive()) {
 			this.message("@red@[ANNOUNCEMENT]: Enjoy the double experience event for another " + Utility.convertTime(World.getFirepitEvent().getFirepit().getTime()) + ".");
@@ -710,16 +710,9 @@ public final class Player extends EntityNode {
 			World.get().setStaffCount(World.get().getStaffCount() + 1);
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 		}
-		if(getFormatUsername().contains("Bot")) {
-			Player p  = this;
-			World.get().submit(new Task(RandomUtils.inclusive(50) + 1) {
-				@Override
-				protected void execute() {
-					World.get().queueLogout(p, false);
-					this.cancel();
-				}
-			});
-		}
+		int x = RandomUtils.inclusive(10);
+		int y = RandomUtils.inclusive(10);
+		getMovementQueue().walk(getPosition().move(RandomUtils.nextBoolean() ? -x : x, RandomUtils.nextBoolean() ? -y : y));
 	}
 	
 	@Override

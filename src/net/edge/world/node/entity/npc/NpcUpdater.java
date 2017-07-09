@@ -7,7 +7,7 @@ import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.Direction;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.update.UpdateBlockSet;
+import net.edge.world.node.entity.update.UpdateManager;
 import net.edge.world.node.entity.update.UpdateState;
 import net.edge.world.node.region.Region;
 import net.edge.world.node.region.RegionManager;
@@ -21,8 +21,6 @@ import java.util.Iterator;
  */
 public final class NpcUpdater {
 	public static void write(Player player) {
-		UpdateBlockSet<Npc> blockSet = UpdateBlockSet.NPC_BLOCK_SET;
-
 		ByteBufAllocator alloc = player.getSession().alloc();
 		GameBuffer msg = player.getSession().getStream();
 		msg.message(65, MessageType.VARIABLE_SHORT);
@@ -35,7 +33,7 @@ public final class NpcUpdater {
 				Npc npc = $it.next();
 				if(npc.getState() == NodeState.ACTIVE && npc.isVisible() && player.getInstance() == npc.getInstance() && npc.getPosition().isViewableFrom(player.getPosition()) && !npc.isNeedsPlacement()) {
 					handleMovement(npc, msg);
-					blockSet.encodeUpdateBlocks(player, npc, blockMsg, UpdateState.UPDATE_LOCAL);
+					UpdateManager.encode(player, npc, blockMsg, UpdateState.UPDATE_LOCAL);
 				} else {
 					msg.putBit(true);
 					msg.putBits(2, 3);
@@ -48,40 +46,40 @@ public final class NpcUpdater {
 			int y = player.getPosition().getY() & 63;
 			int regionId = player.getPosition().getRegion();
 			RegionManager m = World.getRegions();
-			processNpcs(m.getRegion(regionId), player, blockMsg, msg, blockSet, added);
+			processNpcs(m.getRegion(regionId), player, blockMsg, msg, added);
 			if(y > 48) {
 				//top part of region.
 				if(m.exists(regionId + 1))
-					processNpcs(m.getRegion(regionId + 1), player, blockMsg, msg, blockSet, added);
+					processNpcs(m.getRegion(regionId + 1), player, blockMsg, msg, added);
 				if(x > 48) {
 					//top-right of region.
 					if(m.exists(regionId + 256))
-						processNpcs(m.getRegion(regionId + 256), player, blockMsg, msg, blockSet, added);
+						processNpcs(m.getRegion(regionId + 256), player, blockMsg, msg, added);
 					if(m.exists(regionId + 257))
-						processNpcs(m.getRegion(regionId + 257), player, blockMsg, msg, blockSet, added);
+						processNpcs(m.getRegion(regionId + 257), player, blockMsg, msg, added);
 				} else if(x < 16) {
 					//top-left of region.
 					if(m.exists(regionId - 256))
-						processNpcs(m.getRegion(regionId - 256), player, blockMsg, msg, blockSet, added);
+						processNpcs(m.getRegion(regionId - 256), player, blockMsg, msg, added);
 					if(m.exists(regionId - 255))
-						processNpcs(m.getRegion(regionId - 255), player, blockMsg, msg, blockSet, added);
+						processNpcs(m.getRegion(regionId - 255), player, blockMsg, msg, added);
 				}
 			} else if(y < 16) {
 				//bottom part of region.
 				if(m.exists(regionId - 1))
-					processNpcs(m.getRegion(regionId - 1), player, blockMsg, msg, blockSet, added);
+					processNpcs(m.getRegion(regionId - 1), player, blockMsg, msg, added);
 				if(x > 48) {
 					//bottom-right of region.
 					if(m.exists(regionId + 256))
-						processNpcs(m.getRegion(regionId + 256), player, blockMsg, msg, blockSet, added);
+						processNpcs(m.getRegion(regionId + 256), player, blockMsg, msg, added);
 					if(m.exists(regionId + 255))
-						processNpcs(m.getRegion(regionId + 255), player, blockMsg, msg, blockSet, added);
+						processNpcs(m.getRegion(regionId + 255), player, blockMsg, msg, added);
 				} else if(x < 16) {
 					//bottom-left of region.
 					if(m.exists(regionId - 256))
-						processNpcs(m.getRegion(regionId - 256), player, blockMsg, msg, blockSet, added);
+						processNpcs(m.getRegion(regionId - 256), player, blockMsg, msg, added);
 					if(m.exists(regionId - 257))
-						processNpcs(m.getRegion(regionId - 257), player, blockMsg, msg, blockSet, added);
+						processNpcs(m.getRegion(regionId - 257), player, blockMsg, msg, added);
 				}
 			}
 			
@@ -105,7 +103,7 @@ public final class NpcUpdater {
 	/**
 	 * Processing the addition of npc from a region.
 	 */
-	private static void processNpcs(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, UpdateBlockSet<Npc> blockSet, int added) {
+	private static void processNpcs(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, int added) {
 		if(!region.getNpcs().isEmpty()) {
 			for(Npc npc : region.getNpcs()) {
 				if(added == 15 || player.getLocalNpcs().size() >= 255)
@@ -119,7 +117,7 @@ public final class NpcUpdater {
 				if(npc.isVisible() && npc.getPosition().isViewableFrom(player.getPosition())) {
 					if(player.getLocalNpcs().add(npc)) {
 						addNpc(player, npc, msg);
-						blockSet.encodeUpdateBlocks(player, npc, blockMsg, UpdateState.ADD_LOCAL);
+						UpdateManager.encode(player, npc, blockMsg, UpdateState.ADD_LOCAL);
 						added++;
 					}
 				}

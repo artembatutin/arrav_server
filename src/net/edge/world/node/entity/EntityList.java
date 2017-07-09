@@ -199,7 +199,6 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 			limit++;
 		}
 		
-		System.out.println("ADDED: " + entity);
 		entities[index] = entity;
 		entity.setSlot(index + 1);
 		entity.setState(NodeState.ACTIVE);
@@ -211,8 +210,8 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		}
 		size++;
 		//Updating player count.
-		if(entity.isPlayer())
-			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
+		//if(entity.isPlayer())
+		//	PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
 		return true;
 	}
 	
@@ -233,7 +232,6 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		int normal = index - 1;
 		if(entity.getSlot() != -1) {
 			indices.offer(normal);
-			System.out.println("REMOVED: " + entity);
 			entities[normal] = null;
 		}
 		if (index >= limit) {
@@ -242,16 +240,15 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		
 		size--;
 		entity.setState(NodeState.INACTIVE);
-		System.out.println("removed: " + entity.toString() + " size is : " + size);
 		if(entity.isPlayer()) {
 			Player player = entity.toPlayer();
 			player.getSession().getChannel().close();
 			if(player.getRights() != Rights.ADMINISTRATOR)
 				new Hiscores(World.getScore(), player).submit();
-			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
+			//PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
 			if(player.getRights().isStaff()) {
 				World.get().setStaffCount(World.get().getStaffCount() - 1);
-				PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
+				//PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 			}
 		}
 		return true;

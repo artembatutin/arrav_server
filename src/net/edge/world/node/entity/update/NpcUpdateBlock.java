@@ -3,7 +3,7 @@ package net.edge.world.node.entity.update;
 import net.edge.world.node.entity.npc.Npc;
 
 /**
- * An {@link UpdateBlock} implementation specific to {@link Npc}s contained within an {@link UpdateBlockSet} and sent it.
+ * An {@link UpdateBlock} implementation specific to {@link Npc}s contained within an {@link UpdateManager} and sent it.
  * @author lare96 <http://github.org/lare96>
  */
 public abstract class NpcUpdateBlock extends UpdateBlock<Npc> {

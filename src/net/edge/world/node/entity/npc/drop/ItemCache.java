@@ -90,6 +90,11 @@ public enum ItemCache {
 	 * The barrows items that are the main rare items from the barrow brothers
 	 * minigame.
 	 */
-	BARROWS
+	BARROWS,
+	
+	/**
+	 * Caskets items giving coins on clicking.
+	 */
+	CASKETS
 	
 }

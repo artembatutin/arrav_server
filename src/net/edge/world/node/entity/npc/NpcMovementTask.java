@@ -1,5 +1,8 @@
 package net.edge.world.node.entity.npc;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectArraySet;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.locale.Boundary;
@@ -20,14 +23,9 @@ import java.util.Queue;
 public class NpcMovementTask extends Task {
 	
 	/**
-	 * The comparator used to sort the Npcs in the PriorityQueue.
-	 */
-	private static final Comparator<Npc> RANDOM_COMPARATOR = (first, second) -> RandomUtils.inclusive(2) - 1;
-	
-	/**
 	 * The Queue of Npcs.
 	 */
-	private final Queue<Npc> npcs = new PriorityQueue<>(RANDOM_COMPARATOR);
+	private final ObjectList<Npc> npcs = new ObjectArrayList<>();
 	
 	/**
 	 * Creates a new {@link NpcMovementTask}.
@@ -38,30 +36,25 @@ public class NpcMovementTask extends Task {
 	
 	@Override
 	protected void execute() {
-		
-		//System.out.println(npcs.size());
-		
-		int count = RandomUtils.inclusive(npcs.size());
-		
-		for(int iterator = 0; iterator < npcs.size(); iterator++) {
-			Npc npc = npcs.poll();
+		int size = npcs.size();
+		int count = RandomUtils.inclusive(size);
+		for(int iterator = 0; iterator < count; iterator++) {
+			Npc npc = npcs.get(RandomUtils.inclusive(size - 1));
 			if(npc == null)
 				break;
 			if(!npc.active())
 				break;
-			
 			NpcMovementCoordinator move = npc.getMovementCoordinator();
 			if(!move.isCoordinate() || npc.getCombatBuilder().isAttacking() || npc.getCombatBuilder().isBeingAttacked()) {
 				return;
 			}
-			
 			if(npc.getMovementQueue().isMovementDone()) {
 				if(!move.getBoundary().inside(npc.getPosition(), npc.size())) {
 					Path pathHome = npc.getAStarPathFinder().find(npc.getOriginalPosition());
 					if(pathHome != null && pathHome.isPossible())
 						npc.getMovementQueue().walk(pathHome.getMoves());
 				} else {
-					Direction dir = RandomUtils.random(Direction.values());
+					Direction dir = Direction.random();
 					int random_x = npc.toNpc().getPosition().getX() + randomSteps(npc.size());
 					int random_y = npc.toNpc().getPosition().getY() + randomSteps(npc.size());
 					Position generated_random_position = new Position(random_x, random_y);
@@ -70,14 +63,13 @@ public class NpcMovementTask extends Task {
 					boolean traversable = traverse.isTraversable(generated_random_position, boundary, dir, npc.size());
 					if(traversable) {
 						Path pathHome = World.getSimplePathFinder().find(npc, generated_random_position);
-						if(pathHome != null && pathHome.isPossible())
+						if(pathHome.isPossible())
 							npc.getMovementQueue().walk(pathHome.getMoves());
 						else
 							break;
 					}
 				}
 			}
-			npcs.offer(npc);
 		}
 	}
 	
@@ -85,7 +77,7 @@ public class NpcMovementTask extends Task {
 		return RandomUtils.inclusive(0, size);
 	}
 	
-	Queue<Npc> getNpcs() {
+	ObjectList<Npc> getNpcs() {
 		return npcs;
 	}
 }

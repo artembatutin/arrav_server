@@ -1,5 +1,6 @@
 package net.edge.net.codec;
 
+import com.google.common.base.Preconditions;
 import io.netty.buffer.ByteBuf;
 import net.edge.net.packet.PacketHelper;
 
@@ -164,42 +165,41 @@ public final class GameBuffer {
         }
         return this;
     }
-
+    
     /**
-     * Writes the value as a variable amount of bits.
-     * @param amount The amount of bits to write.
-     * @param value  The value of the bits.
-     * @return An instance of this byte message.
-     * @throws IllegalArgumentException If the number of bits is not between {@code 1} and {@code 32} inclusive.
+     * Puts {@code numBits} into the buffer with the value {@code value}.
+     *
+     * @param numBits The number of bits to put into the buffer.
+     * @param value The value.
+     * @throws IllegalArgumentException If the number of bits is not between 1 and 31 inclusive.
      */
-    public GameBuffer putBits(int amount, int value) {
+    public void putBits(int numBits, int value) {
+        Preconditions.checkArgument(numBits >= 1 && numBits <= 32, "Number of bits must be between 1 and 32 inclusive.");
         int bytePos = bitIndex >> 3;
         int bitOffset = 8 - (bitIndex & 7);
-        bitIndex = bitIndex + amount;
+        bitIndex += numBits;
+        
         int requiredSpace = bytePos - buf.writerIndex() + 1;
-        requiredSpace += (amount + 7) / 8;
-        if(buf.writableBytes() < requiredSpace) {
-            buf.capacity(buf.capacity() + requiredSpace);
-        }
-        for(; amount > bitOffset; bitOffset = 8) {
-            byte tmp = buf.getByte(bytePos);
+        requiredSpace += (numBits + 7) / 8;
+        buf.ensureWritable(requiredSpace);
+        
+        for (; numBits > bitOffset; bitOffset = 8) {
+            int tmp = buf.getByte(bytePos);
             tmp &= ~BitConstants.BIT_MASK[bitOffset];
-            tmp |= (value >> (amount - bitOffset)) & BitConstants.BIT_MASK[bitOffset];
+            tmp |= value >> numBits - bitOffset & BitConstants.BIT_MASK[bitOffset];
             buf.setByte(bytePos++, tmp);
-            amount -= bitOffset;
+            numBits -= bitOffset;
         }
-        if(amount == bitOffset) {
-            byte tmp = buf.getByte(bytePos);
+        int tmp = buf.getByte(bytePos);
+        if (numBits == bitOffset) {
             tmp &= ~BitConstants.BIT_MASK[bitOffset];
             tmp |= value & BitConstants.BIT_MASK[bitOffset];
             buf.setByte(bytePos, tmp);
         } else {
-            byte tmp = buf.getByte(bytePos);
-            tmp &= ~(BitConstants.BIT_MASK[amount] << (bitOffset - amount));
-            tmp |= (value & BitConstants.BIT_MASK[amount]) << (bitOffset - amount);
+            tmp &= ~(BitConstants.BIT_MASK[numBits] << bitOffset - numBits);
+            tmp |= (value & BitConstants.BIT_MASK[numBits]) << bitOffset - numBits;
             buf.setByte(bytePos, tmp);
         }
-        return this;
     }
 
     /**

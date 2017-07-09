@@ -94,7 +94,7 @@ public final class AStarPathFinder extends PathFinder {
 			for(Direction direction : Direction.VALUES) {
 				if(direction != Direction.NONE) {
 					Position move = position.move(direction);
-					if(traversable(position, size, direction) && traversable(move, size, Direction.valueOf(direction.getOpposite()).get())) {
+					if(traversable(position, size, direction) && traversable(move, size, Direction.valueOf(direction.getOpposite()))) {
 						Node node = nodes.computeIfAbsent(move, Node::new);
 						compare(active, node, open, sorted, heuristic);
 					}

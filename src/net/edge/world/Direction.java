@@ -3,6 +3,7 @@ package net.edge.world;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.locale.Position;
+import net.edge.util.rand.RandomUtils;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -59,11 +60,6 @@ public enum Direction {
 	NONE(-1, 0, 0, -1);
 	
 	/**
-	 * Caches our enumerated values.
-	 */
-	public static final ImmutableSet<Direction> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Direction.class));
-	
-	/**
 	 * The identification of this direction.
 	 */
 	private final int id;
@@ -87,6 +83,11 @@ public enum Direction {
 	 * Flag if this direction is diagonal.
 	 */
 	private final boolean diagonal;
+	
+	/**
+	 * Caches our enumerated values.
+	 */
+	public static final ImmutableSet<Direction> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Direction.class));
 	
 	/**
 	 * Creates a new {@link Direction}.
@@ -149,8 +150,32 @@ public enum Direction {
 	 * @param id The game object orientation id.
 	 * @return The optional game object orientation.
 	 */
-	public static Optional<Direction> valueOf(int id) {
-		return VALUES.stream().filter(direction -> direction.id == id).findAny();
+	public static Direction valueOf(int id) {
+		if(id == 0)
+			return NORTH_WEST;
+		if(id == 1)
+			return NORTH;
+		if(id == 2)
+			return NORTH_EAST;
+		if(id == 3)
+			return WEST;
+		if(id == 4)
+			return EAST;
+		if(id == 5)
+			return SOUTH_WEST;
+		if(id == 6)
+			return SOUTH;
+		if(id == 7)
+			return SOUTH_EAST;
+		return NONE;
+	}
+	
+	/**
+	 * Gets a random {@link Direction}.
+	 * @return random direction.
+	 */
+	public static Direction random() {
+		return valueOf(RandomUtils.inclusive(0, 7));
 	}
 	
 	/**

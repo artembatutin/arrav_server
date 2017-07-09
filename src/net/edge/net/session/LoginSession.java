@@ -88,8 +88,10 @@ public final class LoginSession extends Session {
 				request.getPipeline().remove("login-encoder");
 				request.getPipeline().replace("login-decoder", "game-decoder", new GameMessageDecoder(request.getDecryptor(), session));
 				
-				new PlayerSerialization(player).deserialize(reader);
-				World.get().run(() -> World.get().queueLogin(player));
+				World.get().run(() -> {
+					new PlayerSerialization(player).deserialize(reader);
+					World.get().run(() -> World.get().queueLogin(player));
+				});
 			});
 		}
 	}
