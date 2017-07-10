@@ -70,7 +70,7 @@ public final class FakeClient {
                             ByteBuf payload = ctx.alloc().buffer();
 
                             payload.writeByte(255); // magic value
-                            payload.writeShort(26); // revision
+                            payload.writeShort(27); // revision
                             payload.writeBoolean(false); // low mem
 
                             for (int i = 0; i < 9; i++) {
@@ -97,7 +97,7 @@ public final class FakeClient {
             }
         });
 
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 20; i++) {
             // Start the client.
             Channel f = b.connect("127.0.0.1", 43594).sync().channel(); //(5)
             ByteBuf buffer = f.alloc().buffer();

@@ -172,17 +172,6 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * As a rule of thumb, {@code stream()} and {@code parallelStream()} should always be used instead unless absolutely
-	 * needed.
-	 */
-	@Override
-	public Spliterator<E> spliterator() {
-		return Spliterators.spliterator(entities, Spliterator.ORDERED | Spliterator.DISTINCT);
-	}
-	
-	/**
 	 * Adds {@code entity} to this list. Will throw an exception if this list is full, or if the entity being added has a state of
 	 * {@code ACTIVE}.
 	 * @param entity The entity to add to this list.
@@ -343,18 +332,4 @@ public class EntityList<E extends EntityNode> implements Iterable<E> {
 		forEach(this::remove);
 	}
 	
-	/**
-	 * @return The {@link Stream} that will traverse over this list. Automatically excludes {@code null} values.
-	 */
-	public Stream<E> stream() {
-		return StreamSupport.stream(spliterator(), false).filter(Objects::nonNull);
-	}
-	
-	/**
-	 * @return The {@link Stream} that will traverse over this list in parallel. Automatically excludes {@code null} values.
-	 */
-	public Stream<E> parallelStream() {
-		Spliterator<E> split = Spliterators.spliterator(entities, spliterator().characteristics() | Spliterator.IMMUTABLE);
-		return StreamSupport.stream(split, true).filter(Objects::nonNull);
-	}
 }

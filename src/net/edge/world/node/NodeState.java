@@ -24,6 +24,6 @@ public enum NodeState {
 	/**
 	 * A specific {@link Player} removal state.
 	 */
-	AWAITING_REMOVAL;
+	AWAITING_REMOVAL
 	
 }

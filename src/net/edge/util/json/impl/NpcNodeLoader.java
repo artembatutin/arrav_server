@@ -28,10 +28,6 @@ public final class NpcNodeLoader extends JsonLoader {
 	public void load(JsonObject reader, Gson builder) {
 		int id = reader.get("id").getAsInt();
 		Position position = Objects.requireNonNull(builder.fromJson(reader.get("position").getAsJsonObject(), Position.class));
-
-		if(World.get().getNpcs().stream().anyMatch(i -> i.getId() == id && i.getOriginalPosition().same(position))) {
-			return;//stop spawning duplicate same npcs on same positions.
-		}
 		Direction dir = reader.get("face") != null ? builder.fromJson(reader.get("face"), Direction.class) : Direction.NONE;
 		boolean coordinate = reader.get("random-walk").getAsBoolean();
 		int radius = 0;

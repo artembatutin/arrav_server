@@ -37,11 +37,11 @@ public final class UpdateManager {
 		if(other.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
 		}
-		boolean cacheBlocks = (state != UpdateState.ADD_LOCAL && state != UpdateState.UPDATE_SELF);
-		if(other.getCachedUpdateBlock() != null && cacheBlocks) {
-			msg.putBytes(other.getCachedUpdateBlock());
-			return;
-		}
+		//boolean cacheBlocks = (state != UpdateState.ADD_LOCAL && state != UpdateState.UPDATE_SELF);
+		//if(other.getCachedUpdateBlock() != null && cacheBlocks) {
+			//msg.putBytes(other.getCachedUpdateBlock());
+			//return;
+		//}
 		GameBuffer encodedBlock = new GameBuffer(other.getSession().alloc().buffer(64));
 		int mask = 0;
 		int size = PLAYER_BLOCKS.length;
@@ -68,7 +68,7 @@ public final class UpdateManager {
 			mask |= 0x40;
 			encodedBlock.putShort(mask, ByteOrder.LITTLE);
 		} else {
-			encodedBlock.put(mask);
+			encodedBlock.put(mask); // can you change pooled buffers to unpooled? yes pls i fucked up doing that
 		}
 		
 		for(int i = 0; i < size; i++) {
@@ -77,9 +77,10 @@ public final class UpdateManager {
 			}
 		}
 		msg.putBytes(encodedBlock);
-		if(cacheBlocks) {
-			other.setCachedUpdateBlock(encodedBlock);
-		}
+		//if(cacheBlocks) {
+			//System.out.println("sending cached");
+			//other.setCachedUpdateBlock(encodedBlock);
+		//}
 		encodedBlock.release();
 	}
 	

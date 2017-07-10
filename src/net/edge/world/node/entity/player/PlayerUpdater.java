@@ -96,8 +96,7 @@ public final class PlayerUpdater {
 				msg.endBitAccess();
 			}
 		} catch(Exception e) {
-			msg.release();
-			throw e;
+			e.printStackTrace();
 		} finally {
 			blockMsg.release();
 		}

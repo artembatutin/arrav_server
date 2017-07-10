@@ -289,7 +289,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 					player.message("You can't log out right now.");
 					break;
 				}
-				player.out(new SendLogout(true));
+				player.out(new SendLogout());
 				break;
 			case 153:
 			case 152:
