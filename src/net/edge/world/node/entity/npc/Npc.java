@@ -184,6 +184,14 @@ public abstract class Npc extends EntityNode {
 	}
 	
 	@Override
+	public void preUpdate() {
+		if(active()) {
+			update();
+			getMovementQueue().sequence();
+		}
+	}
+	
+	@Override
 	public void update() {
 		//No sequencing.
 	}

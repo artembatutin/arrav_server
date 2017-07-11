@@ -175,7 +175,7 @@ public final class Pet extends Follower {
 		pet.task.cancel();
 		TabInterface.SUMMONING.sendInterface(player, -1);
 		player.out(new SendForceTab(TabInterface.INVENTORY));
-		pet.reset();
+		pet.postUpdate();
 	}
 	
 	/**

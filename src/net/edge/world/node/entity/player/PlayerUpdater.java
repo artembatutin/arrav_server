@@ -100,7 +100,6 @@ public final class PlayerUpdater {
 		} finally {
 			blockMsg.release();
 		}
-
 		msg.endVarSize();
 	}
 	

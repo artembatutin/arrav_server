@@ -4,138 +4,79 @@ import net.edge.net.packet.out.SendLogout;
 import net.edge.util.LoggerUtils;
 import net.edge.world.node.entity.EntityList;
 import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcUpdater;
 import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.PlayerUpdater;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Phaser;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static net.edge.world.sync.UpdateType.POST_UPDATE;
+import static net.edge.world.sync.UpdateType.PRE_UPDATE;
+import static net.edge.world.sync.UpdateType.UPDATE;
+
 public class Synchronizer {
 	
-	/**
-	 * Logging issues.
-	 */
-	private Logger logger = LoggerUtils.getLogger(this.getClass());
+	private final Phaser phaser = new Phaser(1);
 	
-	/**
-	 * Executor service for parallel updating.
-	 */
-	private final ExecutorService synchronizer = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+	private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 	
-	public void synchronize(EntityList<Player> players, EntityList<Npc> npcs, int playerSize) {
-		// pre-synchronization
-		//time = System.currentTimeMillis();
+	public void synchronize(EntityList<Player> players, EntityList<Npc> npcs) {
+		//long time = System.currentTimeMillis();
+		phaser.bulkRegister(players.size());
 		for(Player player : players) {
 			if(player == null)
 				continue;
-			try {
-				if(player.active()) {
-					player.update();
-				}
-			} catch(Exception e) {
-				logger.log(Level.WARNING, "Pre sync player " + player, e);
-				player.out(new SendLogout());
-			}
+			executor.submit(new UpdateTask(PRE_UPDATE, player, phaser));
 		}
+		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-PLAYER]: " + (System.currentTimeMillis() - time));
+		
+		
 		//time = System.currentTimeMillis();
+		phaser.bulkRegister(npcs.size());
 		for(Npc npc : npcs) {
 			if(npc == null)
 				continue;
-			try {
-				if(npc.active()) {
-					npc.update();
-					npc.getMovementQueue().sequence();
-				}
-			} catch(Exception e) {
-				logger.log(Level.WARNING, "Pre sync npc " + npc, e);
-				e.printStackTrace();
-			}
+			executor.submit(new UpdateTask(PRE_UPDATE, npc, phaser));
 		}
+		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-NPC]: " + (System.currentTimeMillis() - time));
 		
 		
-		// Synchronization
-		//time = System.currentTimeMillis();
-		CountDownLatch latch = new CountDownLatch(playerSize);
+		long time = System.currentTimeMillis();
+		phaser.bulkRegister(players.size());
 		for(Player player : players) {
 			if(player == null)
 				continue;
-			synchronizer.submit(new SynchronizerTask(player, latch));
+			executor.submit(new UpdateTask(UPDATE, player, phaser));
 		}
-		try {
-			latch.await();
-		} catch(InterruptedException e) {
-			e.printStackTrace();
-		}
+		phaser.arriveAndAwaitAdvance();
+		System.out.println("[SYNC]: " + (System.currentTimeMillis() - time));
 		
-		// Post synchronization
+		
 		//time = System.currentTimeMillis();
+		phaser.bulkRegister(players.size());
 		for(Player player : players) {
 			if(player == null)
 				continue;
-			if(player.isHuman()) {
-				player.getSession().flushQueue();
-			}
-			player.reset();
-			player.setCachedUpdateBlock(null);
-			player.checkRemoval();
+			executor.submit(new UpdateTask(POST_UPDATE, player, phaser));
 		}
+		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[POST-PLAYER]: " + (System.currentTimeMillis() - time));
+		
+		
 		//time = System.currentTimeMillis();
+		phaser.bulkRegister(npcs.size());
 		for(Npc npc : npcs) {
 			if(npc == null)
 				continue;
-			try {
-				npc.reset();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			executor.submit(new UpdateTask(POST_UPDATE, npc, phaser));
 		}
+		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[POST-NPC]: " + (System.currentTimeMillis() - time));
 		
 	}
 	
-	/**
-	 * A model that applies the update procedure within a synchronization block.
-	 */
-	private final class SynchronizerTask implements Runnable {
-		
-		/**
-		 * The player.
-		 */
-		private final Player player;
-		
-		private final CountDownLatch latch;
-		
-		/**
-		 * Creates a new {@link SynchronizerTask}.
-		 *
-		 * @param player The player.
-		 */
-		private SynchronizerTask(Player player, CountDownLatch latch) {
-			this.player = player;
-			this.latch = latch;
-		}
-		
-		@Override
-		public void run() {
-			synchronized(player) {
-				try {
-					PlayerUpdater.write(player);
-					NpcUpdater.write(player);
-					player.getSession().pollOutgoingMessages();
-				} catch(Exception e) {
-					logger.log(Level.WARNING, "Sync player " + player, e);
-					player.out(new SendLogout());
-				} finally {
-					latch.countDown();
-				}
-			}
-		}
-	}
 }

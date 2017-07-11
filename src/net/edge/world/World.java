@@ -163,7 +163,7 @@ public final class World {
 			dequeueLogins();
 			dequeueLogout();
 			taskManager.sequence();
-			sync.synchronize(players, npcs, players.size());
+			sync.synchronize(players, npcs);
 			
 			regionalTick++;
 			if(regionalTick == 10) {
@@ -188,7 +188,7 @@ public final class World {
 			outLimit += 20;
 		}
 		
-		System.out.println("took: " + millis + " - players online: " + players.size() + " parsing packets: " + outLimit + " - went over 600ms " + over + " times");
+		//System.out.println("took: " + millis + " - players online: " + players.size() + " parsing packets: " + outLimit + " - went over 600ms " + over + " times");
 	}
 	
 	private int over = 0;

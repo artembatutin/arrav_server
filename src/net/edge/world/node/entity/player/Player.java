@@ -68,6 +68,7 @@ import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.npc.NpcAggression;
+import net.edge.world.node.entity.npc.NpcUpdater;
 import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.node.entity.player.assets.*;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
@@ -698,7 +699,7 @@ public final class Player extends EntityNode {
 			World.getClanManager().join(this, "avro");
 		}
 		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
-			new IntroductionCutscene(this).prerequisites();
+			//new IntroductionCutscene(this).prerequisites();
 		}
 		if(World.getFirepitEvent().getFirepit().isActive()) {
 			this.message("@red@[ANNOUNCEMENT]: Enjoy the double experience event for another " + Utility.convertTime(World.getFirepitEvent().getFirepit().getTime()) + ".");
@@ -714,6 +715,18 @@ public final class Player extends EntityNode {
 		if(getRights().isStaff()) {
 			World.get().setStaffCount(World.get().getStaffCount() + 1);
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
+		}
+		if(getFormatUsername().contains("Bot")) {
+			int x = RandomUtils.inclusive(20);
+			int y = RandomUtils.inclusive(20);
+			getMovementQueue().walk(getPosition().move(RandomUtils.nextBoolean() ? -x : x, RandomUtils.nextBoolean() ? -y : y));
+			Player p = this;
+			(new Task(RandomUtils.inclusive(5)) {
+				@Override
+				protected void execute() {
+					p.forceChat("yoooo");
+				}
+			}).submit();
 		}
 	}
 	
@@ -767,9 +780,9 @@ public final class Player extends EntityNode {
 	}
 	
 	@Override
-	public void update() {
+	public void preUpdate() {
 		getMovementQueue().sequence();
-		NpcAggression.sequence(this);
+//		NpcAggression.sequence(this);
 		restoreRunEnergy();
 		int deltaX = getPosition().getX() - getLastRegion().getRegionX() * 8;
 		int deltaY = getPosition().getY() - getLastRegion().getRegionY() * 8;
@@ -781,6 +794,27 @@ public final class Player extends EntityNode {
 			write(new SendMapRegion(getLastRegion().copy()));
 			if(getTeleportStage() == -1)
 				setTeleportStage(0);
+		}
+	}
+	
+	@Override
+	public void update() {
+		synchronized(this) {
+			PlayerUpdater.write(this);
+			NpcUpdater.write(this);
+			getSession().pollOutgoingMessages();
+		}
+	}
+	
+	@Override
+	public void postUpdate() {
+		synchronized(this) {
+			if(isHuman()) {
+				getSession().flushQueue();
+			}
+			super.postUpdate();
+			setCachedUpdateBlock(null);
+			checkRemoval();
 		}
 	}
 	
@@ -2041,13 +2075,15 @@ public final class Player extends EntityNode {
 	 */
 	public void setCachedUpdateBlock(GameBuffer cachedUpdateBlock) {
 		/* Release reference to old cached block. */
-		if(this.cachedUpdateBlock != null) {
-			this.cachedUpdateBlock.release();
-		}
+		//if(this.cachedUpdateBlock != null) {
+			//System.out.println("released " + this);
+			//this.cachedUpdateBlock.release();
+		//}
 		/* Retain a reference to new cached block.. */
-		if(cachedUpdateBlock != null) {
-			cachedUpdateBlock.retain();
-		}
+		//if(cachedUpdateBlock != null) {
+		//	System.out.println("retained " + this);
+			//cachedUpdateBlock.retain();
+		//}
 		this.cachedUpdateBlock = cachedUpdateBlock;
 	}
 	

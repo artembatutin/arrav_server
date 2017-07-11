@@ -226,6 +226,19 @@ public abstract class EntityNode extends Node {
 		this.aStarPathFinder = new AStarPathFinder(this, new Manhattan());
 	}
 	
+	public abstract void preUpdate();
+	
+	public abstract void update();
+	
+	public void postUpdate() {
+		primaryDirection = Direction.NONE;
+		secondaryDirection = Direction.NONE;
+		needsRegionUpdate = false;
+		needsPlacement = false;
+		animation = null;
+		flags.clear();
+	}
+	
 	/**
 	 * Sets the value for {@link Node#position}.
 	 * @param position the new value to set.
@@ -382,18 +395,6 @@ public abstract class EntityNode extends Node {
 			return this.getPosition();
 		}
 		return new Position((this.getPosition().getX() + toNpc().getDefinition().getSize() / 2), this.getPosition().getY() + (toNpc().getDefinition().getSize() / 2));
-	}
-	
-	/**
-	 * Resets the prepares this entity for the next update sequence.
-	 */
-	public final void reset() {
-		primaryDirection = Direction.NONE;
-		secondaryDirection = Direction.NONE;
-		needsRegionUpdate = false;
-		needsPlacement = false;
-		animation = null;
-		flags.clear();
 	}
 	
 	/**

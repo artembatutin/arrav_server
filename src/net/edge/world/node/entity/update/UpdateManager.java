@@ -1,5 +1,6 @@
 package net.edge.world.node.entity.update;
 
+import io.netty.buffer.Unpooled;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.ByteOrder;
 import net.edge.world.node.entity.npc.Npc;
@@ -37,12 +38,12 @@ public final class UpdateManager {
 		if(other.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
 		}
-		//boolean cacheBlocks = (state != UpdateState.ADD_LOCAL && state != UpdateState.UPDATE_SELF);
-		//if(other.getCachedUpdateBlock() != null && cacheBlocks) {
-			//msg.putBytes(other.getCachedUpdateBlock());
-			//return;
-		//}
-		GameBuffer encodedBlock = new GameBuffer(other.getSession().alloc().buffer(64));
+		boolean cacheBlocks = (state != UpdateState.ADD_LOCAL && state != UpdateState.UPDATE_SELF);
+		if(other.getCachedUpdateBlock() != null && cacheBlocks) {
+			msg.putBytes(other.getCachedUpdateBlock());
+			return;
+		}
+		GameBuffer encodedBlock = new GameBuffer(Unpooled.buffer(64));
 		int mask = 0;
 		int size = PLAYER_BLOCKS.length;
 		boolean[] flagged = new boolean[size];
@@ -68,7 +69,7 @@ public final class UpdateManager {
 			mask |= 0x40;
 			encodedBlock.putShort(mask, ByteOrder.LITTLE);
 		} else {
-			encodedBlock.put(mask); // can you change pooled buffers to unpooled? yes pls i fucked up doing that
+			encodedBlock.put(mask);
 		}
 		
 		for(int i = 0; i < size; i++) {
@@ -77,11 +78,10 @@ public final class UpdateManager {
 			}
 		}
 		msg.putBytes(encodedBlock);
-		//if(cacheBlocks) {
-			//System.out.println("sending cached");
-			//other.setCachedUpdateBlock(encodedBlock);
-		//}
-		encodedBlock.release();
+		if(cacheBlocks) {
+			other.setCachedUpdateBlock(encodedBlock);
+		}
+		//encodedBlock.release();
 	}
 	
 	

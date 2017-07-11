@@ -113,17 +113,21 @@ public final class GameBuffer {
         buf.writerIndex((bitIndex + 7) >> 3);
         bitIndex = -1;
     }
-
+    
     /**
-     * Writes the bytes from the argued buffer into this buffer. This method does not modify the argued buffer.
-     * @param from The argued buffer that bytes will be written from.
-     * @return An instance of this byte message.
+     * Puts the bytes from the specified buffer into this packet's buffer.
+     *
+     * @param buffer The source {@link ByteBuf}.
      */
-    public GameBuffer putBytes(ByteBuf from) {
-        for(int i = 0; i < from.writerIndex(); i++) {
-            put(from.getByte(i));
+    public void putBytes(ByteBuf buffer) {
+        byte[] bytes = new byte[buffer.readableBytes()];
+        buffer.markReaderIndex();
+        try {
+            buffer.readBytes(bytes);
+        } finally {
+            buffer.resetReaderIndex();
         }
-        return this;
+        putBytes(bytes);
     }
 
     /**
@@ -131,9 +135,8 @@ public final class GameBuffer {
      * @param from the argued buffer that bytes will be written from.
      * @return an instance of this message builder.
      */
-    public GameBuffer putBytes(byte[] from, int size) {
+    public void putBytes(byte[] from, int size) {
         buf.writeBytes(from, 0, size);
-        return this;
     }
 
     /**
@@ -141,8 +144,8 @@ public final class GameBuffer {
      * @param from The argued buffer that bytes will be written from.
      * @return An instance of this byte message.
      */
-    public GameBuffer putBytes(GameBuffer from) {
-        return putBytes(from.getBuffer());
+    public void putBytes(GameBuffer from) {
+        putBytes(from.getBuffer());
     }
 
     /**
@@ -174,7 +177,6 @@ public final class GameBuffer {
      * @throws IllegalArgumentException If the number of bits is not between 1 and 31 inclusive.
      */
     public void putBits(int numBits, int value) {
-        Preconditions.checkArgument(numBits >= 1 && numBits <= 32, "Number of bits must be between 1 and 32 inclusive.");
         int bytePos = bitIndex >> 3;
         int bitOffset = 8 - (bitIndex & 7);
         bitIndex += numBits;
@@ -254,7 +256,7 @@ public final class GameBuffer {
      * @return An instance of this byte message.
      * @throws UnsupportedOperationException If middle or inverse-middle value types are selected.
      */
-    public GameBuffer putShort(int value, ByteTransform type, ByteOrder order) {
+    public void putShort(int value, ByteTransform type, ByteOrder order) {
         switch(order) {
             case BIG:
                 put(value >> 8);
@@ -269,7 +271,6 @@ public final class GameBuffer {
                 put(value >> 8);
                 break;
         }
-        return this;
     }
 
     /**
@@ -277,9 +278,8 @@ public final class GameBuffer {
      * @param value The value to write.
      * @return An instance of this byte message.
      */
-    public GameBuffer putShort(int value) {
+    public void putShort(int value) {
         putShort(value, ByteTransform.NORMAL, ByteOrder.BIG);
-        return this;
     }
 
     /**
@@ -288,9 +288,8 @@ public final class GameBuffer {
      * @param type  The byte transformation type
      * @return An instance of this byte message.
      */
-    public GameBuffer putShort(int value, ByteTransform type) {
+    public void putShort(int value, ByteTransform type) {
         putShort(value, type, ByteOrder.BIG);
-        return this;
     }
 
     /**
@@ -299,9 +298,8 @@ public final class GameBuffer {
      * @param order The byte endianness type.
      * @return An instance of this byte message.
      */
-    public GameBuffer putShort(int value, ByteOrder order) {
+    public void putShort(int value, ByteOrder order) {
         putShort(value, ByteTransform.NORMAL, order);
-        return this;
     }
 
     /**
@@ -311,7 +309,7 @@ public final class GameBuffer {
      * @param order The byte endianness type.
      * @return An instance of this byte message.
      */
-    public GameBuffer putInt(int value, ByteTransform type, ByteOrder order) {
+    public void putInt(int value, ByteTransform type, ByteOrder order) {
         switch(order) {
             case BIG:
                 put(value >> 24);
@@ -338,7 +336,6 @@ public final class GameBuffer {
                 put(value >> 24);
                 break;
         }
-        return this;
     }
 
     /**
@@ -346,9 +343,8 @@ public final class GameBuffer {
      * @param value The value to write.
      * @return An instance of this byte message.
      */
-    public GameBuffer putInt(int value) {
+    public void putInt(int value) {
         putInt(value, ByteTransform.NORMAL, ByteOrder.BIG);
-        return this;
     }
 
     /**
@@ -357,9 +353,8 @@ public final class GameBuffer {
      * @param type  The byte transformation type
      * @return An instance of this byte message.
      */
-    public GameBuffer putInt(int value, ByteTransform type) {
+    public void putInt(int value, ByteTransform type) {
         putInt(value, type, ByteOrder.BIG);
-        return this;
     }
 
     /**
@@ -368,9 +363,8 @@ public final class GameBuffer {
      * @param order The byte endianness type.
      * @return An instance of this byte message.
      */
-    public GameBuffer putInt(int value, ByteOrder order) {
+    public void putInt(int value, ByteOrder order) {
         putInt(value, ByteTransform.NORMAL, order);
-        return this;
     }
 
     /**
@@ -381,7 +375,7 @@ public final class GameBuffer {
      * @return An instance of this byte message.
      * @throws UnsupportedOperationException If middle or inverse-middle value types are selected.
      */
-    public GameBuffer putLong(long value, ByteTransform type, ByteOrder order) {
+    public void putLong(long value, ByteTransform type, ByteOrder order) {
         switch(order) {
             case BIG:
                 put((int) (value >> 56));
@@ -408,7 +402,6 @@ public final class GameBuffer {
                 put((int) (value >> 56));
                 break;
         }
-        return this;
     }
 
     /**
@@ -416,9 +409,8 @@ public final class GameBuffer {
      * @param value The value to write.
      * @return An instance of this byte message.
      */
-    public GameBuffer putLong(long value) {
+    public void putLong(long value) {
         putLong(value, ByteTransform.NORMAL, ByteOrder.BIG);
-        return this;
     }
 
     /**
@@ -427,9 +419,8 @@ public final class GameBuffer {
      * @param type  The byte transformation type
      * @return An instance of this byte message.
      */
-    public GameBuffer putLong(long value, ByteTransform type) {
+    public void putLong(long value, ByteTransform type) {
         putLong(value, type, ByteOrder.BIG);
-        return this;
     }
 
     /**
@@ -438,9 +429,8 @@ public final class GameBuffer {
      * @param order The byte endianness type. to write.
      * @return An instance of this byte message.
      */
-    public GameBuffer putLong(long value, ByteOrder order) {
+    public void putLong(long value, ByteOrder order) {
         putLong(value, ByteTransform.NORMAL, order);
-        return this;
     }
 
     /**

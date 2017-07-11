@@ -118,7 +118,7 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 		buf.put(mob.determineCombatLevel() < 3 ? 3 : mob.determineCombatLevel());
 		buf.put(mob.isIronMan() ? 1 : 0);
 		msg.put(buf.getBuffer().writerIndex(), ByteTransform.C);
-		msg.putBytes(buf);
+		msg.putBytes(buf.getBuffer());
 		buf.release();
 		return -1;
 	}

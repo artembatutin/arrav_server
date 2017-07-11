@@ -97,7 +97,7 @@ public final class FakeClient {
             }
         });
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 200; i++) {
             // Start the client.
             Channel f = b.connect("127.0.0.1", 43594).sync().channel(); //(5)
             ByteBuf buffer = f.alloc().buffer();

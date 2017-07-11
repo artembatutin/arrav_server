@@ -20,6 +20,7 @@ public final class SendItemModelInterface implements OutgoingPacket {
 		GameBuffer msg = player.getSession().getStream();
 		msg.message(246);
 		msg.putShort(id, ByteOrder.LITTLE);
-		msg.putShort(zoom).putShort(model);
+		msg.putShort(zoom);
+		msg.putShort(model);
 	}
 }

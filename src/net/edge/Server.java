@@ -123,7 +123,7 @@ public final class Server {
 			initTasks();
 			launch.shutdown();
 			launch.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			
+			World.get().start();
 			World.getInstanceManager().close(0);
 			World.get().submit(World.getNpcMovementTask());
 			World.get().submit(new RestoreStatTask());
@@ -240,7 +240,6 @@ public final class Server {
 		ItemEvent.init();
 		NpcEvent.init();
 		ObjectEvent.init();
-		World.get().start();
 	}
 	
 	public static void loadEvents() {
