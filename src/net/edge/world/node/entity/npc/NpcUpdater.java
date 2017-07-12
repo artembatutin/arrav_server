@@ -2,7 +2,7 @@ package net.edge.world.node.entity.npc;
 
 import io.netty.buffer.ByteBufAllocator;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.Direction;
@@ -23,7 +23,7 @@ public final class NpcUpdater {
 	public static void write(Player player) {
 		ByteBufAllocator alloc = player.getSession().alloc();
 		GameBuffer msg = player.getSession().getStream();
-		msg.message(65, MessageType.VARIABLE_SHORT);
+		msg.message(65, PacketType.VARIABLE_SHORT);
 		GameBuffer blockMsg = new GameBuffer(alloc.buffer(64));
 		try {
 			msg.startBitAccess();

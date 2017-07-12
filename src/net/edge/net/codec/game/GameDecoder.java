@@ -6,8 +6,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import net.edge.net.NetworkConstants;
 import net.edge.net.codec.IncomingMsg;
-import net.edge.net.codec.IsaacCipher;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
+import net.edge.net.codec.crypto.IsaacRandom;
 import net.edge.net.session.GameSession;
 
 import java.util.List;
@@ -19,17 +19,17 @@ import static com.google.common.base.Preconditions.checkState;
  * A {@link ByteToMessageDecoder} implementation that decodes all {@link ByteBuf}s into {@link IncomingMsg}s.
  * @author lare96 <http://github.org/lare96>
  */
-public final class GameMessageDecoder extends ByteToMessageDecoder {
+public final class GameDecoder extends ByteToMessageDecoder {
 	
 	/**
 	 * The asynchronous logger.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(GameMessageDecoder.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(GameDecoder.class.getName());
 	
 	/**
 	 * The ISAAC that will decrypt incoming messages.
 	 */
-	private final IsaacCipher decryptor;
+	private final IsaacRandom decryptor;
 
 	/**
 	 * The game session.
@@ -54,13 +54,13 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 	/**
 	 * The type of the message currently being decoded.
 	 */
-	private MessageType type = MessageType.RAW;
+	private PacketType type = PacketType.RAW;
 	
 	/**
-	 * Creates a new {@link GameMessageDecoder}.
+	 * Creates a new {@link GameDecoder}.
 	 * @param decryptor The decryptor for this decoder.
 	 */
-	public GameMessageDecoder(IsaacCipher decryptor, GameSession session) {
+	public GameDecoder(IsaacRandom decryptor, GameSession session) {
 		this.decryptor = decryptor;
 		this.session = session;
 	}
@@ -91,11 +91,11 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 			size = NetworkConstants.MESSAGE_SIZES[opcode];
 			
 			if(size == -1) {
-				type = MessageType.VARIABLE;
+				type = PacketType.VARIABLE_BYTE;
 			} else if(size == -2) {
-				type = MessageType.VARIABLE_SHORT;
+				type = PacketType.VARIABLE_SHORT;
 			} else {
-				type = MessageType.FIXED;
+				type = PacketType.FIXED;
 			}
 			
 			if(size == 0) {
@@ -141,7 +141,7 @@ public final class GameMessageDecoder extends ByteToMessageDecoder {
 	private void queueMessage(ByteBuf payload, List<Object> out) {
 		checkState(opcode >= 0, "opcode < 0");
 		checkState(size >= 0, "size < 0");
-		checkState(type != MessageType.RAW, "type == MessageType.RAW");
+		checkState(type != PacketType.RAW, "type == PacketType.RAW");
 		try {
 			if(NetworkConstants.MESSAGES[opcode] == null) {
 				LOGGER.info("Unhandled packet " + opcode + " - " + size);

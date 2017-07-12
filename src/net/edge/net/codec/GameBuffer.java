@@ -1,6 +1,7 @@
 package net.edge.net.codec;
 
 import io.netty.buffer.ByteBuf;
+import net.edge.net.codec.crypto.IsaacRandom;
 import net.edge.net.packet.PacketUtils;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -18,7 +19,7 @@ public final class GameBuffer {
     /**
      * Encrypts packet identifiers.
      */
-    private final IsaacCipher encryptor;
+    private final IsaacRandom encryptor;
 
     /**
      * The writer index where the size has been written for the current message being built.
@@ -26,9 +27,9 @@ public final class GameBuffer {
     private int sizeIndex;
 
     /**
-     * The {@link MessageType} of the message currently being built.
+     * The {@link PacketType} of the message currently being built.
      */
-    private MessageType msgType;
+    private PacketType msgType;
 
     /**
      * The current bit position when writing bits.
@@ -54,7 +55,7 @@ public final class GameBuffer {
     /**
      * Creates a new {@link GameBuffer}.
      */
-    public GameBuffer(ByteBuf buf, IsaacCipher encryptor) {
+    public GameBuffer(ByteBuf buf, IsaacRandom encryptor) {
         this.buf = buf;
         this.encryptor = encryptor;
     }
@@ -64,7 +65,7 @@ public final class GameBuffer {
      * @param id The id of the message.
      */
     public void message(int id) {
-        message(id, MessageType.FIXED);
+        message(id, PacketType.FIXED);
     }
 
     /**
@@ -72,16 +73,16 @@ public final class GameBuffer {
      * @param id The id of the message.
      * @param type The type of message to build.
      */
-    public void message(int id, MessageType type) {
-        if (type == MessageType.RAW) {
+    public void message(int id, PacketType type) {
+        if (type == PacketType.RAW) {
             throw new IllegalArgumentException();
         }
         buf.writeByte(id + encryptor.nextInt());
         sizeIndex = buf.writerIndex();
         msgType = type;
-        if (type == MessageType.VARIABLE) {
+        if (type == PacketType.VARIABLE_BYTE) {
             buf.writeByte(0);
-        } else if (type == MessageType.VARIABLE_SHORT) {
+        } else if (type == PacketType.VARIABLE_SHORT) {
             buf.writeShort(0);
         }
     }
@@ -91,9 +92,9 @@ public final class GameBuffer {
      */
     public void endVarSize() {
         int recordedSize = buf.writerIndex() - sizeIndex;
-        if (msgType == MessageType.VARIABLE) {
+        if (msgType == PacketType.VARIABLE_BYTE) {
             buf.setByte(sizeIndex, recordedSize - 1);
-        } else if (msgType == MessageType.VARIABLE_SHORT) {
+        } else if (msgType == PacketType.VARIABLE_SHORT) {
             buf.setShort(sizeIndex, recordedSize - 2);
         }
     }

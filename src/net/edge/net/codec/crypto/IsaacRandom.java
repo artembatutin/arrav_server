@@ -1,4 +1,4 @@
-package net.edge.net.codec;
+package net.edge.net.codec.crypto;
 
 /**
  * <p> An implementation of the <a href="http://www.burtleburtle.net/bob/rand/isaacafa.html">ISAAC</a> psuedorandom number
@@ -17,7 +17,7 @@ package net.edge.net.codec;
  * <p> This class has been changed to be more conformant to Java and javadoc conventions. </p>
  * @author Bob Jenkins
  */
-public final class IsaacCipher {
+public final class IsaacRandom {
 	
 	/**
 	 * The golden ratio.
@@ -73,7 +73,7 @@ public final class IsaacCipher {
 	 * Creates the random number generator with the specified seed.
 	 * @param seed The seed.
 	 */
-	public IsaacCipher(int[] seed) {
+	public IsaacRandom(int[] seed) {
 		int length = Math.min(seed.length, results.length);
 		System.arraycopy(seed, 0, results, 0, length);
 		init();

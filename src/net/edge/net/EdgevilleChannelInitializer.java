@@ -7,6 +7,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import net.edge.net.codec.login.LoginDecoder;
 import net.edge.net.codec.login.LoginEncoder;
+import net.edge.net.session.LoginSession;
 import net.edge.net.session.Session;
 
 /**
@@ -27,7 +28,7 @@ public final class EdgevilleChannelInitializer extends ChannelInitializer<Socket
 	
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
-		ch.attr(NetworkConstants.SESSION_KEY).setIfAbsent(new Session(ch));
+		ch.attr(NetworkConstants.SESSION_KEY).setIfAbsent(new LoginSession(ch));
 		ch.pipeline().addLast("read-timeout", new ReadTimeoutHandler(NetworkConstants.INPUT_TIMEOUT));
 		ch.pipeline().addLast("channel-filter", channelFilter);
 		ch.pipeline().addLast("login-decoder", new LoginDecoder());

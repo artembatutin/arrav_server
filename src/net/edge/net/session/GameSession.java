@@ -6,7 +6,9 @@ import io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscLinkedAtomicQ
 import net.edge.net.NetworkConstants;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.IncomingMsg;
-import net.edge.net.codec.IsaacCipher;
+import net.edge.net.codec.crypto.IsaacRandom;
+import net.edge.net.codec.game.GameDecoder;
+import net.edge.net.codec.game.GameEncoder;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
@@ -41,14 +43,9 @@ public final class GameSession extends Session {
 	private final Player player;
 	
 	/**
-	 * The message encryptor.
-	 */
-	private final IsaacCipher encryptor;
-	
-	/**
 	 * The message decryptor.
 	 */
-	private final IsaacCipher decryptor;
+	private final IsaacRandom decryptor;
 
 	/**
 	 * The game stream.
@@ -61,21 +58,17 @@ public final class GameSession extends Session {
 	 * @param encryptor The message encryptor.
 	 * @param decryptor The message decryptor.
 	 */
-	GameSession(Player player, Channel channel, IsaacCipher encryptor, IsaacCipher decryptor) {
+	GameSession(Player player, Channel channel, IsaacRandom encryptor, IsaacRandom decryptor) {
 		super(channel);
 		this.player = player;
-		this.encryptor = encryptor;
 		this.decryptor = decryptor;
 		this.stream = new GameBuffer(channel.alloc().buffer(STREAM_CAP), encryptor);
+		init();
 	}
 	
-	@Override
-	public void onDispose() {
-		if(player.getState() == NodeState.ACTIVE) {
-			World.get().queueLogout(player);
-		}
-		setActive(false);
-		outgoing.clear();
+	private void init() {
+		getChannel().pipeline().replace("login-encoder", "game-encoder", new GameEncoder(player));
+		getChannel().pipeline().replace("login-decoder", "game-decoder", new GameDecoder(decryptor, this));
 	}
 	
 	@Override
@@ -87,6 +80,20 @@ public final class GameSession extends Session {
 				packet.getBuffer().release();
 			});
 		}
+	}
+	
+	@Override
+	public void terminate() {
+		if(player.getState() == NodeState.ACTIVE) {
+			World.get().queueLogout(player);
+		}
+		setActive(false);
+		outgoing.clear();
+	}
+	
+	@Override
+	public Player getPlayer() {
+		return player;
 	}
 	
 	/**
@@ -108,14 +115,20 @@ public final class GameSession extends Session {
 	 */
 	public void pollOutgoingMessages() {
 		int written = 0;
-		while (!outgoing.isEmpty() && written < outLimit) {
-			OutgoingPacket packet = outgoing.poll();
-			if(packet == null) {
-				break;
+		Channel channel = getChannel();
+		if (!outgoing.isEmpty()) {
+			if (channel.isActive() && channel.isOpen()) {
+				while (channel.isWritable() && written < outLimit) {
+					OutgoingPacket packet = outgoing.poll();
+					if(packet == null) {
+						break;
+					}
+					getChannel().write(packet, getChannel().voidPromise());
+					written++;
+				}
 			}
-			writeToStream(packet);
-			written++;
 		}
+		getChannel().flush();
 	}
 	
 	/**
@@ -131,20 +144,6 @@ public final class GameSession extends Session {
 				stream.clear();
 			});
 		}
-	}
-	
-	/**
-	 * @return The message encryptor.
-	 */
-	public IsaacCipher getEncryptor() {
-		return encryptor;
-	}
-	
-	/**
-	 * @return The message decryptor.
-	 */
-	public IsaacCipher getDecryptor() {
-		return decryptor;
 	}
 
 	/**

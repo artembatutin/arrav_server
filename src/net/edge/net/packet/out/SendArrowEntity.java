@@ -2,6 +2,7 @@ package net.edge.net.packet.out;
 
 import net.edge.locale.Position;
 import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.player.Player;
@@ -22,4 +23,5 @@ public final class SendArrowEntity implements OutgoingPacket {
 		msg.putShort(entity.getSlot());
 		msg.put(0);
 	}
+	
 }

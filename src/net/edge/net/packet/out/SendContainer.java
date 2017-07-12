@@ -3,7 +3,7 @@ package net.edge.net.packet.out;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
@@ -28,7 +28,7 @@ public final class SendContainer implements OutgoingPacket {
 			return;
 		}
 		GameBuffer msg = player.getSession().getStream();
-		msg.message(53, MessageType.VARIABLE_SHORT);
+		msg.message(53, PacketType.VARIABLE_SHORT);
 		msg.putShort(id);
 		if(container.getItems() == null) {
 			msg.putShort(0);

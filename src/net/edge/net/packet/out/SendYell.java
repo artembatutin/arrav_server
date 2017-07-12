@@ -1,7 +1,7 @@
 package net.edge.net.packet.out;
 
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.assets.Rights;
@@ -20,7 +20,7 @@ public final class SendYell implements OutgoingPacket {
 	@Override
 	public void write(Player player) {
 		GameBuffer msg = player.getSession().getStream();
-		msg.message(210, MessageType.VARIABLE);
+		msg.message(210, PacketType.VARIABLE_BYTE);
 		msg.putCString(author);
 		msg.putCString(message);
 		msg.putShort(rank.getProtocolValue());

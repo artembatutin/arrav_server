@@ -38,12 +38,6 @@ public final class NetworkConstants {
 	public static final int MESSAGE_LIMIT = 15;
 	
 	/**
-	 * The resource leak detection level when not running the server in debug
-	 * mode.
-	 */
-	static final Level RESOURCE_DETECTION = Level.DISABLED;
-	
-	/**
 	 * An array of the message opcodes mapped to their respective listeners.
 	 */
 	public static final IncomingPacket[] MESSAGES = new IncomingPacket[256];

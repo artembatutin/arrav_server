@@ -6,7 +6,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.Attribute;
 import net.edge.net.NetworkConstants;
-import net.edge.net.codec.IsaacCipher;
+import net.edge.net.codec.crypto.IsaacRandom;
 import net.edge.net.packet.PacketUtils;
 import net.edge.net.session.LoginSession;
 import net.edge.net.session.Session;
@@ -127,11 +127,11 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 				long clientHalf = rsaBuffer.readLong();
 				long serverHalf = rsaBuffer.readLong();
 				int[] isaacSeed = {(int) (clientHalf >> 32), (int) clientHalf, (int) (serverHalf >> 32), (int) serverHalf};
-				IsaacCipher decryptor = new IsaacCipher(isaacSeed);
+				IsaacRandom decryptor = new IsaacRandom(isaacSeed);
 				for (int i = 0; i < isaacSeed.length; i++) {
 					isaacSeed[i] += 50;
 				}
-				IsaacCipher encryptor = new IsaacCipher(isaacSeed);
+				IsaacRandom encryptor = new IsaacRandom(isaacSeed);
 
 				@SuppressWarnings("unused") int uid = rsaBuffer.readInt();
 				String username = PacketUtils.getCString(rsaBuffer).toLowerCase().trim();

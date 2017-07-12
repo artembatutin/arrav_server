@@ -15,7 +15,7 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * A {@link ChannelInboundHandlerAdapter} implementation that handles upstream messages from Netty.
- * @author lare96 <http://github.com/lare96>
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 @Sharable
 public final class EdgevilleUpstreamHandler extends ChannelInboundHandlerAdapter {
@@ -33,7 +33,7 @@ public final class EdgevilleUpstreamHandler extends ChannelInboundHandlerAdapter
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
 		Session session = getSession(ctx);
-		session.dispose();
+		session.terminate();
 	}
 	
 	@Override

@@ -5,7 +5,7 @@ import net.edge.content.market.MarketItem;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.node.entity.player.Player;
 
@@ -22,7 +22,7 @@ public final class SendShop implements OutgoingPacket {
 	@Override
 	public void write(Player player) {
 		GameBuffer msg = player.getSession().getStream();
-		msg.message(53, MessageType.VARIABLE_SHORT);
+		msg.message(53, PacketType.VARIABLE_SHORT);
 		msg.putShort(id);
 		if(items == null) {
 			msg.putShort(0);

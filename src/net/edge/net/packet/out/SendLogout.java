@@ -1,7 +1,7 @@
 package net.edge.net.packet.out;
 
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
@@ -16,7 +16,7 @@ public final class SendLogout implements OutgoingPacket {
 			World.get().queueLogout(player);
 		if(player.getSession().getChannel().isActive()) {
 			GameBuffer msg = player.getSession().getStream();
-			msg.message(109, MessageType.VARIABLE_SHORT);
+			msg.message(109, PacketType.VARIABLE_SHORT);
 			msg.endVarSize();
 		}
 	}

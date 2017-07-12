@@ -3,7 +3,7 @@ package net.edge.net.packet.out;
 import net.edge.content.skill.construction.Palette;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.node.entity.player.Player;
 
@@ -18,7 +18,7 @@ public final class SendPaletteMap implements OutgoingPacket {
 	@Override
 	public void write(Player player) {
 		GameBuffer msg = player.getSession().getStream();
-		msg.message(241, MessageType.VARIABLE_SHORT);
+		msg.message(241, PacketType.VARIABLE_SHORT);
 		msg.putShort(player.getPosition().getRegionX() + 6, ByteTransform.A);
 		msg.putShort(player.getPosition().getRegionY() + 6);
 		for (int z = 0; z < 4; z++) {

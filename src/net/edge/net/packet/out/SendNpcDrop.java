@@ -1,7 +1,7 @@
 package net.edge.net.packet.out;
 
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.node.entity.npc.NpcDefinition;
 import net.edge.world.node.entity.npc.drop.ItemCache;
@@ -22,7 +22,7 @@ public final class SendNpcDrop implements OutgoingPacket {
 	@Override
 	public void write(Player player) {
 		GameBuffer msg = player.getSession().getStream();
-		msg.message(121, MessageType.VARIABLE_SHORT);
+		msg.message(121, PacketType.VARIABLE_SHORT);
 		msg.putInt(id);
 		if(id != 0) {
 			if(id > NpcDefinition.DEFINITIONS.length)

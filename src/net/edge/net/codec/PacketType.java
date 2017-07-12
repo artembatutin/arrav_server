@@ -4,7 +4,7 @@ package net.edge.net.codec;
  * An enumerated type whose elements represent the possible {@link IncomingMsg} types.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public enum MessageType {
+public enum PacketType {
 	
 	/**
 	 * Represents a non-game packet of data.
@@ -19,7 +19,7 @@ public enum MessageType {
 	/**
 	 * Represents a variable byte length game packet.
 	 */
-	VARIABLE,
+	VARIABLE_BYTE,
 	
 	/**
 	 * Represents a variable short length game packet.

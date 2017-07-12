@@ -22,12 +22,12 @@ public final class IncomingMsg {
 	/**
 	 * The header type of this message.
 	 */
-	private final MessageType type;
+	private final PacketType type;
 
 	/**
 	 * Creates a new {@link IncomingMsg}.
 	 */
-	public IncomingMsg(int opcode, MessageType type, ByteBuf buf) {
+	public IncomingMsg(int opcode, PacketType type, ByteBuf buf) {
 		this.buf = buf;
 		this.opcode = opcode;
 		this.type = type;
@@ -438,7 +438,7 @@ public final class IncomingMsg {
 	/**
 	 * @return The header type of this message.
 	 */
-	public MessageType getType() {
+	public PacketType getType() {
 		return type;
 	}
 }

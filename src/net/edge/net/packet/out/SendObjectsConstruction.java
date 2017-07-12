@@ -2,13 +2,11 @@ package net.edge.net.packet.out;
 
 import net.edge.content.skill.construction.furniture.Furniture;
 import net.edge.content.skill.construction.furniture.HotSpots;
-import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
 
 public final class SendObjectsConstruction implements OutgoingPacket {
 	
@@ -24,7 +22,7 @@ public final class SendObjectsConstruction implements OutgoingPacket {
 		if(panel == null || panel.length == 0)
 			return;
 		GameBuffer msg = player.getSession().getStream();
-		msg.message(130, MessageType.VARIABLE);
+		msg.message(130, PacketType.VARIABLE_BYTE);
 		msg.put(panel.length);
 		for(Furniture furniture : panel) {
 			msg.putShort(furniture.getItemId());

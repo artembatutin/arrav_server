@@ -1,7 +1,6 @@
 package net.edge.net.packet.out;
 
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.node.entity.player.Player;
 

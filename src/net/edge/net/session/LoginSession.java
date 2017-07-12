@@ -4,16 +4,12 @@ import com.google.gson.JsonObject;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
-import net.edge.content.PlayerPanel;
 import net.edge.net.NetworkConstants;
-import net.edge.net.codec.game.GameMessageDecoder;
 import net.edge.net.codec.login.LoginRequest;
 import net.edge.net.codec.login.LoginResponse;
 import net.edge.net.codec.login.LoginResponseMessage;
-import net.edge.util.TextUtils;
 import net.edge.game.GameConstants;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.player.PlayerCredentials;
 import net.edge.world.node.entity.player.PlayerSerialization;
@@ -39,6 +35,16 @@ public final class LoginSession extends Session {
 			LoginRequest request = (LoginRequest) msg;
 			handleRequest(request);
 		}
+	}
+	
+	@Override
+	public void terminate() {
+	
+	}
+	
+	@Override
+	public Player getPlayer() {
+		return null;
 	}
 	
 	/**
@@ -78,20 +84,18 @@ public final class LoginSession extends Session {
 		ChannelFuture future = channel.writeAndFlush(new LoginResponseMessage(response, player.getRights(), player.isIronMan()));
 		if(response != LoginResponse.NORMAL) {
 			future.addListener(ChannelFutureListener.CLOSE);
-		} else {
-			final JsonObject reader = serial.getReader();
-			future.addListener(it -> {
-				GameSession session = new GameSession(player, channel, request.getEncryptor(), request.getDecryptor());
-				channel.attr(NetworkConstants.SESSION_KEY).set(session);
-				player.setSession(session);
-				request.getPipeline().remove("login-encoder");
-				request.getPipeline().replace("login-decoder", "game-decoder", new GameMessageDecoder(request.getDecryptor(), session));
-				World.get().run(() -> {
-					new PlayerSerialization(player).deserialize(reader);
-					World.get().queueLogin(player);
-				});
-			});
+			return;
 		}
+		future.awaitUninterruptibly();
+		
+		final JsonObject reader = serial.getReader();
+		GameSession session = new GameSession(player, channel, request.getEncryptor(), request.getDecryptor());
+		channel.attr(NetworkConstants.SESSION_KEY).set(session);
+		player.setSession(session);
+		World.get().run(() -> {
+			new PlayerSerialization(player).deserialize(reader);
+			World.get().queueLogin(player);
+		});
 	}
 	
 }
