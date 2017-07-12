@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  * @since 5-7-2017.
  */
-public final class PacketHelper {
+public final class PacketUtils {
     /**
      * The C-String terminator value.
      */
@@ -35,7 +35,7 @@ public final class PacketHelper {
     /**
      * Prevents external instantiation.
      */
-    private PacketHelper() {
+    private PacketUtils() {
         // nothing
     }
 }

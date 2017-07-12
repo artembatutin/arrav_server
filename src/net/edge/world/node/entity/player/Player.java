@@ -2084,7 +2084,7 @@ public final class Player extends EntityNode {
 		//	System.out.println("retained " + this);
 			//cachedUpdateBlock.retain();
 		//}
-		this.cachedUpdateBlock = cachedUpdateBlock;
+		//this.cachedUpdateBlock = cachedUpdateBlock;
 	}
 	
 	/**

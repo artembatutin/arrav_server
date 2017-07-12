@@ -10,7 +10,6 @@ import net.edge.content.shootingstar.ShootingStarManager;
 import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.game.GameConstants;
-import net.edge.game.GameExecutor;
 import net.edge.game.GamePulseHandler;
 import net.edge.locale.InstanceManager;
 import net.edge.locale.area.AreaManager;
@@ -69,11 +68,6 @@ public final class World {
 	 * The scheduled executor service.
 	 */
 	private final ScheduledExecutorService pulser = Executors.newSingleThreadScheduledExecutor(ThreadUtil.create("GamePulse"));
-	
-	/**
-	 * The game executor in charge of managing process.
-	 */
-	private final GameExecutor executor = new GameExecutor();
 	
 	/**
 	 * The manager for the queue of game tasks.
@@ -163,7 +157,9 @@ public final class World {
 			dequeueLogins();
 			dequeueLogout();
 			taskManager.sequence();
-			sync.synchronize(players, npcs);
+			sync.preUpdate(players, npcs);
+			sync.update(players);
+			sync.postUpdate(players, npcs);
 			
 			regionalTick++;
 			if(regionalTick == 10) {
@@ -188,7 +184,7 @@ public final class World {
 			outLimit += 20;
 		}
 		
-		//System.out.println("took: " + millis + " - players online: " + players.size() + " parsing packets: " + outLimit + " - went over 600ms " + over + " times");
+		System.out.println("took: " + millis + " - players online: " + players.size() + " parsing packets: " + outLimit + " - went over 600ms " + over + " times");
 	}
 	
 	private int over = 0;
@@ -230,7 +226,7 @@ public final class World {
 	 * Queues {@code player} to be logged out on the next server sequence.
 	 * @param player the player to log out.
 	 */
-	public void queueLogout(Player player, boolean queued) {
+	public void queueLogout(Player player) {
 		if(player.getCombatBuilder().inCombat())
 			player.getLogoutTimer().reset();
 		player.out(new SendLogout());
@@ -384,14 +380,6 @@ public final class World {
 			e.printStackTrace();
 		}
 		return false;
-	}
-	
-	/**
-	 * Gets the game executor which forwards process.
-	 * @return game executor.
-	 */
-	public GameExecutor getExecutor() {
-		return executor;
 	}
 	
 	/**

@@ -233,7 +233,7 @@ public final class Server {
 		launch.execute(PunishmentHandler::parseStarters);
 	}
 	
-	public void prepare() {
+	private void prepare() {
 		CommandDispatcher.load();
 		loadEvents();
 		ButtonEvent.init();

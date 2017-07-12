@@ -13,7 +13,7 @@ public final class SendLogout implements OutgoingPacket {
 	@Override
 	public void write(Player player) {
 		if(player.getState() != NodeState.AWAITING_REMOVAL)
-			World.get().queueLogout(player, true);
+			World.get().queueLogout(player);
 		if(player.getSession().getChannel().isActive()) {
 			GameBuffer msg = player.getSession().getStream();
 			msg.message(109, MessageType.VARIABLE_SHORT);

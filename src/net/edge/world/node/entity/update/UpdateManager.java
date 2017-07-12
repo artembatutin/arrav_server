@@ -40,8 +40,8 @@ public final class UpdateManager {
 		}
 		boolean cacheBlocks = (state != UpdateState.ADD_LOCAL && state != UpdateState.UPDATE_SELF);
 		if(other.getCachedUpdateBlock() != null && cacheBlocks) {
-			msg.putBytes(other.getCachedUpdateBlock());
-			return;
+			//msg.putBytes(other.getCachedUpdateBlock());
+			//return;
 		}
 		GameBuffer encodedBlock = new GameBuffer(Unpooled.buffer(64));
 		int mask = 0;
@@ -79,7 +79,7 @@ public final class UpdateManager {
 		}
 		msg.putBytes(encodedBlock);
 		if(cacheBlocks) {
-			other.setCachedUpdateBlock(encodedBlock);
+		//	other.setCachedUpdateBlock(encodedBlock);
 		}
 		//encodedBlock.release();
 	}

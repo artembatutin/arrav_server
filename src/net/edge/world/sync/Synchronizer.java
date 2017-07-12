@@ -22,7 +22,12 @@ public class Synchronizer {
 	
 	private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 	
-	public void synchronize(EntityList<Player> players, EntityList<Npc> npcs) {
+	/**
+	 * The pre-update of preparing players and npcs.
+	 * @param players players list.
+	 * @param npcs the npcs list.
+	 */
+	public void preUpdate(EntityList<Player> players, EntityList<Npc> npcs) {
 		//long time = System.currentTimeMillis();
 		phaser.bulkRegister(players.size());
 		for(Player player : players) {
@@ -43,8 +48,13 @@ public class Synchronizer {
 		}
 		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-NPC]: " + (System.currentTimeMillis() - time));
-		
-		
+	}
+	
+	/**
+	 * The main tick update for players.
+	 * @param players players list.
+	 */
+	public void update(EntityList<Player> players) {
 		long time = System.currentTimeMillis();
 		phaser.bulkRegister(players.size());
 		for(Player player : players) {
@@ -54,8 +64,14 @@ public class Synchronizer {
 		}
 		phaser.arriveAndAwaitAdvance();
 		System.out.println("[SYNC]: " + (System.currentTimeMillis() - time));
-		
-		
+	}
+	
+	/**
+	 * The post-update process of resetting players and npcs.
+	 * @param players players list.
+	 * @param npcs npcs list.
+	 */
+	public void postUpdate(EntityList<Player> players, EntityList<Npc> npcs) {
 		//time = System.currentTimeMillis();
 		phaser.bulkRegister(players.size());
 		for(Player player : players) {
@@ -76,7 +92,6 @@ public class Synchronizer {
 		}
 		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[POST-NPC]: " + (System.currentTimeMillis() - time));
-		
 	}
 	
 }

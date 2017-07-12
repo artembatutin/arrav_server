@@ -1,8 +1,7 @@
 package net.edge.net.codec;
 
-import com.google.common.base.Preconditions;
 import io.netty.buffer.ByteBuf;
-import net.edge.net.packet.PacketHelper;
+import net.edge.net.packet.PacketUtils;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -153,20 +152,18 @@ public final class GameBuffer {
      * @param from The argued buffer that bytes will be written from.
      * @return An instance of this byte message.
      */
-    public GameBuffer putBytes(byte[] from) {
+    public void putBytes(byte[] from) {
         buf.writeBytes(from, 0, from.length);
-        return this;
     }
 
     /**
      * Writes the bytes from the argued byte array into this buffer, in reverse.
      * @param data The data to write to this buffer.
      */
-    public GameBuffer putBytesReverse(byte[] data) {
+    public void putBytesReverse(byte[] data) {
         for(int i = data.length - 1; i >= 0; i--) {
             put(data[i]);
         }
-        return this;
     }
     
     /**
@@ -209,9 +206,8 @@ public final class GameBuffer {
      * @param flag The flag to write.
      * @return An instance of this byte message.
      */
-    public GameBuffer putBit(boolean flag) {
+    public void putBit(boolean flag) {
         putBits(1, flag ? 1 : 0);
-        return this;
     }
 
     /**
@@ -220,7 +216,7 @@ public final class GameBuffer {
      * @param type  The byte transformation type
      * @return An instance of this byte message.
      */
-    public GameBuffer put(int value, ByteTransform type) {
+    public void put(int value, ByteTransform type) {
         switch(type) {
             case A:
                 value += 128;
@@ -235,7 +231,6 @@ public final class GameBuffer {
                 break;
         }
         buf.writeByte((byte) value);
-        return this;
     }
 
     /**
@@ -243,9 +238,8 @@ public final class GameBuffer {
      * @param value The value to write.
      * @return An instance of this byte message.
      */
-    public GameBuffer put(int value) {
+    public void put(int value) {
         put(value, ByteTransform.NORMAL);
-        return this;
     }
 
     /**
@@ -442,7 +436,7 @@ public final class GameBuffer {
         for(byte value : string.getBytes()) {
             put(value);
         }
-        put(PacketHelper.TERMINATOR_VALUE);
+        put(PacketUtils.TERMINATOR_VALUE);
         return this;
     }
 

@@ -21,11 +21,6 @@ import static java.util.Objects.requireNonNull;
 public final class EdgevilleUpstreamHandler extends ChannelInboundHandlerAdapter {
 	
 	/**
-	 * The asynchronous logger.
-	 */
-	private static final Logger LOGGER = Logger.getLogger(EdgevilleUpstreamHandler.class.getName());
-	
-	/**
 	 * A default access level constructor to discourage external instantiation outside of the {@code io.luna.org} package.
 	 */
 	EdgevilleUpstreamHandler() { }

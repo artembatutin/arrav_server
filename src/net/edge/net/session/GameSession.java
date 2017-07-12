@@ -18,7 +18,7 @@ import java.util.Queue;
  * A {@link Session} implementation that handles networking for a {@link Player} during gameplay.
  * @author lare96 <http://github.org/lare96>
  */
-public class GameSession extends Session {
+public final class GameSession extends Session {
 	
 	/**
 	 * The cap limit of outgoing packets per session.
@@ -72,7 +72,7 @@ public class GameSession extends Session {
 	@Override
 	public void onDispose() {
 		if(player.getState() == NodeState.ACTIVE) {
-			World.get().queueLogout(player, !getChannel().isActive());
+			World.get().queueLogout(player);
 		}
 		setActive(false);
 		outgoing.clear();

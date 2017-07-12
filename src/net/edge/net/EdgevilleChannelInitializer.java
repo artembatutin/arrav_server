@@ -14,6 +14,7 @@ import net.edge.net.session.Session;
  * @author lare96 <http://github.com/lare96>
  */
 public final class EdgevilleChannelInitializer extends ChannelInitializer<SocketChannel> {
+	
 	/**
 	 * Handles upstream messages from Netty.
 	 */
@@ -27,7 +28,6 @@ public final class EdgevilleChannelInitializer extends ChannelInitializer<Socket
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ch.attr(NetworkConstants.SESSION_KEY).setIfAbsent(new Session(ch));
-		
 		ch.pipeline().addLast("read-timeout", new ReadTimeoutHandler(NetworkConstants.INPUT_TIMEOUT));
 		ch.pipeline().addLast("channel-filter", channelFilter);
 		ch.pipeline().addLast("login-decoder", new LoginDecoder());

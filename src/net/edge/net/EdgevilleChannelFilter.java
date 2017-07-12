@@ -53,12 +53,10 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 			response(ctx, LoginResponse.SERVER_STARTING);
 			return false;
 		}
-		
 		if(PunishmentHandler.isIPBanned(address)) {
 			response(ctx, LoginResponse.ACCOUNT_DISABLED);
 			return false;
 		}
-		
 		int limit = NetworkConstants.CONNECTION_AMOUNT;
 		if(connections.count(address) >= limit) { // Reject if more than CONNECTION_LIMIT active connections.
 			response(ctx, LoginResponse.LOGIN_LIMIT_EXCEEDED);
@@ -78,10 +76,8 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 	@Override
 	protected ChannelFuture channelRejected(ChannelHandlerContext ctx, InetSocketAddress remoteAddress) {
 		Channel channel = ctx.channel();
-		
 		LoginResponse response = channel.attr(RESPONSE_KEY).get(); // Retrieve the response message.
 		LoginResponseMessage message = new LoginResponseMessage(response);
-		
 		ByteBuf initialMessage = ctx.alloc().buffer(8).writeLong(0); // Write initial message.
 		channel.write(initialMessage, channel.voidPromise());
 		return channel.writeAndFlush(message).addListener(ChannelFutureListener.CLOSE); // Write response message.
