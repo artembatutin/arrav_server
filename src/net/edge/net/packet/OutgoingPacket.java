@@ -1,5 +1,7 @@
 package net.edge.net.packet;
 
+import io.netty.buffer.ByteBuf;
+import net.edge.net.codec.GameBuffer;
 import net.edge.world.node.entity.player.Player;
 
 /**
@@ -12,5 +14,7 @@ public interface OutgoingPacket {
     
     }
     
-    void write(Player player);
+    ByteBuf write(Player player, GameBuffer msg);
+    
+    int getLength();
 }

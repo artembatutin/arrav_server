@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.locale.Position;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
@@ -24,4 +25,16 @@ public final class SendArrowEntity implements OutgoingPacket {
 		msg.put(0);
 	}
 	
+	@Override
+	public ByteBuf write(Player player, GameBuffer msg) {
+		msg.message(248);
+		msg.put(entity.isNpc() ? 1 : 10);
+		msg.putShort(entity.getSlot());
+		msg.put(0);
+	}
+	
+	@Override
+	public int getLength() {
+		return 4;
+	}
 }

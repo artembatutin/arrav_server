@@ -1,5 +1,6 @@
 package net.edge.net.session;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscLinkedAtomicQueue;
@@ -46,6 +47,11 @@ public final class GameSession extends Session {
 	 * The message decryptor.
 	 */
 	private final IsaacRandom decryptor;
+	
+	/**
+	 * The message encryptor.
+	 */
+	private final IsaacRandom encryptor;
 
 	/**
 	 * The game stream.
@@ -62,12 +68,13 @@ public final class GameSession extends Session {
 		super(channel);
 		this.player = player;
 		this.decryptor = decryptor;
+		this.encryptor = encryptor;
 		this.stream = new GameBuffer(channel.alloc().buffer(STREAM_CAP), encryptor);
 		init();
 	}
 	
 	private void init() {
-		getChannel().pipeline().replace("login-encoder", "game-encoder", new GameEncoder(player));
+		//getChannel().pipeline().replace("login-encoder", "game-encoder", new GameEncoder(player));
 		getChannel().pipeline().replace("login-decoder", "game-decoder", new GameDecoder(decryptor, this));
 	}
 	
@@ -99,15 +106,15 @@ public final class GameSession extends Session {
 	/**
 	 * Enqueues the given {@link OutgoingPacket} for transport.
 	 */
-	public void enqueueForSync(OutgoingPacket pkt) {
+	public void equeue(OutgoingPacket pkt) {
 		outgoing.offer(pkt);
 	}
 	
 	/**
 	 * Writes the given {@link OutgoingPacket} to the stream.
 	 */
-	public void writeToStream(OutgoingPacket pkt) {
-		pkt.write(player);
+	public void write(OutgoingPacket pkt) {
+		//pkt.write(player);
 	}
 	
 	/**
@@ -123,8 +130,12 @@ public final class GameSession extends Session {
 					if(packet == null) {
 						break;
 					}
-					getChannel().write(packet, getChannel().voidPromise());
-					written++;
+					ByteBuf out = packet.write(player, new GameBuffer(alloc(packet.getLength()), encryptor));
+					if(out != null) {
+						getChannel().write(out, getChannel().voidPromise());
+						out.release();
+						written++;
+					}
 				}
 			}
 		}
@@ -149,8 +160,12 @@ public final class GameSession extends Session {
 	/**
 	 * @return The game stream.
 	 */
-	public GameBuffer getStream() {
-		return stream;
+	//public GameBuffer getStream() {
+	//	return stream;
+	//}
+	
+	public ByteBuf alloc(int length) {
+		return getChannel().alloc().buffer(length);
 	}
 	
 	/**

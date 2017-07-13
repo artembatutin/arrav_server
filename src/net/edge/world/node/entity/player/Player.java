@@ -36,7 +36,6 @@ import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.pets.Pet;
 import net.edge.content.pets.PetManager;
 import net.edge.content.quest.QuestManager;
-import net.edge.content.scene.impl.IntroductionCutscene;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.SkillActionTask;
@@ -67,7 +66,6 @@ import net.edge.world.node.NodeState;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcAggression;
 import net.edge.world.node.entity.npc.NpcUpdater;
 import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.node.entity.player.assets.*;
@@ -786,7 +784,6 @@ public final class Player extends EntityNode {
 		restoreRunEnergy();
 		int deltaX = getPosition().getX() - getLastRegion().getRegionX() * 8;
 		int deltaY = getPosition().getY() - getLastRegion().getRegionY() * 8;
-		
 		if(deltaX < 16 || deltaX >= 88 || deltaY < 16 || deltaY > 88 || isNeedsRegionUpdate() || getTeleportStage() == -1) {
 			setLastRegion(getPosition().copy());
 			setUpdates(true, false);
@@ -1260,7 +1257,7 @@ public final class Player extends EntityNode {
 	 */
 	public void out(OutgoingPacket packet) {
 		packet.onSent(this);
-		getSession().enqueueForSync(packet);
+		getSession().equeue(packet);
 	}
 	
 	/**
@@ -1268,7 +1265,7 @@ public final class Player extends EntityNode {
 	 * @param packet packet to be written.
 	 */
 	public void write(OutgoingPacket packet) {
-		getSession().writeToStream(packet);
+		getSession().write(packet);
 	}
 	
 	/**

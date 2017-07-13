@@ -41,24 +41,35 @@ public final class UpdateManager {
 		}
 		GameBuffer encodedBlock = new GameBuffer(Unpooled.buffer(64));
 		int mask = 0;
-		int size = PLAYER_BLOCKS.length;
-		boolean[] flagged = new boolean[size];
-		for(int i = 0; i < size; i++) {
-			UpdateBlock updateBlock = PLAYER_BLOCKS[i];
-			if(state == UpdateState.ADD_LOCAL && updateBlock.getFlag() == UpdateFlag.APPEARANCE) {
-				mask |= updateBlock.getMask();
-				flagged[i] = true;
-				continue;
-			}
-			if(state == UpdateState.UPDATE_SELF && updateBlock.getFlag() == UpdateFlag.CHAT) {
-				continue;
-			}
-			if(!other.getFlags().get(updateBlock.getFlag())) {
-				continue;
-			}
-			
-			mask |= updateBlock.getMask();
-			flagged[i] = true;
+		if(other.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
+			mask |= 0x400;
+		}
+		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
+			mask |= 0x100;
+		}
+		if(other.getFlags().get(UpdateFlag.ANIMATION)){
+			mask |= 8;
+		}
+		if(other.getFlags().get(UpdateFlag.FORCE_CHAT) && state != UpdateState.UPDATE_SELF) {
+			mask |= 4;
+		}
+		if(other.getFlags().get(UpdateFlag.CHAT)) {
+			mask |= 0x80;
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_ENTITY)) {
+			mask |= 1;
+		}
+		if(other.getFlags().get(UpdateFlag.APPEARANCE)) {
+			mask |= 0x10;
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
+			mask |= 2;
+		}
+		if(other.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
+			mask |= 0x20;
+		}
+		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
+			mask |= 0x200;
 		}
 		
 		if(mask >= 0x100) {
@@ -68,11 +79,37 @@ public final class UpdateManager {
 			encodedBlock.put(mask);
 		}
 		
-		for(int i = 0; i < size; i++) {
-			if(flagged[i]) {
-				PLAYER_BLOCKS[i].write(player, other, encodedBlock);
-			}
+		if(other.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
+			PLAYER_BLOCKS[0].write(player, other, encodedBlock);
 		}
+		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
+			PLAYER_BLOCKS[1].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.ANIMATION)){
+			PLAYER_BLOCKS[2].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.FORCE_CHAT)) {
+			PLAYER_BLOCKS[3].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.CHAT)) {
+			PLAYER_BLOCKS[4].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_ENTITY)) {
+			PLAYER_BLOCKS[5].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.APPEARANCE)) {
+			PLAYER_BLOCKS[6].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
+			PLAYER_BLOCKS[7].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
+			PLAYER_BLOCKS[8].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
+			PLAYER_BLOCKS[9].write(player, other, encodedBlock);
+		}
+		
 		msg.putBytes(encodedBlock);
 		if(cacheBlocks) {
 			//	other.setCachedUpdateBlock(encodedBlock);
