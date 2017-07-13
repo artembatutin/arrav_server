@@ -22,11 +22,11 @@ public final class PlayerChatUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Player mob, GameBuffer msg) {
-		msg.putShort(((mob.getChatColor() & 0xff) << 8) + (mob.getChatEffects() & 0xff), ByteOrder.LITTLE);
-		msg.put(mob.getRights() == PLAYER && player.isIronMan() ? IRON_MAN.getProtocolValue() : mob.getRights().getProtocolValue());
-		msg.put(mob.getChatText().length, ByteTransform.C);
-		msg.putBytesReverse(mob.getChatText());
+	public int write(Player player, Player other, GameBuffer msg) {
+		msg.putShort(((other.getChatColor() & 0xff) << 8) + (other.getChatEffects() & 0xff), ByteOrder.LITTLE);
+		msg.put(other.getRights() == PLAYER && player.isIronMan() ? IRON_MAN.getProtocolValue() : other.getRights().getProtocolValue());
+		msg.put(other.getChatText().length, ByteTransform.C);
+		msg.putBytesReverse(other.getChatText());
 		return -1;
 	}
 }

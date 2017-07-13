@@ -19,8 +19,8 @@ public final class PlayerFaceEntityUpdateBlock extends PlayerUpdateBlock {
 	}
 
 	@Override
-	public int write(Player player, Player mob, GameBuffer msg) {
-		msg.putShort(mob.getFaceIndex(), ByteOrder.LITTLE);
+	public int write(Player player, Player other, GameBuffer msg) {
+		msg.putShort(other.getFaceIndex(), ByteOrder.LITTLE);
 		return -1;
 	}
 }

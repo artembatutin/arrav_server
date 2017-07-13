@@ -20,9 +20,9 @@ public final class PlayerGraphicUpdateBlock extends PlayerUpdateBlock {
 	}
 
 	@Override
-	public int write(Player player, Player mob, GameBuffer msg) {
-		msg.putShort(mob.getGraphic().getId(), ByteOrder.LITTLE);
-		msg.putInt(mob.getGraphic().getDelay() | mob.getGraphic().getHeight() << 16);
+	public int write(Player player, Player other, GameBuffer msg) {
+		msg.putShort(other.getGraphic().getId(), ByteOrder.LITTLE);
+		msg.putInt(other.getGraphic().getDelay() | other.getGraphic().getHeight() << 16);
 		return -1;
 	}
 }

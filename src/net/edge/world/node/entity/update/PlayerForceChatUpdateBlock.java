@@ -17,8 +17,8 @@ public final class PlayerForceChatUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Player mob, GameBuffer msg) {
-		msg.putCString(mob.getForcedText());
+	public int write(Player player, Player other, GameBuffer msg) {
+		msg.putCString(other.getForcedText());
 		return -1;
 	}
 }

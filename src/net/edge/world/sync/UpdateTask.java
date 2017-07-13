@@ -26,16 +26,18 @@ public class UpdateTask implements Runnable{
 	@Override
 	public void run() {
 		try {
-			switch(type) {
-				case PRE_UPDATE:
-					entity.preUpdate();
-					break;
-				case UPDATE:
-					entity.update();
-					break;
-				case POST_UPDATE:
-					entity.postUpdate();
-					break;
+			synchronized(entity) {
+				switch(type) {
+					case PRE_UPDATE:
+						entity.preUpdate();
+						break;
+					case UPDATE:
+						entity.update();
+						break;
+					case POST_UPDATE:
+						entity.postUpdate();
+						break;
+				}
 			}
 		} catch(Exception e) {
 			logger.log(Level.WARNING, type + " sync error " + entity, e);

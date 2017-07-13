@@ -799,23 +799,19 @@ public final class Player extends EntityNode {
 	
 	@Override
 	public void update() {
-		synchronized(this) {
-			PlayerUpdater.write(this);
-			NpcUpdater.write(this);
-			getSession().pollOutgoingMessages();
-		}
+		PlayerUpdater.write(this);
+		NpcUpdater.write(this);
+		getSession().pollOutgoingMessages();
 	}
 	
 	@Override
 	public void postUpdate() {
-		synchronized(this) {
-			if(isHuman()) {
-				getSession().flushQueue();
-			}
-			super.postUpdate();
-			setCachedUpdateBlock(null);
-			checkRemoval();
+		if(isHuman()) {
+			getSession().flushQueue();
 		}
+		super.postUpdate();
+		setCachedUpdateBlock(null);
+		checkRemoval();
 	}
 	
 	@Override

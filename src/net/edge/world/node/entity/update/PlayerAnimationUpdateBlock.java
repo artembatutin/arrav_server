@@ -21,9 +21,9 @@ public final class PlayerAnimationUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Player mob, GameBuffer msg) {
-		msg.putShort(mob.getAnimation().getId(), ByteOrder.LITTLE);
-		msg.put(mob.getAnimation().getDelay(), ByteTransform.C);
+	public int write(Player player, Player other, GameBuffer msg) {
+		msg.putShort(other.getAnimation().getId(), ByteOrder.LITTLE);
+		msg.put(other.getAnimation().getDelay(), ByteTransform.C);
 		return -1;
 	}
 }

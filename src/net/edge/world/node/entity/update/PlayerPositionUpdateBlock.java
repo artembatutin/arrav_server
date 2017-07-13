@@ -20,9 +20,9 @@ public final class PlayerPositionUpdateBlock extends PlayerUpdateBlock {
 	}
 
 	@Override
-	public int write(Player player, Player mob, GameBuffer msg) {
-		msg.putShort(mob.getFacePosition().getX(), ByteTransform.A, ByteOrder.LITTLE);
-		msg.putShort(mob.getFacePosition().getY(), ByteOrder.LITTLE);
+	public int write(Player player, Player other, GameBuffer msg) {
+		msg.putShort(other.getFacePosition().getX(), ByteTransform.A, ByteOrder.LITTLE);
+		msg.putShort(other.getFacePosition().getY(), ByteOrder.LITTLE);
 		return -1;
 	}
 }

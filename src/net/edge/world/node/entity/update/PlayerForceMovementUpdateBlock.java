@@ -22,10 +22,10 @@ public final class PlayerForceMovementUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player mob, Player player, GameBuffer msg) {
-		ForcedMovement movement = player.getForcedMovement();
-		Position lastRegion = mob.getLastRegion();
-		Position position = player.getPosition();
+	public int write(Player player, Player other, GameBuffer msg) {
+		ForcedMovement movement = other.getForcedMovement();
+		Position lastRegion = player.getLastRegion();
+		Position position = other.getPosition();
 		
 		int firstVelocity = (movement.getFirstSpeed());
 		int secondVelocity = (movement.getSecondSpeed());

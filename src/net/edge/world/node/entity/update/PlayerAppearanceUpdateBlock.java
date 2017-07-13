@@ -21,45 +21,45 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 	}
 
 	@Override
-	public int write(Player player, Player mob, GameBuffer msg) {
-		PlayerAppearance appearance = mob.getAppearance();
+	public int write(Player player, Player other, GameBuffer msg) {
+		PlayerAppearance appearance = other.getAppearance();
 		GameBuffer buf = new GameBuffer(player.getSession().alloc().buffer(32));
 		buf.put(appearance.getGender());
-		buf.put(mob.getHeadIcon());
-		buf.put(mob.getSkullIcon());
-		if(mob.getPlayerNpc() == -1) {
-			if(mob.getEquipment().getId(Equipment.HEAD_SLOT) > 1) {
-				buf.putShort(0x8000 + mob.getEquipment().getId(Equipment.HEAD_SLOT));
+		buf.put(other.getHeadIcon());
+		buf.put(other.getSkullIcon());
+		if(other.getPlayerNpc() == -1) {
+			if(other.getEquipment().getId(Equipment.HEAD_SLOT) > 1) {
+				buf.putShort(0x8000 + other.getEquipment().getId(Equipment.HEAD_SLOT));
 			} else {
 				buf.put(0);
 			}
-			if(mob.getEquipment().getId(Equipment.CAPE_SLOT) > 1) {
-				buf.putShort(0x8000 + mob.getEquipment().getId(Equipment.CAPE_SLOT));
+			if(other.getEquipment().getId(Equipment.CAPE_SLOT) > 1) {
+				buf.putShort(0x8000 + other.getEquipment().getId(Equipment.CAPE_SLOT));
 			} else {
 				buf.put(0);
 			}
-			if(mob.getEquipment().getId(Equipment.AMULET_SLOT) > 1) {
-				buf.putShort(0x8000 + mob.getEquipment().getId(Equipment.AMULET_SLOT));
+			if(other.getEquipment().getId(Equipment.AMULET_SLOT) > 1) {
+				buf.putShort(0x8000 + other.getEquipment().getId(Equipment.AMULET_SLOT));
 			} else {
 				buf.put(0);
 			}
-			if(mob.getEquipment().getId(Equipment.WEAPON_SLOT) > 1) {
-				buf.putShort(0x8000 + mob.getEquipment().getId(Equipment.WEAPON_SLOT));
+			if(other.getEquipment().getId(Equipment.WEAPON_SLOT) > 1) {
+				buf.putShort(0x8000 + other.getEquipment().getId(Equipment.WEAPON_SLOT));
 			} else {
 				buf.put(0);
 			}
-			if(mob.getEquipment().getId(Equipment.CHEST_SLOT) > 1) {
-				buf.putShort(0x8000 + mob.getEquipment().getId(Equipment.CHEST_SLOT));
+			if(other.getEquipment().getId(Equipment.CHEST_SLOT) > 1) {
+				buf.putShort(0x8000 + other.getEquipment().getId(Equipment.CHEST_SLOT));
 			} else {
 				buf.putShort(0x100 + appearance.getChest());
 			}
-			if(mob.getEquipment().getId(Equipment.SHIELD_SLOT) > 1) {
-				buf.putShort(0x8000 + mob.getEquipment().getId(Equipment.SHIELD_SLOT));
+			if(other.getEquipment().getId(Equipment.SHIELD_SLOT) > 1) {
+				buf.putShort(0x8000 + other.getEquipment().getId(Equipment.SHIELD_SLOT));
 			} else {
 				buf.put(0);
 			}
-			if(mob.getEquipment().getId(Equipment.CHEST_SLOT) > 1) {
-				if(!mob.getEquipment().get(Equipment.CHEST_SLOT).getDefinition().isPlatebody()) {
+			if(other.getEquipment().getId(Equipment.CHEST_SLOT) > 1) {
+				if(!other.getEquipment().get(Equipment.CHEST_SLOT).getDefinition().isPlatebody()) {
 					buf.putShort(0x100 + appearance.getArms());
 				} else {
 					buf.put(0);
@@ -67,28 +67,28 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 			} else {
 				buf.putShort(0x100 + appearance.getArms());
 			}
-			if(mob.getEquipment().getId(Equipment.LEGS_SLOT) > 1) {
-				buf.putShort(0x8000 + mob.getEquipment().getId(Equipment.LEGS_SLOT));
+			if(other.getEquipment().getId(Equipment.LEGS_SLOT) > 1) {
+				buf.putShort(0x8000 + other.getEquipment().getId(Equipment.LEGS_SLOT));
 			} else {
 				buf.putShort(0x100 + appearance.getLegs());
 			}
-			if(mob.getEquipment().getId(Equipment.HEAD_SLOT) > 1 && (mob.getEquipment().get(Equipment.HEAD_SLOT).getDefinition().isFullHelm() || mob.getEquipment().get(Equipment.HEAD_SLOT).getDefinition().isFullMask())) {
+			if(other.getEquipment().getId(Equipment.HEAD_SLOT) > 1 && (other.getEquipment().get(Equipment.HEAD_SLOT).getDefinition().isFullHelm() || other.getEquipment().get(Equipment.HEAD_SLOT).getDefinition().isFullMask())) {
 				buf.put(0);
 			} else {
 				buf.putShort(0x100 + appearance.getHead());
 			}
-			if(mob.getEquipment().getId(Equipment.HANDS_SLOT) > 1) {
-				buf.putShort(0x8000 + mob.getEquipment().getId(Equipment.HANDS_SLOT));
+			if(other.getEquipment().getId(Equipment.HANDS_SLOT) > 1) {
+				buf.putShort(0x8000 + other.getEquipment().getId(Equipment.HANDS_SLOT));
 			} else {
 				buf.putShort(0x100 + appearance.getHands());
 			}
-			if(mob.getEquipment().getId(Equipment.FEET_SLOT) > 1) {
-				buf.putShort(0x8000 + mob.getEquipment().getId(Equipment.FEET_SLOT));
+			if(other.getEquipment().getId(Equipment.FEET_SLOT) > 1) {
+				buf.putShort(0x8000 + other.getEquipment().getId(Equipment.FEET_SLOT));
 			} else {
 				buf.putShort(0x100 + appearance.getFeet());
 			}
 			if(appearance.isMale()) {
-				if(mob.getEquipment().getId(Equipment.HEAD_SLOT) > 1 && mob.getEquipment().get(Equipment.HEAD_SLOT).getDefinition().isFullMask()) {
+				if(other.getEquipment().getId(Equipment.HEAD_SLOT) > 1 && other.getEquipment().get(Equipment.HEAD_SLOT).getDefinition().isFullMask()) {
 					buf.put(0);
 				} else {
 					buf.putShort(0x100 + appearance.getBeard());
@@ -98,7 +98,7 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 			}
 		} else {
 			buf.putShort(-1);
-			buf.putShort(mob.getPlayerNpc());
+			buf.putShort(other.getPlayerNpc());
 		}
 		buf.put(appearance.getHairColor());
 		buf.put(appearance.getTorsoColor());
@@ -106,17 +106,17 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 		buf.put(appearance.getFeetColor());
 		buf.put(appearance.getSkinColor());
 
-		buf.putShort(mob.getStandIndex() != 0x328 ? mob.getStandIndex() : mob.getWeaponAnimation().getStanding());
-		buf.putShort(mob.getTurnIndex());
-		buf.putShort(mob.getWalkIndex() != 0x333 ? mob.getWalkIndex() : mob.getWeaponAnimation().getWalking());
-		buf.putShort(mob.getTurn180Index());
-		buf.putShort(mob.getTurn90CWIndex());
-		buf.putShort(mob.getTurn90CCWIndex());
-		buf.putShort(mob.getRunIndex() != 0x338 ? mob.getRunIndex() : mob.getWeaponAnimation().getRunning());
+		buf.putShort(other.getStandIndex() != 0x328 ? other.getStandIndex() : other.getWeaponAnimation().getStanding());
+		buf.putShort(other.getTurnIndex());
+		buf.putShort(other.getWalkIndex() != 0x333 ? other.getWalkIndex() : other.getWeaponAnimation().getWalking());
+		buf.putShort(other.getTurn180Index());
+		buf.putShort(other.getTurn90CWIndex());
+		buf.putShort(other.getTurn90CCWIndex());
+		buf.putShort(other.getRunIndex() != 0x338 ? other.getRunIndex() : other.getWeaponAnimation().getRunning());
 
-		buf.putLong(mob.getCredentials().getUsernameHash());
-		buf.put(mob.determineCombatLevel() < 3 ? 3 : mob.determineCombatLevel());
-		buf.put(mob.isIronMan() ? 1 : 0);
+		buf.putLong(other.getCredentials().getUsernameHash());
+		buf.put(other.determineCombatLevel() < 3 ? 3 : other.determineCombatLevel());
+		buf.put(other.isIronMan() ? 1 : 0);
 		msg.put(buf.getBuffer().writerIndex(), ByteTransform.C);
 		msg.putBytes(buf.getBuffer());
 		buf.release();
