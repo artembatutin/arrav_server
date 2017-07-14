@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.TabInterface;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.GameBuffer;
@@ -16,16 +17,16 @@ public final class SendConfig implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		if(state < Byte.MIN_VALUE || state > Byte.MAX_VALUE) {
 			msg.message(87);
 			msg.putShort(id, ByteOrder.LITTLE);
 			msg.putInt(state, ByteOrder.MIDDLE);
-			return;
+			return msg.getBuffer();
 		}
 		msg.message(36);
 		msg.putShort(id, ByteOrder.LITTLE);
 		msg.put(state);
+		return msg.getBuffer();
 	}
 }

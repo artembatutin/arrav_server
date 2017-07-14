@@ -66,7 +66,7 @@ import net.edge.world.node.NodeState;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.entity.EntityNode;
 import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcUpdater;
+import net.edge.net.packet.out.SendNpcUpdate;
 import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.node.entity.player.assets.*;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
@@ -752,10 +752,6 @@ public final class Player extends EntityNode {
 		return getState() == NodeState.ACTIVE;
 	}
 	
-	public void terminate() {
-		session.releaseStream();
-	}
-	
 	@Override
 	public void dispose() {
 		setVisible(false);
@@ -796,8 +792,8 @@ public final class Player extends EntityNode {
 	
 	@Override
 	public void update() {
-		PlayerUpdater.write(this);
-		NpcUpdater.write(this);
+		write(new SendPlayerUpdate());
+		write(new SendNpcUpdate());
 		getSession().pollOutgoingMessages();
 	}
 	

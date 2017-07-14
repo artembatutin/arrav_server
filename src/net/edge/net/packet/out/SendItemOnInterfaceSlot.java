@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
@@ -18,8 +19,7 @@ public final class SendItemOnInterfaceSlot implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(34, PacketType.VARIABLE_SHORT);
 		msg.putShort(id);
 		msg.put(slot);
@@ -32,5 +32,6 @@ public final class SendItemOnInterfaceSlot implements OutgoingPacket {
 			msg.put(am);
 		}
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 }

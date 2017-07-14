@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
@@ -17,12 +18,12 @@ public final class SendText implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(126, PacketType.VARIABLE_SHORT);
 		msg.putCString(text);
 		msg.putShort(id, ByteTransform.A);
 		msg.endVarSize();
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 }

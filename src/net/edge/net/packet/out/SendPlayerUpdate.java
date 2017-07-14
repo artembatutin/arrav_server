@@ -1,12 +1,15 @@
-package net.edge.world.node.entity.player;
+package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.locale.Position;
+import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.Direction;
+import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.update.UpdateManager;
 import net.edge.world.node.entity.update.UpdateState;
 import net.edge.world.node.region.Region;
@@ -15,16 +18,14 @@ import net.edge.world.node.region.RegionManager;
 import java.util.Iterator;
 
 /**
- * An implementation that sends an update message containing the underlying {@link Player} and other
- * {@code Player}s surrounding them.
+ * An implementation that sends an update message containing the underlying {@link Player} and other {@code Player}s surrounding them.
  * @author Artem Batutin <artembatutin@gmail.com>
- * @author lare96 <http://github.org/lare96>
  */
-public final class PlayerUpdater {
+public final class SendPlayerUpdate implements OutgoingPacket {
 	
-	public static void write(Player player) {
+	@Override
+	public ByteBuf write(Player player, GameBuffer msg) {
 		ByteBufAllocator alloc = player.getSession().alloc();
-		GameBuffer msg = player.getSession().getStream();
 		msg.message(81, PacketType.VARIABLE_SHORT);
 		GameBuffer blockMsg = new GameBuffer(alloc.buffer(64));
 		try {
@@ -101,12 +102,13 @@ public final class PlayerUpdater {
 			blockMsg.release();
 		}
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 	
 	/**
 	 * Processing the addition of player from a region.
 	 */
-	private static void processPlayers(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, int added) {
+	private void processPlayers(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, int added) {
 		if(!region.getPlayers().isEmpty()) {
 			for(Player other : region.getPlayers()) {
 				if(added == 15 || player.getLocalPlayers().size() >= 255)
@@ -134,7 +136,7 @@ public final class PlayerUpdater {
 	 * @param player    The {@link Player} this update message is being sent for.
 	 * @param addPlayer The {@code Player} being added.
 	 */
-	private static void addPlayer(GameBuffer msg, Player player, Player addPlayer) {
+	private void addPlayer(GameBuffer msg, Player player, Player addPlayer) {
 		msg.putBits(11, addPlayer.getSlot());
 		msg.putBit(true);
 		msg.putBit(true);
@@ -149,7 +151,7 @@ public final class PlayerUpdater {
 	 * @param player The {@link Player} to handle running and walking for.
 	 * @param msg    The main update message.
 	 */
-	private static void handleMovement(Player player, GameBuffer msg) {
+	private void handleMovement(Player player, GameBuffer msg) {
 		boolean needsUpdate = !player.getFlags().isEmpty();
 		if(player.isNeedsPlacement()) {
 			Position position = player.getPosition();

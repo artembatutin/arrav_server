@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
@@ -16,10 +17,10 @@ public final class SendInterfaceColor implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(122);
 		msg.putShort(id, ByteTransform.A, ByteOrder.LITTLE);
 		msg.putShort(color, ByteTransform.A, ByteOrder.LITTLE);
+		return msg.getBuffer();
 	}
 }

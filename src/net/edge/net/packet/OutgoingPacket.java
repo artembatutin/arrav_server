@@ -10,11 +10,10 @@ import net.edge.world.node.entity.player.Player;
  */
 public interface OutgoingPacket {
     
-    default void onSent(Player player) {
-    
+    default boolean onSent(Player player) {
+        return true;
     }
     
     ByteBuf write(Player player, GameBuffer msg);
     
-    int getLength();
 }

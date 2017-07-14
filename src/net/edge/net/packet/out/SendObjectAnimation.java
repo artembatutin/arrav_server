@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.locale.Position;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
@@ -23,12 +24,12 @@ public final class SendObjectAnimation implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		player.out(new SendCoordinates(position));
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
+		new SendCoordinates(position).write(player, msg);
 		msg.message(160);
 		msg.put(((0 & 7) << 4) + (0 & 7), ByteTransform.S);
 		msg.put((type.getId() << 2) + (direction.getId() & 3), ByteTransform.S);
 		msg.putShort(animation, ByteTransform.A);
+		return msg.getBuffer();
 	}
 }

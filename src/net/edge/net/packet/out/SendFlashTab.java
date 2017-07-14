@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
@@ -14,9 +15,9 @@ public final class SendFlashTab implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(24);
 		msg.put(code, ByteTransform.A);
+		return msg.getBuffer();
 	}
 }

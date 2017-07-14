@@ -1,11 +1,14 @@
-package net.edge.world.node.entity.npc;
+package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
+import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.Direction;
+import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
 import net.edge.world.node.entity.update.UpdateManager;
 import net.edge.world.node.entity.update.UpdateState;
@@ -17,12 +20,11 @@ import java.util.Iterator;
 /**
  * An implementation that sends an update message containing the underlying {@link Player} and {@link Npc}s surrounding them.
  * @author Artem Batutin <artembatutin@gmail.com>
- * @author lare96 <http://github.org/lare96>
  */
-public final class NpcUpdater {
-	public static void write(Player player) {
+public final class SendNpcUpdate implements OutgoingPacket {
+	
+	public ByteBuf write(Player player, GameBuffer msg) {
 		ByteBufAllocator alloc = player.getSession().alloc();
-		GameBuffer msg = player.getSession().getStream();
 		msg.message(65, PacketType.VARIABLE_SHORT);
 		GameBuffer blockMsg = new GameBuffer(alloc.buffer(64));
 		try {
@@ -96,14 +98,14 @@ public final class NpcUpdater {
 		} finally {
 			blockMsg.release();
 		}
-
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 	
 	/**
 	 * Processing the addition of npc from a region.
 	 */
-	private static void processNpcs(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, int added) {
+	private void processNpcs(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, int added) {
 		if(!region.getNpcs().isEmpty()) {
 			for(Npc npc : region.getNpcs()) {
 				if(added == 15 || player.getLocalNpcs().size() >= 255)
@@ -131,7 +133,7 @@ public final class NpcUpdater {
 	 * @param player The {@link Player} this update message is being sent for.
 	 * @param addNpc The {@link Npc} being added.
 	 */
-	private static void addNpc(Player player, Npc addNpc, GameBuffer msg) {
+	private void addNpc(Player player, Npc addNpc, GameBuffer msg) {
 		boolean updateRequired = !addNpc.getFlags().isEmpty();
 		int deltaX = addNpc.getPosition().getX() - player.getPosition().getX();
 		int deltaY = addNpc.getPosition().getY() - player.getPosition().getY();
@@ -149,7 +151,7 @@ public final class NpcUpdater {
 	 * @param npc The {@link Player} to handle running and walking for.
 	 * @param msg The main update message.
 	 */
-	private static void handleMovement(Npc npc, GameBuffer msg) {
+	private void handleMovement(Npc npc, GameBuffer msg) {
 		boolean updateRequired = !npc.getFlags().isEmpty();
 		if(npc.getPrimaryDirection() == Direction.NONE) {
 			if(updateRequired) {

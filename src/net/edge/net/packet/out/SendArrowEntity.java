@@ -17,24 +17,12 @@ public final class SendArrowEntity implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
-		msg.message(248);
-		msg.put(entity.isNpc() ? 1 : 10);
-		msg.putShort(entity.getSlot());
-		msg.put(0);
-	}
-	
-	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(248);
 		msg.put(entity.isNpc() ? 1 : 10);
 		msg.putShort(entity.getSlot());
 		msg.put(0);
+		return msg.getBuffer();
 	}
 	
-	@Override
-	public int getLength() {
-		return 4;
-	}
 }

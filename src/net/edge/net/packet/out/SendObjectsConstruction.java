@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.skill.construction.furniture.Furniture;
 import net.edge.content.skill.construction.furniture.HotSpots;
 import net.edge.net.codec.GameBuffer;
@@ -17,11 +18,17 @@ public final class SendObjectsConstruction implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
+	public boolean onSent(Player player) {
 		Furniture[] panel = spot.getFurnitures();
 		if(panel == null || panel.length == 0)
-			return;
-		GameBuffer msg = player.getSession().getStream();
+			return false;
+		player.getHouse().get().getPlan().setPanel(panel);
+		return true;
+	}
+	
+	@Override
+	public ByteBuf write(Player player, GameBuffer msg) {
+		Furniture[] panel = spot.getFurnitures();
 		msg.message(130, PacketType.VARIABLE_BYTE);
 		msg.put(panel.length);
 		for(Furniture furniture : panel) {
@@ -34,6 +41,6 @@ public final class SendObjectsConstruction implements OutgoingPacket {
 			}
 		}
 		msg.endVarSize();
-		player.getHouse().get().getPlan().setPanel(panel);
+		return msg.getBuffer();
 	}
 }

@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.locale.Position;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
@@ -15,9 +16,9 @@ public final class SendClearContainer implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(40);
 		msg.putShort(id);
+		return msg.getBuffer();
 	}
 }

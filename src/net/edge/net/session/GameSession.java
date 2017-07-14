@@ -54,11 +54,6 @@ public final class GameSession extends Session {
 	private final IsaacRandom encryptor;
 
 	/**
-	 * The game stream.
-	 */
-	private final GameBuffer stream;
-
-	/**
 	 * Creates a new {@link GameSession}.
 	 * @param channel   The channel for this session.
 	 * @param encryptor The message encryptor.
@@ -69,12 +64,8 @@ public final class GameSession extends Session {
 		this.player = player;
 		this.decryptor = decryptor;
 		this.encryptor = encryptor;
-		this.stream = new GameBuffer(channel.alloc().buffer(STREAM_CAP), encryptor);
-		init();
-	}
-	
-	private void init() {
-		//getChannel().pipeline().replace("login-encoder", "game-encoder", new GameEncoder(player));
+		//getChannel().pipeline().remove("login-encoder");
+		getChannel().pipeline().replace("login-encoder", "game-encoder", new GameEncoder(encryptor, player));
 		getChannel().pipeline().replace("login-decoder", "game-decoder", new GameDecoder(decryptor, this));
 	}
 	
@@ -110,11 +101,13 @@ public final class GameSession extends Session {
 		outgoing.offer(pkt);
 	}
 	
+	
 	/**
 	 * Writes the given {@link OutgoingPacket} to the stream.
 	 */
-	public void write(OutgoingPacket pkt) {
-		//pkt.write(player);
+	public void write(OutgoingPacket packet) {
+		ByteBuf temp = packet.write(player, new GameBuffer(alloc(256), encryptor));
+		getChannel().write(temp, getChannel().voidPromise());
 	}
 	
 	/**
@@ -130,16 +123,12 @@ public final class GameSession extends Session {
 					if(packet == null) {
 						break;
 					}
-					ByteBuf out = packet.write(player, new GameBuffer(alloc(packet.getLength()), encryptor));
-					if(out != null) {
-						getChannel().write(out, getChannel().voidPromise());
-						out.release();
-						written++;
-					}
+					//ByteBuf temp = packet.write(player, new GameBuffer(alloc(256), encryptor));
+					getChannel().write(packet, getChannel().voidPromise());
+					written++;
 				}
 			}
 		}
-		getChannel().flush();
 	}
 	
 	/**
@@ -148,21 +137,8 @@ public final class GameSession extends Session {
 	 * the cycle.
 	 */
 	public void flushQueue() {
-		Channel channel = getChannel();
-		if(channel.isActive()) {
-			channel.eventLoop().execute(() -> {
-				channel.writeAndFlush(stream.retain(), channel.voidPromise());
-				stream.clear();
-			});
-		}
+		getChannel().flush();
 	}
-
-	/**
-	 * @return The game stream.
-	 */
-	//public GameBuffer getStream() {
-	//	return stream;
-	//}
 	
 	public ByteBuf alloc(int length) {
 		return getChannel().alloc().buffer(length);
@@ -174,10 +150,6 @@ public final class GameSession extends Session {
 	 */
 	public ByteBufAllocator alloc() {
 		return getChannel().alloc();
-	}
-	
-	public void releaseStream() {
-		stream.release();
 	}
 
 }

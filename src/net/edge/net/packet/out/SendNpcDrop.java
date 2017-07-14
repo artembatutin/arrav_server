@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
@@ -20,16 +21,20 @@ public final class SendNpcDrop implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public boolean onSent(Player player) {
+		return id >= 1;
+	}
+	
+	@Override
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(121, PacketType.VARIABLE_SHORT);
 		msg.putInt(id);
 		if(id != 0) {
 			if(id > NpcDefinition.DEFINITIONS.length)
-				return;
+				return null;
 			NpcDefinition def = NpcDefinition.DEFINITIONS[id];
 			if(def == null)
-				return;
+				return null;
 			msg.putShort(table.getCommon() == null ? 0 : table.getCommon().size());
 			if(table.getCommon() != null) {
 				for(ItemCache c : table.getCommon()) {
@@ -47,5 +52,6 @@ public final class SendNpcDrop implements OutgoingPacket {
 			}
 		}
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 }

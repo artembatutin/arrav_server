@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
@@ -15,11 +16,11 @@ public final class SendObjectRemoval implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		player.write(new SendCoordinates(object.getGlobalPos()));
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
+		new SendCoordinates(object.getGlobalPos()).write(player, msg);
 		msg.message(101);
 		msg.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.C);
 		msg.put(0);
+		return msg.getBuffer();
 	}
 }

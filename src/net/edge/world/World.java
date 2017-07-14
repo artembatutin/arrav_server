@@ -229,8 +229,8 @@ public final class World {
 	public void queueLogout(Player player) {
 		if(player.getCombatBuilder().inCombat())
 			player.getLogoutTimer().reset();
-		player.out(new SendLogout());
 		player.setState(AWAITING_REMOVAL);
+		player.out(new SendLogout());
 		logouts.add(player);
 	}
 	

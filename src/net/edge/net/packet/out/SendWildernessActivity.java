@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.wilderness.WildernessActivity;
 import net.edge.net.codec.GameBuffer;
@@ -16,8 +17,7 @@ public final class SendWildernessActivity implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(150, PacketType.VARIABLE_SHORT);
 		int fools = WildernessActivity.getFooledCount(player);
 		msg.put(pkers.size() + fools);
@@ -33,5 +33,6 @@ public final class SendWildernessActivity implements OutgoingPacket {
 			}
 		}
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 }

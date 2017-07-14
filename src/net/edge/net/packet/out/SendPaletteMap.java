@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.skill.construction.Palette;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
@@ -16,8 +17,7 @@ public final class SendPaletteMap implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(241, PacketType.VARIABLE_SHORT);
 		msg.putShort(player.getPosition().getRegionX() + 6, ByteTransform.A);
 		msg.putShort(player.getPosition().getRegionY() + 6);
@@ -38,5 +38,6 @@ public final class SendPaletteMap implements OutgoingPacket {
 			}
 		}
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 }

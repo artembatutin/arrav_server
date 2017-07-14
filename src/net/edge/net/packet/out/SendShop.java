@@ -1,5 +1,6 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.edge.content.market.MarketItem;
 import net.edge.net.codec.ByteOrder;
@@ -20,8 +21,7 @@ public final class SendShop implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(53, PacketType.VARIABLE_SHORT);
 		msg.putShort(id);
 		if(items == null) {
@@ -61,5 +61,6 @@ public final class SendShop implements OutgoingPacket {
 			}
 		}
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 }
