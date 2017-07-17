@@ -188,7 +188,7 @@ public final class ItemDefinition {
 	 * @return the proper name.
 	 */
 	public String getName() {
-		return noted ? name + " (noted)" : name;
+		return name;
 	}
 	
 	/**
