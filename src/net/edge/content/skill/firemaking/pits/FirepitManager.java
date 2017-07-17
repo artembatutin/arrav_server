@@ -12,6 +12,11 @@ import net.edge.world.object.GameObject;
 public final class FirepitManager {
 	
 	/**
+	 * The fire pit event for the world.
+	 */
+	private static final FirepitManager FIRE_PIT_EVENT = new FirepitManager();
+	
+	/**
 	 * Represents the constant id for the red fire pit object.
 	 */
 	static final int RED_FIRE_PIT_OBJECT_ID = 38828;
@@ -64,6 +69,13 @@ public final class FirepitManager {
 	 */
 	public void register() {
 		firepit.publish();
+	}
+	
+	/**
+	 * Returns the fire pit event manager.
+	 */
+	public static FirepitManager get() {
+		return FIRE_PIT_EVENT;
 	}
 	
 }

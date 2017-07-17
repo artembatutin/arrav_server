@@ -434,11 +434,6 @@ public final class World {
 	private static final Stopwatch RUNNING_TIME = new Stopwatch().reset();
 	
 	/**
-	 * The fire pit event for the world.
-	 */
-	private static final FirepitManager FIRE_PIT_EVENT = new FirepitManager();
-	
-	/**
 	 * The {@link RegionManager} that manages region caching.
 	 */
 	private static final RegionManager REGION_MANAGER = new RegionManager();
@@ -493,13 +488,6 @@ public final class World {
 	 */
 	public static Stopwatch getRunningTime() {
 		return RUNNING_TIME;
-	}
-	
-	/**
-	 * Returns the fire pit event manager.
-	 */
-	public static FirepitManager getFirepitEvent() {
-		return FIRE_PIT_EVENT;
 	}
 	
 	/**
