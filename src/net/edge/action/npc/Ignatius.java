@@ -7,6 +7,7 @@ import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.NpcAction;
+import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.util.Utility;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
@@ -19,7 +20,7 @@ public class Ignatius extends ActionInitializer {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {
 				DialogueAppender ap = new DialogueAppender(player);
-				boolean active = World.getFirepitEvent().getFirepit().isActive();
+				boolean active = FirepitManager.get().getFirepit().isActive();
 				ap.chain(new NpcDialogue(4946, "Hey, " + player.getFormatUsername() + ", what can I help you with?"));
 				ap.chain(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
@@ -40,7 +41,7 @@ public class Ignatius extends ActionInitializer {
 				ap.chain(new NpcDialogue(4946, "Aha, if you think you have any ideas to improve the concept", "feel free to make a suggestion on the forums!"));
 				ap.chain(new PlayerDialogue("Will do!").attachAfter(() -> player.closeWidget()));
 				ap.chain(new PlayerDialogue(active ? "Howlong till the event ends?" : "Howmany logs does the fire pit have?"));
-				String[] messages = active ? new String[]{"The event is active for another:", Utility.convertTime(World.getFirepitEvent().getFirepit().getTime())} : new String[]{"Fire pit: " + World.getFirepitEvent().getFirepit().getElements() + "/1000 logs.", "The minimum log that's sacrificable: " + World.getFirepitEvent().getFirepit().getLogRequirement()};
+				String[] messages = active ? new String[]{"The event is active for another:", Utility.convertTime(FirepitManager.get().getFirepit().getTime())} : new String[]{"Fire pit: " + FirepitManager.get().getFirepit().getElements() + "/1000 logs.", "The minimum log that's sacrificable: " + FirepitManager.get().getFirepit().getLogRequirement()};
 				ap.chain(new StatementDialogue(messages).attachAfter(() -> player.closeWidget()));
 				ap.chain(new PlayerDialogue("Do you sell anything?"));
 				ap.chain(new NpcDialogue(4946, "Sadly, I don't have anything for sale, I used all my logs", "to get 99 firemaking years ago..."));

@@ -1,5 +1,6 @@
 package net.edge.content.skill.firemaking;
 
+import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
@@ -46,7 +47,7 @@ public final class Bonfire extends DestructionSkillAction {
 			return false;
 		}
 		
-		FirepitObject pit = World.getFirepitEvent().getFirepit();
+		FirepitObject pit = FirepitManager.get().getFirepit();
 		boolean logs = FireLighter.VALUES.stream().anyMatch(def -> def.getObjectId() == object.getId());
 		
 		if(pit == null && !logs) {

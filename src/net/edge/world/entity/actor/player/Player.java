@@ -44,6 +44,7 @@ import net.edge.content.skill.action.SkillActionTask;
 import net.edge.content.skill.agility.AgilityCourseBonus;
 import net.edge.content.skill.construction.Construction;
 import net.edge.content.skill.construction.House;
+import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.smithing.Smelting;
@@ -704,8 +705,8 @@ public final class Player extends Actor {
 		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
 			//new IntroductionCutscene(this).prerequisites();
 		}
-		if(World.getFirepitEvent().getFirepit().isActive()) {
-			this.message("@red@[ANNOUNCEMENT]: Enjoy the double experience event for another " + Utility.convertTime(World.getFirepitEvent().getFirepit().getTime()) + ".");
+		if(FirepitManager.get().getFirepit().isActive()) {
+			this.message("@red@[ANNOUNCEMENT]: Enjoy the double experience event for another " + Utility.convertTime(FirepitManager.get().getFirepit().getTime()) + ".");
 		}
 		if(ShootingStarManager.get().getShootingStar() != null && ShootingStarManager.get().getShootingStar().isReg()) {
 			this.message("@red@[ANNOUNCEMENT]: " + ShootingStarManager.get().getShootingStar().getLocationData().getMessageWhenActive());

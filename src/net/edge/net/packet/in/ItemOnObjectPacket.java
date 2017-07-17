@@ -6,6 +6,7 @@ import net.edge.content.skill.crafting.JewelleryMoulding;
 import net.edge.content.skill.crafting.PotClaying;
 import net.edge.content.skill.crafting.Spinning;
 import net.edge.content.skill.firemaking.Bonfire;
+import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.skill.prayer.PrayerBoneAltar;
 import net.edge.content.skill.smithing.Smithing;
 import net.edge.world.locale.Boundary;
@@ -73,7 +74,7 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 				if(Bonfire.addLogs(player, item, object, false)) {
 					return;
 				}
-				if(World.getFirepitEvent().fire(player, object, item)) {
+				if(FirepitManager.get().fire(player, object, item)) {
 					return;
 				}
 				if(PrayerBoneAltar.produce(player, itemId, object)) {

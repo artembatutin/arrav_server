@@ -11,12 +11,14 @@ import io.netty.util.ResourceLeakDetector;
 import net.edge.cache.FileSystem;
 import net.edge.cache.decoder.MapDefinitionDecoder;
 import net.edge.cache.decoder.ObjectDefinitionDecoder;
+import net.edge.cache.decoder.RegionDecoder;
 import net.edge.content.combat.CombatConstants;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.*;
 import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.ObjectAction;
 import net.edge.content.shootingstar.ShootingStarManager;
+import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.net.EdgevilleChannelInitializer;
 import net.edge.net.NetworkConstants;
@@ -184,8 +186,8 @@ public final class Application {
 		//object/region decoding must be done before parallel.
 		new ObjectDefinitionDecoder(fs).run();
 		new MapDefinitionDecoder(fs).run();
-		//new RegionDecoder(fs).run();
-		World.getFirepitEvent().register();
+		new RegionDecoder(fs).run();
+		FirepitManager.get().register();
 		//Item decoding.
 		launch.execute(() -> {
 			new ItemDefinitionLoader().load();
