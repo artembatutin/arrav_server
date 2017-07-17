@@ -4,9 +4,8 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
-import java.util.Comparator;
 import java.util.Optional;
 
 /**

@@ -2,7 +2,7 @@ package net.edge.content.combat.effect;
 
 import net.edge.task.Task;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 
 /**
  * The {@link Task} implementation that provides processing for
@@ -14,7 +14,7 @@ public final class CombatEffectTask extends Task {
 	/**
 	 * The character that this task is for.
 	 */
-	private final EntityNode c;
+	private final Actor c;
 	
 	/**
 	 * The combat effect that is being processed.
@@ -26,7 +26,7 @@ public final class CombatEffectTask extends Task {
 	 * @param c      the character that this task is for.
 	 * @param effect the combat effect that is being processed.
 	 */
-	public CombatEffectTask(EntityNode c, CombatEffect effect) {
+	public CombatEffectTask(Actor c, CombatEffect effect) {
 		super(effect.getDelay(), false);
 		super.attach(c);
 		this.c = c;

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import net.edge.content.minigame.barrows.BarrowsMinigame;
 import net.edge.content.minigame.warriorsguild.impl.AnimationRoom;
 import net.edge.content.minigame.warriorsguild.impl.CyclopsRoom;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.Optional;
 import java.util.function.Consumer;

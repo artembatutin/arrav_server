@@ -10,10 +10,10 @@ import net.edge.content.minigame.SequencedMinigame;
 import net.edge.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.impl.DefaultNpc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.npc.impl.DefaultNpc;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
 
@@ -169,7 +169,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public void onKill(Player player, EntityNode victim) {
+	public void onKill(Player player, Actor victim) {
 		if(victim.isPlayer()) {
 			logout(player);
 			return;

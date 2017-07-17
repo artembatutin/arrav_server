@@ -1,7 +1,7 @@
 package net.edge.content.skill.summoning.familiar.impl.forager;
 
 import net.edge.content.skill.summoning.familiar.ability.Forager;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.function.Consumer;

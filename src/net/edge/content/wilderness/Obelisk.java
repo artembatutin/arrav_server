@@ -8,12 +8,11 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.locale.Position;
 import net.edge.locale.loc.SquareLocation;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.node.region.Region;
 
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 

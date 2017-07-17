@@ -3,7 +3,7 @@ package net.edge.world;
 import net.edge.content.combat.CombatType;
 import net.edge.locale.Position;
 import net.edge.net.packet.out.SendProjectile;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.node.region.RegionManager;
 
 /**
@@ -149,7 +149,7 @@ public final class Projectile {
 	 * @param curve        the curve angle of the projectile.
 	 * @param type         the combat type of this projectile
 	 */
-	public Projectile(EntityNode source, EntityNode victim, int projectileId, int speed, int delay, int startHeight, int endHeight, int curve, CombatType type) {
+	public Projectile(Actor source, Actor victim, int projectileId, int speed, int delay, int startHeight, int endHeight, int curve, CombatType type) {
 		this(source.getCenterPosition(), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), projectileId, speed, delay, startHeight, endHeight, curve, source.getInstance(), type);
 	}
 	
@@ -165,7 +165,7 @@ public final class Projectile {
 	 * @param endHeight    the ending height of the projectile.
 	 * @param curve        the curve angle of the projectile.
 	 */
-	public Projectile(EntityNode source, EntityNode victim, int projectileId, int speed, int delay, int startHeight, int endHeight, int curve) {
+	public Projectile(Actor source, Actor victim, int projectileId, int speed, int delay, int startHeight, int endHeight, int curve) {
 		this(source.getCenterPosition(), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), projectileId, speed, delay, startHeight, endHeight, curve, source.getInstance(), null);
 	}
 	

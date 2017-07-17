@@ -10,6 +10,7 @@ import net.edge.util.log.impl.DuelLog;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.special.CombatSpecial;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.node.item.container.session.impl.DuelSession;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.FoodConsumable;
@@ -20,8 +21,7 @@ import net.edge.locale.Position;
 import net.edge.locale.loc.SquareLocation;
 import net.edge.world.World;
 import net.edge.world.node.NodeType;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
 
@@ -191,7 +191,7 @@ public final class DuelMinigame extends Minigame {
 	}
 	
 	@Override
-	public void onKill(Player player, EntityNode victim) {
+	public void onKill(Player player, Actor victim) {
 		applyWin(victim.toPlayer(), player, false);
 	}
 	
@@ -271,7 +271,7 @@ public final class DuelMinigame extends Minigame {
 	}
 	
 	@Override
-	public boolean canHit(Player player, EntityNode victim, CombatType type) {
+	public boolean canHit(Player player, Actor victim, CombatType type) {
 		if(victim.getType().equals(NodeType.NPC)) {
 			return true;
 		}

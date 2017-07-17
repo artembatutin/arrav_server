@@ -3,9 +3,9 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.world.node.entity.npc.drop.ItemCache;
-import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropManager;
+import net.edge.world.node.actor.npc.drop.ItemCache;
+import net.edge.world.node.actor.npc.drop.NpcDrop;
+import net.edge.world.node.actor.npc.drop.NpcDropManager;
 
 import java.util.Objects;
 

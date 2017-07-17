@@ -1,8 +1,8 @@
 package net.edge.world.sync;
 
-import net.edge.world.node.entity.EntityList;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.ActorList;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,7 +19,7 @@ public class Synchronizer {
 	 * @param players players list.
 	 * @param npcs the npcs list.
 	 */
-	public void preUpdate(EntityList<Player> players, EntityList<Npc> npcs) {
+	public void preUpdate(ActorList<Player> players, ActorList<Npc> npcs) {
 		//long time = System.currentTimeMillis();
 		phaser.bulkRegister(players.size());
 		for(Player player : players) {
@@ -58,7 +58,7 @@ public class Synchronizer {
 	 * The main tick update for players.
 	 * @param players players list.
 	 */
-	public void update(EntityList<Player> players) {
+	public void update(ActorList<Player> players) {
 		long time = System.currentTimeMillis();
 		phaser.bulkRegister(players.size());
 		for(Player player : players) {
@@ -81,7 +81,7 @@ public class Synchronizer {
 	 * @param players players list.
 	 * @param npcs npcs list.
 	 */
-	public void postUpdate(EntityList<Player> players, EntityList<Npc> npcs) {
+	public void postUpdate(ActorList<Player> players, ActorList<Npc> npcs) {
 		//time = System.currentTimeMillis();
 		phaser.bulkRegister(players.size());
 		for(Player player : players) {

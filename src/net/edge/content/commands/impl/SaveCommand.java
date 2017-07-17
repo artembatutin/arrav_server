@@ -6,11 +6,11 @@ import net.edge.net.packet.in.NpcInformationPacket;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropManager;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.PlayerSerialization;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.npc.drop.NpcDrop;
+import net.edge.world.node.actor.npc.drop.NpcDropManager;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.PlayerSerialization;
+import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.ItemDefinition;
 
 import java.io.BufferedWriter;

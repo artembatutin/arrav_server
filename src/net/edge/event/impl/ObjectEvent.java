@@ -18,8 +18,8 @@ import net.edge.content.skill.woodcutting.Woodcutting;
 import net.edge.content.wilderness.Obelisk;
 import net.edge.event.Event;
 import net.edge.net.packet.in.ObjectActionPacket;
-import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.impl.gwd.GodwarsFaction;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
 
 /**

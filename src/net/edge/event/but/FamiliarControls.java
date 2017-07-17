@@ -5,7 +5,7 @@ import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.ButtonEvent;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;

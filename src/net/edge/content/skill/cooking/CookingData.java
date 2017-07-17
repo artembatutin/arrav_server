@@ -2,7 +2,7 @@ package net.edge.content.skill.cooking;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.net.packet.out.SendItemModelInterface;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
 

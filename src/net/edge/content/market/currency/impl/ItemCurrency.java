@@ -1,7 +1,7 @@
 package net.edge.content.market.currency.impl;
 
 import net.edge.content.market.currency.GeneralCurrency;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
 

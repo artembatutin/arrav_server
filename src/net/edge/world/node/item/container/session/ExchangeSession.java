@@ -5,8 +5,8 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.node.item.container.ItemContainer;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.Item;
 
 import java.util.*;

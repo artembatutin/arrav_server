@@ -7,11 +7,11 @@ import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Projectile;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Arrays;
@@ -21,12 +21,12 @@ import java.util.Optional;
 public final class DagannothPrimeCombatStrategy implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+	public boolean canOutgoingAttack(Actor character, Actor victim) {
 		return character.isNpc() && victim.isPlayer();
 	}
 	
 	@Override
-	public void incomingAttack(EntityNode character, EntityNode attacker, CombatHit data) {
+	public void incomingAttack(Actor character, Actor attacker, CombatHit data) {
 		if(data.getType().equals(CombatType.MAGIC) || data.getType().equals(CombatType.MELEE)) {
 			attacker.toPlayer().message("Your attacks are completely blocked...");
 			Arrays.stream(data.getHits()).filter(Objects::nonNull).forEach(h -> h.setAccurate(false));
@@ -35,7 +35,7 @@ public final class DagannothPrimeCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		character.setCurrentlyCasting(SPELL);
 		SPELL.castAnimation().ifPresent(character::animation);
 		World.get().submit(new Task(1, false) {
@@ -52,12 +52,12 @@ public final class DagannothPrimeCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int attackDelay(EntityNode character) {
+	public int attackDelay(Actor character) {
 		return character.getAttackSpeed();
 	}
 
 	@Override
-	public int attackDistance(EntityNode character) {
+	public int attackDistance(Actor character) {
 		return 8;
 	}
 
@@ -89,7 +89,7 @@ public final class DagannothPrimeCombatStrategy implements CombatStrategy {
 		}
 
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 500, 44, 4, 60, 43, 0));
 		}
 

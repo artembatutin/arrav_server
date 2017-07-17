@@ -8,9 +8,9 @@ import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
+import net.edge.world.node.actor.player.assets.activity.ActivityManager;
 
 /**
  * The message sent from the client when a player makes a yellow {@code X} click,

@@ -13,10 +13,10 @@ import net.edge.content.skill.summoning.familiar.ability.Teleporter;
 import net.edge.locale.Position;
 import net.edge.world.World;
 import net.edge.world.node.NodeType;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;
@@ -284,7 +284,7 @@ public final class Summoning {
 	 * @param victim the victim being attacked by the familiar.
 	 * @return <true> if the familiar attacked the victim, <false> otherwise.
 	 */
-	public static boolean attack(Player player, EntityNode victim) {
+	public static boolean attack(Player player, Actor victim) {
 		if(!player.getFamiliar().isPresent()) {
 			return false;
 		}

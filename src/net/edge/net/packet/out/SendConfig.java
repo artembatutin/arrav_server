@@ -1,11 +1,10 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.content.TabInterface;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 public final class SendConfig implements OutgoingPacket {
 	

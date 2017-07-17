@@ -3,27 +3,27 @@ package net.edge.content.combat.strategy.npc;
 import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 
 public final class WaterfiendCombatStrategy implements CombatStrategy {
 	
 	@Override
-	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+	public boolean canOutgoingAttack(Actor character, Actor victim) {
 		return character.isNpc() && victim.isPlayer();
 	}
 	
 	@Override
-	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		return new CombatHit(character, victim, CombatType.MELEE, true);//FIXME waterfiend uses ranged and magic.
 	}
 	
 	@Override
-	public int attackDelay(EntityNode character) {
+	public int attackDelay(Actor character) {
 		return character.getAttackSpeed();
 	}
 	
 	@Override
-	public int attackDistance(EntityNode character) {
+	public int attackDistance(Actor character) {
 		return 6;
 	}
 	

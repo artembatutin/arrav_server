@@ -13,13 +13,13 @@ import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.locale.Position;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.drop.ItemCache;
-import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropManager;
-import net.edge.world.node.entity.npc.drop.NpcDropTable;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.npc.drop.ItemCache;
+import net.edge.world.node.actor.npc.drop.NpcDrop;
+import net.edge.world.node.actor.npc.drop.NpcDropManager;
+import net.edge.world.node.actor.npc.drop.NpcDropTable;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
@@ -226,7 +226,7 @@ public final class BarrowsMinigame extends Minigame {
 	}
 	
 	@Override
-	public void onKill(Player player, EntityNode victim) {
+	public void onKill(Player player, Actor victim) {
 		Npc npc = victim.toNpc();
 		
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();

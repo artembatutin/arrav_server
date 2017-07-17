@@ -1,7 +1,7 @@
 package net.edge.net.packet;
 
 import net.edge.net.codec.IncomingMsg;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 /**
  * Represents a packet reader which returns a message.

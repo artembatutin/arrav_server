@@ -2,10 +2,10 @@ package net.edge.content.combat.magic.lunars.impl.spells;
 
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.net.packet.out.SendConfig;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;
@@ -34,14 +34,14 @@ public final class CureMe extends LunarButtonSpell {
 	}
 
 	@Override
-	public void effect(Player caster, EntityNode victim) {
+	public void effect(Player caster, Actor victim) {
 		caster.message("You are no longer poisoned...");
 		caster.out(new SendConfig(174, 0));
 		caster.getPoisonDamage().set(0);
 	}
 
 	@Override
-	public boolean prerequisites(Player caster, EntityNode victim) {
+	public boolean prerequisites(Player caster, Actor victim) {
 		if(!caster.isPoisoned()) {
 			caster.message("You are not poisoned.");
 			return false;

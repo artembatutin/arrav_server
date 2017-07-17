@@ -9,12 +9,12 @@ import net.edge.content.teleport.TeleportSpell;
 import net.edge.locale.loc.Location;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Spellbook;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager.ActivityType;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Spellbook;
+import net.edge.world.node.actor.player.assets.activity.ActivityManager.ActivityType;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;
@@ -163,7 +163,7 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 	}
 	
 	@Override
-	public final int startCast(EntityNode cast, EntityNode castOn) {
+	public final int startCast(Actor cast, Actor castOn) {
 		// This class holds no support for teleport other.
 		return 0;
 	}

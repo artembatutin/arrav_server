@@ -3,7 +3,7 @@ package net.edge.world.node.item.container.session;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -2,9 +2,9 @@ package net.edge.content.combat;
 
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.special.CombatSpecial;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Hit;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.OptionalInt;
 
@@ -17,12 +17,12 @@ public class CombatHit {
 	/**
 	 * The attacker in this combat session.
 	 */
-	private final EntityNode attacker;
+	private final Actor attacker;
 	
 	/**
 	 * The victim in this combat session.
 	 */
-	private final EntityNode victim;
+	private final Actor victim;
 	
 	/**
 	 * The hits that will be sent when the attacker attacks.
@@ -75,7 +75,7 @@ public class CombatHit {
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 * @param delay         the delay of the hit.
 	 */
-	public CombatHit(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy, OptionalInt delay) {
+	public CombatHit(Actor attacker, Actor victim, int amount, CombatType type, boolean checkAccuracy, OptionalInt delay) {
 		this.attacker = attacker;
 		this.victim = victim;
 		this.type = type;
@@ -131,15 +131,15 @@ public class CombatHit {
 		}
 	}
 	
-	public CombatHit(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy) {
+	public CombatHit(Actor attacker, Actor victim, int amount, CombatType type, boolean checkAccuracy) {
 		this(attacker, victim, amount, type, checkAccuracy, OptionalInt.empty());
 	}
 	
-	public CombatHit(EntityNode attacker, EntityNode victim, int amount, CombatType type, boolean checkAccuracy, int delay) {
+	public CombatHit(Actor attacker, Actor victim, int amount, CombatType type, boolean checkAccuracy, int delay) {
 		this(attacker, victim, amount, type, checkAccuracy, OptionalInt.of(delay));
 	}
 	
-	public CombatHit(EntityNode attacker, EntityNode victim, CombatType type, boolean checkAccuracy) {
+	public CombatHit(Actor attacker, Actor victim, CombatType type, boolean checkAccuracy) {
 		this(attacker, victim, 0, type, checkAccuracy);
 	}
 	
@@ -219,7 +219,7 @@ public class CombatHit {
 	 * Gets the attacker in this combat session.
 	 * @return the attacker.
 	 */
-	public final EntityNode getAttacker() {
+	public final Actor getAttacker() {
 		return attacker;
 	}
 	
@@ -227,7 +227,7 @@ public class CombatHit {
 	 * Gets the victim in this combat session.
 	 * @return the victim.
 	 */
-	public final EntityNode getVictim() {
+	public final Actor getVictim() {
 		return victim;
 	}
 	

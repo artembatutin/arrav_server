@@ -5,8 +5,8 @@ import net.edge.task.Task;
 import net.edge.content.skill.agility.obstacle.ObstacleActivity;
 import net.edge.locale.Position;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.update.UpdateFlag;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.update.UpdateFlag;
 
 /**
  * The forced walkable obstacle action which will walk a player starting from the start position

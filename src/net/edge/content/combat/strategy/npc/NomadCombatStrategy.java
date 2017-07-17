@@ -12,8 +12,8 @@ import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
 import net.edge.world.Projectile;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
 
     private int totalDamage;
 
-    private final List<EntityNode> victims = new ArrayList<>();
+    private final List<Actor> victims = new ArrayList<>();
 
     /**
      * Executed when the {@code character} is hit by the {@code attacker}.
@@ -44,7 +44,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
      * @param data      the combat session data chained to this hit.
      */
     @Override
-    public void incomingAttack(EntityNode character, EntityNode attacker, CombatHit data) {
+    public void incomingAttack(Actor character, Actor attacker, CombatHit data) {
         if(charge != null) {
             switch(charge) {
                 case SARADOMIN:
@@ -82,7 +82,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
      * @param attacker  the attacker whom hit the character.
      */
     @Override
-    public boolean canIncomingAttack(EntityNode character, EntityNode attacker) {
+    public boolean canIncomingAttack(Actor character, Actor attacker) {
         return true;
     }
 
@@ -95,7 +95,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
      * @return {@code true} if an attack can be made, {@code false} otherwise.
      */
     @Override
-    public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+    public boolean canOutgoingAttack(Actor character, Actor victim) {
         return charge == null;
     }
 
@@ -108,7 +108,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
      * @return a container holding the data for the attack.
      */
     @Override
-    public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+    public CombatHit outgoingAttack(Actor character, Actor victim) {
         if(RandomUtils.inclusive(100) < 5) {
             return charge(character);
         } else if(RandomUtils.inclusive(100) < 5) {
@@ -119,7 +119,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
         return type(character, victim, type);
     }
 
-    private CombatHit type(EntityNode character, EntityNode victim, CombatType type) {
+    private CombatHit type(Actor character, Actor victim, CombatType type) {
         switch(type) {
             case MELEE:
                 return melee(character, victim);
@@ -130,13 +130,13 @@ public final class NomadCombatStrategy implements CombatStrategy {
         }
     }
 
-    private CombatHit melee(EntityNode character, EntityNode victim) {
+    private CombatHit melee(Actor character, Actor victim) {
         int animationId = character.toNpc().getDefinition().getAttackAnimation();
         character.animation(new Animation(animationId, Animation.AnimationPriority.HIGH));
         return new CombatHit(character, victim, 1, CombatType.MELEE, true);
     }
 
-    private CombatHit charge(EntityNode character) {
+    private CombatHit charge(Actor character) {
         charge = Charge.random();
         character.getMovementQueue().setLockMovement(true);
         character.graphic(CHARGE_GRAPHIC);
@@ -153,7 +153,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
                     }
                     break;
                 case REBOUND:
-                    for(EntityNode victim : victims) {
+                    for(Actor victim : victims) {
                         if(!character.isDead() && !victim.isDead() && victim.getPosition().withinDistance(character.getPosition(), 15)) {
                             victim.damage(new Hit(totalDamage * 2));
                         }
@@ -169,7 +169,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
         return null;
     }
 
-    private CombatHit superCharge(EntityNode character) {
+    private CombatHit superCharge(Actor character) {
         charge = Charge.SUPER;
         character.getMovementQueue().setLockMovement(true);
         character.graphic(CHARGE_GRAPHIC);
@@ -198,7 +198,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
         return null;
     }
 
-    private CombatHit magic(EntityNode character, EntityNode victim) {
+    private CombatHit magic(Actor character, Actor victim) {
         character.animation(new Animation(12697, Animation.AnimationPriority.HIGH));
         character.forceChat("Freeze!");
         character.setCurrentlyCasting(SPELL);
@@ -222,7 +222,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
      * @return the value that the attack timer should be reset to.
      */
     @Override
-    public int attackDelay(EntityNode character) {
+    public int attackDelay(Actor character) {
         return character.getAttackSpeed();
     }
 
@@ -233,7 +233,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
      * @return the radius that the character must be in to attack.
      */
     @Override
-    public int attackDistance(EntityNode character) {
+    public int attackDistance(Actor character) {
         return 6;
     }
 
@@ -288,7 +288,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
         }
 
         @Override
-        public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+        public Optional<Projectile> projectile(Actor cast, Actor castOn) {
             return Optional.empty();
         }
 

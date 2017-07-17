@@ -3,7 +3,7 @@ package net.edge.world.node.item.container.impl;
 import net.edge.world.node.item.container.ItemContainer;
 import net.edge.world.node.item.container.ItemContainerAdapter;
 import net.edge.world.node.item.container.ItemWeightListener;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 

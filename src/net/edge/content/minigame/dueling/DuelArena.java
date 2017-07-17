@@ -12,7 +12,7 @@ package net.edge.content.minigame.dueling;
 //import net.ev.game.world.NodeType;
 //import net.ev.game.world.entity.player.Player;
 //import net.ev.game.world.World;
-//import net.ev.game.world.entity.EntityNode;
+//import net.ev.game.world.entity.Actor;
 //import CombatType;
 //import Prayer;
 //import net.ev.game.character.player.Privileges.Rights;
@@ -101,7 +101,7 @@ package net.edge.content.minigame.dueling;
 //	}
 //
 //	@Override
-//	public boolean canHit(Player player, EntityNode victim) {
+//	public boolean canHit(Player player, Actor victim) {
 //		if(player.getDuelSession().stage != DuelStage.FIGHT) {
 //			if(victim.isNpc()) {
 //				return true;
@@ -210,7 +210,7 @@ package net.edge.content.minigame.dueling;
 //	}
 //
 //	@Override
-//	public void onKill(Player player, EntityNode victim) {
+//	public void onKill(Player player, Actor victim) {
 //		applyWin((Player) victim, player, false);
 //	}
 //

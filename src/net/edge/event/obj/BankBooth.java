@@ -2,11 +2,7 @@ package net.edge.event.obj;
 
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.ObjectEvent;
-import net.edge.world.Animation;
-import net.edge.world.node.entity.move.ForcedMovement;
-import net.edge.world.node.entity.move.ForcedMovementManager;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.object.ObjectDefinition;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
 
 public class BankBooth extends EventInitializer {

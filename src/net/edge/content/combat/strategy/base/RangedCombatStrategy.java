@@ -14,18 +14,16 @@ import net.edge.task.Task;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Animation.AnimationPriority;
 import net.edge.world.Projectile;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.update.UpdateFlag;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.update.UpdateFlag;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemIdentifiers;
 import net.edge.world.node.item.ItemNode;
-
-import java.util.OptionalInt;
 
 /**
  * The strategy class which holds support for ranged combat.
@@ -34,7 +32,7 @@ import java.util.OptionalInt;
 public final class RangedCombatStrategy implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+	public boolean canOutgoingAttack(Actor character, Actor victim) {
 		if(character.isNpc()) {
 			return true;
 		}
@@ -51,7 +49,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		if(character.isNpc()) {
 			Npc npc = character.toNpc();
 			character.animation(new Animation(npc.getDefinition().getAttackAnimation()));
@@ -99,12 +97,12 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public int attackDelay(EntityNode character) {
+	public int attackDelay(Actor character) {
 		return character.isPlayer() ? character.toPlayer().getRangedDetails().delay() : character.getAttackSpeed();
 	}
 	
 	@Override
-	public int attackDistance(EntityNode character) {
+	public int attackDistance(Actor character) {
 		if(character.getAttr().get("master_archery").getBoolean())
 			return 15;
 		if(character.isNpc())
@@ -156,7 +154,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		return player.getRangedDetails().determine();
 	}
 	
-	private void decrementAmmo(Player player, EntityNode victim, CombatRangedWeapon weapon, CombatRangedAmmo ammo) {
+	private void decrementAmmo(Player player, Actor victim, CombatRangedWeapon weapon, CombatRangedAmmo ammo) {
 		if(weapon.getType().isSpecialBow()) {
 			return;
 		}

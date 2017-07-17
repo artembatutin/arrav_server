@@ -4,7 +4,7 @@ import net.edge.event.EventInitializer;
 import net.edge.event.impl.ButtonEvent;
 import net.edge.game.GameConstants;
 import net.edge.net.PunishmentHandler;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 public class IronManSelection extends EventInitializer {

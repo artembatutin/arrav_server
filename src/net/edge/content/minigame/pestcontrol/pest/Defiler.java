@@ -4,7 +4,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.actor.npc.Npc;
 
 import java.util.Optional;
 

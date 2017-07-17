@@ -14,10 +14,10 @@ import net.edge.content.dialogue.impl.*;
 import net.edge.content.market.currency.Currency;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcDefinition;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.npc.NpcDefinition;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.container.impl.Inventory;
 

@@ -6,7 +6,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.packet.out.SendShopPrice;
 import net.edge.net.packet.out.SendShopStock;
 import net.edge.util.json.JsonSaver;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.ItemDefinition;
 
 /**

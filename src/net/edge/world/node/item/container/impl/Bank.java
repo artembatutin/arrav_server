@@ -5,7 +5,7 @@ import net.edge.net.packet.out.SendContainer;
 import net.edge.net.packet.out.SendInventoryInterface;
 import net.edge.world.node.item.container.ItemContainer;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 public final class Bank {

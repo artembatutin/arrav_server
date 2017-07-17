@@ -13,17 +13,17 @@ import net.edge.content.combat.strategy.base.MeleeCombatStrategy;
 import net.edge.content.combat.strategy.base.RangedCombatStrategy;
 import net.edge.content.combat.weapon.FightStyle;
 import net.edge.content.combat.weapon.WeaponInterface;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
 import net.edge.world.*;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.move.MovementQueue;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.move.MovementQueue;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.npc.impl.gwd.GodwarsFaction;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.*;
@@ -89,7 +89,7 @@ public final class Combat {
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 * @param action        the action to execute for each victim.
 	 */
-	public static <E extends EntityNode> CombatHit[] damageCharactersWithin(EntityNode attacker, Iterable<E> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<E> action) {
+	public static <E extends Actor> CombatHit[] damageCharactersWithin(Actor attacker, Iterable<E> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<E> action) {
 		List<CombatHit> combatHits = new ArrayList<>();
 		for(E c : victims) {
 			if(c == null)
@@ -118,7 +118,7 @@ public final class Combat {
 	 * @param type          the combat type the attacker is using.
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 */
-	public static CombatHit[] damageCharactersWithin(EntityNode attacker, Iterable<? extends EntityNode> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
+	public static CombatHit[] damageCharactersWithin(Actor attacker, Iterable<? extends Actor> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
 		return damageCharactersWithin(attacker, victims, position, radius, hits, type, checkAccuracy, null);
 	}
 	
@@ -134,7 +134,7 @@ public final class Combat {
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 * @param action        the action to execute for each victim.
 	 */
-	public static CombatHit[] damagePlayersWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Player> action) {
+	public static CombatHit[] damagePlayersWithin(Actor attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Player> action) {
 		return damageCharactersWithin(attacker, () -> World.get().getLocalPlayers(attacker), position, radius, hits, type, checkAccuracy, action);
 	}
 	
@@ -150,7 +150,7 @@ public final class Combat {
 	 * @param type          the combat type the attacker is using.
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 */
-	public static CombatHit[] damagePlayersWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
+	public static CombatHit[] damagePlayersWithin(Actor attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
 		return damagePlayersWithin(attacker, position, radius, hits, type, checkAccuracy, null);
 	}
 	
@@ -167,7 +167,7 @@ public final class Combat {
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 * @param action        the action to execute for each victim.
 	 */
-	public static CombatHit[] damageNpcsWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Npc> action) {
+	public static CombatHit[] damageNpcsWithin(Actor attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Npc> action) {
 		return damageCharactersWithin(attacker, () -> World.get().getLocalNpcs(attacker), position, radius, hits, type, checkAccuracy, action);
 	}
 	
@@ -183,7 +183,7 @@ public final class Combat {
 	 * @param type          the combat type the attacker is using.
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 */
-	public static CombatHit[] damageNpcsWithin(EntityNode attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
+	public static CombatHit[] damageNpcsWithin(Actor attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
 		return damageNpcsWithin(attacker, position, radius, hits, type, checkAccuracy, null);
 	}
 	
@@ -262,7 +262,7 @@ public final class Combat {
 	 * @return {@code true} if this character is wearing full void,
 	 * {@code false} otherwise.
 	 */
-	public static boolean isFullVoid(EntityNode character) {
+	public static boolean isFullVoid(Actor character) {
 		if(character.isNpc() && character.toNpc().getDefinition().getName().contains("Void Knight"))
 			return true;
 		Item top = ((Player) character).getEquipment().get(Equipment.CHEST_SLOT);
@@ -275,7 +275,7 @@ public final class Combat {
 	 * @return {@code true} if this character is wearing full veracs,
 	 * {@code false} otherwise.
 	 */
-	public static boolean isFullVeracs(EntityNode character) {
+	public static boolean isFullVeracs(Actor character) {
 		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Verac the Defiled") : character.toPlayer().getEquipment().containsAll(4753, 4757, 4759, 4755);
 	}
 	
@@ -285,7 +285,7 @@ public final class Combat {
 	 * @return {@code true} if this character is wearing full dharoks,
 	 * {@code false} otherwise.
 	 */
-	public static boolean isFullDharoks(EntityNode character) {
+	public static boolean isFullDharoks(Actor character) {
 		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Dharok the Wretched") : character.toPlayer().getEquipment().containsAll(4716, 4720, 4722, 4718);
 	}
 	
@@ -295,7 +295,7 @@ public final class Combat {
 	 * @return {@code true} if this character is wearing full karils,
 	 * {@code false} otherwise.
 	 */
-	public static boolean isFullKarils(EntityNode character) {
+	public static boolean isFullKarils(Actor character) {
 		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Karil the Tainted") : character.toPlayer().getEquipment().containsAll(4732, 4736, 4738, 4734);
 	}
 	
@@ -305,7 +305,7 @@ public final class Combat {
 	 * @return {@code true} if this character is wearing full ahrims,
 	 * {@code false} otherwise.
 	 */
-	public static boolean isFullAhrims(EntityNode character) {
+	public static boolean isFullAhrims(Actor character) {
 		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Ahrim the Blighted") : character.toPlayer().getEquipment().containsAll(4708, 4712, 4714, 4710);
 	}
 	
@@ -315,7 +315,7 @@ public final class Combat {
 	 * @return {@code true} if this character is wearing full torags,
 	 * {@code false} otherwise.
 	 */
-	public static boolean isFullTorags(EntityNode character) {
+	public static boolean isFullTorags(Actor character) {
 		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Torag the Corrupted") : character.toPlayer().getEquipment().containsAll(4745, 4749, 4751, 4747);
 	}
 	
@@ -325,7 +325,7 @@ public final class Combat {
 	 * @return {@code true} if this character is wearing full guthans,
 	 * {@code false} otherwise.
 	 */
-	public static boolean isFullGuthans(EntityNode character) {
+	public static boolean isFullGuthans(Actor character) {
 		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Guthan the Infested") : character.toPlayer().getEquipment().containsAll(4724, 4728, 4730, 4726);
 	}
 	
@@ -380,7 +380,7 @@ public final class Combat {
 	 * @return the delay for the combat type.
 	 * @throws IllegalArgumentException if the combat type is invalid.
 	 */
-	public static int getDelay(EntityNode character, EntityNode victim, CombatType type) {
+	public static int getDelay(Actor character, Actor victim, CombatType type) {
 		int delay = character.isPlayer() && victim.isNpc() ? 1 : 0;
 		if(character.isPlayer() && character.toPlayer().getWeapon().equals(WeaponInterface.SALAMANDER)) {
 			return 1 + delay;
@@ -403,7 +403,7 @@ public final class Combat {
 	 * @return {@code true} if it was successfully applied, {@code false}
 	 * otherwise.
 	 */
-	public static boolean effect(EntityNode character, CombatEffectType effect) {
+	public static boolean effect(Actor character, CombatEffectType effect) {
 		return CombatEffect.EFFECTS.get(effect).start(character);
 	}
 	
@@ -436,7 +436,7 @@ public final class Combat {
 	 * called on two different occasions even with the same arguments.
 	 * @throws IllegalArgumentException if the combat type is invalid.
 	 */
-	public static Hit calculateRandomHit(EntityNode character, EntityNode victim, CombatType type, int delay, boolean checkAccuracy) {
+	public static Hit calculateRandomHit(Actor character, Actor victim, CombatType type, int delay, boolean checkAccuracy) {
 		int max;
 		int hit;
 		switch(type) {
@@ -497,7 +497,7 @@ public final class Combat {
 			}
 			
 			@Override
-			public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+			public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 				return Optional.empty();
 			}
 			
@@ -507,7 +507,7 @@ public final class Combat {
 			}
 			
 			@Override
-			public void executeOnHit(EntityNode cast, EntityNode castOn, boolean accurate, int damage) {
+			public void executeOnHit(Actor cast, Actor castOn, boolean accurate, int damage) {
 			}
 			
 			@Override
@@ -541,7 +541,7 @@ public final class Combat {
 	 * called on two different occasions even with the same arguments.
 	 * @throws IllegalArgumentException if the combat type is invalid.
 	 */
-	public static Hit calculateSoaking(EntityNode victim, CombatType type, Hit hit) {
+	public static Hit calculateSoaking(Actor victim, CombatType type, Hit hit) {
 		if(type != CombatType.NONE && victim.isPlayer()) {
 			Player player = victim.toPlayer();
 			int i = type == CombatType.MAGIC ? 2 : type == CombatType.RANGED ? 1 : 0;
@@ -563,7 +563,7 @@ public final class Combat {
 	 * @param type     the combat type used by the attacker.
 	 * @return {@code true} if the hit was accurate, {@code false} otherwise.
 	 */
-	public static boolean isAccurate(EntityNode attacker, EntityNode victim, CombatType type) {
+	public static boolean isAccurate(Actor attacker, Actor victim, CombatType type) {
 		boolean veracEffect = false;
 		
 		if(type == CombatType.MELEE) {
@@ -726,7 +726,7 @@ public final class Combat {
 	 * @param victim    the victim being attacked.
 	 * @return the maximum hit this character can deal.
 	 */
-	private static int calculateMaxMeleeHit(EntityNode character, EntityNode victim) {
+	private static int calculateMaxMeleeHit(Actor character, Actor victim) {
 		int maxHit;
 		
 		if(character.isNpc()) {
@@ -837,7 +837,7 @@ public final class Combat {
 	 * @param victim    the victim being attacked.
 	 * @return the maximum hit this character can deal.
 	 */
-	private static int calculateMaxRangedHit(EntityNode character, EntityNode victim) {
+	private static int calculateMaxRangedHit(Actor character, Actor victim) {
 		int maxHit = 0;
 		if(character.isNpc()) {
 			Npc npc = (Npc) character;
@@ -891,7 +891,7 @@ public final class Combat {
 	 * @param attacker  the attacker attacking the character.
 	 * @return {@code true} if the character can be attacked, {@code false} otherwise.
 	 */
-	public static boolean canBeAttacked(EntityNode character, EntityNode attacker) {
+	public static boolean canBeAttacked(Actor character, Actor attacker) {
 		if(character == null || attacker == null) {
 			return false;
 		}
@@ -1003,7 +1003,7 @@ public final class Combat {
 	 * @return A {@link List> containing the character nodes which are within distance of the main
 	 * {@code node} type.
 	 */
-	public static <E extends EntityNode> List<E> charactersWithinDistance(EntityNode node, Iterator<E> target, int radius) {
+	public static <E extends Actor> List<E> charactersWithinDistance(Actor node, Iterator<E> target, int radius) {
 		List<E> list = new ArrayList<>();
 		while(target.hasNext()) {
 			E character = target.next();

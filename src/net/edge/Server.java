@@ -11,7 +11,6 @@ import io.netty.util.ResourceLeakDetector;
 import net.edge.cache.FileSystem;
 import net.edge.cache.decoder.MapDefinitionDecoder;
 import net.edge.cache.decoder.ObjectDefinitionDecoder;
-import net.edge.cache.decoder.RegionDecoder;
 import net.edge.content.combat.CombatConstants;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.ButtonEvent;
@@ -32,7 +31,7 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.world.World;
-import net.edge.world.node.entity.attribute.AttributeKey;
+import net.edge.world.node.actor.attribute.AttributeKey;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

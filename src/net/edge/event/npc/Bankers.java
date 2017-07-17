@@ -1,10 +1,9 @@
 package net.edge.event.npc;
 
-import net.edge.content.skill.slayer.Slayer;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.NpcEvent;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 
 public class Bankers extends EventInitializer {
 	@Override

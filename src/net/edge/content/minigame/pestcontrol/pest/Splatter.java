@@ -4,10 +4,9 @@ import net.edge.content.minigame.pestcontrol.PestControlMinigame;
 import net.edge.content.minigame.pestcontrol.defence.PestGate;
 import net.edge.locale.Position;
 import net.edge.world.Hit;
-import net.edge.world.PoisonType;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcDeath;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.npc.NpcDeath;
 import net.edge.world.node.region.Region;
 
 public class Splatter extends Pest {

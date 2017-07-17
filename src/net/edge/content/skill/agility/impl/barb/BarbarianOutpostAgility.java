@@ -1,7 +1,5 @@
 package net.edge.content.skill.agility.impl.barb;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.net.packet.out.SendObjectAnimation;
 import net.edge.task.LinkedTaskSequence;
@@ -18,14 +16,13 @@ import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
 import net.edge.locale.Position;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.move.ForcedMovement;
-import net.edge.world.node.entity.move.ForcedMovementManager;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.move.ForcedMovement;
+import net.edge.world.node.actor.move.ForcedMovementManager;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
-import java.util.EnumSet;
 import java.util.Optional;
 
 /**

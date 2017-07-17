@@ -5,7 +5,7 @@ import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
 
 public class Dragannoth extends EventInitializer {

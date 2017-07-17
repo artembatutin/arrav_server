@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.PlayerPanel;
 import net.edge.locale.Position;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 /**
  * Handles some parts of wilderness activity.

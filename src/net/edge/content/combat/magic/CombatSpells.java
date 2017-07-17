@@ -4,12 +4,12 @@ import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.magic.ancients.CombatAncientSpell;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.PoisonType;
 import net.edge.world.Projectile;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Arrays;
@@ -29,7 +29,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2699, 54, 3, 13, 11, 0, CombatType.MAGIC));
 		}
 		
@@ -80,12 +80,12 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 103, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn) {
+		public void effect(Actor cast, Actor castOn) {
 			if(!castOn.weaken(CombatWeaken.ATTACK_LOW) && cast.isPlayer()) {
 				Player player = (Player) cast;
 				String s = castOn.getType().name().toLowerCase();
@@ -130,7 +130,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2703, 54, 30, 27, 21, 0, CombatType.MAGIC));
 		}
 		
@@ -181,7 +181,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2718, 48, 5, 43, 31, 0, CombatType.MAGIC));
 		}
 		
@@ -232,12 +232,12 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 106, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn) {
+		public void effect(Actor cast, Actor castOn) {
 			if(!castOn.weaken(CombatWeaken.STRENGTH_LOW) && cast.isPlayer()) {
 				Player player = (Player) cast;
 				String s = castOn.getType().name().toLowerCase();
@@ -282,7 +282,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2729, 44, 3, 23, 21, 0, CombatType.MAGIC));
 		}
 		
@@ -333,7 +333,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2729, 44, 3, 144, 71, 0, CombatType.MAGIC));
 		}
 		
@@ -384,7 +384,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2699, 44, 3, 23, 18, 0, CombatType.MAGIC));
 		}
 		
@@ -435,12 +435,12 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 109, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn) {
+		public void effect(Actor cast, Actor castOn) {
 			if(!castOn.weaken(CombatWeaken.DEFENCE_LOW) && cast.isPlayer()) {
 				Player player = (Player) cast;
 				String s = castOn.getType().name().toLowerCase();
@@ -485,12 +485,12 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 178, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn) {
+		public void effect(Actor cast, Actor castOn) {
 			if(castOn.getMovementQueue().isLockMovement()) {
 				if(cast.isPlayer())
 					cast.toPlayer().message("The spell has " + "no effect because they are already frozen.");
@@ -540,7 +540,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2704, 44, 3, 23, 21, 0, CombatType.MAGIC));
 		}
 		
@@ -591,7 +591,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2719, 49, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
@@ -642,7 +642,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2731, 44, 3, 18, 18, 0, CombatType.MAGIC));
 		}
 		
@@ -693,7 +693,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 146, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
@@ -745,7 +745,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2699, 44, 3, 23, 21, 0, CombatType.MAGIC));
 		}
 		
@@ -796,7 +796,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2706, 44, 3, 22, 19, 0, CombatType.MAGIC));
 		}
 		
@@ -847,7 +847,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 88, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
@@ -898,12 +898,12 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 178, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn) {
+		public void effect(Actor cast, Actor castOn) {
 			if(castOn.getMovementQueue().isLockMovement()) {
 				if(cast.isPlayer())
 					cast.toPlayer().message("The spell has no effect because they are already frozen.");
@@ -952,7 +952,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 328, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
@@ -1003,7 +1003,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2720, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
@@ -1054,7 +1054,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2733, 44, 3, 18, 17, 0, CombatType.MAGIC));
 		}
 		
@@ -1105,7 +1105,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 		
@@ -1156,7 +1156,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 		
@@ -1207,7 +1207,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 		
@@ -1258,7 +1258,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2699, 44, 3, 23, 21, 0, CombatType.MAGIC));
 		}
 		
@@ -1309,7 +1309,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2706, 44, 3, 23, 21, 0, CombatType.MAGIC));
 		}
 		
@@ -1360,12 +1360,12 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 168, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn) {
+		public void effect(Actor cast, Actor castOn) {
 			if(!castOn.weaken(CombatWeaken.DEFENCE_HIGH) && cast.isPlayer()) {
 				Player player = (Player) cast;
 				String s = castOn.getType().name().toLowerCase();
@@ -1410,7 +1410,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2721, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
@@ -1461,12 +1461,12 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 171, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn) {
+		public void effect(Actor cast, Actor castOn) {
 			if(!castOn.weaken(CombatWeaken.STRENGTH_HIGH) && cast.isPlayer()) {
 				Player player = (Player) cast;
 				String s = castOn.getType().name().toLowerCase();
@@ -1511,7 +1511,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 2735, 44, 3, 23, 21, 0, CombatType.MAGIC));
 		}
 		
@@ -1562,12 +1562,12 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 178, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn) {
+		public void effect(Actor cast, Actor castOn) {
 			if(castOn.getMovementQueue().isLockMovement()) {
 				if(cast.isPlayer())
 					cast.toPlayer().message("The spell has " + "no effect because they are already frozen.");
@@ -1616,12 +1616,12 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 174, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn) {
+		public void effect(Actor cast, Actor castOn) {
 			if(!castOn.weaken(CombatWeaken.ATTACK_HIGH) && cast.isPlayer()) {
 				Player player = (Player) cast;
 				String s = castOn.getType().name().toLowerCase();
@@ -1666,12 +1666,12 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 344, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn) {
+		public void effect(Actor cast, Actor castOn) {
 			if(castOn.isPlayer())
 				Combat.effect(castOn, CombatEffectType.TELEBLOCK);
 		}
@@ -1708,7 +1708,7 @@ public enum CombatSpells {
 	}),
 	SMOKE_RUSH(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			castOn.poison(PoisonType.DEFAULT_RANGED);
@@ -1725,7 +1725,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 384, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
@@ -1766,7 +1766,7 @@ public enum CombatSpells {
 	}),
 	SHADOW_RUSH(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			castOn.weaken(CombatWeaken.ATTACK_LOW);
@@ -1783,7 +1783,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 378, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
@@ -1824,7 +1824,7 @@ public enum CombatSpells {
 	}),
 	BLOOD_RUSH(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			cast.healEntity((int) (damage * 0.25));
@@ -1841,7 +1841,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 372, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
@@ -1882,7 +1882,7 @@ public enum CombatSpells {
 	}),
 	ICE_RUSH(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			castOn.freeze(7);
@@ -1899,7 +1899,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 360, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
@@ -1940,7 +1940,7 @@ public enum CombatSpells {
 	}),
 	SMOKE_BURST(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			castOn.poison(PoisonType.DEFAULT_RANGED);
@@ -1957,7 +1957,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 		
@@ -1998,7 +1998,7 @@ public enum CombatSpells {
 	}),
 	SHADOW_BURST(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			castOn.weaken(CombatWeaken.ATTACK_LOW);
@@ -2015,7 +2015,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 		
@@ -2056,7 +2056,7 @@ public enum CombatSpells {
 	}),
 	BLOOD_BURST(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			cast.healEntity((int) (damage * 0.25));
@@ -2073,7 +2073,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 		
@@ -2114,7 +2114,7 @@ public enum CombatSpells {
 	}),
 	ICE_BURST(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			castOn.freeze(10);
@@ -2131,7 +2131,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 		
@@ -2172,7 +2172,7 @@ public enum CombatSpells {
 	}),
 	SMOKE_BLITZ(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			castOn.poison(PoisonType.DEFAULT_RANGED);
@@ -2189,7 +2189,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 386, 44, 3, 43, 31, 0, CombatType.MAGIC));
 		}
 		
@@ -2230,7 +2230,7 @@ public enum CombatSpells {
 	}),
 	SHADOW_BLITZ(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			castOn.weaken(CombatWeaken.ATTACK_HIGH);
@@ -2247,7 +2247,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 380, 44, 3, 43, 20, 0, CombatType.MAGIC));
 		}
 		
@@ -2288,7 +2288,7 @@ public enum CombatSpells {
 	}),
 	BLOOD_BLITZ(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			cast.healEntity((int) (damage * 0.25));
@@ -2305,7 +2305,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 374, 44, 3, 43, 21, 0, CombatType.MAGIC));
 		}
 		
@@ -2346,7 +2346,7 @@ public enum CombatSpells {
 	}),
 	ICE_BLITZ(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			castOn.freeze(10);
@@ -2363,7 +2363,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 		
@@ -2404,7 +2404,7 @@ public enum CombatSpells {
 	}),
 	SMOKE_BARRAGE(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			castOn.poison(PoisonType.SUPER_RANGED);
@@ -2421,7 +2421,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 		
@@ -2462,7 +2462,7 @@ public enum CombatSpells {
 	}),
 	SHADOW_BARRAGE(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			castOn.weaken(CombatWeaken.ATTACK_HIGH);
@@ -2479,7 +2479,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 		
@@ -2520,7 +2520,7 @@ public enum CombatSpells {
 	}),
 	BLOOD_BARRAGE(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			cast.healEntity((int) (damage * 0.25));
@@ -2537,7 +2537,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 		
@@ -2578,7 +2578,7 @@ public enum CombatSpells {
 	}),
 	ICE_BARRAGE(new CombatAncientSpell() {
 		@Override
-		public void effect(EntityNode cast, EntityNode castOn, int damage) {
+		public void effect(Actor cast, Actor castOn, int damage) {
 			if(damage < 1)
 				return;
 			castOn.freeze(15);
@@ -2595,7 +2595,7 @@ public enum CombatSpells {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 		

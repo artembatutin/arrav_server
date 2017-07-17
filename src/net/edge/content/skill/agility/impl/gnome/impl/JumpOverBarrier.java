@@ -5,8 +5,8 @@ import net.edge.content.skill.agility.obstacle.ObstacleActivity;
 import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.locale.Position;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.move.ForcedMovement;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.move.ForcedMovement;
+import net.edge.world.node.actor.player.Player;
 
 /**
  * Holds functionality for the jump over barrier obstacle.

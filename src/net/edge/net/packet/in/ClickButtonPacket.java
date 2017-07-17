@@ -36,10 +36,10 @@ import net.edge.net.codec.IncomingMsg;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.entity.player.assets.Spellbook;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
+import net.edge.world.node.actor.player.assets.Spellbook;
+import net.edge.world.node.actor.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
 

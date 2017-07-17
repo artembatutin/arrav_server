@@ -6,7 +6,7 @@ import net.edge.content.wilderness.WildernessActivity;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 public final class SendWildernessActivity implements OutgoingPacket {
 	

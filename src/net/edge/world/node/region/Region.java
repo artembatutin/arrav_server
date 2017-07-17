@@ -12,9 +12,9 @@ import net.edge.world.World;
 import net.edge.world.node.Node;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.NodeType;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.node.item.ItemState;
 import net.edge.world.object.ObjectNode;
@@ -213,11 +213,11 @@ public final class Region extends Node {
 	}
 	
 	/**
-	 * Adds an {@link EntityNode} to the backing queue.
+	 * Adds an {@link Actor} to the backing queue.
 	 * @param e The entity to add.
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
-	public <T extends EntityNode> boolean addChar(T e) {
+	public <T extends Actor> boolean addChar(T e) {
 		if(e.getState() == NodeState.INACTIVE)
 			return false;
 		if(e.isPlayer()) {
@@ -228,10 +228,10 @@ public final class Region extends Node {
 	}
 	
 	/**
-	 * Removes an {@link EntityNode} from the backing queue.
+	 * Removes an {@link Actor} from the backing queue.
 	 * @param e The entity to remove.
 	 */
-	public <T extends EntityNode> boolean removeChar(T e) {
+	public <T extends Actor> boolean removeChar(T e) {
 		if(e.isPlayer()) {
 			return players.remove(e.toPlayer());
 		} else {

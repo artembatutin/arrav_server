@@ -1,7 +1,5 @@
 package net.edge.content.skill.construction;
 
-import net.edge.world.node.entity.player.Player;
-
 /**
  * Represents a player's {@link Construction} house dungeon.
  * @author Artem Batutin <artembatutin@gmail.com>

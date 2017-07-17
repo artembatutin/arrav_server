@@ -2,8 +2,8 @@ package net.edge.content.minigame.pestcontrol.pest;
 
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.impl.DefaultNpc;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.npc.impl.DefaultNpc;
 
 public abstract class Pest extends DefaultNpc {
 	

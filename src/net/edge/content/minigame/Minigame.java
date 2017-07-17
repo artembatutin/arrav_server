@@ -7,6 +7,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.Hit;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.world.node.item.container.impl.EquipmentType;
 import net.edge.content.item.FoodConsumable;
@@ -14,11 +15,10 @@ import net.edge.content.item.PotionConsumable;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.locale.Position;
-import net.edge.world.node.entity.EntityNode;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.update.UpdateFlag;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.update.UpdateFlag;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
@@ -183,7 +183,7 @@ public abstract class Minigame {
 	 * @param player the player who inflicts damage on another character.
 	 * @param other  the character that gets the damage by the player.
 	 */
-	public void onInflictDamage(Player player, EntityNode other, Hit[] inflicted) {
+	public void onInflictDamage(Player player, Actor other, Hit[] inflicted) {
 	
 	}
 	
@@ -192,7 +192,7 @@ public abstract class Minigame {
 	 * @param player the player that killed another character.
 	 * @param other  the character that was killed by the player.
 	 */
-	public void onKill(Player player, EntityNode other) {
+	public void onKill(Player player, Actor other) {
 		
 	}
 	
@@ -330,7 +330,7 @@ public abstract class Minigame {
 	 * @param type   the combat type the other player is being hit with.
 	 * @return <true> if the player can attack, <false> otherwise.
 	 */
-	public boolean canHit(Player player, EntityNode other, CombatType type) {
+	public boolean canHit(Player player, Actor other, CombatType type) {
 		return other.isNpc();
 	}
 	

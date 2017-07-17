@@ -5,7 +5,7 @@ import net.edge.event.EventInitializer;
 import net.edge.event.impl.ItemEvent;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.container.impl.Inventory;
 

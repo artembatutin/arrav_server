@@ -4,8 +4,8 @@ import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
 
 /**
  * The message sent from the client when a player sends the load tool.mapviewer region

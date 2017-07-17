@@ -1,10 +1,10 @@
 package net.edge.world;
 
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 
 /**
  * The container class that represents a hit that can be dealt on a
- * {@link EntityNode}.
+ * {@link Actor}.
  * @author lare96 <http://github.com/lare96>
  */
 public final class Hit {

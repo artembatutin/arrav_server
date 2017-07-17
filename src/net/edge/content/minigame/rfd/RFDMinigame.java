@@ -9,11 +9,11 @@ import net.edge.content.minigame.SequencedMinigame;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.attribute.AttributeValue;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.impl.DefaultNpc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.attribute.AttributeValue;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.npc.impl.DefaultNpc;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
@@ -111,7 +111,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public void onKill(Player player, EntityNode other) {
+	public void onKill(Player player, Actor other) {
 		if(!other.isNpc()) {
 			return;
 		}

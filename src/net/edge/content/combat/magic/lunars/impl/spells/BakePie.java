@@ -3,7 +3,7 @@ package net.edge.content.combat.magic.lunars.impl.spells;
 import net.edge.content.combat.magic.lunars.impl.LunarItemSpell;
 import net.edge.content.skill.cooking.Cooking;
 import net.edge.content.skill.cooking.CookingData;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;

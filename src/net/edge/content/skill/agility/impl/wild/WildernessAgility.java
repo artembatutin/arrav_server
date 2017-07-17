@@ -1,7 +1,5 @@
 package net.edge.content.skill.agility.impl.wild;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.agility.AgilityCourse;
 import net.edge.content.skill.agility.AgilityCourseType;
@@ -14,12 +12,11 @@ import net.edge.content.skill.agility.obstacle.impl.Walkable;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
 import net.edge.net.packet.out.SendObjectAnimation;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
-import java.util.EnumSet;
 import java.util.Optional;
 
 /**

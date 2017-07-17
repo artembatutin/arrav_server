@@ -4,7 +4,7 @@ import net.edge.util.Stopwatch;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.concurrent.TimeUnit;
 

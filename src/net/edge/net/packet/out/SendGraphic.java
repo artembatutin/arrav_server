@@ -2,12 +2,9 @@ package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
 import net.edge.locale.Position;
-import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
-
-import java.util.Objects;
+import net.edge.world.node.actor.player.Player;
 
 import static net.edge.world.node.NodeState.INACTIVE;
 

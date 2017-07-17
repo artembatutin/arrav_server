@@ -1,8 +1,8 @@
 package net.edge.game;
 
 import net.edge.locale.Position;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 /**

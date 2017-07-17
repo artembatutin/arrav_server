@@ -1,7 +1,7 @@
 package net.edge.content.skill.construction;
 
 import net.edge.locale.Position;
-import net.edge.world.node.entity.npc.impl.DefaultNpc;
+import net.edge.world.node.actor.npc.impl.DefaultNpc;
 import net.edge.world.node.item.Item;
 
 /**

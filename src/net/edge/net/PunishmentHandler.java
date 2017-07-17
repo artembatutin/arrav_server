@@ -1,7 +1,7 @@
 package net.edge.net;
 
 import com.google.common.collect.Sets;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 import java.io.FileWriter;
 import java.nio.file.Paths;

@@ -3,7 +3,7 @@ package net.edge.content.item;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 /**

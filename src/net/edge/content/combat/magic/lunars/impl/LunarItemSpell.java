@@ -1,8 +1,8 @@
 package net.edge.content.combat.magic.lunars.impl;
 
 import net.edge.content.combat.magic.lunars.LunarSpell;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 /**
@@ -41,12 +41,12 @@ public abstract class LunarItemSpell extends LunarSpell {
 	public abstract boolean canCast(Player caster, Item item);
 	
 	@Override
-	public final void effect(Player caster, EntityNode victim) {
+	public final void effect(Player caster, Actor victim) {
 
 	}
 	
 	@Override
-	public final boolean prerequisites(Player caster, EntityNode victim) {
+	public final boolean prerequisites(Player caster, Actor victim) {
 		return true;
 	}
 	

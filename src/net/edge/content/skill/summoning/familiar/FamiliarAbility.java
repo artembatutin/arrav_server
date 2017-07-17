@@ -1,6 +1,6 @@
 package net.edge.content.skill.summoning.familiar;
 
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 /**
  * The abstract class which holds basic functionality for familiar abilities.

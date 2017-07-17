@@ -2,7 +2,6 @@ package net.edge.content.item;
 
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
-import net.edge.content.skill.smithing.SmithingTable;
 import net.edge.event.impl.ItemEvent;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
@@ -10,15 +9,13 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
-
-import java.util.Map;
 
 /**
  * The class which is responsible for mithril seeds.

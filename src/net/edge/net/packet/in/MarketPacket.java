@@ -5,7 +5,7 @@ import net.edge.content.market.MarketShop;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.util.TextUtils;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 /**
  * The message that is sent from the client when the player searches an item in the market.

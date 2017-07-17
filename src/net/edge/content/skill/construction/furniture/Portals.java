@@ -10,7 +10,7 @@ import net.edge.content.skill.construction.room.RoomFurniture;
 import net.edge.content.skill.construction.Portal;
 import net.edge.content.skill.construction.data.Constants;
 import net.edge.locale.Position;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.EnumSet;

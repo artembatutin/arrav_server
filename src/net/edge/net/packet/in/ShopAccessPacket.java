@@ -4,7 +4,7 @@ import net.edge.content.market.MarketCounter;
 import net.edge.locale.Position;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 /**
  * The message sent from the client which depends on the Npc Information panel integration.

@@ -3,7 +3,7 @@ package net.edge.event.obj;
 import net.edge.content.skill.Skills;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.ObjectEvent;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
 
 public class SummoningObelisk extends EventInitializer {

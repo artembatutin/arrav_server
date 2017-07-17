@@ -10,7 +10,7 @@ import net.edge.net.packet.out.SendItemOnInterfaceSlot;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
 

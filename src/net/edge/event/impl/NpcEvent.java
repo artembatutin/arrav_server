@@ -8,8 +8,8 @@ import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.thieving.impl.Pickpocketing;
 import net.edge.event.Event;
 import net.edge.net.packet.in.NpcActionPacket;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 
 /**
  * Event handling npc action clicks.

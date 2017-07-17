@@ -9,13 +9,11 @@ import net.edge.net.packet.out.SendFade;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.move.ForcedMovement;
-import net.edge.world.node.entity.move.ForcedMovementDirection;
-import net.edge.world.node.entity.move.ForcedMovementManager;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.move.ForcedMovement;
+import net.edge.world.node.actor.move.ForcedMovementDirection;
+import net.edge.world.node.actor.move.ForcedMovementManager;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
-
-import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.TRAINING_PORTAL;
 
 public class GodWars extends EventInitializer {
 	@Override

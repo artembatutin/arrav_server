@@ -1,10 +1,10 @@
 package net.edge.content.combat.magic.lunars.impl.spells;
 
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;
@@ -33,12 +33,12 @@ public final class HunterKit extends LunarButtonSpell {
 	public static final Item[] ITEMS = Item.convert(10150, 10010, 10006, 10031, 10029, 596, 10008, 11260);
 	
 	@Override
-	public void effect(Player caster, EntityNode victim) {
+	public void effect(Player caster, Actor victim) {
 		caster.getInventory().add(HUNTER_KIT);
 	}
 	
 	@Override
-	public boolean prerequisites(Player caster, EntityNode victim) {
+	public boolean prerequisites(Player caster, Actor victim) {
 		if(!caster.getInventory().hasCapacityFor(HUNTER_KIT)) {
 			caster.message("You don't have space for the hunter kit...");
 			return false;

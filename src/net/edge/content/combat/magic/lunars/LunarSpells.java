@@ -6,8 +6,8 @@ import net.edge.content.combat.magic.lunars.impl.LunarCombatSpell;
 import net.edge.content.combat.magic.lunars.impl.LunarItemSpell;
 import net.edge.content.combat.magic.lunars.impl.spells.*;
 import net.edge.content.dialogue.impl.OptionDialogue;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;
@@ -123,7 +123,7 @@ public final class LunarSpells {
 	 * @param spellId the spell identification.
 	 * @return {@code true} if the spell was casted, {@code false} otherwise.
 	 */
-	public static boolean castCombatSpells(Player player, EntityNode other, int spellId) {
+	public static boolean castCombatSpells(Player player, Actor other, int spellId) {
 		LunarCombatSpell spell = getCombatSpell(spellId).orElse(null);
 
 		if(spell == null) {

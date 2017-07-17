@@ -1,10 +1,10 @@
 package net.edge.content.combat.effect.potion;
 
 import net.edge.content.combat.effect.CombatEffect;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.AntifireDetails;
-import net.edge.world.node.entity.player.assets.AntifireDetails.AntifireType;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.AntifireDetails;
+import net.edge.world.node.actor.player.assets.AntifireDetails.AntifireType;
 
 import java.util.Optional;
 
@@ -29,7 +29,7 @@ public final class CombatAntifireEffect extends CombatEffect {
 	}
 	
 	@Override
-	public boolean apply(EntityNode c) {
+	public boolean apply(Actor c) {
 		if(!c.isPlayer()) {
 			return false;
 		}
@@ -45,7 +45,7 @@ public final class CombatAntifireEffect extends CombatEffect {
 	}
 	
 	@Override
-	public boolean removeOn(EntityNode c) {
+	public boolean removeOn(Actor c) {
 		if(c.isPlayer()) {
 			Player player = c.toPlayer();
 			
@@ -59,7 +59,7 @@ public final class CombatAntifireEffect extends CombatEffect {
 	}
 	
 	@Override
-	public void process(EntityNode c) {
+	public void process(Actor c) {
 		if(c.isPlayer() && c.toPlayer().getAntifireDetails().isPresent()) {
 			Player player = c.toPlayer();
 			AntifireDetails detail = player.getAntifireDetails().get();
@@ -75,7 +75,7 @@ public final class CombatAntifireEffect extends CombatEffect {
 	}
 	
 	@Override
-	public boolean onLogin(EntityNode c) {
+	public boolean onLogin(Actor c) {
 		return c.isPlayer() && c.toPlayer().getAntifireDetails().isPresent();
 	}
 	

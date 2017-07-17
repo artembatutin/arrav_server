@@ -6,10 +6,10 @@ import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.locale.Position;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.move.ForcedMovement;
-import net.edge.world.node.entity.move.ForcedMovementDirection;
-import net.edge.world.node.entity.move.ForcedMovementManager;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.move.ForcedMovement;
+import net.edge.world.node.actor.move.ForcedMovementDirection;
+import net.edge.world.node.actor.move.ForcedMovementManager;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.stream.IntStream;
 

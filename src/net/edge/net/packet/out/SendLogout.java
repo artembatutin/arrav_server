@@ -6,7 +6,7 @@ import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 public final class SendLogout implements OutgoingPacket {
 	

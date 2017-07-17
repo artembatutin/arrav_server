@@ -2,13 +2,13 @@ package net.edge.content.combat.effect;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 
 import java.util.Collection;
 import java.util.Collections;
 
 /**
- * Some sort of temporary effect applied to a {@link EntityNode} during
+ * Some sort of temporary effect applied to a {@link Actor} during
  * combat. Combat effects include but are not limited to; being poisoned,
  * skulled, and teleblocked.
  * @param <T> the type of character that this effect is designated for.
@@ -48,7 +48,7 @@ public abstract class CombatEffect {
 	 * methods in this class.
 	 * @param c the character this combat effect is for.
 	 */
-	public final boolean start(EntityNode c) {
+	public final boolean start(Actor c) {
 		if(apply(c)) {
 			World.get().submit(new CombatEffectTask(c, this));
 			return true;
@@ -62,7 +62,7 @@ public abstract class CombatEffect {
 	 * @return {@code true} if the effect could be applied, {@code false}
 	 * otherwise.
 	 */
-	public abstract boolean apply(EntityNode c);
+	public abstract boolean apply(Actor c);
 	
 	/**
 	 * Removes this effect from {@code c} if needed.
@@ -70,13 +70,13 @@ public abstract class CombatEffect {
 	 * @return {@code true} if this effect should be stopped, {@code false}
 	 * otherwise.
 	 */
-	public abstract boolean removeOn(EntityNode c);
+	public abstract boolean removeOn(Actor c);
 	
 	/**
 	 * Provides processing for this effect on {@code c}.
 	 * @param c the character this combat effect is for.
 	 */
-	public abstract void process(EntityNode c);
+	public abstract void process(Actor c);
 	
 	/**
 	 * Executed on login, primarily used to re-apply the effect to {@code c}.
@@ -84,7 +84,7 @@ public abstract class CombatEffect {
 	 * @return {@code true} if the effect should be re-applied, {@code false}
 	 * otherwise.
 	 */
-	public abstract boolean onLogin(EntityNode c);
+	public abstract boolean onLogin(Actor c);
 	
 	/**
 	 * Gets the delay for this individual combat effect.

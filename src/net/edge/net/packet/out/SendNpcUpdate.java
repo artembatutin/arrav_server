@@ -8,10 +8,10 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.Direction;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.update.UpdateManager;
-import net.edge.world.node.entity.update.UpdateState;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.update.UpdateManager;
+import net.edge.world.node.actor.update.UpdateState;
 import net.edge.world.node.region.Region;
 import net.edge.world.node.region.RegionManager;
 

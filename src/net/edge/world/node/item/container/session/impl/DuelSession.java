@@ -14,7 +14,7 @@ import net.edge.content.minigame.dueling.DuelMinigame;
 import net.edge.content.minigame.dueling.DuelingRules;
 import net.edge.locale.loc.Location;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.*;

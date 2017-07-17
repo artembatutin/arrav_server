@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 public final class SendClanBanned implements OutgoingPacket {
 	

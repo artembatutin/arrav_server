@@ -23,14 +23,14 @@ import net.edge.util.Stopwatch;
 import net.edge.util.TextUtils;
 import net.edge.util.ThreadUtil;
 import net.edge.util.log.LoggingManager;
-import net.edge.world.node.entity.EntityList;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.move.path.SimplePathChecker;
-import net.edge.world.node.entity.move.path.impl.SimplePathFinder;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcMovementTask;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.ActorList;
+import net.edge.world.node.actor.move.path.SimplePathChecker;
+import net.edge.world.node.actor.move.path.impl.SimplePathFinder;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.npc.NpcMovementTask;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.node.item.container.session.ExchangeSessionManager;
 import net.edge.world.node.region.Region;
@@ -87,12 +87,12 @@ public final class World {
 	/**
 	 * The collection of active NPCs.
 	 */
-	private final EntityList<Npc> npcs = new EntityList<>(16384);
+	private final ActorList<Npc> npcs = new ActorList<>(16384);
 	
 	/**
 	 * The collection of active players.
 	 */
-	private final EntityList<Player> players = new EntityList<>(2048);
+	private final ActorList<Player> players = new ActorList<>(2048);
 	
 	/**
 	 * A collection of {@link Player}s registered by their username hashes.
@@ -287,7 +287,7 @@ public final class World {
 	 * @param character the character that it will be returned for.
 	 * @return the local players.
 	 */
-	public Iterator<Player> getLocalPlayers(EntityNode character) {
+	public Iterator<Player> getLocalPlayers(Actor character) {
 		if(character.isPlayer())
 			return character.toPlayer().getLocalPlayers().iterator();
 		return players.iterator();
@@ -300,7 +300,7 @@ public final class World {
 	 * @param character the character that it will be returned for.
 	 * @return the local npcs.
 	 */
-	public Iterator<Npc> getLocalNpcs(EntityNode character) {
+	public Iterator<Npc> getLocalNpcs(Actor character) {
 		if(character.isPlayer())
 			return character.toPlayer().getLocalNpcs().iterator();
 		return npcs.iterator();
@@ -310,8 +310,8 @@ public final class World {
 	 * Gets every single character in the player and npc character lists.
 	 * @return a set containing every single character.
 	 */
-	public Set<EntityNode> getEntities() {
-		Set<EntityNode> characters = new HashSet<>();
+	public Set<Actor> getEntities() {
+		Set<Actor> characters = new HashSet<>();
 		players.forEach(characters::add);
 		npcs.forEach(characters::add);
 		return characters;
@@ -393,7 +393,7 @@ public final class World {
 	 * Gets the collection of active players.
 	 * @return the active players.
 	 */
-	public EntityList<Player> getPlayers() {
+	public ActorList<Player> getPlayers() {
 		return players;
 	}
 	
@@ -421,7 +421,7 @@ public final class World {
 	 * Gets the collection of active npcs.
 	 * @return the active npcs.
 	 */
-	public EntityList<Npc> getNpcs() {
+	public ActorList<Npc> getNpcs() {
 		return npcs;
 	}
 

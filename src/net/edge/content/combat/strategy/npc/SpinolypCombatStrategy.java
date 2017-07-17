@@ -7,11 +7,11 @@ import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Projectile;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;
@@ -19,12 +19,12 @@ import java.util.Optional;
 public final class SpinolypCombatStrategy implements CombatStrategy {
 	
 	@Override
-	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+	public boolean canOutgoingAttack(Actor character, Actor victim) {
 		return character.isNpc() && victim.isPlayer();
 	}
 	
 	@Override
-	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		character.animation(new Animation(character.toNpc().getDefinition().getAttackAnimation()));
 		World.get().submit(new Task(1, false) {
 			@Override
@@ -40,12 +40,12 @@ public final class SpinolypCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public int attackDelay(EntityNode character) {
+	public int attackDelay(Actor character) {
 		return character.getAttackSpeed();
 	}
 	
 	@Override
-	public int attackDistance(EntityNode character) {
+	public int attackDistance(Actor character) {
 		return 8;
 	}
 	
@@ -77,7 +77,7 @@ public final class SpinolypCombatStrategy implements CombatStrategy {
 		}
 		
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 1658, 3, 44, 43, 43, 0));
 		}
 		

@@ -4,7 +4,7 @@ import net.edge.content.minigame.warriorsguild.impl.AnimationRoom;
 import net.edge.content.minigame.warriorsguild.impl.CyclopsRoom;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
 

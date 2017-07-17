@@ -6,7 +6,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.ActionListener;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.Arrays;
 import java.util.List;

@@ -10,9 +10,9 @@ import net.edge.locale.Boundary;
 import net.edge.locale.loc.Location;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcAggression;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.npc.NpcAggression;
+import net.edge.world.node.actor.player.Player;
 
 /**
  * The combat session controls the mechanics of when and how the controller of

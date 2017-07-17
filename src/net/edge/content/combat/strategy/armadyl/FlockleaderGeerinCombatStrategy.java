@@ -6,20 +6,20 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Projectile;
-import net.edge.world.node.entity.npc.impl.gwd.KreeArra;
+import net.edge.world.node.actor.npc.impl.gwd.KreeArra;
 
 public final class FlockleaderGeerinCombatStrategy implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+	public boolean canOutgoingAttack(Actor character, Actor victim) {
 		return victim.isPlayer() && KreeArra.CHAMBER.inLocation(victim.getPosition());
 	}
 
 	@Override
-	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		character.animation(new Animation(character.toNpc().getDefinition().getAttackAnimation()));
 		World.get().submit(new Task(1, false) {
 			@Override
@@ -34,12 +34,12 @@ public final class FlockleaderGeerinCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int attackDelay(EntityNode character) {
+	public int attackDelay(Actor character) {
 		return character.getAttackSpeed();
 	}
 
 	@Override
-	public int attackDistance(EntityNode character) {
+	public int attackDistance(Actor character) {
 		return 7;
 	}
 

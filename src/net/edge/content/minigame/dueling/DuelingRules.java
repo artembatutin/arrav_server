@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.world.node.item.container.session.impl.DuelSession;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.EnumSet;
 import java.util.Optional;

@@ -5,10 +5,8 @@ import net.edge.event.impl.NpcEvent;
 import net.edge.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-
-import java.util.Optional;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 
 public class StrayDog extends EventInitializer {
 	@Override

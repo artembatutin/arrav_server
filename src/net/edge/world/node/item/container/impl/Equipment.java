@@ -13,9 +13,9 @@ import net.edge.world.node.item.container.ItemWeightListener;
 import net.edge.content.item.Requirement;
 import net.edge.content.item.Skillcape;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.ShieldAnimation;
-import net.edge.world.node.entity.update.UpdateFlag;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.ShieldAnimation;
+import net.edge.world.node.actor.update.UpdateFlag;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
 

@@ -3,9 +3,9 @@ package net.edge.content.commands.impl;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"npc"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::npc id")
 public final class SpawnNpcCommand implements Command {

@@ -8,11 +8,11 @@ import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Projectile;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;
@@ -20,18 +20,18 @@ import java.util.Optional;
 public final class TzTokJadCombatStrategy implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+	public boolean canOutgoingAttack(Actor character, Actor victim) {
 		return victim.isPlayer();
 	}
 
 	@Override
-	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		CombatType[] data = character.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.RANGED, CombatType.MAGIC} : new CombatType[]{CombatType.RANGED, CombatType.MAGIC};
 		CombatType c = RandomUtils.random(data);
 		return type(character, victim, c);
 	}
 
-	private CombatHit type(EntityNode character, EntityNode victim, CombatType type) {
+	private CombatHit type(Actor character, Actor victim, CombatType type) {
 		switch(type) {
 			case MELEE:
 				return melee(character, victim);
@@ -44,12 +44,12 @@ public final class TzTokJadCombatStrategy implements CombatStrategy {
 		}
 	}
 
-	private CombatHit melee(EntityNode character, EntityNode victim) {
+	private CombatHit melee(Actor character, Actor victim) {
 		character.animation(new Animation(9277));
 		return new CombatHit(character, victim, 1, CombatType.MELEE, true, 2);
 	}
 
-	private CombatHit ranged(EntityNode character, EntityNode victim) {
+	private CombatHit ranged(Actor character, Actor victim) {
 		character.animation(new Animation(9276));
 		character.graphic(new Graphic(1625));
 		World.get().submit(new Task(2, false) {
@@ -64,7 +64,7 @@ public final class TzTokJadCombatStrategy implements CombatStrategy {
 		return new CombatHit(character, victim, 1, CombatType.RANGED, true, 5);
 	}
 
-	private CombatHit magic(EntityNode character, EntityNode victim) {
+	private CombatHit magic(Actor character, Actor victim) {
 		character.setCurrentlyCasting(SPELL);
 		character.animation(new Animation(9278));
 		World.get().submit(new Task(4, false) {
@@ -80,12 +80,12 @@ public final class TzTokJadCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int attackDelay(EntityNode character) {
+	public int attackDelay(Actor character) {
 		return character.getAttackSpeed();
 	}
 
 	@Override
-	public int attackDistance(EntityNode character) {
+	public int attackDistance(Actor character) {
 		return 10;
 	}
 
@@ -117,7 +117,7 @@ public final class TzTokJadCombatStrategy implements CombatStrategy {
 		}
 
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.of(new Projectile(cast, castOn, 1627, 44, 3, 43, 31, 0));
 		}
 

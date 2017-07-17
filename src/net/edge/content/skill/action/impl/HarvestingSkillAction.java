@@ -6,8 +6,8 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.SkillAction;
 import net.edge.locale.Position;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;

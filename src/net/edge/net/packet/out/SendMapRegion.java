@@ -5,7 +5,7 @@ import net.edge.locale.Position;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 public final class SendMapRegion implements OutgoingPacket {
 	private final Position  position;

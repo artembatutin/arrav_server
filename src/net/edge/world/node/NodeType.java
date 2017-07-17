@@ -1,7 +1,7 @@
 package net.edge.world.node;
 
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.node.region.Region;

@@ -10,8 +10,8 @@ import net.edge.content.skill.summoning.Summoning;
 import net.edge.world.*;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.NodeType;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -51,8 +51,8 @@ public final class CombatHitTask extends Task {
 	@Override
 	public void execute() {
 
-		EntityNode attacker = builder.getCharacter();
-		EntityNode victim = builder.getVictim();
+		Actor attacker = builder.getCharacter();
+		Actor victim = builder.getVictim();
 
 		if(attacker == null || victim == null || attacker.isDead() || attacker.getState() != NodeState.ACTIVE || victim.isDead() || victim.getState() != NodeState.ACTIVE) {
 			this.cancel();
@@ -252,8 +252,8 @@ public final class CombatHitTask extends Task {
 	 */
 	public static void applyPrayerEffects(CombatHit data) {
 		if(data.getHits().length != 0) {
-			EntityNode victim = data.getVictim();
-			EntityNode attacker = data.getAttacker();
+			Actor victim = data.getVictim();
+			Actor attacker = data.getAttacker();
 
 			//PROTECTION PRAYERS
 			if(victim.isPlayer() && Prayer.isAnyActivated(victim.toPlayer(), Combat.getProtectingPrayer(data.getType()))) {
@@ -288,8 +288,8 @@ public final class CombatHitTask extends Task {
 	private void handlePrayerEffects() {
 		if(data.getHits().length != 0) {
 
-			EntityNode victim = data.getVictim();
-			EntityNode attacker = data.getAttacker();
+			Actor victim = data.getVictim();
+			Actor attacker = data.getAttacker();
 
 			//REDEMPTION
 			if(victim.isPlayer() && Prayer.isActivated(victim.toPlayer(), Prayer.REDEMPTION) && victim.toPlayer().getSkills()[Skills.HITPOINTS].getLevel() <= (victim.toPlayer().getSkills()[Skills.HITPOINTS].getRealLevel() / 10)) {

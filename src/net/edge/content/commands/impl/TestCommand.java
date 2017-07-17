@@ -5,12 +5,12 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.entity.npc.drop.ItemCache;
-import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropManager;
-import net.edge.world.node.entity.npc.drop.NpcDropTable;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.npc.drop.ItemCache;
+import net.edge.world.node.actor.npc.drop.NpcDrop;
+import net.edge.world.node.actor.npc.drop.NpcDropManager;
+import net.edge.world.node.actor.npc.drop.NpcDropTable;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.Item;
 
 import java.util.concurrent.ThreadLocalRandom;

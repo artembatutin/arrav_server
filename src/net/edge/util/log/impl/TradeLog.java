@@ -2,7 +2,7 @@ package net.edge.util.log.impl;
 
 import net.edge.util.log.LogDetails;
 import net.edge.world.node.item.container.ItemContainer;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;

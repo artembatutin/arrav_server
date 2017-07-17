@@ -2,14 +2,13 @@ package net.edge.content.combat;
 
 import net.edge.task.TaskListener;
 import net.edge.content.combat.strategy.CombatStrategy;
-import net.edge.locale.Boundary;
 import net.edge.locale.loc.Location;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcAggression;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.npc.NpcAggression;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,17 +27,17 @@ public final class CombatBuilder {
 	/**
 	 * The character in control of this combat builder.
 	 */
-	private final EntityNode character;
+	private final Actor character;
 	
 	/**
 	 * The current character that the controller is attacking.
 	 */
-	private EntityNode currentVictim;
+	private Actor currentVictim;
 	
 	/**
 	 * The last character that attacked the controller.
 	 */
-	private EntityNode aggressor;
+	private Actor aggressor;
 	
 	/**
 	 * The task that handles the entire combat process.
@@ -74,7 +73,7 @@ public final class CombatBuilder {
 	 * Creates a new {@link CombatBuilder}.
 	 * @param character the character in control of this combat builder.
 	 */
-	public CombatBuilder(EntityNode character) {
+	public CombatBuilder(Actor character) {
 		this.character = character;
 	}
 	
@@ -83,7 +82,7 @@ public final class CombatBuilder {
 	 * already attacking the target this method has no effect.
 	 * @param target the character that this controller will be prompted to attack.
 	 */
-	public void attack(EntityNode target) {
+	public void attack(Actor target) {
 		if(character.same(target)) {
 			character.getMovementQueue().reset();
 			return;
@@ -142,7 +141,7 @@ public final class CombatBuilder {
 		if(combatTask != null)
 			combatTask.cancel();
 		if(currentVictim != null) {
-			EntityNode ag = currentVictim.getCombatBuilder().getAggressor();
+			Actor ag = currentVictim.getCombatBuilder().getAggressor();
 			if(ag != null && ag.same(character))
 				ag.getCombatBuilder().setAggressor(null);
 		}
@@ -290,7 +289,7 @@ public final class CombatBuilder {
 	 * Gets the character in control of this combat builder.
 	 * @return the character in control.
 	 */
-	public EntityNode getCharacter() {
+	public Actor getCharacter() {
 		return character;
 	}
 	
@@ -298,7 +297,7 @@ public final class CombatBuilder {
 	 * Gets the current character that the controller is attacking.
 	 * @return the character the controller is attacking
 	 */
-	public EntityNode getVictim() {
+	public Actor getVictim() {
 		return currentVictim;
 	}
 	
@@ -306,7 +305,7 @@ public final class CombatBuilder {
 	 * Gets the last character that attacked the controller.
 	 * @return the last character that attacked.
 	 */
-	public EntityNode getAggressor() {
+	public Actor getAggressor() {
 		return aggressor;
 	}
 	
@@ -314,7 +313,7 @@ public final class CombatBuilder {
 	 * Sets the value for {@link CombatBuilder#aggressor}.
 	 * @param aggressor the new value to set.
 	 */
-	void setAggressor(EntityNode aggressor) {
+	void setAggressor(Actor aggressor) {
 		this.aggressor = aggressor;
 	}
 	
@@ -376,14 +375,14 @@ public final class CombatBuilder {
 		/**
 		 * The victim that will be listened for.
 		 */
-		private final EntityNode victim;
+		private final Actor victim;
 		
 		/**
 		 * Create a new {@link CombatDistanceListener}.
 		 * @param builder the combat builder owned by the controller.
 		 * @param victim  the victim that will be listened for.
 		 */
-		CombatDistanceListener(CombatBuilder builder, EntityNode victim) {
+		CombatDistanceListener(CombatBuilder builder, Actor victim) {
 			super.attach(builder.getCharacter().isPlayer() ? builder.getCharacter().toPlayer() : builder.getCharacter().toNpc());
 			this.builder = builder;
 			this.victim = victim;

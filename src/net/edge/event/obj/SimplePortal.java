@@ -1,16 +1,12 @@
 package net.edge.event.obj;
 
-import net.edge.content.dialogue.impl.OptionDialogue;
-import net.edge.content.skill.Skill;
 import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.game.GameConstants;
 import net.edge.locale.Position;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
-
-import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.LADDER;
 
 public class SimplePortal extends EventInitializer {
 	@Override

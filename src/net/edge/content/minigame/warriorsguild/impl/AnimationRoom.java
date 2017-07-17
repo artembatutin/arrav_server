@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.event.impl.ObjectEvent;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.content.combat.CombatType;
 import net.edge.content.dialogue.impl.StatementDialogue;
@@ -14,13 +13,13 @@ import net.edge.content.minigame.warriorsguild.WarriorsGuild;
 import net.edge.locale.Position;
 import net.edge.locale.loc.SquareLocation;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.move.ForcedMovement;
-import net.edge.world.node.entity.move.ForcedMovementDirection;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.actor.move.ForcedMovement;
+import net.edge.world.node.actor.move.ForcedMovementDirection;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
@@ -83,7 +82,7 @@ public final class AnimationRoom extends GuildRoom {
 	}
 	
 	@Override
-	public boolean canHit(Player player, EntityNode other, CombatType type) {
+	public boolean canHit(Player player, Actor other, CombatType type) {
 		return armour.isPresent() && other.isNpc();
 	}
 	
@@ -158,7 +157,7 @@ public final class AnimationRoom extends GuildRoom {
 	}
 	
 	@Override
-	public void onKill(Player player, EntityNode other) {
+	public void onKill(Player player, Actor other) {
 		if(other.isNpc() && armour.isPresent() && other.toNpc().getId() == armour.get().getId()) {
 			drop(player, true);
 		}

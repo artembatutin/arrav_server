@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
 import net.edge.content.skill.slayer.Slayer;
-import net.edge.world.node.entity.npc.NpcAggression;
-import net.edge.world.node.entity.npc.NpcDefinition;
+import net.edge.world.node.actor.npc.NpcAggression;
+import net.edge.world.node.actor.npc.NpcDefinition;
 
 import java.util.Objects;
 

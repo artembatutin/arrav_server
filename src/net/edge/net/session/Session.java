@@ -1,7 +1,7 @@
 package net.edge.net.session;
 
 import io.netty.channel.Channel;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 import java.net.InetSocketAddress;
 

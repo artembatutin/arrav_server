@@ -3,8 +3,8 @@ package net.edge.net.packet.in;
 import net.edge.content.quest.QuestManager;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.activity.ActivityManager;
 
 /**
  * The message that is sent from the client when the player chats anything

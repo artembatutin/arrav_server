@@ -1,7 +1,7 @@
 package net.edge.content.combat.weapon;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 /**

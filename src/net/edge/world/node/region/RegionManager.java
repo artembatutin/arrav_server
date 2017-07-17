@@ -6,12 +6,12 @@ import it.unimi.dsi.fastutil.objects.ObjectSet;
 import net.edge.locale.Position;
 import net.edge.net.packet.out.SendObject;
 import net.edge.net.packet.out.SendObjectRemoval;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
 
 /**
- * Manages all of the cached {@link Region}s and the {@link EntityNode}s contained within them.
+ * Manages all of the cached {@link Region}s and the {@link Actor}s contained within them.
  * @author lare96 <http://github.org/lare96>
  * @author Graham
  */

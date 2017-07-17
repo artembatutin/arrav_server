@@ -7,7 +7,7 @@ import net.edge.event.EventInitializer;
 import net.edge.event.impl.ButtonEvent;
 import net.edge.locale.Position;
 import net.edge.net.packet.out.SendWildernessActivity;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.concurrent.TimeUnit;
 

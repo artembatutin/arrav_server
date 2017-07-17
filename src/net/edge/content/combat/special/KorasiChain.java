@@ -4,12 +4,12 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.locale.Position;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.Optional;
 
@@ -26,7 +26,7 @@ class KorasiChain extends Task {
 	/**
 	 * The entities being already hitted by the lightning.
 	 */
-	private ObjectList<EntityNode> hitted = new ObjectArrayList<>();
+	private ObjectList<Actor> hitted = new ObjectArrayList<>();
 	
 	/**
 	 * The chained damage in the korasi hits.
@@ -38,7 +38,7 @@ class KorasiChain extends Task {
 	 */
 	private Position position;
 	
-	KorasiChain(Player player, EntityNode victim, int damage) {
+	KorasiChain(Player player, Actor victim, int damage) {
 		super(3, false);
 		this.player = player;
 		this.position = victim.getPosition();

@@ -1,7 +1,7 @@
 package net.edge.content.door;
 
 import net.edge.locale.Position;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.region.Region;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectDirection;

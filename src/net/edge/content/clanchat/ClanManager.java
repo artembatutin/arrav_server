@@ -9,7 +9,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.packet.out.SendClanBanned;
 import net.edge.util.TextUtils;
 import net.edge.util.json.JsonSaver;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.Optional;
 

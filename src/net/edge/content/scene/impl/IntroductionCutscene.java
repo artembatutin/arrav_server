@@ -3,7 +3,6 @@ package net.edge.content.scene.impl;
 import net.edge.net.PunishmentHandler;
 import net.edge.net.packet.out.*;
 import net.edge.task.Task;
-import net.edge.game.GameConstants;
 import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.impl.GiveItemDialogue;
@@ -15,8 +14,8 @@ import net.edge.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager.ActivityType;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.activity.ActivityManager.ActivityType;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;

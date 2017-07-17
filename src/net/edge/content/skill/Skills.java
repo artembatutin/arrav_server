@@ -7,9 +7,9 @@ import net.edge.util.TextUtils;
 import net.edge.game.GameConstants;
 import net.edge.world.Graphic;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.entity.update.UpdateFlag;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
+import net.edge.world.node.actor.update.UpdateFlag;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;

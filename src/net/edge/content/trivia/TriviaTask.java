@@ -2,7 +2,7 @@ package net.edge.content.trivia;
 
 import net.edge.task.Task;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>

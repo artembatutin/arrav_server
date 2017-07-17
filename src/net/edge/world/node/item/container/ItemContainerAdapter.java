@@ -2,7 +2,7 @@ package net.edge.world.node.item.container;
 
 import net.edge.net.packet.out.SendContainer;
 import net.edge.net.packet.out.SendItemOnInterfaceSlot;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 /**

@@ -7,16 +7,16 @@ import net.edge.content.combat.magic.CombatSpell;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.OptionalInt;
 
 public final class MagicCombatStrategy implements CombatStrategy {
 	
 	@Override
-	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+	public boolean canOutgoingAttack(Actor character, Actor victim) {
 		if(character.isNpc()) {
 			return true;
 		}
@@ -38,7 +38,7 @@ public final class MagicCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		int delay = 0;
 		if(character.isPlayer()) {
 			Player player = (Player) character;
@@ -58,12 +58,12 @@ public final class MagicCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public int attackDelay(EntityNode character) {
+	public int attackDelay(Actor character) {
 		return 7;
 	}
 	
 	@Override
-	public int attackDistance(EntityNode character) {
+	public int attackDistance(Actor character) {
 		return 8;
 	}
 	

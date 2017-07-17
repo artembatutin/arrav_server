@@ -6,13 +6,13 @@ import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendNpcDrop;
 import net.edge.util.rand.Chance;
-import net.edge.world.node.entity.npc.NpcDefinition;
-import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropManager;
-import net.edge.world.node.entity.npc.drop.NpcDropTable;
-import net.edge.world.node.entity.npc.drop.SuggestedDrop;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.npc.NpcDefinition;
+import net.edge.world.node.actor.npc.drop.NpcDrop;
+import net.edge.world.node.actor.npc.drop.NpcDropManager;
+import net.edge.world.node.actor.npc.drop.NpcDropTable;
+import net.edge.world.node.actor.npc.drop.SuggestedDrop;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.ItemDefinition;
 
 /**

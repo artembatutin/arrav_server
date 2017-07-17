@@ -8,8 +8,8 @@ import net.edge.content.clanchat.ClanMember;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.container.impl.Inventory;
 

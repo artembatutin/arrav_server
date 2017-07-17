@@ -3,8 +3,8 @@ package net.edge.content.commands.impl;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"emote", "animation", "anim"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::emote, ::animation or ::anim animationId")
 public final class PlayAnimationCommand implements Command {

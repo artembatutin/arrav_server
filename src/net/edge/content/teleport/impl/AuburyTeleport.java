@@ -5,11 +5,11 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.content.teleport.TeleportSpell;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;
@@ -67,7 +67,7 @@ public final class AuburyTeleport extends TeleportSpell {
 	}
 	
 	@Override
-	public int startCast(EntityNode cast, EntityNode castOn) {
+	public int startCast(Actor cast, Actor castOn) {
 		return 0;
 	}
 	

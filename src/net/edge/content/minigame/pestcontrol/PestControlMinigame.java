@@ -18,9 +18,9 @@ import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Hit;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
@@ -257,7 +257,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public void onInflictDamage(Player player, EntityNode other, Hit[] inflicted) {
+	public void onInflictDamage(Player player, Actor other, Hit[] inflicted) {
 		int add = 0;
 		for(Hit hit : inflicted) {
 			add += hit.getDamage();

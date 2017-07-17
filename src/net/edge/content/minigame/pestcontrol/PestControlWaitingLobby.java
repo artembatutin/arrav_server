@@ -10,16 +10,16 @@ import net.edge.locale.Position;
 import net.edge.net.packet.out.SendWalkable;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.drop.ItemCache;
-import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropManager;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.npc.drop.ItemCache;
+import net.edge.world.node.actor.npc.drop.NpcDrop;
+import net.edge.world.node.actor.npc.drop.NpcDropManager;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
 
 import static net.edge.content.minigame.Minigame.MinigameSafety.SAFE;
-import static net.edge.world.node.entity.npc.drop.ItemCache.*;
+import static net.edge.world.node.actor.npc.drop.ItemCache.*;
 
 public final class PestControlWaitingLobby extends MinigameLobby {
 	

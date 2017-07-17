@@ -3,9 +3,9 @@ package net.edge.content.combat;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.edge.util.Stopwatch;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 
 import java.util.Map.Entry;
 import java.util.Optional;
@@ -21,7 +21,7 @@ public final class CombatDamage {
 	/**
 	 * The damages of players who have inflicted damage.
 	 */
-	private final Object2ObjectOpenHashMap<EntityNode, DamageCounter> attackers = new Object2ObjectOpenHashMap<>();
+	private final Object2ObjectOpenHashMap<Actor, DamageCounter> attackers = new Object2ObjectOpenHashMap<>();
 	
 	/**
 	 * Registers damage in the backing collection for {@code character}. This
@@ -30,7 +30,7 @@ public final class CombatDamage {
 	 * @param character the character to register damage for.
 	 * @param amount    the amount of damage to register.
 	 */
-	public void add(EntityNode character, int amount) {
+	public void add(Actor character, int amount) {
 		if(amount > 0) {
 			DamageCounter counter = attackers.putIfAbsent(character, new DamageCounter(amount));
 			if(counter != null)
@@ -47,9 +47,9 @@ public final class CombatDamage {
 	public Optional<Npc> getNpcKiller() {
 		int amount = 0;
 		Npc killer = null;
-		for(Entry<EntityNode, DamageCounter> entry : attackers.entrySet()) {
+		for(Entry<Actor, DamageCounter> entry : attackers.entrySet()) {
 			DamageCounter counter = entry.getValue();
-			EntityNode entity = entry.getKey();
+			Actor entity = entry.getKey();
 			
 			if(!entity.isNpc() || entity.isDead() || entity.getState() != NodeState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
 				continue;
@@ -70,9 +70,9 @@ public final class CombatDamage {
 	public Optional<Player> getPlayerKiller() {
 		int amount = 0;
 		Player killer = null;
-		for(Entry<EntityNode, DamageCounter> entry : attackers.entrySet()) {
+		for(Entry<Actor, DamageCounter> entry : attackers.entrySet()) {
 			DamageCounter counter = entry.getValue();
-			EntityNode entity = entry.getKey();
+			Actor entity = entry.getKey();
 			
 			if(!entity.isPlayer() || entity.isDead() || entity.getState() != NodeState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
 				continue;
@@ -90,12 +90,12 @@ public final class CombatDamage {
 	 * @return the player who has inflicted the most damage, or an empty
 	 * optional if there are no entries.
 	 */
-	public Optional<EntityNode> calculateProperKiller() {
+	public Optional<Actor> calculateProperKiller() {
 		int amount = 0;
-		EntityNode killer = null;
-		for(Entry<EntityNode, DamageCounter> entry : attackers.entrySet()) {
+		Actor killer = null;
+		for(Entry<Actor, DamageCounter> entry : attackers.entrySet()) {
 			DamageCounter counter = entry.getValue();
-			EntityNode entity = entry.getKey();
+			Actor entity = entry.getKey();
 			
 			if(entity.isDead() || entity.getState() != NodeState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
 				continue;

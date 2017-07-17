@@ -3,8 +3,8 @@ package net.edge.world;
 import net.edge.content.MagicStaff;
 import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendConfig;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;
@@ -117,5 +117,5 @@ public abstract class Spell {
 	 * @param castOn the character the spell is being cast on, this may be {@code null}.
 	 * @return the delay of the casting.
 	 */
-	public abstract int startCast(EntityNode cast, EntityNode castOn);
+	public abstract int startCast(Actor cast, Actor castOn);
 }

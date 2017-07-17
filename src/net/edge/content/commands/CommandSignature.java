@@ -1,6 +1,6 @@
 package net.edge.content.commands;
 
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.node.actor.player.assets.Rights;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

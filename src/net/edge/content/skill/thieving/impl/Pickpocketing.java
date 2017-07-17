@@ -11,13 +11,12 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.EnumSet;
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Represents functionality for pickpocketing from various npcs.

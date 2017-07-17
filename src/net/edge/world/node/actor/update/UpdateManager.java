@@ -1,0 +1,268 @@
+package net.edge.world.node.actor.update;
+
+import io.netty.buffer.Unpooled;
+import net.edge.net.codec.GameBuffer;
+import net.edge.net.codec.ByteOrder;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
+
+public final class UpdateManager {
+	
+	private static final PlayerUpdateBlock[] PLAYER_BLOCKS = {
+			new PlayerForceMovementUpdateBlock(),
+			new PlayerGraphicUpdateBlock(),
+			new PlayerAnimationUpdateBlock(),
+			new PlayerForceChatUpdateBlock(),
+			new PlayerChatUpdateBlock(),
+			new PlayerFaceEntityUpdateBlock(),
+			new PlayerAppearanceUpdateBlock(),
+			new PlayerPositionUpdateBlock(),
+			new PlayerPrimaryHitUpdateBlock(),
+			new PlayerSecondaryHitUpdateBlock()
+	};
+	
+	private static final NpcUpdateBlock[] NPC_BLOCKS = {
+			new NpcForceMovementUpdateBlock(),
+			new NpcGraphicUpdateBlock(),
+			new NpcAnimationUpdateBlock(),
+			new NpcForceChatUpdateBlock(),
+			new NpcTransformUpdateBlock(),
+			new NpcFaceEntityUpdateBlock(),
+			new NpcFacePositionUpdateBlock(),
+			new NpcPrimaryHitUpdateBlock(),
+			new NpcSecondaryHitUpdateBlock(),
+	};
+	
+	public static void prepare(Player other) {
+		if(other.getFlags().get(UpdateFlag.CHAT)) {
+			return;
+		}
+		if(other.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
+			return;
+		}
+		int mask = 0;
+		GameBuffer encodedBlock = new GameBuffer(Unpooled.buffer(64));
+		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
+			mask |= 0x100;
+		}
+		if(other.getFlags().get(UpdateFlag.ANIMATION)){
+			mask |= 8;
+		}
+		if(other.getFlags().get(UpdateFlag.FORCE_CHAT)) {
+			mask |= 4;
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_ENTITY)) {
+			mask |= 1;
+		}
+		if(other.getFlags().get(UpdateFlag.APPEARANCE)) {
+			mask |= 0x10;
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
+			mask |= 2;
+		}
+		if(other.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
+			mask |= 0x20;
+		}
+		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
+			mask |= 0x200;
+		}
+		
+		if(mask >= 0x100) {
+			mask |= 0x40;
+			encodedBlock.putShort(mask, ByteOrder.LITTLE);
+		} else {
+			encodedBlock.put(mask);
+		}
+		
+		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
+			PLAYER_BLOCKS[1].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.ANIMATION)){
+			PLAYER_BLOCKS[2].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.FORCE_CHAT)) {
+			PLAYER_BLOCKS[3].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.CHAT)) {
+			PLAYER_BLOCKS[4].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_ENTITY)) {
+			PLAYER_BLOCKS[5].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.APPEARANCE)) {
+			PLAYER_BLOCKS[6].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
+			PLAYER_BLOCKS[7].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
+			PLAYER_BLOCKS[8].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
+			PLAYER_BLOCKS[9].write(null, other, encodedBlock);
+		}
+		other.setCachedUpdateBlock(encodedBlock);
+	}
+	
+	public static void encode(Player player, Player other, GameBuffer msg, UpdateState state) {
+		if(other.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
+			return;
+		}
+		boolean cacheBlocks = (state != UpdateState.ADD_LOCAL && state != UpdateState.UPDATE_SELF);
+		if(other.getCachedUpdateBlock() != null && cacheBlocks) {
+			msg.putBytes(other.getCachedUpdateBlock());
+			return;
+		}
+		GameBuffer encodedBlock = new GameBuffer(Unpooled.buffer(64));
+		int mask = 0;
+		if(other.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
+			mask |= 0x400;
+		}
+		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
+			mask |= 0x100;
+		}
+		if(other.getFlags().get(UpdateFlag.ANIMATION)){
+			mask |= 8;
+		}
+		if(other.getFlags().get(UpdateFlag.FORCE_CHAT)) {
+			mask |= 4;
+		}
+		if(other.getFlags().get(UpdateFlag.CHAT) && state != UpdateState.UPDATE_SELF) {
+			mask |= 0x80;
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_ENTITY)) {
+			mask |= 1;
+		}
+		if(other.getFlags().get(UpdateFlag.APPEARANCE)) {
+			mask |= 0x10;
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
+			mask |= 2;
+		}
+		if(other.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
+			mask |= 0x20;
+		}
+		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
+			mask |= 0x200;
+		}
+		
+		if(mask >= 0x100) {
+			mask |= 0x40;
+			encodedBlock.putShort(mask, ByteOrder.LITTLE);
+		} else {
+			encodedBlock.put(mask);
+		}
+		
+		if(other.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
+			PLAYER_BLOCKS[0].write(player, other, encodedBlock);
+			cacheBlocks = false;
+		}
+		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
+			PLAYER_BLOCKS[1].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.ANIMATION)){
+			PLAYER_BLOCKS[2].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.FORCE_CHAT)) {
+			PLAYER_BLOCKS[3].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.CHAT) && state != UpdateState.UPDATE_SELF) {
+			PLAYER_BLOCKS[4].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_ENTITY)) {
+			PLAYER_BLOCKS[5].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.APPEARANCE)) {
+			PLAYER_BLOCKS[6].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
+			PLAYER_BLOCKS[7].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
+			PLAYER_BLOCKS[8].write(player, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
+			PLAYER_BLOCKS[9].write(player, other, encodedBlock);
+		}
+		
+		msg.putBytes(encodedBlock);
+		if(cacheBlocks) {
+			other.setCachedUpdateBlock(encodedBlock);
+		}
+	}
+	
+	
+	public static void encode(Player player, Npc npc, GameBuffer msg, UpdateState state) {
+		if(npc.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
+			return;
+		}
+		GameBuffer encodedBlock = new GameBuffer(player.getSession().alloc().buffer(64));
+		int mask = 0;
+		
+		if(npc.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
+			mask |= 0x400;
+		}
+		if(npc.getFlags().get(UpdateFlag.GRAPHIC)) {
+			mask |= 0x100;
+		}
+		if(npc.getFlags().get(UpdateFlag.ANIMATION)){
+			mask |= 8;
+		}
+		if(npc.getFlags().get(UpdateFlag.FORCE_CHAT)) {
+			mask |= 4;
+		}
+		if(npc.getFlags().get(UpdateFlag.TRANSFORM)) {
+			mask |= 0x80;
+		}
+		if(npc.getFlags().get(UpdateFlag.FACE_ENTITY)) {
+			mask |= 0x10;
+		}
+		if(npc.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
+			mask |= 1;
+		}
+		if(npc.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
+			mask |= 2;
+		}
+		if(npc.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
+			mask |= 0x20;
+		}
+		
+		if(mask >= 0x100) {
+			mask |= 0x40;
+			encodedBlock.putShort(mask, ByteOrder.LITTLE);
+		} else {
+			encodedBlock.put(mask);
+		}
+		
+		if(npc.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
+			NPC_BLOCKS[0].write(player, npc, encodedBlock);
+		}
+		if(npc.getFlags().get(UpdateFlag.GRAPHIC)) {
+			NPC_BLOCKS[1].write(player, npc, encodedBlock);
+		}
+		if(npc.getFlags().get(UpdateFlag.ANIMATION)){
+			NPC_BLOCKS[2].write(player, npc, encodedBlock);
+		}
+		if(npc.getFlags().get(UpdateFlag.FORCE_CHAT)) {
+			NPC_BLOCKS[3].write(player, npc, encodedBlock);
+		}
+		if(npc.getFlags().get(UpdateFlag.TRANSFORM)) {
+			NPC_BLOCKS[4].write(player, npc, encodedBlock);
+		}
+		if(npc.getFlags().get(UpdateFlag.FACE_ENTITY)) {
+			NPC_BLOCKS[5].write(player, npc, encodedBlock);
+		}
+		if(npc.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
+			NPC_BLOCKS[6].write(player, npc, encodedBlock);
+		}
+		if(npc.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
+			NPC_BLOCKS[7].write(player, npc, encodedBlock);
+		}
+		if(npc.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
+			NPC_BLOCKS[8].write(player, npc, encodedBlock);
+		}
+		msg.putBytes(encodedBlock);
+		encodedBlock.release();
+	}
+	
+}

@@ -11,7 +11,7 @@ import net.edge.content.skill.summoning.SummoningData;
 import net.edge.event.Event;
 import net.edge.net.packet.in.ItemActionPacket;
 import net.edge.net.packet.in.ItemInterfacePacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 /**

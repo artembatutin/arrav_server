@@ -4,7 +4,7 @@ import net.edge.content.PlayerPanel;
 import net.edge.event.Event;
 import net.edge.event.but.Spellbook;
 import net.edge.net.packet.in.ClickButtonPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 /**
  * Event handling button clicks.

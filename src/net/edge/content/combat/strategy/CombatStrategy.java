@@ -1,7 +1,7 @@
 package net.edge.content.combat.strategy;
 
 import net.edge.content.combat.CombatHit;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 
 /**
  * The blueprint of a combat session that determines how a character will act in
@@ -16,7 +16,7 @@ public interface CombatStrategy {
 	 * @param attacker  the attacker whom hit the character.
 	 * @param data      the combat session data chained to this hit.
 	 */
-	default void incomingAttack(EntityNode character, EntityNode attacker, CombatHit data) {
+	default void incomingAttack(Actor character, Actor attacker, CombatHit data) {
 		
 	}
 
@@ -25,7 +25,7 @@ public interface CombatStrategy {
 	 * @param character	the character being hit.
 	 * @param attacker	the attacker whom hit the character.
 	 */
-	default boolean canIncomingAttack(EntityNode character, EntityNode attacker) {
+	default boolean canIncomingAttack(Actor character, Actor attacker) {
 		return true;
 	}
 
@@ -36,7 +36,7 @@ public interface CombatStrategy {
 	 * @param victim    the character being attacked.
 	 * @return {@code true} if an attack can be made, {@code false} otherwise.
 	 */
-	boolean canOutgoingAttack(EntityNode character, EntityNode victim);
+	boolean canOutgoingAttack(Actor character, Actor victim);
 	
 	/**
 	 * Executed when {@code character} has passed the initial {@code canAttack}
@@ -45,21 +45,21 @@ public interface CombatStrategy {
 	 * @param victim    the character being attacked.
 	 * @return a container holding the data for the attack.
 	 */
-	CombatHit outgoingAttack(EntityNode character, EntityNode victim);
+	CombatHit outgoingAttack(Actor character, Actor victim);
 	
 	/**
 	 * Determines the delay for when {@code character} will attack.
 	 * @param character the character waiting to attack.
 	 * @return the value that the attack timer should be reset to.
 	 */
-	int attackDelay(EntityNode character);
+	int attackDelay(Actor character);
 	
 	/**
 	 * Determines how close {@code character} must be to attack.
 	 * @param character the character that is attacking.
 	 * @return the radius that the character must be in to attack.
 	 */
-	int attackDistance(EntityNode character);
+	int attackDistance(Actor character);
 	
 	/**
 	 * The NPCs that will be assigned this combat strategy.

@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.skill.hunter.Hunter;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 /**
  * Represents a single task which will run for each trap.

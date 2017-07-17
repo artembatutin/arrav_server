@@ -8,7 +8,7 @@ import net.edge.world.World;
 import net.edge.world.node.Node;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.NodeType;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.region.Region;
 
 /**

@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.content.TabInterface;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.net.packet.out.SendConfig;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 /**

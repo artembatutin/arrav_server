@@ -14,7 +14,7 @@ import net.edge.net.packet.out.SendMinimapState;
 import net.edge.net.packet.out.SendObject;
 import net.edge.net.packet.out.SendPaletteMap;
 import net.edge.task.Task;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 /**

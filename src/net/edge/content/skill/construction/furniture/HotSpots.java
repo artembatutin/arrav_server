@@ -6,7 +6,7 @@ import net.edge.content.skill.construction.data.Constants;
 import net.edge.content.skill.construction.room.RoomManipulation;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.net.packet.out.SendObjectsConstruction;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
 
 import java.awt.*;

@@ -4,8 +4,8 @@ import net.edge.event.EventInitializer;
 import net.edge.event.impl.ItemEvent;
 import net.edge.util.rand.Chance;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.drop.NpcDrop;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.concurrent.ThreadLocalRandom;

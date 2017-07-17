@@ -7,7 +7,7 @@ import net.edge.util.json.JsonLoader;
 import net.edge.locale.Position;
 import net.edge.world.Direction;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.node.actor.npc.Npc;
 
 import java.util.Objects;
 

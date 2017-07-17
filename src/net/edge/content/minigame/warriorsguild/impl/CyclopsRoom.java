@@ -20,9 +20,9 @@ import net.edge.content.minigame.warriorsguild.WarriorsGuild;
 import net.edge.locale.Position;
 import net.edge.locale.loc.SquareLocation;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
@@ -65,7 +65,7 @@ public final class CyclopsRoom extends GuildRoom {
 	}
 
 	@Override
-	public boolean canHit(Player player, EntityNode other, CombatType type) {
+	public boolean canHit(Player player, Actor other, CombatType type) {
 		return entered.isPresent() && other.isNpc();
 	}
 
@@ -145,7 +145,7 @@ public final class CyclopsRoom extends GuildRoom {
 	}
 
 	@Override
-	public void onKill(Player player, EntityNode other) {
+	public void onKill(Player player, Actor other) {
 		Defender defender = Defender.getNext(player);
 		boolean rollRare = true; // 10% chance.
 		if(rollRare) {

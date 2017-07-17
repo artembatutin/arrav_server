@@ -12,7 +12,7 @@ import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
 import net.edge.event.impl.ObjectEvent;
 import net.edge.locale.Position;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;

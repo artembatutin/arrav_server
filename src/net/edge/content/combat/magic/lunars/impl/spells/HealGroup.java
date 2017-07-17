@@ -3,11 +3,11 @@ package net.edge.content.combat.magic.lunars.impl.spells;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public final class HealGroup extends LunarButtonSpell {
 	List<Player> local_players;
 	
 	@Override
-	public void effect(Player caster, EntityNode victim) {
+	public void effect(Player caster, Actor victim) {
 		int transfer = (int) ((caster.getCurrentHealth() / 100.0f) * 75.0f);
 		caster.damage(new Hit(transfer));
 		transfer = transfer / local_players.size();
@@ -51,7 +51,7 @@ public final class HealGroup extends LunarButtonSpell {
 	}
 	
 	@Override
-	public boolean prerequisites(Player caster, EntityNode victim) {
+	public boolean prerequisites(Player caster, Actor victim) {
 		if(caster.getCurrentHealth() < ((caster.getMaximumHealth()) / 100.0f) * 11.0f) {
 			caster.message("Your hitpoints are too low to cast this spell.");
 			return false;

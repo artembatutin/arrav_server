@@ -2,8 +2,7 @@ package net.edge.content.minigame.pestcontrol.pest;
 
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.region.Region;
+import net.edge.world.node.actor.npc.Npc;
 
 public class Brawler extends Pest {
 	

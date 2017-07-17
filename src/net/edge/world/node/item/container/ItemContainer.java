@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.packet.out.SendContainer;
 import net.edge.net.packet.out.SendItemOnInterfaceSlot;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.IndexedItem;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;

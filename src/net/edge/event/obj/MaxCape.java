@@ -10,7 +10,7 @@ import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.skill.Skills;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.ObjectEvent;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
 

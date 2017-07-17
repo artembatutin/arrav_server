@@ -1,6 +1,6 @@
 package net.edge.world;
 
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 
 import java.util.Optional;
 
@@ -43,7 +43,7 @@ public final class Visualize {
 	 * Attempts to play the visualization for the specified {@code character}.
 	 * @param character the character to start the visualization for.
 	 */
-	public <E extends EntityNode> void play(E character) {
+	public <E extends Actor> void play(E character) {
 		getAnimation().ifPresent(character::animation);
 		getGraphic().ifPresent(character::graphic);
 	}

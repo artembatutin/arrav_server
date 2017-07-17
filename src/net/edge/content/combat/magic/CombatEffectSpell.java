@@ -1,7 +1,7 @@
 package net.edge.content.combat.magic;
 
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;
@@ -23,7 +23,7 @@ public abstract class CombatEffectSpell extends CombatSpell {
 	}
 	
 	@Override
-	public final void executeOnHit(EntityNode cast, EntityNode castOn, boolean accurate, int damage) {
+	public final void executeOnHit(Actor cast, Actor castOn, boolean accurate, int damage) {
 		if(accurate) {
 			effect(cast, castOn);
 		}
@@ -34,5 +34,5 @@ public abstract class CombatEffectSpell extends CombatSpell {
 	 * @param cast   the character who casted the spell.
 	 * @param castOn the character who the spell was casted on.
 	 */
-	public abstract void effect(EntityNode cast, EntityNode castOn);
+	public abstract void effect(Actor cast, Actor castOn);
 }

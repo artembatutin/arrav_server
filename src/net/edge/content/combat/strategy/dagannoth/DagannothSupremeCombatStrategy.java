@@ -6,7 +6,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Projectile;
 
@@ -16,12 +16,12 @@ import java.util.Objects;
 public final class DagannothSupremeCombatStrategy implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+	public boolean canOutgoingAttack(Actor character, Actor victim) {
 		return character.isNpc() && victim.isPlayer();
 	}
 	
 	@Override
-	public void incomingAttack(EntityNode character, EntityNode attacker, CombatHit data) {
+	public void incomingAttack(Actor character, Actor attacker, CombatHit data) {
 		if(data.getType().equals(CombatType.RANGED) || data.getType().equals(CombatType.MAGIC)) {
 			attacker.toPlayer().message("Your attacks are completely blocked...");
 			Arrays.stream(data.getHits()).filter(Objects::nonNull).forEach(h -> h.setAccurate(false));
@@ -30,7 +30,7 @@ public final class DagannothSupremeCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		character.animation(new Animation(character.toNpc().getDefinition().getAttackAnimation()));
 		World.get().submit(new Task(1, false) {
 			@Override
@@ -45,12 +45,12 @@ public final class DagannothSupremeCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int attackDelay(EntityNode character) {
+	public int attackDelay(Actor character) {
 		return character.getAttackSpeed();
 	}
 
 	@Override
-	public int attackDistance(EntityNode character) {
+	public int attackDistance(Actor character) {
 		return 5;
 	}
 

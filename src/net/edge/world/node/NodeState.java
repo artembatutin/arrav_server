@@ -1,6 +1,6 @@
 package net.edge.world.node;
 
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.player.Player;
 
 /**
  * An enumeration that defines the states of an {@link Node}.

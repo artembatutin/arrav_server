@@ -15,10 +15,10 @@ import net.edge.content.skill.summoning.SummoningData;
 import net.edge.locale.Position;
 import net.edge.world.Graphic;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcDeath;
-import net.edge.world.node.entity.npc.impl.Follower;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.npc.NpcDeath;
+import net.edge.world.node.actor.npc.impl.Follower;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;

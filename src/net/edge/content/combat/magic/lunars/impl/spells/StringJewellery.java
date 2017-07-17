@@ -2,8 +2,8 @@ package net.edge.content.combat.magic.lunars.impl.spells;
 
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.content.skill.crafting.AmuletStringing;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
 import java.util.Optional;
@@ -27,12 +27,12 @@ public final class StringJewellery extends LunarButtonSpell {
 	private AmuletStringing.AmuletData data;
 	
 	@Override
-	public void effect(Player caster, EntityNode victim) {
+	public void effect(Player caster, Actor victim) {
 		AmuletStringing.create(caster, data, true);
 	}
 	
 	@Override
-	public boolean prerequisites(Player caster, EntityNode victim) {
+	public boolean prerequisites(Player caster, Actor victim) {
 		AmuletStringing.AmuletData data = AmuletStringing.AmuletData.getDefinition(caster).orElse(null);
 		
 		if(data == null) {
