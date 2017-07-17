@@ -96,10 +96,10 @@ public final class ObjectActionPacket implements IncomingPacket {
 				});
 			}
 		}
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
+		Optional<GameObject> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
-		final ObjectNode object = o.get();
+		final GameObject object = o.get();
 		if(player.getRights().greater(Rights.ADMINISTRATOR) && GameServer.DEBUG)
 			player.message("[OBJ"+action+"]:" + object.getId() + " - " + object.getGlobalPos().toString());
 		boolean distanceIgnore = (action == 1 && (objectId == 85584 || objectId == 85532 || objectId == 85534));
@@ -158,7 +158,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 	/**
 	 * Tries to handle the {@link ObjectAction} action.
 	 */
-	private boolean event(Player player, ObjectNode object, ActionContainer<ObjectAction> con) {
+	private boolean event(Player player, GameObject object, ActionContainer<ObjectAction> con) {
 		ObjectAction e = con.get(object.getId());
 		if(e != null) {
 			if(e.click(player, object, 1))
@@ -182,12 +182,12 @@ public final class ObjectActionPacket implements IncomingPacket {
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(spell < 0 || objectId < 0 || objectX < 0 || objectY < 0)
 			return;
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
+		Optional<GameObject> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
 		//Controlling data.
 		player.facePosition(position);
-		final ObjectNode object = o.get();
+		final GameObject object = o.get();
 		player.getMovementListener().append(() -> {
 			if(new Boundary(position, object.getDefinition().getSize()).within(player.getPosition(), player.size(), 1)) {
 				switch(objectId) {

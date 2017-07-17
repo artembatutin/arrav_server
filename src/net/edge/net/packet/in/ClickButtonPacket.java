@@ -41,7 +41,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.Spellbook;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.concurrent.TimeUnit;
 
@@ -237,14 +237,14 @@ public final class ClickButtonPacket implements IncomingPacket {
 			case 53152:
 				CookingData cookingData = (CookingData) player.getAttr().get("cooking_data").get();
 				if(cookingData != null) {
-					Cooking cooking = new Cooking(player, (ObjectNode) player.getAttr().get("cooking_object").get(), cookingData, (Boolean) player.getAttr().get("cooking_usingStove").get(), 1);
+					Cooking cooking = new Cooking(player, (GameObject) player.getAttr().get("cooking_object").get(), cookingData, (Boolean) player.getAttr().get("cooking_usingStove").get(), 1);
 					cooking.start();
 				}
 				break;
 			case 53151:
 				CookingData cookingData1 = (CookingData) player.getAttr().get("cooking_data").get();
 				if(cookingData1 != null) {
-					Cooking cooking = new Cooking(player, (ObjectNode) player.getAttr().get("cooking_object").get(), cookingData1, (Boolean) player.getAttr().get("cooking_usingStove").get(), 5);
+					Cooking cooking = new Cooking(player, (GameObject) player.getAttr().get("cooking_object").get(), cookingData1, (Boolean) player.getAttr().get("cooking_usingStove").get(), 5);
 					cooking.start();
 				}
 				break;
@@ -252,7 +252,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 				CookingData cookingData2 = (CookingData) player.getAttr().get("cooking_data").get();
 				if(cookingData2 != null) {
 					int amount = player.getInventory().computeAmountForId(cookingData2.getRawId());
-					Cooking cooking = new Cooking(player, (ObjectNode) player.getAttr().get("cooking_object").get(), cookingData2, (Boolean) player.getAttr().get("cooking_usingStove").get(), amount);
+					Cooking cooking = new Cooking(player, (GameObject) player.getAttr().get("cooking_object").get(), cookingData2, (Boolean) player.getAttr().get("cooking_usingStove").get(), amount);
 					cooking.start();
 				}
 				break;

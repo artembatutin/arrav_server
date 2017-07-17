@@ -12,7 +12,7 @@ import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ObjectAction;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ public class MaxCape extends ActionInitializer {
 	public void init() {
 		ObjectAction e = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				DialogueAppender app = new DialogueAppender(player);
 				app.chain(new StatementDialogue("You investigate the mysterious cape that is hanging on the rack..."));
 				boolean maxed = Skills.maxed(player);

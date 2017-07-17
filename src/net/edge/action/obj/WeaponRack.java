@@ -8,7 +8,7 @@ public class WeaponRack extends ActionInitializer {
 	public void init() {
 		/*ObjectAction l = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						player.getInventory().add(new Item(14486));

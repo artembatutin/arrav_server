@@ -8,7 +8,7 @@ import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.PrayerBook;
 import net.edge.world.entity.actor.player.assets.Spellbook;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 
 public class HomeAltar extends ActionInitializer {
@@ -17,7 +17,7 @@ public class HomeAltar extends ActionInitializer {
 		//prayer altar
 		ObjectAction pray = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				int level = player.getSkills()[Skills.PRAYER].getRealLevel();
 				if(player.getSkills()[Skills.PRAYER].getLevel() < level) {
 					player.animation(new Animation(645));
@@ -35,7 +35,7 @@ public class HomeAltar extends ActionInitializer {
 		//prayer/magic switcher
 		ObjectAction change = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						if(player.getPrayerBook().equals(PrayerBook.CURSES)) {

@@ -11,7 +11,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.object.DynamicObject;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -55,7 +55,7 @@ public final class Mining extends HarvestingSkillAction {
 	 * @param rock   the mining rock.
 	 * @param object the rock object.
 	 */
-	public Mining(Player player, RockData rock, ObjectNode object) {
+	public Mining(Player player, RockData rock, GameObject object) {
 		super(player, Optional.of(object.getGlobalPos()));
 		if(rock == RockData.ESSENCE && player.getSkills()[Skills.MINING].getRealLevel() >= 30)
 			rock = RockData.PURE_ESSENCE;
@@ -68,7 +68,7 @@ public final class Mining extends HarvestingSkillAction {
 		for(RockData rock : RockData.values()) {
 			ObjectAction mine = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					Mining mining = new Mining(player, rock, object);
 					mining.start();
 					return true;
@@ -76,7 +76,7 @@ public final class Mining extends HarvestingSkillAction {
 			};
 			ObjectAction prospect = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					player.message("You examine the rock for ores...");
 					String message = rock.toString().concat(" ore").replace("_", " ");
 					World.get().submit(new Task(rock.prospectDelay(), false) {
@@ -116,7 +116,7 @@ public final class Mining extends HarvestingSkillAction {
 			Optional<TransformableObject> filter = Arrays.stream(rock.getObject()).filter(p -> p.getObjectId() == object.getId()).findFirst();
 			if(filter.isPresent()) {
 				int id = object.getId();//filled rock.
-				ObjectNode emptyRock = object.setId(filter.get().getTransformable());
+				GameObject emptyRock = object.setId(filter.get().getTransformable());
 				object.setDisabled(true);
 				emptyRock.publish(rock.getRespawnTime(), n -> {
 					object.setId(id);

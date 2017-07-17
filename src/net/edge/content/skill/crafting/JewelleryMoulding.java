@@ -12,7 +12,7 @@ import net.edge.util.TextUtils;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -91,7 +91,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 	 * @param object the object the item got used on.
 	 * @return {@code true} if the interface opened, {@code false} otherwise.
 	 */
-	public static final boolean openInterface(Player player, Item item, ObjectNode object) {
+	public static final boolean openInterface(Player player, Item item, GameObject object) {
 		if(!(item.getId() == GOLD_BAR.getId() && Arrays.stream(new String[]{"Pottery Oven", "Furnace"})
 				.anyMatch(object.getDefinition().getName()::contains))) {
 			return false;

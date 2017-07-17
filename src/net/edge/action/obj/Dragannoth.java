@@ -6,7 +6,7 @@ import net.edge.world.locale.Position;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 public class Dragannoth extends ActionInitializer {
 	@Override
@@ -14,7 +14,7 @@ public class Dragannoth extends ActionInitializer {
 		//down
 		ObjectAction s = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				player.move(new Position(1910, 4367));
 				return true;
 			}
@@ -23,7 +23,7 @@ public class Dragannoth extends ActionInitializer {
 		//up
 		s = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				player.animation(new Animation(827));
 				LinkedTaskSequence seq2 = new LinkedTaskSequence();
 				seq2.connect(2, () -> player.move(new Position(2899, 4449)));

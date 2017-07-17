@@ -14,7 +14,7 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -128,7 +128,7 @@ public final class Hunter {
 	 * @param object the object that was clicked.
 	 * @return {@code true} if the trap was picked up, {@code false} otherwise.
 	 */
-	public static boolean pickup(Player player, ObjectNode object) {
+	public static boolean pickup(Player player, GameObject object) {
 		Optional<Trap.TrapType> type = Trap.TrapType.getTrapByObjectId(object.getId());
 		
 		if(!type.isPresent()) {
@@ -170,7 +170,7 @@ public final class Hunter {
 	 * @param object the object being interacted with.
 	 * @return {@code true} if the trap was claimed, {@code false} otherwise.
 	 */
-	public static boolean claim(Player player, ObjectNode object) {
+	public static boolean claim(Player player, GameObject object) {
 		Trap trap = getTrap(player, object).orElse(null);
 		
 		if(trap == null) {
@@ -212,7 +212,7 @@ public final class Hunter {
 	 * @param object the object to compare.
 	 * @return a trap wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
-	public static Optional<Trap> getTrap(Player player, ObjectNode object) {
+	public static Optional<Trap> getTrap(Player player, GameObject object) {
 		return !GLOBAL_TRAPS.containsKey(player) ? Optional.empty() : GLOBAL_TRAPS.get(player).getTraps().stream().filter(trap -> trap.getObject().getId() == object.getId() && trap.getObject().getX() == object.getX() && trap.getObject().getY() == object.getY() && trap.getObject().getZ() == object.getZ()).findAny();
 	}
 }

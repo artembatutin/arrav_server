@@ -19,8 +19,8 @@ import net.edge.world.Animation;
 import net.edge.world.entity.actor.move.ForcedMovement;
 import net.edge.world.entity.actor.move.ForcedMovementManager;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
 import java.util.Optional;
@@ -42,7 +42,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 	 * @param object   {@link #getObject()}.
 	 * @param obstacle the obstacle this player is trying to cross.
 	 */
-	private BarbarianOutpostAgility(Player player, ObjectNode object, BarbarianAgilityData obstacle) {
+	private BarbarianOutpostAgility(Player player, GameObject object, BarbarianAgilityData obstacle) {
 		super(player, object, AgilityCourseType.BARBARIAN_AGILITY);
 		this.obstacle = obstacle;
 	}
@@ -51,7 +51,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 		for(BarbarianAgilityData data : BarbarianAgilityData.values()) {
 			ObjectAction perform = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					BarbarianOutpostAgility agility = new BarbarianOutpostAgility(player, object, data);
 					agility.start();
 					return true;

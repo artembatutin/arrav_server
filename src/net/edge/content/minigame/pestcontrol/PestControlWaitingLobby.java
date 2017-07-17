@@ -16,7 +16,7 @@ import net.edge.world.entity.actor.mob.drop.ItemCache;
 import net.edge.world.entity.actor.mob.drop.Drop;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import static net.edge.content.minigame.Minigame.MinigameSafety.SAFE;
 import static net.edge.world.entity.actor.mob.drop.ItemCache.*;
@@ -130,7 +130,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		//boat entering/exiting.
 		ObjectAction plank = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				PEST_LOBBY.submit(player);
 				return true;
 			}
@@ -138,7 +138,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		plank.registerFirst(14315);
 		ObjectAction ladder = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				PEST_LOBBY.onLeave(player);
 				return true;
 			}

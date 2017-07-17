@@ -21,7 +21,7 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.update.UpdateFlag;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -109,7 +109,7 @@ public abstract class Minigame {
 	 * @param object the object interacted with.
 	 * @return <true> if the player can, <false> otherwise.
 	 */
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
+	public boolean onFirstClickObject(Player player, GameObject object) {
 		player.message("You cannot interact with this object in here!");
 		return false;
 	}
@@ -120,7 +120,7 @@ public abstract class Minigame {
 	 * @param object the object interacted with.
 	 * @return <true> if the player can, <false> otherwise.
 	 */
-	public boolean onSecondClickObject(Player player, ObjectNode object) {
+	public boolean onSecondClickObject(Player player, GameObject object) {
 		player.message("You cannot interact with this object in here!");
 		return false;
 	}
@@ -131,7 +131,7 @@ public abstract class Minigame {
 	 * @param object the object interacted with.
 	 * @return <true> if the player can, <false> otherwise.
 	 */
-	public boolean onThirdClickObject(Player player, ObjectNode object) {
+	public boolean onThirdClickObject(Player player, GameObject object) {
 		player.message("You cannot interact with this object in here!");
 		return false;
 	}
@@ -142,7 +142,7 @@ public abstract class Minigame {
 	 * @param object the object interacted with.
 	 * @return <true> if the player can, <false> otherwise.
 	 */
-	public boolean onFourthClickObject(Player player, ObjectNode object) {
+	public boolean onFourthClickObject(Player player, GameObject object) {
 		player.message("You cannot interact with this object in here!");
 		return false;
 	}
@@ -153,7 +153,7 @@ public abstract class Minigame {
 	 * @param object the object interacted with.
 	 * @return <true> if the player can, <false> otherwise.
 	 */
-	public boolean onFifthClickObject(Player player, ObjectNode object) {
+	public boolean onFifthClickObject(Player player, GameObject object) {
 		player.message("You cannot interact with this object in here!");
 		return false;
 	}
@@ -165,7 +165,7 @@ public abstract class Minigame {
 	 * @param item   the item being used on the object.
 	 * @return {@code true} if the player can, {@code false} otherwise.
 	 */
-	public boolean onItemOnObject(Player player, ObjectNode object, Item item) {
+	public boolean onItemOnObject(Player player, GameObject object, Item item) {
 		player.message("You cannot do this while in here!");
 		return true;
 	}

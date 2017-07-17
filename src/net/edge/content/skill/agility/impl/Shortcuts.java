@@ -10,7 +10,7 @@ import net.edge.content.skill.agility.obstacle.impl.Walkable;
 import net.edge.action.impl.ObjectAction;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -31,7 +31,7 @@ public final class Shortcuts extends AgilityCourse {
 	 * @param object     {@link #getObject()}.
 	 * @param definition {@link #definition}.
 	 */
-	public Shortcuts(Player player, ObjectNode object, ShortcutsData definition) {
+	public Shortcuts(Player player, GameObject object, ShortcutsData definition) {
 		super(player, object, AgilityCourseType.SHORTCUTS);
 		this.definition = definition;
 	}
@@ -40,7 +40,7 @@ public final class Shortcuts extends AgilityCourse {
 		for(ShortcutsData data : ShortcutsData.values()) {
 			ObjectAction perform = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					Shortcuts shortcut = new Shortcuts(player, object, data);
 					shortcut.start();
 					return true;

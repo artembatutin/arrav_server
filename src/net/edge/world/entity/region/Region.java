@@ -17,7 +17,7 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.GroundItemState;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectType;
 
 import java.util.Iterator;
@@ -71,14 +71,14 @@ public final class Region extends Entity {
 	private final ObjectArrayList<Mob> mobs = new ObjectArrayList<>();
 	
 	/**
-	 * A {@link Int2ObjectOpenHashMap} of active {@link ObjectNode}s in this {@code Region}.
+	 * A {@link Int2ObjectOpenHashMap} of active {@link GameObject}s in this {@code Region}.
 	 */
 	private final Int2ObjectOpenHashMap<RegionTiledObjects> staticObjects = new Int2ObjectOpenHashMap<>();
 	
 	/**
-	 * A {@link ObjectList} of removed {@link ObjectNode}s in this {@code Region}.
+	 * A {@link ObjectList} of removed {@link GameObject}s in this {@code Region}.
 	 */
-	private final ObjectList<ObjectNode> removeObjects = new ObjectArrayList<>();
+	private final ObjectList<GameObject> removeObjects = new ObjectArrayList<>();
 
 	private ObjectList<Region> surroundingRegions = null;
 	
@@ -340,72 +340,72 @@ public final class Region extends Entity {
 	}
 	
 	/**
-	 * Adds an {@link ObjectNode} to the backing set.
+	 * Adds an {@link GameObject} to the backing set.
 	 * @param o The object to add.
 	 */
-	public void addObj(ObjectNode o) {
+	public void addObj(GameObject o) {
 		getObjectsFrompacked(o.getLocalPos()).add(o);
 	}
 	
 	/**
-	 * Removes an {@link ObjectNode} from the backing set.
+	 * Removes an {@link GameObject} from the backing set.
 	 * @param o The object to remove.
 	 */
-	public void removeObj(ObjectNode o) {
+	public void removeObj(GameObject o) {
 		getObjectsFrompacked(o.getLocalPos()).remove(o);
 	}
 	
 	/**
-	 * Gets the a set of {@link ObjectNode} on the specified {@link Position}.
+	 * Gets the a set of {@link GameObject} on the specified {@link Position}.
 	 * @param position The position.
-	 * @return A {@link RegionTiledObjects} of {@link ObjectNode}s on the specified position.
+	 * @return A {@link RegionTiledObjects} of {@link GameObject}s on the specified position.
 	 */
 	public RegionTiledObjects getObjects(Position position) {
 		return staticObjects.computeIfAbsent(position.toLocalPacked(), key -> new RegionTiledObjects());
 	}
 	
 	/**
-	 * Gets the a set of {@link ObjectNode} on the packed coordinates.
+	 * Gets the a set of {@link GameObject} on the packed coordinates.
 	 * @param packed The packed position.
-	 * @return A {@link RegionTiledObjects} of {@link ObjectNode}s on the specified position.
+	 * @return A {@link RegionTiledObjects} of {@link GameObject}s on the specified position.
 	 */
 	public RegionTiledObjects getObjectsFrompacked(int packed) {
 		return staticObjects.computeIfAbsent(packed, key -> new RegionTiledObjects());
 	}
 	
 	/**
-	 * Gets the an {@link Optional} of {@link ObjectNode}s on the specified {@link Position} with the specified {@code id}.
+	 * Gets the an {@link Optional} of {@link GameObject}s on the specified {@link Position} with the specified {@code id}.
 	 * @param id       The id of the object to seek for.
 	 * @param position The position.
-	 * @return A {@link Optional} of {@link ObjectNode} on the specified position.
+	 * @return A {@link Optional} of {@link GameObject} on the specified position.
 	 */
-	public Optional<ObjectNode> getObject(int id, Position position) {
+	public Optional<GameObject> getObject(int id, Position position) {
 		return getObject(id, position.toLocalPacked());
 	}
 	
 	/**
-	 * Gets the an {@link Optional} of {@link ObjectNode}s on the specified {@link Position} with the specified {@code type}.
+	 * Gets the an {@link Optional} of {@link GameObject}s on the specified {@link Position} with the specified {@code type}.
 	 * @param type       The type of the object to seek for.
 	 * @param position The position.
-	 * @return A {@link Optional} of {@link ObjectNode} on the specified position.
+	 * @return A {@link Optional} of {@link GameObject} on the specified position.
 	 */
-	public Optional<ObjectNode> getObject(ObjectType type, Position position) {
+	public Optional<GameObject> getObject(ObjectType type, Position position) {
 		RegionTiledObjects tile = getObjectsFrompacked(position.toLocalPacked());
-		ObjectNode o = tile.getType(type);
+		GameObject o = tile.getType(type);
 		if(o != null)
 			return Optional.of(o);
 		return Optional.empty();
 	}
 	
 	/**
-	 * Gets the an {@link Optional} of {@link ObjectNode}s with the specified {@code id} and {@code packed} coordinates.
+	 * Gets the an {@link Optional} of {@link GameObject}s with the specified {@code id} and {@code packed} coordinates.
 	 * @param id       The id of the object to seek for.
 	 * @param packed The packed position.
-	 * @return A {@link Optional} of {@link ObjectNode}.
+	 * @return A {@link Optional} of {@link GameObject}.
 	 */
-	public Optional<ObjectNode> getObject(int id, int packed) {
+	public Optional<GameObject> getObject(int id, int packed) {
 		RegionTiledObjects tile = getObjectsFrompacked(packed);
-		ObjectNode o = tile.getId(id);
+		GameObject o = tile.getId(id);
 		if(o != null)
 			return Optional.of(o);
 		return Optional.empty();
@@ -415,15 +415,15 @@ public final class Region extends Entity {
 	 * Sends an action to interactive objects with the specified {@code id}.
 	 * @param id The id of the object to seek for.
 	 */
-	public void interactAction(int id, Consumer<ObjectNode> action) {
+	public void interactAction(int id, Consumer<GameObject> action) {
 		staticObjects.forEach((l, c) -> c.interactiveAction(id, action));
 	}
 	
 	/**
-	 * Gets the a List of dynamic {@link ObjectNode} of interactive from all {@link Position}s of the region where staticObjects are applied.
+	 * Gets the a List of dynamic {@link GameObject} of interactive from all {@link Position}s of the region where staticObjects are applied.
 	 * @return A {@link ObjectList}.
 	 */
-	public void dynamicAction(Consumer<ObjectNode> action) {
+	public void dynamicAction(Consumer<GameObject> action) {
 		staticObjects.forEach((l, c) -> c.dynamicAction(action));
 	}
 	
@@ -485,10 +485,10 @@ public final class Region extends Entity {
 	}
 	
 	/**
-	 * Gets the a {@link ObjectList} of {@link ObjectNode}s that are removed by the server during game time.
-	 * @return A {@link ObjectList of {@link ObjectNode}s that are removed.
+	 * Gets the a {@link ObjectList} of {@link GameObject}s that are removed by the server during game time.
+	 * @return A {@link ObjectList of {@link GameObject }s that are removed.
 	 */
-	public ObjectList<ObjectNode> getRemovedObjects() {
+	public ObjectList<GameObject> getRemovedObjects() {
 		return removeObjects;
 	}
 	

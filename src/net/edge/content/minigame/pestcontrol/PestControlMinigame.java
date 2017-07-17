@@ -23,7 +23,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -149,7 +149,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
+	public boolean onFirstClickObject(Player player, GameObject object) {
 		Position pos = object.getGlobalPos();
 		//west north ladder.
 		if(object.getId() == 14296 && pos.getX() == 2644) {
@@ -191,7 +191,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public boolean onThirdClickObject(Player player, ObjectNode object) {
+	public boolean onThirdClickObject(Player player, GameObject object) {
 		for(PestGate gate : gates) {
 			if(gate.clicked(object.getGlobalPos())) {
 				gate.repair(player);

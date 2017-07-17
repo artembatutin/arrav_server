@@ -5,7 +5,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 import net.edge.world.entity.region.Region;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -13,7 +13,7 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * The parent class that represents anything that can be interacted with in the {@link World}.
- * This includes {@link GroundItem}s, {@link ObjectNode}s, {@link Player}s, and {@link Mob}s.
+ * This includes {@link GroundItem}s, {@link GameObject}s, {@link Player}s, and {@link Mob}s.
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class Entity {

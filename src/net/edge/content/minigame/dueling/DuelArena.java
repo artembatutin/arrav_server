@@ -28,7 +28,7 @@ package net.edge.content.minigame.dueling;
 //import net.ev.game.location.Location;
 //import net.ev.game.location.Position;
 //import net.ev.game.location.SquareLocation;
-//import net.ev.game.world.object.ObjectNode;
+//import net.ev.game.world.object.GameObject;
 //import org.edge.task.LinkedTaskSequence;
 //import net.ev.utility.BitMask;
 //import net.ev.utility.RandomGen;
@@ -187,7 +187,7 @@ package net.edge.content.minigame.dueling;
 //	}
 //
 //	@Override
-//	public boolean onFirstClickObject(Player player, ObjectNode object) {
+//	public boolean onFirstClickObject(Player player, GameObject object) {
 //		if(object.getId() == 3203) {
 //			if(player.getDuelSession().rules.has(DuelingRules.NO_FORFEIT.value)) {
 //				player.message("Forfeiting has been disabled during this duel.");

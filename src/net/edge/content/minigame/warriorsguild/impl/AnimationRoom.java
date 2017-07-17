@@ -22,7 +22,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.GroundItem;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 import net.edge.world.entity.region.Region;
 
 import java.util.*;
@@ -56,13 +56,13 @@ public final class AnimationRoom extends GuildRoom {
 	 * @param object the object that represents the door.
 	 * @return {@code true} if the player entered, {@code false} otherwise.
 	 */
-	public static boolean enter(Player player, ObjectNode object) {
+	public static boolean enter(Player player, GameObject object) {
 		player.move(new Position(player.getPosition().getX(), 3545));
 		return true;
 	}
 	
 	@Override
-	public boolean onItemOnObject(Player player, ObjectNode object, Item item) {
+	public boolean onItemOnObject(Player player, GameObject object, Item item) {
 		Optional<AnimatedArmour.ArmourData> data = AnimatedArmour.ArmourData.getArmour(item.getId());
 		if(!data.isPresent()) {
 			return false;
@@ -87,7 +87,7 @@ public final class AnimationRoom extends GuildRoom {
 	}
 	
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode node) {
+	public boolean onFirstClickObject(Player player, GameObject node) {
 		switch(node.getId()) {
 			case 57647:
 			case 57644:

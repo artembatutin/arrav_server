@@ -20,7 +20,7 @@ import net.edge.action.Action;
 import net.edge.net.packet.in.ObjectActionPacket;
 import net.edge.world.entity.actor.mob.impl.gwd.GodwarsFaction;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 /**
  * Action handling object action clicks.
@@ -28,7 +28,7 @@ import net.edge.world.object.ObjectNode;
  */
 public abstract class ObjectAction extends Action {
 	
-	public abstract boolean click(Player player, ObjectNode object, int click);
+	public abstract boolean click(Player player, GameObject object, int click);
 	
 	public void registerFirst(int object) {
 		ObjectActionPacket.FIRST.register(object, this);

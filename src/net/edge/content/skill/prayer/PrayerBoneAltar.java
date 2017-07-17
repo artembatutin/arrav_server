@@ -7,7 +7,7 @@ import net.edge.content.skill.action.impl.DestructionSkillAction;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -17,13 +17,13 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 
 	private final int itemId;
 	
-	public PrayerBoneAltar(Player player, int itemId, ObjectNode object) {
+	public PrayerBoneAltar(Player player, int itemId, GameObject object) {
 		super(player, Optional.of(object.getGlobalPos()));
 		this.bone = Bone.getBone(itemId).orElse(null);
 		this.itemId = itemId;
 	}
 	
-	public static boolean produce(Player player, int itemId, ObjectNode object) {
+	public static boolean produce(Player player, int itemId, GameObject object) {
 		if(object.getId() != 409) {
 			return false;
 		}

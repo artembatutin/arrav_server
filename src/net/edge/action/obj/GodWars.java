@@ -13,7 +13,7 @@ import net.edge.world.entity.actor.move.ForcedMovement;
 import net.edge.world.entity.actor.move.ForcedMovementDirection;
 import net.edge.world.entity.actor.move.ForcedMovementManager;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 public class GodWars extends ActionInitializer {
 	@Override
@@ -21,7 +21,7 @@ public class GodWars extends ActionInitializer {
 		//jump in water
 		ObjectAction l = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				player.getActivityManager().disable();
 				boolean north = player.getPosition().getY() < 5334;
 				LinkedTaskSequence seq = new LinkedTaskSequence();
@@ -53,7 +53,7 @@ public class GodWars extends ActionInitializer {
 		//graple
 		l = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				if(!player.getEquipment().contains(9419)) {
 					player.message("You need to wield a mithril grapple to cross this.");
 					return true;

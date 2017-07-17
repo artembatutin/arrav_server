@@ -12,7 +12,7 @@ import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -89,7 +89,7 @@ public final class Spinning extends ProducingSkillAction {
 	 * @param object the object that the item was used on.
 	 * @return {@code true} if the interface was opened, {@code false} otherwise.
 	 */
-	public static boolean openInterface(Player player, Item item, ObjectNode object) {
+	public static boolean openInterface(Player player, Item item, GameObject object) {
 		if(object.getId() != 2644) {
 			return false;
 		}

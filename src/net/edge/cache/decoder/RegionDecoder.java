@@ -9,8 +9,8 @@ import net.edge.util.CompressionUtil;
 import net.edge.util.LoggerUtils;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 import net.edge.world.object.StaticObject;
 import net.edge.world.entity.region.Region;
@@ -95,7 +95,7 @@ public final class RegionDecoder implements Runnable {
 	}
 	
 	/**
-	 * Parses a {@link ObjectNode} on the specified coordinates.
+	 * Parses a {@link GameObject} on the specified coordinates.
 	 * @param gameObjectBuffer The uncompressed game object data buffer.
 	 * @param x                The x coordinate this object is on.
 	 * @param y                The y coordinate this object is on.

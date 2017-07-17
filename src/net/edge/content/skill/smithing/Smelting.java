@@ -12,7 +12,7 @@ import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -120,7 +120,7 @@ public final class Smelting extends ProducingSkillAction {
 	public static void event() {
 		ObjectAction smelt = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				player.chatWidget(2400);
 				return true;
 			}

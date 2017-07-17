@@ -13,8 +13,8 @@ import net.edge.action.impl.ObjectAction;
 import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendObjectAnimation;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
 import java.util.Optional;
@@ -36,7 +36,7 @@ public final class WildernessAgility extends AgilityCourse {
 	 * @param object {@link #getObject()}.
 	 * @param data   the obstacle this player is trying to cross.
 	 */
-	public WildernessAgility(Player player, ObjectNode object, WildernessAgilityData data) {
+	public WildernessAgility(Player player, GameObject object, WildernessAgilityData data) {
 		super(player, object, AgilityCourseType.WILDERNESS_AGILITY);
 		this.data = data;
 	}
@@ -45,7 +45,7 @@ public final class WildernessAgility extends AgilityCourse {
 		for(WildernessAgilityData data : WildernessAgilityData.values()) {
 			ObjectAction perform = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					WildernessAgility agility = new WildernessAgility(player, object, data);
 					agility.start();
 					return true;

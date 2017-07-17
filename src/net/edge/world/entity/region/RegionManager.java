@@ -8,7 +8,7 @@ import net.edge.net.packet.out.SendObject;
 import net.edge.net.packet.out.SendObjectRemoval;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 /**
  * Manages all of the cached {@link Region}s and the {@link Actor}s contained within them.
@@ -83,7 +83,7 @@ public final class RegionManager {
 		ObjectList<Region> allRegions = getAllSurroundingRegions(player.getPosition().getRegion());
 		for(Region region : allRegions) {
 			if(!region.getRemovedObjects().isEmpty()) {
-				for(ObjectNode obj : region.getRemovedObjects()) {
+				for(GameObject obj : region.getRemovedObjects()) {
 					System.out.println("remove " + obj);
 					player.out(new SendObjectRemoval(obj));
 				}

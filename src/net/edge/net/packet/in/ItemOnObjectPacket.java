@@ -19,7 +19,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -53,10 +53,10 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 			return;
 		}
 		
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
+		Optional<GameObject> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
-		final ObjectNode object = o.get();
+		final GameObject object = o.get();
 		
 		if(player.getRights().greater(Rights.ADMINISTRATOR))
 			player.message("[ItemOnObject message] objectId = " + object.toString() + ", itemId = " + item.getId());

@@ -4,8 +4,8 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.action.impl.ObjectAction;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDefinition;
-import net.edge.world.object.ObjectNode;
 
 import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.DOOR;
 
@@ -25,7 +25,7 @@ public class DoorHandler {
 	 */
 	public static final ObjectAction APPENDER = new ObjectAction() {
 		@Override
-		public boolean click(Player player, ObjectNode object, int click) {
+		public boolean click(Player player, GameObject object, int click) {
 			ObjectDefinition def = object.getDefinition();
 			if(def == null)
 				return false;
@@ -61,7 +61,7 @@ public class DoorHandler {
 	/**
 	 * All exceptions to door opening.
 	 */
-	private static boolean exception(Player player, ObjectNode object) {
+	private static boolean exception(Player player, GameObject object) {
 		
 		
 		if(object.getId() == 34811 && object.getGlobalPos().same(new Position(3104, 3498))) {

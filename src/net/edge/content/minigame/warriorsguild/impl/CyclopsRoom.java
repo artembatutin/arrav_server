@@ -25,7 +25,7 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.*;
 
@@ -52,7 +52,7 @@ public final class CyclopsRoom extends GuildRoom {
 		super("CYCLOPS_ROOM", GuildRoomType.CYCLOPS_ROOM);
 	}
 
-	public static boolean enter(Player player, ObjectNode object) {
+	public static boolean enter(Player player, GameObject object) {
 		player.move(new Position(2840, 3539, 2));
 		return true;
 	}
@@ -70,7 +70,7 @@ public final class CyclopsRoom extends GuildRoom {
 	}
 
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
+	public boolean onFirstClickObject(Player player, GameObject object) {
 		switch(object.getId()) {
 			case 57647:
 			case 57644:

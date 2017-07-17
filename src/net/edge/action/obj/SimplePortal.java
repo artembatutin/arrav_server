@@ -6,7 +6,7 @@ import net.edge.action.impl.ObjectAction;
 import net.edge.GameConstants;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 public class SimplePortal extends ActionInitializer {
 	@Override
@@ -14,7 +14,7 @@ public class SimplePortal extends ActionInitializer {
 		//Green portal at home
 		ObjectAction portal = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				if(object.getGlobalPos().same(new Position(3005, 3963, 0)))//wilderness agility
 						player.teleport(GameConstants.STARTING_POSITION, DefaultTeleportSpell.TeleportType.OBELISK);
 				if(object.getGlobalPos().same(new Position(2996, 9823, 0)))//to rune essence

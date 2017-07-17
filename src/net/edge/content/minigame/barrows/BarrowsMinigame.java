@@ -22,7 +22,7 @@ import net.edge.world.entity.actor.mob.drop.DropTable;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -65,7 +65,7 @@ public final class BarrowsMinigame extends Minigame {
 	 * Handles functionality for when a player interacts with a sarcophagus (grave)
 	 * @param player the player to execute the functionality for.
 	 */
-	private void sarcophagusInteraction(Player player, ObjectNode object) {
+	private void sarcophagusInteraction(Player player, GameObject object) {
 		BarrowsData data = BarrowsData.VALUES.stream().filter(b -> b.getSarcophagusId() == object.getId()).findAny().orElse(null);
 		
 		if(data == null)
@@ -135,7 +135,7 @@ public final class BarrowsMinigame extends Minigame {
 	}
 	
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
+	public boolean onFirstClickObject(Player player, GameObject object) {
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
 		
 		//Exiting.

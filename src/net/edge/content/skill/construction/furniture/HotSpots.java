@@ -7,7 +7,7 @@ import net.edge.content.skill.construction.room.RoomManipulation;
 import net.edge.action.impl.ObjectAction;
 import net.edge.net.packet.out.SendObjectsConstruction;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.awt.*;
 
@@ -535,7 +535,7 @@ public enum HotSpots {
 		for(HotSpots spot : values()) {
 			ObjectAction e = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					if(!player.getHouse().get().isBuilding())
 						return true;
 					player.out(new SendObjectsConstruction(spot));
@@ -550,7 +550,7 @@ public enum HotSpots {
 		 */
 		ObjectAction roomCreation = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				if(!player.getHouse().get().isBuilding())
 					return true;
 				if(RoomManipulation.roomExists(player)) {

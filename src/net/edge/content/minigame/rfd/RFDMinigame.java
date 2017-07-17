@@ -14,7 +14,7 @@ import net.edge.world.entity.actor.attribute.AttributeValue;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.impl.DefaultMob;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -159,7 +159,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
+	public boolean onFirstClickObject(Player player, GameObject object) {
 		switch(object.getId()) {
 			case 12356:
 				if(currentNpc.isPresent() && !currentNpc.get().isDead()) {

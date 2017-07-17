@@ -11,7 +11,7 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.object.DynamicObject;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -47,7 +47,7 @@ public final class Stalls extends Thieving {
 		for(StallData data : StallData.values()) {
 			ObjectAction steal = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					if(object.isDynamic() && object.toDynamic().isDisabled()) {
 						return false;
 					}

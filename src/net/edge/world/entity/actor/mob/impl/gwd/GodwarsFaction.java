@@ -9,7 +9,7 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobType;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 /**
  * The enumerated type whose elements represent a set of constants used to differ
@@ -87,7 +87,7 @@ public enum GodwarsFaction {
 		for(GodwarsFaction faction : GodwarsFaction.values()) {
 			ObjectAction door = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					if(player.getPosition().equals(faction.chamberPosition)) {
 						player.move(faction.startPosition);
 						return false;

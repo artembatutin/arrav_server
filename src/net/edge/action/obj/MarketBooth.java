@@ -4,14 +4,14 @@ import net.edge.content.market.MarketCounter;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ObjectAction;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 public class MarketBooth extends ActionInitializer {
 	@Override
 	public void init() {
 		ObjectAction m = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				player.widget(-13);
 				return true;
 			}
@@ -21,7 +21,7 @@ public class MarketBooth extends ActionInitializer {
 		//tomatoes crates
 		m = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				MarketCounter.getShops().get(5).openShop(player);
 				return true;
 			}

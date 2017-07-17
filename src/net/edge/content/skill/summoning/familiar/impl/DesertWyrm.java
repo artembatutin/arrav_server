@@ -37,9 +37,9 @@ public final class DesertWyrm extends Familiar {
 		familiar.animation(new Animation(7800));
 		familiar.graphic(new Graphic(1412));
 		
-		//List<ObjectNode> objs = World.getRegions().getRegion(familiar.getPosition()).interactAction(familiar.getPosition(), 7);
+		//List<GameObject> objs = World.getRegions().getRegion(familiar.getPosition()).interactAction(familiar.getPosition(), 7);
 		//Rock rock = null;
-		//for(ObjectNode n : objs) {
+		//for(GameObject n : objs) {
 		//	if(n != null) {
 		//		//rock = Rock.getDefinition(n.getId()).orElse(null);
 		//		TODO: Stan, look at this.

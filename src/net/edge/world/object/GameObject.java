@@ -16,7 +16,7 @@ import static net.edge.world.object.ObjectDirection.*;
  * The node that represents an object anywhere in the world.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public abstract class ObjectNode {
+public abstract class GameObject {
 	
 	/**
 	 * The identification of this object.
@@ -34,23 +34,23 @@ public abstract class ObjectNode {
 	private final ObjectDirection direction;
 	
 	/**
-	 * Creates a new {@link ObjectNode}.
+	 * Creates a new {@link GameObject}.
 	 * @param id        the identification of the object.
 	 * @param direction the direction this object is facing.
 	 * @param type      the type of object that this is.
 	 */
-	public ObjectNode(int id, ObjectDirection direction, ObjectType type) {
+	public GameObject(int id, ObjectDirection direction, ObjectType type) {
 		this.id = id;
 		this.type = type;
 		this.direction = direction;
 	}
 	
 	/**
-	 * Creates a new {@link ObjectNode} with the default {@code objectType}.
+	 * Creates a new {@link GameObject} with the default {@code objectType}.
 	 * @param id        the identification of the object.
 	 * @param direction the direction this object is facing.
 	 */
-	public ObjectNode(int id, ObjectDirection direction) {
+	public GameObject(int id, ObjectDirection direction) {
 		this(id, direction, ObjectType.GENERAL_PROP);
 	}
 	
@@ -70,7 +70,7 @@ public abstract class ObjectNode {
 	 * @param id new direction to set.
 	 * @return the copy of this object.
 	 */
-	public ObjectNode setId(int id) {
+	public GameObject setId(int id) {
 		remove();
 		this.id = id;
 		return this;
@@ -81,7 +81,7 @@ public abstract class ObjectNode {
 	 * @param direction new direction to set.
 	 * @return the copy of this object.
 	 */
-	public ObjectNode setDirection(ObjectDirection direction) {
+	public GameObject setDirection(ObjectDirection direction) {
 		remove();
 		return copy(direction);
 	}
@@ -91,7 +91,7 @@ public abstract class ObjectNode {
 	 * @param objectType new type to set.
 	 * @return the copy of this object.
 	 */
-	public ObjectNode setObjectType(ObjectType objectType) {
+	public GameObject setObjectType(ObjectType objectType) {
 		remove();
 		return copy(objectType);
 	}
@@ -100,21 +100,21 @@ public abstract class ObjectNode {
 	 * Gets a copy of this object.
 	 * @return the new object created.
 	 */
-	public abstract ObjectNode copy();
+	public abstract GameObject copy();
 	
 	/**
 	 * Copying the object with a new specified {@link ObjectDirection}.
 	 * @param direction the specified direction.
 	 * @return the new object created.
 	 */
-	public abstract ObjectNode copy(ObjectDirection direction);
+	public abstract GameObject copy(ObjectDirection direction);
 	
 	/**
 	 * Copying the object with a new specified {@link ObjectType}.
 	 * @param type the specified type.
 	 * @return the new object created.
 	 */
-	public abstract ObjectNode copy(ObjectType type);
+	public abstract GameObject copy(ObjectType type);
 	
 	/**
 	 * Returns the X coordinate of this object.
@@ -168,7 +168,7 @@ public abstract class ObjectNode {
 	 * Setting a new position for this object.
 	 * @param position
 	 */
-	public abstract ObjectNode setPosition(Position position);
+	public abstract GameObject setPosition(Position position);
 	
 	/**
 	 * Gets the object in the dynamic form.
@@ -223,9 +223,9 @@ public abstract class ObjectNode {
 	 * {@code action} after specified amount of ticks.
 	 * @param ticks  the amount of ticks to unregister this object after.
 	 */
-	public void publish(int ticks, Consumer<ObjectNode> action) {
+	public void publish(int ticks, Consumer<GameObject> action) {
 		publish();
-		ObjectNode ref = this;
+		GameObject ref = this;
 		World.get().submit(new Task(ticks, false) {
 			@Override
 			public void execute() {
@@ -295,8 +295,8 @@ public abstract class ObjectNode {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof ObjectNode) {
-			ObjectNode other = (ObjectNode) obj;
+		if(obj instanceof GameObject) {
+			GameObject other = (GameObject) obj;
 			return getId() == other.getId() && getInstance() == other.getInstance() && getX() == other.getX() && getY() == other.getY() && getZ() == other.getZ() && getDirection() == other.getDirection() && getObjectType() == other.getObjectType();
 		}
 		return false;
@@ -307,7 +307,7 @@ public abstract class ObjectNode {
 	 * @param direction direction of the door.
 	 * @return flag.
 	 */
-	public boolean isAdjacantDoor(ObjectNode obj) {
+	public boolean isAdjacantDoor(GameObject obj) {
 		
 		int dx = getX() - obj.getX();
 		int dy = getY() - obj.getY();

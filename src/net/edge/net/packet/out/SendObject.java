@@ -9,16 +9,16 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectType;
 
 import java.util.Optional;
 
 public final class SendObject implements OutgoingPacket {
 	
-	private final ObjectNode object;
+	private final GameObject object;
 	
-	public SendObject(ObjectNode object) {
+	public SendObject(GameObject object) {
 		this.object = object;
 	}
 	

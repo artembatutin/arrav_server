@@ -6,7 +6,7 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 /**
  * Holds support for slashing webs found allover runescape.
@@ -22,7 +22,7 @@ public final class WebSlashing extends Task {
 	/**
 	 * The object we're currently dealing with.
 	 */
-	private final ObjectNode object;
+	private final GameObject object;
 	
 	/**
 	 * The saved id of the object being slashed.
@@ -33,7 +33,7 @@ public final class WebSlashing extends Task {
 	 * Constructs a new {@link WebSlashing}.
 	 * @param object {@link #object}.
 	 */
-	private WebSlashing(ObjectNode object) {
+	private WebSlashing(GameObject object) {
 		super(RandomUtils.inclusive(10, 20));
 		this.object = object;
 		this.id = object.getId();
@@ -54,7 +54,7 @@ public final class WebSlashing extends Task {
 	public static void event() {
 		ObjectAction slash = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				if(!player.getWebSlashingTimer().elapsed(1800)) {
 					return false;
 				}

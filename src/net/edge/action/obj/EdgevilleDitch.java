@@ -6,14 +6,14 @@ import net.edge.world.Animation;
 import net.edge.world.entity.actor.move.ForcedMovement;
 import net.edge.world.entity.actor.move.ForcedMovementManager;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 public class EdgevilleDitch extends ActionInitializer {
 	@Override
 	public void init() {
 		ObjectAction jump = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				ForcedMovement jump;
 				int wild = 3;
 				if(player.getPosition().getX() < 3000 && player.getPosition().getX() > 2994) {

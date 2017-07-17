@@ -11,7 +11,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -188,7 +188,7 @@ public final class BirdSnare extends Trap {
 	}
 	
 	@Override
-	public boolean canClaim(ObjectNode object) {
+	public boolean canClaim(GameObject object) {
 		if(!trapped.isPresent()) {
 			return false;
 		}

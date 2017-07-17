@@ -15,7 +15,7 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.impl.DefaultMob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -110,7 +110,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	public static void event() {
 		ObjectAction e = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				player.getDialogueBuilder().append(
 		        new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
@@ -248,7 +248,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		return true;
 	}
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
+	public boolean onFirstClickObject(Player player, GameObject object) {
 		if(object.getId() == 9357) {//Exit
 			onDeath(player);
 			return true;

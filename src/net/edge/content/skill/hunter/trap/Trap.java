@@ -37,7 +37,7 @@ public abstract class Trap {
 	/**
 	 * The global object spawned on the world.
 	 */
-	private ObjectNode object;
+	private GameObject object;
 	
 	/**
 	 * Determines if this trap is abandoned.
@@ -170,7 +170,7 @@ public abstract class Trap {
 	 * @param object the object that was interacted with.
 	 * @return {@code true} if the trap can, {@code false} otherwise.
 	 */
-	public abstract boolean canClaim(ObjectNode object);
+	public abstract boolean canClaim(GameObject object);
 	
 	/**
 	 * @return the player
@@ -203,7 +203,7 @@ public abstract class Trap {
 	/**
 	 * @return the object
 	 */
-	public ObjectNode getObject() {
+	public GameObject getObject() {
 		return object;
 	}
 	

@@ -23,7 +23,7 @@ import net.edge.world.World;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -254,7 +254,7 @@ public final class DuelMinigame extends Minigame {
 	}
 	
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
+	public boolean onFirstClickObject(Player player, GameObject object) {
 		if(object.getId() == 3203) {
 			if(rules.contains(DuelingRules.NO_FORFEIT)) {
 				player.message("Forfeiting has been disabled during this duel.");

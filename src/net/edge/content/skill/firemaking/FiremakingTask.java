@@ -5,8 +5,8 @@ import net.edge.world.entity.item.GroundItemStatic;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.GroundItemPolicy;
 import net.edge.world.object.DynamicObject;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
 /**
@@ -23,7 +23,7 @@ final class FiremakingTask extends Task {
 	/**
 	 * The object we're registering and deregistering at a later state.
 	 */
-	private ObjectNode object;
+	private GameObject object;
 	
 	/**
 	 * Constructs a new {@link FiremakingTask}.

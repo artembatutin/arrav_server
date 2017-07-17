@@ -8,7 +8,7 @@ import net.edge.world.Graphic;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.ItemDefinition;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -18,14 +18,14 @@ public final class Cooking extends ProducingSkillAction {
 	static final Item BURNT_PIE = new Item(2329);
 	private static final double COOKING_BURN_RATE = 50.0;
 	private final CookingData data;
-	private final ObjectNode object;
+	private final GameObject object;
 	private final boolean cookStove;
 	private int counter;
 	private boolean burned;
 	private final boolean spell;
 	private final ThreadLocalRandom random = ThreadLocalRandom.current();
 	
-	public Cooking(Player player, ObjectNode object, CookingData data, boolean cookStove, int counter, boolean spell) {
+	public Cooking(Player player, GameObject object, CookingData data, boolean cookStove, int counter, boolean spell) {
 		super(player, spell ? Optional.empty() : Optional.of(object.getGlobalPos()));
 		this.data = data;
 		this.object = object;
@@ -34,7 +34,7 @@ public final class Cooking extends ProducingSkillAction {
 		this.spell = spell;
 	}
 	
-	public Cooking(Player player, ObjectNode object, CookingData data, boolean cookStove, int counter) {
+	public Cooking(Player player, GameObject object, CookingData data, boolean cookStove, int counter) {
 		this(player, object, data, cookStove, counter, false);
 	}
 	

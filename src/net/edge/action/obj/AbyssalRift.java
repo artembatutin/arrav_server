@@ -4,7 +4,7 @@ import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ObjectAction;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.TRAINING_PORTAL;
 
@@ -16,7 +16,7 @@ public class AbyssalRift extends ActionInitializer {
 		//ignored rift
 		ObjectAction l = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				player.message("This altar hasn't been added yet.");
 				return true;
 			}
@@ -26,7 +26,7 @@ public class AbyssalRift extends ActionInitializer {
 			int ii = i;
 			l = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					player.teleport(pos[ii], TRAINING_PORTAL);
 					return true;
 				}

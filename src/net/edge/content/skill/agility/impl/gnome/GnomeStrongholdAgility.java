@@ -13,7 +13,7 @@ import net.edge.content.skill.agility.obstacle.impl.Walkable;
 import net.edge.action.impl.ObjectAction;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -34,7 +34,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 	 * @param object   {@link #getObject()}.
 	 * @param obstacle the obstacle this player is trying to cross.
 	 */
-	private GnomeStrongholdAgility(Player player, ObjectNode object, GnomeAgilityData obstacle) {
+	private GnomeStrongholdAgility(Player player, GameObject object, GnomeAgilityData obstacle) {
 		super(player, object, AgilityCourseType.GNOME_AGILITY);
 		this.obstacle = obstacle;
 	}
@@ -43,7 +43,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		for(GnomeAgilityData data : GnomeAgilityData.values()) {
 			ObjectAction perform = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					GnomeStrongholdAgility agility = new GnomeStrongholdAgility(player, object, data);
 					agility.start();
 					return true;

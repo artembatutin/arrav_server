@@ -6,7 +6,7 @@ import net.edge.action.impl.ObjectAction;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 /**
  * The class which is responsible for executing minigame rooms of
@@ -23,14 +23,14 @@ public final class WarriorsGuild {
 	public static void event() {
 		ObjectAction c =new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				return object.getGlobalPos().same(new Position(2839, 3537)) && CyclopsRoom.enter(player, object);
 			}
 		};
 		c.registerFirst(43741);
 		ObjectAction a = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				return !(!object.getGlobalPos().same(new Position(2855, 3546)) && !object.getGlobalPos().same(new Position(2854, 3546))) && AnimationRoom.enter(player, object);
 			}
 		};

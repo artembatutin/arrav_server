@@ -7,9 +7,9 @@ import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
 import net.edge.world.Direction;
 import net.edge.world.World;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDefinition;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
 import java.util.Optional;
@@ -24,13 +24,13 @@ import static net.edge.world.object.ObjectType.*;
 public final class TraversalMap {
 	
 	/**
-	 * Marks a {@link ObjectNode} with the specified attributes on the
+	 * Marks a {@link GameObject} with the specified attributes on the
 	 * specified {@link Position} to the {@code TraversalMap}.
 	 * @param object The game object.
 	 * @param add    The condition if the object is added.
 	 * @param list   the condition if the region object list will be affected.
 	 */
-	public void markObject(Region reg, ObjectNode object, boolean add, boolean list) {
+	public void markObject(Region reg, GameObject object, boolean add, boolean list) {
 		if(object.getId() > ObjectDefinition.DEFINITIONS.length) {
 			return;
 		}

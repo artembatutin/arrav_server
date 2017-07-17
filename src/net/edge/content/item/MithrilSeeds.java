@@ -13,8 +13,8 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.Item;
 import net.edge.world.object.DynamicObject;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
 /**
@@ -42,7 +42,7 @@ public final class MithrilSeeds {
         for(int objectId : FLOWER_OBJECT_IDS.keySet()) {
             ObjectAction objEvent = new ObjectAction() {
                 @Override
-                public boolean click(Player player, ObjectNode object, int click) {
+                public boolean click(Player player, GameObject object, int click) {
                     if(player.getInventory().remaining() < 1) {
                         player.message("You don't have enough inventory slots to pick these flowers up.");
                         return true;
@@ -83,7 +83,7 @@ public final class MithrilSeeds {
     
                 player.getInventory().remove(new Item(299), slot);
                 player.animation(new Animation(827, Animation.AnimationPriority.HIGH));
-                getRandomFlowerObject(player).publish(120, ObjectNode::remove);
+                getRandomFlowerObject(player).publish(120, GameObject::remove);
                 Position p = player.getPosition();
                 if(World.getTraversalMap().isTraversable(p, Direction.WEST, player.size())) {
                     player.getMovementQueue().walk(Direction.WEST.getX(), Direction.WEST.getY());
