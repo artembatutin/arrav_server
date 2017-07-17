@@ -1,6 +1,6 @@
 package net.edge.content.combat;
 
-import net.edge.Server;
+import net.edge.GameServer;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
@@ -263,10 +263,10 @@ public final class CombatHitTask extends Task {
 							int hit = h.getDamage();
 							double mod = Math.abs(1 - CombatConstants.PRAYER_DAMAGE_REDUCTION);
 							h.setDamage((int) (hit * mod));
-							if(Server.DEBUG)
+							if(GameServer.DEBUG)
 								victim.toPlayer().message("[DEBUG]: Damage " + "reduced by opponents prayer [" + (hit - h.getDamage()) + "]");
 							mod = Math.round(RandomUtils.nextDouble() * 100.0) / 100.0;
-							if(Server.DEBUG)
+							if(GameServer.DEBUG)
 								victim.toPlayer().message("[DEBUG]: Chance " + "of opponents prayer cancelling hit [" + mod + "/" + CombatConstants.PRAYER_ACCURACY_REDUCTION + "]");
 							if(mod <= CombatConstants.PRAYER_ACCURACY_REDUCTION) {
 								h.setAccurate(false);

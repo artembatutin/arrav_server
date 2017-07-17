@@ -16,7 +16,6 @@ import net.edge.action.ActionInitializer;
 import net.edge.action.impl.*;
 import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.ObjectAction;
-import net.edge.game.GameShutdownHook;
 import net.edge.net.EdgevilleChannelInitializer;
 import net.edge.net.NetworkConstants;
 import net.edge.net.PunishmentHandler;
@@ -47,7 +46,7 @@ import java.util.stream.Collectors;
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author lare96 <http://github.com/lare96>
  */
-public final class Server {
+public final class GameServer {
 	
 	/**
 	 * The flag that determines if debugging messages should be printed or not.
@@ -72,7 +71,7 @@ public final class Server {
 	/**
 	 * The LOGGER that will print important information.
 	 */
-	private final static Logger LOGGER = LoggerUtils.getLogger(Server.class);
+	private final static Logger LOGGER = LoggerUtils.getLogger(GameServer.class);
 	
 	static {
 		try {
@@ -83,7 +82,7 @@ public final class Server {
 	}
 	
 	/**
-	 * Invoked when this program is started, initializes the {@link Server}.
+	 * Invoked when this program is started, initializes the {@link GameServer}.
 	 * @param args The runtime arguments, none of which are parsed.
 	 */
 	public static void main(String[] args) {
@@ -93,7 +92,7 @@ public final class Server {
 			DEBUG = false;
 		}
 		try {
-			Server edgeville = new Server();
+			GameServer edgeville = new GameServer();
 			edgeville.init();
 		} catch(Exception e) {
 			LOGGER.log(Level.SEVERE, "Error in game run time!", e);
@@ -104,7 +103,7 @@ public final class Server {
 	/**
 	 * A package-private constructor to discourage external instantiation.
 	 */
-	public Server() {
+	public GameServer() {
 		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleInitialization").build());
 		launch = MoreExecutors.listeningDecorator(delegateService);
 	}

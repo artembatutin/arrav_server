@@ -1,6 +1,6 @@
 package net.edge.net.packet.in;
 
-import net.edge.Server;
+import net.edge.GameServer;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.firemaking.Bonfire;
 import net.edge.content.skill.hunter.Hunter;
@@ -100,7 +100,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 		if(!o.isPresent())
 			return;
 		final ObjectNode object = o.get();
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && GameServer.DEBUG)
 			player.message("[OBJ"+action+"]:" + object.getId() + " - " + object.getGlobalPos().toString());
 		boolean distanceIgnore = (action == 1 && (objectId == 85584 || objectId == 85532 || objectId == 85534));
 		Boundary boundary = new Boundary(position, object.getDefinition().getSize());

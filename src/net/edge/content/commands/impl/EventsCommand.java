@@ -1,6 +1,6 @@
 package net.edge.content.commands.impl;
 
-import net.edge.Server;
+import net.edge.GameServer;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.node.actor.player.Player;
@@ -11,7 +11,7 @@ public final class EventsCommand implements Command {
 
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Server.loadEvents();
+		GameServer.loadEvents();
 	}
 
 }

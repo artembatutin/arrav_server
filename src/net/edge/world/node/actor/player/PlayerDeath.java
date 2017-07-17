@@ -8,7 +8,7 @@ import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendGraphic;
 import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.rand.RandomUtils;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.content.PlayerPanel;
 import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.weapon.WeaponInterface;

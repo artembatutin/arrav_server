@@ -1,6 +1,6 @@
 package net.edge.world.node.actor.mob;
 
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.locale.loc.Location;
 import net.edge.world.node.actor.player.Player;
 

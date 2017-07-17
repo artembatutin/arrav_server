@@ -11,7 +11,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.ipfilter.AbstractRemoteAddressFilter;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
-import net.edge.Server;
+import net.edge.GameServer;
 import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.net.codec.login.LoginCode;
 import net.edge.net.codec.login.LoginResponse;
@@ -49,7 +49,7 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 			response(ctx, LoginCode.SERVER_BEING_UPDATED);
 			return false;
 		}
-		if(Server.STARTING) {
+		if(GameServer.STARTING) {
 			response(ctx, LoginCode.SERVER_STARTING);
 			return false;
 		}

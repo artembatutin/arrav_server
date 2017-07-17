@@ -4,7 +4,7 @@ import net.edge.content.item.Skillcape;
 import net.edge.net.packet.out.SendSkill;
 import net.edge.net.packet.out.SendSkillGoal;
 import net.edge.util.TextUtils;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.Graphic;
 import net.edge.world.World;
 import net.edge.world.node.actor.player.Player;

@@ -6,7 +6,7 @@ import net.edge.content.commands.impl.RedeemCommand;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.wilderness.WildernessActivity;
 import net.edge.action.impl.ButtonAction;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.net.packet.out.SendEnterName;
 import net.edge.net.packet.out.SendLink;
 import net.edge.net.packet.out.SendNpcDrop;

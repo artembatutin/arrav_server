@@ -1,6 +1,6 @@
 package net.edge.content.commands.impl;
 
-import net.edge.Server;
+import net.edge.GameServer;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.net.packet.out.SendLogout;
@@ -29,13 +29,13 @@ public final class UpdateCommand implements Command {
 		while((other = it.next()) != null) {
 			other.out(new SendUpdateTimer(timer * 50 / 30));
 		}
-		Server.UPDATING = timer;
+		GameServer.UPDATING = timer;
 		World.get().getTask().submit(new Task(1, true) {
 			@Override
 			protected void execute() {
-				Server.UPDATING -= 0.6;
-				System.out.println("Update count: " + Server.UPDATING);
-				if(Server.UPDATING <= 0) {
+				GameServer.UPDATING -= 0.6;
+				System.out.println("Update count: " + GameServer.UPDATING);
+				if(GameServer.UPDATING <= 0) {
 					inProgess = 2;
 					System.out.println("Setting player into updating mode.");
 					System.out.println("Logging players out... - Players online: " + World.get().getPlayers().size());

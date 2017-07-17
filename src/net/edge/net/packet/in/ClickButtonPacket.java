@@ -1,6 +1,6 @@
 package net.edge.net.packet.in;
 
-import net.edge.Server;
+import net.edge.GameServer;
 import net.edge.content.Emote;
 import net.edge.content.TabInterface;
 import net.edge.content.clanchat.ClanChatRank;
@@ -75,7 +75,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		int button = PROPER_READ ? payload.getShort() : hexToInt(payload.getBytes(2));
-		if(Server.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
+		if(GameServer.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}
 		

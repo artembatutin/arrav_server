@@ -2,7 +2,7 @@ package net.edge.action.but;
 
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ButtonAction;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.net.PunishmentHandler;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;

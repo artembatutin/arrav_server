@@ -2,7 +2,7 @@ package net.edge.content.skill.firemaking.pits;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.SkillAction;
 import net.edge.world.Animation;

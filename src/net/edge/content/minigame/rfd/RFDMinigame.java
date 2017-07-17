@@ -1,6 +1,6 @@
 package net.edge.content.minigame.rfd;
 
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.item.FoodConsumable;

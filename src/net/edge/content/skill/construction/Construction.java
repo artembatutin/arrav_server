@@ -7,7 +7,7 @@ import net.edge.content.skill.construction.furniture.Portals;
 import net.edge.content.skill.construction.room.Room;
 import net.edge.content.skill.construction.room.RoomData;
 import net.edge.content.skill.construction.room.RoomFurniture;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.locale.Position;
 import net.edge.net.packet.out.SendFade;
 import net.edge.net.packet.out.SendMinimapState;

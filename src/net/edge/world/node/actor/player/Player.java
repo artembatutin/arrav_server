@@ -3,7 +3,7 @@ package net.edge.world.node.actor.player;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.Server;
+import net.edge.GameServer;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
 import net.edge.content.ViewingOrb;
@@ -49,7 +49,7 @@ import net.edge.content.skill.summoning.Summoning;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.content.wilderness.WildernessActivity;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.locale.Position;
 import net.edge.locale.loc.Location;
 import net.edge.net.codec.GameBuffer;
@@ -707,8 +707,8 @@ public final class Player extends Actor {
 			this.message("@red@[ANNOUNCEMENT]: " + World.getShootingStarEvent().getShootingStar().getLocationData().getMessageWhenActive());
 		}
 		World.getTriviaBot().onLogin(this);
-		if(Server.UPDATING > 0) {
-			out(new SendUpdateTimer((int) (Server.UPDATING * 50 / 30)));
+		if(GameServer.UPDATING > 0) {
+			out(new SendUpdateTimer((int) (GameServer.UPDATING * 50 / 30)));
 		}
 		Summoning.login(this);
 		if(getRights().isStaff()) {

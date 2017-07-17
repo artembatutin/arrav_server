@@ -2,15 +2,15 @@ package net.edge.world;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import net.edge.Server;
+import net.edge.GameServer;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.shootingstar.ShootingStarManager;
 import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.trivia.TriviaTask;
-import net.edge.game.GameConstants;
-import net.edge.game.GamePulseHandler;
+import net.edge.GameConstants;
+import net.edge.GamePulseHandler;
 import net.edge.locale.InstanceManager;
 import net.edge.locale.area.AreaManager;
 import net.edge.net.database.Database;
@@ -117,8 +117,8 @@ public final class World {
 	static {
 		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
-			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
+			donation = new Database(!GameServer.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !GameServer.DEBUG ? "root" : "edge_avro", !GameServer.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
+			score = new Database(!GameServer.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !GameServer.DEBUG ? "root" : "edge_avro", !GameServer.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -3,7 +3,7 @@ package net.edge.content.trivia;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.World;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.node.actor.player.Player;

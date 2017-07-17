@@ -1,4 +1,4 @@
-package net.edge.game;
+package net.edge;
 
 import net.edge.world.World;
 

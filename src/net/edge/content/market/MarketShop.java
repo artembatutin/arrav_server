@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.edge.content.market.currency.impl.ItemCurrency;
 import net.edge.net.packet.out.*;
 import net.edge.util.TextUtils;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;

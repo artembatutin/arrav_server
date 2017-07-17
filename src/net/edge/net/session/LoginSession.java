@@ -8,7 +8,7 @@ import net.edge.net.NetworkConstants;
 import net.edge.net.codec.login.LoginRequest;
 import net.edge.net.codec.login.LoginCode;
 import net.edge.net.codec.login.LoginResponse;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.World;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.PlayerCredentials;

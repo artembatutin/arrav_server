@@ -1,6 +1,6 @@
 package net.edge.net.packet.in;
 
-import net.edge.Server;
+import net.edge.GameServer;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.pets.Pet;
@@ -129,7 +129,7 @@ public final class NpcActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && GameServer.DEBUG)
 			player.message("[NPC1]:" + mob.toString());
 	}
 	
@@ -160,7 +160,7 @@ public final class NpcActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && GameServer.DEBUG)
 			player.message("[NPC2]:" + mob.toString());
 	}
 	
@@ -188,7 +188,7 @@ public final class NpcActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && GameServer.DEBUG)
 			player.message("[NPC3]:" + mob.toString());
 	}
 	
@@ -218,7 +218,7 @@ public final class NpcActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && GameServer.DEBUG)
 			player.message("[NPC4]:" + mob.toString());
 	}
 	

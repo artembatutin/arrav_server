@@ -2,7 +2,7 @@ package net.edge.content.minigame.fightcaves;
 
 import net.edge.content.item.PotionConsumable;
 import net.edge.action.impl.ObjectAction;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.FoodConsumable;

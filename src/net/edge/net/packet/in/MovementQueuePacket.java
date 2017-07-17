@@ -1,6 +1,6 @@
 package net.edge.net.packet.in;
 
-import net.edge.Server;
+import net.edge.GameServer;
 import net.edge.content.market.MarketShop;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.locale.Position;
@@ -81,7 +81,7 @@ public final class MovementQueuePacket implements IncomingPacket {
 			player.getMovementQueue().finish();
 		}
 		
-		if(Server.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
+		if(GameServer.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("DEBUG[walking= " + player.getPosition().getRegion() + "]");
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.WALKING);

@@ -1,7 +1,7 @@
 package net.edge.content.skill.firemaking.pits;
 
 import net.edge.task.Task;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.World;
 
 import java.util.Optional;

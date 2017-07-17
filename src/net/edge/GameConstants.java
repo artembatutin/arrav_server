@@ -1,4 +1,4 @@
-package net.edge.game;
+package net.edge;
 
 import net.edge.locale.Position;
 import net.edge.world.node.actor.mob.Mob;
@@ -82,7 +82,7 @@ public final class GameConstants {
 	/**
 	 * The message that will be sent on every login.
 	 */
-	public static final String WELCOME_MESSAGE = "@blu@Welcome to Edgeville - Report bugs by doing ::bug *description_here*";
+	public static final String WELCOME_MESSAGE = "@blu@Welcome to Edgeville";
 	
 	/**
 	 * The items received when a player logs in for the first time in regular mode.
@@ -100,12 +100,7 @@ public final class GameConstants {
 	 * killed, while {@code -killer-} is replaced with the killer's name.
 	 */
 	public static final String[] DEATH_MESSAGES = {"You have just killed -victim-!", "You have completely slaughtered -victim-!", "I bet -victim- will think twice before messing with you again!", "Your killing style is impeccable, -victim- didn't stand a chance!"};
-
-	/**
-	 * Strings that can not be used in a username.
-	 */
-	public static final String BAD_USERNAMES[] = {"m o d", "a d m i n", "mod", "admin", "moderator", "administrator", "owner", "m0d", "adm1n", "0wner", "retard", "Nigga", "nigger", "n1gger", "n1gg3r", "nigg3r", "n1gga", "cock", "faggot", "fag", "anus", "arse", "fuck", "bastard", "bitch", "cunt", "chode", "damn", "dick", "faggit", "gay", "homo", "jizz", "lesbian", "negro", "pussy", "penis", "queef", "twat", "titty", "whore", "b1tch"};
-
+	
 	/**
 	 * Strings that are classified as bad.
 	 */
