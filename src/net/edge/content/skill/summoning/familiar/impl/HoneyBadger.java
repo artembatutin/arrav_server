@@ -7,7 +7,7 @@ import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.ability.Fighter;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.SummoningData;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 import java.util.Optional;
@@ -43,7 +43,7 @@ public final class HoneyBadger extends Familiar {
 	}
 	
 	@Override
-	public void interact(Player player, Npc npc, int id) {
+	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
 			player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 		}

@@ -2,7 +2,7 @@ package net.edge.content.minigame.pestcontrol.pest;
 
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 
 public class Brawler extends Pest {
 	
@@ -12,7 +12,7 @@ public class Brawler extends Pest {
 	}
 	
 	@Override
-	public void sequence(Npc knight) {
+	public void sequence(Mob knight) {
 		//none
 	}
 	

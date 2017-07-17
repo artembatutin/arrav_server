@@ -1,7 +1,7 @@
 package net.edge.world.node.actor.update;
 
 import net.edge.net.codec.GameBuffer;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 /**
@@ -18,7 +18,7 @@ public final class NpcFaceEntityUpdateBlock extends NpcUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Npc mob, GameBuffer msg) {
+	public int write(Player player, Mob mob, GameBuffer msg) {
 		msg.putShort(mob.getFaceIndex());
 		return -1;
 	}

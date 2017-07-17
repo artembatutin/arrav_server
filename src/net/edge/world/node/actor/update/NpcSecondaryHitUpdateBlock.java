@@ -2,7 +2,7 @@ package net.edge.world.node.actor.update;
 
 import net.edge.net.codec.GameBuffer;
 import net.edge.world.Hit;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 /**
@@ -19,13 +19,13 @@ public final class NpcSecondaryHitUpdateBlock extends NpcUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Npc npc, GameBuffer msg) {
-		Hit hit = npc.getSecondaryHit();
+	public int write(Player player, Mob mob, GameBuffer msg) {
+		Hit hit = mob.getSecondaryHit();
 		msg.putShort(hit.getDamage());
 		msg.put(hit.getType().getId() + (hit.hasSource() && hit.getSource() != player.getSlot() ? 5 : 0));
 		msg.put(hit.getIcon().getId());
-		msg.putShort((int) Math.round((((double) npc.getCurrentHealth()) / ((double) npc.getMaxHealth())) * 100));
-		msg.put(npc.getSpecial().isPresent() ? npc.getSpecial().getAsInt() : 101);
+		msg.putShort((int) Math.round((((double) mob.getCurrentHealth()) / ((double) mob.getMaxHealth())) * 100));
+		msg.put(mob.getSpecial().isPresent() ? mob.getSpecial().getAsInt() : 101);
 		return -1;
 	}
 }

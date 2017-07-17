@@ -186,7 +186,7 @@ public enum CombatSpecial {
 						if(target.isPlayer()) {
 							local = player.getLocalPlayers();
 						} else if(target.isNpc()) {
-							local = player.getLocalNpcs();
+							local = player.getLocalMobs();
 						}
 						if(local == null)
 							return;

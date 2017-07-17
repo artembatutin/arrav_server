@@ -2,7 +2,7 @@ package net.edge.world.node;
 
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
@@ -13,7 +13,7 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * The parent class that represents anything that can be interacted with in the {@link World}.
- * This includes {@link ItemNode}s, {@link ObjectNode}s, {@link Player}s, and {@link Npc}s.
+ * This includes {@link ItemNode}s, {@link ObjectNode}s, {@link Player}s, and {@link Mob}s.
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class Node {

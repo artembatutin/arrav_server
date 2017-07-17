@@ -1,7 +1,7 @@
 package net.edge.game;
 
 import net.edge.locale.Position;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -53,7 +53,7 @@ public final class GameConstants {
 	
 	/**
 	 * The absolute distance that players must be within to be targeted by
-	 * aggressive {@link Npc}s.
+	 * aggressive {@link Mob}s.
 	 */
 	public static final int TARGET_DISTANCE = 6;
 	
@@ -64,7 +64,7 @@ public final class GameConstants {
 	public static final int DROP_THRESHOLD = 2;
 	
 	/**
-	 * The time in seconds that has to be spent in a region before {@link Npc}s
+	 * The time in seconds that has to be spent in a region before {@link Mob}s
 	 * stop acting aggressive towards a specific {@link Player}.
 	 */
 	public static final int TOLERANCE_SECONDS = 600;

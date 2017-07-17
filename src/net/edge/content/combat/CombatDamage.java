@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.edge.util.Stopwatch;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 import java.util.Map.Entry;
@@ -44,9 +44,9 @@ public final class CombatDamage {
 	 * @return the player who has inflicted the most damage, or an empty
 	 * optional if there are no entries.
 	 */
-	public Optional<Npc> getNpcKiller() {
+	public Optional<Mob> getNpcKiller() {
 		int amount = 0;
-		Npc killer = null;
+		Mob killer = null;
 		for(Entry<Actor, DamageCounter> entry : attackers.entrySet()) {
 			DamageCounter counter = entry.getValue();
 			Actor entity = entry.getKey();

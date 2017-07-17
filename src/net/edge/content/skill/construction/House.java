@@ -7,7 +7,7 @@ import net.edge.content.skill.construction.data.Constants;
 import net.edge.content.skill.construction.room.Room;
 import net.edge.content.skill.construction.room.RoomFurniture;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 import static net.edge.content.skill.construction.HouseController.State.*;
@@ -49,9 +49,9 @@ public class House {
 	private final ObjectList<Player> visitors = new ObjectArrayList<>();
 	
 	/**
-	 * The active npcs in this house.
+	 * The active mobs in this house.
 	 */
-	private final ObjectList<Npc> npcs = new ObjectArrayList<>();
+	private final ObjectList<Mob> mobs = new ObjectArrayList<>();
 	
 	/**
 	 * The house controller of the {@link #owner}.
@@ -167,24 +167,24 @@ public class House {
 		if(visitors.isEmpty()) {
 			World.getInstanceManager().open(instance);
 			instance = 0;
-			for(Npc n : npcs) {
+			for(Mob n : mobs) {
 				removeNpc(n);
 			}
 		}
 	}
 	
-	public void addNpc(Npc npc) {
+	public void addNpc(Mob mob) {
 		if(instance == 0)
 			instance = World.getInstanceManager().closeNext();
-		if(npcs.contains(npc))
+		if(mobs.contains(mob))
 			return;
-		npc.setInstance(instance);
-		npcs.add(npc);
+		mob.setInstance(instance);
+		mobs.add(mob);
 	}
 	
-	public void removeNpc(Npc npc) {
-		npc.setInstance(0);
-		npcs.remove(npc);
+	public void removeNpc(Mob mob) {
+		mob.setInstance(0);
+		mobs.remove(mob);
 	}
 	
 	public HouseDungeon getDungeon() {

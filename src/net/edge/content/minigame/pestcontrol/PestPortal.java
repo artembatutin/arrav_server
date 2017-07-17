@@ -7,19 +7,19 @@ import net.edge.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Hit;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
-import net.edge.world.node.actor.npc.NpcDeath;
-import net.edge.world.node.actor.npc.impl.DefaultNpc;
+import net.edge.world.node.actor.mob.Mob;
+import net.edge.world.node.actor.mob.MobDeath;
+import net.edge.world.node.actor.mob.impl.DefaultMob;
 import net.edge.world.node.actor.player.Player;
 
 import java.util.Optional;
 
 import static net.edge.content.minigame.pestcontrol.pest.PestType.*;
 
-public class PestPortal extends DefaultNpc {
+public class PestPortal extends DefaultMob {
 	
 	
-	private final Npc knight;
+	private final Mob knight;
 	
 	private final Position spawn;
 	
@@ -27,7 +27,7 @@ public class PestPortal extends DefaultNpc {
 	
 	private PestControlMinigame game;
 	
-	public PestPortal(int id, Position position, Position spawn, int widget, Npc knight) {
+	public PestPortal(int id, Position position, Position spawn, int widget, Mob knight) {
 		super(id, position);
 		setOriginalRandomWalk(false);
 		setAutoRetaliate(false);
@@ -102,7 +102,7 @@ public class PestPortal extends DefaultNpc {
 	@Override
 	public void appendDeath() {
 		setDead(true);
-		World.get().submit(new NpcDeath(this));
+		World.get().submit(new MobDeath(this));
 		knight.healEntity(50);
 		if(game != null) {
 			if(!game.portalsAlive()) {

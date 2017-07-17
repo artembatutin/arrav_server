@@ -3,7 +3,7 @@ package net.edge.event.npc;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.NpcEvent;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 public class Thurgo extends EventInitializer {
@@ -11,7 +11,7 @@ public class Thurgo extends EventInitializer {
 	public void init() {
 		NpcEvent e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				player.getDialogueBuilder().append(new NpcDialogue(604, "Beautiful day in this dark cave, isn't it?"));
 				return true;
 			}

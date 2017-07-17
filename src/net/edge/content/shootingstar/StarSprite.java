@@ -10,7 +10,7 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.PlayerDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -18,7 +18,7 @@ import net.edge.world.node.item.Item;
  * The class which represents a single star sprite npc.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
-public final class StarSprite extends Npc {
+public final class StarSprite extends Mob {
 
 	/**
 	 * The shooting star this star sprite is summoned from.
@@ -51,7 +51,7 @@ public final class StarSprite extends Npc {
 	public static void event() {
 		NpcEvent e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				if(click == 1) {
 					DialogueAppender ap = new DialogueAppender(player);
 					ap.chain(new NpcDialogue(8091, "Hello " + player.getFormatUsername() + ", I had been trapped inside this rock", "for a few decades, I can now finally return."));
@@ -144,7 +144,7 @@ public final class StarSprite extends Npc {
 	}
 
 	@Override
-	public Npc create() {
+	public Mob create() {
 		return new StarSprite(star);
 	}
 

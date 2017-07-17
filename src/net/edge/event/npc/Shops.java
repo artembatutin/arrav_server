@@ -3,7 +3,7 @@ package net.edge.event.npc;
 import net.edge.content.market.MarketCounter;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.NpcEvent;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 public class Shops extends EventInitializer {
@@ -57,7 +57,7 @@ public class Shops extends EventInitializer {
 		for(Shop s : Shop.values()) {
 			NpcEvent e = new NpcEvent() {
 				@Override
-				public boolean click(Player player, Npc npc, int click) {
+				public boolean click(Player player, Mob npc, int click) {
 					MarketCounter.getShops().get(s.shop).openShop(player);
 					return true;
 				}

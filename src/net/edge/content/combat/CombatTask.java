@@ -10,8 +10,8 @@ import net.edge.locale.Boundary;
 import net.edge.locale.loc.Location;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
-import net.edge.world.node.actor.npc.Npc;
-import net.edge.world.node.actor.npc.NpcAggression;
+import net.edge.world.node.actor.mob.Mob;
+import net.edge.world.node.actor.mob.MobAggression;
 import net.edge.world.node.actor.player.Player;
 
 /**
@@ -170,10 +170,11 @@ public final class CombatTask extends Task {
 			}
 		}
 		if(builder.getCharacter().isNpc()) {
-			Npc npc = (Npc) builder.getCharacter();
-			boolean retreats = npc.getDefinition().retreats() && npc.getCombatBuilder().inCombat();
-			if(builder.getVictim().getCombatBuilder().isCooldown() && !new Boundary(npc.getPosition(), npc.size()).within(npc.getPosition(), npc.size(), GameConstants.TARGET_DISTANCE) && retreats) {
-				NpcAggression.retreat(npc);
+			Mob mob = (Mob) builder.getCharacter();
+			boolean retreats = mob.getDefinition().retreats() && mob.getCombatBuilder().inCombat();
+			if(builder.getVictim().getCombatBuilder().isCooldown() && !new Boundary(mob.getPosition(), mob.size()).within(mob
+					.getPosition(), mob.size(), GameConstants.TARGET_DISTANCE) && retreats) {
+				MobAggression.retreat(mob);
 				return false;
 			}
 		}

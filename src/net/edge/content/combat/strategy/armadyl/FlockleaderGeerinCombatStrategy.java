@@ -9,7 +9,7 @@ import net.edge.world.node.NodeState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Projectile;
-import net.edge.world.node.actor.npc.impl.gwd.KreeArra;
+import net.edge.world.node.actor.mob.impl.gwd.KreeArra;
 
 public final class FlockleaderGeerinCombatStrategy implements CombatStrategy {
 

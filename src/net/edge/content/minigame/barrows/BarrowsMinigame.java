@@ -14,11 +14,11 @@ import net.edge.locale.Position;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.npc.Npc;
-import net.edge.world.node.actor.npc.drop.ItemCache;
-import net.edge.world.node.actor.npc.drop.NpcDrop;
-import net.edge.world.node.actor.npc.drop.NpcDropManager;
-import net.edge.world.node.actor.npc.drop.NpcDropTable;
+import net.edge.world.node.actor.mob.Mob;
+import net.edge.world.node.actor.mob.drop.DropManager;
+import net.edge.world.node.actor.mob.drop.ItemCache;
+import net.edge.world.node.actor.mob.drop.Drop;
+import net.edge.world.node.actor.mob.drop.DropTable;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
@@ -186,11 +186,11 @@ public final class BarrowsMinigame extends Minigame {
 				return true;
 			}
 			if(!container.getCurrent().isPresent()) {
-				NpcDropTable table = NpcDropManager.TABLES.get(-1);//barrows custom.
+				DropTable table = DropManager.TABLES.get(-1);//barrows custom.
 				ObjectList<Item> loot = new ObjectArrayList<>();
 				for(int i = 0; i < 20; i++) {
 					ItemCache cache = RandomUtils.random(table.getCommon());
-					NpcDrop drop = RandomUtils.random(NpcDropManager.COMMON.get(cache));
+					Drop drop = RandomUtils.random(DropManager.COMMON.get(cache));
 					if(drop.roll(ThreadLocalRandom.current())) {
 						loot.add(new Item(drop.getId(), RandomUtils.inclusive(drop.getMinimum(), drop.getMaximum())));
 					}
@@ -227,10 +227,10 @@ public final class BarrowsMinigame extends Minigame {
 	
 	@Override
 	public void onKill(Player player, Actor victim) {
-		Npc npc = victim.toNpc();
+		Mob mob = victim.toNpc();
 		
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
-		if(current.isPresent() && npc.getId() != current.get().getId()) {
+		if(current.isPresent() && mob.getId() != current.get().getId()) {
 			return;
 		}
 		player.getMinigameContainer().getBarrowsContainer().setCurrent(Optional.empty());

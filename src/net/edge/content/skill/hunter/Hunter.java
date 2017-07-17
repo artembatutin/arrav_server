@@ -10,7 +10,7 @@ import net.edge.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
@@ -97,11 +97,11 @@ public final class Hunter {
 		//	return false;
 		//}
 		
-		for(Npc npc : player.getLocalNpcs()) {
-			if(npc == null) {
+		for(Mob mob : player.getLocalMobs()) {
+			if(mob == null) {
 				continue;
 			}
-			if(npc.getPosition().same(player.getPosition()) || npc.getOriginalPosition().same(player.getPosition())) {
+			if(mob.getPosition().same(player.getPosition()) || mob.getOriginalPosition().same(player.getPosition())) {
 				player.message("You can't set-up your trap here.");
 				return false;
 			}

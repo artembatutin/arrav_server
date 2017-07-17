@@ -22,7 +22,7 @@ import net.edge.world.node.actor.move.MovementQueue;
 import net.edge.world.node.actor.move.MovementQueueListener;
 import net.edge.world.node.actor.move.path.AStarPathFinder;
 import net.edge.world.node.actor.move.path.distance.Manhattan;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.activity.ActivityManager;
 import net.edge.world.node.actor.update.UpdateFlag;
@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 /**
- * The {@link Node} implementation representing a node that is an entity. This includes {@link Player}s and {@link Npc}s.
+ * The {@link Node} implementation representing a node that is an entity. This includes {@link Player}s and {@link Mob}s.
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class Actor extends Node {
@@ -1070,8 +1070,8 @@ public abstract class Actor extends Node {
 	}
 	
 	/**
-	 * Determines if this entity is a {@link Npc}.
-	 * @return {@code true} if this entity is a {@link Npc}, {@code false}
+	 * Determines if this entity is a {@link Mob}.
+	 * @return {@code true} if this entity is a {@link Mob}, {@code false}
 	 * otherwise.
 	 */
 	public final boolean isNpc() {
@@ -1082,19 +1082,19 @@ public abstract class Actor extends Node {
 	 * Executes the specified action if the underlying node is a player.
 	 * @param action the action to execute.
 	 */
-	public final void ifNpc(Consumer<Npc> action) {
+	public final void ifNpc(Consumer<Mob> action) {
 		if(!this.isNpc())
 			return;
 		action.accept(this.toNpc());
 	}
 	
 	/**
-	 * Casts the {@link Actor} to a {@link Npc}.
-	 * @return an instance of this {@link Actor} as a {@link Npc}.
+	 * Casts the {@link Actor} to a {@link Mob}.
+	 * @return an instance of this {@link Actor} as a {@link Mob}.
 	 */
-	public final Npc toNpc() {
+	public final Mob toNpc() {
 		Preconditions.checkArgument(isNpc(), "Cannot cast this entity to npc.");
-		return (Npc) this;
+		return (Mob) this;
 	}
 	
 	/**

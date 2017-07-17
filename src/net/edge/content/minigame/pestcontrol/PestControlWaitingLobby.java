@@ -10,16 +10,16 @@ import net.edge.locale.Position;
 import net.edge.net.packet.out.SendWalkable;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.actor.npc.Npc;
-import net.edge.world.node.actor.npc.drop.ItemCache;
-import net.edge.world.node.actor.npc.drop.NpcDrop;
-import net.edge.world.node.actor.npc.drop.NpcDropManager;
+import net.edge.world.node.actor.mob.Mob;
+import net.edge.world.node.actor.mob.drop.DropManager;
+import net.edge.world.node.actor.mob.drop.ItemCache;
+import net.edge.world.node.actor.mob.drop.Drop;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
 
 import static net.edge.content.minigame.Minigame.MinigameSafety.SAFE;
-import static net.edge.world.node.actor.npc.drop.ItemCache.*;
+import static net.edge.world.node.actor.mob.drop.ItemCache.*;
 
 public final class PestControlWaitingLobby extends MinigameLobby {
 	
@@ -148,7 +148,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		//accessing shop.
 		NpcEvent shop = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				player.widget(37000);
 				player.text(37007, player.getPest() + " points");
 				return true;
@@ -196,7 +196,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 					}
 					if(Currency.PEST_POINTS.getCurrency().takeCurrency(player, (index == 0 ? 30 : 15))) {
 						//three items.
-						NpcDrop pack = RandomUtils.random(NpcDropManager.COMMON.get(packs[index]));
+						Drop pack = RandomUtils.random(DropManager.COMMON.get(packs[index]));
 						player.getInventory().add(new Item(pack.getId(), RandomUtils.inclusive(pack.getMinimum(), pack.getMaximum())));
 					}
 					return true;

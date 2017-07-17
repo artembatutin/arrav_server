@@ -578,7 +578,7 @@ public final class ItemDefinition {
 									}
 								}
 								if(npc != null && rarity != null && combat != null) {
-									for(NpcDefinition def : NpcDefinition.DEFINITIONS) {
+									for(MobDefinition def : MobDefinition.DEFINITIONS) {
 										if(def == null)
 											continue;
 										if(def.getName() == null)
@@ -589,29 +589,29 @@ public final class ItemDefinition {
 													if(comb == 0)
 														continue;
 													if(comb == def.getCombatLevel()) {
-														if(NpcDropManager.getTables().containsKey(index)) {
-															NpcDropTable drop = NpcDropManager.getTables().get(def.getId());
-															if(!drop.getDrops().contains(new NpcDrop(index, minQuant, maxQuant, rarity))) {
-																drop.getDrops().add(new NpcDrop(index, minQuant, maxQuant, rarity));
+														if(DropManager.getTables().containsKey(index)) {
+															DropTable drop = DropManager.getTables().get(def.getId());
+															if(!drop.getDrops().contains(new Drop(index, minQuant, maxQuant, rarity))) {
+																drop.getDrops().add(new Drop(index, minQuant, maxQuant, rarity));
 																drops += 1;
 															}
 														} else {
-															NpcDropTable drop = new NpcDropTable(new NpcDrop[]{new NpcDrop(index, minQuant, maxQuant, rarity)}, new ItemCache[]{ItemCache.LOW_RUNES});
-															NpcDropManager.getTables().put(def.getId(), drop);
+															DropTable drop = new DropTable(new Drop[]{new Drop(index, minQuant, maxQuant, rarity)}, new ItemCache[]{ItemCache.LOW_RUNES});
+															DropManager.getTables().put(def.getId(), drop);
 															drops += 1;
 														}
 													}
 												}
 											} else {
-												if(NpcDropManager.getTables().containsKey(index)) {
-													NpcDropTable drop = NpcDropManager.getTables().get(def.getId());
-													if(!drop.getDrops().contains(new NpcDrop(index, minQuant, maxQuant, rarity))) {
-														drop.getDrops().add(new NpcDrop(index, minQuant, maxQuant, rarity));
+												if(DropManager.getTables().containsKey(index)) {
+													DropTable drop = DropManager.getTables().get(def.getId());
+													if(!drop.getDrops().contains(new Drop(index, minQuant, maxQuant, rarity))) {
+														drop.getDrops().add(new Drop(index, minQuant, maxQuant, rarity));
 														drops += 1;
 													}
 												} else {
-													NpcDropTable drop = new NpcDropTable(new NpcDrop[]{new NpcDrop(index, minQuant, maxQuant, rarity)}, new ItemCache[]{ItemCache.LOW_RUNES});
-													NpcDropManager.getTables().put(def.getId(), drop);
+													DropTable drop = new DropTable(new Drop[]{new Drop(index, minQuant, maxQuant, rarity)}, new ItemCache[]{ItemCache.LOW_RUNES});
+													DropManager.getTables().put(def.getId(), drop);
 													drops += 1;
 												}
 											}
@@ -634,7 +634,7 @@ public final class ItemDefinition {
 			// Always close files.
 			bufferedReader.close();
 			System.out.println("added drops: " + totald);
-			NpcDropManager.dump();
+			DropManager.dump();
 		} catch(IOException ex) {
 			ex.printStackTrace();
 		}*/

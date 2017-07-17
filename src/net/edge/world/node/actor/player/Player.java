@@ -65,9 +65,9 @@ import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.net.packet.out.SendNpcUpdate;
-import net.edge.world.node.actor.npc.impl.gwd.GodwarsFaction;
+import net.edge.world.node.actor.mob.impl.gwd.GodwarsFaction;
 import net.edge.world.node.actor.player.assets.*;
 import net.edge.world.node.actor.player.assets.activity.ActivityManager;
 import net.edge.world.node.actor.update.UpdateFlag;
@@ -141,7 +141,7 @@ public final class Player extends Actor {
 	/**
 	 * Uniquely spawned mob/npcs for this player.
 	 */
-	private final ObjectList<Npc> mobs = new ObjectArrayList<>();
+	private final ObjectList<Mob> mobs = new ObjectArrayList<>();
 	
 	/**
 	 * The hash collection of the local players.
@@ -151,7 +151,7 @@ public final class Player extends Actor {
 	/**
 	 * The hash collection of the local npcs.
 	 */
-	private final Set<Npc> localNpcs = new LinkedHashSet<>(255);
+	private final Set<Mob> localMobs = new LinkedHashSet<>(255);
 	
 	/**
 	 * The hash collection of friends.
@@ -324,7 +324,7 @@ public final class Player extends Actor {
 	private final MutableNumber playerKills = new MutableNumber();
 	
 	/**
-	 * The total amount of times this player died to a {@link Npc}
+	 * The total amount of times this player died to a {@link Mob}
 	 */
 	private final MutableNumber npcDeaths = new MutableNumber();
 	
@@ -777,7 +777,7 @@ public final class Player extends Actor {
 	@Override
 	public void preUpdate() {
 		getMovementQueue().sequence();
-//		NpcAggression.sequence(this);
+//		MobAggression.sequence(this);
 		restoreRunEnergy();
 		int deltaX = getPosition().getX() - getLastRegion().getRegionX() * 8;
 		int deltaY = getPosition().getY() - getLastRegion().getRegionY() * 8;
@@ -1181,8 +1181,8 @@ public final class Player extends Actor {
 	 * Gets the hash collection of the local npcs.
 	 * @return the local npcs.
 	 */
-	public Set<Npc> getLocalNpcs() {
-		return localNpcs;
+	public Set<Mob> getLocalMobs() {
+		return localMobs;
 	}
 	
 	/**
@@ -2444,7 +2444,7 @@ public final class Player extends Actor {
 	 * Gets the list of spawned npcs specifically for this player.
 	 * @return mobs list.
 	 */
-	public ObjectList<Npc> getMobs() {
+	public ObjectList<Mob> getMobs() {
 		return mobs;
 	}
 	

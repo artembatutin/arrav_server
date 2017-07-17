@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
 import net.edge.content.skill.slayer.Slayer;
-import net.edge.world.node.actor.npc.NpcAggression;
-import net.edge.world.node.actor.npc.NpcDefinition;
+import net.edge.world.node.actor.mob.MobAggression;
+import net.edge.world.node.actor.mob.MobDefinition;
 
 import java.util.Objects;
 
@@ -57,9 +57,9 @@ public final class NpcDefinitionLoader extends JsonLoader {
 			Slayer.SLAYER_LEVELS.put(slayerKey, slayerRequirement);
 		}
 		
-		NpcDefinition.DEFINITIONS[index] = new NpcDefinition(index, name, description, combatLevel, size, attackable, aggressive, retreats, poisonous, respawnTime, maxHit, hitpoints, attackSpeed, attackAnim, defenceAnim, deathAnim, attackLevel, magicLevel, rangedLevel, defenceLevel, slayerRequirement, slayerKey, weakness);
+		MobDefinition.DEFINITIONS[index] = new MobDefinition(index, name, description, combatLevel, size, attackable, aggressive, retreats, poisonous, respawnTime, maxHit, hitpoints, attackSpeed, attackAnim, defenceAnim, deathAnim, attackLevel, magicLevel, rangedLevel, defenceLevel, slayerRequirement, slayerKey, weakness);
 		
 		if(aggressive)
-			NpcAggression.AGGRESSIVE.add(index);
+			MobAggression.AGGRESSIVE.add(index);
 	}
 }

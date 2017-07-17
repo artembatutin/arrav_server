@@ -8,7 +8,7 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.Direction;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.update.UpdateManager;
 import net.edge.world.node.actor.update.UpdateState;
@@ -18,7 +18,7 @@ import net.edge.world.node.region.RegionManager;
 import java.util.Iterator;
 
 /**
- * An implementation that sends an update message containing the underlying {@link Player} and {@link Npc}s surrounding them.
+ * An implementation that sends an update message containing the underlying {@link Player} and {@link Mob}s surrounding them.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class SendNpcUpdate implements OutgoingPacket {
@@ -29,13 +29,14 @@ public final class SendNpcUpdate implements OutgoingPacket {
 		GameBuffer blockMsg = new GameBuffer(alloc.buffer(64));
 		try {
 			msg.startBitAccess();
-			msg.putBits(8, player.getLocalNpcs().size());
-			Iterator<Npc> $it = player.getLocalNpcs().iterator();
+			msg.putBits(8, player.getLocalMobs().size());
+			Iterator<Mob> $it = player.getLocalMobs().iterator();
 			while($it.hasNext()) {
-				Npc npc = $it.next();
-				if(npc.getState() == NodeState.ACTIVE && npc.isVisible() && player.getInstance() == npc.getInstance() && npc.getPosition().isViewableFrom(player.getPosition()) && !npc.isNeedsPlacement()) {
-					handleMovement(npc, msg);
-					UpdateManager.encode(player, npc, blockMsg, UpdateState.UPDATE_LOCAL);
+				Mob mob = $it.next();
+				if(mob.getState() == NodeState.ACTIVE && mob.isVisible() && player.getInstance() == mob.getInstance() && mob
+						.getPosition().isViewableFrom(player.getPosition()) && !mob.isNeedsPlacement()) {
+					handleMovement(mob, msg);
+					UpdateManager.encode(player, mob, blockMsg, UpdateState.UPDATE_LOCAL);
 				} else {
 					msg.putBit(true);
 					msg.putBits(2, 3);
@@ -106,20 +107,20 @@ public final class SendNpcUpdate implements OutgoingPacket {
 	 * Processing the addition of npc from a region.
 	 */
 	private void processNpcs(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, int added) {
-		if(!region.getNpcs().isEmpty()) {
-			for(Npc npc : region.getNpcs()) {
-				if(added == 15 || player.getLocalNpcs().size() >= 255)
+		if(!region.getMobs().isEmpty()) {
+			for(Mob mob : region.getMobs()) {
+				if(added == 15 || player.getLocalMobs().size() >= 255)
 					break;
-				if(npc == null)
+				if(mob == null)
 					continue;
-				if(npc.getState() != NodeState.ACTIVE)
+				if(mob.getState() != NodeState.ACTIVE)
 					continue;
-				if(npc.getInstance() != player.getInstance())
+				if(mob.getInstance() != player.getInstance())
 					continue;
-				if(npc.isVisible() && npc.getPosition().isViewableFrom(player.getPosition())) {
-					if(player.getLocalNpcs().add(npc)) {
-						addNpc(player, npc, msg);
-						UpdateManager.encode(player, npc, blockMsg, UpdateState.ADD_LOCAL);
+				if(mob.isVisible() && mob.getPosition().isViewableFrom(player.getPosition())) {
+					if(player.getLocalMobs().add(mob)) {
+						addNpc(player, mob, msg);
+						UpdateManager.encode(player, mob, blockMsg, UpdateState.ADD_LOCAL);
 						added++;
 					}
 				}
@@ -128,32 +129,32 @@ public final class SendNpcUpdate implements OutgoingPacket {
 	}
 	
 	/**
-	 * Adds {@code addNpc} in the view of {@code player}.
+	 * Adds {@code addMob} in the view of {@code player}.
 	 * @param msg    The main update message.
 	 * @param player The {@link Player} this update message is being sent for.
-	 * @param addNpc The {@link Npc} being added.
+	 * @param addMob The {@link Mob} being added.
 	 */
-	private void addNpc(Player player, Npc addNpc, GameBuffer msg) {
-		boolean updateRequired = !addNpc.getFlags().isEmpty();
-		int deltaX = addNpc.getPosition().getX() - player.getPosition().getX();
-		int deltaY = addNpc.getPosition().getY() - player.getPosition().getY();
+	private void addNpc(Player player, Mob addMob, GameBuffer msg) {
+		boolean updateRequired = !addMob.getFlags().isEmpty();
+		int deltaX = addMob.getPosition().getX() - player.getPosition().getX();
+		int deltaY = addMob.getPosition().getY() - player.getPosition().getY();
 
-		msg.putBits(14, addNpc.getSlot());
+		msg.putBits(14, addMob.getSlot());
 		msg.putBits(5, deltaY);
 		msg.putBits(5, deltaX);
 		msg.putBit(updateRequired);
-		msg.putBits(16, addNpc.getId());
+		msg.putBits(16, addMob.getId());
 		msg.putBit(true);
 	}
 	
 	/**
-	 * Handles walking movement for {@code npc}.
-	 * @param npc The {@link Player} to handle running and walking for.
+	 * Handles walking movement for {@code mob}.
+	 * @param mob The {@link Player} to handle running and walking for.
 	 * @param msg The main update message.
 	 */
-	private void handleMovement(Npc npc, GameBuffer msg) {
-		boolean updateRequired = !npc.getFlags().isEmpty();
-		if(npc.getPrimaryDirection() == Direction.NONE) {
+	private void handleMovement(Mob mob, GameBuffer msg) {
+		boolean updateRequired = !mob.getFlags().isEmpty();
+		if(mob.getPrimaryDirection() == Direction.NONE) {
 			if(updateRequired) {
 				msg.putBit(true);
 				msg.putBits(2, 0);
@@ -163,7 +164,7 @@ public final class SendNpcUpdate implements OutgoingPacket {
 		} else {
 			msg.putBit(true);
 			msg.putBits(2, 1);
-			msg.putBits(3, npc.getPrimaryDirection().getId());
+			msg.putBits(3, mob.getPrimaryDirection().getId());
 			msg.putBit(updateRequired);
 		}
 	}

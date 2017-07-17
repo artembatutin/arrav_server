@@ -11,6 +11,7 @@ import net.edge.content.combat.weapon.FightStyle;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.task.Task;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.util.rand.RandomUtils;
@@ -18,7 +19,6 @@ import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Animation.AnimationPriority;
 import net.edge.world.Projectile;
-import net.edge.world.node.actor.npc.Npc;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.update.UpdateFlag;
 import net.edge.world.node.item.Item;
@@ -51,9 +51,9 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	@Override
 	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		if(character.isNpc()) {
-			Npc npc = character.toNpc();
-			character.animation(new Animation(npc.getDefinition().getAttackAnimation()));
-			CombatRangedAmmunition ammo = prepareAmmo(npc.getId());
+			Mob mob = character.toNpc();
+			character.animation(new Animation(mob.getDefinition().getAttackAnimation()));
+			CombatRangedAmmunition ammo = prepareAmmo(mob.getId());
 			
 			if(ammo.getGraphic().getId() != 0)
 				character.graphic(ammo.getGraphic());

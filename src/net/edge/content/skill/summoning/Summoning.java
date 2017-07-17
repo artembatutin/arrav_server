@@ -15,7 +15,7 @@ import net.edge.world.World;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.Graphic;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -150,12 +150,12 @@ public final class Summoning {
 	/**
 	 * The method which should be overriden if this familiar has an
 	 * ability where an item can be used on it.
-	 * @param player the player whom is using an item on the npc.
-	 * @param npc    the npc whom's being interacted by a player.
-	 * @param item   the item being used on the npc.
+	 * @param player the player whom is using an item on the mob.
+	 * @param mob    the mob whom's being interacted by a player.
+	 * @param item   the item being used on the mob.
 	 * @return <true> if theres an action, <false> otherwise.
 	 */
-	public static boolean itemOnNpc(Player player, Npc npc, Item item) {
+	public static boolean itemOnNpc(Player player, Mob mob, Item item) {
 		Optional<Familiar> has_familiar = player.getFamiliar();
 		
 		if(!has_familiar.isPresent()) {
@@ -164,11 +164,11 @@ public final class Summoning {
 		
 		Familiar familiar = has_familiar.get();
 		
-		if(familiar.getId() != npc.getId()) {
+		if(familiar.getId() != mob.getId()) {
 			return false;
 		}
 		
-		if(!familiar.itemOnNpc(player, npc, item)) {
+		if(!familiar.itemOnNpc(player, mob, item)) {
 			return false;
 		}
 		return true;
@@ -179,7 +179,7 @@ public final class Summoning {
 	 * @param player the player we're opening this bob for.
 	 * @return <true> if the interface could be opened, <false> otherwise.
 	 */
-	public static boolean openBeastOfBurden(Player player, Npc npc) {
+	public static boolean openBeastOfBurden(Player player, Mob mob) {
 		Optional<Familiar> has_familiar = player.getFamiliar();
 		
 		if(!has_familiar.isPresent()) {
@@ -188,7 +188,7 @@ public final class Summoning {
 		
 		Familiar familiar = has_familiar.get();
 		
-		if(familiar.getId() != npc.getId()) {
+		if(familiar.getId() != mob.getId()) {
 			return false;
 		}
 		
@@ -328,15 +328,15 @@ public final class Summoning {
 	
 	/**
 	 * Interacts with the familiar and sends it's respective dialogue.
-	 * @param player the player interacting with the {@code npc}.
-	 * @param npc    the npc being interacted by the {@code player}.
+	 * @param player the player interacting with the {@code mob}.
+	 * @param mob    the mob being interacted by the {@code player}.
 	 * @param id     the action id being interacted with.
 	 * @return <true> if the dialogue was sent, <false> otherwise.
 	 */
-	public static boolean interact(Player player, Npc npc, int id) {
+	public static boolean interact(Player player, Mob mob, int id) {
 		Optional<Familiar> familiar = player.getFamiliar();
 		
-		if(npc.isFamiliar() && !familiar.isPresent()) {
+		if(mob.isFamiliar() && !familiar.isPresent()) {
 			player.message("This is not your familiar.");
 			return false;
 		}
@@ -345,11 +345,11 @@ public final class Summoning {
 			return false;
 		}
 		
-		if(familiar.get().getId() != npc.getId()) {
+		if(familiar.get().getId() != mob.getId()) {
 			return false;
 		}
 		
-		familiar.get().interact(player, npc, id);
+		familiar.get().interact(player, mob, id);
 		return true;
 	}
 	

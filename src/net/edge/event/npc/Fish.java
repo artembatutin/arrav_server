@@ -4,7 +4,7 @@ import net.edge.content.skill.fishing.Fishing;
 import net.edge.content.skill.fishing.Tool;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.NpcEvent;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 public class Fish extends EventInitializer {
@@ -12,7 +12,7 @@ public class Fish extends EventInitializer {
 	public void init() {
 		NpcEvent e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				Fishing fishing = new Fishing(player, Tool.FISHING_ROD, npc.getPosition());
 				fishing.start();
 				return true;
@@ -24,8 +24,8 @@ public class Fish extends EventInitializer {
 		e.registerFirst(236);
 		e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
-				Fishing fly_fishing = new Fishing(player, Tool.FLY_FISHING_ROD, npc.getPosition());
+			public boolean click(Player player, Mob mob, int click) {
+				Fishing fly_fishing = new Fishing(player, Tool.FLY_FISHING_ROD, mob.getPosition());
 				fly_fishing.start();
 				return true;
 			}
@@ -39,8 +39,8 @@ public class Fish extends EventInitializer {
 		e.registerFirst(318);
 		e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
-				Fishing lobster_pot = new Fishing(player, Tool.LOBSTER_POT, npc.getPosition());
+			public boolean click(Player player, Mob mob, int click) {
+				Fishing lobster_pot = new Fishing(player, Tool.LOBSTER_POT, mob.getPosition());
 				lobster_pot.start();
 				return true;
 			}
@@ -48,8 +48,8 @@ public class Fish extends EventInitializer {
 		e.registerFirst(312);
 		e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
-				Fishing big_net = new Fishing(player, Tool.BIG_NET, npc.getPosition());
+			public boolean click(Player player, Mob mob, int click) {
+				Fishing big_net = new Fishing(player, Tool.BIG_NET, mob.getPosition());
 				big_net.start();
 				return true;
 			}
@@ -57,8 +57,8 @@ public class Fish extends EventInitializer {
 		e.registerFirst(313);
 		e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
-				Fishing net = new Fishing(player, Tool.NET, npc.getPosition());
+			public boolean click(Player player, Mob mob, int click) {
+				Fishing net = new Fishing(player, Tool.NET, mob.getPosition());
 				net.start();
 				return true;
 			}
@@ -67,8 +67,8 @@ public class Fish extends EventInitializer {
 		e.registerFirst(319);
 		e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
-				Fishing net_monkfish = new Fishing(player, Tool.NET_MONKFISH, npc.getPosition());
+			public boolean click(Player player, Mob mob, int click) {
+				Fishing net_monkfish = new Fishing(player, Tool.NET_MONKFISH, mob.getPosition());
 				net_monkfish.start();
 				return true;
 			}
@@ -77,8 +77,8 @@ public class Fish extends EventInitializer {
 		
 		e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
-				Fishing lobster_pot = new Fishing(player, Tool.FISHING_ROD, npc.getPosition());
+			public boolean click(Player player, Mob mob, int click) {
+				Fishing lobster_pot = new Fishing(player, Tool.FISHING_ROD, mob.getPosition());
 				lobster_pot.start();
 				return true;
 			}
@@ -93,8 +93,8 @@ public class Fish extends EventInitializer {
 		e.registerSecond(319);
 		e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
-				Fishing lobster_pot = new Fishing(player, Tool.HARPOON, npc.getPosition());
+			public boolean click(Player player, Mob mob, int click) {
+				Fishing lobster_pot = new Fishing(player, Tool.HARPOON, mob.getPosition());
 				lobster_pot.start();
 				return true;
 			}
@@ -103,8 +103,8 @@ public class Fish extends EventInitializer {
 		e.registerSecond(322);
 		e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
-				Fishing lobster_pot = new Fishing(player, Tool.SHARK_HARPOON, npc.getPosition());
+			public boolean click(Player player, Mob mob, int click) {
+				Fishing lobster_pot = new Fishing(player, Tool.SHARK_HARPOON, mob.getPosition());
 				lobster_pot.start();
 				return true;
 			}

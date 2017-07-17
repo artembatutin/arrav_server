@@ -1,14 +1,14 @@
 package net.edge.content.minigame.barrows;
 
 import net.edge.locale.Position;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 /**
  * The npc which represents the barrow brother.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
-public final class BarrowBrother extends Npc {
+public final class BarrowBrother extends Mob {
 	
 	/**
 	 * The player for who the barrow brother will be spawned.
@@ -42,7 +42,7 @@ public final class BarrowBrother extends Npc {
 	}
 	
 	@Override
-	public Npc create() {
+	public Mob create() {
 		return new BarrowBrother(data, player, this.getPosition());
 	}
 }

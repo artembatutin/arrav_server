@@ -6,7 +6,7 @@ import net.edge.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 
 import java.util.Optional;
 
@@ -18,7 +18,7 @@ public class Ravager extends Pest {
 	private PestGate gate;
 	
 	/**
-	 * Creates a new {@link Npc}.
+	 * Creates a new {@link Mob}.
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
@@ -28,7 +28,7 @@ public class Ravager extends Pest {
 	}
 	
 	@Override
-	public void sequence(Npc knight) {
+	public void sequence(Mob knight) {
 		//attacking gates and barricades first. ignoring player attacks
 		if(gate == null && getPosition() != null) {
 			gate = PestControlMinigame.getNearestGate(getPosition());

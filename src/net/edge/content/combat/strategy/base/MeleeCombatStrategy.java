@@ -7,7 +7,7 @@ import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 public final class MeleeCombatStrategy implements CombatStrategy {
@@ -30,8 +30,8 @@ public final class MeleeCombatStrategy implements CombatStrategy {
 	@Override
 	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		if(character.isNpc()) {
-			Npc npc = (Npc) character;
-			npc.animation(new Animation(npc.getDefinition().getAttackAnimation()));
+			Mob mob = (Mob) character;
+			mob.animation(new Animation(mob.getDefinition().getAttackAnimation()));
 		} else if(character.isPlayer()) {
 			Player player = (Player) character;
 			if(player.getWeaponAnimation() != null && !player.getFightType().isAnimationPrioritized()) {

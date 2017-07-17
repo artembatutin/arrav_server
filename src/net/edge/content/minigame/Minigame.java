@@ -16,7 +16,7 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.locale.Position;
 import net.edge.world.Animation;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.update.UpdateFlag;
 import net.edge.world.node.item.Item;
@@ -74,24 +74,24 @@ public abstract class Minigame {
 	}
 	
 	/**
-	 * Determines if this player can click the npc.
+	 * Determines if this player can click the mob.
 	 * @param player the player the message was sent for.
-	 * @param npc    the npc that was clicked by the player.
-	 * @return <true> if the player can click the npc, <false> otherwise.
+	 * @param mob    the mob that was clicked by the player.
+	 * @return <true> if the player can click the mob, <false> otherwise.
 	 */
-	public boolean onFirstClickNpc(Player player, Npc npc) {
-		player.message("You cannot interact with this npc in here!");
+	public boolean onFirstClickNpc(Player player, Mob mob) {
+		player.message("You cannot interact with this mob in here!");
 		return false;
 	}
 	
 	/**
-	 * Determines if this player can click the npc.
+	 * Determines if this player can click the mob.
 	 * @param player the player the message was sent for.
-	 * @param npc    the npc that was clicked by the player.
-	 * @return <true> if the player can click the npc, <false> otherwise.
+	 * @param mob    the mob that was clicked by the player.
+	 * @return <true> if the player can click the mob, <false> otherwise.
 	 */
-	public boolean onSecondClickNpc(Player player, Npc npc) {
-		player.message("You cannot interact with this npc in here!");
+	public boolean onSecondClickNpc(Player player, Mob mob) {
+		player.message("You cannot interact with this mob in here!");
 		return false;
 	}
 	

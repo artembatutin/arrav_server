@@ -5,10 +5,10 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.actor.npc.drop.ItemCache;
-import net.edge.world.node.actor.npc.drop.NpcDrop;
-import net.edge.world.node.actor.npc.drop.NpcDropManager;
-import net.edge.world.node.actor.npc.drop.NpcDropTable;
+import net.edge.world.node.actor.mob.drop.Drop;
+import net.edge.world.node.actor.mob.drop.DropManager;
+import net.edge.world.node.actor.mob.drop.ItemCache;
+import net.edge.world.node.actor.mob.drop.DropTable;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.Item;
@@ -20,7 +20,7 @@ public final class TestCommand implements Command {
 
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		NpcDropTable table = NpcDropManager.TABLES.get(-1);//barrows custom.
+		DropTable table = DropManager.TABLES.get(-1);//barrows custom.
 		ObjectList<Item> loot = new ObjectArrayList<>();
 		
 		int expect = RandomUtils.inclusive(4,8);
@@ -31,7 +31,7 @@ public final class TestCommand implements Command {
 			ItemCache cache = RandomUtils.random(table.getCommon());
 			
 			//random item from cache
-			NpcDrop drop = RandomUtils.random(NpcDropManager.COMMON.get(cache));
+			Drop drop = RandomUtils.random(DropManager.COMMON.get(cache));
 			
 			//roll
 			if(drop.roll(ThreadLocalRandom.current())) {

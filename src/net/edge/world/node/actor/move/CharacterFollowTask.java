@@ -11,7 +11,7 @@ import net.edge.world.World;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.move.path.Path;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 import java.util.Optional;
@@ -61,13 +61,13 @@ class CharacterFollowTask extends Task {
 		
 		//Familiar calling back.
 		if(character.isNpc()) {
-			Npc npc = character.toNpc();
-			if(npc.isFamiliar() || npc.isPet()) {
+			Mob mob = character.toNpc();
+			if(mob.isFamiliar() || mob.isPet()) {
 				if(!character.getPosition().withinDistance(leader.getPosition(), 15)) {
 					if(leader.isPlayer()) {
-						if(npc.isFamiliar()) {
+						if(mob.isFamiliar()) {
 							Summoning.callFamiliar(leader.toPlayer());
-						} else if(npc.isPet()) {
+						} else if(mob.isPet()) {
 							Summoning.callPet(leader.toPlayer());
 						}
 					}

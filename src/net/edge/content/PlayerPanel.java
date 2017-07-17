@@ -245,7 +245,7 @@ public enum PlayerPanel {
 		PlayerPanel.TOTAL_PLAYER_KILLS.refresh(player, "@or2@ - Total Players killed: @yel@" + player.getPlayerKills().get());
 		PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(player, "@or2@ - Total Player deaths: @yel@" + player.getDeathsByPlayer().get());
 		PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Npcs killed: @yel@" + player.getNpcKills().get());
-		PlayerPanel.TOTAL_NPC_DEATHS.refresh(player, "@or2@ - Total Npc deaths: @yel@" + player.getDeathsByNpc().get());
+		PlayerPanel.TOTAL_NPC_DEATHS.refresh(player, "@or2@ - Total Mob deaths: @yel@" + player.getDeathsByNpc().get());
 		
 		PlayerPanel.EMPTY2.refresh(player, "");
 		PlayerPanel.INDIVIDUAL_SCOREBOARD_STATISTICS.refresh(player, "@or1@Indiv. Scoreboard Statistics:");

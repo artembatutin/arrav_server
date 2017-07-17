@@ -2,6 +2,7 @@ package net.edge.content.item;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.GiveItemDialogue;
@@ -12,7 +13,6 @@ import net.edge.content.skill.Skills;
 import net.edge.event.impl.NpcEvent;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.actor.npc.Npc;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -146,7 +146,7 @@ public enum Skillcape {
 		for(Skillcape c : Skillcape.values()) {
 			NpcEvent e = new NpcEvent() {
 				@Override
-				public boolean click(Player player, Npc npc, int click) {
+				public boolean click(Player player, Mob npc, int click) {
 					if(c.getSkill() != -1 && player.getSkills()[c.getSkill()].getRealLevel() != 99) {
 						player.dialogue(new NpcDialogue(c.getMaster(), Expression.CONFUSED, "You haven't mastered this skill yet."));
 						return false;

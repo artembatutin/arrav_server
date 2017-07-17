@@ -6,7 +6,7 @@ import net.edge.content.dialogue.DialogueType;
 import net.edge.content.dialogue.Expression;
 import net.edge.net.packet.out.SendInterfaceAnimation;
 import net.edge.net.packet.out.SendInterfaceNpcModel;
-import net.edge.world.node.actor.npc.NpcDefinition;
+import net.edge.world.node.actor.mob.MobDefinition;
 
 /**
  * The dialogue chain entry that sends the player a dialogue from an NPC.
@@ -50,14 +50,14 @@ public final class NpcDialogue extends Dialogue {
 		switch(getText().length) {
 			case 1:
 				dialogue.getPlayer().out(new SendInterfaceAnimation(4883, expression.getExpression()));
-				dialogue.getPlayer().text(4884, NpcDefinition.DEFINITIONS[npc].getName());
+				dialogue.getPlayer().text(4884, MobDefinition.DEFINITIONS[npc].getName());
 				dialogue.getPlayer().text(4885, getText()[0]);
 				dialogue.getPlayer().out(new SendInterfaceNpcModel(4883, npc));
 				dialogue.getPlayer().chatWidget(4882);
 				break;
 			case 2:
 				dialogue.getPlayer().out(new SendInterfaceAnimation(4888, expression.getExpression()));
-				dialogue.getPlayer().text(4889, NpcDefinition.DEFINITIONS[npc].getName());
+				dialogue.getPlayer().text(4889, MobDefinition.DEFINITIONS[npc].getName());
 				dialogue.getPlayer().text(4890, getText()[0]);
 				dialogue.getPlayer().text(4891, getText()[1]);
 				dialogue.getPlayer().out(new SendInterfaceNpcModel(4888, npc));
@@ -65,7 +65,7 @@ public final class NpcDialogue extends Dialogue {
 				break;
 			case 3:
 				dialogue.getPlayer().out(new SendInterfaceAnimation(4894, expression.getExpression()));
-				dialogue.getPlayer().text(4895, NpcDefinition.DEFINITIONS[npc].getName());
+				dialogue.getPlayer().text(4895, MobDefinition.DEFINITIONS[npc].getName());
 				dialogue.getPlayer().text(4896, getText()[0]);
 				dialogue.getPlayer().text(4897, getText()[1]);
 				dialogue.getPlayer().text(4898, getText()[2]);
@@ -74,7 +74,7 @@ public final class NpcDialogue extends Dialogue {
 				break;
 			case 4:
 				dialogue.getPlayer().out(new SendInterfaceAnimation(4901, expression.getExpression()));
-				dialogue.getPlayer().text(4902, NpcDefinition.DEFINITIONS[npc].getName());
+				dialogue.getPlayer().text(4902, MobDefinition.DEFINITIONS[npc].getName());
 				dialogue.getPlayer().text(4903, getText()[0]);
 				dialogue.getPlayer().text(4904, getText()[1]);
 				dialogue.getPlayer().text(4905, getText()[2]);

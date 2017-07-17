@@ -8,7 +8,7 @@ import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 import java.util.Optional;
@@ -51,9 +51,9 @@ class KorasiChain extends Task {
 			this.cancel();
 			return;
 		}
-		Optional<Npc> npc = player.getLocalNpcs().stream().filter(n -> n.getPosition().withinDistance(position, 1) && !hitted.contains(n)).findAny();
+		Optional<Mob> npc = player.getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(position, 1) && !hitted.contains(n)).findAny();
 		if(npc.isPresent()) {
-			Npc n = npc.get();
+			Mob n = npc.get();
 			n.damage(new Hit(chainedDamage / 2, Hit.HitType.NORMAL, Hit.HitIcon.MAGIC, player.getSlot()));
 			n.animation(new Animation(n.getDefinition().getDefenceAnimation()));
 			n.graphic(new Graphic(1730));

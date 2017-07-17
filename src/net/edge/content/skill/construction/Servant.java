@@ -1,14 +1,14 @@
 package net.edge.content.skill.construction;
 
 import net.edge.locale.Position;
-import net.edge.world.node.actor.npc.impl.DefaultNpc;
+import net.edge.world.node.actor.mob.impl.DefaultMob;
 import net.edge.world.node.item.Item;
 
 /**
  * Represents a {@link House} servant.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public class Servant extends DefaultNpc {
+public class Servant extends DefaultMob {
 	
 	private boolean fetching, greetVisitors;
 	private Item[] inventory;

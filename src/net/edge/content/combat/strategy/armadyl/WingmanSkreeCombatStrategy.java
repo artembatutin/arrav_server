@@ -11,7 +11,7 @@ import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Projectile;
-import net.edge.world.node.actor.npc.impl.gwd.KreeArra;
+import net.edge.world.node.actor.mob.impl.gwd.KreeArra;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 

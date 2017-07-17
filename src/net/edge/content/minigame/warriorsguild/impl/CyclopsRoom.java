@@ -21,7 +21,7 @@ import net.edge.locale.Position;
 import net.edge.locale.loc.SquareLocation;
 import net.edge.world.World;
 import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNode;
@@ -96,7 +96,7 @@ public final class CyclopsRoom extends GuildRoom {
 	}
 
 	@Override
-	public boolean onFirstClickNpc(Player player, Npc npc) {
+	public boolean onFirstClickNpc(Player player, Mob mob) {
 		player.getDialogueBuilder().send(new KamfreenaConversation());
 		return false;
 	}

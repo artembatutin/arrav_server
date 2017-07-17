@@ -14,8 +14,8 @@ import net.edge.content.dialogue.impl.*;
 import net.edge.content.market.currency.Currency;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
-import net.edge.world.node.actor.npc.Npc;
-import net.edge.world.node.actor.npc.NpcDefinition;
+import net.edge.world.node.actor.mob.Mob;
+import net.edge.world.node.actor.mob.MobDefinition;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.Item;
@@ -142,7 +142,7 @@ public final class Slayer {
 		for(SlayerMaster master : SlayerMaster.values()) {
 			NpcEvent e = new NpcEvent() {
 				@Override
-				public boolean click(Player player, Npc npc, int click) {
+				public boolean click(Player player, Mob npc, int click) {
 					if(!player.getSkills()[Skills.SLAYER].reqLevel(master.getRequirement())) {
 						player.message("You need a slayer level of " + master.getRequirement() + " to access " + TextUtils.capitalize(master.toString().toLowerCase()) + ".");
 						return false;
@@ -175,33 +175,33 @@ public final class Slayer {
 	}
 	
 	/**
-	 * Checks if the specified {@code player} can attack the {@code npc}.
+	 * Checks if the specified {@code player} can attack the {@code mob}.
 	 * @param player the player to check for.
-	 * @param npc    the npc being attacked.
+	 * @param mob    the mob being attacked.
 	 * @return <true> if the player can, <false> otherwise.
 	 */
-	public static boolean canAttack(Player player, Npc npc) {
-		if(!player.getSkills()[Skills.SLAYER].reqLevel(npc.getDefinition().getSlayerRequirement())) {
-			player.message("You need a slayer level of " + npc.getDefinition().getSlayerRequirement() + " to slay this creature.");
+	public static boolean canAttack(Player player, Mob mob) {
+		if(!player.getSkills()[Skills.SLAYER].reqLevel(mob.getDefinition().getSlayerRequirement())) {
+			player.message("You need a slayer level of " + mob.getDefinition().getSlayerRequirement() + " to slay this creature.");
 			return false;
 		}
 		return true;
 	}
 	
 	/**
-	 * Decrements the remaining slayer task by 1 if the specified {@code npc}
+	 * Decrements the remaining slayer task by 1 if the specified {@code mob}
 	 * was assigned as a task.
 	 * @param player the player to decrement this for.
-	 * @param npc    the npc to check for.
+	 * @param mob    the mob to check for.
 	 * @return <true> if the remaining slayer task was decremented, <false> otherwise.
 	 */
-	public static boolean decrement(Player player, Npc npc) {
+	public static boolean decrement(Player player, Mob mob) {
 		if(!player.getSlayer().isPresent()) {
 			return false;
 		}
 		
 		Slayer slayer = player.getSlayer().get();
-		if(!slayer.getKey().equals(npc.getDefinition().getSlayerKey())) {
+		if(!slayer.getKey().equals(mob.getDefinition().getSlayerKey())) {
 			return false;
 		}
 		
@@ -222,7 +222,7 @@ public final class Slayer {
 			PlayerPanel.SLAYER_TASK.refresh(player, "@or2@ - Slayer task: @yel@" + (player.getSlayer().isPresent() ? (player.getSlayer().get().getAmount() + " " + player.getSlayer().get().toString()) : "none"));
 		}
 		
-		String npc_indefinite_article = TextUtils.appendIndefiniteArticle(npc.getDefinition().getName().toLowerCase());
+		String npc_indefinite_article = TextUtils.appendIndefiniteArticle(mob.getDefinition().getName().toLowerCase());
 		player.message("You have defeated " + npc_indefinite_article + ", only " + slayer.amount + " more to go.");
 		Skills.experience(player, slayer.getDifficulty().getValue() * (50 + RandomUtils.inclusive(1, 25)), Skills.SLAYER);
 		return true;
@@ -397,7 +397,7 @@ public final class Slayer {
 		for(SlayerKeyPolicy task : SLAYER_KEYS.get(master)) {
 			if(skill.getRealLevel() < SLAYER_LEVELS.getOrDefault(task.getKey(), 99))
 				continue;//Player wont be able to do slayer on a higher boss slayer requirement.
-			if(!NpcDefinition.fromSlayerKey(task.getKey()).isPresent())
+			if(!MobDefinition.fromSlayerKey(task.getKey()).isPresent())
 				continue;//Awful way to check through a loop but alright... - we checking if any npc key exist of that type.
 			if(blocked.contains(task.getKey()))
 				continue;//The player blocked this task.

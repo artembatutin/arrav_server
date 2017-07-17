@@ -3,8 +3,8 @@ package net.edge.event.npc;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.NpcEvent;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.actor.npc.Npc;
-import net.edge.world.node.actor.npc.impl.DefaultNpc;
+import net.edge.world.node.actor.mob.Mob;
+import net.edge.world.node.actor.mob.impl.DefaultMob;
 import net.edge.world.node.actor.player.Player;
 
 public class TraderStan extends EventInitializer {
@@ -36,7 +36,7 @@ public class TraderStan extends EventInitializer {
 				"May the gold be with you.",
 				"I aint gonna say I had a small loan of a million dollars from my Dad."
 		};
-		Npc.CUSTOM_NPCS.put(4650, s -> new DefaultNpc(4650, s) {
+		Mob.CUSTOM_NPCS.put(4650, s -> new DefaultMob(4650, s) {
 			private int timer = 0;
 			@Override
 			public void update() {
@@ -49,7 +49,7 @@ public class TraderStan extends EventInitializer {
 		});
 		NpcEvent e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				/*DialogueAppender app = new DialogueAppender(player);
 				app.chain(new NpcDialogue(5913, "Hello " + player.getFormatUsername() + ", my name is Stan.", "How may I help you today?"));
 				app.chain(new OptionDialogue(t -> {

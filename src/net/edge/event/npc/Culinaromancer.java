@@ -11,7 +11,7 @@ import net.edge.content.minigame.rfd.RFDData;
 import net.edge.content.minigame.rfd.RFDMinigame;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.NpcEvent;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -22,7 +22,7 @@ public class Culinaromancer extends EventInitializer {
 	public void init() {
 		NpcEvent e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				DialogueAppender ap = new DialogueAppender(player);
 				
 				ap.chain(new NpcDialogue(3400, Expression.MAD, "Ergh... What do you want?"));

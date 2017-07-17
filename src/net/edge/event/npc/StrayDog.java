@@ -5,7 +5,7 @@ import net.edge.event.impl.NpcEvent;
 import net.edge.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 public class StrayDog extends EventInitializer {
@@ -13,7 +13,7 @@ public class StrayDog extends EventInitializer {
 	public void init() {
 		NpcEvent e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				player.animation(new Animation(2110));
 				player.forceChat("Thbbbbt!");
 				npc.forceChat("Whine!");

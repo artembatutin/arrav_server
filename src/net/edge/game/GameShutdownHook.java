@@ -7,8 +7,8 @@ import net.edge.content.commands.impl.BugCommand;
 import net.edge.content.market.MarketItem;
 import net.edge.net.packet.in.NpcInformationPacket;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.drop.NpcDrop;
-import net.edge.world.node.actor.npc.drop.NpcDropManager;
+import net.edge.world.node.actor.mob.drop.Drop;
+import net.edge.world.node.actor.mob.drop.DropManager;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.PlayerSerialization;
 
@@ -53,10 +53,10 @@ public final class GameShutdownHook extends Thread {
 			});
 			exit.submit(() -> {
 				//drops
-				NpcDropManager.serializeDrops();
+				DropManager.serializeDrops();
 				try {
 					BufferedWriter out = new BufferedWriter(new FileWriter("./data/suggested_drops.txt", true));
-					for(NpcDrop d : NpcInformationPacket.SUGGESTED) {
+					for(Drop d : NpcInformationPacket.SUGGESTED) {
 						out.write(d.toString());
 						out.newLine();
 					}

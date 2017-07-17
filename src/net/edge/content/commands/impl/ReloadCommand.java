@@ -23,7 +23,7 @@ public final class ReloadCommand implements Command {
 				if(!removed) {
 					//Removing npcs.
 					World.get().getNpcs().clear();
-					World.get().getPlayers().forEach(p -> p.getLocalNpcs().clear());
+					World.get().getPlayers().forEach(p -> p.getLocalMobs().clear());
 					//clearing areas
 					World.getAreaManager().getAreas().clear();
 					//Deleting shops

@@ -14,6 +14,7 @@ import net.edge.content.combat.strategy.base.RangedCombatStrategy;
 import net.edge.content.combat.weapon.FightStyle;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.node.actor.Actor;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
@@ -21,8 +22,7 @@ import net.edge.locale.Boundary;
 import net.edge.locale.Position;
 import net.edge.world.*;
 import net.edge.world.node.actor.move.MovementQueue;
-import net.edge.world.node.actor.npc.Npc;
-import net.edge.world.node.actor.npc.impl.gwd.GodwarsFaction;
+import net.edge.world.node.actor.mob.impl.gwd.GodwarsFaction;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -155,7 +155,7 @@ public final class Combat {
 	}
 	
 	/**
-	 * Deals the damage contained within {@code data} to all {@link Npc}s within
+	 * Deals the damage contained within {@code data} to all {@link Mob}s within
 	 * {@code radius} of {@code position}. This method also executes
 	 * {@code action} for every character. Please note that this only accounts
 	 * for local characters.
@@ -167,12 +167,12 @@ public final class Combat {
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 * @param action        the action to execute for each victim.
 	 */
-	public static CombatHit[] damageNpcsWithin(Actor attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Npc> action) {
+	public static CombatHit[] damageNpcsWithin(Actor attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Mob> action) {
 		return damageCharactersWithin(attacker, () -> World.get().getLocalNpcs(attacker), position, radius, hits, type, checkAccuracy, action);
 	}
 	
 	/**
-	 * Deals the damage contained within {@code data} to all {@link Npc}s within
+	 * Deals the damage contained within {@code data} to all {@link Mob}s within
 	 * {@code radius} of {@code position}. This method also executes
 	 * {@code action} for every character. Please note that this only accounts
 	 * for local characters.
@@ -219,13 +219,13 @@ public final class Combat {
 	}
 	
 	/**
-	 * Determines which spell {@code npc} will use when they have the
+	 * Determines which spell {@code mob} will use when they have the
 	 * {@link MagicCombatStrategy} combat strategy.
-	 * @param npc the npc that needs a spell.
-	 * @return the spell that the npc will cast.
+	 * @param mob the mob that needs a spell.
+	 * @return the spell that the mob will cast.
 	 */
-	public static CombatSpells prepareSpellCast(Npc npc) {
-		switch(npc.getId()) {
+	public static CombatSpells prepareSpellCast(Mob mob) {
+		switch(mob.getId()) {
 			case 6221:
 				return CombatSpells.FIRE_WAVE;
 			case 6254:
@@ -632,9 +632,9 @@ public final class Combat {
 			}
 			
 			if(victim.isNpc()) {
-				Npc npc = victim.toNpc();
+				Mob mob = victim.toNpc();
 				/* SLAYER */
-				if(player.getSlayer().isPresent() && Objects.equals(npc.getDefinition().getSlayerKey(), player.getSlayer().get().getKey())) {
+				if(player.getSlayer().isPresent() && Objects.equals(mob.getDefinition().getSlayerKey(), player.getSlayer().get().getKey())) {
 					Item head = player.getEquipment().get(Equipment.HEAD_SLOT);
 					if(head != null) {
 						if(head.getId() == 13263)
@@ -730,17 +730,17 @@ public final class Combat {
 		int maxHit;
 		
 		if(character.isNpc()) {
-			Npc npc = character.toNpc();
-			maxHit = npc.getDefinition().getMaxHit();
+			Mob mob = character.toNpc();
+			maxHit = mob.getDefinition().getMaxHit();
 			if(victim.isPlayer()) {
 				Player p = victim.toPlayer();
 				if(p.isIronMan())//Iron man monsters tougher.
 					maxHit *= 1.2;
 			}
-			if(npc.getWeakenedBy() == CombatWeaken.STRENGTH_LOW || npc.getWeakenedBy() == CombatWeaken.STRENGTH_HIGH)
-				maxHit -= (int) ((npc.getWeakenedBy().getRate()) * (maxHit));
-			if(npc.getId() == 2026) { //Dharok the wretched
-				maxHit += (int) ((npc.getMaxHealth() / 10) - (npc.getCurrentHealth() / 10) * 0.15);
+			if(mob.getWeakenedBy() == CombatWeaken.STRENGTH_LOW || mob.getWeakenedBy() == CombatWeaken.STRENGTH_HIGH)
+				maxHit -= (int) ((mob.getWeakenedBy().getRate()) * (maxHit));
+			if(mob.getId() == 2026) { //Dharok the wretched
+				maxHit += (int) ((mob.getMaxHealth() / 10) - (mob.getCurrentHealth() / 10) * 0.15);
 			}
 			return maxHit;
 		}
@@ -784,22 +784,22 @@ public final class Combat {
 		} else {
 		    /*int itemId = player.getEquipment().get(Equipment.HEAD_SLOT).getId();
 		    if (itemId >= 8901 && itemId <= 8921) {
-				if (victim.isNpc() && ((Npc) victim).getId() == player.getSlayer...) {
+				if (victim.isNpc() && ((Mob) victim).getId() == player.getSlayer...) {
 					return 1.15;
 				}
 			}*/
 		}
 		
 		if(victim.isNpc()) {
-			Npc npc = (Npc) victim;
-			if(npc.getWeakenedBy() == CombatWeaken.DEFENCE_LOW) {
+			Mob mob = (Mob) victim;
+			if(mob.getWeakenedBy() == CombatWeaken.DEFENCE_LOW) {
 				cumulativeStr *= 0.10;
-			} else if(npc.getWeakenedBy() == CombatWeaken.DEFENCE_HIGH) {
+			} else if(mob.getWeakenedBy() == CombatWeaken.DEFENCE_HIGH) {
 				cumulativeStr *= 0.20;
 			}
 
 			/* SLAYER */
-			if(player.getSlayer().isPresent() && Objects.equals(npc.getDefinition().getSlayerKey(), player.getSlayer().get().getKey())) {
+			if(player.getSlayer().isPresent() && Objects.equals(mob.getDefinition().getSlayerKey(), player.getSlayer().get().getKey())) {
 				Item head = player.getEquipment().get(Equipment.HEAD_SLOT);
 				if(head != null) {
 					if(head.getId() == 13263)
@@ -840,8 +840,8 @@ public final class Combat {
 	private static int calculateMaxRangedHit(Actor character, Actor victim) {
 		int maxHit = 0;
 		if(character.isNpc()) {
-			Npc npc = (Npc) character;
-			maxHit = npc.getDefinition().getMaxHit();
+			Mob mob = (Mob) character;
+			maxHit = mob.getDefinition().getMaxHit();
 			if(victim.isPlayer()) {
 				Player p = victim.toPlayer();
 				if(p.isIronMan())//Iron man monsters tougher.

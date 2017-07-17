@@ -8,7 +8,7 @@ import net.edge.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbil
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import net.edge.content.skill.summoning.SummoningData;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemNodeStatic;
@@ -58,7 +58,7 @@ public final class AlbinoRat extends Familiar {
 	}
 	
 	@Override
-	public void interact(Player player, Npc npc, int id) {
+	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
 			player.getDialogueBuilder().append(RandomUtils.random(RANDOM_DIALOGUE));
 		}

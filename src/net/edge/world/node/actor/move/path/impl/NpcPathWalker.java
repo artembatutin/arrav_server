@@ -5,14 +5,14 @@ import net.edge.world.node.actor.Actor;
 import net.edge.world.Direction;
 import net.edge.world.node.actor.move.path.Path;
 import net.edge.world.node.actor.move.path.PathFinder;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
  * Represents a simple path finder which determines a straight path to the first blocked tile or it's destination.
- * Mostly used by {@link Npc} following and movement.
+ * Mostly used by {@link Mob} following and movement.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class NpcPathWalker extends PathFinder {

@@ -7,7 +7,7 @@ import net.edge.content.skill.thieving.Thieving;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Hit;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.DynamicObject;
@@ -108,7 +108,7 @@ public final class Stalls extends Thieving {
 	@Override
 	public void onSubmit() {
 		if(stall.requirement > 40 && RandomUtils.inclusive(200) < 10) {
-			Optional<Npc> guard = player.getLocalNpcs().stream().filter(g -> g.getId() == 3408 && !g.getCombatBuilder().inCombat()).findFirst();
+			Optional<Mob> guard = player.getLocalMobs().stream().filter(g -> g.getId() == 3408 && !g.getCombatBuilder().inCombat()).findFirst();
 			if(guard.isPresent()) {
 				guard.get().forceChat("Get your hands off there!");
 				guard.get().faceEntity(player);

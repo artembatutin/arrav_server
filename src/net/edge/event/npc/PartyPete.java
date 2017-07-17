@@ -10,7 +10,7 @@ import net.edge.event.impl.NpcEvent;
 import net.edge.net.database.connection.use.Donating;
 import net.edge.net.packet.out.SendLink;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 public class PartyPete extends EventInitializer {
@@ -18,7 +18,7 @@ public class PartyPete extends EventInitializer {
 	public void init() {
 		NpcEvent e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				player.getDialogueBuilder().append(new NpcDialogue(659, Expression.HAPPY, "Hello Adventurer, what do you seek from me", "today?"), new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						player.getDialogueBuilder().advance();

@@ -6,17 +6,17 @@ import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendNpcDrop;
 import net.edge.util.rand.Chance;
-import net.edge.world.node.actor.npc.NpcDefinition;
-import net.edge.world.node.actor.npc.drop.NpcDrop;
-import net.edge.world.node.actor.npc.drop.NpcDropManager;
-import net.edge.world.node.actor.npc.drop.NpcDropTable;
-import net.edge.world.node.actor.npc.drop.SuggestedDrop;
+import net.edge.world.node.actor.mob.MobDefinition;
+import net.edge.world.node.actor.mob.drop.Drop;
+import net.edge.world.node.actor.mob.drop.DropManager;
+import net.edge.world.node.actor.mob.drop.DropTable;
+import net.edge.world.node.actor.mob.drop.SuggestedDrop;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.ItemDefinition;
 
 /**
- * The message sent from the client which depends on the Npc Information panel integration.
+ * The message sent from the client which depends on the Mob Information panel integration.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class NpcInformationPacket implements IncomingPacket {
@@ -33,7 +33,7 @@ public final class NpcInformationPacket implements IncomingPacket {
 			int max = payload.getShort();
 			SuggestedDrop suggested = new SuggestedDrop(npc, item, min, max, chance);
 			if(player.getRights() == Rights.ADMINISTRATOR) {
-				NpcDropTable table = NpcDropManager.getTables().get(npc);
+				DropTable table = DropManager.getTables().get(npc);
 				if(table == null) {
 					player.message("No table found.");
 					return;
@@ -42,7 +42,7 @@ public final class NpcInformationPacket implements IncomingPacket {
 				if(min == 99) {
 					int index = 0;
 					String itemName = ItemDefinition.get(item).getName().toLowerCase().replaceAll(" ", "_");
-					for(NpcDrop d : table.getUnique()) {
+					for(Drop d : table.getUnique()) {
 						if(d != null) {
 							String name = ItemDefinition.get(d.getId()).getName().toLowerCase().replaceAll(" ", "_");
 							if(itemName.equals(name)) {
@@ -70,12 +70,12 @@ public final class NpcInformationPacket implements IncomingPacket {
 			}
 		} else {
 			int id = payload.getShort();
-			if(id < 0 || id > NpcDefinition.DEFINITIONS.length) {
+			if(id < 0 || id > MobDefinition.DEFINITIONS.length) {
 				player.message("No information found.");
 				return;
 			}
 			player.getAttr().get("npcInformation").set(id);
-			NpcDropTable drop = NpcDropManager.getTables().get(id);
+			DropTable drop = DropManager.getTables().get(id);
 			if(drop == null) {
 				player.message("This monster doesn't have any drop table.");
 				return;

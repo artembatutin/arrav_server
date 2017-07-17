@@ -11,8 +11,8 @@ import net.edge.locale.Position;
 import net.edge.world.World;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.attribute.AttributeValue;
-import net.edge.world.node.actor.npc.Npc;
-import net.edge.world.node.actor.npc.impl.DefaultNpc;
+import net.edge.world.node.actor.mob.Mob;
+import net.edge.world.node.actor.mob.impl.DefaultMob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
 
@@ -32,7 +32,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	/**
 	 * The current npc spawned for this wave.
 	 */
-	private Optional<Npc> currentNpc = Optional.empty();
+	private Optional<Mob> currentNpc = Optional.empty();
 	
 	/**
 	 * The first wave this minigame will start at.
@@ -64,11 +64,11 @@ public final class RFDMinigame extends SequencedMinigame {
 		for(Player player : getPlayers()) {//there is one player.
 			if(player.getMinigame().isPresent() && !((RFDMinigame) (player.getMinigame().get())).currentNpc.isPresent() && ++timer >= DELAY_BETWEEN_ROUNDS) {
 				RFDData data = ((RFDMinigame) player.getMinigame().get()).wave;
-				this.currentNpc = Optional.of(new DefaultNpc(data.getNpcId(), new Position(1900, 5354, 2)));
-				Npc npc = this.currentNpc.get();
-				World.getInstanceManager().isolate(npc, instance);
-				World.get().getNpcs().add(npc);
-				npc.getCombatBuilder().attack(player);
+				this.currentNpc = Optional.of(new DefaultMob(data.getNpcId(), new Position(1900, 5354, 2)));
+				Mob mob = this.currentNpc.get();
+				World.getInstanceManager().isolate(mob, instance);
+				World.get().getNpcs().add(mob);
+				mob.getCombatBuilder().attack(player);
 				timer = 0;
 			}
 		}
@@ -116,9 +116,9 @@ public final class RFDMinigame extends SequencedMinigame {
 			return;
 		}
 		
-		Npc npc = other.toNpc();
+		Mob mob = other.toNpc();
 		
-		if(!RFDData.isValidNpc(npc.getId())) {
+		if(!RFDData.isValidNpc(mob.getId())) {
 			return;
 		}
 		

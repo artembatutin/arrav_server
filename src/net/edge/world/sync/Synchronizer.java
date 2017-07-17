@@ -1,7 +1,7 @@
 package net.edge.world.sync;
 
 import net.edge.world.node.actor.ActorList;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 import java.util.concurrent.ExecutorService;
@@ -19,7 +19,7 @@ public class Synchronizer {
 	 * @param players players list.
 	 * @param npcs the npcs list.
 	 */
-	public void preUpdate(ActorList<Player> players, ActorList<Npc> npcs) {
+	public void preUpdate(ActorList<Player> players, ActorList<Mob> npcs) {
 		//long time = System.currentTimeMillis();
 		phaser.bulkRegister(players.size());
 		for(Player player : players) {
@@ -39,12 +39,12 @@ public class Synchronizer {
 		
 		//time = System.currentTimeMillis();
 		phaser.bulkRegister(npcs.size());
-		for(Npc npc : npcs) {
-			if(npc == null)
+		for(Mob mob : npcs) {
+			if(mob == null)
 				continue;
 			executor.submit(() -> {
 				try {
-					npc.preUpdate();
+					mob.preUpdate();
 				} finally {
 					phaser.arriveAndDeregister();
 				}
@@ -81,7 +81,7 @@ public class Synchronizer {
 	 * @param players players list.
 	 * @param npcs npcs list.
 	 */
-	public void postUpdate(ActorList<Player> players, ActorList<Npc> npcs) {
+	public void postUpdate(ActorList<Player> players, ActorList<Mob> npcs) {
 		//time = System.currentTimeMillis();
 		phaser.bulkRegister(players.size());
 		for(Player player : players) {
@@ -101,12 +101,12 @@ public class Synchronizer {
 		
 		//time = System.currentTimeMillis();
 		phaser.bulkRegister(npcs.size());
-		for(Npc npc : npcs) {
-			if(npc == null)
+		for(Mob mob : npcs) {
+			if(mob == null)
 				continue;
 			executor.submit(() -> {
 				try {
-					npc.postUpdate();
+					mob.postUpdate();
 				} finally {
 					phaser.arriveAndDeregister();
 				}

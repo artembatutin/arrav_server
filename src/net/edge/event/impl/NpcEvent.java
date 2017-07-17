@@ -8,7 +8,7 @@ import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.thieving.impl.Pickpocketing;
 import net.edge.event.Event;
 import net.edge.net.packet.in.NpcActionPacket;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 /**
@@ -17,7 +17,7 @@ import net.edge.world.node.actor.player.Player;
  */
 public abstract class NpcEvent extends Event {
 	
-	public abstract boolean click(Player player, Npc npc, int click);
+	public abstract boolean click(Player player, Mob mob, int click);
 	
 	public void registerFirst(int npc) {
 		NpcActionPacket.FIRST.register(npc, this);

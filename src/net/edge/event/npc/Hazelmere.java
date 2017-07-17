@@ -7,7 +7,7 @@ import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.market.MarketCounter;
 import net.edge.event.EventInitializer;
 import net.edge.event.impl.NpcEvent;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 public class Hazelmere extends EventInitializer {
@@ -15,7 +15,7 @@ public class Hazelmere extends EventInitializer {
 	public void init() {
 		NpcEvent e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				DialogueAppender a = new DialogueAppender(player);
 				a.chain(new NpcDialogue(669, "Hey " + player.getFormatUsername() + ", what do you need?"));
 				a.chain(new OptionDialogue(t -> {

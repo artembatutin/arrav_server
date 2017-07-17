@@ -10,7 +10,7 @@ import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.SummoningData;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 import java.util.Optional;
@@ -54,13 +54,13 @@ public final class Macaw extends Familiar {
 	}
 	
 	@Override
-	public void interact(Player player, Npc npc, int id) {
+	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 					player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-					Summoning.openBeastOfBurden(player, npc);
+					Summoning.openBeastOfBurden(player, mob);
 				} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 					player.getDialogueBuilder().advance();
 				} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
@@ -68,7 +68,7 @@ public final class Macaw extends Familiar {
 				}
 			}, "Interact", "View storage", "Remote view", "Nevermind"), new StatementDialogue("This ability has not been added yet."));
 		} else if(id == 2) {
-			Summoning.openBeastOfBurden(player, npc);
+			Summoning.openBeastOfBurden(player, mob);
 		}
 	}
 	

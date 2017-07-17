@@ -1,6 +1,6 @@
 package net.edge.world.node;
 
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
@@ -28,7 +28,7 @@ public enum NodeType {
 	PLAYER,
 	
 	/**
-	 * The element used to represent the {@link Npc} implementation.
+	 * The element used to represent the {@link Mob} implementation.
 	 */
 	NPC,
 	

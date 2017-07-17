@@ -3,7 +3,7 @@ package net.edge.content.commands.impl;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.Rights;
 
@@ -12,7 +12,7 @@ public final class SpawnNpcCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Npc n = Npc.getNpc(Integer.parseInt(cmd[1]), player.getPosition());
+		Mob n = Mob.getNpc(Integer.parseInt(cmd[1]), player.getPosition());
 		boolean coordinate = true;
 		n.setOwner(player);
 		n.setOriginalRandomWalk(coordinate);

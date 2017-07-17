@@ -68,9 +68,9 @@ public class DoorHandler {
 			if(player.isIronMan()) {
 				player.teleport(new Position(player.getPosition().getX() >= 3104 ? 3103 : 3104, 3498), DOOR);
 				if(player.getPosition().getX() >= 3104)
-					player.getLocalNpcs().stream().filter(n -> n.getId() == 6184).findFirst().ifPresent(e -> e.forceChat("Welcome to the iron man house " + (player.isIronMaxed() ? "captain" : "soldier") + " " + player.getFormatUsername() + "."));
+					player.getLocalMobs().stream().filter(n -> n.getId() == 6184).findFirst().ifPresent(e -> e.forceChat("Welcome to the iron man house " + (player.isIronMaxed() ? "captain" : "soldier") + " " + player.getFormatUsername() + "."));
 			} else
-				player.getLocalNpcs().stream().filter(n -> n.getId() == 6184).findFirst().ifPresent(e -> e.forceChat("Only iron man members can enter, sir."));
+				player.getLocalMobs().stream().filter(n -> n.getId() == 6184).findFirst().ifPresent(e -> e.forceChat("Only iron man members can enter, sir."));
 			return true;
 		}
 		

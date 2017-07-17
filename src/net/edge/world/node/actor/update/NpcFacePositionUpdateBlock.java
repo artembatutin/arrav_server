@@ -2,7 +2,7 @@ package net.edge.world.node.actor.update;
 
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.ByteOrder;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 /**
@@ -19,9 +19,9 @@ public final class NpcFacePositionUpdateBlock extends NpcUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Npc npc, GameBuffer msg) {
-		msg.putShort(npc.getFacePosition().getX(), ByteOrder.LITTLE);
-		msg.putShort(npc.getFacePosition().getY(), ByteOrder.LITTLE);
+	public int write(Player player, Mob mob, GameBuffer msg) {
+		msg.putShort(mob.getFacePosition().getX(), ByteOrder.LITTLE);
+		msg.putShort(mob.getFacePosition().getY(), ByteOrder.LITTLE);
 		return -1;
 	}
 }

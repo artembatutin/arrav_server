@@ -5,7 +5,7 @@ import net.edge.net.packet.out.SendConfig;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.Hit;
 import net.edge.world.PoisonType;
-import net.edge.world.node.actor.npc.NpcDefinition;
+import net.edge.world.node.actor.mob.MobDefinition;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -91,7 +91,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 	 * optional if no poison type exists.
 	 */
 	public static Optional<PoisonType> getPoisonType(int npc) {
-		NpcDefinition def = NpcDefinition.DEFINITIONS[npc];
+		MobDefinition def = MobDefinition.DEFINITIONS[npc];
 		if(def == null || !def.isAttackable() || !def.isPoisonous())
 			return Optional.empty();
 		if(def.getCombatLevel() < 75)

@@ -17,7 +17,7 @@ import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.node.actor.move.ForcedMovement;
 import net.edge.world.node.actor.move.ForcedMovementDirection;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
@@ -192,7 +192,7 @@ public final class AnimationRoom extends GuildRoom {
 	 * The class which represents a single animated armour npc.
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
-	private static final class AnimatedArmour extends Npc {
+	private static final class AnimatedArmour extends Mob {
 		
 		/**
 		 * The data type of this armour.
@@ -210,7 +210,7 @@ public final class AnimationRoom extends GuildRoom {
 		}
 		
 		@Override
-		public Npc create() {
+		public Mob create() {
 			return new AnimatedArmour(data, this.getPosition());
 		}
 		

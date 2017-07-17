@@ -14,7 +14,7 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.PlayerDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -129,7 +129,7 @@ public final class ScoreboardManager {
 	public static void event() {
 		NpcEvent e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				DialogueAppender ap = new DialogueAppender(player);
 				ap.chain(new NpcDialogue(npc.getId(), "Hello " + player.getFormatUsername() + ", what can I do for you today?"));
 				ap.chain(new OptionDialogue(t -> {

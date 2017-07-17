@@ -100,7 +100,7 @@ public final class AttributeKey<T> {
 		AttributeKey.forTransient("smithing_equipment", new Item(-1, -1));
 		AttributeKey.forTransient("smithing_position", new Position(0, 0));
 		
-		//Npc
+		//Mob
 		AttributeKey.forTransient("npc_facing", Direction.NONE);
 		AttributeKey.forTransient("isRetreating", false);
 		AttributeKey.forTransient("npcInformation", 0);

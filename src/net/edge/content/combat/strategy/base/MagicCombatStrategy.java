@@ -8,7 +8,7 @@ import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 import java.util.OptionalInt;
@@ -47,8 +47,8 @@ public final class MagicCombatStrategy implements CombatStrategy {
 			}
 			delay = player.prepareSpell(get(player), victim);
 		} else if(character.isNpc()) {
-			Npc npc = (Npc) character;
-			delay = npc.prepareSpell(Combat.prepareSpellCast(npc).getSpell(), victim);
+			Mob mob = (Mob) character;
+			delay = mob.prepareSpell(Combat.prepareSpellCast(mob).getSpell(), victim);
 		}
 		
 		if(character.getCurrentlyCasting().maximumHit() == -1) {

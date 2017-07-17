@@ -5,8 +5,8 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.locale.loc.Location;
 import net.edge.world.World;
 import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.npc.Npc;
-import net.edge.world.node.actor.npc.NpcAggression;
+import net.edge.world.node.actor.mob.Mob;
+import net.edge.world.node.actor.mob.MobAggression;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.Rights;
 
@@ -88,7 +88,7 @@ public final class CombatBuilder {
 			return;
 		}
 		if(character.isPlayer() && target.isNpc() && character.toPlayer().getRights().equals(Rights.ADMINISTRATOR)) {
-			character.toPlayer().message("[DEBUG NPC ID] Npc = " + target.toNpc().getId() + ", position = " + target.toNpc().getPosition().toString());
+			character.toPlayer().message("[DEBUG NPC ID] Mob = " + target.toNpc().getId() + ", position = " + target.toNpc().getPosition().toString());
 		}
 		//if(target.same(currentVictim)) {
 		//	determineStrategy();
@@ -97,9 +97,9 @@ public final class CombatBuilder {
 		//	}
 		//}
 		if(character.isPlayer() && target.isNpc()) {
-			Npc npc = target.toNpc();
+			Mob mob = target.toNpc();
 			Player player = (Player) character;
-			if(npc.getOwner() != -1 && !npc.isOwner(player)) {
+			if(mob.getOwner() != -1 && !mob.isOwner(player)) {
 				player.message("I should mind my own business...");
 				character.getMovementQueue().reset();
 				return;
@@ -397,8 +397,8 @@ public final class CombatBuilder {
 				builder.reset();
 				this.cancel();
 				if(builder.character.isNpc()) {
-					Npc npc = builder.character.toNpc();
-					NpcAggression.retreat(npc);
+					Mob mob = builder.character.toNpc();
+					MobAggression.retreat(mob);
 				}
 				return false;
 			}

@@ -9,7 +9,7 @@ import net.edge.event.EventInitializer;
 import net.edge.event.impl.NpcEvent;
 import net.edge.util.Utility;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 public class Ignatius extends EventInitializer {
@@ -17,7 +17,7 @@ public class Ignatius extends EventInitializer {
 	public void init() {
 		NpcEvent e = new NpcEvent() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				DialogueAppender ap = new DialogueAppender(player);
 				boolean active = World.getFirepitEvent().getFirepit().isActive();
 				ap.chain(new NpcDialogue(4946, "Hey, " + player.getFormatUsername() + ", what can I help you with?"));

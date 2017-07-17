@@ -73,7 +73,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			getCharacter().graphic(new Graphic(437));
 			final int hit = RandomUtils.inclusive(CombatConstants.MAXIMUM_RETRIBUTION_DAMAGE);
 			if(Location.inMultiCombat(getCharacter())) {
-				getCharacter().getLocalNpcs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
+				getCharacter().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
 				if(Location.inWilderness(getCharacter())) {
 					getCharacter().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
 				}
@@ -101,7 +101,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			}
 			int maxHit = (int) ((getCharacter().getSkills()[Skills.PRAYER].getLevel() / 100.D) * 25);
 			if(Location.inMultiCombat(getCharacter())) {
-				getCharacter().getLocalNpcs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
+				getCharacter().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
 				if(Location.inWilderness(getCharacter())) {
 					getCharacter().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getCharacter().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
 				}
@@ -194,7 +194,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		getCharacter().getCombatBuilder().getDamageCache().calculateProperKiller().ifPresent(e -> {
 			if(e.isNpc()) {
 				getCharacter().getDeathsByNpc().incrementAndGet();
-				PlayerPanel.TOTAL_NPC_DEATHS.refresh(getCharacter(), "@or2@ - Total Npc deaths: @yel@" + getCharacter().getDeathsByNpc().get());
+				PlayerPanel.TOTAL_NPC_DEATHS.refresh(getCharacter(), "@or2@ - Total Mob deaths: @yel@" + getCharacter().getDeathsByNpc().get());
 			}
 		});
 	}

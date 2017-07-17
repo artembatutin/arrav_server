@@ -4,14 +4,14 @@ import net.edge.content.combat.CombatType;
 import net.edge.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 
 import java.util.Optional;
 
 public class Torcher extends Pest {
 	
 	/**
-	 * Creates a new {@link Npc}.
+	 * Creates a new {@link Mob}.
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
@@ -22,7 +22,7 @@ public class Torcher extends Pest {
 	}
 	
 	@Override
-	public void sequence(Npc knight) {
+	public void sequence(Mob knight) {
 		if(getCombatBuilder().getAggressor() != null && getCombatBuilder().getAggressor().isPlayer()) {
 			getCombatBuilder().attack(getCombatBuilder().getAggressor());
 		} else if(!getPosition().withinDistance(knight.getPosition(), 15) && !getCombatBuilder().isAttacking()) {

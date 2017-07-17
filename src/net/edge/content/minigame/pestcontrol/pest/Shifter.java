@@ -4,14 +4,14 @@ import net.edge.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Graphic;
 import net.edge.world.World;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 
 import java.util.Optional;
 
 public class Shifter extends Pest {
 	
 	/**
-	 * Creates a new {@link Npc}.
+	 * Creates a new {@link Mob}.
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
@@ -20,7 +20,7 @@ public class Shifter extends Pest {
 	}
 	
 	@Override
-	public void sequence(Npc knight) {
+	public void sequence(Mob knight) {
 		//teleporting towards the knight.
 		if((!getPosition().withinDistance(knight.getPosition(), 6) && getCombatBuilder().getAggressor() == null) || RandomUtils.inclusive(3) == 1) {
 			Position delta = Position.delta(getPosition(), knight.getPosition());

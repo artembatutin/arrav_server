@@ -3,7 +3,7 @@ package net.edge.world.node.actor.update;
 import io.netty.buffer.Unpooled;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.ByteOrder;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 
 public final class UpdateManager {
@@ -192,38 +192,38 @@ public final class UpdateManager {
 	}
 	
 	
-	public static void encode(Player player, Npc npc, GameBuffer msg, UpdateState state) {
-		if(npc.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
+	public static void encode(Player player, Mob mob, GameBuffer msg, UpdateState state) {
+		if(mob.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
 		}
 		GameBuffer encodedBlock = new GameBuffer(player.getSession().alloc().buffer(64));
 		int mask = 0;
 		
-		if(npc.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
+		if(mob.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
 			mask |= 0x400;
 		}
-		if(npc.getFlags().get(UpdateFlag.GRAPHIC)) {
+		if(mob.getFlags().get(UpdateFlag.GRAPHIC)) {
 			mask |= 0x100;
 		}
-		if(npc.getFlags().get(UpdateFlag.ANIMATION)){
+		if(mob.getFlags().get(UpdateFlag.ANIMATION)){
 			mask |= 8;
 		}
-		if(npc.getFlags().get(UpdateFlag.FORCE_CHAT)) {
+		if(mob.getFlags().get(UpdateFlag.FORCE_CHAT)) {
 			mask |= 4;
 		}
-		if(npc.getFlags().get(UpdateFlag.TRANSFORM)) {
+		if(mob.getFlags().get(UpdateFlag.TRANSFORM)) {
 			mask |= 0x80;
 		}
-		if(npc.getFlags().get(UpdateFlag.FACE_ENTITY)) {
+		if(mob.getFlags().get(UpdateFlag.FACE_ENTITY)) {
 			mask |= 0x10;
 		}
-		if(npc.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
+		if(mob.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
 			mask |= 1;
 		}
-		if(npc.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
+		if(mob.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
 			mask |= 2;
 		}
-		if(npc.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
+		if(mob.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
 			mask |= 0x20;
 		}
 		
@@ -234,32 +234,32 @@ public final class UpdateManager {
 			encodedBlock.put(mask);
 		}
 		
-		if(npc.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
-			NPC_BLOCKS[0].write(player, npc, encodedBlock);
+		if(mob.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
+			NPC_BLOCKS[0].write(player, mob, encodedBlock);
 		}
-		if(npc.getFlags().get(UpdateFlag.GRAPHIC)) {
-			NPC_BLOCKS[1].write(player, npc, encodedBlock);
+		if(mob.getFlags().get(UpdateFlag.GRAPHIC)) {
+			NPC_BLOCKS[1].write(player, mob, encodedBlock);
 		}
-		if(npc.getFlags().get(UpdateFlag.ANIMATION)){
-			NPC_BLOCKS[2].write(player, npc, encodedBlock);
+		if(mob.getFlags().get(UpdateFlag.ANIMATION)){
+			NPC_BLOCKS[2].write(player, mob, encodedBlock);
 		}
-		if(npc.getFlags().get(UpdateFlag.FORCE_CHAT)) {
-			NPC_BLOCKS[3].write(player, npc, encodedBlock);
+		if(mob.getFlags().get(UpdateFlag.FORCE_CHAT)) {
+			NPC_BLOCKS[3].write(player, mob, encodedBlock);
 		}
-		if(npc.getFlags().get(UpdateFlag.TRANSFORM)) {
-			NPC_BLOCKS[4].write(player, npc, encodedBlock);
+		if(mob.getFlags().get(UpdateFlag.TRANSFORM)) {
+			NPC_BLOCKS[4].write(player, mob, encodedBlock);
 		}
-		if(npc.getFlags().get(UpdateFlag.FACE_ENTITY)) {
-			NPC_BLOCKS[5].write(player, npc, encodedBlock);
+		if(mob.getFlags().get(UpdateFlag.FACE_ENTITY)) {
+			NPC_BLOCKS[5].write(player, mob, encodedBlock);
 		}
-		if(npc.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
-			NPC_BLOCKS[6].write(player, npc, encodedBlock);
+		if(mob.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
+			NPC_BLOCKS[6].write(player, mob, encodedBlock);
 		}
-		if(npc.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
-			NPC_BLOCKS[7].write(player, npc, encodedBlock);
+		if(mob.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
+			NPC_BLOCKS[7].write(player, mob, encodedBlock);
 		}
-		if(npc.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
-			NPC_BLOCKS[8].write(player, npc, encodedBlock);
+		if(mob.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
+			NPC_BLOCKS[8].write(player, mob, encodedBlock);
 		}
 		msg.putBytes(encodedBlock);
 		encodedBlock.release();

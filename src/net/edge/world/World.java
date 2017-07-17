@@ -27,8 +27,8 @@ import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.ActorList;
 import net.edge.world.node.actor.move.path.SimplePathChecker;
 import net.edge.world.node.actor.move.path.impl.SimplePathFinder;
-import net.edge.world.node.actor.npc.Npc;
-import net.edge.world.node.actor.npc.NpcMovementTask;
+import net.edge.world.node.actor.mob.Mob;
+import net.edge.world.node.actor.mob.MobMovementTask;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.item.ItemNode;
@@ -87,7 +87,7 @@ public final class World {
 	/**
 	 * The collection of active NPCs.
 	 */
-	private final ActorList<Npc> npcs = new ActorList<>(16384);
+	private final ActorList<Mob> npcs = new ActorList<>(16384);
 	
 	/**
 	 * The collection of active players.
@@ -294,15 +294,15 @@ public final class World {
 	}
 	
 	/**
-	 * Retrieves and returns the local {@link Npc}s for {@code character}. The
+	 * Retrieves and returns the local {@link Mob}s for {@code character}. The
 	 * specific npcs returned is completely dependent on the character given in
 	 * the argument.
 	 * @param character the character that it will be returned for.
 	 * @return the local npcs.
 	 */
-	public Iterator<Npc> getLocalNpcs(Actor character) {
+	public Iterator<Mob> getLocalNpcs(Actor character) {
 		if(character.isPlayer())
-			return character.toPlayer().getLocalNpcs().iterator();
+			return character.toPlayer().getLocalMobs().iterator();
 		return npcs.iterator();
 	}
 	
@@ -367,7 +367,7 @@ public final class World {
 				return false;
 			}
 			boolean response = players.remove(player);
-			for(Npc mob : player.getMobs()) {
+			for(Mob mob : player.getMobs()) {
 				npcs.remove(mob);
 			}
 			player.getMobs().clear();
@@ -421,7 +421,7 @@ public final class World {
 	 * Gets the collection of active npcs.
 	 * @return the active npcs.
 	 */
-	public ActorList<Npc> getNpcs() {
+	public ActorList<Mob> getNpcs() {
 		return npcs;
 	}
 
@@ -499,9 +499,9 @@ public final class World {
 	private static final ScoreboardManager SCOREBOARD_MANAGER = new ScoreboardManager();
 	
 	/**
-	 * A integral {@link Task} that handles ranomized movement of all {@link Npc}s.
+	 * A integral {@link Task} that handles ranomized movement of all {@link Mob}s.
 	 */
-	private static final NpcMovementTask NPC_MOVEMENT_TASK = new NpcMovementTask();
+	private static final MobMovementTask NPC_MOVEMENT_TASK = new MobMovementTask();
 	
 	/**
 	 * The scores database connection.
@@ -617,7 +617,7 @@ public final class World {
 	/**
 	 * Returns the randomized npc task.
 	 */
-	public static NpcMovementTask getNpcMovementTask() {
+	public static MobMovementTask getNpcMovementTask() {
 		return NPC_MOVEMENT_TASK;
 	}
 	

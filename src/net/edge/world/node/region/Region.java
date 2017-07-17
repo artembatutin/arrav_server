@@ -13,7 +13,7 @@ import net.edge.world.node.Node;
 import net.edge.world.node.NodeState;
 import net.edge.world.node.NodeType;
 import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.npc.Npc;
+import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.ItemNode;
 import net.edge.world.node.item.ItemState;
@@ -66,9 +66,9 @@ public final class Region extends Node {
 	private final ObjectArrayList<Player> players = new ObjectArrayList<>();
 	
 	/**
-	 * A {@link Int2ObjectOpenHashMap} of active {@link Npc}s in this {@code Region}.
+	 * A {@link Int2ObjectOpenHashMap} of active {@link Mob}s in this {@code Region}.
 	 */
-	private final ObjectArrayList<Npc> npcs = new ObjectArrayList<>();
+	private final ObjectArrayList<Mob> mobs = new ObjectArrayList<>();
 	
 	/**
 	 * A {@link Int2ObjectOpenHashMap} of active {@link ObjectNode}s in this {@code Region}.
@@ -171,8 +171,8 @@ public final class Region extends Node {
 	
 	@Override
 	public void register() {
-		//activating all npcs.
-		for(Npc n : npcs) {
+		//activating all mobs.
+		for(Mob n : mobs) {
 			n.setActive(true);
 		}
 		LOGGER.info("Loaded Region: [" + regionId + "] on the fly.");
@@ -180,8 +180,8 @@ public final class Region extends Node {
 	
 	@Override
 	public void dispose() {
-		//deactivating all npcs.
-		for(Npc n : npcs) {
+		//deactivating all mobs.
+		for(Mob n : mobs) {
 			n.setActive(false);
 		}
 		LOGGER.info("Disposed Region: [" + regionId + "] on the fly.");
@@ -223,7 +223,7 @@ public final class Region extends Node {
 		if(e.isPlayer()) {
 			return players.add(e.toPlayer());
 		} else {
-			return npcs.add(e.toNpc());
+			return mobs.add(e.toNpc());
 		}
 	}
 	
@@ -235,7 +235,7 @@ public final class Region extends Node {
 		if(e.isPlayer()) {
 			return players.remove(e.toPlayer());
 		} else {
-			return npcs.remove(e.toNpc());
+			return mobs.remove(e.toNpc());
 		}
 	}
 	
@@ -248,11 +248,11 @@ public final class Region extends Node {
 	}
 	
 	/**
-	 * Retrieves and returns an {@link Int2ObjectOpenHashMap} of {@link Npc}s.
-	 * @return all the npcs inside the region.
+	 * Retrieves and returns an {@link Int2ObjectOpenHashMap} of {@link Mob}s.
+	 * @return all the mobs inside the region.
 	 */
-	public ObjectArrayList<Npc> getNpcs() {
-		return npcs;
+	public ObjectArrayList<Mob> getMobs() {
+		return mobs;
 	}
 	
 	/**
