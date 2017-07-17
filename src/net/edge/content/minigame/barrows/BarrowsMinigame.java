@@ -12,7 +12,7 @@ import net.edge.content.minigame.Minigame;
 import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.mob.drop.DropManager;
@@ -108,7 +108,7 @@ public final class BarrowsMinigame extends Minigame {
 	public boolean canTeleport(Player player, Position position) {
 		player.out(new SendMinimapState(0));
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
-		if(current.isPresent() && current.get().getState() != NodeState.ACTIVE)
+		if(current.isPresent() && current.get().getState() != EntityState.ACTIVE)
 			return true;
 		current.ifPresent(World.get().getNpcs()::remove);
 		return true;
@@ -142,7 +142,7 @@ public final class BarrowsMinigame extends Minigame {
 		BarrowsData stair = BarrowsData.VALUES.stream().filter(d -> d.getStairId() == object.getId()).findAny().orElse(null);
 		if(stair != null) {
 			current.ifPresent(c -> {
-				if(c.getState() == NodeState.ACTIVE)
+				if(c.getState() == EntityState.ACTIVE)
 					World.get().getNpcs().remove(c);
 			});
 			player.out(new SendMinimapState(0));
@@ -153,7 +153,7 @@ public final class BarrowsMinigame extends Minigame {
 		//Summoning a brother
 		BarrowsData sarcophagus = BarrowsData.VALUES.stream().filter(d -> d.getSarcophagusId() == object.getId()).findAny().orElse(null);
 		if(sarcophagus != null) {
-			if(current.isPresent() && current.get().getState() == NodeState.ACTIVE) {
+			if(current.isPresent() && current.get().getState() == EntityState.ACTIVE) {
 				player.message("You have already summoned this barrows brother.");
 				return false;
 			}
@@ -175,7 +175,7 @@ public final class BarrowsMinigame extends Minigame {
 			if(!container.getCurrent().isPresent()) {
 				container.setCurrent(getRandom(player));
 			}
-			if(container.getCurrent().isPresent() && container.getCurrent().get().getState() != NodeState.ACTIVE) {
+			if(container.getCurrent().isPresent() && container.getCurrent().get().getState() != EntityState.ACTIVE) {
 				if(player.getMinigameContainer().getBarrowsContainer().getKilledBrothers().size() != 5) {
 					return false;
 				}
@@ -220,7 +220,7 @@ public final class BarrowsMinigame extends Minigame {
 	public void onDeath(Player player) {
 		player.out(new SendMinimapState(0));
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
-		if(current.isPresent() && current.get().getState() != NodeState.ACTIVE)
+		if(current.isPresent() && current.get().getState() != EntityState.ACTIVE)
 			return;
 		current.ifPresent(World.get().getNpcs()::remove);
 	}
@@ -255,7 +255,7 @@ public final class BarrowsMinigame extends Minigame {
 		
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
 		
-		if(current.isPresent() && current.get().getState() != NodeState.ACTIVE) {
+		if(current.isPresent() && current.get().getState() != EntityState.ACTIVE) {
 			return;
 		}
 		current.ifPresent(World.get().getNpcs()::remove);

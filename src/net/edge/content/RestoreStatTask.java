@@ -6,7 +6,7 @@ import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.Rights;
 
@@ -37,7 +37,7 @@ public final class RestoreStatTask extends Task {
 		Player player;
 		Iterator<Player> it = World.get().getPlayers().iterator();
 		while((player = it.next()) != null) {
-			if(player.getState() != NodeState.ACTIVE) {
+			if(player.getState() != EntityState.ACTIVE) {
 				continue;
 			}
 			if(player.isDead()) {

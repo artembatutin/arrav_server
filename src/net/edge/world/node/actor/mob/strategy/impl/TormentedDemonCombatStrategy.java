@@ -6,7 +6,7 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -130,7 +130,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Mo
 			@Override
 			public void execute() {
 				this.cancel();
-				if(character.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || character.isDead() || victim.isDead())
+				if(character.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || character.isDead() || victim.isDead())
 					return;
 				new Projectile(character, victim, 1887, 30, 35, 34, 16, 16).sendProjectile();
 			}
@@ -151,7 +151,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Mo
 			@Override
 			public void execute() {
 				this.cancel();
-				if(character.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || character.isDead() || victim.isDead())
+				if(character.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || character.isDead() || victim.isDead())
 					return;
 				TORMENTED_DEMON_BLAST.projectile(character, victim).get().sendProjectile();
 			}
@@ -274,7 +274,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Mo
 		@Override
 		protected void execute() {
 			this.cancel();
-			if(strategy.npc.getState() != NodeState.ACTIVE || strategy.npc.isDead() || strategy.npc.getCombatBuilder().getVictim() == null) {
+			if(strategy.npc.getState() != EntityState.ACTIVE || strategy.npc.isDead() || strategy.npc.getCombatBuilder().getVictim() == null) {
 				return;
 			}
 			
@@ -313,7 +313,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Mo
 		@Override
 		protected void execute() {
 			this.cancel();
-			if(strategy.npc.getState() != NodeState.ACTIVE || strategy.npc.isDead() || strategy.npc.getCombatBuilder().getVictim() == null) {
+			if(strategy.npc.getState() != EntityState.ACTIVE || strategy.npc.isDead() || strategy.npc.getCombatBuilder().getVictim() == null) {
 				return;
 			}
 			CombatType[] types = new CombatType[]{CombatType.MELEE, CombatType.RANGED, CombatType.MAGIC};
@@ -352,7 +352,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Mo
 		@Override
 		protected void execute() {
 			this.cancel();
-			if(strategy.npc.getState() != NodeState.ACTIVE || strategy.npc.isDead() || strategy.npc.getCombatBuilder().getVictim() == null) {
+			if(strategy.npc.getState() != EntityState.ACTIVE || strategy.npc.isDead() || strategy.npc.getCombatBuilder().getVictim() == null) {
 				return;
 			}
 			strategy.switchState();

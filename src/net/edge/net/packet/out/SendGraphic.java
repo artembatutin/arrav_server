@@ -6,7 +6,7 @@ import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.node.actor.player.Player;
 
-import static net.edge.world.node.NodeState.INACTIVE;
+import static net.edge.world.node.EntityState.INACTIVE;
 
 public final class SendGraphic implements OutgoingPacket {
 	

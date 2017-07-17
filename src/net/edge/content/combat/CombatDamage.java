@@ -2,7 +2,7 @@ package net.edge.content.combat;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.edge.util.Stopwatch;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
@@ -51,7 +51,7 @@ public final class CombatDamage {
 			DamageCounter counter = entry.getValue();
 			Actor entity = entry.getKey();
 			
-			if(!entity.isNpc() || entity.isDead() || entity.getState() != NodeState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
+			if(!entity.isNpc() || entity.isDead() || entity.getState() != EntityState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
 				continue;
 			if(counter.getAmount() > amount) {
 				amount = counter.getAmount();
@@ -74,7 +74,7 @@ public final class CombatDamage {
 			DamageCounter counter = entry.getValue();
 			Actor entity = entry.getKey();
 			
-			if(!entity.isPlayer() || entity.isDead() || entity.getState() != NodeState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
+			if(!entity.isPlayer() || entity.isDead() || entity.getState() != EntityState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
 				continue;
 			if(counter.getAmount() > amount) {
 				amount = counter.getAmount();
@@ -97,7 +97,7 @@ public final class CombatDamage {
 			DamageCounter counter = entry.getValue();
 			Actor entity = entry.getKey();
 			
-			if(entity.isDead() || entity.getState() != NodeState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
+			if(entity.isDead() || entity.getState() != EntityState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
 				continue;
 			if(counter.getAmount() > amount) {
 				amount = counter.getAmount();

@@ -7,7 +7,7 @@ import net.edge.net.codec.PacketType;
 import net.edge.locale.Position;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.Direction;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.update.UpdateManager;
@@ -37,7 +37,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 			Iterator<Player> $it = player.getLocalPlayers().iterator();
 			while($it.hasNext()) {
 				Player other = $it.next();
-				if(other.isVisible() && other.getInstance() == player.getInstance() && other.getPosition().isViewableFrom(player.getPosition()) && other.getState() == NodeState.ACTIVE && !other.isNeedsPlacement()) {
+				if(other.isVisible() && other.getInstance() == player.getInstance() && other.getPosition().isViewableFrom(player.getPosition()) && other.getState() == EntityState.ACTIVE && !other.isNeedsPlacement()) {
 					handleMovement(other, msg);
 					UpdateManager.encode(player, other, blockMsg, UpdateState.UPDATE_LOCAL);
 				} else {
@@ -115,7 +115,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 					break;
 				if(other == null || other.same(player))
 					continue;
-				if(other.getState() != NodeState.ACTIVE)
+				if(other.getState() != EntityState.ACTIVE)
 					continue;
 				if(other.getInstance() != player.getInstance())
 					continue;

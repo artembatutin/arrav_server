@@ -12,7 +12,7 @@ import net.edge.content.skill.SkillData;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
 import net.edge.world.*;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.mob.impl.corp.CorporealBeast;
 import net.edge.world.node.actor.mob.strategy.DynamicCombatStrategy;
@@ -74,7 +74,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 	}
 
 	private void spawnDarkEnergyCore(Actor victim) {
-		if(npc.getDarkEnergyCore().getState().equals(NodeState.ACTIVE) || (npc.getCurrentHealth()) >= (npc.getMaxHealth() / 2) || npc.getDarkEnergyCore().isDead()) {
+		if(npc.getDarkEnergyCore().getState().equals(EntityState.ACTIVE) || (npc.getCurrentHealth()) >= (npc.getMaxHealth() / 2) || npc.getDarkEnergyCore().isDead()) {
 			return;
 		}
 
@@ -147,7 +147,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 			@Override
 			public void execute() {
 				this.cancel();
-				if(npc.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || npc.isDead() || victim.isDead()) {
+				if(npc.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || npc.isDead() || victim.isDead()) {
 					return;
 				}
 				if(spell.equals(TRANSCULENT_BALL_OF_ENERGY)) {
@@ -205,7 +205,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 			@Override
 			public void execute() {
 				this.cancel();
-				if(npc.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || npc.isDead() || victim.isDead())
+				if(npc.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || npc.isDead() || victim.isDead())
 					return;
 				new Projectile(npc, victim, 1823, 44, 3, 60, 36, 0).sendProjectile();
 			}

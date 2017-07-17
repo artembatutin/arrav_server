@@ -3,7 +3,7 @@ package net.edge.content.shootingstar;
 import net.edge.util.Stopwatch;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.player.Player;
 
 import java.util.concurrent.TimeUnit;
@@ -28,7 +28,7 @@ public final class ShootingStarManager {
 	 * The process method which is invoked every minute on start-up.
 	 */
 	public void process() {
-		if(!stopwatch.elapsed(28, TimeUnit.MINUTES) || (star != null && star.sprite.getState().equals(NodeState.ACTIVE))) { // 1 minute correction, because task runs every minute and it might skip.
+		if(!stopwatch.elapsed(28, TimeUnit.MINUTES) || (star != null && star.sprite.getState().equals(EntityState.ACTIVE))) { // 1 minute correction, because task runs every minute and it might skip.
 			return;
 		}
 		stopwatch.reset();

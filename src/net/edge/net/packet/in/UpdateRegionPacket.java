@@ -3,7 +3,7 @@ package net.edge.net.packet.in;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.Rights;
 
@@ -24,8 +24,8 @@ public final class UpdateRegionPacket implements IncomingPacket {
 			player.setUpdates(false, false);
 			player.setUpdateRegion(false);
 			World.getRegions().getAllSurroundingRegions(player.getPosition().getRegion()).forEach(r -> {
-				if(r.getState() != NodeState.ACTIVE) {
-					r.setState(NodeState.ACTIVE);
+				if(r.getState() != EntityState.ACTIVE) {
+					r.setState(EntityState.ACTIVE);
 				}
 				r.onEnter(player);
 			});

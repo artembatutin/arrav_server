@@ -13,7 +13,7 @@ import net.edge.net.codec.game.GameDecoder;
 import net.edge.net.codec.game.GameEncoder;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.player.Player;
 
 import java.util.Queue;
@@ -83,7 +83,7 @@ public final class GameSession extends Session {
 	
 	@Override
 	public void terminate() {
-		if(player.getState() == NodeState.ACTIVE) {
+		if(player.getState() == EntityState.ACTIVE) {
 			World.get().queueLogout(player);
 		}
 		setActive(false);

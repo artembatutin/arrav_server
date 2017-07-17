@@ -9,7 +9,7 @@ package net.edge.content.minigame.dueling;
 //import com.google.common.collect.ImmutableSet;
 //import com.google.common.collect.Sets;
 //
-//import net.ev.game.world.NodeType;
+//import net.ev.game.world.EntityType;
 //import net.ev.game.world.entity.player.Player;
 //import net.ev.game.world.World;
 //import net.ev.game.world.entity.Actor;

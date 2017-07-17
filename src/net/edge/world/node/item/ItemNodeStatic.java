@@ -3,7 +3,7 @@ package net.edge.world.node.item;
 import net.edge.locale.Position;
 import net.edge.net.packet.out.SendItemNode;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.player.Player;
 
 /**
@@ -53,7 +53,7 @@ public final class ItemNodeStatic extends ItemNode {
 	public void onSequence() {
 		switch(policy) {
 			case TIMEOUT:
-				setState(NodeState.INACTIVE);
+				setState(EntityState.INACTIVE);
 				break;
 			case RESPAWN:
 				if(needsRespawn) {

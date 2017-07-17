@@ -44,8 +44,8 @@ import java.util.*;
 import java.util.concurrent.*;
 
 import static net.edge.net.session.GameSession.outLimit;
-import static net.edge.world.node.NodeState.AWAITING_REMOVAL;
-import static net.edge.world.node.NodeState.IDLE;
+import static net.edge.world.node.EntityState.AWAITING_REMOVAL;
+import static net.edge.world.node.EntityState.IDLE;
 
 /**
  * The static utility class that contains functions to manage and process game characters.

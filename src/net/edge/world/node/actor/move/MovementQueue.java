@@ -6,7 +6,7 @@ import net.edge.task.Task;
 import net.edge.locale.Position;
 import net.edge.locale.loc.Location;
 import net.edge.world.World;
-import net.edge.world.node.NodeType;
+import net.edge.world.node.EntityType;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.Direction;
 import net.edge.world.node.actor.move.path.Path;
@@ -333,7 +333,7 @@ public final class MovementQueue {
 	 * @param runToggled the new value to set.
 	 */
 	public void setRunning(boolean runToggled) {
-		if(character.getType().equals(NodeType.PLAYER)) {
+		if(character.getType().equals(EntityType.PLAYER)) {
 			Player player = (Player) character;
 			player.out(new SendConfig(173, runToggled ? 0 : 1));
 		}

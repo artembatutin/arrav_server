@@ -9,9 +9,9 @@ import net.edge.util.LoggerUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.Node;
-import net.edge.world.node.NodeState;
-import net.edge.world.node.NodeType;
+import net.edge.world.node.Entity;
+import net.edge.world.node.EntityState;
+import net.edge.world.node.EntityType;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
@@ -27,11 +27,11 @@ import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 /**
- * A location on the tool.mapviewer that is {@code 64x64} in size. Used primarily for caching various types of {@link Node}s and
- * {@link RegionTile}s. There is a reason that the {@link Node}s are not being cached together.
+ * A location on the tool.mapviewer that is {@code 64x64} in size. Used primarily for caching various types of {@link Entity}s and
+ * {@link RegionTile}s. There is a reason that the {@link Entity}s are not being cached together.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public final class Region extends Node {
+public final class Region extends Entity {
 	
 	/**
 	 * The {@link Logger} instance to log our global changes.
@@ -106,7 +106,7 @@ public final class Region extends Node {
 	 * @param regionId The id of this region.
 	 */
 	Region(int regionId, RegionManager manager) {
-		super(new Position((regionId >> 8) << 6, (regionId & 0xFF) << 6), NodeType.REGION);
+		super(new Position((regionId >> 8) << 6, (regionId & 0xFF) << 6), EntityType.REGION);
 		this.regionId = regionId;
 		this.manager = manager;
 	}
@@ -150,7 +150,7 @@ public final class Region extends Node {
 					item.onSequence();
 					item.getCounter().set(0);
 				}
-				if(item.getState() != NodeState.ACTIVE) {
+				if(item.getState() != EntityState.ACTIVE) {
 					item.dispose();
 					it.remove();
 				}
@@ -159,10 +159,10 @@ public final class Region extends Node {
 		
 		//cleaning only when the cleanup time has come.
 		if(cleanup > 500) {
-			if(getState() == NodeState.ACTIVE && getPlayers().isEmpty()) {
+			if(getState() == EntityState.ACTIVE && getPlayers().isEmpty()) {
 				boolean playersNearby = playersAround();
 				if(!playersNearby) {
-					setState(NodeState.INACTIVE);
+					setState(EntityState.INACTIVE);
 				}
 			}
 			cleanup = 0;
@@ -193,7 +193,7 @@ public final class Region extends Node {
 	 */
 	public void onEnter(Player player) {
 		for(ItemNode item : items) {
-			if(item.getItemState() == ItemState.HIDDEN || item.getState() != NodeState.ACTIVE)
+			if(item.getItemState() == ItemState.HIDDEN || item.getState() != EntityState.ACTIVE)
 				continue;
 			if(item.getPosition() == null)
 				continue;
@@ -218,7 +218,7 @@ public final class Region extends Node {
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
 	public <T extends Actor> boolean addChar(T e) {
-		if(e.getState() == NodeState.INACTIVE)
+		if(e.getState() == EntityState.INACTIVE)
 			return false;
 		if(e.isPlayer()) {
 			return players.add(e.toPlayer());
@@ -272,7 +272,7 @@ public final class Region extends Node {
 	 * @return {@code true} if the item was registered, {@code false} otherwise.
 	 */
 	public boolean register(ItemNode item, boolean stack) {
-		if(item.getState() != NodeState.IDLE)
+		if(item.getState() != EntityState.IDLE)
 			return false;
 		if(stack) {
 			for(ItemNode next : items) {
@@ -289,19 +289,19 @@ public final class Region extends Node {
 					return true;
 				}
 			}
-			item.setState(NodeState.ACTIVE);
+			item.setState(EntityState.ACTIVE);
 			items.add(item);
 			return true;
 		}
 		if(item.getItem().getDefinition().isStackable()) {
-			item.setState(NodeState.ACTIVE);
+			item.setState(EntityState.ACTIVE);
 			items.add(item);
 			return true;
 		}
 		int amount = item.getItem().getAmount();
 		item.getItem().setAmount(1);
 		for(int i = 0; i < amount; i++) {
-			item.setState(NodeState.ACTIVE);
+			item.setState(EntityState.ACTIVE);
 			items.add(item);
 		}
 		return true;
@@ -314,10 +314,10 @@ public final class Region extends Node {
 	 * otherwise.
 	 */
 	public boolean unregister(ItemNode item) {
-		if (item.getState() != NodeState.ACTIVE)
+		if (item.getState() != EntityState.ACTIVE)
 			return false;
 		if (items.remove(item)) {
-			item.setState(NodeState.INACTIVE);
+			item.setState(EntityState.INACTIVE);
 			return true;
 		}
 		return false;
@@ -332,7 +332,7 @@ public final class Region extends Node {
 	 */
 	public Optional<ItemNode> getItem(int id, Position position) {
 		for(ItemNode i : items) {
-			if(i.getItem().getId() == id && i.getItemState() != ItemState.HIDDEN && i.getState() == NodeState.ACTIVE && i.getPosition().same(position)) {
+			if(i.getItem().getId() == id && i.getItemState() != ItemState.HIDDEN && i.getState() == EntityState.ACTIVE && i.getPosition().same(position)) {
 				return Optional.of(i);
 			}
 		}

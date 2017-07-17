@@ -8,8 +8,8 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.world.*;
-import net.edge.world.node.NodeState;
-import net.edge.world.node.NodeType;
+import net.edge.world.node.EntityState;
+import net.edge.world.node.EntityType;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.player.Player;
 
@@ -54,7 +54,7 @@ public final class CombatHitTask extends Task {
 		Actor attacker = builder.getCharacter();
 		Actor victim = builder.getVictim();
 
-		if(attacker == null || victim == null || attacker.isDead() || attacker.getState() != NodeState.ACTIVE || victim.isDead() || victim.getState() != NodeState.ACTIVE) {
+		if(attacker == null || victim == null || attacker.isDead() || attacker.getState() != EntityState.ACTIVE || victim.isDead() || victim.getState() != EntityState.ACTIVE) {
 			this.cancel();
 			return;
 		}
@@ -74,7 +74,7 @@ public final class CombatHitTask extends Task {
 			victim.getCombatBuilder().getDamageCache().add(attacker, counter);
 		}
 
-		if(victim.getType() == NodeType.PLAYER && !data.isIgnored()) {
+		if(victim.getType() == EntityType.PLAYER && !data.isIgnored()) {
 			Player player = (Player) victim;
 			Summoning.combatTeleport(player);
 		}

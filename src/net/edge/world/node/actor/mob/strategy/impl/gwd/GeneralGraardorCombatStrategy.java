@@ -6,7 +6,7 @@ import net.edge.content.combat.CombatHit;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Projectile;
@@ -38,7 +38,7 @@ public final class GeneralGraardorCombatStrategy extends DynamicCombatStrategy<G
 		CombatType[] data = npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.RANGED} : new CombatType[]{CombatType.RANGED};
 		CombatType c = RandomUtils.random(data);
 		GeneralGraardor.SERGEANTS.forEach(sergeant -> {
-			if(!sergeant.isDead() && sergeant.getState() == NodeState.ACTIVE) {
+			if(!sergeant.isDead() && sergeant.getState() == EntityState.ACTIVE) {
 				sergeant.getCombatBuilder().attack(victim);
 			}
 		});

@@ -1,7 +1,7 @@
 package net.edge.content.combat.effect;
 
 import net.edge.task.Task;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 
 /**
@@ -35,7 +35,7 @@ public final class CombatEffectTask extends Task {
 	
 	@Override
 	public void execute() {
-		if(effect.removeOn(c) || c.getState() != NodeState.ACTIVE) {
+		if(effect.removeOn(c) || c.getState() != EntityState.ACTIVE) {
 			this.cancel();
 			return;
 		}

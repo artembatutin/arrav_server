@@ -6,7 +6,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.database.connection.use.Hiscores;
 import net.edge.content.PlayerPanel;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.region.Region;
@@ -175,7 +175,7 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 	 * @param entity The entity to add to this list.
 	 */
 	public boolean add(E entity) {
-		if(entity.getState() == NodeState.ACTIVE)
+		if(entity.getState() == EntityState.ACTIVE)
 			return false;
 		if (size == capacity())
 			return false;
@@ -187,11 +187,11 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 		}
 		entities[index] = entity;
 		entity.setSlot(index + 1);
-		entity.setState(NodeState.ACTIVE);
+		entity.setState(EntityState.ACTIVE);
 		//Activating npc if region active.
 		if(entity.isNpc()) {
 			Region reg = entity.getRegion();
-			if(reg != null && reg.getState() == NodeState.ACTIVE)
+			if(reg != null && reg.getState() == EntityState.ACTIVE)
 				entity.toNpc().setActive(true);
 		}
 		size++;
@@ -206,7 +206,7 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 	 * @param entity The entity to remove from this list.
 	 */
 	public boolean remove(E entity) {
-		if(entity.getState() != NodeState.ACTIVE && entity.getState() != NodeState.AWAITING_REMOVAL) {
+		if(entity.getState() != EntityState.ACTIVE && entity.getState() != EntityState.AWAITING_REMOVAL) {
 			System.out.println("Couldn't remove: " + entity.toString() + " because not active.");
 			return true;
 		}
@@ -225,7 +225,7 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 		}
 		
 		size--;
-		entity.setState(NodeState.INACTIVE);
+		entity.setState(EntityState.INACTIVE);
 		if(entity.isPlayer()) {
 			Player player = entity.toPlayer();
 			player.getSession().getChannel().close();

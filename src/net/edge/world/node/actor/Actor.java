@@ -13,9 +13,9 @@ import net.edge.content.combat.magic.CombatSpell;
 import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.locale.Position;
-import net.edge.world.node.Node;
-import net.edge.world.node.NodeState;
-import net.edge.world.node.NodeType;
+import net.edge.world.node.Entity;
+import net.edge.world.node.EntityState;
+import net.edge.world.node.EntityType;
 import net.edge.world.node.actor.attribute.AttributeMap;
 import net.edge.world.node.actor.move.ForcedMovement;
 import net.edge.world.node.actor.move.MovementQueue;
@@ -33,10 +33,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 /**
- * The {@link Node} implementation representing a node that is an entity. This includes {@link Player}s and {@link Mob}s.
+ * The {@link Entity} implementation representing a node that is an entity. This includes {@link Player}s and {@link Mob}s.
  * @author lare96 <http://github.com/lare96>
  */
-public abstract class Actor extends Node {
+public abstract class Actor extends Entity {
 	
 	/**
 	 * The current teleport stage that this player is in.
@@ -219,10 +219,10 @@ public abstract class Actor extends Node {
 	 * @param position the position of this entity in the world.
 	 * @param type     the type of node that this entity is.
 	 */
-	public Actor(Position position, NodeType type) {
+	public Actor(Position position, EntityType type) {
 		super(position, type);
 		setPosition(position);
-		this.autoRetaliate = (type == NodeType.NPC);
+		this.autoRetaliate = (type == EntityType.NPC);
 		this.aStarPathFinder = new AStarPathFinder(this, new Manhattan());
 	}
 	
@@ -240,7 +240,7 @@ public abstract class Actor extends Node {
 	}
 	
 	/**
-	 * Sets the value for {@link Node#position}.
+	 * Sets the value for {@link Entity#position}.
 	 * @param position the new value to set.
 	 */
 	@Override
@@ -540,7 +540,7 @@ public abstract class Actor extends Node {
 			@Override
 			public void execute() {
 				this.cancel();
-				if(getState() != NodeState.ACTIVE) {
+				if(getState() != EntityState.ACTIVE) {
 					return;
 				}
 				sendDamage(hit3);
@@ -563,7 +563,7 @@ public abstract class Actor extends Node {
 			@Override
 			public void execute() {
 				this.cancel();
-				if(getState() != NodeState.ACTIVE) {
+				if(getState() != EntityState.ACTIVE) {
 					return;
 				}
 				sendDamage(hit3, hit4);
@@ -1046,7 +1046,7 @@ public abstract class Actor extends Node {
 	 * otherwise.
 	 */
 	public final boolean isPlayer() {
-		return getType() == NodeType.PLAYER;
+		return getType() == EntityType.PLAYER;
 	}
 	
 	/**
@@ -1075,7 +1075,7 @@ public abstract class Actor extends Node {
 	 * otherwise.
 	 */
 	public final boolean isNpc() {
-		return getType() == NodeType.NPC;
+		return getType() == EntityType.NPC;
 	}
 	
 	/**

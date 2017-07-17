@@ -1,6 +1,6 @@
 package net.edge.locale;
 
-import net.edge.world.node.Node;
+import net.edge.world.node.Entity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,44 +32,44 @@ public final class InstanceManager {
 	}
 	
 	/**
-	 * Isolates a single {@link Node} in a specific {@code instance}.
-	 * @param node     the node to be isolated.
+	 * Isolates a single {@link Entity} in a specific {@code instance}.
+	 * @param entity     the entity to be isolated.
 	 * @param instance the selected instance.
 	 */
-	public void isolate(Node node, int instance) {
-		node.setInstance(instance);
+	public void isolate(Entity entity, int instance) {
+		entity.setInstance(instance);
 		if(!INSTANCES[instance]) {
 			INSTANCES[instance] = true;
 		}
 	}
 	
 	/**
-	 * Isolates a single {@link Node}
-	 * @param node the single node to isolate.
+	 * Isolates a single {@link Entity}
+	 * @param entity the single entity to isolate.
 	 */
-	public void isolate(Node node) {
-		if(node.getInstance() != 0) {
-			throw new IllegalStateException(node.toString() + " is already in an instance.");
+	public void isolate(Entity entity) {
+		if(entity.getInstance() != 0) {
+			throw new IllegalStateException(entity.toString() + " is already in an instance.");
 		}
-		isolate(node, getOpenInstance());
+		isolate(entity, getOpenInstance());
 	}
 	
 	/**
-	 * Isolates a list of nodes.
-	 * @param nodes the nodes to isolate.
+	 * Isolates a list of entities.
+	 * @param entities the entities to isolate.
 	 */
-	public void isolate(List<Node> nodes) {
+	public void isolate(List<Entity> entities) {
 		int instance = getOpenInstance();
-		nodes.forEach(i -> isolate(i, instance));
+		entities.forEach(i -> isolate(i, instance));
 	}
 	
 	/**
-	 * Isolates an array of nodes.
-	 * @param nodes the nodes to isolate.
+	 * Isolates an array of entities.
+	 * @param entities the entities to isolate.
 	 */
-	public void isolate(Node... nodes) {
+	public void isolate(Entity... entities) {
 		int instance = getOpenInstance();
-		Arrays.asList(nodes).forEach(i -> isolate(i, instance));
+		Arrays.asList(entities).forEach(i -> isolate(i, instance));
 	}
 	
 	/**

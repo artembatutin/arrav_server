@@ -6,7 +6,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -42,7 +42,7 @@ public final class DagannothPrimeCombatStrategy implements CombatStrategy {
 			@Override
 			public void execute() {
 				this.cancel();
-				if(character.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || character.isDead() || victim.isDead()) {
+				if(character.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || character.isDead() || victim.isDead()) {
 					return;
 				}
 				SPELL.projectile(character, victim).ifPresent(p -> p.sendProjectile());

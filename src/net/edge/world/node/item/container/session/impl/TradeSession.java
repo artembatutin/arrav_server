@@ -8,7 +8,7 @@ import net.edge.world.node.item.container.session.ExchangeSession;
 import net.edge.world.node.item.container.session.ExchangeSessionActionType;
 import net.edge.world.node.item.container.session.ExchangeSessionType;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 
@@ -140,7 +140,7 @@ public final class TradeSession extends ExchangeSession {
 				player.text(3535, "Waiting for other player...");
 				break;
 			case FINALIZE:
-				if(other.getState() == NodeState.ACTIVE && player.getState() == NodeState.ACTIVE) {
+				if(other.getState() == EntityState.ACTIVE && player.getState() == EntityState.ACTIVE) {
 					player.getInventory().addAll(this.getExchangeSession().get(other).getItems());
 					other.getInventory().addAll(this.getExchangeSession().get(player).getItems());
 					World.getLoggingManager().write(Log.create(new TradeLog(player, this.getExchangeSession().get(player), other, this.getExchangeSession().get(other))));

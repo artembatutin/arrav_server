@@ -20,7 +20,7 @@ import net.edge.content.skill.prayer.Prayer;
 import net.edge.locale.Position;
 import net.edge.locale.loc.SquareLocation;
 import net.edge.world.World;
-import net.edge.world.node.NodeType;
+import net.edge.world.node.EntityType;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.object.ObjectNode;
@@ -272,7 +272,7 @@ public final class DuelMinigame extends Minigame {
 	
 	@Override
 	public boolean canHit(Player player, Actor victim, CombatType type) {
-		if(victim.getType().equals(NodeType.NPC)) {
+		if(victim.getType().equals(EntityType.NPC)) {
 			return true;
 		}
 		if(!session.getOther(player).same(victim)) {

@@ -6,7 +6,7 @@ import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.Direction;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
@@ -33,7 +33,7 @@ public final class SendNpcUpdate implements OutgoingPacket {
 			Iterator<Mob> $it = player.getLocalMobs().iterator();
 			while($it.hasNext()) {
 				Mob mob = $it.next();
-				if(mob.getState() == NodeState.ACTIVE && mob.isVisible() && player.getInstance() == mob.getInstance() && mob
+				if(mob.getState() == EntityState.ACTIVE && mob.isVisible() && player.getInstance() == mob.getInstance() && mob
 						.getPosition().isViewableFrom(player.getPosition()) && !mob.isNeedsPlacement()) {
 					handleMovement(mob, msg);
 					UpdateManager.encode(player, mob, blockMsg, UpdateState.UPDATE_LOCAL);
@@ -113,7 +113,7 @@ public final class SendNpcUpdate implements OutgoingPacket {
 					break;
 				if(mob == null)
 					continue;
-				if(mob.getState() != NodeState.ACTIVE)
+				if(mob.getState() != EntityState.ACTIVE)
 					continue;
 				if(mob.getInstance() != player.getInstance())
 					continue;

@@ -62,8 +62,8 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
-import net.edge.world.node.NodeType;
+import net.edge.world.node.EntityState;
+import net.edge.world.node.EntityType;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.net.packet.out.SendNpcUpdate;
@@ -601,7 +601,7 @@ public final class Player extends Actor {
 	 * Creates a new {@link Player}.
 	 */
 	public Player(PlayerCredentials credentials, boolean human) {
-		super(GameConstants.STARTING_POSITION, NodeType.PLAYER);
+		super(GameConstants.STARTING_POSITION, EntityType.PLAYER);
 		this.credentials = credentials;
 		this.human = human;
 	}
@@ -750,7 +750,7 @@ public final class Player extends Actor {
 	
 	@Override
 	public boolean active() {
-		return getState() == NodeState.ACTIVE;
+		return getState() == EntityState.ACTIVE;
 	}
 	
 	@Override

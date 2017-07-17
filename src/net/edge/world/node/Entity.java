@@ -16,7 +16,7 @@ import static java.util.Objects.requireNonNull;
  * This includes {@link ItemNode}s, {@link ObjectNode}s, {@link Player}s, and {@link Mob}s.
  * @author lare96 <http://github.com/lare96>
  */
-public abstract class Node {
+public abstract class Entity {
 	
 	/**
 	 * The position of this node in the world.
@@ -31,19 +31,19 @@ public abstract class Node {
 	/**
 	 * The type of node that this node is.
 	 */
-	private final NodeType type;
+	private final EntityType type;
 	
 	/**
 	 * The current of this node.
 	 */
-	private NodeState state = NodeState.IDLE;
+	private EntityState state = EntityState.IDLE;
 	
 	/**
-	 * Creates a new {@link Node}.
+	 * Creates a new {@link Entity}.
 	 * @param position the position of this node in the world.
 	 * @param type     the type of node that this node is.
 	 */
-	public Node(Position position, NodeType type) {
+	public Entity(Position position, EntityType type) {
 		this.type = requireNonNull(type);
 		this.setPosition(position);
 		initialize();
@@ -87,7 +87,7 @@ public abstract class Node {
 	}
 	
 	/**
-	 * Sets the value for {@link Node#position}.
+	 * Sets the value for {@link Entity#position}.
 	 * @param position the new value to set.
 	 */
 	public void setPosition(Position position) {
@@ -98,7 +98,7 @@ public abstract class Node {
 	 * Gets the type of node that this node is.
 	 * @return the type of node that this node is.
 	 */
-	public final NodeType getType() {
+	public final EntityType getType() {
 		return type;
 	}
 	
@@ -121,7 +121,7 @@ public abstract class Node {
 	/**
 	 * @return The current state that this {@code Entity} is in.
 	 */
-	public final NodeState getState() {
+	public final EntityState getState() {
 		return state;
 	}
 	
@@ -132,7 +132,7 @@ public abstract class Node {
 	 * @param state The state to set, cannot be {@code null} or {@code IDLE}.
 	 * @throws IllegalArgumentException If the value being set is equal to the current value.
 	 */
-	public final void setState(NodeState state) {
+	public final void setState(EntityState state) {
 		this.state = requireNonNull(state);
 		switch(state) {
 			case ACTIVE:

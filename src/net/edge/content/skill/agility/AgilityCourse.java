@@ -8,7 +8,7 @@ import net.edge.content.skill.action.SkillAction;
 import net.edge.content.skill.agility.obstacle.ObstacleAction;
 import net.edge.content.skill.agility.obstacle.ObstacleActivity;
 import net.edge.locale.Position;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.Animation;
 import net.edge.world.node.actor.move.ForcedMovement;
 import net.edge.world.node.actor.move.ForcedMovementManager;
@@ -131,7 +131,7 @@ public abstract class AgilityCourse extends SkillAction {
 	
 	@Override
 	public void onStop() {
-		if(getPlayer().getState() == NodeState.INACTIVE) {
+		if(getPlayer().getState() == EntityState.INACTIVE) {
 			getPlayer().move(current.getStart());
 			return;
 		}

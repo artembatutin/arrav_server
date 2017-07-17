@@ -3,7 +3,7 @@ package net.edge.world.node.actor.move;
 import net.edge.task.TaskListener;
 import net.edge.task.Task;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 
 import java.util.Objects;
@@ -88,7 +88,7 @@ public final class MovementQueueListener {
 		
 		@Override
 		public void run() {
-			if(character.getState() == NodeState.ACTIVE) {
+			if(character.getState() == EntityState.ACTIVE) {
 				try {
 					task.run();
 				} catch(Exception e) {

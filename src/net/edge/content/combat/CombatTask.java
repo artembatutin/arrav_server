@@ -9,7 +9,7 @@ import net.edge.content.minigame.MinigameHandler;
 import net.edge.locale.Boundary;
 import net.edge.locale.loc.Location;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.mob.MobAggression;
 import net.edge.world.node.actor.player.Player;
@@ -132,7 +132,7 @@ public final class CombatTask extends Task {
 			return false;
 		if(builder.getVictim() == null)
 			return false;
-		if(builder.getVictim().getState() != NodeState.ACTIVE || builder.getCharacter().getState() != NodeState.ACTIVE || builder.getCharacter().isDead() || builder.getVictim().isDead()) {
+		if(builder.getVictim().getState() != EntityState.ACTIVE || builder.getCharacter().getState() != EntityState.ACTIVE || builder.getCharacter().isDead() || builder.getVictim().isDead()) {
 			builder.reset();
 			return false;
 		}

@@ -9,7 +9,7 @@ import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.NodeType;
+import net.edge.world.node.EntityType;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.Hit;
 import net.edge.world.PoisonType;
@@ -147,7 +147,7 @@ public abstract class Mob extends Actor {
 	 * @param position the position of this character in the world.
 	 */
 	public Mob(int id, Position position) {
-		super(position, NodeType.NPC);
+		super(position, EntityType.NPC);
 		this.id = id;
 		this.originalPosition = position.copy();
 		this.maxHealth = getDefinition().getHitpoints();

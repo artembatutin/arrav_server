@@ -172,7 +172,7 @@ public final class NpcPathWalker extends PathFinder {
 		private Position delta;
 		
 		/**
-		 * Constructs {@code Node}.
+		 * Constructs {@code Entity}.
 		 * @param position The current position.
 		 * @param delta    The delta position to move.
 		 */

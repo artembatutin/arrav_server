@@ -4,7 +4,7 @@ import net.edge.event.impl.ObjectEvent;
 import net.edge.content.combat.CombatType;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.mob.MobType;
@@ -164,7 +164,7 @@ public enum GodwarsFaction {
 	 */
 	private static boolean canAttack(GodwarsSoldier soldier, GodwarsSoldier target) {
 		//some prerequisite checks.
-		if(soldier.getCombatBuilder().inCombat() || (target.isNpc() && target.getCombatBuilder().inCombat()) || soldier.isDead() || soldier.getState() != NodeState.ACTIVE || target.isDead() || target.getState() != NodeState.ACTIVE) {
+		if(soldier.getCombatBuilder().inCombat() || (target.isNpc() && target.getCombatBuilder().inCombat()) || soldier.isDead() || soldier.getState() != EntityState.ACTIVE || target.isDead() || target.getState() != EntityState.ACTIVE) {
 			return false;
 		}
 		//if the difference is greater then 5 tiles block

@@ -9,7 +9,7 @@ import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Projectile;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.mob.impl.KalphiteQueen;
 import net.edge.world.node.actor.mob.strategy.DynamicCombatStrategy;
@@ -91,7 +91,7 @@ public final class KalphiteQueenCombatStrategy extends DynamicCombatStrategy<Kal
             @Override
             public void execute() {
                 this.cancel();
-                if(npc.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || npc.isDead() || victim.isDead())
+                if(npc.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || npc.isDead() || victim.isDead())
                     return;
                 new Projectile(npc, victim, 473, 50, 16, 61, 41, 0).sendProjectile();
             }
@@ -111,7 +111,7 @@ public final class KalphiteQueenCombatStrategy extends DynamicCombatStrategy<Kal
             @Override
             public void execute() {
                 this.cancel();
-                if(npc.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || npc.isDead() || victim.isDead())
+                if(npc.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || npc.isDead() || victim.isDead())
                     return;
                 KALPHITE_QUEEN_BLAST.projectile(npc, victim).get().sendProjectile();
             }

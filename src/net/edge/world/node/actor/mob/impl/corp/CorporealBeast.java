@@ -4,7 +4,7 @@ import net.edge.task.Task;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.mob.strategy.impl.corp.CorporealBeastCombatStrategy;
@@ -44,7 +44,7 @@ public final class CorporealBeast extends Mob {
 	
 	@Override
 	public void appendDeath() {
-		if(!darkEnergyCore.isDead() && darkEnergyCore.getState() == NodeState.ACTIVE) {
+		if(!darkEnergyCore.isDead() && darkEnergyCore.getState() == EntityState.ACTIVE) {
 			darkEnergyCore.appendDeath();
 		}
 		

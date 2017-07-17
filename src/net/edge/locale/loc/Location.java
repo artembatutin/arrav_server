@@ -2,7 +2,7 @@ package net.edge.locale.loc;
 
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.Node;
+import net.edge.world.node.Entity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -102,33 +102,33 @@ public abstract class Location {
 	}
 	
 	/**
-	 * Determines if {@code node} is in any of the fun pvp locations.
-	 * @param node the node to determine if in the locations.
-	 * @return {@code true} if the node is in any of these locations,
+	 * Determines if {@code entity} is in any of the fun pvp locations.
+	 * @param entity the entity to determine if in the locations.
+	 * @return {@code true} if the entity is in any of these locations,
 	 * {@code false} otherwise.
 	 */
-	public static boolean inFunPvP(Node node) {
-		return World.getAreaManager().inArea(node.getPosition(), "FUN_PVP");
+	public static boolean inFunPvP(Entity entity) {
+		return World.getAreaManager().inArea(entity.getPosition(), "FUN_PVP");
 	}
 	
 	/**
-	 * Determines if {@code node} is in any of the multicombat locations.
-	 * @param node the node to determine if in the locations.
-	 * @return {@code true} if the node is in any of these locations,
+	 * Determines if {@code entity} is in any of the multicombat locations.
+	 * @param entity the entity to determine if in the locations.
+	 * @return {@code true} if the entity is in any of these locations,
 	 * {@code false} otherwise.
 	 */
-	public static boolean inMultiCombat(Node node) {
-		return World.getAreaManager().inMulti(node);
+	public static boolean inMultiCombat(Entity entity) {
+		return World.getAreaManager().inMulti(entity);
 	}
 	
 	/**
-	 * Determines if {@code node} is in any of the wilderness locations.
-	 * @param node the node to determine if in the locations.
-	 * @return {@code true} if the node is in any of these locations,
+	 * Determines if {@code entity} is in any of the wilderness locations.
+	 * @param entity the entity to determine if in the locations.
+	 * @return {@code true} if the entity is in any of these locations,
 	 * {@code false} otherwise.
 	 */
-	public static boolean inWilderness(Node node) {
-		return inWilderness(node.getPosition());
+	public static boolean inWilderness(Entity entity) {
+		return inWilderness(entity.getPosition());
 	}
 	
 	/**
@@ -142,33 +142,33 @@ public abstract class Location {
 	}
 	
 	/**
-	 * Determines if {@code node} is in any of the duel locations.
-	 * @param node the node to determine if in the locations.
-	 * @return {@code true} if the node is in any of these locations,
+	 * Determines if {@code entity} is in any of the duel locations.
+	 * @param entity the entity to determine if in the locations.
+	 * @return {@code true} if the entity is in any of these locations,
 	 * {@code false} otherwise.
 	 */
-	public static boolean inDuelArena(Node node) {
-		return World.getAreaManager().inArea(node.getPosition(), "DUEL_ARENA");
+	public static boolean inDuelArena(Entity entity) {
+		return World.getAreaManager().inArea(entity.getPosition(), "DUEL_ARENA");
 	}
 	
 	/**
-	 * Determines if {@code node} is in any of the godwars locations.
-	 * @param node the node to determine if in the locations.
-	 * @return {@code true} if the node is in any of these locations,
+	 * Determines if {@code entity} is in any of the godwars locations.
+	 * @param entity the entity to determine if in the locations.
+	 * @return {@code true} if the entity is in any of these locations,
 	 * {@code false} otherwise.
 	 */
-	public static boolean inGodwars(Node node) {
-		return World.getAreaManager().inArea(node.getPosition(), "GODWARS");
+	public static boolean inGodwars(Entity entity) {
+		return World.getAreaManager().inArea(entity.getPosition(), "GODWARS");
 	}
 	
 	/**
-	 * Determines if {@code node} is in any of the home locations.
-	 * @param node the node to determine if in the locations.
-	 * @return {@code true} if the node is in any of these locations,
+	 * Determines if {@code entity} is in any of the home locations.
+	 * @param entity the entity to determine if in the locations.
+	 * @return {@code true} if the entity is in any of these locations,
 	 * {@code false} otherwise.
 	 */
-	public static boolean isAtHome(Node node) {
-		return World.getAreaManager().inArea(node.getPosition(), "HOME");
+	public static boolean isAtHome(Entity entity) {
+		return World.getAreaManager().inArea(entity.getPosition(), "HOME");
 	}
 	
 	/**

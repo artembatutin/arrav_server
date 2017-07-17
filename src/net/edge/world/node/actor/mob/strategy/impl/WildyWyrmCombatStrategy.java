@@ -5,7 +5,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.task.Task;
 import net.edge.world.*;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.mob.strategy.DynamicCombatStrategy;
@@ -106,7 +106,7 @@ public final class WildyWyrmCombatStrategy extends DynamicCombatStrategy<Mob> {
             @Override
             public void execute() {
                 this.cancel();
-                if(npc.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || npc.isDead() || victim.isDead())
+                if(npc.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || npc.isDead() || victim.isDead())
                     return;
                 SPELL.projectile(npc, victim).get().sendProjectile();
             }

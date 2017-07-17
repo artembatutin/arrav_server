@@ -8,7 +8,7 @@ import net.edge.content.skill.summoning.Summoning;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.move.path.Path;
 import net.edge.world.node.actor.mob.Mob;
@@ -51,7 +51,7 @@ class CharacterFollowTask extends Task {
 	@Override
 	public void execute() {
 		//First checks.
-		if(character.getState() != NodeState.ACTIVE || leader.getState() != NodeState.ACTIVE || !character.isFollowing() || character.isDead() || leader.isDead()) {//Death and away check.
+		if(character.getState() != EntityState.ACTIVE || leader.getState() != EntityState.ACTIVE || !character.isFollowing() || character.isDead() || leader.isDead()) {//Death and away check.
 			character.faceEntity(null);
 			character.setFollowing(false);
 			character.setFollowEntity(null);

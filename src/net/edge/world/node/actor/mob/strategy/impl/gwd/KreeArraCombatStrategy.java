@@ -7,7 +7,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -44,7 +44,7 @@ public final class KreeArraCombatStrategy extends DynamicCombatStrategy<KreeArra
 		CombatType[] data = npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC, CombatType.RANGED} : new CombatType[]{CombatType.MAGIC, CombatType.RANGED};
 		CombatType c = RandomUtils.random(data);
 		KreeArra.AVIANTESES.forEach(aviantese -> {
-			if(!aviantese.isDead() && aviantese.getState() == NodeState.ACTIVE) {
+			if(!aviantese.isDead() && aviantese.getState() == EntityState.ACTIVE) {
 				aviantese.getCombatBuilder().attack(victim);
 			}
 		});
@@ -79,7 +79,7 @@ public final class KreeArraCombatStrategy extends DynamicCombatStrategy<KreeArra
 			@Override
 			public void execute() {
 				this.cancel();
-				if(npc.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || npc.isDead() || victim.isDead()) {
+				if(npc.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || npc.isDead() || victim.isDead()) {
 					return;
 				}
 				SPELL.projectile(npc, victim).ifPresent(Projectile::sendProjectile);

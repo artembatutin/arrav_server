@@ -5,7 +5,7 @@ import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.player.Player;
 
 public final class SendLogout implements OutgoingPacket {
@@ -13,7 +13,7 @@ public final class SendLogout implements OutgoingPacket {
 	
 	@Override
 	public boolean onSent(Player player) {
-		if(player.getState() != NodeState.AWAITING_REMOVAL)
+		if(player.getState() != EntityState.AWAITING_REMOVAL)
 			World.get().queueLogout(player);
 		return true;
 	}

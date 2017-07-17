@@ -6,7 +6,7 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.Hit;
 import net.edge.world.Hit.HitIcon;
 import net.edge.world.Hit.HitType;
@@ -104,7 +104,7 @@ public final class DarkEnergyCore extends Mob {
 		@Override
 		protected void execute() {
 			Player victim = RandomUtils.random(core.getRegion().getPlayers().stream().filter(p -> World.getAreaManager().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList()));
-			if(core.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || core.isDead() || victim.isDead()) {
+			if(core.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || core.isDead() || victim.isDead()) {
 				return;
 			}
 			
@@ -162,7 +162,7 @@ public final class DarkEnergyCore extends Mob {
 				return;
 			}
 			
-			if(core.getState() != NodeState.ACTIVE || core.isDead() || !core.isVisible()) {
+			if(core.getState() != EntityState.ACTIVE || core.isDead() || !core.isVisible()) {
 				return;
 			}
 			
@@ -173,7 +173,7 @@ public final class DarkEnergyCore extends Mob {
 			}
 			
 			Player victim = RandomUtils.random(possibleVictims);
-			if(victim.isDead() || victim.getState() != NodeState.ACTIVE) {
+			if(victim.isDead() || victim.getState() != EntityState.ACTIVE) {
 				return;
 			}
 			

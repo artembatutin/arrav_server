@@ -7,10 +7,10 @@ import net.edge.world.object.ObjectNode;
 import net.edge.world.node.region.Region;
 
 /**
- * The enumerated type whose elements represent the different types of {@link Node} implementations.
+ * The enumerated type whose elements represent the different types of {@link Entity} implementations.
  * @author lare96 <http://github.com/lare96>
  */
-public enum NodeType {
+public enum EntityType {
 	
 	/**
 	 * The element used to represent the {@link ItemNode} implementation.

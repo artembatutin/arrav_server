@@ -12,7 +12,7 @@ import net.edge.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.content.skill.summoning.familiar.ability.Teleporter;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.NodeType;
+import net.edge.world.node.EntityType;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.Graphic;
 import net.edge.world.node.actor.mob.Mob;
@@ -289,7 +289,7 @@ public final class Summoning {
 			return false;
 		}
 		Familiar familiar = player.getFamiliar().get();
-		if(!player.isWildernessInterface() && victim.getType().equals(NodeType.PLAYER)) {
+		if(!player.isWildernessInterface() && victim.getType().equals(EntityType.PLAYER)) {
 			player.message("This player is not in the wilderness!");
 			return false;
 		}

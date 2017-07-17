@@ -162,7 +162,7 @@ public final class AStarPathFinder extends PathFinder {
 }
 
 /**
- * A {@code Node} representing a weighted {@link Position}.
+ * A {@code Entity} representing a weighted {@link Position}.
  * @author Graham
  * @author Major
  * @author Artem Batutin <artembatutin@gmail.com>
@@ -171,27 +171,27 @@ public final class AStarPathFinder extends PathFinder {
 final class Node implements Comparable<Node> {
 	
 	/**
-	 * The cost of this {@code Node}.
+	 * The cost of this {@code Entity}.
 	 */
 	private int cost;
 	
 	/**
-	 * Whether or not this {@code Node} is openShop.
+	 * Whether or not this {@code Entity} is openShop.
 	 */
 	private boolean open = true;
 	
 	/**
-	 * The parent {@code Node} of this Node.
+	 * The parent {@code Entity} of this Entity.
 	 */
 	private Optional<Node> parent = Optional.empty();
 	
 	/**
-	 * The Position of this {@code Node}.
+	 * The Position of this {@code Entity}.
 	 */
 	private final Position position;
 	
 	/**
-	 * Creates the {@code Node} with the specified {@link Position} and cost.
+	 * Creates the {@code Entity} with the specified {@link Position} and cost.
 	 * @param position The Position.
 	 */
 	public Node(Position position) {
@@ -199,9 +199,9 @@ final class Node implements Comparable<Node> {
 	}
 	
 	/**
-	 * Creates the {@code Node} with the specified {@link Position} and cost.
+	 * Creates the {@code Entity} with the specified {@link Position} and cost.
 	 * @param position The Position.
-	 * @param cost     The cost of the Node.
+	 * @param cost     The cost of the Entity.
 	 */
 	public Node(Position position, int cost) {
 		this.position = position;
@@ -209,7 +209,7 @@ final class Node implements Comparable<Node> {
 	}
 	
 	/**
-	 * Sets the cost of this Node.
+	 * Sets the cost of this Entity.
 	 * @param cost The cost.
 	 */
 	public void setCost(int cost) {
@@ -217,7 +217,7 @@ final class Node implements Comparable<Node> {
 	}
 	
 	/**
-	 * Gets the cost of this Node.
+	 * Gets the cost of this Entity.
 	 * @return The cost.
 	 */
 	public int getCost() {
@@ -225,7 +225,7 @@ final class Node implements Comparable<Node> {
 	}
 	
 	/**
-	 * Closes this Node.
+	 * Closes this Entity.
 	 */
 	public void close() {
 		open = false;
@@ -233,39 +233,39 @@ final class Node implements Comparable<Node> {
 	
 	/**
 	 * Returns whether or not this {@link Node} is openShop.
-	 * @return {@code true} if this Node is openShop, otherwise {@code false}.
+	 * @return {@code true} if this Entity is openShop, otherwise {@code false}.
 	 */
 	public boolean isOpen() {
 		return open;
 	}
 	
 	/**
-	 * Sets the parent Node of this Node.
-	 * @param parent The parent Node. May be {@code null}.
+	 * Sets the parent Entity of this Entity.
+	 * @param parent The parent Entity. May be {@code null}.
 	 */
 	public void setParent(Node parent) {
 		this.parent = Optional.ofNullable(parent);
 	}
 	
 	/**
-	 * Gets the parent Node of this Node.
-	 * @return The parent Node.
-	 * @throws NoSuchElementException If this Node does not have a parent.
+	 * Gets the parent Entity of this Entity.
+	 * @return The parent Entity.
+	 * @throws NoSuchElementException If this Entity does not have a parent.
 	 */
 	public Node getParent() {
 		return parent.get();
 	}
 	
 	/**
-	 * Returns whether or not this Node has a parent Node.
-	 * @return {@code true} if this Node has a parent Node, otherwise {@code false}.
+	 * Returns whether or not this Entity has a parent Entity.
+	 * @return {@code true} if this Entity has a parent Entity, otherwise {@code false}.
 	 */
 	public boolean hasParent() {
 		return parent.isPresent();
 	}
 	
 	/**
-	 * Gets the {@link Position} this Node represents.
+	 * Gets the {@link Position} this Entity represents.
 	 * @return The position.
 	 */
 	public Position getPosition() {
@@ -273,8 +273,8 @@ final class Node implements Comparable<Node> {
 	}
 	
 	/**
-	 * Compares the {@code Node}'s cost with another.
-	 * @param other The other Node to check.
+	 * Compares the {@code Entity}'s cost with another.
+	 * @param other The other Entity to check.
 	 * @return The differential Integer.
 	 */
 	@Override
@@ -283,7 +283,7 @@ final class Node implements Comparable<Node> {
 	}
 	
 	/**
-	 * Gets the condition if the Node equals another object.
+	 * Gets the condition if the Entity equals another object.
 	 * @param obj The object to be checked.
 	 * @return {@code true} if it's the same as the object, {@code false} otherwise.
 	 */

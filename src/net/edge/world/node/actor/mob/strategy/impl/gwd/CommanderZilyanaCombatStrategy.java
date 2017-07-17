@@ -4,7 +4,7 @@ import net.edge.content.combat.CombatHit;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -40,7 +40,7 @@ public final class CommanderZilyanaCombatStrategy extends DynamicCombatStrategy<
 		CombatType[] data = npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
 		CombatType c = RandomUtils.random(data);
 		CommanderZilyana.MINIONS.forEach(minion -> {
-			if(!minion.isDead() && minion.getState() == NodeState.ACTIVE) {
+			if(!minion.isDead() && minion.getState() == EntityState.ACTIVE) {
 				minion.getCombatBuilder().attack(victim);
 			}
 		});

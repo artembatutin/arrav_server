@@ -8,7 +8,7 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
-import net.edge.world.node.NodeState;
+import net.edge.world.node.EntityState;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.AntifireDetails;
@@ -64,7 +64,7 @@ public final class KingBlackDragonCombatStrategy implements CombatStrategy {
 			@Override
 			public void execute() {
 				this.cancel();
-				if(character.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || character.isDead() || victim.isDead())
+				if(character.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || character.isDead() || victim.isDead())
 					return;
 				spell.projectile(character, victim).get().sendProjectile();
 			}

@@ -6,8 +6,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.locale.Position;
 import net.edge.locale.area.Area.AreaLocation;
 import net.edge.locale.loc.Location;
-import net.edge.world.node.Node;
-import java.util.Optional;
+import net.edge.world.node.Entity;
 
 /**
  * The manager class which can be used to check if certain nodes are in an area.
@@ -26,13 +25,13 @@ public final class AreaManager {
 	private static final ObjectList<Location> MULTI_ZONES = new ObjectArrayList<>();
 	
 	/**
-	 * Checks if the specified {@code node} is in the area specified {@code area}.
-	 * @param node the node to check for.
-	 * @param area the area to check the node for.
-	 * @return <true> if the node is, <false> otherwise.
+	 * Checks if the specified {@code entity} is in the area specified {@code area}.
+	 * @param entity the entity to check for.
+	 * @param area the area to check the entity for.
+	 * @return <true> if the entity is, <false> otherwise.
 	 */
-	public boolean inArea(Node node, String area) {
-		return inArea(node.getPosition(), area);
+	public boolean inArea(Entity entity, String area) {
+		return inArea(entity.getPosition(), area);
 	}
 	
 	/**
@@ -52,13 +51,13 @@ public final class AreaManager {
 	}
 	
 	/**
-	 * Checks if the specified {@code node} is in a multi-area.
-	 * @param node the node to check for.
-	 * @return {@code true} if the node is, {@code false} otherwise.
+	 * Checks if the specified {@code entity} is in a multi-area.
+	 * @param entity the entity to check for.
+	 * @return {@code true} if the entity is, {@code false} otherwise.
 	 */
-	public boolean inMulti(Node node) {
+	public boolean inMulti(Entity entity) {
 		for(Location zone : MULTI_ZONES) {
-			if(zone.inLocation(node.getPosition()))
+			if(zone.inLocation(entity.getPosition()))
 				return true;
 		}
 		return false;

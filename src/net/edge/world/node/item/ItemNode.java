@@ -5,9 +5,9 @@ import net.edge.net.packet.out.SendItemNodeRemoval;
 import net.edge.util.MutableNumber;
 import net.edge.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.Node;
-import net.edge.world.node.NodeState;
-import net.edge.world.node.NodeType;
+import net.edge.world.node.Entity;
+import net.edge.world.node.EntityState;
+import net.edge.world.node.EntityType;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.region.Region;
 
@@ -16,7 +16,7 @@ import net.edge.world.node.region.Region;
  * @author lare96 <http://github.com/lare96>
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public class ItemNode extends Node {
+public class ItemNode extends Entity {
 	
 	/**
 	 * The item concealed within this node.
@@ -45,7 +45,7 @@ public class ItemNode extends Node {
 	 * @param player   the player attached to this node.
 	 */
 	public ItemNode(Item item, Position position, Player player) {
-		super(position, NodeType.ITEM);
+		super(position, EntityType.ITEM);
 		this.item = item.copy();
 		this.player = player;
 	}
@@ -78,7 +78,7 @@ public class ItemNode extends Node {
 				state = ItemState.SEEN_BY_EVERYONE;
 				break;
 			case SEEN_BY_EVERYONE:
-				this.setState(NodeState.INACTIVE);
+				this.setState(EntityState.INACTIVE);
 				break;
 			default:
 				throw new IllegalStateException("Invalid item node state!");
@@ -91,7 +91,7 @@ public class ItemNode extends Node {
 	 */
 	public void onPickup(Player player) {
 		if(player.getInventory().add(item) != -1) {
-			this.setState(NodeState.INACTIVE);
+			this.setState(EntityState.INACTIVE);
 		}
 	}
 	
