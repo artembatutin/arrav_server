@@ -3,6 +3,7 @@ package net.edge.action.but;
 import net.edge.content.pets.Pet;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ButtonAction;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
@@ -19,7 +20,7 @@ public class PetControls extends ActionInitializer {
 				Optional<Pet> pet = player.getPetManager().getPet();
 				if(pet.isPresent()) {
 					Pet p = pet.get();
-					Position position = World.getTraversalMap().getRandomNearby(player.getPosition(), player.getPosition(), p.size());
+					Position position = TraversalMap.getRandomNearby(player.getPosition(), player.getPosition(), p.size());
 					if(position != null) {
 						p.move(position);
 					} else {

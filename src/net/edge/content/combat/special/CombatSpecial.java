@@ -15,6 +15,7 @@ import net.edge.content.skill.Skill;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.Position;
 import net.edge.world.*;
@@ -325,7 +326,7 @@ public enum CombatSpecial {
 			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
-					Position pos = World.getTraversalMap().getRandomNearby(target.getPosition(), player.getPosition(), target.size());
+					Position pos = TraversalMap.getRandomNearby(target.getPosition(), player.getPosition(), target.size());
 					if(pos != null) {
 						target.getMovementQueue().walk(pos);
 						target.getMovementListener().append(() -> target.freeze(4));

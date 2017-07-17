@@ -349,7 +349,7 @@ package net.edge.content.minigame.dueling;
 //						rival.move(OBSTACLES_ARENA.random());
 //					} else if(this.rules.has(DuelingRules.NO_MOVEMENT.value)) {
 //						player.move(DEFAULT_ARENA.random());
-//						List<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), rival.size());
+//						List<Position> pos = TraversalMap.getSurroundedTraversableTiles(player.getPosition(), player.size(), rival.size());
 //						if(pos.size() > 0) {
 //							Position p = new RandomGen().random(pos);
 //							rival.move(p);

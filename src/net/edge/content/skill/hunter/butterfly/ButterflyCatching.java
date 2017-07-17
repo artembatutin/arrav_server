@@ -14,6 +14,7 @@ import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -103,7 +104,7 @@ public final class ButterflyCatching extends ProducingSkillAction {
 		player.graphic(data.releasedGraphic);
 		
 		//FIXME for some reason the code below returns into an index out of bounds exception
-		Position position = RandomUtils.random(World.getTraversalMap().getNearbyTraversableTiles(player.getPosition(), 3));
+		Position position = RandomUtils.random(TraversalMap.getNearbyTraversableTiles(player.getPosition(), 3));
 		Mob mob = new DefaultMob(data.npc, position);
 		LinkedTaskSequence seq = new LinkedTaskSequence();
 		seq.connect(2, () -> World.get().getNpcs().add(mob));
@@ -123,7 +124,7 @@ public final class ButterflyCatching extends ProducingSkillAction {
 			if(barehanded) {
 				player.message("You manage to catch the bufferly and release it back into the wild.");
 				Skills.experience(player, data.agilityRequirement.getExperience(), Skills.AGILITY);
-				Position position = RandomUtils.random(World.getTraversalMap().getNearbyTraversableTiles(player.getPosition(), 3));
+				Position position = RandomUtils.random(TraversalMap.getNearbyTraversableTiles(player.getPosition(), 3));
 				Mob mob = new DefaultMob(data.npc, position);
 				LinkedTaskSequence seq = new LinkedTaskSequence();
 				seq.connect(2, () -> player.graphic(data.barehandGraphic));

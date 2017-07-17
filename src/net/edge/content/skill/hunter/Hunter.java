@@ -6,6 +6,7 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.hunter.trap.Trap;
 import net.edge.content.skill.hunter.trap.TrapProcessor;
 import net.edge.content.skill.hunter.trap.TrapTask;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
@@ -92,7 +93,7 @@ public final class Hunter {
 		
 		Position p = player.getPosition();
 		
-		//if(player.getRegion().interactAction().stream().anyMatch(o -> o.getObjectType() == ObjectType.GENERAL_PROP) || !World.getTraversalMap().isTraversable(p, Direction.WEST, player.size()) && !World.getTraversalMap().isTraversable(p, Direction.EAST, player.size()) || Location.isAtHome(player)) {
+		//if(player.getRegion().interactAction().stream().anyMatch(o -> o.getObjectType() == ObjectType.GENERAL_PROP) || !TraversalMap.isTraversable(p, Direction.WEST, player.size()) && !TraversalMap.isTraversable(p, Direction.EAST, player.size()) || Location.isAtHome(player)) {
 		//	player.message("You can't set-up your trap here.");
 		//	return false;
 		//}
@@ -113,9 +114,9 @@ public final class Hunter {
 		player.animation(new Animation(827));
 		player.getInventory().remove(new Item(trap.getType().getItemId(), 1));
 		trap.getObject().publish();
-		if(World.getTraversalMap().isTraversable(p, Direction.WEST, player.size())) {
+		if(TraversalMap.isTraversable(p, Direction.WEST, player.size())) {
 			player.getMovementQueue().walk(Direction.WEST.getX(), Direction.WEST.getY());
-		} else if(World.getTraversalMap().isTraversable(p, Direction.EAST, player.size())) {
+		} else if(TraversalMap.isTraversable(p, Direction.EAST, player.size())) {
 			player.getMovementQueue().walk(Direction.EAST.getX(), Direction.EAST.getY());
 		}
 		player.facePosition(p);

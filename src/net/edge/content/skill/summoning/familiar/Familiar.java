@@ -12,6 +12,7 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import net.edge.content.skill.summoning.SummoningData;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.Graphic;
 import net.edge.world.World;
@@ -100,7 +101,7 @@ public abstract class Familiar extends Follower {
 	public void summon(Player player, boolean login) {
 		/* Checks if the familiar is a large npc. */
 		boolean isLarge = size() > 1;
-		ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), size());
+		ObjectList<Position> pos = TraversalMap.getSurroundedTraversableTiles(player.getPosition(), player.size(), size());
 		if(!pos.isEmpty()) {
 			Position p = RandomUtils.random(pos);
 			this.move(p);

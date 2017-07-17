@@ -4,6 +4,7 @@ import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.DestructionSkillAction;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
@@ -65,9 +66,9 @@ public final class Firemaking extends DestructionSkillAction {
 				player.getInventory().remove(new Item(lighter.getItem(), 1));
 			}
 			Position p = getPlayer().getPosition();
-			if(World.getTraversalMap().isTraversable(p, Direction.WEST, getPlayer().size())) {
+			if(TraversalMap.isTraversable(p, Direction.WEST, getPlayer().size())) {
 				getPlayer().getMovementQueue().walk(Direction.WEST.getX(), Direction.WEST.getY());
-			} else if(World.getTraversalMap().isTraversable(p, Direction.EAST, getPlayer().size())) {
+			} else if(TraversalMap.isTraversable(p, Direction.EAST, getPlayer().size())) {
 				getPlayer().getMovementQueue().walk(Direction.EAST.getX(), Direction.EAST.getY());
 			}
 			getPlayer().facePosition(p);
@@ -78,7 +79,8 @@ public final class Firemaking extends DestructionSkillAction {
 	@Override
 	public boolean init() {
 		Position p = getPlayer().getPosition();
-		if(getPlayer().getRegion().getObjects(p).hasInteractive() || !World.getTraversalMap().isTraversable(p, Direction.WEST, getPlayer().size()) && !World.getTraversalMap().isTraversable(p, Direction.EAST, getPlayer().size()) || Location.isAtHome(getPlayer())) {
+		if(getPlayer().getRegion().getObjects(p).hasInteractive() || !TraversalMap.isTraversable(p, Direction.WEST, getPlayer().size()) && !TraversalMap
+				.isTraversable(p, Direction.EAST, getPlayer().size()) || Location.isAtHome(getPlayer())) {
 			getPlayer().message("You can't start a fire here.");
 			return false;
 		}

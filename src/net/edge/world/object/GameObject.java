@@ -3,6 +3,7 @@ package net.edge.world.object;
 import net.edge.net.packet.out.SendObject;
 import net.edge.net.packet.out.SendObjectRemoval;
 import net.edge.task.Task;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.region.Region;
@@ -206,7 +207,7 @@ public abstract class GameObject {
 	 * Clips the object on the traversable map.
 	 */
 	public void clip(Region reg) {
-		World.getTraversalMap().markObject(reg, this, true, false);
+		TraversalMap.markObject(reg, this, true, false);
 		visible(true);
 	}
 	
@@ -214,7 +215,7 @@ public abstract class GameObject {
 	 * Unclips the object from the traversable map.
 	 */
 	public void unclip(Region reg) {
-		World.getTraversalMap().markObject(reg, this, false, false);
+		TraversalMap.markObject(reg, this, false, false);
 		visible(false);
 	}
 	

@@ -3,6 +3,7 @@ package net.edge.content.minigame.pestcontrol;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.minigame.pestcontrol.pest.*;
 
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Hit;
@@ -47,7 +48,7 @@ public class PestPortal extends DefaultMob {
 			return;
 		int type = RandomUtils.inclusive(0, 6);
 		Pest pest = null;
-		Optional<Position> destination = World.getTraversalMap().getRandomTraversableTile(getSpawn(), type == 0 ? 2 : 1);
+		Optional<Position> destination = TraversalMap.getRandomTraversableTile(getSpawn(), type == 0 ? 2 : 1);
 		if(!destination.isPresent())
 			return;
 		switch(type) {

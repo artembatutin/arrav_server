@@ -2,6 +2,7 @@ package net.edge.content.minigame.pestcontrol.pest;
 
 import net.edge.content.minigame.pestcontrol.PestControlMinigame;
 import net.edge.content.minigame.pestcontrol.defence.PestGate;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
@@ -36,7 +37,7 @@ public class Ravager extends Pest {
 		if(gate != null) {
 			if(gate.destroyed()) {
 				if(!getPosition().withinDistance(knight.getPosition(), 5) && getCombatBuilder().getVictim() != null) {
-					Optional<Position> destination = World.getTraversalMap().getRandomTraversableTile(getCombatBuilder().getVictim().getPosition(), size());
+					Optional<Position> destination = TraversalMap.getRandomTraversableTile(getCombatBuilder().getVictim().getPosition(), size());
 					destination.ifPresent(d -> getMovementQueue().smartWalk(d));
 				}
 			} else {

@@ -9,6 +9,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.skill.SkillData;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
 import net.edge.world.*;
@@ -178,7 +179,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 					return;
 				}
 
-				ObjectList<Position> positions = World.getTraversalMap().getNonDiagonalNearbyTraversableTiles(originalVictimPosition, 3);
+				ObjectList<Position> positions = TraversalMap.getNonDiagonalNearbyTraversableTiles(originalVictimPosition, 3);
 				positions.forEach(p -> new Projectile(originalVictimPosition, p, 0, 1824, 44, 4, 60, 43, 0, npc.getInstance(), CombatType.MAGIC).sendProjectile());
 				World.get().submit(new Task(1, false) {
 					@Override

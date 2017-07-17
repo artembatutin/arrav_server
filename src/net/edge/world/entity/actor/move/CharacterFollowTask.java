@@ -5,6 +5,7 @@ import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.Combat;
 import net.edge.content.skill.summoning.Summoning;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
@@ -101,7 +102,7 @@ class CharacterFollowTask extends Task {
 			//Only moving when movement is done.
 			if(character.getMovementQueue().isMovementDone()) {
 				character.getMovementQueue().reset();
-				ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(leader.getPosition(), leader.size(), character.size());
+				ObjectList<Position> pos = TraversalMap.getSurroundedTraversableTiles(leader.getPosition(), leader.size(), character.size());
 				if(pos.size() > 0) {
 					Position p = RandomUtils.random(pos);
 					character.getMovementQueue().walk(p);
@@ -127,7 +128,7 @@ class CharacterFollowTask extends Task {
 			/*if(character.getCombatBuilder().isAttacking()) {
 				Direction facing = Direction.fromDeltas(Position.delta(character.getPosition(), leader.getPosition()));
 				if(facing.isDiagonal()) {//Moving player if diagonal fighting
-					Position pos = World.getTraversalMap().getRandomNearby(character.getPosition(), leader.getPosition(), character.size());
+					Position pos = TraversalMap.getRandomNearby(character.getPosition(), leader.getPosition(), character.size());
 					if(pos != null)
 						character.getMovementQueue().walk(pos);
 				}

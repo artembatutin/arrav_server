@@ -5,6 +5,7 @@ import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
@@ -64,7 +65,7 @@ public final class KreeArraCombatStrategy extends DynamicCombatStrategy<KreeArra
 					return;
 				}
 				
-				Position position = World.getTraversalMap().getRandomNearby(victim.getPosition(), npc.getPosition(), 2);
+				Position position = TraversalMap.getRandomNearby(victim.getPosition(), npc.getPosition(), 2);
 				victim.getMovementQueue().reset();
 				if(position != null)
 					victim.move(position);

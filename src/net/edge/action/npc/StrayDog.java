@@ -2,6 +2,7 @@ package net.edge.action.npc;
 
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.NpcAction;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.World;
@@ -17,7 +18,7 @@ public class StrayDog extends ActionInitializer {
 				player.animation(new Animation(2110));
 				player.forceChat("Thbbbbt!");
 				npc.forceChat("Whine!");
-				Position pos = World.getTraversalMap().getRandomNearby(npc.getPosition(), player.getPosition(), npc.size());
+				Position pos = TraversalMap.getRandomNearby(npc.getPosition(), player.getPosition(), npc.size());
 				if(pos != null)
 					npc.getMovementQueue().walk(pos);
 				return true;

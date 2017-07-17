@@ -28,9 +28,8 @@ public abstract class PathFinder {
 	 * @return {@code true} if any of the Directions lead to a traversable tile, otherwise {@code false}.
 	 */
 	protected boolean traversable(Position current, int size, Direction... directions) {
-		TraversalMap traversalMap = World.getTraversalMap();
 		for(Direction direction : directions) {
-			if(!traversalMap.isTraversable(current, direction, size)) {
+			if(!TraversalMap.isTraversable(current, direction, size)) {
 				return false;// not traversable
 			}
 		}
@@ -45,9 +44,7 @@ public abstract class PathFinder {
 	 */
 	boolean traversable(Position current, Position going, int size) {
 		Direction first = Direction.fromDeltas(Position.delta(current, going));
-		TraversalMap traversalMap = World.getTraversalMap();
-
-		return traversalMap.isTraversable(current, first, size);
+		return TraversalMap.isTraversable(current, first, size);
 	}
 	
 	/**
@@ -60,9 +57,7 @@ public abstract class PathFinder {
 	boolean projectileCheck(Position current, Position going) {
 		Direction first = Direction.fromDeltas(Position.delta(going, current));
 		Direction second = Direction.fromDeltas(Position.delta(current, going));
-		TraversalMap traversalMap = World.getTraversalMap();
-
-		return (traversalMap.isTraversable(current, second, true) && traversalMap.isTraversable(going, first, true));
+		return (TraversalMap.isTraversable(current, second, true) && TraversalMap.isTraversable(going, first, true));
 	}
 	
 }

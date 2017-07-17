@@ -2,6 +2,7 @@ package net.edge.content.commands.impl;
 
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
@@ -17,7 +18,7 @@ public final class AssistCommand implements Command {
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player assisted = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
 		if(assisted != null && assisted != player) {
-			Position pos = World.getTraversalMap().getRandomNearby(assisted.getPosition(), player.getPosition(), 1);
+			Position pos = TraversalMap.getRandomNearby(assisted.getPosition(), player.getPosition(), 1);
 			if(pos != null) {
 				player.move(pos);
 			} else {

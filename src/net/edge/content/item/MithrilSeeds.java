@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import net.edge.action.impl.*;
 import net.edge.action.impl.ItemAction;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
@@ -85,9 +86,9 @@ public final class MithrilSeeds {
                 player.animation(new Animation(827, Animation.AnimationPriority.HIGH));
                 getRandomFlowerObject(player).publish(120, GameObject::remove);
                 Position p = player.getPosition();
-                if(World.getTraversalMap().isTraversable(p, Direction.WEST, player.size())) {
+                if(TraversalMap.isTraversable(p, Direction.WEST, player.size())) {
                     player.getMovementQueue().walk(Direction.WEST.getX(), Direction.WEST.getY());
-                } else if(World.getTraversalMap().isTraversable(p, Direction.EAST, player.size())) {
+                } else if(TraversalMap.isTraversable(p, Direction.EAST, player.size())) {
                     player.getMovementQueue().walk(Direction.EAST.getX(), Direction.EAST.getY());
                 }
                 player.facePosition(p);

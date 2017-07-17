@@ -10,6 +10,7 @@ import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.content.skill.summoning.familiar.ability.Teleporter;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.EntityType;
@@ -45,8 +46,7 @@ public final class Summoning {
 			//pet is already close enough.
 			return;
 		}
-		ObjectList<Position> pos = World.getTraversalMap()
-				.getSurroundedTraversableTiles(player.getPosition(), player.size(), pet.size());
+		ObjectList<Position> pos = TraversalMap.getSurroundedTraversableTiles(player.getPosition(), player.size(), pet.size());
 		if(pos.size() > 0) {
 			Position p = RandomUtils.random(pos);
 			pet.move(p);
@@ -68,7 +68,7 @@ public final class Summoning {
 			//familiar is already close enough.
 			return;
 		}
-		ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), familiar.size());
+		ObjectList<Position> pos = TraversalMap.getSurroundedTraversableTiles(player.getPosition(), player.size(), familiar.size());
 		if(pos.size() > 0) {
 			Position p = RandomUtils.random(pos);
 			familiar.move(p);

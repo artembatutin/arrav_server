@@ -82,7 +82,7 @@ public final class MovementQueue {
 		if(walkPoint != null && walkPoint.getDirection() != Direction.NONE) {
 			int x = walkPoint.getDirection().getX();
 			int y = walkPoint.getDirection().getY();
-			//boolean traversable = World.getTraversalMap().isTraversable(character.getPosition(), walkPoint.getDirection(), character.size());
+			//boolean traversable = TraversalMap.isTraversable(character.getPosition(), walkPoint.getDirection(), character.size());
 			//if(!traversable) {
 			//	reset();
 			//	return;
@@ -105,7 +105,7 @@ public final class MovementQueue {
 		if(runPoint != null && runPoint.getDirection() != Direction.NONE) {
 			int x = runPoint.getDirection().getX();
 			int y = runPoint.getDirection().getY();
-			//boolean traversable = World.getTraversalMap().isTraversable(character.getPosition(), runPoint.getDirection(), character.size());
+			//boolean traversable = TraversalMap.isTraversable(character.getPosition(), runPoint.getDirection(), character.size());
 			//if(!traversable) {
 			//	reset();
 			//	return;

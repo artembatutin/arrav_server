@@ -1,5 +1,6 @@
 package net.edge.content.minigame.pestcontrol.pest;
 
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Graphic;
@@ -27,7 +28,7 @@ public class Shifter extends Pest {
 			int x = RandomUtils.inclusive(delta.getX() < 0 ? -delta.getX() : delta.getX());
 			int y = RandomUtils.inclusive(delta.getY() < 0 ? -delta.getY() : delta.getY());
 			Position move = getPosition().move((delta.getX() < 0 ? -x : x) + RandomUtils.inclusive(3), (delta.getY() < 0 ? -y : y) + RandomUtils.inclusive(3));
-			Optional<Position> destination = World.getTraversalMap().getRandomTraversableTile(move, size());
+			Optional<Position> destination = TraversalMap.getRandomTraversableTile(move, size());
 			destination.ifPresent(this::move);
 			graphic(new Graphic(308, 100));
 			getCombatBuilder().reset();

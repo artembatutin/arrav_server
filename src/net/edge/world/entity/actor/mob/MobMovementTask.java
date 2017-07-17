@@ -54,8 +54,7 @@ public class MobMovementTask extends Task {
 					int random_y = mob.toNpc().getPosition().getY() + randomSteps(mob.size());
 					Position generated_random_position = new Position(random_x, random_y);
 					Boundary boundary = new Boundary(generated_random_position, mob.size());
-					TraversalMap traverse = new TraversalMap();
-					boolean traversable = traverse.isTraversable(generated_random_position, boundary, dir, mob.size());
+					boolean traversable = TraversalMap.isTraversable(generated_random_position, boundary, dir, mob.size());
 					if(traversable) {
 						Path pathHome = World.getSimplePathFinder().find(mob, generated_random_position);
 						if(pathHome.isPossible())

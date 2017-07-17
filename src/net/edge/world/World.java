@@ -439,11 +439,6 @@ public final class World {
 	private static final RegionManager REGION_MANAGER = new RegionManager();
 	
 	/**
-	 * This world's {@link TraversalMap} used to handle the clipping around the world.
-	 */
-	private static final TraversalMap TRAVERSAL_MAP = new TraversalMap();
-	
-	/**
 	 * This world's straight line pathfinder used for NPCs movements.
 	 */
 	private static final SimplePathFinder SIMPLE_PATH_FINDER = new SimplePathFinder();
@@ -495,13 +490,6 @@ public final class World {
 	 */
 	public static RegionManager getRegions() {
 		return REGION_MANAGER;
-	}
-	
-	/**
-	 * Returns this world's {@link TraversalMap}.
-	 */
-	public static TraversalMap getTraversalMap() {
-		return TRAVERSAL_MAP;
 	}
 	
 	/**
