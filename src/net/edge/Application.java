@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author lare96 <http://github.com/lare96>
  */
-public final class GameServer {
+public final class Application {
 	
 	/**
 	 * The flag that determines if debugging messages should be printed or not.
@@ -71,7 +71,7 @@ public final class GameServer {
 	/**
 	 * The LOGGER that will print important information.
 	 */
-	private final static Logger LOGGER = LoggerUtils.getLogger(GameServer.class);
+	private final static Logger LOGGER = LoggerUtils.getLogger(Application.class);
 	
 	static {
 		try {
@@ -82,7 +82,7 @@ public final class GameServer {
 	}
 	
 	/**
-	 * Invoked when this program is started, initializes the {@link GameServer}.
+	 * Invoked when this program is started, initializes the {@link Application}.
 	 * @param args The runtime arguments, none of which are parsed.
 	 */
 	public static void main(String[] args) {
@@ -92,7 +92,7 @@ public final class GameServer {
 			DEBUG = false;
 		}
 		try {
-			GameServer edgeville = new GameServer();
+			Application edgeville = new Application();
 			edgeville.init();
 		} catch(Exception e) {
 			LOGGER.log(Level.SEVERE, "Error in game run time!", e);
@@ -103,7 +103,7 @@ public final class GameServer {
 	/**
 	 * A package-private constructor to discourage external instantiation.
 	 */
-	public GameServer() {
+	public Application() {
 		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleInitialization").build());
 		launch = MoreExecutors.listeningDecorator(delegateService);
 	}
