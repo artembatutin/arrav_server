@@ -71,6 +71,7 @@ import net.edge.world.node.entity.npc.impl.gwd.GodwarsFaction;
 import net.edge.world.node.entity.player.assets.*;
 import net.edge.world.node.entity.player.assets.activity.ActivityManager;
 import net.edge.world.node.entity.update.UpdateFlag;
+import net.edge.world.node.entity.update.UpdateManager;
 import net.edge.world.node.item.container.impl.Bank;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.world.node.item.container.impl.Inventory;
@@ -788,6 +789,7 @@ public final class Player extends EntityNode {
 			if(getTeleportStage() == -1)
 				setTeleportStage(0);
 		}
+		UpdateManager.prepare(this);
 	}
 	
 	@Override
@@ -803,8 +805,7 @@ public final class Player extends EntityNode {
 			getSession().flushQueue();
 		}
 		super.postUpdate();
-		setCachedUpdateBlock(null);
-		checkRemoval();
+		cachedUpdateBlock = null;
 	}
 	
 	@Override
@@ -2063,26 +2064,7 @@ public final class Player extends EntityNode {
 	 * @param cachedUpdateBlock the new value to set.
 	 */
 	public void setCachedUpdateBlock(GameBuffer cachedUpdateBlock) {
-		/* Release reference to old cached block. */
-		//if(this.cachedUpdateBlock != null) {
-			//System.out.println("released " + this);
-			//this.cachedUpdateBlock.release();
-		//}
-		/* Retain a reference to new cached block.. */
-		//if(cachedUpdateBlock != null) {
-		//	System.out.println("retained " + this);
-			//cachedUpdateBlock.retain();
-		//}
-		//this.cachedUpdateBlock = cachedUpdateBlock;
-	}
-	
-	/**
-	 * Checks if this player is to be removed from the world.
-	 */
-	public void checkRemoval() {
-		//if(session != null && !session.isActive()) {
-		//	World.get().queueLogout(this, false);
-		//}
+		this.cachedUpdateBlock = cachedUpdateBlock;
 	}
 	
 	/**

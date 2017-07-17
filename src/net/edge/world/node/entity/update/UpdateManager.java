@@ -33,14 +33,85 @@ public final class UpdateManager {
 			new NpcSecondaryHitUpdateBlock(),
 	};
 	
+	public static void prepare(Player other) {
+		if(other.getFlags().get(UpdateFlag.CHAT)) {
+			return;
+		}
+		if(other.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
+			return;
+		}
+		int mask = 0;
+		GameBuffer encodedBlock = new GameBuffer(Unpooled.buffer(64));
+		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
+			mask |= 0x100;
+		}
+		if(other.getFlags().get(UpdateFlag.ANIMATION)){
+			mask |= 8;
+		}
+		if(other.getFlags().get(UpdateFlag.FORCE_CHAT)) {
+			mask |= 4;
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_ENTITY)) {
+			mask |= 1;
+		}
+		if(other.getFlags().get(UpdateFlag.APPEARANCE)) {
+			mask |= 0x10;
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
+			mask |= 2;
+		}
+		if(other.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
+			mask |= 0x20;
+		}
+		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
+			mask |= 0x200;
+		}
+		
+		if(mask >= 0x100) {
+			mask |= 0x40;
+			encodedBlock.putShort(mask, ByteOrder.LITTLE);
+		} else {
+			encodedBlock.put(mask);
+		}
+		
+		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
+			PLAYER_BLOCKS[1].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.ANIMATION)){
+			PLAYER_BLOCKS[2].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.FORCE_CHAT)) {
+			PLAYER_BLOCKS[3].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.CHAT)) {
+			PLAYER_BLOCKS[4].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_ENTITY)) {
+			PLAYER_BLOCKS[5].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.APPEARANCE)) {
+			PLAYER_BLOCKS[6].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
+			PLAYER_BLOCKS[7].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.PRIMARY_HIT)) {
+			PLAYER_BLOCKS[8].write(null, other, encodedBlock);
+		}
+		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
+			PLAYER_BLOCKS[9].write(null, other, encodedBlock);
+		}
+		other.setCachedUpdateBlock(encodedBlock);
+	}
+	
 	public static void encode(Player player, Player other, GameBuffer msg, UpdateState state) {
 		if(other.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
 		}
 		boolean cacheBlocks = (state != UpdateState.ADD_LOCAL && state != UpdateState.UPDATE_SELF);
 		if(other.getCachedUpdateBlock() != null && cacheBlocks) {
-			//msg.putBytes(other.getCachedUpdateBlock());
-			//return;
+			msg.putBytes(other.getCachedUpdateBlock());
+			return;
 		}
 		GameBuffer encodedBlock = new GameBuffer(Unpooled.buffer(64));
 		int mask = 0;
@@ -84,6 +155,7 @@ public final class UpdateManager {
 		
 		if(other.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
 			PLAYER_BLOCKS[0].write(player, other, encodedBlock);
+			cacheBlocks = false;
 		}
 		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
 			PLAYER_BLOCKS[1].write(player, other, encodedBlock);
@@ -115,9 +187,8 @@ public final class UpdateManager {
 		
 		msg.putBytes(encodedBlock);
 		if(cacheBlocks) {
-			//other.setCachedUpdateBlock(encodedBlock);
+			other.setCachedUpdateBlock(encodedBlock);
 		}
-		//encodedBlock.release();
 	}
 	
 	

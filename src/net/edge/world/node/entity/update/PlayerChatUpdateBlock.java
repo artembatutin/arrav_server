@@ -24,7 +24,7 @@ public final class PlayerChatUpdateBlock extends PlayerUpdateBlock {
 	@Override
 	public int write(Player player, Player other, GameBuffer msg) {
 		msg.putShort(((other.getChatColor() & 0xff) << 8) + (other.getChatEffects() & 0xff), ByteOrder.LITTLE);
-		msg.put(other.getRights() == PLAYER && player.isIronMan() ? IRON_MAN.getProtocolValue() : other.getRights().getProtocolValue());
+		msg.put(other.getRights() == PLAYER && other.isIronMan() ? IRON_MAN.getProtocolValue() : other.getRights().getProtocolValue());
 		msg.put(other.getChatText().length, ByteTransform.C);
 		msg.putBytesReverse(other.getChatText());
 		return -1;

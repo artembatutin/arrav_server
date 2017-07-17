@@ -183,7 +183,6 @@ public final class World {
 		} else if(outLimit < 200) {
 			outLimit += 20;
 		}
-		
 		System.out.println("took: " + millis + " - players online: " + players.size() + " parsing packets: " + outLimit + " - went over 600ms " + over + " times");
 	}
 	
