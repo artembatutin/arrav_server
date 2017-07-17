@@ -10,9 +10,9 @@ import net.edge.content.skill.Skills;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.World;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.PrayerBook;
-import net.edge.world.node.actor.update.UpdateFlag;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.PrayerBook;
+import net.edge.world.entity.actor.update.UpdateFlag;
 
 import java.util.Arrays;
 import java.util.Optional;

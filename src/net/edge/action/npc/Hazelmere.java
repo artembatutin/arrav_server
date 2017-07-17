@@ -7,8 +7,8 @@ import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.market.MarketCounter;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.NpcAction;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 
 public class Hazelmere extends ActionInitializer {
 	@Override

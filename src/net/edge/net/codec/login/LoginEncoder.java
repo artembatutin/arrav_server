@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import net.edge.world.node.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 /**
  * A {@link MessageToByteEncoder} implementation that encodes and writes the data contained within the {@link

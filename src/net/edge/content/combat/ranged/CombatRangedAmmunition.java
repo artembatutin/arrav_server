@@ -10,15 +10,15 @@ import net.edge.content.combat.weapon.FightType;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.world.World;
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
 import net.edge.world.Hit.HitIcon;
 import net.edge.world.Hit.HitType;
 import net.edge.world.PoisonType;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemIdentifiers;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.ItemIdentifiers;
 
 /**
  * Represents a single definition of a ranged weapon which consists of details

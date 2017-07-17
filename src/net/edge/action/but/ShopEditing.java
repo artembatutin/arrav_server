@@ -5,7 +5,7 @@ import net.edge.content.market.MarketShop;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ButtonAction;
 import net.edge.net.packet.out.SendEnterAmount;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 public class ShopEditing extends ActionInitializer {
 	

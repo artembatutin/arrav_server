@@ -1,16 +1,16 @@
 package net.edge.net.packet.in;
 
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.activity.ActivityManager;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.GroundItem;
-import net.edge.world.node.region.Region;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.region.Region;
 
 import java.util.Optional;
 

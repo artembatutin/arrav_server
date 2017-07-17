@@ -1,6 +1,6 @@
 package net.edge.content.quest;
 
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 

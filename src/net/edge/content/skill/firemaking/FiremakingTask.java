@@ -1,9 +1,9 @@
 package net.edge.content.skill.firemaking;
 
 import net.edge.task.Task;
-import net.edge.world.node.item.GroundItemStatic;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.GroundItemPolicy;
+import net.edge.world.entity.item.GroundItemStatic;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.GroundItemPolicy;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectNode;

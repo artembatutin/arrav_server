@@ -7,8 +7,8 @@ import net.edge.content.skill.construction.data.Constants;
 import net.edge.content.skill.construction.room.Room;
 import net.edge.content.skill.construction.room.RoomFurniture;
 import net.edge.world.World;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 
 import static net.edge.content.skill.construction.HouseController.State.*;
 

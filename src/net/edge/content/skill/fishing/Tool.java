@@ -5,8 +5,8 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 public enum Tool {
 	NET(303, 1, -1, 0.35, 621, new Catchable[]{Catchable.SHRIMP, Catchable.ANCHOVY, Catchable.MONKFISH}) {

@@ -4,10 +4,10 @@ import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.Direction;
 import net.edge.world.World;
-import net.edge.world.node.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.Mob;
 
 import java.util.Objects;
 

@@ -3,7 +3,7 @@ package net.edge.content.pets;
 import net.edge.task.Task;
 import net.edge.content.TabInterface;
 import net.edge.world.World;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 public final class PetTask extends Task {
 	

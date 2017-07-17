@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.DialogueBuilder;
 import net.edge.content.dialogue.DialogueType;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.EnumSet;
 import java.util.Optional;

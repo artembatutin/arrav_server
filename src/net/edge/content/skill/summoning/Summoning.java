@@ -10,14 +10,14 @@ import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.content.skill.summoning.familiar.ability.Teleporter;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.EntityType;
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.EntityType;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Graphic;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 

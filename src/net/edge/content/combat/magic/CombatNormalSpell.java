@@ -1,6 +1,6 @@
 package net.edge.content.combat.magic;
 
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.actor.Actor;
 
 /**
  * The {@link CombatSpell} extension with support for normal spells that have no

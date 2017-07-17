@@ -1,8 +1,8 @@
 package net.edge.content.skill.runecrafting;
 
 import net.edge.content.skill.Skills;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 

@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.edge.util.json.JsonSaver;
 import net.edge.content.market.exchange.personal.PlayerCounter;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * Controls all the Avarrockian market.

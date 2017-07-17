@@ -11,8 +11,8 @@ import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.GameConstants;
 import net.edge.GamePulseHandler;
-import net.edge.locale.InstanceManager;
-import net.edge.locale.area.AreaManager;
+import net.edge.world.locale.InstanceManager;
+import net.edge.world.locale.area.AreaManager;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
 import net.edge.net.packet.out.SendLogout;
@@ -23,19 +23,19 @@ import net.edge.util.Stopwatch;
 import net.edge.util.TextUtils;
 import net.edge.util.ThreadUtil;
 import net.edge.util.log.LoggingManager;
-import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.ActorList;
-import net.edge.world.node.actor.move.path.SimplePathChecker;
-import net.edge.world.node.actor.move.path.impl.SimplePathFinder;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.mob.MobMovementTask;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.Rights;
-import net.edge.world.node.item.GroundItem;
-import net.edge.world.node.item.container.session.ExchangeSessionManager;
-import net.edge.world.node.region.Region;
-import net.edge.world.node.region.RegionManager;
-import net.edge.world.node.region.TraversalMap;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.ActorList;
+import net.edge.world.entity.actor.move.path.SimplePathChecker;
+import net.edge.world.entity.actor.move.path.impl.SimplePathFinder;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobMovementTask;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.region.Region;
+import net.edge.world.entity.region.RegionManager;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.sync.Synchronizer;
 
 import java.sql.Connection;
@@ -44,8 +44,8 @@ import java.util.*;
 import java.util.concurrent.*;
 
 import static net.edge.net.session.GameSession.outLimit;
-import static net.edge.world.node.EntityState.AWAITING_REMOVAL;
-import static net.edge.world.node.EntityState.IDLE;
+import static net.edge.world.entity.EntityState.AWAITING_REMOVAL;
+import static net.edge.world.entity.EntityState.IDLE;
 
 /**
  * The static utility class that contains functions to manage and process game characters.

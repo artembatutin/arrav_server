@@ -5,8 +5,8 @@ import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ItemAction;
 import net.edge.GameConstants;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>

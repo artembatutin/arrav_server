@@ -1,7 +1,7 @@
 package net.edge.content.skill.mining;
 
 import net.edge.content.skill.action.TransformableObject;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.item.Item;
 
 import static net.edge.content.skill.mining.RockType.*;
 

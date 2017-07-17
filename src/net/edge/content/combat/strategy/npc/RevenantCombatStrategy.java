@@ -2,7 +2,7 @@ package net.edge.content.combat.strategy.npc;
 
 import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.strategy.CombatStrategy;
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.actor.Actor;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>

@@ -1,8 +1,8 @@
 package net.edge.world.sync;
 
-import net.edge.world.node.actor.ActorList;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.ActorList;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

@@ -6,7 +6,7 @@ import net.edge.content.dialogue.DialogueType;
 import net.edge.content.dialogue.Expression;
 import net.edge.net.packet.out.SendInterfaceAnimation;
 import net.edge.net.packet.out.SendInterfaceNpcModel;
-import net.edge.world.node.actor.mob.MobDefinition;
+import net.edge.world.entity.actor.mob.MobDefinition;
 
 /**
  * The dialogue chain entry that sends the player a dialogue from an NPC.

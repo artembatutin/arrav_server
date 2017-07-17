@@ -1,9 +1,9 @@
 package net.edge.content.market.exchange.personal;
 
-import net.edge.world.node.item.container.ItemContainer;
+import net.edge.world.entity.item.container.ItemContainer;
 import net.edge.content.market.exchange.item.ExchangeItem;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 /**
  * A single section in the player counter.

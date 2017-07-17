@@ -3,10 +3,10 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.world.node.actor.mob.drop.Drop;
-import net.edge.world.node.actor.mob.drop.DropManager;
-import net.edge.world.node.actor.mob.drop.ItemCache;
-import net.edge.world.node.actor.mob.drop.DropTable;
+import net.edge.world.entity.actor.mob.drop.Drop;
+import net.edge.world.entity.actor.mob.drop.DropManager;
+import net.edge.world.entity.actor.mob.drop.ItemCache;
+import net.edge.world.entity.actor.mob.drop.DropTable;
 
 import java.io.File;
 import java.io.IOException;

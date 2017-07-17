@@ -5,10 +5,10 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 
 public final class MeleeCombatStrategy implements CombatStrategy {
 	

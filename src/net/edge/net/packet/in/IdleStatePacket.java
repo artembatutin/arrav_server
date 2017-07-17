@@ -2,7 +2,7 @@ package net.edge.net.packet.in;
 
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * The message sent from the client when an {@link Player} enters an idle state.

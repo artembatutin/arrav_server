@@ -1,9 +1,9 @@
 package net.edge.content.combat.magic.lunars.impl;
 
 import net.edge.content.combat.magic.lunars.LunarSpell;
-import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 /**
  * Holds support for Lunar Spells which are casted when they are used on inventory items.

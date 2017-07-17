@@ -11,9 +11,9 @@ import net.edge.content.minigame.rfd.RFDData;
 import net.edge.content.minigame.rfd.RFDMinigame;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.NpcAction;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 

@@ -6,7 +6,7 @@ import net.edge.task.Task;
 import net.edge.world.Animation;
 import net.edge.world.Hit;
 import net.edge.world.World;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.stream.IntStream;
 

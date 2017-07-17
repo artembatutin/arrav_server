@@ -4,7 +4,7 @@ import net.edge.content.skill.summoning.PouchCreation;
 import net.edge.content.skill.summoning.SummoningData;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import static net.edge.content.skill.summoning.SummoningData.VALUES;
 

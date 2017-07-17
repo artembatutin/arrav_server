@@ -1,19 +1,12 @@
 package net.edge.util.json.impl;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.locale.area.Area;
-import net.edge.locale.loc.CircleLocation;
-import net.edge.locale.loc.Location;
-import net.edge.locale.loc.SquareLocation;
+import net.edge.world.locale.loc.CircleLocation;
+import net.edge.world.locale.loc.Location;
+import net.edge.world.locale.loc.SquareLocation;
 import net.edge.util.json.JsonLoader;
 import net.edge.world.World;
-
-import java.util.Objects;
 
 /**
  * The {@link JsonLoader} implementation that loads all multi area instances.

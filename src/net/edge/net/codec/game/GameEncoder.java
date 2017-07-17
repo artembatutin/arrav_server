@@ -5,7 +5,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.crypto.IsaacRandom;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * A {@link MessageToByteEncoder} which encodes in-game packets.

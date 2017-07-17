@@ -1,10 +1,10 @@
 package net.edge.content;
 
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendForceTab;
 import net.edge.net.packet.out.SendMinimapState;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.update.UpdateFlag;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.update.UpdateFlag;
 
 /**
  * The container class that handles the opening, closing, and navigation of

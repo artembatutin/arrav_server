@@ -5,9 +5,9 @@ import net.edge.content.combat.Combat;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.content.item.PotionConsumable;
 import net.edge.world.World;
-import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.List;
 import java.util.Optional;

@@ -8,10 +8,10 @@ import net.edge.content.clanchat.ClanMember;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.Rights;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.container.impl.Inventory;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Inventory;
 
 /**
  * The class which is responsible for dicing actions.

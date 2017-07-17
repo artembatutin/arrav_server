@@ -1,10 +1,6 @@
 package net.edge.content.skill.slayer;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import net.edge.world.node.item.Item;
-
-import java.util.EnumSet;
+import net.edge.world.entity.item.Item;
 
 /**
  * Represents a slayer boss task for the slayer skill

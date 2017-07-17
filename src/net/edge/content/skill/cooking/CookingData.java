@@ -2,9 +2,9 @@ package net.edge.content.skill.cooking;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.net.packet.out.SendItemModelInterface;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.ItemDefinition;
 
 import static net.edge.content.skill.cooking.Cooking.BURNT_PIE;
 

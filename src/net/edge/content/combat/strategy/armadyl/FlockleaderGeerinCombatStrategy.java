@@ -5,11 +5,11 @@ import net.edge.task.Task;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.World;
-import net.edge.world.node.EntityState;
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.EntityState;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Projectile;
-import net.edge.world.node.actor.mob.impl.gwd.KreeArra;
+import net.edge.world.entity.actor.mob.impl.gwd.KreeArra;
 
 public final class FlockleaderGeerinCombatStrategy implements CombatStrategy {
 

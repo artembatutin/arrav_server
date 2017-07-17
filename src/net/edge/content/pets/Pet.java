@@ -8,13 +8,13 @@ import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.skill.summoning.familiar.Familiar;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.World;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.mob.impl.Follower;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.impl.Follower;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 

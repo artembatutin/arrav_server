@@ -6,14 +6,14 @@ import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
-import net.edge.world.node.EntityState;
+import net.edge.world.entity.EntityState;
 import net.edge.world.Direction;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.update.UpdateManager;
-import net.edge.world.node.actor.update.UpdateState;
-import net.edge.world.node.region.Region;
-import net.edge.world.node.region.RegionManager;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.update.UpdateManager;
+import net.edge.world.entity.actor.update.UpdateState;
+import net.edge.world.entity.region.Region;
+import net.edge.world.entity.region.RegionManager;
 
 import java.util.Iterator;
 

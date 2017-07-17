@@ -2,7 +2,7 @@ package net.edge.content.shootingstar;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 
 import java.util.EnumSet;
 

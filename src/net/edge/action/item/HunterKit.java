@@ -5,9 +5,9 @@ import net.edge.content.skill.hunter.trap.impl.BirdSnare;
 import net.edge.content.skill.hunter.trap.impl.BoxTrap;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ItemAction;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.container.impl.Inventory;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Inventory;
 
 public class HunterKit extends ActionInitializer {
 	@Override

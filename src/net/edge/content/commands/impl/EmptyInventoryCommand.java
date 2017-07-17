@@ -2,8 +2,8 @@ package net.edge.content.commands.impl;
 
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"emptyinventory"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR}, syntax = "Use this command as just ::emptyinventory")
 public final class EmptyInventoryCommand implements Command {

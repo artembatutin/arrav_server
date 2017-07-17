@@ -1,7 +1,7 @@
 package net.edge.content.combat.effect;
 
-import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * The combat effect applied when a player needs to be teleblocked.

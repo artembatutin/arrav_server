@@ -1,10 +1,10 @@
 package net.edge.net.packet.in;
 
 import net.edge.content.market.MarketCounter;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * The message sent from the client which depends on the Mob Information panel integration.

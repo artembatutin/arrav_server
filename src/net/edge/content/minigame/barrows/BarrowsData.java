@@ -2,8 +2,8 @@ package net.edge.content.minigame.barrows;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.locale.loc.CircleLocation;
-import net.edge.locale.Position;
+import net.edge.world.locale.loc.CircleLocation;
+import net.edge.world.locale.Position;
 
 import java.util.EnumSet;
 import java.util.Optional;

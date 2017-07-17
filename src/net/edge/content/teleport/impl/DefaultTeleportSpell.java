@@ -6,16 +6,16 @@ import net.edge.task.Task;
 import net.edge.util.ActionListener;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.teleport.TeleportSpell;
-import net.edge.locale.loc.Location;
-import net.edge.locale.Position;
+import net.edge.world.locale.loc.Location;
+import net.edge.world.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.Spellbook;
-import net.edge.world.node.actor.player.assets.activity.ActivityManager.ActivityType;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Spellbook;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 

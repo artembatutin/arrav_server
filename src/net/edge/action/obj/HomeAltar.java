@@ -5,9 +5,9 @@ import net.edge.content.skill.Skills;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ObjectAction;
 import net.edge.world.Animation;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.PrayerBook;
-import net.edge.world.node.actor.player.assets.Spellbook;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.PrayerBook;
+import net.edge.world.entity.actor.player.assets.Spellbook;
 import net.edge.world.object.ObjectNode;
 
 

@@ -4,13 +4,13 @@ import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.magic.ancients.CombatAncientSpell;
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.PoisonType;
 import net.edge.world.Projectile;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Arrays;
 import java.util.Optional;

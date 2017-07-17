@@ -1,12 +1,12 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
-import static net.edge.world.node.EntityState.INACTIVE;
+import static net.edge.world.entity.EntityState.INACTIVE;
 
 public final class SendGraphic implements OutgoingPacket {
 	

@@ -7,9 +7,9 @@ import net.edge.content.combat.magic.CombatSpell;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.OptionalInt;
 

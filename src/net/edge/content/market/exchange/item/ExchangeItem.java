@@ -1,7 +1,7 @@
 package net.edge.content.market.exchange.item;
 
 import net.edge.content.market.MarketCounter;
-import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.entity.item.ItemDefinition;
 
 /**
  * Represents an exchanged item in the {@link MarketCounter}.

@@ -2,12 +2,12 @@ package net.edge.content.combat.effect;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.net.packet.out.SendConfig;
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Hit;
 import net.edge.world.PoisonType;
-import net.edge.world.node.actor.mob.MobDefinition;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.MobDefinition;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 

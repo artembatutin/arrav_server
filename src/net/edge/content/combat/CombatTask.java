@@ -6,13 +6,13 @@ import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.locale.Boundary;
-import net.edge.locale.loc.Location;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.loc.Location;
 import net.edge.world.World;
-import net.edge.world.node.EntityState;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.mob.MobAggression;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.EntityState;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobAggression;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * The combat session controls the mechanics of when and how the controller of

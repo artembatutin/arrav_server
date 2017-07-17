@@ -5,8 +5,8 @@ import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.GroundItem;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.GroundItem;
 
 public final class SendItemNode implements OutgoingPacket {
 	

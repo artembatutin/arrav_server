@@ -3,9 +3,9 @@ package net.edge.world;
 import net.edge.content.MagicStaff;
 import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendConfig;
-import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 

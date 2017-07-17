@@ -1,10 +1,10 @@
 package net.edge.content.combat.effect.potion;
 
 import net.edge.content.combat.effect.CombatEffect;
-import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.AntifireDetails;
-import net.edge.world.node.actor.player.assets.AntifireDetails.AntifireType;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.AntifireDetails;
+import net.edge.world.entity.actor.player.assets.AntifireDetails.AntifireType;
 
 import java.util.Optional;
 

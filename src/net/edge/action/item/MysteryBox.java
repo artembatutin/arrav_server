@@ -4,9 +4,9 @@ import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ItemAction;
 import net.edge.util.rand.Chance;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.actor.mob.drop.Drop;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.drop.Drop;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.concurrent.ThreadLocalRandom;
 

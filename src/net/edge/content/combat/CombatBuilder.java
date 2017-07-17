@@ -2,13 +2,13 @@ package net.edge.content.combat;
 
 import net.edge.task.TaskListener;
 import net.edge.content.combat.strategy.CombatStrategy;
-import net.edge.locale.loc.Location;
+import net.edge.world.locale.loc.Location;
 import net.edge.world.World;
-import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.mob.MobAggression;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.Rights;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobAggression;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 import java.util.concurrent.TimeUnit;
 

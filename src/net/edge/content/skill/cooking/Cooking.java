@@ -5,9 +5,9 @@ import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.ItemDefinition;
 import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;

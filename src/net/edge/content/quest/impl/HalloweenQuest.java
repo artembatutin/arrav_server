@@ -2,7 +2,7 @@ package net.edge.content.quest.impl;
 
 import net.edge.content.quest.Quest;
 import net.edge.content.quest.QuestTask;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.time.LocalDate;
 

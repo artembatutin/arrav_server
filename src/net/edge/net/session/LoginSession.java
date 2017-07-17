@@ -10,9 +10,9 @@ import net.edge.net.codec.login.LoginCode;
 import net.edge.net.codec.login.LoginResponse;
 import net.edge.GameConstants;
 import net.edge.world.World;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.PlayerCredentials;
-import net.edge.world.node.actor.player.PlayerSerialization;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.PlayerCredentials;
+import net.edge.world.entity.actor.player.PlayerSerialization;
 
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during login.

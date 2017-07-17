@@ -2,9 +2,9 @@ package net.edge.content.combat;
 
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.special.CombatSpecial;
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Hit;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.OptionalInt;
 

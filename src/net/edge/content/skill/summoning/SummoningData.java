@@ -6,9 +6,9 @@ import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.impl.*;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.action.impl.ItemAction;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 

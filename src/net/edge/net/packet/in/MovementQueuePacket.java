@@ -3,14 +3,14 @@ package net.edge.net.packet.in;
 import net.edge.GameServer;
 import net.edge.content.market.MarketShop;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.Rights;
-import net.edge.world.node.actor.player.assets.activity.ActivityManager;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 /**
  * The message sent from the client when a player makes a yellow {@code X} click,

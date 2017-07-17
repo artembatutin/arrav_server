@@ -3,8 +3,8 @@ package net.edge.action.npc;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.NpcAction;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 
 public class SlayerMaster extends ActionInitializer {
 	@Override

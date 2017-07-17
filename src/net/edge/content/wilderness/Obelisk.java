@@ -5,12 +5,12 @@ import com.google.common.collect.Sets;
 import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.locale.Position;
-import net.edge.locale.loc.SquareLocation;
+import net.edge.world.locale.Position;
+import net.edge.world.locale.loc.SquareLocation;
 import net.edge.world.World;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 import net.edge.world.object.ObjectNode;
-import net.edge.world.node.region.Region;
+import net.edge.world.entity.region.Region;
 
 import java.util.EnumSet;
 import java.util.Optional;

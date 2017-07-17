@@ -5,9 +5,9 @@ import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.content.wilderness.WildernessActivity;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ButtonAction;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendWildernessActivity;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.concurrent.TimeUnit;
 

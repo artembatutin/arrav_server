@@ -4,8 +4,8 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.skill.Skill;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ObjectAction;
-import net.edge.locale.Position;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.locale.Position;
+import net.edge.world.entity.actor.player.Player;
 import net.edge.world.object.ObjectNode;
 
 import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.LADDER;

@@ -3,8 +3,8 @@ package net.edge.net.packet.out;
 import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendArrowEntity implements OutgoingPacket {
 	

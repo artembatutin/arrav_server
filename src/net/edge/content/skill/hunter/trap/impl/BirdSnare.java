@@ -6,11 +6,11 @@ import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.hunter.trap.Trap;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 import net.edge.world.object.ObjectNode;
 
 import java.util.EnumSet;

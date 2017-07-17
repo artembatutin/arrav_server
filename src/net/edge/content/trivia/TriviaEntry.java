@@ -6,8 +6,8 @@ import net.edge.world.World;
 import net.edge.GameConstants;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Arrays;
 import java.util.List;

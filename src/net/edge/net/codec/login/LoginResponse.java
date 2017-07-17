@@ -1,7 +1,7 @@
 package net.edge.net.codec.login;
 
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 /**
  * An immutable message that is written through a channel and forwarded to the {@link LoginEncoder} where it is encoded and

@@ -1,10 +1,10 @@
 package net.edge.world;
 
 import net.edge.content.combat.CombatType;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendProjectile;
-import net.edge.world.node.actor.Actor;
-import net.edge.world.node.region.RegionManager;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.region.RegionManager;
 
 /**
  * A container representing a graphic propelled through the air by some sort of

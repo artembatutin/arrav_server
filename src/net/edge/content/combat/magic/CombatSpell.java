@@ -2,7 +2,7 @@ package net.edge.content.combat.magic;
 
 import net.edge.task.Task;
 import net.edge.world.*;
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.actor.Actor;
 
 import java.util.Optional;
 

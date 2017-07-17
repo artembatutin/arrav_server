@@ -2,10 +2,10 @@ package net.edge.net.packet.in;
 
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.PlayerAppearance;
-import net.edge.world.node.actor.player.assets.activity.ActivityManager.ActivityType;
-import net.edge.world.node.actor.update.UpdateFlag;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.PlayerAppearance;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
+import net.edge.world.entity.actor.update.UpdateFlag;
 
 /**
  * The message sent from the client when the character clicks "accept" on the

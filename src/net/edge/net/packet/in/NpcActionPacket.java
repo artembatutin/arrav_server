@@ -8,19 +8,19 @@ import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.NpcAction;
-import net.edge.locale.Boundary;
-import net.edge.locale.Position;
-import net.edge.locale.loc.Location;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
+import net.edge.world.locale.loc.Location;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.mob.MobDefinition;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.Rights;
-import net.edge.world.node.actor.player.assets.activity.ActivityManager;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobDefinition;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 import java.util.Optional;
 

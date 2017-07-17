@@ -3,9 +3,9 @@ package net.edge.content.minigame.warriorsguild;
 import net.edge.content.minigame.warriorsguild.impl.AnimationRoom;
 import net.edge.content.minigame.warriorsguild.impl.CyclopsRoom;
 import net.edge.action.impl.ObjectAction;
-import net.edge.locale.Position;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.locale.Position;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 import net.edge.world.object.ObjectNode;
 
 /**

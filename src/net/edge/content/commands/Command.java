@@ -1,6 +1,6 @@
 package net.edge.content.commands;
 
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * Represents a command which holds functionality for the execution of

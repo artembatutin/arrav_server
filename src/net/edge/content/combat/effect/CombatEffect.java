@@ -2,7 +2,7 @@ package net.edge.content.combat.effect;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.world.World;
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.actor.Actor;
 
 import java.util.Collection;
 import java.util.Collections;

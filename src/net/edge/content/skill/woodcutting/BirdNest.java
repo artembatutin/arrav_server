@@ -3,9 +3,9 @@ package net.edge.content.skill.woodcutting;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.GroundItem;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.item.Item;
 
 import java.util.EnumSet;
 

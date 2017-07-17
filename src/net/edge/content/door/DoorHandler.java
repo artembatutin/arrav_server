@@ -2,8 +2,8 @@ package net.edge.content.door;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.action.impl.ObjectAction;
-import net.edge.locale.Position;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.locale.Position;
+import net.edge.world.entity.actor.player.Player;
 import net.edge.world.object.ObjectDefinition;
 import net.edge.world.object.ObjectNode;
 

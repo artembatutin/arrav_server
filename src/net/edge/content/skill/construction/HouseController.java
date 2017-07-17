@@ -3,9 +3,8 @@ package net.edge.content.skill.construction;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.skill.construction.furniture.ConstructionPlan;
-import net.edge.content.skill.construction.furniture.Furniture;
 import net.edge.content.skill.construction.room.Room;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 
 /**
  * A house controller class which stores data for one single player.

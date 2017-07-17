@@ -3,8 +3,8 @@ package net.edge.content.shootingstar;
 import net.edge.util.Stopwatch;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
-import net.edge.world.node.EntityState;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.EntityState;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.concurrent.TimeUnit;
 

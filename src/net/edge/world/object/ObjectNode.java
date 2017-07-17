@@ -3,9 +3,9 @@ package net.edge.world.object;
 import net.edge.net.packet.out.SendObject;
 import net.edge.net.packet.out.SendObjectRemoval;
 import net.edge.task.Task;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.region.Region;
+import net.edge.world.entity.region.Region;
 
 import java.util.Objects;
 import java.util.function.Consumer;

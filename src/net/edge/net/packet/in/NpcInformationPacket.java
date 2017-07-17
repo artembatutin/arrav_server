@@ -6,14 +6,14 @@ import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendNpcDrop;
 import net.edge.util.rand.Chance;
-import net.edge.world.node.actor.mob.MobDefinition;
-import net.edge.world.node.actor.mob.drop.Drop;
-import net.edge.world.node.actor.mob.drop.DropManager;
-import net.edge.world.node.actor.mob.drop.DropTable;
-import net.edge.world.node.actor.mob.drop.SuggestedDrop;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.Rights;
-import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.entity.actor.mob.MobDefinition;
+import net.edge.world.entity.actor.mob.drop.Drop;
+import net.edge.world.entity.actor.mob.drop.DropManager;
+import net.edge.world.entity.actor.mob.drop.DropTable;
+import net.edge.world.entity.actor.mob.drop.SuggestedDrop;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.item.ItemDefinition;
 
 /**
  * The message sent from the client which depends on the Mob Information panel integration.

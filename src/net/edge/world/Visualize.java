@@ -1,6 +1,6 @@
 package net.edge.world;
 
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.actor.Actor;
 
 import java.util.Optional;
 

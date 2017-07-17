@@ -4,11 +4,11 @@ import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.actor.mob.MobDefinition;
-import net.edge.world.node.actor.mob.drop.DropTable;
-import net.edge.world.node.actor.mob.drop.ItemCache;
-import net.edge.world.node.actor.mob.drop.Drop;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.mob.MobDefinition;
+import net.edge.world.entity.actor.mob.drop.DropTable;
+import net.edge.world.entity.actor.mob.drop.ItemCache;
+import net.edge.world.entity.actor.mob.drop.Drop;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendNpcDrop implements OutgoingPacket {
 	

@@ -9,8 +9,8 @@ import net.edge.content.skill.Skills;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.NpcAction;
 import net.edge.world.Graphic;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 
 public class IronmanCaptain extends ActionInitializer {
 	@Override

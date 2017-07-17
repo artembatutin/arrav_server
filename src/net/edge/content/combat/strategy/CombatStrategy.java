@@ -1,7 +1,7 @@
 package net.edge.content.combat.strategy;
 
 import net.edge.content.combat.CombatHit;
-import net.edge.world.node.actor.Actor;
+import net.edge.world.entity.actor.Actor;
 
 /**
  * The blueprint of a combat session that determines how a character will act in

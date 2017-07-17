@@ -3,8 +3,8 @@ package net.edge.content.item;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 /**
  * The container class that represents one equipment requirement.

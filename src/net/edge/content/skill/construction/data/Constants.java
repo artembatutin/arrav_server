@@ -2,9 +2,8 @@ package net.edge.content.skill.construction.data;
 
 import net.edge.content.skill.construction.Construction;
 import net.edge.content.skill.construction.furniture.HotSpots;
-import net.edge.content.skill.construction.room.Room;
 import net.edge.content.skill.construction.room.RoomData;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.object.ObjectDefinition;
 
 /**

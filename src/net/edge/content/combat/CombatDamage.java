@@ -2,10 +2,10 @@ package net.edge.content.combat;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.edge.util.Stopwatch;
-import net.edge.world.node.EntityState;
-import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.EntityState;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Map.Entry;
 import java.util.Optional;

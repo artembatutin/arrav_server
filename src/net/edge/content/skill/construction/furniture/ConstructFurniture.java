@@ -10,9 +10,9 @@ import net.edge.content.skill.construction.data.Constants;
 import net.edge.content.skill.construction.room.Room;
 import net.edge.task.Task;
 import net.edge.world.Animation;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.Rights;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 

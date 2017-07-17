@@ -2,9 +2,9 @@ package net.edge.content;
 
 import com.google.common.collect.Sets;
 import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.world.node.item.container.impl.Equipment;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.item.container.impl.Equipment;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.EnumSet;
 import java.util.Optional;

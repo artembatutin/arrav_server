@@ -3,11 +3,11 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.locale.Position;
-import net.edge.world.node.item.GroundItem;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.GroundItemStatic;
-import net.edge.world.node.item.GroundItemPolicy;
+import net.edge.world.locale.Position;
+import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.GroundItemStatic;
+import net.edge.world.entity.item.GroundItemPolicy;
 
 import java.util.Objects;
 

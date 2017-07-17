@@ -7,10 +7,10 @@ import net.edge.content.commands.impl.BugCommand;
 import net.edge.content.market.MarketItem;
 import net.edge.net.packet.in.NpcInformationPacket;
 import net.edge.world.World;
-import net.edge.world.node.actor.mob.drop.Drop;
-import net.edge.world.node.actor.mob.drop.DropManager;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.PlayerSerialization;
+import net.edge.world.entity.actor.mob.drop.Drop;
+import net.edge.world.entity.actor.mob.drop.DropManager;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.PlayerSerialization;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

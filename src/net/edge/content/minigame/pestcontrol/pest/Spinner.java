@@ -1,14 +1,14 @@
 package net.edge.content.minigame.pestcontrol.pest;
 
 import net.edge.content.minigame.pestcontrol.PestPortal;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.task.Task;
 import net.edge.world.Animation;
 import net.edge.world.Hit;
 import net.edge.world.PoisonType;
 import net.edge.world.World;
-import net.edge.world.node.actor.mob.Mob;
-import net.edge.world.node.region.Region;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.region.Region;
 
 public class Spinner extends Pest {
 	

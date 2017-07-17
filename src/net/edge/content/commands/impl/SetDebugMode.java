@@ -3,8 +3,8 @@ package net.edge.content.commands.impl;
 import net.edge.GameServer;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"debug", "debugmode"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::debug or ::debugmode")
 public final class SetDebugMode implements Command {

@@ -1,8 +1,8 @@
 package net.edge.world.object;
 
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.region.Region;
+import net.edge.world.entity.region.Region;
 
 /**
  * An implementation of {@link ObjectNode} that is in a dynamic state.

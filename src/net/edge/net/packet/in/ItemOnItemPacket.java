@@ -16,9 +16,9 @@ import net.edge.content.skill.herblore.UnfinishedPotion;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.activity.ActivityManager;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import net.edge.world.entity.item.Item;
 
 /**
  * The message sent from the client when a player uses an item on another item.

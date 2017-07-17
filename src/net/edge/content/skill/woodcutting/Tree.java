@@ -1,12 +1,7 @@
 package net.edge.content.skill.woodcutting;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import net.edge.content.skill.action.TransformableObject;
-import net.edge.world.node.item.Item;
-
-import java.util.EnumSet;
-import java.util.Optional;
+import net.edge.world.entity.item.Item;
 
 /**
  * The enumerated type which elements represents the data required for the

@@ -1,7 +1,7 @@
 package net.edge.content;
 
 import net.edge.net.packet.out.SendTab;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * An enumeration of tab interfaces.

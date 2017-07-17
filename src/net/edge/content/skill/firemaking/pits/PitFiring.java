@@ -7,8 +7,8 @@ import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.SkillAction;
 import net.edge.world.Animation;
 import net.edge.world.World;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.activity.ActivityManager;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 import java.util.Optional;
 import java.util.OptionalInt;

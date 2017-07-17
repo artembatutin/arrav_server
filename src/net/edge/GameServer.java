@@ -29,7 +29,7 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.world.World;
-import net.edge.world.node.actor.attribute.AttributeKey;
+import net.edge.world.entity.actor.attribute.AttributeKey;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

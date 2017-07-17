@@ -3,7 +3,7 @@ package net.edge.content.quest;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.edge.content.PlayerPanel;
 import net.edge.content.quest.impl.HalloweenQuest;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Arrays;
 

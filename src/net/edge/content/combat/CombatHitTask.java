@@ -8,10 +8,10 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.world.*;
-import net.edge.world.node.EntityState;
-import net.edge.world.node.EntityType;
-import net.edge.world.node.actor.Actor;
-import net.edge.world.node.actor.player.Player;
+import net.edge.world.entity.EntityState;
+import net.edge.world.entity.EntityType;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Arrays;
 import java.util.Objects;

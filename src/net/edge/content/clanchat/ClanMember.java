@@ -2,8 +2,8 @@ package net.edge.content.clanchat;
 
 import net.edge.net.packet.out.SendClanMessage;
 import net.edge.world.World;
-import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 import java.util.Objects;
 import java.util.Optional;
