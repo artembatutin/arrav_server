@@ -749,6 +749,11 @@ public final class Player extends Actor {
 	}
 	
 	@Override
+	public boolean inMulti() {
+		return multicombatInterface;
+	}
+	
+	@Override
 	public boolean active() {
 		return getState() == EntityState.ACTIVE;
 	}
@@ -1932,15 +1937,6 @@ public final class Player extends Actor {
 	 */
 	public boolean isWildernessInterface() {
 		return wildernessInterface;
-	}
-	
-	/**
-	 * Determines if a multicombat interface is present.
-	 * @return {@code true} if a multicombat interface is present, {@code false}
-	 * otherwise.
-	 */
-	public boolean isMulticombatInterface() {
-		return multicombatInterface;
 	}
 	
 	/**

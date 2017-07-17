@@ -24,6 +24,7 @@ import net.edge.world.entity.actor.mob.strategy.impl.TormentedDemonCombatStrateg
 import net.edge.world.entity.actor.mob.strategy.impl.WildyWyrmCombatStrategy;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.update.UpdateFlag;
+import net.edge.world.locale.loc.Location;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -278,6 +279,11 @@ public abstract class Mob extends Actor {
 		return false;
 	}
 	
+	@Override
+	public boolean inMulti() {
+		return Location.inMultiCombat(this);
+	}
+	
 	/**
 	 * Activates the {@code TRANSFORM} update mask for this non-player
 	 * character.
@@ -446,10 +452,6 @@ public abstract class Mob extends Actor {
 		player.getMobs().add(this);
 	}
 	
-	/**
-	 * Determines if the npc is active in his region.
-	 * @return {@code true} if the npc is active, {@code false} otherwise.
-	 */
 	@Override
 	public boolean active() {
 		return active;

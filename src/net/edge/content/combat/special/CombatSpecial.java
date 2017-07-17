@@ -181,7 +181,7 @@ public enum CombatSpecial {
 			return new CombatHit(player, target, 1, CombatType.MELEE, false) {
 				@Override
 				public void postAttack(int counter) {
-					if(Location.inMultiCombat(player)) {
+					if(player.inMulti()) {
 						Set<? extends Actor> local = null;
 						if(target.isPlayer()) {
 							local = player.getLocalPlayers();
@@ -353,7 +353,7 @@ public enum CombatSpecial {
 			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
-					if(Location.inMultiCombat(player)) {
+					if(player.inMulti()) {
 						if(!player.isWildernessInterface()) {
 							World.get().submit(new KorasiChain(player, target, counter));
 						}

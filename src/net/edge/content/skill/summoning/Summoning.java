@@ -293,7 +293,7 @@ public final class Summoning {
 			player.message("This player is not in the wilderness!");
 			return false;
 		}
-		if(!player.isMulticombatInterface()) {
+		if(!player.inMulti()) {
 			player.message("You can only do this in multi-combat areas!");
 			return false;
 		}

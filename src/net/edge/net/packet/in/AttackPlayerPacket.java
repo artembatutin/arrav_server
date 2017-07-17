@@ -90,7 +90,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			attacker.getMovementQueue().reset();
 			return false;
 		}
-		if(!Location.inMultiCombat(attacker) && attacker.getCombatBuilder().isBeingAttacked() && attacker.getCombatBuilder().getAggressor() != victim && attacker.getCombatBuilder().pjingCheck()) {
+		if(!attacker.inMulti() && attacker.getCombatBuilder().isBeingAttacked() && attacker.getCombatBuilder().getAggressor() != victim && attacker.getCombatBuilder().pjingCheck()) {
 			attacker.message("You are already under attack!");
 			attacker.getMovementQueue().reset();
 			return false;

@@ -2,7 +2,6 @@ package net.edge.content.combat;
 
 import net.edge.task.TaskListener;
 import net.edge.content.combat.strategy.CombatStrategy;
-import net.edge.world.locale.loc.Location;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
@@ -403,7 +402,7 @@ public final class CombatBuilder {
 				return false;
 			}
 			
-			if(!Location.inMultiCombat(builder.getCharacter()) && victim.getCombatBuilder().isBeingAttacked() && !victim.getCombatBuilder().getAggressor().same(builder.getCharacter())) {
+			if(!builder.getCharacter().inMulti() && victim.getCombatBuilder().isBeingAttacked() && !victim.getCombatBuilder().getAggressor().same(builder.getCharacter())) {
 				if(builder.getCharacter().isPlayer()) {
 					Player player = builder.getCharacter().toPlayer();
 					player.message("They are already under attack!");

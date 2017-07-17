@@ -3,7 +3,6 @@ package net.edge.content.combat.magic.ancients;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatSpell;
-import net.edge.world.locale.loc.Location;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -21,7 +20,7 @@ public abstract class CombatAncientSpell extends CombatSpell {
 	public final void executeOnHit(Actor cast, Actor castOn, boolean accurate, int damage) {
 		if(accurate) {
 			effect(cast, castOn, damage);
-			if(radius() == 0 || !Location.inMultiCombat(castOn))
+			if(radius() == 0 || !castOn.inMulti())
 				return;
 			if(castOn.isPlayer()) {
 				Combat.damagePlayersWithin(cast, castOn.getPosition(), radius(), 1, CombatType.MAGIC, false, t -> {

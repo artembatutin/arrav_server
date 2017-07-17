@@ -31,7 +31,7 @@ public final class MobAggression {
 		if(player.getMinigame().isPresent() && player.getMinigame().get().aggression()) {
 			return;
 		}
-		if(player.processAgressiveTick() == 1 && (!player.getCombatBuilder().inCombat() || player.isMulticombatInterface())) {
+		if(player.processAgressiveTick() == 1 && (!player.getCombatBuilder().inCombat() || player.inMulti())) {
 			for(Mob mob : player.getLocalMobs()) {
 				if(validate(mob, player)) {
 					mob.getCombatBuilder().attack(player);

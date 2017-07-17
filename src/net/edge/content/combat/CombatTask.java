@@ -86,7 +86,7 @@ public final class CombatTask extends Task {
 				player.closeWidget();
 				
 				if(builder.getVictim().isPlayer() && !MinigameHandler.getMinigame(builder.getVictim().toPlayer()).isPresent()) {
-					if(!builder.getCharacter().getCombatBuilder().isBeingAttacked() || builder.getCharacter().getCombatBuilder().isBeingAttacked() && builder.getCharacter().getCombatBuilder().getAggressor() != builder.getVictim() && Location.inMultiCombat(builder.getCharacter())) {
+					if(!builder.getCharacter().getCombatBuilder().isBeingAttacked() || builder.getCharacter().getCombatBuilder().isBeingAttacked() && builder.getCharacter().getCombatBuilder().getAggressor() != builder.getVictim() && builder.getCharacter().inMulti()) {
 						Combat.effect(builder.getCharacter(), CombatEffectType.SKULL);
 					}
 				}
@@ -142,7 +142,7 @@ public final class CombatTask extends Task {
 				return false;
 			}
 		}
-		if(!Location.inMultiCombat(builder.getCharacter()) && builder.isBeingAttacked() && !builder.getVictim().same(builder.getAggressor())) {
+		if(!builder.getCharacter().inMulti() && builder.isBeingAttacked() && !builder.getVictim().same(builder.getAggressor())) {
 			if(builder.getCharacter().isPlayer()) {
 				Player player = builder.getCharacter().toPlayer();
 				player.message("You are already under attack!");
@@ -151,7 +151,7 @@ public final class CombatTask extends Task {
 			builder.reset();
 			return false;
 		}
-		if(!Location.inMultiCombat(builder.getCharacter()) && builder.getVictim() != null && builder.getVictim().getCombatBuilder().isBeingAttacked() && builder.getVictim().getCombatBuilder().getAggressor() != null && !builder.getVictim().getCombatBuilder().getAggressor().same(builder.getCharacter())) {
+		if(!builder.getCharacter().inMulti() && builder.getVictim() != null && builder.getVictim().getCombatBuilder().isBeingAttacked() && builder.getVictim().getCombatBuilder().getAggressor() != null && !builder.getVictim().getCombatBuilder().getAggressor().same(builder.getCharacter())) {
 			if(builder.getCharacter().isPlayer()) {
 				Player player = builder.getCharacter().toPlayer();
 				player.message("You are already under attack!");

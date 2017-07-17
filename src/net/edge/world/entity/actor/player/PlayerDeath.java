@@ -72,7 +72,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		if(Prayer.isActivated(getCharacter(), Prayer.RETRIBUTION)) {
 			getCharacter().graphic(new Graphic(437));
 			final int hit = RandomUtils.inclusive(CombatConstants.MAXIMUM_RETRIBUTION_DAMAGE);
-			if(Location.inMultiCombat(getCharacter())) {
+			if(getCharacter().inMulti()) {
 				getCharacter().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
 				if(Location.inWilderness(getCharacter())) {
 					getCharacter().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
@@ -100,7 +100,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				SendGraphic.local(getCharacter(), 2260, new Position(x, y, getCharacter().getPosition().getZ()), 25);
 			}
 			int maxHit = (int) ((getCharacter().getSkills()[Skills.PRAYER].getLevel() / 100.D) * 25);
-			if(Location.inMultiCombat(getCharacter())) {
+			if(getCharacter().inMulti()) {
 				getCharacter().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
 				if(Location.inWilderness(getCharacter())) {
 					getCharacter().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getCharacter().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));

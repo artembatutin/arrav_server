@@ -232,7 +232,7 @@ public final class NpcActionPacket implements IncomingPacket {
 	private boolean checkAttack(Player player, Mob mob) {
 		if(!MobDefinition.DEFINITIONS[mob.getId()].isAttackable())
 			return false;
-		if(!Location.inMultiCombat(player) && player.getCombatBuilder().isBeingAttacked() && !mob.same(player.getCombatBuilder().getAggressor())) {
+		if(!player.inMulti() && player.getCombatBuilder().isBeingAttacked() && !mob.same(player.getCombatBuilder().getAggressor())) {
 			player.message("You are already under attack!");
 			return false;
 		}

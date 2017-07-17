@@ -290,6 +290,12 @@ public abstract class Actor extends Entity {
 	}
 	
 	/**
+	 * Condition if the {@link Actor} is in multi combat area.
+	 * @return multi area combat flag.
+	 */
+	public abstract boolean inMulti();
+	
+	/**
 	 * Condition if this {@link Actor} is active in the world.
 	 * @return {@code true} if it is, false otherwise.
 	 */
