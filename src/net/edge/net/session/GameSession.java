@@ -2,6 +2,7 @@ package net.edge.net.session;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscLinkedAtomicQueue;
 import net.edge.net.NetworkConstants;
@@ -106,7 +107,7 @@ public final class GameSession extends Session {
 	 * Writes the given {@link OutgoingPacket} to the stream.
 	 */
 	public void write(OutgoingPacket packet) {
-		ByteBuf temp = packet.write(player, new GameBuffer(alloc(256), encryptor));
+		ByteBuf temp = packet.write(player, new GameBuffer(Unpooled.buffer(256), encryptor));
 		getChannel().write(temp, getChannel().voidPromise());
 	}
 	

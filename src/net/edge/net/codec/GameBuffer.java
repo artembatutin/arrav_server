@@ -11,6 +11,12 @@ import static com.google.common.base.Preconditions.checkState;
  * @since 5-7-2017.
  */
 public final class GameBuffer {
+    
+    /**
+     * An array of the bit masks used for writing bits.
+     */
+    private static final int[] BIT_MASK = {0, 0x1, 0x3, 0x7, 0xf, 0x1f, 0x3f, 0x7f, 0xff, 0x1ff, 0x3ff, 0x7ff, 0xfff, 0x1fff, 0x3fff, 0x7fff, 0xffff, 0x1ffff, 0x3ffff, 0x7ffff, 0xfffff, 0x1fffff, 0x3fffff, 0x7fffff, 0xffffff, 0x1ffffff, 0x3ffffff, 0x7ffffff, 0xfffffff, 0x1fffffff, 0x3fffffff, 0x7fffffff, -1};
+    
     /**
      * The backing byte buffer used to read and write data.
      */
@@ -35,15 +41,6 @@ public final class GameBuffer {
      * The current bit position when writing bits.
      */
     private int bitIndex = -1;
-
-    /*
-     * A static initialization block that calculates the bit masks.
-     */
-    static {
-        for(int i = 0; i < BitConstants.BIT_MASK.length; i++) {
-            BitConstants.BIT_MASK[i] = (1 << i) - 1;
-        }
-    }
 
     /**
      * Creates a new {@link GameBuffer}.
@@ -175,30 +172,30 @@ public final class GameBuffer {
      * @throws IllegalArgumentException If the number of bits is not between 1 and 31 inclusive.
      */
     public void putBits(int numBits, int value) {
+        if(!buf.hasArray()) {
+            throw new UnsupportedOperationException("The ByteBuf implementation must support array() for bit usage.");
+        }
+    
+        int bytes = (int) Math.ceil((double) numBits / 8D) + 1;
+        buf.ensureWritable((bitIndex + 7) / 8 + bytes);
+    
+        final byte[] buffer = this.buf.array();
+    
         int bytePos = bitIndex >> 3;
         int bitOffset = 8 - (bitIndex & 7);
         bitIndex += numBits;
-        
-        int requiredSpace = bytePos - buf.writerIndex() + 1;
-        requiredSpace += (numBits + 7) / 8;
-        buf.ensureWritable(requiredSpace);
-        
-        for (; numBits > bitOffset; bitOffset = 8) {
-            int tmp = buf.getByte(bytePos);
-            tmp &= ~BitConstants.BIT_MASK[bitOffset];
-            tmp |= value >> numBits - bitOffset & BitConstants.BIT_MASK[bitOffset];
-            buf.setByte(bytePos++, tmp);
+    
+        for(; numBits > bitOffset; bitOffset = 8) {
+            buffer[bytePos] &= ~BIT_MASK[bitOffset];
+            buffer[bytePos++] |= (value >> (numBits - bitOffset)) & BIT_MASK[bitOffset];
             numBits -= bitOffset;
         }
-        int tmp = buf.getByte(bytePos);
-        if (numBits == bitOffset) {
-            tmp &= ~BitConstants.BIT_MASK[bitOffset];
-            tmp |= value & BitConstants.BIT_MASK[bitOffset];
-            buf.setByte(bytePos, tmp);
+        if(numBits == bitOffset) {
+            buffer[bytePos] &= ~BIT_MASK[bitOffset];
+            buffer[bytePos] |= value & BIT_MASK[bitOffset];
         } else {
-            tmp &= ~(BitConstants.BIT_MASK[numBits] << bitOffset - numBits);
-            tmp |= (value & BitConstants.BIT_MASK[numBits]) << bitOffset - numBits;
-            buf.setByte(bytePos, tmp);
+            buffer[bytePos] &= ~(BIT_MASK[numBits] << (bitOffset - numBits));
+            buffer[bytePos] |= (value & BIT_MASK[numBits]) << (bitOffset - numBits);
         }
     }
 

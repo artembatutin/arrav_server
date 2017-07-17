@@ -1,7 +1,5 @@
 package net.edge.world.sync;
 
-import net.edge.net.packet.out.SendLogout;
-import net.edge.util.LoggerUtils;
 import net.edge.world.node.entity.EntityList;
 import net.edge.world.node.entity.npc.Npc;
 import net.edge.world.node.entity.player.Player;
@@ -9,12 +7,6 @@ import net.edge.world.node.entity.player.Player;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static net.edge.world.sync.UpdateType.POST_UPDATE;
-import static net.edge.world.sync.UpdateType.PRE_UPDATE;
-import static net.edge.world.sync.UpdateType.UPDATE;
 
 public class Synchronizer {
 	
@@ -33,7 +25,13 @@ public class Synchronizer {
 		for(Player player : players) {
 			if(player == null)
 				continue;
-			executor.submit(new UpdateTask(PRE_UPDATE, player, phaser));
+			executor.submit(() -> {
+				try {
+					player.preUpdate();
+				} finally {
+					phaser.arriveAndDeregister();
+				}
+			});
 		}
 		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-PLAYER]: " + (System.currentTimeMillis() - time));
@@ -44,7 +42,13 @@ public class Synchronizer {
 		for(Npc npc : npcs) {
 			if(npc == null)
 				continue;
-			executor.submit(new UpdateTask(PRE_UPDATE, npc, phaser));
+			executor.submit(() -> {
+				try {
+					npc.preUpdate();
+				} finally {
+					phaser.arriveAndDeregister();
+				}
+			});
 		}
 		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-NPC]: " + (System.currentTimeMillis() - time));
@@ -60,7 +64,13 @@ public class Synchronizer {
 		for(Player player : players) {
 			if(player == null)
 				continue;
-			executor.submit(new UpdateTask(UPDATE, player, phaser));
+			executor.submit(() -> {
+				try {
+					player.update();
+				} finally {
+					phaser.arriveAndDeregister();
+				}
+			});
 		}
 		phaser.arriveAndAwaitAdvance();
 		System.out.println("[SYNC]: " + (System.currentTimeMillis() - time));
@@ -77,7 +87,13 @@ public class Synchronizer {
 		for(Player player : players) {
 			if(player == null)
 				continue;
-			executor.submit(new UpdateTask(POST_UPDATE, player, phaser));
+			executor.submit(() -> {
+				try {
+					player.postUpdate();
+				} finally {
+					phaser.arriveAndDeregister();
+				}
+			});
 		}
 		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[POST-PLAYER]: " + (System.currentTimeMillis() - time));
@@ -88,7 +104,13 @@ public class Synchronizer {
 		for(Npc npc : npcs) {
 			if(npc == null)
 				continue;
-			executor.submit(new UpdateTask(POST_UPDATE, npc, phaser));
+			executor.submit(() -> {
+				try {
+					npc.postUpdate();
+				} finally {
+					phaser.arriveAndDeregister();
+				}
+			});
 		}
 		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[POST-NPC]: " + (System.currentTimeMillis() - time));

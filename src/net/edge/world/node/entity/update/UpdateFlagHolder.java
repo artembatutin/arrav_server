@@ -11,44 +11,43 @@ import java.util.EnumSet;
 public final class UpdateFlagHolder {
 	
 	/**
-	 * An {@link EnumSet} that will contain all active {@link UpdateFlag}s.
+	 * A boolean array defining flagged update flags.
 	 */
-	private final EnumSet<UpdateFlag> flags = EnumSet.noneOf(UpdateFlag.class);
+	private boolean[] flagged = new boolean[11];
+	
+	/**
+	 * Condition if none are flagged.
+	 */
+	private boolean empty = true;
 	
 	/**
 	 * Adds {@code flag} to the backing {@link EnumSet}.
 	 * @param flag The {@link UpdateFlag} to add.
 	 */
 	public void flag(UpdateFlag flag) {
-		flags.add(flag);
+		flagged[flag.getIndex()] = true;
+		empty = false;
 	}
 	
 	/**
-	 * Removes {@code flag} from the backing {@link EnumSet}.
-	 * @param flag The {@link UpdateFlag} to remove.
-	 */
-	public void unflag(UpdateFlag flag) {
-		flags.remove(flag);
-	}
-	
-	/*
 	 * @return {@code true} if the backing {@link EnumSet} contains {@code flag}, false otherwise.
 	 */
 	public boolean get(UpdateFlag flag) {
-		return flags.contains(flag);
+		return flagged[flag.getIndex()];
 	}
 	
 	/**
 	 * @return {@code true} if the backing {@link EnumSet} is empty.
 	 */
 	public boolean isEmpty() {
-		return flags.isEmpty();
+		return empty;
 	}
 	
 	/**
 	 * Clears the backing {@link EnumSet} of all elements.
 	 */
 	public void clear() {
-		flags.clear();
+		flagged = new boolean[11];
+		empty = true;
 	}
 }

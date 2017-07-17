@@ -21,8 +21,7 @@ import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.locale.Position;
-import net.edge.net.codec.login.LoginResponse;
-import net.edge.util.TextUtils;
+import net.edge.net.codec.login.LoginCode;
 import net.edge.util.json.GsonUtils;
 import net.edge.world.World;
 import net.edge.world.node.entity.attribute.AttributeKey;
@@ -43,9 +42,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import static net.edge.content.skill.summoning.familiar.FamiliarAbility.FamiliarAbilityType.BEAST_OF_BURDEN;
-import static net.edge.net.codec.login.LoginResponse.ACCOUNT_DISABLED;
-import static net.edge.net.codec.login.LoginResponse.COULD_NOT_COMPLETE_LOGIN;
-import static net.edge.net.codec.login.LoginResponse.INVALID_CREDENTIALS;
+import static net.edge.net.codec.login.LoginCode.ACCOUNT_DISABLED;
+import static net.edge.net.codec.login.LoginCode.COULD_NOT_COMPLETE_LOGIN;
+import static net.edge.net.codec.login.LoginCode.INVALID_CREDENTIALS;
 
 /**
  * The serializer that will serialize and deserialize character files for
@@ -133,12 +132,12 @@ public final class PlayerSerialization {
 	}
 	
 	/**
-	 * Initializes the decoder and gives out a {@link LoginResponse}.
+	 * Initializes the decoder and gives out a {@link LoginCode}.
 	 * @param password the password used to connect.
 	 * @return login response with the encoded json object.
 	 */
 	public SerializeResponse loginCheck(String password) {
-		SerializeResponse response = new SerializeResponse(LoginResponse.NORMAL);
+		SerializeResponse response = new SerializeResponse(LoginCode.NORMAL);
 		try {
 			File file = Paths.get("./data/players/" + player.getCredentials().getUsername() + ".json").toFile();
 			if(!file.exists()) {
@@ -802,22 +801,22 @@ public final class PlayerSerialization {
 		/**
 		 * Login response to give away.
 		 */
-		private LoginResponse response;
+		private LoginCode response;
 		
 		/**
 		 * Saved reader for later usage.
 		 */
 		private JsonObject reader;
 		
-		public SerializeResponse(LoginResponse response) {
+		public SerializeResponse(LoginCode response) {
 			this.response = response;
 		}
 		
-		public LoginResponse getResponse() {
+		public LoginCode getResponse() {
 			return response;
 		}
 		
-		public void setResponse(LoginResponse response) {
+		public void setResponse(LoginCode response) {
 			this.response = response;
 		}
 		

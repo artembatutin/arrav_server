@@ -9,10 +9,13 @@ import net.edge.world.node.entity.player.Player;
 
 /**
  * A {@link MessageToByteEncoder} which encodes in-game packets.
- * @author Graham
+ * @author Artem Batutin
  */
 public final class GameEncoder extends MessageToByteEncoder<OutgoingPacket> {
 	
+	/**
+	 * The player this encoder is dedicated to.
+	 */
 	private final Player player;
 	
 	/**

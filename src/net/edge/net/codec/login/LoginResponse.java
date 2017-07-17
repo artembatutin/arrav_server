@@ -1,46 +1,71 @@
 package net.edge.net.codec.login;
 
+import net.edge.world.node.entity.player.Player;
+import net.edge.world.node.entity.player.assets.Rights;
+
 /**
- * The enumerated type whose elements represent the login response types.
- * @author lare96 <http://github.com/lare96>
+ * An immutable message that is written through a channel and forwarded to the {@link LoginEncoder} where it is encoded and
+ * sent to the client.
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
-public enum LoginResponse {
-	NORMAL(2),
-	INVALID_CREDENTIALS(3),
-	ACCOUNT_DISABLED(4),
-	ACCOUNT_ONLINE(5),
-	SERVER_JUST_UPDATED(6),
-	WORLD_FULL(7),
-	LOGIN_SERVER_OFFLINE(8),
-	LOGIN_LIMIT_EXCEEDED(9),
-	BAD_SESSION_ID(10),
-	PLEASE_TRY_AGAIN(11),
-	NEED_MEMBERS(12),
-	COULD_NOT_COMPLETE_LOGIN(13),
-	SERVER_BEING_UPDATED(14),
-	LOGIN_ATTEMPTS_EXCEEDED(16),
-	MEMBERS_ONLY_AREA(17),
-	WRONG_BUILD_NUMBER(18),
-	SERVER_STARTING(19);
-
+public final class LoginResponse {
+	
 	/**
-	 * The response code that the protocol recognizes.
+	 * The actual login response.
 	 */
-	private final int code;
-
+	private final LoginCode response;
+	
+	/**
+	 * The {@link Player}s authority level.
+	 */
+	private final Rights rights;
+	
+	/**
+	 * If the player is iron man.
+	 */
+	private final boolean iron;
+	
 	/**
 	 * Creates a new {@link LoginResponse}.
-	 * @param code the response code that the protocol recognizes.
+	 * @param response The actual login response.
+	 * @param rights   The {@link Player}s authority level.
+	 * @param iron     The iron man flag condition.
 	 */
-	LoginResponse(int code) {
-		this.code = code;
+	public LoginResponse(LoginCode response, Rights rights, boolean iron) {
+		this.response = response;
+		this.rights = rights;
+		this.iron = iron;
 	}
-
+	
 	/**
-	 * Gets the response code that the protocol recognizes.
-	 * @return the response code.
+	 * Creates a new {@link LoginResponse} with an authority level of {@code PLAYER} and a {@code flagged} value of
+	 * {@code false}.
+	 * @param response The actual login response.
 	 */
-	public final int getCode() {
-		return code;
+	public LoginResponse(LoginCode response) {
+		this(response, Rights.PLAYER, false);
 	}
+	
+	/**
+	 * @return The actual login response.
+	 */
+	public LoginCode getResponse() {
+		return response;
+	}
+	
+	/**
+	 * @return The {@link Player}s authority level.
+	 */
+	public Rights getRights() {
+		return rights;
+	}
+	
+	/**
+	 * If the player is iron man.
+	 * @return iron man.
+	 */
+	public boolean isIron() {
+		return iron;
+	}
+	
 }

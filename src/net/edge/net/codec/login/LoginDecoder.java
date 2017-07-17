@@ -44,8 +44,6 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 		switch(state) {
 			case HANDSHAKE:
-				Attribute<Session> attribute = ctx.channel().attr(NetworkConstants.SESSION_KEY);
-				attribute.set(new LoginSession(ctx.channel()));
 				decodeHandshake(ctx, in, out);
 				state = State.LOGIN_TYPE;
 				break;

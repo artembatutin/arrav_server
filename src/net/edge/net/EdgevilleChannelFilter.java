@@ -13,8 +13,8 @@ import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import net.edge.Server;
 import net.edge.content.commands.impl.UpdateCommand;
+import net.edge.net.codec.login.LoginCode;
 import net.edge.net.codec.login.LoginResponse;
-import net.edge.net.codec.login.LoginResponseMessage;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -32,10 +32,10 @@ import java.net.InetSocketAddress;
 public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<InetSocketAddress> {
 	
 	/**
-	 * An {@link AttributeKey} used to access an {@link Attribute} describing which {@link LoginResponse} should be sent for
+	 * An {@link AttributeKey} used to access an {@link Attribute} describing which {@link LoginCode} should be sent for
 	 * rejected channels.
 	 */
-	private static final AttributeKey<LoginResponse> RESPONSE_KEY = AttributeKey.valueOf("channel.RESPONSE_KEY");
+	private static final AttributeKey<LoginCode> RESPONSE_KEY = AttributeKey.valueOf("channel.RESPONSE_KEY");
 	
 	/**
 	 * A concurrent {@link Multiset} containing active connections.
@@ -46,20 +46,20 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 	protected boolean accept(ChannelHandlerContext ctx, InetSocketAddress remoteAddress) throws Exception {
 		String address = address(remoteAddress);
 		if(UpdateCommand.inProgess == 2) {
-			response(ctx, LoginResponse.SERVER_BEING_UPDATED);
+			response(ctx, LoginCode.SERVER_BEING_UPDATED);
 			return false;
 		}
 		if(Server.STARTING) {
-			response(ctx, LoginResponse.SERVER_STARTING);
+			response(ctx, LoginCode.SERVER_STARTING);
 			return false;
 		}
 		if(PunishmentHandler.isIPBanned(address)) {
-			response(ctx, LoginResponse.ACCOUNT_DISABLED);
+			response(ctx, LoginCode.ACCOUNT_DISABLED);
 			return false;
 		}
 		int limit = NetworkConstants.CONNECTION_AMOUNT;
 		if(connections.count(address) >= limit) { // Reject if more than CONNECTION_LIMIT active connections.
-			response(ctx, LoginResponse.LOGIN_LIMIT_EXCEEDED);
+			response(ctx, LoginCode.LOGIN_LIMIT_EXCEEDED);
 			return false;
 		}
 		return true;
@@ -76,8 +76,8 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 	@Override
 	protected ChannelFuture channelRejected(ChannelHandlerContext ctx, InetSocketAddress remoteAddress) {
 		Channel channel = ctx.channel();
-		LoginResponse response = channel.attr(RESPONSE_KEY).get(); // Retrieve the response message.
-		LoginResponseMessage message = new LoginResponseMessage(response);
+		LoginCode response = channel.attr(RESPONSE_KEY).get(); // Retrieve the response message.
+		LoginResponse message = new LoginResponse(response);
 		ByteBuf initialMessage = ctx.alloc().buffer(8).writeLong(0); // Write initial message.
 		channel.write(initialMessage, channel.voidPromise());
 		return channel.writeAndFlush(message).addListener(ChannelFutureListener.CLOSE); // Write response message.
@@ -94,7 +94,7 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 	/**
 	 * Sets the {@code RESPONSE_KEY} attribute to {@code response}.
 	 */
-	private void response(ChannelHandlerContext ctx, LoginResponse response) {
+	private void response(ChannelHandlerContext ctx, LoginCode response) {
 		Channel channel = ctx.channel();
 		channel.attr(RESPONSE_KEY).set(response);
 	}
