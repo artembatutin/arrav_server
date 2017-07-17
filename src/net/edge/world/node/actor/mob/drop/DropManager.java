@@ -10,7 +10,7 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.GroundItem;
 import net.edge.world.node.region.Region;
 
 import java.util.*;
@@ -60,7 +60,7 @@ public final class DropManager {
 		for(Item drop : dropItems) {
 			if(drop == null)
 				continue;
-			region.register(new ItemNode(drop, victim.getPosition(), killer));
+			region.register(new GroundItem(drop, victim.getPosition(), killer));
 		}
 	}
 

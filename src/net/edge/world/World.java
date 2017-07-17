@@ -31,7 +31,7 @@ import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.mob.MobMovementTask;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.Rights;
-import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.GroundItem;
 import net.edge.world.node.item.container.session.ExchangeSessionManager;
 import net.edge.world.node.region.Region;
 import net.edge.world.node.region.RegionManager;
@@ -105,7 +105,7 @@ public final class World {
 	private int staffCount;
 	
 	/**
-	 * The regional tick counter for processing such as {@link ItemNode} in a region.
+	 * The regional tick counter for processing such as {@link GroundItem} in a region.
 	 */
 	private int regionalTick;
 	

@@ -20,8 +20,8 @@ import net.edge.world.node.actor.mob.drop.ItemCache;
 import net.edge.world.node.actor.mob.drop.Drop;
 import net.edge.world.node.actor.mob.drop.DropTable;
 import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.item.GroundItem;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
@@ -125,7 +125,7 @@ public final class BarrowsMinigame extends Minigame {
 	}
 	
 	@Override
-	public boolean canPickup(Player player, ItemNode node) {
+	public boolean canPickup(Player player, GroundItem node) {
 		return true;
 	}
 	

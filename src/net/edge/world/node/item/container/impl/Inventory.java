@@ -1,11 +1,11 @@
 package net.edge.world.node.item.container.impl;
 
+import net.edge.world.node.item.GroundItem;
 import net.edge.world.node.item.container.ItemContainer;
 import net.edge.world.node.item.container.ItemContainerAdapter;
 import net.edge.world.node.item.container.ItemWeightListener;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
 
 import java.util.Arrays;
 import java.util.List;
@@ -149,7 +149,7 @@ public class Inventory extends ItemContainer {
 	 */
 	public void addOrDrop(List<Item> items) {
 		addOrExecute(t -> {
-			ItemNode node = new ItemNode(t, player.getPosition(), player);
+			GroundItem node = new GroundItem(t, player.getPosition(), player);
 			node.getRegion().register(node);
 		}, "Some of the items were dropped beneath you instead...", items);
 	}

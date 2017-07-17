@@ -15,8 +15,8 @@ import net.edge.world.node.EntityType;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.item.ItemState;
+import net.edge.world.node.item.GroundItem;
+import net.edge.world.node.item.GroundItemState;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
@@ -56,9 +56,9 @@ public final class Region extends Entity {
 	
 	//The nodes in this region.
 	/**
-	 * A {@link ObjectList} of {@link ItemNode}s in this {@code Region}.
+	 * A {@link ObjectList} of {@link GroundItem}s in this {@code Region}.
 	 */
-	private final ObjectList<ItemNode> items = new ObjectArrayList<>();
+	private final ObjectList<GroundItem> items = new ObjectArrayList<>();
 	
 	/**
 	 * A {@link Int2ObjectOpenHashMap} of active {@link Player}s in this {@code Region}.
@@ -143,9 +143,9 @@ public final class Region extends Entity {
 		
 		//sequencing active item nodes.
 		if(!items.isEmpty()) {
-			Iterator<ItemNode> it = items.iterator();
+			Iterator<GroundItem> it = items.iterator();
 			while(it.hasNext()) {
-				ItemNode item = it.next();
+				GroundItem item = it.next();
 				if(item.getCounter().incrementAndGet(10) >= SEQUENCE_TICKS) {
 					item.onSequence();
 					item.getCounter().set(0);
@@ -192,8 +192,8 @@ public final class Region extends Entity {
 	 * @param player the player to update items for.
 	 */
 	public void onEnter(Player player) {
-		for(ItemNode item : items) {
-			if(item.getItemState() == ItemState.HIDDEN || item.getState() != EntityState.ACTIVE)
+		for(GroundItem item : items) {
+			if(item.getItemState() == GroundItemState.HIDDEN || item.getState() != EntityState.ACTIVE)
 				continue;
 			if(item.getPosition() == null)
 				continue;
@@ -201,11 +201,11 @@ public final class Region extends Entity {
 				continue;
 			player.out(new SendItemNodeRemoval(item));
 			if(item.getPosition().withinDistance(player.getPosition(), 60)) {
-				if(item.getPlayer() == null && item.getItemState() == ItemState.SEEN_BY_EVERYONE) {
+				if(item.getPlayer() == null && item.getItemState() == GroundItemState.SEEN_BY_EVERYONE) {
 					player.out(new SendItemNode(item));
 					continue;
 				}
-				if(item.getPlayer().same(player) && item.getItemState() == ItemState.SEEN_BY_OWNER) {
+				if(item.getPlayer().same(player) && item.getItemState() == GroundItemState.SEEN_BY_OWNER) {
 					player.out(new SendItemNode(item));
 				}
 			}
@@ -261,7 +261,7 @@ public final class Region extends Entity {
 	 * @param item the item to attempt to register.
 	 * @return {@code true} if the item was registered, {@code false} otherwise.
 	 */
-	public boolean register(ItemNode item) {
+	public boolean register(GroundItem item) {
 		return register(item, false);
 	}
 	
@@ -271,11 +271,11 @@ public final class Region extends Entity {
 	 * @param stack if the item should stack upon registration.
 	 * @return {@code true} if the item was registered, {@code false} otherwise.
 	 */
-	public boolean register(ItemNode item, boolean stack) {
+	public boolean register(GroundItem item, boolean stack) {
 		if(item.getState() != EntityState.IDLE)
 			return false;
 		if(stack) {
-			for(ItemNode next : items) {
+			for(GroundItem next : items) {
 				if(next.getPlayer() == null || next.getPosition() == null || next.getItem() == null)
 					continue;
 				if(!next.getPosition().same(item.getPosition()))
@@ -313,7 +313,7 @@ public final class Region extends Entity {
 	 * @return {@code true} if the item was unregistered, {@code false}
 	 * otherwise.
 	 */
-	public boolean unregister(ItemNode item) {
+	public boolean unregister(GroundItem item) {
 		if (item.getState() != EntityState.ACTIVE)
 			return false;
 		if (items.remove(item)) {
@@ -330,9 +330,9 @@ public final class Region extends Entity {
 	 * @return the item instance wrapped in an optional, or an empty optional if
 	 * no item is found.
 	 */
-	public Optional<ItemNode> getItem(int id, Position position) {
-		for(ItemNode i : items) {
-			if(i.getItem().getId() == id && i.getItemState() != ItemState.HIDDEN && i.getState() == EntityState.ACTIVE && i.getPosition().same(position)) {
+	public Optional<GroundItem> getItem(int id, Position position) {
+		for(GroundItem i : items) {
+			if(i.getItem().getId() == id && i.getItemState() != GroundItemState.HIDDEN && i.getState() == EntityState.ACTIVE && i.getPosition().same(position)) {
 				return Optional.of(i);
 			}
 		}

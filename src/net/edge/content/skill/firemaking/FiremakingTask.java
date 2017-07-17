@@ -1,9 +1,9 @@
 package net.edge.content.skill.firemaking;
 
 import net.edge.task.Task;
+import net.edge.world.node.item.GroundItemStatic;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNodeStatic;
-import net.edge.world.node.item.ItemPolicy;
+import net.edge.world.node.item.GroundItemPolicy;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectNode;
@@ -42,7 +42,7 @@ final class FiremakingTask extends Task {
 	
 	@Override
 	public void execute() {
-		object.getRegion().register(new ItemNodeStatic(new Item(592), object.getGlobalPos(), ItemPolicy.TIMEOUT));
+		object.getRegion().register(new GroundItemStatic(new Item(592), object.getGlobalPos(), GroundItemPolicy.TIMEOUT));
 		object.remove();
 		this.cancel();
 	}

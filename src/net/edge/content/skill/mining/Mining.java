@@ -202,10 +202,10 @@ public final class Mining extends HarvestingSkillAction {
 				if(getPlayer().getInventory().spaceFor(PickaxeData.PICKAXE_HANDLE)) {
 					getPlayer().getInventory().add(PickaxeData.PICKAXE_HANDLE);
 				} else {
-					ItemNode node = new ItemNode(PickaxeData.PICKAXE_HANDLE, getPlayer().getPosition(), getPlayer());
+					GroundItem node = new GroundItem(PickaxeData.PICKAXE_HANDLE, getPlayer().getPosition(), getPlayer());
 					ItemNodeManager.register(node);
 				}
-				ItemNode node = new ItemNode(pickaxe.getHead(), getPlayer().getPosition(), getPlayer());
+				GroundItem node = new GroundItem(pickaxe.getHead(), getPlayer().getPosition(), getPlayer());
 				ItemNodeManager.register(node);
 				getPlayer().message("Your pickaxe dismantled during the mining process.");
 			} else {

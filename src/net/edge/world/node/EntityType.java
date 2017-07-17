@@ -2,7 +2,7 @@ package net.edge.world.node;
 
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.GroundItem;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.node.region.Region;
 
@@ -13,7 +13,7 @@ import net.edge.world.node.region.Region;
 public enum EntityType {
 	
 	/**
-	 * The element used to represent the {@link ItemNode} implementation.
+	 * The element used to represent the {@link GroundItem} implementation.
 	 */
 	ITEM,
 	

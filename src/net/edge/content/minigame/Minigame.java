@@ -8,6 +8,7 @@ import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.Hit;
 import net.edge.world.node.actor.Actor;
+import net.edge.world.node.item.GroundItem;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.world.node.item.container.impl.EquipmentType;
 import net.edge.content.item.FoodConsumable;
@@ -20,7 +21,6 @@ import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.update.UpdateFlag;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
@@ -230,14 +230,14 @@ public abstract class Minigame {
 	 * @param node   the item node that is being picked up.
 	 * @return {@code true} if the player can, {@code false} otherwise.
 	 */
-	public boolean canPickup(Player player, ItemNode node) {
+	public boolean canPickup(Player player, GroundItem node) {
 		player.message("You cannot pick up items from the floor in here!");
 		return false;
 	}
 	
 	/**
 	 * The method which handles functionality when a player picks up an item from the ground,
-	 * this method differs with {@link #canPickup(Player, ItemNode)} as this method is executed
+	 * this method differs with {@link #canPickup(Player, GroundItem)} as this method is executed
 	 * after the item from the ground has been added to the inventory.
 	 * @param player the player attempting to pick up an item from the floor.
 	 * @param item   the item that was picked up.

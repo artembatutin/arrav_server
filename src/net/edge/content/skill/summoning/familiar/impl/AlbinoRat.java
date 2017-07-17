@@ -10,8 +10,8 @@ import net.edge.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import net.edge.content.skill.summoning.SummoningData;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.item.GroundItemStatic;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNodeStatic;
 
 import java.util.Optional;
 
@@ -43,7 +43,7 @@ public final class AlbinoRat extends Familiar {
 			t.getFamiliar().get().forceChat("Rawrgh, mai cheese!");
 			return;
 		}
-		ItemNodeStatic eggs = new ItemNodeStatic(new Item(1985), t.getFamiliar().get().getPosition());
+		GroundItemStatic eggs = new GroundItemStatic(new Item(1985), t.getFamiliar().get().getPosition());
 		eggs.getRegion().register(eggs);
 	});
 	

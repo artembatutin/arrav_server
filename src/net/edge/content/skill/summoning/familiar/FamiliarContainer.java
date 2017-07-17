@@ -1,12 +1,12 @@
 package net.edge.content.skill.summoning.familiar;
 
 import com.google.common.collect.ImmutableList;
+import net.edge.world.node.item.GroundItemStatic;
 import net.edge.world.node.item.container.ItemContainer;
 import net.edge.locale.Position;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
-import net.edge.world.node.item.ItemNodeStatic;
 
 /**
  * Holds functionality for abilities which can hold items such as
@@ -154,7 +154,7 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 	 */
 	final void dropAll(Position position) {
 		container.forEach(item -> {
-			ItemNodeStatic ground = new ItemNodeStatic(item, position);
+			GroundItemStatic ground = new GroundItemStatic(item, position);
 			ground.getRegion().register(ground);
 		});
 		container.clear();

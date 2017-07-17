@@ -10,7 +10,7 @@ import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.activity.ActivityManager.ActivityType;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemDefinition;
-import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.GroundItem;
 
 /**
  * The message sent from the client when the player drops an item.
@@ -65,7 +65,7 @@ public final class DropItemPacket implements IncomingPacket {
 		
 		int amount = ItemDefinition.DEFINITIONS[id].isStackable() ? item.getAmount() : 1;
 		player.getInventory().remove(new Item(id, amount), slot);
-		player.getRegion().register(new ItemNode(new Item(id, amount), player.getPosition(), player));
+		player.getRegion().register(new GroundItem(new Item(id, amount), player.getPosition(), player));
 		player.getActivityManager().execute(ActivityType.DROP_ITEM);
 	}
 }

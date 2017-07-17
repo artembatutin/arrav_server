@@ -21,7 +21,7 @@ import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.activity.ActivityManager;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.GroundItem;
 import net.edge.world.object.ObjectNode;
 import net.edge.world.node.region.Region;
 
@@ -117,7 +117,7 @@ public final class AnimationRoom extends GuildRoom {
 	}
 	
 	@Override
-	public boolean canPickup(Player player, ItemNode node) {
+	public boolean canPickup(Player player, GroundItem node) {
 		return true;
 	}
 	
@@ -175,10 +175,10 @@ public final class AnimationRoom extends GuildRoom {
 		if(!armour.isPresent()) {
 			return;
 		}
-		ObjectList<ItemNode> items = new ObjectArrayList<>();
-		Arrays.stream(armour.get().data.set).forEach(item -> items.add(new ItemNode(item, armour.get().getPosition(), player)));
+		ObjectList<GroundItem> items = new ObjectArrayList<>();
+		Arrays.stream(armour.get().data.set).forEach(item -> items.add(new GroundItem(item, armour.get().getPosition(), player)));
 		if(tokens) {
-			items.add(new ItemNode(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), armour.get().data.tokens), armour.get().getPosition(), player));
+			items.add(new GroundItem(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), armour.get().data.tokens), armour.get().getPosition(), player));
 		}
 		Region region = World.getRegions().getRegion(armour.get().getPosition());
 		if(region == null)

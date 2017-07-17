@@ -23,8 +23,8 @@ import net.edge.world.World;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
+import net.edge.world.node.item.GroundItem;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
 
 import java.util.*;
@@ -124,7 +124,7 @@ public final class CyclopsRoom extends GuildRoom {
 	}
 
 	@Override
-	public boolean canPickup(Player player, ItemNode node) {
+	public boolean canPickup(Player player, GroundItem node) {
 		return true;
 	}
 
@@ -149,7 +149,7 @@ public final class CyclopsRoom extends GuildRoom {
 		Defender defender = Defender.getNext(player);
 		boolean rollRare = true; // 10% chance.
 		if(rollRare) {
-			ItemNode node = new ItemNode(defender.item, other.getPosition(), player);
+			GroundItem node = new GroundItem(defender.item, other.getPosition(), player);
 			node.getRegion().register(node);
 		}
 	}

@@ -21,8 +21,8 @@ import net.edge.world.World;
 import net.edge.world.node.actor.Actor;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.player.assets.Rights;
+import net.edge.world.node.item.GroundItem;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
 import net.edge.world.object.ObjectNode;
 
 import java.util.Optional;
@@ -231,7 +231,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public boolean canPickup(Player player, ItemNode node) {
+	public boolean canPickup(Player player, GroundItem node) {
 		return true;
 	}
 	

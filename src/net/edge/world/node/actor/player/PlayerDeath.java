@@ -30,7 +30,7 @@ import net.edge.world.Hit;
 import net.edge.world.node.actor.player.assets.Rights;
 import net.edge.world.node.actor.update.UpdateFlag;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.GroundItem;
 import net.edge.world.node.region.Region;
 
 import java.util.Iterator;
@@ -308,11 +308,11 @@ public final class PlayerDeath extends ActorDeath<Player> {
 					amount--;
 				}
 			}
-			region.register(killer.map(player -> new ItemNode(new Item(526), character.getPosition(), player)).orElseGet(() -> new ItemNode(new Item(526), character.getPosition(), character)));
-			items.forEach(item -> region.register(killer.map(player -> new ItemNode(item, character.getPosition(), player)).orElseGet(() -> new ItemNode(item, character.getPosition(), character))));
+			region.register(killer.map(player -> new GroundItem(new Item(526), character.getPosition(), player)).orElseGet(() -> new GroundItem(new Item(526), character.getPosition(), character)));
+			items.forEach(item -> region.register(killer.map(player -> new GroundItem(item, character.getPosition(), player)).orElseGet(() -> new GroundItem(item, character.getPosition(), character))));
 			character.getInventory().addAll(keep.toArray(new Item[keep.size()]));
 		} else {
-			region.register(killer.map(player -> new ItemNode(new Item(526), character.getPosition(), player)).orElseGet(() -> new ItemNode(new Item(526), character.getPosition(), character)));
+			region.register(killer.map(player -> new GroundItem(new Item(526), character.getPosition(), player)).orElseGet(() -> new GroundItem(new Item(526), character.getPosition(), character)));
 		}
 	}
 }

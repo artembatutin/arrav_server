@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
 import net.edge.locale.Position;
+import net.edge.world.node.item.GroundItem;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.item.ItemNodeStatic;
-import net.edge.world.node.item.ItemPolicy;
+import net.edge.world.node.item.GroundItemStatic;
+import net.edge.world.node.item.GroundItemPolicy;
 
 import java.util.Objects;
 
@@ -29,7 +29,7 @@ public final class ItemNodeLoader extends JsonLoader {
 		int id = reader.get("id").getAsInt();
 		int amount = reader.get("amount").getAsInt();
 		Position position = Objects.requireNonNull(builder.fromJson(reader.get("position"), Position.class));
-		ItemNode item = new ItemNodeStatic(new Item(id, amount), position, ItemPolicy.RESPAWN);
+		GroundItem item = new GroundItemStatic(new Item(id, amount), position, GroundItemPolicy.RESPAWN);
 		item.getRegion().register(item);
 	}
 }

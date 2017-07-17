@@ -5,13 +5,13 @@ import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.node.actor.player.Player;
-import net.edge.world.node.item.ItemNode;
+import net.edge.world.node.item.GroundItem;
 
 public final class SendItemNodeRemoval implements OutgoingPacket {
 	
-	private final ItemNode item;
+	private final GroundItem item;
 	
-	public SendItemNodeRemoval(ItemNode item) {
+	public SendItemNodeRemoval(GroundItem item) {
 		this.item = item;
 	}
 	

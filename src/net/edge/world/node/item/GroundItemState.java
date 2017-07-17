@@ -1,11 +1,11 @@
 package net.edge.world.node.item;
 
 /**
- * The enumerated type whose elements represent the states an {@link ItemNode}
+ * The enumerated type whose elements represent the states an {@link GroundItem}
  * can take on.
  * @author lare96 <http://github.com/lare96>
  */
-public enum ItemState {
+public enum GroundItemState {
 	SEEN_BY_OWNER,
 	SEEN_BY_EVERYONE,
 	HIDDEN

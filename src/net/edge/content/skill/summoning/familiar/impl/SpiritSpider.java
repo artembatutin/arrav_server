@@ -13,7 +13,7 @@ import net.edge.content.skill.summoning.SummoningData;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNodeStatic;
+import net.edge.world.node.item.GroundItemStatic;
 
 import java.util.Optional;
 
@@ -50,7 +50,7 @@ public final class SpiritSpider extends Familiar {
 			t.getFamiliar().get().forceChat("Rawrgh, my eggs won't come out!");
 			return;
 		}
-		ItemNodeStatic eggs = new ItemNodeStatic(new Item(223), t.getFamiliar().get().getPosition());
+		GroundItemStatic eggs = new GroundItemStatic(new Item(223), t.getFamiliar().get().getPosition());
 		eggs.getRegion().register(eggs);
 	});
 	

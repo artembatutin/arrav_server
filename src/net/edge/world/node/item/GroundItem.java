@@ -16,7 +16,7 @@ import net.edge.world.node.region.Region;
  * @author lare96 <http://github.com/lare96>
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public class ItemNode extends Entity {
+public class GroundItem extends Entity {
 	
 	/**
 	 * The item concealed within this node.
@@ -31,7 +31,7 @@ public class ItemNode extends Entity {
 	/**
 	 * The item state of this node.
 	 */
-	private ItemState state = ItemState.SEEN_BY_OWNER;
+	private GroundItemState state = GroundItemState.SEEN_BY_OWNER;
 	
 	/**
 	 * The player attached to this node.
@@ -39,12 +39,12 @@ public class ItemNode extends Entity {
 	private Player player;
 	
 	/**
-	 * Creates new {@link ItemNode}.
+	 * Creates new {@link GroundItem}.
 	 * @param item     the item concealed within this node.
 	 * @param position the position this node is on.
 	 * @param player   the player attached to this node.
 	 */
-	public ItemNode(Item item, Position position, Player player) {
+	public GroundItem(Item item, Position position, Player player) {
 		super(position, EntityType.ITEM);
 		this.item = item.copy();
 		this.player = player;
@@ -72,10 +72,10 @@ public class ItemNode extends Entity {
 			case SEEN_BY_OWNER:
 				World.getRegions().getAllSurroundingRegions(getPosition().getRegion()).forEach(r -> r.getPlayers().forEach(p -> {
 					if(!p.same(player) && p.getPosition().getZ() == super.getPosition().getZ() && p.getInstance() == super.getInstance())
-						p.out(new SendItemNode(new ItemNode(item, super.getPosition(), null)));
+						p.out(new SendItemNode(new GroundItem(item, super.getPosition(), null)));
 				}));
 				player = null;
-				state = ItemState.SEEN_BY_EVERYONE;
+				state = GroundItemState.SEEN_BY_EVERYONE;
 				break;
 			case SEEN_BY_EVERYONE:
 				this.setState(EntityState.INACTIVE);
@@ -99,15 +99,15 @@ public class ItemNode extends Entity {
 	 * Gets the item state of this node.
 	 * @return the item state.
 	 */
-	public final ItemState getItemState() {
+	public final GroundItemState getItemState() {
 		return state;
 	}
 	
 	/**
-	 * Sets the value for {@link ItemNode#state}.
+	 * Sets the value for {@link GroundItem#state}.
 	 * @param state the new value to set.
 	 */
-	public final void setState(ItemState state) {
+	public final void setState(GroundItemState state) {
 		this.state = state;
 	}
 	
@@ -120,7 +120,7 @@ public class ItemNode extends Entity {
 	}
 	
 	/**
-	 * Sets the value for {@link ItemNode#player}.
+	 * Sets the value for {@link GroundItem#player}.
 	 * @param player the new value to set.
 	 */
 	public final void setPlayer(Player player) {

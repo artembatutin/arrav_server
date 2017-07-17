@@ -5,7 +5,7 @@ package net.edge.world.node.item;
  * can take on.
  * @author lare96 <http://github.com/lare96>
  */
-public enum ItemPolicy {
+public enum GroundItemPolicy {
 	TIMEOUT,
 	RESPAWN
 }

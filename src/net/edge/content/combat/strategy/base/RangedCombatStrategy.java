@@ -12,6 +12,7 @@ import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.task.Task;
 import net.edge.world.node.actor.mob.Mob;
+import net.edge.world.node.item.GroundItem;
 import net.edge.world.node.item.container.impl.Equipment;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.util.rand.RandomUtils;
@@ -23,7 +24,6 @@ import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.actor.update.UpdateFlag;
 import net.edge.world.node.item.Item;
 import net.edge.world.node.item.ItemIdentifiers;
-import net.edge.world.node.item.ItemNode;
 
 /**
  * The strategy class which holds support for ranged combat.
@@ -180,7 +180,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 			item.decrementAmount();
 			double chance = ava_collector ? 0.35 : 0.70;
 			if(ammo.getDefinition().isDroppable() && RandomUtils.success(chance)) {//register item to floor
-				ItemNode am = new ItemNode(new Item(item.getId()), victim.getPosition(), player);
+				GroundItem am = new GroundItem(new Item(item.getId()), victim.getPosition(), player);
 				am.getRegion().register(am, true);
 			}
 		}
