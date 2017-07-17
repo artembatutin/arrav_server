@@ -7,6 +7,7 @@ import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.SequencedMinigame;
 import net.edge.content.skill.prayer.Prayer;
+import net.edge.world.locale.InstanceManager;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
@@ -27,7 +28,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	/**
 	 * The instance of the current rfd minigame.
 	 */
-	private final int instance = World.getInstanceManager().closeNext();
+	private final int instance = InstanceManager.get().closeNext();
 	
 	/**
 	 * The current npc spawned for this wave.
@@ -66,7 +67,7 @@ public final class RFDMinigame extends SequencedMinigame {
 				RFDData data = ((RFDMinigame) player.getMinigame().get()).wave;
 				this.currentNpc = Optional.of(new DefaultMob(data.getNpcId(), new Position(1900, 5354, 2)));
 				Mob mob = this.currentNpc.get();
-				World.getInstanceManager().isolate(mob, instance);
+				InstanceManager.get().isolate(mob, instance);
 				World.get().getNpcs().add(mob);
 				mob.getCombatBuilder().attack(player);
 				timer = 0;
@@ -76,7 +77,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	
 	@Override
 	public void enter(Player player) {
-		World.getInstanceManager().isolate(player, instance);
+		InstanceManager.get().isolate(player, instance);
 		player.move(new Position(1899, 5366, 2));
 		
 		player.message("The next wave will start in 6 seconds...");
@@ -187,7 +188,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	private void leave(Player player) {
 		player.setMinigame(Optional.empty());
 		player.setInstance(0);
-		World.getInstanceManager().open(instance);
+		InstanceManager.get().open(instance);
 		player.teleport(GameConstants.STARTING_POSITION);
 		this.destruct();
 	}

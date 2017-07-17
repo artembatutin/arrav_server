@@ -1,7 +1,9 @@
 package net.edge.content.commands.impl;
 
+import net.edge.content.clanchat.ClanManager;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.market.MarketItem;
+import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.net.packet.in.NpcInformationPacket;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
@@ -29,7 +31,6 @@ public final class SaveCommand implements Command {
 				while((other = it.next()) != null) {
 					new PlayerSerialization(other).serialize();
 				}
-				World.getClanManager().save();
 				player.message("Character files have been saved for everyone online!");
 				break;
 			case "drops":
@@ -55,11 +56,11 @@ public final class SaveCommand implements Command {
 				player.message("Serialized market prices!");
 				break;
 			case "clans"://included in hook.
-				World.getClanManager().save();
+				ClanManager.get().save();
 				player.message("Serialized shops!");
 				break;
 			case "board"://included in hook.
-				World.getScoreboardManager().serializeIndividualScoreboard();
+				ScoreboardManager.get().serializeIndividualScoreboard();
 				player.message("Serialized scoreboard statistics!");
 				break;
 			case "itemdefs":

@@ -16,6 +16,8 @@ import net.edge.action.ActionInitializer;
 import net.edge.action.impl.*;
 import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.ObjectAction;
+import net.edge.content.shootingstar.ShootingStarManager;
+import net.edge.content.trivia.TriviaTask;
 import net.edge.net.EdgevilleChannelInitializer;
 import net.edge.net.NetworkConstants;
 import net.edge.net.PunishmentHandler;
@@ -30,6 +32,7 @@ import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.world.World;
 import net.edge.world.entity.actor.attribute.AttributeKey;
+import net.edge.world.locale.InstanceManager;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -121,7 +124,8 @@ public final class Application {
 			launch.shutdown();
 			launch.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
 			World.get().start();
-			World.getInstanceManager().close(0);
+			InstanceManager.get().close(0);
+			TriviaTask.getBot().submit();
 			World.get().submit(World.getNpcMovementTask());
 			World.get().submit(new RestoreStatTask());
 			World.get().submit(new Task(100, false) {
@@ -129,16 +133,15 @@ public final class Application {
 				public void execute() {
 					PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
 					LocalDate date = LocalDate.now();
-					ScoreboardManager score = World.getScoreboardManager();
+					ScoreboardManager score = ScoreboardManager.get();
 					if(date.getDayOfWeek().equals(DayOfWeek.MONDAY) && !score.isResetPlayerScoreboardStatistic()) {
 						score.resetPlayerScoreboard();
 					} else if(!date.getDayOfWeek().equals(DayOfWeek.MONDAY) && score.isResetPlayerScoreboardStatistic()) {
 						score.setResetPlayerScoreboardStatistic(false);
 					}
-					World.getShootingStarEvent().process();
+					ShootingStarManager.get().process();
 				}
 			});
-			World.getTriviaBot().submit();
 			LOGGER.info("Edgeville is now online!");
 			STARTING = false;
 		} catch(Exception e) {

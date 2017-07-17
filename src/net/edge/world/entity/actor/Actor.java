@@ -296,6 +296,12 @@ public abstract class Actor extends Entity {
 	public abstract boolean inMulti();
 	
 	/**
+	 * Condition if the {@link Actor} is in wilderness area.
+	 * @return wilderness area flag.
+	 */
+	public abstract boolean inWilderness();
+	
+	/**
 	 * Condition if this {@link Actor} is active in the world.
 	 * @return {@code true} if it is, false otherwise.
 	 */

@@ -9,6 +9,7 @@ import net.edge.content.skill.construction.room.RoomFurniture;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.InstanceManager;
 
 import static net.edge.content.skill.construction.HouseController.State.*;
 
@@ -140,7 +141,7 @@ public class House {
 	
 	public void addPlayer(Player visitor) {
 		if(instance == 0)
-			instance = World.getInstanceManager().closeNext();
+			instance = InstanceManager.get().closeNext();
 		if(visitors.contains(visitor))
 			return;
 		if(visitors.isEmpty()) {
@@ -165,7 +166,7 @@ public class House {
 		player.getHouse().get().setActive(null);
 		player.getHouse().get().setState(AWAY);
 		if(visitors.isEmpty()) {
-			World.getInstanceManager().open(instance);
+			InstanceManager.get().open(instance);
 			instance = 0;
 			for(Mob n : mobs) {
 				removeNpc(n);
@@ -175,7 +176,7 @@ public class House {
 	
 	public void addNpc(Mob mob) {
 		if(instance == 0)
-			instance = World.getInstanceManager().closeNext();
+			instance = InstanceManager.get().closeNext();
 		if(mobs.contains(mob))
 			return;
 		mob.setInstance(instance);

@@ -9,6 +9,7 @@ import net.edge.net.packet.out.SendItemOnInterfaceSlot;
 import net.edge.util.Stopwatch;
 import net.edge.world.entity.item.container.session.ExchangeSession;
 import net.edge.world.entity.item.container.session.ExchangeSessionActionType;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.entity.item.container.session.ExchangeSessionType;
 import net.edge.content.minigame.dueling.DuelMinigame;
 import net.edge.content.minigame.dueling.DuelingRules;
@@ -57,19 +58,19 @@ public final class DuelSession extends ExchangeSession {
 			return;
 		}
 		
-		DuelSession session = (DuelSession) World.getExchangeSessionManager().isAvailable(player, requested, ExchangeSessionType.DUEL).orElse(null);
+		DuelSession session = (DuelSession) ExchangeSessionManager.get().isAvailable(player, requested, ExchangeSessionType.DUEL).orElse(null);
 		
 		if(session != null) {
 			session.setStage(OFFER_ITEMS);
 			session.updateMainComponents();
-			this.getPlayers().forEach(World.getExchangeSessionManager()::resetRequests);
+			this.getPlayers().forEach(ExchangeSessionManager.get()::resetRequests);
 			session.setAttachment(null);
 		} else {
 			session = new DuelSession(player, requested, ExchangeSession.REQUEST);
 			player.message("Sending duel request...");
 			requested.message(player.getFormatUsername() + ":duelreq:");
 			session.setAttachment(player);
-			World.getExchangeSessionManager().add(session);
+			ExchangeSessionManager.get().add(session);
 		}
 	}
 	
@@ -87,7 +88,7 @@ public final class DuelSession extends ExchangeSession {
 				this.accept(player, CONFIRM_DECISION);
 				return;
 			case 148025:
-				World.getExchangeSessionManager().reset(player, ExchangeSessionType.DUEL);
+				ExchangeSessionManager.get().reset(player, ExchangeSessionType.DUEL);
 				return;
 		}
 	}

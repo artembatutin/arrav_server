@@ -7,6 +7,7 @@ import net.edge.world.Animation;
 import net.edge.world.Hit;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.area.AreaManager;
 
 import java.util.stream.IntStream;
 
@@ -57,7 +58,7 @@ public final class OverloadEffectTask extends Task {
      */
     @Override
     protected void execute() {
-        if(World.getAreaManager().inArea(player, "WILDERNESS") || cycle < 1) {
+        if(player.inWilderness() || cycle < 1) {
             player.message("The effects of overload have ran out.");
             this.cancel();
             return;

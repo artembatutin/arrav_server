@@ -18,6 +18,7 @@ import net.edge.world.entity.actor.mob.impl.corp.CorporealBeast;
 import net.edge.world.entity.actor.mob.strategy.DynamicCombatStrategy;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
+import net.edge.world.locale.area.AreaManager;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +42,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 
 	@Override
 	public boolean canOutgoingAttack(Actor victim) {
-		return victim.isPlayer() && World.getAreaManager().inArea(victim.getPosition(), "CORPOREAL_BEAST");
+		return victim.isPlayer() && AreaManager.get().inArea(victim.getPosition(), "CORPOREAL_BEAST");
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 		CombatType[] data = npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE} : new CombatType[]{CombatType.MAGIC};
 		CombatType c = RandomUtils.random(data);
 
-		List<Player> players = npc.getRegion().getPlayers().stream().filter(p -> World.getAreaManager().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList());
+		List<Player> players = npc.getRegion().getPlayers().stream().filter(p -> AreaManager.get().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList());
 		return type(victim, c, players);
 	}
 

@@ -15,6 +15,11 @@ import java.util.stream.IntStream;
 public final class InstanceManager {
 	
 	/**
+	 * The instance manager for the world.
+	 */
+	private static final InstanceManager INSTANCE_MANAGER = new InstanceManager();
+	
+	/**
 	 * The array of instances that exist on the world.
 	 */
 	private static final boolean[] INSTANCES = new boolean[1000];
@@ -95,6 +100,13 @@ public final class InstanceManager {
 		int i = getOpenInstance();
 		INSTANCES[i] = true;
 		return i;
+	}
+	
+	/**
+	 * Returns the instance manager.
+	 */
+	public static InstanceManager get() {
+		return INSTANCE_MANAGER;
 	}
 	
 }

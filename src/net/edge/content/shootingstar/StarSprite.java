@@ -172,7 +172,7 @@ public final class StarSprite extends Mob {
 		protected void execute() {
 			this.cancel();
 			World.get().getNpcs().remove(sprite);
-			World.getShootingStarEvent().stopwatch.reset();
+			ShootingStarManager.get().stopwatch.reset();
 		}
 
 	}

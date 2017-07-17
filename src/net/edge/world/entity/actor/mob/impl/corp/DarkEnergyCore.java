@@ -13,6 +13,7 @@ import net.edge.world.Hit.HitType;
 import net.edge.world.Projectile;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.area.AreaManager;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -103,7 +104,7 @@ public final class DarkEnergyCore extends Mob {
 		
 		@Override
 		protected void execute() {
-			Player victim = RandomUtils.random(core.getRegion().getPlayers().stream().filter(p -> World.getAreaManager().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList()));
+			Player victim = RandomUtils.random(core.getRegion().getPlayers().stream().filter(p -> AreaManager.get().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList()));
 			if(core.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || core.isDead() || victim.isDead()) {
 				return;
 			}
@@ -166,7 +167,7 @@ public final class DarkEnergyCore extends Mob {
 				return;
 			}
 			
-			List<Player> possibleVictims = core.getRegion().getPlayers().stream().filter(p -> World.getAreaManager().inArea(p.getPosition(), "CORPOREAL_BEAST") && new Boundary(p.getPosition(), p.size()).inside(core.getPosition(), 3)).collect(Collectors.toList());
+			List<Player> possibleVictims = core.getRegion().getPlayers().stream().filter(p -> AreaManager.get().inArea(p.getPosition(), "CORPOREAL_BEAST") && new Boundary(p.getPosition(), p.size()).inside(core.getPosition(), 3)).collect(Collectors.toList());
 			
 			if(possibleVictims.isEmpty()) {
 				return;

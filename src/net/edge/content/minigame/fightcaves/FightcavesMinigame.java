@@ -7,6 +7,7 @@ import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.minigame.SequencedMinigame;
+import net.edge.world.locale.InstanceManager;
 import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
@@ -83,7 +84,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	/**
 	 * The instance of the current fightcave minigame.
 	 */
-	private final int instance = World.getInstanceManager().closeNext();
+	private final int instance = InstanceManager.get().closeNext();
 	
 	/**
 	 * The array of active monsters.
@@ -152,7 +153,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 					monsters[i] = new DefaultMob(wave[i], RandomUtils.random(SPAWNS));
 					monsters[i].setRespawn(false);
 					monsters[i].setOwner(player);
-					World.getInstanceManager().isolate(monsters[i], instance);
+					InstanceManager.get().isolate(monsters[i], instance);
 					World.get().getNpcs().add(monsters[i]);
 					monsters[i].setViewingDistance(100);
 					monsters[i].getCombatBuilder().attack(player);
@@ -212,7 +213,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	
 	@Override
 	public void enter(Player player) {
-		World.getInstanceManager().isolate(player, instance);
+		InstanceManager.get().isolate(player, instance);
 		player.move(new Position(2413, 5117));
 		timer = DELAY;
 		started = false;
@@ -230,7 +231,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 				continue;
 			World.get().getNpcs().remove(monster);
 		}
-		World.getInstanceManager().open(instance);
+		InstanceManager.get().open(instance);
 		player.setInstance(0);
 		player.setMinigame(Optional.empty());
 		player.move(new Position(2436, 5169));

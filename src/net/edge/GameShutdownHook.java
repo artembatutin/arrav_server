@@ -3,8 +3,10 @@ package net.edge;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import net.edge.content.clanchat.ClanManager;
 import net.edge.content.commands.impl.BugCommand;
 import net.edge.content.market.MarketItem;
+import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.net.packet.in.NpcInformationPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.drop.Drop;
@@ -47,8 +49,8 @@ public final class GameShutdownHook extends Thread {
 				}
 			});
 			exit.submit(() -> {
-				World.getClanManager().save();
-				World.getScoreboardManager().serializeIndividualScoreboard();
+				ClanManager.get().save();
+				ScoreboardManager.get().serializeIndividualScoreboard();
 				MarketItem.serializeMarketItems();
 			});
 			exit.submit(() -> {

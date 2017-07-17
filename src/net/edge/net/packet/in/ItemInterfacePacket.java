@@ -3,6 +3,7 @@ package net.edge.net.packet.in;
 import net.edge.content.Attributes;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.item.container.session.ExchangeSession;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.entity.item.container.session.ExchangeSessionType;
 import net.edge.content.skill.crafting.JewelleryMoulding;
 import net.edge.content.skill.smithing.Smithing;
@@ -93,7 +94,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		if(Smithing.forge(player, interfaceId, slot, 1)) {
 			return;
 		}
-		Optional<ExchangeSession> session = World.getExchangeSessionManager().getExchangeSession(player);
+		Optional<ExchangeSession> session = ExchangeSessionManager.get().getExchangeSession(player);
 		switch(interfaceId) {
 			case 1688:
 				player.getEquipment().unequip(slot);
@@ -153,7 +154,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		if(Smithing.forge(player, interfaceId, slot, 5)) {
 			return;
 		}
-		Optional<ExchangeSession> session = World.getExchangeSessionManager().getExchangeSession(player);
+		Optional<ExchangeSession> session = ExchangeSessionManager.get().getExchangeSession(player);
 		switch(interfaceId) {
 			case 3322:
 				if(!session.isPresent()) {
@@ -204,7 +205,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		if(Smithing.forge(player, interfaceId, slot, 10)) {
 			return;
 		}
-		Optional<ExchangeSession> session = World.getExchangeSessionManager().getExchangeSession(player);
+		Optional<ExchangeSession> session = ExchangeSessionManager.get().getExchangeSession(player);
 		switch(interfaceId) {
 			case 3823:
 				if(player.getMarketShop() != null)
@@ -258,7 +259,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		if(Attributes.fourthSlot(player, interfaceId, itemId, slot)) {
 			return;
 		}
-		Optional<ExchangeSession> session = World.getExchangeSessionManager().getExchangeSession(player);
+		Optional<ExchangeSession> session = ExchangeSessionManager.get().getExchangeSession(player);
 		switch(interfaceId) {
 			case 3322:
 				if(!session.isPresent()) {

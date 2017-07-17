@@ -3,11 +3,12 @@ package net.edge.world.entity.actor.player;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.GameServer;
+import net.edge.Application;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
 import net.edge.content.ViewingOrb;
 import net.edge.content.achievements.AchievementKey;
+import net.edge.content.clanchat.ClanManager;
 import net.edge.content.clanchat.ClanMember;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatType;
@@ -36,6 +37,7 @@ import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.pets.Pet;
 import net.edge.content.pets.PetManager;
 import net.edge.content.quest.QuestManager;
+import net.edge.content.shootingstar.ShootingStarManager;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.SkillActionTask;
@@ -48,8 +50,10 @@ import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.teleport.impl.DefaultTeleportSpell;
+import net.edge.content.trivia.TriviaTask;
 import net.edge.content.wilderness.WildernessActivity;
 import net.edge.GameConstants;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.locale.Position;
 import net.edge.world.locale.loc.Location;
 import net.edge.net.codec.GameBuffer;
@@ -669,7 +673,7 @@ public final class Player extends Actor {
 			if($it.onLogin(this))
 				World.get().submit(new CombatEffectTask(this, $it));
 		});
-		World.getExchangeSessionManager().resetRequests(this);
+		ExchangeSessionManager.get().resetRequests(this);
 		message(GameConstants.WELCOME_MESSAGE);
 		if(UpdateCommand.inProgess == 1) {
 			message("@red@There is currently an update schedule in progress. You'll be kicked off soon.");
@@ -695,7 +699,7 @@ public final class Player extends Actor {
 		MinigameHandler.executeVoid(this, m -> m.onLogin(this));
 		PlayerPanel.refreshAll(this);
 		if(!clan.isPresent() && isHuman()) {
-			World.getClanManager().join(this, "avro");
+			ClanManager.get().join(this, "avro");
 		}
 		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
 			//new IntroductionCutscene(this).prerequisites();
@@ -703,12 +707,12 @@ public final class Player extends Actor {
 		if(World.getFirepitEvent().getFirepit().isActive()) {
 			this.message("@red@[ANNOUNCEMENT]: Enjoy the double experience event for another " + Utility.convertTime(World.getFirepitEvent().getFirepit().getTime()) + ".");
 		}
-		if(World.getShootingStarEvent().getShootingStar() != null && World.getShootingStarEvent().getShootingStar().isReg()) {
-			this.message("@red@[ANNOUNCEMENT]: " + World.getShootingStarEvent().getShootingStar().getLocationData().getMessageWhenActive());
+		if(ShootingStarManager.get().getShootingStar() != null && ShootingStarManager.get().getShootingStar().isReg()) {
+			this.message("@red@[ANNOUNCEMENT]: " + ShootingStarManager.get().getShootingStar().getLocationData().getMessageWhenActive());
 		}
-		World.getTriviaBot().onLogin(this);
-		if(GameServer.UPDATING > 0) {
-			out(new SendUpdateTimer((int) (GameServer.UPDATING * 50 / 30)));
+		TriviaTask.getBot().onLogin(this);
+		if(Application.UPDATING > 0) {
+			out(new SendUpdateTimer((int) (Application.UPDATING * 50 / 30)));
 		}
 		Summoning.login(this);
 		if(getRights().isStaff()) {
@@ -754,6 +758,11 @@ public final class Player extends Actor {
 	}
 	
 	@Override
+	public boolean inWilderness() {
+		return wildernessInterface;
+	}
+	
+	@Override
 	public boolean active() {
 		return getState() == EntityState.ACTIVE;
 	}
@@ -764,11 +773,10 @@ public final class Player extends Actor {
 		Pet.onLogout(this);
 		Construction.onLogout(this);
 		Summoning.dismiss(this, true);
-		World.getExchangeSessionManager().reset(this);
+		ExchangeSessionManager.get().reset(this);
 		if(getMarketShop() != null)
 			MarketShop.clearFromShop(this);
 		World.get().getTask().cancel(this);
-		World.getExchangeSessionManager().reset(this);
 		setSkillAction(Optional.empty());
 		resetOverloadEffect(true);
 		MinigameHandler.executeVoid(this, m -> m.onLogout(this));
@@ -1928,15 +1936,6 @@ public final class Player extends Actor {
 	 */
 	public void setSkullIcon(int skullIcon) {
 		this.skullIcon = skullIcon;
-	}
-	
-	/**
-	 * Determines if a wilderness interface is present.
-	 * @return {@code true} if a wilderness interface is present, {@code false}
-	 * otherwise.
-	 */
-	public boolean isWildernessInterface() {
-		return wildernessInterface;
 	}
 	
 	/**

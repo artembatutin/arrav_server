@@ -1,7 +1,8 @@
 package net.edge.net.packet.in;
 
-import net.edge.GameServer;
+import net.edge.Application;
 import net.edge.content.minigame.MinigameHandler;
+import net.edge.content.shootingstar.ShootingStarManager;
 import net.edge.content.skill.firemaking.Bonfire;
 import net.edge.content.skill.hunter.Hunter;
 import net.edge.action.ActionContainer;
@@ -100,7 +101,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 		if(!o.isPresent())
 			return;
 		final GameObject object = o.get();
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && GameServer.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[OBJ"+action+"]:" + object.getId() + " - " + object.getGlobalPos().toString());
 		boolean distanceIgnore = (action == 1 && (objectId == 85584 || objectId == 85532 || objectId == 85534));
 		Boundary boundary = new Boundary(position, object.getDefinition().getSize());
@@ -115,7 +116,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 							return;
 						if(Bonfire.addLogs(player, new Item(-100), object, true))
 							return;
-						if(World.getShootingStarEvent().mine(player, objectId))
+						if(ShootingStarManager.get().mine(player, objectId))
 							return;
 						if(Hunter.claim(player, object))
 							return;
@@ -127,7 +128,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 							return;
 						if(event(player, object, SECOND))
 							return;
-						if(World.getShootingStarEvent().getShootingStar().prospect(player, objectId))
+						if(ShootingStarManager.get().getShootingStar().prospect(player, objectId))
 							return;
 						break;
 					case 3:

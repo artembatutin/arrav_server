@@ -6,6 +6,7 @@ import net.edge.util.log.Log;
 import net.edge.util.log.impl.TradeLog;
 import net.edge.world.entity.item.container.session.ExchangeSession;
 import net.edge.world.entity.item.container.session.ExchangeSessionActionType;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.entity.item.container.session.ExchangeSessionType;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
@@ -33,19 +34,19 @@ public final class TradeSession extends ExchangeSession {
 
 	@Override
 	public void onRequest(Player player, Player requested) {
-		TradeSession session = (TradeSession) World.getExchangeSessionManager().isAvailable(player, requested, ExchangeSessionType.TRADE).orElse(null);
+		TradeSession session = (TradeSession) ExchangeSessionManager.get().isAvailable(player, requested, ExchangeSessionType.TRADE).orElse(null);
 
 		if(session != null) {
 			session.setStage(OFFER_ITEMS);
 			session.updateMainComponents();
-			this.getPlayers().forEach(World.getExchangeSessionManager()::resetRequests);
+			this.getPlayers().forEach(ExchangeSessionManager.get()::resetRequests);
 			session.setAttachment(null);
 		} else {
 			session = new TradeSession(player, requested, ExchangeSession.REQUEST);
 			player.message("Sending trade request...");
 			requested.message(player.getFormatUsername() + ":tradereq:");
 			session.setAttachment(player);
-			World.getExchangeSessionManager().add(session);
+			ExchangeSessionManager.get().add(session);
 		}
 	}
 

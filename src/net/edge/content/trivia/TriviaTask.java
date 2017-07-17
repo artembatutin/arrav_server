@@ -9,6 +9,11 @@ import net.edge.world.entity.actor.player.Player;
  * @since 3-6-2017.
  */
 public final class TriviaTask extends Task {
+    
+    /**
+     * The trivia task bot.
+     */
+    private static final TriviaTask TRIVIA_BOT = new TriviaTask();
 
     /**
      * The entry of this trivia task.
@@ -55,5 +60,12 @@ public final class TriviaTask extends Task {
      */
     public void onLogin(Player player) {
         entry.onLogin(player);
+    }
+    
+    /**
+     * Returns the trivia bot handler.
+     */
+    public static TriviaTask getBot() {
+        return TRIVIA_BOT;
     }
 }

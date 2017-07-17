@@ -4,6 +4,7 @@ import net.edge.content.combat.Combat;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.combat.magic.lunars.LunarSpells;
 import net.edge.world.entity.item.container.session.ExchangeSession;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.entity.item.container.session.impl.DuelSession;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.MinigameHandler;
@@ -96,7 +97,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			return false;
 		}
 		if(Location.inDuelArena(attacker) && !attacker.getMinigame().isPresent()) {
-			World.getExchangeSessionManager().request(new DuelSession(attacker, victim, ExchangeSession.REQUEST));
+			ExchangeSessionManager.get().request(new DuelSession(attacker, victim, ExchangeSession.REQUEST));
 			attacker.getMovementQueue().reset();
 			return false;
 		}
@@ -105,8 +106,8 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			if(Location.inFunPvP(attacker) && Location.inFunPvP(victim)) {
 				return true;
 			}
-			if(!Location.inWilderness(attacker) || !Location.inWilderness(victim)) {
-				attacker.message("Both you and " + victim.getFormatUsername() + " need to be in the wilderness" + " to fight!");
+			if(!attacker.inWilderness() || !victim.inWilderness()) {
+				attacker.message("Both you and " + victim.getFormatUsername() + " need to be in the wilderness to fight!");
 				attacker.getMovementQueue().reset();
 				return false;
 			}

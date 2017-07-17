@@ -6,6 +6,7 @@ import net.edge.task.LinkedTaskSequence;
 import net.edge.content.skill.action.SkillActionTask;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -210,7 +211,7 @@ public final class ActivityManager {
 	 */
 	public void execute(ActivityType type) {
 		ActivityManager activity = player.getActivityManager();
-		activity.onHook(ActivityType.WALKING, () -> World.getExchangeSessionManager().reset(player));
+		activity.onHook(ActivityType.WALKING, () -> ExchangeSessionManager.get().reset(player));
 		activity.onHook(ActivityType.INTERFACE_CLICK, () -> player.getAttr().get("banking").set(false));
 		activity.onHook(ActivityType.INTERFACE_CLICK, () -> player.getAttr().get("bob").set(false));
 		skillHook(player, type);

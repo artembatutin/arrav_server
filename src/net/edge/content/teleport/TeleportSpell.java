@@ -4,6 +4,7 @@ import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.ActionListener;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.Skills;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.locale.Position;
 import net.edge.world.Spell;
 import net.edge.world.World;
@@ -94,8 +95,8 @@ public abstract class TeleportSpell extends Spell {
 		if(!this.canCast(player)) {
 			return false;
 		}
-		if(World.getExchangeSessionManager().inAnySession(player)) {
-			World.getExchangeSessionManager().reset(player);
+		if(ExchangeSessionManager.get().inAnySession(player)) {
+			ExchangeSessionManager.get().reset(player);
 		}
 		
 		player.getActivityManager().execute(ActivityManager.ActivityType.TELEPORT);

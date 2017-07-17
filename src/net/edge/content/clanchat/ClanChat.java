@@ -71,15 +71,15 @@ public final class ClanChat {
 				member.setMute(true);
 			}
 			if(rank.getValue() >= getLowest().getValue()) {
-				World.getClanManager().update(ClanChatUpdate.BAN_MODIFICATION, member);
+				ClanManager.get().update(ClanChatUpdate.BAN_MODIFICATION, member);
 			}
 			if(rank != ClanChatRank.MEMBER) {
 				if(!ranks.containsKey(player.getCredentials().getUsername())) {
 					ranks.put(player.getCredentials().getUsername(), rank);
 				}
 			}
-			World.getClanManager().update(ClanChatUpdate.JOINING, member);
-			World.getClanManager().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, this);
+			ClanManager.get().update(ClanChatUpdate.JOINING, member);
+			ClanManager.get().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, this);
 			return true;
 		}
 		return false;
@@ -99,8 +99,8 @@ public final class ClanChat {
 			player.setClan(Optional.empty());
 		}
 		
-		World.getClanManager().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, this);
-		World.getClanManager().clearOnLogin(player);
+		ClanManager.get().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, this);
+		ClanManager.get().clearOnLogin(player);
 	}
 	
 	/**

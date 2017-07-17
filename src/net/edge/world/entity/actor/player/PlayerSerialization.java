@@ -4,6 +4,7 @@ import com.google.gson.*;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.edge.content.achievements.AchievementKey;
+import net.edge.content.clanchat.ClanManager;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.skill.construction.House;
 import net.edge.content.skill.construction.room.Room;
@@ -326,7 +327,7 @@ public final class PlayerSerialization {
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			World.getClanManager().join(p, n.getAsString());
+			ClanManager.get().join(p, n.getAsString());
 		}
 	}, new Token("appearance") {
 		@Override

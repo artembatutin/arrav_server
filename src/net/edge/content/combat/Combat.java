@@ -1,6 +1,6 @@
 package net.edge.content.combat;
 
-import net.edge.GameServer;
+import net.edge.Application;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectType;
@@ -443,13 +443,13 @@ public final class Combat {
 			case MELEE:
 				max = Combat.calculateMaxMeleeHit(character, victim);
 				hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);
-				if(GameServer.DEBUG && character.isPlayer())
+				if(Application.DEBUG && character.isPlayer())
 					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
 				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.MELEE, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
 			case RANGED:
 				max = Combat.calculateMaxRangedHit(character, victim);
 				hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);
-				if(GameServer.DEBUG && character.isPlayer())
+				if(Application.DEBUG && character.isPlayer())
 					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
 				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.RANGED, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
 			case MAGIC:
@@ -460,7 +460,7 @@ public final class Combat {
 						max *= 1.2;
 				}
 				hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);
-				if(GameServer.DEBUG && character.isPlayer())
+				if(Application.DEBUG && character.isPlayer())
 					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
 				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.MAGIC, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
 			default:
@@ -713,7 +713,7 @@ public final class Combat {
 		double hitSucceed = A < D ? (A - 1.0) / (2.0 * D) : 1.0 - (D + 1.0) / (2.0 * A);
 		hitSucceed = hitSucceed >= 1.0 ? 0.99 : hitSucceed <= 0.0 ? 0.01 : hitSucceed;
 		
-		if(attacker.isPlayer() && GameServer.DEBUG) {
+		if(attacker.isPlayer() && Application.DEBUG) {
 			attacker.toPlayer().message("[DEBUG]: Your roll " + "[" + (Math.round(attackCalc * 1000.0) / 1000.0) + "] : " + "Victim's roll [" + (Math.round(defenceCalc * 1000.0) / 1000.0) + "] : Chance to hit [" + (100 * Math.round(hitSucceed * 1000.0) / 1000.0) + "%]");
 		}
 		return hitSucceed >= RandomUtils.nextDouble();
@@ -824,7 +824,7 @@ public final class Combat {
 		
 		maxHit = (int) (baseDamage * specialMultiplier);
 		
-		if(GameServer.DEBUG)
+		if(Application.DEBUG)
 			player.message("[DEBUG]: Maximum hit this turn " + "is [" + maxHit + "].");
 		return maxHit * 10;
 		
@@ -880,7 +880,7 @@ public final class Combat {
 		
 		maxHit = (int) (baseDamage * specialMultiplier);
 		
-		if(GameServer.DEBUG)
+		if(Application.DEBUG)
 			player.message("[DEBUG]: Maximum hit this turn " + "is [" + maxHit + "].");
 		return maxHit * 10;
 	}

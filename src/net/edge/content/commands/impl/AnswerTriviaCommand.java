@@ -1,5 +1,6 @@
 package net.edge.content.commands.impl;
 
+import net.edge.content.trivia.TriviaTask;
 import net.edge.world.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
@@ -23,9 +24,7 @@ public final class AnswerTriviaCommand implements Command {
     @Override
     public void execute(Player player, String[] cmd, String command) throws Exception {
         String answer = String.join(" ", cmd);
-
         answer = answer.substring(answer.indexOf(" ") + 1, answer.length());
-
-        World.getTriviaBot().entry.answer(player, answer);
+        TriviaTask.getBot().entry.answer(player, answer);
     }
 }

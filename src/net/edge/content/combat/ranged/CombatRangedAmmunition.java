@@ -19,6 +19,7 @@ import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.ItemIdentifiers;
+import net.edge.world.locale.area.AreaManager;
 
 /**
  * Represents a single definition of a ranged weapon which consists of details
@@ -606,7 +607,7 @@ public enum CombatRangedAmmunition {
 			}
 			
 			Combat.charactersWithinDistance(attacker, World.get().getLocalPlayers(attacker), 1).forEach(pl -> {
-				if(!World.getAreaManager().inMulti(pl)) {
+				if(!pl.inMulti()) {
 					return;
 				}
 				pl.graphic(new Graphic(2739, 80, 58));
@@ -627,7 +628,7 @@ public enum CombatRangedAmmunition {
 			}
 			
 			Combat.charactersWithinDistance(attacker, World.get().getLocalPlayers(attacker), 1).forEach(pl -> {
-				if(!World.getAreaManager().inMulti(pl)) {
+				if(!pl.inMulti()) {
 					return;
 				}
 				pl.graphic(new Graphic(2739, 80, 58));

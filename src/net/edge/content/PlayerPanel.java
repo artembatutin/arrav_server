@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.content.commands.impl.RedeemCommand;
 import net.edge.content.market.MarketCounter;
+import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.wilderness.WildernessActivity;
 import net.edge.action.impl.ButtonAction;
 import net.edge.GameConstants;
@@ -249,7 +250,7 @@ public enum PlayerPanel {
 		
 		PlayerPanel.EMPTY2.refresh(player, "");
 		PlayerPanel.INDIVIDUAL_SCOREBOARD_STATISTICS.refresh(player, "@or1@Indiv. Scoreboard Statistics:");
-		PlayerScoreboardStatistic s = World.getScoreboardManager().getPlayerScoreboard().get(player.getFormatUsername());
+		PlayerScoreboardStatistic s = ScoreboardManager.get().getPlayerScoreboard().get(player.getFormatUsername());
 		PlayerPanel.INDIVIDUAL_HIGHEST_KILLSTREAKS.refresh(player, "@or2@ - Highest Killstreak: @yel@" + (s == null ? 0 : s.getHighestKillstreak()));
 		PlayerPanel.INDIVIDUAL_CURRENT_KILLSTREAKS.refresh(player, "@or2@ - Current Killstreak: @yel@" + (s == null ? 0 : s.getCurrentKillstreak()));
 		PlayerPanel.INDIVIDUAL_KILLS.refresh(player, "@or2@ - Players killed: @yel@" + (s == null ? 0 : s.getKills()));

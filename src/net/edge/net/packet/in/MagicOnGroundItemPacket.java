@@ -1,6 +1,6 @@
 package net.edge.net.packet.in;
 
-import net.edge.GameServer;
+import net.edge.Application;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
@@ -20,7 +20,7 @@ public class MagicOnGroundItemPacket implements IncomingPacket {
 		int itemId = payload.getShort(true);
 		int spellId = payload.getShort(false, ByteTransform.A);
 		
-		if(GameServer.DEBUG) {
+		if(Application.DEBUG) {
 			player.message("item = " + itemId + ", spell = " + spellId + ", x = " + x + ", y = " + y + ".");
 		}
 	}

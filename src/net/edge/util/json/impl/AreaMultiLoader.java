@@ -2,6 +2,7 @@ package net.edge.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import net.edge.world.locale.area.AreaManager;
 import net.edge.world.locale.loc.CircleLocation;
 import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.loc.SquareLocation;
@@ -22,6 +23,6 @@ public final class AreaMultiLoader extends JsonLoader {
 	public void load(JsonObject reader, Gson builder) {
 		boolean square = reader.has("square");
 		Location loc = builder.fromJson(square ? reader.get("square") : reader.get("circle"), square ? SquareLocation.class : CircleLocation.class);
-		World.getAreaManager().getMultiZones().add(loc);
+		AreaManager.get().getMultiZones().add(loc);
 	}
 }

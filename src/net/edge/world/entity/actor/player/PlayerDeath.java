@@ -3,6 +3,7 @@ package net.edge.world.entity.actor.player;
 import com.google.common.collect.Ordering;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.net.PunishmentHandler;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendGraphic;
@@ -19,6 +20,7 @@ import net.edge.content.scoreboard.PlayerScoreboardStatistic;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
@@ -63,7 +65,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		getCharacter().getActivityManager().disable();
 		getCharacter().animation(new Animation(0x900, Animation.AnimationPriority.HIGH));
 		getCharacter().setSkillAction(Optional.empty());
-		World.getExchangeSessionManager().reset(getCharacter());
+		ExchangeSessionManager.get().reset(getCharacter());
 
 		if(!MinigameHandler.getMinigame(getCharacter()).isPresent()) {
 			deathMessage = true;
@@ -74,7 +76,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			final int hit = RandomUtils.inclusive(CombatConstants.MAXIMUM_RETRIBUTION_DAMAGE);
 			if(getCharacter().inMulti()) {
 				getCharacter().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
-				if(Location.inWilderness(getCharacter())) {
+				if(getCharacter().inWilderness()) {
 					getCharacter().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
 				}
 			} else {
@@ -102,7 +104,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			int maxHit = (int) ((getCharacter().getSkills()[Skills.PRAYER].getLevel() / 100.D) * 25);
 			if(getCharacter().inMulti()) {
 				getCharacter().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
-				if(Location.inWilderness(getCharacter())) {
+				if(getCharacter().inWilderness()) {
 					getCharacter().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getCharacter().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
 				}
 			} else {
@@ -152,26 +154,22 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				k.message("You don't receive any points because you have killed " + getCharacter().getFormatUsername() + " twice in a row.");
 				return;
 			}
-			//deaths
-			PlayerScoreboardStatistic characterStatistic = World.getScoreboardManager().getPlayerScoreboard().putIfAbsent(getCharacter().getFormatUsername(), new PlayerScoreboardStatistic(getCharacter().getFormatUsername()));
 			
+			//deaths
+			PlayerScoreboardStatistic characterStatistic = ScoreboardManager.get().getPlayerScoreboard().putIfAbsent(getCharacter().getFormatUsername(), new PlayerScoreboardStatistic(getCharacter().getFormatUsername()));
 			if(characterStatistic == null) {
 				characterStatistic = new PlayerScoreboardStatistic(getCharacter().getFormatUsername());
 			}
-			
 			PlayerPanel.INDIVIDUAL_DEATHS.refresh(getCharacter(), "@or2@ - Current Player deaths: @yel@" + characterStatistic.getDeaths().incrementAndGet());
-			
 			PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(getCharacter(), "@or2@ - Total Player deaths: @yel@" + getCharacter().getDeathsByPlayer().incrementAndGet());
 			
 			//kills
-			PlayerScoreboardStatistic killerStatistic = World.getScoreboardManager().getPlayerScoreboard().putIfAbsent(k.getFormatUsername(), new PlayerScoreboardStatistic(k.getFormatUsername()));
-			
+			PlayerScoreboardStatistic killerStatistic = ScoreboardManager.get().getPlayerScoreboard().putIfAbsent(k.getFormatUsername(), new PlayerScoreboardStatistic(k.getFormatUsername()));
 			if(killerStatistic == null) {
 				killerStatistic = new PlayerScoreboardStatistic(k.getFormatUsername());
 			}
 			
 			PlayerPanel.INDIVIDUAL_KILLS.refresh(k, "@or2@ - Current Players killed: @yel@" + killerStatistic.getKills().incrementAndGet());
-			
 			PlayerPanel.TOTAL_PLAYER_KILLS.refresh(k, "@or2@ - Total Players killed: @yel@" + k.getPlayerKills().incrementAndGet());
 
 			//killstreak

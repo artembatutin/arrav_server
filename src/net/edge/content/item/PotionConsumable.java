@@ -16,6 +16,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Inventory;
+import net.edge.world.locale.area.AreaManager;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -41,7 +42,7 @@ public enum PotionConsumable {
 	OVERLOAD(15332, 15333, 15334, 15335) {
 		@Override
 		public boolean canDrink(Player player) {
-			if(World.getAreaManager().inArea(player, "WILDERNESS")) {
+			if(player.inWilderness()) {
 				player.message("You can't drink this potion in the wilderness.");
 				return false;
 			}
@@ -86,7 +87,7 @@ public enum PotionConsumable {
 	EXTREME_STRENGTH(15312, 15313, 15314, 15315) {
 		@Override
 		public boolean canDrink(Player player) {
-			if(World.getAreaManager().inArea(player, "WILDERNESS")) {
+			if(player.inWilderness()) {
 				player.message("You can't drink this potion in the wilderness.");
 				return false;
 			}
@@ -112,7 +113,7 @@ public enum PotionConsumable {
 	EXTREME_ATTACK(15308, 15309, 15310, 15311) {
 		@Override
 		public boolean canDrink(Player player) {
-			if(World.getAreaManager().inArea(player, "WILDERNESS")) {
+			if(player.inWilderness()) {
 				player.message("You can't drink this potion in the wilderness.");
 				return false;
 			}
@@ -138,7 +139,7 @@ public enum PotionConsumable {
 	EXTREME_DEFENCE(15316, 15317, 15318, 15319) {
 		@Override
 		public boolean canDrink(Player player) {
-			if(World.getAreaManager().inArea(player, "WILDERNESS")) {
+			if(player.inWilderness()) {
 				player.message("You can't drink this potion in the wilderness.");
 				return false;
 			}
@@ -164,7 +165,7 @@ public enum PotionConsumable {
 	EXTREME_RANGING(15324, 15325, 15326, 15327) {
 		@Override
 		public boolean canDrink(Player player) {
-			if(World.getAreaManager().inArea(player, "WILDERNESS")) {
+			if(player.inWilderness()) {
 				player.message("You can't drink this potion in the wilderness.");
 				return false;
 			}
@@ -190,7 +191,7 @@ public enum PotionConsumable {
 	EXTREME_MAGIC(15320, 15321, 15322, 15323) {
 		@Override
 		public boolean canDrink(Player player) {
-			if(World.getAreaManager().inArea(player, "WILDERNESS")) {
+			if(player.inWilderness()) {
 				player.message("You can't drink this potion in the wilderness.");
 				return false;
 			}
@@ -216,7 +217,7 @@ public enum PotionConsumable {
 	RECOVER_SPECIAL(15300, 15301, 15302, 15303) {
 		@Override
 		public boolean canDrink(Player player) {
-			if(World.getAreaManager().inArea(player, "WILDERNESS")) {
+			if(player.inWilderness()) {
 				player.message("You can't drink this potion in the wilderness.");
 				return false;
 			}

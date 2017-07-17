@@ -49,21 +49,21 @@ public final class ClanChatSettings {
 				Optional<ClanChatRank> talkR = ClanChatRank.forAction(action, false, false);
 				if(talkR.isPresent()) {
 					talk = talkR.get();
-					World.getClanManager().update(ClanChatUpdate.SETTING_MODIFICATION, clicker);
+					ClanManager.get().update(ClanChatUpdate.SETTING_MODIFICATION, clicker);
 				}
 				break;
 			case 392:
 				Optional<ClanChatRank> muteR = ClanChatRank.forAction(action, true, false);
 				if(muteR.isPresent()) {
 					mute = muteR.get();
-					World.getClanManager().update(ClanChatUpdate.SETTING_MODIFICATION, clicker);
+					ClanManager.get().update(ClanChatUpdate.SETTING_MODIFICATION, clicker);
 				}
 				break;
 			case 393:
 				Optional<ClanChatRank> banR = ClanChatRank.forAction(action, true, false);
 				if(banR.isPresent()) {
 					ban = banR.get();
-					World.getClanManager().update(ClanChatUpdate.SETTING_MODIFICATION, clicker);
+					ClanManager.get().update(ClanChatUpdate.SETTING_MODIFICATION, clicker);
 				}
 				break;
 			

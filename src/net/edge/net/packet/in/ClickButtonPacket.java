@@ -1,10 +1,11 @@
 package net.edge.net.packet.in;
 
-import net.edge.GameServer;
+import net.edge.Application;
 import net.edge.content.Emote;
 import net.edge.content.TabInterface;
 import net.edge.content.clanchat.ClanChatRank;
 import net.edge.content.clanchat.ClanChatUpdate;
+import net.edge.content.clanchat.ClanManager;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.combat.magic.lunars.LunarSpells;
 import net.edge.content.combat.special.CombatSpecial;
@@ -41,6 +42,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.Spellbook;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.object.GameObject;
 
 import java.util.concurrent.TimeUnit;
@@ -75,7 +77,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		int button = PROPER_READ ? payload.getShort() : hexToInt(payload.getBytes(2));
-		if(GameServer.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
+		if(Application.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}
 		
@@ -142,7 +144,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 		if(LeatherWorking.create(player, button)) {
 			return;
 		}
-		if(World.getExchangeSessionManager().buttonClickAction(player, button)) {
+		if(ExchangeSessionManager.get().buttonClickAction(player, button)) {
 			return;
 		}
 		if(Dialogues.executeOptionListeners(player, button)) {
@@ -169,12 +171,12 @@ public final class ClickButtonPacket implements IncomingPacket {
 						player.message("You are unable to do that.");
 					} else {
 						player.getClan().get().getClan().setName(TextUtils.capitalize(s));
-						World.getClanManager().update(ClanChatUpdate.NAME_MODIFICATION, player.getClan().get().getClan());
+						ClanManager.get().update(ClanChatUpdate.NAME_MODIFICATION, player.getClan().get().getClan());
 					}
 				})));
 				break;
 			case 241:
-				World.getClanManager().delete(player);
+				ClanManager.get().delete(player);
 				break;
 			case 118114:
 				LunarSpells.castSpellbookSwap(player);
@@ -196,16 +198,16 @@ public final class ClickButtonPacket implements IncomingPacket {
 					else
 						player.getClan().get().sendMessage("You don't have the requirements to do that.");
 				else
-					player.out(new SendEnterName("Your clan chat name:", t -> () -> World.getClanManager().create(player, t)));
+					player.out(new SendEnterName("Your clan chat name:", t -> () -> ClanManager.get().create(player, t)));
 				break;
 			case 83093:
 				player.widget(15106);
 				break;
 			case 195209:
 				if(player.getClan().isPresent())
-					World.getClanManager().exit(player);
+					ClanManager.get().exit(player);
 				else
-					player.out(new SendEnterName("Enter the name of the chat you wish to join.", s -> () -> World.getClanManager().join(player, s)));
+					player.out(new SendEnterName("Enter the name of the chat you wish to join.", s -> () -> ClanManager.get().join(player, s)));
 				break;
 			
 			case 59135:

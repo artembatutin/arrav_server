@@ -1,5 +1,6 @@
 package net.edge.content.scene.impl;
 
+import net.edge.content.clanchat.ClanManager;
 import net.edge.net.PunishmentHandler;
 import net.edge.net.packet.out.*;
 import net.edge.task.Task;
@@ -130,7 +131,7 @@ public final class IntroductionCutscene extends Cutscene {
 			player.setVisible(true);
 			player.getAttr().get("introduction_stage").set(2);
 			player.graphic(new Graphic(2189));
-			World.getClanManager().join(player, "avro");
+			ClanManager.get().join(player, "avro");
 		}).attachAfter(() -> {
 			player.move(new Position(3088, 3509));
 			player.widget(-5);

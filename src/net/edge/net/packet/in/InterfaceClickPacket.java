@@ -6,6 +6,7 @@ import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 
 /**
  * The message sent from the client when a player clicks certain options on an
@@ -19,7 +20,7 @@ public final class InterfaceClickPacket implements IncomingPacket {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.INTERFACE_CLICK))
 			return;
 		
-		if(World.getExchangeSessionManager().reset(player)) {
+		if(ExchangeSessionManager.get().reset(player)) {
 			return;
 		}
 		

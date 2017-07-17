@@ -9,6 +9,7 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.strategy.impl.corp.CorporealBeastCombatStrategy;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.area.AreaManager;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -123,7 +124,7 @@ public final class CorporealBeast extends Mob {
 		@Override
 		protected void execute() {
 			Collection<Player> players = beast.getRegion().getPlayers();
-			if(players.isEmpty() || players.stream().noneMatch(player -> World.getAreaManager().inArea(player.getPosition(), "CORPOREAL_BEAST"))) {
+			if(players.isEmpty() || players.stream().noneMatch(player -> AreaManager.get().inArea(player.getPosition(), "CORPOREAL_BEAST"))) {
 				beast.healEntity(beast.getMaxHealth());//this is capped.
 				beast.task.ifPresent(t -> {
 					t.setRunning(false);

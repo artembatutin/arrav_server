@@ -15,6 +15,11 @@ import net.edge.world.entity.Entity;
 public final class AreaManager {
 	
 	/**
+	 * This world's {@link AreaManager} used to handle to check if certain areas have permissions.
+	 */
+	private static final AreaManager AREA_MANAGER = new AreaManager();
+	
+	/**
 	 * The mapping of all the areas in the world.
 	 */
 	private static final Object2ObjectArrayMap<String, Area> AREAS = new Object2ObjectArrayMap<>();
@@ -78,5 +83,12 @@ public final class AreaManager {
 	 */
 	public ObjectList<Location> getMultiZones() {
 		return MULTI_ZONES;
+	}
+	
+	/**
+	 * Returns this world'{@link AreaManager}.
+	 */
+	public static AreaManager get() {
+		return AREA_MANAGER;
 	}
 }

@@ -28,6 +28,11 @@ import java.util.Map.Entry;
 public final class ScoreboardManager {
 	
 	/**
+	 * This world's {@link ScoreboardManager} used to check scores.
+	 */
+	private static final ScoreboardManager SCOREBOARD_MANAGER = new ScoreboardManager();
+	
+	/**
 	 * The mappings of the player scoreboard.
 	 */
 	private final Object2ObjectOpenHashMap<String, PlayerScoreboardStatistic> player_scoreboard = new Object2ObjectOpenHashMap<>();
@@ -149,9 +154,9 @@ public final class ScoreboardManager {
 				ap.chain(new PlayerDialogue("Ah, I think I understand now.").attachAfter(() -> ap.getBuilder().go(-7)));
 				
 				ap.chain(new PlayerDialogue("I would like to claim my rewards."));
-				if(World.getScoreboardManager().getPlayerScoreboardRewards().containsKey(player.getFormatUsername())) {
-					player.getInventory().addOrBank(new Item(12852, World.getScoreboardManager().getPlayerScoreboardRewards().get(player.getFormatUsername()).get()));
-					World.getScoreboardManager().getPlayerScoreboardRewards().remove(player.getFormatUsername());
+				if(ScoreboardManager.get().getPlayerScoreboardRewards().containsKey(player.getFormatUsername())) {
+					player.getInventory().addOrBank(new Item(12852, ScoreboardManager.get().getPlayerScoreboardRewards().get(player.getFormatUsername()).get()));
+					ScoreboardManager.get().getPlayerScoreboardRewards().remove(player.getFormatUsername());
 					ap.chain(new NpcDialogue(npc.getId(), "Ah yeah, there were some rewards waiting for you however,", "they have been added to your inventory or have been", "banked.").attachAfter(() -> ap.getBuilder().go(-10)));
 				} else {
 					ap.chain(new NpcDialogue(npc.getId(), "There are no rewards waiting for you.").attachAfter(() -> ap.getBuilder().go(-9)));
@@ -203,7 +208,13 @@ public final class ScoreboardManager {
 			ComparisonChain c = ComparisonChain.start().compare(arg1.getCurrentKillstreak().get(), arg0.getCurrentKillstreak().get()).compare(arg1.getKills().get(), arg0.getKills().get()).compare(arg0.getDeaths(), arg1.getDeaths());
 			return c.result();
 		}
-		
+	}
+	
+	/**
+	 * Returns this world's {@link ScoreboardManager}.
+	 */
+	public static ScoreboardManager get() {
+		return SCOREBOARD_MANAGER;
 	}
 	
 }

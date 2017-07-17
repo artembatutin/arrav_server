@@ -15,6 +15,11 @@ import java.util.stream.Collectors;
 public final class ExchangeSessionManager {
 	
 	/**
+	 * This world's {@link ExchangeSessionManager} used to handle container sessions.
+	 */
+	private static final ExchangeSessionManager EXCHANGE_SESSION_MANAGER = new ExchangeSessionManager();
+	
+	/**
 	 * The collection of sessions.
 	 */
 	private static final ObjectList<ExchangeSession> SESSIONS = new ObjectArrayList<>();
@@ -87,10 +92,6 @@ public final class ExchangeSessionManager {
 			player.message("You cannot send a trade request while the other player is teleporting.");
 			return false;
 		}
-		if(Objects.isNull(requested)) {
-			player.message("That player cannot be found, try again shortly.");
-			return false;
-		}
 		session.onRequest(player, requested);
 		return true;
 	}
@@ -103,18 +104,15 @@ public final class ExchangeSessionManager {
 	 */
 	public boolean buttonClickAction(Player player, int button) {
 		Optional<ExchangeSession> session = getExchangeSession(player);
-		
 		if(!session.isPresent()) {
 			return false;
 		}
-		
-		if(World.getExchangeSessionManager().containsSessionInconsistancies(player)) {
+		if(ExchangeSessionManager.get().containsSessionInconsistancies(player)) {
 			return false;
 		}
-		if(!World.getExchangeSessionManager().inSession(player, session.get().getType())) {
+		if(!ExchangeSessionManager.get().inSession(player, session.get().getType())) {
 			return false;
 		}
-		
 		session.get().onClickButton(player, button);
 		return true;
 	}
@@ -214,10 +212,13 @@ public final class ExchangeSessionManager {
 	 * {@link Optional#empty()}. otherwise.
 	 */
 	public Optional<ExchangeSession> isAvailable(Player requester, Player requested, ExchangeSessionType type) {
-		return SESSIONS.stream().filter(def -> def.getStage() == ExchangeSession.REQUEST).
-				filter(def -> def.getType().equals(type)).
-				filter(def -> def.getPlayers().containsAll(Arrays.asList(requester, requested))).
-				filter(def -> def.getAttachment().equals(requested)).findAny();
+		for(ExchangeSession session : SESSIONS) {
+			if(session == null)
+				continue;
+			if(session.getStage() == ExchangeSession.REQUEST && session.getType() == type && session.getPlayers().contains(requested) && session.getPlayers().contains(requester) && session.getAttachment().equals(requested))
+				return Optional.of(session);
+		}
+		return Optional.empty();
 	}
 	
 	/**
@@ -226,7 +227,13 @@ public final class ExchangeSessionManager {
 	 * @return an exchange session wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
 	public Optional<ExchangeSession> getExchangeSession(Player player) {
-		return SESSIONS.stream().filter(def -> this.inAnySession(player)).filter(def -> def.getPlayers().contains(player)).findAny();
+		for(ExchangeSession session : SESSIONS) {
+			if(session == null)
+				continue;
+			if(session.getPlayers().contains(player))
+				return Optional.of(session);
+		}
+		return Optional.empty();
 	}
 	
 	/**
@@ -235,7 +242,13 @@ public final class ExchangeSessionManager {
 	 * @return an exchange session wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
 	public Optional<ExchangeSession> getExchangeSession(Player player, ExchangeSessionType type) {
-		return SESSIONS.stream().filter(def -> def.getType().equals(type)).filter(def -> def.getPlayers().contains(player)).findAny();
+		for(ExchangeSession session : SESSIONS) {
+			if(session == null)
+				continue;
+			if(session.getType() == type && session.getPlayers().contains(player))
+				return Optional.of(session);
+		}
+		return Optional.empty();
 	}
 	
 	/**
@@ -246,11 +259,9 @@ public final class ExchangeSessionManager {
 	 */
 	public void finalize(Player player, ExchangeSessionActionType type) {
 		Optional<ExchangeSession> session = SESSIONS.stream().filter(def -> def.getPlayers().contains(player)).findAny();
-		
 		if(!session.isPresent()) {
 			return;
 		}
-		
 		session.get().finalize(type);
 	}
 	
@@ -262,4 +273,12 @@ public final class ExchangeSessionManager {
 	public boolean contains(ExchangeSession session) {
 		return SESSIONS.contains(session);
 	}
+	
+	/**
+	 * Returns this world's {@link ExchangeSessionManager}.
+	 */
+	public static ExchangeSessionManager get() {
+		return EXCHANGE_SESSION_MANAGER;
+	}
+	
 }

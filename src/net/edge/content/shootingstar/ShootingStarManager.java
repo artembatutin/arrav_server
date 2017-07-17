@@ -13,6 +13,11 @@ import java.util.concurrent.TimeUnit;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ShootingStarManager {
+	
+	/**
+	 * The shooting star event for the world.
+	 */
+	private static final ShootingStarManager SHOOTING_STAR_MANAGER = new ShootingStarManager();
 
 	/**
 	 * Represents the shooting star object.
@@ -52,7 +57,7 @@ public final class ShootingStarManager {
 	 * Generates a shooting star on a random location.
 	 * @return a shooting star on a random location.
 	 */
-	public ShootingStar generateStar() {
+	private ShootingStar generateStar() {
 		return new ShootingStar(RandomUtils.random(StarLocationData.VALUES.asList()));
 	}
 	
@@ -71,9 +76,13 @@ public final class ShootingStarManager {
 	 * @return {@code true} if the object was mined, {@code false} otherwise.
 	 */
 	public boolean mine(Player player, int objectId) {
-		if(star == null) {
-			return false;
-		}
-		return star.mine(player, objectId);
+		return star != null && star.mine(player, objectId);
+	}
+	
+	/**
+	 * Returns the shooting star event manager.
+	 */
+	public static ShootingStarManager get() {
+		return SHOOTING_STAR_MANAGER;
 	}
 }

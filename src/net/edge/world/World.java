@@ -2,7 +2,7 @@ package net.edge.world;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import net.edge.GameServer;
+import net.edge.Application;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.content.scoreboard.ScoreboardManager;
@@ -117,8 +117,8 @@ public final class World {
 	static {
 		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-			donation = new Database(!GameServer.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !GameServer.DEBUG ? "root" : "edge_avro", !GameServer.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
-			score = new Database(!GameServer.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !GameServer.DEBUG ? "root" : "edge_avro", !GameServer.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
+			donation = new Database(!Application.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !Application.DEBUG ? "root" : "edge_avro", !Application.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
+			score = new Database(!Application.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !Application.DEBUG ? "root" : "edge_avro", !Application.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -429,34 +429,14 @@ public final class World {
 	/* CONSTANTS DECLARATIONS */
 	
 	/**
-	 * The trivia task for this world.
-	 */
-	private static final TriviaTask TRIVIA_BOT = new TriviaTask();
-	
-	/**
 	 * The time the server has been running.
 	 */
 	private static final Stopwatch RUNNING_TIME = new Stopwatch().reset();
 	
 	/**
-	 * The shooting star event for the world.
-	 */
-	private static final ShootingStarManager SHOOTING_STAR_MANAGER = new ShootingStarManager();
-	
-	/**
 	 * The fire pit event for the world.
 	 */
 	private static final FirepitManager FIRE_PIT_EVENT = new FirepitManager();
-	
-	/**
-	 * The clan manager for the world.
-	 */
-	private static final ClanManager CLAN_MANAGER = new ClanManager();
-	
-	/**
-	 * The instance manager for the world.
-	 */
-	private static final InstanceManager INSTANCE_MANAGER = new InstanceManager();
 	
 	/**
 	 * The {@link RegionManager} that manages region caching.
@@ -469,11 +449,6 @@ public final class World {
 	private static final TraversalMap TRAVERSAL_MAP = new TraversalMap();
 	
 	/**
-	 * This world's {@link AreaManager} used to handle to check if certain areas have permissions.
-	 */
-	private static final AreaManager AREA_MANAGER = new AreaManager();
-	
-	/**
 	 * This world's straight line pathfinder used for NPCs movements.
 	 */
 	private static final SimplePathFinder SIMPLE_PATH_FINDER = new SimplePathFinder();
@@ -484,19 +459,9 @@ public final class World {
 	private static final SimplePathChecker SIMPLE_PATH_CHECKER = new SimplePathChecker();
 	
 	/**
-	 * This world's {@link ExchangeSessionManager} used to handle container sessions.
-	 */
-	private static final ExchangeSessionManager EXCHANGE_SESSION_MANAGER = new ExchangeSessionManager();
-	
-	/**
 	 * This world's {@link LoggingManager} used to log player actions.
 	 */
 	private static final LoggingManager LOG_MANAGER = new LoggingManager();
-	
-	/**
-	 * This world's {@link ScoreboardManager} used to check scores.
-	 */
-	private static final ScoreboardManager SCOREBOARD_MANAGER = new ScoreboardManager();
 	
 	/**
 	 * A integral {@link Task} that handles ranomized movement of all {@link Mob}s.
@@ -517,31 +482,10 @@ public final class World {
 	/* ASSETS GATHERS METHODS. */
 	
 	/**
-	 * Returns the trivia bot handler.
-	 */
-	public static TriviaTask getTriviaBot() {
-		return TRIVIA_BOT;
-	}
-	
-	/**
-	 * Returns this world's {@link ExchangeSessionManager}.
-	 */
-	public static ExchangeSessionManager getExchangeSessionManager() {
-		return EXCHANGE_SESSION_MANAGER;
-	}
-	
-	/**
 	 * Returns this world's {@link LoggingManager}.
 	 */
 	public static LoggingManager getLoggingManager() {
 		return LOG_MANAGER;
-	}
-	
-	/**
-	 * Returns this world's {@link ScoreboardManager}.
-	 */
-	public static ScoreboardManager getScoreboardManager() {
-		return SCOREBOARD_MANAGER;
 	}
 	
 	/**
@@ -559,27 +503,6 @@ public final class World {
 	}
 	
 	/**
-	 * Returns the shooting star event manager.
-	 */
-	public static ShootingStarManager getShootingStarEvent() {
-		return SHOOTING_STAR_MANAGER;
-	}
-	
-	/**
-	 * Returns the clan chat manager.
-	 */
-	public static ClanManager getClanManager() {
-		return CLAN_MANAGER;
-	}
-	
-	/**
-	 * Returns the instance manager.
-	 */
-	public static InstanceManager getInstanceManager() {
-		return INSTANCE_MANAGER;
-	}
-	
-	/**
 	 * Returns this world's {@link RegionManager}.
 	 */
 	public static RegionManager getRegions() {
@@ -591,13 +514,6 @@ public final class World {
 	 */
 	public static TraversalMap getTraversalMap() {
 		return TRAVERSAL_MAP;
-	}
-	
-	/**
-	 * Returns this world'{@link AreaManager}.
-	 */
-	public static AreaManager getAreaManager() {
-		return AREA_MANAGER;
 	}
 	
 	/**

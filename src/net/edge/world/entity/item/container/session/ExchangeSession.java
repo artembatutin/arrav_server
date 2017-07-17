@@ -136,10 +136,10 @@ public abstract class ExchangeSession {
 		if(player.getInventory().get(slot) == null) {
 			return false;
 		}
-		if(!World.getExchangeSessionManager().inAnySession(player)) {
+		if(!ExchangeSessionManager.get().inAnySession(player)) {
 			return false;
 		}
-		if(World.getExchangeSessionManager().containsSessionInconsistancies(player)) {
+		if(ExchangeSessionManager.get().containsSessionInconsistancies(player)) {
 			return false;
 		}
 		if(!canAddItem(player, invItem, slot)) {
@@ -183,10 +183,10 @@ public abstract class ExchangeSession {
 		if(getStage() != OFFER_ITEMS) {
 			return false;
 		}
-		if(!World.getExchangeSessionManager().inAnySession(player)) {
+		if(!ExchangeSessionManager.get().inAnySession(player)) {
 			return false;
 		}
-		if(World.getExchangeSessionManager().containsSessionInconsistancies(player)) {
+		if(ExchangeSessionManager.get().containsSessionInconsistancies(player)) {
 			return false;
 		}
 		if(!canRemoveItem(player, item)) {
@@ -236,7 +236,7 @@ public abstract class ExchangeSession {
 				break;
 		}
 		onReset();
-		World.getExchangeSessionManager().remove(this);
+		ExchangeSessionManager.get().remove(this);
 	}
 	
 	public static final int REQUEST = 1;

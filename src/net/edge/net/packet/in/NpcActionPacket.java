@@ -1,6 +1,6 @@
 package net.edge.net.packet.in;
 
-import net.edge.GameServer;
+import net.edge.Application;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.pets.Pet;
@@ -10,7 +10,6 @@ import net.edge.action.ActionContainer;
 import net.edge.action.impl.NpcAction;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
-import net.edge.world.locale.loc.Location;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
@@ -129,7 +128,7 @@ public final class NpcActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && GameServer.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[NPC1]:" + mob.toString());
 	}
 	
@@ -160,7 +159,7 @@ public final class NpcActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && GameServer.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[NPC2]:" + mob.toString());
 	}
 	
@@ -188,7 +187,7 @@ public final class NpcActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && GameServer.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[NPC3]:" + mob.toString());
 	}
 	
@@ -218,7 +217,7 @@ public final class NpcActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && GameServer.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[NPC4]:" + mob.toString());
 	}
 	

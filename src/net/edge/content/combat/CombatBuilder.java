@@ -8,6 +8,7 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobAggression;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.locale.area.AreaManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -229,7 +230,7 @@ public final class CombatBuilder {
 	 * @return pjing check condition.
 	 */
 	public boolean pjingCheck() {
-		return !character.getLastCombat().elapsed(5, TimeUnit.SECONDS) && World.getAreaManager().inArea(character, "WILDERNESS");
+		return !character.getLastCombat().elapsed(5, TimeUnit.SECONDS) && character.inWilderness();
 	}
 	
 	/**

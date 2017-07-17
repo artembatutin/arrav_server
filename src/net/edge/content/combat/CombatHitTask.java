@@ -1,6 +1,6 @@
 package net.edge.content.combat;
 
-import net.edge.GameServer;
+import net.edge.Application;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
@@ -12,6 +12,7 @@ import net.edge.world.entity.EntityState;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.area.AreaManager;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -199,7 +200,7 @@ public final class CombatHitTask extends Task {
 				return;
 			}
 
-			if(World.getAreaManager().inArea(player, "DUEL_ARENA") && player.getMinigame().isPresent()) {
+			if(AreaManager.get().inArea(player, "DUEL_ARENA") && player.getMinigame().isPresent()) {
 				return;
 			}
 
@@ -263,10 +264,10 @@ public final class CombatHitTask extends Task {
 							int hit = h.getDamage();
 							double mod = Math.abs(1 - CombatConstants.PRAYER_DAMAGE_REDUCTION);
 							h.setDamage((int) (hit * mod));
-							if(GameServer.DEBUG)
+							if(Application.DEBUG)
 								victim.toPlayer().message("[DEBUG]: Damage " + "reduced by opponents prayer [" + (hit - h.getDamage()) + "]");
 							mod = Math.round(RandomUtils.nextDouble() * 100.0) / 100.0;
-							if(GameServer.DEBUG)
+							if(Application.DEBUG)
 								victim.toPlayer().message("[DEBUG]: Chance " + "of opponents prayer cancelling hit [" + mod + "/" + CombatConstants.PRAYER_ACCURACY_REDUCTION + "]");
 							if(mod <= CombatConstants.PRAYER_ACCURACY_REDUCTION) {
 								h.setAccurate(false);

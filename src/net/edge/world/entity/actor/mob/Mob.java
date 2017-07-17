@@ -284,6 +284,11 @@ public abstract class Mob extends Actor {
 		return Location.inMultiCombat(this);
 	}
 	
+	@Override
+	public boolean inWilderness() {
+		return Location.inWilderness(this);
+	}
+	
 	/**
 	 * Activates the {@code TRANSFORM} update mask for this non-player
 	 * character.

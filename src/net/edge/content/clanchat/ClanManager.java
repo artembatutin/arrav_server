@@ -21,6 +21,11 @@ import java.util.Optional;
 public final class ClanManager {
 	
 	/**
+	 * The clan manager for the world.
+	 */
+	private static final ClanManager CLAN_MANAGER = new ClanManager();
+	
+	/**
 	 * The collection of clans on this world.
 	 */
 	private static final Object2ObjectArrayMap<String, ClanChat> GLOBAL_CLANS = new Object2ObjectArrayMap<>();
@@ -195,6 +200,13 @@ public final class ClanManager {
 			json.split();
 		}
 		json.publish("./data/json/clans.json");
+	}
+	
+	/**
+	 * Returns the clan chat manager.
+	 */
+	public static ClanManager get() {
+		return CLAN_MANAGER;
 	}
 	
 }

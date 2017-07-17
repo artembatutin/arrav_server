@@ -304,11 +304,10 @@ public abstract class GameObject {
 	
 	/**
 	 * Finds if this object is an anchor point for the door.
-	 * @param direction direction of the door.
+	 * @param obj clicked object.
 	 * @return flag.
 	 */
 	public boolean isAdjacantDoor(GameObject obj) {
-		
 		int dx = getX() - obj.getX();
 		int dy = getY() - obj.getY();
 		if(dx >= 1 && direction == EAST) {

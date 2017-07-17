@@ -3,6 +3,7 @@ package net.edge.world.locale.loc;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.Entity;
+import net.edge.world.locale.area.AreaManager;
 
 import java.util.Arrays;
 import java.util.List;
@@ -108,7 +109,7 @@ public abstract class Location {
 	 * {@code false} otherwise.
 	 */
 	public static boolean inFunPvP(Entity entity) {
-		return World.getAreaManager().inArea(entity.getPosition(), "FUN_PVP");
+		return AreaManager.get().inArea(entity.getPosition(), "FUN_PVP");
 	}
 	
 	/**
@@ -118,7 +119,7 @@ public abstract class Location {
 	 * {@code false} otherwise.
 	 */
 	public static boolean inMultiCombat(Entity entity) {
-		return World.getAreaManager().inMulti(entity);
+		return AreaManager.get().inMulti(entity);
 	}
 	
 	/**
@@ -138,7 +139,7 @@ public abstract class Location {
 	 * {@code false} otherwise.
 	 */
 	public static boolean inWilderness(Position pos) {
-		return World.getAreaManager().inArea(pos, "WILDERNESS") && !World.getAreaManager().inArea(pos, "CLAN_WARS");
+		return AreaManager.get().inArea(pos, "WILDERNESS") && !AreaManager.get().inArea(pos, "CLAN_WARS");
 	}
 	
 	/**
@@ -148,7 +149,7 @@ public abstract class Location {
 	 * {@code false} otherwise.
 	 */
 	public static boolean inDuelArena(Entity entity) {
-		return World.getAreaManager().inArea(entity.getPosition(), "DUEL_ARENA");
+		return AreaManager.get().inArea(entity.getPosition(), "DUEL_ARENA");
 	}
 	
 	/**
@@ -158,7 +159,7 @@ public abstract class Location {
 	 * {@code false} otherwise.
 	 */
 	public static boolean inGodwars(Entity entity) {
-		return World.getAreaManager().inArea(entity.getPosition(), "GODWARS");
+		return AreaManager.get().inArea(entity.getPosition(), "GODWARS");
 	}
 	
 	/**
@@ -168,7 +169,7 @@ public abstract class Location {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isAtHome(Entity entity) {
-		return World.getAreaManager().inArea(entity.getPosition(), "HOME");
+		return AreaManager.get().inArea(entity.getPosition(), "HOME");
 	}
 	
 	/**

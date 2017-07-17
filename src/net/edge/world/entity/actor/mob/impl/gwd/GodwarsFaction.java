@@ -9,6 +9,7 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobType;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.area.AreaManager;
 import net.edge.world.object.GameObject;
 
 /**
@@ -93,7 +94,7 @@ public enum GodwarsFaction {
 						return false;
 					}
 					
-					if(!World.getAreaManager().inArea(player, "GODWARS")) {
+					if(!AreaManager.get().inArea(player, "GODWARS")) {
 						return false;
 					}
 					
@@ -135,7 +136,7 @@ public enum GodwarsFaction {
 		if(t != MobType.ARMADYL_SOLDIER && t != MobType.ZAMORAK_SOLDIER && t != MobType.SARADOMIN_SOLDIER && t != MobType.BANDOS_SOLIDER)
 			return false;
 		GodwarsSoldier s = (GodwarsSoldier) mob;
-		if(!World.getAreaManager().inArea(s, "GODWARS") || !World.getAreaManager().inArea(player, "GODWARS")) {
+		if(!AreaManager.get().inArea(s, "GODWARS") || !AreaManager.get().inArea(player, "GODWARS")) {
 			return false;
 		}
 		if(player.getGodwarsKillcount()[s.faction.id] == 100) {
