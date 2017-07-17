@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import net.edge.content.commands.impl.RedeemCommand;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.wilderness.WildernessActivity;
-import net.edge.event.impl.ButtonEvent;
+import net.edge.action.impl.ButtonAction;
 import net.edge.game.GameConstants;
 import net.edge.net.packet.out.SendEnterName;
 import net.edge.net.packet.out.SendLink;
@@ -261,7 +261,7 @@ public enum PlayerPanel {
 	 */
 	public static void event() {
 		for(PlayerPanel p : PlayerPanel.values()) {
-			ButtonEvent e = new ButtonEvent() {
+			ButtonAction e = new ButtonAction() {
 				@Override
 				public boolean click(Player player, int button) {
 					p.onClick(player);

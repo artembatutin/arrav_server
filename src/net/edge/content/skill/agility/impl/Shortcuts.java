@@ -7,7 +7,7 @@ import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Steppable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.locale.Position;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
@@ -38,7 +38,7 @@ public final class Shortcuts extends AgilityCourse {
 	
 	public static void event() {
 		for(ShortcutsData data : ShortcutsData.values()) {
-			ObjectEvent perform = new ObjectEvent() {
+			ObjectAction perform = new ObjectAction() {
 				@Override
 				public boolean click(Player player, ObjectNode object, int click) {
 					Shortcuts shortcut = new Shortcuts(player, object, data);

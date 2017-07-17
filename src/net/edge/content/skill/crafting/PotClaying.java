@@ -2,7 +2,7 @@ package net.edge.content.skill.crafting;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.task.Task;
@@ -92,7 +92,7 @@ public final class PotClaying extends ProducingSkillAction {
 	}
 	
 	public static void objects() {
-		ObjectEvent click = new ObjectEvent() {
+		ObjectAction click = new ObjectAction() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
 				player.text(8879, "What would you like to make?");

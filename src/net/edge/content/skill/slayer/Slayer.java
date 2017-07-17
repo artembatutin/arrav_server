@@ -4,8 +4,8 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.dialogue.test.DialogueAppender;
-import net.edge.event.impl.ItemEvent;
-import net.edge.event.impl.NpcEvent;
+import net.edge.action.impl.ItemAction;
+import net.edge.action.impl.NpcAction;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.PlayerPanel;
@@ -103,7 +103,7 @@ public final class Slayer {
 	}
 	
 	public static void eventItem() {
-		ItemEvent activate = new ItemEvent() {
+		ItemAction activate = new ItemAction() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
 				if(container != Inventory.INVENTORY_DISPLAY_ID)
@@ -123,7 +123,7 @@ public final class Slayer {
 			}
 		};
 		activate.register(4155);
-		ItemEvent killsLeft = new ItemEvent() {
+		ItemAction killsLeft = new ItemAction() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
 				SlayerMaster master = player.getSlayer().isPresent() ? player.getSlayer().get().getMaster() : SlayerMaster.SPRIA;
@@ -140,7 +140,7 @@ public final class Slayer {
 	
 	public static void eventNpc() {
 		for(SlayerMaster master : SlayerMaster.values()) {
-			NpcEvent e = new NpcEvent() {
+			NpcAction e = new NpcAction() {
 				@Override
 				public boolean click(Player player, Mob npc, int click) {
 					if(!player.getSkills()[Skills.SLAYER].reqLevel(master.getRequirement())) {

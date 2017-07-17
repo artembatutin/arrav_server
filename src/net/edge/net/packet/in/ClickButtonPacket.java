@@ -10,6 +10,7 @@ import net.edge.content.combat.magic.lunars.LunarSpells;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.combat.weapon.WeaponInterface;
+import net.edge.action.impl.ButtonAction;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendEnterName;
@@ -30,8 +31,7 @@ import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.summoning.Summoning;
-import net.edge.event.EventContainer;
-import net.edge.event.impl.ButtonEvent;
+import net.edge.action.ActionContainer;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
@@ -52,7 +52,7 @@ import java.util.concurrent.TimeUnit;
  */
 public final class ClickButtonPacket implements IncomingPacket {
 	
-	public static final EventContainer<ButtonEvent> BUTTONS = new EventContainer<>();
+	public static final ActionContainer<ButtonAction> BUTTONS = new ActionContainer<>();
 	
 	/**
 	 * The flag that determines if this message should be read properly.
@@ -88,7 +88,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 				MarketShop.clearFromShop(player);
 			}
 		}
-		ButtonEvent e = BUTTONS.get(button);
+		ButtonAction e = BUTTONS.get(button);
 		if(e != null) {
 			if(e.click(player, button)) {
 				return;

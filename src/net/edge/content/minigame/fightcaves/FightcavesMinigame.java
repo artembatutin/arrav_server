@@ -1,7 +1,7 @@
 package net.edge.content.minigame.fightcaves;
 
 import net.edge.content.item.PotionConsumable;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.game.GameConstants;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -108,7 +108,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	}
 	
 	public static void event() {
-		ObjectEvent e = new ObjectEvent() {
+		ObjectAction e = new ObjectAction() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
 				player.getDialogueBuilder().append(

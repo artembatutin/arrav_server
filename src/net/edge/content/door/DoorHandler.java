@@ -1,7 +1,7 @@
 package net.edge.content.door;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.locale.Position;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectDefinition;
@@ -23,7 +23,7 @@ public class DoorHandler {
 	/**
 	 * The door appender event.
 	 */
-	public static final ObjectEvent APPENDER = new ObjectEvent() {
+	public static final ObjectAction APPENDER = new ObjectAction() {
 		@Override
 		public boolean click(Player player, ObjectNode object, int click) {
 			ObjectDefinition def = object.getDefinition();

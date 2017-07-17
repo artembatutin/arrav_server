@@ -2,7 +2,7 @@ package net.edge.content.item;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.event.impl.ItemEvent;
+import net.edge.action.impl.ItemAction;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendEnergy;
 import net.edge.task.Task;
@@ -480,7 +480,7 @@ public enum PotionConsumable {
 	
 	public static void event() {
 		for(PotionConsumable potion : PotionConsumable.values()) {
-			ItemEvent e = new ItemEvent() {
+			ItemAction e = new net.edge.action.impl.ItemAction() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
 					if(container != Inventory.INVENTORY_DISPLAY_ID)

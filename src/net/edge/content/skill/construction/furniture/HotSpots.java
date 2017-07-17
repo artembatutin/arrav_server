@@ -4,7 +4,7 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.skill.construction.Construction;
 import net.edge.content.skill.construction.data.Constants;
 import net.edge.content.skill.construction.room.RoomManipulation;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.net.packet.out.SendObjectsConstruction;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
@@ -533,7 +533,7 @@ public enum HotSpots {
 	
 	public static void event() {
 		for(HotSpots spot : values()) {
-			ObjectEvent e = new ObjectEvent() {
+			ObjectAction e = new ObjectAction() {
 				@Override
 				public boolean click(Player player, ObjectNode object, int click) {
 					if(!player.getHouse().get().isBuilding())
@@ -548,7 +548,7 @@ public enum HotSpots {
 		/*
 		 * Creating rooms.
 		 */
-		ObjectEvent roomCreation = new ObjectEvent() {
+		ObjectAction roomCreation = new ObjectAction() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
 				if(!player.getHouse().get().isBuilding())

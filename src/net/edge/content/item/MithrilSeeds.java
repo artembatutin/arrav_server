@@ -2,8 +2,8 @@ package net.edge.content.item;
 
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
-import net.edge.event.impl.ItemEvent;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.*;
+import net.edge.action.impl.ItemAction;
 import net.edge.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
@@ -40,7 +40,7 @@ public final class MithrilSeeds {
 
     public static void event() {
         for(int objectId : FLOWER_OBJECT_IDS.keySet()) {
-            ObjectEvent objEvent = new ObjectEvent() {
+            ObjectAction objEvent = new ObjectAction() {
                 @Override
                 public boolean click(Player player, ObjectNode object, int click) {
                     if(player.getInventory().remaining() < 1) {
@@ -63,7 +63,7 @@ public final class MithrilSeeds {
             objEvent.registerFirst(objectId);
         }
 
-        ItemEvent itemEvent = new ItemEvent() {
+        ItemAction itemEvent = new net.edge.action.impl.ItemAction() {
             @Override
             public boolean click(Player player, Item item, int container, int slot, int click) {
                 if(player.getCombatBuilder().inCombat()) {

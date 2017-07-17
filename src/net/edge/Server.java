@@ -12,11 +12,10 @@ import net.edge.cache.FileSystem;
 import net.edge.cache.decoder.MapDefinitionDecoder;
 import net.edge.cache.decoder.ObjectDefinitionDecoder;
 import net.edge.content.combat.CombatConstants;
-import net.edge.event.EventInitializer;
-import net.edge.event.impl.ButtonEvent;
-import net.edge.event.impl.ItemEvent;
-import net.edge.event.impl.NpcEvent;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.ActionInitializer;
+import net.edge.action.impl.*;
+import net.edge.action.impl.ItemAction;
+import net.edge.action.impl.ObjectAction;
 import net.edge.game.GameShutdownHook;
 import net.edge.net.EdgevilleChannelInitializer;
 import net.edge.net.NetworkConstants;
@@ -235,17 +234,17 @@ public final class Server {
 	private void prepare() {
 		CommandDispatcher.load();
 		loadEvents();
-		ButtonEvent.init();
-		ItemEvent.init();
-		NpcEvent.init();
-		ObjectEvent.init();
+		ButtonAction.init();
+		ItemAction.init();
+		NpcAction.init();
+		ObjectAction.init();
 	}
 	
 	public static void loadEvents() {
-		for(String directory : Utility.getSubDirectories(EventInitializer.class)) {
+		for(String directory : Utility.getSubDirectories(ActionInitializer.class)) {
 			try {
-				List<EventInitializer> s = Utility.getClassesInDirectory(EventInitializer.class.getPackage().getName() + "." + directory).stream().map(clazz -> (EventInitializer) clazz).collect(Collectors.toList());
-				s.forEach(EventInitializer::init);
+				List<ActionInitializer> s = Utility.getClassesInDirectory(ActionInitializer.class.getPackage().getName() + "." + directory).stream().map(clazz -> (ActionInitializer) clazz).collect(Collectors.toList());
+				s.forEach(ActionInitializer::init);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}

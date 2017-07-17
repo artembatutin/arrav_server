@@ -1,6 +1,6 @@
 package net.edge.content;
 
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
@@ -52,7 +52,7 @@ public final class WebSlashing extends Task {
 	}
 	
 	public static void event() {
-		ObjectEvent slash = new ObjectEvent() {
+		ObjectAction slash = new ObjectAction() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
 				if(!player.getWebSlashingTimer().elapsed(1800)) {

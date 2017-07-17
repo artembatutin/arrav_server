@@ -1,7 +1,7 @@
 package net.edge.content.shootingstar;
 
 import net.edge.content.market.MarketCounter;
-import net.edge.event.impl.NpcEvent;
+import net.edge.action.impl.NpcAction;
 import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.task.Task;
 import net.edge.content.dialogue.Expression;
@@ -49,7 +49,7 @@ public final class StarSprite extends Mob {
 	}
 
 	public static void event() {
-		NpcEvent e = new NpcEvent() {
+		NpcAction e = new NpcAction() {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {
 				if(click == 1) {

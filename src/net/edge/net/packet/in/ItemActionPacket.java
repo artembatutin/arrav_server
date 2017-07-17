@@ -1,7 +1,7 @@
 package net.edge.net.packet.in;
 
-import net.edge.event.EventContainer;
-import net.edge.event.impl.ItemEvent;
+import net.edge.action.ActionContainer;
+import net.edge.action.impl.ItemAction;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
@@ -17,7 +17,7 @@ import net.edge.world.node.item.ItemDefinition;
  */
 public final class ItemActionPacket implements IncomingPacket {
 	
-	public static final EventContainer<ItemEvent> ITEM_ACTION = new EventContainer<>();
+	public static final ActionContainer<ItemAction> ITEM_ACTION = new ActionContainer<>();
 	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
@@ -50,7 +50,7 @@ public final class ItemActionPacket implements IncomingPacket {
 		if(item == null || item.getId() != id)
 			return;
 		player.getCombatBuilder().cooldown(true);
-		ItemEvent e = ITEM_ACTION.get(item.getId());
+		ItemAction e = ITEM_ACTION.get(item.getId());
 		if(e != null)
 			e.click(player, item, container, slot, 1);
 	}
@@ -69,7 +69,7 @@ public final class ItemActionPacket implements IncomingPacket {
 		}
 		Item item = player.getInventory().get(slot);
 		player.getCombatBuilder().cooldown(true);
-		ItemEvent e = ITEM_ACTION.get(item.getId());
+		ItemAction e = ITEM_ACTION.get(item.getId());
 		if(e != null)
 			e.click(player, item, container, slot, 3);
 		if(item.getDefinition().getName().contains("Black mask")) {

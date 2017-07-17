@@ -6,8 +6,8 @@ import net.edge.world.node.item.container.session.ExchangeSession;
 import net.edge.world.node.item.container.session.ExchangeSessionType;
 import net.edge.content.skill.crafting.JewelleryMoulding;
 import net.edge.content.skill.smithing.Smithing;
-import net.edge.event.EventContainer;
-import net.edge.event.impl.ItemEvent;
+import net.edge.action.ActionContainer;
+import net.edge.action.impl.ItemAction;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
@@ -29,7 +29,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	/**
 	 * Events called on item equip action.
 	 */
-	public static final EventContainer<ItemEvent> EQUIP = new EventContainer<>();
+	public static final ActionContainer<ItemAction> EQUIP = new ActionContainer<>();
 	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
@@ -305,7 +305,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		if(item == null || !Item.valid(item)) {
 			return;
 		}
-		ItemEvent e = EQUIP.get(item.getId());
+		ItemAction e = EQUIP.get(item.getId());
 		player.getCombatBuilder().cooldown(false);
 		if(e != null)
 			if(e.click(player, item, interfaceId, slot, 5))

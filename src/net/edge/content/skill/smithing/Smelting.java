@@ -2,7 +2,7 @@ package net.edge.content.skill.smithing;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.task.Task;
@@ -118,7 +118,7 @@ public final class Smelting extends ProducingSkillAction {
 	private static final int[] SMELT_BARS = {2349, 2351, 2355, 2353, 2357, 2359, 2361, 2363};
 	
 	public static void event() {
-		ObjectEvent smelt = new ObjectEvent() {
+		ObjectAction smelt = new ObjectAction() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
 				player.chatWidget(2400);

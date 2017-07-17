@@ -1,6 +1,6 @@
 package net.edge.content;
 
-import net.edge.event.impl.ItemEvent;
+import net.edge.action.impl.ItemAction;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.clanchat.ClanChatRank;
@@ -77,7 +77,7 @@ public final class Dice {
 			if(data.equals(DiceData.DICE_BAG)) {
 				continue;
 			}
-			ItemEvent e = new ItemEvent() {
+			ItemAction e = new ItemAction() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
 					if(container != Inventory.INVENTORY_DISPLAY_ID)
@@ -86,7 +86,7 @@ public final class Dice {
 				}
 			};
 			e.register(data.item.getId());
-			e = new ItemEvent() {
+			e = new ItemAction() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
 					return roll(player, data, true);
@@ -94,7 +94,7 @@ public final class Dice {
 			};
 			e.registerEquip(data.item.getId());
 		}
-		ItemEvent bag = new ItemEvent() {
+		ItemAction bag = new ItemAction() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
 				if(container != Inventory.INVENTORY_DISPLAY_ID)

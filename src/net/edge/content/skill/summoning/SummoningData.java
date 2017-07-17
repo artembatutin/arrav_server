@@ -5,7 +5,7 @@ import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.impl.*;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
-import net.edge.event.impl.ItemEvent;
+import net.edge.action.impl.ItemAction;
 import net.edge.world.node.actor.mob.Mob;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.node.item.Item;
@@ -729,7 +729,7 @@ public enum SummoningData {
 	
 	public static void event() {
 		for(SummoningData data : VALUES) {
-			ItemEvent e = new ItemEvent() {
+			ItemAction e = new ItemAction() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
 					if(click == 3) {

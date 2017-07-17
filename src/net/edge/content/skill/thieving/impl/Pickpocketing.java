@@ -2,7 +2,7 @@ package net.edge.content.skill.thieving.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.event.impl.NpcEvent;
+import net.edge.action.impl.NpcAction;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.Skills;
@@ -68,7 +68,7 @@ public final class Pickpocketing extends Thieving {
 	
 	public static void event() {
 		for(PickpocketData data : PickpocketData.values()) {
-			NpcEvent e = new NpcEvent() {
+			NpcAction e = new NpcAction() {
 				@Override
 				public boolean click(Player player, Mob npc, int click) {
 					Pickpocketing thieving = new Pickpocketing(player, data, npc);

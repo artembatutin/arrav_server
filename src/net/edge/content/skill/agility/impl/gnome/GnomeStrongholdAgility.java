@@ -10,7 +10,7 @@ import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Climbable;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.locale.Position;
 import net.edge.world.node.actor.player.Player;
 import net.edge.world.object.ObjectNode;
@@ -41,7 +41,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 	
 	public static void event() {
 		for(GnomeAgilityData data : GnomeAgilityData.values()) {
-			ObjectEvent perform = new ObjectEvent() {
+			ObjectAction perform = new ObjectAction() {
 				@Override
 				public boolean click(Player player, ObjectNode object, int click) {
 					GnomeStrongholdAgility agility = new GnomeStrongholdAgility(player, object, data);

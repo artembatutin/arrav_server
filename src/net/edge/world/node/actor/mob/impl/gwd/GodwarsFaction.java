@@ -1,6 +1,6 @@
 package net.edge.world.node.actor.mob.impl.gwd;
 
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.content.combat.CombatType;
 import net.edge.locale.Position;
 import net.edge.world.World;
@@ -85,7 +85,7 @@ public enum GodwarsFaction {
 	
 	public static void event() {
 		for(GodwarsFaction faction : GodwarsFaction.values()) {
-			ObjectEvent door = new ObjectEvent() {
+			ObjectAction door = new ObjectAction() {
 				@Override
 				public boolean click(Player player, ObjectNode object, int click) {
 					if(player.getPosition().equals(faction.chamberPosition)) {

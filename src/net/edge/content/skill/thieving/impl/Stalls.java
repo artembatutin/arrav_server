@@ -1,6 +1,6 @@
 package net.edge.content.skill.thieving.impl;
 
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.thieving.Thieving;
@@ -45,7 +45,7 @@ public final class Stalls extends Thieving {
 	
 	public static void event() {
 		for(StallData data : StallData.values()) {
-			ObjectEvent steal = new ObjectEvent() {
+			ObjectAction steal = new ObjectAction() {
 				@Override
 				public boolean click(Player player, ObjectNode object, int click) {
 					if(object.isDynamic() && object.toDynamic().isDisabled()) {

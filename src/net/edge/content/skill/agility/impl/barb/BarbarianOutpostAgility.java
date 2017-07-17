@@ -1,6 +1,6 @@
 package net.edge.content.skill.agility.impl.barb;
 
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.net.packet.out.SendObjectAnimation;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
@@ -49,7 +49,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 	
 	public static void event() {
 		for(BarbarianAgilityData data : BarbarianAgilityData.values()) {
-			ObjectEvent perform = new ObjectEvent() {
+			ObjectAction perform = new ObjectAction() {
 				@Override
 				public boolean click(Player player, ObjectNode object, int click) {
 					BarbarianOutpostAgility agility = new BarbarianOutpostAgility(player, object, data);

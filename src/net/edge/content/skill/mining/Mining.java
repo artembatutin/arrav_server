@@ -1,7 +1,7 @@
 package net.edge.content.skill.mining;
 
 import net.edge.content.skill.Skills;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.TransformableObject;
@@ -66,7 +66,7 @@ public final class Mining extends HarvestingSkillAction {
 	
 	public static void event() {
 		for(RockData rock : RockData.values()) {
-			ObjectEvent mine = new ObjectEvent() {
+			ObjectAction mine = new ObjectAction() {
 				@Override
 				public boolean click(Player player, ObjectNode object, int click) {
 					Mining mining = new Mining(player, rock, object);
@@ -74,7 +74,7 @@ public final class Mining extends HarvestingSkillAction {
 					return true;
 				}
 			};
-			ObjectEvent prospect = new ObjectEvent() {
+			ObjectAction prospect = new ObjectAction() {
 				@Override
 				public boolean click(Player player, ObjectNode object, int click) {
 					player.message("You examine the rock for ores...");

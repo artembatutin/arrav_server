@@ -1,6 +1,6 @@
 package net.edge.content.skill.runecrafting;
 
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;
 import net.edge.world.node.item.container.impl.Inventory;
 import net.edge.content.skill.SkillData;
@@ -63,7 +63,7 @@ public final class Runecrafting extends ProducingSkillAction {
 	
 	public static void event() {
 		for(Altar a : Altar.values()) {
-			ObjectEvent rc = new ObjectEvent() {
+			ObjectAction rc = new ObjectAction() {
 				@Override
 				public boolean click(Player player, ObjectNode object, int click) {
 					Runecrafting runeCrafting = new Runecrafting(player, object, a);

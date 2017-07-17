@@ -2,7 +2,7 @@ package net.edge.content.wilderness;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.locale.Position;
@@ -64,7 +64,7 @@ public enum Obelisk {
 	}
 	
 	public static void event() {
-		ObjectEvent a = new ObjectEvent() {
+		ObjectAction a = new ObjectAction() {
 			@Override
 			public boolean click(Player player, ObjectNode object, int click) {
 				Optional<Obelisk> obelisk = get(object);

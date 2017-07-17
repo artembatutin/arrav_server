@@ -4,8 +4,8 @@ import net.edge.Server;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.firemaking.Bonfire;
 import net.edge.content.skill.hunter.Hunter;
-import net.edge.event.EventContainer;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.ActionContainer;
+import net.edge.action.impl.ObjectAction;
 import net.edge.locale.Boundary;
 import net.edge.locale.Position;
 import net.edge.net.codec.IncomingMsg;
@@ -30,12 +30,12 @@ public final class ObjectActionPacket implements IncomingPacket {
 	/*
 	 * All of the object events.
 	 */
-	public static final EventContainer<ObjectEvent> FIRST = new EventContainer<>();
-	public static final EventContainer<ObjectEvent> SECOND = new EventContainer<>();
-	public static final EventContainer<ObjectEvent> THIRD = new EventContainer<>();
-	public static final EventContainer<ObjectEvent> FOURTH = new EventContainer<>();
-	public static final EventContainer<ObjectEvent> FIFTH = new EventContainer<>();
-	public static final EventContainer<ObjectEvent> CONSTRUCTION = new EventContainer<>();
+	public static final ActionContainer<ObjectAction> FIRST = new ActionContainer<>();
+	public static final ActionContainer<ObjectAction> SECOND = new ActionContainer<>();
+	public static final ActionContainer<ObjectAction> THIRD = new ActionContainer<>();
+	public static final ActionContainer<ObjectAction> FOURTH = new ActionContainer<>();
+	public static final ActionContainer<ObjectAction> FIFTH = new ActionContainer<>();
+	public static final ActionContainer<ObjectAction> CONSTRUCTION = new ActionContainer<>();
 	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
@@ -83,7 +83,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 		player.facePosition(position);
 		//construction clicks.
 		if(player.getHouse().isOwnerHome()) {
-			ObjectEvent e = CONSTRUCTION.get(objectId);
+			ObjectAction e = CONSTRUCTION.get(objectId);
 			player.message(objectId+"");
 			if(e != null) {
 				player.getHouse().get().getPlan().setObjectX(objectX);
@@ -156,10 +156,10 @@ public final class ObjectActionPacket implements IncomingPacket {
 	}
 	
 	/**
-	 * Tries to handle the {@link ObjectEvent} action.
+	 * Tries to handle the {@link ObjectAction} action.
 	 */
-	private boolean event(Player player, ObjectNode object, EventContainer<ObjectEvent> con) {
-		ObjectEvent e = con.get(object.getId());
+	private boolean event(Player player, ObjectNode object, ActionContainer<ObjectAction> con) {
+		ObjectAction e = con.get(object.getId());
 		if(e != null) {
 			if(e.click(player, object, 1))
 				return true;
