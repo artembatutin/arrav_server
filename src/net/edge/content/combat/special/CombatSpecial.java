@@ -354,7 +354,7 @@ public enum CombatSpecial {
 				@Override
 				public void postAttack(int counter) {
 					if(player.inMulti()) {
-						if(!player.isWildernessInterface()) {
+						if(!player.inWilderness()) {
 							World.get().submit(new KorasiChain(player, target, counter));
 						}
 					}

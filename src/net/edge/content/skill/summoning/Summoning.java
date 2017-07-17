@@ -289,7 +289,7 @@ public final class Summoning {
 			return false;
 		}
 		Familiar familiar = player.getFamiliar().get();
-		if(!player.isWildernessInterface() && victim.getType().equals(EntityType.PLAYER)) {
+		if(!player.inWilderness() && victim.getType().equals(EntityType.PLAYER)) {
 			player.message("This player is not in the wilderness!");
 			return false;
 		}

@@ -162,7 +162,7 @@ public final class CombatTask extends Task {
 		}
 		if(builder.getCharacter().isPlayer()) {
 			Player player = (Player) builder.getCharacter();
-			if(Location.inWilderness(builder.getCharacter()) && !Location.inWilderness(builder.getVictim())) {
+			if(builder.getCharacter().inWilderness() && !builder.getVictim().inWilderness()) {
 				player.message("They are not in the wilderness!");
 				player.getMovementQueue().reset();
 				builder.reset();

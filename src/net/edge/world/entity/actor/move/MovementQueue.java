@@ -119,7 +119,7 @@ public final class MovementQueue {
 			if(character.isPlayer()) {
 				Player player = character.toPlayer();
 				if(player.getRights().less(Rights.ADMINISTRATOR)) {
-					if(player.getRunEnergy() > 0 && !(player.isIronMaxed() && !Location.inWilderness(player))) {
+					if(player.getRunEnergy() > 0 && !(player.isIronMaxed() && !player.inWilderness())) {
 						double drainRate = 0.7D;
 						double weight = player.getWeight();
 						double weightFactor = (weight > 1.371D ? (int) weight * 0.00729166D : 0.0D);

@@ -50,7 +50,7 @@ public final class MobAggression {
 	 * otherwise.
 	 */
 	private static boolean validate(Mob mob, Player player) {
-		boolean wilderness = Location.inWilderness(mob) && Location.inWilderness(player);
+		boolean wilderness = player.inWilderness();
 		boolean retreats = mob.getDefinition().retreats() || (player.getCombatBuilder().isBeingAttacked() && player.getCombatBuilder().getVictim() != mob);
 		boolean tolerance = !(wilderness || mob.getDefinition().getCombatLevel() > 126) && player.getTolerance().elapsed(GameConstants.TOLERANCE_SECONDS, TimeUnit.SECONDS);
 		if(mob.getAttr().get("isRetreating").getBoolean()) {
