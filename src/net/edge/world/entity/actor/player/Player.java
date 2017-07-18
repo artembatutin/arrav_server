@@ -37,6 +37,7 @@ import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.pets.Pet;
 import net.edge.content.pets.PetManager;
 import net.edge.content.quest.QuestManager;
+import net.edge.content.scene.impl.IntroductionCutscene;
 import net.edge.content.shootingstar.ShootingStarManager;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
@@ -703,7 +704,7 @@ public final class Player extends Actor {
 			ClanManager.get().join(this, "avro");
 		}
 		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
-			//new IntroductionCutscene(this).prerequisites();
+			new IntroductionCutscene(this).prerequisites();
 		}
 		if(FirepitManager.get().getFirepit().isActive()) {
 			this.message("@red@[ANNOUNCEMENT]: Enjoy the double experience event for another " + Utility.convertTime(FirepitManager.get().getFirepit().getTime()) + ".");

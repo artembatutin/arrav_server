@@ -2,6 +2,9 @@ package net.edge.action.obj;
 
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ObjectAction;
+import net.edge.content.dialogue.impl.OptionDialogue;
+import net.edge.content.dialogue.impl.StatementDialogue;
+import net.edge.content.skill.construction.Construction;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.object.GameObject;
 
@@ -11,8 +14,7 @@ public class HousePortal extends ActionInitializer {
 		ObjectAction e = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				player.message("Construction to be released soon.");
-				/*player.getDialogueBuilder().append(new OptionDialogue(t -> {
+				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						if(!Construction.hasHouse(player)) {
 							player.getDialogueBuilder().go(1);
@@ -36,7 +38,7 @@ public class HousePortal extends ActionInitializer {
 						Construction.buyHouse(player);
 					}
 					player.closeWidget();
-				}, "Yes I'll buy", " No, too expensive."));*/
+				}, "Yes I'll buy", " No, too expensive."));
 				return true;
 			}
 		};

@@ -12,7 +12,7 @@ public class SummoningObelisk extends ActionInitializer {
 		ObjectAction l = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				if(click == 3 && object.getId() == 29447) {
+				if(click == 3 && object.getId() == 29947) {
 					player.widget(-8);
 					return true;
 				}

@@ -112,7 +112,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 						if(!MinigameHandler.execute(player, m -> m.onFirstClickObject(player, object))) {
 							return;
 						}
-						if(event(player, object, FIRST))
+						if(event(player, object, FIRST, 1))
 							return;
 						if(Bonfire.addLogs(player, new Item(-100), object, true))
 							return;
@@ -126,7 +126,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 					case 2:
 						if(!MinigameHandler.execute(player, m -> m.onSecondClickObject(player, object)))
 							return;
-						if(event(player, object, SECOND))
+						if(event(player, object, SECOND, 2))
 							return;
 						if(ShootingStarManager.get().getShootingStar().prospect(player, objectId))
 							return;
@@ -134,21 +134,21 @@ public final class ObjectActionPacket implements IncomingPacket {
 					case 3:
 						if(!MinigameHandler.execute(player, m -> m.onThirdClickObject(player, object)))
 							return;
-						if(event(player, object, THIRD))
+						if(event(player, object, THIRD, 3))
 							return;
 						break;
 					case 4:
 						if(!MinigameHandler.execute(player, m -> m.onFourthClickObject(player, object))) {
 							return;
 						}
-						if(event(player, object, FOURTH))
+						if(event(player, object, FOURTH, 4))
 							return;
 						break;
 					case 5:
 						if(!MinigameHandler.execute(player, m -> m.onFourthClickObject(player, object))) {
 							return;
 						}
-						if(event(player, object, FIFTH))
+						if(event(player, object, FIFTH, 5))
 							return;
 						break;
 				}
@@ -159,10 +159,10 @@ public final class ObjectActionPacket implements IncomingPacket {
 	/**
 	 * Tries to handle the {@link ObjectAction} action.
 	 */
-	private boolean event(Player player, GameObject object, ActionContainer<ObjectAction> con) {
+	private boolean event(Player player, GameObject object, ActionContainer<ObjectAction> con, int click) {
 		ObjectAction e = con.get(object.getId());
 		if(e != null) {
-			if(e.click(player, object, 1))
+			if(e.click(player, object, click))
 				return true;
 		}
 		return false;
