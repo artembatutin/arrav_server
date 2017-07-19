@@ -137,6 +137,9 @@ public final class NomadCombatStrategy implements CombatStrategy {
     }
 
     private CombatHit charge(EntityNode character) {
+        if(charge != null) {
+            return null;
+        }
         charge = Charge.random();
         character.getMovementQueue().setLockMovement(true);
         character.graphic(CHARGE_GRAPHIC);
