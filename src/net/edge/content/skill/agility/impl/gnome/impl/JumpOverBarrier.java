@@ -3,10 +3,10 @@ package net.edge.content.skill.agility.impl.gnome.impl;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.content.skill.agility.obstacle.ObstacleActivity;
 import net.edge.content.skill.agility.obstacle.ObstacleType;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.move.ForcedMovement;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.move.ForcedMovement;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * Holds functionality for the jump over barrier obstacle.

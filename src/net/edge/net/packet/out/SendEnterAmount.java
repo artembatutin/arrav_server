@@ -1,10 +1,11 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.util.ActionListener;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -20,11 +21,16 @@ public final class SendEnterAmount implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
-		msg.message(27, MessageType.VARIABLE);
+	public boolean onSent(Player player) {
+		player.setEnterInputListener(Optional.of(action));
+		return true;
+	}
+	
+	@Override
+	public ByteBuf write(Player player, GameBuffer msg) {
+		msg.message(27, PacketType.VARIABLE_BYTE);
 		msg.putCString(title);
 		msg.endVarSize();
-		player.setEnterInputListener(Optional.of(action));
+		return msg.getBuffer();
 	}
 }

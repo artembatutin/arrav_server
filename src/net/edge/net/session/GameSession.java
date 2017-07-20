@@ -1,16 +1,20 @@
 package net.edge.net.session;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscLinkedAtomicQueue;
 import net.edge.net.NetworkConstants;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.IncomingMsg;
-import net.edge.net.codec.IsaacCipher;
+import net.edge.net.codec.crypto.IsaacRandom;
+import net.edge.net.codec.game.GameDecoder;
+import net.edge.net.codec.game.GameEncoder;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.EntityState;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Queue;
 
@@ -18,7 +22,7 @@ import java.util.Queue;
  * A {@link Session} implementation that handles networking for a {@link Player} during gameplay.
  * @author lare96 <http://github.org/lare96>
  */
-public class GameSession extends Session {
+public final class GameSession extends Session {
 	
 	/**
 	 * The cap limit of outgoing packets per session.
@@ -41,19 +45,14 @@ public class GameSession extends Session {
 	private final Player player;
 	
 	/**
-	 * The message encryptor.
-	 */
-	private final IsaacCipher encryptor;
-	
-	/**
 	 * The message decryptor.
 	 */
-	private final IsaacCipher decryptor;
-
+	private final IsaacRandom decryptor;
+	
 	/**
-	 * The game stream.
+	 * The message encryptor.
 	 */
-	private final GameBuffer stream;
+	private final IsaacRandom encryptor;
 
 	/**
 	 * Creates a new {@link GameSession}.
@@ -61,21 +60,14 @@ public class GameSession extends Session {
 	 * @param encryptor The message encryptor.
 	 * @param decryptor The message decryptor.
 	 */
-	GameSession(Player player, Channel channel, IsaacCipher encryptor, IsaacCipher decryptor) {
+	GameSession(Player player, Channel channel, IsaacRandom encryptor, IsaacRandom decryptor) {
 		super(channel);
 		this.player = player;
-		this.encryptor = encryptor;
 		this.decryptor = decryptor;
-		this.stream = new GameBuffer(channel.alloc().buffer(STREAM_CAP), encryptor);
-	}
-	
-	@Override
-	public void onDispose() {
-		if(player.getState() == NodeState.ACTIVE) {
-			World.get().queueLogout(player, !getChannel().isActive());
-		}
-		setActive(false);
-		outgoing.clear();
+		this.encryptor = encryptor;
+		//getChannel().pipeline().remove("login-encoder");
+		getChannel().pipeline().replace("login-encoder", "game-encoder", new GameEncoder(encryptor, player));
+		getChannel().pipeline().replace("login-decoder", "game-decoder", new GameDecoder(decryptor, this));
 	}
 	
 	@Override
@@ -89,18 +81,34 @@ public class GameSession extends Session {
 		}
 	}
 	
+	@Override
+	public void terminate() {
+		if(player.getState() == EntityState.ACTIVE) {
+			World.get().queueLogout(player);
+		}
+		setActive(false);
+		outgoing.clear();
+	}
+	
+	@Override
+	public Player getPlayer() {
+		return player;
+	}
+	
 	/**
 	 * Enqueues the given {@link OutgoingPacket} for transport.
 	 */
-	public void enqueueForSync(OutgoingPacket pkt) {
+	public void equeue(OutgoingPacket pkt) {
 		outgoing.offer(pkt);
 	}
+	
 	
 	/**
 	 * Writes the given {@link OutgoingPacket} to the stream.
 	 */
-	public void writeToStream(OutgoingPacket pkt) {
-		pkt.write(player);
+	public void write(OutgoingPacket packet) {
+		ByteBuf temp = packet.write(player, new GameBuffer(Unpooled.buffer(256), encryptor));
+		getChannel().write(temp, getChannel().voidPromise());
 	}
 	
 	/**
@@ -108,13 +116,19 @@ public class GameSession extends Session {
 	 */
 	public void pollOutgoingMessages() {
 		int written = 0;
-		while (!outgoing.isEmpty() && written < outLimit) {
-			OutgoingPacket packet = outgoing.poll();
-			if(packet == null) {
-				break;
+		Channel channel = getChannel();
+		if (!outgoing.isEmpty()) {
+			if (channel.isActive() && channel.isOpen()) {
+				while (channel.isWritable() && written < outLimit) {
+					OutgoingPacket packet = outgoing.poll();
+					if(packet == null) {
+						break;
+					}
+					//ByteBuf temp = packet.write(player, new GameBuffer(alloc(256), encryptor));
+					getChannel().write(packet, getChannel().voidPromise());
+					written++;
+				}
 			}
-			writeToStream(packet);
-			written++;
 		}
 	}
 	
@@ -124,34 +138,11 @@ public class GameSession extends Session {
 	 * the cycle.
 	 */
 	public void flushQueue() {
-		Channel channel = getChannel();
-		if(channel.isActive()) {
-			channel.eventLoop().execute(() -> {
-				channel.writeAndFlush(stream.retain(), channel.voidPromise());
-				stream.clear();
-			});
-		}
+		getChannel().flush();
 	}
 	
-	/**
-	 * @return The message encryptor.
-	 */
-	public IsaacCipher getEncryptor() {
-		return encryptor;
-	}
-	
-	/**
-	 * @return The message decryptor.
-	 */
-	public IsaacCipher getDecryptor() {
-		return decryptor;
-	}
-
-	/**
-	 * @return The game stream.
-	 */
-	public GameBuffer getStream() {
-		return stream;
+	public ByteBuf alloc(int length) {
+		return getChannel().alloc().buffer(length);
 	}
 	
 	/**
@@ -160,10 +151,6 @@ public class GameSession extends Session {
 	 */
 	public ByteBufAllocator alloc() {
 		return getChannel().alloc();
-	}
-	
-	public void releaseStream() {
-		stream.release();
 	}
 
 }

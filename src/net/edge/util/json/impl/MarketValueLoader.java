@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
 import net.edge.content.market.MarketItem;
-import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.entity.item.ItemDefinition;
 
 /**
  * The {@link JsonLoader} implementation that loads all market values.

@@ -4,22 +4,23 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import net.edge.event.impl.NpcEvent;
+import net.edge.action.impl.NpcAction;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.item.container.impl.Equipment;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.impl.DefaultMob;
+import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
-import net.edge.locale.Position;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.impl.DefaultNpc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -49,9 +50,9 @@ public final class ButterflyCatching extends ProducingSkillAction {
 	private final ButterflyData data;
 	
 	/**
-	 * The npc that represents the butterfly
+	 * The mob that represents the butterfly
 	 */
-	private final Npc npc;
+	private final Mob mob;
 	
 	/**
 	 * Determines if this skill action is bare handed or not.
@@ -62,21 +63,21 @@ public final class ButterflyCatching extends ProducingSkillAction {
 	 * Constructs a new {@link ButterflyCatching}.
 	 * @param player     {@link #getPlayer()}.
 	 * @param data       {@link #data}.
-	 * @param npc        {@link #npc}.
+	 * @param mob        {@link #mob}.
 	 * @param barehanded {@link #barehanded}.
 	 */
-	public ButterflyCatching(Player player, ButterflyData data, Npc npc, boolean barehanded) {
-		super(player, Optional.of(npc.getPosition()));
+	public ButterflyCatching(Player player, ButterflyData data, Mob mob, boolean barehanded) {
+		super(player, Optional.of(mob.getPosition()));
 		this.data = data;
-		this.npc = npc;
+		this.mob = mob;
 		this.barehanded = barehanded;
 	}
 	
 	public static void event() {
 		for(ButterflyData data : ButterflyData.values()) {
-			NpcEvent e = new NpcEvent() {
+			NpcAction e = new NpcAction() {
 				@Override
-				public boolean click(Player player, Npc npc, int click) {
+				public boolean click(Player player, Mob npc, int click) {
 					boolean barehanded = !player.getEquipment().contains(10010);
 					if(barehanded && (player.getEquipment().get(Equipment.WEAPON_SLOT) != null || player.getEquipment().get(Equipment.SHIELD_SLOT) != null)) {
 						player.message("Your hands need to be free to catch a butterfly.");
@@ -103,10 +104,10 @@ public final class ButterflyCatching extends ProducingSkillAction {
 		player.graphic(data.releasedGraphic);
 		
 		//FIXME for some reason the code below returns into an index out of bounds exception
-		Position position = RandomUtils.random(World.getTraversalMap().getNearbyTraversableTiles(player.getPosition(), 3));
-		Npc npc = new DefaultNpc(data.npc, position);
+		Position position = RandomUtils.random(TraversalMap.getNearbyTraversableTiles(player.getPosition(), 3));
+		Mob mob = new DefaultMob(data.npc, position);
 		LinkedTaskSequence seq = new LinkedTaskSequence();
-		seq.connect(2, () -> World.get().getNpcs().add(npc));
+		seq.connect(2, () -> World.get().getNpcs().add(mob));
 		seq.start();
 		return true;
 	}
@@ -114,20 +115,20 @@ public final class ButterflyCatching extends ProducingSkillAction {
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success) {
-			player.getMovementQueue().smartWalk(npc.getPosition());
-			npc.move(new Position(0, 0));
-			npc.appendDeath();
+			player.getMovementQueue().smartWalk(mob.getPosition());
+			mob.move(new Position(0, 0));
+			mob.appendDeath();
 			player.animation(barehanded ? BAREHAND_ANIMATION : NETTING_ANIMATION);
 			Skills.experience(player, barehanded ? data.barehandRequirement.getExperience() : data.regularRequirement.getExperience(), skill().getId());
 			
 			if(barehanded) {
 				player.message("You manage to catch the bufferly and release it back into the wild.");
 				Skills.experience(player, data.agilityRequirement.getExperience(), Skills.AGILITY);
-				Position position = RandomUtils.random(World.getTraversalMap().getNearbyTraversableTiles(player.getPosition(), 3));
-				Npc npc = new DefaultNpc(data.npc, position);
+				Position position = RandomUtils.random(TraversalMap.getNearbyTraversableTiles(player.getPosition(), 3));
+				Mob mob = new DefaultMob(data.npc, position);
 				LinkedTaskSequence seq = new LinkedTaskSequence();
 				seq.connect(2, () -> player.graphic(data.barehandGraphic));
-				seq.connect(4, () -> World.get().getNpcs().add(npc));
+				seq.connect(4, () -> World.get().getNpcs().add(mob));
 				seq.start();
 			}
 			
@@ -178,17 +179,20 @@ public final class ButterflyCatching extends ProducingSkillAction {
 	private boolean checkHunter() {
 		if(barehanded) {
 			if(!player.getSkills()[skill().getId()].reqLevel(data.barehandRequirement.getRequirement())) {
-				player.message("You need a hunter level of " + data.barehandRequirement.getRequirement() + " to catch a " + npc.getDefinition().getName() + " barehanded.");
+				player.message("You need a hunter level of " + data.barehandRequirement.getRequirement() + " to catch a " + mob
+						.getDefinition().getName() + " barehanded.");
 				return false;
 			}
 			
 			if(!player.getSkills()[Skills.AGILITY].reqLevel(data.agilityRequirement.getRequirement())) {
-				player.message("You need an agility level of " + data.agilityRequirement.getRequirement() + " to catch a " + npc.getDefinition().getName() + " barehanded.");
+				player.message("You need an agility level of " + data.agilityRequirement.getRequirement() + " to catch a " + mob
+						.getDefinition().getName() + " barehanded.");
 				return false;
 			}
 		} else {
 			if(!player.getSkills()[skill().getId()].reqLevel(data.regularRequirement.getRequirement())) {
-				player.message("You need an agility level of " + data.regularRequirement.getRequirement() + " to catch a " + npc.getDefinition().getName() + " with a butterfly org.");
+				player.message("You need an agility level of " + data.regularRequirement.getRequirement() + " to catch a " + mob
+						.getDefinition().getName() + " with a butterfly org.");
 				return false;
 			}
 			
@@ -212,12 +216,12 @@ public final class ButterflyCatching extends ProducingSkillAction {
 		BLACK_WARLOCK(5082, 10014, 910, 914, new ButterflyPolicy(45, 54), new ButterflyPolicy(95, 650), new ButterflyPolicy(90, 125));
 		
 		/**
-		 * Caches our npc values.
+		 * Caches our mob values.
 		 */
 		private static final ImmutableSet<ButterflyData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(ButterflyData.class));
 		
 		/**
-		 * Represents the npc id.
+		 * Represents the mob id.
 		 */
 		private final int npc;
 		

@@ -17,15 +17,15 @@ import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.warriorsguild.GuildRoom;
 import net.edge.content.minigame.warriorsguild.WarriorsGuild;
-import net.edge.locale.Position;
-import net.edge.locale.loc.SquareLocation;
+import net.edge.world.locale.Position;
+import net.edge.world.locale.loc.SquareLocation;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 import java.util.*;
 
@@ -52,7 +52,7 @@ public final class CyclopsRoom extends GuildRoom {
 		super("CYCLOPS_ROOM", GuildRoomType.CYCLOPS_ROOM);
 	}
 
-	public static boolean enter(Player player, ObjectNode object) {
+	public static boolean enter(Player player, GameObject object) {
 		player.move(new Position(2840, 3539, 2));
 		return true;
 	}
@@ -65,12 +65,12 @@ public final class CyclopsRoom extends GuildRoom {
 	}
 
 	@Override
-	public boolean canHit(Player player, EntityNode other, CombatType type) {
+	public boolean canHit(Player player, Actor other, CombatType type) {
 		return entered.isPresent() && other.isNpc();
 	}
 
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
+	public boolean onFirstClickObject(Player player, GameObject object) {
 		switch(object.getId()) {
 			case 57647:
 			case 57644:
@@ -96,7 +96,7 @@ public final class CyclopsRoom extends GuildRoom {
 	}
 
 	@Override
-	public boolean onFirstClickNpc(Player player, Npc npc) {
+	public boolean onFirstClickNpc(Player player, Mob mob) {
 		player.getDialogueBuilder().send(new KamfreenaConversation());
 		return false;
 	}
@@ -124,7 +124,7 @@ public final class CyclopsRoom extends GuildRoom {
 	}
 
 	@Override
-	public boolean canPickup(Player player, ItemNode node) {
+	public boolean canPickup(Player player, GroundItem node) {
 		return true;
 	}
 
@@ -145,11 +145,11 @@ public final class CyclopsRoom extends GuildRoom {
 	}
 
 	@Override
-	public void onKill(Player player, EntityNode other) {
+	public void onKill(Player player, Actor other) {
 		Defender defender = Defender.getNext(player);
 		boolean rollRare = true; // 10% chance.
 		if(rollRare) {
-			ItemNode node = new ItemNode(defender.item, other.getPosition(), player);
+			GroundItem node = new GroundItem(defender.item, other.getPosition(), player);
 			node.getRegion().register(node);
 		}
 	}

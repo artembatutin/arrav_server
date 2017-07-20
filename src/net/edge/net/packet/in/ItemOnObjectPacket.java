@@ -6,20 +6,21 @@ import net.edge.content.skill.crafting.JewelleryMoulding;
 import net.edge.content.skill.crafting.PotClaying;
 import net.edge.content.skill.crafting.Spinning;
 import net.edge.content.skill.firemaking.Bonfire;
+import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.skill.prayer.PrayerBoneAltar;
 import net.edge.content.skill.smithing.Smithing;
-import net.edge.locale.Boundary;
-import net.edge.locale.Position;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -53,10 +54,10 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 			return;
 		}
 		
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
+		Optional<GameObject> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
-		final ObjectNode object = o.get();
+		final GameObject object = o.get();
 		
 		if(player.getRights().greater(Rights.ADMINISTRATOR))
 			player.message("[ItemOnObject message] objectId = " + object.toString() + ", itemId = " + item.getId());
@@ -73,7 +74,7 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 				if(Bonfire.addLogs(player, item, object, false)) {
 					return;
 				}
-				if(World.getFirepitEvent().fire(player, object, item)) {
+				if(FirepitManager.get().fire(player, object, item)) {
 					return;
 				}
 				if(PrayerBoneAltar.produce(player, itemId, object)) {

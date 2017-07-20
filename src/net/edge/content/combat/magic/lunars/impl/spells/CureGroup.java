@@ -4,11 +4,11 @@ import net.edge.content.combat.Combat;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +29,7 @@ public final class CureGroup extends LunarButtonSpell {
 	List<Player> local_players;
 	
 	@Override
-	public void effect(Player caster, EntityNode victim) {
+	public void effect(Player caster, Actor victim) {
 		for(Player target : local_players) {
 			target.graphic(new Graphic(744, 90));
 			target.getPoisonDamage().set(0);
@@ -39,7 +39,7 @@ public final class CureGroup extends LunarButtonSpell {
 	}
 	
 	@Override
-	public boolean prerequisites(Player caster, EntityNode victim) {
+	public boolean prerequisites(Player caster, Actor victim) {
 		local_players = Combat.charactersWithinDistance(caster, World.get().getLocalPlayers(caster), 1);
 		
 		if(local_players.isEmpty()) {

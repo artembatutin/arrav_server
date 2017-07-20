@@ -1,7 +1,7 @@
 package net.edge.content.skill.smithing;
 
 import net.edge.util.TextUtils;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.item.Item;
 
 public interface SmithingTable {
 	

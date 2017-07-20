@@ -2,11 +2,9 @@ package net.edge.content.minigame;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.content.minigame.pestcontrol.PestControlWaitingLobby;
 import net.edge.task.Task;
-import net.edge.util.MutableNumber;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 

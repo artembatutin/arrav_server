@@ -2,8 +2,7 @@ package net.edge.content.item;
 
 import net.edge.task.Task;
 import net.edge.world.Animation;
-import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.function.Consumer;
 

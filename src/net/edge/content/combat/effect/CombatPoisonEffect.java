@@ -2,12 +2,12 @@ package net.edge.content.combat.effect;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.net.packet.out.SendConfig;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Hit;
 import net.edge.world.PoisonType;
-import net.edge.world.node.entity.npc.NpcDefinition;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.MobDefinition;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -35,7 +35,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 	}
 	
 	@Override
-	public boolean apply(EntityNode t) {
+	public boolean apply(Actor t) {
 		if(t.isPoisoned() || t.getPoisonType() == null)
 			return false;
 		if(t.isPlayer()) {
@@ -50,12 +50,12 @@ public final class CombatPoisonEffect extends CombatEffect {
 	}
 	
 	@Override
-	public boolean removeOn(EntityNode t) {
+	public boolean removeOn(Actor t) {
 		return !t.isPoisoned() || t.isDead();
 	}
 	
 	@Override
-	public void process(EntityNode t) {
+	public void process(Actor t) {
 		amount--;
 		t.damage(new Hit(t.getPoisonDamage().get(), Hit.HitType.POISON, Hit.HitIcon.NONE));
 		if(amount == 0) {
@@ -65,7 +65,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 	}
 	
 	@Override
-	public boolean onLogin(EntityNode t) {
+	public boolean onLogin(Actor t) {
 		return t.isPoisoned();
 	}
 	
@@ -91,7 +91,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 	 * optional if no poison type exists.
 	 */
 	public static Optional<PoisonType> getPoisonType(int npc) {
-		NpcDefinition def = NpcDefinition.DEFINITIONS[npc];
+		MobDefinition def = MobDefinition.DEFINITIONS[npc];
 		if(def == null || !def.isAttackable() || !def.isPoisonous())
 			return Optional.empty();
 		if(def.getCombatLevel() < 75)

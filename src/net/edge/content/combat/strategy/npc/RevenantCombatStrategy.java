@@ -2,7 +2,7 @@ package net.edge.content.combat.strategy.npc;
 
 import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.strategy.CombatStrategy;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.entity.actor.Actor;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -19,7 +19,7 @@ public final class RevenantCombatStrategy implements CombatStrategy {
      * @return {@code true} if an attack can be made, {@code false} otherwise.
      */
     @Override
-    public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+    public boolean canOutgoingAttack(Actor character, Actor victim) {
         return true;
     }
 
@@ -32,7 +32,7 @@ public final class RevenantCombatStrategy implements CombatStrategy {
      * @return a container holding the data for the attack.
      */
     @Override
-    public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+    public CombatHit outgoingAttack(Actor character, Actor victim) {
         return null;
     }
 
@@ -43,7 +43,7 @@ public final class RevenantCombatStrategy implements CombatStrategy {
      * @return the value that the attack timer should be reset to.
      */
     @Override
-    public int attackDelay(EntityNode character) {
+    public int attackDelay(Actor character) {
         return 0;
     }
 
@@ -54,7 +54,7 @@ public final class RevenantCombatStrategy implements CombatStrategy {
      * @return the radius that the character must be in to attack.
      */
     @Override
-    public int attackDistance(EntityNode character) {
+    public int attackDistance(Actor character) {
         return 0;
     }
 

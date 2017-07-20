@@ -1,23 +1,24 @@
 package net.edge.net.packet.out;
 
-import net.edge.locale.Position;
+import io.netty.buffer.ByteBuf;
+import net.edge.world.locale.Position;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectType;
 
 import java.util.Optional;
 
 public final class SendObject implements OutgoingPacket {
 	
-	private final ObjectNode object;
+	private final GameObject object;
 	
-	public SendObject(ObjectNode object) {
+	public SendObject(GameObject object) {
 		this.object = object;
 	}
 	
@@ -38,12 +39,12 @@ public final class SendObject implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		player.write(new SendCoordinates(object.getGlobalPos()));
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
+		new SendCoordinates(object.getGlobalPos()).write(player, msg);
 		msg.message(151);
 		msg.put(0, ByteTransform.S);
 		msg.putInt(object.getId());
 		msg.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.S);
+		return msg.getBuffer();
 	}
 }

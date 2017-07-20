@@ -12,11 +12,11 @@ import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -95,7 +95,7 @@ public final class Smithing extends ProducingSkillAction {
 	 * @param object the object the item was used on.
 	 * @return <true> if the interface opened, <false> otherwise.
 	 */
-	public static boolean openInterface(Player player, Item item, ObjectNode object) {
+	public static boolean openInterface(Player player, Item item, GameObject object) {
 		SmithingTable[] values = TABLE.get(item.getId());
 		
 		if(!object.getDefinition().getName().equalsIgnoreCase("anvil")) {

@@ -1,14 +1,14 @@
 package net.edge.world.object;
 
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.region.Region;
+import net.edge.world.entity.region.Region;
 
 /**
- * An implementation of {@link ObjectNode} that is in a static state.
+ * An implementation of {@link GameObject} that is in a static state.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public class StaticObject extends ObjectNode {
+public class StaticObject extends GameObject {
 	
 	/**
 	 * A reference to the region containing this static object.
@@ -33,17 +33,17 @@ public class StaticObject extends ObjectNode {
 	}
 	
 	@Override
-	public ObjectNode copy() {
+	public GameObject copy() {
 		return new StaticObject(region, getId(), packedCoordinates, getDirection(), getObjectType());
 	}
 	
 	@Override
-	public ObjectNode copy(ObjectDirection direction) {
+	public GameObject copy(ObjectDirection direction) {
 		return new StaticObject(region, getId(), packedCoordinates, direction, getObjectType());
 	}
 	
 	@Override
-	public ObjectNode copy(ObjectType type) {
+	public GameObject copy(ObjectType type) {
 		return new StaticObject(region, getId(), packedCoordinates, getDirection(), type);
 	}
 	

@@ -15,15 +15,10 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * A {@link ChannelInboundHandlerAdapter} implementation that handles upstream messages from Netty.
- * @author lare96 <http://github.com/lare96>
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 @Sharable
 public final class EdgevilleUpstreamHandler extends ChannelInboundHandlerAdapter {
-	
-	/**
-	 * The asynchronous logger.
-	 */
-	private static final Logger LOGGER = Logger.getLogger(EdgevilleUpstreamHandler.class.getName());
 	
 	/**
 	 * A default access level constructor to discourage external instantiation outside of the {@code io.luna.org} package.
@@ -38,7 +33,7 @@ public final class EdgevilleUpstreamHandler extends ChannelInboundHandlerAdapter
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
 		Session session = getSession(ctx);
-		session.dispose();
+		session.terminate();
 	}
 	
 	@Override

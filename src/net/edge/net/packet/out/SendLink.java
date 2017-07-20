@@ -1,13 +1,10 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.util.ActionListener;
-import net.edge.world.node.entity.player.Player;
-
-import java.util.Optional;
-import java.util.function.Function;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendLink implements OutgoingPacket {
 	
@@ -18,10 +15,10 @@ public final class SendLink implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
-		msg.message(100, MessageType.VARIABLE);
+	public ByteBuf write(Player player, GameBuffer msg) {
+		msg.message(100, PacketType.VARIABLE_BYTE);
 		msg.putCString(link);
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 }

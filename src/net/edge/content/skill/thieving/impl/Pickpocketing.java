@@ -2,7 +2,7 @@ package net.edge.content.skill.thieving.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.event.impl.NpcEvent;
+import net.edge.action.impl.NpcAction;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.Skills;
@@ -11,13 +11,12 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.EnumSet;
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Represents functionality for pickpocketing from various npcs.
@@ -31,9 +30,9 @@ public final class Pickpocketing extends Thieving {
 	private final PickpocketData definition;
 	
 	/**
-	 * The current npc we're interacting with.
+	 * The current mob we're interacting with.
 	 */
-	private final Npc npc;
+	private final Mob mob;
 	
 	/**
 	 * Represents the animation specific to pickpocketing.
@@ -41,7 +40,7 @@ public final class Pickpocketing extends Thieving {
 	private static final Animation ANIMATION = new Animation(881);
 	
 	/**
-	 * Represents the npc animation(hitting player).
+	 * Represents the mob animation(hitting player).
 	 */
 	private static final Animation NPC_ANIMATION = new Animation(422);
 	
@@ -59,19 +58,19 @@ public final class Pickpocketing extends Thieving {
 	 * Constructs a new {@link Pickpocketing}.
 	 * @param player {@link #getPlayer()}.
 	 * @param data   the definition of this theft.
-	 * @param npc    the npc this player is stealing from.
+	 * @param mob    the mob this player is stealing from.
 	 */
-	private Pickpocketing(Player player, PickpocketData data, Npc npc) {
-		super(player, npc.getPosition());
+	private Pickpocketing(Player player, PickpocketData data, Mob mob) {
+		super(player, mob.getPosition());
 		this.definition = data;
-		this.npc = npc;
+		this.mob = mob;
 	}
 	
 	public static void event() {
 		for(PickpocketData data : PickpocketData.values()) {
-			NpcEvent e = new NpcEvent() {
+			NpcAction e = new NpcAction() {
 				@Override
-				public boolean click(Player player, Npc npc, int click) {
+				public boolean click(Player player, Mob npc, int click) {
 					Pickpocketing thieving = new Pickpocketing(player, data, npc);
 					thieving.start();
 					return true;
@@ -109,7 +108,7 @@ public final class Pickpocketing extends Thieving {
 	
 	@Override
 	public boolean canInit() {
-		String name = npc.getDefinition().getName();
+		String name = mob.getDefinition().getName();
 		if(!getPlayer().getSkills()[skill().getId()].reqLevel(requirement())) {
 			getPlayer().message("You need a thieving level of " + requirement() + " to steal from " + TextUtils.appendIndefiniteArticle(name) + ".");
 			return false;
@@ -142,8 +141,8 @@ public final class Pickpocketing extends Thieving {
 	@Override
 	public void onExecute(Task t) {
 		if(failure()) {
-			npc.forceChat("What do you think you're doing?");
-			npc.animation(NPC_ANIMATION);
+			mob.forceChat("What do you think you're doing?");
+			mob.animation(NPC_ANIMATION);
 			int hit = RandomUtils.inclusive(1, definition.damage);
 			getPlayer().damage(new Hit(hit));
 			getPlayer().animation(STUN_ANIMATION);
@@ -203,32 +202,32 @@ public final class Pickpocketing extends Thieving {
 		private static final ImmutableSet<PickpocketData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(PickpocketData.class));
 		
 		/**
-		 * The identifiers which represents this npc.
+		 * The identifiers which represents this mob.
 		 */
 		private final int[] npcId;
 		
 		/**
-		 * The loot obtained upon pickpocketing this npc.
+		 * The loot obtained upon pickpocketing this mob.
 		 */
 		private final Item[] loot;
 		
 		/**
-		 * The requirement required for pickpocketing this npc.
+		 * The requirement required for pickpocketing this mob.
 		 */
 		private final int requirement;
 		
 		/**
-		 * The experience gained upon pickpockting this npc.
+		 * The experience gained upon pickpockting this mob.
 		 */
 		private final double experience;
 		
 		/**
-		 * The amount of seconds this player stays stunned upon failing to pickpocket this npc.
+		 * The amount of seconds this player stays stunned upon failing to pickpocket this mob.
 		 */
 		private final int seconds;
 		
 		/**
-		 * The amount of damage this players get inflicted upon failing to pickpocket this npc.
+		 * The amount of damage this players get inflicted upon failing to pickpocket this mob.
 		 */
 		private final int damage;
 		

@@ -7,8 +7,8 @@ import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.EnumSet;
 import java.util.Optional;

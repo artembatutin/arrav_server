@@ -1,35 +1,40 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.npc.NpcDefinition;
-import net.edge.world.node.entity.npc.drop.ItemCache;
-import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropTable;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.mob.MobDefinition;
+import net.edge.world.entity.actor.mob.drop.DropTable;
+import net.edge.world.entity.actor.mob.drop.ItemCache;
+import net.edge.world.entity.actor.mob.drop.Drop;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendNpcDrop implements OutgoingPacket {
 	
 	private final int id;
-	private final NpcDropTable table;
+	private final DropTable table;
 	
-	public SendNpcDrop(int id, NpcDropTable table) {
+	public SendNpcDrop(int id, DropTable table) {
 		this.id = id;
 		this.table = table;
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
-		msg.message(121, MessageType.VARIABLE_SHORT);
+	public boolean onSent(Player player) {
+		return id >= 1;
+	}
+	
+	@Override
+	public ByteBuf write(Player player, GameBuffer msg) {
+		msg.message(121, PacketType.VARIABLE_SHORT);
 		msg.putInt(id);
 		if(id != 0) {
-			if(id > NpcDefinition.DEFINITIONS.length)
-				return;
-			NpcDefinition def = NpcDefinition.DEFINITIONS[id];
+			if(id > MobDefinition.DEFINITIONS.length)
+				return null;
+			MobDefinition def = MobDefinition.DEFINITIONS[id];
 			if(def == null)
-				return;
+				return null;
 			msg.putShort(table.getCommon() == null ? 0 : table.getCommon().size());
 			if(table.getCommon() != null) {
 				for(ItemCache c : table.getCommon()) {
@@ -38,7 +43,7 @@ public final class SendNpcDrop implements OutgoingPacket {
 			}
 			msg.putShort(table.getUnique() == null ? 0 : table.getUnique().size());
 			if(table.getUnique() != null) {
-				for(NpcDrop d : table.getUnique()) {
+				for(Drop d : table.getUnique()) {
 					msg.putShort(d.getId());
 					msg.putShort(d.getMinimum());
 					msg.putShort(d.getMaximum());
@@ -47,5 +52,6 @@ public final class SendNpcDrop implements OutgoingPacket {
 			}
 		}
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 }

@@ -1,13 +1,14 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.edge.content.market.MarketItem;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendShop implements OutgoingPacket {
 	
@@ -20,9 +21,8 @@ public final class SendShop implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
-		msg.message(53, MessageType.VARIABLE_SHORT);
+	public ByteBuf write(Player player, GameBuffer msg) {
+		msg.message(53, PacketType.VARIABLE_SHORT);
 		msg.putShort(id);
 		if(items == null) {
 			msg.putShort(0);
@@ -61,5 +61,6 @@ public final class SendShop implements OutgoingPacket {
 			}
 		}
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 }

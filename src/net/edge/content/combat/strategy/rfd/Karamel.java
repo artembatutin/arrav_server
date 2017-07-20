@@ -5,36 +5,36 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Projectile;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
 public final class Karamel implements CombatStrategy {
 	
 	@Override
-	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+	public boolean canOutgoingAttack(Actor character, Actor victim) {
 		return character.isNpc() && victim.isPlayer();
 	}
 
 	@Override
-	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		CombatType[] data = character.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
 		CombatType type = RandomUtils.random(data);
 		return type(character, victim, type);
 	}
 	
-	private CombatHit melee(EntityNode character, EntityNode victim) {
+	private CombatHit melee(Actor character, Actor victim) {
 		Animation animation = new Animation(422);
 		character.animation(animation);
 		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
 	}
 	
-	private CombatHit magic(EntityNode character, EntityNode victim) {
+	private CombatHit magic(Actor character, Actor victim) {
 		character.animation(new Animation(1979));
 		//TODO walk away only if the victim is using melee (basically if hes within 1 tile distance)
 		character.forceChat("Semolina-Go!");
@@ -52,7 +52,7 @@ public final class Karamel implements CombatStrategy {
 		};
 	}
 	
-	private CombatHit type(EntityNode character, EntityNode victim, CombatType type) {
+	private CombatHit type(Actor character, Actor victim, CombatType type) {
 		switch(type) {
 			case MELEE:
 				return melee(character, victim);
@@ -64,12 +64,12 @@ public final class Karamel implements CombatStrategy {
 	}
 
 	@Override
-	public int attackDelay(EntityNode character) {
+	public int attackDelay(Actor character) {
 		return character.getAttackSpeed();
 	}
 
 	@Override
-	public int attackDistance(EntityNode character) {
+	public int attackDistance(Actor character) {
 		return 7;
 	}
 
@@ -101,7 +101,7 @@ public final class Karamel implements CombatStrategy {
 		}
 
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 

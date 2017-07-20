@@ -2,13 +2,12 @@ package net.edge.content.minigame.pestcontrol.pest;
 
 import net.edge.content.minigame.pestcontrol.PestControlMinigame;
 import net.edge.content.minigame.pestcontrol.defence.PestGate;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.Hit;
-import net.edge.world.PoisonType;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcDeath;
-import net.edge.world.node.region.Region;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobDeath;
+import net.edge.world.entity.region.Region;
 
 public class Splatter extends Pest {
 	
@@ -18,7 +17,7 @@ public class Splatter extends Pest {
 	private PestGate gate;
 	
 	/**
-	 * Creates a new {@link Npc}.
+	 * Creates a new {@link Mob}.
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
@@ -27,7 +26,7 @@ public class Splatter extends Pest {
 	}
 	
 	@Override
-	public void sequence(Npc knight) {
+	public void sequence(Mob knight) {
 		//when dead, explode and cause damage around, no damage on portals.
 		if(gate == null) {
 			gate = PestControlMinigame.getNearestGate(getPosition());
@@ -56,7 +55,7 @@ public class Splatter extends Pest {
 	@Override
 	public void appendDeath() {
 		setDead(true);
-		World.get().submit(new NpcDeath(this));
+		World.get().submit(new MobDeath(this));
 		Region reg = getRegion();
 		//hitting players.
 		reg.getPlayers().forEach(p -> {
@@ -65,7 +64,7 @@ public class Splatter extends Pest {
 			}
 		});
 		//hitting npcs.
-		reg.getNpcs().forEach(n -> {
+		reg.getMobs().forEach(n -> {
 			int id = n.getId();
 			if(id < 6142 || id > 6145) {//ignoring portals.
 				if(n.getPosition().withinDistance(getPosition(), 1)) {

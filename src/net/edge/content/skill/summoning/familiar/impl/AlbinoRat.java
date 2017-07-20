@@ -8,13 +8,12 @@ import net.edge.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbil
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import net.edge.content.skill.summoning.SummoningData;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNodeStatic;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.GroundItemStatic;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Represents the Albino rat familiar.
@@ -44,7 +43,7 @@ public final class AlbinoRat extends Familiar {
 			t.getFamiliar().get().forceChat("Rawrgh, mai cheese!");
 			return;
 		}
-		ItemNodeStatic eggs = new ItemNodeStatic(new Item(1985), t.getFamiliar().get().getPosition());
+		GroundItemStatic eggs = new GroundItemStatic(new Item(1985), t.getFamiliar().get().getPosition());
 		eggs.getRegion().register(eggs);
 	});
 	
@@ -59,7 +58,7 @@ public final class AlbinoRat extends Familiar {
 	}
 	
 	@Override
-	public void interact(Player player, Npc npc, int id) {
+	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
 			player.getDialogueBuilder().append(RandomUtils.random(RANDOM_DIALOGUE));
 		}

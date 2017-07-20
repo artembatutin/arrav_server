@@ -6,17 +6,16 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.hunter.trap.Trap;
 import net.edge.content.skill.hunter.trap.TrapProcessor;
 import net.edge.content.skill.hunter.trap.TrapTask;
-import net.edge.locale.loc.Location;
-import net.edge.locale.Position;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
-import net.edge.world.object.ObjectNode;
-import net.edge.world.object.ObjectType;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -56,7 +55,7 @@ public final class Hunter {
 			GLOBAL_TRAPS.get(player).getTraps().forEach(t -> {
 				t.setAbandoned(true);
 				t.getObject().publish();
-				t.getObject().getRegion().register(new ItemNode(new Item(t.getType().getItemId()), t.getObject().getGlobalPos().copy(), player));
+				t.getObject().getRegion().register(new GroundItem(new Item(t.getType().getItemId()), t.getObject().getGlobalPos().copy(), player));
 			});
 			GLOBAL_TRAPS.get(player).getTraps().clear();
 		} else {
@@ -64,7 +63,7 @@ public final class Hunter {
 			trap.setAbandoned(true);
 			trap.getObject().remove();
 			player.message("You have abandoned your trap...");
-			trap.getObject().getRegion().register(new ItemNode(new Item(trap.getType().getItemId()), trap.getObject().getGlobalPos().copy(), player));
+			trap.getObject().getRegion().register(new GroundItem(new Item(trap.getType().getItemId()), trap.getObject().getGlobalPos().copy(), player));
 		}
 		
 		if(GLOBAL_TRAPS.get(player).getTraps().isEmpty()) {
@@ -94,16 +93,16 @@ public final class Hunter {
 		
 		Position p = player.getPosition();
 		
-		//if(player.getRegion().interactAction().stream().anyMatch(o -> o.getObjectType() == ObjectType.GENERAL_PROP) || !World.getTraversalMap().isTraversable(p, Direction.WEST, player.size()) && !World.getTraversalMap().isTraversable(p, Direction.EAST, player.size()) || Location.isAtHome(player)) {
+		//if(player.getRegion().interactAction().stream().anyMatch(o -> o.getObjectType() == ObjectType.GENERAL_PROP) || !TraversalMap.isTraversable(p, Direction.WEST, player.size()) && !TraversalMap.isTraversable(p, Direction.EAST, player.size()) || Location.isAtHome(player)) {
 		//	player.message("You can't set-up your trap here.");
 		//	return false;
 		//}
 		
-		for(Npc npc : player.getLocalNpcs()) {
-			if(npc == null) {
+		for(Mob mob : player.getLocalMobs()) {
+			if(mob == null) {
 				continue;
 			}
-			if(npc.getPosition().same(player.getPosition()) || npc.getOriginalPosition().same(player.getPosition())) {
+			if(mob.getPosition().same(player.getPosition()) || mob.getOriginalPosition().same(player.getPosition())) {
 				player.message("You can't set-up your trap here.");
 				return false;
 			}
@@ -115,9 +114,9 @@ public final class Hunter {
 		player.animation(new Animation(827));
 		player.getInventory().remove(new Item(trap.getType().getItemId(), 1));
 		trap.getObject().publish();
-		if(World.getTraversalMap().isTraversable(p, Direction.WEST, player.size())) {
+		if(TraversalMap.isTraversable(p, Direction.WEST, player.size())) {
 			player.getMovementQueue().walk(Direction.WEST.getX(), Direction.WEST.getY());
-		} else if(World.getTraversalMap().isTraversable(p, Direction.EAST, player.size())) {
+		} else if(TraversalMap.isTraversable(p, Direction.EAST, player.size())) {
 			player.getMovementQueue().walk(Direction.EAST.getX(), Direction.EAST.getY());
 		}
 		player.facePosition(p);
@@ -130,7 +129,7 @@ public final class Hunter {
 	 * @param object the object that was clicked.
 	 * @return {@code true} if the trap was picked up, {@code false} otherwise.
 	 */
-	public static boolean pickup(Player player, ObjectNode object) {
+	public static boolean pickup(Player player, GameObject object) {
 		Optional<Trap.TrapType> type = Trap.TrapType.getTrapByObjectId(object.getId());
 		
 		if(!type.isPresent()) {
@@ -172,7 +171,7 @@ public final class Hunter {
 	 * @param object the object being interacted with.
 	 * @return {@code true} if the trap was claimed, {@code false} otherwise.
 	 */
-	public static boolean claim(Player player, ObjectNode object) {
+	public static boolean claim(Player player, GameObject object) {
 		Trap trap = getTrap(player, object).orElse(null);
 		
 		if(trap == null) {
@@ -214,7 +213,7 @@ public final class Hunter {
 	 * @param object the object to compare.
 	 * @return a trap wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
-	public static Optional<Trap> getTrap(Player player, ObjectNode object) {
+	public static Optional<Trap> getTrap(Player player, GameObject object) {
 		return !GLOBAL_TRAPS.containsKey(player) ? Optional.empty() : GLOBAL_TRAPS.get(player).getTraps().stream().filter(trap -> trap.getObject().getId() == object.getId() && trap.getObject().getX() == object.getX() && trap.getObject().getY() == object.getY() && trap.getObject().getZ() == object.getZ()).findAny();
 	}
 }

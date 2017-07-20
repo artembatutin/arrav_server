@@ -5,9 +5,9 @@ import com.google.common.collect.Sets;
 import net.edge.task.Task;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 import net.edge.world.object.*;
 
 import java.util.EnumSet;
@@ -37,7 +37,7 @@ public abstract class Trap {
 	/**
 	 * The global object spawned on the world.
 	 */
-	private ObjectNode object;
+	private GameObject object;
 	
 	/**
 	 * Determines if this trap is abandoned.
@@ -64,16 +64,16 @@ public abstract class Trap {
 	}
 	
 	/**
-	 * Attempts to trap the specified {@code npc} by checking the prerequisites and initiating the
+	 * Attempts to trap the specified {@code mob} by checking the prerequisites and initiating the
 	 * abstract {@link #onCatch} method.
-	 * @param npc the npc to trap.
+	 * @param mob the mob to trap.
 	 */
-	protected void trap(Npc npc) {
-		if(!this.getState().equals(TrapState.PENDING) || !canCatch(npc) || this.isAbandoned()) {
+	protected void trap(Mob mob) {
+		if(!this.getState().equals(TrapState.PENDING) || !canCatch(mob) || this.isAbandoned()) {
 			return;
 		}
 		
-		onCatch(npc);
+		onCatch(mob);
 	}
 	
 	/**
@@ -91,10 +91,10 @@ public abstract class Trap {
 	
 	/**
 	 * Calculates the chance for the bird to be lured <b>or</b> trapped.
-	 * @param npc the npc being caught.
+	 * @param mob the mob being caught.
 	 * @return the double value which defines the chance.
 	 */
-	public int successFormula(Npc npc) {
+	public int successFormula(Mob mob) {
 		Player player = this.getPlayer();
 		if(player == null) {
 			return 0;
@@ -126,10 +126,10 @@ public abstract class Trap {
 	
 	/**
 	 * Determines if the trap can catch.
-	 * @param npc the npc to check.
+	 * @param mob the mob to check.
 	 * @return {@code true} if the player can, {@code false} otherwise.
 	 */
-	public abstract boolean canCatch(Npc npc);
+	public abstract boolean canCatch(Mob mob);
 	
 	/**
 	 * The functionality that should be handled when the trap is picked up.
@@ -143,9 +143,9 @@ public abstract class Trap {
 	
 	/**
 	 * The functionality that should be handled when the trap has catched.
-	 * @param npc the npc that was catched.
+	 * @param mob the mob that was catched.
 	 */
-	public abstract void onCatch(Npc npc);
+	public abstract void onCatch(Mob mob);
 	
 	/**
 	 * The functionality that should be handled every 600ms.
@@ -170,7 +170,7 @@ public abstract class Trap {
 	 * @param object the object that was interacted with.
 	 * @return {@code true} if the trap can, {@code false} otherwise.
 	 */
-	public abstract boolean canClaim(ObjectNode object);
+	public abstract boolean canClaim(GameObject object);
 	
 	/**
 	 * @return the player
@@ -203,7 +203,7 @@ public abstract class Trap {
 	/**
 	 * @return the object
 	 */
-	public ObjectNode getObject() {
+	public GameObject getObject() {
 		return object;
 	}
 	

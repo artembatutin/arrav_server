@@ -6,9 +6,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.Attribute;
 import net.edge.net.NetworkConstants;
-import net.edge.net.codec.IncomingMsg;
-import net.edge.net.codec.IsaacCipher;
-import net.edge.net.packet.PacketHelper;
+import net.edge.net.codec.crypto.IsaacRandom;
+import net.edge.net.packet.PacketUtils;
 import net.edge.net.session.LoginSession;
 import net.edge.net.session.Session;
 import net.edge.util.TextUtils;
@@ -45,8 +44,6 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 		switch(state) {
 			case HANDSHAKE:
-				Attribute<Session> attribute = ctx.channel().attr(NetworkConstants.SESSION_KEY);
-				attribute.set(new LoginSession(ctx.channel()));
 				decodeHandshake(ctx, in, out);
 				state = State.LOGIN_TYPE;
 				break;
@@ -128,15 +125,15 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 				long clientHalf = rsaBuffer.readLong();
 				long serverHalf = rsaBuffer.readLong();
 				int[] isaacSeed = {(int) (clientHalf >> 32), (int) clientHalf, (int) (serverHalf >> 32), (int) serverHalf};
-				IsaacCipher decryptor = new IsaacCipher(isaacSeed);
+				IsaacRandom decryptor = new IsaacRandom(isaacSeed);
 				for (int i = 0; i < isaacSeed.length; i++) {
 					isaacSeed[i] += 50;
 				}
-				IsaacCipher encryptor = new IsaacCipher(isaacSeed);
+				IsaacRandom encryptor = new IsaacRandom(isaacSeed);
 
 				@SuppressWarnings("unused") int uid = rsaBuffer.readInt();
-				String username = PacketHelper.getCString(rsaBuffer).toLowerCase().trim();
-				String password = PacketHelper.getCString(rsaBuffer).toLowerCase();
+				String username = PacketUtils.getCString(rsaBuffer).toLowerCase().trim();
+				String password = PacketUtils.getCString(rsaBuffer).toLowerCase();
 				long usernameHash = TextUtils.nameToHash(username);
 				out.add(new LoginRequest(username, usernameHash, password, build, encryptor, decryptor, ctx.channel().pipeline()));
 			} finally {

@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.DialogueBuilder;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.List;
 

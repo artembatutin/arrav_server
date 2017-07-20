@@ -7,9 +7,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import net.edge.net.NetworkConstants;
-import net.edge.net.packet.PacketHelper;
-import net.edge.util.rand.RandomUtils;
+import net.edge.net.packet.PacketUtils;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -61,8 +59,8 @@ public final class FakeClient {
                             rsa.writeInt(random.nextInt());
 
                             rsa.writeInt(0); // uid
-                            PacketHelper.writeCString(rsa, "Bot" + count.get());
-                            PacketHelper.writeCString(rsa, "123456");
+                            PacketUtils.writeCString(rsa, "Bot" + count.get());
+                            PacketUtils.writeCString(rsa, "123456");
 
                             byte[] rsaBytes = new byte[rsa.readableBytes()];
                             rsa.readBytes(rsaBytes);
@@ -97,7 +95,7 @@ public final class FakeClient {
             }
         });
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 200; i++) {
             // Start the client.
             Channel f = b.connect("127.0.0.1", 43594).sync().channel(); //(5)
             ByteBuf buffer = f.alloc().buffer();

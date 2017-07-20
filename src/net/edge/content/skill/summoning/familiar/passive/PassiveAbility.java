@@ -1,6 +1,6 @@
 package net.edge.content.skill.summoning.familiar.passive;
 
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * The passive ability indicates functionality which will be handled

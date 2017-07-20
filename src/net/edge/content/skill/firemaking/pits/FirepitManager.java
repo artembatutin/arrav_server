@@ -1,15 +1,20 @@
 package net.edge.content.skill.firemaking.pits;
 
 import net.edge.content.skill.firemaking.FireLighter;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 /**
  * The manager class for the fire pit event objects.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class FirepitManager {
+	
+	/**
+	 * The fire pit event for the world.
+	 */
+	private static final FirepitManager FIRE_PIT_EVENT = new FirepitManager();
 	
 	/**
 	 * Represents the constant id for the red fire pit object.
@@ -41,7 +46,7 @@ public final class FirepitManager {
 	 * @param item   the item that was used on the fire pit.
 	 * @return {@code true} if the pit was fired, {@code false} otherwise.
 	 */
-	public boolean fire(Player player, ObjectNode object, Item item) {
+	public boolean fire(Player player, GameObject object, Item item) {
 		FirepitObject pit = firepit.getGlobalPos().same(object.getGlobalPos()) && firepit.getId() == object.getId() ? firepit : null;
 		
 		if(pit == null) {
@@ -64,6 +69,13 @@ public final class FirepitManager {
 	 */
 	public void register() {
 		firepit.publish();
+	}
+	
+	/**
+	 * Returns the fire pit event manager.
+	 */
+	public static FirepitManager get() {
+		return FIRE_PIT_EVENT;
 	}
 	
 }

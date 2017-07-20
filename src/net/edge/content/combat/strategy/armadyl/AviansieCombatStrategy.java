@@ -7,14 +7,14 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.entity.EntityState;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Projectile;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -25,19 +25,19 @@ import java.util.Optional;
 public final class AviansieCombatStrategy implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+	public boolean canOutgoingAttack(Actor character, Actor victim) {
 		return character.isNpc();
 	}
 
 	@Override
-	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		character.animation(new Animation(character.toNpc().getDefinition().getAttackAnimation()));
 		CombatType[] data = getCombatType(character.toNpc(), victim);
 		CombatType c = RandomUtils.random(data);
 		return type(character, victim, c);
 	}
 
-	private CombatHit type(EntityNode character, EntityNode victim, CombatType c) {
+	private CombatHit type(Actor character, Actor victim, CombatType c) {
 		switch(c) {
 			case MAGIC:
 				return magic(character, victim);
@@ -50,35 +50,35 @@ public final class AviansieCombatStrategy implements CombatStrategy {
 		}
 	}
 
-	private CombatType[] getCombatType(Npc npc, EntityNode victim) {
-		switch(npc.getId()) {
+	private CombatType[] getCombatType(Mob mob, Actor victim) {
+		switch(mob.getId()) {
 			case 6246:
-				return npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.RANGED, CombatType.MAGIC} : new CombatType[]{CombatType.RANGED, CombatType.MAGIC};
+				return mob.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.RANGED, CombatType.MAGIC} : new CombatType[]{CombatType.RANGED, CombatType.MAGIC};
 			case 6230:
-				return npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.RANGED} : new CombatType[]{CombatType.RANGED};
+				return mob.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.RANGED} : new CombatType[]{CombatType.RANGED};
 			case 6231:
-				return npc.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
+				return mob.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
 			default:
 				return new CombatType[]{CombatType.MELEE};
 		}
 	}
 
-	private CombatHit melee(EntityNode character, EntityNode victim) {
+	private CombatHit melee(Actor character, Actor victim) {
 		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
 	}
 
-	private CombatHit ranged(EntityNode character, EntityNode victim) {
+	private CombatHit ranged(Actor character, Actor victim) {
 		new Projectile(character, victim, 1837, 44, 3, 120, 43, 0).sendProjectile();
 		return new CombatHit(character, victim, 1, CombatType.RANGED, true);
 	}
 
-	private CombatHit magic(EntityNode character, EntityNode victim) {
+	private CombatHit magic(Actor character, Actor victim) {
 		character.setCurrentlyCasting(SPELL);
 		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
 				this.cancel();
-				if(character.getState() != NodeState.ACTIVE || victim.getState() != NodeState.ACTIVE || character.isDead() || victim.isDead()) {
+				if(character.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || character.isDead() || victim.isDead()) {
 					return;
 				}
 				new Projectile(character, victim, 2729, 44, 3, 120, 43, 0).sendProjectile();
@@ -88,12 +88,12 @@ public final class AviansieCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int attackDelay(EntityNode character) {
+	public int attackDelay(Actor character) {
 		return character.getAttackSpeed();
 	}
 
 	@Override
-	public int attackDistance(EntityNode character) {
+	public int attackDistance(Actor character) {
 		return 7;
 	}
 
@@ -125,7 +125,7 @@ public final class AviansieCombatStrategy implements CombatStrategy {
 		}
 
 		@Override
-		public Optional<Projectile> projectile(EntityNode cast, EntityNode castOn) {
+		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
 			return Optional.empty();
 		}
 

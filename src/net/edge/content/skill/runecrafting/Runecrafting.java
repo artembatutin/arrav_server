@@ -1,15 +1,15 @@
 package net.edge.content.skill.runecrafting;
 
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;
-import net.edge.world.node.item.container.impl.Inventory;
+import net.edge.world.entity.item.container.impl.Inventory;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,16 +56,16 @@ public final class Runecrafting extends ProducingSkillAction {
 	 * @param player {@link #player}.
 	 * @param object the object the {@code player} is interacting with.
 	 */
-	private Runecrafting(Player player, ObjectNode object, Altar altar) {
+	private Runecrafting(Player player, GameObject object, Altar altar) {
 		super(player, Optional.of(object.getGlobalPos()));
 		this.altar = altar;
 	}
 	
 	public static void event() {
 		for(Altar a : Altar.values()) {
-			ObjectEvent rc = new ObjectEvent() {
+			ObjectAction rc = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					Runecrafting runeCrafting = new Runecrafting(player, object, a);
 					runeCrafting.start();
 					return true;

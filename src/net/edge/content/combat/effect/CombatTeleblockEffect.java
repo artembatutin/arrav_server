@@ -1,7 +1,7 @@
 package net.edge.content.combat.effect;
 
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * The combat effect applied when a player needs to be teleblocked.
@@ -17,7 +17,7 @@ public final class CombatTeleblockEffect extends CombatEffect {
 	}
 
 	@Override
-	public boolean apply(EntityNode c) {
+	public boolean apply(Actor c) {
 		if(c.isPlayer()) {
 			Player player = (Player) c;
 			if(player.getTeleblockTimer().get() > 0) {
@@ -31,7 +31,7 @@ public final class CombatTeleblockEffect extends CombatEffect {
 	}
 
 	@Override
-	public boolean removeOn(EntityNode c) {
+	public boolean removeOn(Actor c) {
 		if(c.isPlayer()) {
 			Player player = (Player) c;
 			if(player.getTeleblockTimer().get() <= 0) {
@@ -44,7 +44,7 @@ public final class CombatTeleblockEffect extends CombatEffect {
 	}
 
 	@Override
-	public void process(EntityNode c) {
+	public void process(Actor c) {
 		if(c.isPlayer()) {
 			Player player = (Player) c;
 			player.getTeleblockTimer().decrementAndGet(50, 0);
@@ -52,7 +52,7 @@ public final class CombatTeleblockEffect extends CombatEffect {
 	}
 
 	@Override
-	public boolean onLogin(EntityNode c) {
+	public boolean onLogin(Actor c) {
 		if(c.isPlayer()) {
 			Player player = (Player) c;
 			if(player.getTeleblockTimer().get() > 0)

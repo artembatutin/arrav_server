@@ -3,8 +3,8 @@ package net.edge.content.commands.impl;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"gfx", "graphic", "graph"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::gfx, ::graphic or ::graph graphicId")
 public final class PlayGraphicCommand implements Command {

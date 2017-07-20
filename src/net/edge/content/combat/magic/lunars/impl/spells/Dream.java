@@ -4,11 +4,11 @@ import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -26,13 +26,13 @@ public final class Dream extends LunarButtonSpell {
 	}
 
 	@Override
-	public void effect(Player caster, EntityNode victim) {
+	public void effect(Player caster, Actor victim) {
 		caster.getActivityManager().disable();
 		World.get().submit(new DreamTask(caster));
 	}
 
 	@Override
-	public boolean prerequisites(Player caster, EntityNode victim) {
+	public boolean prerequisites(Player caster, Actor victim) {
 		if(caster.getAttr().get("lunar_dream").getBoolean()) {
 			caster.message("You are already dreaming...");
 			return false;

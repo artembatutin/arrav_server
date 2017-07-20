@@ -3,8 +3,8 @@ package net.edge.net.packet.in;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.util.TextUtils;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 import java.util.Optional;
 

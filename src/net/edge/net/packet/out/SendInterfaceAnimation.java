@@ -1,10 +1,9 @@
 package net.edge.net.packet.out;
 
-import net.edge.locale.Position;
-import net.edge.net.codec.ByteTransform;
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendInterfaceAnimation implements OutgoingPacket {
 	
@@ -16,10 +15,10 @@ public final class SendInterfaceAnimation implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(200);
 		msg.putShort(id);
 		msg.putShort(animation);
+		return msg.getBuffer();
 	}
 }

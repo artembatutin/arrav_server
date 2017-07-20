@@ -1,26 +1,25 @@
 package net.edge.net.packet.in;
 
-import net.edge.Server;
+import net.edge.Application;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.pets.Pet;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.summoning.Summoning;
-import net.edge.event.EventContainer;
-import net.edge.event.impl.NpcEvent;
-import net.edge.locale.Boundary;
-import net.edge.locale.Position;
-import net.edge.locale.loc.Location;
+import net.edge.action.ActionContainer;
+import net.edge.action.impl.NpcAction;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcDefinition;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobDefinition;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 import java.util.Optional;
 
@@ -33,10 +32,10 @@ public final class NpcActionPacket implements IncomingPacket {
 	/*
 	 * All of the npc events.
 	 */
-	public static final EventContainer<NpcEvent> FIRST = new EventContainer<>();
-	public static final EventContainer<NpcEvent> SECOND = new EventContainer<>();
-	public static final EventContainer<NpcEvent> THIRD = new EventContainer<>();
-	public static final EventContainer<NpcEvent> FOURTH = new EventContainer<>();
+	public static final ActionContainer<NpcAction> FIRST = new ActionContainer<>();
+	public static final ActionContainer<NpcAction> SECOND = new ActionContainer<>();
+	public static final ActionContainer<NpcAction> THIRD = new ActionContainer<>();
+	public static final ActionContainer<NpcAction> FOURTH = new ActionContainer<>();
 	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
@@ -72,11 +71,11 @@ public final class NpcActionPacket implements IncomingPacket {
 	 */
 	private void attackOther(Player player, IncomingMsg payload) {
 		int index = payload.getShort(false, ByteTransform.A);
-		Npc npc = World.get().getNpcs().get(index - 1);
-		if(npc == null || !checkAttack(player, npc))
+		Mob mob = World.get().getNpcs().get(index - 1);
+		if(mob == null || !checkAttack(player, mob))
 			return;
 		player.getTolerance().reset();
-		player.getCombatBuilder().attack(npc);
+		player.getCombatBuilder().attack(mob);
 	}
 	
 	/**
@@ -87,13 +86,13 @@ public final class NpcActionPacket implements IncomingPacket {
 	private void attackMagic(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int spellId = payload.getShort(true, ByteTransform.A);
-		Npc npc = World.get().getNpcs().get(index - 1);
+		Mob mob = World.get().getNpcs().get(index - 1);
 		Optional<CombatSpells> spell = CombatSpells.getSpell(spellId);
-		if(npc == null || !spell.isPresent() || !checkAttack(player, npc))
+		if(mob == null || !spell.isPresent() || !checkAttack(player, mob))
 			return;
 		player.setCastSpell(spell.get().getSpell());
 		player.getTolerance().reset();
-		player.getCombatBuilder().attack(npc);
+		player.getCombatBuilder().attack(mob);
 	}
 	
 	/**
@@ -103,34 +102,34 @@ public final class NpcActionPacket implements IncomingPacket {
 	 */
 	private void firstClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
-		Npc npc = World.get().getNpcs().get(index - 1);
-		if(npc == null)
+		Mob mob = World.get().getNpcs().get(index - 1);
+		if(mob == null)
 			return;
-		Position position = npc.getPosition().copy();
-		if(npc.getId() == 4650) {
+		Position position = mob.getPosition().copy();
+		if(mob.getId() == 4650) {
 			player.getMovementQueue().smartWalk(new Position(3081, 3508));
 		}
 		player.getMovementListener().append(() -> {
-			if(new Boundary(position, npc.size()).within(player.getPosition(), player.size(), npc.getId() == 4650 ? 3 : 1)) {
-				player.facePosition(npc.getPosition());
-				npc.facePosition(player.getPosition());
-				if(!MinigameHandler.execute(player, m -> m.onFirstClickNpc(player, npc))) {
+			if(new Boundary(position, mob.size()).within(player.getPosition(), player.size(), mob.getId() == 4650 ? 3 : 1)) {
+				player.facePosition(mob.getPosition());
+				mob.facePosition(player.getPosition());
+				if(!MinigameHandler.execute(player, m -> m.onFirstClickNpc(player, mob))) {
 					return;
 				}
-				if(Summoning.interact(player, npc, 1)) {
+				if(Summoning.interact(player, mob, 1)) {
 					return;
 				}
-				if(Pet.pickup(player, npc)) {
+				if(Pet.pickup(player, mob)) {
 					return;
 				}
-				NpcEvent e = FIRST.get(npc.getId());
+				NpcAction e = FIRST.get(mob.getId());
 				if(e != null) {
-					e.click(player, npc, 1);
+					e.click(player, mob, 1);
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
-			player.message("[NPC1]:" + npc.toString());
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
+			player.message("[NPC1]:" + mob.toString());
 	}
 	
 	/**
@@ -140,28 +139,28 @@ public final class NpcActionPacket implements IncomingPacket {
 	 */
 	private void secondClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(false, ByteTransform.A, ByteOrder.LITTLE);
-		Npc npc = World.get().getNpcs().get(index - 1);
-		if(npc == null)
+		Mob mob = World.get().getNpcs().get(index - 1);
+		if(mob == null)
 			return;
-		Position position = npc.getPosition().copy();
+		Position position = mob.getPosition().copy();
 		player.getMovementListener().append(() -> {
-			if(new Boundary(position, npc.size()).within(player.getPosition(), player.size(), 1)) {
-				player.facePosition(npc.getPosition());
-				npc.facePosition(player.getPosition());
-				if(!MinigameHandler.execute(player, m -> m.onSecondClickNpc(player, npc))) {
+			if(new Boundary(position, mob.size()).within(player.getPosition(), player.size(), 1)) {
+				player.facePosition(mob.getPosition());
+				mob.facePosition(player.getPosition());
+				if(!MinigameHandler.execute(player, m -> m.onSecondClickNpc(player, mob))) {
 					return;
 				}
-				if(Summoning.interact(player, npc, 2)) {
+				if(Summoning.interact(player, mob, 2)) {
 					return;
 				}
-				NpcEvent e = SECOND.get(npc.getId());
+				NpcAction e = SECOND.get(mob.getId());
 				if(e != null) {
-					e.click(player, npc, 2);
+					e.click(player, mob, 2);
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
-			player.message("[NPC2]:" + npc.toString());
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
+			player.message("[NPC2]:" + mob.toString());
 	}
 	
 	/**
@@ -171,25 +170,25 @@ public final class NpcActionPacket implements IncomingPacket {
 	 */
 	private void thirdClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true);
-		Npc npc = World.get().getNpcs().get(index - 1);
-		if(npc == null)
+		Mob mob = World.get().getNpcs().get(index - 1);
+		if(mob == null)
 			return;
-		Position position = npc.getPosition().copy();
+		Position position = mob.getPosition().copy();
 		player.getMovementListener().append(() -> {
-			if(new Boundary(position, npc.size()).within(player.getPosition(), player.size(), 1)) {
-				player.facePosition(npc.getPosition());
-				npc.facePosition(player.getPosition());
-				if(Summoning.interact(player, npc, 3)) {
+			if(new Boundary(position, mob.size()).within(player.getPosition(), player.size(), 1)) {
+				player.facePosition(mob.getPosition());
+				mob.facePosition(player.getPosition());
+				if(Summoning.interact(player, mob, 3)) {
 					return;
 				}
-				NpcEvent e = THIRD.get(npc.getId());
+				NpcAction e = THIRD.get(mob.getId());
 				if(e != null) {
-					e.click(player, npc, 3);
+					e.click(player, mob, 3);
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
-			player.message("[NPC3]:" + npc.toString());
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
+			player.message("[NPC3]:" + mob.toString());
 	}
 	
 	/**
@@ -199,44 +198,44 @@ public final class NpcActionPacket implements IncomingPacket {
 	 */
 	private void fourthClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
-		Npc npc = World.get().getNpcs().get(index - 1);
-		if(npc == null)
+		Mob mob = World.get().getNpcs().get(index - 1);
+		if(mob == null)
 			return;
-		final int id = npc.getId();
-		Position position = npc.getPosition();
+		final int id = mob.getId();
+		Position position = mob.getPosition();
 		player.getMovementListener().append(() -> {
-			if(new Boundary(position, npc.size()).within(player.getPosition(), player.size(), 1)) {
-				player.facePosition(npc.getPosition());
-				npc.facePosition(player.getPosition());
+			if(new Boundary(position, mob.size()).within(player.getPosition(), player.size(), 1)) {
+				player.facePosition(mob.getPosition());
+				mob.facePosition(player.getPosition());
 				
-				if(Summoning.interact(player, npc, 4)) {
+				if(Summoning.interact(player, mob, 4)) {
 					return;
 				}
-				NpcEvent e = FOURTH.get(npc.getId());
+				NpcAction e = FOURTH.get(mob.getId());
 				if(e != null) {
-					e.click(player, npc, 4);
+					e.click(player, mob, 4);
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
-			player.message("[NPC4]:" + npc.toString());
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
+			player.message("[NPC4]:" + mob.toString());
 	}
 	
 	/**
-	 * Determines if {@code player} can make an attack on {@code npc}.
+	 * Determines if {@code player} can make an attack on {@code mob}.
 	 * @param player the player attempting to make an attack.
-	 * @param npc    the npc being attacked.
+	 * @param mob    the mob being attacked.
 	 * @return {@code true} if the player can make an attack, {@code false}
 	 * otherwise.
 	 */
-	private boolean checkAttack(Player player, Npc npc) {
-		if(!NpcDefinition.DEFINITIONS[npc.getId()].isAttackable())
+	private boolean checkAttack(Player player, Mob mob) {
+		if(!MobDefinition.DEFINITIONS[mob.getId()].isAttackable())
 			return false;
-		if(!Location.inMultiCombat(player) && player.getCombatBuilder().isBeingAttacked() && !npc.same(player.getCombatBuilder().getAggressor())) {
+		if(!player.inMulti() && player.getCombatBuilder().isBeingAttacked() && !mob.same(player.getCombatBuilder().getAggressor())) {
 			player.message("You are already under attack!");
 			return false;
 		}
-		if(!Slayer.canAttack(player, npc)) {
+		if(!Slayer.canAttack(player, mob)) {
 			return false;
 		}
 		return true;

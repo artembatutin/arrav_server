@@ -2,7 +2,7 @@ package net.edge.content.skill.crafting;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.task.Task;
@@ -10,9 +10,9 @@ import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -92,9 +92,9 @@ public final class PotClaying extends ProducingSkillAction {
 	}
 	
 	public static void objects() {
-		ObjectEvent click = new ObjectEvent() {
+		ObjectAction click = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				player.text(8879, "What would you like to make?");
 				player.out(new SendItemModelInterface(8941, 105, 1931));
 				player.out(new SendItemModelInterface(8942, 120, 2313));
@@ -122,7 +122,7 @@ public final class PotClaying extends ProducingSkillAction {
 	 * @param object the object the {@code item} was used on.
 	 * @return {@code true} if the interface got opened, {@code false} otherwise.
 	 */
-	public static boolean openInterface(Player player, Item item, ObjectNode object) {
+	public static boolean openInterface(Player player, Item item, GameObject object) {
 		if(!(object.getId() == 2642 && item.getId() == CLAY.getId())) {
 			return false;
 		}

@@ -1,14 +1,14 @@
 package net.edge.content.commands.impl;
 
-import net.edge.Server;
+import net.edge.Application;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.net.packet.out.SendLogout;
 import net.edge.net.packet.out.SendUpdateTimer;
 import net.edge.task.Task;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 import java.util.Iterator;
 
@@ -29,13 +29,13 @@ public final class UpdateCommand implements Command {
 		while((other = it.next()) != null) {
 			other.out(new SendUpdateTimer(timer * 50 / 30));
 		}
-		Server.UPDATING = timer;
+		Application.UPDATING = timer;
 		World.get().getTask().submit(new Task(1, true) {
 			@Override
 			protected void execute() {
-				Server.UPDATING -= 0.6;
-				System.out.println("Update count: " + Server.UPDATING);
-				if(Server.UPDATING <= 0) {
+				Application.UPDATING -= 0.6;
+				System.out.println("Update count: " + Application.UPDATING);
+				if(Application.UPDATING <= 0) {
 					inProgess = 2;
 					System.out.println("Setting player into updating mode.");
 					System.out.println("Logging players out... - Players online: " + World.get().getPlayers().size());

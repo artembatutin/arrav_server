@@ -1,10 +1,10 @@
 package net.edge.net.packet.out;
 
 import com.google.common.base.Preconditions;
-import net.edge.locale.Position;
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendCameraShake implements OutgoingPacket {
 	
@@ -19,12 +19,12 @@ public final class SendCameraShake implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(35);
 		msg.put(parameter);
 		msg.put(jitter);
 		msg.put(amplitude);
 		msg.put(frequency);
+		return msg.getBuffer();
 	}
 }

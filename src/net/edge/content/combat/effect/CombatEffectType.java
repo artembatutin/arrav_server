@@ -2,7 +2,7 @@ package net.edge.content.combat.effect;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.content.combat.effect.potion.CombatAntifireEffect;
-import net.edge.world.node.entity.player.assets.AntifireDetails.AntifireType;
+import net.edge.world.entity.actor.player.assets.AntifireDetails.AntifireType;
 
 /**
  * The enumerated type whose values represent the collection of different combat

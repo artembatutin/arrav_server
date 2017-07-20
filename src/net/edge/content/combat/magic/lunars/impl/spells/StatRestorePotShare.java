@@ -5,9 +5,9 @@ import net.edge.content.combat.Combat;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.content.item.PotionConsumable;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,12 +31,12 @@ public final class StatRestorePotShare extends LunarButtonSpell {
 	List<Player> local_players;
 	
 	@Override
-	public void effect(Player caster, EntityNode victim) {
+	public void effect(Player caster, Actor victim) {
 		//PotionConsumable.consume(caster, item, slot)
 	}
 	
 	@Override
-	public boolean prerequisites(Player caster, EntityNode victim) {
+	public boolean prerequisites(Player caster, Actor victim) {
 		if(POTIONS.stream().noneMatch(pot -> caster.getInventory().containsAny(pot.getIds()))) {
 			caster.message("You don't have any potion which can be shared with other players.");
 			return false;

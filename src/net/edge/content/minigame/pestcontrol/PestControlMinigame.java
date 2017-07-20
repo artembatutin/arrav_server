@@ -12,18 +12,18 @@ import net.edge.content.minigame.SequencedMinigame;
 import net.edge.content.minigame.pestcontrol.defence.PestGate;
 import net.edge.content.minigame.pestcontrol.pest.Pest;
 import net.edge.content.skill.Skills;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Hit;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -149,7 +149,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
+	public boolean onFirstClickObject(Player player, GameObject object) {
 		Position pos = object.getGlobalPos();
 		//west north ladder.
 		if(object.getId() == 14296 && pos.getX() == 2644) {
@@ -191,7 +191,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public boolean onThirdClickObject(Player player, ObjectNode object) {
+	public boolean onThirdClickObject(Player player, GameObject object) {
 		for(PestGate gate : gates) {
 			if(gate.clicked(object.getGlobalPos())) {
 				gate.repair(player);
@@ -231,7 +231,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public boolean canPickup(Player player, ItemNode node) {
+	public boolean canPickup(Player player, GroundItem node) {
 		return true;
 	}
 	
@@ -257,7 +257,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public void onInflictDamage(Player player, EntityNode other, Hit[] inflicted) {
+	public void onInflictDamage(Player player, Actor other, Hit[] inflicted) {
 		int add = 0;
 		for(Hit hit : inflicted) {
 			add += hit.getDamage();

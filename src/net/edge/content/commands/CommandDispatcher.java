@@ -4,7 +4,8 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.util.LoggerUtils;
 import net.edge.util.Utility;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.IncompleteAnnotationException;
@@ -35,8 +36,8 @@ public final class CommandDispatcher {
 	 * @param parts  the string which represents a command.
 	 */
 	public static void execute(Player player, String[] parts, String command) {
-		if(World.getExchangeSessionManager().inAnySession(player)) {
-			World.getExchangeSessionManager().reset(player);
+		if(ExchangeSessionManager.get().inAnySession(player)) {
+			ExchangeSessionManager.get().reset(player);
 		}
 		
 		Optional<Command> cmd = getCommand(parts[0]);

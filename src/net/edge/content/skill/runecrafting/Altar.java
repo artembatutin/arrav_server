@@ -1,6 +1,6 @@
 package net.edge.content.skill.runecrafting;
 
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 
 /**
  * The enumerated type which elements represents an altar which can produce

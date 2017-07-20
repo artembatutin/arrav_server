@@ -1,13 +1,14 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.container.ItemContainer;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.ItemContainer;
 
 public final class SendContainer implements OutgoingPacket {
 	
@@ -20,15 +21,19 @@ public final class SendContainer implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
+	public boolean onSent(Player player) {
 		if(id == -1)
-			return;
+			return false;
 		if(container.size() == 0) {
-			player.write(new SendClearContainer(id));
-			return;
+			player.out(new SendClearContainer(id));
+			return false;
 		}
-		GameBuffer msg = player.getSession().getStream();
-		msg.message(53, MessageType.VARIABLE_SHORT);
+		return true;
+	}
+	
+	@Override
+	public ByteBuf write(Player player, GameBuffer msg) {
+		msg.message(53, PacketType.VARIABLE_SHORT);
 		msg.putShort(id);
 		if(container.getItems() == null) {
 			msg.putShort(0);
@@ -70,5 +75,6 @@ public final class SendContainer implements OutgoingPacket {
 			}
 		}
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 }

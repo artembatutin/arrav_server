@@ -1,9 +1,9 @@
 package net.edge.net.packet.out;
 
-import net.edge.locale.Position;
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendSkillGoal implements OutgoingPacket {
 	
@@ -15,10 +15,10 @@ public final class SendSkillGoal implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(135);
 		msg.put(id);
 		msg.put(goal);
+		return msg.getBuffer();
 	}
 }

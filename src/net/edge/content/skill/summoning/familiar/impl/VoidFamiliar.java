@@ -12,9 +12,9 @@ import net.edge.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbil
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.SummoningData;
 import net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType;
-import net.edge.locale.loc.Location;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.locale.loc.Location;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 
@@ -68,11 +68,11 @@ public abstract class VoidFamiliar extends Familiar {
 		}
 		
 		@Override
-		public void interact(Player player, Npc npc, int id) {
+		public void interact(Player player, Mob mob, int id) {
 			if(id == 1) {
 				player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 			} else if(id == 2) {
-				Summoning.openBeastOfBurden(player, npc);
+				Summoning.openBeastOfBurden(player, mob);
 			}
 		}
 	}
@@ -98,7 +98,7 @@ public abstract class VoidFamiliar extends Familiar {
 		}
 		
 		@Override
-		public void interact(Player player, Npc npc, int id) {
+		public void interact(Player player, Mob mob, int id) {
 			if(id == 1) {
 				player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 			}
@@ -126,7 +126,7 @@ public abstract class VoidFamiliar extends Familiar {
 		}
 		
 		@Override
-		public void interact(Player player, Npc npc, int id) {
+		public void interact(Player player, Mob mob, int id) {
 			if(id == 1) {
 				player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 			}
@@ -154,7 +154,7 @@ public abstract class VoidFamiliar extends Familiar {
 		}
 		
 		@Override
-		public void interact(Player player, Npc npc, int id) {
+		public void interact(Player player, Mob mob, int id) {
 			if(id == 1) {
 				player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 			} else if(id == 2) {

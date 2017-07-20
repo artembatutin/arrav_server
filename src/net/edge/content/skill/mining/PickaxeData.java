@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.content.skill.woodcutting.Hatchet;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.EnumSet;
 import java.util.Optional;

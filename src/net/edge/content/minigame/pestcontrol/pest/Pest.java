@@ -1,16 +1,16 @@
 package net.edge.content.minigame.pestcontrol.pest;
 
-import net.edge.locale.Boundary;
-import net.edge.locale.Position;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.impl.DefaultNpc;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.impl.DefaultMob;
 
-public abstract class Pest extends DefaultNpc {
+public abstract class Pest extends DefaultMob {
 	
 	private static final Boundary pestBoundary = new Boundary(new Position(2623, 2558), new Position(2689, 2625));
 	
 	/**
-	 * Creates a new {@link Npc}.
+	 * Creates a new {@link Mob}.
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
@@ -24,7 +24,7 @@ public abstract class Pest extends DefaultNpc {
 	 * Sequencing this pest in the minigame.
 	 * @param knight the pest minigame.
 	 */
-	public abstract void sequence(Npc knight);
+	public abstract void sequence(Mob knight);
 	
 	public abstract boolean aggressive();
 	

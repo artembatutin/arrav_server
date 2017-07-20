@@ -5,8 +5,8 @@ import net.edge.content.commands.CommandSignature;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"setplevel"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::setplevel playername skill level")
 public final class SetPlayerlevelCommand implements Command {

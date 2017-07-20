@@ -2,16 +2,17 @@ package net.edge.net.packet.in;
 
 import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendEnterAmount;
-import net.edge.world.node.item.container.session.ExchangeSession;
-import net.edge.world.node.item.container.session.ExchangeSessionType;
+import net.edge.world.entity.item.container.session.ExchangeSession;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.item.container.session.ExchangeSessionType;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.ItemDefinition;
 
 public final class InputXOptionPacket implements IncomingPacket {
 	
@@ -59,17 +60,17 @@ public final class InputXOptionPacket implements IncomingPacket {
 				}
 				break;
 			case 3322://Inventory -> trade or duel
-				if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent() || World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
+				if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent() || ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
 					player.out(new SendEnterAmount("How many you would like to deposit?", t -> () -> {
 						int amount = Integer.parseInt(t);
-						if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
+						if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
 							//ExchangeSession session = World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.TRADE).get();
 							//int slot = player.getAttr().get("enter_x_item_slot").getInt();
 							//session.add(player, slot, amount);
 							//session.updateMainComponents();
 							player.message("Disabled for now.");
-						} else if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
-							ExchangeSession session = World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.DUEL).get();
+						} else if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
+							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).get();
 							int slot1 = player.getAttr().get("enter_x_item_slot").getInt();
 							session.add(player, slot1, amount);
 						}
@@ -87,10 +88,10 @@ public final class InputXOptionPacket implements IncomingPacket {
 				}
 				break;
 			case 6669://Duel -> inventory
-				if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
+				if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
 					player.out(new SendEnterAmount("How many you would like to withdraw?", t -> () -> {
-						if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
-							ExchangeSession session = World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.DUEL).get();
+						if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
+							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).get();
 							Item item = session.getExchangeSession().get(player).get(player.getAttr().get("enter_x_item_slot").getInt());
 							session.remove(player, new Item(item.getId(), Integer.parseInt(t)));
 						}
@@ -98,9 +99,9 @@ public final class InputXOptionPacket implements IncomingPacket {
 				}
 				break;
 			case 3415://Trade -> inventory
-				if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
+				if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
 					player.out(new SendEnterAmount("How many you would like to withdraw?", t -> () -> {
-						if(World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
+						if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
 							//ExchangeSession session = World.getExchangeSessionManager().getExchangeSession(player, ExchangeSessionType.TRADE).get();
 							//Item item = session.getExchangeSession().get(player).get(player.getAttr().get("enter_x_item_slot").getInt());
 							//session.remove(player, new Item(item.getId(), amount));

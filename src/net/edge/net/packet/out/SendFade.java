@@ -1,10 +1,9 @@
 package net.edge.net.packet.out;
 
-import net.edge.net.codec.ByteTransform;
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendFade implements OutgoingPacket {
 	
@@ -17,11 +16,11 @@ public final class SendFade implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(80);
 		msg.put(start);
 		msg.put(duration);
 		msg.put(end);
+		return msg.getBuffer();
 	}
 }

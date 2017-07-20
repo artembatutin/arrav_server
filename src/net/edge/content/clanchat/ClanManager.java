@@ -9,7 +9,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.packet.out.SendClanBanned;
 import net.edge.util.TextUtils;
 import net.edge.util.json.JsonSaver;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 
@@ -19,6 +19,11 @@ import java.util.Optional;
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class ClanManager {
+	
+	/**
+	 * The clan manager for the world.
+	 */
+	private static final ClanManager CLAN_MANAGER = new ClanManager();
 	
 	/**
 	 * The collection of clans on this world.
@@ -195,6 +200,13 @@ public final class ClanManager {
 			json.split();
 		}
 		json.publish("./data/json/clans.json");
+	}
+	
+	/**
+	 * Returns the clan chat manager.
+	 */
+	public static ClanManager get() {
+		return CLAN_MANAGER;
 	}
 	
 }

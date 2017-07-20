@@ -10,9 +10,9 @@ import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -98,17 +98,18 @@ public final class Tanning extends ProducingSkillAction {
 	/**
 	 * Attempts to openShop the interface for the specified player.
 	 * @param player the player to openShop the interface for.
-	 * @param item   the item being used on the npc.
-	 * @param npc    the npc that the item was used on.
+	 * @param item   the item being used on the mob.
+	 * @param mob    the mob that the item was used on.
 	 * @return {@code true} if the interface was opened, {@code false} otherwise.
 	 */
-	public static boolean openInterface(Player player, Item item, Npc npc) {
-		if(npc.getId() != 805) {
+	public static boolean openInterface(Player player, Item item, Mob mob) {
+		if(mob.getId() != 805) {
 			return false;
 		}
 		
 		if(!TanningData.getByItem(item.getId()).isPresent()) {
-			player.message("You can't use " + TextUtils.appendIndefiniteArticle(item.getDefinition().getName()) + " on " + npc.getDefinition().getName());
+			player.message("You can't use " + TextUtils.appendIndefiniteArticle(item.getDefinition().getName()) + " on " + mob
+					.getDefinition().getName());
 			return false;
 		}
 		

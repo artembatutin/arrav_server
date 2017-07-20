@@ -1,18 +1,18 @@
 package net.edge.content.skill.woodcutting;
 
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.TransformableObject;
 import net.edge.content.skill.action.impl.HarvestingSkillAction;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 import net.edge.world.object.DynamicObject;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -48,7 +48,7 @@ public final class Woodcutting extends HarvestingSkillAction {
 	 * @param player {@link #player}.
 	 * @param object the object the {@code player} is interacting with.
 	 */
-	public Woodcutting(Player player, Tree tree, ObjectNode object) {
+	public Woodcutting(Player player, Tree tree, GameObject object) {
 		super(player, Optional.of(object.getGlobalPos()));
 		this.objectName = object.getDefinition().getName().toLowerCase();
 		this.tree = tree;
@@ -58,9 +58,9 @@ public final class Woodcutting extends HarvestingSkillAction {
 	
 	public static void event() {
 		for(Tree tree : Tree.values()) {
-			ObjectEvent cut = new ObjectEvent() {
+			ObjectAction cut = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					Woodcutting woodcutting = new Woodcutting(player, tree, object);
 					woodcutting.start();
 					return true;

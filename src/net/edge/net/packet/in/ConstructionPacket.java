@@ -6,7 +6,7 @@ import net.edge.content.skill.construction.room.RoomData;
 import net.edge.content.skill.construction.room.RoomManipulation;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import static net.edge.content.skill.construction.room.RoomData.*;
 

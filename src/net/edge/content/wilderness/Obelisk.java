@@ -2,18 +2,17 @@ package net.edge.content.wilderness;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.locale.Position;
-import net.edge.locale.loc.SquareLocation;
+import net.edge.world.locale.Position;
+import net.edge.world.locale.loc.SquareLocation;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.object.ObjectNode;
-import net.edge.world.node.region.Region;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.object.GameObject;
+import net.edge.world.entity.region.Region;
 
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -60,14 +59,14 @@ public enum Obelisk {
 	 * @return an optional holding the {@link Obelisk} value found,
 	 * {@link Optional#empty} otherwise.
 	 */
-	public static Optional<Obelisk> get(ObjectNode object) {
+	public static Optional<Obelisk> get(GameObject object) {
 		return VALUES.stream().filter(t -> object.getId() == t.object).findAny();
 	}
 	
 	public static void event() {
-		ObjectEvent a = new ObjectEvent() {
+		ObjectAction a = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				Optional<Obelisk> obelisk = get(object);
 				if(obelisk.isPresent()) {
 					World.get().submit(new ObeliskTask(obelisk.get(), player.getRegion()));

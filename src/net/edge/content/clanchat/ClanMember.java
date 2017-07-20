@@ -2,8 +2,8 @@ package net.edge.content.clanchat;
 
 import net.edge.net.packet.out.SendClanMessage;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -113,7 +113,7 @@ public final class ClanMember {
 		}
 		clan.getBanned().add(member.getPlayer().getCredentials().getUsername());
 		clan.remove(member.getPlayer(), false);
-		World.getClanManager().update(ClanChatUpdate.BAN_MODIFICATION, clan);
+		ClanManager.get().update(ClanChatUpdate.BAN_MODIFICATION, clan);
 		member.sendMessage("You got banned from the clan.");
 	}
 	
@@ -128,7 +128,7 @@ public final class ClanMember {
 		}
 		String member = clan.getBanned().get(index);
 		clan.getBanned().remove(member);
-		World.getClanManager().update(ClanChatUpdate.BAN_MODIFICATION, clan);
+		ClanManager.get().update(ClanChatUpdate.BAN_MODIFICATION, clan);
 	}
 	
 	/**

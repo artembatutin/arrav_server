@@ -1,20 +1,21 @@
 package net.edge.net.packet.in;
 
-import net.edge.Server;
+import net.edge.Application;
 import net.edge.content.minigame.MinigameHandler;
+import net.edge.content.shootingstar.ShootingStarManager;
 import net.edge.content.skill.firemaking.Bonfire;
 import net.edge.content.skill.hunter.Hunter;
-import net.edge.event.EventContainer;
-import net.edge.event.impl.ObjectEvent;
-import net.edge.locale.Boundary;
-import net.edge.locale.Position;
+import net.edge.action.ActionContainer;
+import net.edge.action.impl.ObjectAction;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import net.edge.world.entity.item.Item;
 import net.edge.world.object.*;
 
 import java.util.Optional;
@@ -30,12 +31,12 @@ public final class ObjectActionPacket implements IncomingPacket {
 	/*
 	 * All of the object events.
 	 */
-	public static final EventContainer<ObjectEvent> FIRST = new EventContainer<>();
-	public static final EventContainer<ObjectEvent> SECOND = new EventContainer<>();
-	public static final EventContainer<ObjectEvent> THIRD = new EventContainer<>();
-	public static final EventContainer<ObjectEvent> FOURTH = new EventContainer<>();
-	public static final EventContainer<ObjectEvent> FIFTH = new EventContainer<>();
-	public static final EventContainer<ObjectEvent> CONSTRUCTION = new EventContainer<>();
+	public static final ActionContainer<ObjectAction> FIRST = new ActionContainer<>();
+	public static final ActionContainer<ObjectAction> SECOND = new ActionContainer<>();
+	public static final ActionContainer<ObjectAction> THIRD = new ActionContainer<>();
+	public static final ActionContainer<ObjectAction> FOURTH = new ActionContainer<>();
+	public static final ActionContainer<ObjectAction> FIFTH = new ActionContainer<>();
+	public static final ActionContainer<ObjectAction> CONSTRUCTION = new ActionContainer<>();
 	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
@@ -83,7 +84,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 		player.facePosition(position);
 		//construction clicks.
 		if(player.getHouse().isOwnerHome()) {
-			ObjectEvent e = CONSTRUCTION.get(objectId);
+			ObjectAction e = CONSTRUCTION.get(objectId);
 			player.message(objectId+"");
 			if(e != null) {
 				player.getHouse().get().getPlan().setObjectX(objectX);
@@ -96,11 +97,11 @@ public final class ObjectActionPacket implements IncomingPacket {
 				});
 			}
 		}
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
+		Optional<GameObject> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
-		final ObjectNode object = o.get();
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Server.DEBUG)
+		final GameObject object = o.get();
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[OBJ"+action+"]:" + object.getId() + " - " + object.getGlobalPos().toString());
 		boolean distanceIgnore = (action == 1 && (objectId == 85584 || objectId == 85532 || objectId == 85534));
 		Boundary boundary = new Boundary(position, object.getDefinition().getSize());
@@ -111,11 +112,11 @@ public final class ObjectActionPacket implements IncomingPacket {
 						if(!MinigameHandler.execute(player, m -> m.onFirstClickObject(player, object))) {
 							return;
 						}
-						if(event(player, object, FIRST))
+						if(event(player, object, FIRST, 1))
 							return;
 						if(Bonfire.addLogs(player, new Item(-100), object, true))
 							return;
-						if(World.getShootingStarEvent().mine(player, objectId))
+						if(ShootingStarManager.get().mine(player, objectId))
 							return;
 						if(Hunter.claim(player, object))
 							return;
@@ -125,29 +126,29 @@ public final class ObjectActionPacket implements IncomingPacket {
 					case 2:
 						if(!MinigameHandler.execute(player, m -> m.onSecondClickObject(player, object)))
 							return;
-						if(event(player, object, SECOND))
+						if(event(player, object, SECOND, 2))
 							return;
-						if(World.getShootingStarEvent().getShootingStar().prospect(player, objectId))
+						if(ShootingStarManager.get().getShootingStar().prospect(player, objectId))
 							return;
 						break;
 					case 3:
 						if(!MinigameHandler.execute(player, m -> m.onThirdClickObject(player, object)))
 							return;
-						if(event(player, object, THIRD))
+						if(event(player, object, THIRD, 3))
 							return;
 						break;
 					case 4:
 						if(!MinigameHandler.execute(player, m -> m.onFourthClickObject(player, object))) {
 							return;
 						}
-						if(event(player, object, FOURTH))
+						if(event(player, object, FOURTH, 4))
 							return;
 						break;
 					case 5:
 						if(!MinigameHandler.execute(player, m -> m.onFourthClickObject(player, object))) {
 							return;
 						}
-						if(event(player, object, FIFTH))
+						if(event(player, object, FIFTH, 5))
 							return;
 						break;
 				}
@@ -156,12 +157,12 @@ public final class ObjectActionPacket implements IncomingPacket {
 	}
 	
 	/**
-	 * Tries to handle the {@link ObjectEvent} action.
+	 * Tries to handle the {@link ObjectAction} action.
 	 */
-	private boolean event(Player player, ObjectNode object, EventContainer<ObjectEvent> con) {
-		ObjectEvent e = con.get(object.getId());
+	private boolean event(Player player, GameObject object, ActionContainer<ObjectAction> con, int click) {
+		ObjectAction e = con.get(object.getId());
 		if(e != null) {
-			if(e.click(player, object, 1))
+			if(e.click(player, object, click))
 				return true;
 		}
 		return false;
@@ -182,12 +183,12 @@ public final class ObjectActionPacket implements IncomingPacket {
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(spell < 0 || objectId < 0 || objectX < 0 || objectY < 0)
 			return;
-		Optional<ObjectNode> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
+		Optional<GameObject> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
 		//Controlling data.
 		player.facePosition(position);
-		final ObjectNode object = o.get();
+		final GameObject object = o.get();
 		player.getMovementListener().append(() -> {
 			if(new Boundary(position, object.getDefinition().getSize()).within(player.getPosition(), player.size(), 1)) {
 				switch(objectId) {

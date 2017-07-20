@@ -1,5 +1,6 @@
 package net.edge.content.skill.firemaking;
 
+import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
@@ -8,10 +9,10 @@ import net.edge.content.skill.firemaking.pits.FirepitData;
 import net.edge.content.skill.firemaking.pits.FirepitObject;
 import net.edge.world.Animation;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 import net.edge.world.object.DynamicObject;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public final class Bonfire extends DestructionSkillAction {
 	
 	private int amount;
 	
-	public Bonfire(Player player, ObjectNode object, LogType log, FirepitObject pit) {
+	public Bonfire(Player player, GameObject object, LogType log, FirepitObject pit) {
 		super(player, Optional.of(object.getGlobalPos()));
 		this.object = object.toDynamic();
 		this.log = log;
@@ -33,7 +34,7 @@ public final class Bonfire extends DestructionSkillAction {
 		this.amount = player.getInventory().computeAmountForId(log.getLog().getId());
 	}
 	
-	public static boolean addLogs(Player player, Item item, ObjectNode object, boolean click) {
+	public static boolean addLogs(Player player, Item item, GameObject object, boolean click) {
 		FirepitData data = FirepitData.VALUES.stream().filter(d -> d.getObjectId() == object.getId()).findAny().orElse(null);
 		
 		if(data == null) {
@@ -46,7 +47,7 @@ public final class Bonfire extends DestructionSkillAction {
 			return false;
 		}
 		
-		FirepitObject pit = World.getFirepitEvent().getFirepit();
+		FirepitObject pit = FirepitManager.get().getFirepit();
 		boolean logs = FireLighter.VALUES.stream().anyMatch(def -> def.getObjectId() == object.getId());
 		
 		if(pit == null && !logs) {

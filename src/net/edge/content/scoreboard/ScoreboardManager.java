@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.event.impl.NpcEvent;
+import net.edge.action.impl.NpcAction;
 import net.edge.net.packet.out.SendScore;
 import net.edge.util.MutableNumber;
 import net.edge.util.json.JsonSaver;
@@ -14,9 +14,9 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.PlayerDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -26,6 +26,11 @@ import java.util.Map.Entry;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ScoreboardManager {
+	
+	/**
+	 * This world's {@link ScoreboardManager} used to check scores.
+	 */
+	private static final ScoreboardManager SCOREBOARD_MANAGER = new ScoreboardManager();
 	
 	/**
 	 * The mappings of the player scoreboard.
@@ -127,9 +132,9 @@ public final class ScoreboardManager {
 	}
 	
 	public static void event() {
-		NpcEvent e = new NpcEvent() {
+		NpcAction e = new NpcAction() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				DialogueAppender ap = new DialogueAppender(player);
 				ap.chain(new NpcDialogue(npc.getId(), "Hello " + player.getFormatUsername() + ", what can I do for you today?"));
 				ap.chain(new OptionDialogue(t -> {
@@ -149,9 +154,9 @@ public final class ScoreboardManager {
 				ap.chain(new PlayerDialogue("Ah, I think I understand now.").attachAfter(() -> ap.getBuilder().go(-7)));
 				
 				ap.chain(new PlayerDialogue("I would like to claim my rewards."));
-				if(World.getScoreboardManager().getPlayerScoreboardRewards().containsKey(player.getFormatUsername())) {
-					player.getInventory().addOrBank(new Item(12852, World.getScoreboardManager().getPlayerScoreboardRewards().get(player.getFormatUsername()).get()));
-					World.getScoreboardManager().getPlayerScoreboardRewards().remove(player.getFormatUsername());
+				if(ScoreboardManager.get().getPlayerScoreboardRewards().containsKey(player.getFormatUsername())) {
+					player.getInventory().addOrBank(new Item(12852, ScoreboardManager.get().getPlayerScoreboardRewards().get(player.getFormatUsername()).get()));
+					ScoreboardManager.get().getPlayerScoreboardRewards().remove(player.getFormatUsername());
 					ap.chain(new NpcDialogue(npc.getId(), "Ah yeah, there were some rewards waiting for you however,", "they have been added to your inventory or have been", "banked.").attachAfter(() -> ap.getBuilder().go(-10)));
 				} else {
 					ap.chain(new NpcDialogue(npc.getId(), "There are no rewards waiting for you.").attachAfter(() -> ap.getBuilder().go(-9)));
@@ -203,7 +208,13 @@ public final class ScoreboardManager {
 			ComparisonChain c = ComparisonChain.start().compare(arg1.getCurrentKillstreak().get(), arg0.getCurrentKillstreak().get()).compare(arg1.getKills().get(), arg0.getKills().get()).compare(arg0.getDeaths(), arg1.getDeaths());
 			return c.result();
 		}
-		
+	}
+	
+	/**
+	 * Returns this world's {@link ScoreboardManager}.
+	 */
+	public static ScoreboardManager get() {
+		return SCOREBOARD_MANAGER;
 	}
 	
 }

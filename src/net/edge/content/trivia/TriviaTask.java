@@ -2,13 +2,18 @@ package net.edge.content.trivia;
 
 import net.edge.task.Task;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  * @since 3-6-2017.
  */
 public final class TriviaTask extends Task {
+    
+    /**
+     * The trivia task bot.
+     */
+    private static final TriviaTask TRIVIA_BOT = new TriviaTask();
 
     /**
      * The entry of this trivia task.
@@ -55,5 +60,12 @@ public final class TriviaTask extends Task {
      */
     public void onLogin(Player player) {
         entry.onLogin(player);
+    }
+    
+    /**
+     * Returns the trivia bot handler.
+     */
+    public static TriviaTask getBot() {
+        return TRIVIA_BOT;
     }
 }

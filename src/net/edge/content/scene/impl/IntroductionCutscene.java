@@ -1,9 +1,9 @@
 package net.edge.content.scene.impl;
 
+import net.edge.content.clanchat.ClanManager;
 import net.edge.net.PunishmentHandler;
 import net.edge.net.packet.out.*;
 import net.edge.task.Task;
-import net.edge.game.GameConstants;
 import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.impl.GiveItemDialogue;
@@ -11,13 +11,13 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue.OptionType;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.scene.Cutscene;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager.ActivityType;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -131,7 +131,7 @@ public final class IntroductionCutscene extends Cutscene {
 			player.setVisible(true);
 			player.getAttr().get("introduction_stage").set(2);
 			player.graphic(new Graphic(2189));
-			World.getClanManager().join(player, "avro");
+			ClanManager.get().join(player, "avro");
 		}).attachAfter(() -> {
 			player.move(new Position(3088, 3509));
 			player.widget(-5);

@@ -1,6 +1,6 @@
 package net.edge.content.combat;
 
-import net.edge.Server;
+import net.edge.Application;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
@@ -8,10 +8,11 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.world.*;
-import net.edge.world.node.NodeState;
-import net.edge.world.node.NodeType;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.EntityState;
+import net.edge.world.entity.EntityType;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.area.AreaManager;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -51,10 +52,10 @@ public final class CombatHitTask extends Task {
 	@Override
 	public void execute() {
 
-		EntityNode attacker = builder.getCharacter();
-		EntityNode victim = builder.getVictim();
+		Actor attacker = builder.getCharacter();
+		Actor victim = builder.getVictim();
 
-		if(attacker == null || victim == null || attacker.isDead() || attacker.getState() != NodeState.ACTIVE || victim.isDead() || victim.getState() != NodeState.ACTIVE) {
+		if(attacker == null || victim == null || attacker.isDead() || attacker.getState() != EntityState.ACTIVE || victim.isDead() || victim.getState() != EntityState.ACTIVE) {
 			this.cancel();
 			return;
 		}
@@ -74,7 +75,7 @@ public final class CombatHitTask extends Task {
 			victim.getCombatBuilder().getDamageCache().add(attacker, counter);
 		}
 
-		if(victim.getType() == NodeType.PLAYER && !data.isIgnored()) {
+		if(victim.getType() == EntityType.PLAYER && !data.isIgnored()) {
 			Player player = (Player) victim;
 			Summoning.combatTeleport(player);
 		}
@@ -199,7 +200,7 @@ public final class CombatHitTask extends Task {
 				return;
 			}
 
-			if(World.getAreaManager().inArea(player, "DUEL_ARENA") && player.getMinigame().isPresent()) {
+			if(AreaManager.get().inArea(player, "DUEL_ARENA") && player.getMinigame().isPresent()) {
 				return;
 			}
 
@@ -252,8 +253,8 @@ public final class CombatHitTask extends Task {
 	 */
 	public static void applyPrayerEffects(CombatHit data) {
 		if(data.getHits().length != 0) {
-			EntityNode victim = data.getVictim();
-			EntityNode attacker = data.getAttacker();
+			Actor victim = data.getVictim();
+			Actor attacker = data.getAttacker();
 
 			//PROTECTION PRAYERS
 			if(victim.isPlayer() && Prayer.isAnyActivated(victim.toPlayer(), Combat.getProtectingPrayer(data.getType()))) {
@@ -263,10 +264,10 @@ public final class CombatHitTask extends Task {
 							int hit = h.getDamage();
 							double mod = Math.abs(1 - CombatConstants.PRAYER_DAMAGE_REDUCTION);
 							h.setDamage((int) (hit * mod));
-							if(Server.DEBUG)
+							if(Application.DEBUG)
 								victim.toPlayer().message("[DEBUG]: Damage " + "reduced by opponents prayer [" + (hit - h.getDamage()) + "]");
 							mod = Math.round(RandomUtils.nextDouble() * 100.0) / 100.0;
-							if(Server.DEBUG)
+							if(Application.DEBUG)
 								victim.toPlayer().message("[DEBUG]: Chance " + "of opponents prayer cancelling hit [" + mod + "/" + CombatConstants.PRAYER_ACCURACY_REDUCTION + "]");
 							if(mod <= CombatConstants.PRAYER_ACCURACY_REDUCTION) {
 								h.setAccurate(false);
@@ -288,8 +289,8 @@ public final class CombatHitTask extends Task {
 	private void handlePrayerEffects() {
 		if(data.getHits().length != 0) {
 
-			EntityNode victim = data.getVictim();
-			EntityNode attacker = data.getAttacker();
+			Actor victim = data.getVictim();
+			Actor attacker = data.getAttacker();
 
 			//REDEMPTION
 			if(victim.isPlayer() && Prayer.isActivated(victim.toPlayer(), Prayer.REDEMPTION) && victim.toPlayer().getSkills()[Skills.HITPOINTS].getLevel() <= (victim.toPlayer().getSkills()[Skills.HITPOINTS].getRealLevel() / 10)) {

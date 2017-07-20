@@ -3,23 +3,23 @@ package net.edge.content.minigame.pestcontrol;
 import net.edge.content.market.currency.Currency;
 import net.edge.content.minigame.MinigameLobby;
 import net.edge.content.skill.Skills;
-import net.edge.event.impl.ButtonEvent;
-import net.edge.event.impl.NpcEvent;
-import net.edge.event.impl.ObjectEvent;
-import net.edge.locale.Position;
+import net.edge.action.impl.ButtonAction;
+import net.edge.action.impl.NpcAction;
+import net.edge.action.impl.ObjectAction;
+import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendWalkable;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.drop.ItemCache;
-import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropManager;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.drop.DropManager;
+import net.edge.world.entity.actor.mob.drop.ItemCache;
+import net.edge.world.entity.actor.mob.drop.Drop;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 import static net.edge.content.minigame.Minigame.MinigameSafety.SAFE;
-import static net.edge.world.node.entity.npc.drop.ItemCache.*;
+import static net.edge.world.entity.actor.mob.drop.ItemCache.*;
 
 public final class PestControlWaitingLobby extends MinigameLobby {
 	
@@ -128,17 +128,17 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	
 	public static void event() {
 		//boat entering/exiting.
-		ObjectEvent plank = new ObjectEvent() {
+		ObjectAction plank = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				PEST_LOBBY.submit(player);
 				return true;
 			}
 		};
 		plank.registerFirst(14315);
-		ObjectEvent ladder = new ObjectEvent() {
+		ObjectAction ladder = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				PEST_LOBBY.onLeave(player);
 				return true;
 			}
@@ -146,9 +146,9 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		ladder.registerFirst(14314);
 		
 		//accessing shop.
-		NpcEvent shop = new NpcEvent() {
+		NpcAction shop = new NpcAction() {
 			@Override
-			public boolean click(Player player, Npc npc, int click) {
+			public boolean click(Player player, Mob npc, int click) {
 				player.widget(37000);
 				player.text(37007, player.getPest() + " points");
 				return true;
@@ -163,7 +163,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		for(int skill : skills) {
 			for(int i = 0; i < 3; i++) {
 				final int cost = i == 0 ? 1 : i == 1 ? 10 : 100;
-				ButtonEvent attack = new ButtonEvent() {
+				ButtonAction attack = new ButtonAction() {
 					@Override
 					public boolean click(Player player, int button) {
 						if(Currency.PEST_POINTS.getCurrency().takeCurrency(player, cost)) {
@@ -187,7 +187,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		};
 		for(int i = 0; i < 3; i++) {
 			int index = i;
-			ButtonEvent attack = new ButtonEvent() {
+			ButtonAction attack = new ButtonAction() {
 				@Override
 				public boolean click(Player player, int button) {
 					if(player.getInventory().remaining() < 1) {
@@ -196,7 +196,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 					}
 					if(Currency.PEST_POINTS.getCurrency().takeCurrency(player, (index == 0 ? 30 : 15))) {
 						//three items.
-						NpcDrop pack = RandomUtils.random(NpcDropManager.COMMON.get(packs[index]));
+						Drop pack = RandomUtils.random(DropManager.COMMON.get(packs[index]));
 						player.getInventory().add(new Item(pack.getId(), RandomUtils.inclusive(pack.getMinimum(), pack.getMaximum())));
 					}
 					return true;
@@ -212,7 +212,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		button = 144198;
 		for(int i = 0; i < items.length; i++) {
 			int index = i;
-			ButtonEvent attack = new ButtonEvent() {
+			ButtonAction attack = new ButtonAction() {
 				@Override
 				public boolean click(Player player, int button) {
 					if(player.getInventory().remaining() < 1) {

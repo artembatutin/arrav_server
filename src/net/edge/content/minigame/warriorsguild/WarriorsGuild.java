@@ -2,11 +2,11 @@ package net.edge.content.minigame.warriorsguild;
 
 import net.edge.content.minigame.warriorsguild.impl.AnimationRoom;
 import net.edge.content.minigame.warriorsguild.impl.CyclopsRoom;
-import net.edge.event.impl.ObjectEvent;
-import net.edge.locale.Position;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.action.impl.ObjectAction;
+import net.edge.world.locale.Position;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 /**
  * The class which is responsible for executing minigame rooms of
@@ -21,16 +21,16 @@ public final class WarriorsGuild {
 	public static final Item WARRIOR_GUILD_TOKEN = new Item(8851);
 	
 	public static void event() {
-		ObjectEvent c =new ObjectEvent() {
+		ObjectAction c =new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				return object.getGlobalPos().same(new Position(2839, 3537)) && CyclopsRoom.enter(player, object);
 			}
 		};
 		c.registerFirst(43741);
-		ObjectEvent a = new ObjectEvent() {
+		ObjectAction a = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				return !(!object.getGlobalPos().same(new Position(2855, 3546)) && !object.getGlobalPos().same(new Position(2854, 3546))) && AnimationRoom.enter(player, object);
 			}
 		};

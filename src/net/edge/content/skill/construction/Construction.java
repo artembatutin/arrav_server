@@ -7,15 +7,15 @@ import net.edge.content.skill.construction.furniture.Portals;
 import net.edge.content.skill.construction.room.Room;
 import net.edge.content.skill.construction.room.RoomData;
 import net.edge.content.skill.construction.room.RoomFurniture;
-import net.edge.game.GameConstants;
-import net.edge.locale.Position;
+import net.edge.GameConstants;
+import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendFade;
 import net.edge.net.packet.out.SendMinimapState;
 import net.edge.net.packet.out.SendObject;
 import net.edge.net.packet.out.SendPaletteMap;
 import net.edge.task.Task;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 /**
  * Handling the main construction skill.

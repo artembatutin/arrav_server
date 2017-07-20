@@ -2,7 +2,7 @@ package net.edge.net.packet.in;
 
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 public final class DefaultPacket implements IncomingPacket {
 	

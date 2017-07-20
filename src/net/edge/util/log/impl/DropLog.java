@@ -2,9 +2,9 @@ package net.edge.util.log.impl;
 
 import net.edge.util.TextUtils;
 import net.edge.util.log.LogDetails;
-import net.edge.world.node.entity.npc.NpcDefinition;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.MobDefinition;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -17,7 +17,7 @@ public final class DropLog extends LogDetails {
 	/**
 	 * The npc whom dropped this item for this drop log.
 	 */
-	private final NpcDefinition npc;
+	private final MobDefinition npc;
 	
 	/**
 	 * The item dropped for this drop log.
@@ -29,7 +29,7 @@ public final class DropLog extends LogDetails {
 	 * @param npc  {@link #npc}.
 	 * @param item {@link #item}.
 	 */
-	public DropLog(Player player, NpcDefinition npc, Item item) {
+	public DropLog(Player player, MobDefinition npc, Item item) {
 		super(player.getFormatUsername(), "Drop");
 		this.npc = npc;
 		this.item = item;

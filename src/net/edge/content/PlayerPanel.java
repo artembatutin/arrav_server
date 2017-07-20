@@ -4,9 +4,10 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.content.commands.impl.RedeemCommand;
 import net.edge.content.market.MarketCounter;
+import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.wilderness.WildernessActivity;
-import net.edge.event.impl.ButtonEvent;
-import net.edge.game.GameConstants;
+import net.edge.action.impl.ButtonAction;
+import net.edge.GameConstants;
 import net.edge.net.packet.out.SendEnterName;
 import net.edge.net.packet.out.SendLink;
 import net.edge.net.packet.out.SendNpcDrop;
@@ -16,11 +17,10 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.scoreboard.PlayerScoreboardStatistic;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.EnumSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -246,11 +246,11 @@ public enum PlayerPanel {
 		PlayerPanel.TOTAL_PLAYER_KILLS.refresh(player, "@or2@ - Total Players killed: @yel@" + player.getPlayerKills().get());
 		PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(player, "@or2@ - Total Player deaths: @yel@" + player.getDeathsByPlayer().get());
 		PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Npcs killed: @yel@" + player.getNpcKills().get());
-		PlayerPanel.TOTAL_NPC_DEATHS.refresh(player, "@or2@ - Total Npc deaths: @yel@" + player.getDeathsByNpc().get());
+		PlayerPanel.TOTAL_NPC_DEATHS.refresh(player, "@or2@ - Total Mob deaths: @yel@" + player.getDeathsByNpc().get());
 		
 		PlayerPanel.EMPTY2.refresh(player, "");
 		PlayerPanel.INDIVIDUAL_SCOREBOARD_STATISTICS.refresh(player, "@or1@Indiv. Scoreboard Statistics:");
-		PlayerScoreboardStatistic s = World.getScoreboardManager().getPlayerScoreboard().get(player.getFormatUsername());
+		PlayerScoreboardStatistic s = ScoreboardManager.get().getPlayerScoreboard().get(player.getFormatUsername());
 		PlayerPanel.INDIVIDUAL_HIGHEST_KILLSTREAKS.refresh(player, "@or2@ - Highest Killstreak: @yel@" + (s == null ? 0 : s.getHighestKillstreak()));
 		PlayerPanel.INDIVIDUAL_CURRENT_KILLSTREAKS.refresh(player, "@or2@ - Current Killstreak: @yel@" + (s == null ? 0 : s.getCurrentKillstreak()));
 		PlayerPanel.INDIVIDUAL_KILLS.refresh(player, "@or2@ - Players killed: @yel@" + (s == null ? 0 : s.getKills()));
@@ -262,7 +262,7 @@ public enum PlayerPanel {
 	 */
 	public static void event() {
 		for(PlayerPanel p : PlayerPanel.values()) {
-			ButtonEvent e = new ButtonEvent() {
+			ButtonAction e = new ButtonAction() {
 				@Override
 				public boolean click(Player player, int button) {
 					p.onClick(player);

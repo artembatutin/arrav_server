@@ -1,12 +1,10 @@
 package net.edge.net.packet.out;
 
-import net.edge.locale.Position;
-import net.edge.net.codec.ByteTransform;
+import io.netty.buffer.ByteBuf;
+import net.edge.world.locale.Position;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectType;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendProjectile implements OutgoingPacket {
 	
@@ -25,9 +23,8 @@ public final class SendProjectile implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		player.write(new SendCoordinates(position));
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
+		new SendCoordinates(position).write(player, msg);
 		msg.message(117);
 		msg.put(0);
 		msg.put(offset.getX());
@@ -40,5 +37,6 @@ public final class SendProjectile implements OutgoingPacket {
 		msg.putShort(speed);
 		msg.put(16);
 		msg.put(64);
+		return msg.getBuffer();
 	}
 }

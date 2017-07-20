@@ -1,14 +1,12 @@
 package net.edge.net.packet.out;
 
-import net.edge.locale.Position;
-import net.edge.net.codec.ByteTransform;
+import io.netty.buffer.ByteBuf;
+import net.edge.world.locale.Position;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
-import java.util.Objects;
-
-import static net.edge.world.node.NodeState.INACTIVE;
+import static net.edge.world.entity.EntityState.INACTIVE;
 
 public final class SendGraphic implements OutgoingPacket {
 	
@@ -32,13 +30,13 @@ public final class SendGraphic implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		player.write(new SendCoordinates(position));
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
+		new SendCoordinates(position).write(player, msg);
 		msg.message(4);
 		msg.put(0);
 		msg.putShort(id);
 		msg.put(level);
 		msg.putShort(0);
+		return msg.getBuffer();
 	}
 }

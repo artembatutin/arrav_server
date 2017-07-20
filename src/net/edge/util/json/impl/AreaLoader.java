@@ -6,15 +6,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.locale.loc.Location;
+import net.edge.world.locale.area.AreaManager;
+import net.edge.world.locale.loc.Location;
 import net.edge.util.json.JsonLoader;
-import net.edge.locale.loc.CircleLocation;
-import net.edge.locale.loc.SquareLocation;
-import net.edge.locale.area.Area;
+import net.edge.world.locale.loc.CircleLocation;
+import net.edge.world.locale.loc.SquareLocation;
+import net.edge.world.locale.area.Area;
 import net.edge.world.World;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -45,9 +44,9 @@ public final class AreaLoader extends JsonLoader {
 			Location loc = builder.fromJson(square ? element.getAsJsonObject().get("square") : element.getAsJsonObject().get("circle"), square ? SquareLocation.class : CircleLocation.class);
 			locations.add(new Area.AreaLocation(loc, teleport, summon));
 			if(multi) {
-				World.getAreaManager().getMultiZones().add(loc);
+				AreaManager.get().getMultiZones().add(loc);
 			}
 		}
-		World.getAreaManager().getAreas().put(name, new Area(name, locations));
+		AreaManager.get().getAreas().put(name, new Area(name, locations));
 	}
 }

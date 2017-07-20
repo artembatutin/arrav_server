@@ -5,18 +5,18 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
 
 public final class TzKihCombatStrategy implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(EntityNode character, EntityNode victim) {
+	public boolean canOutgoingAttack(Actor character, Actor victim) {
 		return character.isNpc();
 	}
 
 	@Override
-	public CombatHit outgoingAttack(EntityNode character, EntityNode victim) {
+	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		if(victim.isPlayer()) {
 			Player player = victim.toPlayer();
 			String type = character.toNpc().isFamiliar() ? "Spirit tz-kih" : "Tz-kih";
@@ -29,12 +29,12 @@ public final class TzKihCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int attackDelay(EntityNode character) {
+	public int attackDelay(Actor character) {
 		return 4;
 	}
 
 	@Override
-	public int attackDistance(EntityNode character) {
+	public int attackDistance(Actor character) {
 		return 1;
 	}
 

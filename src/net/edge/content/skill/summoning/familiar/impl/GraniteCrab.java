@@ -9,10 +9,10 @@ import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.SummoningData;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemIdentifiers;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.ItemIdentifiers;
 
 import java.util.Optional;
 
@@ -59,11 +59,11 @@ public final class GraniteCrab extends Familiar {
 	}
 	
 	@Override
-	public void interact(Player player, Npc npc, int id) {
+	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
 			player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 		} else if(id == 2) {
-			Summoning.openBeastOfBurden(player, npc);
+			Summoning.openBeastOfBurden(player, mob);
 		}
 	}
 	

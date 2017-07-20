@@ -1,14 +1,13 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.skill.construction.furniture.Furniture;
 import net.edge.content.skill.construction.furniture.HotSpots;
-import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 public final class SendObjectsConstruction implements OutgoingPacket {
 	
@@ -19,12 +18,18 @@ public final class SendObjectsConstruction implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
+	public boolean onSent(Player player) {
 		Furniture[] panel = spot.getFurnitures();
 		if(panel == null || panel.length == 0)
-			return;
-		GameBuffer msg = player.getSession().getStream();
-		msg.message(130, MessageType.VARIABLE);
+			return false;
+		player.getHouse().get().getPlan().setPanel(panel);
+		return true;
+	}
+	
+	@Override
+	public ByteBuf write(Player player, GameBuffer msg) {
+		Furniture[] panel = spot.getFurnitures();
+		msg.message(130, PacketType.VARIABLE_BYTE);
 		msg.put(panel.length);
 		for(Furniture furniture : panel) {
 			msg.putShort(furniture.getItemId());
@@ -36,6 +41,6 @@ public final class SendObjectsConstruction implements OutgoingPacket {
 			}
 		}
 		msg.endVarSize();
-		player.getHouse().get().getPlan().setPanel(panel);
+		return msg.getBuffer();
 	}
 }

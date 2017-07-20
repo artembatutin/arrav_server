@@ -2,7 +2,7 @@ package net.edge.content.skill.summoning.familiar.ability;
 
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.world.Direction;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 

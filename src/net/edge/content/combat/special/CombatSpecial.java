@@ -9,17 +9,18 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.world.node.item.container.impl.Equipment;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
-import net.edge.locale.loc.Location;
-import net.edge.locale.Position;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.loc.Location;
+import net.edge.world.locale.Position;
 import net.edge.world.*;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +35,7 @@ public enum CombatSpecial {
 	//int[] ids, int amount, double strength, double accuracy, CombatType combat, WeaponInterface weapon
 	ABYSSAL_WHIP(new int[]{4151, 13444, 15441, 15442, 15443, 15444}, 50, 1, 1, CombatType.MELEE, WeaponInterface.WHIP) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(1658, Animation.AnimationPriority.HIGH));
 			target.graphic(new Graphic(341, 140));
 			if(target.isPlayer()) {
@@ -53,7 +54,7 @@ public enum CombatSpecial {
 	},
 	ANCHOR(new int[]{10887}, 50, 1.1, 1.30, CombatType.MELEE, WeaponInterface.WARHAMMER) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(5870, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1027, 50));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true, 3) {
@@ -73,7 +74,7 @@ public enum CombatSpecial {
 	},
 	ARMADYL_GODSWORD(new int[]{11694, 13450}, 50, 1.375, 2, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(11989, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(2113));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true);
@@ -81,7 +82,7 @@ public enum CombatSpecial {
 	},
 	BANDOS_GODSWORD(new int[]{11696}, 50, 1.21, 1.5, CombatType.MELEE, WeaponInterface.WARHAMMER) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(11991, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(2114));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
@@ -118,7 +119,7 @@ public enum CombatSpecial {
 	},
 	ZAMORAK_GODSWORD(new int[]{11700}, 50, 1.1, 1.4, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(7070, Animation.AnimationPriority.HIGH));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
@@ -140,7 +141,7 @@ public enum CombatSpecial {
 	},
 	SARADOMIN_GODSWORD(new int[]{11698}, 60, 1.1, 1.8, CombatType.MELEE, WeaponInterface.WARHAMMER) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(7071, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1220));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
@@ -157,7 +158,7 @@ public enum CombatSpecial {
 	},
 	SARADOMIN_SWORD(new int[]{11730}, 65, 1.1, 1, CombatType.MELEE, WeaponInterface.WARHAMMER) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(11993, Animation.AnimationPriority.HIGH));
 			
 			return new CombatHit(player, target, 2, CombatType.MELEE, true) {
@@ -175,22 +176,22 @@ public enum CombatSpecial {
 	},
 	DRAGON_2H_SWORD(new int[]{7158}, 60, 1, 1, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(3157, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(559));
 			return new CombatHit(player, target, 1, CombatType.MELEE, false) {
 				@Override
 				public void postAttack(int counter) {
-					if(Location.inMultiCombat(player)) {
-						Set<? extends EntityNode> local = null;
+					if(player.inMulti()) {
+						Set<? extends Actor> local = null;
 						if(target.isPlayer()) {
 							local = player.getLocalPlayers();
 						} else if(target.isNpc()) {
-							local = player.getLocalNpcs();
+							local = player.getLocalMobs();
 						}
 						if(local == null)
 							return;
-						for(EntityNode character : local) {
+						for(Actor character : local) {
 							if(character == null)
 								continue;
 							if(character.getPosition().withinDistance(target.getPosition(), 1) && !character.same(target) && !character.same(player) && character.getCurrentHealth() > 0 && !character.isDead()) {
@@ -206,7 +207,7 @@ public enum CombatSpecial {
 	},
 	DRAGON_BATTLEAXE(new int[]{1377}, 100, 1, 1, CombatType.MELEE, WeaponInterface.BATTLEAXE) {
 		@Override
-		public void onActivation(Player player, EntityNode target) {
+		public void onActivation(Player player, Actor target) {
 			int newStrength = (int) (player.getSkills()[Skills.STRENGTH].getRealLevel() * 0.2);
 			int newAttack = (int) (player.getSkills()[Skills.ATTACK].getRealLevel() * 0.1);
 			int newDefence = (int) (player.getSkills()[Skills.DEFENCE].getRealLevel() * 0.1);
@@ -230,13 +231,13 @@ public enum CombatSpecial {
 		}
 		
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			throw new UnsupportedOperationException("Dragon battleaxe does not have a special attack!");
 		}
 	},
 	DRAGON_CLAWS(new int[]{14484, 14486}, 50, 1.05, 6, CombatType.MELEE, WeaponInterface.CLAWS) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(10961, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1950, 50));
 			return new CombatHit(player, target, 4, CombatType.MELEE, true);
@@ -244,7 +245,7 @@ public enum CombatSpecial {
 	},
 	DRAGON_DAGGER(new int[]{1215, 1231, 5680, 5698}, 25, 1.15, 1.25, CombatType.MELEE, WeaponInterface.DAGGER) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(1062, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(252, 100));
 			return new CombatHit(player, target, 2, CombatType.MELEE, true, 2);
@@ -252,7 +253,7 @@ public enum CombatSpecial {
 	},
 	DRAGON_HALBERD(new int[]{3204, 11716}, 30, 1, 1, CombatType.MELEE, WeaponInterface.HALBERD) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(1203, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(282, 100));
 			return new CombatHit(player, target, 2, CombatType.MELEE, true);
@@ -260,7 +261,7 @@ public enum CombatSpecial {
 	},
 	DRAGON_LONGSWORD(new int[]{1305}, 25, 1.15, 1, CombatType.MELEE, WeaponInterface.LONGSWORD) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(1058, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(248, 100));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true);
@@ -268,7 +269,7 @@ public enum CombatSpecial {
 	},
 	DRAGON_MACE(new int[]{1434}, 25, 1.50, 1.25, CombatType.MELEE, WeaponInterface.MACE) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(1060, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(251, 100));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true);
@@ -276,7 +277,7 @@ public enum CombatSpecial {
 	},
 	DRAGON_PICKAXE(new int[]{15259}, 100, 1, 1, CombatType.MELEE, WeaponInterface.PICKAXE) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(12031, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(2144));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
@@ -300,7 +301,7 @@ public enum CombatSpecial {
 	},
 	DRAGON_SCIMITAR(new int[]{4587}, 55, 1, 1, CombatType.MELEE, WeaponInterface.SCIMITAR) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(12031, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(2118, 100));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
@@ -319,13 +320,13 @@ public enum CombatSpecial {
 	},
 	DRAGON_SPEAR(new int[]{1249, 1263, 3176, 5716, 5730, 13772, 11716}, 25, 1, 1, CombatType.MELEE, WeaponInterface.SPEAR) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(1064, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(253));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
-					Position pos = World.getTraversalMap().getRandomNearby(target.getPosition(), player.getPosition(), target.size());
+					Position pos = TraversalMap.getRandomNearby(target.getPosition(), player.getPosition(), target.size());
 					if(pos != null) {
 						target.getMovementQueue().walk(pos);
 						target.getMovementListener().append(() -> target.freeze(4));
@@ -339,7 +340,7 @@ public enum CombatSpecial {
 	},
 	GRANITE_MAUL(new int[]{4153}, 50, 1, 1, CombatType.MELEE, WeaponInterface.WARHAMMER) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(1667, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(340, 40));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true);
@@ -347,14 +348,14 @@ public enum CombatSpecial {
 	},
 	KORASI_SWORD(new int[]{19780}, 60, 1.2, 1.1, CombatType.MAGIC, WeaponInterface.LONGSWORD) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(14788, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(target.isPlayer() ? 1729 : 1730));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
 				@Override
 				public void postAttack(int counter) {
-					if(Location.inMultiCombat(player)) {
-						if(!player.isWildernessInterface()) {
+					if(player.inMulti()) {
+						if(!player.inWilderness()) {
 							World.get().submit(new KorasiChain(player, target, counter));
 						}
 					}
@@ -364,14 +365,14 @@ public enum CombatSpecial {
 	},
 	VESTAS_LONGSWORD(new int[]{13899}, 25, 1.28, 1.25, CombatType.MELEE, WeaponInterface.LONGSWORD) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(10502, Animation.AnimationPriority.HIGH));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true);
 		}
 	},
 	STATIUS_WARHAMMER(new int[]{13902}, 30, 1.25, 1.23, CombatType.MELEE, WeaponInterface.WARHAMMER) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(10505, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1840));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
@@ -393,7 +394,7 @@ public enum CombatSpecial {
 	},
 	DARK_BOW(new int[]{11235, 15701, 15702, 15703, 15704, 13405}, 55, 1.45, 1.22, CombatType.RANGED, WeaponInterface.LONGBOW) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(426));
 			final int[] delay = {0};
 			World.get().submit(new Task(1, false) {
@@ -425,7 +426,7 @@ public enum CombatSpecial {
 	},
 	MAGIC_SHORTBOW(new int[]{861}, 50, 1, 1.1, CombatType.RANGED, WeaponInterface.SHORTBOW) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(426, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(250, 100));
 			int delay = new Projectile(player, target, 249, 58, 40, 43, 31, 0, CombatType.RANGED).sendProjectile().getTravelTime();
@@ -443,7 +444,7 @@ public enum CombatSpecial {
 	},
 	MAGIC_LONGBOW(new int[]{859}, 35, 1, 5, CombatType.RANGED, WeaponInterface.LONGBOW) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(426, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(250, 100));
 			return new CombatHit(player, target, 1, CombatType.RANGED, true, new Projectile(player, target, 249, 44, 3, 43, 31, 0, CombatType.RANGED).sendProjectile().getTravelTime());
@@ -451,7 +452,7 @@ public enum CombatSpecial {
 	},
 	MORRIGANS_JAVELIN(new int[]{13879}, 50, 1.40, 1.30, CombatType.RANGED, WeaponInterface.JAVELIN) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(10501, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1836));
 			return new CombatHit(player, target, 1, CombatType.RANGED, true);
@@ -459,7 +460,7 @@ public enum CombatSpecial {
 	},
 	MORRIGANS_THROWNAXE(new int[]{13883}, 50, 1.38, 1.30, CombatType.RANGED, WeaponInterface.THROWNAXE) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(10504, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1838));
 			return new CombatHit(player, target, 1, CombatType.RANGED, true);
@@ -467,7 +468,7 @@ public enum CombatSpecial {
 	},
 	DARKLIGHT(new int[]{6746}, 50, 1.15, 1, CombatType.MELEE, WeaponInterface.LONGSWORD) {
 		@Override
-		public CombatHit container(Player player, EntityNode target) {
+		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(2890, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(483, 100));
 			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
@@ -542,7 +543,7 @@ public enum CombatSpecial {
 	 * @param target the target when activating the special attack bar, will be
 	 *               {@code null} if the player is not in combat.
 	 */
-	public void onActivation(Player player, EntityNode target) {
+	public void onActivation(Player player, Actor target) {
 		
 	}
 	
@@ -552,7 +553,7 @@ public enum CombatSpecial {
 	 * @param target the main target of the attack.
 	 * @return the combat data.
 	 */
-	public abstract CombatHit container(Player player, EntityNode target);
+	public abstract CombatHit container(Player player, Actor target);
 	
 	/**
 	 * Drains the special bar for {@code player}.

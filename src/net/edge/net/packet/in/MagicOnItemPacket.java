@@ -6,11 +6,11 @@ import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.util.Stopwatch;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager.ActivityType;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.ItemDefinition;
 
 /**
  * The message sent from the client when a player uses magic on an inventory item.

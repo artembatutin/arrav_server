@@ -2,9 +2,9 @@ package net.edge.net.packet.in;
 
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 /**
  * The message sent from the client when the player clicks some sort of button or

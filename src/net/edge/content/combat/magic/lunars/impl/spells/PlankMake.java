@@ -3,13 +3,12 @@ package net.edge.content.combat.magic.lunars.impl.spells;
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
-import java.util.Map.Entry;
 import java.util.Optional;
 
 /**
@@ -26,7 +25,7 @@ public final class PlankMake extends LunarButtonSpell {
 	}
 	
 	@Override
-	public void effect(Player caster, EntityNode victim) {
+	public void effect(Player caster, Actor victim) {
 		for(int i : PLANKS.keySet()) {
 			if(caster.getInventory().contains(i)) {
 				caster.getInventory().remove(new Item(i));
@@ -36,7 +35,7 @@ public final class PlankMake extends LunarButtonSpell {
 	}
 	
 	@Override
-	public boolean prerequisites(Player caster, EntityNode victim) {
+	public boolean prerequisites(Player caster, Actor victim) {
 		if(PLANKS.keySet().stream().noneMatch(caster.getInventory()::contains)) {
 			caster.message("You don't have any logs that can be made into planks.");
 			return false;

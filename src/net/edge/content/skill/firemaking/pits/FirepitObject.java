@@ -2,8 +2,8 @@ package net.edge.content.skill.firemaking.pits;
 
 import net.edge.util.TextUtils;
 import net.edge.content.skill.firemaking.LogType;
-import net.edge.locale.Position;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.locale.Position;
+import net.edge.world.entity.actor.player.Player;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectType;

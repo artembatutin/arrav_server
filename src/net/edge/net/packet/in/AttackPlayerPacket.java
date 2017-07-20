@@ -3,18 +3,19 @@ package net.edge.net.packet.in;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.combat.magic.lunars.LunarSpells;
-import net.edge.world.node.item.container.session.ExchangeSession;
-import net.edge.world.node.item.container.session.impl.DuelSession;
+import net.edge.world.entity.item.container.session.ExchangeSession;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.item.container.session.impl.DuelSession;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.locale.loc.Location;
+import net.edge.world.locale.loc.Location;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 import java.util.Optional;
 
@@ -90,13 +91,13 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			attacker.getMovementQueue().reset();
 			return false;
 		}
-		if(!Location.inMultiCombat(attacker) && attacker.getCombatBuilder().isBeingAttacked() && attacker.getCombatBuilder().getAggressor() != victim && attacker.getCombatBuilder().pjingCheck()) {
+		if(!attacker.inMulti() && attacker.getCombatBuilder().isBeingAttacked() && attacker.getCombatBuilder().getAggressor() != victim && attacker.getCombatBuilder().pjingCheck()) {
 			attacker.message("You are already under attack!");
 			attacker.getMovementQueue().reset();
 			return false;
 		}
 		if(Location.inDuelArena(attacker) && !attacker.getMinigame().isPresent()) {
-			World.getExchangeSessionManager().request(new DuelSession(attacker, victim, ExchangeSession.REQUEST));
+			ExchangeSessionManager.get().request(new DuelSession(attacker, victim, ExchangeSession.REQUEST));
 			attacker.getMovementQueue().reset();
 			return false;
 		}
@@ -105,8 +106,8 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			if(Location.inFunPvP(attacker) && Location.inFunPvP(victim)) {
 				return true;
 			}
-			if(!Location.inWilderness(attacker) || !Location.inWilderness(victim)) {
-				attacker.message("Both you and " + victim.getFormatUsername() + " need to be in the wilderness" + " to fight!");
+			if(!attacker.inWilderness() || !victim.inWilderness()) {
+				attacker.message("Both you and " + victim.getFormatUsername() + " need to be in the wilderness to fight!");
 				attacker.getMovementQueue().reset();
 				return false;
 			}

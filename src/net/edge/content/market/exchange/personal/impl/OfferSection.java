@@ -2,7 +2,7 @@ package net.edge.content.market.exchange.personal.impl;
 
 import net.edge.content.market.exchange.item.ExchangeItem;
 import net.edge.content.market.exchange.personal.PlayerCounterSection;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * The section offerring items from other players.

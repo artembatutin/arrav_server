@@ -1,6 +1,7 @@
 package net.edge.net.session;
 
 import io.netty.channel.Channel;
+import net.edge.world.entity.actor.player.Player;
 
 import java.net.InetSocketAddress;
 
@@ -10,7 +11,7 @@ import static com.google.common.base.Preconditions.checkState;
  * An abstraction model that determines how I/O operations are handled.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public class Session {
+public abstract class Session {
 	
 	/**
 	 * The {@link Channel} to send and receive messages through.
@@ -40,26 +41,21 @@ public class Session {
 	}
 	
 	/**
-	 * Disposes of this {@code Session} by closing the {@link Channel} and executing the {@code onDispose()} listener.
-	 */
-	public void dispose() {
-		onDispose();
-	}
-	
-	/**
-	 * Executed when this {@link Session} needs to be disposed of.
-	 */
-	public void onDispose() {
-		
-	}
-	
-	/**
-	 * Implementations decide which messages are handled and how they are handled. Messages are ignored completely by
-	 * default.
+	 * Implementations decide which messages are handled and how they are handled. Messages are ignored completely by default.
 	 * @param msg The message to handle.
 	 */
-	public void handleUpstreamMessage(Object msg) throws Exception {
-	}
+	public abstract void handleUpstreamMessage(Object msg) throws Exception;
+	
+	/**
+	 * Disposes of this {@code Session} by closing the {@link Channel}.
+	 */
+	public abstract void terminate();
+	
+	/**
+	 * Gets the player associated with this {@link Session} if possible.
+	 * @return player in this session.
+	 */
+	public abstract Player getPlayer();
 	
 	/**
 	 * @return The {@link Channel} to send and receive messages through.

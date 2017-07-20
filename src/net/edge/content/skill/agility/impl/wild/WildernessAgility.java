@@ -1,7 +1,5 @@
 package net.edge.content.skill.agility.impl.wild;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.agility.AgilityCourse;
 import net.edge.content.skill.agility.AgilityCourseType;
@@ -11,15 +9,14 @@ import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Steppable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
-import net.edge.event.impl.ObjectEvent;
-import net.edge.locale.Position;
+import net.edge.action.impl.ObjectAction;
+import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendObjectAnimation;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
-import java.util.EnumSet;
 import java.util.Optional;
 
 /**
@@ -39,16 +36,16 @@ public final class WildernessAgility extends AgilityCourse {
 	 * @param object {@link #getObject()}.
 	 * @param data   the obstacle this player is trying to cross.
 	 */
-	public WildernessAgility(Player player, ObjectNode object, WildernessAgilityData data) {
+	public WildernessAgility(Player player, GameObject object, WildernessAgilityData data) {
 		super(player, object, AgilityCourseType.WILDERNESS_AGILITY);
 		this.data = data;
 	}
 	
 	public static void event() {
 		for(WildernessAgilityData data : WildernessAgilityData.values()) {
-			ObjectEvent perform = new ObjectEvent() {
+			ObjectAction perform = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					WildernessAgility agility = new WildernessAgility(player, object, data);
 					agility.start();
 					return true;

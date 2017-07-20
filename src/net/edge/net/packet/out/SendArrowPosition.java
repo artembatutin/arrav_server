@@ -1,14 +1,10 @@
 package net.edge.net.packet.out;
 
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import net.edge.content.market.MarketItem;
-import net.edge.locale.Position;
-import net.edge.net.codec.ByteOrder;
-import net.edge.net.codec.ByteTransform;
+import io.netty.buffer.ByteBuf;
+import net.edge.world.locale.Position;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendArrowPosition implements OutgoingPacket {
 	
@@ -40,12 +36,12 @@ public final class SendArrowPosition implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
+	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(254);
 		msg.put(direction);
 		msg.putShort(position.getX());
 		msg.putShort(position.getY());
 		msg.put(position.getZ());
+		return msg.getBuffer();
 	}
 }

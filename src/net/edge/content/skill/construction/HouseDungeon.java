@@ -1,7 +1,5 @@
 package net.edge.content.skill.construction;
 
-import net.edge.world.node.entity.player.Player;
-
 /**
  * Represents a player's {@link Construction} house dungeon.
  * @author Artem Batutin <artembatutin@gmail.com>
@@ -46,7 +44,7 @@ public class HouseDungeon {
 		Room room = getOwner().houseRooms[0][myTiles[0] - 1][myTiles[1] - 1];
 		int[] converted = Construction.getConvertedCoords(3, 2, myTiles, room);
 		p.toConsCoords = converted;
-		GameServer.getTaskScheduler().schedule(new Task(1, p, false) {
+		Application.getTaskScheduler().schedule(new Task(1, p, false) {
 			@Override
 			protected void execute() {
 				p.getPacketSender().sendObjectsRemoval(0, 0, 10);
@@ -67,7 +65,7 @@ public class HouseDungeon {
 		p.getPacketSender().sendInterface(28640);
 		p.getPacketSender().sendMapState(2);
 		final Player p_ = p;
-		GameServer.getTaskScheduler().schedule(new Task(1, p, false) {
+		Application.getTaskScheduler().schedule(new Task(1, p, false) {
 			int ticks;
 			@Override
 			public void execute() {

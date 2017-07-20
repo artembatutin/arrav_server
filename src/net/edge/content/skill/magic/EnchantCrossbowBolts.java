@@ -1,13 +1,13 @@
 package net.edge.content.skill.magic;
 
 import com.google.common.collect.ImmutableMap;
-import net.edge.world.node.item.container.impl.Inventory;
+import net.edge.world.entity.item.container.impl.Inventory;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 import java.util.function.Function;

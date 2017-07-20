@@ -1,12 +1,12 @@
 package net.edge.content.item;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.world.node.item.container.ItemContainer;
+import net.edge.world.entity.item.container.ItemContainer;
 import net.edge.content.skill.Skills;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 

@@ -2,8 +2,8 @@ package net.edge.content.skill.fishing;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.locale.loc.Location;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.locale.loc.Location;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -26,7 +26,7 @@ public enum Catchable {
 	SLIMY_EEL(3379, 28, 0.15, 65) {
 		@Override
 		public boolean catchable(Player player) {
-			return Location.inWilderness(player);
+			return player.inWilderness();
 		}
 	},
 	SALMON(331, 30, 0.18, 70),
@@ -34,7 +34,7 @@ public enum Catchable {
 	CAVE_EEL(5001, 38, 0.13, 80) {
 		@Override
 		public boolean catchable(Player player) {
-			return Location.inWilderness(player);
+			return player.inWilderness();
 		}
 	},
 	LOBSTER(377, 40, 0.20, 90),
@@ -43,7 +43,7 @@ public enum Catchable {
 	LAVA_EEL(2148, 53, 0.15, 60) {
 		@Override
 		public boolean catchable(Player player) {
-			return Location.inWilderness(player);
+			return player.inWilderness();
 		}
 	},
 	MONKFISH(7944, 62, 0.12, 120),

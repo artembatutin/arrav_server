@@ -1,7 +1,7 @@
 package net.edge.net.database.connection.use;
 
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.io.IOException;
 import java.sql.*;

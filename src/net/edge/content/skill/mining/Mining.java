@@ -1,17 +1,17 @@
 package net.edge.content.skill.mining;
 
 import net.edge.content.skill.Skills;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.TransformableObject;
 import net.edge.content.skill.action.impl.HarvestingSkillAction;
 import net.edge.world.Animation;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 import net.edge.world.object.DynamicObject;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -55,7 +55,7 @@ public final class Mining extends HarvestingSkillAction {
 	 * @param rock   the mining rock.
 	 * @param object the rock object.
 	 */
-	public Mining(Player player, RockData rock, ObjectNode object) {
+	public Mining(Player player, RockData rock, GameObject object) {
 		super(player, Optional.of(object.getGlobalPos()));
 		if(rock == RockData.ESSENCE && player.getSkills()[Skills.MINING].getRealLevel() >= 30)
 			rock = RockData.PURE_ESSENCE;
@@ -66,17 +66,17 @@ public final class Mining extends HarvestingSkillAction {
 	
 	public static void event() {
 		for(RockData rock : RockData.values()) {
-			ObjectEvent mine = new ObjectEvent() {
+			ObjectAction mine = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					Mining mining = new Mining(player, rock, object);
 					mining.start();
 					return true;
 				}
 			};
-			ObjectEvent prospect = new ObjectEvent() {
+			ObjectAction prospect = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					player.message("You examine the rock for ores...");
 					String message = rock.toString().concat(" ore").replace("_", " ");
 					World.get().submit(new Task(rock.prospectDelay(), false) {
@@ -116,7 +116,7 @@ public final class Mining extends HarvestingSkillAction {
 			Optional<TransformableObject> filter = Arrays.stream(rock.getObject()).filter(p -> p.getObjectId() == object.getId()).findFirst();
 			if(filter.isPresent()) {
 				int id = object.getId();//filled rock.
-				ObjectNode emptyRock = object.setId(filter.get().getTransformable());
+				GameObject emptyRock = object.setId(filter.get().getTransformable());
 				object.setDisabled(true);
 				emptyRock.publish(rock.getRespawnTime(), n -> {
 					object.setId(id);
@@ -202,10 +202,10 @@ public final class Mining extends HarvestingSkillAction {
 				if(getPlayer().getInventory().spaceFor(PickaxeData.PICKAXE_HANDLE)) {
 					getPlayer().getInventory().add(PickaxeData.PICKAXE_HANDLE);
 				} else {
-					ItemNode node = new ItemNode(PickaxeData.PICKAXE_HANDLE, getPlayer().getPosition(), getPlayer());
+					GroundItem node = new GroundItem(PickaxeData.PICKAXE_HANDLE, getPlayer().getPosition(), getPlayer());
 					ItemNodeManager.register(node);
 				}
-				ItemNode node = new ItemNode(pickaxe.getHead(), getPlayer().getPosition(), getPlayer());
+				GroundItem node = new GroundItem(pickaxe.getHead(), getPlayer().getPosition(), getPlayer());
 				ItemNodeManager.register(node);
 				getPlayer().message("Your pickaxe dismantled during the mining process.");
 			} else {

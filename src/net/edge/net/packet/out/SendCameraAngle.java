@@ -1,9 +1,10 @@
 package net.edge.net.packet.out;
 
-import net.edge.locale.Position;
+import io.netty.buffer.ByteBuf;
+import net.edge.world.locale.Position;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendCameraAngle implements OutgoingPacket {
 	
@@ -18,13 +19,13 @@ public final class SendCameraAngle implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer str = player.getSession().getStream();
-		str.message(177);
-		str.put(position.getLocalX(player.getPosition()));
-		str.put(position.getLocalY(player.getPosition()));
-		str.putShort(height);
-		str.put(movementSpeed);
-		str.put(rotationSpeed);
+	public ByteBuf write(Player player, GameBuffer msg) {
+		msg.message(177);
+		msg.put(position.getLocalX(player.getPosition()));
+		msg.put(position.getLocalY(player.getPosition()));
+		msg.putShort(height);
+		msg.put(movementSpeed);
+		msg.put(rotationSpeed);
+		return msg.getBuffer();
 	}
 }

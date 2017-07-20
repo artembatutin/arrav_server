@@ -1,10 +1,10 @@
 package net.edge.net.packet.out;
 
-import net.edge.content.TabInterface;
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendScore implements OutgoingPacket {
 	
@@ -20,14 +20,14 @@ public final class SendScore implements OutgoingPacket {
 	}
 	
 	@Override
-	public void write(Player player) {
-		GameBuffer msg = player.getSession().getStream();
-		msg.message(30, MessageType.VARIABLE);
+	public ByteBuf write(Player player, GameBuffer msg) {
+		msg.message(30, PacketType.VARIABLE_BYTE);
 		msg.putShort(index);
 		msg.putShort(kills);
 		msg.putShort(deaths);
 		msg.putShort(killstreak);
 		msg.putCString(title);
 		msg.endVarSize();
+		return msg.getBuffer();
 	}
 }

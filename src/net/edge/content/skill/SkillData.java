@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.net.packet.out.SendSkillGoal;
 import net.edge.util.TextUtils;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.EnumSet;
 import java.util.Optional;

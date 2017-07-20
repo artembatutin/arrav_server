@@ -1,7 +1,5 @@
 package net.edge.content.skill.agility.impl;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import net.edge.content.skill.agility.AgilityCourse;
 import net.edge.content.skill.agility.AgilityCourseType;
 import net.edge.content.skill.agility.obstacle.ObstacleAction;
@@ -9,12 +7,11 @@ import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Steppable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
-import net.edge.event.impl.ObjectEvent;
-import net.edge.locale.Position;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.action.impl.ObjectAction;
+import net.edge.world.locale.Position;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.object.GameObject;
 
-import java.util.EnumSet;
 import java.util.Optional;
 
 /**
@@ -34,16 +31,16 @@ public final class Shortcuts extends AgilityCourse {
 	 * @param object     {@link #getObject()}.
 	 * @param definition {@link #definition}.
 	 */
-	public Shortcuts(Player player, ObjectNode object, ShortcutsData definition) {
+	public Shortcuts(Player player, GameObject object, ShortcutsData definition) {
 		super(player, object, AgilityCourseType.SHORTCUTS);
 		this.definition = definition;
 	}
 	
 	public static void event() {
 		for(ShortcutsData data : ShortcutsData.values()) {
-			ObjectEvent perform = new ObjectEvent() {
+			ObjectAction perform = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					Shortcuts shortcut = new Shortcuts(player, object, data);
 					shortcut.start();
 					return true;

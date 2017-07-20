@@ -1,15 +1,16 @@
 package net.edge.net.packet.in;
 
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.item.container.session.ExchangeSession;
-import net.edge.world.node.item.container.session.impl.DuelSession;
-import net.edge.world.node.item.container.session.impl.TradeSession;
+import net.edge.world.entity.item.container.session.ExchangeSession;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.item.container.session.impl.DuelSession;
+import net.edge.world.entity.item.container.session.impl.TradeSession;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 /**
  * The message sent from the client when a player sends some sort of request to
@@ -46,7 +47,7 @@ public final class RequestPacket implements IncomingPacket {
 			return;
 		if(!MinigameHandler.execute(player, m -> m.canTrade(player, other)))
 			return;
-		World.getExchangeSessionManager().request(new TradeSession(player, other, ExchangeSession.REQUEST));
+		ExchangeSessionManager.get().request(new TradeSession(player, other, ExchangeSession.REQUEST));
 	}
 	
 	/**
@@ -59,7 +60,7 @@ public final class RequestPacket implements IncomingPacket {
 		Player other = World.get().getPlayers().get(index - 1);
 		if(other == null || !validate(player, other))
 			return;
-		World.getExchangeSessionManager().request(new DuelSession(player, other, ExchangeSession.REQUEST));
+		ExchangeSessionManager.get().request(new DuelSession(player, other, ExchangeSession.REQUEST));
 	}
 	
 	/**

@@ -1,8 +1,7 @@
 package net.edge.net.codec;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.DefaultByteBufHolder;
-import net.edge.net.packet.PacketHelper;
+import net.edge.net.packet.PacketUtils;
 
 /**
  * A {@link ByteBuf} wrapper tailored to the specifications of the Runescape protocol. These wrappers are backed by pooled
@@ -23,12 +22,12 @@ public final class IncomingMsg {
 	/**
 	 * The header type of this message.
 	 */
-	private final MessageType type;
+	private final PacketType type;
 
 	/**
 	 * Creates a new {@link IncomingMsg}.
 	 */
-	public IncomingMsg(int opcode, MessageType type, ByteBuf buf) {
+	public IncomingMsg(int opcode, PacketType type, ByteBuf buf) {
 		this.buf = buf;
 		this.opcode = opcode;
 		this.type = type;
@@ -359,7 +358,7 @@ public final class IncomingMsg {
 	 * @return The value of the string.
 	 */
 	public String getCString() { // very weird
-		return PacketHelper.getCString(buf);
+		return PacketUtils.getCString(buf);
 	}
 	
 	/**
@@ -439,7 +438,7 @@ public final class IncomingMsg {
 	/**
 	 * @return The header type of this message.
 	 */
-	public MessageType getType() {
+	public PacketType getType() {
 		return type;
 	}
 }

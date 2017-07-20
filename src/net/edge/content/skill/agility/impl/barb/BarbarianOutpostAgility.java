@@ -1,8 +1,6 @@
 package net.edge.content.skill.agility.impl.barb;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.net.packet.out.SendObjectAnimation;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
@@ -16,16 +14,15 @@ import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Climbable;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.move.ForcedMovement;
-import net.edge.world.node.entity.move.ForcedMovementManager;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.move.ForcedMovement;
+import net.edge.world.entity.actor.move.ForcedMovementManager;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
-import java.util.EnumSet;
 import java.util.Optional;
 
 /**
@@ -45,16 +42,16 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 	 * @param object   {@link #getObject()}.
 	 * @param obstacle the obstacle this player is trying to cross.
 	 */
-	private BarbarianOutpostAgility(Player player, ObjectNode object, BarbarianAgilityData obstacle) {
+	private BarbarianOutpostAgility(Player player, GameObject object, BarbarianAgilityData obstacle) {
 		super(player, object, AgilityCourseType.BARBARIAN_AGILITY);
 		this.obstacle = obstacle;
 	}
 	
 	public static void event() {
 		for(BarbarianAgilityData data : BarbarianAgilityData.values()) {
-			ObjectEvent perform = new ObjectEvent() {
+			ObjectAction perform = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					BarbarianOutpostAgility agility = new BarbarianOutpostAgility(player, object, data);
 					agility.start();
 					return true;

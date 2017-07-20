@@ -5,12 +5,12 @@ import net.edge.task.Task;
 import net.edge.content.combat.magic.lunars.LunarSpell;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Spellbook;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Spellbook;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -34,7 +34,7 @@ public final class SpellbookSwap extends LunarSpell {
 	}
 	
 	@Override
-	public void effect(Player caster, EntityNode victim) {
+	public void effect(Player caster, Actor victim) {
 		caster.getActivityManager().disable();
 		LinkedTaskSequence seq = new LinkedTaskSequence();
 		seq.connect(11, () -> {
@@ -48,7 +48,7 @@ public final class SpellbookSwap extends LunarSpell {
 	}
 	
 	@Override
-	public boolean prerequisites(Player caster, EntityNode victim) {
+	public boolean prerequisites(Player caster, Actor victim) {
 		if(type.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 			return false;
 		}

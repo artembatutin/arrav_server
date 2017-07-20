@@ -1,16 +1,14 @@
 package net.edge.content.minigame.pestcontrol.pest;
 
 import net.edge.content.minigame.pestcontrol.PestPortal;
-import net.edge.content.minigame.pestcontrol.defence.PestGate;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.task.Task;
 import net.edge.world.Animation;
 import net.edge.world.Hit;
 import net.edge.world.PoisonType;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcDeath;
-import net.edge.world.node.region.Region;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.region.Region;
 
 public class Spinner extends Pest {
 	
@@ -20,7 +18,7 @@ public class Spinner extends Pest {
 	private final PestPortal portal;
 	
 	/**
-	 * Creates a new {@link Npc}.
+	 * Creates a new {@link Mob}.
 	 * @param id       the identification for this NPC.
 	 * @param portal   the portal to defend.
 	 */
@@ -30,7 +28,7 @@ public class Spinner extends Pest {
 	}
 	
 	@Override
-	public void sequence(Npc knight) {
+	public void sequence(Mob knight) {
 		//heal portals and explode when portal is down.
 		portal.healEntity(portal.getMaxHealth() / 10);
 		if(portal.isDead()) {

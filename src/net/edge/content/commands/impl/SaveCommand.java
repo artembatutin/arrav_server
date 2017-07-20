@@ -1,17 +1,19 @@
 package net.edge.content.commands.impl;
 
+import net.edge.content.clanchat.ClanManager;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.market.MarketItem;
+import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.net.packet.in.NpcInformationPacket;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.drop.NpcDrop;
-import net.edge.world.node.entity.npc.drop.NpcDropManager;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.PlayerSerialization;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.entity.actor.mob.drop.Drop;
+import net.edge.world.entity.actor.mob.drop.DropManager;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.PlayerSerialization;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.item.ItemDefinition;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -29,14 +31,13 @@ public final class SaveCommand implements Command {
 				while((other = it.next()) != null) {
 					new PlayerSerialization(other).serialize();
 				}
-				World.getClanManager().save();
 				player.message("Character files have been saved for everyone online!");
 				break;
 			case "drops":
-				NpcDropManager.serializeDrops();
+				DropManager.serializeDrops();
 				try {
 					BufferedWriter out = new BufferedWriter(new FileWriter("./data/suggested_drops.txt", true));
-					for(NpcDrop d : NpcInformationPacket.SUGGESTED) {
+					for(Drop d : NpcInformationPacket.SUGGESTED) {
 						out.write(d.toString());
 						out.newLine();
 					}
@@ -55,11 +56,11 @@ public final class SaveCommand implements Command {
 				player.message("Serialized market prices!");
 				break;
 			case "clans"://included in hook.
-				World.getClanManager().save();
+				ClanManager.get().save();
 				player.message("Serialized shops!");
 				break;
 			case "board"://included in hook.
-				World.getScoreboardManager().serializeIndividualScoreboard();
+				ScoreboardManager.get().serializeIndividualScoreboard();
 				player.message("Serialized scoreboard statistics!");
 				break;
 			case "itemdefs":

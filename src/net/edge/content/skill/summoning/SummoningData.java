@@ -5,10 +5,10 @@ import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.impl.*;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
-import net.edge.event.impl.ItemEvent;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.action.impl.ItemAction;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -721,7 +721,7 @@ public enum SummoningData {
 			}
 			
 			@Override
-			public void interact(Player player, Npc npc, int id) {
+			public void interact(Player player, Mob mob, int id) {
 			
 			}
 		};
@@ -729,7 +729,7 @@ public enum SummoningData {
 	
 	public static void event() {
 		for(SummoningData data : VALUES) {
-			ItemEvent e = new ItemEvent() {
+			ItemAction e = new ItemAction() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
 					if(click == 3) {

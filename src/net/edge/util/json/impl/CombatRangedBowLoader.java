@@ -7,7 +7,7 @@ import net.edge.content.combat.ranged.CombatRangedAmmunition;
 import net.edge.content.combat.ranged.CombatRangedDetails;
 import net.edge.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
 import net.edge.content.combat.ranged.CombatRangedType;
-import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.entity.item.ItemDefinition;
 
 import java.util.Arrays;
 import java.util.Objects;

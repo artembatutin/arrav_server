@@ -6,12 +6,12 @@ import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.hunter.trap.Trap;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -33,7 +33,7 @@ public final class BoxTrap extends Trap {
 	/**
 	 * The npc trapped inside this box.
 	 */
-	private Optional<Npc> trapped = Optional.empty();
+	private Optional<Mob> trapped = Optional.empty();
 	
 	/**
 	 * Determines if an animal is going to the trap.
@@ -51,18 +51,18 @@ public final class BoxTrap extends Trap {
 	private static final int DISTANCE_PORT = 2;
 	
 	/**
-	 * Kills the specified {@code npc}.
-	 * @param npc the npc to kill.
+	 * Kills the specified {@code mob}.
+	 * @param mob the mob to kill.
 	 */
-	private void kill(Npc npc) {
-		npc.move(new Position(0, 0, 0));
-		npc.appendDeath();
-		trapped = Optional.of(npc);
+	private void kill(Mob mob) {
+		mob.move(new Position(0, 0, 0));
+		mob.appendDeath();
+		trapped = Optional.of(mob);
 	}
 	
 	@Override
-	public boolean canCatch(Npc npc) {
-		Optional<BoxTrapData> data = BoxTrapData.getBoxTrapDataByNpcId(npc.getId());
+	public boolean canCatch(Mob mob) {
+		Optional<BoxTrapData> data = BoxTrapData.getBoxTrapDataByNpcId(mob.getId());
 		
 		if(!data.isPresent()) {
 			throw new IllegalStateException("Invalid box trap id.");
@@ -86,7 +86,7 @@ public final class BoxTrap extends Trap {
 	}
 	
 	@Override
-	public void onCatch(Npc npc) {
+	public void onCatch(Mob mob) {
 		if(event.isPresent()) {
 			return;
 		}
@@ -95,22 +95,22 @@ public final class BoxTrap extends Trap {
 			
 			@Override
 			public void execute() {
-				npc.getMovementQueue().smartWalk(getObject().getGlobalPos().copy());
+				mob.getMovementQueue().smartWalk(getObject().getGlobalPos().copy());
 				if(isAbandoned()) {
 					this.cancel();
 					return;
 				}
-				if(npc.getPosition().getX() == getObject().getX() && npc.getPosition().getY() == getObject().getY()) {
+				if(mob.getPosition().getX() == getObject().getX() && mob.getPosition().getY() == getObject().getY()) {
 					this.cancel();
 					
 					int count = RandomUtils.inclusive(180);
-					int formula = successFormula(npc);
+					int formula = successFormula(mob);
 					if(count > formula) {
 						setState(TrapState.FALLEN);
 						this.cancel();
 						return;
 					}
-					kill(npc);
+					kill(mob);
 					updateObject(CAUGHT_ID);
 					setState(TrapState.CAUGHT);
 				}
@@ -126,21 +126,21 @@ public final class BoxTrap extends Trap {
 	
 	@Override
 	public void onSequence(Task t) {
-		for(Npc npc : player.getLocalNpcs()) {
-			if(npc == null || npc.isDead()) {
+		for(Mob mob : player.getLocalMobs()) {
+			if(mob == null || mob.isDead()) {
 				continue;
 			}
-			if(!BoxTrapData.VALUES.stream().anyMatch(id -> id.npcId == npc.getId())) {
+			if(!BoxTrapData.VALUES.stream().anyMatch(id -> id.npcId == mob.getId())) {
 				continue;
 			}
-			if(this.getObject().getGlobalPos().withinDistance(npc.getPosition(), DISTANCE_PORT)) {
+			if(this.getObject().getGlobalPos().withinDistance(mob.getPosition(), DISTANCE_PORT)) {
 				if(RandomUtils.inclusive(100) < 20) {
 					return;
 				}
 				if(this.isAbandoned()) {
 					return;
 				}
-				trap(npc);
+				trap(mob);
 			}
 		}
 	}
@@ -176,7 +176,7 @@ public final class BoxTrap extends Trap {
 	}
 	
 	@Override
-	public boolean canClaim(ObjectNode object) {
+	public boolean canClaim(GameObject object) {
 		if(!trapped.isPresent()) {
 			return false;
 		}

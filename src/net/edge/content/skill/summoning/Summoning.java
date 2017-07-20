@@ -10,14 +10,15 @@ import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.content.skill.summoning.familiar.ability.Teleporter;
-import net.edge.locale.Position;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.NodeType;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.entity.EntityType;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -45,8 +46,7 @@ public final class Summoning {
 			//pet is already close enough.
 			return;
 		}
-		ObjectList<Position> pos = World.getTraversalMap()
-				.getSurroundedTraversableTiles(player.getPosition(), player.size(), pet.size());
+		ObjectList<Position> pos = TraversalMap.getSurroundedTraversableTiles(player.getPosition(), player.size(), pet.size());
 		if(pos.size() > 0) {
 			Position p = RandomUtils.random(pos);
 			pet.move(p);
@@ -68,7 +68,7 @@ public final class Summoning {
 			//familiar is already close enough.
 			return;
 		}
-		ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), familiar.size());
+		ObjectList<Position> pos = TraversalMap.getSurroundedTraversableTiles(player.getPosition(), player.size(), familiar.size());
 		if(pos.size() > 0) {
 			Position p = RandomUtils.random(pos);
 			familiar.move(p);
@@ -150,12 +150,12 @@ public final class Summoning {
 	/**
 	 * The method which should be overriden if this familiar has an
 	 * ability where an item can be used on it.
-	 * @param player the player whom is using an item on the npc.
-	 * @param npc    the npc whom's being interacted by a player.
-	 * @param item   the item being used on the npc.
+	 * @param player the player whom is using an item on the mob.
+	 * @param mob    the mob whom's being interacted by a player.
+	 * @param item   the item being used on the mob.
 	 * @return <true> if theres an action, <false> otherwise.
 	 */
-	public static boolean itemOnNpc(Player player, Npc npc, Item item) {
+	public static boolean itemOnNpc(Player player, Mob mob, Item item) {
 		Optional<Familiar> has_familiar = player.getFamiliar();
 		
 		if(!has_familiar.isPresent()) {
@@ -164,11 +164,11 @@ public final class Summoning {
 		
 		Familiar familiar = has_familiar.get();
 		
-		if(familiar.getId() != npc.getId()) {
+		if(familiar.getId() != mob.getId()) {
 			return false;
 		}
 		
-		if(!familiar.itemOnNpc(player, npc, item)) {
+		if(!familiar.itemOnNpc(player, mob, item)) {
 			return false;
 		}
 		return true;
@@ -179,7 +179,7 @@ public final class Summoning {
 	 * @param player the player we're opening this bob for.
 	 * @return <true> if the interface could be opened, <false> otherwise.
 	 */
-	public static boolean openBeastOfBurden(Player player, Npc npc) {
+	public static boolean openBeastOfBurden(Player player, Mob mob) {
 		Optional<Familiar> has_familiar = player.getFamiliar();
 		
 		if(!has_familiar.isPresent()) {
@@ -188,7 +188,7 @@ public final class Summoning {
 		
 		Familiar familiar = has_familiar.get();
 		
-		if(familiar.getId() != npc.getId()) {
+		if(familiar.getId() != mob.getId()) {
 			return false;
 		}
 		
@@ -284,16 +284,16 @@ public final class Summoning {
 	 * @param victim the victim being attacked by the familiar.
 	 * @return <true> if the familiar attacked the victim, <false> otherwise.
 	 */
-	public static boolean attack(Player player, EntityNode victim) {
+	public static boolean attack(Player player, Actor victim) {
 		if(!player.getFamiliar().isPresent()) {
 			return false;
 		}
 		Familiar familiar = player.getFamiliar().get();
-		if(!player.isWildernessInterface() && victim.getType().equals(NodeType.PLAYER)) {
+		if(!player.inWilderness() && victim.getType().equals(EntityType.PLAYER)) {
 			player.message("This player is not in the wilderness!");
 			return false;
 		}
-		if(!player.isMulticombatInterface()) {
+		if(!player.inMulti()) {
 			player.message("You can only do this in multi-combat areas!");
 			return false;
 		}
@@ -328,15 +328,15 @@ public final class Summoning {
 	
 	/**
 	 * Interacts with the familiar and sends it's respective dialogue.
-	 * @param player the player interacting with the {@code npc}.
-	 * @param npc    the npc being interacted by the {@code player}.
+	 * @param player the player interacting with the {@code mob}.
+	 * @param mob    the mob being interacted by the {@code player}.
 	 * @param id     the action id being interacted with.
 	 * @return <true> if the dialogue was sent, <false> otherwise.
 	 */
-	public static boolean interact(Player player, Npc npc, int id) {
+	public static boolean interact(Player player, Mob mob, int id) {
 		Optional<Familiar> familiar = player.getFamiliar();
 		
-		if(npc.isFamiliar() && !familiar.isPresent()) {
+		if(mob.isFamiliar() && !familiar.isPresent()) {
 			player.message("This is not your familiar.");
 			return false;
 		}
@@ -345,11 +345,11 @@ public final class Summoning {
 			return false;
 		}
 		
-		if(familiar.get().getId() != npc.getId()) {
+		if(familiar.get().getId() != mob.getId()) {
 			return false;
 		}
 		
-		familiar.get().interact(player, npc, id);
+		familiar.get().interact(player, mob, id);
 		return true;
 	}
 	

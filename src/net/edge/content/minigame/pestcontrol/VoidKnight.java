@@ -1,14 +1,14 @@
 package net.edge.content.minigame.pestcontrol;
 
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Hit;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.NpcDeath;
-import net.edge.world.node.entity.npc.impl.DefaultNpc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.mob.MobDeath;
+import net.edge.world.entity.actor.mob.impl.DefaultMob;
+import net.edge.world.entity.actor.player.Player;
 
-public class VoidKnight extends DefaultNpc {
+public class VoidKnight extends DefaultMob {
 	
 	private PestControlMinigame game;
 	
@@ -43,7 +43,7 @@ public class VoidKnight extends DefaultNpc {
 	@Override
 	public void appendDeath() {
 		setDead(true);
-		World.get().submit(new NpcDeath(this));
+		World.get().submit(new MobDeath(this));
 		//void knight is dead, lost.
 		if(game != null)
 			game.end(false);

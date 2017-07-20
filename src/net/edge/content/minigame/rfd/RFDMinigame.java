@@ -1,20 +1,21 @@
 package net.edge.content.minigame.rfd;
 
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.SequencedMinigame;
 import net.edge.content.skill.prayer.Prayer;
-import net.edge.locale.Position;
+import net.edge.world.locale.InstanceManager;
+import net.edge.world.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.attribute.AttributeValue;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.impl.DefaultNpc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.attribute.AttributeValue;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.impl.DefaultMob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -27,12 +28,12 @@ public final class RFDMinigame extends SequencedMinigame {
 	/**
 	 * The instance of the current rfd minigame.
 	 */
-	private final int instance = World.getInstanceManager().closeNext();
+	private final int instance = InstanceManager.get().closeNext();
 	
 	/**
 	 * The current npc spawned for this wave.
 	 */
-	private Optional<Npc> currentNpc = Optional.empty();
+	private Optional<Mob> currentNpc = Optional.empty();
 	
 	/**
 	 * The first wave this minigame will start at.
@@ -64,11 +65,11 @@ public final class RFDMinigame extends SequencedMinigame {
 		for(Player player : getPlayers()) {//there is one player.
 			if(player.getMinigame().isPresent() && !((RFDMinigame) (player.getMinigame().get())).currentNpc.isPresent() && ++timer >= DELAY_BETWEEN_ROUNDS) {
 				RFDData data = ((RFDMinigame) player.getMinigame().get()).wave;
-				this.currentNpc = Optional.of(new DefaultNpc(data.getNpcId(), new Position(1900, 5354, 2)));
-				Npc npc = this.currentNpc.get();
-				World.getInstanceManager().isolate(npc, instance);
-				World.get().getNpcs().add(npc);
-				npc.getCombatBuilder().attack(player);
+				this.currentNpc = Optional.of(new DefaultMob(data.getNpcId(), new Position(1900, 5354, 2)));
+				Mob mob = this.currentNpc.get();
+				InstanceManager.get().isolate(mob, instance);
+				World.get().getNpcs().add(mob);
+				mob.getCombatBuilder().attack(player);
 				timer = 0;
 			}
 		}
@@ -76,7 +77,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	
 	@Override
 	public void enter(Player player) {
-		World.getInstanceManager().isolate(player, instance);
+		InstanceManager.get().isolate(player, instance);
 		player.move(new Position(1899, 5366, 2));
 		
 		player.message("The next wave will start in 6 seconds...");
@@ -111,14 +112,14 @@ public final class RFDMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public void onKill(Player player, EntityNode other) {
+	public void onKill(Player player, Actor other) {
 		if(!other.isNpc()) {
 			return;
 		}
 		
-		Npc npc = other.toNpc();
+		Mob mob = other.toNpc();
 		
-		if(!RFDData.isValidNpc(npc.getId())) {
+		if(!RFDData.isValidNpc(mob.getId())) {
 			return;
 		}
 		
@@ -159,7 +160,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
+	public boolean onFirstClickObject(Player player, GameObject object) {
 		switch(object.getId()) {
 			case 12356:
 				if(currentNpc.isPresent() && !currentNpc.get().isDead()) {
@@ -187,7 +188,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	private void leave(Player player) {
 		player.setMinigame(Optional.empty());
 		player.setInstance(0);
-		World.getInstanceManager().open(instance);
+		InstanceManager.get().open(instance);
 		player.teleport(GameConstants.STARTING_POSITION);
 		this.destruct();
 	}

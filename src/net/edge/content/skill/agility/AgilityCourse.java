@@ -7,14 +7,14 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.SkillAction;
 import net.edge.content.skill.agility.obstacle.ObstacleAction;
 import net.edge.content.skill.agility.obstacle.ObstacleActivity;
-import net.edge.locale.Position;
-import net.edge.world.node.NodeState;
+import net.edge.world.locale.Position;
+import net.edge.world.entity.EntityState;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.move.ForcedMovement;
-import net.edge.world.node.entity.move.ForcedMovementManager;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.move.ForcedMovement;
+import net.edge.world.entity.actor.move.ForcedMovementManager;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -37,7 +37,7 @@ public abstract class AgilityCourse extends SkillAction {
 	/**
 	 * The object this player is interacting with.
 	 */
-	private final ObjectNode object;
+	private final GameObject object;
 	
 	/**
 	 * Indicates if the player was running before he attempted to cross the obstacle.
@@ -50,7 +50,7 @@ public abstract class AgilityCourse extends SkillAction {
 	 * @param object the object being interacted with.
 	 * @param type   the type of this agility course.
 	 */
-	public AgilityCourse(Player player, ObjectNode object, AgilityCourseType type) {
+	public AgilityCourse(Player player, GameObject object, AgilityCourseType type) {
 		super(player, Optional.empty());
 		
 		this.type = type;
@@ -131,7 +131,7 @@ public abstract class AgilityCourse extends SkillAction {
 	
 	@Override
 	public void onStop() {
-		if(getPlayer().getState() == NodeState.INACTIVE) {
+		if(getPlayer().getState() == EntityState.INACTIVE) {
 			getPlayer().move(current.getStart());
 			return;
 		}
@@ -173,7 +173,7 @@ public abstract class AgilityCourse extends SkillAction {
 		return SkillData.AGILITY;
 	}
 	
-	public ObjectNode getObject() {
+	public GameObject getObject() {
 		return object;
 	}
 	

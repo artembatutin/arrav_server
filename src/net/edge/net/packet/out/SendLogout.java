@@ -1,23 +1,27 @@
 package net.edge.net.packet.out;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.MessageType;
+import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
-import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.EntityState;
+import net.edge.world.entity.actor.player.Player;
 
 public final class SendLogout implements OutgoingPacket {
 	
 	
 	@Override
-	public void write(Player player) {
-		if(player.getState() != NodeState.AWAITING_REMOVAL)
-			World.get().queueLogout(player, true);
-		if(player.getSession().getChannel().isActive()) {
-			GameBuffer msg = player.getSession().getStream();
-			msg.message(109, MessageType.VARIABLE_SHORT);
-			msg.endVarSize();
-		}
+	public boolean onSent(Player player) {
+		if(player.getState() != EntityState.AWAITING_REMOVAL)
+			World.get().queueLogout(player);
+		return true;
+	}
+	
+	@Override
+	public ByteBuf write(Player player, GameBuffer msg) {
+		msg.message(109, PacketType.VARIABLE_SHORT);
+		msg.endVarSize();
+		return msg.getBuffer();
 	}
 }

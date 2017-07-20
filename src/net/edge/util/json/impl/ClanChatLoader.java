@@ -3,6 +3,7 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import net.edge.content.clanchat.ClanManager;
 import net.edge.util.json.JsonLoader;
 import net.edge.content.clanchat.ClanChat;
 import net.edge.content.clanchat.ClanChatRank;
@@ -50,6 +51,6 @@ public final class ClanChatLoader extends JsonLoader {
 			clan.getRanked().put(o.get("name").getAsString(), builder.fromJson(o.get("rank"), ClanChatRank.class));
 		});
 		
-		World.getClanManager().getClans().put(owner, clan);
+		ClanManager.get().getClans().put(owner, clan);
 	}
 }

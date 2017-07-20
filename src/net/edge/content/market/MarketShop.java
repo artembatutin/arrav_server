@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.edge.content.market.currency.impl.ItemCurrency;
 import net.edge.net.packet.out.*;
 import net.edge.util.TextUtils;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
@@ -12,10 +12,10 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.Skillcape;
 import net.edge.content.market.currency.Currency;
 import net.edge.content.minigame.rfd.RFDData;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.ItemDefinition;
 
 import java.util.Arrays;
 

@@ -9,10 +9,10 @@ package net.edge.content.minigame.dueling;
 //import com.google.common.collect.ImmutableSet;
 //import com.google.common.collect.Sets;
 //
-//import net.ev.game.world.NodeType;
+//import net.ev.game.world.EntityType;
 //import net.ev.game.world.entity.player.Player;
 //import net.ev.game.world.World;
-//import net.ev.game.world.entity.EntityNode;
+//import net.ev.game.world.entity.Actor;
 //import CombatType;
 //import Prayer;
 //import net.ev.game.character.player.Privileges.Rights;
@@ -28,7 +28,7 @@ package net.edge.content.minigame.dueling;
 //import net.ev.game.location.Location;
 //import net.ev.game.location.Position;
 //import net.ev.game.location.SquareLocation;
-//import net.ev.game.world.object.ObjectNode;
+//import net.ev.game.world.object.GameObject;
 //import org.edge.task.LinkedTaskSequence;
 //import net.ev.utility.BitMask;
 //import net.ev.utility.RandomGen;
@@ -101,7 +101,7 @@ package net.edge.content.minigame.dueling;
 //	}
 //
 //	@Override
-//	public boolean canHit(Player player, EntityNode victim) {
+//	public boolean canHit(Player player, Actor victim) {
 //		if(player.getDuelSession().stage != DuelStage.FIGHT) {
 //			if(victim.isNpc()) {
 //				return true;
@@ -187,7 +187,7 @@ package net.edge.content.minigame.dueling;
 //	}
 //
 //	@Override
-//	public boolean onFirstClickObject(Player player, ObjectNode object) {
+//	public boolean onFirstClickObject(Player player, GameObject object) {
 //		if(object.getId() == 3203) {
 //			if(player.getDuelSession().rules.has(DuelingRules.NO_FORFEIT.value)) {
 //				player.message("Forfeiting has been disabled during this duel.");
@@ -210,7 +210,7 @@ package net.edge.content.minigame.dueling;
 //	}
 //
 //	@Override
-//	public void onKill(Player player, EntityNode victim) {
+//	public void onKill(Player player, Actor victim) {
 //		applyWin((Player) victim, player, false);
 //	}
 //
@@ -349,7 +349,7 @@ package net.edge.content.minigame.dueling;
 //						rival.move(OBSTACLES_ARENA.random());
 //					} else if(this.rules.has(DuelingRules.NO_MOVEMENT.value)) {
 //						player.move(DEFAULT_ARENA.random());
-//						List<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), rival.size());
+//						List<Position> pos = TraversalMap.getSurroundedTraversableTiles(player.getPosition(), player.size(), rival.size());
 //						if(pos.size() > 0) {
 //							Position p = new RandomGen().random(pos);
 //							rival.move(p);

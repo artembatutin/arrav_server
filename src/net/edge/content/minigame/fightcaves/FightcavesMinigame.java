@@ -1,21 +1,22 @@
 package net.edge.content.minigame.fightcaves;
 
 import net.edge.content.item.PotionConsumable;
-import net.edge.event.impl.ObjectEvent;
-import net.edge.game.GameConstants;
+import net.edge.action.impl.ObjectAction;
+import net.edge.GameConstants;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.minigame.SequencedMinigame;
-import net.edge.locale.Position;
+import net.edge.world.locale.InstanceManager;
+import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.impl.DefaultNpc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.impl.DefaultMob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
@@ -83,12 +84,12 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	/**
 	 * The instance of the current fightcave minigame.
 	 */
-	private final int instance = World.getInstanceManager().closeNext();
+	private final int instance = InstanceManager.get().closeNext();
 	
 	/**
 	 * The array of active monsters.
 	 */
-	private Npc[] monsters;
+	private Mob[] monsters;
 	
 	/**
 	 * The flag to determines if the fight is started.
@@ -108,9 +109,9 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	}
 	
 	public static void event() {
-		ObjectEvent e = new ObjectEvent() {
+		ObjectAction e = new ObjectAction() {
 			@Override
-			public boolean click(Player player, ObjectNode object, int click) {
+			public boolean click(Player player, GameObject object, int click) {
 				player.getDialogueBuilder().append(
 		        new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
@@ -147,12 +148,12 @@ public final class FightcavesMinigame extends SequencedMinigame {
 				} else {
 					wave = WAVES[this.wave];
 				}
-				monsters = new Npc[wave.length];
+				monsters = new Mob[wave.length];
 				for(int i = 0; i < wave.length; i++) {
-					monsters[i] = new DefaultNpc(wave[i], RandomUtils.random(SPAWNS));
+					monsters[i] = new DefaultMob(wave[i], RandomUtils.random(SPAWNS));
 					monsters[i].setRespawn(false);
 					monsters[i].setOwner(player);
-					World.getInstanceManager().isolate(monsters[i], instance);
+					InstanceManager.get().isolate(monsters[i], instance);
 					World.get().getNpcs().add(monsters[i]);
 					monsters[i].setViewingDistance(100);
 					monsters[i].getCombatBuilder().attack(player);
@@ -169,17 +170,17 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	}
 	
 	@Override
-	public void onKill(Player player, EntityNode victim) {
+	public void onKill(Player player, Actor victim) {
 		if(victim.isPlayer()) {
 			logout(player);
 			return;
 		}
-		Npc npc = victim.toNpc();
+		Mob mob = victim.toNpc();
 		boolean empty = true;
 		for(int i = 0; i < monsters.length; i++) {
 			if(monsters[i] == null)
 				continue;
-			if(monsters[i].getId() == npc.getId() && monsters[i].getSlot() == npc.getSlot()) {
+			if(monsters[i].getId() == mob.getId() && monsters[i].getSlot() == mob.getSlot()) {
 				monsters[i] = null;
 				continue;
 			}
@@ -212,7 +213,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	
 	@Override
 	public void enter(Player player) {
-		World.getInstanceManager().isolate(player, instance);
+		InstanceManager.get().isolate(player, instance);
 		player.move(new Position(2413, 5117));
 		timer = DELAY;
 		started = false;
@@ -225,12 +226,12 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	
 	@Override
 	public void logout(Player player) {
-		for(Npc monster : monsters) {
+		for(Mob monster : monsters) {
 			if(monster == null)
 				continue;
 			World.get().getNpcs().remove(monster);
 		}
-		World.getInstanceManager().open(instance);
+		InstanceManager.get().open(instance);
 		player.setInstance(0);
 		player.setMinigame(Optional.empty());
 		player.move(new Position(2436, 5169));
@@ -248,7 +249,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		return true;
 	}
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
+	public boolean onFirstClickObject(Player player, GameObject object) {
 		if(object.getId() == 9357) {//Exit
 			onDeath(player);
 			return true;

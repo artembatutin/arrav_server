@@ -6,8 +6,8 @@ import net.edge.content.skill.action.impl.HarvestingSkillAction;
 import net.edge.content.skill.mining.PickaxeData;
 import net.edge.world.Animation;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -97,7 +97,7 @@ public final class StarMining extends HarvestingSkillAction {
 				star.setElements(0);
 				star.publish();
 			} else {
-				World.getShootingStarEvent().getShootingStar().getStarSprite().spawn();
+				ShootingStarManager.get().getShootingStar().getStarSprite().spawn();
 			}
 			this.onStop();
 			t.cancel();

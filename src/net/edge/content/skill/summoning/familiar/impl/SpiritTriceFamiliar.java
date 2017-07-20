@@ -8,8 +8,8 @@ import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.SummoningData;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 
@@ -43,11 +43,11 @@ public abstract class SpiritTriceFamiliar extends Familiar {
 	}
 	
 	@Override
-	public final void interact(Player player, Npc npc, int id) {
+	public final void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
 			player.getDialogueBuilder().append(new NpcDialogue(getId(), RandomUtils.random(RANDOM_DIALOGUE)));
 		} else if(id == 2) {
-			Summoning.openBeastOfBurden(player, npc);
+			Summoning.openBeastOfBurden(player, mob);
 		} else if(id == 3) {
 			player.message("Oops, we didn't know what the ability was for this familiar, if you know it");
 			player.message("please let us know through the forums.");

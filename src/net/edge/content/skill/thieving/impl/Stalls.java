@@ -1,21 +1,19 @@
 package net.edge.content.skill.thieving.impl;
 
-import net.edge.event.impl.ObjectEvent;
+import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.thieving.Thieving;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Hit;
-import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 import net.edge.world.object.DynamicObject;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.object.GameObject;
 
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Represents functionality for stealing from a stall.
@@ -47,9 +45,9 @@ public final class Stalls extends Thieving {
 	
 	public static void event() {
 		for(StallData data : StallData.values()) {
-			ObjectEvent steal = new ObjectEvent() {
+			ObjectAction steal = new ObjectAction() {
 				@Override
-				public boolean click(Player player, ObjectNode object, int click) {
+				public boolean click(Player player, GameObject object, int click) {
 					if(object.isDynamic() && object.toDynamic().isDisabled()) {
 						return false;
 					}
@@ -110,7 +108,7 @@ public final class Stalls extends Thieving {
 	@Override
 	public void onSubmit() {
 		if(stall.requirement > 40 && RandomUtils.inclusive(200) < 10) {
-			Optional<Npc> guard = player.getLocalNpcs().stream().filter(g -> g.getId() == 3408 && !g.getCombatBuilder().inCombat()).findFirst();
+			Optional<Mob> guard = player.getLocalMobs().stream().filter(g -> g.getId() == 3408 && !g.getCombatBuilder().inCombat()).findFirst();
 			if(guard.isPresent()) {
 				guard.get().forceChat("Get your hands off there!");
 				guard.get().faceEntity(player);

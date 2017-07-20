@@ -4,10 +4,10 @@ import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.Direction;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.entity.actor.mob.Mob;
 
 import java.util.Objects;
 
@@ -36,16 +36,16 @@ public final class NpcNodeLoader extends JsonLoader {
 		Preconditions.checkState(!(coordinate && radius == 0));
 		Preconditions.checkState(!(!coordinate && radius > 0));
 		Preconditions.checkState(!(dir != Direction.NONE && radius > 0));
-		Npc npc = Npc.getNpc(id, position);
-		npc.setOriginalRandomWalk(coordinate);
-		npc.getMovementCoordinator().setCoordinate(coordinate);
-		npc.getMovementCoordinator().setRadius(radius);
+		Mob mob = Mob.getNpc(id, position);
+		mob.setOriginalRandomWalk(coordinate);
+		mob.getMovementCoordinator().setCoordinate(coordinate);
+		mob.getMovementCoordinator().setRadius(radius);
 		if(dir != Direction.NONE) {
-			npc.getMovementCoordinator().setFacingDirection(dir);
+			mob.getMovementCoordinator().setFacingDirection(dir);
 		}
-		npc.setRespawn(true);
-		if(!World.get().getNpcs().add(npc))
-			throw new IllegalStateException(npc.toString() + " could not be added to the world!");
+		mob.setRespawn(true);
+		if(!World.get().getNpcs().add(mob))
+			throw new IllegalStateException(mob.toString() + " could not be added to the world!");
 	}
 
 }

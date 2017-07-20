@@ -1,7 +1,7 @@
 package net.edge.content.achievements;
 
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 /**
  * Handles the achievements.

@@ -1,9 +1,8 @@
 package net.edge.content.minigame.pestcontrol.pest;
 
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.region.Region;
+import net.edge.world.entity.actor.mob.Mob;
 
 public class Brawler extends Pest {
 	
@@ -13,7 +12,7 @@ public class Brawler extends Pest {
 	}
 	
 	@Override
-	public void sequence(Npc knight) {
+	public void sequence(Mob knight) {
 		//none
 	}
 	
@@ -27,7 +26,7 @@ public class Brawler extends Pest {
 		//removing clipped positions of this brawler.
 		//if(getPosition() != null) {
 		//	Region prev = World.getRegions().getRegion(getPosition());
-		//	World.getTraversalMap().markOccupant(prev, 0, getPosition().getX(), getPosition().getY(), size(), size(), true, false);
+		//	TraversalMap.markOccupant(prev, 0, getPosition().getX(), getPosition().getY(), size(), size(), true, false);
 		//}
 		//updating region, might not even need.
 		if(getSlot() != -1 && getPosition() != null && getPosition().getRegion() != position.getRegion()) {
@@ -39,7 +38,7 @@ public class Brawler extends Pest {
 		
 		//Clipping the brawler positions.
 		//Region prev = World.getRegions().getRegion(getPosition());
-		//World.getTraversalMap().markOccupant(prev, 0, getPosition().getX(), getPosition().getY(), size(), size(), true, true);
+		//TraversalMap.markOccupant(prev, 0, getPosition().getX(), getPosition().getY(), size(), size(), true, true);
 	}
 	
 }

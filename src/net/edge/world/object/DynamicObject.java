@@ -1,14 +1,14 @@
 package net.edge.world.object;
 
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.World;
-import net.edge.world.node.region.Region;
+import net.edge.world.entity.region.Region;
 
 /**
- * An implementation of {@link ObjectNode} that is in a dynamic state.
+ * An implementation of {@link GameObject} that is in a dynamic state.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public class DynamicObject extends ObjectNode {
+public class DynamicObject extends GameObject {
 	
 	/**
 	 * The count of elements this object contains.
@@ -31,10 +31,10 @@ public class DynamicObject extends ObjectNode {
 	private final Position position;
 	
 	/**
-	 * Creating a {@link DynamicObject} with a {@link ObjectNode}.
+	 * Creating a {@link DynamicObject} with a {@link GameObject}.
 	 * @param o object node converting.
 	 */
-	public DynamicObject(ObjectNode o) {
+	public DynamicObject(GameObject o) {
 		this(o.getId(), new Position(o.getX(), o.getY(), o.getZ()), o.getDirection(), o.getObjectType(), false, 0, 0);
 	}
 	
@@ -50,17 +50,17 @@ public class DynamicObject extends ObjectNode {
 	}
 	
 	@Override
-	public ObjectNode copy() {
+	public GameObject copy() {
 		return new DynamicObject(getId(), new Position(getX(), getY(), getZ()), getDirection(), getObjectType(), disabled, elements, instance);
 	}
 	
 	@Override
-	public ObjectNode copy(ObjectDirection direction) {
+	public GameObject copy(ObjectDirection direction) {
 		return new DynamicObject(getId(), new Position(getX(), getY(), getZ()), direction, getObjectType(), disabled, elements, instance);
 	}
 	
 	@Override
-	public ObjectNode copy(ObjectType type) {
+	public GameObject copy(ObjectType type) {
 		return new DynamicObject(getId(), new Position(getX(), getY(), getZ()), getDirection(), type, disabled, elements, instance);
 	}
 	

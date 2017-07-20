@@ -2,13 +2,13 @@ package net.edge.content.skill.firemaking.pits;
 
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.SkillAction;
 import net.edge.world.Animation;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 import java.util.Optional;
 import java.util.OptionalInt;

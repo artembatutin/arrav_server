@@ -10,8 +10,8 @@ import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.SummoningData;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 
@@ -37,9 +37,9 @@ public final class DesertWyrm extends Familiar {
 		familiar.animation(new Animation(7800));
 		familiar.graphic(new Graphic(1412));
 		
-		//List<ObjectNode> objs = World.getRegions().getRegion(familiar.getPosition()).interactAction(familiar.getPosition(), 7);
+		//List<GameObject> objs = World.getRegions().getRegion(familiar.getPosition()).interactAction(familiar.getPosition(), 7);
 		//Rock rock = null;
-		//for(ObjectNode n : objs) {
+		//for(GameObject n : objs) {
 		//	if(n != null) {
 		//		//rock = Rock.getDefinition(n.getId()).orElse(null);
 		//		TODO: Stan, look at this.
@@ -72,7 +72,7 @@ public final class DesertWyrm extends Familiar {
 	}
 	
 	@Override
-	public void interact(Player player, Npc npc, int id) {
+	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
 			player.getDialogueBuilder().append(RandomUtils.random(RANDOM_DIALOGUE));
 		} else if(id == 2) {

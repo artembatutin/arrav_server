@@ -2,7 +2,7 @@ package net.edge.content.combat.magic;
 
 import net.edge.task.Task;
 import net.edge.world.*;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.entity.actor.Actor;
 
 import java.util.Optional;
 
@@ -14,7 +14,7 @@ import java.util.Optional;
 public abstract class CombatSpell extends Spell {
 	
 	@Override
-	public final int startCast(EntityNode cast, EntityNode castOn) {
+	public final int startCast(Actor cast, Actor castOn) {
 		if(!cast.isVisible() || !castOn.isVisible())
 			return 0;
 		Optional<Animation> optional = castAnimation();
@@ -67,7 +67,7 @@ public abstract class CombatSpell extends Spell {
 	 * @param castOn the character this spell is being cast on.
 	 * @return the cast projectile.
 	 */
-	public abstract Optional<Projectile> projectile(EntityNode cast, EntityNode castOn);
+	public abstract Optional<Projectile> projectile(Actor cast, Actor castOn);
 	
 	/**
 	 * The graphic played when this spell hits the victim.
@@ -82,5 +82,5 @@ public abstract class CombatSpell extends Spell {
 	 * @param accurate if this spell was accurate.
 	 * @param damage   the damage inflicted by this spell.
 	 */
-	public abstract void executeOnHit(EntityNode cast, EntityNode castOn, boolean accurate, int damage);
+	public abstract void executeOnHit(Actor cast, Actor castOn, boolean accurate, int damage);
 }

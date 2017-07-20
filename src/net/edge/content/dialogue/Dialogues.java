@@ -1,7 +1,7 @@
 package net.edge.content.dialogue;
 
 import net.edge.content.dialogue.impl.OptionDialogue;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 import java.util.function.Consumer;

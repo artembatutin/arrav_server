@@ -2,16 +2,16 @@ package net.edge.content.item;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.event.impl.ItemEvent;
+import net.edge.action.impl.ItemAction;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.container.impl.Inventory;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Inventory;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -324,7 +324,7 @@ public enum FoodConsumable {
 	
 	public static void event() {
 		for(FoodConsumable food : FoodConsumable.values()) {
-			ItemEvent e = new ItemEvent() {
+			ItemAction e = new ItemAction() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
 					if(container != Inventory.INVENTORY_DISPLAY_ID)

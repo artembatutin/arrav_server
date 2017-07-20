@@ -2,7 +2,7 @@ package net.edge.net.codec.login;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
-import net.edge.net.codec.IsaacCipher;
+import net.edge.net.codec.crypto.IsaacRandom;
 
 /**
  * The implementation that contains data used for the final portion of the login protocol.
@@ -33,12 +33,12 @@ public final class LoginRequest {
 	/**
 	 * The encryptor for encrypting messages.
 	 */
-	private final IsaacCipher encryptor;
+	private final IsaacRandom encryptor;
 	
 	/**
 	 * The decryptor for decrypting messages.
 	 */
-	private final IsaacCipher decryptor;
+	private final IsaacRandom decryptor;
 	
 	/**
 	 * The pipeline for the underlying {@link Channel}.
@@ -53,7 +53,7 @@ public final class LoginRequest {
 	 * @param encryptor the encryptor for encrypting messages.
 	 * @param decryptor the decryptor for decrypting messages.
 	 */
-	LoginRequest(String username, long usernameHash, String password, int build, IsaacCipher encryptor, IsaacCipher decryptor, ChannelPipeline pipeline) {
+	LoginRequest(String username, long usernameHash, String password, int build, IsaacRandom encryptor, IsaacRandom decryptor, ChannelPipeline pipeline) {
 		this.username = username;
 		this.usernameHash = usernameHash;
 		this.password = password;
@@ -98,7 +98,7 @@ public final class LoginRequest {
 	 * Gets the encryptor for encrypting messages.
 	 * @return the encryptor.
 	 */
-	public IsaacCipher getEncryptor() {
+	public IsaacRandom getEncryptor() {
 		return encryptor;
 	}
 	
@@ -106,7 +106,7 @@ public final class LoginRequest {
 	 * Gets the decryptor for decrypting messages.
 	 * @return the decryptor.
 	 */
-	public IsaacCipher getDecryptor() {
+	public IsaacRandom getDecryptor() {
 		return decryptor;
 	}
 	

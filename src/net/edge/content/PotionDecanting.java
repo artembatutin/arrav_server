@@ -1,9 +1,9 @@
 package net.edge.content;
 
 import net.edge.content.item.PotionConsumable;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.ItemDefinition;
 
 /**
  * The class which holds functionality for decanting potions.

@@ -1,11 +1,11 @@
 package net.edge.net.packet.in;
 
-import net.edge.Server;
+import net.edge.Application;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * The message sent from the client when a player uses magic on a ground item.
@@ -20,7 +20,7 @@ public class MagicOnGroundItemPacket implements IncomingPacket {
 		int itemId = payload.getShort(true);
 		int spellId = payload.getShort(false, ByteTransform.A);
 		
-		if(Server.DEBUG) {
+		if(Application.DEBUG) {
 			player.message("item = " + itemId + ", spell = " + spellId + ", x = " + x + ", y = " + y + ".");
 		}
 	}

@@ -2,12 +2,12 @@ package net.edge.content.minigame.pestcontrol.pest;
 
 import net.edge.content.minigame.pestcontrol.PestControlMinigame;
 import net.edge.content.minigame.pestcontrol.defence.PestGate;
-import net.edge.locale.Position;
-import net.edge.util.rand.RandomUtils;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
+import net.edge.world.entity.actor.mob.Mob;
 
 import java.util.Optional;
 
@@ -19,7 +19,7 @@ public class Ravager extends Pest {
 	private PestGate gate;
 	
 	/**
-	 * Creates a new {@link Npc}.
+	 * Creates a new {@link Mob}.
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
@@ -29,7 +29,7 @@ public class Ravager extends Pest {
 	}
 	
 	@Override
-	public void sequence(Npc knight) {
+	public void sequence(Mob knight) {
 		//attacking gates and barricades first. ignoring player attacks
 		if(gate == null && getPosition() != null) {
 			gate = PestControlMinigame.getNearestGate(getPosition());
@@ -37,7 +37,7 @@ public class Ravager extends Pest {
 		if(gate != null) {
 			if(gate.destroyed()) {
 				if(!getPosition().withinDistance(knight.getPosition(), 5) && getCombatBuilder().getVictim() != null) {
-					Optional<Position> destination = World.getTraversalMap().getRandomTraversableTile(getCombatBuilder().getVictim().getPosition(), size());
+					Optional<Position> destination = TraversalMap.getRandomTraversableTile(getCombatBuilder().getVictim().getPosition(), size());
 					destination.ifPresent(d -> getMovementQueue().smartWalk(d));
 				}
 			} else {

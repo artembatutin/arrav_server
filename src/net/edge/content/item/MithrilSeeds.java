@@ -2,23 +2,21 @@ package net.edge.content.item;
 
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
-import net.edge.content.skill.smithing.SmithingTable;
-import net.edge.event.impl.ItemEvent;
-import net.edge.event.impl.ObjectEvent;
-import net.edge.locale.Position;
+import net.edge.action.impl.*;
+import net.edge.action.impl.ItemAction;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.item.Item;
 import net.edge.world.object.DynamicObject;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
-
-import java.util.Map;
 
 /**
  * The class which is responsible for mithril seeds.
@@ -43,9 +41,9 @@ public final class MithrilSeeds {
 
     public static void event() {
         for(int objectId : FLOWER_OBJECT_IDS.keySet()) {
-            ObjectEvent objEvent = new ObjectEvent() {
+            ObjectAction objEvent = new ObjectAction() {
                 @Override
-                public boolean click(Player player, ObjectNode object, int click) {
+                public boolean click(Player player, GameObject object, int click) {
                     if(player.getInventory().remaining() < 1) {
                         player.message("You don't have enough inventory slots to pick these flowers up.");
                         return true;
@@ -66,7 +64,7 @@ public final class MithrilSeeds {
             objEvent.registerFirst(objectId);
         }
 
-        ItemEvent itemEvent = new ItemEvent() {
+        ItemAction itemEvent = new net.edge.action.impl.ItemAction() {
             @Override
             public boolean click(Player player, Item item, int container, int slot, int click) {
                 if(player.getCombatBuilder().inCombat()) {
@@ -86,11 +84,11 @@ public final class MithrilSeeds {
     
                 player.getInventory().remove(new Item(299), slot);
                 player.animation(new Animation(827, Animation.AnimationPriority.HIGH));
-                getRandomFlowerObject(player).publish(120, ObjectNode::remove);
+                getRandomFlowerObject(player).publish(120, GameObject::remove);
                 Position p = player.getPosition();
-                if(World.getTraversalMap().isTraversable(p, Direction.WEST, player.size())) {
+                if(TraversalMap.isTraversable(p, Direction.WEST, player.size())) {
                     player.getMovementQueue().walk(Direction.WEST.getX(), Direction.WEST.getY());
-                } else if(World.getTraversalMap().isTraversable(p, Direction.EAST, player.size())) {
+                } else if(TraversalMap.isTraversable(p, Direction.EAST, player.size())) {
                     player.getMovementQueue().walk(Direction.EAST.getX(), Direction.EAST.getY());
                 }
                 player.facePosition(p);

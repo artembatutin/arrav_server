@@ -4,12 +4,12 @@ import net.edge.content.item.Skillcape;
 import net.edge.net.packet.out.SendSkill;
 import net.edge.net.packet.out.SendSkillGoal;
 import net.edge.util.TextUtils;
-import net.edge.game.GameConstants;
+import net.edge.GameConstants;
 import net.edge.world.Graphic;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.entity.update.UpdateFlag;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.actor.update.UpdateFlag;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;

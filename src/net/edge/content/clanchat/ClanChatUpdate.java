@@ -3,8 +3,8 @@ package net.edge.content.clanchat;
 import net.edge.net.packet.out.SendClanBanned;
 import net.edge.net.packet.out.SendClanMessage;
 import net.edge.util.TextUtils;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 /**
  * The enumerated type whose elements represent the update states

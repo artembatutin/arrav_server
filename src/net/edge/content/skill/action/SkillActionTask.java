@@ -1,8 +1,8 @@
 package net.edge.content.skill.action;
 
 import net.edge.task.Task;
-import net.edge.world.node.NodeState;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.EntityState;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 
@@ -77,7 +77,7 @@ public final class SkillActionTask extends Task {
 	
 	@Override
 	public void execute() {
-		if(player.getState() != NodeState.ACTIVE) {
+		if(player.getState() != EntityState.ACTIVE) {
 			this.cancel();
 			return;
 		}

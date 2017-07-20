@@ -6,9 +6,9 @@ import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.content.market.MarketCounter;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.locale.area.AreaManager;
 
 @CommandSignature(alias = {"reload"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::reload")
 public final class ReloadCommand implements Command {
@@ -24,9 +24,9 @@ public final class ReloadCommand implements Command {
 				if(!removed) {
 					//Removing npcs.
 					World.get().getNpcs().clear();
-					World.get().getPlayers().forEach(p -> p.getLocalNpcs().clear());
+					World.get().getPlayers().forEach(p -> p.getLocalMobs().clear());
 					//clearing areas
-					World.getAreaManager().getAreas().clear();
+					AreaManager.get().getAreas().clear();
 					//Deleting shops
 					MarketCounter.getShops().clear();
 					player.message("Successfully removed the world nodes [Objects, Npcs, Shops, Areas].");

@@ -7,15 +7,16 @@ import net.edge.content.door.DoorHandler;
 import net.edge.util.ByteBufferUtil;
 import net.edge.util.CompressionUtil;
 import net.edge.util.LoggerUtils;
-import net.edge.locale.Position;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
 import net.edge.world.World;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 import net.edge.world.object.StaticObject;
-import net.edge.world.node.region.Region;
-import net.edge.world.node.region.RegionDefinition;
-import net.edge.world.node.region.RegionTile;
+import net.edge.world.entity.region.Region;
+import net.edge.world.entity.region.RegionDefinition;
+import net.edge.world.entity.region.RegionTile;
 
 import java.nio.ByteBuffer;
 import java.util.*;
@@ -82,7 +83,7 @@ public final class RegionDecoder implements Runnable {
 			ByteBuffer gameObjectBuffer = ByteBuffer.wrap(CompressionUtil.gunzip(gameObjectData.array()));
 			ObjectList<StaticObject> objects = parseGameObject(region, gameObjectBuffer, x, y, downHeights, isNew);
 			for(StaticObject o : objects) {
-				World.getTraversalMap().markObject(region, o, true, true);
+				TraversalMap.markObject(region, o, true, true);
 				if(o.getDefinition() != null && DoorHandler.isDoor(o.getDefinition()))
 					DoorHandler.APPENDER.registerFirst(o.getId());
 			}
@@ -95,7 +96,7 @@ public final class RegionDecoder implements Runnable {
 	}
 	
 	/**
-	 * Parses a {@link ObjectNode} on the specified coordinates.
+	 * Parses a {@link GameObject} on the specified coordinates.
 	 * @param gameObjectBuffer The uncompressed game object data buffer.
 	 * @param x                The x coordinate this object is on.
 	 * @param y                The y coordinate this object is on.
@@ -181,10 +182,10 @@ public final class RegionDecoder implements Runnable {
 			position = position.move(0, 0, -1);
 		}
 		if((flags & RegionTile.FLAG_BLOCKED) != 0) {
-			World.getTraversalMap().mark(region, position.getZ(), position.getX(), position.getY(), true, false);
+			TraversalMap.mark(region, position.getZ(), position.getX(), position.getY(), true, false);
 		}
 		if((flags & RegionTile.FLAG_BRIDGE) != 0) {
-			World.getTraversalMap().markBridge(region, position.getZ(), position.getX(), position.getY() - 1);
+			TraversalMap.markBridge(region, position.getZ(), position.getX(), position.getY() - 1);
 		}
 	}
 	

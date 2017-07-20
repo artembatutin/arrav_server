@@ -4,8 +4,8 @@ import net.edge.net.PunishmentHandler;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.World;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"ipban"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Use this command as ::ipban username")
 public final class IPBanningCommand implements Command {
@@ -17,7 +17,7 @@ public final class IPBanningCommand implements Command {
 		if(ipban != null && (ipban.getRights().less(Rights.ADMINISTRATOR) || player.getRights().equals(Rights.ADMINISTRATOR)) && ipban != player) {
 			player.message("Successfully IP banned " + ipban.getFormatUsername() + ".");
 			PunishmentHandler.addIPBan(ipban.getSession().getHost(), ipban.getCredentials().getUsername());
-			World.get().queueLogout(ipban, false);
+			World.get().queueLogout(ipban);
 		}
 	}
 	

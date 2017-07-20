@@ -2,13 +2,12 @@ package net.edge.content.minigame.pestcontrol.defence;
 
 import net.edge.content.door.Door;
 import net.edge.content.skill.Skills;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
-
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 public class PestGate {
 	
@@ -35,7 +34,7 @@ public class PestGate {
 	 */
 	private Position[] positions;
 	
-	public PestGate(ObjectNode clicked) {
+	public PestGate(GameObject clicked) {
 		door = new Door(clicked);
 		positions = new Position[]{door.getCurrentOne(), door.getCurrentSecond()};
 	}

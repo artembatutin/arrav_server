@@ -3,8 +3,8 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.world.node.item.container.impl.EquipmentType;
-import net.edge.world.node.item.ItemDefinition;
+import net.edge.world.entity.item.container.impl.EquipmentType;
+import net.edge.world.entity.item.ItemDefinition;
 
 import java.util.Objects;
 

@@ -5,7 +5,7 @@ import com.google.common.collect.Multiset;
 import net.edge.content.combat.CombatConstants;
 import net.edge.task.Task;
 import net.edge.content.skill.Skills;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * A task that periodically drains prayer points for {@link Player}s. It

@@ -1,11 +1,11 @@
 package net.edge.content.door;
 
-import net.edge.locale.Position;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.region.Region;
+import net.edge.world.locale.Position;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.region.Region;
 import net.edge.world.object.DynamicObject;
+import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectNode;
 import net.edge.world.object.ObjectType;
 
 import java.util.Optional;
@@ -23,10 +23,10 @@ public class Door {
 	private final DynamicObject appended;
 	private final DynamicObject appendedSecond;
 	
-	private final ObjectNode original;
-	private final ObjectNode originalSecond;
+	private final GameObject original;
+	private final GameObject originalSecond;
 
-	public Door(ObjectNode object) {
+	public Door(GameObject object) {
 		boolean closed = object.getDefinition().hasAction("open");
 		original = object.copy();
 		Region reg = original.getRegion();
@@ -35,8 +35,8 @@ public class Door {
 		//getting second door if found.
 		if(original.getObjectType() == STRAIGHT_WALL) {
 			if(original.getDirection() == WEST || original.getDirection() == EAST) {
-				Optional<ObjectNode> northen = reg.getObject(STRAIGHT_WALL, pos.move(0, 1));
-				Optional<ObjectNode> southen = reg.getObject(STRAIGHT_WALL, pos.move(0, -1));
+				Optional<GameObject> northen = reg.getObject(STRAIGHT_WALL, pos.move(0, 1));
+				Optional<GameObject> southen = reg.getObject(STRAIGHT_WALL, pos.move(0, -1));
 				if(northen.isPresent() && northen.get().getDefinition() != null && northen.get().getDefinition().hasAction(closed ? "open" : "close")) {
 					originalSecond = northen.get();
 				} else if(southen.isPresent() && southen.get().getDefinition() != null && southen.get().getDefinition().hasAction(closed ? "open" : "close")) {
@@ -45,8 +45,8 @@ public class Door {
 					originalSecond = null;
 				}
 			} else {
-				Optional<ObjectNode> easten = reg.getObject(STRAIGHT_WALL, pos.move(1, 0));
-				Optional<ObjectNode> westen = reg.getObject(STRAIGHT_WALL, pos.move(-1, 0));
+				Optional<GameObject> easten = reg.getObject(STRAIGHT_WALL, pos.move(1, 0));
+				Optional<GameObject> westen = reg.getObject(STRAIGHT_WALL, pos.move(-1, 0));
 				if(easten.isPresent() && easten.get().getDefinition() != null && easten.get().getDefinition().hasAction(closed ? "open" : "close")) {
 					originalSecond = easten.get();
 				} else if(westen.isPresent() && westen.get().getDefinition() != null && westen.get().getDefinition().hasAction(closed ? "open" : "close")) {
@@ -66,8 +66,8 @@ public class Door {
 		int xAdjustment2 = 0;
 		int yAdjustment2 = 0;
 		ObjectDirection direction2 = originalSecond != null ? originalSecond.getDirection() : null;
-		ObjectNode first = null;
-		ObjectNode second = null;
+		GameObject first = null;
+		GameObject second = null;
 		
 		if(original.getObjectType() == STRAIGHT_WALL) {
 			if(originalSecond == null) {
@@ -86,7 +86,7 @@ public class Door {
 						direction = WEST;
 					}
 				} else {
-					ObjectNode[] adjacants = {
+					GameObject[] adjacants = {
 							reg.getObject(STRAIGHT_WALL, pos.move(-1, 1)).orElse(null),
 							reg.getObject(STRAIGHT_WALL, pos.move(0, 1)).orElse(null),
 							reg.getObject(STRAIGHT_WALL, pos.move(1, 1)).orElse(null),
@@ -96,7 +96,7 @@ public class Door {
 							reg.getObject(STRAIGHT_WALL, pos.move(0, -1)).orElse(null),
 							reg.getObject(STRAIGHT_WALL, pos.move(1, -1)).orElse(null)
 					};
-					for(ObjectNode ad : adjacants) {
+					for(GameObject ad : adjacants) {
 						if(ad == null)
 							continue;
 						if(ad.isAdjacantDoor(original)) {
@@ -132,7 +132,7 @@ public class Door {
 						direction2 = EAST;
 					}
 				} else {
-					ObjectNode[] adjacants = {
+					GameObject[] adjacants = {
 							reg.getObject(STRAIGHT_WALL, pos.move(-1, 1)).orElse(null),
 							reg.getObject(STRAIGHT_WALL, pos.move(0, 1)).orElse(null),
 							reg.getObject(STRAIGHT_WALL, pos.move(1, 1)).orElse(null),
@@ -142,7 +142,7 @@ public class Door {
 							reg.getObject(STRAIGHT_WALL, pos.move(0, -1)).orElse(null),
 							reg.getObject(STRAIGHT_WALL, pos.move(1, -1)).orElse(null)
 					};
-					for(ObjectNode ad : adjacants) {
+					for(GameObject ad : adjacants) {
 						if(ad == null)
 							continue;
 						if(ad.isAdjacantDoor(first)) {

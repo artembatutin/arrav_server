@@ -8,13 +8,13 @@ import net.edge.content.TabInterface;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.skill.summoning.familiar.Familiar;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.impl.Follower;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.impl.Follower;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -62,12 +62,12 @@ public final class Pet extends Follower {
 	/**
 	 * Attempts to feed the pet the player has spawned.
 	 * @param player the player feeding the pet.
-	 * @param npc    the npc representing the pet.
+	 * @param mob    the mob representing the pet.
 	 * @param food   the item representing the food.
 	 * @return {@code true} if the pet was fed, {@code false} if not.
 	 */
-	public static boolean feed(Player player, Npc npc, Item food) {
-		PetData data = PetData.getNpc(npc.getId()).orElse(null);
+	public static boolean feed(Player player, Mob mob, Item food) {
+		PetData data = PetData.getNpc(mob.getId()).orElse(null);
 		
 		if(data == null) {
 			return false;
@@ -175,17 +175,17 @@ public final class Pet extends Follower {
 		pet.task.cancel();
 		TabInterface.SUMMONING.sendInterface(player, -1);
 		player.out(new SendForceTab(TabInterface.INVENTORY));
-		pet.reset();
+		pet.postUpdate();
 	}
 	
 	/**
 	 * Attempts to pickup the pet.
 	 * @param player the player picking up the pet.
-	 * @param npc    the npc that was picked up.
+	 * @param mob    the mob that was picked up.
 	 * @return {@code true} if the pet was picked up, {@code false} otherwise.
 	 */
-	public static boolean pickup(Player player, Npc npc) {
-		PetData data = PetData.getNpc(npc.getId()).orElse(null);
+	public static boolean pickup(Player player, Mob mob) {
+		PetData data = PetData.getNpc(mob.getId()).orElse(null);
 		if(data == null) {
 			return false;
 		}
@@ -196,7 +196,7 @@ public final class Pet extends Follower {
 			player.message("This is not your pet.");
 			return false;
 		}
-		if(pet.getSlot() != npc.getSlot()) {
+		if(pet.getSlot() != mob.getSlot()) {
 			player.message("This is not your pet.");
 			return false;
 		}

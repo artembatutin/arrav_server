@@ -1,6 +1,8 @@
 package net.edge.net.packet;
 
-import net.edge.world.node.entity.player.Player;
+import io.netty.buffer.ByteBuf;
+import net.edge.net.codec.GameBuffer;
+import net.edge.world.entity.actor.player.Player;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -8,9 +10,10 @@ import net.edge.world.node.entity.player.Player;
  */
 public interface OutgoingPacket {
     
-    default void onSent(Player player) {
+    default boolean onSent(Player player) {
+        return true;
+    }
     
-    };
+    ByteBuf write(Player player, GameBuffer msg);
     
-    void write(Player player);
 }

@@ -3,23 +3,24 @@ package net.edge.content.minigame.pestcontrol;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.minigame.pestcontrol.pest.*;
 
-import net.edge.locale.Position;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Hit;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcDeath;
-import net.edge.world.node.entity.npc.impl.DefaultNpc;
-import net.edge.world.node.entity.player.Player;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobDeath;
+import net.edge.world.entity.actor.mob.impl.DefaultMob;
+import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 
 import static net.edge.content.minigame.pestcontrol.pest.PestType.*;
 
-public class PestPortal extends DefaultNpc {
+public class PestPortal extends DefaultMob {
 	
 	
-	private final Npc knight;
+	private final Mob knight;
 	
 	private final Position spawn;
 	
@@ -27,7 +28,7 @@ public class PestPortal extends DefaultNpc {
 	
 	private PestControlMinigame game;
 	
-	public PestPortal(int id, Position position, Position spawn, int widget, Npc knight) {
+	public PestPortal(int id, Position position, Position spawn, int widget, Mob knight) {
 		super(id, position);
 		setOriginalRandomWalk(false);
 		setAutoRetaliate(false);
@@ -47,7 +48,7 @@ public class PestPortal extends DefaultNpc {
 			return;
 		int type = RandomUtils.inclusive(0, 6);
 		Pest pest = null;
-		Optional<Position> destination = World.getTraversalMap().getRandomTraversableTile(getSpawn(), type == 0 ? 2 : 1);
+		Optional<Position> destination = TraversalMap.getRandomTraversableTile(getSpawn(), type == 0 ? 2 : 1);
 		if(!destination.isPresent())
 			return;
 		switch(type) {
@@ -102,7 +103,7 @@ public class PestPortal extends DefaultNpc {
 	@Override
 	public void appendDeath() {
 		setDead(true);
-		World.get().submit(new NpcDeath(this));
+		World.get().submit(new MobDeath(this));
 		knight.healEntity(50);
 		if(game != null) {
 			if(!game.portalsAlive()) {

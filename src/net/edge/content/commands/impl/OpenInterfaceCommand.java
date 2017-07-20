@@ -2,8 +2,8 @@ package net.edge.content.commands.impl;
 
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"interface"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::interface interfaceId")
 public final class OpenInterfaceCommand implements Command {

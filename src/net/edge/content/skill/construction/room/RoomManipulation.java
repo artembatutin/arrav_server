@@ -6,8 +6,8 @@ import net.edge.content.skill.construction.data.Constants;
 import net.edge.content.skill.construction.furniture.Furniture;
 import net.edge.content.skill.construction.furniture.HotSpots;
 import net.edge.net.packet.out.SendRemoveObjects;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import static net.edge.content.skill.construction.Construction.getMyChunk;
 import static net.edge.content.skill.construction.Construction.getXTilesOnTile;

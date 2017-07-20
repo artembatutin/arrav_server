@@ -6,9 +6,9 @@ import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.skill.prayer.Prayer;
-import net.edge.locale.Position;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.PrayerBook;
+import net.edge.world.locale.Position;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.PrayerBook;
 
 /**
  * The abstract class which defines the basics each guild room accesses.

@@ -3,13 +3,13 @@ package net.edge.content.combat.magic.lunars;
 import net.edge.util.Stopwatch;
 import net.edge.content.MagicStaff;
 import net.edge.content.skill.Skills;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Spell;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Spellbook;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Spellbook;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -30,13 +30,13 @@ public abstract class LunarSpell extends Spell {
 	 * @param caster the caster casting the spell.
 	 * @param victim the victim hit by the spell.
 	 */
-	public abstract void effect(Player caster, EntityNode victim);
+	public abstract void effect(Player caster, Actor victim);
 
 	/**
 	 * Any checks that should be made before casting the spell.
 	 * @param caster the caster casting the spell.
 	 */
-	public abstract boolean prerequisites(Player caster, EntityNode victim);
+	public abstract boolean prerequisites(Player caster, Actor victim);
 
 	/**
 	 * The name of this spell.
@@ -74,7 +74,7 @@ public abstract class LunarSpell extends Spell {
 	}
 
 	@Override
-	public int startCast(EntityNode cast, EntityNode castOn) {
+	public int startCast(Actor cast, Actor castOn) {
 		if(!cast.isPlayer()) {
 			return 0;
 		}

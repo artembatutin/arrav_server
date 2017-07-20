@@ -1,10 +1,11 @@
 package net.edge.content.commands.impl;
 
+import net.edge.content.trivia.TriviaTask;
 import net.edge.world.World;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -23,9 +24,7 @@ public final class AnswerTriviaCommand implements Command {
     @Override
     public void execute(Player player, String[] cmd, String command) throws Exception {
         String answer = String.join(" ", cmd);
-
         answer = answer.substring(answer.indexOf(" ") + 1, answer.length());
-
-        World.getTriviaBot().entry.answer(player, answer);
+        TriviaTask.getBot().entry.answer(player, answer);
     }
 }

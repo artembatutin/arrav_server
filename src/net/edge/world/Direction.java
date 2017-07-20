@@ -2,7 +2,7 @@ package net.edge.world;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.locale.Position;
+import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 
 import java.util.EnumSet;

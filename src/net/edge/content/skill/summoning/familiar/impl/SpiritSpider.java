@@ -10,10 +10,10 @@ import net.edge.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbil
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import net.edge.content.skill.summoning.SummoningData;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNodeStatic;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.GroundItemStatic;
 
 import java.util.Optional;
 
@@ -50,7 +50,7 @@ public final class SpiritSpider extends Familiar {
 			t.getFamiliar().get().forceChat("Rawrgh, my eggs won't come out!");
 			return;
 		}
-		ItemNodeStatic eggs = new ItemNodeStatic(new Item(223), t.getFamiliar().get().getPosition());
+		GroundItemStatic eggs = new GroundItemStatic(new Item(223), t.getFamiliar().get().getPosition());
 		eggs.getRegion().register(eggs);
 	});
 	
@@ -60,13 +60,13 @@ public final class SpiritSpider extends Familiar {
 	}
 	
 	@Override
-	public void interact(Player player, Npc npc, int id) {
+	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
 			player.getDialogueBuilder().append(new OptionDialogue(t -> {
 				if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 					player.getDialogueBuilder().advance();
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-					Summoning.openBeastOfBurden(player, npc);
+					Summoning.openBeastOfBurden(player, mob);
 				} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 					player.closeWidget();
 				}

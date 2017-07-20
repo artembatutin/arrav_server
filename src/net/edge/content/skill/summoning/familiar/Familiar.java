@@ -12,14 +12,15 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import net.edge.content.skill.summoning.SummoningData;
-import net.edge.locale.Position;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
 import net.edge.world.Graphic;
 import net.edge.world.World;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcDeath;
-import net.edge.world.node.entity.npc.impl.Follower;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobDeath;
+import net.edge.world.entity.actor.mob.impl.Follower;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -100,7 +101,7 @@ public abstract class Familiar extends Follower {
 	public void summon(Player player, boolean login) {
 		/* Checks if the familiar is a large npc. */
 		boolean isLarge = size() > 1;
-		ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), size());
+		ObjectList<Position> pos = TraversalMap.getSurroundedTraversableTiles(player.getPosition(), player.size(), size());
 		if(!pos.isEmpty()) {
 			Position p = RandomUtils.random(pos);
 			this.move(p);
@@ -192,7 +193,7 @@ public abstract class Familiar extends Follower {
 		/* Don't want familiar to respawn if dead */
 		this.setRespawn(false);
 		/* Remove this npc from the world */
-		World.get().submit(new NpcDeath(this));
+		World.get().submit(new MobDeath(this));
 		/* Check if the familiar can hold items */
 		if(this.getAbilityType().isHoldableContainer()) {
 			/* Cast to ItemHoldableAbility, this is safe since we checked */
@@ -218,12 +219,12 @@ public abstract class Familiar extends Follower {
 	/**
 	 * The method which should be overriden if this familiar has an
 	 * ability where an item can be used on it.
-	 * @param player the player whom is using an item on the npc.
-	 * @param npc    the npc whom's being interacted by a player.
-	 * @param item   the item being used on the npc.
+	 * @param player the player whom is using an item on the mob.
+	 * @param mob    the mob whom's being interacted by a player.
+	 * @param item   the item being used on the mob.
 	 * @return <true> if theres an action, <false> otherwise.
 	 */
-	public boolean itemOnNpc(Player player, Npc npc, Item item) {
+	public boolean itemOnNpc(Player player, Mob mob, Item item) {
 		return false;
 	}
 
@@ -257,10 +258,10 @@ public abstract class Familiar extends Follower {
 	/**
 	 * Attempts to interact with this familiar
 	 * @param player the player whom is interacting with the familiar.
-	 * @param npc    the npc this player is interacting with.
+	 * @param mob    the mob this player is interacting with.
 	 * @param id     the action id being interacted with.
 	 */
-	public abstract void interact(Player player, Npc npc, int id);
+	public abstract void interact(Player player, Mob mob, int id);
 
 	/**
 	 * @return {@link #data}.

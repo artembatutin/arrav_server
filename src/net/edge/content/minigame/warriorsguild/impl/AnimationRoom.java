@@ -4,27 +4,26 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.event.impl.ObjectEvent;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.content.combat.CombatType;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.warriorsguild.GuildRoom;
 import net.edge.content.minigame.warriorsguild.WarriorsGuild;
-import net.edge.locale.Position;
-import net.edge.locale.loc.SquareLocation;
+import net.edge.world.locale.Position;
+import net.edge.world.locale.loc.SquareLocation;
 import net.edge.world.World;
-import net.edge.world.node.entity.EntityNode;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
-import net.edge.world.node.entity.move.ForcedMovement;
-import net.edge.world.node.entity.move.ForcedMovementDirection;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.activity.ActivityManager;
-import net.edge.world.node.item.Item;
-import net.edge.world.node.item.ItemNode;
-import net.edge.world.object.ObjectNode;
-import net.edge.world.node.region.Region;
+import net.edge.world.entity.actor.move.ForcedMovement;
+import net.edge.world.entity.actor.move.ForcedMovementDirection;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.GroundItem;
+import net.edge.world.object.GameObject;
+import net.edge.world.entity.region.Region;
 
 import java.util.*;
 
@@ -57,13 +56,13 @@ public final class AnimationRoom extends GuildRoom {
 	 * @param object the object that represents the door.
 	 * @return {@code true} if the player entered, {@code false} otherwise.
 	 */
-	public static boolean enter(Player player, ObjectNode object) {
+	public static boolean enter(Player player, GameObject object) {
 		player.move(new Position(player.getPosition().getX(), 3545));
 		return true;
 	}
 	
 	@Override
-	public boolean onItemOnObject(Player player, ObjectNode object, Item item) {
+	public boolean onItemOnObject(Player player, GameObject object, Item item) {
 		Optional<AnimatedArmour.ArmourData> data = AnimatedArmour.ArmourData.getArmour(item.getId());
 		if(!data.isPresent()) {
 			return false;
@@ -83,12 +82,12 @@ public final class AnimationRoom extends GuildRoom {
 	}
 	
 	@Override
-	public boolean canHit(Player player, EntityNode other, CombatType type) {
+	public boolean canHit(Player player, Actor other, CombatType type) {
 		return armour.isPresent() && other.isNpc();
 	}
 	
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode node) {
+	public boolean onFirstClickObject(Player player, GameObject node) {
 		switch(node.getId()) {
 			case 57647:
 			case 57644:
@@ -118,7 +117,7 @@ public final class AnimationRoom extends GuildRoom {
 	}
 	
 	@Override
-	public boolean canPickup(Player player, ItemNode node) {
+	public boolean canPickup(Player player, GroundItem node) {
 		return true;
 	}
 	
@@ -158,7 +157,7 @@ public final class AnimationRoom extends GuildRoom {
 	}
 	
 	@Override
-	public void onKill(Player player, EntityNode other) {
+	public void onKill(Player player, Actor other) {
 		if(other.isNpc() && armour.isPresent() && other.toNpc().getId() == armour.get().getId()) {
 			drop(player, true);
 		}
@@ -176,10 +175,10 @@ public final class AnimationRoom extends GuildRoom {
 		if(!armour.isPresent()) {
 			return;
 		}
-		ObjectList<ItemNode> items = new ObjectArrayList<>();
-		Arrays.stream(armour.get().data.set).forEach(item -> items.add(new ItemNode(item, armour.get().getPosition(), player)));
+		ObjectList<GroundItem> items = new ObjectArrayList<>();
+		Arrays.stream(armour.get().data.set).forEach(item -> items.add(new GroundItem(item, armour.get().getPosition(), player)));
 		if(tokens) {
-			items.add(new ItemNode(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), armour.get().data.tokens), armour.get().getPosition(), player));
+			items.add(new GroundItem(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), armour.get().data.tokens), armour.get().getPosition(), player));
 		}
 		Region region = World.getRegions().getRegion(armour.get().getPosition());
 		if(region == null)
@@ -193,7 +192,7 @@ public final class AnimationRoom extends GuildRoom {
 	 * The class which represents a single animated armour npc.
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
-	private static final class AnimatedArmour extends Npc {
+	private static final class AnimatedArmour extends Mob {
 		
 		/**
 		 * The data type of this armour.
@@ -211,7 +210,7 @@ public final class AnimationRoom extends GuildRoom {
 		}
 		
 		@Override
-		public Npc create() {
+		public Mob create() {
 			return new AnimatedArmour(data, this.getPosition());
 		}
 		

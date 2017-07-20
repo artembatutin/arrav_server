@@ -10,20 +10,21 @@ import net.edge.util.log.impl.DuelLog;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.special.CombatSpecial;
-import net.edge.world.node.item.container.session.impl.DuelSession;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.item.container.session.impl.DuelSession;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.skill.prayer.Prayer;
-import net.edge.locale.Position;
-import net.edge.locale.loc.SquareLocation;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
+import net.edge.world.locale.loc.SquareLocation;
 import net.edge.world.World;
-import net.edge.world.node.NodeType;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.item.Item;
-import net.edge.world.object.ObjectNode;
+import net.edge.world.entity.EntityType;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.object.GameObject;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -67,22 +68,22 @@ public final class DuelMinigame extends Minigame {
 	/**
 	 * The square location for the obstacles dueling arena.
 	 */
-	public static final SquareLocation OBSTACLES_ARENA_CHECK = new SquareLocation(3364, 3244, 3389, 3258, 0);
+	private static final SquareLocation OBSTACLES_ARENA_CHECK = new SquareLocation(3364, 3244, 3389, 3258, 0);
 	
 	/**
 	 * The square location for the default dueling arena.
 	 */
-	public static final SquareLocation DEFAULT_ARENA_CHECK = new SquareLocation(3332, 3244, 3357, 3258, 0);
+	private static final SquareLocation DEFAULT_ARENA_CHECK = new SquareLocation(3332, 3244, 3357, 3258, 0);
 	
 	/**
 	 * The square location for the obstacles dueling arena.
 	 */
-	public static final SquareLocation OBSTACLES_ARENA = new SquareLocation(3366, 3246, 3386, 3256, 0);
+	private static final SquareLocation OBSTACLES_ARENA = new SquareLocation(3366, 3246, 3386, 3256, 0);
 	
 	/**
 	 * The square location for the default dueling arena.
 	 */
-	public static final SquareLocation DEFAULT_ARENA = new SquareLocation(3335, 3246, 3355, 3256, 0);
+	private static final SquareLocation DEFAULT_ARENA = new SquareLocation(3335, 3246, 3355, 3256, 0);
 	
 	/**
 	 * Applies the staked items to the winner and clears the minigame session.
@@ -90,7 +91,7 @@ public final class DuelMinigame extends Minigame {
 	 * @param winner the winner who won the duel.
 	 * @param logout whether the duel was won through the opponent logging out.
 	 */
-	public void applyWin(Player loser, Player winner, boolean logout) {
+	private void applyWin(Player loser, Player winner, boolean logout) {
 		loser.out(new SendContextMenu(2, false, "Challenge"));
 		loser.move(deathPosition(loser));
 		loser.setMinigame(Optional.empty());
@@ -157,7 +158,7 @@ public final class DuelMinigame extends Minigame {
 		
 		if(rules.contains(DuelingRules.NO_MOVEMENT)) {
 			player.move(DEFAULT_ARENA_CHECK.random());
-			ObjectList<Position> pos = World.getTraversalMap().getSurroundedTraversableTiles(player.getPosition(), player.size(), other.size());
+			ObjectList<Position> pos = TraversalMap.getSurroundedTraversableTiles(player.getPosition(), player.size(), other.size());
 			if(pos.size() > 0) {
 				Position p = RandomUtils.random(pos);
 				other.move(p);
@@ -191,7 +192,7 @@ public final class DuelMinigame extends Minigame {
 	}
 	
 	@Override
-	public void onKill(Player player, EntityNode victim) {
+	public void onKill(Player player, Actor victim) {
 		applyWin(victim.toPlayer(), player, false);
 	}
 	
@@ -254,7 +255,7 @@ public final class DuelMinigame extends Minigame {
 	}
 	
 	@Override
-	public boolean onFirstClickObject(Player player, ObjectNode object) {
+	public boolean onFirstClickObject(Player player, GameObject object) {
 		if(object.getId() == 3203) {
 			if(rules.contains(DuelingRules.NO_FORFEIT)) {
 				player.message("Forfeiting has been disabled during this duel.");
@@ -271,8 +272,8 @@ public final class DuelMinigame extends Minigame {
 	}
 	
 	@Override
-	public boolean canHit(Player player, EntityNode victim, CombatType type) {
-		if(victim.getType().equals(NodeType.NPC)) {
+	public boolean canHit(Player player, Actor victim, CombatType type) {
+		if(victim.getType().equals(EntityType.NPC)) {
 			return true;
 		}
 		if(!session.getOther(player).same(victim)) {

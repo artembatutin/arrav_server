@@ -2,18 +2,17 @@ package net.edge.world;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import net.edge.Server;
+import net.edge.Application;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.shootingstar.ShootingStarManager;
 import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.trivia.TriviaTask;
-import net.edge.game.GameConstants;
-import net.edge.game.GameExecutor;
-import net.edge.game.GamePulseHandler;
-import net.edge.locale.InstanceManager;
-import net.edge.locale.area.AreaManager;
+import net.edge.GameConstants;
+import net.edge.GamePulseHandler;
+import net.edge.world.locale.InstanceManager;
+import net.edge.world.locale.area.AreaManager;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
 import net.edge.net.packet.out.SendLogout;
@@ -24,19 +23,19 @@ import net.edge.util.Stopwatch;
 import net.edge.util.TextUtils;
 import net.edge.util.ThreadUtil;
 import net.edge.util.log.LoggingManager;
-import net.edge.world.node.entity.EntityList;
-import net.edge.world.node.entity.EntityNode;
-import net.edge.world.node.entity.move.path.SimplePathChecker;
-import net.edge.world.node.entity.move.path.impl.SimplePathFinder;
-import net.edge.world.node.entity.npc.Npc;
-import net.edge.world.node.entity.npc.NpcMovementTask;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
-import net.edge.world.node.item.ItemNode;
-import net.edge.world.node.item.container.session.ExchangeSessionManager;
-import net.edge.world.node.region.Region;
-import net.edge.world.node.region.RegionManager;
-import net.edge.world.node.region.TraversalMap;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.ActorList;
+import net.edge.world.entity.actor.move.path.SimplePathChecker;
+import net.edge.world.entity.actor.move.path.impl.SimplePathFinder;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobMovementTask;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.region.Region;
+import net.edge.world.entity.region.RegionManager;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.sync.Synchronizer;
 
 import java.sql.Connection;
@@ -45,8 +44,8 @@ import java.util.*;
 import java.util.concurrent.*;
 
 import static net.edge.net.session.GameSession.outLimit;
-import static net.edge.world.node.NodeState.AWAITING_REMOVAL;
-import static net.edge.world.node.NodeState.IDLE;
+import static net.edge.world.entity.EntityState.AWAITING_REMOVAL;
+import static net.edge.world.entity.EntityState.IDLE;
 
 /**
  * The static utility class that contains functions to manage and process game characters.
@@ -71,11 +70,6 @@ public final class World {
 	private final ScheduledExecutorService pulser = Executors.newSingleThreadScheduledExecutor(ThreadUtil.create("GamePulse"));
 	
 	/**
-	 * The game executor in charge of managing process.
-	 */
-	private final GameExecutor executor = new GameExecutor();
-	
-	/**
 	 * The manager for the queue of game tasks.
 	 */
 	private final TaskManager taskManager = new TaskManager();
@@ -93,12 +87,12 @@ public final class World {
 	/**
 	 * The collection of active NPCs.
 	 */
-	private final EntityList<Npc> npcs = new EntityList<>(16384);
+	private final ActorList<Mob> npcs = new ActorList<>(16384);
 	
 	/**
 	 * The collection of active players.
 	 */
-	private final EntityList<Player> players = new EntityList<>(2048);
+	private final ActorList<Player> players = new ActorList<>(2048);
 	
 	/**
 	 * A collection of {@link Player}s registered by their username hashes.
@@ -111,7 +105,7 @@ public final class World {
 	private int staffCount;
 	
 	/**
-	 * The regional tick counter for processing such as {@link ItemNode} in a region.
+	 * The regional tick counter for processing such as {@link GroundItem} in a region.
 	 */
 	private int regionalTick;
 	
@@ -123,8 +117,8 @@ public final class World {
 	static {
 		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-			donation = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
-			score = new Database(!Server.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !Server.DEBUG ? "root" : "edge_avro", !Server.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
+			donation = new Database(!Application.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !Application.DEBUG ? "root" : "edge_avro", !Application.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
+			score = new Database(!Application.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !Application.DEBUG ? "root" : "edge_avro", !Application.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -163,7 +157,9 @@ public final class World {
 			dequeueLogins();
 			dequeueLogout();
 			taskManager.sequence();
-			sync.synchronize(players, npcs, players.size());
+			sync.preUpdate(players, npcs);
+			sync.update(players);
+			sync.postUpdate(players, npcs);
 			
 			regionalTick++;
 			if(regionalTick == 10) {
@@ -187,7 +183,6 @@ public final class World {
 		} else if(outLimit < 200) {
 			outLimit += 20;
 		}
-		
 		System.out.println("took: " + millis + " - players online: " + players.size() + " parsing packets: " + outLimit + " - went over 600ms " + over + " times");
 	}
 	
@@ -230,11 +225,11 @@ public final class World {
 	 * Queues {@code player} to be logged out on the next server sequence.
 	 * @param player the player to log out.
 	 */
-	public void queueLogout(Player player, boolean queued) {
+	public void queueLogout(Player player) {
 		if(player.getCombatBuilder().inCombat())
 			player.getLogoutTimer().reset();
-		player.out(new SendLogout());
 		player.setState(AWAITING_REMOVAL);
+		player.out(new SendLogout());
 		logouts.add(player);
 	}
 	
@@ -292,22 +287,22 @@ public final class World {
 	 * @param character the character that it will be returned for.
 	 * @return the local players.
 	 */
-	public Iterator<Player> getLocalPlayers(EntityNode character) {
+	public Iterator<Player> getLocalPlayers(Actor character) {
 		if(character.isPlayer())
 			return character.toPlayer().getLocalPlayers().iterator();
 		return players.iterator();
 	}
 	
 	/**
-	 * Retrieves and returns the local {@link Npc}s for {@code character}. The
+	 * Retrieves and returns the local {@link Mob}s for {@code character}. The
 	 * specific npcs returned is completely dependent on the character given in
 	 * the argument.
 	 * @param character the character that it will be returned for.
 	 * @return the local npcs.
 	 */
-	public Iterator<Npc> getLocalNpcs(EntityNode character) {
+	public Iterator<Mob> getLocalNpcs(Actor character) {
 		if(character.isPlayer())
-			return character.toPlayer().getLocalNpcs().iterator();
+			return character.toPlayer().getLocalMobs().iterator();
 		return npcs.iterator();
 	}
 	
@@ -315,8 +310,8 @@ public final class World {
 	 * Gets every single character in the player and npc character lists.
 	 * @return a set containing every single character.
 	 */
-	public Set<EntityNode> getEntities() {
-		Set<EntityNode> characters = new HashSet<>();
+	public Set<Actor> getEntities() {
+		Set<Actor> characters = new HashSet<>();
 		players.forEach(characters::add);
 		npcs.forEach(characters::add);
 		return characters;
@@ -372,7 +367,7 @@ public final class World {
 				return false;
 			}
 			boolean response = players.remove(player);
-			for(Npc mob : player.getMobs()) {
+			for(Mob mob : player.getMobs()) {
 				npcs.remove(mob);
 			}
 			player.getMobs().clear();
@@ -387,14 +382,6 @@ public final class World {
 	}
 	
 	/**
-	 * Gets the game executor which forwards process.
-	 * @return game executor.
-	 */
-	public GameExecutor getExecutor() {
-		return executor;
-	}
-	
-	/**
 	 * Gets the manager for the queue of game tasks.
 	 * @return the queue of tasks.
 	 */
@@ -406,7 +393,7 @@ public final class World {
 	 * Gets the collection of active players.
 	 * @return the active players.
 	 */
-	public EntityList<Player> getPlayers() {
+	public ActorList<Player> getPlayers() {
 		return players;
 	}
 	
@@ -434,7 +421,7 @@ public final class World {
 	 * Gets the collection of active npcs.
 	 * @return the active npcs.
 	 */
-	public EntityList<Npc> getNpcs() {
+	public ActorList<Mob> getNpcs() {
 		return npcs;
 	}
 
@@ -442,49 +429,14 @@ public final class World {
 	/* CONSTANTS DECLARATIONS */
 	
 	/**
-	 * The trivia task for this world.
-	 */
-	private static final TriviaTask TRIVIA_BOT = new TriviaTask();
-	
-	/**
 	 * The time the server has been running.
 	 */
 	private static final Stopwatch RUNNING_TIME = new Stopwatch().reset();
 	
 	/**
-	 * The shooting star event for the world.
-	 */
-	private static final ShootingStarManager SHOOTING_STAR_MANAGER = new ShootingStarManager();
-	
-	/**
-	 * The fire pit event for the world.
-	 */
-	private static final FirepitManager FIRE_PIT_EVENT = new FirepitManager();
-	
-	/**
-	 * The clan manager for the world.
-	 */
-	private static final ClanManager CLAN_MANAGER = new ClanManager();
-	
-	/**
-	 * The instance manager for the world.
-	 */
-	private static final InstanceManager INSTANCE_MANAGER = new InstanceManager();
-	
-	/**
 	 * The {@link RegionManager} that manages region caching.
 	 */
 	private static final RegionManager REGION_MANAGER = new RegionManager();
-	
-	/**
-	 * This world's {@link TraversalMap} used to handle the clipping around the world.
-	 */
-	private static final TraversalMap TRAVERSAL_MAP = new TraversalMap();
-	
-	/**
-	 * This world's {@link AreaManager} used to handle to check if certain areas have permissions.
-	 */
-	private static final AreaManager AREA_MANAGER = new AreaManager();
 	
 	/**
 	 * This world's straight line pathfinder used for NPCs movements.
@@ -497,24 +449,14 @@ public final class World {
 	private static final SimplePathChecker SIMPLE_PATH_CHECKER = new SimplePathChecker();
 	
 	/**
-	 * This world's {@link ExchangeSessionManager} used to handle container sessions.
-	 */
-	private static final ExchangeSessionManager EXCHANGE_SESSION_MANAGER = new ExchangeSessionManager();
-	
-	/**
 	 * This world's {@link LoggingManager} used to log player actions.
 	 */
 	private static final LoggingManager LOG_MANAGER = new LoggingManager();
 	
 	/**
-	 * This world's {@link ScoreboardManager} used to check scores.
+	 * A integral {@link Task} that handles ranomized movement of all {@link Mob}s.
 	 */
-	private static final ScoreboardManager SCOREBOARD_MANAGER = new ScoreboardManager();
-	
-	/**
-	 * A integral {@link Task} that handles ranomized movement of all {@link Npc}s.
-	 */
-	private static final NpcMovementTask NPC_MOVEMENT_TASK = new NpcMovementTask();
+	private static final MobMovementTask NPC_MOVEMENT_TASK = new MobMovementTask();
 	
 	/**
 	 * The scores database connection.
@@ -530,31 +472,10 @@ public final class World {
 	/* ASSETS GATHERS METHODS. */
 	
 	/**
-	 * Returns the trivia bot handler.
-	 */
-	public static TriviaTask getTriviaBot() {
-		return TRIVIA_BOT;
-	}
-	
-	/**
-	 * Returns this world's {@link ExchangeSessionManager}.
-	 */
-	public static ExchangeSessionManager getExchangeSessionManager() {
-		return EXCHANGE_SESSION_MANAGER;
-	}
-	
-	/**
 	 * Returns this world's {@link LoggingManager}.
 	 */
 	public static LoggingManager getLoggingManager() {
 		return LOG_MANAGER;
-	}
-	
-	/**
-	 * Returns this world's {@link ScoreboardManager}.
-	 */
-	public static ScoreboardManager getScoreboardManager() {
-		return SCOREBOARD_MANAGER;
 	}
 	
 	/**
@@ -565,52 +486,10 @@ public final class World {
 	}
 	
 	/**
-	 * Returns the fire pit event manager.
-	 */
-	public static FirepitManager getFirepitEvent() {
-		return FIRE_PIT_EVENT;
-	}
-	
-	/**
-	 * Returns the shooting star event manager.
-	 */
-	public static ShootingStarManager getShootingStarEvent() {
-		return SHOOTING_STAR_MANAGER;
-	}
-	
-	/**
-	 * Returns the clan chat manager.
-	 */
-	public static ClanManager getClanManager() {
-		return CLAN_MANAGER;
-	}
-	
-	/**
-	 * Returns the instance manager.
-	 */
-	public static InstanceManager getInstanceManager() {
-		return INSTANCE_MANAGER;
-	}
-	
-	/**
 	 * Returns this world's {@link RegionManager}.
 	 */
 	public static RegionManager getRegions() {
 		return REGION_MANAGER;
-	}
-	
-	/**
-	 * Returns this world's {@link TraversalMap}.
-	 */
-	public static TraversalMap getTraversalMap() {
-		return TRAVERSAL_MAP;
-	}
-	
-	/**
-	 * Returns this world'{@link AreaManager}.
-	 */
-	public static AreaManager getAreaManager() {
-		return AREA_MANAGER;
 	}
 	
 	/**
@@ -630,7 +509,7 @@ public final class World {
 	/**
 	 * Returns the randomized npc task.
 	 */
-	public static NpcMovementTask getNpcMovementTask() {
+	public static MobMovementTask getNpcMovementTask() {
 		return NPC_MOVEMENT_TASK;
 	}
 	

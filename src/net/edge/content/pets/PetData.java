@@ -2,7 +2,6 @@ package net.edge.content.pets;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.world.node.item.Item;
 
 import java.util.EnumSet;
 import java.util.Optional;

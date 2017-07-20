@@ -4,8 +4,8 @@ import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"emptybank"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::emptybank")
 public final class EmptyBankCommand implements Command {
