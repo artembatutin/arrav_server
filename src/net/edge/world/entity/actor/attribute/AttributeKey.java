@@ -57,6 +57,7 @@ public final class AttributeKey<T> {
 		//Combat
 		AttributeKey.forPersistent("fight_type", FightType.UNARMED_PUNCH);
 		AttributeKey.forTransient("master_archery", false);
+		AttributeKey.forTransient("invincible", false);
 		
 		//Availability
 		AttributeKey.forTransient("destroy_item_slot", -1);

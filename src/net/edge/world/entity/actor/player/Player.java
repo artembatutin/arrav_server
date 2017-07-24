@@ -671,6 +671,9 @@ public final class Player extends Actor {
 		privateMessage.updateOtherList(true);
 		out(new SendContextMenu(3, false, "Follow"));
 		out(new SendContextMenu(4, false, "Trade with"));
+		if (getRights() == Rights.ADMINISTRATOR) {
+			getAttr().get("invincible").set(true);
+		}
 		CombatEffect.values().forEach($it -> {
 			if($it.onLogin(this))
 				World.get().submit(new CombatEffectTask(this, $it));
