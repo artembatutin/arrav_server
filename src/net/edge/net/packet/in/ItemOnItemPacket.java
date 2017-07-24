@@ -43,7 +43,7 @@ public final class ItemOnItemPacket implements IncomingPacket {
 		if(PotionDecanting.manual(player, itemUsed, itemOn)) {
 			return;
 		}
-		if(Firemaking.execute(player, itemUsed, itemOn)) {
+		if(Firemaking.execute(player, itemUsed, itemOn, false)) {
 			return;
 		}
 		if(UnfinishedPotion.produce(player, itemUsed, itemOn)) {

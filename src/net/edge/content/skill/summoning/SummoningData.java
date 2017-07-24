@@ -340,7 +340,12 @@ public enum SummoningData {
 	/**
 	 * Represents a pyrelord familiar.
 	 */
-	PYRELORD(30, 12816, 46, 202.4, 7377, 2.3, 5, 32, new Item(12160), new Item(590), new Item(12155), new Item(12183, 111)),
+	PYRELORD(30, 12816, 46, 202.4, 7377, 2.3, 5, 32, new Item(12160), new Item(590), new Item(12155), new Item(12183, 111)) {
+		@Override
+		public Pyrelord create() {
+			return new Pyrelord();
+		}
+	},
 	
 	/**
 	 * Represents a magpie familiar.
