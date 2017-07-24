@@ -10,12 +10,12 @@ import net.edge.world.entity.actor.mob.drop.ItemCache;
 import net.edge.world.entity.actor.mob.drop.Drop;
 import net.edge.world.entity.actor.player.Player;
 
-public final class SendNpcDrop implements OutgoingPacket {
+public final class SendMobDrop implements OutgoingPacket {
 	
 	private final int id;
 	private final DropTable table;
 	
-	public SendNpcDrop(int id, DropTable table) {
+	public SendMobDrop(int id, DropTable table) {
 		this.id = id;
 		this.table = table;
 	}

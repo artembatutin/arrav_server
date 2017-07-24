@@ -133,7 +133,7 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.FACE_ENTITY)) {
 			mask |= 1;
 		}
-		if(other.getFlags().get(UpdateFlag.APPEARANCE)) {
+		if(other.getFlags().get(UpdateFlag.APPEARANCE) || state ==UpdateState.ADD_LOCAL) {
 			mask |= 0x10;
 		}
 		if(other.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
@@ -172,7 +172,7 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.FACE_ENTITY)) {
 			PLAYER_BLOCKS[5].write(player, other, encodedBlock);
 		}
-		if(other.getFlags().get(UpdateFlag.APPEARANCE)) {
+		if(other.getFlags().get(UpdateFlag.APPEARANCE) || state ==UpdateState.ADD_LOCAL) {
 			PLAYER_BLOCKS[6].write(player, other, encodedBlock);
 		}
 		if(other.getFlags().get(UpdateFlag.FACE_COORDINATE)) {

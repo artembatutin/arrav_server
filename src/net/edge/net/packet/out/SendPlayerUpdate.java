@@ -48,45 +48,9 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 			}
 			
 			int added = 0;
-			int x = player.getPosition().getX() & 63;
-			int y = player.getPosition().getY() & 63;
-			int regionId = player.getPosition().getRegion();
-			RegionManager m = World.getRegions();
-			processPlayers(m.getRegion(regionId), player, blockMsg, msg, added);
-			if(y > 48) {
-				//top part of region.
-				if(m.exists(regionId + 1))
-					processPlayers(m.getRegion(regionId + 1), player, blockMsg, msg, added);
-				if(x > 48) {
-					//top-right of region.
-					if(m.exists(regionId + 256))
-						processPlayers(m.getRegion(regionId + 256), player, blockMsg, msg, added);
-					if(m.exists(regionId + 257))
-						processPlayers(m.getRegion(regionId + 257), player, blockMsg, msg, added);
-				} else if(x < 16) {
-					//top-left of region.
-					if(m.exists(regionId - 256))
-						processPlayers(m.getRegion(regionId - 256), player, blockMsg, msg, added);
-					if(m.exists(regionId - 255))
-						processPlayers(m.getRegion(regionId - 255), player, blockMsg, msg, added);
-				}
-			} else if(y < 16) {
-				//bottom part of region.
-				if(m.exists(regionId - 1))
-					processPlayers(m.getRegion(regionId - 1), player, blockMsg, msg, added);
-				if(x > 48) {
-					//bottom-right of region.
-					if(m.exists(regionId + 256))
-						processPlayers(m.getRegion(regionId + 256), player, blockMsg, msg, added);
-					if(m.exists(regionId + 255))
-						processPlayers(m.getRegion(regionId + 255), player, blockMsg, msg, added);
-				} else if(x < 16) {
-					//bottom-left of region.
-					if(m.exists(regionId - 256))
-						processPlayers(m.getRegion(regionId - 256), player, blockMsg, msg, added);
-					if(m.exists(regionId - 257))
-						processPlayers(m.getRegion(regionId - 257), player, blockMsg, msg, added);
-				}
+			processPlayers(player.getRegion(), player, blockMsg, msg, added);
+			for(Region r : player.getRegion().getSurroundingRegions()) {
+				processPlayers(r, player, blockMsg, msg, added);
 			}
 			
 			if(blockMsg.getBuffer().writerIndex() > 0) {

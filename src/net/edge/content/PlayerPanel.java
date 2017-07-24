@@ -10,7 +10,7 @@ import net.edge.action.impl.ButtonAction;
 import net.edge.GameConstants;
 import net.edge.net.packet.out.SendEnterName;
 import net.edge.net.packet.out.SendLink;
-import net.edge.net.packet.out.SendNpcDrop;
+import net.edge.net.packet.out.SendMobDrop;
 import net.edge.util.TextUtils;
 import net.edge.util.Utility;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -76,7 +76,7 @@ public enum PlayerPanel {
 	NPC_TOOL() {
 		@Override
 		public void onClick(Player player) {
-			player.out(new SendNpcDrop(0, null));
+			player.out(new SendMobDrop(0, null));
 		}
 	},
 	TOOL3,

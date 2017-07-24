@@ -1,6 +1,7 @@
 package net.edge.world;
 
 import net.edge.content.combat.CombatType;
+import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendProjectile;
 import net.edge.world.entity.actor.Actor;
@@ -16,7 +17,7 @@ public final class Projectile {
 	/**
 	 * Magic combat projectile delays.
 	 */
-	public static final int[] MAGIC_DELAYS = {
+	private static final int[] MAGIC_DELAYS = {
 			2,
 			2,
 			3,
@@ -174,45 +175,11 @@ public final class Projectile {
 	 * container.
 	 */
 	public Projectile sendProjectile() {
-		int x = start.getX() & 63;
-		int y = start.getY() & 63;
 		int regionId = start.getRegion();
 		RegionManager m = World.getRegions();
 		m.getRegion(regionId).getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-		if(y > 48) {
-			//top part of region.
-			if(m.exists(regionId + 1))
-				m.getRegion(regionId + 1).getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-			if(x > 48) {
-				//top-right of region.
-				if(m.exists(regionId + 256))
-					m.getRegion(regionId + 256).getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-				if(m.exists(regionId + 257))
-					m.getRegion(regionId + 257).getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-			} else if(x < 16) {
-				//top-left of region.
-				if(m.exists(regionId - 256))
-					m.getRegion(regionId - 256).getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-				if(m.exists(regionId - 255))
-					m.getRegion(regionId - 255).getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-			}
-		} else if(y < 16) {
-			//bottom part of region.
-			if(m.exists(regionId - 1))
-				m.getRegion(regionId - 1).getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-			if(x > 48) {
-				//bottom-right of region.
-				if(m.exists(regionId + 256))
-					m.getRegion(regionId + 256).getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-				if(m.exists(regionId + 255))
-					m.getRegion(regionId + 255).getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-			} else if(x < 16) {
-				//bottom-left of region.
-				if(m.exists(regionId - 256))
-					m.getRegion(regionId - 256).getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-				if(m.exists(regionId - 257))
-					m.getRegion(regionId - 257).getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-			}
+		for(Region r : m.getRegion(regionId).getSurroundingRegions()) {
+			r.getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
 		}
 		return this;
 	}

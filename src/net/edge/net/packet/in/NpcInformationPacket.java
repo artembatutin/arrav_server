@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.net.packet.out.SendNpcDrop;
+import net.edge.net.packet.out.SendMobDrop;
 import net.edge.util.rand.Chance;
 import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.entity.actor.mob.drop.Drop;
@@ -49,7 +49,7 @@ public final class NpcInformationPacket implements IncomingPacket {
 								table.getUnique().remove(index);
 								table.sort();
 								player.message("Removed: " + d.toString());
-								player.out(new SendNpcDrop(npc, table));
+								player.out(new SendMobDrop(npc, table));
 								return;
 							}
 						}
@@ -63,7 +63,7 @@ public final class NpcInformationPacket implements IncomingPacket {
 				table.getUnique().add(suggested.toDrop());
 				table.sort();
 				player.message("Added " + suggested.toString());
-				player.out(new SendNpcDrop(npc, table));
+				player.out(new SendMobDrop(npc, table));
 			} else {
 				SUGGESTED.add(suggested);
 				player.message("Your suggestion has been submitted.");
@@ -80,7 +80,7 @@ public final class NpcInformationPacket implements IncomingPacket {
 				player.message("This monster doesn't have any drop table.");
 				return;
 			}
-			player.out(new SendNpcDrop(id, drop));
+			player.out(new SendMobDrop(id, drop));
 			player.widget(-11);
 		}
 	}

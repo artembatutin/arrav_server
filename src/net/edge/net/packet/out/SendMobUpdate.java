@@ -21,7 +21,7 @@ import java.util.Iterator;
  * An implementation that sends an update message containing the underlying {@link Player} and {@link Mob}s surrounding them.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public final class SendNpcUpdate implements OutgoingPacket {
+public final class SendMobUpdate implements OutgoingPacket {
 	
 	public ByteBuf write(Player player, GameBuffer msg) {
 		ByteBufAllocator alloc = player.getSession().alloc();
@@ -45,45 +45,9 @@ public final class SendNpcUpdate implements OutgoingPacket {
 			}
 			
 			int added = 0;
-			int x = player.getPosition().getX() & 63;
-			int y = player.getPosition().getY() & 63;
-			int regionId = player.getPosition().getRegion();
-			RegionManager m = World.getRegions();
-			processNpcs(m.getRegion(regionId), player, blockMsg, msg, added);
-			if(y > 48) {
-				//top part of region.
-				if(m.exists(regionId + 1))
-					processNpcs(m.getRegion(regionId + 1), player, blockMsg, msg, added);
-				if(x > 48) {
-					//top-right of region.
-					if(m.exists(regionId + 256))
-						processNpcs(m.getRegion(regionId + 256), player, blockMsg, msg, added);
-					if(m.exists(regionId + 257))
-						processNpcs(m.getRegion(regionId + 257), player, blockMsg, msg, added);
-				} else if(x < 16) {
-					//top-left of region.
-					if(m.exists(regionId - 256))
-						processNpcs(m.getRegion(regionId - 256), player, blockMsg, msg, added);
-					if(m.exists(regionId - 255))
-						processNpcs(m.getRegion(regionId - 255), player, blockMsg, msg, added);
-				}
-			} else if(y < 16) {
-				//bottom part of region.
-				if(m.exists(regionId - 1))
-					processNpcs(m.getRegion(regionId - 1), player, blockMsg, msg, added);
-				if(x > 48) {
-					//bottom-right of region.
-					if(m.exists(regionId + 256))
-						processNpcs(m.getRegion(regionId + 256), player, blockMsg, msg, added);
-					if(m.exists(regionId + 255))
-						processNpcs(m.getRegion(regionId + 255), player, blockMsg, msg, added);
-				} else if(x < 16) {
-					//bottom-left of region.
-					if(m.exists(regionId - 256))
-						processNpcs(m.getRegion(regionId - 256), player, blockMsg, msg, added);
-					if(m.exists(regionId - 257))
-						processNpcs(m.getRegion(regionId - 257), player, blockMsg, msg, added);
-				}
+			processNpcs(player.getRegion(), player, blockMsg, msg, added);
+			for(Region r : player.getRegion().getSurroundingRegions()) {
+				processNpcs(r, player, blockMsg, msg, added);
 			}
 			
 			if(blockMsg.getBuffer().writerIndex() > 0) {

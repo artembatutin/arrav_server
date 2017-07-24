@@ -72,7 +72,7 @@ import net.edge.world.entity.EntityState;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.net.packet.out.SendNpcUpdate;
+import net.edge.net.packet.out.SendMobUpdate;
 import net.edge.world.entity.actor.mob.impl.gwd.GodwarsFaction;
 import net.edge.world.entity.actor.player.assets.*;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -814,7 +814,7 @@ public final class Player extends Actor {
 	@Override
 	public void update() {
 		write(new SendPlayerUpdate());
-		write(new SendNpcUpdate());
+		write(new SendMobUpdate());
 		getSession().pollOutgoingMessages();
 	}
 	
