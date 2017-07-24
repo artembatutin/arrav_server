@@ -17,7 +17,7 @@ public final class IndividualScoreboardLoader extends JsonLoader {
 	 * Constructs a new {@link IndividualScoreboardLoader}.
 	 */
 	public IndividualScoreboardLoader() {
-		super("./data/json/scoreboard/individual_killstreaks.json");
+		super("./data/def/score/individual_killstreaks.json");
 	}
 
 	@Override

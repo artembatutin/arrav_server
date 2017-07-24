@@ -16,7 +16,7 @@ import net.edge.world.World;
 public final class AreaMultiLoader extends JsonLoader {
 	
 	public AreaMultiLoader() {
-		super("./data/json/areas_multi.json");
+		super("./data/def/areas_multi.json");
 	}
 	
 	@Override

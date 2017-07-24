@@ -16,7 +16,7 @@ public final class MarketValueLoader extends JsonLoader {
 	 * Creates a new {@link MarketValueLoader}.
 	 */
 	public MarketValueLoader() {
-		super("./data/json/items/market_values.json");
+		super("./data/def/item/market_values.json");
 	}
 	
 	@Override

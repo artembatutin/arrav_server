@@ -199,7 +199,7 @@ public final class ClanManager {
 			json.current().add("ranked", ranks);
 			json.split();
 		}
-		json.publish("./data/json/clans.json");
+		json.publish("./data/def/clans.json");
 	}
 	
 	/**

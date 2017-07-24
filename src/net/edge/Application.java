@@ -196,18 +196,18 @@ public final class Application {
 		});
 		//NPC decoding.
 		launch.execute(() -> {
-			new NpcDefinitionLoader().load();
-			new NpcNodeLoader().load();
-			new NpcDropTableLoader().load();
-			new NpcDropCacheLoader().load();
+			new MobDefinitionLoader().load();
+			new MobNodeLoader().load();
+			new MobDropTableLoader().load();
+			new DropCacheLoader().load();
 		});
 		launch.execute(new AreaLoader());
 		launch.execute(new AreaMultiLoader());
 		launch.execute(new ShopLoader());
 		launch.execute(new ClanChatLoader());
 		launch.execute(new WeaponPoisonLoader());
-		launch.execute(new MessageOpcodeLoader());
-		launch.execute(new MessageSizeLoader());
+		launch.execute(new PacketOpcodeLoader());
+		launch.execute(new PacketSizeLoader());
 		launch.execute(new SlayerLocationLoader());
 		launch.execute(new ShieldAnimationLoader());
 		launch.execute(new WeaponAnimationLoader());

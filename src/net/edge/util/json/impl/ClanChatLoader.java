@@ -21,7 +21,7 @@ public final class ClanChatLoader extends JsonLoader {
 	 * Creates a new {@link ClanChatLoader}.
 	 */
 	public ClanChatLoader() {
-		super("./data/json/clans.json");
+		super("./data/def/clans.json");
 	}
 	
 	@Override

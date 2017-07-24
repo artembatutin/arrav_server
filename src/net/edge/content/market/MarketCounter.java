@@ -52,7 +52,7 @@ public class MarketCounter {
 			item_values_saver.current().addProperty("items", new Gson().toJson(s.getItems()));
 			item_values_saver.split();
 		}
-		item_values_saver.publish("./data/json/items/market_shops2.json");
+		item_values_saver.publish("./data/def/item/market_shops2.json");
 	}
 	
 	public static Int2ObjectArrayMap<MarketShop> getShops() {

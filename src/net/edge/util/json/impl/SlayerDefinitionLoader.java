@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 public final class SlayerDefinitionLoader extends JsonLoader {
 	
 	public SlayerDefinitionLoader() {
-		super("./data/json/slayer/slayer.json");
+		super("./data/def/slayer/slayer.json");
 	}
 	
 	@Override

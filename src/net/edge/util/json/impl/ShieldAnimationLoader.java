@@ -20,7 +20,7 @@ public final class ShieldAnimationLoader extends JsonLoader {
 	 * Constructs a new {@link ShieldAnimationLoader}.
 	 */
 	public ShieldAnimationLoader() {
-		super("./data/json/equipment/shield_animations.json");
+		super("./data/def/combat/shield_animations.json");
 	}
 	
 	@Override

@@ -18,7 +18,7 @@ public final class WeaponAnimationLoader extends JsonLoader {
 	 * Creates a new {@link WeaponAnimationLoader}.
 	 */
 	public WeaponAnimationLoader() {
-		super("./data/json/equipment/weapon_animations.json");
+		super("./data/def/combat/weapon_animations.json");
 	}
 	
 	@Override

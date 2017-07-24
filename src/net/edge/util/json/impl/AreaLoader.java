@@ -23,7 +23,7 @@ import java.util.Objects;
 public final class AreaLoader extends JsonLoader {
 	
 	public AreaLoader() {
-		super("./data/json/areas.json");
+		super("./data/def/areas.json");
 	}
 	
 	@Override

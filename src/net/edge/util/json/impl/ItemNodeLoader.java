@@ -21,7 +21,7 @@ public final class ItemNodeLoader extends JsonLoader {
 	 * Creates a new {@link ItemNodeLoader}.
 	 */
 	public ItemNodeLoader() {
-		super("./data/json/items/item_nodes.json");
+		super("./data/def/item/item_nodes.json");
 	}
 	
 	@Override

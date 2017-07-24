@@ -19,7 +19,7 @@ public final class ItemDefinitionLoader extends JsonLoader {
 	 * Creates a new {@link ItemDefinitionLoader}.
 	 */
 	public ItemDefinitionLoader() {
-		super("./data/json/items/item_definitions.json");
+		super("./data/def/item/item_definitions.json");
 	}
 	
 	@Override

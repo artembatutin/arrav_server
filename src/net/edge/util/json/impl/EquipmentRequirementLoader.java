@@ -20,7 +20,7 @@ public final class EquipmentRequirementLoader extends JsonLoader {
 	 * Creates a new {@link EquipmentRequirementLoader}.
 	 */
 	public EquipmentRequirementLoader() {
-		super("./data/json/equipment/level_requirements.json");
+		super("./data/def/combat/level_requirements.json");
 	}
 	
 	@Override

@@ -395,7 +395,7 @@ public final class MobDefinition {
 			json.current().addProperty("weakness", d.weakness);
 			json.split();
 		}
-		json.publish("./data/dumps/new_npc.json");
+		json.publish("./data/def/mob/new_mob.json");
 	}
 	
 }

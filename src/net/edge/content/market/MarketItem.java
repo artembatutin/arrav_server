@@ -164,7 +164,7 @@ public class MarketItem {
 			item_values_saver.current().addProperty("searchable", v.isSearchable());
 			item_values_saver.split();
 		}
-		item_values_saver.publish("./data/json/items/market_values.json");
+		item_values_saver.publish("./data/def/item/market_values.json");
 	}
 	
 	

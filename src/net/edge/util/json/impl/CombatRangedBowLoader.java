@@ -22,7 +22,7 @@ public final class CombatRangedBowLoader extends JsonLoader {
 	 * Constructs a new {@link CombatRangedBowLoader}.
 	 */
 	public CombatRangedBowLoader() {
-		super("./data/json/equipment/combat_ranged_bows.json");
+		super("./data/def/combat/combat_ranged_bows.json");
 	}
 	
 	@Override

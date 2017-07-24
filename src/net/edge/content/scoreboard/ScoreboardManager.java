@@ -66,7 +66,7 @@ public final class ScoreboardManager {
 			scoreboard_statistics_saver.current().addProperty("deaths", p.getDeaths().get());
 			scoreboard_statistics_saver.split();
 		}
-		scoreboard_statistics_saver.publish("./data/json/scoreboard/individual_killstreaks.json");
+		scoreboard_statistics_saver.publish("./data/def/score/individual_killstreaks.json");
 		
 		JsonSaver scoreboard_rewards_saver = new JsonSaver();
 		for(Entry<String, MutableNumber> entry : this.player_scoreboard_rewards.entrySet()) {
@@ -76,7 +76,7 @@ public final class ScoreboardManager {
 			scoreboard_rewards_saver.current().addProperty("amount", amount);
 			scoreboard_rewards_saver.split();
 		}
-		scoreboard_rewards_saver.publish("./data/json/scoreboard/individual_killstreak_rewards.json");
+		scoreboard_rewards_saver.publish("./data/def/score/individual_killstreak_rewards.json");
 	}
 	
 	/**

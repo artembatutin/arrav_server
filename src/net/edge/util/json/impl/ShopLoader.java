@@ -19,7 +19,7 @@ public final class ShopLoader extends JsonLoader {
 	 * Creates a new {@link ShopLoader}.
 	 */
 	public ShopLoader() {
-		super("./data/json/items/market_shops.json");
+		super("./data/def/item/market_shops.json");
 	}
 	
 	@Override

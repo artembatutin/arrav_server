@@ -405,7 +405,7 @@ public final class ItemDefinition {
 				item_def_saver.current().add("bonus", new Gson().toJsonTree(d.getBonus()));
 			item_def_saver.split();
 		}
-		item_def_saver.publish("./data/json/items/item_definitions2.json");
+		item_def_saver.publish("./data/def/item/item_definitions2.json");
 	}
 	
 	public static void dumpDrops() {

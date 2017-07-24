@@ -19,7 +19,7 @@ public final class SlayerLocationLoader extends JsonLoader {
 	 * Creates a new {@link SlayerLocationLoader}.
 	 */
 	public SlayerLocationLoader() {
-		super("./data/json/slayer/slayer_locations.json");
+		super("./data/def/slayer/slayer_locations.json");
 	}
 	
 	@Override

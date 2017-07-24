@@ -33,8 +33,8 @@ public final class ReloadCommand implements Command {
 					removed = true;
 				} else {
 					new ItemDefinitionLoader().load();
-					new NpcDefinitionLoader().load();
-					new NpcNodeLoader().load();
+					new MobDefinitionLoader().load();
+					new MobNodeLoader().load();
 					new ShopLoader().load();
 					new AreaLoader().load();
 					this.cancel();

@@ -91,7 +91,7 @@ public final class DropManager {
 			drops_saver.current().add("common", new Gson().toJsonTree(table.getCommon().toArray()));
 			drops_saver.split();
 		}
-		drops_saver.publish("./data/json/npcs/npc_drops2.json");
+		drops_saver.publish("./data/def/mob/mob_drops2.json");
 	}
 
 }

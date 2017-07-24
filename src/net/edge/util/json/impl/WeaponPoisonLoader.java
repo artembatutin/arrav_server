@@ -19,7 +19,7 @@ public final class WeaponPoisonLoader extends JsonLoader {
 	 * Creates a new {@link WeaponPoisonLoader}.
 	 */
 	public WeaponPoisonLoader() {
-		super("./data/json/equipment/weapon_poison.json");
+		super("./data/def/combat/weapon_poison.json");
 	}
 	
 	@Override
