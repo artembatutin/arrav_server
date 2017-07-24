@@ -74,10 +74,12 @@ public final class TraversalMap {
 		}
 		if(reg == null)
 			reg = World.getRegions().getRegion(position);
-		if(add && list) {
-			reg.addObj(object);
-		} else if(list) {
-			reg.removeObj(object);
+		if(object.getObjectType().getId() <= 11) {
+			if(add && list) {
+				reg.addObj(object);
+			} else if(list) {
+				reg.removeObj(object);
+			}
 		}
 		
 	}

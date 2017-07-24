@@ -4,7 +4,6 @@ import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendEnergy;
 import net.edge.task.Task;
 import net.edge.world.locale.Position;
-import net.edge.world.locale.loc.Location;
 import net.edge.world.World;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
@@ -37,7 +36,7 @@ public final class MovementQueue {
 	/**
 	 * The task ran when following another character.
 	 */
-	private Optional<CharacterFollowTask> followTask = Optional.empty();
+	private Optional<ActorFollowTask> followTask = Optional.empty();
 	
 	/**
 	 * The flag that determines if the run button is toggled.
@@ -314,7 +313,7 @@ public final class MovementQueue {
 		if(!followTask.isPresent()) {
 			character.setFollowing(true);
 			character.setFollowEntity(leader);
-			followTask = Optional.of(new CharacterFollowTask(character, leader));
+			followTask = Optional.of(new ActorFollowTask(character, leader));
 			followTask.get().submit();
 		}
 	}
@@ -378,7 +377,7 @@ public final class MovementQueue {
 	 * Sets the value for {@link MovementQueue#followTask}.
 	 * @param followTask the new value to set.
 	 */
-	public void setFollowTask(Optional<CharacterFollowTask> followTask) {
+	public void setFollowTask(Optional<ActorFollowTask> followTask) {
 		this.followTask = followTask;
 	}
 	

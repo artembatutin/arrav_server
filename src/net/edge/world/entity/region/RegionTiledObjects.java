@@ -16,7 +16,7 @@ import static net.edge.world.object.ObjectGroup.WALL;
  */
 public class RegionTiledObjects {
 	
-	private final GameObject[] objects = new GameObject[23];
+	private final GameObject[] objects = new GameObject[12];
 	
 	public RegionTiledObjects() {
 		reset();
