@@ -2,10 +2,9 @@ package net.edge.content.commands.impl;
 
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
-import net.edge.game.GameConstants;
-import net.edge.locale.Position;
-import net.edge.world.node.entity.player.Player;
-import net.edge.world.node.entity.player.assets.Rights;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.locale.Position;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
