@@ -21,7 +21,7 @@ import java.util.Optional;
  * The {@link Task} implementation that handles the entire following process.
  * @author lare96 <http://github.com/lare96>
  */
-class CharacterFollowTask extends Task {
+class ActorFollowTask extends Task {
 	
 	/**
 	 * The character this process is being executed for.
@@ -39,11 +39,11 @@ class CharacterFollowTask extends Task {
 	private Position destination;
 	
 	/**
-	 * Creates a new {@link CharacterFollowTask}.
+	 * Creates a new {@link ActorFollowTask}.
 	 * @param character the character this process is being executed for.
 	 * @param leader    the character being followed in this process.
 	 */
-	CharacterFollowTask(Actor character, Actor leader) {
+	ActorFollowTask(Actor character, Actor leader) {
 		super(1, true);
 		this.character = character;
 		this.leader = leader;
@@ -79,7 +79,6 @@ class CharacterFollowTask extends Task {
 		
 		
 		//Entity facing.
-		if(character.getFaceIndex() == 65535)
 		character.faceEntity(leader);
 		
 		//Movement locks.
