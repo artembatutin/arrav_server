@@ -807,7 +807,8 @@ public final class Player extends Actor {
 			if(getTeleportStage() == -1)
 				setTeleportStage(0);
 		}
-		UpdateManager.prepare(this);
+		if(getSession() != null)
+			UpdateManager.prepare(this);
 	}
 	
 	@Override

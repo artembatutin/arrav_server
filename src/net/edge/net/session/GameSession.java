@@ -74,10 +74,12 @@ public final class GameSession extends Session {
 	public void handleUpstreamMessage(Object msg) {
 		if(msg instanceof IncomingMsg) {
 			IncomingMsg packet = (IncomingMsg) msg;
-			World.get().run(() -> {
-				NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.getSize(), packet);
-				packet.getBuffer().release();
-			});
+			if(packet.getOpcode() != 0) {
+				World.get().run(() -> {
+					NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.getSize(), packet);
+					packet.getBuffer().release();
+				});
+			}
 		}
 	}
 	
