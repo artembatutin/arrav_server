@@ -1,4 +1,4 @@
-package net.edge.content.combat.strategy.npc;
+package net.edge.content.combat.strategy.mob;
 
 import net.edge.task.Task;
 import net.edge.content.combat.CombatHit;

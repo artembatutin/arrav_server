@@ -6,15 +6,15 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 /**
- * An {@link NpcUpdateBlock} implementation that handles the {@code PRIMARY_HIT} update block.
+ * An {@link MobUpdateBlock} implementation that handles the {@code PRIMARY_HIT} update block.
  * @author lare96 <http://github.org/lare96>
  */
-public final class NpcPrimaryHitUpdateBlock extends NpcUpdateBlock {
+public final class MobPrimaryHitUpdateBlock extends MobUpdateBlock {
 	
 	/**
-	 * Creates a new {@link NpcPrimaryHitUpdateBlock}.
+	 * Creates a new {@link MobPrimaryHitUpdateBlock}.
 	 */
-	public NpcPrimaryHitUpdateBlock() {
+	public MobPrimaryHitUpdateBlock() {
 		super(2, UpdateFlag.PRIMARY_HIT);
 	}
 	

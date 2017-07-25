@@ -6,15 +6,15 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 /**
- * An {@link NpcUpdateBlock} implementation that handles the {@code FACE_COORDINATE} update block.
+ * An {@link MobUpdateBlock} implementation that handles the {@code FACE_COORDINATE} update block.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public final class NpcFacePositionUpdateBlock extends NpcUpdateBlock {
+public final class MobFacePositionUpdateBlock extends MobUpdateBlock {
 	
 	/**
-	 * Creates a new {@link NpcFacePositionUpdateBlock}.
+	 * Creates a new {@link MobFacePositionUpdateBlock}.
 	 */
-	public NpcFacePositionUpdateBlock() {
+	public MobFacePositionUpdateBlock() {
 		super(1, UpdateFlag.FACE_COORDINATE);
 	}
 	

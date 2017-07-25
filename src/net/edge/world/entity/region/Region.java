@@ -1,5 +1,6 @@
 package net.edge.world.entity.region;
 
+import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -23,6 +24,7 @@ import net.edge.world.object.ObjectType;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
@@ -61,14 +63,14 @@ public final class Region extends Entity {
 	private final ObjectList<GroundItem> items = new ObjectArrayList<>();
 	
 	/**
-	 * A {@link Int2ObjectOpenHashMap} of active {@link Player}s in this {@code Region}.
+	 * A {@link Set} of active {@link Player}s in this {@code Region}.
 	 */
-	private final ObjectArrayList<Player> players = new ObjectArrayList<>();
+	private final Set<Player> players = Sets.newConcurrentHashSet();
 	
 	/**
-	 * A {@link Int2ObjectOpenHashMap} of active {@link Mob}s in this {@code Region}.
+	 * A {@link Set} of active {@link Mob}s in this {@code Region}.
 	 */
-	private final ObjectArrayList<Mob> mobs = new ObjectArrayList<>();
+	private final Set<Mob> mobs = Sets.newConcurrentHashSet();
 	
 	/**
 	 * A {@link Int2ObjectOpenHashMap} of active {@link GameObject}s in this {@code Region}.
@@ -240,18 +242,18 @@ public final class Region extends Entity {
 	}
 	
 	/**
-	 * Retrieves and returns an {@link Int2ObjectOpenHashMap} of {@link Player}s.
+	 * Retrieves and returns an {@link Set} of {@link Player}s.
 	 * @return all the players inside the region.
 	 */
-	public ObjectArrayList<Player> getPlayers() {
+	public Set<Player> getPlayers() {
 		return players;
 	}
 	
 	/**
-	 * Retrieves and returns an {@link Int2ObjectOpenHashMap} of {@link Mob}s.
+	 * Retrieves and returns an {@link Set} of {@link Mob}s.
 	 * @return all the mobs inside the region.
 	 */
-	public ObjectArrayList<Mob> getMobs() {
+	public Set<Mob> getMobs() {
 		return mobs;
 	}
 	

@@ -6,15 +6,15 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 /**
- * An {@link NpcUpdateBlock} implementation that handles the {@code ANIMATION} update block.
+ * An {@link MobUpdateBlock} implementation that handles the {@code ANIMATION} update block.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-final class NpcAnimationUpdateBlock extends NpcUpdateBlock {
+final class MobAnimationUpdateBlock extends MobUpdateBlock {
 	
 	/**
-	 * Creates a new {@link NpcAnimationUpdateBlock}.
+	 * Creates a new {@link MobAnimationUpdateBlock}.
 	 */
-	NpcAnimationUpdateBlock() {
+	MobAnimationUpdateBlock() {
 		super(8, UpdateFlag.ANIMATION);
 	}
 	

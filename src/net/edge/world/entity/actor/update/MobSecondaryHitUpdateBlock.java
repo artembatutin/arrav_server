@@ -6,15 +6,15 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 /**
- * An {@link NpcUpdateBlock} implementation that handles the {@code SECONDARY_HIT} update block.
+ * An {@link MobUpdateBlock} implementation that handles the {@code SECONDARY_HIT} update block.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public final class NpcSecondaryHitUpdateBlock extends NpcUpdateBlock {
+public final class MobSecondaryHitUpdateBlock extends MobUpdateBlock {
 	
 	/**
-	 * Creates a new {@link NpcSecondaryHitUpdateBlock}.
+	 * Creates a new {@link MobSecondaryHitUpdateBlock}.
 	 */
-	public NpcSecondaryHitUpdateBlock() {
+	public MobSecondaryHitUpdateBlock() {
 		super(0x20, UpdateFlag.SECONDARY_HIT);
 	}
 	

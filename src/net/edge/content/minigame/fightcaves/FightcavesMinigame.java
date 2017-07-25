@@ -248,6 +248,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	public boolean canPot(Player player, PotionConsumable potion) {
 		return true;
 	}
+	
 	@Override
 	public boolean onFirstClickObject(Player player, GameObject object) {
 		if(object.getId() == 9357) {//Exit

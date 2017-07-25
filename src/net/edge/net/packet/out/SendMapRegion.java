@@ -19,8 +19,6 @@ public final class SendMapRegion implements OutgoingPacket {
 		msg.message(73);
 		msg.putShort(position.getRegionX() + 6, ByteTransform.A);
 		msg.putShort(position.getRegionY() + 6);
-		
-		System.out.println("sending - " + (position.getRegionX() + 6) + " : " + (position.getRegionY() + 6));
 		return msg.getBuffer();
 	}
 }

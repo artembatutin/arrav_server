@@ -9,15 +9,15 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 /**
- * An {@link NpcUpdateBlock} implementation that handles the {@code TRANSFORM} update block.
+ * An {@link MobUpdateBlock} implementation that handles the {@code TRANSFORM} update block.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public final class NpcForceMovementUpdateBlock extends NpcUpdateBlock {
+public final class MobForceMovementUpdateBlock extends MobUpdateBlock {
 	
 	/**
-	 * Creates a new {@link NpcForceMovementUpdateBlock}.
+	 * Creates a new {@link MobForceMovementUpdateBlock}.
 	 */
-	public NpcForceMovementUpdateBlock() {
+	public MobForceMovementUpdateBlock() {
 		super(0x400, UpdateFlag.FORCE_MOVEMENT);
 	}
 	

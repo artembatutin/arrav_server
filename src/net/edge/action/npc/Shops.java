@@ -10,7 +10,7 @@ public class Shops extends ActionInitializer {
 	public enum Shop {
 		GENERAL_KEEPER(551, 12, true, true),
 		GENERAL_ASSISTANT(552, 12, true, true),
-		FLETCHING_HUNTMAN(1281, 20, 2),
+		FLETCHING_HUNTMAN(1281, 20, 1),
 		HERBLORE_KAQEMEEX(455, 10, 1),
 		SUMMONING_JATIX(587, 9, true, true),
 		SUPPLY_SHOP_ANNA(6180, 8, 1),

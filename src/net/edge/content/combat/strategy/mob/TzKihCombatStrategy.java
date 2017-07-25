@@ -1,4 +1,4 @@
-package net.edge.content.combat.strategy.npc;
+package net.edge.content.combat.strategy.mob;
 
 import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;

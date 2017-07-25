@@ -578,7 +578,7 @@
   {
     "item": 4734,
     "type": "CROSSBOW",
-    "delay": 4,
+    "delay": 3,
     "ammunitions": [
       "BOLT_RACK"
     ]

@@ -113,8 +113,10 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public int[] getNpcs() {
-		return new int[]{6276, 6256, 6220, 688, 1183, 8781, 8776,
-				3762, 3763, 3764, 3765, 3766, 3767, 3768, 3769, 3770, 3771//pest defilers
+		return new int[]{
+				6276, 6256, 6220, 688, 1183, 8781, 8776,
+				3762, 3763, 3764, 3765, 3766, 3767, 3768, 3769, 3770, 3771,//pest defilers
+				2028,//karil
 		};
 	}
 	
@@ -145,6 +147,8 @@ public final class RangedCombatStrategy implements CombatStrategy {
 			case 3770:
 			case 3771:
 				return CombatRangedAmmunition.STEEL_KNIFE;
+			case 2029:
+				return CombatRangedAmmunition.BOLT_RACK;
 			default:
 				return CombatRangedAmmunition.BRONZE_ARROW;
 		}

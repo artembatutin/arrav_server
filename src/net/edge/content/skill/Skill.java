@@ -46,11 +46,9 @@ public final class Skill {
 	public int getLevelForExperience() {
 		int points = 0;
 		int output;
-		
 		if(realLevel >= 99) {
 			return 99;
 		}
-		
 		for(int lvl = 1; lvl <= 99; lvl++) {
 			points += Math.floor(lvl + 300.0 * Math.pow(2.0, lvl / 7.0));
 			output = (int) Math.floor(points / 4);
@@ -179,7 +177,6 @@ public final class Skill {
 	 */
 	public void setExperience(double experience) {
 		this.experience = experience;
-		
 		if(this.experience > MAXIMUM_EXPERIENCE) {
 			this.experience = MAXIMUM_EXPERIENCE;
 		}
@@ -235,7 +232,6 @@ public final class Skill {
 		} else if(realLevel > 99) {
 			realLevel = 99;
 		}
-		
 		this.realLevel = realLevel;
 		this.level = this.realLevel;
 		int experience = Skills.getExperienceForLevel(this.realLevel);

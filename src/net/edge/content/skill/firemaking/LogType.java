@@ -13,17 +13,17 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum LogType {
-	LOG(1511, 1, 15, 40),
-	ACHEY(2862, 1, 28, 40),
-	OAK(1521, 15, 36, 60),
-	WILLOW(1519, 30, 46, 90),
-	TEAK(6333, 35, 49, 105),
-	ARCTIC_PINE(10810, 42, 54, 125),
-	MAPLE(1517, 45, 65, 135),
-	MAHOGANY(6332, 50, 73, 157.5),
-	EUCALYPTUS(12581, 58, 84, 193.5),
-	YEW(1515, 60, 106, 202.5),
-	MAGIC(1513, 75, 120, 303.8);
+	LOG(1511, 1, 30, 40),
+	ACHEY(2862, 1, 48, 40),
+	OAK(1521, 15, 56, 60),
+	WILLOW(1519, 30, 66, 90),
+	TEAK(6333, 35, 79, 105),
+	ARCTIC_PINE(10810, 42, 84, 125),
+	MAPLE(1517, 45, 95, 135),
+	MAHOGANY(6332, 50, 103, 157.5),
+	EUCALYPTUS(12581, 58, 114, 193.5),
+	YEW(1515, 60, 126, 202.5),
+	MAGIC(1513, 75, 140, 303.8);
 	
 	/**
 	 * Caches our enum values.

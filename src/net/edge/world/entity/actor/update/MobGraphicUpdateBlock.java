@@ -5,15 +5,15 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 /**
- * An {@link NpcUpdateBlock} implementation that handles the {@code GRAPHIC} update block.
+ * An {@link MobUpdateBlock} implementation that handles the {@code GRAPHIC} update block.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public final class NpcGraphicUpdateBlock extends NpcUpdateBlock {
+public final class MobGraphicUpdateBlock extends MobUpdateBlock {
 	
 	/**
-	 * Creates a new {@link NpcGraphicUpdateBlock}.
+	 * Creates a new {@link MobGraphicUpdateBlock}.
 	 */
-	public NpcGraphicUpdateBlock() {
+	public MobGraphicUpdateBlock() {
 		super(0x100, UpdateFlag.GRAPHIC);
 	}
 	

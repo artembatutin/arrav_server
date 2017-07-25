@@ -5,15 +5,15 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 /**
- * An {@link NpcUpdateBlock} implementation that handles the {@code FACE_ENTITY} update block.
+ * An {@link MobUpdateBlock} implementation that handles the {@code FACE_ENTITY} update block.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public final class NpcFaceEntityUpdateBlock extends NpcUpdateBlock {
+public final class MobFaceEntityUpdateBlock extends MobUpdateBlock {
 	
 	/**
-	 * Creates a new {@link NpcFaceEntityUpdateBlock}.
+	 * Creates a new {@link MobFaceEntityUpdateBlock}.
 	 */
-	public NpcFaceEntityUpdateBlock() {
+	public MobFaceEntityUpdateBlock() {
 		super(0x10, UpdateFlag.FACE_ENTITY);
 	}
 	

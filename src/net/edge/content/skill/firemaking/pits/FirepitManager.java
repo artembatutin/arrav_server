@@ -48,18 +48,14 @@ public final class FirepitManager {
 	 */
 	public boolean fire(Player player, GameObject object, Item item) {
 		FirepitObject pit = firepit.getGlobalPos().same(object.getGlobalPos()) && firepit.getId() == object.getId() ? firepit : null;
-		
 		if(pit == null) {
 			return false;
 		}
-		
 		FireLighter lighter = FireLighter.getDefinition(item.getId()).orElse(null);
-		
 		if(lighter == null) {
 			player.message("You can only fire the pit with a fire lighter.");
 			return false;
 		}
-		
 		pit.fire(player);
 		return true;
 	}

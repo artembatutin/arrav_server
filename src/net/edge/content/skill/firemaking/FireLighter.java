@@ -45,7 +45,12 @@ public enum FireLighter {
 	}
 	
 	public static Optional<FireLighter> getDefinition(int id) {
-		return VALUES.stream().filter(def -> def.item == id).findAny();
+		for(FireLighter light : VALUES) {
+			if(light.getItem() == id) {
+				return Optional.of(light);
+			}
+		}
+		return Optional.empty();
 	}
 	
 	/**
@@ -55,7 +60,12 @@ public enum FireLighter {
 	 * @return an Optional with the found value, {@link Optional#empty} otherwise.
 	 */
 	protected static Optional<FireLighter> getDefinition(int id, int secondId) {
-		return VALUES.stream().filter(def -> def.item == id || def.item == secondId).findAny();
+		for(FireLighter light : VALUES) {
+			if(light.getItem() == id || light.getItem() == secondId) {
+				return Optional.of(light);
+			}
+		}
+		return Optional.empty();
 	}
 	
 	/**

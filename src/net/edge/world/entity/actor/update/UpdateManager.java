@@ -21,16 +21,16 @@ public final class UpdateManager {
 			new PlayerSecondaryHitUpdateBlock()
 	};
 	
-	private static final NpcUpdateBlock[] NPC_BLOCKS = {
-			new NpcForceMovementUpdateBlock(),
-			new NpcGraphicUpdateBlock(),
-			new NpcAnimationUpdateBlock(),
-			new NpcForceChatUpdateBlock(),
-			new NpcTransformUpdateBlock(),
-			new NpcFaceEntityUpdateBlock(),
-			new NpcFacePositionUpdateBlock(),
-			new NpcPrimaryHitUpdateBlock(),
-			new NpcSecondaryHitUpdateBlock(),
+	private static final MobUpdateBlock[] NPC_BLOCKS = {
+			new MobForceMovementUpdateBlock(),
+			new MobGraphicUpdateBlock(),
+			new MobAnimationUpdateBlock(),
+			new MobForceChatUpdateBlock(),
+			new MobTransformUpdateBlock(),
+			new MobFaceEntityUpdateBlock(),
+			new MobFacePositionUpdateBlock(),
+			new MobPrimaryHitUpdateBlock(),
+			new MobSecondaryHitUpdateBlock(),
 	};
 	
 	public static void prepare(Player other) {

@@ -7,15 +7,15 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 /**
- * An {@link NpcUpdateBlock} implementation that handles the {@code TRANSFORM} update block.
+ * An {@link MobUpdateBlock} implementation that handles the {@code TRANSFORM} update block.
  * @author lare96 <http://github.org/lare96>
  */
-public final class NpcTransformUpdateBlock extends NpcUpdateBlock {
+public final class MobTransformUpdateBlock extends MobUpdateBlock {
 	
 	/**
-	 * Creates a new {@link NpcTransformUpdateBlock}.
+	 * Creates a new {@link MobTransformUpdateBlock}.
 	 */
-	public NpcTransformUpdateBlock() {
+	public MobTransformUpdateBlock() {
 		super(0x80, UpdateFlag.TRANSFORM);
 	}
 	

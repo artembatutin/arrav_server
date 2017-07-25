@@ -153,7 +153,6 @@ public final class World {
 		final long start = System.currentTimeMillis();
 		
 		synchronized(this) {
-
 			dequeueLogins();
 			dequeueLogout();
 			taskManager.sequence();
@@ -183,7 +182,7 @@ public final class World {
 		} else if(outLimit < 200) {
 			outLimit += 20;
 		}
-		System.out.println("took: " + millis + " - players online: " + players.size() + " parsing packets: " + outLimit + " - went over 600ms " + over + " times");
+		//System.out.println("took: " + millis + " - players online: " + players.size() + " parsing packets: " + outLimit + " - went over 600ms " + over + " times");
 	}
 	
 	private int over = 0;

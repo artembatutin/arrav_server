@@ -7,6 +7,7 @@ import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.SequencedMinigame;
 import net.edge.content.skill.prayer.Prayer;
+import net.edge.world.entity.item.GroundItem;
 import net.edge.world.locale.InstanceManager;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
@@ -150,6 +151,10 @@ public final class RFDMinigame extends SequencedMinigame {
 	
 	@Override
 	public boolean canEat(Player player, FoodConsumable food) {
+		return true;
+	}
+	
+	public boolean canPickup(Player player, GroundItem node) {
 		return true;
 	}
 	

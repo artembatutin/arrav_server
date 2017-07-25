@@ -191,12 +191,14 @@ public final class Skills {
 		if(oldLevel < 99) {
 			int newLevel = player.getSkills()[skill].getLevelForExperience();
 			if(oldLevel < newLevel) {
-				if(skill != 3) {
-					player.getSkills()[skill].setLevel(newLevel, true);
-				} else {
-					int old = player.getSkills()[skill].getLevel();
-					if(old + 10 < 990)
-						player.getSkills()[skill].setLevel(old + 10, false);
+				if(player.getSkills()[skill].getLevel() <= newLevel) {
+					if(skill != 3) {
+						player.getSkills()[skill].setLevel(newLevel, true);
+					} else {
+						int old = player.getSkills()[skill].getLevel();
+						if(old + 10 < 990)
+							player.getSkills()[skill].setLevel(old + 10, false);
+					}
 				}
 				SkillData data = SkillData.values()[skill];
 				String append = TextUtils.appendIndefiniteArticle(data.toString());

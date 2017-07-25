@@ -1,4 +1,4 @@
-package net.edge.content.combat.strategy.npc;
+package net.edge.content.combat.strategy.mob;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.content.combat.Combat;

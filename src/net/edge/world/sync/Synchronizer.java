@@ -59,7 +59,7 @@ public class Synchronizer {
 	 * @param players players list.
 	 */
 	public void update(ActorList<Player> players) {
-		long time = System.currentTimeMillis();
+		//long time = System.currentTimeMillis();
 		phaser.bulkRegister(players.size());
 		for(Player player : players) {
 			if(player == null)
@@ -73,7 +73,7 @@ public class Synchronizer {
 			});
 		}
 		phaser.arriveAndAwaitAdvance();
-		System.out.println("[SYNC]: " + (System.currentTimeMillis() - time));
+		//System.out.println("[SYNC]: " + (System.currentTimeMillis() - time));
 	}
 	
 	/**
