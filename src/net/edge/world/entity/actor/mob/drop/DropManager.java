@@ -39,6 +39,20 @@ public final class DropManager {
 	 * Mob sharing the same table drop redirects.
 	 */
 	public final static Int2IntArrayMap REDIRECTS = new Int2IntArrayMap();
+	
+	public static void dump() {
+		for(ItemCache cache : ItemCache.values()) {
+			StringBuilder sb = new StringBuilder(cache.name()+"(");
+			for(Drop d : COMMON.get(cache)) {
+				sb.append(d.getId()).append(", ");
+				sb.append(d.getChance().ordinal()).append(", ");
+				sb.append(d.getMinimum()).append(", ");
+				sb.append(d.getMaximum()).append(", ");
+			}
+			sb.append("),");
+			System.out.println(sb.toString());
+		}
+	}
 
 	/**
 	 * Drops the items in {@code victim}s drop table for {@code killer}. If the

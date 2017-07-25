@@ -578,7 +578,7 @@
         "id": 452,
         "minimum": 1,
         "maximum": 5,
-        "chance": "VER_UNCOMMON"
+        "chance": "VERY_UNCOMMON"
       }
     ]
   },

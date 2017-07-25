@@ -34,6 +34,7 @@ import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.world.World;
 import net.edge.world.entity.actor.attribute.AttributeKey;
+import net.edge.world.entity.actor.mob.drop.DropManager;
 import net.edge.world.locale.InstanceManager;
 
 import java.time.DayOfWeek;
@@ -199,7 +200,8 @@ public final class Application {
 			new MobDefinitionLoader().load();
 			new MobNodeLoader().load();
 			new MobDropTableLoader().load();
-			new DropCacheLoader().load();
+			new ItemCacheLoader().load();
+			//DropManager.dump();//dumping cache values for client.
 		});
 		launch.execute(new AreaLoader());
 		launch.execute(new AreaMultiLoader());

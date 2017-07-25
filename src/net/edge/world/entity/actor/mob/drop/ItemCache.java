@@ -96,5 +96,6 @@ public enum ItemCache {
 	 * Caskets items giving coins on clicking.
 	 */
 	CASKETS
+	;
 	
 }

@@ -13,13 +13,13 @@ import java.util.Objects;
  * The {@link JsonLoader} implementation that loads all cached {@link Drop}s.
  * @author lare96 <http://github.com/lare96>
  */
-public final class DropCacheLoader extends JsonLoader {
+public final class ItemCacheLoader extends JsonLoader {
 	
 	/**
-	 * Creates a new {@link DropCacheLoader}.
+	 * Creates a new {@link ItemCacheLoader}.
 	 */
-	public DropCacheLoader() {
-		super("./data/def/mob/drop_cache.json");
+	public ItemCacheLoader() {
+		super("./data/def/item/item_cache.json");
 	}
 	
 	@Override
