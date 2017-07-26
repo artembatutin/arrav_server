@@ -55,7 +55,7 @@ public final class CharacterSelectionPacket implements IncomingPacket {
 			player.getAttr().get("introduction_stage").set(1);
 		}
 		player.getActivityManager().execute(ActivityType.CHARACTER_SELECTION);
-		CHANGE_APPEARANCE.inc(player, 1);
+		CHANGE_APPEARANCE.inc(player);
 	}
 	
 }

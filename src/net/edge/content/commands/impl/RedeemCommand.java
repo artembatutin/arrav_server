@@ -8,6 +8,8 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.Item;
 
+import static net.edge.content.achievements.Achievement.VOTE;
+
 /**
  * The assist command for staff members.
  */
@@ -26,6 +28,7 @@ public final class RedeemCommand implements Command {
 		if (r1.success()) {
 			int voted = r1.votes().size();
 			player.getInventory().addOrBank(new Item(6829, voted));
+			VOTE.inc(player);
 		} else {
 			player.message("Nothing found, you can vote by clicking the link in the quest tab.");
 		}

@@ -56,7 +56,7 @@ public final class PrayerBoneBury extends DestructionSkillAction {
 			getPlayer().animation(new Animation(827));
 			getPlayer().message("You bury the " + bone + ".");
 			getPlayer().getBuryTimer().reset();
-			BURY_BONES.inc(player, 1);
+			BURY_BONES.inc(player);
 		}
 		t.cancel();
 	}

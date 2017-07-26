@@ -16,6 +16,8 @@ import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.BONE_FIRE;
+
 public final class Bonfire extends DestructionSkillAction {
 	
 	private final LogType log;
@@ -36,20 +38,15 @@ public final class Bonfire extends DestructionSkillAction {
 	
 	public static boolean addLogs(Player player, Item item, GameObject object, boolean click) {
 		FirepitData data = FirepitData.VALUES.stream().filter(d -> d.getObjectId() == object.getId()).findAny().orElse(null);
-		
 		if(data == null) {
 			return false;
 		}
-		
 		LogType log = click ? LogType.getDefinition(player).orElse(null) : LogType.getDefinition(item.getId()).orElse(null);
-		
 		if(log == null) {
 			return false;
 		}
-		
 		FirepitObject pit = FirepitManager.get().getFirepit();
 		boolean logs = FireLighter.VALUES.stream().anyMatch(def -> def.getObjectId() == object.getId());
-		
 		if(pit == null && !logs) {
 			player.message("You can't add logs to " + TextUtils.appendIndefiniteArticle(object.getDefinition().getName()) + ".");
 			return false;
@@ -67,6 +64,7 @@ public final class Bonfire extends DestructionSkillAction {
 			if(amount-- <= 0) {
 				t.cancel();
 			}
+			BONE_FIRE.inc(player);
 		}
 	}
 	

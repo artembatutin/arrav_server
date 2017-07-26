@@ -414,7 +414,7 @@ public final class CombatBuilder {
 				return false;
 			}
 			return true;
-			//return new Boundary(builder.character.getPosition(), builder.character.size()).within(victim.getPosition(), victim.size(), builder.strategy.attackDistance(builder.getCharacter()));
+			//return new Boundary(builder.character.getPosition(), builder.character.size()).within(victim.getPosition(), victim.size(), builder.strategy.attackDistance(builder.getActor()));
 		}
 		
 		@Override

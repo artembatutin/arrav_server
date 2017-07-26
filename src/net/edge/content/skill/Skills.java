@@ -14,6 +14,8 @@ import net.edge.world.entity.actor.update.UpdateFlag;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+import static net.edge.content.achievements.Achievement.SKILL_MASTERY;
+
 /**
  * The class that contains methods to handle the functionality of skills.
  * @author lare96 <http://github.com/lare96>
@@ -207,6 +209,7 @@ public final class Skills {
 				player.message("Congratulations, you've just advanced " + append + " level!");
 				player.chatWidget(data.getChatbox());
 				if(newLevel == 99 || newLevel == 120) {
+					SKILL_MASTERY.inc(player);
 					String append_max = TextUtils.appendIndefiniteArticleNoVowel(data.toString());
 					player.graphic(new Graphic(MAXED_GRAPHICS));
 					World.get().message("@blu@[Global Announcements] @red@" + player.getFormatUsername() + "@blu@ has just reached level " + newLevel + " " + append_max + ".");

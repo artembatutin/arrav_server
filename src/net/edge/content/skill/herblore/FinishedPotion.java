@@ -14,6 +14,8 @@ import net.edge.world.entity.item.Item;
 
 import java.util.*;
 
+import static net.edge.content.achievements.Achievement.POTION_MAKER;
+
 /**
  * Represents the procession for creating unfinished potions.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -52,11 +54,9 @@ public final class FinishedPotion extends ProducingSkillAction {
 	 */
 	public static boolean produce(Player player, Item firstItem, Item secondItem) {
 		FinishedPotion potion = new FinishedPotion(player, firstItem, secondItem);
-		
 		if(potion.definition == null) {
 			return false;
 		}
-		
 		potion.start();
 		return true;
 	}
@@ -65,6 +65,7 @@ public final class FinishedPotion extends ProducingSkillAction {
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			getPlayer().animation(ANIMATION);
+			POTION_MAKER.inc(player);
 		}
 	}
 	

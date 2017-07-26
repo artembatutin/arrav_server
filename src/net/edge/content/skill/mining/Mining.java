@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static net.edge.content.achievements.Achievement.MINER;
+
 public final class Mining extends HarvestingSkillAction {
 
 	/**
@@ -113,10 +115,17 @@ public final class Mining extends HarvestingSkillAction {
 			object.setElements(object.getElements() - 1);
 		}
 		if(object.getElements() <= 0 && !object.isDisabled()) {
-			Optional<TransformableObject> filter = Arrays.stream(rock.getObject()).filter(p -> p.getObjectId() == object.getId()).findFirst();
-			if(filter.isPresent()) {
+			MINER.inc(player);
+			TransformableObject obj = null;
+			for(TransformableObject ob : rock.getObject()) {
+				if(ob.getObjectId() == object.getId()) {
+					obj = ob;
+					break;
+				}
+			}
+			if(obj != null) {
 				int id = object.getId();//filled rock.
-				GameObject emptyRock = object.setId(filter.get().getTransformable());
+				GameObject emptyRock = object.setId(obj.getTransformable());
 				object.setDisabled(true);
 				emptyRock.publish(rock.getRespawnTime(), n -> {
 					object.setId(id);

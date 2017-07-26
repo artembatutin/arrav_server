@@ -27,6 +27,8 @@ import net.edge.world.object.GameObject;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static net.edge.content.achievements.Achievement.BARROWS;
+
 /**
  * Holds functionality for the barrows minigame.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -186,6 +188,7 @@ public final class BarrowsMinigame extends Minigame {
 				return true;
 			}
 			if(!container.getCurrent().isPresent()) {
+				BARROWS.inc(player);
 				DropTable table = DropManager.TABLES.get(-1);//barrows custom.
 				ObjectList<Item> loot = new ObjectArrayList<>();
 				for(int i = 0; i < 20; i++) {

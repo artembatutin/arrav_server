@@ -52,13 +52,13 @@ public abstract class ActorDeath<T extends Actor> extends Task {
 	public final void execute() {
 		switch(counter++) {
 			case 0:
-				getCharacter().setDead(true);
-				getCharacter().getPoisonDamage().set(0);
-				getCharacter().getMovementQueue().reset();
-				getCharacter().unfreeze();
-				getCharacter().unStun();
-				if(getCharacter().isPlayer()) {
-					getCharacter().toPlayer().out(new SendConfig(174, 0));
+				getActor().setDead(true);
+				getActor().getPoisonDamage().set(0);
+				getActor().getMovementQueue().reset();
+				getActor().unfreeze();
+				getActor().unStun();
+				if(getActor().isPlayer()) {
+					getActor().toPlayer().out(new SendConfig(174, 0));
 				}
 				break;
 			case 1:
@@ -69,8 +69,8 @@ public abstract class ActorDeath<T extends Actor> extends Task {
 				break;
 			case 6:
 				postDeath();
-				if(getCharacter().isPlayer()) {
-					getCharacter().setDead(false);
+				if(getActor().isPlayer()) {
+					getActor().setDead(false);
 				}
 				this.cancel();
 				break;
@@ -80,14 +80,14 @@ public abstract class ActorDeath<T extends Actor> extends Task {
 	@Override
 	public final void onException(Exception e) {
 		e.printStackTrace();
-		if(getCharacter().isPlayer()) {
-			World.get().queueLogout(getCharacter().toPlayer());
-		} else if(getCharacter().isNpc()) {
-			World.get().getMobs().remove(getCharacter().toNpc());
+		if(getActor().isPlayer()) {
+			World.get().queueLogout(getActor().toPlayer());
+		} else if(getActor().isNpc()) {
+			World.get().getMobs().remove(getActor().toNpc());
 		}
 	}
 	
-	public T getCharacter() {
+	public T getActor() {
 		return character;
 	}
 	

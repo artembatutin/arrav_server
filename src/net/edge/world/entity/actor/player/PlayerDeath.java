@@ -23,7 +23,6 @@ import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.Position;
-import net.edge.world.World;
 import net.edge.world.entity.actor.ActorDeath;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
@@ -38,6 +37,7 @@ import net.edge.world.entity.region.Region;
 import java.util.Iterator;
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.KILLER;
 import static net.edge.content.minigame.Minigame.MinigameSafety.SAFE;
 
 /**
@@ -62,35 +62,35 @@ public final class PlayerDeath extends ActorDeath<Player> {
 	
 	@Override
 	public void preDeath() {
-		getCharacter().getActivityManager().disable();
-		getCharacter().animation(new Animation(0x900, Animation.AnimationPriority.HIGH));
-		getCharacter().setSkillAction(Optional.empty());
-		ExchangeSessionManager.get().reset(getCharacter());
+		getActor().getActivityManager().disable();
+		getActor().animation(new Animation(0x900, Animation.AnimationPriority.HIGH));
+		getActor().setSkillAction(Optional.empty());
+		ExchangeSessionManager.get().reset(getActor());
 
-		if(!MinigameHandler.getMinigame(getCharacter()).isPresent()) {
+		if(!MinigameHandler.getMinigame(getActor()).isPresent()) {
 			deathMessage = true;
 		}
 
-		if(Prayer.isActivated(getCharacter(), Prayer.RETRIBUTION)) {
-			getCharacter().graphic(new Graphic(437));
+		if(Prayer.isActivated(getActor(), Prayer.RETRIBUTION)) {
+			getActor().graphic(new Graphic(437));
 			final int hit = RandomUtils.inclusive(CombatConstants.MAXIMUM_RETRIBUTION_DAMAGE);
-			if(getCharacter().inMulti()) {
-				getCharacter().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
-				if(getCharacter().inWilderness()) {
-					getCharacter().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getCharacter().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
+			if(getActor().inMulti()) {
+				getActor().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getActor().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
+				if(getActor().inWilderness()) {
+					getActor().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getActor().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
 				}
 			} else {
-				Actor victim = getCharacter().getCombatBuilder().getVictim();
-				if(victim != null && victim.getPosition().withinDistance(getCharacter().getPosition(), 2)) {
+				Actor victim = getActor().getCombatBuilder().getVictim();
+				if(victim != null && victim.getPosition().withinDistance(getActor().getPosition(), 2)) {
 					victim.damage(new Hit(RandomUtils.inclusive(hit)));
 				}
 			}
 		}
 
-		if(Prayer.isActivated(getCharacter(), Prayer.WRATH)) {
-			getCharacter().graphic(new Graphic(2259));
-			int x = getCharacter().getPosition().getX() - 3;
-			int y = getCharacter().getPosition().getY() - 2;
+		if(Prayer.isActivated(getActor(), Prayer.WRATH)) {
+			getActor().graphic(new Graphic(2259));
+			int x = getActor().getPosition().getX() - 3;
+			int y = getActor().getPosition().getY() - 2;
 			for(int i = 0; i < 25; i++) {
 				x++;
 				if(i == 5 || i == 10 || i == 15 || i == 20) {
@@ -99,69 +99,70 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				}
 				if(i % 2 == 1)
 					continue;
-				SendGraphic.local(getCharacter(), 2260, new Position(x, y, getCharacter().getPosition().getZ()), 25);
+				SendGraphic.local(getActor(), 2260, new Position(x, y, getActor().getPosition().getZ()), 25);
 			}
-			int maxHit = (int) ((getCharacter().getSkills()[Skills.PRAYER].getLevel() / 100.D) * 25);
-			if(getCharacter().inMulti()) {
-				getCharacter().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getCharacter().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
-				if(getCharacter().inWilderness()) {
-					getCharacter().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getCharacter().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
+			int maxHit = (int) ((getActor().getSkills()[Skills.PRAYER].getLevel() / 100.D) * 25);
+			if(getActor().inMulti()) {
+				getActor().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getActor().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
+				if(getActor().inWilderness()) {
+					getActor().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getActor().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
 				}
 			} else {
-				Actor victim = getCharacter().getCombatBuilder().getVictim();
-				if(victim != null && victim.getPosition().withinDistance(getCharacter().getPosition(), 3)) {
+				Actor victim = getActor().getCombatBuilder().getVictim();
+				if(victim != null && victim.getPosition().withinDistance(getActor().getPosition(), 3)) {
 					victim.damage(new Hit(RandomUtils.inclusive(maxHit)));
 				}
 			}
 		}
 		
-		if(Location.inFunPvP(getCharacter())) {
-			getCharacter().move(new Position(3086, 3508, 1));
+		if(Location.inFunPvP(getActor())) {
+			getActor().move(new Position(3086, 3508, 1));
 			setCounter(6);
 		}
 	}
 	
 	@Override
 	public void death() {
-		Optional<Player> killer = getCharacter().getCombatBuilder().getDamageCache().getPlayerKiller();
-		Optional<Minigame> optional = MinigameHandler.getMinigame(getCharacter());
+		Optional<Player> killer = getActor().getCombatBuilder().getDamageCache().getPlayerKiller();
+		Optional<Minigame> optional = MinigameHandler.getMinigame(getActor());
 		if(optional.isPresent()) {
-			optional.get().onDeath(getCharacter());
+			optional.get().onDeath(getActor());
 			if(optional.get().getSafety().equals(Minigame.MinigameSafety.DEFAULT)) {
-				if(getCharacter().getRights().less(Rights.ADMINISTRATOR)) {
-					calculateDropItems(getCharacter(), killer, false);
+				if(getActor().getRights().less(Rights.ADMINISTRATOR)) {
+					calculateDropItems(getActor(), killer, false);
 				}
 			} else if(optional.get().getSafety().equals(Minigame.MinigameSafety.DANGEROUS)) {
-				if(getCharacter().getRights().less(Rights.ADMINISTRATOR)) {
-					calculateDropItems(getCharacter(), killer, true);
+				if(getActor().getRights().less(Rights.ADMINISTRATOR)) {
+					calculateDropItems(getActor(), killer, true);
 				}
 			}
-			getCharacter().move(optional.get().deathPosition(getCharacter()));
-			killer.ifPresent(k -> optional.get().onKill(k, getCharacter()));
+			getActor().move(optional.get().deathPosition(getActor()));
+			killer.ifPresent(k -> optional.get().onKill(k, getActor()));
 			return;
 		}
-		if(getCharacter().getRights().less(Rights.ADMINISTRATOR)) {
-			calculateDropItems(getCharacter(), killer, false);
-			getCharacter().move(new Position(3084, 3514));
+		if(getActor().getRights().less(Rights.ADMINISTRATOR)) {
+			calculateDropItems(getActor(), killer, false);
+			getActor().move(new Position(3084, 3514));
 		}
 
 		killer.ifPresent(k -> {
-			if(PunishmentHandler.same(getCharacter(), k)) {
-				k.message("You don't receive any points because you and " + getCharacter().getFormatUsername() + " are connected from the same network.");
+			KILLER.inc(k);
+			if(PunishmentHandler.same(getActor(), k)) {
+				k.message("You don't receive any points because you and " + getActor().getFormatUsername() + " are connected from the same network.");
 				return;
 			}
-			if(getCharacter().getLastKiller().equalsIgnoreCase(k.getFormatUsername())) {
-				k.message("You don't receive any points because you have killed " + getCharacter().getFormatUsername() + " twice in a row.");
+			if(getActor().getLastKiller().equalsIgnoreCase(k.getFormatUsername())) {
+				k.message("You don't receive any points because you have killed " + getActor().getFormatUsername() + " twice in a row.");
 				return;
 			}
 			
 			//deaths
-			PlayerScoreboardStatistic characterStatistic = ScoreboardManager.get().getPlayerScoreboard().putIfAbsent(getCharacter().getFormatUsername(), new PlayerScoreboardStatistic(getCharacter().getFormatUsername()));
+			PlayerScoreboardStatistic characterStatistic = ScoreboardManager.get().getPlayerScoreboard().putIfAbsent(getActor().getFormatUsername(), new PlayerScoreboardStatistic(getActor().getFormatUsername()));
 			if(characterStatistic == null) {
-				characterStatistic = new PlayerScoreboardStatistic(getCharacter().getFormatUsername());
+				characterStatistic = new PlayerScoreboardStatistic(getActor().getFormatUsername());
 			}
-			PlayerPanel.INDIVIDUAL_DEATHS.refresh(getCharacter(), "@or2@ - Current Player deaths: @yel@" + characterStatistic.getDeaths().incrementAndGet());
-			PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(getCharacter(), "@or2@ - Total Player deaths: @yel@" + getCharacter().getDeathsByPlayer().incrementAndGet());
+			PlayerPanel.INDIVIDUAL_DEATHS.refresh(getActor(), "@or2@ - Current Player deaths: @yel@" + characterStatistic.getDeaths().incrementAndGet());
+			PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(getActor(), "@or2@ - Total Player deaths: @yel@" + getActor().getDeathsByPlayer().incrementAndGet());
 			
 			//kills
 			PlayerScoreboardStatistic killerStatistic = ScoreboardManager.get().getPlayerScoreboard().putIfAbsent(k.getFormatUsername(), new PlayerScoreboardStatistic(k.getFormatUsername()));
@@ -186,43 +187,43 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			}
 			PlayerPanel.INDIVIDUAL_CURRENT_KILLSTREAKS.refresh(k, "@or2@ - Current Killstreak: @yel@" + killerStatistic.getCurrentKillstreak().get());
 
-			k.message(RandomUtils.random(GameConstants.DEATH_MESSAGES).replaceAll("-victim-", getCharacter().getFormatUsername()).replaceAll("-killer-", k.getFormatUsername()));
+			k.message(RandomUtils.random(GameConstants.DEATH_MESSAGES).replaceAll("-victim-", getActor().getFormatUsername()).replaceAll("-killer-", k.getFormatUsername()));
 		});
 		
-		getCharacter().getCombatBuilder().getDamageCache().calculateProperKiller().ifPresent(e -> {
+		getActor().getCombatBuilder().getDamageCache().calculateProperKiller().ifPresent(e -> {
 			if(e.isNpc()) {
-				getCharacter().getDeathsByNpc().incrementAndGet();
-				PlayerPanel.TOTAL_NPC_DEATHS.refresh(getCharacter(), "@or2@ - Total Mob deaths: @yel@" + getCharacter().getDeathsByNpc().get());
+				getActor().getDeathsByNpc().incrementAndGet();
+				PlayerPanel.TOTAL_NPC_DEATHS.refresh(getActor(), "@or2@ - Total Mob deaths: @yel@" + getActor().getDeathsByNpc().get());
 			}
 		});
 	}
 	
 	@Override
 	public void postDeath() {
-		getCharacter().closeWidget();
-		getCharacter().getCombatBuilder().reset();
-		getCharacter().getCombatBuilder().getDamageCache().clear();
-		getCharacter().getTolerance().reset();
-		getCharacter().getSpecialPercentage().set(100);
-		getCharacter().out(new SendConfig(301, 0));
-		getCharacter().setSpecialActivated(false);
-		getCharacter().getSkullTimer().set(0);
-		getCharacter().setRunEnergy(100);
-		getCharacter().setAntifireDetail(Optional.empty());
-		getCharacter().getTeleblockTimer().set(0);
-		getCharacter().animation(new Animation(65535));
-		WeaponInterface.execute(getCharacter(), getCharacter().getEquipment().get(Equipment.WEAPON_SLOT));
+		getActor().closeWidget();
+		getActor().getCombatBuilder().reset();
+		getActor().getCombatBuilder().getDamageCache().clear();
+		getActor().getTolerance().reset();
+		getActor().getSpecialPercentage().set(100);
+		getActor().out(new SendConfig(301, 0));
+		getActor().setSpecialActivated(false);
+		getActor().getSkullTimer().set(0);
+		getActor().setRunEnergy(100);
+		getActor().setAntifireDetail(Optional.empty());
+		getActor().getTeleblockTimer().set(0);
+		getActor().animation(new Animation(65535));
+		WeaponInterface.execute(getActor(), getActor().getEquipment().get(Equipment.WEAPON_SLOT));
 		if(deathMessage) {
-			getCharacter().message(getCharacter().getRights().less(Rights.ADMINISTRATOR) ? "Oh dear, you're dead!" : "You are unaffected by death because of your rank.");
+			getActor().message(getActor().getRights().less(Rights.ADMINISTRATOR) ? "Oh dear, you're dead!" : "You are unaffected by death because of your rank.");
 		}
-		getCharacter().out(new SendWalkable(-1));
-		Prayer.deactivateAll(getCharacter());
+		getActor().out(new SendWalkable(-1));
+		Prayer.deactivateAll(getActor());
 		
-		Optional<Minigame> minigame = MinigameHandler.getMinigame(getCharacter());
+		Optional<Minigame> minigame = MinigameHandler.getMinigame(getActor());
 		if(!minigame.isPresent() || minigame.get().getSafety() != SAFE) {
-			if(getCharacter().isIronMan() && !getCharacter().isIronMaxed()) {
-				for(int index = 0; index < getCharacter().getSkills().length; index++) {
-					Skill skill = getCharacter().getSkills()[index];
+			if(getActor().isIronMan() && !getActor().isIronMaxed()) {
+				for(int index = 0; index < getActor().getSkills().length; index++) {
+					Skill skill = getActor().getSkills()[index];
 					int experience = (int) (skill.getExperience() * 0.75);
 					int newLevel = Skills.getLevelForExperience(experience);
 					if(index == Skills.HITPOINTS && newLevel < 10) {
@@ -235,10 +236,10 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			}
 		}
 
-		Skills.restoreAll(getCharacter());
-		getCharacter().getActivityManager().enable();
-		getCharacter().getFlags().flag(UpdateFlag.APPEARANCE);
-		minigame.ifPresent(m -> m.postDeath(getCharacter()));
+		Skills.restoreAll(getActor());
+		getActor().getActivityManager().enable();
+		getActor().getFlags().flag(UpdateFlag.APPEARANCE);
+		minigame.ifPresent(m -> m.postDeath(getActor()));
 	}
 	
 	/**
@@ -253,7 +254,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		ObjectList<Item> items = new ObjectArrayList<>();
 		Region region = character.getRegion();
 		killer.ifPresent(player -> {
-            if(!getCharacter().getLastKiller().equalsIgnoreCase(player.getFormatUsername())) {
+            if(!getActor().getLastKiller().equalsIgnoreCase(player.getFormatUsername())) {
             	Rights right = player.getRights();
             	int baseAmount = RandomUtils.inclusive(10, 50) * (GameConstants.DOUBLE_BLOOD_MONEY_EVENT ? 2 : 1);
             	int amount = right.equals(Rights.EXTREME_DONATOR) ? ((int) (baseAmount * 1.05))  : right.equals(Rights.SUPER_DONATOR) ? ((int) (baseAmount * 1.10)) : right.equals(Rights.DONATOR) ? ((int) (baseAmount * 1.15)) : baseAmount;

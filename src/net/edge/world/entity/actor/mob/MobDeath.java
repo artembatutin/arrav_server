@@ -16,6 +16,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.GRIZZLY_BEAR;
+import static net.edge.content.achievements.Achievement.KILL_A_MAN;
+import static net.edge.content.achievements.Achievement.NO_GUARD;
+
 /**
  * The {@link ActorDeath} implementation that is dedicated to managing the
  * death process for all {@link Mob}s.
@@ -38,43 +42,50 @@ public final class MobDeath extends ActorDeath<Mob> {
 
 	@Override
 	public void preDeath() {
-		if(getCharacter().getCombatBuilder().getVictim() != null) {
-			getCharacter().getCombatBuilder().getVictim().getCombatBuilder().reset();
+		if(getActor().getCombatBuilder().getVictim() != null) {
+			getActor().getCombatBuilder().getVictim().getCombatBuilder().reset();
 		}
-		getCharacter().animation(new Animation(getCharacter().getDefinition().getDeathAnimation(), Animation.AnimationPriority.HIGH));
+		getActor().animation(new Animation(getActor().getDefinition().getDeathAnimation(), Animation.AnimationPriority.HIGH));
 	}
 	
 	@Override
 	public void death() {
-		Optional<Player> killer = getCharacter().getCombatBuilder().getDamageCache().getPlayerKiller();
-		if(killer.isPresent()) {
-			Player player = killer.get();
-			GodwarsFaction.increment(player, getCharacter());
-			Slayer.decrement(player, getCharacter());
-			MinigameHandler.getMinigame(player).ifPresent(m -> m.onKill(player, getCharacter()));
-			if(NON_DROPPABLES.stream().noneMatch(t -> t == getCharacter().getId())) {
-				DropManager.dropItems(player, getCharacter());
+		Optional<Player> killer = getActor().getCombatBuilder().getDamageCache().getPlayerKiller();
+		killer.ifPresent(k ->  {
+			GodwarsFaction.increment(k, getActor());
+			Slayer.decrement(k, getActor());
+			MinigameHandler.getMinigame(k).ifPresent(m -> m.onKill(k, getActor()));
+			if(NON_DROPPABLES.stream().noneMatch(t -> t == getActor().getId())) {
+				DropManager.dropItems(k, getActor());
 			}
-			if(player.getRights().less(Rights.ADMINISTRATOR)) {
-				player.getNpcKills().incrementAndGet();
-				PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Mobs killed: @yel@" + player.getNpcKills().get());
+			if(k.getRights().less(Rights.ADMINISTRATOR)) {
+				k.getNpcKills().incrementAndGet();
+				PlayerPanel.TOTAL_NPC_KILLS.refresh(k, "@or2@ - Total Mobs killed: @yel@" + k.getNpcKills().get());
 			}
-		}
-		World.get().getMobs().remove(getCharacter());
+			//achievement kills
+			int id = getActor().getId();
+			if(id > 0 && id < 2)
+				KILL_A_MAN.inc(k);
+			if(id == 105 || id == 1195)
+				GRIZZLY_BEAR.inc(k);
+			if(id == 3408)
+				NO_GUARD.inc(k);
+		});
+		World.get().getMobs().remove(getActor());
 	}
 	
 	@Override
 	public void postDeath() {
 		try {
-			if(getCharacter().isRespawn()) {
-				World.get().submit(new Task(getCharacter().getDefinition().getRespawnTime(), false) {
+			if(getActor().isRespawn()) {
+				World.get().submit(new Task(getActor().getDefinition().getRespawnTime(), false) {
 					@Override
 					public void execute() {
 						this.cancel();
-						Mob mob = Mob.getNpc(getCharacter().getId(), getCharacter().getOriginalPosition());
-						mob.setOriginalRandomWalk(getCharacter().isOriginalRandomWalk());
-						mob.getMovementCoordinator().setCoordinate(getCharacter().getMovementCoordinator().isCoordinate());
-						mob.getMovementCoordinator().setBoundary(getCharacter().getMovementCoordinator().getBoundary());
+						Mob mob = Mob.getNpc(getActor().getId(), getActor().getOriginalPosition());
+						mob.setOriginalRandomWalk(getActor().isOriginalRandomWalk());
+						mob.getMovementCoordinator().setCoordinate(getActor().getMovementCoordinator().isCoordinate());
+						mob.getMovementCoordinator().setBoundary(getActor().getMovementCoordinator().getBoundary());
 						mob.setRespawn(true);
 						World.get().getMobs().add(mob);
 					}

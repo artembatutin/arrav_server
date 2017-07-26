@@ -21,6 +21,8 @@ import net.edge.world.entity.item.Item;
 import java.util.EnumSet;
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.HIGH_ALCHEMY;
+
 /**
  * Holds functionality for magic on item skills.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -269,6 +271,7 @@ public final class Enchanting extends ProducingSkillAction {
 				player.getInventory().remove(new Item(item.getId(), 1), slot);
 				player.getInventory().add(new Item(995, item.getDefinition().getHighAlchValue()));
 				player.out(new SendForceTab(TabInterface.MAGIC));
+				HIGH_ALCHEMY.inc(player);
 			}
 		},
 		LEVEL_4_ENCHANT(1180, 57, 67, new Item[]{}, new Item[]{new Item(557, 10), new Item(564)}, new Animation(720), new Graphic(115, 75)) {

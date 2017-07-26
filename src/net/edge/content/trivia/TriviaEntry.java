@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static net.edge.content.achievements.Achievement.TRIVIABOT;
+
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  * @since 3-6-2017.
@@ -98,9 +100,8 @@ public final class TriviaEntry {
             List<String> attemptedAnswers = attempted_answers.stream().filter(a -> Arrays.stream(GameConstants.BAD_STRINGS).noneMatch(a::contains)).collect(Collectors.toList());
             World.get().message("@red@[Trivia Bot]: @blu@Attempted answers: @red@" + attemptedAnswers.toString() + "@blu@!");
         }
-
+        TRIVIABOT.inc(player);
         int amount = RandomUtils.inclusive(10_000, 30_000);
-
         player.getBank().add(0, new Item(995, amount));
         player.message("@red@[Trivia Bot]: @blu@" + TextUtils.formatPrice(amount) + " coins were added into your bank.");
         reset();

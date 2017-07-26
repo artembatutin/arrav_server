@@ -17,6 +17,8 @@ import net.edge.world.object.GameObject;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.WOODCUTTING;
+
 /**
  * Represents the procession for cutting logs.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -141,11 +143,17 @@ public final class Woodcutting extends HarvestingSkillAction {
 			t.cancel();
 		}
 		if(object.getElements() <= 0 && !tree.isObstacle() && object.isReg()) {
-			Optional<TransformableObject> filter = Arrays.stream(tree.getObject()).filter(p -> p.getObjectId() == object.getId()).findFirst();
-			
-			if(filter.isPresent()) {
+			TransformableObject obj = null;
+			for(TransformableObject ob : tree.getObject()) {
+				if(ob.getObjectId() == object.getId()) {
+					obj = ob;
+					break;
+				}
+			}
+			if(obj != null) {
+				WOODCUTTING.inc(player);
 				int id = object.getId();//saved tree id.
-				object.setId(filter.get().getTransformable());
+				object.setId(obj.getTransformable());
 				object.setDisabled(true);
 				object.publish(tree.getRespawnTime(), n -> {
 					object.setId(id);

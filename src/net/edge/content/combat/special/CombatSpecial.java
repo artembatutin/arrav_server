@@ -1,5 +1,6 @@
 package net.edge.content.combat.special;
 
+import net.edge.content.achievements.Achievement;
 import net.edge.content.combat.CombatHit;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendInterfaceLayer;
@@ -246,6 +247,7 @@ public enum CombatSpecial {
 	DRAGON_DAGGER(new int[]{1215, 1231, 5680, 5698}, 25, 1.15, 1.25, CombatType.MELEE, WeaponInterface.DAGGER) {
 		@Override
 		public CombatHit container(Player player, Actor target) {
+			Achievement.DRAGON_DAGGER.inc(player);
 			player.animation(new Animation(1062, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(252, 100));
 			return new CombatHit(player, target, 2, CombatType.MELEE, true, 2);

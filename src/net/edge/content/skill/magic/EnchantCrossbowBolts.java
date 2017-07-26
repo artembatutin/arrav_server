@@ -1,6 +1,7 @@
 package net.edge.content.skill.magic;
 
 import com.google.common.collect.ImmutableMap;
+import net.edge.task.Task;
 import net.edge.world.entity.item.container.impl.Inventory;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.SkillData;
@@ -13,6 +14,8 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static net.edge.content.achievements.Achievement.ENCHANTER;
 
 /**
  * The class which is responsible for enchanting crossbow bolts.
@@ -42,11 +45,9 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 	 */
 	public static boolean enchant(Player player, int buttonId) {
 		BoltData data = BoltData.VALUES.get(buttonId);
-		
 		if(data == null) {
 			return false;
 		}
-		
 		EnchantCrossbowBolts magic = new EnchantCrossbowBolts(player, data);
 		magic.start();
 		return true;
@@ -104,6 +105,13 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 		player.text(49085, (inventory.contains(new Item(560, 10)) ? "@gre@" : "@red@") + "10x");
 		player.widget(49000);
 		return true;
+	}
+	
+	@Override
+	public void onProduce(Task t, boolean success) {
+		if(success) {
+			ENCHANTER.inc(player, data.produced.getAmount());
+		}
 	}
 	
 	@Override

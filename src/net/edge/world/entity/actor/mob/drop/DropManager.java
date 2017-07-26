@@ -63,11 +63,9 @@ public final class DropManager {
 	public static void dropItems(Player killer, Mob victim) {
 		DropTable table = TABLES.getOrDefault(victim.getId(), DEFAULT);
 		List<Item> dropItems = table.toItems(killer, victim);
-
 		if(victim.getMaxHealth() >= 500 && RandomUtils.inclusive(50) == 1) {
 			dropItems.add(new Item(450));
 		}
-
 		Region region = victim.getRegion();
 		if(region == null)
 			return;
