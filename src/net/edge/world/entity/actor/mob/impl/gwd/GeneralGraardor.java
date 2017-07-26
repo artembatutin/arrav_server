@@ -74,7 +74,7 @@ public final class GeneralGraardor extends Mob {
 			sergeant.getMovementCoordinator().setCoordinate(true);
 			sergeant.getMovementCoordinator().setRadius(3);
 			MobAggression.AGGRESSIVE.add(sergeant.getId());
-			World.get().getNpcs().add(sergeant);
+			World.get().getMobs().add(sergeant);
 		});
 		MobAggression.AGGRESSIVE.add(this.getId());
 	}

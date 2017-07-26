@@ -140,7 +140,7 @@ public final class BirdSnare extends Trap {
 	
 	@Override
 	public void onSequence(Task t) {
-		for(Mob mob : World.get().getNpcs()) {
+		for(Mob mob : World.get().getMobs()) {
 			if(mob == null || mob.isDead()) {
 				continue;
 			}

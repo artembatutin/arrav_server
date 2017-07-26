@@ -34,7 +34,6 @@ import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.world.World;
 import net.edge.world.entity.actor.attribute.AttributeKey;
-import net.edge.world.entity.actor.mob.drop.DropManager;
 import net.edge.world.locale.InstanceManager;
 
 import java.time.DayOfWeek;
@@ -223,7 +222,7 @@ public final class Application {
 				try {
 					List<CombatStrategy> s = Utility.getClassesInDirectory(CombatStrategy.class.getPackage().getName() + "." + directory).stream().map(clazz -> (CombatStrategy) clazz).collect(Collectors.toList());
 					s.forEach(c -> {
-						for(int n : c.getNpcs()) {
+						for(int n : c.getMobs()) {
 							CombatConstants.DEFAULT_STRATEGIES.put(n, c);
 						}
 					});

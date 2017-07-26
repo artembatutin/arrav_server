@@ -36,7 +36,7 @@ public class TraderStan extends ActionInitializer {
 				"May the gold be with you.",
 				"I aint gonna say I had a small loan of a million dollars from my Dad."
 		};
-		Mob.CUSTOM_NPCS.put(4650, s -> new DefaultMob(4650, s) {
+		Mob.CUSTOM_MOBS.put(4650, s -> new DefaultMob(4650, s) {
 			private int timer = 0;
 			@Override
 			public void update() {

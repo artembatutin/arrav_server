@@ -90,7 +90,7 @@ public final class TzTokJadCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{2745};
 	}
 

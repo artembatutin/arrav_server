@@ -69,7 +69,7 @@ public final class CommanderZilyana extends Mob {
 			minion.getMovementCoordinator().setCoordinate(true);
 			minion.getMovementCoordinator().setRadius(3);
 			MobAggression.AGGRESSIVE.add(minion.getId());
-			World.get().getNpcs().add(minion);
+			World.get().getMobs().add(minion);
 		});
 		MobAggression.AGGRESSIVE.add(this.getId());
 	}

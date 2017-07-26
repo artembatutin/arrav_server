@@ -24,7 +24,7 @@ public final class PetTask extends Task {
 		player.text(19032, ((int) pet.getProgress().getHunger()) + "%");
 		if(pet.getProgress().getHunger() >= 100.0) {
 			this.cancel();
-			World.get().getNpcs().remove(pet);
+			World.get().getMobs().remove(pet);
 			player.getPetManager().reset();
 			TabInterface.SUMMONING.sendInterface(player, -1);
 			player.message("Your pet has ran away to find some food!");

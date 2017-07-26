@@ -68,7 +68,7 @@ public final class MagicCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{6278, 6257, 6221, 13, 172, 174, 2025,
 				3752, 3753, 3754, 3755, 3756, 3757, 3758, 3759, 3760, 3761//pest torchers
 		};

@@ -30,7 +30,7 @@ public final class AgrithNaNa implements CombatStrategy {
 	}
 
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{3493};
 	}
 

@@ -2,6 +2,8 @@ package net.edge.content;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.content.achievements.Achievement;
+import net.edge.content.achievements.AchievementHandler;
 import net.edge.content.commands.impl.RedeemCommand;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.scoreboard.ScoreboardManager;
@@ -245,7 +247,7 @@ public enum PlayerPanel {
 		PlayerPanel.CURRENT_KILLSTREAK.refresh(player, "@or2@ - Current Killstreak: @yel@" + player.getCurrentKillstreak().get());
 		PlayerPanel.TOTAL_PLAYER_KILLS.refresh(player, "@or2@ - Total Players killed: @yel@" + player.getPlayerKills().get());
 		PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(player, "@or2@ - Total Player deaths: @yel@" + player.getDeathsByPlayer().get());
-		PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Npcs killed: @yel@" + player.getNpcKills().get());
+		PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Mobs killed: @yel@" + player.getNpcKills().get());
 		PlayerPanel.TOTAL_NPC_DEATHS.refresh(player, "@or2@ - Total Mob deaths: @yel@" + player.getDeathsByNpc().get());
 		
 		PlayerPanel.EMPTY2.refresh(player, "");
@@ -255,6 +257,11 @@ public enum PlayerPanel {
 		PlayerPanel.INDIVIDUAL_CURRENT_KILLSTREAKS.refresh(player, "@or2@ - Current Killstreak: @yel@" + (s == null ? 0 : s.getCurrentKillstreak()));
 		PlayerPanel.INDIVIDUAL_KILLS.refresh(player, "@or2@ - Players killed: @yel@" + (s == null ? 0 : s.getKills()));
 		PlayerPanel.INDIVIDUAL_DEATHS.refresh(player, "@or2@ - Player deaths: @yel@" + (s == null ? 0 : s.getDeaths()));
+		
+		//achievements
+		for(Achievement a : Achievement.VALUES) {
+			AchievementHandler.update(player, a);
+		}
 	}
 	
 	/**

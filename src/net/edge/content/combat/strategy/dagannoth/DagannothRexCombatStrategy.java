@@ -40,7 +40,7 @@ public final class DagannothRexCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{2883};
 	}
 

@@ -3,16 +3,9 @@ package net.edge.world;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.edge.Application;
-import net.edge.content.clanchat.ClanManager;
 import net.edge.content.commands.impl.UpdateCommand;
-import net.edge.content.scoreboard.ScoreboardManager;
-import net.edge.content.shootingstar.ShootingStarManager;
-import net.edge.content.skill.firemaking.pits.FirepitManager;
-import net.edge.content.trivia.TriviaTask;
 import net.edge.GameConstants;
 import net.edge.GamePulseHandler;
-import net.edge.world.locale.InstanceManager;
-import net.edge.world.locale.area.AreaManager;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
 import net.edge.net.packet.out.SendLogout;
@@ -32,10 +25,8 @@ import net.edge.world.entity.actor.mob.MobMovementTask;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.GroundItem;
-import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.entity.region.Region;
 import net.edge.world.entity.region.RegionManager;
-import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.sync.Synchronizer;
 
 import java.sql.Connection;
@@ -87,7 +78,7 @@ public final class World {
 	/**
 	 * The collection of active NPCs.
 	 */
-	private final ActorList<Mob> npcs = new ActorList<>(16384);
+	private final ActorList<Mob> mobs = new ActorList<>(16384);
 	
 	/**
 	 * The collection of active players.
@@ -156,9 +147,9 @@ public final class World {
 			dequeueLogins();
 			dequeueLogout();
 			taskManager.sequence();
-			sync.preUpdate(players, npcs);
+			sync.preUpdate(players, mobs);
 			sync.update(players);
-			sync.postUpdate(players, npcs);
+			sync.postUpdate(players, mobs);
 			
 			regionalTick++;
 			if(regionalTick == 10) {
@@ -294,26 +285,26 @@ public final class World {
 	
 	/**
 	 * Retrieves and returns the local {@link Mob}s for {@code character}. The
-	 * specific npcs returned is completely dependent on the character given in
+	 * specific mobs returned is completely dependent on the character given in
 	 * the argument.
 	 * @param character the character that it will be returned for.
-	 * @return the local npcs.
+	 * @return the local mobs.
 	 */
-	public Iterator<Mob> getLocalNpcs(Actor character) {
+	public Iterator<Mob> getLocalMobs(Actor character) {
 		if(character.isPlayer())
 			return character.toPlayer().getLocalMobs().iterator();
-		return npcs.iterator();
+		return mobs.iterator();
 	}
 	
 	/**
-	 * Gets every single character in the player and npc character lists.
+	 * Gets every single actor in the player and npc character lists.
 	 * @return a set containing every single character.
 	 */
-	public Set<Actor> getEntities() {
-		Set<Actor> characters = new HashSet<>();
-		players.forEach(characters::add);
-		npcs.forEach(characters::add);
-		return characters;
+	public Set<Actor> getActors() {
+		Set<Actor> actors = new HashSet<>();
+		players.forEach(actors::add);
+		mobs.forEach(actors::add);
+		return actors;
 	}
 	
 	/**
@@ -367,7 +358,7 @@ public final class World {
 			}
 			boolean response = players.remove(player);
 			for(Mob mob : player.getMobs()) {
-				npcs.remove(mob);
+				mobs.remove(mob);
 			}
 			player.getMobs().clear();
 			if(response) {
@@ -417,11 +408,11 @@ public final class World {
 	}
 	
 	/**
-	 * Gets the collection of active npcs.
-	 * @return the active npcs.
+	 * Gets the collection of active mobs.
+	 * @return the active mobs.
 	 */
-	public ActorList<Mob> getNpcs() {
-		return npcs;
+	public ActorList<Mob> getMobs() {
+		return mobs;
 	}
 
 

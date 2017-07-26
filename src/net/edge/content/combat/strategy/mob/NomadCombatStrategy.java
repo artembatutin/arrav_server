@@ -245,7 +245,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
      * @return the array of assigned NPCs.
      */
     @Override
-    public int[] getNpcs() {
+    public int[] getMobs() {
         return new int[]{8528};
     }
 

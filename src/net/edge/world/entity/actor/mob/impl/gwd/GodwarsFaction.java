@@ -3,7 +3,6 @@ package net.edge.world.entity.actor.mob.impl.gwd;
 import net.edge.action.impl.ObjectAction;
 import net.edge.content.combat.CombatType;
 import net.edge.world.locale.Position;
-import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
@@ -121,7 +120,7 @@ public enum GodwarsFaction {
 			
 			for(int n = faction.startId; n < faction.endId; n++) {
 				int npcId = n;
-				Mob.CUSTOM_NPCS.put(n, s -> new GodwarsSoldier(npcId, s, faction));
+				Mob.CUSTOM_MOBS.put(n, s -> new GodwarsSoldier(npcId, s, faction));
 			}
 		}
 	}

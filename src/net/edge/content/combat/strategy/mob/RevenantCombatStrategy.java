@@ -64,7 +64,7 @@ public final class RevenantCombatStrategy implements CombatStrategy {
      * @return the array of assigned NPCs.
      */
     @Override
-    public int[] getNpcs() {
+    public int[] getMobs() {
         return new int[0];
     }
 }

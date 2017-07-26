@@ -1,13 +1,14 @@
 package net.edge.world.entity.actor.player;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.Application;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
 import net.edge.content.ViewingOrb;
-import net.edge.content.achievements.AchievementKey;
+import net.edge.content.achievements.Achievement;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.clanchat.ClanMember;
 import net.edge.content.combat.Combat;
@@ -199,10 +200,9 @@ public final class Player extends Actor {
 	 */
 	private final DialogueBuilder dialogueChain = new DialogueBuilder(this);
 
-	/** The achievement. */
-	private HashMap<AchievementKey, Integer> playerAchievements = new HashMap<AchievementKey, Integer>(AchievementKey.values().length) {
-		{
-			for (final AchievementKey achievement : AchievementKey.values()) {
+	/** The cached achievement progress. */
+	private Object2IntArrayMap<Achievement> playerAchievements = new Object2IntArrayMap<Achievement>(Achievement.VALUES.size()) { {
+			for (final Achievement achievement : Achievement.VALUES) {
 				put(achievement, 0);
 			}
 		}
@@ -2207,7 +2207,7 @@ public final class Player extends Actor {
 	 * Gets the achievements for the player.
 	 * @return the map containing the player achievements.
 	 */
-	public HashMap<AchievementKey, Integer> getAchievements() {
+	public Object2IntArrayMap<Achievement> getAchievements() {
 		return playerAchievements;
 	}
 	/**

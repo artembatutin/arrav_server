@@ -50,7 +50,7 @@ public final class SpinolypCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{2896};
 	}
 	

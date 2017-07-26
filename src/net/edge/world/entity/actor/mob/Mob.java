@@ -42,7 +42,7 @@ public abstract class Mob extends Actor {
 	/**
 	 * A mapping which contains all the custom npcs by their id.
 	 */
-	public static final Int2ObjectArrayMap<Function<Position, Mob>> CUSTOM_NPCS = new Int2ObjectArrayMap<>(
+	public static final Int2ObjectArrayMap<Function<Position, Mob>> CUSTOM_MOBS = new Int2ObjectArrayMap<>(
 			ImmutableMap.<Integer, Function<Position, Mob>>builder()
 					.put(6247, s -> new CommanderZilyana())
 					.put(6260, s -> new GeneralGraardor())
@@ -66,7 +66,7 @@ public abstract class Mob extends Actor {
 			Mob mob = new DefaultMob(id, pos);
 			return mob.setStrategy(Optional.of(new WildyWyrmCombatStrategy(mob)));
 		}
-		return CUSTOM_NPCS.containsKey(id) ? CUSTOM_NPCS.get(id).apply(pos).create() : new DefaultMob(id, pos);
+		return CUSTOM_MOBS.containsKey(id) ? CUSTOM_MOBS.get(id).apply(pos).create() : new DefaultMob(id, pos);
 	}
 	
 	/**

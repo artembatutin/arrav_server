@@ -118,7 +118,7 @@ public final class MetallicDragonCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{1590, 1591, 1592, 5363};
 	}
 	

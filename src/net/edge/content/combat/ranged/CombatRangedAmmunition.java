@@ -19,7 +19,6 @@ import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.ItemIdentifiers;
-import net.edge.world.locale.area.AreaManager;
 
 /**
  * Represents a single definition of a ranged weapon which consists of details
@@ -176,15 +175,14 @@ public enum CombatRangedAmmunition {
 		}
 	},
 	DRAGONBANE_ARROW(new int[]{21640, 21712, 21713, 21714}, 15, 64, 36, 40, 31, 24, true) {
-		final ImmutableSet<Integer> affectedNpcs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363);
-		
+		final ImmutableSet<Integer> affectedMobs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363);
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor victim, CombatHit data) {
 			if(!victim.isNpc()) {
 				return data;
 			}
 			
-			if(!affectedNpcs.contains(victim.toNpc().getId())) {
+			if(!affectedMobs.contains(victim.toNpc().getId())) {
 				return data;
 			}
 			
@@ -263,15 +261,14 @@ public enum CombatRangedAmmunition {
 		}
 	},
 	DRAGONBANE_BOLT(new int[]{21660, 21680, 21681, 21682}, 27, 86, 42, 43, 31, 0, true) {
-		final ImmutableSet<Integer> affectedNpcs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363);
-		
+		final ImmutableSet<Integer> affectedMobs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363);
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor victim, CombatHit data) {
 			if(!victim.isNpc()) {
 				return data;
 			}
 			
-			if(!affectedNpcs.contains(victim.toNpc().getId())) {
+			if(!affectedMobs.contains(victim.toNpc().getId())) {
 				return data;
 			}
 			
@@ -362,9 +359,7 @@ public enum CombatRangedAmmunition {
 	},
 	STEEL_BOLTS(9141, 27, 86, 42, 43, 31, 0, true),
 	PEARL_BOLTS(new int[]{880, 9238}, 27, 86, 42, 43, 31, 0, true) {
-		
-		final ImmutableSet<Integer> affectedNpcs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363, 110, 1633, 1634, 1635, 1636, 1019, 2591, 2592, 2593, 2594, 2595, 2596, 2597, 2598, 2599, 2600, 2601, 2602, 2603, 2604, 2605, 2606, 2607, 2608, 2609, 2610, 2611, 2612, 2613, 2614, 2615, 2616, 2627, 2628, 2629, 2630, 2631, 2631, 2734, 2735, 2736, 2737, 2738, 2739, 2740, 2741, 2742, 2743, 2744, 2745, 2746);
-		
+		final ImmutableSet<Integer> affectedMobs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363, 110, 1633, 1634, 1635, 1636, 1019, 2591, 2592, 2593, 2594, 2595, 2596, 2597, 2598, 2599, 2600, 2601, 2602, 2603, 2604, 2605, 2606, 2607, 2608, 2609, 2610, 2611, 2612, 2613, 2614, 2615, 2616, 2627, 2628, 2629, 2630, 2631, 2631, 2734, 2735, 2736, 2737, 2738, 2739, 2740, 2741, 2742, 2743, 2744, 2745, 2746);
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor victim, CombatHit data) {
 			if(weapon.getAmmunition().getItem().getId() != 9238) {
@@ -387,7 +382,7 @@ public enum CombatRangedAmmunition {
 			
 			boolean multiply = false;
 			
-			if(victim.isNpc() && affectedNpcs.contains(victim.toNpc().getId())) {
+			if(victim.isNpc() && affectedMobs.contains(victim.toNpc().getId())) {
 				multiply = true;
 			}
 			

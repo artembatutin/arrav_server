@@ -39,7 +39,7 @@ public final class TzKihCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{2627, 7361};
 	}
 

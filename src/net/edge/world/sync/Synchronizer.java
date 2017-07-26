@@ -15,11 +15,11 @@ public class Synchronizer {
 	private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 	
 	/**
-	 * The pre-update of preparing players and npcs.
+	 * The pre-update of preparing players and mobs.
 	 * @param players players list.
-	 * @param npcs the npcs list.
+	 * @param mobs the mobs list.
 	 */
-	public void preUpdate(ActorList<Player> players, ActorList<Mob> npcs) {
+	public void preUpdate(ActorList<Player> players, ActorList<Mob> mobs) {
 		//long time = System.currentTimeMillis();
 		phaser.bulkRegister(players.size());
 		for(Player player : players) {
@@ -38,8 +38,8 @@ public class Synchronizer {
 		
 		
 		//time = System.currentTimeMillis();
-		phaser.bulkRegister(npcs.size());
-		for(Mob mob : npcs) {
+		phaser.bulkRegister(mobs.size());
+		for(Mob mob : mobs) {
 			if(mob == null)
 				continue;
 			executor.submit(() -> {
@@ -77,11 +77,11 @@ public class Synchronizer {
 	}
 	
 	/**
-	 * The post-update process of resetting players and npcs.
+	 * The post-update process of resetting players and mobs.
 	 * @param players players list.
-	 * @param npcs npcs list.
+	 * @param mobs mobs list.
 	 */
-	public void postUpdate(ActorList<Player> players, ActorList<Mob> npcs) {
+	public void postUpdate(ActorList<Player> players, ActorList<Mob> mobs) {
 		//long time = System.currentTimeMillis();
 		phaser.bulkRegister(players.size());
 		for(Player player : players) {
@@ -100,8 +100,8 @@ public class Synchronizer {
 		
 		
 		//time = System.currentTimeMillis();
-		phaser.bulkRegister(npcs.size());
-		for(Mob mob : npcs) {
+		phaser.bulkRegister(mobs.size());
+		for(Mob mob : mobs) {
 			if(mob == null)
 				continue;
 			executor.submit(() -> {

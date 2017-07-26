@@ -7,6 +7,8 @@ import net.edge.world.entity.actor.player.PlayerAppearance;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
 import net.edge.world.entity.actor.update.UpdateFlag;
 
+import static net.edge.content.achievements.Achievement.CHANGE_APPEARANCE;
+
 /**
  * The message sent from the client when the character clicks "accept" on the
  * character selection interface.
@@ -53,6 +55,7 @@ public final class CharacterSelectionPacket implements IncomingPacket {
 			player.getAttr().get("introduction_stage").set(1);
 		}
 		player.getActivityManager().execute(ActivityType.CHARACTER_SELECTION);
+		CHANGE_APPEARANCE.inc(player, 1);
 	}
 	
 }

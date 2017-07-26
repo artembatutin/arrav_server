@@ -154,7 +154,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 					monsters[i].setRespawn(false);
 					monsters[i].setOwner(player);
 					InstanceManager.get().isolate(monsters[i], instance);
-					World.get().getNpcs().add(monsters[i]);
+					World.get().getMobs().add(monsters[i]);
 					monsters[i].setViewingDistance(100);
 					monsters[i].getCombatBuilder().attack(player);
 				}
@@ -229,7 +229,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		for(Mob monster : monsters) {
 			if(monster == null)
 				continue;
-			World.get().getNpcs().remove(monster);
+			World.get().getMobs().remove(monster);
 		}
 		InstanceManager.get().open(instance);
 		player.setInstance(0);

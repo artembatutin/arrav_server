@@ -55,7 +55,7 @@ public final class SergeantSteelwillCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{6263};
 	}
 

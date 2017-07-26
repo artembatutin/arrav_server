@@ -1,7 +1,7 @@
 package net.edge.world.entity.actor.mob;
 
 /**
- * Enumeration of several types of Npcs.
+ * Enumeration of several types of Mobs.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum MobType {

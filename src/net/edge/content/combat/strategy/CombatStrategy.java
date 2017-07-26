@@ -65,5 +65,5 @@ public interface CombatStrategy {
 	 * The NPCs that will be assigned this combat strategy.
 	 * @return the array of assigned NPCs.
 	 */
-	int[] getNpcs();
+	int[] getMobs();
 }

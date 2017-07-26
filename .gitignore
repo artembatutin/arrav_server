@@ -17,3 +17,4 @@ data/cache/
 *.class
 map_editor/**
 data/players/**
+hs_err_pid12147.log

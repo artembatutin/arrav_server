@@ -104,7 +104,7 @@ public abstract class DynamicCombatStrategy<T extends Mob> implements CombatStra
 	}
 	
 	@Override
-	public final int[] getNpcs() {
+	public final int[] getMobs() {
 		return null;
 	}
 }

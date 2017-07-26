@@ -107,7 +107,7 @@ public final class ButterflyCatching extends ProducingSkillAction {
 		Position position = RandomUtils.random(TraversalMap.getNearbyTraversableTiles(player.getPosition(), 3));
 		Mob mob = new DefaultMob(data.npc, position);
 		LinkedTaskSequence seq = new LinkedTaskSequence();
-		seq.connect(2, () -> World.get().getNpcs().add(mob));
+		seq.connect(2, () -> World.get().getMobs().add(mob));
 		seq.start();
 		return true;
 	}
@@ -128,7 +128,7 @@ public final class ButterflyCatching extends ProducingSkillAction {
 				Mob mob = new DefaultMob(data.npc, position);
 				LinkedTaskSequence seq = new LinkedTaskSequence();
 				seq.connect(2, () -> player.graphic(data.barehandGraphic));
-				seq.connect(4, () -> World.get().getNpcs().add(mob));
+				seq.connect(4, () -> World.get().getMobs().add(mob));
 				seq.start();
 			}
 			

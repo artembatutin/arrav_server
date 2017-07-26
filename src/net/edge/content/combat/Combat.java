@@ -89,7 +89,7 @@ public final class Combat {
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 * @param action        the action to execute for each victim.
 	 */
-	public static <E extends Actor> CombatHit[] damageCharactersWithin(Actor attacker, Iterable<E> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<E> action) {
+	public static <E extends Actor> CombatHit[] damageActorsWithin(Actor attacker, Iterable<E> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<E> action) {
 		List<CombatHit> combatHits = new ArrayList<>();
 		for(E c : victims) {
 			if(c == null)
@@ -118,8 +118,8 @@ public final class Combat {
 	 * @param type          the combat type the attacker is using.
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 */
-	public static CombatHit[] damageCharactersWithin(Actor attacker, Iterable<? extends Actor> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
-		return damageCharactersWithin(attacker, victims, position, radius, hits, type, checkAccuracy, null);
+	public static CombatHit[] damageActorsWithin(Actor attacker, Iterable<? extends Actor> victims, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
+		return damageActorsWithin(attacker, victims, position, radius, hits, type, checkAccuracy, null);
 	}
 	
 	/**
@@ -135,7 +135,7 @@ public final class Combat {
 	 * @param action        the action to execute for each victim.
 	 */
 	public static CombatHit[] damagePlayersWithin(Actor attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Player> action) {
-		return damageCharactersWithin(attacker, () -> World.get().getLocalPlayers(attacker), position, radius, hits, type, checkAccuracy, action);
+		return damageActorsWithin(attacker, () -> World.get().getLocalPlayers(attacker), position, radius, hits, type, checkAccuracy, action);
 	}
 	
 	/**
@@ -167,8 +167,8 @@ public final class Combat {
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 * @param action        the action to execute for each victim.
 	 */
-	public static CombatHit[] damageNpcsWithin(Actor attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Mob> action) {
-		return damageCharactersWithin(attacker, () -> World.get().getLocalNpcs(attacker), position, radius, hits, type, checkAccuracy, action);
+	public static CombatHit[] damageMobsWithin(Actor attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy, Consumer<Mob> action) {
+		return damageActorsWithin(attacker, () -> World.get().getLocalMobs(attacker), position, radius, hits, type, checkAccuracy, action);
 	}
 	
 	/**
@@ -183,8 +183,8 @@ public final class Combat {
 	 * @param type          the combat type the attacker is using.
 	 * @param checkAccuracy determines if accuracy should be calculated for hits.
 	 */
-	public static CombatHit[] damageNpcsWithin(Actor attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
-		return damageNpcsWithin(attacker, position, radius, hits, type, checkAccuracy, null);
+	public static CombatHit[] damageMobsWithin(Actor attacker, Position position, int radius, int hits, CombatType type, boolean checkAccuracy) {
+		return damageMobsWithin(attacker, position, radius, hits, type, checkAccuracy, null);
 	}
 	
 	/**

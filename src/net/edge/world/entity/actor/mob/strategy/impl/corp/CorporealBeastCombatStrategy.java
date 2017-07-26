@@ -93,7 +93,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 			protected void execute() {
 				this.cancel();
 				npc.getDarkEnergyCore().setPosition(pos);
-				World.get().getNpcs().add(npc.getDarkEnergyCore());
+				World.get().getMobs().add(npc.getDarkEnergyCore());
 			}
 
 		});

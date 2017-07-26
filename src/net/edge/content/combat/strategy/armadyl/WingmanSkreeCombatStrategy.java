@@ -51,7 +51,7 @@ public final class WingmanSkreeCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{6223};
 	}
 

@@ -30,7 +30,7 @@ public final class ItemOnNpcPacket implements IncomingPacket {
 		if(container == 3214) {
 			item = player.getInventory().get(slot);
 		}
-		Mob usedOn = World.get().getNpcs().get(npc - 1);
+		Mob usedOn = World.get().getMobs().get(npc - 1);
 		
 		if(item == null || usedOn == null || item.getId() != itemId) {
 			return;

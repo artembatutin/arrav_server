@@ -74,7 +74,7 @@ public final class Karamel implements CombatStrategy {
 	}
 
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{3495};
 	}
 

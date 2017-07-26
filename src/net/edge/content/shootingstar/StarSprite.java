@@ -45,7 +45,7 @@ public final class StarSprite extends Mob {
 	public void spawn() {
 		star.setDisabled(true);
 		star.remove();
-		World.get().getNpcs().add(star.sprite);
+		World.get().getMobs().add(star.sprite);
 	}
 
 	public static void event() {
@@ -171,7 +171,7 @@ public final class StarSprite extends Mob {
 		@Override
 		protected void execute() {
 			this.cancel();
-			World.get().getNpcs().remove(sprite);
+			World.get().getMobs().remove(sprite);
 			ShootingStarManager.get().stopwatch.reset();
 		}
 

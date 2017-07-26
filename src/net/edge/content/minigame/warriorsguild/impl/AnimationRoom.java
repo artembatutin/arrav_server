@@ -137,7 +137,7 @@ public final class AnimationRoom extends GuildRoom {
 			ForcedMovement.create(player, player.getPosition().move(0, 3), null).setSecondSpeed(42).setDirection(ForcedMovementDirection.SOUTH).submit();
 		});
 		seq.connect(3, () -> {
-			World.get().getNpcs().add(arm);
+			World.get().getMobs().add(arm);
 			arm.setOwner(player);
 			arm.forceChat("I'M ALIVE!!!!");
 		});
@@ -148,7 +148,7 @@ public final class AnimationRoom extends GuildRoom {
 	
 	@Override
 	public void onDestruct(Player player) {
-		armour.ifPresent(World.get().getNpcs()::remove);
+		armour.ifPresent(World.get().getMobs()::remove);
 	}
 	
 	@Override
@@ -184,7 +184,7 @@ public final class AnimationRoom extends GuildRoom {
 		if(region == null)
 			return;
 		items.forEach(item -> region.register(item, item.getItem().getId() == WarriorsGuild.WARRIOR_GUILD_TOKEN.getId()));
-		armour.ifPresent(World.get().getNpcs()::remove);
+		armour.ifPresent(World.get().getMobs()::remove);
 		armour = Optional.empty();
 	}
 	

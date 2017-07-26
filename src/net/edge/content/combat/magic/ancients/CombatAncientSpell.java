@@ -28,7 +28,7 @@ public abstract class CombatAncientSpell extends CombatSpell {
 					effect(cast, castOn, damage);
 				});
 			} else {
-				Combat.damageNpcsWithin(cast, castOn.getPosition(), radius(), 1, CombatType.MAGIC, false, t -> {
+				Combat.damageMobsWithin(cast, castOn.getPosition(), radius(), 1, CombatType.MAGIC, false, t -> {
 					cast.getCurrentlyCasting().endGraphic().ifPresent(t::graphic);
 					effect(cast, castOn, damage);
 				});

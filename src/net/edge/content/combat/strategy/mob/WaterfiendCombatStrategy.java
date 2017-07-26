@@ -28,7 +28,7 @@ public final class WaterfiendCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{5361};
 	}
 	

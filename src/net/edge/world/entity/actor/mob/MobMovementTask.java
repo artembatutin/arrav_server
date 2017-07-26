@@ -18,7 +18,7 @@ import net.edge.world.entity.region.TraversalMap;
 public class MobMovementTask extends Task {
 	
 	/**
-	 * The Queue of Npcs.
+	 * The Queue of Mobs.
 	 */
 	private final ObjectList<Mob> mobs = new ObjectArrayList<>();
 	

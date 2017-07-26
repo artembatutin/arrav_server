@@ -285,7 +285,7 @@ public abstract class Actor extends Entity {
 		if(isPlayer())
 			return World.get().getPlayers().get(slot - 1).toString();
 		else if(isNpc())
-			return World.get().getNpcs().get(slot - 1).toString();
+			return World.get().getMobs().get(slot - 1).toString();
 		throw new IllegalStateException("Invalid entity node type!");
 	}
 	

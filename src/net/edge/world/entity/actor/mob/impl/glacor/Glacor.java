@@ -103,7 +103,7 @@ public final class Glacor extends Mob {
 				g.setStrategy(Optional.of(new GlacyteCombatStrategy(g)));
 				g.setRespawn(false);
 				this.getGlacytes().add(glacyte);
-				World.get().getNpcs().add(g);
+				World.get().getMobs().add(g);
 				g.getCombatBuilder().attack(victim);
 			}
 			

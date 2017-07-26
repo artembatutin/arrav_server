@@ -71,7 +71,7 @@ public final class NpcActionPacket implements IncomingPacket {
 	 */
 	private void attackOther(Player player, IncomingMsg payload) {
 		int index = payload.getShort(false, ByteTransform.A);
-		Mob mob = World.get().getNpcs().get(index - 1);
+		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null || !checkAttack(player, mob))
 			return;
 		player.getTolerance().reset();
@@ -86,7 +86,7 @@ public final class NpcActionPacket implements IncomingPacket {
 	private void attackMagic(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int spellId = payload.getShort(true, ByteTransform.A);
-		Mob mob = World.get().getNpcs().get(index - 1);
+		Mob mob = World.get().getMobs().get(index - 1);
 		Optional<CombatSpells> spell = CombatSpells.getSpell(spellId);
 		if(mob == null || !spell.isPresent() || !checkAttack(player, mob))
 			return;
@@ -102,7 +102,7 @@ public final class NpcActionPacket implements IncomingPacket {
 	 */
 	private void firstClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
-		Mob mob = World.get().getNpcs().get(index - 1);
+		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null)
 			return;
 		Position position = mob.getPosition().copy();
@@ -139,7 +139,7 @@ public final class NpcActionPacket implements IncomingPacket {
 	 */
 	private void secondClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(false, ByteTransform.A, ByteOrder.LITTLE);
-		Mob mob = World.get().getNpcs().get(index - 1);
+		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null)
 			return;
 		Position position = mob.getPosition().copy();
@@ -170,7 +170,7 @@ public final class NpcActionPacket implements IncomingPacket {
 	 */
 	private void thirdClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true);
-		Mob mob = World.get().getNpcs().get(index - 1);
+		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null)
 			return;
 		Position position = mob.getPosition().copy();
@@ -198,7 +198,7 @@ public final class NpcActionPacket implements IncomingPacket {
 	 */
 	private void fourthClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
-		Mob mob = World.get().getNpcs().get(index - 1);
+		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null)
 			return;
 		final int id = mob.getId();

@@ -11,10 +11,11 @@ import net.edge.world.entity.item.container.impl.Inventory;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.BURY_BONES;
+
 public final class PrayerBoneBury extends DestructionSkillAction {
 	
 	private final Bone bone;
-
 	private final int itemId;
 	
 	public PrayerBoneBury(Player player, int itemId, Bone bone) {
@@ -55,6 +56,7 @@ public final class PrayerBoneBury extends DestructionSkillAction {
 			getPlayer().animation(new Animation(827));
 			getPlayer().message("You bury the " + bone + ".");
 			getPlayer().getBuryTimer().reset();
+			BURY_BONES.inc(player, 1);
 		}
 		t.cancel();
 	}

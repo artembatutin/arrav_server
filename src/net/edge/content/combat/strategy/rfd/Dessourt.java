@@ -42,7 +42,7 @@ public final class Dessourt implements CombatStrategy {
 	}
 
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{3496};
 	}
 

@@ -31,7 +31,7 @@ public final class SergeantStrongstackCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{6261};
 	}
 

@@ -75,7 +75,7 @@ public class PestPortal extends DefaultMob {
 				break;
 		}
 		if(pest != null) {
-			World.get().getNpcs().add(pest);
+			World.get().getMobs().add(pest);
 			pests.add(pest);
 		}
 	}

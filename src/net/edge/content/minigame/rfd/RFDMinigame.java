@@ -69,7 +69,7 @@ public final class RFDMinigame extends SequencedMinigame {
 				this.currentNpc = Optional.of(new DefaultMob(data.getNpcId(), new Position(1900, 5354, 2)));
 				Mob mob = this.currentNpc.get();
 				InstanceManager.get().isolate(mob, instance);
-				World.get().getNpcs().add(mob);
+				World.get().getMobs().add(mob);
 				mob.getCombatBuilder().attack(player);
 				timer = 0;
 			}
@@ -102,7 +102,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	@Override
 	public void logout(Player player) {
 		if(currentNpc.isPresent() && !currentNpc.get().isDead()) {
-			World.get().getNpcs().remove(currentNpc.get());
+			World.get().getMobs().remove(currentNpc.get());
 		}
 		leave(player);
 	}
@@ -169,7 +169,7 @@ public final class RFDMinigame extends SequencedMinigame {
 		switch(object.getId()) {
 			case 12356:
 				if(currentNpc.isPresent() && !currentNpc.get().isDead()) {
-					World.get().getNpcs().remove(currentNpc.get());
+					World.get().getMobs().remove(currentNpc.get());
 				}
 				player.message("You leave the minigame...");
 				leave(player);

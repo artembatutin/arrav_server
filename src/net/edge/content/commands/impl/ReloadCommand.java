@@ -23,13 +23,13 @@ public final class ReloadCommand implements Command {
 			protected void execute() {
 				if(!removed) {
 					//Removing npcs.
-					World.get().getNpcs().clear();
+					World.get().getMobs().clear();
 					World.get().getPlayers().forEach(p -> p.getLocalMobs().clear());
 					//clearing areas
 					AreaManager.get().getAreas().clear();
 					//Deleting shops
 					MarketCounter.getShops().clear();
-					player.message("Successfully removed the world nodes [Objects, Npcs, Shops, Areas].");
+					player.message("Successfully removed the world nodes [Objects, Mobs, Shops, Areas].");
 					removed = true;
 				} else {
 					new ItemDefinitionLoader().load();
@@ -38,7 +38,7 @@ public final class ReloadCommand implements Command {
 					new ShopLoader().load();
 					new AreaLoader().load();
 					this.cancel();
-					player.message("Successfully reloaded the world [Objects, Npcs, Shops, Defs, Areas].");
+					player.message("Successfully reloaded the world [Objects, Mobs, Shops, Defs, Areas].");
 				}
 			}
 		});

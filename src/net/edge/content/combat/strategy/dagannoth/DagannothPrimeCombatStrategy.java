@@ -62,7 +62,7 @@ public final class DagannothPrimeCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{2882};
 	}
 	

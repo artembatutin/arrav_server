@@ -57,10 +57,10 @@ public final class MobDeath extends ActorDeath<Mob> {
 			}
 			if(player.getRights().less(Rights.ADMINISTRATOR)) {
 				player.getNpcKills().incrementAndGet();
-				PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Npcs killed: @yel@" + player.getNpcKills().get());
+				PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Mobs killed: @yel@" + player.getNpcKills().get());
 			}
 		}
-		World.get().getNpcs().remove(getCharacter());
+		World.get().getMobs().remove(getCharacter());
 	}
 	
 	@Override
@@ -76,7 +76,7 @@ public final class MobDeath extends ActorDeath<Mob> {
 						mob.getMovementCoordinator().setCoordinate(getCharacter().getMovementCoordinator().isCoordinate());
 						mob.getMovementCoordinator().setBoundary(getCharacter().getMovementCoordinator().getBoundary());
 						mob.setRespawn(true);
-						World.get().getNpcs().add(mob);
+						World.get().getMobs().add(mob);
 					}
 				});
 			}

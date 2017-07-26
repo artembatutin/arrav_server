@@ -112,7 +112,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{
 				6276, 6256, 6220, 688, 1183, 8781, 8776,
 				3762, 3763, 3764, 3765, 3766, 3767, 3768, 3769, 3770, 3771,//pest defilers

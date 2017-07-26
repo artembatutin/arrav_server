@@ -58,7 +58,7 @@ public final class MeleeCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{6261};
 	}
 	

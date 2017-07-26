@@ -5,7 +5,6 @@ import io.netty.buffer.ByteBufAllocator;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.Direction;
 import net.edge.world.entity.actor.mob.Mob;
@@ -13,7 +12,6 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.update.UpdateManager;
 import net.edge.world.entity.actor.update.UpdateState;
 import net.edge.world.entity.region.Region;
-import net.edge.world.entity.region.RegionManager;
 
 import java.util.Iterator;
 
@@ -45,9 +43,9 @@ public final class SendMobUpdate implements OutgoingPacket {
 			}
 			
 			int added = 0;
-			processNpcs(player.getRegion(), player, blockMsg, msg, added);
+			processMobs(player.getRegion(), player, blockMsg, msg, added);
 			for(Region r : player.getRegion().getSurroundingRegions()) {
-				processNpcs(r, player, blockMsg, msg, added);
+				processMobs(r, player, blockMsg, msg, added);
 			}
 			
 			if(blockMsg.getBuffer().writerIndex() > 0) {
@@ -70,7 +68,7 @@ public final class SendMobUpdate implements OutgoingPacket {
 	/**
 	 * Processing the addition of npc from a region.
 	 */
-	private void processNpcs(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, int added) {
+	private void processMobs(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, int added) {
 		if(!region.getMobs().isEmpty()) {
 			for(Mob mob : region.getMobs()) {
 				if(added == 15 || player.getLocalMobs().size() >= 255)

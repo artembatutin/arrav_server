@@ -35,7 +35,7 @@ public final class FlightKilisaCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{6227};
 	}
 

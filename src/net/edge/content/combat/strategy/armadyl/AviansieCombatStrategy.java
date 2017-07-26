@@ -98,7 +98,7 @@ public final class AviansieCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int[] getNpcs() {
+	public int[] getMobs() {
 		return new int[]{6246, 6230, 6231};
 	}
 

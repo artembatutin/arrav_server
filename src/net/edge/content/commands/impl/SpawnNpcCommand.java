@@ -19,7 +19,7 @@ public final class SpawnNpcCommand implements Command {
 		n.getMovementCoordinator().setCoordinate(coordinate);
 		n.getMovementCoordinator().setRadius(3);
 		n.setRespawn(false);
-		World.get().getNpcs().add(n);
+		World.get().getMobs().add(n);
 	}
 	
 }

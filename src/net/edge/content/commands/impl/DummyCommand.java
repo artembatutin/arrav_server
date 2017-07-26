@@ -18,7 +18,7 @@ public final class DummyCommand implements Command {
 		mob.setCurrentHealth(1000);
 		mob.setOwner(player);
 		mob.getMovementQueue().setLockMovement(true);
-		World.get().getNpcs().add(mob);
+		World.get().getMobs().add(mob);
 	}
 	
 }
