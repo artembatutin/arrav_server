@@ -223,6 +223,7 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 				spell.type.getEndGraphic().ifPresent(player::graphic);
 			}
 			if(player.getTeleportStage() < 1) {
+				player.setTeleportStage(-1);
 				this.cancel();
 				return;
 			}

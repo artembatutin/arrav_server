@@ -31,8 +31,7 @@ public final class SendMobUpdate implements OutgoingPacket {
 			Iterator<Mob> $it = player.getLocalMobs().iterator();
 			while($it.hasNext()) {
 				Mob mob = $it.next();
-				if(mob.getState() == EntityState.ACTIVE && mob.isVisible() && player.getInstance() == mob.getInstance() && mob
-						.getPosition().isViewableFrom(player.getPosition()) && !mob.isNeedsPlacement()) {
+				if(mob.getState() == EntityState.ACTIVE && mob.isVisible() && player.getInstance() == mob.getInstance() && mob.getPosition().isViewableFrom(player.getPosition()) && !mob.isNeedsPlacement()) {
 					handleMovement(mob, msg);
 					UpdateManager.encode(player, mob, blockMsg, UpdateState.UPDATE_LOCAL);
 				} else {

@@ -996,7 +996,6 @@ public final class Player extends Actor {
 			setLastRegion(getPosition().copy());
 		super.setPosition(destination.copy());
 		setNeedsPlacement(true);
-		setTeleportStage(-1);
 	}
 	
 	/**

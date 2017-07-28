@@ -86,13 +86,13 @@ public class Construction {
 			protected void execute() {
 				tick++;
 				switch(tick) {
-					case 1:
+					case 2:
 						me.move(new Position(Constants.MIDDLE_X, Constants.MIDDLE_Y, 0));
 						break;
-					case 3:
-						me.out(new SendPaletteMap(house.getPalette()));
+					case 5:
+						me.write(new SendPaletteMap(house.getPalette()));
 						break;
-					case 4:
+					case 8:
 						placeAllFurniture(me, 0);
 						placeAllFurniture(me, 1);
 						if (house.get().isDungeon()) {
