@@ -1,6 +1,7 @@
 package net.edge.world.entity.actor.player;
 
 import com.google.gson.*;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.edge.content.achievements.Achievement;
@@ -95,8 +96,21 @@ public final class PlayerSerialization {
 				for(Token token : TOKENS) {
 					obj.add(token.getName(), gson.toJsonTree(token.toJson(player)));
 				}
-				obj.add("achievements", gson.toJsonTree(new String[] {"lol1", "lol2"}));
-				obj.add("quests", gson.toJsonTree(player.getQuestManager().getStartedQuests()));
+				Object2ObjectArrayMap<Achievement, Integer> achievements = new Object2ObjectArrayMap<>();
+				for(Object2IntMap.Entry<Achievement> it : player.getAchievements().object2IntEntrySet()) {
+					int value = it.getIntValue();
+					achievements.put(it.getKey(), value);
+				}
+				obj.add("achievements", gson.toJsonTree(achievements));
+				Object2ObjectArrayMap<String, Object> quests = new Object2ObjectArrayMap<>();
+				for(Map.Entry<Quests, Quest> it : player.getQuestManager().getStartedQuests().entrySet()) {
+					Quests key = it.getKey();
+					Quest value = it.getValue();
+					Object2ObjectLinkedOpenHashMap<String, Object> attributeEntry = new Object2ObjectLinkedOpenHashMap<>();
+					attributeEntry.put("quest", value);
+					quests.put(key.name(), attributeEntry);
+				}
+				obj.add("quests", gson.toJsonTree(quests));
 				Object2ObjectArrayMap<String, Object> attributes = new Object2ObjectArrayMap<>();
 				for(Map.Entry<String, AttributeValue<?>> it : player.getAttr()) {
 					AttributeKey<?> key = AttributeKey.ALIASES.get(it.getKey());
@@ -193,6 +207,12 @@ public final class PlayerSerialization {
 					Object data = GsonUtils.getAsType(obj.get("value"), type);
 					if(AttributeKey.ALIASES.keySet().stream().anyMatch(s -> s.equals(it.getKey())))
 						player.getAttr().get(it.getKey()).set(data);
+				}
+			}
+			if(reader.has("achievements")) {
+				JsonObject attr = reader.get("achievements").getAsJsonObject();
+				for(Map.Entry<String, JsonElement> it : attr.entrySet()) {
+					player.getAchievements().put(Achievement.valueOf(it.getKey()), it.getValue().getAsInt());
 				}
 			}
 		} catch(Exception e) {
