@@ -7,9 +7,13 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.packet.out.SendClanBanned;
+import net.edge.net.packet.out.SendClanMessage;
+import net.edge.net.packet.out.SendClearText;
+import net.edge.net.packet.out.SendEnterName;
 import net.edge.util.TextUtils;
 import net.edge.util.json.JsonSaver;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 import java.util.Optional;
 
@@ -35,9 +39,7 @@ public final class ClanManager {
 		player.text(50140, "Owner: ");
 		player.text(50135, "Join Clan");
 		player.text(50136, "Clan Setup");
-		for(int i = 50144; i < 50244; i++) {
-			player.text(i, "");
-		}
+		player.out(new SendClearText(50144, 100));
 		player.out(new SendClanBanned(new ObjectArrayList<>()));
 	}
 	
@@ -78,10 +80,6 @@ public final class ClanManager {
 			player.message("This clan doesn't exist.");
 			return;
 		}
-		if(clan.get().getMembers().size() >= 100) {
-			player.message("The clan you trying to join is full.");
-			return;
-		}
 		if(clan.get().getBanned().contains(player.getCredentials().getUsername())) {
 			player.message("You are banned from this clan.");
 			return;
@@ -113,14 +111,37 @@ public final class ClanManager {
 	public void delete(Player player) {
 		if(player.getClan().isPresent()) {
 			if(player.getClan().get().getRank() != ClanChatRank.OWNER) {
+				player.message("Only the owner is allowed to do that.");
 				return;
 			}
 			ClanChat clan = player.getClan().get().getClan();
-			ObjectList<ClanMember> list = clan.getMembers();
-			list.forEach(m -> clan.remove(m.getPlayer(), false));
+			for(int pos = 0; pos < clan.getMembers().length; pos++) {
+				if(clan.getMembers()[pos] == null)
+					continue;
+				ClanMember m = clan.getMembers()[pos];
+				clan.remove(m.getPlayer(), false);
+			}
 			GLOBAL_CLANS.remove(player.getCredentials().getUsername());
 		} else {
 			clearOnLogin(player);
+		}
+	}
+	
+	/**
+	 * Attempts to rename the clan chat.
+	 * @param player owenr
+	 */
+	public void rename(Player player) {
+		if(player.getClan().isPresent()) {
+			if(player.getClan().get().getRank() != ClanChatRank.OWNER) {
+				player.message("Only the owner is allowed to do that.");
+				return;
+			}
+			player.out(new SendEnterName("The new clan chat name to set:", s -> () -> {
+				String newName = TextUtils.capitalize(s);
+				player.getClan().get().getClan().setName(newName);
+				ClanManager.get().update(ClanChatUpdate.NAME_MODIFICATION, player.getClan().get().getClan());
+			}));
 		}
 	}
 
@@ -155,6 +176,10 @@ public final class ClanManager {
 				continue;
 			update(update, member);
 		}
+	}
+	
+	public void update(ClanChatUpdate update, ClanChat clan, ClanMember member) {
+		update.update(clan, member);
 	}
 	
 	public void update(ClanChatUpdate update, ClanMember member) {

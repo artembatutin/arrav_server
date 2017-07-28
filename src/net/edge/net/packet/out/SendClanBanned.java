@@ -23,6 +23,7 @@ public final class SendClanBanned implements OutgoingPacket {
 			msg.putCString(s);
 		}
 		msg.endVarSize();
+		msg.endVarSize();
 		return msg.getBuffer();
 	}
 }

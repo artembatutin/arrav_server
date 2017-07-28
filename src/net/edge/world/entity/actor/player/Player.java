@@ -517,7 +517,7 @@ public final class Player extends Actor {
 	/**
 	 * A map of interfaces texts.
 	 */
-	private final Int2ObjectArrayMap<String> interfaceTexts = new Int2ObjectArrayMap<>();
+	public final Int2ObjectArrayMap<String> interfaceTexts = new Int2ObjectArrayMap<>();
 	
 	/**
 	 * The array of chat text packed into bytes.
@@ -704,7 +704,7 @@ public final class Player extends Actor {
 		MinigameHandler.executeVoid(this, m -> m.onLogin(this));
 		PlayerPanel.refreshAll(this);
 		if(!clan.isPresent() && isHuman()) {
-			ClanManager.get().join(this, "avro");
+			ClanManager.get().clearOnLogin(this);
 		}
 		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
 			new IntroductionCutscene(this).prerequisites();
@@ -1309,15 +1309,18 @@ public final class Player extends Actor {
 	 * A shorter way of sending a player string on interface.
 	 * @param message the text to send.
 	 */
-	public void text(int id, String message) {
-		if(!interfaceTexts.containsKey(id)) {
-			interfaceTexts.put(id, message);
-		} else {
+	public void text(int id, String message, boolean skipCheck) {
+		if(!skipCheck && interfaceTexts.containsKey(id)) {
 			if(interfaceTexts.get(id).equals(message)) {
 				return;
 			}
 		}
+		interfaceTexts.put(id, message);
 		out(new SendText(id, message));
+	}
+	
+	public void text(int id, String message) {
+		text(id, message, false);
 	}
 	
 	/**

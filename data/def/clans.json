@@ -14,21 +14,5 @@
         "rank": "OWNER"
       }
     ]
-  },
-  {
-    "owner": "sar",
-    "name": "Sar",
-    "loot": false,
-    "ban": "OWNER",
-    "mute": "OWNER",
-    "talk": "MEMBER",
-    "mutes": [],
-    "bans": [],
-    "ranked": [
-      {
-        "name": "sar",
-        "rank": "OWNER"
-      }
-    ]
   }
 ]

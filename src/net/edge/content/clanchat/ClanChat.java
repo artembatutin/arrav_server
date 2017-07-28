@@ -23,7 +23,7 @@ public final class ClanChat {
 	/**
 	 * The clan chat members in this clan chat.
 	 */
-	private final ObjectArrayList<ClanMember> members = new ObjectArrayList<>(100);
+	private final ClanMember[] members = new ClanMember[100];
 	
 	/**
 	 * A collection of clan chat ranks.
@@ -51,6 +51,11 @@ public final class ClanChat {
 	private ClanChatSettings settings = new ClanChatSettings();
 	
 	/**
+	 * The searching cursor for the empty spot.
+	 */
+	private int cursor;
+	
+	/**
 	 * Constructs a new {@link ClanChat}.
 	 */
 	public ClanChat(String name, String owner) {
@@ -63,10 +68,19 @@ public final class ClanChat {
 	 * @param player the player to add.
 	 */
 	public boolean add(Player player, ClanChatRank rank) {
-		ClanMember member = new ClanMember(player, this, rank);
-		if(members.add(member)) {
+		int pos = -1;
+		for(int i = cursor; i < members.length; i++) {
+			if(members[i] == null) {
+				pos = i;
+				break;
+			}
+		}
+		if(pos != -1) {
+			ClanMember member = new ClanMember(player, this, rank);
+			member.setPos(pos);
+			members[pos] = member;
+			cursor = pos;
 			player.setClan(Optional.of(member));
-			
 			if(muted.contains(player.getCredentials().getUsername())) {
 				member.setMute(true);
 			}
@@ -79,7 +93,7 @@ public final class ClanChat {
 				}
 			}
 			ClanManager.get().update(ClanChatUpdate.JOINING, member);
-			ClanManager.get().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, this);
+			ClanManager.get().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, this, member);
 			return true;
 		}
 		return false;
@@ -93,14 +107,17 @@ public final class ClanChat {
 		if(!player.getClan().isPresent()) {
 			return;
 		}
-		members.remove(player.getClan().get());
-		
+		ClanMember m = player.getClan().get();
+		if(cursor > m.getPos()) {
+			cursor = m.getPos();
+		}
+		members[m.getPos()] = null;
+		ClanManager.get().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, this, m);
+		ClanManager.get().clearOnLogin(player);
+		m.setPos(-1);
 		if(!logout) {
 			player.setClan(Optional.empty());
 		}
-		
-		ClanManager.get().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, this);
-		ClanManager.get().clearOnLogin(player);
 	}
 	
 	/**
@@ -146,7 +163,7 @@ public final class ClanChat {
 	/**
 	 * @return the members
 	 */
-	public ObjectList<ClanMember> getMembers() {
+	public ClanMember[] getMembers() {
 		return members;
 	}
 	

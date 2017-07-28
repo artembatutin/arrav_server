@@ -95,16 +95,8 @@ public final class PlayerSerialization {
 				for(Token token : TOKENS) {
 					obj.add(token.getName(), gson.toJsonTree(token.toJson(player)));
 				}
-				obj.add("achievements", gson.toJsonTree(player.getAchievements()));
-				Object2ObjectArrayMap<String, Object> quests = new Object2ObjectArrayMap<>();
-				for(Map.Entry<Quests, Quest> it : player.getQuestManager().getStartedQuests().entrySet()) {
-					Quests key = it.getKey();
-					Quest value = it.getValue();
-					Object2ObjectLinkedOpenHashMap<String, Object> attributeEntry = new Object2ObjectLinkedOpenHashMap<>();
-					attributeEntry.put("quest", value);
-					quests.put(key.name(), attributeEntry);
-				}
-				obj.add("quests", gson.toJsonTree(quests));
+				obj.add("achievements", gson.toJsonTree(new String[] {"lol1", "lol2"}));
+				obj.add("quests", gson.toJsonTree(player.getQuestManager().getStartedQuests()));
 				Object2ObjectArrayMap<String, Object> attributes = new Object2ObjectArrayMap<>();
 				for(Map.Entry<String, AttributeValue<?>> it : player.getAttr()) {
 					AttributeKey<?> key = AttributeKey.ALIASES.get(it.getKey());
@@ -320,7 +312,9 @@ public final class PlayerSerialization {
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			ClanManager.get().join(p, n.getAsString());
+			String clan = n.getAsString();
+			if(clan.length() > 0)
+				ClanManager.get().join(p, n.getAsString());
 		}
 	}, new Token("appearance") {
 		@Override

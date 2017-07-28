@@ -10,6 +10,7 @@ import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.wilderness.WildernessActivity;
 import net.edge.action.impl.ButtonAction;
 import net.edge.GameConstants;
+import net.edge.net.packet.out.SendClearText;
 import net.edge.net.packet.out.SendEnterName;
 import net.edge.net.packet.out.SendLink;
 import net.edge.net.packet.out.SendMobDrop;
@@ -218,6 +219,7 @@ public enum PlayerPanel {
 	public static void refreshAll(Player player) {
 		if(!player.isHuman())
 			return;
+		player.out(new SendClearText(16026, 100));
 		PlayerPanel.TAB.refresh(player, "@or2@Informative @or1@- @or3@Clickable");
 		PlayerPanel.TOOLS.refresh(player, "@or1@Quickies:");
 		PlayerPanel.COMMUNITY.refresh(player, "@or3@ - Forums");

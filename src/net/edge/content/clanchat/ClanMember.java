@@ -36,12 +36,17 @@ public final class ClanMember {
 	private boolean muted;
 	
 	/**
+	 * The cursor position of this member in the list.
+	 */
+	private int pos;
+	
+	/**
 	 * Constructs a new {@link ClanMember}.
 	 * @param player {@link #player}.
 	 * @param clan   {@link #clan}.
 	 * @param rank   {@link #rank}.
 	 */
-	public ClanMember(Player player, ClanChat clan, ClanChatRank rank) {
+	ClanMember(Player player, ClanChat clan, ClanChatRank rank) {
 		this.player = player;
 		this.clan = clan;
 		this.rank = rank;
@@ -56,7 +61,7 @@ public final class ClanMember {
 			sendMessage("You don't have the requirement rank to mute in this clan.");
 			return;
 		}
-		ClanMember member = clan.getMembers().get(index);
+		ClanMember member = clan.getMembers()[index];
 		if(member.getRank().getValue() >= clan.getLowest().getValue()) {
 			sendMessage("You cannot mute this player from the clan.");
 			return;
@@ -65,8 +70,10 @@ public final class ClanMember {
 		clan.getMuted().add(member.getPlayer().getCredentials().getUsername());
 		member.sendMessage("You are now muted in the clan chat.");
 		for(ClanMember m : clan.getMembers()) {
-			String rank = m.isMuted() ? "y" : "n";
-			m.getPlayer().text(50144 + index, rank + m.getRank().toIcon(member.getPlayer(), m.getPlayer()) + m.getPlayer().getFormatUsername());
+			if(m == null)
+				continue;
+			String mute = member.isMuted() ? "y" : "n";
+			m.getPlayer().text(50144 + index, mute + member.getRank().toIcon(m.getPlayer(), member.getPlayer()) + member.getPlayer().getFormatUsername());
 		}
 	}
 	
@@ -79,13 +86,15 @@ public final class ClanMember {
 			sendMessage("You don't have the requirement rank to unmute in this clan.");
 			return;
 		}
-		ClanMember member = clan.getMembers().get(index);
+		ClanMember member = clan.getMembers()[index];
 		member.setMute(false);
-		member.getClan().getMuted().add(member.getPlayer().getCredentials().getUsername());
+		member.getClan().getMuted().remove(member.getPlayer().getCredentials().getUsername());
 		member.sendMessage("You are now unmuted from the clan chat.");
 		for(ClanMember m : clan.getMembers()) {
-			String mute = m.isMuted() ? "y" : "n";
-			m.getPlayer().text(50144 + index, mute + m.getRank().toIcon(member.getPlayer(), m.getPlayer()) + m.getPlayer().getFormatUsername());
+			if(m == null)
+				continue;
+			String mute = member.isMuted() ? "y" : "n";
+			m.getPlayer().text(50144 + index, mute + member.getRank().toIcon(m.getPlayer(), member.getPlayer()) + member.getPlayer().getFormatUsername());
 		}
 	}
 	
@@ -98,7 +107,7 @@ public final class ClanMember {
 			sendMessage("You don't have the requirement rank to ban in this clan.");
 			return;
 		}
-		ClanMember member = clan.getMembers().get(index);
+		ClanMember member = clan.getMembers()[index];
 		if(member.getRank() == ClanChatRank.OWNER) {
 			sendMessage("You cannot ban the owner of this clan.");
 			return;
@@ -170,7 +179,7 @@ public final class ClanMember {
 			sendMessage("Only the owner of the clan can rank members.");
 			return;
 		}
-		ClanMember member = clan.getMembers().get(interfaceId);
+		ClanMember member = clan.getMembers()[interfaceId];
 		if(member == null) {
 			return;
 		}
@@ -259,4 +268,11 @@ public final class ClanMember {
 		player.out(new SendClanMessage("", text, clan.getName(), Rights.PLAYER));
 	}
 	
+	public int getPos() {
+		return pos;
+	}
+	
+	public void setPos(int pos) {
+		this.pos = pos;
+	}
 }

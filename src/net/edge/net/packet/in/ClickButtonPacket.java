@@ -164,20 +164,6 @@ public final class ClickButtonPacket implements IncomingPacket {
 			player.getBank().setTab(button - 100);
 		}
 		switch(button) {
-			//Clan chat
-			case 240:
-				player.getClan().filter(c -> c.getRank() == ClanChatRank.OWNER).ifPresent(clan -> player.out(new SendEnterName("The new clan chat name to set:", s -> () -> {
-					if(!player.getClan().isPresent() || player.getClan().get().getRank() != ClanChatRank.OWNER) {
-						player.message("You are unable to do that.");
-					} else {
-						player.getClan().get().getClan().setName(TextUtils.capitalize(s));
-						ClanManager.get().update(ClanChatUpdate.NAME_MODIFICATION, player.getClan().get().getClan());
-					}
-				})));
-				break;
-			case 241:
-				ClanManager.get().delete(player);
-				break;
 			case 118114:
 				LunarSpells.castSpellbookSwap(player);
 				break;

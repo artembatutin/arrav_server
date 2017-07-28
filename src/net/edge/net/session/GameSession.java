@@ -76,8 +76,11 @@ public final class GameSession extends Session {
 			IncomingMsg packet = (IncomingMsg) msg;
 			if(packet.getOpcode() != 0) {
 				World.get().run(() -> {
-					NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.getSize(), packet);
-					packet.getBuffer().release();
+					try {
+						NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.getSize(), packet);
+					} finally {
+						packet.getBuffer().release();
+					}
 				});
 			}
 		}

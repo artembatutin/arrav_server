@@ -2,6 +2,7 @@ package net.edge.content.clanchat;
 
 import net.edge.net.packet.out.SendClanBanned;
 import net.edge.net.packet.out.SendClanMessage;
+import net.edge.net.packet.out.SendClearText;
 import net.edge.util.TextUtils;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -22,32 +23,47 @@ public enum ClanChatUpdate {
 			player.text(50139, "Talking in: @or1@" + clan.getName());
 			player.text(50140, "Owner: " + TextUtils.capitalize(clan.getOwner()));
 			player.text(50135, "Leave Clan");
-			MEMBER_LIST_MODIFICATION.update(member);
 			if(member.getRank().getValue() >= clan.getSettings().getBan().getValue()) {
 				player.text(50136, "Manage");
+			}
+			player.out(new SendClearText(50144, 100));
+			for(int pos = 0; pos < clan.getMembers().length; pos++) {
+				if(clan.getMembers()[pos] == null) {
+					continue;
+				}
+				ClanMember m = clan.getMembers()[pos];
+				String rank = m.isMuted() ? "y" : "n";
+				player.text(50144 + pos, rank + m.getRank().toIcon(player, m.getPlayer()) + m.getPlayer().getFormatUsername());
 			}
 		}
 	},
 	NAME_MODIFICATION() {
 		@Override
 		public void update(ClanChat clan) {
-			clan.getMembers().forEach(m -> {
+			for(int pos = 0; pos < clan.getMembers().length; pos++) {
+				if(clan.getMembers()[pos] == null)
+					continue;
+				ClanMember m = clan.getMembers()[pos];
 				if(m.getRank().getValue() >= m.getClan().getLowest().getValue())
 					m.getPlayer().text(50306, clan.getName());
 				m.getPlayer().text(50139, "Talking in: @or1@" + clan.getName());
-				m.getPlayer().out(new SendClanMessage("The clan name has been changed to", clan.getName(), clan.getName(), Rights.PLAYER));
-			});
+				m.getPlayer().out(new SendClanMessage("The clan name has been changed.", clan.getName(), clan.getName(), Rights.PLAYER));
+			}
 		}
 	},
 	MEMBER_LIST_MODIFICATION() {
 		@Override
-		public void update(ClanChat clan) {
-			for(ClanMember forM : clan.getMembers()) {
-				int i = 0;
-				for(ClanMember m : clan.getMembers()) {
-					String rank = m.isMuted() ? "y" : "n";
-					forM.getPlayer().text(50144 + i, rank + m.getRank().toIcon(forM.getPlayer(), m.getPlayer()) + m.getPlayer().getFormatUsername());
-					i++;
+		public void update(ClanChat clan, ClanMember member) {
+			boolean quit = clan.getMembers()[member.getPos()] == null;
+			for(int pos = 0; pos < clan.getMembers().length; pos++) {
+				if(clan.getMembers()[pos] == null)
+					continue;
+				ClanMember m = clan.getMembers()[pos];
+				if(quit) {
+					m.getPlayer().text(50144 + member.getPos(), "");
+				} else {
+					String rank = member.isMuted() ? "y" : "n";
+					m.getPlayer().text(50144 + member.getPos(), rank + member.getRank().toIcon(m.getPlayer(), member.getPlayer()) + member.getPlayer().getFormatUsername());
 				}
 			}
 		}
@@ -55,7 +71,14 @@ public enum ClanChatUpdate {
 	BAN_MODIFICATION() {
 		@Override
 		public void update(ClanChat clan) {
-			clan.getMembers().forEach(m -> m.getPlayer().out(new SendClanBanned(clan.getBanned())));
+			for(int pos = 0; pos < clan.getMembers().length; pos++) {
+				if(clan.getMembers()[pos] == null)
+					continue;
+				ClanMember m = clan.getMembers()[pos];
+				if(m.getRank().getValue() >= clan.getLowest().getValue()) {
+					m.getPlayer().out(new SendClanBanned(clan.getBanned()));
+				}
+			}
 		}
 		
 		@Override
@@ -86,6 +109,10 @@ public enum ClanChatUpdate {
 			
 		}
 	};
+	
+	public void update(ClanChat clan, ClanMember member) {
+	
+	}
 	
 	public void update(ClanMember member) {
 		

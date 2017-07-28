@@ -1,7 +1,12 @@
 package net.edge.net.packet.in;
 
+import net.edge.content.clanchat.ClanChatRank;
+import net.edge.content.clanchat.ClanChatUpdate;
+import net.edge.content.clanchat.ClanManager;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
+import net.edge.net.packet.out.SendEnterName;
+import net.edge.util.TextUtils;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -47,6 +52,20 @@ public final class InterfaceActionPacket implements IncomingPacket {
 				} else {
 					player.getClan().get().unmute(interfaceId - 600);
 				}
+			}
+		}
+		if(interfaceId == 701) {
+			if(action == 1) {
+				ClanManager.get().delete(player);
+			} else {
+				player.getClan().filter(c -> c.getRank() == ClanChatRank.OWNER).ifPresent(clan -> player.out(new SendEnterName("The new clan chat name to set:", s -> () -> {
+					if(!player.getClan().isPresent() || player.getClan().get().getRank() != ClanChatRank.OWNER) {
+						player.message("You are unable to do that.");
+					} else {
+						player.getClan().get().getClan().setName(TextUtils.capitalize(s));
+						ClanManager.get().update(ClanChatUpdate.NAME_MODIFICATION, player.getClan().get().getClan());
+					}
+				})));
 			}
 		}
 		switch(interfaceId) {
