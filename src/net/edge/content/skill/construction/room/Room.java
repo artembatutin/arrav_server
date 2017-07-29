@@ -52,7 +52,6 @@ public class Room {
 		for(int i = 0; i < data.getSpots().length; i++) {
 			if(data.getSpots()[i].getHotSpotId() == furniture.getFurniture().getHotSpotId()) {
 				this.furniture[i] = furniture;
-				break;
 			}
 		}
 	}

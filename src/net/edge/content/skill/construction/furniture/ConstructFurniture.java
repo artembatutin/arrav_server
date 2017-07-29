@@ -54,7 +54,7 @@ public final class ConstructFurniture extends ProducingSkillAction {
 					actualX += Constants.getXOffsetForObjectId(find.getObjectId(), find, roomRot);
 					int actualY = Constants.BASE_Y + (myTiles[1] * 8);
 					actualY += Constants.getYOffsetForObjectId(find.getObjectId(), find, roomRot);
-					if(plan.getObjectX() == actualX && plan.getObjectY() == actualY && myRoomType == find.getRoomType() || find.getCarpetDim() != null && myRoomType == find.getRoomType()) {
+					if(find.getHotSpotId() == plan.getSelected().getHotSpotId() && (plan.getObjectX() == actualX && plan.getObjectY() == actualY && myRoomType == find.getRoomType() || find.getCarpetDim() != null && myRoomType == find.getRoomType())) {
 						s = find;
 						break;
 					}

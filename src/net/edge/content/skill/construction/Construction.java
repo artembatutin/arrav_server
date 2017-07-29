@@ -89,10 +89,10 @@ public class Construction {
 					case 2:
 						me.move(new Position(Constants.MIDDLE_X, Constants.MIDDLE_Y, 0));
 						break;
-					case 5:
+					case 3:
 						me.write(new SendPaletteMap(house.getPalette()));
 						break;
-					case 8:
+					case 4:
 						placeAllFurniture(me, 0);
 						placeAllFurniture(me, 1);
 						if (house.get().isDungeon()) {
@@ -319,7 +319,6 @@ public class Construction {
 		} else if(s.getHotSpotId() == 86) {
 			actualX = Constants.BASE_X + (myTiles[0] * 8) + 2;
 			actualY = Constants.BASE_Y + (myTiles[1] * 8) + 2;
-			
 			SendObject.construction(p, actualX + 1, actualY, placeBack ? 15352 : f.getId(), 3, 0, height);
 			SendObject.construction(p, actualX + 2, actualY, placeBack ? 15352 : f.getId(), 3, 0, height);
 			SendObject.construction(p, actualX + 3, actualY, placeBack ? 15352 : f.getId(), 2, 2, height);
@@ -532,12 +531,10 @@ public class Construction {
 				actualX1 += Constants.getXOffsetForObjectId(find.getObjectId(), find, roomRot);
 				int actualY1 = Constants.BASE_Y + (myTiles[1] * 8);
 				actualY1 += Constants.getYOffsetForObjectId(find.getObjectId(), find, roomRot);
-				
 				SendObject.construction(p, actualX1, actualY1, placeBack ? s.getObjectId() : f.getId(), find.getRotation(roomRot), find.getObjectType(), height);
 			}
 		} else {
-			SendObject.construction(p, actualX, actualY, (portalId != -1 ? portalId : placeBack ? s.getObjectId() : f.getId()), s
-							.getRotation(roomRot), s.getObjectType(), height);
+			SendObject.construction(p, actualX, actualY, (portalId != -1 ? portalId : placeBack ? s.getObjectId() : f.getId()), s.getRotation(roomRot), s.getObjectType(), height);
 		}
 	}
 }
