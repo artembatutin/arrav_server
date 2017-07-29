@@ -1,6 +1,6 @@
 package net.edge.content.combat.strategy.base;
 
-import net.edge.content.combat.Combat;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatSpell;
@@ -33,7 +33,7 @@ public final class MagicCombatStrategy implements CombatStrategy {
 			return false;
 		}
 		
-		player.getCombatBuilder().setCombatType(CombatType.MAGIC);
+		player.getCombat().setCombatType(CombatType.MAGIC);
 		return true;
 	}
 	
@@ -48,7 +48,7 @@ public final class MagicCombatStrategy implements CombatStrategy {
 			delay = player.prepareSpell(get(player), victim);
 		} else if(character.isNpc()) {
 			Mob mob = (Mob) character;
-			delay = mob.prepareSpell(Combat.prepareSpellCast(mob).getSpell(), victim);
+			delay = mob.prepareSpell(CombatUtil.prepareSpellCast(mob).getSpell(), victim);
 		}
 		
 		if(character.getCurrentlyCasting().maximumHit() == -1) {

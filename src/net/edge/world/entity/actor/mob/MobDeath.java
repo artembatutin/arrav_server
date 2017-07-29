@@ -42,15 +42,15 @@ public final class MobDeath extends ActorDeath<Mob> {
 
 	@Override
 	public void preDeath() {
-		if(getActor().getCombatBuilder().getVictim() != null) {
-			getActor().getCombatBuilder().getVictim().getCombatBuilder().reset();
+		if(getActor().getCombat().getVictim() != null) {
+			getActor().getCombat().getVictim().getCombat().reset();
 		}
 		getActor().animation(new Animation(getActor().getDefinition().getDeathAnimation(), Animation.AnimationPriority.HIGH));
 	}
 	
 	@Override
 	public void death() {
-		Optional<Player> killer = getActor().getCombatBuilder().getDamageCache().getPlayerKiller();
+		Optional<Player> killer = getActor().getCombat().getDamageCache().getPlayerKiller();
 		killer.ifPresent(k ->  {
 			GodwarsFaction.increment(k, getActor());
 			Slayer.decrement(k, getActor());

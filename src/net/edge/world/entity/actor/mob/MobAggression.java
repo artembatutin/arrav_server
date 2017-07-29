@@ -1,7 +1,6 @@
 package net.edge.world.entity.actor.mob;
 
 import net.edge.GameConstants;
-import net.edge.world.locale.loc.Location;
 import net.edge.world.entity.actor.player.Player;
 
 import java.util.HashSet;
@@ -31,10 +30,10 @@ public final class MobAggression {
 		if(player.getMinigame().isPresent() && player.getMinigame().get().aggression()) {
 			return;
 		}
-		if(player.processAgressiveTick() == 1 && (!player.getCombatBuilder().inCombat() || player.inMulti())) {
+		if(player.processAgressiveTick() == 1 && (!player.getCombat().inCombat() || player.inMulti())) {
 			for(Mob mob : player.getLocalMobs()) {
 				if(validate(mob, player)) {
-					mob.getCombatBuilder().attack(player);
+					mob.getCombat().attack(player);
 				} else {
 					mob.getMovementCoordinator().setCoordinate(mob.isOriginalRandomWalk());
 				}
@@ -51,7 +50,7 @@ public final class MobAggression {
 	 */
 	private static boolean validate(Mob mob, Player player) {
 		boolean wilderness = player.inWilderness();
-		boolean retreats = mob.getDefinition().retreats() || (player.getCombatBuilder().isBeingAttacked() && player.getCombatBuilder().getVictim() != mob);
+		boolean retreats = mob.getDefinition().retreats() || (player.getCombat().isBeingAttacked() && player.getCombat().getVictim() != mob);
 		boolean tolerance = !(wilderness || mob.getDefinition().getCombatLevel() > 126) && player.getTolerance().elapsed(GameConstants.TOLERANCE_SECONDS, TimeUnit.SECONDS);
 		if(mob.getAttr().get("isRetreating").getBoolean()) {
 			if(mob.getPosition().withinDistance(mob.getOriginalPosition(), 1)) {
@@ -59,7 +58,7 @@ public final class MobAggression {
 			}
 			return false;
 		}
-		if(!AGGRESSIVE.contains(mob.getId()) && !wilderness || !mob.getDefinition().isAttackable() || mob.getCombatBuilder().inCombat())
+		if(!AGGRESSIVE.contains(mob.getId()) && !wilderness || !mob.getDefinition().isAttackable() || mob.getCombat().inCombat())
 			return false;
 		if(!mob.getPosition().withinDistance(player.getPosition(), 40)) {
 			retreat(mob);//Too far.
@@ -75,11 +74,11 @@ public final class MobAggression {
 		}
 		if(player.determineCombatLevel() > (mob.getDefinition().getCombatLevel() * 2) && !wilderness)
 			return false;
-		return !mob.getCombatBuilder().isAttacking() && !mob.getCombatBuilder().isBeingAttacked() && !tolerance;
+		return !mob.getCombat().isAttacking() && !mob.getCombat().isBeingAttacked() && !tolerance;
 	}
 	
 	public static void retreat(Mob mob) {
-		mob.getCombatBuilder().reset();
+		mob.getCombat().reset();
 		mob.getMovementQueue().smartWalk(mob.getOriginalPosition());
 		mob.getAttr().get("isRetreating").set(true);
 	}

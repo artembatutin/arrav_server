@@ -52,7 +52,7 @@ public final class GlacorExplodeTask extends Task {
 		mob.resetSpecial();
 		
 		if(!death) {
-			mob.getCombatBuilder().reset();
+			mob.getCombat().reset();
 		}
 	}
 	
@@ -89,8 +89,8 @@ public final class GlacorExplodeTask extends Task {
 	
 	@Override
 	public void onCancel() {
-		if(!death && !mob.getCombatBuilder().inCombat()) {
-			mob.getCombatBuilder().attack(player);
+		if(!death && !mob.getCombat().inCombat()) {
+			mob.getCombat().attack(player);
 		}
 	}
 }

@@ -7,7 +7,7 @@ import net.edge.net.packet.out.SendInterfaceLayer;
 import net.edge.net.packet.out.SendUpdateSpecial;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.Combat;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.Actor;
@@ -17,7 +17,6 @@ import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.entity.region.TraversalMap;
-import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.Position;
 import net.edge.world.*;
 import net.edge.world.entity.actor.player.Player;
@@ -196,9 +195,9 @@ public enum CombatSpecial {
 							if(character == null)
 								continue;
 							if(character.getPosition().withinDistance(target.getPosition(), 1) && !character.same(target) && !character.same(player) && character.getCurrentHealth() > 0 && !character.isDead()) {
-								Hit hit = Combat.calculateRandomHit(player, target, CombatType.MELEE, 0, true);
+								Hit hit = CombatUtil.calculateRandomHit(player, target, CombatType.MELEE, 0, true);
 								character.damage(hit);
-								character.getCombatBuilder().getDamageCache().add(player, hit.getDamage());
+								character.getCombat().getDamageCache().add(player, hit.getDamage());
 							}
 						}
 					}
@@ -227,7 +226,7 @@ public enum CombatSpecial {
 			Skills.refresh(player, Skills.DEFENCE);
 			Skills.refresh(player, Skills.RANGED);
 			Skills.refresh(player, Skills.MAGIC);
-			player.getCombatBuilder().cooldown(true);
+			player.getCombat().cooldown(true);
 			CombatSpecial.drain(player, DRAGON_BATTLEAXE.amount);
 		}
 		

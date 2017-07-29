@@ -46,7 +46,7 @@ public final class KreeArraCombatStrategy extends DynamicCombatStrategy<KreeArra
 		CombatType c = RandomUtils.random(data);
 		KreeArra.AVIANTESES.forEach(aviantese -> {
 			if(!aviantese.isDead() && aviantese.getState() == EntityState.ACTIVE) {
-				aviantese.getCombatBuilder().attack(victim);
+				aviantese.getCombat().attack(victim);
 			}
 		});
 		return type(victim, c);

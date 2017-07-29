@@ -1,7 +1,7 @@
 package net.edge.content.combat.strategy.mob;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.content.combat.Combat;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
@@ -193,7 +193,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
             character.graphic(new Graphic(65565));
         });
         seq.connect(1, () -> {
-            Combat.damagePlayersWithin(character, character.getPosition(), 5, 1, CombatType.NONE, false/*, p -> new Projectile(character, p, 2283, 44, 3, 43, 31, 0).sendProjectile()*/);
+            CombatUtil.damagePlayersWithin(character, character.getPosition(), 5, 1, CombatType.NONE, false/*, p -> new Projectile(character, p, 2283, 44, 3, 43, 31, 0).sendProjectile()*/);
             charge = null;
             character.getMovementQueue().setLockMovement(false);
         });

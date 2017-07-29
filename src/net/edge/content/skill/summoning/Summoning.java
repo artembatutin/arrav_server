@@ -12,7 +12,6 @@ import net.edge.content.skill.summoning.familiar.FamiliarContainer;
 import net.edge.content.skill.summoning.familiar.ability.Teleporter;
 import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
-import net.edge.world.World;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Graphic;
@@ -308,12 +307,12 @@ public final class Summoning {
 			return false;
 		}
 		
-		if(!player.getCombatBuilder().inCombat()) {
+		if(!player.getCombat().inCombat()) {
 			player.message("Your familiar cannot fight whilst you are not in combat.");
 			return false;
 		}
 		
-		familiar.getCombatBuilder().attack(victim);
+		familiar.getCombat().attack(victim);
 		return true;
 	}
 	

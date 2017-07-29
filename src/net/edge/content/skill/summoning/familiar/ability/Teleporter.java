@@ -71,7 +71,7 @@ public final class Teleporter extends FamiliarAbility {
 		
 		int amount = player.getMaximumHealth() / policy.percentage;
 		
-		if(policy.combat && !player.getCombatBuilder().inCombat() && player.getCurrentHealth() < amount) {
+		if(policy.combat && !player.getCombat().inCombat() && player.getCurrentHealth() < amount) {
 			player.message("This familiar will only teleport you while you're in combat.");
 			return false;
 		}

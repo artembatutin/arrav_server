@@ -19,11 +19,6 @@ public final class TrapTask extends Task {
 	private final Player player;
 	
 	/**
-	 * The trap this task is running for.
-	 */
-	private ObjectList<Trap> trap = new ObjectArrayList<>();
-	
-	/**
 	 * Constructs a new {@link TrapTask}.
 	 * @param player {@link #player}.
 	 */
@@ -33,31 +28,23 @@ public final class TrapTask extends Task {
 	}
 	
 	@Override
-	public void onSequence() {
+	public void execute() {
 		if(Hunter.GLOBAL_TRAPS.get(player) == null || !Hunter.GLOBAL_TRAPS.get(player).getTask().isPresent() || Hunter.GLOBAL_TRAPS.get(player).getTraps().isEmpty()) {
 			this.cancel();
 			return;
 		}
-		
-		this.trap.forEach(t -> {
+		ObjectList<Trap> traps = Hunter.GLOBAL_TRAPS.get(player).getTraps();
+		traps.forEach(t -> {
 			boolean withinDistance = player.getPosition().withinDistance(t.getObject().getGlobalPos(), 25);
 			if(!withinDistance && !t.isAbandoned()) {
 				Hunter.abandon(player, t, false);
 			}
 		});
 		
-	}
-	
-	@Override
-	public void execute() {
-		this.trap.clear();
-		this.trap.addAll(Hunter.GLOBAL_TRAPS.get(player).getTraps());
-		
-		Trap trap = RandomUtils.random(this.trap);
+		Trap trap = RandomUtils.random(traps);
 		if(!Hunter.getTrap(player, trap.getObject()).isPresent() || !trap.getState().equals(Trap.TrapState.PENDING)) {
 			return;
 		}
-		
 		trap.onSequence(this);
 	}
 }

@@ -7,7 +7,6 @@ import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.world.locale.Boundary;
-import net.edge.world.locale.loc.Location;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.mob.Mob;
@@ -24,13 +23,13 @@ public final class CombatTask extends Task {
 	/**
 	 * The builder assigned to this combat session.
 	 */
-	private final CombatBuilder builder;
+	private final Combat builder;
 	
 	/**
 	 * Create a new {@link CombatTask}.
 	 * @param builder the builder assigned to this combat session.
 	 */
-	CombatTask(CombatBuilder builder) {
+	CombatTask(Combat builder) {
 		super(1, false);
 		super.attach(builder.getCharacter().isPlayer() ? builder.getCharacter().toPlayer() : builder.getCharacter().toNpc());
 		this.builder = builder;
@@ -58,7 +57,7 @@ public final class CombatTask extends Task {
 		}
 		builder.decrementAttackTimer();
 		if(builder.getAttackTimer() < 1) {
-			if(!Combat.checkAttackDistance(builder)) {
+			if(!CombatUtil.checkAttackDistance(builder)) {
 				return;
 			}
 			if(!builder.getStrategy().canIncomingAttack(builder.getCharacter(), builder.getVictim())) {
@@ -67,7 +66,7 @@ public final class CombatTask extends Task {
 			if(!builder.getStrategy().canOutgoingAttack(builder.getCharacter(), builder.getVictim())) {
 				return;
 			}
-			if(!Combat.canBeAttacked(builder.getVictim(), builder.getCharacter())) {
+			if(!CombatUtil.canBeAttacked(builder.getVictim(), builder.getCharacter())) {
 				builder.reset();
 				return;
 			}
@@ -86,8 +85,8 @@ public final class CombatTask extends Task {
 				player.closeWidget();
 				
 				if(builder.getVictim().isPlayer() && !MinigameHandler.getMinigame(builder.getVictim().toPlayer()).isPresent()) {
-					if(!builder.getCharacter().getCombatBuilder().isBeingAttacked() || builder.getCharacter().getCombatBuilder().isBeingAttacked() && builder.getCharacter().getCombatBuilder().getAggressor() != builder.getVictim() && builder.getCharacter().inMulti()) {
-						Combat.effect(builder.getCharacter(), CombatEffectType.SKULL);
+					if(!builder.getCharacter().getCombat().isBeingAttacked() || builder.getCharacter().getCombat().isBeingAttacked() && builder.getCharacter().getCombat().getAggressor() != builder.getVictim() && builder.getCharacter().inMulti()) {
+						CombatUtil.effect(builder.getCharacter(), CombatEffectType.SKULL);
 					}
 				}
 				
@@ -98,7 +97,7 @@ public final class CombatTask extends Task {
 			}
 			
 			if(data.getType() != null && !data.isIgnored()) {
-				builder.getVictim().getCombatBuilder().setAggressor(builder.getCharacter());
+				builder.getVictim().getCombat().setAggressor(builder.getCharacter());
 				builder.getVictim().getLastCombat().reset();
 				
 				if(data.getType() == CombatType.MAGIC && builder.getCharacter().isPlayer() && !builder.getCharacter().toPlayer().getWeapon().equals(WeaponInterface.SALAMANDER)) {
@@ -106,7 +105,7 @@ public final class CombatTask extends Task {
 					
 					if(player.getCastSpell() != null && player.getAutocastSpell() != null || player.getAutocastSpell() == null) {
 						if(!player.isSpecialActivated()) {
-							player.getCombatBuilder().cooldown(false);
+							player.getCombat().cooldown(false);
 						}
 						player.setCastSpell(null);
 						player.setFollowing(false);
@@ -151,7 +150,7 @@ public final class CombatTask extends Task {
 			builder.reset();
 			return false;
 		}
-		if(!builder.getCharacter().inMulti() && builder.getVictim() != null && builder.getVictim().getCombatBuilder().isBeingAttacked() && builder.getVictim().getCombatBuilder().getAggressor() != null && !builder.getVictim().getCombatBuilder().getAggressor().same(builder.getCharacter())) {
+		if(!builder.getCharacter().inMulti() && builder.getVictim() != null && builder.getVictim().getCombat().isBeingAttacked() && builder.getVictim().getCombat().getAggressor() != null && !builder.getVictim().getCombat().getAggressor().same(builder.getCharacter())) {
 			if(builder.getCharacter().isPlayer()) {
 				Player player = builder.getCharacter().toPlayer();
 				player.message("You are already under attack!");
@@ -171,8 +170,8 @@ public final class CombatTask extends Task {
 		}
 		if(builder.getCharacter().isNpc()) {
 			Mob mob = (Mob) builder.getCharacter();
-			boolean retreats = mob.getDefinition().retreats() && mob.getCombatBuilder().inCombat();
-			if(builder.getVictim().getCombatBuilder().isCooldown() && !new Boundary(mob.getPosition(), mob.size()).within(mob
+			boolean retreats = mob.getDefinition().retreats() && mob.getCombat().inCombat();
+			if(builder.getVictim().getCombat().isCooldown() && !new Boundary(mob.getPosition(), mob.size()).within(mob
 					.getPosition(), mob.size(), GameConstants.TARGET_DISTANCE) && retreats) {
 				MobAggression.retreat(mob);
 				return false;

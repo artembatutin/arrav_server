@@ -39,7 +39,7 @@ public final class GeneralGraardorCombatStrategy extends DynamicCombatStrategy<G
 		CombatType c = RandomUtils.random(data);
 		GeneralGraardor.SERGEANTS.forEach(sergeant -> {
 			if(!sergeant.isDead() && sergeant.getState() == EntityState.ACTIVE) {
-				sergeant.getCombatBuilder().attack(victim);
+				sergeant.getCombat().attack(victim);
 			}
 		});
 		npc.forceChat(RandomUtils.random(GeneralGraardor.RANDOM_CHAT));

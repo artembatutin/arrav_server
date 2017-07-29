@@ -70,7 +70,7 @@ public final class RFDMinigame extends SequencedMinigame {
 				Mob mob = this.currentNpc.get();
 				InstanceManager.get().isolate(mob, instance);
 				World.get().getMobs().add(mob);
-				mob.getCombatBuilder().attack(player);
+				mob.getCombat().attack(player);
 				timer = 0;
 			}
 		}

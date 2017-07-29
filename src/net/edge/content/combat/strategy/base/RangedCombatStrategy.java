@@ -1,6 +1,6 @@
 package net.edge.content.combat.strategy.base;
 
-import net.edge.content.combat.Combat;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.ranged.CombatRangedAmmunition;
@@ -44,7 +44,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		if(!prerequisites(player)) {
 			return false;
 		}
-		player.getCombatBuilder().setCombatType(CombatType.RANGED);
+		player.getCombat().setCombatType(CombatType.RANGED);
 		return true;
 	}
 	
@@ -108,7 +108,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		if(character.isNpc())
 			return 6;
 		Player player = (Player) character;
-		return Combat.getRangedDistance(player.getWeapon()) + (player.getFightType().getStyle() == FightStyle.DEFENSIVE ? 2 : 0);
+		return CombatUtil.getRangedDistance(player.getWeapon()) + (player.getFightType().getStyle() == FightStyle.DEFENSIVE ? 2 : 0);
 	}
 	
 	@Override
@@ -121,7 +121,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	}
 	
 	private void startAnimation(Player player) {
-		if(player.getWeaponAnimation() != null) {
+		if(player.getWeaponAnimation() != null && player.getWeaponAnimation().getAttacking()[0] != 422) {
 			player.animation(new Animation(player.getWeaponAnimation().getAttacking()[player.getFightType().getStyle().ordinal()], AnimationPriority.HIGH));
 		} else {
 			player.animation(new Animation(player.getFightType().getAnimation(), Animation.AnimationPriority.HIGH));

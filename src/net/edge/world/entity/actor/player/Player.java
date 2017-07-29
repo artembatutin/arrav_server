@@ -11,7 +11,7 @@ import net.edge.content.ViewingOrb;
 import net.edge.content.achievements.Achievement;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.clanchat.ClanMember;
-import net.edge.content.combat.Combat;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectTask;
@@ -758,6 +758,16 @@ public final class Player extends Actor {
 	}
 	
 	@Override
+	public Set<Player> getLocalPlayers() {
+		return localPlayers;
+	}
+	
+	@Override
+	public Set<Mob> getLocalMobs() {
+		return localMobs;
+	}
+	
+	@Override
 	public boolean inMulti() {
 		return multicombatInterface;
 	}
@@ -857,20 +867,20 @@ public final class Player extends Actor {
 	public CombatStrategy determineStrategy() {
 		if(specialActivated && castSpell == null) {
 			if(combatSpecial.getCombat() == CombatType.MELEE) {
-				return Combat.newDefaultMeleeStrategy();
+				return CombatUtil.newDefaultMeleeStrategy();
 			} else if(combatSpecial.getCombat() == CombatType.RANGED) {
-				return Combat.newDefaultRangedStrategy();
+				return CombatUtil.newDefaultRangedStrategy();
 			} else if(combatSpecial.getCombat() == CombatType.MAGIC) {
-				return Combat.newDefaultMagicStrategy();
+				return CombatUtil.newDefaultMagicStrategy();
 			}
 		}
 		if(castSpell != null || autocastSpell != null) {
-			return Combat.newDefaultMagicStrategy();
+			return CombatUtil.newDefaultMagicStrategy();
 		}
 		if(weapon == WeaponInterface.SHORTBOW || weapon == WeaponInterface.COMPOSITE_BOW || weapon == WeaponInterface.LONGBOW || weapon == WeaponInterface.CROSSBOW || weapon == WeaponInterface.DART || weapon == WeaponInterface.JAVELIN || weapon == WeaponInterface.THROWNAXE || weapon == WeaponInterface.KNIFE || weapon == WeaponInterface.CHINCHOMPA || weapon == WeaponInterface.SALAMANDER) {
-			return Combat.newDefaultRangedStrategy();
+			return CombatUtil.newDefaultRangedStrategy();
 		}
-		return Combat.newDefaultMeleeStrategy();
+		return CombatUtil.newDefaultMeleeStrategy();
 	}
 	
 	@Override
@@ -1185,22 +1195,6 @@ public final class Player extends Actor {
 
 	public void setLastKiller(String lastKiller) {
 		this.lastKiller = lastKiller;
-	}
-
-	/**
-	 * Gets the hash collection of the local players.
-	 * @return the local players.
-	 */
-	public Set<Player> getLocalPlayers() {
-		return localPlayers;
-	}
-	
-	/**
-	 * Gets the hash collection of the local npcs.
-	 * @return the local npcs.
-	 */
-	public Set<Mob> getLocalMobs() {
-		return localMobs;
 	}
 	
 	/**

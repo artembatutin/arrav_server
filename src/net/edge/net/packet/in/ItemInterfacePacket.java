@@ -12,7 +12,6 @@ import net.edge.action.impl.ItemAction;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
-import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.Item;
@@ -98,7 +97,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		switch(interfaceId) {
 			case 1688:
 				player.getEquipment().unequip(slot);
-				player.getCombatBuilder().cooldown(true);
+				player.getCombat().cooldown(true);
 				break;
 			case 3322:
 				if(!session.isPresent()) {
@@ -307,7 +306,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 			return;
 		}
 		ItemAction e = EQUIP.get(item.getId());
-		player.getCombatBuilder().cooldown(false);
+		player.getCombat().cooldown(false);
 		if(e != null)
 			if(e.click(player, item, interfaceId, slot, 5))
 				return;

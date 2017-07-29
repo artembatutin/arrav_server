@@ -83,11 +83,11 @@ public class CombatHit {
 		this.delay = delay;
 		this.experience = determineExperience();
 		
-		this.getAttacker().getCombatBuilder().resetAttackTimer();
+		this.getAttacker().getCombat().resetAttackTimer();
 		int counter = 0;
 		// No hit for this turn, but we still need to calculate accuracy.
 		if(amount == 0) {
-			accurate = !checkAccuracy || Combat.isAccurate(attacker, victim, type);
+			accurate = !checkAccuracy || CombatUtil.isAccurate(attacker, victim, type);
 			this.hits = new Hit[]{};
 			this.damage = 0;
 		} else {
@@ -95,7 +95,7 @@ public class CombatHit {
 			// hit and accuracy calculations.
 			this.hits = new Hit[amount];
 			for(int i = 0; i < hits.length; i++) {
-				hits[i] = Combat.calculateRandomHit(attacker, victim, type, 0/**i == 0 ? 0 : (delay * (i * 2))*/, checkAccuracy);
+				hits[i] = CombatUtil.calculateRandomHit(attacker, victim, type, 0/**i == 0 ? 0 : (delay * (i * 2))*/, checkAccuracy);
 				if(hits[i].isAccurate()) {
 					accurate = true;
 					counter += hits[i].getDamage();
@@ -169,7 +169,7 @@ public class CombatHit {
 	}
 	
 	public void experience() {
-		Combat.handleExperience(attacker.getCombatBuilder(), this, damage);
+		CombatUtil.handleExperience(attacker.getCombat(), this, damage);
 	}
 	
 	/**

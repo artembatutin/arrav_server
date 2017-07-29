@@ -1,7 +1,7 @@
 package net.edge.content.combat.magic.lunars.impl.spells;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.content.combat.Combat;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.content.item.PotionConsumable;
 import net.edge.world.World;
@@ -42,7 +42,7 @@ public final class StatRestorePotShare extends LunarButtonSpell {
 			return false;
 		}
 		
-		local_players = Combat.charactersWithinDistance(caster, World.get().getLocalPlayers(caster), 1).stream().limit(4).collect(Collectors.toList());
+		local_players = CombatUtil.actorsWithinDistance(caster, World.get().getLocalPlayers(caster), 1).stream().limit(4).collect(Collectors.toList());
 		
 		if(local_players.isEmpty() || local_players.stream().noneMatch(p -> p.getAttr().get("accept_aid").getBoolean())) {
 			caster.toPlayer().message("There are no players within your radius to cast this spell for.");

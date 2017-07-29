@@ -3,8 +3,6 @@ package net.edge.net.packet.in;
 import net.edge.Application;
 import net.edge.content.Emote;
 import net.edge.content.TabInterface;
-import net.edge.content.clanchat.ClanChatRank;
-import net.edge.content.clanchat.ClanChatUpdate;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.combat.magic.lunars.LunarSpells;
@@ -35,7 +33,6 @@ import net.edge.content.skill.summoning.Summoning;
 import net.edge.action.ActionContainer;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.task.Task;
-import net.edge.util.TextUtils;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -989,8 +986,8 @@ public final class ClickButtonPacket implements IncomingPacket {
 					}
 					player.out(new SendConfig(301, 1));
 					player.setSpecialActivated(true);
-					if(player.getCombatSpecial() == CombatSpecial.GRANITE_MAUL && player.getCombatBuilder().isAttacking() && !player.getCombatBuilder().isCooldown()) {
-						player.getCombatBuilder().instant();
+					if(player.getCombatSpecial() == CombatSpecial.GRANITE_MAUL && player.getCombat().isAttacking() && !player.getCombat().isCooldown()) {
+						player.getCombat().instant();
 						break;
 					}
 					World.get().submit(new Task(1, false) {
@@ -1001,7 +998,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 								return;
 							}
 							
-							player.getCombatSpecial().onActivation(player, player.getCombatBuilder().getVictim());
+							player.getCombatSpecial().onActivation(player, player.getCombat().getVictim());
 							this.cancel();
 						}
 					}.attach(player));

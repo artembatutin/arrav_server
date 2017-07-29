@@ -1,6 +1,6 @@
 package net.edge.content.combat.magic;
 
-import net.edge.content.combat.Combat;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.magic.ancients.CombatAncientSpell;
@@ -1673,7 +1673,7 @@ public enum CombatSpells {
 		@Override
 		public void effect(Actor cast, Actor castOn) {
 			if(castOn.isPlayer())
-				Combat.effect(castOn, CombatEffectType.TELEBLOCK);
+				CombatUtil.effect(castOn, CombatEffectType.TELEBLOCK);
 		}
 		
 		@Override

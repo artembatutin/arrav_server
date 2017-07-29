@@ -244,12 +244,12 @@ public final class CyclopsRoom extends GuildRoom {
 				player.move(new Position(2846, RandomUtils.nextBoolean() ? 3541 : 3540, 2));
 				player.getDialogueBuilder().append(new NpcDialogue(4289, Expression.CALM, "Your time is up..."));
 				
-				if(player.getCombatBuilder().isAttacking()) {
-					player.getCombatBuilder().reset();
+				if(player.getCombat().isAttacking()) {
+					player.getCombat().reset();
 				}
 				
-				if(player.getCombatBuilder().getVictim() != null) {
-					player.getCombatBuilder().getVictim().getCombatBuilder().reset();
+				if(player.getCombat().getVictim() != null) {
+					player.getCombat().getVictim().getCombat().reset();
 				}
 				
 				this.cancel();

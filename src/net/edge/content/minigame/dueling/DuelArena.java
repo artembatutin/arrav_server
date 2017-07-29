@@ -114,10 +114,10 @@ package net.edge.content.minigame.dueling;
 //			player.message("You can't attack this person.");
 //			return false;
 //		}
-//		if(player.getCombatBuilder().getStrategy() == null) {
+//		if(player.getCombat().getStrategy() == null) {
 //			return true;
 //		} else {
-//			CombatType type = player.getCombatBuilder().getStrategy().getCombatType();
+//			CombatType type = player.getCombat().getStrategy().getCombatType();
 //			if(player.getDuelSession().rules.has(DuelingRules.WHIP_DDS_ONLY.value)) {
 //				if(!type.same(CombatType.MELEE)) {
 //					player.message("You can only hit the opponent with a whip or dds.");
@@ -529,7 +529,7 @@ package net.edge.content.minigame.dueling;
 //			//just to make sure both players have confirmed.
 //			break;
 //		case COUNTDOWN:
-//			player.getCombatBuilder().reset();
+//			player.getCombat().reset();
 //			player.closeInterface();
 //			player.getMessages().sendContextMenu(3, "Attack");
 //			LinkedTaskSequence seq = new LinkedTaskSequence();

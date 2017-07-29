@@ -118,10 +118,6 @@ public final class ObjectActionPacket implements IncomingPacket {
 							return;
 						if(ShootingStarManager.get().mine(player, objectId))
 							return;
-						if(Hunter.claim(player, object))
-							return;
-						if(Hunter.pickup(player, object))
-							return;
 						break;
 					case 2:
 						if(!MinigameHandler.execute(player, m -> m.onSecondClickObject(player, object)))

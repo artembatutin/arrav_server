@@ -1,9 +1,9 @@
 package net.edge.world.entity.actor.move;
 
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.combat.CombatUtil;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.Combat;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Boundary;
@@ -111,10 +111,10 @@ class ActorFollowTask extends Task {
 		}
 		
 		//Combat distance check.
-		if(character.getCombatBuilder().isAttacking()) {
+		if(character.getCombat().isAttacking()) {
 			if(character.isPlayer()) {
-				character.getCombatBuilder().determineStrategy();
-				if(Combat.checkAttackDistance(character.getCombatBuilder())) {
+				character.getCombat().determineStrategy();
+				if(CombatUtil.checkAttackDistance(character.getCombat())) {
 					return;
 				}
 			}
@@ -124,7 +124,7 @@ class ActorFollowTask extends Task {
 		if(boundary.within(character.getPosition(), character.size(), 1)) {
 			character.getMovementQueue().reset();
 			//Combat diagonal fighting.
-			/*if(character.getCombatBuilder().isAttacking()) {
+			/*if(character.getCombat().isAttacking()) {
 				Direction facing = Direction.fromDeltas(Position.delta(character.getPosition(), leader.getPosition()));
 				if(facing.isDiagonal()) {//Moving player if diagonal fighting
 					Position pos = TraversalMap.getRandomNearby(character.getPosition(), leader.getPosition(), character.size());

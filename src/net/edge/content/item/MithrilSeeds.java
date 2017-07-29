@@ -9,7 +9,6 @@ import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
-import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.Item;
@@ -67,7 +66,7 @@ public final class MithrilSeeds {
         ItemAction itemEvent = new net.edge.action.impl.ItemAction() {
             @Override
             public boolean click(Player player, Item item, int container, int slot, int click) {
-                if(player.getCombatBuilder().inCombat()) {
+                if(player.getCombat().inCombat()) {
                     player.message("You are currently in combat.");
                     return true;
                 }

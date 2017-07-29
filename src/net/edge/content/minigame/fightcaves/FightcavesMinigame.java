@@ -156,7 +156,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 					InstanceManager.get().isolate(monsters[i], instance);
 					World.get().getMobs().add(monsters[i]);
 					monsters[i].setViewingDistance(100);
-					monsters[i].getCombatBuilder().attack(player);
+					monsters[i].getCombat().attack(player);
 				}
 				started = true;
 				timer = DELAY;

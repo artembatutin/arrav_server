@@ -107,7 +107,7 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 				return false;
 			}
 			
-			if(player.getCombatBuilder().inCombat() && player.getCombatBuilder().getVictim() != null && player.getCombatBuilder().getVictim().isPlayer()) {
+			if(player.getCombat().inCombat() && player.getCombat().getVictim() != null && player.getCombat().getVictim().isPlayer()) {
 				player.message("You can't teleport while being in combat.");
 				return false;
 			}

@@ -1,12 +1,12 @@
 package net.edge.world.entity.actor;
 
 import com.google.common.base.Preconditions;
+import net.edge.content.combat.Combat;
 import net.edge.world.*;
 import net.edge.task.Task;
 import net.edge.util.MutableNumber;
 import net.edge.util.Stopwatch;
-import net.edge.content.combat.Combat;
-import net.edge.content.combat.CombatBuilder;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.magic.CombatSpell;
@@ -29,6 +29,7 @@ import net.edge.world.entity.actor.update.UpdateFlag;
 import net.edge.world.entity.actor.update.UpdateFlagHolder;
 
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
@@ -51,7 +52,7 @@ public abstract class Actor extends Entity {
 	/**
 	 * The combat builder that will handle all combat operations for this entity.
 	 */
-	private final CombatBuilder combatBuilder = new CombatBuilder(this);
+	private final Combat combat = new Combat(this);
 	
 	/**
 	 * The movement queue that will handle all movement processing for this entity.
@@ -326,6 +327,18 @@ public abstract class Actor extends Entity {
 	public abstract boolean weaken(CombatWeaken effect);
 	
 	/**
+	 * Gets a set of local players.
+	 * @return local players
+	 */
+	public abstract Set<Player> getLocalPlayers();
+	
+	/**
+	 * Gets a set of local mobs.
+	 * @return local mobs
+	 */
+	public abstract Set<Mob> getLocalMobs();
+	
+	/**
 	 * Gets the attack speed for this entity.
 	 * @return the attack speed.
 	 */
@@ -385,7 +398,7 @@ public abstract class Actor extends Entity {
 	 */
 	public void poison(PoisonType type) {
 		poisonType = type;
-		Combat.effect(this, CombatEffectType.POISON);
+		CombatUtil.effect(this, CombatEffectType.POISON);
 	}
 	
 	/**
@@ -942,8 +955,8 @@ public abstract class Actor extends Entity {
 	 * entity.
 	 * @return the combat builder.
 	 */
-	public final CombatBuilder getCombatBuilder() {
-		return combatBuilder;
+	public final Combat getCombat() {
+		return combat;
 	}
 	
 	/**

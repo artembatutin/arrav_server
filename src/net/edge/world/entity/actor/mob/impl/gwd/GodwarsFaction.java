@@ -131,7 +131,7 @@ public enum GodwarsFaction {
 	 * @return {@code true} if the killcount was incremented, {@code false} otherwise.
 	 */
 	public static boolean increment(Player player, Mob mob) {
-		MobType t = mob.getNpcType();
+		MobType t = mob.getMobType();
 		if(t != MobType.ARMADYL_SOLDIER && t != MobType.ZAMORAK_SOLDIER && t != MobType.SARADOMIN_SOLDIER && t != MobType.BANDOS_SOLIDER)
 			return false;
 		GodwarsSoldier s = (GodwarsSoldier) mob;
@@ -164,7 +164,7 @@ public enum GodwarsFaction {
 	 */
 	private static boolean canAttack(GodwarsSoldier soldier, GodwarsSoldier target) {
 		//some prerequisite checks.
-		if(soldier.getCombatBuilder().inCombat() || (target.isNpc() && target.getCombatBuilder().inCombat()) || soldier.isDead() || soldier.getState() != EntityState.ACTIVE || target.isDead() || target.getState() != EntityState.ACTIVE) {
+		if(soldier.getCombat().inCombat() || (target.isNpc() && target.getCombat().inCombat()) || soldier.isDead() || soldier.getState() != EntityState.ACTIVE || target.isDead() || target.getState() != EntityState.ACTIVE) {
 			return false;
 		}
 		//if the difference is greater then 5 tiles block
@@ -189,14 +189,14 @@ public enum GodwarsFaction {
 		if(!character.isNpc() || !attacker.isPlayer()) {
 			return true;
 		}
-		MobType t = character.toNpc().getNpcType();
+		MobType t = character.toNpc().getMobType();
 		if(t != MobType.ARMADYL_SOLDIER && t != MobType.ZAMORAK_SOLDIER && t != MobType.SARADOMIN_SOLDIER && t != MobType.BANDOS_SOLIDER)
 			return true;
 		if(((GodwarsSoldier) character).faction.equals(GodwarsFaction.ARMADYL)) {
-			if(attacker.isPlayer() && attacker.getCombatBuilder().getCombatType().equals(CombatType.MELEE)) {
+			if(attacker.isPlayer() && attacker.getCombat().getCombatType().equals(CombatType.MELEE)) {
 				attacker.toPlayer().message("The aviansie is flying too high for you to attack using melee.");
-				if(!character.getCombatBuilder().isAttacking()) {
-					character.getCombatBuilder().attack(attacker);
+				if(!character.getCombat().isAttacking()) {
+					character.getCombat().attack(attacker);
 				}
 				//if the aviansie was attempted to be attacked it will attack back.
 				return false;
@@ -271,13 +271,13 @@ public enum GodwarsFaction {
 		@Override
 		public void update() {
 			check++;
-			if(getCombatBuilder().inCombat())
+			if(getCombat().inCombat())
 				return;
 			if(check % 20 == 1) {
 				for(Player player : getRegion().getPlayers()) {
 					//if the target is a player but hes wearing items which will protect him they will not attack.
 					if(!GodwarsFaction.isProtected(player, faction)) {
-						getCombatBuilder().attack(player);
+						getCombat().attack(player);
 					}
 				}
 			}
@@ -287,13 +287,13 @@ public enum GodwarsFaction {
 					count++;
 					if(count >= 10)
 						break;
-					MobType t = mob.getNpcType();
+					MobType t = mob.getMobType();
 					if(t != MobType.ARMADYL_SOLDIER && t != MobType.ZAMORAK_SOLDIER && t != MobType.SARADOMIN_SOLDIER && t != MobType.BANDOS_SOLIDER)
 						continue;
 					if(canAttack(this, (GodwarsSoldier) mob)) {
 						mob.setAutoRetaliate(true);
-						getCombatBuilder().attack(mob);
-						mob.getCombatBuilder().attack(this);
+						getCombat().attack(mob);
+						mob.getCombat().attack(this);
 						break;
 					}
 				}
@@ -302,7 +302,7 @@ public enum GodwarsFaction {
 		}
 		
 		@Override
-		public MobType getNpcType() {
+		public MobType getMobType() {
 			return faction.type;
 		}
 	}

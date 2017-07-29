@@ -7,7 +7,6 @@ import net.edge.content.skill.Skills;
 import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.locale.Position;
 import net.edge.world.Spell;
-import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
@@ -47,7 +46,7 @@ public abstract class TeleportSpell extends Spell {
 		player.widget(-1);
 		player.out(new SendWalkable(-1));
 		player.setTeleportStage(1);
-		player.getCombatBuilder().reset();
+		player.getCombat().reset();
 		player.faceEntity(null);
 		player.setFollowing(false);
 		player.setFollowEntity(null);

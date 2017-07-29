@@ -120,7 +120,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 				@Override
 				public void postAttack(int counter) {
 					stompables.stream().filter(s -> !s.getFormatUsername().equals(stompables.get(0).getFormatUsername())).forEach(player -> {
-						Arrays.stream(getHits()).forEach(hit -> player.getCombatBuilder().getDamageCache().add(npc, hit.getDamage()));
+						Arrays.stream(getHits()).forEach(hit -> player.getCombat().getDamageCache().add(npc, hit.getDamage()));
 						player.damage(getHits());
 					});
 				}

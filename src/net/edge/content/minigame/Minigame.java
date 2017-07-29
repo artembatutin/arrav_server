@@ -441,8 +441,8 @@ public abstract class Minigame {
 	 */
 	public final void restore(Player player) {
 		player.closeWidget();
-		player.getCombatBuilder().reset();
-		player.getCombatBuilder().getDamageCache().clear();
+		player.getCombat().reset();
+		player.getCombat().getDamageCache().clear();
 		player.getTolerance().reset();
 		player.getSpecialPercentage().set(100);
 		player.getPoisonDamage().set(0);

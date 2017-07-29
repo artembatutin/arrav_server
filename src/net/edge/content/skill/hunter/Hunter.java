@@ -1,11 +1,13 @@
 package net.edge.content.skill.hunter;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import net.edge.action.impl.ObjectAction;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.hunter.trap.Trap;
 import net.edge.content.skill.hunter.trap.TrapProcessor;
 import net.edge.content.skill.hunter.trap.TrapTask;
+import net.edge.content.skill.hunter.trap.bird.BirdData;
 import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.Animation;
@@ -123,89 +125,64 @@ public final class Hunter {
 		return true;
 	}
 	
-	/**
-	 * Attempts to pick up the trap for the specified {@code player}.
-	 * @param player the player to pick this trap up for.
-	 * @param object the object that was clicked.
-	 * @return {@code true} if the trap was picked up, {@code false} otherwise.
-	 */
-	public static boolean pickup(Player player, GameObject object) {
-		Optional<Trap.TrapType> type = Trap.TrapType.getTrapByObjectId(object.getId());
-		
-		if(!type.isPresent()) {
-			return false;
+	public static void event() {
+		ObjectAction action = new ObjectAction() {
+			@Override
+			public boolean click(Player player, GameObject object, int click) {
+				if(click == 1) {
+					Trap trap = getTrap(player, object).orElse(null);
+					if(trap == null) {
+						return false;
+					}
+					if(trap.getState().equals(Trap.TrapState.CAUGHT)) {
+						if(!trap.getPlayer().getFormatUsername().equals(player.getFormatUsername())) {
+							player.message("You can't claim the rewards of someone elses trap...");
+							return false;
+						}
+						if(!trap.canClaim(object)) {
+							return false;
+						}
+						
+						Arrays.stream(trap.reward()).forEach(reward -> player.getInventory().add(reward));
+						Skills.experience(player, (int) trap.experience() * 5, Skills.HUNTER);
+						GLOBAL_TRAPS.get(player).getTraps().remove(trap);
+						if(GLOBAL_TRAPS.get(player).getTraps().isEmpty()) {
+							GLOBAL_TRAPS.get(player).setTask(Optional.empty());
+							GLOBAL_TRAPS.remove(player);
+						}
+						trap.getObject().remove();
+						player.getInventory().add(new Item(trap.getType().getItemId(), 1));
+						player.animation(new Animation(827));
+						return true;
+					}
+					if(!trap.getPlayer().getFormatUsername().equals(player.getFormatUsername())) {
+						player.message("You can't pickup someone elses trap...");
+						return false;
+					}
+					GLOBAL_TRAPS.get(player).getTraps().remove(trap);
+					
+					if(GLOBAL_TRAPS.get(player).getTraps().isEmpty()) {
+						GLOBAL_TRAPS.get(player).setTask(Optional.empty());
+						GLOBAL_TRAPS.remove(player);
+					}
+					trap.onPickUp();
+					object.remove();
+					player.getInventory().add(new Item(trap.getType().getItemId(), 1));
+					player.animation(new Animation(827));
+					return true;
+				}
+				return false;
+			}
+		};
+		for(Trap.TrapType type : Trap.TrapType.values()) {
+			action.registerFirst(type.getObjectId());
 		}
-		
-		Trap trap = getTrap(player, object).orElse(null);
-		
-		if(trap == null) {
-			return false;
+		for(BirdData data : BirdData.values()) {
+			action.registerFirst(data.objectId);
 		}
-		
-		if(trap.getState().equals(Trap.TrapState.CAUGHT)) {
-			return false;
-		}
-		
-		if(!trap.getPlayer().getFormatUsername().equals(player.getFormatUsername())) {
-			player.message("You can't pickup someone elses trap...");
-			return false;
-		}
-		
-		GLOBAL_TRAPS.get(player).getTraps().remove(trap);
-		
-		if(GLOBAL_TRAPS.get(player).getTraps().isEmpty()) {
-			GLOBAL_TRAPS.get(player).setTask(Optional.empty());
-			GLOBAL_TRAPS.remove(player);
-		}
-		
-		trap.onPickUp();
-		object.remove();
-		player.getInventory().add(new Item(trap.getType().getItemId(), 1));
-		player.animation(new Animation(827));
-		return true;
+		action.registerFirst(19190);
 	}
 	
-	/**
-	 * Attempts to claim the rewards of this trap.
-	 * @param player the player attempting to claim the items.
-	 * @param object the object being interacted with.
-	 * @return {@code true} if the trap was claimed, {@code false} otherwise.
-	 */
-	public static boolean claim(Player player, GameObject object) {
-		Trap trap = getTrap(player, object).orElse(null);
-		
-		if(trap == null) {
-			return false;
-		}
-		
-		if(!trap.getState().equals(Trap.TrapState.CAUGHT)) {
-			return false;
-		}
-		
-		if(!trap.getPlayer().getFormatUsername().equals(player.getFormatUsername())) {
-			player.message("You can't claim the rewards of someone elses trap...");
-			return false;
-		}
-		
-		if(!trap.canClaim(object)) {
-			return false;
-		}
-		
-		Arrays.stream(trap.reward()).forEach(reward -> player.getInventory().add(reward));
-		
-		Skills.experience(player, (int) trap.experience() * 5, Skills.HUNTER);
-		
-		GLOBAL_TRAPS.get(player).getTraps().remove(trap);
-		
-		if(GLOBAL_TRAPS.get(player).getTraps().isEmpty()) {
-			GLOBAL_TRAPS.get(player).setTask(Optional.empty());
-			GLOBAL_TRAPS.remove(player);
-		}
-		trap.getObject().remove();
-		player.getInventory().add(new Item(trap.getType().getItemId(), 1));
-		player.animation(new Animation(827));
-		return true;
-	}
 	
 	/**
 	 * Gets a trap for the specified global object given.
@@ -214,6 +191,13 @@ public final class Hunter {
 	 * @return a trap wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
 	public static Optional<Trap> getTrap(Player player, GameObject object) {
-		return !GLOBAL_TRAPS.containsKey(player) ? Optional.empty() : GLOBAL_TRAPS.get(player).getTraps().stream().filter(trap -> trap.getObject().getId() == object.getId() && trap.getObject().getX() == object.getX() && trap.getObject().getY() == object.getY() && trap.getObject().getZ() == object.getZ()).findAny();
+		if(!GLOBAL_TRAPS.containsKey(player))
+			return Optional.empty();
+		for(Trap t : GLOBAL_TRAPS.get(player).getTraps()) {
+			if(t.getObject().getId() == object.getId() && t.getObject().getGlobalPos().same(object.getGlobalPos())) {
+				return Optional.of(t);
+			}
+		}
+		return Optional.empty();
 	}
 }

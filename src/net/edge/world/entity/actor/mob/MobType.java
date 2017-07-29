@@ -17,6 +17,14 @@ public enum MobType {
 	ARMADYL_SOLDIER,
 	BANDOS_SOLIDER,
 	SARADOMIN_SOLDIER,
-	ZAMORAK_SOLDIER
+	ZAMORAK_SOLDIER,
+	
+	/*
+	 * Hunting
+	 */
+	HUNTING_MAMMAL,
+	HUNTING_BIRD,
+	
+	;
 	
 }

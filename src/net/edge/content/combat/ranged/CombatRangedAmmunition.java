@@ -2,14 +2,13 @@ package net.edge.content.combat.ranged;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.content.combat.CombatHit;
+import net.edge.content.combat.CombatUtil;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.ranged.CombatRangedDetails.CombatRangedWeapon;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
-import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
@@ -72,7 +71,7 @@ public enum CombatRangedAmmunition {
 			if(type.equals(CombatType.MAGIC)) {
 				Skill magic = player.getSkills()[Skills.MAGIC];
 				int hit = RandomUtils.inclusive(0, (int) Math.floor(0.5 + magic.getLevel() * 15 / 80) * 10);
-				player.setCurrentlyCasting(Combat.emptySpell(hit));
+				player.setCurrentlyCasting(CombatUtil.emptySpell(hit));
 			}
 			
 			data = new CombatHit(player, victim, 1, type, false);
@@ -87,7 +86,7 @@ public enum CombatRangedAmmunition {
 			if(type.equals(CombatType.MAGIC)) {
 				Skill magic = player.getSkills()[Skills.MAGIC];
 				int hit = RandomUtils.inclusive(0, (int) Math.floor(0.5 + magic.getLevel() * 123 / 640) * 10);
-				player.setCurrentlyCasting(Combat.emptySpell(hit));
+				player.setCurrentlyCasting(CombatUtil.emptySpell(hit));
 			}
 			
 			data = new CombatHit(player, victim, 1, type, false);
@@ -102,7 +101,7 @@ public enum CombatRangedAmmunition {
 			if(type.equals(CombatType.MAGIC)) {
 				Skill magic = player.getSkills()[Skills.MAGIC];
 				int hit = RandomUtils.inclusive(0, (int) Math.floor(0.5 + magic.getLevel() * 141 / 640) * 10);
-				player.setCurrentlyCasting(Combat.emptySpell(hit));
+				player.setCurrentlyCasting(CombatUtil.emptySpell(hit));
 			}
 			
 			data = new CombatHit(player, victim, 1, type, false);
@@ -117,7 +116,7 @@ public enum CombatRangedAmmunition {
 			if(type.equals(CombatType.MAGIC)) {
 				Skill magic = player.getSkills()[Skills.MAGIC];
 				int hit = RandomUtils.inclusive(0, (int) Math.floor(0.5 + magic.getLevel() * 156 / 640) * 10);
-				player.setCurrentlyCasting(Combat.emptySpell(hit));
+				player.setCurrentlyCasting(CombatUtil.emptySpell(hit));
 			}
 			
 			data = new CombatHit(player, victim, 1, type, false);
@@ -592,28 +591,28 @@ public enum CombatRangedAmmunition {
 	BLURITE_BOLTS(9139, 27, 86, 42, 43, 31, 0, true),
 	SILVER_BOLTS(9145, 27, 86, 42, 43, 31, 0, true),
 	
-	CHINCHOMPA(new int[]{10033, 10034}, 908, 64, 36, 40, 31, 0, false) {
+	CHINCHOMPA(10033, 908, 64, 26, 40, 31, 0, false) {
 		@Override
-		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor attacker, CombatHit data) {
+		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor victim, CombatHit data) {
 			int baseHit = data.getHits()[0].getDamage();
-			
 			if(baseHit < 1) {
 				return data;
 			}
-			
-			Combat.charactersWithinDistance(attacker, World.get().getLocalPlayers(attacker), 1).forEach(pl -> {
-				if(!pl.inMulti()) {
-					return;
-				}
-				pl.graphic(new Graphic(2739, 80, 58));
-				pl.damage(new Hit(RandomUtils.inclusive(baseHit - 5, baseHit + 5), HitType.NORMAL, HitIcon.RANGED, attacker.getSlot()));
-				pl.getCombatBuilder().getDamageCache().add(player, baseHit);
-			});
-			
+			if(player.inMulti()) {
+				CombatUtil.relativeWithinDistance(player, a -> {
+					if(!a.inMulti()) {
+						return;
+					}
+					a.graphic(new Graphic(2739, 80, 58));
+					a.damage(new Hit(RandomUtils.inclusive(baseHit - 5, baseHit + 5), HitType.NORMAL, HitIcon.RANGED, victim
+							.getSlot()));
+					a.getCombat().getDamageCache().add(player, baseHit);
+				}, 1);
+			}
 			return data;
 		}
 	},
-	RED_CHINCHOMPA(10034, 909, 64, 36, 40, 31, 0, false) {
+	RED_CHINCHOMPA(10034, 909, 64, 26, 40, 31, 0, false) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor attacker, CombatHit data) {
 			int baseHit = data.getHits()[0].getDamage();
@@ -621,15 +620,16 @@ public enum CombatRangedAmmunition {
 			if(baseHit < 1) {
 				return data;
 			}
-			
-			Combat.charactersWithinDistance(attacker, World.get().getLocalPlayers(attacker), 1).forEach(pl -> {
-				if(!pl.inMulti()) {
-					return;
-				}
-				pl.graphic(new Graphic(2739, 80, 58));
-				pl.damage(new Hit(baseHit, HitType.NORMAL, HitIcon.RANGED, attacker.getSlot()));
-				pl.getCombatBuilder().getDamageCache().add(player, baseHit);
-			});
+			if(player.inMulti()) {
+				CombatUtil.relativeWithinDistance(player, a -> {
+					if(!a.inMulti()) {
+						return;
+					}
+					a.graphic(new Graphic(2739, 80, 58));
+					a.damage(new Hit(baseHit, HitType.NORMAL, HitIcon.RANGED, attacker.getSlot()));
+					a.getCombat().getDamageCache().add(player, baseHit);
+				}, 1);
+			}
 			
 			return data;
 		}

@@ -4,7 +4,6 @@ import net.edge.content.combat.CombatType;
 import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 
 import java.util.Optional;
@@ -19,14 +18,14 @@ public class Defiler extends Pest {
 	public Defiler(int id, Position position) {
 		super(id, position);
 		getAttr().get("master_archery").set(true);
-		getCombatBuilder().setCombatType(CombatType.RANGED);
+		getCombat().setCombatType(CombatType.RANGED);
 	}
 	
 	@Override
 	public void sequence(Mob knight) {
-		if(getCombatBuilder().getAggressor() != null && getCombatBuilder().getAggressor().isPlayer()) {
-			getCombatBuilder().attack(getCombatBuilder().getAggressor());
-		} else if(!getPosition().withinDistance(knight.getPosition(), 15) && !getCombatBuilder().isAttacking()) {
+		if(getCombat().getAggressor() != null && getCombat().getAggressor().isPlayer()) {
+			getCombat().attack(getCombat().getAggressor());
+		} else if(!getPosition().withinDistance(knight.getPosition(), 15) && !getCombat().isAttacking()) {
 			Position delta = Position.delta(getPosition(), knight.getPosition());
 			int x = RandomUtils.inclusive(delta.getX() < 0 ? -delta.getX() : delta.getX());
 			int y = RandomUtils.inclusive(delta.getY() < 0 ? -delta.getY() : delta.getY());

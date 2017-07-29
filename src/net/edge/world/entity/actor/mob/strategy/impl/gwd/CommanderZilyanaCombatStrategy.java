@@ -41,7 +41,7 @@ public final class CommanderZilyanaCombatStrategy extends DynamicCombatStrategy<
 		CombatType c = RandomUtils.random(data);
 		CommanderZilyana.MINIONS.forEach(minion -> {
 			if(!minion.isDead() && minion.getState() == EntityState.ACTIVE) {
-				minion.getCombatBuilder().attack(victim);
+				minion.getCombat().attack(victim);
 			}
 		});
 		return type(victim, c);

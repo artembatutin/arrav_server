@@ -91,8 +91,8 @@ public final class Glacor extends Mob {
 	public Hit decrementHealth(Hit hit) {
 		Hit h = super.decrementHealth(hit);
 		
-		if((this.getCurrentHealth()) < (this.getMaxHealth() / 2) && !this.isDead() && !this.hasSummoned() && this.getCombatBuilder().getVictim() != null) {
-			Player victim = this.getCombatBuilder().getVictim().toPlayer();
+		if((this.getCurrentHealth()) < (this.getMaxHealth() / 2) && !this.isDead() && !this.hasSummoned() && this.getCombat().getVictim() != null) {
+			Player victim = this.getCombat().getVictim().toPlayer();
 			
 			if(victim == null) {
 				return h;
@@ -104,7 +104,7 @@ public final class Glacor extends Mob {
 				g.setRespawn(false);
 				this.getGlacytes().add(glacyte);
 				World.get().getMobs().add(g);
-				g.getCombatBuilder().attack(victim);
+				g.getCombat().attack(victim);
 			}
 			
 			this.setSummoned();

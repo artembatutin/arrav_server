@@ -49,7 +49,7 @@ public final class ItemActionPacket implements IncomingPacket {
 		Item item = player.getInventory().get(slot);
 		if(item == null || item.getId() != id)
 			return;
-		player.getCombatBuilder().cooldown(true);
+		player.getCombat().cooldown(true);
 		ItemAction e = ITEM_ACTION.get(item.getId());
 		if(e != null)
 			e.click(player, item, container, slot, 1);
@@ -68,7 +68,7 @@ public final class ItemActionPacket implements IncomingPacket {
 			return;
 		}
 		Item item = player.getInventory().get(slot);
-		player.getCombatBuilder().cooldown(true);
+		player.getCombat().cooldown(true);
 		ItemAction e = ITEM_ACTION.get(item.getId());
 		if(e != null)
 			e.click(player, item, container, slot, 3);

@@ -3,10 +3,10 @@ package net.edge.content.item;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.action.impl.ItemAction;
+import net.edge.content.combat.CombatUtil;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendEnergy;
 import net.edge.task.Task;
-import net.edge.content.combat.Combat;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.Skill;
@@ -16,7 +16,6 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Inventory;
-import net.edge.world.locale.area.AreaManager;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -670,7 +669,7 @@ public enum PotionConsumable {
 	 */
 	private static void onAntiFireEffect(Player player, boolean superVariant) {
 		player.message("You take a sip of the" + (superVariant ? " super" : "") + " antifire potion.");
-		Combat.effect(player, superVariant ? CombatEffectType.SUPER_ANTIFIRE_POTION : CombatEffectType.ANTIFIRE_POTION);
+		CombatUtil.effect(player, superVariant ? CombatEffectType.SUPER_ANTIFIRE_POTION : CombatEffectType.ANTIFIRE_POTION);
 	}
 	
 	/**

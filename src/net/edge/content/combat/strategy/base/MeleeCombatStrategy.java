@@ -23,7 +23,7 @@ public final class MeleeCombatStrategy implements CombatStrategy {
 			return false;
 		}
 		
-		player.getCombatBuilder().setCombatType(CombatType.MELEE);
+		player.getCombat().setCombatType(CombatType.MELEE);
 		return true;
 	}
 	

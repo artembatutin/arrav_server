@@ -10,6 +10,9 @@ import net.edge.content.skill.agility.impl.gnome.GnomeStrongholdAgility;
 import net.edge.content.skill.agility.impl.wild.WildernessAgility;
 import net.edge.content.skill.construction.furniture.HotSpots;
 import net.edge.content.skill.crafting.PotClaying;
+import net.edge.content.skill.hunter.Hunter;
+import net.edge.content.skill.hunter.trap.bird.BirdData;
+import net.edge.content.skill.hunter.trap.mammal.MammalData;
 import net.edge.content.skill.mining.Mining;
 import net.edge.content.skill.runecrafting.Runecrafting;
 import net.edge.content.skill.smithing.Smelting;
@@ -70,6 +73,9 @@ public abstract class ObjectAction extends Action {
 		HotSpots.event();
 		PestControlWaitingLobby.event();
 		GodwarsFaction.event();
+		BirdData.event();
+		MammalData.event();
+		Hunter.event();
 	}
 	
 }

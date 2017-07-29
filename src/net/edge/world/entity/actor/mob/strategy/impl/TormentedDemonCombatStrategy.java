@@ -274,11 +274,11 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Mo
 		@Override
 		protected void execute() {
 			this.cancel();
-			if(strategy.npc.getState() != EntityState.ACTIVE || strategy.npc.isDead() || strategy.npc.getCombatBuilder().getVictim() == null) {
+			if(strategy.npc.getState() != EntityState.ACTIVE || strategy.npc.isDead() || strategy.npc.getCombat().getVictim() == null) {
 				return;
 			}
 			
-			Actor entity = strategy.npc.getCombatBuilder().getVictim();
+			Actor entity = strategy.npc.getCombat().getVictim();
 			
 			entity.ifPlayer(pl -> pl.message("The demon restored it's shield."));
 		}
@@ -313,11 +313,11 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Mo
 		@Override
 		protected void execute() {
 			this.cancel();
-			if(strategy.npc.getState() != EntityState.ACTIVE || strategy.npc.isDead() || strategy.npc.getCombatBuilder().getVictim() == null) {
+			if(strategy.npc.getState() != EntityState.ACTIVE || strategy.npc.isDead() || strategy.npc.getCombat().getVictim() == null) {
 				return;
 			}
 			CombatType[] types = new CombatType[]{CombatType.MELEE, CombatType.RANGED, CombatType.MAGIC};
-			strategy.npc.getCombatBuilder().resetAttackTimer();
+			strategy.npc.getCombat().resetAttackTimer();
 			strategy.npc.animation(new Animation(10917, Animation.AnimationPriority.HIGH));
 			strategy.combatType = RandomUtils.random(types);
 		}
@@ -352,7 +352,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Mo
 		@Override
 		protected void execute() {
 			this.cancel();
-			if(strategy.npc.getState() != EntityState.ACTIVE || strategy.npc.isDead() || strategy.npc.getCombatBuilder().getVictim() == null) {
+			if(strategy.npc.getState() != EntityState.ACTIVE || strategy.npc.isDead() || strategy.npc.getCombat().getVictim() == null) {
 				return;
 			}
 			strategy.switchState();

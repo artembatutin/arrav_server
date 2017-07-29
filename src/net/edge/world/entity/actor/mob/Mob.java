@@ -2,7 +2,7 @@ package net.edge.world.entity.actor.mob;
 
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import net.edge.content.combat.Combat;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.magic.CombatWeaken;
@@ -29,6 +29,7 @@ import net.edge.world.locale.loc.Location;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -221,6 +222,16 @@ public abstract class Mob extends Actor {
 	}
 	
 	@Override
+	public Set<Player> getLocalPlayers() {
+		return getRegion().getPlayers();
+	}
+	
+	@Override
+	public Set<Mob> getLocalMobs() {
+		return getRegion().getMobs();
+	}
+	
+	@Override
 	public int getAttackSpeed() {
 		return this.getDefinition().getAttackSpeed();
 	}
@@ -232,7 +243,7 @@ public abstract class Mob extends Actor {
 	
 	@Override
 	public CombatStrategy determineStrategy() {
-		return strategy.orElse(Combat.determineStrategy(id));
+		return strategy.orElse(CombatUtil.determineStrategy(id));
 	}
 	
 	@Override
@@ -321,7 +332,7 @@ public abstract class Mob extends Actor {
 	 * Gets the {@link MobType} of this npc.
 	 * @return type.
 	 */
-	public MobType getNpcType() {
+	public MobType getMobType() {
 		return MobType.NONE;
 	}
 	

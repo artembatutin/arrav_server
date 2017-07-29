@@ -75,7 +75,7 @@ public final class NpcActionPacket implements IncomingPacket {
 		if(mob == null || !checkAttack(player, mob))
 			return;
 		player.getTolerance().reset();
-		player.getCombatBuilder().attack(mob);
+		player.getCombat().attack(mob);
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public final class NpcActionPacket implements IncomingPacket {
 			return;
 		player.setCastSpell(spell.get().getSpell());
 		player.getTolerance().reset();
-		player.getCombatBuilder().attack(mob);
+		player.getCombat().attack(mob);
 	}
 	
 	/**
@@ -231,7 +231,7 @@ public final class NpcActionPacket implements IncomingPacket {
 	private boolean checkAttack(Player player, Mob mob) {
 		if(!MobDefinition.DEFINITIONS[mob.getId()].isAttackable())
 			return false;
-		if(!player.inMulti() && player.getCombatBuilder().isBeingAttacked() && !mob.same(player.getCombatBuilder().getAggressor())) {
+		if(!player.inMulti() && player.getCombat().isBeingAttacked() && !mob.same(player.getCombat().getAggressor())) {
 			player.message("You are already under attack!");
 			return false;
 		}

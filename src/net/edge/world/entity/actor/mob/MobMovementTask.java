@@ -40,7 +40,7 @@ public class MobMovementTask extends Task {
 			if(!mob.active())
 				break;
 			MobMovementCoordinator move = mob.getMovementCoordinator();
-			if(!move.isCoordinate() || mob.getCombatBuilder().isAttacking() || mob.getCombatBuilder().isBeingAttacked()) {
+			if(!move.isCoordinate() || mob.getCombat().isAttacking() || mob.getCombat().isBeingAttacked()) {
 				return;
 			}
 			if(mob.getMovementQueue().isMovementDone()) {

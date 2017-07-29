@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import net.edge.task.Task;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -37,7 +38,7 @@ public abstract class Trap {
 	/**
 	 * The global object spawned on the world.
 	 */
-	private GameObject object;
+	private DynamicObject object;
 	
 	/**
 	 * Determines if this trap is abandoned.
@@ -72,7 +73,6 @@ public abstract class Trap {
 		if(!this.getState().equals(TrapState.PENDING) || !canCatch(mob) || this.isAbandoned()) {
 			return;
 		}
-		
 		onCatch(mob);
 	}
 	
@@ -196,14 +196,14 @@ public abstract class Trap {
 	/**
 	 * @param state the state to set.
 	 */
-	public void setState(TrapState state) {
+	public void setState(TrapState state, Mob mob) {
 		this.state = state;
 	}
 	
 	/**
 	 * @return the object
 	 */
-	public GameObject getObject() {
+	public DynamicObject getObject() {
 		return object;
 	}
 	
@@ -212,7 +212,9 @@ public abstract class Trap {
 	 * @param id the id to set.
 	 */
 	public void updateObject(int id) {
-		this.object = object.setId(id);
+		int slot = object.getElements();
+		this.object = object.setId(id).toDynamic();
+		this.object.setElements(slot);
 		this.object.publish();
 	}
 	
@@ -240,11 +242,6 @@ public abstract class Trap {
 		FAILED_BOX_TRAP(19192, 10008),
 		BIRD_SNARE(19175, 10006),
 		FAILED_BIRD_SNARE(19174, 10006);
-		
-		/**
-		 * Caches our enum values.
-		 */
-		private static final ImmutableSet<TrapType> VALUES = Sets.immutableEnumSet(EnumSet.allOf(TrapType.class));
 		
 		/**
 		 * The object id for this trap.
@@ -280,23 +277,6 @@ public abstract class Trap {
 			return itemId;
 		}
 		
-		/**
-		 * Gets a trap dependent of the specified {@code objectId}.
-		 * @param objectId the id to get the trap type enumerator from.
-		 * @return a {@link TrapType} wrapped in an optional, {@link Optional#empty} otherwise.
-		 */
-		public static Optional<TrapType> getTrapByObjectId(int objectId) {
-			return VALUES.stream().filter(trap -> trap.objectId == objectId).findAny();
-		}
-		
-		/**
-		 * Gets a trap dependent of the specified {@code itemId}.
-		 * @param itemId the id to get the trap type enumerator from.
-		 * @return a {@link TrapType} wrapped in an optional, {@link Optional#empty} otherwise.
-		 */
-		public static Optional<TrapType> getTrapByItemId(int itemId) {
-			return VALUES.stream().filter(trap -> trap.itemId == itemId).findAny();
-		}
 	}
 	
 	/**
@@ -306,6 +286,7 @@ public abstract class Trap {
 	 */
 	public enum TrapState {
 		PENDING,
+		CATCHING,
 		CAUGHT,
 		FALLEN
 	}

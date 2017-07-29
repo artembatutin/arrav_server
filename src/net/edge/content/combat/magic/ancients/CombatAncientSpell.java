@@ -1,6 +1,6 @@
 package net.edge.content.combat.magic.ancients;
 
-import net.edge.content.combat.Combat;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatSpell;
 import net.edge.world.entity.actor.Actor;
@@ -23,12 +23,12 @@ public abstract class CombatAncientSpell extends CombatSpell {
 			if(radius() == 0 || !castOn.inMulti())
 				return;
 			if(castOn.isPlayer()) {
-				Combat.damagePlayersWithin(cast, castOn.getPosition(), radius(), 1, CombatType.MAGIC, false, t -> {
+				CombatUtil.damagePlayersWithin(cast, castOn.getPosition(), radius(), 1, CombatType.MAGIC, false, t -> {
 					cast.getCurrentlyCasting().endGraphic().ifPresent(t::graphic);
 					effect(cast, castOn, damage);
 				});
 			} else {
-				Combat.damageMobsWithin(cast, castOn.getPosition(), radius(), 1, CombatType.MAGIC, false, t -> {
+				CombatUtil.damageMobsWithin(cast, castOn.getPosition(), radius(), 1, CombatType.MAGIC, false, t -> {
 					cast.getCurrentlyCasting().endGraphic().ifPresent(t::graphic);
 					effect(cast, castOn, damage);
 				});

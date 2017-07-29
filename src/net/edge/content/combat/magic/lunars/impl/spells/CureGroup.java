@@ -1,6 +1,6 @@
 package net.edge.content.combat.magic.lunars.impl.spells;
 
-import net.edge.content.combat.Combat;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.world.World;
@@ -40,7 +40,7 @@ public final class CureGroup extends LunarButtonSpell {
 	
 	@Override
 	public boolean prerequisites(Player caster, Actor victim) {
-		local_players = Combat.charactersWithinDistance(caster, World.get().getLocalPlayers(caster), 1);
+		local_players = CombatUtil.actorsWithinDistance(caster, World.get().getLocalPlayers(caster), 1);
 		
 		if(local_players.isEmpty()) {
 			if(caster.isPlayer()) {

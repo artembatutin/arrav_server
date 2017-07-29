@@ -1,6 +1,6 @@
 package net.edge.net.packet.in;
 
-import net.edge.content.combat.Combat;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.combat.magic.lunars.LunarSpells;
 import net.edge.world.entity.item.container.session.ExchangeSession;
@@ -62,7 +62,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		}
 		
 		player.setCastSpell(spell.get().getSpell());
-		player.getCombatBuilder().attack(victim);
+		player.getCombat().attack(victim);
 	}
 	
 	/**
@@ -76,7 +76,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		Player victim = World.get().getPlayers().get(index - 1);
 		if(index < 0 || index > World.get().getPlayers().capacity() || !checkAttack(player, victim))
 			return;
-		player.getCombatBuilder().attack(victim);
+		player.getCombat().attack(victim);
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			attacker.getMovementQueue().reset();
 			return false;
 		}
-		if(!attacker.inMulti() && attacker.getCombatBuilder().isBeingAttacked() && attacker.getCombatBuilder().getAggressor() != victim && attacker.getCombatBuilder().pjingCheck()) {
+		if(!attacker.inMulti() && attacker.getCombat().isBeingAttacked() && attacker.getCombat().getAggressor() != victim && attacker.getCombat().pjingCheck()) {
 			attacker.message("You are already under attack!");
 			attacker.getMovementQueue().reset();
 			return false;
@@ -111,7 +111,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 				attacker.getMovementQueue().reset();
 				return false;
 			}
-			int combatDifference = Combat.combatLevelDifference(attacker.determineCombatLevel(), victim.determineCombatLevel());
+			int combatDifference = CombatUtil.combatLevelDifference(attacker.determineCombatLevel(), victim.determineCombatLevel());
 			if(combatDifference > attacker.getWildernessLevel() || combatDifference > victim.getWildernessLevel()) {
 				attacker.message("Your combat level " + "difference is too great to attack that player here.");
 				attacker.getMovementQueue().reset();

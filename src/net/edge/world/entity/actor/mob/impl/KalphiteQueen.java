@@ -48,9 +48,9 @@ public final class KalphiteQueen extends Mob {
                 });
                 sequence.connect(14, () -> {
                     this.setDead(false);
-                    Actor victim = this.getCombatBuilder().getVictim();
+                    Actor victim = this.getCombat().getVictim();
                     if(victim != null && victim.getPosition().withinDistance(this.getPosition(), 12) && !victim.isDead()) {
-                        this.getCombatBuilder().attack(victim);
+                        this.getCombat().attack(victim);
                     }
                 });
                 sequence.start();

@@ -30,7 +30,7 @@ public abstract class Spell {
 		
 		if(player.getSkills()[Skills.MAGIC].getLevel() < level) {
 			player.message("You need a Magic level of " + level + " to cast this spell.");
-			player.getCombatBuilder().reset();
+			player.getCombat().reset();
 			return false;
 		}
 		
@@ -38,7 +38,7 @@ public abstract class Spell {
 			if(!player.getEquipment().containsAll(equipment.get())) {
 				player.message("You do not have the required equipment to cast this spell.");
 				resetPlayerSpell(player);
-				player.getCombatBuilder().reset();
+				player.getCombat().reset();
 				return false;
 			}
 		}
@@ -49,7 +49,7 @@ public abstract class Spell {
 			if(!player.getInventory().containsAll(items)) {
 				player.message("You do not have the required items to cast this spell.");
 				resetPlayerSpell(player);
-				player.getCombatBuilder().reset();
+				player.getCombat().reset();
 				return false;
 			}
 			
@@ -75,7 +75,7 @@ public abstract class Spell {
 	 * @param player the player to reset.
 	 */
 	private final void resetPlayerSpell(Player player) {
-		if(player.getCombatBuilder().isAttacking() || player.getCombatBuilder().isBeingAttacked() && player.isAutocast()) {
+		if(player.getCombat().isAttacking() || player.getCombat().isBeingAttacked() && player.isAutocast()) {
 			player.setAutocastSpell(null);
 			player.setAutocast(false);
 			player.out(new SendConfig(108, 0));

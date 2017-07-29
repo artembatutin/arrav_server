@@ -96,19 +96,19 @@ public final class CombatRangedDetails {
 	public boolean determine() {
 		if(!weapon.isPresent()) {
 			player.message("This ranged weapon hasn't been configured yet, please report on our forums...");
-			player.getCombatBuilder().reset();
+			player.getCombat().reset();
 			return false;
 		}
 		int slot = weapon.get().getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
 		Item ammo = player.getEquipment().get(slot);
 		if(ammo == null) {
 			player.message("You don't have any ammunition to shoot with...");
-			player.getCombatBuilder().reset();
+			player.getCombat().reset();
 			return false;
 		}
 		if(!ammunition.isPresent()) {
 			player.message("You cannot use " + TextUtils.appendPluralCheck(ammo.getDefinition().getName().toLowerCase()) + " with this ranged weapon.");
-			player.getCombatBuilder().reset();
+			player.getCombat().reset();
 			return false;
 		}
 		return true;
