@@ -350,17 +350,32 @@ public enum SummoningData {
 	/**
 	 * Represents a magpie familiar.
 	 */
-	MAGPIE(31, 12041, 47, 83.2, 6824, 0.9, 5, 34, new Item(12159), new Item(1635), new Item(12155), new Item(12183, 88)),
+	MAGPIE(31, 12041, 47, 83.2, 6824, 0.9, 5, 34, new Item(12159), new Item(1635), new Item(12155), new Item(12183, 88)) {
+		@Override
+		public Magpie create() {
+			return new Magpie();
+		}
+	},
 	
 	/**
 	 * Represents a bloated leech familiar.
 	 */
-	BLOATED_LEECH(32, 12061, 49, 215.2, 6843, 2.4, 5, 34, new Item(12160), new Item(2132), new Item(12155), new Item(12183, 117)),
+	BLOATED_LEECH(32, 12061, 49, 215.2, 6843, 2.4, 5, 34, new Item(12160), new Item(2132), new Item(12155), new Item(12183, 117)) {
+		@Override
+		public BloatedLeech create() {
+			return new BloatedLeech();
+		}
+	},
 	
 	/**
 	 * Represents a spirit terrorbird familiar.
 	 */
-	SPIRIT_TERRORBIRD(33, 12007, 52, 68.4, 6794, 0.8, 6, 36, new Item(12158), new Item(9978), new Item(12155), new Item(12183, 12)),
+	SPIRIT_TERRORBIRD(33, 12007, 52, 68.4, 6794, 0.8, 6, 36, new Item(12158), new Item(9978), new Item(12155), new Item(12183, 12)) {
+		@Override
+		public SpiritTerrorbird create() {
+			return new SpiritTerrorbird();
+		}
+	},
 	
 	/**
 	 * Represents an abyssal parasite familiar.
