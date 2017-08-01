@@ -39,7 +39,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		this.obstacle = obstacle;
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(GnomeAgilityData data : GnomeAgilityData.values()) {
 			ObjectAction perform = new ObjectAction() {
 				@Override

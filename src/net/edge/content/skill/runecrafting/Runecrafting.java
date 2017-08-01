@@ -61,7 +61,7 @@ public final class Runecrafting extends ProducingSkillAction {
 		this.altar = altar;
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(Altar a : Altar.values()) {
 			ObjectAction rc = new ObjectAction() {
 				@Override

@@ -102,6 +102,10 @@ public enum CookingData {
 	}
 	
 	public static CookingData forItem(Item item) {
-		return VALUES.stream().filter(fish -> fish.rawId == item.getId()).findFirst().orElse(null);
+		for(CookingData data : VALUES) {
+			if(data.getRawId() == item.getId())
+				return data;
+		}
+		return null;
 	}
 }

@@ -63,7 +63,7 @@ public enum Obelisk {
 		return VALUES.stream().filter(t -> object.getId() == t.object).findAny();
 	}
 	
-	public static void event() {
+	public static void action() {
 		ObjectAction a = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {

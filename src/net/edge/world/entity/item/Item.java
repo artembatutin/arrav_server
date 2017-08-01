@@ -206,6 +206,14 @@ public final class Item {
 	}
 	
 	/**
+	 * Gets the name of this item.
+ 	 * @return item name.
+	 */
+	public String getName() {
+		return ItemDefinition.DEFINITIONS[id].getName();
+	}
+	
+	/**
 	 * Gets the item value for the item identifier.
 	 * @return the item value.
 	 */
@@ -225,8 +233,9 @@ public final class Item {
 	 * Sets the identification of this item.
 	 * @param id the new identification of this item.
 	 */
-	public final void setId(int id) {
+	public final Item setId(int id) {
 		this.id = id;
+		return this;
 	}
 	
 	/**
@@ -241,10 +250,11 @@ public final class Item {
 	 * Sets the quantity of this item.
 	 * @param amount the new quantity of this item.
 	 */
-	public final void setAmount(int amount) {
+	public final Item setAmount(int amount) {
 		if(amount < 0)
 			amount = 0;
 		this.amount = amount;
+		return this;
 	}
 	
 	@Override

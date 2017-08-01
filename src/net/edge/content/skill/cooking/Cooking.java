@@ -1,5 +1,6 @@
 package net.edge.content.skill.cooking;
 
+import net.edge.action.impl.ItemOnObjectAction;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
@@ -141,5 +142,26 @@ public final class Cooking extends ProducingSkillAction {
 			return false;
 		}
 		return true;
+	}
+	
+	public static void action() {
+		ItemOnObjectAction a = new ItemOnObjectAction() {
+			@Override
+			public boolean click(Player player, GameObject object, Item item, int container, int slot) {
+				CookingData c = CookingData.forItem(item);
+				if(c == null)
+					return false;
+				player.getAttr().get("cooking_usingStove").set(true);
+				player.getAttr().get("cooking_data").set(c);
+				player.getAttr().get("cooking_object").set(object);
+				c.openInterface(player);
+				return true;
+			}
+		};
+		a.registerObj(114);
+		a.registerObj(2728);
+		a.registerObj(25730);
+		a.registerObj(24283);
+		a.registerObj(2732);
 	}
 }

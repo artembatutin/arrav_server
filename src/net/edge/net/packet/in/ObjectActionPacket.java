@@ -114,8 +114,6 @@ public final class ObjectActionPacket implements IncomingPacket {
 						}
 						if(event(player, object, FIRST, 1))
 							return;
-						if(Bonfire.addLogs(player, new Item(-100), object, true))
-							return;
 						if(ShootingStarManager.get().mine(player, objectId))
 							return;
 						break;

@@ -2,7 +2,7 @@ package net.edge.content.item;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.action.impl.NpcAction;
+import net.edge.action.impl.MobAction;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.content.dialogue.Expression;
@@ -142,9 +142,9 @@ public enum Skillcape {
 		return true;
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(Skillcape c : Skillcape.values()) {
-			NpcAction e = new NpcAction() {
+			MobAction e = new MobAction() {
 				@Override
 				public boolean click(Player player, Mob npc, int click) {
 					if(c.getSkill() != -1 && player.getSkills()[c.getSkill()].getRealLevel() != 99) {

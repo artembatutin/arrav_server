@@ -38,7 +38,7 @@ public final class MithrilSeeds {
             .put(2986, 2472)
             .put(2987, 2474).build());
 
-    public static void event() {
+    public static void action() {
         for(int objectId : FLOWER_OBJECT_IDS.keySet()) {
             ObjectAction objEvent = new ObjectAction() {
                 @Override

@@ -24,7 +24,7 @@ public final class PrayerBoneBury extends DestructionSkillAction {
 		this.itemId = itemId;
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(Bone b : Bone.values()) {
 			ItemAction e = new ItemAction() {
 				@Override

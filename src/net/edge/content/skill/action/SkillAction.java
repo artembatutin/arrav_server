@@ -63,7 +63,6 @@ public abstract class SkillAction {
 	 */
 	public final void stop() {
 		SkillActionTask task = player.getSkillActionTask().get();
-		
 		task.setRunning(false);
 		task.getAction().onStop();
 		task.getAction().getPlayer().setSkillAction(Optional.empty());
@@ -79,7 +78,7 @@ public abstract class SkillAction {
 	}
 	
 	/**
-	 * The delay inbetween playing animations.
+	 * The delay in between playing animations.
 	 * @return the numerical value which determines the time to play the animation again.
 	 */
 	public OptionalInt animationDelay() {

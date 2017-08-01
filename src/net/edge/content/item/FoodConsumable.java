@@ -322,7 +322,7 @@ public enum FoodConsumable {
 		return name().toLowerCase().replace("_", " ");
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(FoodConsumable food : FoodConsumable.values()) {
 			ItemAction e = new ItemAction() {
 				@Override

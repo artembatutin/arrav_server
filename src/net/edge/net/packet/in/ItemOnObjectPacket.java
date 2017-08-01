@@ -1,7 +1,8 @@
 package net.edge.net.packet.in;
 
+import net.edge.action.ActionContainer;
+import net.edge.action.impl.ItemOnObjectAction;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.skill.cooking.CookingData;
 import net.edge.content.skill.crafting.JewelleryMoulding;
 import net.edge.content.skill.crafting.PotClaying;
 import net.edge.content.skill.crafting.Spinning;
@@ -26,11 +27,12 @@ import java.util.Optional;
 
 /**
  * The message sent from the client when a player uses an item on an object.
- * @author lare96 <http://github.com/lare96>
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class ItemOnObjectPacket implements IncomingPacket {
 	
-	// TODO: When cache reading is done, check position of objects.
+	public static final ActionContainer<ItemOnObjectAction> OBJECTS = new ActionContainer<>();
+	public static final ActionContainer<ItemOnObjectAction> ITEMS = new ActionContainer<>();
 	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
@@ -68,44 +70,22 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 				if(!MinigameHandler.execute(player, m -> m.onItemOnObject(player, object, item))) {
 					return;
 				}
-				if(JewelleryMoulding.openInterface(player, item, object)) {
-					return;
+				ItemOnObjectAction a = OBJECTS.get(objectId);
+				if(a != null) {
+					if(a.click(player, object, item, container, slot))
+						return;
 				}
-				if(Bonfire.addLogs(player, item, object, false)) {
-					return;
+				a = ITEMS.get(objectId);
+				if(a != null) {
+					if(a.click(player, object, item, container, slot))
+						return;
 				}
 				if(FirepitManager.get().fire(player, object, item)) {
-					return;
-				}
-				if(PrayerBoneAltar.produce(player, itemId, object)) {
 					return;
 				}
 				if(Smithing.openInterface(player, item, object)) {
 					return;
 				}
-				if(Spinning.openInterface(player, item, object)) {
-					return;
-				}
-				if(PotClaying.openInterface(player, item, object)) {
-					return;
-				}
-				
-				switch(objectId) {
-					case 114:
-					case 2728:
-					case 25730:
-					case 24283:
-					case 2732:
-						CookingData c = CookingData.forItem(item);
-						if(c == null)
-							return;
-						player.getAttr().get("cooking_usingStove").set(true);
-						player.getAttr().get("cooking_data").set(c);
-						player.getAttr().get("cooking_object").set(object);
-						c.openInterface(player);
-						break;
-				}
-				
 			}
 		});
 		player.getActivityManager().execute(ActivityManager.ActivityType.ITEM_ON_OBJECT);

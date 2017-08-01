@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.action.impl.NpcAction;
+import net.edge.action.impl.MobAction;
 import net.edge.net.packet.out.SendScore;
 import net.edge.util.MutableNumber;
 import net.edge.util.json.JsonSaver;
@@ -131,8 +131,8 @@ public final class ScoreboardManager {
 		player_scoreboard.clear();
 	}
 	
-	public static void event() {
-		NpcAction e = new NpcAction() {
+	public static void action() {
+		MobAction e = new MobAction() {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {
 				DialogueAppender ap = new DialogueAppender(player);

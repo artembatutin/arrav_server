@@ -1,5 +1,6 @@
 package net.edge.content.skill.prayer;
 
+import net.edge.action.impl.ItemOnObjectAction;
 import net.edge.net.packet.out.SendGraphic;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
@@ -17,25 +18,24 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 
 	private final int itemId;
 	
-	public PrayerBoneAltar(Player player, int itemId, GameObject object) {
+	public PrayerBoneAltar(Player player, int itemId, GameObject object, Bone bone) {
 		super(player, Optional.of(object.getGlobalPos()));
-		this.bone = Bone.getBone(itemId).orElse(null);
+		this.bone = bone;
 		this.itemId = itemId;
 	}
 	
-	public static boolean produce(Player player, int itemId, GameObject object) {
-		if(object.getId() != 409) {
-			return false;
+	public static void action() {
+		for(Bone bone : Bone.values()) {
+			ItemOnObjectAction a = new ItemOnObjectAction() {
+				@Override
+				public boolean click(Player player, GameObject object, Item item, int container, int slot) {
+					PrayerBoneAltar altarAction = new PrayerBoneAltar(player, item.getId(), object, bone);
+					altarAction.start();
+					return true;
+				}
+			};
+			a.registerObj(409);
 		}
-		Optional<Bone> bone = Bone.getBone(itemId);
-		
-		if(!bone.isPresent()) {
-			return false;
-		}
-		
-		PrayerBoneAltar altarAction = new PrayerBoneAltar(player, itemId, object);
-		altarAction.start();
-		return true;
 	}
 	
 	@Override

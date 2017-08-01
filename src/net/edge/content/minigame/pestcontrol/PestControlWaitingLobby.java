@@ -4,7 +4,7 @@ import net.edge.content.market.currency.Currency;
 import net.edge.content.minigame.MinigameLobby;
 import net.edge.content.skill.Skills;
 import net.edge.action.impl.ButtonAction;
-import net.edge.action.impl.NpcAction;
+import net.edge.action.impl.MobAction;
 import net.edge.action.impl.ObjectAction;
 import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendWalkable;
@@ -146,7 +146,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		ladder.registerFirst(14314);
 		
 		//accessing shop.
-		NpcAction shop = new NpcAction() {
+		MobAction shop = new MobAction() {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {
 				player.widget(37000);

@@ -2,6 +2,7 @@ package net.edge.content.skill.crafting;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.action.impl.ItemOnObjectAction;
 import net.edge.action.impl.ObjectAction;
 import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.net.packet.out.SendItemModelInterface;
@@ -91,7 +92,7 @@ public final class PotClaying extends ProducingSkillAction {
 		crafting.start();
 	}
 	
-	public static void objects() {
+	public static void action() {
 		ObjectAction click = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
@@ -113,35 +114,27 @@ public final class PotClaying extends ProducingSkillAction {
 			}
 		};
 		click.registerFirst(2643);
-	}
-	
-	/**
-	 * Attempts to open the unfired pot creation interface for the specified {@code player}.
-	 * @param player the player to open this interface for.
-	 * @param item   the item that was used on the {@code object}.
-	 * @param object the object the {@code item} was used on.
-	 * @return {@code true} if the interface got opened, {@code false} otherwise.
-	 */
-	public static boolean openInterface(Player player, Item item, GameObject object) {
-		if(!(object.getId() == 2642 && item.getId() == CLAY.getId())) {
-			return false;
-		}
-		
-		player.text(8879, "What would you like to make?");
-		player.out(new SendItemModelInterface(8941, 105, 1787));
-		player.out(new SendItemModelInterface(8942, 120, 1789));
-		player.out(new SendItemModelInterface(8943, 100, 1791));
-		player.out(new SendItemModelInterface(8944, 100, 5352));
-		player.out(new SendItemModelInterface(8945, 150, 4438));
-		player.text(8949, "\\n\\n\\n\\nPot");
-		player.text(8953, "\\n\\n\\n\\nPie Dish");
-		player.text(8957, "\\n\\n\\n\\nBowl");
-		player.text(8961, "\\n\\n\\n\\nPlant pot");
-		player.text(8965, "\\n\\n\\n\\nPot lid");
-		player.getAttr().get("crafting_potfired").set(false);
-		player.getAttr().get("crafting_pots").set(true);
-		player.chatWidget(8938);
-		return true;
+		ItemOnObjectAction a = new ItemOnObjectAction() {
+			@Override
+			public boolean click(Player player, GameObject object, Item item, int container, int slot) {
+				player.text(8879, "What would you like to make?");
+				player.out(new SendItemModelInterface(8941, 105, 1787));
+				player.out(new SendItemModelInterface(8942, 120, 1789));
+				player.out(new SendItemModelInterface(8943, 100, 1791));
+				player.out(new SendItemModelInterface(8944, 100, 5352));
+				player.out(new SendItemModelInterface(8945, 150, 4438));
+				player.text(8949, "\\n\\n\\n\\nPot");
+				player.text(8953, "\\n\\n\\n\\nPie Dish");
+				player.text(8957, "\\n\\n\\n\\nBowl");
+				player.text(8961, "\\n\\n\\n\\nPlant pot");
+				player.text(8965, "\\n\\n\\n\\nPot lid");
+				player.getAttr().get("crafting_potfired").set(false);
+				player.getAttr().get("crafting_pots").set(true);
+				player.chatWidget(8938);
+				return true;
+			}
+		};
+		a.registerObj(2642);
 	}
 	
 	@Override

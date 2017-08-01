@@ -43,7 +43,7 @@ public final class Stalls extends Thieving {
 		this.object = object;
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(StallData data : StallData.values()) {
 			ObjectAction steal = new ObjectAction() {
 				@Override

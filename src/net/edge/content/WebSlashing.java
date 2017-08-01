@@ -51,7 +51,7 @@ public final class WebSlashing extends Task {
 		object.publish();
 	}
 	
-	public static void event() {
+	public static void action() {
 		ObjectAction slash = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {

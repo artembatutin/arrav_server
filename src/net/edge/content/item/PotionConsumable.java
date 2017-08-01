@@ -478,7 +478,7 @@ public enum PotionConsumable {
 		this.ids = ids;
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(PotionConsumable potion : PotionConsumable.values()) {
 			ItemAction e = new net.edge.action.impl.ItemAction() {
 				@Override

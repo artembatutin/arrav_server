@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import net.edge.action.impl.NpcAction;
+import net.edge.action.impl.MobAction;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
@@ -73,9 +73,9 @@ public final class ButterflyCatching extends ProducingSkillAction {
 		this.barehanded = barehanded;
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(ButterflyData data : ButterflyData.values()) {
-			NpcAction e = new NpcAction() {
+			MobAction e = new MobAction() {
 				@Override
 				public boolean click(Player player, Mob npc, int click) {
 					boolean barehanded = !player.getEquipment().contains(10010);

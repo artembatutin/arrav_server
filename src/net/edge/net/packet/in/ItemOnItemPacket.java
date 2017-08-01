@@ -1,5 +1,7 @@
 package net.edge.net.packet.in;
 
+import net.edge.action.ActionContainer;
+import net.edge.action.impl.ItemOnItemAction;
 import net.edge.content.PotionDecanting;
 import net.edge.content.item.ItemCombine;
 import net.edge.content.skill.cooking.DoughCreation;
@@ -26,6 +28,8 @@ import net.edge.world.entity.item.Item;
  */
 public final class ItemOnItemPacket implements IncomingPacket {
 	
+	public static final ActionContainer<ItemOnItemAction> ACTIONS = new ActionContainer<>();
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ON_ITEM))
@@ -36,9 +40,15 @@ public final class ItemOnItemPacket implements IncomingPacket {
 		payload.getShort();
 		Item itemUsed = player.getInventory().get(firstSlot);
 		Item itemOn = player.getInventory().get(secondSlot);
-		
 		if(secondSlot < 0 || firstSlot < 0 || itemUsed == null || itemOn == null) {
 			return;
+		}
+		ItemOnItemAction a = ACTIONS.get(itemUsed.getId());
+		if(a == null)
+			a = ACTIONS.get(itemOn.getId());
+		if(a != null) {
+			if(a.click(player, itemOn, itemUsed, firstSlot, secondSlot))
+				return;
 		}
 		if(PotionDecanting.manual(player, itemUsed, itemOn)) {
 			return;

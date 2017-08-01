@@ -1,5 +1,7 @@
 package net.edge.content.skill.firemaking;
 
+import net.edge.action.impl.ItemOnObjectAction;
+import net.edge.action.impl.ObjectAction;
 import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
@@ -36,12 +38,27 @@ public final class Bonfire extends DestructionSkillAction {
 		this.amount = player.getInventory().computeAmountForId(log.getLog().getId());
 	}
 	
-	public static boolean addLogs(Player player, Item item, GameObject object, boolean click) {
-		FirepitData data = FirepitData.VALUES.stream().filter(d -> d.getObjectId() == object.getId()).findAny().orElse(null);
-		if(data == null) {
-			return false;
+	public static void action() {
+		for(FirepitData data : FirepitData.values()) {
+			ItemOnObjectAction a = new ItemOnObjectAction() {
+				@Override
+				public boolean click(Player player, GameObject object, Item item, int container, int slot) {
+					return addLogs(player, item, object);
+				}
+			};
+			ObjectAction a2 = new ObjectAction() {
+				@Override
+				public boolean click(Player player, GameObject object, int click) {
+					return addLogs(player, new Item(-100), object);
+				}
+			};
+			a.registerObj(data.getObjectId());
+			a2.registerFirst(data.getObjectId());
 		}
-		LogType log = click ? LogType.getDefinition(player).orElse(null) : LogType.getDefinition(item.getId()).orElse(null);
+	}
+	
+	public static boolean addLogs(Player player, Item item, GameObject object) {
+		LogType log = item.getId() == -100 ? LogType.getDefinition(player).orElse(null) : LogType.getDefinition(item.getId()).orElse(null);
 		if(log == null) {
 			return false;
 		}

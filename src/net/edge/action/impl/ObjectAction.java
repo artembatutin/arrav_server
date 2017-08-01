@@ -56,19 +56,19 @@ public abstract class ObjectAction extends Action {
 	public void registerCons(int object) { ObjectActionPacket.CONSTRUCTION.register(object, this);}
 	
 	public static void init() {
-		WebSlashing.event();
-		WarriorsGuild.event();
-		Obelisk.event();
-		FightcavesMinigame.event();
-		Woodcutting.event();
-		Mining.event();
-		Runecrafting.event();
-		GnomeStrongholdAgility.event();
-		BarbarianOutpostAgility.event();
-		WildernessAgility.event();
-		Shortcuts.event();
-		PotClaying.objects();
-		Stalls.event();
+		WebSlashing.action();
+		WarriorsGuild.action();
+		Obelisk.action();
+		FightcavesMinigame.action();
+		Woodcutting.action();
+		Mining.action();
+		Runecrafting.action();
+		GnomeStrongholdAgility.action();
+		BarbarianOutpostAgility.action();
+		WildernessAgility.action();
+		Shortcuts.action();
+		PotClaying.action();
+		Stalls.action();
 		Smelting.event();
 		HotSpots.event();
 		PestControlWaitingLobby.event();

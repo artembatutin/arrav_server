@@ -747,7 +747,7 @@ public enum SummoningData {
 		};
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(SummoningData data : VALUES) {
 			ItemAction e = new ItemAction() {
 				@Override

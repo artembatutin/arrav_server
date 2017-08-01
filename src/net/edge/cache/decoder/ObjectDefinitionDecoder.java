@@ -173,7 +173,7 @@ public final class ObjectDefinitionDecoder implements Runnable {
 			} else if(code == 33) {
 				buffer.getShort();
 				buffer.getShort();
-				int j = buffer.get() & 0xFF;
+				int j = buffer.getShort() & 0xFF;
 				for(int l = 0; l < j; l++) {
 					buffer.getInt();
 				}

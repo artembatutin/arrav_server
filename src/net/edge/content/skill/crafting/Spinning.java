@@ -3,6 +3,7 @@ package net.edge.content.skill.crafting;
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.action.impl.ItemOnObjectAction;
 import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.task.Task;
@@ -57,9 +58,7 @@ public final class Spinning extends ProducingSkillAction {
 		if(!BUTTON_FOR_AMOUNT.containsKey(buttonId) || !player.getAttr().get("crafting_spin").getBoolean()) {
 			return false;
 		}
-
 		int amount = BUTTON_FOR_AMOUNT.get(buttonId);
-
 		if(amount == -1) {
 			player.out(new SendEnterAmount("How many you would like to spin?", s -> () -> Spinning.create(player, (SpinningData) player.getAttr().get("crafting_spinning").get(), Integer.parseInt(s))));
 			return true;
@@ -82,30 +81,24 @@ public final class Spinning extends ProducingSkillAction {
 		crafting.start();
 	}
 	
-	/**
-	 * Attempts to open the spinning interface.
-	 * @param player the player to open the interface for.
-	 * @param item   the item used on the object.
-	 * @param object the object that the item was used on.
-	 * @return {@code true} if the interface was opened, {@code false} otherwise.
-	 */
-	public static boolean openInterface(Player player, Item item, GameObject object) {
-		if(object.getId() != 2644) {
-			return false;
+	public static void action() {
+		for(SpinningData data : SpinningData.values()) {
+			ItemOnObjectAction a = new ItemOnObjectAction() {
+				@Override
+				public boolean click(Player player, GameObject object, Item item, int container, int slot) {
+					if(object.getId() != 2644) {
+						return false;
+					}
+					player.text(2799, "\\n\\n\\n\\n\\n" + data.produced.getDefinition().getName());
+					player.out(new SendItemModelInterface(1746, 200, data.produced.getId()));
+					player.getAttr().get("crafting_spin").set(true);
+					player.getAttr().get("crafting_spinning").set(data);
+					player.chatWidget(4429);
+					return true;
+				}
+			};
+			a.registerItem(data.item.getId());
 		}
-		
-		SpinningData data = SpinningData.VALUES.get(item.getId());
-		
-		if(data == null) {
-			return false;
-		}
-		
-		player.text(2799, "\\n\\n\\n\\n\\n" + data.produced.getDefinition().getName());
-		player.out(new SendItemModelInterface(1746, 200, data.produced.getId()));
-		player.getAttr().get("crafting_spin").set(true);
-		player.getAttr().get("crafting_spinning").set(data);
-		player.chatWidget(4429);
-		return true;
 	}
 	
 	@Override
@@ -183,12 +176,6 @@ public final class Spinning extends ProducingSkillAction {
 		SINEW(9436, 9438, 10, 15),
 		MAGIC_ROOTS(6051, 6038, 19, 30),
 		HAIR(10814, 954, 30, 25);
-		
-		/**
-		 * A map containing the item by spinning data.
-		 */
-		private static final Int2ObjectArrayMap<SpinningData> VALUES = new Int2ObjectArrayMap<>(ImmutableMap.copyOf(Stream.of(SpinningData.values()).collect(Collectors.toMap(t -> t.item.getId(), Function.identity()))));
-		
 		/**
 		 * The item required to spin.
 		 */

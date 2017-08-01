@@ -72,7 +72,7 @@ public final class Dice {
 		return true;
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(DiceData data : DiceData.values()) {
 			if(data.equals(DiceData.DICE_BAG)) {
 				continue;

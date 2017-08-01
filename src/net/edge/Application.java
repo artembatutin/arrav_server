@@ -241,7 +241,9 @@ public final class Application {
 		loadEvents();
 		ButtonAction.init();
 		ItemAction.init();
-		NpcAction.init();
+		ItemOnObjectAction.init();
+		ItemOnItemAction.init();
+		MobAction.init();
 		ObjectAction.init();
 	}
 	

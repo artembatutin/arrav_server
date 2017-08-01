@@ -31,7 +31,7 @@ public final class Herb extends ProducingSkillAction {
 		definition = herb;
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(GrimyHerb h : GrimyHerb.values()) {
 			ItemAction e = new ItemAction() {
 				@Override

@@ -15,7 +15,7 @@ import net.edge.world.entity.actor.player.Player;
  * Action handling npc action clicks.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public abstract class NpcAction extends Action {
+public abstract class MobAction extends Action {
 	
 	public abstract boolean click(Player player, Mob mob, int click);
 	
@@ -36,12 +36,12 @@ public abstract class NpcAction extends Action {
 	}
 	
 	public static void init() {
-		ScoreboardManager.event();
-		ButterflyCatching.event();
-		Slayer.eventNpc();
-		StarSprite.event();
-		Pickpocketing.event();
-		Skillcape.event();
+		ScoreboardManager.action();
+		ButterflyCatching.action();
+		Slayer.actionMob();
+		StarSprite.action();
+		Pickpocketing.action();
+		Skillcape.action();
 	}
 	
 }

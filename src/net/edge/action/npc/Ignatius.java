@@ -6,17 +6,16 @@ import net.edge.content.dialogue.impl.PlayerDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.action.ActionInitializer;
-import net.edge.action.impl.NpcAction;
+import net.edge.action.impl.MobAction;
 import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.util.Utility;
-import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 public class Ignatius extends ActionInitializer {
 	@Override
 	public void init() {
-		NpcAction e = new NpcAction() {
+		MobAction e = new MobAction() {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {
 				DialogueAppender ap = new DialogueAppender(player);

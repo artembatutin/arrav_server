@@ -1,6 +1,7 @@
 package net.edge.content.skill.woodcutting;
 
 import net.edge.action.impl.ObjectAction;
+import net.edge.content.skill.farming.patch.Patch;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.TransformableObject;
@@ -36,6 +37,11 @@ public final class Woodcutting extends HarvestingSkillAction {
 	private final Tree tree;
 	
 	/**
+	 * Tree patch if cutting farming tree.
+	 */
+	private final Patch patch;
+	
+	/**
 	 * The object we're interfering with.
 	 */
 	private final DynamicObject object;
@@ -47,18 +53,21 @@ public final class Woodcutting extends HarvestingSkillAction {
 	
 	/**
 	 * Constructs a new {@link Woodcutting} skill.
-	 * @param player {@link #player}.
-	 * @param object the object the {@code player} is interacting with.
 	 */
-	public Woodcutting(Player player, Tree tree, GameObject object) {
+	public Woodcutting(Player player, Tree tree, GameObject object, Patch patch) {
 		super(player, Optional.of(object.getGlobalPos()));
 		this.objectName = object.getDefinition().getName().toLowerCase();
 		this.tree = tree;
 		this.hatchet = Hatchet.getDefinition(player).orElse(null);
 		this.object = object.toDynamic();
+		this.patch = patch;
 	}
 	
-	public static void event() {
+	public Woodcutting(Player player, Tree tree, GameObject object) {
+		this(player, tree, object, null);
+	}
+	
+	public static void action() {
 		for(Tree tree : Tree.values()) {
 			ObjectAction cut = new ObjectAction() {
 				@Override
@@ -102,7 +111,7 @@ public final class Woodcutting extends HarvestingSkillAction {
 		if(!checkWoodcutting()) {
 			return false;
 		}
-		if(object.getElements() <= 0) {
+		if(patch == null && object.getElements() <= 0) {
 			object.setElements(tree.getLogCount());
 		}
 		getPlayer().message("You begin to cut the " + objectName + "...");
@@ -122,7 +131,11 @@ public final class Woodcutting extends HarvestingSkillAction {
 	public void onHarvest(Task t, Item[] items, boolean success) {
 		if(!tree.isObstacle() && success) {
 			BirdNest.drop(getPlayer());
-			object.setElements(object.getElements() - 1);
+			if(patch != null) {
+				patch.setHarvestedItem(patch.getHarvestedItem().createAndIncrement(1));
+			} else {
+				object.setElements(object.getElements() - 1);
+			}
 		}
 		if(tree.isObstacle() && success && object.isReg()) {
 			object.remove();

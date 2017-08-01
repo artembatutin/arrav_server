@@ -18,8 +18,6 @@ public enum Bone {
 	OURG_BONES(4834, 140),
 	DAGANNOTH_BONES(6729, 125);
 
-	public static final ImmutableSet<Bone> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Bone.class));
-
 	private final int id;
 	private final double experience;
 
@@ -41,7 +39,4 @@ public enum Bone {
 		return name().toLowerCase().replaceAll("_", " ");
 	}
 
-	public static Optional<Bone> getBone(int id) {
-		return VALUES.stream().filter(it -> it.getId() == id).findFirst();
-	}
 }

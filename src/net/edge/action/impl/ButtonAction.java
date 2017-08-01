@@ -20,7 +20,7 @@ public abstract class ButtonAction extends Action {
 	
 	public static void init() {
 		new Spellbook();
-		PlayerPanel.event();
+		PlayerPanel.action();
 	}
 	
 }

@@ -10,7 +10,7 @@ import net.edge.content.market.MarketCounter;
 import net.edge.content.minigame.rfd.RFDData;
 import net.edge.content.minigame.rfd.RFDMinigame;
 import net.edge.action.ActionInitializer;
-import net.edge.action.impl.NpcAction;
+import net.edge.action.impl.MobAction;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class Culinaromancer extends ActionInitializer {
 	@Override
 	public void init() {
-		NpcAction e = new NpcAction() {
+		MobAction e = new MobAction() {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {
 				DialogueAppender ap = new DialogueAppender(player);

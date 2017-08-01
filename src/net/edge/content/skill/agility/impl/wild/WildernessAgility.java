@@ -41,7 +41,7 @@ public final class WildernessAgility extends AgilityCourse {
 		this.data = data;
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(WildernessAgilityData data : WildernessAgilityData.values()) {
 			ObjectAction perform = new ObjectAction() {
 				@Override

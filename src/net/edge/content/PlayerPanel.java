@@ -269,7 +269,7 @@ public enum PlayerPanel {
 	/**
 	 * Sets up event clicks.
 	 */
-	public static void event() {
+	public static void action() {
 		for(PlayerPanel p : PlayerPanel.values()) {
 			ButtonAction e = new ButtonAction() {
 				@Override

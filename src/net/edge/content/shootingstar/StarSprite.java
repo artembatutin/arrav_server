@@ -1,7 +1,7 @@
 package net.edge.content.shootingstar;
 
 import net.edge.content.market.MarketCounter;
-import net.edge.action.impl.NpcAction;
+import net.edge.action.impl.MobAction;
 import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.task.Task;
 import net.edge.content.dialogue.Expression;
@@ -48,8 +48,8 @@ public final class StarSprite extends Mob {
 		World.get().getMobs().add(star.sprite);
 	}
 
-	public static void event() {
-		NpcAction e = new NpcAction() {
+	public static void action() {
+		MobAction e = new MobAction() {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {
 				if(click == 1) {

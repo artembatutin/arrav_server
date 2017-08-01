@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.action.impl.ItemAction;
-import net.edge.action.impl.NpcAction;
+import net.edge.action.impl.MobAction;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.PlayerPanel;
@@ -102,7 +102,7 @@ public final class Slayer {
 		updateBlocked(player);
 	}
 	
-	public static void eventItem() {
+	public static void actionItem() {
 		ItemAction activate = new ItemAction() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
@@ -138,9 +138,9 @@ public final class Slayer {
 		killsLeft.registerEquip(4155);
 	}
 	
-	public static void eventNpc() {
+	public static void actionMob() {
 		for(SlayerMaster master : SlayerMaster.values()) {
-			NpcAction e = new NpcAction() {
+			MobAction e = new MobAction() {
 				@Override
 				public boolean click(Player player, Mob npc, int click) {
 					if(!player.getSkills()[Skills.SLAYER].reqLevel(master.getRequirement())) {

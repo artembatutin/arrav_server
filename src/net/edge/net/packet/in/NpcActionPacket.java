@@ -7,7 +7,7 @@ import net.edge.content.pets.Pet;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.action.ActionContainer;
-import net.edge.action.impl.NpcAction;
+import net.edge.action.impl.MobAction;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
 import net.edge.net.codec.IncomingMsg;
@@ -32,10 +32,10 @@ public final class NpcActionPacket implements IncomingPacket {
 	/*
 	 * All of the npc events.
 	 */
-	public static final ActionContainer<NpcAction> FIRST = new ActionContainer<>();
-	public static final ActionContainer<NpcAction> SECOND = new ActionContainer<>();
-	public static final ActionContainer<NpcAction> THIRD = new ActionContainer<>();
-	public static final ActionContainer<NpcAction> FOURTH = new ActionContainer<>();
+	public static final ActionContainer<MobAction> FIRST = new ActionContainer<>();
+	public static final ActionContainer<MobAction> SECOND = new ActionContainer<>();
+	public static final ActionContainer<MobAction> THIRD = new ActionContainer<>();
+	public static final ActionContainer<MobAction> FOURTH = new ActionContainer<>();
 	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
@@ -122,7 +122,7 @@ public final class NpcActionPacket implements IncomingPacket {
 				if(Pet.pickup(player, mob)) {
 					return;
 				}
-				NpcAction e = FIRST.get(mob.getId());
+				MobAction e = FIRST.get(mob.getId());
 				if(e != null) {
 					e.click(player, mob, 1);
 				}
@@ -153,7 +153,7 @@ public final class NpcActionPacket implements IncomingPacket {
 				if(Summoning.interact(player, mob, 2)) {
 					return;
 				}
-				NpcAction e = SECOND.get(mob.getId());
+				MobAction e = SECOND.get(mob.getId());
 				if(e != null) {
 					e.click(player, mob, 2);
 				}
@@ -181,7 +181,7 @@ public final class NpcActionPacket implements IncomingPacket {
 				if(Summoning.interact(player, mob, 3)) {
 					return;
 				}
-				NpcAction e = THIRD.get(mob.getId());
+				MobAction e = THIRD.get(mob.getId());
 				if(e != null) {
 					e.click(player, mob, 3);
 				}
@@ -211,7 +211,7 @@ public final class NpcActionPacket implements IncomingPacket {
 				if(Summoning.interact(player, mob, 4)) {
 					return;
 				}
-				NpcAction e = FOURTH.get(mob.getId());
+				MobAction e = FOURTH.get(mob.getId());
 				if(e != null) {
 					e.click(player, mob, 4);
 				}

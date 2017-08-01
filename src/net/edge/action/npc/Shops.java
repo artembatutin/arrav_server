@@ -2,7 +2,7 @@ package net.edge.action.npc;
 
 import net.edge.content.market.MarketCounter;
 import net.edge.action.ActionInitializer;
-import net.edge.action.impl.NpcAction;
+import net.edge.action.impl.MobAction;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
@@ -55,7 +55,7 @@ public class Shops extends ActionInitializer {
 	@Override
 	public void init() {
 		for(Shop s : Shop.values()) {
-			NpcAction e = new NpcAction() {
+			MobAction e = new MobAction() {
 				@Override
 				public boolean click(Player player, Mob npc, int click) {
 					MarketCounter.getShops().get(s.shop).openShop(player);

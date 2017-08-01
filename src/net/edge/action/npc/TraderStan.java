@@ -1,7 +1,7 @@
 package net.edge.action.npc;
 
 import net.edge.action.ActionInitializer;
-import net.edge.action.impl.NpcAction;
+import net.edge.action.impl.MobAction;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.impl.DefaultMob;
@@ -47,7 +47,7 @@ public class TraderStan extends ActionInitializer {
 				}
 			}
 		});
-		NpcAction e = new NpcAction() {
+		MobAction e = new MobAction() {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {
 				/*DialogueAppender app = new DialogueAppender(player);

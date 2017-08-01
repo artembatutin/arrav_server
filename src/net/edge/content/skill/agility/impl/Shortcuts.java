@@ -36,7 +36,7 @@ public final class Shortcuts extends AgilityCourse {
 		this.definition = definition;
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(ShortcutsData data : ShortcutsData.values()) {
 			ObjectAction perform = new ObjectAction() {
 				@Override

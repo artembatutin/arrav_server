@@ -2,17 +2,19 @@ package net.edge.world.entity.actor.player;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.Application;
+import net.edge.GameConstants;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
 import net.edge.content.ViewingOrb;
 import net.edge.content.achievements.Achievement;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.clanchat.ClanMember;
-import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatType;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectTask;
 import net.edge.content.combat.effect.CombatPoisonEffect;
@@ -46,6 +48,9 @@ import net.edge.content.skill.action.SkillActionTask;
 import net.edge.content.skill.agility.AgilityCourseBonus;
 import net.edge.content.skill.construction.Construction;
 import net.edge.content.skill.construction.House;
+import net.edge.content.skill.farming.FarmingManager;
+import net.edge.content.skill.farming.patch.Patch;
+import net.edge.content.skill.farming.patch.PatchType;
 import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.slayer.Slayer;
@@ -55,17 +60,12 @@ import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.content.wilderness.WildernessActivity;
-import net.edge.GameConstants;
-import net.edge.world.entity.item.container.session.ExchangeSessionManager;
-import net.edge.world.locale.Position;
-import net.edge.world.locale.loc.Location;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.net.packet.out.*;
 import net.edge.net.session.GameSession;
 import net.edge.task.Task;
 import net.edge.util.*;
-import net.edge.util.rand.RandomUtils;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
 import net.edge.world.World;
@@ -73,7 +73,6 @@ import net.edge.world.entity.EntityState;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.net.packet.out.SendMobUpdate;
 import net.edge.world.entity.actor.mob.impl.gwd.GodwarsFaction;
 import net.edge.world.entity.actor.player.assets.*;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -82,6 +81,9 @@ import net.edge.world.entity.actor.update.UpdateManager;
 import net.edge.world.entity.item.container.impl.Bank;
 import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.world.entity.item.container.impl.Inventory;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.locale.Position;
+import net.edge.world.locale.loc.Location;
 
 import java.util.*;
 import java.util.function.Function;
@@ -124,12 +126,12 @@ public final class Player extends Actor {
 	 * 2 - iron man maxed
 	 */
 	private int ironMan;
-
+	
 	/**
 	 * The total amount of times this player has voted.
 	 */
 	private int totalVotes;
-
+	
 	/**
 	 * Player's voting points.
 	 */
@@ -139,7 +141,7 @@ public final class Player extends Actor {
 	 * The aggression tick timer to not check npc aggression each tick.
 	 */
 	private int aggressionTick;
-
+	
 	/**
 	 * The last username that killed this player.
 	 */
@@ -199,15 +201,23 @@ public final class Player extends Actor {
 	 * The dialogue builder for this player.
 	 */
 	private final DialogueBuilder dialogueChain = new DialogueBuilder(this);
-
-	/** The cached achievement progress. */
-	private Object2IntArrayMap<Achievement> playerAchievements = new Object2IntArrayMap<Achievement>(Achievement.VALUES.size()) { {
-			for (final Achievement achievement : Achievement.VALUES) {
+	
+	/**
+	 * The cached achievement progress.
+	 */
+	private Object2IntArrayMap<Achievement> playerAchievements = new Object2IntArrayMap<Achievement>(Achievement.VALUES.size()) {
+		{
+			for(final Achievement achievement : Achievement.VALUES) {
 				put(achievement, 0);
 			}
 		}
 	};
-
+	
+	/**
+	 * The cached player's farming patches progress.
+	 */
+	private Object2ObjectArrayMap<PatchType, Patch> playerPatches = new Object2ObjectArrayMap<>(PatchType.VALUES.size());
+	
 	/**
 	 * The I/O manager that manages I/O operations for this player.
 	 */
@@ -217,12 +227,12 @@ public final class Player extends Actor {
 	 * The godwars killcount that can be increased by this player.
 	 */
 	private int[] godwarsKillcount = new int[4];
-
+	
 	/**
 	 * The overload effect for this player.
 	 */
 	private OverloadEffectTask overloadEffect;
-
+	
 	/**
 	 * The array of skills that can be trained by this player.
 	 */
@@ -272,7 +282,9 @@ public final class Player extends Actor {
 	/**
 	 * The collection of stopwatches used for various timing operations.
 	 */
-	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), eatingTimer = new Stopwatch().reset(), potionTimer = new Stopwatch().reset(), specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch().reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
+	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), eatingTimer = new Stopwatch()
+			.reset(), potionTimer = new Stopwatch().reset(), specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch()
+			.reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
 	
 	/**
 	 * The collection of counters used for various counting operations.
@@ -611,11 +623,11 @@ public final class Player extends Actor {
 		this.credentials = credentials;
 		this.human = human;
 	}
-
+	
 	public PlayerCredentials getCredentials() {
 		return credentials;
 	}
-
+	
 	public void sendDefaultSidebars() {
 		TabInterface.CLAN_CHAT.sendInterface(this, 50128);
 		TabInterface.SKILL.sendInterface(this, 3917);
@@ -671,7 +683,7 @@ public final class Player extends Actor {
 		privateMessage.updateOtherList(true);
 		out(new SendContextMenu(3, false, "Follow"));
 		out(new SendContextMenu(4, false, "Trade with"));
-		if (getRights() == Rights.ADMINISTRATOR) {
+		if(getRights() == Rights.ADMINISTRATOR) {
 			getAttr().get("invincible").set(true);
 		}
 		CombatEffect.values().forEach($it -> {
@@ -720,21 +732,10 @@ public final class Player extends Actor {
 			out(new SendUpdateTimer((int) (Application.UPDATING * 50 / 30)));
 		}
 		Summoning.login(this);
+		FarmingManager.login(this);
 		if(getRights().isStaff()) {
 			World.get().setStaffCount(World.get().getStaffCount() + 1);
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
-		}
-		if(getFormatUsername().contains("Bot")) {
-			int x = RandomUtils.inclusive(20);
-			int y = RandomUtils.inclusive(20);
-			getMovementQueue().walk(getPosition().move(RandomUtils.nextBoolean() ? -x : x, RandomUtils.nextBoolean() ? -y : y));
-			Player p = this;
-			(new Task(RandomUtils.inclusive(5)) {
-				@Override
-				protected void execute() {
-					p.forceChat("yoooo");
-				}
-			}).submit();
 		}
 	}
 	
@@ -754,7 +755,8 @@ public final class Player extends Actor {
 	
 	@Override
 	public String toString() {
-		return getCredentials().getUsername() == null ? session.toString() : "PLAYER[username= " + getCredentials().getUsername() + ", host= " + session.getHost() + ", rights= " + rights + "]";
+		return getCredentials().getUsername() == null ? session.toString() : "PLAYER[username= " + getCredentials().getUsername() + ", host= " + session
+				.getHost() + ", rights= " + rights + "]";
 	}
 	
 	@Override
@@ -805,7 +807,7 @@ public final class Player extends Actor {
 	@Override
 	public void preUpdate() {
 		getMovementQueue().sequence();
-//		MobAggression.sequence(this);
+		//		MobAggression.sequence(this);
 		restoreRunEnergy();
 		int deltaX = getPosition().getX() - getLastRegion().getRegionX() * 8;
 		int deltaY = getPosition().getY() - getLastRegion().getRegionY() * 8;
@@ -1066,7 +1068,8 @@ public final class Player extends Actor {
 			godwarsInterface = false;
 		}
 		if(Location.inWilderness(this)) {
-			int calculateY = this.getPosition().getY() > 6400 ? super.getPosition().getY() - 6400 : super.getPosition().getY();
+			int calculateY = this.getPosition().getY() > 6400 ? super.getPosition().getY() - 6400 : super.getPosition()
+					.getY();
 			wildernessLevel = (((calculateY - 3520) / 8) + 1);
 			if(!wildernessInterface) {
 				out(new SendWalkable(197));
@@ -1154,7 +1157,7 @@ public final class Player extends Actor {
 		if(update)
 			PlayerPanel.IRON.refresh(this, "@or3@ - Iron man: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
 	}
-
+	
 	/**
 	 * Gets the total amount of times this player has voted.
 	 * @return total amount of votes.
@@ -1162,16 +1165,16 @@ public final class Player extends Actor {
 	public int getTotalVotes() {
 		return totalVotes;
 	}
-
+	
 	/**
 	 * Sets the total amount of times this player has voted.
-	 * @param vote	the amount to set.
+	 * @param vote the amount to set.
 	 */
 	public void setTotalVotes(int vote) {
 		this.totalVotes += vote;
 		PlayerPanel.TOTAL_VOTES.refresh(this, "@or2@ - Total votes: @yel@" + this.getTotalVotes());
 	}
-
+	
 	/**
 	 * Gets the amount of vote points this player has.
 	 * @return votes
@@ -1182,17 +1185,16 @@ public final class Player extends Actor {
 	
 	/**
 	 * Sets the vote point amount for this player.
-	 * @param vote
 	 */
 	public void setVotePoints(int vote) {
 		this.votePoints += vote;
 		PlayerPanel.VOTE.refresh(this, "@or3@ - Vote points: @yel@" + this.getVotePoints() + " points");
 	}
-
+	
 	public String getLastKiller() {
 		return lastKiller;
 	}
-
+	
 	public void setLastKiller(String lastKiller) {
 		this.lastKiller = lastKiller;
 	}
@@ -1353,7 +1355,7 @@ public final class Player extends Actor {
 	public void setGodwarsKillcount(int[] godwarsKillcount) {
 		this.godwarsKillcount = godwarsKillcount;
 	}
-
+	
 	/**
 	 * Gets the overload effect if there is any.
 	 * @return the overload effect.
@@ -1361,7 +1363,7 @@ public final class Player extends Actor {
 	public OverloadEffectTask getOverloadEffect() {
 		return overloadEffect;
 	}
-
+	
 	/**
 	 * Applies the overload effect for the specified player.
 	 */
@@ -1370,7 +1372,7 @@ public final class Player extends Actor {
 		overloadEffect = effect;
 		effect.submit();
 	}
-
+	
 	/**
 	 * Resets the overload effect.
 	 */
@@ -1379,11 +1381,11 @@ public final class Player extends Actor {
 			if(overloadEffect.isRunning() && stopTask) {
 				overloadEffect.cancel();
 			}
-
+			
 			overloadEffect = null;
 		}
 	}
-
+	
 	/**
 	 * Gets the array of skills that can be trained by this player.
 	 * @return the skills that can be trained.
@@ -1471,7 +1473,7 @@ public final class Player extends Actor {
 	public Stopwatch getPotionTimer() {
 		return potionTimer;
 	}
-
+	
 	/**
 	 * Gets the special attack restore timer.
 	 * @return the special attack restore timer.
@@ -1479,7 +1481,7 @@ public final class Player extends Actor {
 	public Stopwatch getSpecialAttackRestoreTimer() {
 		return specRestorePotionTimer;
 	}
-
+	
 	/**
 	 * Gets the npc tolerance stopwatch timer.
 	 * @return the tolerance timer.
@@ -1503,7 +1505,7 @@ public final class Player extends Actor {
 	public Stopwatch getBuryTimer() {
 		return buryTimer;
 	}
-
+	
 	public Stopwatch getDiceTimer() {
 		return diceTimer;
 	}
@@ -2198,7 +2200,7 @@ public final class Player extends Actor {
 	public DialogueBuilder getDialogueBuilder() {
 		return dialogueChain;
 	}
-
+	
 	/**
 	 * Gets the achievements for the player.
 	 * @return the map containing the player achievements.
@@ -2206,6 +2208,15 @@ public final class Player extends Actor {
 	public Object2IntArrayMap<Achievement> getAchievements() {
 		return playerAchievements;
 	}
+	
+	/**
+	 * Gets the farming patches for the player.
+	 * @return the map containing the player patches.
+	 */
+	public Object2ObjectArrayMap<PatchType, Patch>  getPatches() {
+		return playerPatches;
+	}
+	
 	/**
 	 * Determines if the region has been updated this sequence.
 	 * @return {@code true} if the region has been updated, {@code false}
@@ -2369,7 +2380,8 @@ public final class Player extends Actor {
 	 */
 	public void setSlayer(Optional<Slayer> slayer) {
 		this.slayer = slayer;
-		PlayerPanel.SLAYER_TASK.refresh(this, "@or2@ - Slayer task: @yel@" + (slayer.isPresent() ? (slayer.get().getAmount() + " " + slayer.get().toString()) : "none"));
+		PlayerPanel.SLAYER_TASK.refresh(this, "@or2@ - Slayer task: @yel@" + (slayer.isPresent() ? (slayer.get()
+				.getAmount() + " " + slayer.get().toString()) : "none"));
 	}
 	
 	/**
@@ -2394,10 +2406,10 @@ public final class Player extends Actor {
 	public AgilityCourseBonus getAgilityBonus() {
 		return agility_bonus;
 	}
-
+	
 	/**
 	 * Sends a single dialogue, this method is used for ease.
-	 * @param dialogue	the dialogue to send.
+	 * @param dialogue the dialogue to send.
 	 */
 	public void dialogue(Dialogue dialogue) {
 		DialogueAppender ap = new DialogueAppender(this);

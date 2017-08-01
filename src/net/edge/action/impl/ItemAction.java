@@ -32,14 +32,14 @@ public abstract class ItemAction extends Action {
 	}
 	
 	public static void init() {
-		PrayerBoneBury.event();
-		FoodConsumable.event();
-		PotionConsumable.event();
-		Herb.event();
-		Slayer.eventItem();
-		Dice.event();
-		MithrilSeeds.event();
-		SummoningData.event();
+		PrayerBoneBury.action();
+		FoodConsumable.action();
+		PotionConsumable.action();
+		Herb.action();
+		Slayer.actionItem();
+		Dice.action();
+		MithrilSeeds.action();
+		SummoningData.action();
 	}
 	
 }
