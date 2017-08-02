@@ -42,9 +42,6 @@ public class FarmingAction {
 								.getSeedClass() == SeedClass.BUSHES || farming.patch.getSeedType()
 								.getSeedClass() == SeedClass.TREES || farming.patch.getSeedType()
 								.getSeedClass() == SeedClass.MUSHROOMS || farming.patch.getSeedType() == FlowerSeed.WHITE_LILY) ? "The crops are looking healthy." : "The crops are looking healthy; should probably water them to keep it that way!" : "The crops are looking healthy and watered!";
-						
-						//player.message("opt=" + option + "; grown=" + fullyGrown);
-						
 						if(farming.patch.getSeedType().getSeedClass() == SeedClass.TREES) {
 							if(option == 1) {
 								if(!farming.patch.hasAttribute(PatchAttribute.CHECKED_HEALTH)) {

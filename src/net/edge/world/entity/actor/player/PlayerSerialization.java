@@ -9,6 +9,8 @@ import net.edge.content.clanchat.ClanManager;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.skill.construction.House;
 import net.edge.content.skill.construction.room.Room;
+import net.edge.content.skill.farming.patch.Patch;
+import net.edge.content.skill.farming.patch.PatchType;
 import net.edge.content.skill.summoning.SummoningData;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.minigame.barrows.BarrowsData;
@@ -96,21 +98,9 @@ public final class PlayerSerialization {
 				for(Token token : TOKENS) {
 					obj.add(token.getName(), gson.toJsonTree(token.toJson(player)));
 				}
-				Object2ObjectArrayMap<Achievement, Integer> achievements = new Object2ObjectArrayMap<>();
-				for(Object2IntMap.Entry<Achievement> it : player.getAchievements().object2IntEntrySet()) {
-					int value = it.getIntValue();
-					achievements.put(it.getKey(), value);
-				}
-				obj.add("achievements", gson.toJsonTree(achievements));
-				Object2ObjectArrayMap<String, Object> quests = new Object2ObjectArrayMap<>();
-				for(Map.Entry<Quests, Quest> it : player.getQuestManager().getStartedQuests().entrySet()) {
-					Quests key = it.getKey();
-					Quest value = it.getValue();
-					Object2ObjectLinkedOpenHashMap<String, Object> attributeEntry = new Object2ObjectLinkedOpenHashMap<>();
-					attributeEntry.put("quest", value);
-					quests.put(key.name(), attributeEntry);
-				}
-				obj.add("quests", gson.toJsonTree(quests));
+				obj.add("achievements", gson.toJsonTree(player.getAchievements(), Map.class));
+				obj.add("patches", gson.toJsonTree(player.getPatches(), Map.class));
+				obj.add("quests", gson.toJsonTree(player.getQuestManager().getStartedQuests(), Map.class));
 				Object2ObjectArrayMap<String, Object> attributes = new Object2ObjectArrayMap<>();
 				for(Map.Entry<String, AttributeValue<?>> it : player.getAttr()) {
 					AttributeKey<?> key = AttributeKey.ALIASES.get(it.getKey());
@@ -213,6 +203,12 @@ public final class PlayerSerialization {
 				JsonObject attr = reader.get("achievements").getAsJsonObject();
 				for(Map.Entry<String, JsonElement> it : attr.entrySet()) {
 					player.getAchievements().put(Achievement.valueOf(it.getKey()), it.getValue().getAsInt());
+				}
+			}
+			if(reader.has("patches")) {
+				JsonObject attr = reader.get("patches").getAsJsonObject();
+				for(Map.Entry<String, JsonElement> it : attr.entrySet()) {
+					player.getPatches().put(PatchType.valueOf(it.getKey()), gson.fromJson(it.getValue(), Patch.class));
 				}
 			}
 		} catch(Exception e) {

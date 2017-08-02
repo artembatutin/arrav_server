@@ -19,7 +19,7 @@ public enum MushroomSeed implements SeedType {
 	
 	;
 	
-	private MushroomSeed(int levelRequirement, Item seed, int[] growthTime, Item[] rewards, Item[] protectionFee, int[] experience, int[] values) {
+	MushroomSeed(int levelRequirement, Item seed, int[] growthTime, Item[] rewards, Item[] protectionFee, int[] experience, int[] values) {
 		this.levelRequirement = levelRequirement;
 		this.seed = seed;
 		this.growthTime = growthTime;

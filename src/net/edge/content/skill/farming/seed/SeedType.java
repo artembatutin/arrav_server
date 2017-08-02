@@ -6,25 +6,25 @@ import net.edge.world.entity.item.Item;
 
 public interface SeedType {
 	
-	public SeedClass getSeedClass();
+	SeedClass getSeedClass();
 	
-	public int getLevelRequirement();
+	int getLevelRequirement();
 	
-	public int getToolId();
+	int getToolId();
 	
-	public Animation getAnimation();
+	Animation getAnimation();
 	
-	public Item getSeed();
+	Item getSeed();
 	
-	public int[] getGrowthTime();
+	int[] getGrowthTime();
 	
-	public Item[] getRewards();
+	Item[] getRewards();
 	
-	public Item[] getProtectionFee();
+	Item[] getProtectionFee();
 	
-	public int[] getExperience();
+	int[] getExperience();
 	
-	public int[] getValues();
+	int[] getValues();
 	
-	public int getHarvestAmount(Patch patch);
+	int getHarvestAmount(Patch patch);
 }

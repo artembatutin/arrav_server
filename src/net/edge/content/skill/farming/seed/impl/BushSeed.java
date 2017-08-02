@@ -58,7 +58,7 @@ public enum BushSeed implements SeedType {
 	//197, 198, 199, 200, 201, 202, 203, 209
 	;
 	
-	private BushSeed(int levelRequirement, Item seeds, int[] growthTime, Item[] rewards, Item[] protectionFee, int[] experience, int[] values) {
+	BushSeed(int levelRequirement, Item seeds, int[] growthTime, Item[] rewards, Item[] protectionFee, int[] experience, int[] values) {
 		this.levelRequirement = levelRequirement;
 		this.seeds = seeds;
 		this.growthTime = growthTime;
