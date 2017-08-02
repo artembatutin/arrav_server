@@ -69,12 +69,12 @@ public final class GameSession extends Session {
 		if(msg instanceof IncomingMsg) {
 			IncomingMsg packet = (IncomingMsg) msg;
 			if(packet.getOpcode() != 0) {
+				if(packet.getOpcode() == 41) {
+					handle(packet);//item equipping
+					return;
+				}
 				World.get().run(() -> {
-					try {
-						NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.getSize(), packet);
-					} finally {
-						packet.getBuffer().release();
-					}
+					handle(packet);
 				});
 			}
 		}
@@ -101,6 +101,17 @@ public final class GameSession extends Session {
 		outgoing.offer(pkt);
 	}
 	
+	/**
+	 * Handling an incoming packet/message.
+	 * @param packet incoming message.
+	 */
+	public void handle(IncomingMsg packet) {
+		try {
+			NetworkConstants.MESSAGES[packet.getOpcode()].handle(player, packet.getOpcode(), packet.getSize(), packet);
+		} finally {
+			packet.getBuffer().release();
+		}
+	}
 	
 	/**
 	 * Writes the given {@link OutgoingPacket} to the stream.
@@ -137,10 +148,6 @@ public final class GameSession extends Session {
 	 */
 	public void flushQueue() {
 		getChannel().flush();
-	}
-	
-	public ByteBuf alloc(int length) {
-		return getChannel().alloc().buffer(length);
 	}
 	
 	/**

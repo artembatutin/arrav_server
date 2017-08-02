@@ -134,6 +134,11 @@ public class ItemContainer implements Iterable<Item> {
 	private int size;
 	
 	/**
+	 * Condition if packets are non-queued.
+	 */
+	private boolean nonQueued = false;
+	
+	/**
 	 * Creates a new {@link ItemContainer}.
 	 * @param capacity {@link #capacity()}.
 	 * @param policy   {@link #policy}.
@@ -1150,6 +1155,22 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public void untest() {
 		test = false;
+	}
+	
+	/**
+	 * Condition if packets are non-queued.
+	 * @return non-queued flag.
+	 */
+	public boolean nonQueued() {
+		return nonQueued;
+	}
+	
+	/**
+	 * Sets if the packets should be direct or queued.
+	 * @param nonQueued flag to set.
+	 */
+	public void nonQueue(boolean nonQueued) {
+		this.nonQueued = nonQueued;
 	}
 	
 }

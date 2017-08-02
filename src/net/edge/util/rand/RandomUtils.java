@@ -311,7 +311,6 @@ public final class RandomUtils {
 	 * @param max the maximum inclusive number.
 	 * @return the pseudo-random {@code int}.
 	 * @throws IllegalArgumentException if {@code max - min + 1} is less than {@code 0}.
-	 * @see {@link #inclusive(int, int)}.
 	 */
 	public static int inclusiveExcludes(int min, int max, int... exclude) {
 		Arrays.sort(exclude);

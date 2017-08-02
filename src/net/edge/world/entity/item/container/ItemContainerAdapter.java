@@ -28,7 +28,7 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	@Override
 	public void singleUpdate(ItemContainer container, Item oldItem, Item newItem, int slot, boolean update) {
 		if(update)
-			updateItem(newItem, slot);
+			updateItem(container, newItem, slot);
 	}
 	
 	@Override
@@ -45,14 +45,20 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	 * Updates many items on a widget.
 	 */
 	protected void updateItems(ItemContainer container) {
-		player.out(new SendContainer(widget(), container));
+		if(container.nonQueued())
+			player.write(new SendContainer(widget(), container));
+		else
+			player.out(new SendContainer(widget(), container));
 	}
 	
 	/**
 	 * Updates a single item on a widget.
 	 */
-	protected void updateItem(Item item, int slot) {
-		player.out(new SendItemOnInterfaceSlot(widget(), item, slot));
+	protected void updateItem(ItemContainer container, Item item, int slot) {
+		if(container.nonQueued())
+			player.write(new SendItemOnInterfaceSlot(widget(), item, slot));
+		else
+			player.out(new SendItemOnInterfaceSlot(widget(), item, slot));
 	}
 	
 	/**

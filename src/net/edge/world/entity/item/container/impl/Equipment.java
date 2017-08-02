@@ -50,7 +50,7 @@ public final class Equipment extends ItemContainer {
 		@Override
 		public void singleUpdate(ItemContainer container, Item oldItem, Item newItem, int slot, boolean update) {
 			if(update)
-				updateItem(newItem, slot);
+				updateItem(container, newItem, slot);
 			updateBonus(oldItem, newItem);
 			writeBonuses();
 		}
@@ -162,6 +162,7 @@ public final class Equipment extends ItemContainer {
 		this.player = player;
 		addListener(new EquipmentListener());
 		addListener(new ItemWeightListener(player));
+		nonQueue(true);
 	}
 	
 	@Override
@@ -192,6 +193,7 @@ public final class Equipment extends ItemContainer {
 			return false;
 		if(!Skillcape.verifySkillCape(player, equipItem))
 			return false;
+		inventory.nonQueue(true);
 		ItemDefinition def = equipItem.getDefinition();
 		EquipmentType type = def.getEquipmentType();
 		Optional<Item> unequipPrimary;
@@ -220,8 +222,10 @@ public final class Equipment extends ItemContainer {
 		
 		//Just a check, had to put it in final.
 		Item finalEquipItem = equipItem;
-		if(!MinigameHandler.execute(player, m -> m.canEquip(player, finalEquipItem, finalEquipItem.getDefinition().getEquipmentType())))
+		if(!MinigameHandler.execute(player, m -> m.canEquip(player, finalEquipItem, finalEquipItem.getDefinition().getEquipmentType()))) {
+			inventory.nonQueue(false);
 			return false;
+		}
 		
 		if(!inventory.hasCapacityFor(unequipPrimary.orElse(null), unequipSecondary.orElse(null))) {
 			boolean possible = false;
@@ -234,6 +238,7 @@ public final class Equipment extends ItemContainer {
 			}
 			if(!possible) {
 				player.message("You do not have enough space in your inventory.");
+				inventory.nonQueue(false);
 				return false;
 			}
 		}
@@ -261,7 +266,7 @@ public final class Equipment extends ItemContainer {
 		if(type == WEAPON || type == ARROWS) {
 			updateRange();
 		}
-		
+		inventory.nonQueue(false);
 		return true;
 	}
 	
