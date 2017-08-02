@@ -145,12 +145,11 @@ public final class World {
 		
 		synchronized(this) {
 			dequeueLogins();
-			dequeueLogout();
 			taskManager.sequence();
 			sync.preUpdate(players, mobs);
 			sync.update(players);
 			sync.postUpdate(players, mobs);
-			
+			dequeueLogout();
 			regionalTick++;
 			if(regionalTick == 10) {
 				Region[] regions = World.getRegions().getRegions();

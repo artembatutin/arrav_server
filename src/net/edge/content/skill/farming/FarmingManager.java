@@ -27,11 +27,11 @@ public final class FarmingManager {
 		int value;
 		switch(patchType) {
 			case VARROCK_CASTLE_TREE_PATCH:
-			case FALADOR_TREE_PATCH:
-			case TAVERLEY_TREE_PATCH:
+			case HOME_EAST_TREE_PATCH:
+			case HOME_WEST_TREE_PATCH:
 				final Patch varrockTree = player.getPatches().get(PatchType.VARROCK_CASTLE_TREE_PATCH);
-				final Patch faladorTree = player.getPatches().get(PatchType.FALADOR_TREE_PATCH);
-				final Patch taverleyTree = player.getPatches().get(PatchType.TAVERLEY_TREE_PATCH);
+				final Patch faladorTree = player.getPatches().get(PatchType.HOME_EAST_TREE_PATCH);
+				final Patch taverleyTree = player.getPatches().get(PatchType.HOME_WEST_TREE_PATCH);
 				value = ((0 << 24)) + (getPatchValue(varrockTree) << 16) + (getPatchValue(faladorTree) << 8) + (getPatchValue(taverleyTree));
 				player.out(new SendConfig(patchType.getConfigId(), value));
 				break;

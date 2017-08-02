@@ -27,8 +27,8 @@ import java.util.Optional;
 public enum PatchType {
 	
 	VARROCK_CASTLE_TREE_PATCH(502, 8390, TreeSeed.values()),
-	FALADOR_TREE_PATCH(502, 8389, TreeSeed.values()),//MOVED TO HOME EAST
-	TAVERLEY_TREE_PATCH(502, 8388, TreeSeed.values()),//MOVED TO HOME WEST
+	HOME_EAST_TREE_PATCH(502, 8389, TreeSeed.values()),//MOVED TO HOME EAST - FALADOR'S
+	HOME_WEST_TREE_PATCH(502, 8388, TreeSeed.values()),//MOVED TO HOME WEST - TAVERLEY'S
 	
 	FALADOR_NORTH_WEST_ALLOTMENT(504, 8550, AllotmentSeed.values()),
 	FALADOR_SOUTH_EAST_ALLOTMENT(504, 8551, AllotmentSeed.values()),

@@ -10,7 +10,7 @@ import net.edge.net.session.LoginSession;
 
 /**
  * The {@link ChannelInitializer} implementation that will initialize {@link SocketChannel}s before they are registered.
- * @author Artem Batutin
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class EdgevilleChannelInitializer extends ChannelInitializer<SocketChannel> {
 	

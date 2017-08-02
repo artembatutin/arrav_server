@@ -20,7 +20,7 @@ import java.util.Queue;
 
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during gameplay.
- * @author lare96 <http://github.org/lare96>
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class GameSession extends Session {
 	
@@ -28,11 +28,6 @@ public final class GameSession extends Session {
 	 * The cap limit of outgoing packets per session.
 	 */
 	public static int outLimit = 200;
-	
-	/**
-	 * The capacity of the stream.
-	 */
-	private static final int STREAM_CAP = 5000;
 	
 	/**
 	 * The queue of {@link OutgoingPacket}s.
@@ -65,7 +60,6 @@ public final class GameSession extends Session {
 		this.player = player;
 		this.decryptor = decryptor;
 		this.encryptor = encryptor;
-		//getChannel().pipeline().remove("login-encoder");
 		getChannel().pipeline().replace("login-encoder", "game-encoder", new GameEncoder(encryptor, player));
 		getChannel().pipeline().replace("login-decoder", "game-decoder", new GameDecoder(decryptor, this));
 	}
@@ -104,6 +98,7 @@ public final class GameSession extends Session {
 	 * Enqueues the given {@link OutgoingPacket} for transport.
 	 */
 	public void equeue(OutgoingPacket pkt) {
+		System.out.println("queued : " + pkt);
 		outgoing.offer(pkt);
 	}
 	

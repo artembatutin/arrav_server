@@ -16,7 +16,7 @@ import net.edge.world.entity.actor.player.PlayerSerialization;
 
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during login.
- * @author lare96 <http://github.org/lare96>
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class LoginSession extends Session {
 	

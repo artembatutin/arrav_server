@@ -1267,8 +1267,8 @@ public final class Player extends Actor {
 	 * @param packet packet to be queued.
 	 */
 	public void out(OutgoingPacket packet) {
-		packet.onSent(this);
-		getSession().equeue(packet);
+		if(packet.onSent(this))
+			getSession().equeue(packet);
 	}
 	
 	/**

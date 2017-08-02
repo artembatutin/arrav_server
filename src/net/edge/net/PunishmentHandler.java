@@ -13,6 +13,7 @@ import java.util.Set;
  * received by the server to ensure that the server does not fall victim to
  * attacks by a socket flooder or a connection from a banned host.
  * @author lare96 <http://github.com/lare96>
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class PunishmentHandler {
 	
