@@ -73,6 +73,7 @@ import net.edge.world.entity.EntityState;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobAggression;
 import net.edge.world.entity.actor.mob.impl.gwd.GodwarsFaction;
 import net.edge.world.entity.actor.player.assets.*;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -807,7 +808,7 @@ public final class Player extends Actor {
 	@Override
 	public void preUpdate() {
 		getMovementQueue().sequence();
-		//		MobAggression.sequence(this);
+		MobAggression.sequence(this);
 		restoreRunEnergy();
 		int deltaX = getPosition().getX() - getLastRegion().getRegionX() * 8;
 		int deltaY = getPosition().getY() - getLastRegion().getRegionY() * 8;

@@ -98,7 +98,6 @@ public final class GameSession extends Session {
 	 * Enqueues the given {@link OutgoingPacket} for transport.
 	 */
 	public void equeue(OutgoingPacket pkt) {
-		System.out.println("queued : " + pkt);
 		outgoing.offer(pkt);
 	}
 	
@@ -124,7 +123,6 @@ public final class GameSession extends Session {
 					if(packet == null) {
 						break;
 					}
-					//ByteBuf temp = packet.write(player, new GameBuffer(alloc(256), encryptor));
 					getChannel().write(packet, getChannel().voidPromise());
 					written++;
 				}

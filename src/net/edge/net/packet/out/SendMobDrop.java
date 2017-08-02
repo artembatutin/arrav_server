@@ -35,14 +35,14 @@ public final class SendMobDrop implements OutgoingPacket {
 			MobDefinition def = MobDefinition.DEFINITIONS[id];
 			if(def == null)
 				return null;
-			msg.putShort(table.getCommon() == null ? 0 : table.getCommon().size());
-			if(table.getCommon() != null) {
+			msg.putShort(table == null || table.getCommon() == null ? 0 : table.getCommon().size());
+			if(table != null && table.getCommon() != null) {
 				for(ItemCache c : table.getCommon()) {
 					msg.putShort(c.ordinal());
 				}
 			}
-			msg.putShort(table.getUnique() == null ? 0 : table.getUnique().size());
-			if(table.getUnique() != null) {
+			msg.putShort(table == null || table.getUnique() == null ? 0 : table.getUnique().size());
+			if(table != null && table.getUnique() != null) {
 				for(Drop d : table.getUnique()) {
 					msg.putShort(d.getId());
 					msg.putShort(d.getMinimum());

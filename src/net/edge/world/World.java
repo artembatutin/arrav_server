@@ -197,10 +197,6 @@ public final class World {
 				if(player == null) {
 					break;
 				}
-				//if(player.getSession() != null && !player.getSession().isActive()) {
-				//	queueLogout(player, true);
-				//	continue;
-				//}
 				if(players.add(player)) {
 					playerByNames.put(player.getCredentials().getUsernameHash(), player);
 				} else if(player.isHuman()) {

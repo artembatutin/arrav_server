@@ -192,6 +192,10 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			int reward = player.getAttr().get("fight_caves_advanced").getBoolean() ? 19111 : 6570;
 			player.getInventory().addOrBank(new Item(reward, 1));
 			player.move(new Position(2436, 5169));
+			if(RandomUtils.inclusive(100) == 0) {
+				player.getInventory().addOrBank(new Item(3906));
+				player.message("You just got yourself a trapped Jadiku!");
+			}
 			this.destruct();
 		} else if(empty) {
 			started = false;

@@ -20,7 +20,6 @@ public final class SendLogout implements OutgoingPacket {
 	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
-		System.out.println("written");
 		msg.message(109, PacketType.VARIABLE_SHORT);
 		msg.endVarSize();
 		return msg.getBuffer();

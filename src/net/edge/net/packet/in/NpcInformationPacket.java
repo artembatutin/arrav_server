@@ -7,10 +7,7 @@ import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendMobDrop;
 import net.edge.util.rand.Chance;
 import net.edge.world.entity.actor.mob.MobDefinition;
-import net.edge.world.entity.actor.mob.drop.Drop;
-import net.edge.world.entity.actor.mob.drop.DropManager;
-import net.edge.world.entity.actor.mob.drop.DropTable;
-import net.edge.world.entity.actor.mob.drop.SuggestedDrop;
+import net.edge.world.entity.actor.mob.drop.*;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.ItemDefinition;
@@ -31,11 +28,39 @@ public final class NpcInformationPacket implements IncomingPacket {
 			int item = payload.getShort();
 			int min = payload.getShort();
 			int max = payload.getShort();
+			ItemCache cache = null;
+			if(min > 65500) {
+				cache = ItemCache.get(min).orElse(null);
+			}
+			if(min != 99 && min != 88 && cache == null && max > 2) {
+				ItemDefinition def = ItemDefinition.get(item);
+				if(def != null) {
+					if(!def.isStackable()) {
+						item = def.getNoted();
+					}
+				}
+			}
 			SuggestedDrop suggested = new SuggestedDrop(npc, item, min, max, chance);
 			if(player.getRights() == Rights.ADMINISTRATOR) {
 				DropTable table = DropManager.getTables().get(npc);
 				if(table == null) {
-					player.message("No table found.");
+					table = new DropTable(new Drop[]{}, new ItemCache[]{});
+					DropManager.getTables().put(npc, table);
+				}
+				if(cache != null) {
+					table.getCommon().add(cache);
+					player.message("Added cache: " + cache);
+					player.out(new SendMobDrop(npc, table));
+					return;
+				}
+				//to share table
+				if(min == 88) {
+					table = DropManager.getTables().get(max);
+					if(table != null) {
+						DropManager.getTables().put(npc, table);
+					}
+					player.out(new SendMobDrop(npc, table));
+					player.message("Shared with: " + MobDefinition.DEFINITIONS[max].getName());
 					return;
 				}
 				//to remove item
@@ -76,7 +101,7 @@ public final class NpcInformationPacket implements IncomingPacket {
 			}
 			player.getAttr().get("npcInformation").set(id);
 			DropTable drop = DropManager.getTables().get(id);
-			if(drop == null) {
+			if(drop == null && !player.getRights().equals(Rights.ADMINISTRATOR)) {
 				player.message("This monster doesn't have any drop table.");
 				return;
 			}
