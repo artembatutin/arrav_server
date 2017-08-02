@@ -1742,7 +1742,7 @@ public final class Player extends Actor {
 	public void setSpecialActivated(boolean specialActivated) {
 		this.specialActivated = specialActivated;
 	}
-	
+
 	/**
 	 * Gets the current fight type the player is using.
 	 * @return the current fight type.
