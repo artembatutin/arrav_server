@@ -8,6 +8,11 @@ import net.edge.world.entity.actor.player.Player;
 
 public class Shops extends ActionInitializer {
 	public enum Shop {
+		DEFENCE(705, 16, 1),
+		MAGIC(1658, 14, 1),
+		WEAPONRY(4288, 15, 1),
+		RANGED(682, 13, 1),
+		STRONGMAN(8270, 17, 1),
 		GENERAL_KEEPER(551, 12, true, true),
 		GENERAL_ASSISTANT(552, 12, true, true),
 		FLETCHING_HUNTMAN(1281, 20, 1),
