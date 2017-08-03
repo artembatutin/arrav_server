@@ -896,7 +896,7 @@ public final class Player extends Actor {
 	}
 	
 	@Override
-	public int getAttackSpeed() {
+	public int getAttackDelay() {
 		int speed = weapon.getSpeed();
 		if(fightType == FightType.CROSSBOW_RAPID || fightType == FightType.SHORTBOW_RAPID || fightType == FightType.LONGBOW_RAPID || fightType == FightType.DART_RAPID || fightType == FightType.KNIFE_RAPID || fightType == FightType.THROWNAXE_RAPID || fightType == FightType.JAVELIN_RAPID) {
 			speed--;

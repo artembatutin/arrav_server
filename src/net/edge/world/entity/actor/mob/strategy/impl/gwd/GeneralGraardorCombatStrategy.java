@@ -86,7 +86,7 @@ public final class GeneralGraardorCombatStrategy extends DynamicCombatStrategy<G
 
 	@Override
 	public int attackDelay() {
-		return npc.getAttackSpeed();
+		return npc.getAttackDelay();
 	}
 
 	@Override

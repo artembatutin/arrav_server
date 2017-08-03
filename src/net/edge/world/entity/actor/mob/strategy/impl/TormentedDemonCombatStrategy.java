@@ -242,7 +242,7 @@ public final class TormentedDemonCombatStrategy extends DynamicCombatStrategy<Mo
 	
 	@Override
 	public int attackDelay() {
-		return npc.getAttackSpeed();
+		return npc.getAttackDelay();
 	}
 	
 	@Override

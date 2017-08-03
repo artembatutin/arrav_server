@@ -9,104 +9,159 @@ public class MobDefinitionCombat {
 	/**
 	 * Determines if this NPC is aggressive.
 	 */
-	private boolean aggressive;
+	public boolean aggressive;
 	
 	/**
 	 * Determines if this NPC retreats.
 	 */
-	private boolean retreats;
+	public boolean retreats;
 	
 	/**
 	 * Determines if this NPC is poisonous.
 	 */
-	private boolean poisonous;
+	public boolean poisonous;
 	
 	/**
 	 * The time it takes for this NPC to respawn.
 	 */
-	private int respawnTime;
+	public int respawnTime;
 	
 	/**
-	 * The max hit of this NPC.
+	 * The max hit of this mob.
 	 */
-	private int maxHit;
+	public int maxHit;
 	
 	/**
 	 * The maximum amount of hitpoints this NPC has.
 	 */
-	private int hitpoints;
+	public int hitpoints;
 	
 	/**
-	 * The attack speed of this NPC.
+	 * The attack speed of this mob.
 	 */
-	private int attackSpeed;
+	public int attackDelay;
 	
 	/**
-	 * The attack animation of this NPC.
+	 * The attack animation of this mob.
 	 */
-	private int attackAnimation;
+	public int attackAnimation;
 	
 	/**
-	 * The defence animation of this NPC.
+	 * The defence animation of this mob.
 	 */
-	private int defenceAnimation;
+	public int defenceAnimation;
 	
 	/**
-	 * The death animation of this NPC.
+	 * The death animation of this mob.
 	 */
-	private int deathAnimation;
+	public int deathAnimation;
 	
 	/**
-	 * The combat level of this NPC.
+	 * The combat level of this mob.
 	 */
-	private int combatLevel;
+	public int combatLevel;
 	
 	/**
-	 * The attack level of this NPC.
+	 * The attack level of this mob.
 	 */
-	private int attackLevel;
+	public int attackLevel;
 	
 	/**
-	 * The magic level of this NPC.
+	 * The magic level of this mob.
 	 */
-	private int magicLevel;
+	public int magicLevel;
 	
 	/**
-	 * The ranged level of this NPC.
+	 * The ranged level of this mob.
 	 */
-	private int rangedLevel;
+	public int rangedLevel;
 	
 	/**
-	 * The defence level of this NPC.
+	 * The defence level of this mob.
 	 */
-	private int defenceLevel;
+	public int defenceLevel;
+	
+	/**
+	 * The strength level of this mob.
+	 */
+	public int strengthLevel;
+	
+	/**
+	 * The attacking stab attribute.
+	 */
+	public int attackStab;
+	
+	/**
+	 * The attacking stab attribute.
+	 */
+	public int attackSlash;
+	
+	/**
+	 * The attacking crush attribute.
+	 */
+	public int attackCrush;
+	
+	/**
+	 * The attacking magic attribute.
+	 */
+	public int attackMagic;
+	
+	/**
+	 * The attacking ranged attribute.
+	 */
+	public int attackRanged;
+	
+	/**
+	 * The defending stab attribute.
+	 */
+	public int defenceStab;
+	
+	/**
+	 * The defending slash attribute.
+	 */
+	public int defenceSlash;
+	
+	/**
+	 * The defending crush attribute.
+	 */
+	public int defenceCrush;
+	
+	/**
+	 * The defending magic attribute.
+	 */
+	public int defenceMagic;
+	
+	/**
+	 * The defending defence attribute.
+	 */
+	public int defenceRanged;
 	
 	/**
 	 * The required slayer level to slay this NPC.
 	 */
-	private int slayerRequirement;
+	public int slayerRequirement;
 	
 	/**
-	 * The slayer key of this NPC.
+	 * The slayer key of this mob.
 	 */
-	private String slayerKey;
+	public String slayerKey;
 	
 	/**
-	 * The weakness of this NPC.
+	 * The weakness of this mob.
 	 */
-	private String weakness;
+	public String weakness;
 	
 	/**
 	 * Creates a new {@link MobDefinitionCombat}.
 	 */
-	public MobDefinitionCombat(boolean aggressive, boolean retreats, boolean poisonous, int respawnTime, int maxHit, int hitpoints, int attackSpeed, int attackAnimation, int defenceAnimation, int deathAnimation, int combatLevel, int attackLevel, int magicLevel, int rangedLevel, int defenceLevel, int slayerRequirement, String slayerKey, String weakness) {
+	public MobDefinitionCombat(boolean aggressive, boolean retreats, boolean poisonous, int respawnTime, int maxHit, int hitpoints, int attackDelay, int attackAnimation, int defenceAnimation, int deathAnimation, int combatLevel, int attackLevel, int magicLevel, int rangedLevel, int defenceLevel, int slayerRequirement, String slayerKey, String weakness, int attackStab, int attackSlash, int attackCrush, int attackMagic, int attackRanged, int defenceStab, int defenceSlash, int defenceCrush, int defenceMagic, int defenceRanged) {
 		this.aggressive = aggressive;
 		this.retreats = retreats;
 		this.poisonous = poisonous;
 		this.respawnTime = respawnTime;
 		this.maxHit = maxHit;
 		this.hitpoints = hitpoints;
-		this.attackSpeed = attackSpeed;
+		this.attackDelay = attackDelay;
 		this.attackAnimation = attackAnimation;
 		this.defenceAnimation = defenceAnimation;
 		this.deathAnimation = deathAnimation;
@@ -118,148 +173,130 @@ public class MobDefinitionCombat {
 		this.slayerRequirement = slayerRequirement;
 		this.slayerKey = slayerKey;
 		this.weakness = weakness;
+		this.attackStab = attackStab;
+		this.attackSlash = attackSlash;
+		this.attackCrush = attackCrush;
+		this.attackMagic = attackMagic;
+		this.attackRanged = attackRanged;
+		this.defenceStab = defenceStab;
+		this.defenceSlash = defenceSlash;
+		this.defenceCrush = defenceCrush;
+		this.defenceMagic = defenceMagic;
+		this.defenceRanged = defenceRanged;
 	}
 	
-	/**
-	 * Gets the combat level of this npc.
-	 * @return the combat level
-	 */
 	public int getCombatLevel() {
 		return combatLevel;
 	}
 	
-	/**
-	 * Determines if this NPC is aggressive.
-	 * @return {@code true} if this NPC is aggressive, {@code false} otherwise.
-	 */
 	public boolean aggressive() {
 		return aggressive;
 	}
 	
-	/**
-	 * Determines if this NPC retreats.
-	 * @return {@code true} if this NPC can retreat, {@code false} otherwise.
-	 */
 	public boolean retreats() {
 		return retreats;
 	}
 	
-	/**
-	 * Determines if this NPC is poisonous.
-	 * @return {@code true} if this NPC is poisonous, {@code false} otherwise.
-	 */
 	public boolean poisonous() {
 		return poisonous;
 	}
 	
-	/**
-	 * Gets the time it takes for this NPC to respawn.
-	 * @return the respawn time.
-	 */
 	public int getRespawnTime() {
 		return respawnTime <= 0 ? 1 : respawnTime;
 	}
 	
-	/**
-	 * Gets the max hit of this NPC.
-	 * @return the max hit.
-	 */
 	public int getMaxHit() {
 		return maxHit;
 	}
 	
-	/**
-	 * Gets the maximum amount of hitpoints this NPC has.
-	 * @return the maximum amount of hitpoints.
-	 */
 	public int getHitpoints() {
 		return hitpoints;
 	}
 	
-	/**
-	 * Gets the maximum amount of hitpoints this NPC has.
-	 * @return the attack speed.
-	 */
-	public int getAttackSpeed() {
-		return attackSpeed;
+	public int getAttackDelay() {
+		return attackDelay;
 	}
 	
-	/**
-	 * Gets the attack animation of this NPC.
-	 * @return the attack animation.
-	 */
 	public int getAttackAnimation() {
 		return attackAnimation;
 	}
 	
-	/**
-	 * Gets the defence animation of this NPC.
-	 * @return the defence animation.
-	 */
 	public int getDefenceAnimation() {
 		return defenceAnimation;
 	}
 	
-	/**
-	 * Gets the death animation of this NPC.
-	 * @return the death animation.
-	 */
 	public int getDeathAnimation() {
 		return deathAnimation;
 	}
 	
-	/**
-	 * Gets the attack level of this NPC.
-	 * @return the attack bonus.
-	 */
 	public int getAttackLevel() {
 		return attackLevel;
 	}
 	
-	/**
-	 * Gets the magic level of this NPC.
-	 * @return the melee defence bonus.
-	 */
 	public int getMagicLevel() {
 		return magicLevel;
 	}
 	
-	/**
-	 * Gets the ranged level of this NPC.
-	 * @return the ranged defence bonus.
-	 */
 	public int getRangedLevel() {
 		return rangedLevel;
 	}
 	
-	/**
-	 * Gets the defence level of this NPC.
-	 * @return the magic defence bonus.
-	 */
+	public int getStrengthLevel() {
+		return strengthLevel;
+	}
+	
 	public int getDefenceLevel() {
 		return defenceLevel;
 	}
 	
-	/**
-	 * Gets the slayer requirement level.
-	 * @return slayer requirement level.
-	 */
+	public int getAttackStab() {
+		return attackStab;
+	}
+	
+	public int getAttackSlash() {
+		return attackSlash;
+	}
+	
+	public int getAttackCrush() {
+		return attackCrush;
+	}
+	
+	public int getAttackMagic() {
+		return attackMagic;
+	}
+	
+	public int getAttackRanged() {
+		return attackRanged;
+	}
+	
+	public int getDefenceStab() {
+		return defenceStab;
+	}
+	
+	public int getDefenceSlash() {
+		return defenceSlash;
+	}
+	
+	public int getDefenceCrush() {
+		return defenceCrush;
+	}
+	
+	public int getDefenceMagic() {
+		return defenceMagic;
+	}
+	
+	public int getDefenceRanged() {
+		return defenceRanged;
+	}
+	
 	public int getSlayerRequirement() {
 		return slayerRequirement;
 	}
 	
-	/**
-	 * Gets the slayer key.
-	 * @return slayer key.
-	 */
 	public String getSlayerKey() {
 		return slayerKey;
 	}
 	
-	/**
-	 * Gets the combat weakness.
-	 * @return combat weakness.
-	 */
 	public String getWeakness() {
 		return weakness;
 	}

@@ -153,7 +153,7 @@ public final class GlacorCombatStrategy extends DynamicCombatStrategy<Glacor> {
 
 	@Override
 	public int attackDelay() {
-		return npc.getAttackSpeed();
+		return npc.getAttackDelay();
 	}
 
 	@Override

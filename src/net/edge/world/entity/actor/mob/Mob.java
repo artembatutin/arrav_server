@@ -232,8 +232,8 @@ public abstract class Mob extends Actor {
 	}
 	
 	@Override
-	public int getAttackSpeed() {
-		return this.getDefinition().getAttackSpeed();
+	public int getAttackDelay() {
+		return this.getDefinition().getAttackDelay();
 	}
 	
 	@Override

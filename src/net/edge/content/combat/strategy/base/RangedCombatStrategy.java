@@ -98,7 +98,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public int attackDelay(Actor character) {
-		return character.isPlayer() ? character.toPlayer().getRangedDetails().delay() : character.getAttackSpeed();
+		return character.isPlayer() ? character.toPlayer().getRangedDetails().delay() : character.getAttackDelay();
 	}
 	
 	@Override

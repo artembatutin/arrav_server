@@ -131,7 +131,7 @@ public final class CommanderZilyanaCombatStrategy extends DynamicCombatStrategy<
 	
 	@Override
 	public int attackDelay() {
-		return npc.getAttackSpeed();
+		return npc.getAttackDelay();
 	}
 	
 	@Override

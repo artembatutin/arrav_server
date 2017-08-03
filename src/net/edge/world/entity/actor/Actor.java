@@ -342,7 +342,7 @@ public abstract class Actor extends Entity {
 	 * Gets the attack speed for this entity.
 	 * @return the attack speed.
 	 */
-	public abstract int getAttackSpeed();
+	public abstract int getAttackDelay();
 	
 	/**
 	 * Gets this entity's current health.

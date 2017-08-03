@@ -231,7 +231,7 @@ public final class CorporealBeastCombatStrategy extends DynamicCombatStrategy<Co
 
 	@Override
 	public int attackDelay() {
-		return npc.getAttackSpeed() - 2;
+		return npc.getAttackDelay() - 2;
 	}
 
 	@Override

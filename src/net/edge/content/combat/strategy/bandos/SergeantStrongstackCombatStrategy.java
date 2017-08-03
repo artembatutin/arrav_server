@@ -22,7 +22,7 @@ public final class SergeantStrongstackCombatStrategy implements CombatStrategy {
 
 	@Override
 	public int attackDelay(Actor character) {
-		return character.getAttackSpeed();
+		return character.getAttackDelay();
 	}
 
 	@Override

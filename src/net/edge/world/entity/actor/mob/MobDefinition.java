@@ -1,9 +1,16 @@
 package net.edge.world.entity.actor.mob;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.edge.util.json.JsonSaver;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -16,7 +23,7 @@ public final class MobDefinition {
 	/**
 	 * A dummy {@link MobDefinitionCombat} to prevent nullpointers.
 	 */
-	public static final MobDefinitionCombat NON_COMBAT = new MobDefinitionCombat(false, true, false, 10, 10, 10, 7, -1, -1, -1, 3, 3, 3, 3, 3, 3, "", "");
+	public static final MobDefinitionCombat NON_COMBAT = new MobDefinitionCombat(false, true, false, 10, 10, 10, 7, -1, -1, -1, 3, 3, 3, 3, 3, 3, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 	
 	/**
 	 * The array that contains all of the NPC definitions.
@@ -171,8 +178,8 @@ public final class MobDefinition {
 	 * Gets the maximum amount of hitpoints this NPC has.
 	 * @return the attack speed.
 	 */
-	public int getAttackSpeed() {
-		return combat == null ? NON_COMBAT.getAttackSpeed() : combat.getAttackSpeed();
+	public int getAttackDelay() {
+		return combat == null ? NON_COMBAT.getAttackDelay() : combat.getAttackDelay();
 	}
 	
 	/**
@@ -256,36 +263,59 @@ public final class MobDefinition {
 	}
 	
 	/**
+	 * Gets the extended combat definition.
+	 * @return combat.
+	 */
+	public MobDefinitionCombat getCombat() {
+		return combat;
+	}
+	
+	/**
 	 * Dumps all the definitions to a new json file.
 	 */
 	public static void dump() {
 		JsonSaver json = new JsonSaver();
 		for(MobDefinition d : MobDefinition.DEFINITIONS) {
+			link(d, d.getName());
 			json.current().addProperty("id", d.id);
 			json.current().addProperty("name", d.name);
 			json.current().addProperty("size", d.size);
 			json.current().addProperty("description", d.description);
 			json.current().addProperty("attackable", d.attackable);
 			if(d.attackable) {
+				//process
 				json.current().addProperty("respawn", d.combat.getRespawnTime());
 				json.current().addProperty("hitpoints", d.combat.getHitpoints());
-				json.current().addProperty("maxHit", d.combat.getMaxHit() < 0 ? -d.combat.getMaxHit() : d.combat.getMaxHit());
-				json.current().addProperty("attackSpeed", d.combat.getAttackSpeed());
+				json.current().addProperty("maxHit", d.combat.getMaxHit());
+				json.current().addProperty("attackDelay", d.combat.getAttackDelay());
+				//levels
 				json.current().addProperty("combatLevel", d.combat.getCombatLevel());
-				
 				json.current().addProperty("attackLevel", d.getAttackLevel());
 				json.current().addProperty("magicLevel", d.combat.getMagicLevel());
 				json.current().addProperty("rangedLevel", d.combat.getRangedLevel());
 				json.current().addProperty("defenceLevel", d.combat.getDefenceLevel());
-				
+				json.current().addProperty("strengthLevel", d.combat.getStrengthLevel());
+				//attacks
+				json.current().addProperty("atkStab", d.combat.getAttackStab());
+				json.current().addProperty("atkSlash", d.combat.getAttackSlash());
+				json.current().addProperty("atkCrush", d.combat.getAttackCrush());
+				json.current().addProperty("atkMagic", d.combat.getAttackMagic());
+				json.current().addProperty("atkRange", d.combat.getAttackRanged());
+				//defence
+				json.current().addProperty("defStab", d.combat.getDefenceStab());
+				json.current().addProperty("defSlash", d.combat.getDefenceSlash());
+				json.current().addProperty("defCrush", d.combat.getDefenceCrush());
+				json.current().addProperty("defMagic", d.combat.getDefenceMagic());
+				json.current().addProperty("defRange", d.combat.getDefenceRanged());
+				//flags
 				json.current().addProperty("aggressive", d.combat.aggressive());
 				json.current().addProperty("retreats", d.combat.retreats());
 				json.current().addProperty("poisonous", d.combat.poisonous());
-				
+				//anims
 				json.current().addProperty("attackAnim", d.combat.getAttackAnimation());
 				json.current().addProperty("defenceAnim", d.combat.getDefenceAnimation());
 				json.current().addProperty("deathAnim", d.combat.getDeathAnimation());
-				
+				//slayer
 				json.current().addProperty("slayerRequirement", d.combat.getSlayerRequirement());
 				json.current().addProperty("slayerKey", d.combat.getSlayerKey());
 				json.current().addProperty("weakness", d.combat.getWeakness());
@@ -295,5 +325,163 @@ public final class MobDefinition {
 		json.publish("./data/def/mob/new_mob.json");
 	}
 	
+	private static void link(MobDefinition d, String name) {
+		name = name.replaceAll(" ", "_");
+		String url = "http://oldschoolrunescape.wikia.com/wiki/" + name + "?action=raw";
+		try {
+			bestiary(url, d);
+		} catch (Exception e) {
+			System.out.println("(" + d.id + ") Failed to parse " + url + ", msg: " + e);
+		}
+	}
+	
+	private static void bestiary(String url, MobDefinition def) throws Exception {
+		URL oracle = new URL(url);
+		URLConnection yc = oracle.openConnection();
+		try(BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()))) {
+			JsonParser parser = new JsonParser();
+			JsonObject obj = (JsonObject) parser.parse(in);
+			String name = obj.get("name").getAsString();
+			if(def.getName() != null && def.getName().equals(name) && def.getCombat() != null) {
+				def.getCombat().aggressive = obj.get("aggressive").getAsBoolean();
+				def.getCombat().poisonous = obj.get("poisonous").getAsBoolean();
+				JsonObject anims = (JsonObject) obj.get("animations");
+				def.getCombat().deathAnimation = anims.get("death").getAsInt();
+				def.getCombat().attackAnimation = anims.get("attack").getAsInt();
+				if(def.getCombat().getMagicLevel() <= 0) {
+					def.getCombat().magicLevel = obj.get("magic").getAsInt();
+				}
+				if(def.getCombat().getDefenceLevel() <= 0) {
+					def.getCombat().defenceLevel = obj.get("defence").getAsInt();
+				}
+				if(def.getCombat().getRangedLevel() <= 0) {
+					def.getCombat().rangedLevel = obj.get("ranged").getAsInt();
+				}
+				if(def.getCombat().getAttackLevel() <= 0) {
+					def.getCombat().attackLevel = obj.get("attack").getAsInt();
+				}
+			}
+		}
+	}
+	
+	private static void parseFrom07(String url, MobDefinition def) throws Exception {
+		URL oracle = new URL(url);
+		URLConnection yc = oracle.openConnection();
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()))) {
+			String inputLine;
+			int cmb = 0;
+			while ((inputLine = in.readLine()) != null) {
+				if(inputLine.contains("**[[") && inputLine.contains("Common")) {
+					System.out.println("Common: " + def.getName());
+					link(def, def.getName()+"_(Common)");
+					return;
+				}
+				if (inputLine.startsWith("|")) {
+					String[] split = inputLine.substring(1, inputLine.length()).split("=");
+					if (split.length != 2) {
+						continue;
+					}
+					
+					String key = split[0].replaceAll("}", " ").trim();
+					String value = split[1].replaceAll("}", " ").trim();
+					if (value.contains(",")) {
+						value = value.split(",")[0];
+					}
+					
+					switch (key) {
+						case "combat":
+							cmb = parseInt(value);
+							break;
+						case "att":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.attackLevel = parseInt(value);
+							break;
+						case "str":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.strengthLevel = parseInt(value);
+							break;
+						case "def":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.defenceLevel = parseInt(value);
+							break;
+						case "range":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.rangedLevel = parseInt(value);
+							break;
+						case "mage":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.magicLevel = parseInt(value);
+							break;
+						case "max hit":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.maxHit = parseInt(value) * 10;
+							break;
+						
+						case "astab":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.attackStab = parseInt(value);
+							break;
+						case "aslash":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.attackSlash = parseInt(value);
+							break;
+						case "acrush":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.attackCrush = parseInt(value);
+							break;
+						case "amagic":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.attackMagic = parseInt(value);
+							break;
+						case "arange":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.attackRanged = parseInt(value);
+							break;
+						
+						case "dstab":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.defenceStab = parseInt(value);
+							break;
+						case "dslash":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.defenceSlash = parseInt(value);
+							break;
+						case "dcrush":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.defenceCrush = parseInt(value);
+							break;
+						case "dmagic":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.defenceMagic = parseInt(value);
+							break;
+						case "drange":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.defenceRanged = parseInt(value);
+							break;
+						
+						
+						case "hp":
+						case "hitpoints":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.hitpoints = parseInt(value);
+							break;
+						case "attack speed":
+							if(def.combat != null && def.getCombatLevel() == cmb)
+								def.combat.attackDelay = (10 - parseInt(value));
+							break;
+					}
+				}
+			}
+			System.out.println("Finished: " + def.getName());
+		}
+	}
+	
+	private static int parseInt(String value) {
+		try {
+			return Integer.parseInt(value);
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 	
 }

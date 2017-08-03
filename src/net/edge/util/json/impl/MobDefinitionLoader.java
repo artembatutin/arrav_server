@@ -41,7 +41,7 @@ public final class MobDefinitionLoader extends JsonLoader {
 			int maxHit = reader.get("maxHit").getAsInt();
 			int hitpoints = reader.get("hitpoints").getAsInt();
 			
-			int attackSpeed = reader.get("attackSpeed").getAsInt();
+			int attackDelay = reader.get("attackDelay").getAsInt();
 			
 			int attackAnim = reader.get("attackAnim").getAsInt();
 			int defenceAnim = reader.get("defenceAnim").getAsInt();
@@ -52,6 +52,18 @@ public final class MobDefinitionLoader extends JsonLoader {
 			int rangedLevel = reader.get("rangedLevel").getAsInt();
 			int defenceLevel = reader.get("defenceLevel").getAsInt();
 			
+			int attackStab = reader.get("atkStab").getAsInt();
+			int attackSlash = reader.get("atkSlash").getAsInt();
+			int attackCrush = reader.get("atkCrush").getAsInt();
+			int attackMagic = reader.get("atkMagic").getAsInt();
+			int attackRanged = reader.get("atkRanged").getAsInt();
+			
+			int defenceStab = reader.get("defStab").getAsInt();
+			int defenceSlash = reader.get("defSlash").getAsInt();
+			int defenceCrush = reader.get("defCrush").getAsInt();
+			int defenceMagic = reader.get("defMagic").getAsInt();
+			int defenceRanged = reader.get("defRanged").getAsInt();
+			
 			String weakness = reader.get("weakness").getAsString();
 			String slayerKey = reader.get("slayerKey").getAsString();
 			int slayerRequirement = reader.get("slayerRequirement").getAsInt();
@@ -61,7 +73,7 @@ public final class MobDefinitionLoader extends JsonLoader {
 			if(aggressive) {
 				MobAggression.AGGRESSIVE.add(index);
 			}
-			combat = new MobDefinitionCombat(aggressive, retreats, poisonous, respawnTime, maxHit, hitpoints, attackSpeed, attackAnim, defenceAnim, deathAnim, combatLevel, attackLevel, magicLevel, rangedLevel, defenceLevel, slayerRequirement, slayerKey, weakness);
+			combat = new MobDefinitionCombat(aggressive, retreats, poisonous, respawnTime, maxHit, hitpoints, attackDelay, attackAnim, defenceAnim, deathAnim, combatLevel, attackLevel, magicLevel, rangedLevel, defenceLevel, slayerRequirement, slayerKey, weakness, attackStab, attackSlash, attackCrush, attackMagic, attackRanged, defenceStab, defenceSlash, defenceCrush, defenceMagic, defenceRanged);
 		}
 		MobDefinition.DEFINITIONS[index] = new MobDefinition(index, name, description, size, attackable, combat);
 	}

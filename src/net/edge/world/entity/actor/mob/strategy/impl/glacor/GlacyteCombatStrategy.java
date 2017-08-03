@@ -76,7 +76,7 @@ public final class GlacyteCombatStrategy extends DynamicCombatStrategy<Glacyte> 
 	
 	@Override
 	public int attackDelay() {
-		return npc.getAttackSpeed();
+		return npc.getAttackDelay();
 	}
 	
 	@Override

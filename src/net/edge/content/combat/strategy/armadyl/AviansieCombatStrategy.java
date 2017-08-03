@@ -89,7 +89,7 @@ public final class AviansieCombatStrategy implements CombatStrategy {
 
 	@Override
 	public int attackDelay(Actor character) {
-		return character.getAttackSpeed();
+		return character.getAttackDelay();
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public final class WaterfiendCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public int attackDelay(Actor character) {
-		return character.getAttackSpeed();
+		return character.getAttackDelay();
 	}
 	
 	@Override

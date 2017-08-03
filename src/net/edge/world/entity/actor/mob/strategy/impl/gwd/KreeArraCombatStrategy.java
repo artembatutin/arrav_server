@@ -163,7 +163,7 @@ public final class KreeArraCombatStrategy extends DynamicCombatStrategy<KreeArra
 
 	@Override
 	public int attackDelay() {
-		return npc.getAttackSpeed();
+		return npc.getAttackDelay();
 	}
 
 	@Override
