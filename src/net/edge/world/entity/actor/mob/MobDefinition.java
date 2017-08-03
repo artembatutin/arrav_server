@@ -2,14 +2,21 @@ package net.edge.world.entity.actor.mob;
 
 import net.edge.util.json.JsonSaver;
 
+import java.io.*;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Optional;
 
 /**
- * The container that represents an NPC definition.
- * @author lare96 <http://github.com/lare96>
+ * The container that represents an Mob definition.
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class MobDefinition {
+	
+	/**
+	 * A dummy {@link MobDefinitionCombat} to prevent nullpointers.
+	 */
+	public static final MobDefinitionCombat NON_COMBAT = new MobDefinitionCombat(false, true, false, 10, 10, 10, 7, -1, -1, -1, 3, 3, 3, 3, 3, 3, "", "");
 	
 	/**
 	 * The array that contains all of the NPC definitions.
@@ -19,172 +26,43 @@ public final class MobDefinition {
 	/**
 	 * The identification for this NPC.
 	 */
-	private final int id;
+	private int id;
 	
 	/**
 	 * The name of this NPC.
 	 */
-	private final String name;
+	private String name;
 	
 	/**
 	 * The description of this NPC.
 	 */
-	private final String description;
+	private String description;
 	
 	/**
 	 * The size of this NPC.
 	 */
-	private final int size;
+	private int size;
 	
 	/**
 	 * Determines if this NPC can be attacked.
 	 */
-	private final boolean attackable;
+	private boolean attackable;
 	
 	/**
-	 * Determines if this NPC is aggressive.
+	 * The mob's combat definition.
 	 */
-	private final boolean aggressive;
-	
-	/**
-	 * Determines if this NPC retreats.
-	 */
-	private final boolean retreats;
-	
-	/**
-	 * Determines if this NPC is poisonous.
-	 */
-	private final boolean poisonous;
-	
-	/**
-	 * The time it takes for this NPC to respawn.
-	 */
-	private final int respawnTime;
-	
-	/**
-	 * The max hit of this NPC.
-	 */
-	private final int maxHit;
-	
-	/**
-	 * The maximum amount of hitpoints this NPC has.
-	 */
-	private final int hitpoints;
-	
-	/**
-	 * The attack speed of this NPC.
-	 */
-	private final int attackSpeed;
-	
-	/**
-	 * The attack animation of this NPC.
-	 */
-	private final int attackAnimation;
-	
-	/**
-	 * The defence animation of this NPC.
-	 */
-	private final int defenceAnimation;
-	
-	/**
-	 * The death animation of this NPC.
-	 */
-	private final int deathAnimation;
-	
-	/**
-	 * The combat level of this NPC.
-	 */
-	private final int combatLevel;
-	
-	/**
-	 * The attack level of this NPC.
-	 */
-	private final int attackLevel;
-	
-	/**
-	 * The magic level of this NPC.
-	 */
-	private final int magicLevel;
-	
-	/**
-	 * The ranged level of this NPC.
-	 */
-	private final int rangedLevel;
-	
-	/**
-	 * The defence level of this NPC.
-	 */
-	private final int defenceLevel;
-	
-	/**
-	 * The required slayer level to slay this NPC.
-	 */
-	private final int slayerRequirement;
-	
-	/**
-	 * The slayer key of this NPC.
-	 */
-	private final String slayerKey;
-	
-	/**
-	 * The weakness of this NPC.
-	 */
-	private final String weakness;
+	private final MobDefinitionCombat combat;
 	
 	/**
 	 * Creates a new {@link MobDefinition}.
-	 * @param id                the identification for this NPC.
-	 * @param name              the name of this NPC.
-	 * @param description       the description of this NPC.
-	 * @param combatLevel       the combat level of this NPC.
-	 * @param size              the size of this NPC.
-	 * @param attackable        determines if this NPC can be attacked.
-	 * @param aggressive        determines if this NPC is aggressive.
-	 * @param retreats          determines if this NPC retreats.
-	 * @param poisonous         determines if this NPC is poisonous.
-	 * @param respawnTime       the time it takes for this NPC to respawn.
-	 * @param maxHit            the max hit of this NPC.
-	 * @param hitpoints         the maximum amount of hitpoints this NPC has.
-	 * @param attackSpeed       the attack speed of this NPC.
-	 * @param attackAnimation   the attack animation of this NPC.
-	 * @param defenceAnimation  the defence animation of this NPC.
-	 * @param deathAnimation    the death animation of this NPC.
-	 * @param attackLevel       the attack level of this NPC.
-	 * @param magicLevel        the magic level of this NPC.
-	 * @param rangedLevel       the ranged level of this NPC.
-	 * @param defenceLevel      the defence level of this NPC.
-	 * @param slayerRequirement the requirement slayer level to slay this NPC.
-	 * @param slayerKey         The slayer key of this NPC.
-	 * @param weakness          the weakness of this NPC.
 	 */
-	public MobDefinition(int id, String name, String description, int combatLevel, int size, boolean attackable, boolean aggressive, boolean retreats, boolean poisonous, int respawnTime, int maxHit, int hitpoints, int attackSpeed, int attackAnimation, int defenceAnimation, int deathAnimation, int attackLevel, int magicLevel, int rangedLevel, int defenceLevel, int slayerRequirement, String slayerKey, String weakness) {
+	public MobDefinition(int id, String name, String description, int size, boolean attackable, MobDefinitionCombat combat) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.combatLevel = combatLevel;
 		this.size = size;
 		this.attackable = attackable;
-		this.aggressive = aggressive;
-		this.retreats = retreats;
-		this.poisonous = poisonous;
-		this.respawnTime = respawnTime;
-		this.maxHit = maxHit;
-		this.hitpoints = hitpoints;
-		this.attackSpeed = attackSpeed;
-		this.attackAnimation = attackAnimation;
-		this.defenceAnimation = defenceAnimation;
-		this.deathAnimation = deathAnimation;
-		this.attackLevel = attackLevel;
-		this.magicLevel = magicLevel;
-		this.rangedLevel = rangedLevel;
-		this.defenceLevel = defenceLevel;
-		this.slayerRequirement = slayerRequirement;
-		this.slayerKey = slayerKey;
-		this.weakness = weakness;
-	}
-	
-	public static Optional<MobDefinition> fromString(String name) {
-		return Arrays.stream(DEFINITIONS).filter($it -> $it.getName().equalsIgnoreCase(name)).findAny();
+		this.combat = combat;
 	}
 	
 	public static Optional<MobDefinition> fromSlayerKey(String key) {
@@ -216,14 +94,6 @@ public final class MobDefinition {
 	}
 	
 	/**
-	 * Gets the combat level of this npc.
-	 * @return the combat level
-	 */
-	public int getCombatLevel() {
-		return combatLevel;
-	}
-	
-	/**
 	 * Gets the size of this NPC.
 	 * @return the size.
 	 */
@@ -241,11 +111,19 @@ public final class MobDefinition {
 	}
 	
 	/**
+	 * Gets the combat level of this npc.
+	 * @return the combat level
+	 */
+	public int getCombatLevel() {
+		return combat == null ? NON_COMBAT.getCombatLevel() : combat.getCombatLevel();
+	}
+	
+	/**
 	 * Determines if this NPC is aggressive.
 	 * @return {@code true} if this NPC is aggressive, {@code false} otherwise.
 	 */
-	public boolean isAggressive() {
-		return aggressive;
+	public boolean aggressive() {
+		return combat == null ? NON_COMBAT.aggressive() : combat.aggressive();
 	}
 	
 	/**
@@ -253,15 +131,15 @@ public final class MobDefinition {
 	 * @return {@code true} if this NPC can retreat, {@code false} otherwise.
 	 */
 	public boolean retreats() {
-		return retreats;
+		return combat == null ? NON_COMBAT.retreats() : combat.retreats();
 	}
 	
 	/**
 	 * Determines if this NPC is poisonous.
 	 * @return {@code true} if this NPC is poisonous, {@code false} otherwise.
 	 */
-	public boolean isPoisonous() {
-		return poisonous;
+	public boolean poisonous() {
+		return combat == null ? NON_COMBAT.poisonous() : combat.poisonous();
 	}
 	
 	/**
@@ -269,7 +147,8 @@ public final class MobDefinition {
 	 * @return the respawn time.
 	 */
 	public int getRespawnTime() {
-		return ((respawnTime - 1) <= 0 ? 1 : (respawnTime - 1));
+		int respawnTime = combat == null ? NON_COMBAT.getRespawnTime() : combat.getRespawnTime();
+		return respawnTime <= 0 ? 1 : respawnTime;
 	}
 	
 	/**
@@ -277,7 +156,7 @@ public final class MobDefinition {
 	 * @return the max hit.
 	 */
 	public int getMaxHit() {
-		return maxHit;
+		return combat == null ? NON_COMBAT.getMaxHit() : combat.getMaxHit();
 	}
 	
 	/**
@@ -285,7 +164,7 @@ public final class MobDefinition {
 	 * @return the maximum amount of hitpoints.
 	 */
 	public int getHitpoints() {
-		return hitpoints * 10;
+		return combat == null ? NON_COMBAT.getHitpoints() : combat.getHitpoints();
 	}
 	
 	/**
@@ -293,7 +172,7 @@ public final class MobDefinition {
 	 * @return the attack speed.
 	 */
 	public int getAttackSpeed() {
-		return attackSpeed;
+		return combat == null ? NON_COMBAT.getAttackSpeed() : combat.getAttackSpeed();
 	}
 	
 	/**
@@ -301,7 +180,7 @@ public final class MobDefinition {
 	 * @return the attack animation.
 	 */
 	public int getAttackAnimation() {
-		return attackAnimation;
+		return combat == null ? NON_COMBAT.getAttackAnimation() : combat.getAttackAnimation();
 	}
 	
 	/**
@@ -309,7 +188,7 @@ public final class MobDefinition {
 	 * @return the defence animation.
 	 */
 	public int getDefenceAnimation() {
-		return defenceAnimation;
+		return combat == null ? NON_COMBAT.getDefenceAnimation() : combat.getDefenceAnimation();
 	}
 	
 	/**
@@ -317,7 +196,7 @@ public final class MobDefinition {
 	 * @return the death animation.
 	 */
 	public int getDeathAnimation() {
-		return deathAnimation;
+		return combat == null ? NON_COMBAT.getDeathAnimation() : combat.getDeathAnimation();
 	}
 	
 	/**
@@ -325,7 +204,7 @@ public final class MobDefinition {
 	 * @return the attack bonus.
 	 */
 	public int getAttackLevel() {
-		return attackLevel;
+		return combat == null ? NON_COMBAT.getAttackLevel() : combat.getAttackLevel();
 	}
 	
 	/**
@@ -333,7 +212,7 @@ public final class MobDefinition {
 	 * @return the melee defence bonus.
 	 */
 	public int getMagicLevel() {
-		return magicLevel;
+		return combat == null ? NON_COMBAT.getMagicLevel() : combat.getMagicLevel();
 	}
 	
 	/**
@@ -341,7 +220,7 @@ public final class MobDefinition {
 	 * @return the ranged defence bonus.
 	 */
 	public int getRangedLevel() {
-		return rangedLevel;
+		return combat == null ? NON_COMBAT.getRangedLevel() : combat.getRangedLevel();
 	}
 	
 	/**
@@ -349,19 +228,31 @@ public final class MobDefinition {
 	 * @return the magic defence bonus.
 	 */
 	public int getDefenceLevel() {
-		return defenceLevel;
+		return combat == null ? NON_COMBAT.getDefenceLevel() : combat.getDefenceLevel();
 	}
 	
+	/**
+	 * Gets the slayer requirement level.
+	 * @return slayer requirement level.
+	 */
 	public int getSlayerRequirement() {
-		return slayerRequirement;
+		return combat == null ? NON_COMBAT.getSlayerRequirement() : combat.getSlayerRequirement();
 	}
 	
+	/**
+	 * Gets the slayer key.
+	 * @return slayer key.
+	 */
 	public String getSlayerKey() {
-		return slayerKey;
+		return combat == null ? NON_COMBAT.getSlayerKey() : combat.getSlayerKey();
 	}
 	
+	/**
+	 * Gets the combat weakness.
+	 * @return combat weakness.
+	 */
 	public String getWeakness() {
-		return weakness;
+		return combat == null ? NON_COMBAT.getWeakness() : combat.getWeakness();
 	}
 	
 	/**
@@ -374,28 +265,35 @@ public final class MobDefinition {
 			json.current().addProperty("name", d.name);
 			json.current().addProperty("size", d.size);
 			json.current().addProperty("description", d.description);
-			json.current().addProperty("respawn", d.respawnTime);
-			json.current().addProperty("hitpoints", d.hitpoints);
-			json.current().addProperty("maxHit", d.maxHit);
-			json.current().addProperty("attackSpeed", d.attackSpeed);
-			json.current().addProperty("combatLevel", d.combatLevel);
-			json.current().addProperty("attackLevel", d.attackLevel);
-			json.current().addProperty("magicLevel", d.magicLevel);
-			json.current().addProperty("rangedLevel", d.rangedLevel);
-			json.current().addProperty("defenceLevel", d.defenceLevel);
 			json.current().addProperty("attackable", d.attackable);
-			json.current().addProperty("aggressive", d.aggressive);
-			json.current().addProperty("retreats", d.retreats);
-			json.current().addProperty("poisonous", d.poisonous);
-			json.current().addProperty("attackAnim", d.attackAnimation);
-			json.current().addProperty("defenceAnim", d.defenceAnimation);
-			json.current().addProperty("deathAnim", d.deathAnimation);
-			json.current().addProperty("slayerRequirement", d.slayerRequirement);
-			json.current().addProperty("slayerKey", d.slayerKey);
-			json.current().addProperty("weakness", d.weakness);
+			if(d.attackable) {
+				json.current().addProperty("respawn", d.combat.getRespawnTime());
+				json.current().addProperty("hitpoints", d.combat.getHitpoints());
+				json.current().addProperty("maxHit", d.combat.getMaxHit() < 0 ? -d.combat.getMaxHit() : d.combat.getMaxHit());
+				json.current().addProperty("attackSpeed", d.combat.getAttackSpeed());
+				json.current().addProperty("combatLevel", d.combat.getCombatLevel());
+				
+				json.current().addProperty("attackLevel", d.getAttackLevel());
+				json.current().addProperty("magicLevel", d.combat.getMagicLevel());
+				json.current().addProperty("rangedLevel", d.combat.getRangedLevel());
+				json.current().addProperty("defenceLevel", d.combat.getDefenceLevel());
+				
+				json.current().addProperty("aggressive", d.combat.aggressive());
+				json.current().addProperty("retreats", d.combat.retreats());
+				json.current().addProperty("poisonous", d.combat.poisonous());
+				
+				json.current().addProperty("attackAnim", d.combat.getAttackAnimation());
+				json.current().addProperty("defenceAnim", d.combat.getDefenceAnimation());
+				json.current().addProperty("deathAnim", d.combat.getDeathAnimation());
+				
+				json.current().addProperty("slayerRequirement", d.combat.getSlayerRequirement());
+				json.current().addProperty("slayerKey", d.combat.getSlayerKey());
+				json.current().addProperty("weakness", d.combat.getWeakness());
+			}
 			json.split();
 		}
 		json.publish("./data/def/mob/new_mob.json");
 	}
+	
 	
 }

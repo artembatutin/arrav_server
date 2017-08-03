@@ -199,7 +199,7 @@ public class MeleeFormulas {
 //			}
 
 			/* SLAYER */
-            if(player.getSlayer().isPresent() && Objects.equals(mob.getDefinition().getSlayerKey(), player.getSlayer().get().getKey())) {
+            if(player.getSlayer().isPresent() && mob.getDefinition().getSlayerKey() != null && Objects.equals(mob.getDefinition().getSlayerKey(), player.getSlayer().get().getKey())) {
                 Item head = player.getEquipment().get(Equipment.HEAD_SLOT);
                 if(head != null) {
                     if(head.getId() == 13263)

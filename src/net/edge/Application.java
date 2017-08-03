@@ -34,6 +34,7 @@ import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.world.World;
 import net.edge.world.entity.actor.attribute.AttributeKey;
+import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.locale.InstanceManager;
 
 import java.time.DayOfWeek;
@@ -186,7 +187,7 @@ public final class Application {
 		//object/region decoding must be done before parallel.
 		new ObjectDefinitionDecoder(fs).run();
 		new MapDefinitionDecoder(fs).run();
-		new RegionDecoder(fs).run();
+		//new RegionDecoder(fs).run();
 		FirepitManager.get().register();
 		//Item decoding.
 		launch.execute(() -> {
@@ -197,6 +198,7 @@ public final class Application {
 		//NPC decoding.
 		launch.execute(() -> {
 			new MobDefinitionLoader().load();
+			MobDefinition.dump();
 			new MobNodeLoader().load();
 			new MobDropTableLoader().load();
 			new ItemCacheLoader().load();

@@ -270,7 +270,7 @@ public abstract class Mob extends Actor {
 	
 	@Override
 	public void onSuccessfulHit(Actor victim, CombatType type) {
-		if(getDefinition().isPoisonous())
+		if(getDefinition().poisonous())
 			victim.poison(CombatPoisonEffect.getPoisonType(id).orElse(PoisonType.DEFAULT_NPC));
 	}
 	

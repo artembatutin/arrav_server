@@ -23,7 +23,7 @@ public class RangedFormulas {
      * @return the maximum hit this character can deal.
      */
     public static int calculateMaxRangedHit(Actor character, Actor victim) {
-        int maxHit = 0;
+        int maxHit;
         if(character.isNpc()) {
             Mob mob = (Mob) character;
             maxHit = mob.getDefinition().getMaxHit();

@@ -92,7 +92,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 	 */
 	public static Optional<PoisonType> getPoisonType(int npc) {
 		MobDefinition def = MobDefinition.DEFINITIONS[npc];
-		if(def == null || !def.isAttackable() || !def.isPoisonous())
+		if(def == null || !def.isAttackable() || !def.poisonous())
 			return Optional.empty();
 		if(def.getCombatLevel() < 75)
 			return Optional.of(PoisonType.DEFAULT_NPC);

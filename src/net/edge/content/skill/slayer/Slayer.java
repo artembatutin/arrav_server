@@ -201,7 +201,7 @@ public final class Slayer {
 		}
 		
 		Slayer slayer = player.getSlayer().get();
-		if(!slayer.getKey().equals(mob.getDefinition().getSlayerKey())) {
+		if(mob.getDefinition().getSlayerKey() != null && !slayer.getKey().equals(mob.getDefinition().getSlayerKey())) {
 			return false;
 		}
 		
