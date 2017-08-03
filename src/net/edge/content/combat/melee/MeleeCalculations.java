@@ -6,6 +6,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.weapon.FightStyle;
+import net.edge.content.combat.weapon.FightType;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.entity.actor.Actor;
@@ -21,43 +22,7 @@ import java.util.Objects;
  * Date: 02/08/2017
  * https://github.com/ophionB | https://www.rune-server.ee/members/ophion/
  */
-public class MeleeFormulas {
-
-    public static int calculateMeleeDefence(Actor character) {
-        Player player = (Player) character;
-        int defenceLevel = player.getSkills()[Skills.DEFENCE].getLevel();
-        double prayerMultiplier = 1.0;
-        int combatStyleBonus = 0;
-        int correspondingBonus = player.getEquipment().getBonuses()[player.getFightType().getCorrespondingBonus()];
-
-        if (Prayer.isActivated(player, Prayer.THICK_SKIN)) {
-            prayerMultiplier = 1.05;
-        } else if (Prayer.isActivated(player, Prayer.ROCK_SKIN)) {
-            prayerMultiplier = 1.1;
-        } else if (Prayer.isActivated(player, Prayer.STEEL_SKIN)) {
-            prayerMultiplier = 1.15;
-        } else if (Prayer.isActivated(player, Prayer.CHIVALRY)) {
-            prayerMultiplier = 1.20;
-        } else if (Prayer.isActivated(player, Prayer.PIETY)) {
-            prayerMultiplier = 1.25;
-//		} else if (player.getCurses().active(CurseType.TURMOIL)) { 
-//		if(!player.getInteractingEntity().isNpc()) {
-//			Player opponent = (Player) player.getInteractingEntity();
-//				prayerBonus = opponent.getSkills().getLevelForExperience(SkillConstants.DEFENCE) * 0.15;
-//		}
-//		prayerMultiplier = 1.15 + (prayerBonus/100);
-        }
-
-        if(player.getFightType().getStyle() == FightStyle.DEFENSIVE) {
-            combatStyleBonus = 3;
-        } else if(player.getFightType().getStyle() == FightStyle.CONTROLLED) {
-            combatStyleBonus = 1;
-        }
-
-       // int baseAccuracy = (int) Math.round(Math.round(attackLevel * prayerMultiplier) + combatStyleBonus + 8 * additionalBonusMultiplier) * (correspondingBonus+64);
-        int baseDefence = (int) Math.round(Math.round(defenceLevel * prayerMultiplier) + combatStyleBonus + 8) * (correspondingBonus+64);
-        return baseDefence;
-    }
+public class MeleeCalculations {
 
     /**
      * Formula calculating the players attack
@@ -66,48 +31,51 @@ public class MeleeFormulas {
      * @return
      */
     public static int calculateMeleeAttack(Actor character, Actor victim) {
-        Player player = (Player) character;
 
-        int attackLevel = player.getSkills()[Skills.ATTACK].getLevel();
+        int attackLevel = character.isPlayer() ? character.toPlayer().getSkills()[Skills.ATTACK].getLevel() : character.toNpc().getDefinition().getAttackLevel();
+        int correspondingBonus = character.isPlayer() ? character.toPlayer().getEquipment().getBonuses()[character.toPlayer().getFightType().getBonus()] : 120;
         int combatStyleBonus = 0;
         double specialMultiplier = 1.0;
         double prayerMultiplier = 1.0;
         double prayerBonus = 0;
         double additionalBonusMultiplier = 1.0;
-        int correspondingBonus = player.getEquipment().getBonuses()[player.getFightType().getCorrespondingBonus()];
 
+        if(character.isPlayer()) {
+            Player player = (Player) character;
         if (Prayer.isActivated(player, Prayer.CLARITY_OF_THOUGHT)) {
             prayerMultiplier = 1.05;
         } else if (Prayer.isActivated(player, Prayer.IMPROVED_REFLEXES)) {
-            prayerMultiplier =  1.1;
+            prayerMultiplier = 1.1;
         } else if (Prayer.isActivated(player, Prayer.INCREDIBLE_REFLEXES)) {
-            prayerMultiplier =  1.15;
+            prayerMultiplier = 1.15;
         } else if (Prayer.isActivated(player, Prayer.CHIVALRY)) {
-            prayerMultiplier =  1.15;
+            prayerMultiplier = 1.15;
         } else if (Prayer.isActivated(player, Prayer.PIETY)) {
-            prayerMultiplier =  1.20;
+            prayerMultiplier = 1.20;
         } else if (Prayer.isActivated(player, Prayer.TURMOIL)) {
-            if(!victim.isNpc()) {
+            if (!victim.isNpc()) {
                 Player opponent = (Player) victim;
-                prayerBonus = opponent.getSkills()[Skills.ATTACK].getLevel() * 0.15;
+                prayerMultiplier = opponent.getSkills()[Skills.ATTACK].getLevel() * 0.15;
             }
-            prayerMultiplier = 1.15 + (prayerBonus/100);
+            prayerMultiplier = 1.15 + (prayerBonus / 100);
         }
 
-        if(player.getFightType().getStyle() == FightStyle.ACCURATE) {
+        if (player.getFightType().getStyle() == FightStyle.ACCURATE) {
             combatStyleBonus = 3;
-        } else if(player.getFightType().getStyle() == FightStyle.CONTROLLED) {
+        } else if (player.getFightType().getStyle() == FightStyle.CONTROLLED) {
             combatStyleBonus = 1;
         }
 
-        if(player.isSpecialActivated()) {
+        if (player.isSpecialActivated()) {
             specialMultiplier = player.getCombatSpecial().getAccuracy();
         }
         attackLevel *= specialMultiplier;
 
-        if(CombatUtil.isFullVoid(player) && player.getEquipment().contains(11665)) {
+        if (CombatUtil.isFullVoid(player) && player.getEquipment().contains(11665)) {
             additionalBonusMultiplier += 0.1;
         }
+        player.message("Corresponding attack:" +correspondingBonus);
+    }
 
         int baseAccuracy = (int) Math.round(Math.round(attackLevel * prayerMultiplier) + combatStyleBonus + 8 * additionalBonusMultiplier) * (correspondingBonus+64);
         //int baseAccuracy2 = Math.floor(((Math.round(attackLevel * prayerMultiplier) + combatStyleBonus + 8) * additionalBonusMultiplier) * (correspondingBonus+64));
@@ -141,13 +109,12 @@ public class MeleeFormulas {
         }
 
         Player player = (Player) character;
-
-        double specialMultiplier = 1;
-        // TODO: void melee = 1.2, slayer helm = 1.15, salve amulet = 1.15,
-        // salve amulet(e) = 1.2
         int level = player.getSkills()[Skills.STRENGTH].getLevel();
         int equipmentBonus = player.getEquipment().getBonuses()[CombatConstants.BONUS_STRENGTH];
         double prayer = 1.0;
+        double specialMultiplier = 1;
+        // TODO: void melee = 1.2, slayer helm = 1.15, salve amulet = 1.15,
+        // salve amulet(e) = 1.2
         if(Prayer.isActivated(player, Prayer.BURST_OF_STRENGTH)) {
             prayer = 1.05;
         } else if(Prayer.isActivated(player, Prayer.SUPERHUMAN_STRENGTH)) {

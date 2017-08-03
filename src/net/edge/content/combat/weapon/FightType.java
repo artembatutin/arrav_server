@@ -117,9 +117,6 @@ public enum FightType {
 	 */
 	private final int child;
 	
-	/**
-	 * The type of bonus this type will apply.
-	 */
 	private final int bonus;
 	
 	/**
@@ -167,7 +164,7 @@ public enum FightType {
 	 * @return the corresponding.
 	 */
 	public final int getCorrespondingBonus() {
-		switch(bonus) {
+		switch(getBonus()) {
 			case CombatConstants.ATTACK_CRUSH:
 				return CombatConstants.DEFENCE_CRUSH;
 			case CombatConstants.ATTACK_MAGIC:
@@ -216,6 +213,8 @@ public enum FightType {
 	}
 	
 	/**
+	 * The type of bonus this type will apply.
+	 */ /**
 	 * Gets the type of bonus this type will apply
 	 * @return the bonus type.
 	 */
