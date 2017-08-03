@@ -567,12 +567,16 @@ public final class CombatUtil {
 	 */
 	public static boolean isAccurate(Actor attacker, Actor victim, CombatType type) {
 		Player player = (Player) attacker;
+		double attackRoll = 1 - (MeleeFormulas.calculateMeleeDefence(victim) + 2) / (2 * (MeleeFormulas.calculateMeleeAttack(player,victim) + 1));
+		double defenceRoll = (MeleeFormulas.calculateMeleeAttack(player, victim) / (2 * (MeleeFormulas.calculateMeleeDefence(victim) + 1)));
 		if (type == CombatType.MELEE) {
-			player.message("Attack roll: "+MeleeFormulas.calculateMaxMeleeHit(player, victim) + "Defence roll:" +MeleeFormulas.calculateMeleeDefence(victim));
+			player.message("Chance with higher attack: " +  attackRoll);
+			player.message("Higher def: " + defenceRoll);
+			player.message("Attack roll: "+MeleeFormulas.calculateMeleeAttack(player, victim) + "Defence roll:" +MeleeFormulas.calculateMeleeDefence(victim));
 			if (MeleeFormulas.calculateMeleeAttack(player, victim) > MeleeFormulas.calculateMeleeDefence(victim)) {
-				return RandomUtils.success(1-(MeleeFormulas.calculateMeleeDefence(victim)+2) / (2*(MeleeFormulas.calculateMeleeAttack(player, victim))));
+				return RandomUtils.success(attackRoll);
 			} else {
-				return RandomUtils.success(MeleeFormulas.calculateMeleeAttack(player, victim) / (2*(MeleeFormulas.calculateMeleeDefence(victim)+1)));
+				return RandomUtils.success(defenceRoll);
 			}
 		}
 //		boolean veracEffect = false;
