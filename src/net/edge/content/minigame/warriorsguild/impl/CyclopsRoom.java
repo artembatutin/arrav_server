@@ -66,7 +66,7 @@ public final class CyclopsRoom extends GuildRoom {
 
 	@Override
 	public boolean canHit(Player player, Actor other, CombatType type) {
-		return entered.isPresent() && other.isNpc();
+		return entered.isPresent() && other.isMob();
 	}
 
 	@Override

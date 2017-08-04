@@ -247,28 +247,6 @@ public abstract class Mob extends Actor {
 	}
 	
 	@Override
-	public int getBaseAttack(CombatType type) {
-		int value;
-		if(type == CombatType.MAGIC)
-			value = getDefinition().getMagicLevel();
-		else if(type == CombatType.RANGED)
-			value = getDefinition().getRangedLevel();
-		else
-			value = getDefinition().getAttackLevel();
-		if(weakenedBy == CombatWeaken.ATTACK_LOW || weakenedBy == CombatWeaken.ATTACK_HIGH)
-			value -= (int) ((weakenedBy.getRate()) * (value));
-		return value;
-	}
-	
-	@Override
-	public int getBaseDefence(CombatType type) {
-		int value = getDefinition().getDefenceLevel();
-		if(weakenedBy == CombatWeaken.DEFENCE_LOW || weakenedBy == CombatWeaken.DEFENCE_HIGH)
-			value -= (int) ((weakenedBy.getRate()) * (value));
-		return value;
-	}
-	
-	@Override
 	public void onSuccessfulHit(Actor victim, CombatType type) {
 		if(getDefinition().poisonous())
 			victim.poison(CombatPoisonEffect.getPoisonType(id).orElse(PoisonType.DEFAULT_NPC));

@@ -164,7 +164,7 @@ public enum GodwarsFaction {
 	 */
 	private static boolean canAttack(GodwarsSoldier soldier, GodwarsSoldier target) {
 		//some prerequisite checks.
-		if(soldier.getCombat().inCombat() || (target.isNpc() && target.getCombat().inCombat()) || soldier.isDead() || soldier.getState() != EntityState.ACTIVE || target.isDead() || target.getState() != EntityState.ACTIVE) {
+		if(soldier.getCombat().inCombat() || (target.isMob() && target.getCombat().inCombat()) || soldier.isDead() || soldier.getState() != EntityState.ACTIVE || target.isDead() || target.getState() != EntityState.ACTIVE) {
 			return false;
 		}
 		//if the difference is greater then 5 tiles block
@@ -186,7 +186,7 @@ public enum GodwarsFaction {
 	 * @return {@code true} if the character can be attacked, {@code false} otherwise.
 	 */
 	public static boolean canBeAttacked(Actor character, Actor attacker) {
-		if(!character.isNpc() || !attacker.isPlayer()) {
+		if(!character.isMob() || !attacker.isPlayer()) {
 			return true;
 		}
 		MobType t = character.toMob().getMobType();

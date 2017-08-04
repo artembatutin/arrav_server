@@ -11,10 +11,6 @@ import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.item.Item;
-import net.edge.world.entity.item.container.impl.Equipment;
-
-import java.util.Objects;
 
 /**
  * Created by Dave/Ophion
@@ -27,7 +23,7 @@ public class MeleeFormula implements Formula {
 	@Override
 	public int attack(Actor attacker, Actor defender) {
 		float attackLevel = attacker.isPlayer() ? attacker.toPlayer().getSkills()[Skills.ATTACK].getLevel() : attacker.toMob().getDefinition().getAttackLevel();
-		int correspondingBonus = attacker.isPlayer() ? attacker.toPlayer().getEquipment().getBonuses()[attacker.toPlayer().getFightType().getBonus()] : 120;
+		int correspondingBonus = attacker.isPlayer() ? attacker.toPlayer().getEquipment().getBonuses()[attacker.toPlayer().getFightType().getBonus()] : attacker.toMob().getDefinition().getCombat().getAttackMelee();
 		
 		if(attacker.isPlayer()) {
 			Player player = (Player) attacker;
@@ -63,6 +59,10 @@ public class MeleeFormula implements Formula {
 			if(player.isSpecialActivated()) {
 				attackLevel *= player.getCombatSpecial().getAccuracy();
 			}
+		} else if(attacker.isMob()) {
+			Mob mob = attacker.toMob();
+			if(mob.getWeakenedBy() == CombatWeaken.ATTACK_LOW || mob.getWeakenedBy() == CombatWeaken.ATTACK_HIGH)
+				attackLevel -= (int) ((mob.getWeakenedBy().getRate()) * (attackLevel));
 		}
 		return Math.round(attackLevel) * (correspondingBonus + 64);
 	}
@@ -70,7 +70,7 @@ public class MeleeFormula implements Formula {
 	@Override
 	public int maxHit(Actor attacker, Actor defender) {
 		int maxHit;
-		if(attacker.isNpc()) {
+		if(attacker.isMob()) {
 			Mob mob = attacker.toMob();
 			maxHit = mob.getDefinition().getMaxHit();
 			if(defender.isPlayer()) {
@@ -128,5 +128,19 @@ public class MeleeFormula implements Formula {
 		if(Application.DEBUG)
 			player.message("[DEBUG]: Maximum hit this turn " + "is [" + ((int) (baseDamage * 10)) + "].");
 		return (int) (baseDamage * 10);
+	}
+	
+	@Override
+	public int getMobDefence(int type, Mob mob) {
+		if(type == CombatConstants.DEFENCE_CRUSH)
+			return mob.getDefinition().getCombat().getDefenceCrush();
+		if(type == CombatConstants.DEFENCE_SLASH)
+			return mob.getDefinition().getCombat().getDefenceSlash();
+		return mob.getDefinition().getCombat().getDefenceStab();
+	}
+	
+	@Override
+	public CombatType getType() {
+		return CombatType.MELEE;
 	}
 }

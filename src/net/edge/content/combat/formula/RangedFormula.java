@@ -2,7 +2,9 @@ package net.edge.content.combat.formula;
 
 import net.edge.Application;
 import net.edge.content.combat.CombatConstants;
+import net.edge.content.combat.CombatType;
 import net.edge.content.combat.CombatUtil;
+import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.weapon.FightStyle;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
@@ -21,7 +23,7 @@ public class RangedFormula implements Formula {
 	@Override
 	public int attack(Actor attacker, Actor defender) {
 		float rangeLevel = attacker.isPlayer() ? attacker.toPlayer().getSkills()[Skills.RANGED].getLevel() : attacker.toMob().getDefinition().getRangedLevel();
-		int correspondingBonus = attacker.isPlayer() ? attacker.toPlayer().getEquipment().getBonuses()[attacker.toPlayer().getFightType().getBonus()] : 120;
+		int correspondingBonus = attacker.isPlayer() ? attacker.toPlayer().getEquipment().getBonuses()[attacker.toPlayer().getFightType().getBonus()] : attacker.toMob().getDefinition().getCombat().getAttackRanged();
 		
 		if(attacker.isPlayer()) {
 			Player player = (Player) attacker;
@@ -49,6 +51,10 @@ public class RangedFormula implements Formula {
 			if(player.isSpecialActivated()) {
 				rangeLevel *= player.getCombatSpecial().getAccuracy();
 			}
+		} else if(attacker.isMob()) {
+			Mob mob = attacker.toMob();
+			if(mob.getWeakenedBy() == CombatWeaken.ATTACK_LOW || mob.getWeakenedBy() == CombatWeaken.ATTACK_HIGH)
+				rangeLevel -= (int) ((mob.getWeakenedBy().getRate()) * (rangeLevel));
 		}
 		return Math.round(rangeLevel) * (correspondingBonus + 64);
 	}
@@ -56,7 +62,7 @@ public class RangedFormula implements Formula {
 	@Override
 	public int maxHit(Actor attacker, Actor defender) {
 		int maxHit;
-		if(attacker.isNpc()) {
+		if(attacker.isMob()) {
 			Mob mob = (Mob) attacker;
 			maxHit = mob.getDefinition().getMaxHit();
 			if(defender.isPlayer()) {
@@ -99,5 +105,15 @@ public class RangedFormula implements Formula {
 		if(Application.DEBUG)
 			player.message("[DEBUG]: Maximum hit this turn " + "is [" + ((int) (baseDamage * 10)) + "].");
 		return (int) (baseDamage * 10);
+	}
+	
+	@Override
+	public int getMobDefence(int type, Mob mob) {
+		return mob.getDefinition().getCombat().getDefenceRanged();
+	}
+	
+	@Override
+	public CombatType getType() {
+		return CombatType.RANGED;
 	}
 }

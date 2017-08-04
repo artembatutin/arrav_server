@@ -33,7 +33,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 
 	@Override
 	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		if(character.isNpc()) {
+		if(character.isMob()) {
 			return true;
 		}
 		
@@ -50,7 +50,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		if(character.isNpc()) {
+		if(character.isMob()) {
 			Mob mob = character.toMob();
 			character.animation(new Animation(mob.getDefinition().getAttackAnimation()));
 			CombatRangedAmmunition ammo = prepareAmmo(mob.getId());
@@ -105,7 +105,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	public int attackDistance(Actor character) {
 		if(character.getAttr().get("master_archery").getBoolean())
 			return 15;
-		if(character.isNpc())
+		if(character.isMob())
 			return 6;
 		Player player = (Player) character;
 		return CombatUtil.getRangedDistance(player.getWeapon()) + (player.getFightType().getStyle() == FightStyle.DEFENSIVE ? 2 : 0);

@@ -17,7 +17,7 @@ public final class SendArrowEntity implements OutgoingPacket {
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(248);
-		msg.put(entity.isNpc() ? 1 : 10);
+		msg.put(entity.isMob() ? 1 : 10);
 		msg.putShort(entity.getSlot());
 		msg.put(0);
 		return msg.getBuffer();

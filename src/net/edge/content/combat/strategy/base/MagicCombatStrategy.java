@@ -17,7 +17,7 @@ public final class MagicCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		if(character.isNpc()) {
+		if(character.isMob()) {
 			return true;
 		}
 		
@@ -46,7 +46,7 @@ public final class MagicCombatStrategy implements CombatStrategy {
 				player.getAttr().get("lunar_spellbook_swap").set(false);
 			}
 			delay = player.prepareSpell(get(player), victim);
-		} else if(character.isNpc()) {
+		} else if(character.isMob()) {
 			Mob mob = (Mob) character;
 			delay = mob.prepareSpell(CombatUtil.prepareSpellCast(mob).getSpell(), victim);
 		}

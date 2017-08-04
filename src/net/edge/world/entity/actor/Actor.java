@@ -285,7 +285,7 @@ public abstract class Actor extends Entity {
 			return "unregistered entity node.";
 		if(isPlayer())
 			return World.get().getPlayers().get(slot - 1).toString();
-		else if(isNpc())
+		else if(isMob())
 			return World.get().getMobs().get(slot - 1).toString();
 		throw new IllegalStateException("Invalid entity node type!");
 	}
@@ -362,22 +362,6 @@ public abstract class Actor extends Entity {
 	 * @return the combat strategy.
 	 */
 	public abstract CombatStrategy determineStrategy();
-	
-	/**
-	 * Gets the base attack level for this entity based on {@code type}, used
-	 * for combat calculations.
-	 * @param type the combat type.
-	 * @return the base attack level.
-	 */
-	public abstract int getBaseAttack(CombatType type);
-	
-	/**
-	 * Gets the base defence level for this entity based on {@code type},
-	 * used for combat calculations.
-	 * @param type the combat type.
-	 * @return the base defence level.
-	 */
-	public abstract int getBaseDefence(CombatType type);
 	
 	/**
 	 * Executed on a successful hit, used primarily for poison effects.
@@ -1099,7 +1083,7 @@ public abstract class Actor extends Entity {
 	 * @return {@code true} if this entity is a {@link Mob}, {@code false}
 	 * otherwise.
 	 */
-	public final boolean isNpc() {
+	public final boolean isMob() {
 		return getType() == EntityType.NPC;
 	}
 	
@@ -1108,7 +1092,7 @@ public abstract class Actor extends Entity {
 	 * @param action the action to execute.
 	 */
 	public final void ifNpc(Consumer<Mob> action) {
-		if(!this.isNpc())
+		if(!this.isMob())
 			return;
 		action.accept(this.toMob());
 	}
@@ -1118,7 +1102,7 @@ public abstract class Actor extends Entity {
 	 * @return an instance of this {@link Actor} as a {@link Mob}.
 	 */
 	public final Mob toMob() {
-		Preconditions.checkArgument(isNpc(), "Cannot cast this entity to npc.");
+		Preconditions.checkArgument(isMob(), "Cannot cast this entity to npc.");
 		return (Mob) this;
 	}
 	

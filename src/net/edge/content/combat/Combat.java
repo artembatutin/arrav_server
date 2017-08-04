@@ -86,7 +86,7 @@ public final class Combat {
 			character.getMovementQueue().reset();
 			return;
 		}
-		if(character.isPlayer() && target.isNpc() && character.toPlayer().getRights().equals(Rights.ADMINISTRATOR)) {
+		if(character.isPlayer() && target.isMob() && character.toPlayer().getRights().equals(Rights.ADMINISTRATOR)) {
 			character.toPlayer().message("[DEBUG NPC ID] Mob = " + target.toMob().getId() + ", position = " + target.toMob().getPosition().toString());
 		}
 		//if(target.same(currentVictim)) {
@@ -95,7 +95,7 @@ public final class Combat {
 		//		character.getMovementQueue().reset();
 		//	}
 		//}
-		if(character.isPlayer() && target.isNpc()) {
+		if(character.isPlayer() && target.isMob()) {
 			Mob mob = target.toMob();
 			Player player = (Player) character;
 			if(mob.getOwner() != -1 && !mob.isOwner(player)) {
@@ -153,7 +153,7 @@ public final class Combat {
 		attackTimer = 0;
 		character.faceEntity(null);
 		character.setFollowing(false);
-		if(character.isNpc() && !character.isDead()) {
+		if(character.isMob() && !character.isDead()) {
 			character.getMovementQueue().smartWalk(character.toMob().getOriginalPosition());
 		}
 		
@@ -395,7 +395,7 @@ public final class Combat {
 			if(!builder.character.getPosition().withinDistance(victim.getPosition(), builder.character.getViewingDistance())) {
 				builder.reset();
 				this.cancel();
-				if(builder.character.isNpc()) {
+				if(builder.character.isMob()) {
 					Mob mob = builder.character.toMob();
 					MobAggression.retreat(mob);
 				}

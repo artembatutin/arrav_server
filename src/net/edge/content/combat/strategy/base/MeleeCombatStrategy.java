@@ -14,7 +14,7 @@ public final class MeleeCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		if(character.isNpc()) {
+		if(character.isMob()) {
 			return true;
 		}
 		Player player = (Player) character;
@@ -29,7 +29,7 @@ public final class MeleeCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		if(character.isNpc()) {
+		if(character.isMob()) {
 			Mob mob = (Mob) character;
 			mob.animation(new Animation(mob.getDefinition().getAttackAnimation()));
 		} else if(character.isPlayer()) {
@@ -50,7 +50,7 @@ public final class MeleeCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public int attackDistance(Actor character) {
-		if(character.isNpc())
+		if(character.isMob())
 			return 1;
 		if(character.toPlayer().getWeapon() == WeaponInterface.HALBERD)
 			return 2;

@@ -186,7 +186,7 @@ public enum CombatSpecial {
 						Set<? extends Actor> local = null;
 						if(target.isPlayer()) {
 							local = player.getLocalPlayers();
-						} else if(target.isNpc()) {
+						} else if(target.isMob()) {
 							local = player.getLocalMobs();
 						}
 						if(local == null)

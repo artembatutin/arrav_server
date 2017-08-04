@@ -114,7 +114,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	
 	@Override
 	public void onKill(Player player, Actor other) {
-		if(!other.isNpc()) {
+		if(!other.isMob()) {
 			return;
 		}
 		

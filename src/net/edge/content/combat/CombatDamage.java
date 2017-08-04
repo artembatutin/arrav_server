@@ -51,7 +51,7 @@ public final class CombatDamage {
 			DamageCounter counter = entry.getValue();
 			Actor entity = entry.getKey();
 			
-			if(!entity.isNpc() || entity.isDead() || entity.getState() != EntityState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
+			if(!entity.isMob() || entity.isDead() || entity.getState() != EntityState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
 				continue;
 			if(counter.getAmount() > amount) {
 				amount = counter.getAmount();

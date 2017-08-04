@@ -9,7 +9,7 @@ public final class WaterfiendCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		return character.isNpc() && victim.isPlayer();
+		return character.isMob() && victim.isPlayer();
 	}
 	
 	@Override

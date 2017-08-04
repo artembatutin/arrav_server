@@ -274,7 +274,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullVoid(Actor character) {
-		if(character.isNpc() && character.toMob().getDefinition().getName().contains("Void Knight"))
+		if(character.isMob() && character.toMob().getDefinition().getName().contains("Void Knight"))
 			return true;
 		Item top = ((Player) character).getEquipment().get(Equipment.CHEST_SLOT);
 		return top != null && !(top.getId() != 8839 && top.getId() != 10611) && character.toPlayer().getEquipment().containsAll(8840, 8842);
@@ -287,7 +287,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullVeracs(Actor character) {
-		return character.isNpc() ? character.toMob().getDefinition().getName().equals("Verac the Defiled") : character.toPlayer().getEquipment().containsAll(4753, 4757, 4759, 4755);
+		return character.isMob() ? character.toMob().getDefinition().getName().equals("Verac the Defiled") : character.toPlayer().getEquipment().containsAll(4753, 4757, 4759, 4755);
 	}
 	
 	/**
@@ -297,7 +297,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullDharoks(Actor character) {
-		return character.isNpc() ? character.toMob().getDefinition().getName().equals("Dharok the Wretched") : character.toPlayer().getEquipment().containsAll(4716, 4720, 4722, 4718);
+		return character.isMob() ? character.toMob().getDefinition().getName().equals("Dharok the Wretched") : character.toPlayer().getEquipment().containsAll(4716, 4720, 4722, 4718);
 	}
 	
 	/**
@@ -307,7 +307,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullKarils(Actor character) {
-		return character.isNpc() ? character.toMob().getDefinition().getName().equals("Karil the Tainted") : character.toPlayer().getEquipment().containsAll(4732, 4736, 4738, 4734);
+		return character.isMob() ? character.toMob().getDefinition().getName().equals("Karil the Tainted") : character.toPlayer().getEquipment().containsAll(4732, 4736, 4738, 4734);
 	}
 	
 	/**
@@ -317,7 +317,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullAhrims(Actor character) {
-		return character.isNpc() ? character.toMob().getDefinition().getName().equals("Ahrim the Blighted") : character.toPlayer().getEquipment().containsAll(4708, 4712, 4714, 4710);
+		return character.isMob() ? character.toMob().getDefinition().getName().equals("Ahrim the Blighted") : character.toPlayer().getEquipment().containsAll(4708, 4712, 4714, 4710);
 	}
 	
 	/**
@@ -327,7 +327,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullTorags(Actor character) {
-		return character.isNpc() ? character.toMob().getDefinition().getName().equals("Torag the Corrupted") : character.toPlayer().getEquipment().containsAll(4745, 4749, 4751, 4747);
+		return character.isMob() ? character.toMob().getDefinition().getName().equals("Torag the Corrupted") : character.toPlayer().getEquipment().containsAll(4745, 4749, 4751, 4747);
 	}
 	
 	/**
@@ -337,7 +337,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullGuthans(Actor character) {
-		return character.isNpc() ? character.toMob().getDefinition().getName().equals("Guthan the Infested") : character.toPlayer().getEquipment().containsAll(4724, 4728, 4730, 4726);
+		return character.isMob() ? character.toMob().getDefinition().getName().equals("Guthan the Infested") : character.toPlayer().getEquipment().containsAll(4724, 4728, 4730, 4726);
 	}
 	
 	/**
@@ -392,7 +392,7 @@ public final class CombatUtil {
 	 * @throws IllegalArgumentException if the combat type is invalid.
 	 */
 	public static int getDelay(Actor character, Actor victim, CombatType type) {
-		int delay = character.isPlayer() && victim.isNpc() ? 1 : 0;
+		int delay = character.isPlayer() && victim.isMob() ? 1 : 0;
 		if(character.isPlayer() && character.toPlayer().getWeapon().equals(WeaponInterface.SALAMANDER)) {
 			return 1 + delay;
 		}

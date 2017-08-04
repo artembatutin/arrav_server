@@ -142,7 +142,7 @@ public final class CombatHitTask extends Task {
 					}
 				});
 			}
-		} else if(victim.isNpc() && !data.isIgnored()) {
+		} else if(victim.isMob() && !data.isIgnored()) {
 			victim.animation(new Animation(victim.toMob().getDefinition().getDefenceAnimation(), Animation.AnimationPriority.LOW));
 		}
 

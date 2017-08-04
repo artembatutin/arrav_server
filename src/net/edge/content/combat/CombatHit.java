@@ -178,7 +178,7 @@ public class CombatHit {
 	 * @return an array of skills that will be given experience for this attack.
 	 */
 	private int[] determineExperience() {
-		return attacker.isNpc() ? new int[]{} : attacker.toPlayer().getFightType().getStyle().skills(type);
+		return attacker.isMob() ? new int[]{} : attacker.toPlayer().getFightType().getStyle().skills(type);
 	}
 	
 	/**

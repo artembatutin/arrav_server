@@ -191,7 +191,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		});
 		
 		getActor().getCombat().getDamageCache().calculateProperKiller().ifPresent(e -> {
-			if(e.isNpc()) {
+			if(e.isMob()) {
 				getActor().getDeathsByNpc().incrementAndGet();
 				PlayerPanel.TOTAL_NPC_DEATHS.refresh(getActor(), "@or2@ - Total Mob deaths: @yel@" + getActor().getDeathsByNpc().get());
 			}

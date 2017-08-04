@@ -62,7 +62,7 @@ public final class CorporealBeast extends Mob {
 	 * @return {@code true} if the familiar was devoured, {@code false} otherwise.
 	 */
 	public boolean devourFamiliar(Actor victim) {
-		if(victim.isNpc()) {
+		if(victim.isMob()) {
 			return false;
 		}
 		

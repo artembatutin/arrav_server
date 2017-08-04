@@ -1,6 +1,7 @@
 package net.edge.world.entity.actor.mob;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.edge.util.json.JsonSaver;
@@ -23,7 +24,7 @@ public final class MobDefinition {
 	/**
 	 * A dummy {@link MobDefinitionCombat} to prevent nullpointers.
 	 */
-	public static final MobDefinitionCombat NON_COMBAT = new MobDefinitionCombat(false, true, false, 10, 10, 10, 7, -1, -1, -1, 3, 3, 3, 3, 3, 3, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+	public static final MobDefinitionCombat NON_COMBAT = new MobDefinitionCombat(false, true, false, 10, 10, 10, 7, -1, -1, -1, 3, 3, 3, 3, 3, 3, "", "", 0, 0, 0, 0, 0, 0, 0, 0);
 	
 	/**
 	 * The array that contains all of the NPC definitions.
@@ -58,7 +59,7 @@ public final class MobDefinition {
 	/**
 	 * The mob's combat definition.
 	 */
-	private final MobDefinitionCombat combat;
+	private MobDefinitionCombat combat;
 	
 	/**
 	 * Creates a new {@link MobDefinition}.
@@ -267,7 +268,7 @@ public final class MobDefinition {
 	 * @return combat.
 	 */
 	public MobDefinitionCombat getCombat() {
-		return combat;
+		return combat == null ? NON_COMBAT : combat;
 	}
 	
 	/**
@@ -276,7 +277,7 @@ public final class MobDefinition {
 	public static void dump() {
 		JsonSaver json = new JsonSaver();
 		for(MobDefinition d : MobDefinition.DEFINITIONS) {
-			link(d, d.getName());
+			//link(d, d.getName());
 			json.current().addProperty("id", d.id);
 			json.current().addProperty("name", d.name);
 			json.current().addProperty("size", d.size);
@@ -296,9 +297,7 @@ public final class MobDefinition {
 				json.current().addProperty("defenceLevel", d.combat.getDefenceLevel());
 				json.current().addProperty("strengthLevel", d.combat.getStrengthLevel());
 				//attacks
-				json.current().addProperty("atkStab", d.combat.getAttackStab());
-				json.current().addProperty("atkSlash", d.combat.getAttackSlash());
-				json.current().addProperty("atkCrush", d.combat.getAttackCrush());
+				json.current().addProperty("atkMelee", d.combat.getAttackMelee());
 				json.current().addProperty("atkMagic", d.combat.getAttackMagic());
 				json.current().addProperty("atkRange", d.combat.getAttackRanged());
 				//defence
@@ -326,12 +325,12 @@ public final class MobDefinition {
 	}
 	
 	private static void link(MobDefinition d, String name) {
-		name = name.replaceAll(" ", "_");
 		//String url = "http://oldschoolrunescape.wikia.com/wiki/" + name + "?action=raw";
 		String url = "http://services.runescape.com/m=itemdb_rs/bestiary/beastData.json?beastid=" + d.getId();
 		try {
 			bestiary(url, d);
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("(" + d.id + ") Failed to parse " + url + ", msg: " + e);
 		}
 	}
@@ -339,29 +338,51 @@ public final class MobDefinition {
 	private static void bestiary(String url, MobDefinition def) throws Exception {
 		URL oracle = new URL(url);
 		URLConnection yc = oracle.openConnection();
+		if(def == null || def.getName() == null || def.getCombat() == null)
+			return;
 		try(BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()))) {
 			JsonParser parser = new JsonParser();
-			JsonObject obj = (JsonObject) parser.parse(in);
+			JsonElement el = parser.parse(in);
+			if(el.isJsonNull())
+				return;
+			JsonObject obj = el.getAsJsonObject();
 			String name = obj.get("name").getAsString();
-			if(def.getName() != null && def.getName().equals(name) && def.getCombat() != null) {
+			if(def.getName().toLowerCase().equals(name.toLowerCase())) {
 				def.getCombat().aggressive = obj.get("aggressive").getAsBoolean();
 				def.getCombat().poisonous = obj.get("poisonous").getAsBoolean();
 				JsonObject anims = (JsonObject) obj.get("animations");
-				def.getCombat().deathAnimation = anims.get("death").getAsInt();
-				def.getCombat().attackAnimation = anims.get("attack").getAsInt();
-				if(def.getCombat().getMagicLevel() <= 0) {
+				boolean combatible = false;
+				if(anims.has("death")) {
+					def.getCombat().deathAnimation = anims.get("death").getAsInt();
+					combatible = true;
+				}
+				if(anims.has("attack")) {
+					def.getCombat().attackAnimation = anims.get("attack").getAsInt();
+					combatible = true;
+				}
+				if(anims.has("magic") && def.getCombat().getMagicLevel() <= 0) {
 					def.getCombat().magicLevel = obj.get("magic").getAsInt();
+					combatible = true;
 				}
-				if(def.getCombat().getDefenceLevel() <= 0) {
+				if(anims.has("defence") && def.getCombat().getDefenceLevel() <= 0) {
 					def.getCombat().defenceLevel = obj.get("defence").getAsInt();
+					combatible = true;
 				}
-				if(def.getCombat().getRangedLevel() <= 0) {
+				if(anims.has("ranged") && def.getCombat().getRangedLevel() <= 0) {
 					def.getCombat().rangedLevel = obj.get("ranged").getAsInt();
+					combatible = true;
 				}
-				if(def.getCombat().getAttackLevel() <= 0) {
+				if(anims.has("attack") && def.getCombat().getAttackLevel() <= 0) {
 					def.getCombat().attackLevel = obj.get("attack").getAsInt();
+					combatible = true;
 				}
-				System.out.println(def.getName() + " updated");
+				if(!combatible) {
+					def.combat = null;
+					def.attackable = false;
+					System.out.println(def.getId() + " - " + def.getName() + " is not compatible");
+				} else {
+					System.out.println(def.getId() + " - " + def.getName() + " updated");
+				}
 			}
 		}
 	}
@@ -419,18 +440,7 @@ public final class MobDefinition {
 								def.combat.maxHit = parseInt(value) * 10;
 							break;
 						
-						case "astab":
-							if(def.combat != null && def.getCombatLevel() == cmb)
-								def.combat.attackStab = parseInt(value);
-							break;
-						case "aslash":
-							if(def.combat != null && def.getCombatLevel() == cmb)
-								def.combat.attackSlash = parseInt(value);
-							break;
-						case "acrush":
-							if(def.combat != null && def.getCombatLevel() == cmb)
-								def.combat.attackCrush = parseInt(value);
-							break;
+							
 						case "amagic":
 							if(def.combat != null && def.getCombatLevel() == cmb)
 								def.combat.attackMagic = parseInt(value);

@@ -168,7 +168,7 @@ public final class CombatTask extends Task {
 				return false;
 			}
 		}
-		if(builder.getCharacter().isNpc()) {
+		if(builder.getCharacter().isMob()) {
 			Mob mob = (Mob) builder.getCharacter();
 			boolean retreats = mob.getDefinition().retreats() && mob.getCombat().inCombat();
 			if(builder.getVictim().getCombat().isCooldown() && !new Boundary(mob.getPosition(), mob.size()).within(mob

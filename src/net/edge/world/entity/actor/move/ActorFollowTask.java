@@ -61,7 +61,7 @@ class ActorFollowTask extends Task {
 		}
 		
 		//Familiar calling back.
-		if(character.isNpc()) {
+		if(character.isMob()) {
 			Mob mob = character.toMob();
 			if(mob.isFamiliar() || mob.isPet()) {
 				if(!character.getPosition().withinDistance(leader.getPosition(), 15)) {
@@ -143,7 +143,7 @@ class ActorFollowTask extends Task {
 		
 		
 		//Setting new path depending on the follower's type.
-		Path path = character.isPlayer() || (character.isNpc() && character.toMob().isSmart()) ? character.getAStarPathFinder().find(leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
+		Path path = character.isPlayer() || (character.isMob() && character.toMob().isSmart()) ? character.getAStarPathFinder().find(leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
 		if(path != null && path.isPossible()) {
 			//removing the points overlapping the leader's boundaries.
 			while(boundary.inside(path.poll(), leader.size()));

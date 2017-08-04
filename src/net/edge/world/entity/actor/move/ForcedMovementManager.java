@@ -38,7 +38,7 @@ public final class ForcedMovementManager {
 	 * @return <true> if the player can, <false> otherwise.
 	 */
 	private static boolean prerequisites(Actor character) {
-		if(character.isNpc()) {
+		if(character.isMob()) {
 			return true;
 		}
 		Player player = character.toPlayer();

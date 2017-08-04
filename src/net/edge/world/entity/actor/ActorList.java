@@ -189,7 +189,7 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 		entity.setSlot(index + 1);
 		entity.setState(EntityState.ACTIVE);
 		//Activating npc if region active.
-		if(entity.isNpc()) {
+		if(entity.isMob()) {
 			Region reg = entity.getRegion();
 			if(reg != null && reg.getState() == EntityState.ACTIVE)
 				entity.toMob().setActive(true);

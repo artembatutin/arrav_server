@@ -87,19 +87,9 @@ public class MobDefinitionCombat {
 	public int strengthLevel;
 	
 	/**
-	 * The attacking stab attribute.
+	 * The attacking melee attribute.
 	 */
-	public int attackStab;
-	
-	/**
-	 * The attacking stab attribute.
-	 */
-	public int attackSlash;
-	
-	/**
-	 * The attacking crush attribute.
-	 */
-	public int attackCrush;
+	public int attackMelee;
 	
 	/**
 	 * The attacking magic attribute.
@@ -154,7 +144,7 @@ public class MobDefinitionCombat {
 	/**
 	 * Creates a new {@link MobDefinitionCombat}.
 	 */
-	public MobDefinitionCombat(boolean aggressive, boolean retreats, boolean poisonous, int respawnTime, int maxHit, int hitpoints, int attackDelay, int attackAnimation, int defenceAnimation, int deathAnimation, int combatLevel, int attackLevel, int magicLevel, int rangedLevel, int defenceLevel, int slayerRequirement, String slayerKey, String weakness, int attackStab, int attackSlash, int attackCrush, int attackMagic, int attackRanged, int defenceStab, int defenceSlash, int defenceCrush, int defenceMagic, int defenceRanged) {
+	public MobDefinitionCombat(boolean aggressive, boolean retreats, boolean poisonous, int respawnTime, int maxHit, int hitpoints, int attackDelay, int attackAnimation, int defenceAnimation, int deathAnimation, int combatLevel, int attackLevel, int magicLevel, int rangedLevel, int defenceLevel, int slayerRequirement, String slayerKey, String weakness, int attackMelee, int attackMagic, int attackRanged, int defenceStab, int defenceSlash, int defenceCrush, int defenceMagic, int defenceRanged) {
 		this.aggressive = aggressive;
 		this.retreats = retreats;
 		this.poisonous = poisonous;
@@ -173,9 +163,7 @@ public class MobDefinitionCombat {
 		this.slayerRequirement = slayerRequirement;
 		this.slayerKey = slayerKey;
 		this.weakness = weakness;
-		this.attackStab = attackStab;
-		this.attackSlash = attackSlash;
-		this.attackCrush = attackCrush;
+		this.attackMelee = attackMelee;
 		this.attackMagic = attackMagic;
 		this.attackRanged = attackRanged;
 		this.defenceStab = defenceStab;
@@ -210,7 +198,7 @@ public class MobDefinitionCombat {
 	}
 	
 	public int getHitpoints() {
-		return hitpoints * 10;
+		return hitpoints;
 	}
 	
 	public int getAttackDelay() {
@@ -249,16 +237,8 @@ public class MobDefinitionCombat {
 		return defenceLevel;
 	}
 	
-	public int getAttackStab() {
-		return attackStab;
-	}
-	
-	public int getAttackSlash() {
-		return attackSlash;
-	}
-	
-	public int getAttackCrush() {
-		return attackCrush;
+	public int getAttackMelee() {
+		return attackMelee;
 	}
 	
 	public int getAttackMagic() {

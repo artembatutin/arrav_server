@@ -103,7 +103,7 @@ package net.edge.content.minigame.dueling;
 //	@Override
 //	public boolean canHit(Player player, Actor victim) {
 //		if(player.getDuelSession().stage != DuelStage.FIGHT) {
-//			if(victim.isNpc()) {
+//			if(victim.isMob()) {
 //				return true;
 //			} else {
 //				player.getDuelSession().request((Player) victim);

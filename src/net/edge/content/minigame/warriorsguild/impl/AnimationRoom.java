@@ -83,7 +83,7 @@ public final class AnimationRoom extends GuildRoom {
 	
 	@Override
 	public boolean canHit(Player player, Actor other, CombatType type) {
-		return armour.isPresent() && other.isNpc();
+		return armour.isPresent() && other.isMob();
 	}
 	
 	@Override
@@ -158,7 +158,7 @@ public final class AnimationRoom extends GuildRoom {
 	
 	@Override
 	public void onKill(Player player, Actor other) {
-		if(other.isNpc() && armour.isPresent() && other.toMob().getId() == armour.get().getId()) {
+		if(other.isMob() && armour.isPresent() && other.toMob().getId() == armour.get().getId()) {
 			drop(player, true);
 		}
 	}

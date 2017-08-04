@@ -82,7 +82,7 @@ public abstract class ActorDeath<T extends Actor> extends Task {
 		e.printStackTrace();
 		if(getActor().isPlayer()) {
 			World.get().queueLogout(getActor().toPlayer());
-		} else if(getActor().isNpc()) {
+		} else if(getActor().isMob()) {
 			World.get().getMobs().remove(getActor().toMob());
 		}
 	}

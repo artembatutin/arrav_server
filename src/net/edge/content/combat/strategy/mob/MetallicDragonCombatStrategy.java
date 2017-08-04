@@ -24,7 +24,7 @@ public final class MetallicDragonCombatStrategy implements CombatStrategy {
 	
 	@Override
 	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		return character.isNpc();
+		return character.isMob();
 	}
 	
 	@Override

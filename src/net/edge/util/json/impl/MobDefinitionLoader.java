@@ -52,9 +52,7 @@ public final class MobDefinitionLoader extends JsonLoader {
 			int rangedLevel = reader.get("rangedLevel").getAsInt();
 			int defenceLevel = reader.get("defenceLevel").getAsInt();
 			
-			int attackStab = reader.get("atkStab").getAsInt();
-			int attackSlash = reader.get("atkSlash").getAsInt();
-			int attackCrush = reader.get("atkCrush").getAsInt();
+			int attackMelee = reader.get("atkMelee").getAsInt();
 			int attackMagic = reader.get("atkMagic").getAsInt();
 			int attackRanged = reader.get("atkRange").getAsInt();
 			
@@ -73,7 +71,7 @@ public final class MobDefinitionLoader extends JsonLoader {
 			if(aggressive) {
 				MobAggression.AGGRESSIVE.add(index);
 			}
-			combat = new MobDefinitionCombat(aggressive, retreats, poisonous, respawnTime, maxHit, hitpoints, attackDelay, attackAnim, defenceAnim, deathAnim, combatLevel, attackLevel, magicLevel, rangedLevel, defenceLevel, slayerRequirement, slayerKey, weakness, attackStab, attackSlash, attackCrush, attackMagic, attackRanged, defenceStab, defenceSlash, defenceCrush, defenceMagic, defenceRanged);
+			combat = new MobDefinitionCombat(aggressive, retreats, poisonous, respawnTime, maxHit, hitpoints, attackDelay, attackAnim, defenceAnim, deathAnim, combatLevel, attackLevel, magicLevel, rangedLevel, defenceLevel, slayerRequirement, slayerKey, weakness, attackMelee, attackMagic, attackRanged, defenceStab, defenceSlash, defenceCrush, defenceMagic, defenceRanged);
 		}
 		MobDefinition.DEFINITIONS[index] = new MobDefinition(index, name, description, size, attackable, combat);
 	}

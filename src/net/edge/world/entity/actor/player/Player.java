@@ -926,22 +926,6 @@ public final class Player extends Actor {
 	}
 	
 	@Override
-	public int getBaseAttack(CombatType type) {
-		if(type == CombatType.RANGED)
-			return skills[Skills.RANGED].getLevel();
-		else if(type == CombatType.MAGIC)
-			return skills[Skills.MAGIC].getLevel();
-		return skills[Skills.ATTACK].getLevel();
-	}
-	
-	@Override
-	public int getBaseDefence(CombatType type) {
-		if(type == CombatType.MAGIC)
-			return skills[Skills.MAGIC].getLevel();
-		return skills[Skills.DEFENCE].getLevel();
-	}
-	
-	@Override
 	public void healEntity(int amount) {
 		int level = skills[Skills.HITPOINTS].getRealLevel() * 10;
 		skills[Skills.HITPOINTS].increaseLevel(amount, level);

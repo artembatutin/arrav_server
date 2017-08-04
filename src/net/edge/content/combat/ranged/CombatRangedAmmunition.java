@@ -134,7 +134,7 @@ public enum CombatRangedAmmunition {
 	ABYSSALBANE_ARROW(new int[]{21655, 21733, 21734, 21735}, 15, 64, 36, 40, 31, 2, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor victim, CombatHit data) {
-			if(!victim.isNpc()) {
+			if(!victim.isMob()) {
 				return data;
 			}
 			
@@ -155,7 +155,7 @@ public enum CombatRangedAmmunition {
 	BASILISKBANE_ARROW(new int[]{21650, 21719, 21720, 21721}, 15, 64, 36, 40, 31, 24, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor victim, CombatHit data) {
-			if(!victim.isNpc()) {
+			if(!victim.isMob()) {
 				return data;
 			}
 			
@@ -177,7 +177,7 @@ public enum CombatRangedAmmunition {
 		final ImmutableSet<Integer> affectedMobs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363);
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor victim, CombatHit data) {
-			if(!victim.isNpc()) {
+			if(!victim.isMob()) {
 				return data;
 			}
 			
@@ -198,7 +198,7 @@ public enum CombatRangedAmmunition {
 	WALLASALKIBANE_ARROW(new int[]{21645, 21726, 21727, 21728}, 15, 64, 36, 40, 31, 24, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor victim, CombatHit data) {
-			if(!victim.isNpc()) {
+			if(!victim.isMob()) {
 				return data;
 			}
 			
@@ -220,7 +220,7 @@ public enum CombatRangedAmmunition {
 	ABYSSALBANE_BOLT(new int[]{21675, 21701, 21702, 21703}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor victim, CombatHit data) {
-			if(!victim.isNpc()) {
+			if(!victim.isMob()) {
 				return data;
 			}
 			
@@ -241,7 +241,7 @@ public enum CombatRangedAmmunition {
 	BASILISKBANE_BOLT(new int[]{21670, 21687, 21688, 21689}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor victim, CombatHit data) {
-			if(!victim.isNpc()) {
+			if(!victim.isMob()) {
 				return data;
 			}
 			
@@ -263,7 +263,7 @@ public enum CombatRangedAmmunition {
 		final ImmutableSet<Integer> affectedMobs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363);
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor victim, CombatHit data) {
-			if(!victim.isNpc()) {
+			if(!victim.isMob()) {
 				return data;
 			}
 			
@@ -284,7 +284,7 @@ public enum CombatRangedAmmunition {
 	WALLASALKIBANE_BOLT(new int[]{21665, 21694, 21695, 21696}, 27, 86, 42, 43, 31, 0, true) {
 		@Override
 		public CombatHit applyEffects(Player player, CombatRangedWeapon weapon, Actor victim, CombatHit data) {
-			if(!victim.isNpc()) {
+			if(!victim.isMob()) {
 				return data;
 			}
 			
@@ -381,7 +381,7 @@ public enum CombatRangedAmmunition {
 			
 			boolean multiply = false;
 			
-			if(victim.isNpc() && affectedMobs.contains(victim.toMob().getId())) {
+			if(victim.isMob() && affectedMobs.contains(victim.toMob().getId())) {
 				multiply = true;
 			}
 			

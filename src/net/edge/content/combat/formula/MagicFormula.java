@@ -1,11 +1,14 @@
 package net.edge.content.combat.formula;
 
 import net.edge.content.combat.CombatConstants;
+import net.edge.content.combat.CombatType;
 import net.edge.content.combat.CombatUtil;
+import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.weapon.FightStyle;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 /**
@@ -19,7 +22,7 @@ public class MagicFormula implements Formula {
 	@Override
 	public int attack(Actor attacker, Actor defender) {
 		float magicLevel = attacker.isPlayer() ? attacker.toPlayer().getSkills()[Skills.MAGIC].getLevel() : attacker.toMob().getDefinition().getMagicLevel();
-		int correspondingBonus = attacker.isPlayer() ? attacker.toPlayer().getEquipment().getBonuses()[CombatConstants.ATTACK_MAGIC] : 120;
+		int correspondingBonus = attacker.isPlayer() ? attacker.toPlayer().getEquipment().getBonuses()[CombatConstants.ATTACK_MAGIC] : attacker.toMob().getDefinition().getCombat().getAttackMagic();
 		
 		if(attacker.isPlayer()) {
 			Player player = (Player) attacker;
@@ -37,6 +40,10 @@ public class MagicFormula implements Formula {
 			if(CombatUtil.isFullVoid(player) && player.getEquipment().contains(11663)) {
 				magicLevel *= 1.45;
 			}
+		} else if(attacker.isMob()) {
+			Mob mob = attacker.toMob();
+			if(mob.getWeakenedBy() == CombatWeaken.ATTACK_LOW || mob.getWeakenedBy() == CombatWeaken.ATTACK_HIGH)
+				magicLevel -= (int) ((mob.getWeakenedBy().getRate()) * (magicLevel));
 		}
 		return Math.round(magicLevel) * (correspondingBonus + 64);
 	}
@@ -44,8 +51,9 @@ public class MagicFormula implements Formula {
 	@Override
 	public int defence(Actor attacker, Actor defender) {
 		//Magic defence accuracy is different from all others for players.
-		float defenceLevel = defender.isPlayer() ? defender.toPlayer().getSkills()[Skills.DEFENCE].getLevel() : defender.toMob().getDefinition().getDefenceLevel();
-		int correspondingBonus = defender.isPlayer() ? defender.toPlayer().getEquipment().getBonuses()[attacker.toPlayer().getFightType().getCorrespondingBonus()] : 10;
+		int type = attacker.isPlayer() ? attacker.toPlayer().getFightType().getCorrespondingBonus() : getType() == CombatType.MAGIC ? CombatConstants.DEFENCE_MAGIC : getType() == CombatType.RANGED ? CombatConstants.DEFENCE_RANGED : CombatConstants.DEFENCE_STAB;
+		float defenceLevel = defender.isPlayer() ? defender.toPlayer().getSkills()[Skills.DEFENCE].getLevel() : defender.toMob().getDefinition().getCombat().getDefenceLevel();
+		int correspondingBonus = defender.isPlayer() ? defender.toPlayer().getEquipment().getBonuses()[type] : getMobDefence(type, defender.toMob());
 		if(defender.isPlayer()) {
 			Player player = (Player) defender;
 			if(Prayer.isActivated(player, Prayer.THICK_SKIN)) {
@@ -80,6 +88,10 @@ public class MagicFormula implements Formula {
 			//rounding and add up 8
 			magicLevel = Math.round(magicLevel * 0.7);
 			defenceLevel += magicLevel;
+		} else if(defender.isMob()) {
+			Mob mob = defender.toMob();
+			if(mob.getWeakenedBy() == CombatWeaken.DEFENCE_LOW || mob.getWeakenedBy() == CombatWeaken.DEFENCE_HIGH)
+				defenceLevel -= (int) ((mob.getWeakenedBy().getRate()) * (defenceLevel));
 		}
 		return Math.round(defenceLevel) * (correspondingBonus+64);
 	}
@@ -87,11 +99,21 @@ public class MagicFormula implements Formula {
 	@Override
 	public int maxHit(Actor attacker, Actor defender) {
 		int max = attacker.getCurrentlyCasting().maximumHit();
-		if(defender.isPlayer() && attacker.isNpc()) {
+		if(defender.isPlayer() && attacker.isMob()) {
 			Player p = defender.toPlayer();
 			if(p.isIronMan())//Iron man monsters tougher.
 				max *= 1.2;
 		}
 		return max;
+	}
+	
+	@Override
+	public int getMobDefence(int type, Mob mob) {
+		return mob.getDefinition().getCombat().getDefenceMagic();
+	}
+	
+	@Override
+	public CombatType getType() {
+		return CombatType.MAGIC;
 	}
 }

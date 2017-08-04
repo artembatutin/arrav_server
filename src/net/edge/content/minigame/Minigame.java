@@ -331,7 +331,7 @@ public abstract class Minigame {
 	 * @return <true> if the player can attack, <false> otherwise.
 	 */
 	public boolean canHit(Player player, Actor other, CombatType type) {
-		return other.isNpc();
+		return other.isMob();
 	}
 	
 	/**
