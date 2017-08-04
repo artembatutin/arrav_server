@@ -20,7 +20,7 @@ public final class FlockleaderGeerinCombatStrategy implements CombatStrategy {
 
 	@Override
 	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		character.animation(new Animation(character.toNpc().getDefinition().getAttackAnimation()));
+		character.animation(new Animation(character.toMob().getDefinition().getAttackAnimation()));
 		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {

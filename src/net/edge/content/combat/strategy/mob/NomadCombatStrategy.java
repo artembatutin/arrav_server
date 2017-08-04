@@ -131,7 +131,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
     }
 
     private CombatHit melee(Actor character, Actor victim) {
-        int animationId = character.toNpc().getDefinition().getAttackAnimation();
+        int animationId = character.toMob().getDefinition().getAttackAnimation();
         character.animation(new Animation(animationId, Animation.AnimationPriority.HIGH));
         return new CombatHit(character, victim, 1, CombatType.MELEE, true);
     }

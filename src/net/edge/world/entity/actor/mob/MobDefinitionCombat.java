@@ -210,7 +210,7 @@ public class MobDefinitionCombat {
 	}
 	
 	public int getHitpoints() {
-		return hitpoints;
+		return hitpoints * 10;
 	}
 	
 	public int getAttackDelay() {

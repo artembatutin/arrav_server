@@ -56,13 +56,13 @@ public final class MobDefinitionLoader extends JsonLoader {
 			int attackSlash = reader.get("atkSlash").getAsInt();
 			int attackCrush = reader.get("atkCrush").getAsInt();
 			int attackMagic = reader.get("atkMagic").getAsInt();
-			int attackRanged = reader.get("atkRanged").getAsInt();
+			int attackRanged = reader.get("atkRange").getAsInt();
 			
 			int defenceStab = reader.get("defStab").getAsInt();
 			int defenceSlash = reader.get("defSlash").getAsInt();
 			int defenceCrush = reader.get("defCrush").getAsInt();
 			int defenceMagic = reader.get("defMagic").getAsInt();
-			int defenceRanged = reader.get("defRanged").getAsInt();
+			int defenceRanged = reader.get("defRange").getAsInt();
 			
 			String weakness = reader.get("weakness").getAsString();
 			String slayerKey = reader.get("slayerKey").getAsString();

@@ -175,7 +175,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			logout(player);
 			return;
 		}
-		Mob mob = victim.toNpc();
+		Mob mob = victim.toMob();
 		boolean empty = true;
 		for(int i = 0; i < monsters.length; i++) {
 			if(monsters[i] == null)

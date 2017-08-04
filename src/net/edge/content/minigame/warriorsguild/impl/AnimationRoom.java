@@ -158,7 +158,7 @@ public final class AnimationRoom extends GuildRoom {
 	
 	@Override
 	public void onKill(Player player, Actor other) {
-		if(other.isNpc() && armour.isPresent() && other.toNpc().getId() == armour.get().getId()) {
+		if(other.isNpc() && armour.isPresent() && other.toMob().getId() == armour.get().getId()) {
 			drop(player, true);
 		}
 	}

@@ -192,7 +192,7 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 		if(entity.isNpc()) {
 			Region reg = entity.getRegion();
 			if(reg != null && reg.getState() == EntityState.ACTIVE)
-				entity.toNpc().setActive(true);
+				entity.toMob().setActive(true);
 		}
 		size++;
 		//Updating player count.

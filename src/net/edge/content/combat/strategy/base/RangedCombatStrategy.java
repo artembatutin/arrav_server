@@ -51,7 +51,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	@Override
 	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		if(character.isNpc()) {
-			Mob mob = character.toNpc();
+			Mob mob = character.toMob();
 			character.animation(new Animation(mob.getDefinition().getAttackAnimation()));
 			CombatRangedAmmunition ammo = prepareAmmo(mob.getId());
 			

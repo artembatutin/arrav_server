@@ -230,7 +230,7 @@ public final class BarrowsMinigame extends Minigame {
 	
 	@Override
 	public void onKill(Player player, Actor victim) {
-		Mob mob = victim.toNpc();
+		Mob mob = victim.toMob();
 		
 		Optional<BarrowBrother> current = player.getMinigameContainer().getBarrowsContainer().getCurrent();
 		if(current.isPresent() && mob.getId() != current.get().getId()) {

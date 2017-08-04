@@ -19,7 +19,7 @@ public final class TzKihCombatStrategy implements CombatStrategy {
 	public CombatHit outgoingAttack(Actor character, Actor victim) {
 		if(victim.isPlayer()) {
 			Player player = victim.toPlayer();
-			String type = character.toNpc().isFamiliar() ? "Spirit tz-kih" : "Tz-kih";
+			String type = character.toMob().isFamiliar() ? "Spirit tz-kih" : "Tz-kih";
 			Skill prayer = player.getSkills()[Skills.PRAYER];
 			prayer.decreaseLevel(1);
 			Skills.refresh(player, Skills.PRAYER);

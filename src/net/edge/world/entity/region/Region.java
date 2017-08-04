@@ -225,7 +225,7 @@ public final class Region extends Entity {
 		if(e.isPlayer()) {
 			return players.add(e.toPlayer());
 		} else {
-			return mobs.add(e.toNpc());
+			return mobs.add(e.toMob());
 		}
 	}
 	
@@ -237,7 +237,7 @@ public final class Region extends Entity {
 		if(e.isPlayer()) {
 			return players.remove(e.toPlayer());
 		} else {
-			return mobs.remove(e.toNpc());
+			return mobs.remove(e.toMob());
 		}
 	}
 	

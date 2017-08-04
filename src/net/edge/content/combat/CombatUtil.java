@@ -1,9 +1,10 @@
 package net.edge.content.combat;
 
 import net.edge.Application;
-import net.edge.content.combat.magic.MagicCalculations;
-import net.edge.content.combat.melee.MeleeCalculations;
-import net.edge.content.combat.ranged.RangedCalculations;
+import net.edge.content.combat.formula.Formula;
+import net.edge.content.combat.formula.MagicFormula;
+import net.edge.content.combat.formula.MeleeFormula;
+import net.edge.content.combat.formula.RangedFormula;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectType;
@@ -13,7 +14,6 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.combat.strategy.base.MagicCombatStrategy;
 import net.edge.content.combat.strategy.base.MeleeCombatStrategy;
 import net.edge.content.combat.strategy.base.RangedCombatStrategy;
-import net.edge.content.combat.weapon.FightStyle;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
@@ -36,6 +36,15 @@ import java.util.function.Consumer;
  * @author lare96 <http://github.com/lare96>
  */
 public final class CombatUtil {
+	
+	/**
+	 * The formulas instances.
+	 */
+	public static final Formula[] FORMULAS = {
+			new MeleeFormula(),
+			new RangedFormula(),
+			new MagicFormula()
+	};
 	
 	/**
 	 * The default constructor.
@@ -265,7 +274,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullVoid(Actor character) {
-		if(character.isNpc() && character.toNpc().getDefinition().getName().contains("Void Knight"))
+		if(character.isNpc() && character.toMob().getDefinition().getName().contains("Void Knight"))
 			return true;
 		Item top = ((Player) character).getEquipment().get(Equipment.CHEST_SLOT);
 		return top != null && !(top.getId() != 8839 && top.getId() != 10611) && character.toPlayer().getEquipment().containsAll(8840, 8842);
@@ -278,7 +287,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullVeracs(Actor character) {
-		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Verac the Defiled") : character.toPlayer().getEquipment().containsAll(4753, 4757, 4759, 4755);
+		return character.isNpc() ? character.toMob().getDefinition().getName().equals("Verac the Defiled") : character.toPlayer().getEquipment().containsAll(4753, 4757, 4759, 4755);
 	}
 	
 	/**
@@ -288,7 +297,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullDharoks(Actor character) {
-		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Dharok the Wretched") : character.toPlayer().getEquipment().containsAll(4716, 4720, 4722, 4718);
+		return character.isNpc() ? character.toMob().getDefinition().getName().equals("Dharok the Wretched") : character.toPlayer().getEquipment().containsAll(4716, 4720, 4722, 4718);
 	}
 	
 	/**
@@ -298,7 +307,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullKarils(Actor character) {
-		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Karil the Tainted") : character.toPlayer().getEquipment().containsAll(4732, 4736, 4738, 4734);
+		return character.isNpc() ? character.toMob().getDefinition().getName().equals("Karil the Tainted") : character.toPlayer().getEquipment().containsAll(4732, 4736, 4738, 4734);
 	}
 	
 	/**
@@ -308,7 +317,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullAhrims(Actor character) {
-		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Ahrim the Blighted") : character.toPlayer().getEquipment().containsAll(4708, 4712, 4714, 4710);
+		return character.isNpc() ? character.toMob().getDefinition().getName().equals("Ahrim the Blighted") : character.toPlayer().getEquipment().containsAll(4708, 4712, 4714, 4710);
 	}
 	
 	/**
@@ -318,7 +327,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullTorags(Actor character) {
-		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Torag the Corrupted") : character.toPlayer().getEquipment().containsAll(4745, 4749, 4751, 4747);
+		return character.isNpc() ? character.toMob().getDefinition().getName().equals("Torag the Corrupted") : character.toPlayer().getEquipment().containsAll(4745, 4749, 4751, 4747);
 	}
 	
 	/**
@@ -328,7 +337,7 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullGuthans(Actor character) {
-		return character.isNpc() ? character.toNpc().getDefinition().getName().equals("Guthan the Infested") : character.toPlayer().getEquipment().containsAll(4724, 4728, 4730, 4726);
+		return character.isNpc() ? character.toMob().getDefinition().getName().equals("Guthan the Infested") : character.toPlayer().getEquipment().containsAll(4724, 4728, 4730, 4726);
 	}
 	
 	/**
@@ -439,35 +448,14 @@ public final class CombatUtil {
 	 * @throws IllegalArgumentException if the combat type is invalid.
 	 */
 	public static Hit calculateRandomHit(Actor character, Actor victim, CombatType type, int delay, boolean checkAccuracy) {
-		int max;
-		int hit;
-		switch(type) {
-			case MELEE:
-				max = MeleeCalculations.calculateMaxMeleeHit(character, victim);
-				hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);
-				if(Application.DEBUG && character.isPlayer())
-					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
-				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.MELEE, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
-			case RANGED:
-				max = RangedCalculations.calculateMaxRangedHit(character, victim);
-				hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);
-				if(Application.DEBUG && character.isPlayer())
-					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
-				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.RANGED, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
-			case MAGIC:
-				max = character.getCurrentlyCasting().maximumHit();
-				if(victim.isPlayer() && character.isNpc()) {
-					Player p = victim.toPlayer();
-					if(p.isIronMan())//Iron man monsters tougher.
-						max *= 1.2;
-				}
-				hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);
-				if(Application.DEBUG && character.isPlayer())
-					character.toPlayer().message("[DEBUG]: " + "Maximum hit this turn is [" + hit + "].");
-				return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.MAGIC, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
-			default:
-				throw new IllegalArgumentException("Invalid combat type!");
-		}
+		if(type == CombatType.NONE)
+			throw new IllegalArgumentException("Invalid combat type!");
+		Formula formula = FORMULAS[type.ordinal()];
+		int max = formula.maxHit(character, victim);
+		int hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);
+		if(Application.DEBUG && character.isPlayer())
+			character.toPlayer().message("[COMBAT-HIT]: " + "Max: [" + max + "] Hit: [" + hit + "].");
+		return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, Hit.HitIcon.MELEE, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
 	}
 	
 	/**
@@ -557,45 +545,6 @@ public final class CombatUtil {
 		}
 		return hit;
 	}
-
-	public static int calculateDefence(Actor defender, Actor attacker) {
-
-		int defenceLevel = defender.isPlayer() ? defender.toPlayer().getSkills()[Skills.DEFENCE].getLevel() : defender.toNpc().getDefinition().getDefenceLevel();
-		int correspondingBonus = defender.isPlayer() ? defender.toPlayer().getEquipment().getBonuses()[attacker.toPlayer().getFightType().getCorrespondingBonus()] : 10;
-		double prayerMultiplier = 1.0;
-		int combatStyleBonus = 0;
-
-		if(defender.isPlayer()) {
-			Player player = (Player) defender;
-			if (Prayer.isActivated(player, Prayer.THICK_SKIN)) {
-				prayerMultiplier = 1.05;
-			} else if (Prayer.isActivated(player, Prayer.ROCK_SKIN)) {
-				prayerMultiplier = 1.1;
-			} else if (Prayer.isActivated(player, Prayer.STEEL_SKIN)) {
-				prayerMultiplier = 1.15;
-			} else if (Prayer.isActivated(player, Prayer.CHIVALRY)) {
-				prayerMultiplier = 1.20;
-			} else if (Prayer.isActivated(player, Prayer.PIETY)) {
-				prayerMultiplier = 1.25;
-//		} else if (player.getCurses().active(CurseType.TURMOIL)) {
-//		if(!player.getInteractingEntity().isNpc()) {
-//			Player opponent = (Player) player.getInteractingEntity();
-//				prayerBonus = opponent.getSkills().getLevelForExperience(SkillConstants.DEFENCE) * 0.15;
-//		}
-//		prayerMultiplier = 1.15 + (prayerBonus/100);
-			}
-
-			if (player.getFightType().getStyle() == FightStyle.DEFENSIVE) {
-				combatStyleBonus = 3;
-			} else if (player.getFightType().getStyle() == FightStyle.CONTROLLED) {
-				combatStyleBonus = 1;
-			}
-		}
-		attacker.toPlayer().message("Corresponding defence: " +correspondingBonus);
-		// int baseAccuracy = (int) Math.round(Math.round(attackLevel * prayerMultiplier) + combatStyleBonus + 8 * additionalBonusMultiplier) * (correspondingBonus+64);
-		int baseDefence = Math.round(Math.round(defenceLevel * prayerMultiplier) + combatStyleBonus + 8) * (correspondingBonus+64);
-		return baseDefence;
-	}
 	
 	/**
 	 * Determines if {@code attacker}'s attack will be successful.
@@ -605,193 +554,23 @@ public final class CombatUtil {
 	 * @return {@code true} if the hit was accurate, {@code false} otherwise.
 	 */
 	public static boolean isAccurate(Actor attacker, Actor victim, CombatType type) {
-		if (type == CombatType.MELEE) {
-			double dominantAttackRoll = 1 - (calculateDefence(victim, attacker) + 2) / (double)(2 * (MeleeCalculations.calculateMeleeAttack(attacker,victim) + 1));
-			double dominantDefenceRoll = (MeleeCalculations.calculateMeleeAttack(attacker, victim) / (double)(2 * (calculateDefence(victim, attacker) + 1)));
-			if (MeleeCalculations.calculateMeleeAttack(attacker, victim) > calculateDefence(victim, attacker)) {
-				return RandomUtils.success(dominantAttackRoll);
-			} else {
-				return RandomUtils.success(dominantDefenceRoll);
-			}
+		if(type == CombatType.NONE)
+			return false;
+		Formula formula = FORMULAS[type.ordinal()];
+		
+		double roll;
+		double attackRoll = formula.attack(attacker, victim);
+		double defenceRoll = formula.defence(attacker, victim);
+		if(attackRoll > defenceRoll) {
+			roll = 1 - (defenceRoll+2) / (2*(attackRoll+1));
+		} else {
+			roll = attackRoll / (2*(defenceRoll+1));
 		}
-
-		if(type == CombatType.RANGED) {
-			double dominantAttackRoll = 1 - (calculateDefence(victim, attacker) + 2) / (double)(2 * (RangedCalculations.calculateRangeAttack(attacker,victim) + 1));
-			double dominantDefenceRoll = (RangedCalculations.calculateRangeAttack(attacker, victim) / (double)(2 * (calculateDefence(victim, attacker) + 1)));
-			if (RangedCalculations.calculateRangeAttack(attacker, victim) > calculateDefence(victim, attacker)) {
-				return RandomUtils.success(dominantAttackRoll);
-			} else {
-				return RandomUtils.success(dominantDefenceRoll);
-			}
-		}
-
-		if (type == CombatType.MAGIC) {
-
-			double dominantAttackRoll = 1 - (MagicCalculations.calculateMageDefence(victim, attacker) + 2) / (double)(2 * (MagicCalculations.calculateMageAttack(attacker,victim) + 1));
-			double dominantDefenceRoll = (MagicCalculations.calculateMageAttack(attacker, victim) / (double)(2 * (MagicCalculations.calculateMageDefence(victim, attacker) + 1)));
-			if(attacker.isPlayer()) {
-				attacker.toPlayer().message("Dominant attack: " +dominantAttackRoll);
-				attacker.toPlayer().message("Dominant defence: " +dominantDefenceRoll);
-			}
-			if (MagicCalculations.calculateMageAttack(attacker, victim) > MagicCalculations.calculateMageDefence(victim, attacker)) {
-				return RandomUtils.success(dominantAttackRoll);
-			} else {
-				return RandomUtils.success(dominantDefenceRoll);
-			}
-		}
-//		boolean veracEffect = false;
-//
-//		if(type == CombatType.MELEE) {
-//			if(CombatUtil.isFullVeracs(attacker)) {
-//				if(RandomUtils.inclusive(8) == 3) {
-//					veracEffect = true;
-//				}
-//			}
-//		}
-//
-//		double prayerMod = 1;
-//		double equipmentBonus = 1;
-//		double specialBonus = 1;
-//		int styleBonus = 0;
-//		int bonusType = -1;
-//		if(attacker.isPlayer()) {
-//			Player player = (Player) attacker;
-//
-//			equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[CombatConstants.ATTACK_MAGIC] : player.getEquipment().getBonuses()[player.getFightType().getBonus()];
-//			bonusType = player.getFightType().getCorrespondingBonus();
-//			if(type == CombatType.MELEE) {
-//				if(Prayer.isActivated(player, Prayer.CLARITY_OF_THOUGHT)) {
-//					prayerMod = 1.05;
-//				} else if(Prayer.isActivated(player, Prayer.IMPROVED_REFLEXES)) {
-//					prayerMod = 1.10;
-//				} else if(Prayer.isActivated(player, Prayer.INCREDIBLE_REFLEXES)) {
-//					prayerMod = 1.15;
-//				} else if(Prayer.isActivated(player, Prayer.CHIVALRY)) {
-//					prayerMod = 1.18;
-//				} else if(Prayer.isActivated(player, Prayer.PIETY)) {
-//					prayerMod = 1.23;
-//				} else if(Prayer.isActivated(player, Prayer.TURMOIL)) {
-//					if(victim.isPlayer()) {
-//						//1000 because if strength is 99 / 100 * 10 = 9.9 which is wayy to much.
-//						prayerMod = (victim.toPlayer().getSkills()[Skills.ATTACK].getRealLevel() / 1000) * 15;
-//					} else {
-//						prayerMod = prayerMod + 1.15;
-//					}
-//				}
-//			} else if(type == CombatType.RANGED) {
-//				if(Prayer.isActivated(player, Prayer.SHARP_EYE)) {
-//					prayerMod = 1.05;
-//				} else if(Prayer.isActivated(player, Prayer.HAWK_EYE)) {
-//					prayerMod = 1.10;
-//				} else if(Prayer.isActivated(player, Prayer.EAGLE_EYE)) {
-//					prayerMod = 1.15;
-//				}
-//			} else if(type == CombatType.MAGIC) {
-//				if(Prayer.isActivated(player, Prayer.MYSTIC_WILL)) {
-//					prayerMod = 1.05;
-//				} else if(Prayer.isActivated(player, Prayer.MYSTIC_LORE)) {
-//					prayerMod = 1.10;
-//				} else if(Prayer.isActivated(player, Prayer.MYSTIC_MIGHT)) {
-//					prayerMod = 1.15;
-//				}
-//			}
-//
-//			if(player.getFightType().getStyle() == FightStyle.ACCURATE) {
-//				styleBonus = 3;
-//			} else if(player.getFightType().getStyle() == FightStyle.CONTROLLED) {
-//				styleBonus = 1;
-//			}
-//
-//			if(player.isSpecialActivated()) {
-//				specialBonus = player.getCombatSpecial().getAccuracy();
-//			}
-//
-//			if(victim.isNpc()) {
-//				Mob mob = victim.toNpc();
-//				/* SLAYER */
-//				if(player.getSlayer().isPresent() && Objects.equals(mob.getDefinition().getSlayerKey(), player.getSlayer().get().getKey())) {
-//					Item head = player.getEquipment().get(Equipment.HEAD_SLOT);
-//					if(head != null) {
-//						if(head.getId() == 13263)
-//							styleBonus *= 1.12;
-//						if(head.getId() == 15492)
-//							styleBonus *= 1.25;//full slayer
-//						if(head.getId() == 15488 && player.getCombat().getCombatType() == CombatType.MAGIC)
-//							styleBonus *= 1.125;//hexcrest
-//						if(head.getId() == 15490 && player.getCombat().getCombatType() == CombatType.RANGED)
-//							styleBonus *= 1.125;//focus sight
-//						if(head.getDefinition().getName().contains("Black mask") && player.getCombat().getCombatType() == CombatType.MELEE)
-//							styleBonus *= 1.125;//black mask
-//					}
-//				}
-//			}
-//		}
-//
-//		double attackCalc = Math.floor(equipmentBonus + attacker.getBaseAttack(type)) + 8;
-//		attackCalc *= prayerMod;
-//		attackCalc += styleBonus;
-//
-//		if(equipmentBonus < -67) {
-//			attackCalc = RandomUtils.inclusive(8) == 0 ? attackCalc : 0;
-//		}
-//		attackCalc *= specialBonus;
-//
-//		equipmentBonus = 1;
-//		prayerMod = 1;
-//		styleBonus = 0;
-//		if(victim.isPlayer()) {
-//			Player player = (Player) victim;
-//
-//			if(bonusType == -1) {
-//				equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[CombatConstants.DEFENCE_MAGIC] : player.getSkills()[Skills.DEFENCE].getLevel();
-//			} else {
-//				equipmentBonus = type == CombatType.MAGIC ? player.getEquipment().getBonuses()[CombatConstants.DEFENCE_MAGIC] : player.getEquipment().getBonuses()[bonusType];
-//			}
-//
-//			if(Prayer.isActivated(player, Prayer.THICK_SKIN)) {
-//				prayerMod = 1.05;
-//			} else if(Prayer.isActivated(player, Prayer.ROCK_SKIN)) {
-//				prayerMod = 1.10;
-//			} else if(Prayer.isActivated(player, Prayer.STEEL_SKIN)) {
-//				prayerMod = 1.15;
-//			} else if(Prayer.isActivated(player, Prayer.CHIVALRY)) {
-//				prayerMod = 1.20;
-//			} else if(Prayer.isActivated(player, Prayer.PIETY)) {
-//				prayerMod = 1.25;
-//			} else if(Prayer.isActivated(player, Prayer.TURMOIL)) {
-//				if(victim.isPlayer()) {
-//					//1000 because if strength is 99 / 100 * 10 = 9.9 which is wayy to much.
-//					prayerMod = (victim.toPlayer().getSkills()[Skills.DEFENCE].getRealLevel() / 1000) * 15;
-//				}
-//				prayerMod = prayerMod + 0.15;
-//			}
-//
-//			if(player.getFightType().getStyle() == FightStyle.DEFENSIVE) {
-//				styleBonus = 3;
-//			} else if(player.getFightType().getStyle() == FightStyle.CONTROLLED) {
-//				styleBonus = 1;
-//			}
-//		}
-//
-//		double defenceCalc = Math.floor(equipmentBonus + victim.getBaseDefence(type)) + 8;
-//		defenceCalc *= prayerMod;
-//		defenceCalc += styleBonus;
-//
-//		if(equipmentBonus < -67) {
-//			defenceCalc = RandomUtils.inclusive(8) == 0 ? defenceCalc : 0;
-//		}
-//		if(veracEffect) {
-//			defenceCalc = 0;
-//		}
-//		double A = Math.floor(attackCalc);
-//		double D = Math.floor(defenceCalc);
-//		double hitSucceed = A < D ? (A - 1.0) / (2.0 * D) : 1.0 - (D + 1.0) / (2.0 * A);
-//		hitSucceed = hitSucceed >= 1.0 ? 0.99 : hitSucceed <= 0.0 ? 0.01 : hitSucceed;
-//
-//		if(attacker.isPlayer() && Application.DEBUG) {
-//			attacker.toPlayer().message("[DEBUG]: Your roll " + "[" + (Math.round(attackCalc * 1000.0) / 1000.0) + "] : " + "Victim's roll [" + (Math.round(defenceCalc * 1000.0) / 1000.0) + "] : Chance to hit [" + (100 * Math.round(hitSucceed * 1000.0) / 1000.0) + "%]");
-//		}
-		return false;//hitSucceed >= RandomUtils.nextDouble();
+		if(Application.DEBUG && attacker.isPlayer())
+			attacker.toPlayer().message("[" + attacker.toPlayer().getFormatUsername() + "]: " + attackRoll + ", Defender: [" + defenceRoll + "], roll: " + roll);
+		if(Application.DEBUG && victim.isPlayer())
+			victim.toPlayer().message("[" + attacker.toMob().getDefinition().getName() + "]: " + attackRoll + ", Defender: [" + defenceRoll + "], roll: " + roll);
+		return RandomUtils.success(roll);
 	}
 
 	/**

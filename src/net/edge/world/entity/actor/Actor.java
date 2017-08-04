@@ -408,7 +408,7 @@ public abstract class Actor extends Entity {
 	public final int size() {
 		if(isPlayer())
 			return 1;
-		return toNpc().getDefinition().getSize();
+		return toMob().getDefinition().getSize();
 	}
 	
 	/**
@@ -419,7 +419,7 @@ public abstract class Actor extends Entity {
 		if(isPlayer()) {
 			return this.getPosition();
 		}
-		return new Position((this.getPosition().getX() + toNpc().getDefinition().getSize() / 2), this.getPosition().getY() + (toNpc().getDefinition().getSize() / 2));
+		return new Position((this.getPosition().getX() + toMob().getDefinition().getSize() / 2), this.getPosition().getY() + (toMob().getDefinition().getSize() / 2));
 	}
 	
 	/**
@@ -1110,14 +1110,14 @@ public abstract class Actor extends Entity {
 	public final void ifNpc(Consumer<Mob> action) {
 		if(!this.isNpc())
 			return;
-		action.accept(this.toNpc());
+		action.accept(this.toMob());
 	}
 	
 	/**
 	 * Casts the {@link Actor} to a {@link Mob}.
 	 * @return an instance of this {@link Actor} as a {@link Mob}.
 	 */
-	public final Mob toNpc() {
+	public final Mob toMob() {
 		Preconditions.checkArgument(isNpc(), "Cannot cast this entity to npc.");
 		return (Mob) this;
 	}

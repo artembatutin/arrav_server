@@ -327,7 +327,8 @@ public final class MobDefinition {
 	
 	private static void link(MobDefinition d, String name) {
 		name = name.replaceAll(" ", "_");
-		String url = "http://oldschoolrunescape.wikia.com/wiki/" + name + "?action=raw";
+		//String url = "http://oldschoolrunescape.wikia.com/wiki/" + name + "?action=raw";
+		String url = "http://services.runescape.com/m=itemdb_rs/bestiary/beastData.json?beastid=" + d.getId();
 		try {
 			bestiary(url, d);
 		} catch (Exception e) {
@@ -360,6 +361,7 @@ public final class MobDefinition {
 				if(def.getCombat().getAttackLevel() <= 0) {
 					def.getCombat().attackLevel = obj.get("attack").getAsInt();
 				}
+				System.out.println(def.getName() + " updated");
 			}
 		}
 	}

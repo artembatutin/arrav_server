@@ -189,7 +189,7 @@ public enum GodwarsFaction {
 		if(!character.isNpc() || !attacker.isPlayer()) {
 			return true;
 		}
-		MobType t = character.toNpc().getMobType();
+		MobType t = character.toMob().getMobType();
 		if(t != MobType.ARMADYL_SOLDIER && t != MobType.ZAMORAK_SOLDIER && t != MobType.SARADOMIN_SOLDIER && t != MobType.BANDOS_SOLIDER)
 			return true;
 		if(((GodwarsSoldier) character).faction.equals(GodwarsFaction.ARMADYL)) {

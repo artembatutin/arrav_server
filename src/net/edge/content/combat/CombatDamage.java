@@ -55,7 +55,7 @@ public final class CombatDamage {
 				continue;
 			if(counter.getAmount() > amount) {
 				amount = counter.getAmount();
-				killer = entity.toNpc();
+				killer = entity.toMob();
 			}
 		}
 		return Optional.ofNullable(killer);

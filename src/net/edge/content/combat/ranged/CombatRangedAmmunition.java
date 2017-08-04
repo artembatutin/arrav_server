@@ -138,7 +138,7 @@ public enum CombatRangedAmmunition {
 				return data;
 			}
 			
-			if(victim.toNpc().getId() != 1615) {
+			if(victim.toMob().getId() != 1615) {
 				return data;
 			}
 			
@@ -159,7 +159,7 @@ public enum CombatRangedAmmunition {
 				return data;
 			}
 			
-			if(victim.toNpc().getId() != 1616) {
+			if(victim.toMob().getId() != 1616) {
 				return data;
 			}
 			
@@ -181,7 +181,7 @@ public enum CombatRangedAmmunition {
 				return data;
 			}
 			
-			if(!affectedMobs.contains(victim.toNpc().getId())) {
+			if(!affectedMobs.contains(victim.toMob().getId())) {
 				return data;
 			}
 			
@@ -202,7 +202,7 @@ public enum CombatRangedAmmunition {
 				return data;
 			}
 			
-			if(victim.toNpc().getId() != 2457) {
+			if(victim.toMob().getId() != 2457) {
 				return data;
 			}
 			
@@ -224,7 +224,7 @@ public enum CombatRangedAmmunition {
 				return data;
 			}
 			
-			if(victim.toNpc().getId() != 1615) {
+			if(victim.toMob().getId() != 1615) {
 				return data;
 			}
 			
@@ -245,7 +245,7 @@ public enum CombatRangedAmmunition {
 				return data;
 			}
 			
-			if(victim.toNpc().getId() != 1616) {
+			if(victim.toMob().getId() != 1616) {
 				return data;
 			}
 			
@@ -267,7 +267,7 @@ public enum CombatRangedAmmunition {
 				return data;
 			}
 			
-			if(!affectedMobs.contains(victim.toNpc().getId())) {
+			if(!affectedMobs.contains(victim.toMob().getId())) {
 				return data;
 			}
 			
@@ -288,7 +288,7 @@ public enum CombatRangedAmmunition {
 				return data;
 			}
 			
-			if(victim.toNpc().getId() != 2457) {
+			if(victim.toMob().getId() != 2457) {
 				return data;
 			}
 			
@@ -381,7 +381,7 @@ public enum CombatRangedAmmunition {
 			
 			boolean multiply = false;
 			
-			if(victim.isNpc() && affectedMobs.contains(victim.toNpc().getId())) {
+			if(victim.isNpc() && affectedMobs.contains(victim.toMob().getId())) {
 				multiply = true;
 			}
 			

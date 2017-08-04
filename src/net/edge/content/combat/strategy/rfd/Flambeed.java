@@ -15,7 +15,7 @@ public final class Flambeed implements CombatStrategy {
 
 	@Override
 	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		Animation animation = new Animation(character.toNpc().getDefinition().getAttackAnimation());
+		Animation animation = new Animation(character.toMob().getDefinition().getAttackAnimation());
 		character.animation(animation);
 		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
 	}

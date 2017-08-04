@@ -31,8 +31,8 @@ public final class AviansieCombatStrategy implements CombatStrategy {
 
 	@Override
 	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		character.animation(new Animation(character.toNpc().getDefinition().getAttackAnimation()));
-		CombatType[] data = getCombatType(character.toNpc(), victim);
+		character.animation(new Animation(character.toMob().getDefinition().getAttackAnimation()));
+		CombatType[] data = getCombatType(character.toMob(), victim);
 		CombatType c = RandomUtils.random(data);
 		return type(character, victim, c);
 	}

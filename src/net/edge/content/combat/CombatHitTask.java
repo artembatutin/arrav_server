@@ -143,7 +143,7 @@ public final class CombatHitTask extends Task {
 				});
 			}
 		} else if(victim.isNpc() && !data.isIgnored()) {
-			victim.animation(new Animation(victim.toNpc().getDefinition().getDefenceAnimation(), Animation.AnimationPriority.LOW));
+			victim.animation(new Animation(victim.toMob().getDefinition().getDefenceAnimation(), Animation.AnimationPriority.LOW));
 		}
 
 		data.postAttack(counter);

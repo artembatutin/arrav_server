@@ -118,7 +118,7 @@ public final class RFDMinigame extends SequencedMinigame {
 			return;
 		}
 		
-		Mob mob = other.toNpc();
+		Mob mob = other.toMob();
 		
 		if(!RFDData.isValidNpc(mob.getId())) {
 			return;

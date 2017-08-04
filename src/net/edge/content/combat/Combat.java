@@ -87,7 +87,7 @@ public final class Combat {
 			return;
 		}
 		if(character.isPlayer() && target.isNpc() && character.toPlayer().getRights().equals(Rights.ADMINISTRATOR)) {
-			character.toPlayer().message("[DEBUG NPC ID] Mob = " + target.toNpc().getId() + ", position = " + target.toNpc().getPosition().toString());
+			character.toPlayer().message("[DEBUG NPC ID] Mob = " + target.toMob().getId() + ", position = " + target.toMob().getPosition().toString());
 		}
 		//if(target.same(currentVictim)) {
 		//	determineStrategy();
@@ -96,7 +96,7 @@ public final class Combat {
 		//	}
 		//}
 		if(character.isPlayer() && target.isNpc()) {
-			Mob mob = target.toNpc();
+			Mob mob = target.toMob();
 			Player player = (Player) character;
 			if(mob.getOwner() != -1 && !mob.isOwner(player)) {
 				player.message("I should mind my own business...");
@@ -154,7 +154,7 @@ public final class Combat {
 		character.faceEntity(null);
 		character.setFollowing(false);
 		if(character.isNpc() && !character.isDead()) {
-			character.getMovementQueue().smartWalk(character.toNpc().getOriginalPosition());
+			character.getMovementQueue().smartWalk(character.toMob().getOriginalPosition());
 		}
 		
 	}
@@ -382,7 +382,7 @@ public final class Combat {
 		 * @param victim  the victim that will be listened for.
 		 */
 		CombatDistanceListener(Combat builder, Actor victim) {
-			super.attach(builder.getCharacter().isPlayer() ? builder.getCharacter().toPlayer() : builder.getCharacter().toNpc());
+			super.attach(builder.getCharacter().isPlayer() ? builder.getCharacter().toPlayer() : builder.getCharacter().toMob());
 			this.builder = builder;
 			this.victim = victim;
 		}
@@ -396,7 +396,7 @@ public final class Combat {
 				builder.reset();
 				this.cancel();
 				if(builder.character.isNpc()) {
-					Mob mob = builder.character.toNpc();
+					Mob mob = builder.character.toMob();
 					MobAggression.retreat(mob);
 				}
 				return false;

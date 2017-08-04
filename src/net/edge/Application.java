@@ -198,7 +198,7 @@ public final class Application {
 		//NPC decoding.
 		launch.execute(() -> {
 			new MobDefinitionLoader().load();
-			MobDefinition.dump();
+			//MobDefinition.dump();
 			new MobNodeLoader().load();
 			new MobDropTableLoader().load();
 			new ItemCacheLoader().load();

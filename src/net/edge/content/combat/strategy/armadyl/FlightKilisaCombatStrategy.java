@@ -20,7 +20,7 @@ public final class FlightKilisaCombatStrategy implements CombatStrategy {
 
 	@Override
 	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		character.animation(new Animation(character.toNpc().getDefinition().getAttackAnimation()));
+		character.animation(new Animation(character.toMob().getDefinition().getAttackAnimation()));
 		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
 	}
 

@@ -31,7 +31,7 @@ public final class CombatTask extends Task {
 	 */
 	CombatTask(Combat builder) {
 		super(1, false);
-		super.attach(builder.getCharacter().isPlayer() ? builder.getCharacter().toPlayer() : builder.getCharacter().toNpc());
+		super.attach(builder.getCharacter().isPlayer() ? builder.getCharacter().toPlayer() : builder.getCharacter().toMob());
 		this.builder = builder;
 	}
 	

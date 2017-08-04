@@ -50,8 +50,8 @@ public class MobMovementTask extends Task {
 						mob.getMovementQueue().walk(pathHome.getMoves());
 				} else {
 					Direction dir = Direction.random();
-					int random_x = mob.toNpc().getPosition().getX() + randomSteps(mob.size());
-					int random_y = mob.toNpc().getPosition().getY() + randomSteps(mob.size());
+					int random_x = mob.toMob().getPosition().getX() + randomSteps(mob.size());
+					int random_y = mob.toMob().getPosition().getY() + randomSteps(mob.size());
 					Position generated_random_position = new Position(random_x, random_y);
 					Boundary boundary = new Boundary(generated_random_position, mob.size());
 					boolean traversable = TraversalMap.isTraversable(generated_random_position, boundary, dir, mob.size());
