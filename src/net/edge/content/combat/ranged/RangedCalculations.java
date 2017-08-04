@@ -3,6 +3,7 @@ package net.edge.content.combat.ranged;
 import net.edge.Application;
 import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.CombatUtil;
+import net.edge.content.combat.weapon.FightStyle;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.entity.actor.Actor;
@@ -14,7 +15,53 @@ import net.edge.world.entity.actor.player.Player;
  * Date: 02/08/2017
  * https://github.com/ophionB | https://www.rune-server.ee/members/ophion/
  */
-public class RangedFormulas {
+public class RangedCalculations {
+
+    /**
+     * Formula calculating the players Ranged accuracy
+     * @param character
+     * @param victim
+     * @return
+     */
+    public static int calculateRangeAttack(Actor character, Actor victim) {
+
+        int rangeLevel = character.isPlayer() ? character.toPlayer().getSkills()[Skills.RANGED].getLevel() : character.toNpc().getDefinition().getRangedLevel();
+        int correspondingBonus = character.isPlayer() ? character.toPlayer().getEquipment().getBonuses()[character.toPlayer().getFightType().getBonus()] : 120;
+        int combatStyleBonus = 0;
+        double specialMultiplier = 1.0;
+        double prayerMultiplier = 1.0;
+        double additionalBonusMultiplier = 1.0;
+
+        if (character.isPlayer()) {
+            Player player = (Player) character;
+            if (Prayer.isActivated(player, Prayer.SHARP_EYE)) {
+                prayerMultiplier = 1.05;
+            } else if (Prayer.isActivated(player, Prayer.HAWK_EYE)) {
+                prayerMultiplier = 1.1;
+            } else if (Prayer.isActivated(player, Prayer.EAGLE_EYE)) {
+                prayerMultiplier = 1.15;
+            }
+
+            if (player.getFightType().getStyle() == FightStyle.ACCURATE) {
+                combatStyleBonus = 3;
+            } else if (player.getFightType().getStyle() == FightStyle.DEFENSIVE) {
+                combatStyleBonus = 1;
+            }
+
+            if (player.isSpecialActivated()) {
+                specialMultiplier = player.getCombatSpecial().getAccuracy();
+            }
+            rangeLevel *= specialMultiplier;
+
+            if (CombatUtil.isFullVoid(player) && player.getEquipment().contains(11664)) {
+                additionalBonusMultiplier += 0.1;
+            }
+            player.message("Corresponding attack:" + correspondingBonus);
+        }
+        int baseAccuracy = (int) Math.round(Math.round(rangeLevel * prayerMultiplier) + combatStyleBonus + 8 * additionalBonusMultiplier) * (correspondingBonus+64);
+        //int baseAccuracy2 = Math.floor(((Math.round(attackLevel * prayerMultiplier) + combatStyleBonus + 8) * additionalBonusMultiplier) * (correspondingBonus+64));
+        return baseAccuracy;
+    }
     /**
      * Calculates the maximum hit that can be dealt using ranged for
      * {@code character}.
