@@ -32,6 +32,9 @@ public final class MobAggression {
 		}
 		if(player.processAgressiveTick() == 1 && (!player.getCombat().inCombat() || player.inMulti())) {
 			for(Mob mob : player.getLocalMobs()) {
+				if(!mob.getDefinition().isAttackable()) {
+					continue;
+				}
 				if(validate(mob, player)) {
 					mob.getCombat().attack(player);
 				} else {
@@ -58,7 +61,7 @@ public final class MobAggression {
 			}
 			return false;
 		}
-		if(!AGGRESSIVE.contains(mob.getId()) && !wilderness || !mob.getDefinition().isAttackable() || mob.getCombat().inCombat())
+		if(!AGGRESSIVE.contains(mob.getId()) && !wilderness || mob.getCombat().inCombat())
 			return false;
 		if(!mob.getPosition().withinDistance(player.getPosition(), 40)) {
 			retreat(mob);//Too far.
