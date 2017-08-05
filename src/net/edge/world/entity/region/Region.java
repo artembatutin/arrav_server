@@ -40,7 +40,6 @@ public final class Region extends Entity {
 	 */
 	private static final Logger LOGGER = LoggerUtils.getLogger(Region.class);
 	
-	//Few process constants.
 	/**
 	 * The size of a region.
 	 */
@@ -56,7 +55,6 @@ public final class Region extends Entity {
 	 */
 	private static final int SEQUENCE_TICKS = 100;
 	
-	//The nodes in this region.
 	/**
 	 * A {@link ObjectList} of {@link GroundItem}s in this {@code Region}.
 	 */
@@ -81,10 +79,12 @@ public final class Region extends Entity {
 	 * A {@link ObjectList} of removed {@link GameObject}s in this {@code Region}.
 	 */
 	private final ObjectList<GameObject> removeObjects = new ObjectArrayList<>();
-
+	
+	/**
+	 * A list of all surrounding regions.
+	 */
 	private ObjectList<Region> surroundingRegions = null;
 	
-	//The clipping data and few switches.
 	/**
 	 * The Id of this {@link Region}.
 	 */
@@ -100,7 +100,10 @@ public final class Region extends Entity {
 	 * The tiles within the region(regional clipping).
 	 */
 	private RegionTile[][] tiles;
-
+	
+	/**
+	 * A saved region manager instance.
+	 */
 	private RegionManager manager;
 	
 	/**
@@ -111,31 +114,6 @@ public final class Region extends Entity {
 		super(new Position((regionId >> 8) << 6, (regionId & 0xFF) << 6), EntityType.REGION);
 		this.regionId = regionId;
 		this.manager = manager;
-	}
-
-	public ObjectList<Region> getSurroundingRegions() {
-		if (surroundingRegions == null) {
-			ObjectList<Region> regions = new ObjectArrayList<>();
-			regions.add(manager.getRegion(regionId));
-			if (manager.exists(regionId + 256))
-				regions.add(manager.getRegion(regionId + 256));
-			if (manager.exists(regionId - 256))
-				regions.add(manager.getRegion(regionId - 256));
-			if (manager.exists(regionId + 1))
-				regions.add(manager.getRegion(regionId + 1));
-			if (manager.exists(regionId - 1))
-				regions.add(manager.getRegion(regionId - 1));
-			if (manager.exists(regionId + 257))
-				regions.add(manager.getRegion(regionId + 257));
-			if (manager.exists(regionId - 255))
-				regions.add(manager.getRegion(regionId - 255));
-			if (manager.exists(regionId + 255))
-				regions.add(manager.getRegion(regionId + 255));
-			if (manager.exists(regionId - 257))
-				regions.add(manager.getRegion(regionId - 257));
-			surroundingRegions = regions;
-		}
-		return surroundingRegions;
 	}
 	
 	@Override
@@ -273,7 +251,7 @@ public final class Region extends Entity {
 	 * @param stack if the item should stack upon registration.
 	 * @return {@code true} if the item was registered, {@code false} otherwise.
 	 */
-	public boolean register(GroundItem item, boolean stack) {
+	public synchronized boolean register(GroundItem item, boolean stack) {
 		if(item.getState() != EntityState.IDLE)
 			return false;
 		if(stack) {
@@ -315,7 +293,7 @@ public final class Region extends Entity {
 	 * @return {@code true} if the item was unregistered, {@code false}
 	 * otherwise.
 	 */
-	public boolean unregister(GroundItem item) {
+	public synchronized boolean unregister(GroundItem item) {
 		if (item.getState() != EntityState.ACTIVE)
 			return false;
 		if (items.remove(item)) {
@@ -467,6 +445,43 @@ public final class Region extends Entity {
 		return regionId;
 	}
 	
+	/**
+	 * Gets the a {@link ObjectList} of {@link GameObject}s that are removed by the server during game time.
+	 * @return A {@link ObjectList of {@link GameObject }s that are removed.
+	 */
+	public ObjectList<GameObject> getRemovedObjects() {
+		return removeObjects;
+	}
+	
+	/**
+	 * Gets the surrounding regions.
+	 * @return surrounding regions.
+	 */
+	public ObjectList<Region> getSurroundingRegions() {
+		if (surroundingRegions == null) {
+			ObjectList<Region> regions = new ObjectArrayList<>();
+			regions.add(manager.getRegion(regionId));
+			if (manager.exists(regionId + 256))
+				regions.add(manager.getRegion(regionId + 256));
+			if (manager.exists(regionId - 256))
+				regions.add(manager.getRegion(regionId - 256));
+			if (manager.exists(regionId + 1))
+				regions.add(manager.getRegion(regionId + 1));
+			if (manager.exists(regionId - 1))
+				regions.add(manager.getRegion(regionId - 1));
+			if (manager.exists(regionId + 257))
+				regions.add(manager.getRegion(regionId + 257));
+			if (manager.exists(regionId - 255))
+				regions.add(manager.getRegion(regionId - 255));
+			if (manager.exists(regionId + 255))
+				regions.add(manager.getRegion(regionId + 255));
+			if (manager.exists(regionId - 257))
+				regions.add(manager.getRegion(regionId - 257));
+			surroundingRegions = regions;
+		}
+		return surroundingRegions;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(getRegionId());
@@ -484,14 +499,6 @@ public final class Region extends Entity {
 			return getRegionId() == other.getRegionId();
 		}
 		return false;
-	}
-	
-	/**
-	 * Gets the a {@link ObjectList} of {@link GameObject}s that are removed by the server during game time.
-	 * @return A {@link ObjectList of {@link GameObject }s that are removed.
-	 */
-	public ObjectList<GameObject> getRemovedObjects() {
-		return removeObjects;
 	}
 	
 }

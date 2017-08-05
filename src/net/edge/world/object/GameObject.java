@@ -191,13 +191,13 @@ public abstract class GameObject {
 		return getRegion().getObject(getId(), getLocalPos()).isPresent();
 	}
 	
-	public void publish() {
+	public synchronized void publish() {
 		Region r = getRegion();
 		r.addObj(this);
 		clip(r);
 	}
 	
-	public void remove() {
+	public synchronized void remove() {
 		Region r = getRegion();
 		r.removeObj(this);
 		unclip(r);
