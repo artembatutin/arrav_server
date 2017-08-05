@@ -53,16 +53,6 @@ public class Ravager extends Pest {
 		return false;
 	}
 	
-	@Override
-	public void setPosition(Position position) {
-		//Updating the region if the entity entered another one.
-		if(getSlot() != -1 && getPosition() != null && getPosition().getRegion() != position.getRegion()) {
-			World.getRegions().getRegion(getPosition().getRegion()).removeChar(this);
-			World.getRegions().getRegion(position.getRegion()).addChar(this);
-		}
-		super.setPosition(position);
-	}
-	
 	private void attackGate() {
 		if(gate != null && !gate.destroyed() && getPosition().withinDistance(gate.getPos(), 1)) {
 			animation(new Animation(getDefinition().getAttackAnimation()));

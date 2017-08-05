@@ -212,9 +212,7 @@ public abstract class Mob extends Actor {
 				hit.setType(Hit.HitType.NORMAL);
 			}
 		}
-		if (!getAttr().get("invincible").getBoolean()) {
-			currentHealth -= hit.getDamage();
-		}
+		currentHealth -= hit.getDamage();
 		if(currentHealth <= 0) {
 			setCurrentHealth(0);
 		}

@@ -42,8 +42,7 @@ public class Splatter extends Pest {
 	public void setPosition(Position position) {
 		//Updating the region if the entity entered another one.
 		if(getSlot() != -1 && getPosition() != null && getPosition().getRegion() != position.getRegion()) {
-			World.getRegions().getRegion(getPosition().getRegion()).removeChar(this);
-			World.getRegions().getRegion(position.getRegion()).addChar(this);
+			regionChanged = getPosition();
 		}
 		super.setPosition(position);
 		if(gate != null && gate.getPos().withinDistance(getPosition(), 1)) {

@@ -83,36 +83,20 @@ public class Synchronizer {
 	 */
 	public void postUpdate(ActorList<Player> players, ActorList<Mob> mobs) {
 		//long time = System.currentTimeMillis();
-		phaser.bulkRegister(players.size());
 		for(Player player : players) {
 			if(player == null)
 				continue;
-			executor.submit(() -> {
-				try {
-					player.postUpdate();
-				} finally {
-					phaser.arriveAndDeregister();
-				}
-			});
+			player.postUpdate();
 		}
-		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[POST-PLAYER]: " + (System.currentTimeMillis() - time));
 		
 		
 		//time = System.currentTimeMillis();
-		phaser.bulkRegister(mobs.size());
 		for(Mob mob : mobs) {
 			if(mob == null)
 				continue;
-			executor.submit(() -> {
-				try {
-					mob.postUpdate();
-				} finally {
-					phaser.arriveAndDeregister();
-				}
-			});
+			mob.postUpdate();
 		}
-		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[POST-NPC]: " + (System.currentTimeMillis() - time));
 	}
 	

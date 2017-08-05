@@ -71,11 +71,13 @@ public final class MobDropTableLoader extends JsonLoader {
 	
 	@Override
 	public void start() {
-		try {
-			File out = new File("./drops2.txt");
-			writer = new PrintWriter(out);
-		} catch(IOException e) {
-			e.printStackTrace();
+		if(OUTPUT) {
+			try {
+				File out = new File("./drops2.txt");
+				writer = new PrintWriter(out);
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

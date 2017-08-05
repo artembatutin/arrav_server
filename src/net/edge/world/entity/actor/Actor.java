@@ -76,6 +76,11 @@ public abstract class Actor extends Entity {
 	private final Stopwatch lastCombat = new Stopwatch(), freezeTimer = new Stopwatch(), stunTimer = new Stopwatch();
 	
 	/**
+	 * A saved position of the previous region to be moved from.
+	 */
+	protected Position regionChanged;
+	
+	/**
 	 * The slot this entity has been assigned to.
 	 */
 	private int slot = -1;
@@ -232,6 +237,12 @@ public abstract class Actor extends Entity {
 	public abstract void update();
 	
 	public void postUpdate() {
+		//Updating the region that the actor has entered.
+		if(regionChanged != null) {
+			World.getRegions().getRegion(regionChanged.getRegion()).removeChar(this);
+			World.getRegions().getRegion(getPosition().getRegion()).addChar(this);
+			regionChanged = null;
+		}
 		primaryDirection = Direction.NONE;
 		secondaryDirection = Direction.NONE;
 		needsRegionUpdate = false;
@@ -246,10 +257,9 @@ public abstract class Actor extends Entity {
 	 */
 	@Override
 	public void setPosition(Position position) {
-		//Updating the region if the entity entered another one.
+		//Adding region change if the actor entered another one.
 		if(getSlot() != -1 && getPosition() != null && getPosition().getRegion() != position.getRegion()) {
-			World.getRegions().getRegion(getPosition().getRegion()).removeChar(this);
-			World.getRegions().getRegion(position.getRegion()).addChar(this);
+			regionChanged = getPosition();
 		}
 		super.setPosition(position);
 	}

@@ -21,7 +21,7 @@ public class Brawler extends Pest {
 		return true;
 	}
 	
-	@Override
+	/*@Override
 	public void setPosition(Position position) {
 		//removing clipped positions of this brawler.
 		//if(getPosition() != null) {
@@ -39,6 +39,6 @@ public class Brawler extends Pest {
 		//Clipping the brawler positions.
 		//Region prev = World.getRegions().getRegion(getPosition());
 		//TraversalMap.markOccupant(prev, 0, getPosition().getX(), getPosition().getY(), size(), size(), true, true);
-	}
+	}*/
 	
 }
