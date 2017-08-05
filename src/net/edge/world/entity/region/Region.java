@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.packet.out.SendItemNode;
 import net.edge.net.packet.out.SendItemNodeRemoval;
+import net.edge.task.Task;
 import net.edge.util.LoggerUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.locale.Position;
@@ -28,6 +29,9 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+import static net.edge.world.entity.EntityState.ACTIVE;
+import static net.edge.world.entity.EntityState.INACTIVE;
+
 /**
  * A location on the tool.mapviewer that is {@code 64x64} in size. Used primarily for caching various types of {@link Entity}s and
  * {@link RegionTile}s. There is a reason that the {@link Entity}s are not being cached together.
@@ -41,6 +45,11 @@ public final class Region extends Entity {
 	private static final Logger LOGGER = LoggerUtils.getLogger(Region.class);
 	
 	/**
+	 * A {@link ObjectList} of all active {@link Region}s in the world.
+	 */
+	private static final ObjectList<Region> ACTIVE_REGIONS = new ObjectArrayList<>();
+	
+	/**
 	 * The size of a region.
 	 */
 	private static final int REGION_SIZE = 64;
@@ -49,11 +58,6 @@ public final class Region extends Entity {
 	 * The maximum level a floor can be.
 	 */
 	private static final int MAXIMUM_HEIGHT_LEVEL = 4;
-	
-	/**
-	 * The amount of ticks to execute the sequence listener.
-	 */
-	private static final int SEQUENCE_TICKS = 100;
 	
 	/**
 	 * A {@link ObjectList} of {@link GroundItem}s in this {@code Region}.
@@ -91,10 +95,9 @@ public final class Region extends Entity {
 	private final int regionId;
 	
 	/**
-	 * A simple integer acting as a clean up timer for this region.
-	 * We randomize it so all regions clean at their own pace.
+	 * An task for regional item sequencing.
 	 */
-	private int cleanup = RandomUtils.inclusive(0, 400);
+	private Optional<Task> itemTask = Optional.empty();
 	
 	/**
 	 * The tiles within the region(regional clipping).
@@ -107,6 +110,12 @@ public final class Region extends Entity {
 	private RegionManager manager;
 	
 	/**
+	 * A simple integer acting as a clean up timer for this region.
+	 * We randomize it so all regions clean at their own pace.
+	 */
+	private int cleanup = RandomUtils.inclusive(0, 400);
+	
+	/**
 	 * Creates a new {@link Region}.
 	 * @param regionId The id of this region.
 	 */
@@ -116,41 +125,31 @@ public final class Region extends Entity {
 		this.manager = manager;
 	}
 	
-	@Override
-	public void update() {
-		//cleanup timer increased.
-		cleanup++;
-		
-		//sequencing active item nodes.
-		if(!items.isEmpty()) {
-			Iterator<GroundItem> it = items.iterator();
-			while(it.hasNext()) {
-				GroundItem item = it.next();
-				if(item.getCounter().incrementAndGet(10) >= SEQUENCE_TICKS) {
-					item.onSequence();
-					item.getCounter().set(0);
+	/**
+	 * Cleaning up all empty-from-players regions.
+	 */
+	public static void cleanup() {
+		Iterator<Region> it = ACTIVE_REGIONS.iterator();
+		while(it.hasNext()) {
+			Region r = it.next();
+			r.cleanup++;
+			//cleaning only when the cleanup time has come.
+			if(r.cleanup > 500) {
+				if(r.getState() == EntityState.ACTIVE && r.getPlayers().isEmpty()) {
+					boolean playersNearby = r.playersAround();
+					if(!playersNearby) {
+						r.setState(EntityState.INACTIVE);
+						it.remove();
+					}
 				}
-				if(item.getState() != EntityState.ACTIVE) {
-					item.dispose();
-					it.remove();
-				}
+				r.cleanup = 0;
 			}
-		}
-		
-		//cleaning only when the cleanup time has come.
-		if(cleanup > 500) {
-			if(getState() == EntityState.ACTIVE && getPlayers().isEmpty()) {
-				boolean playersNearby = playersAround();
-				if(!playersNearby) {
-					setState(EntityState.INACTIVE);
-				}
-			}
-			cleanup = 0;
 		}
 	}
 	
 	@Override
 	public void register() {
+		ACTIVE_REGIONS.add(this);
 		//activating all mobs.
 		for(Mob n : mobs) {
 			n.setActive(true);
@@ -173,7 +172,7 @@ public final class Region extends Entity {
 	 */
 	public void onEnter(Player player) {
 		for(GroundItem item : items) {
-			if(item.getItemState() == GroundItemState.HIDDEN || item.getState() != EntityState.ACTIVE)
+			if(item.getItemState() == GroundItemState.HIDDEN || item.getState() != ACTIVE)
 				continue;
 			if(item.getPosition() == null)
 				continue;
@@ -198,7 +197,7 @@ public final class Region extends Entity {
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
 	public <T extends Actor> boolean add(T e) {
-		if(e.getState() == EntityState.INACTIVE)
+		if(e.getState() == INACTIVE)
 			return false;
 		if(e.isPlayer()) {
 			return players.add(e.toPlayer());
@@ -254,6 +253,11 @@ public final class Region extends Entity {
 	public synchronized boolean register(GroundItem item, boolean stack) {
 		if(item.getState() != EntityState.IDLE)
 			return false;
+		//sending the task sequencing if none.
+		if(!itemTask.isPresent()) {
+			itemTask = Optional.of(new RegionItemTask(this));
+			itemTask.get().submit();
+		}
 		if(stack) {
 			for(GroundItem next : items) {
 				if(next.getPlayer() == null || next.getPosition() == null || next.getItem() == null)
@@ -269,19 +273,19 @@ public final class Region extends Entity {
 					return true;
 				}
 			}
-			item.setState(EntityState.ACTIVE);
+			item.setState(ACTIVE);
 			items.add(item);
 			return true;
 		}
 		if(item.getItem().getDefinition().isStackable()) {
-			item.setState(EntityState.ACTIVE);
+			item.setState(ACTIVE);
 			items.add(item);
 			return true;
 		}
 		int amount = item.getItem().getAmount();
 		item.getItem().setAmount(1);
 		for(int i = 0; i < amount; i++) {
-			item.setState(EntityState.ACTIVE);
+			item.setState(ACTIVE);
 			items.add(item);
 		}
 		return true;
@@ -294,13 +298,21 @@ public final class Region extends Entity {
 	 * otherwise.
 	 */
 	public synchronized boolean unregister(GroundItem item) {
-		if (item.getState() != EntityState.ACTIVE)
+		if (item.getState() != ACTIVE)
 			return false;
 		if (items.remove(item)) {
-			item.setState(EntityState.INACTIVE);
+			item.setState(INACTIVE);
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Gets the item node list.
+	 * @return item nodes.
+	 */
+	public ObjectList<GroundItem> getItems() {
+		return items;
 	}
 	
 	/**
@@ -311,8 +323,10 @@ public final class Region extends Entity {
 	 * no item is found.
 	 */
 	public Optional<GroundItem> getItem(int id, Position position) {
+		if(items.isEmpty())
+			return Optional.empty();
 		for(GroundItem i : items) {
-			if(i.getItem().getId() == id && i.getItemState() != GroundItemState.HIDDEN && i.getState() == EntityState.ACTIVE && i.getPosition().same(position)) {
+			if(i.getItem().getId() == id && i.getItemState() != GroundItemState.HIDDEN && i.getState() == ACTIVE && i.getPosition().same(position)) {
 				return Optional.of(i);
 			}
 		}
@@ -408,10 +422,18 @@ public final class Region extends Entity {
 	}
 	
 	/**
+	 * Setting a new {@link #itemTask}.
+	 * @param itemTask item task to set.
+	 */
+	public void setItemTask(Optional<Task> itemTask) {
+		this.itemTask = itemTask;
+	}
+	
+	/**
 	 * Determines if there any player around this region.
 	 * @return {@code true} if there is a player around regionally, {@code false} otherwise.
 	 */
-	private boolean playersAround() {
+	boolean playersAround() {
 		for(Region r : World.getRegions().getAllSurroundingRegions(getRegionId())) {
 			if(!r.getPlayers().isEmpty())
 				return true;

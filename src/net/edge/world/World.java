@@ -162,12 +162,7 @@ public final class World {
 			disposeActors();
 			regionalTick++;
 			if(regionalTick == 10) {
-				Region[] regions = World.getRegions().getRegions();
-				for(Region region : regions) {
-					if(region != null) {
-						region.update();
-					}
-				}
+				Region.cleanup();
 				regionalTick = 0;
 			}
 		}
