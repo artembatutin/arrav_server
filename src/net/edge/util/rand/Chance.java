@@ -56,4 +56,5 @@ public enum Chance {
 	public Rational getRational() {
 		return rational;
 	}
+	
 }

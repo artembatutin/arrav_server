@@ -6,7 +6,6 @@ import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.entity.actor.mob.drop.DropTable;
-import net.edge.world.entity.actor.mob.drop.ItemCache;
 import net.edge.world.entity.actor.mob.drop.Drop;
 import net.edge.world.entity.actor.player.Player;
 
@@ -35,15 +34,9 @@ public final class SendMobDrop implements OutgoingPacket {
 			MobDefinition def = MobDefinition.DEFINITIONS[id];
 			if(def == null)
 				return null;
-			msg.putShort(table == null || table.getCommon() == null ? 0 : table.getCommon().size());
-			if(table != null && table.getCommon() != null) {
-				for(ItemCache c : table.getCommon()) {
-					msg.putShort(c.ordinal());
-				}
-			}
-			msg.putShort(table == null || table.getUnique() == null ? 0 : table.getUnique().size());
-			if(table != null && table.getUnique() != null) {
-				for(Drop d : table.getUnique()) {
+			msg.putShort(table == null || table.getDrops() == null ? 0 : table.getDrops().size());
+			if(table != null && table.getDrops() != null) {
+				for(Drop d : table.getDrops()) {
 					msg.putShort(d.getId());
 					msg.putShort(d.getMinimum());
 					msg.putShort(d.getMaximum());

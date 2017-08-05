@@ -4,8 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
 import net.edge.world.entity.actor.mob.drop.Drop;
-import net.edge.world.entity.actor.mob.drop.ItemCache;
-import net.edge.world.entity.actor.mob.drop.DropManager;
+import net.edge.world.entity.item.ItemCache;
 
 import java.util.Objects;
 
@@ -26,6 +25,6 @@ public final class ItemCacheLoader extends JsonLoader {
 	public void load(JsonObject reader, Gson builder) {
 		ItemCache table = Objects.requireNonNull(builder.fromJson(reader.get("table"), ItemCache.class));
 		Drop[] items = Objects.requireNonNull(builder.fromJson(reader.get("items"), Drop[].class));
-		DropManager.COMMON.put(table, items);
+		ItemCache.COMMON.put(table, items);
 	}
 }

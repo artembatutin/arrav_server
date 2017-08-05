@@ -9,22 +9,32 @@ public enum MobType {
 	/**
 	 * None specific.
 	 */
-	NONE,
+	NONE(true),
 	
 	/*
 	 * Godwards soldiers.
 	 */
-	ARMADYL_SOLDIER,
-	BANDOS_SOLIDER,
-	SARADOMIN_SOLDIER,
-	ZAMORAK_SOLDIER,
+	ARMADYL_SOLDIER(false),
+	BANDOS_SOLIDER(false),
+	SARADOMIN_SOLDIER(false),
+	ZAMORAK_SOLDIER(false),
 	
 	/*
 	 * Hunting
 	 */
-	HUNTING_MAMMAL,
-	HUNTING_BIRD,
+	HUNTING_MAMMAL(false),
+	HUNTING_BIRD(false),
 	
 	;
+	
+	private final boolean aggressive;
+	
+	MobType(boolean aggressive) {
+		this.aggressive = aggressive;
+	}
+	
+	public boolean isAggressive() {
+		return aggressive;
+	}
 	
 }

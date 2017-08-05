@@ -187,7 +187,7 @@ public final class Application {
 		//object/region decoding must be done before parallel.
 		new ObjectDefinitionDecoder(fs).run();
 		new MapDefinitionDecoder(fs).run();
-		//new RegionDecoder(fs).run();
+		new RegionDecoder(fs).run();
 		FirepitManager.get().register();
 		//Item decoding.
 		launch.execute(() -> {
@@ -198,11 +198,9 @@ public final class Application {
 		//NPC decoding.
 		launch.execute(() -> {
 			new MobDefinitionLoader().load();
-			//MobDefinition.dump();
 			new MobNodeLoader().load();
-			new MobDropTableLoader().load();
 			new ItemCacheLoader().load();
-			//DropManager.dump();//dumping cache values for client.
+			new MobDropTableLoader().load();
 		});
 		launch.execute(new AreaLoader());
 		launch.execute(new AreaMultiLoader());

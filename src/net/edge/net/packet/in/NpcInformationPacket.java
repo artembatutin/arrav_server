@@ -28,11 +28,7 @@ public final class NpcInformationPacket implements IncomingPacket {
 			int item = payload.getShort();
 			int min = payload.getShort();
 			int max = payload.getShort();
-			ItemCache cache = null;
-			if(min > 65500) {
-				cache = ItemCache.get(min).orElse(null);
-			}
-			if(min != 99 && min != 88 && cache == null && max > 2) {
+			if(min != 99 && min != 88 && max > 2) {
 				ItemDefinition def = ItemDefinition.get(item);
 				if(def != null) {
 					if(!def.isStackable()) {
@@ -44,14 +40,8 @@ public final class NpcInformationPacket implements IncomingPacket {
 			if(player.getRights() == Rights.ADMINISTRATOR) {
 				DropTable table = DropManager.getTables().get(npc);
 				if(table == null) {
-					table = new DropTable(new Drop[]{}, new ItemCache[]{});
+					table = new DropTable(new Drop[]{});
 					DropManager.getTables().put(npc, table);
-				}
-				if(cache != null) {
-					table.getCommon().add(cache);
-					player.message("Added cache: " + cache);
-					player.out(new SendMobDrop(npc, table));
-					return;
 				}
 				//to share table
 				if(min == 88) {
@@ -67,11 +57,11 @@ public final class NpcInformationPacket implements IncomingPacket {
 				if(min == 99) {
 					int index = 0;
 					String itemName = ItemDefinition.get(item).getName().toLowerCase().replaceAll(" ", "_");
-					for(Drop d : table.getUnique()) {
+					for(Drop d : table.getDrops()) {
 						if(d != null) {
 							String name = ItemDefinition.get(d.getId()).getName().toLowerCase().replaceAll(" ", "_");
 							if(itemName.equals(name)) {
-								table.getUnique().remove(index);
+								table.getDrops().remove(index);
 								table.sort();
 								player.message("Removed: " + d.toString());
 								player.out(new SendMobDrop(npc, table));
@@ -83,9 +73,7 @@ public final class NpcInformationPacket implements IncomingPacket {
 					player.message("Couldn't remove any drop.");
 					return;
 				}
-				if(table.getUnique().isEmpty())
-					table.getCommon().clear();
-				table.getUnique().add(suggested.toDrop());
+				table.getDrops().add(suggested.toDrop());
 				table.sort();
 				player.message("Added " + suggested.toString());
 				player.out(new SendMobDrop(npc, table));

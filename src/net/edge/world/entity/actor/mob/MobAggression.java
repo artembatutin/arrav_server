@@ -35,6 +35,9 @@ public final class MobAggression {
 				if(!mob.getDefinition().isAttackable()) {
 					continue;
 				}
+				if(!mob.getMobType().isAggressive()) {
+					continue;
+				}
 				if(validate(mob, player)) {
 					mob.getCombat().attack(player);
 				} else {

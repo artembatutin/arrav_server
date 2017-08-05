@@ -29,7 +29,6 @@ public final class SendProjectile implements OutgoingPacket {
 		msg.put(0);
 		msg.put(offset.getX());
 		msg.put(offset.getY());
-		System.out.println("locked on: " + lockon);
 		msg.putShort(lockon);
 		msg.putShort(gfxMoving);
 		msg.put(startHeight);

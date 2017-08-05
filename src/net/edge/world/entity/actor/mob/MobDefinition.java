@@ -5,6 +5,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.edge.util.json.JsonSaver;
+import net.edge.util.rand.Chance;
+import net.edge.world.entity.actor.mob.drop.Drop;
+import net.edge.world.entity.actor.mob.drop.DropManager;
+import net.edge.world.entity.actor.mob.drop.DropTable;
+import net.edge.world.entity.item.ItemDefinition;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

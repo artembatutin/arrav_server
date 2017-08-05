@@ -1,5 +1,6 @@
 package net.edge.world.entity.actor.mob.drop;
 
+import net.edge.content.market.MarketItem;
 import net.edge.util.rand.Chance;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.item.Item;
@@ -17,22 +18,22 @@ public class Drop {
 	/**
 	 * The identification of this {@code Drop}.
 	 */
-	private int id;
+	public int id;
 	
 	/**
 	 * The minimum amount that will be dropped.
 	 */
-	private int minimum;
+	public int minimum;
 	
 	/**
 	 * The maximum amount that will be dropped.
 	 */
-	private int maximum;
+	public int maximum;
 	
 	/**
 	 * The chance of this item being dropped.
 	 */
-	private Chance chance;
+	private final Chance chance;
 	
 	/**
 	 * Creates a new {@link Drop}.
@@ -96,9 +97,19 @@ public class Drop {
 	/**
 	 * Returns the condition if this item is rare.
 	 * @return true if chance is a rare chance.
+	 * Gets the pricing value of this drop.
+	 * @return value.
 	 */
-	public boolean isRare() {
+	boolean isRare() {
 		return chance == RARE || chance == VERY_RARE || chance == EXTREMELY_RARE;
+	}
+	
+	/**
+	 * Gets the pricing value of this drop.
+	 * @return value.
+	 */
+	public int value() {
+		return MarketItem.get(id).getPrice() * maximum;
 	}
 	
 	/**
@@ -131,19 +142,4 @@ public class Drop {
 		return result;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public void setMinimum(int minimum) {
-		this.minimum = minimum;
-	}
-	
-	public void setMaximum(int maximum) {
-		this.maximum = maximum;
-	}
-	
-	public void setChance(Chance chance) {
-		this.chance = chance;
-	}
 }

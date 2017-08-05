@@ -11,15 +11,14 @@ import net.edge.net.packet.out.SendWalkable;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.drop.DropManager;
-import net.edge.world.entity.actor.mob.drop.ItemCache;
+import net.edge.world.entity.item.ItemCache;
 import net.edge.world.entity.actor.mob.drop.Drop;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.object.GameObject;
 
 import static net.edge.content.minigame.Minigame.MinigameSafety.SAFE;
-import static net.edge.world.entity.actor.mob.drop.ItemCache.*;
+import static net.edge.world.entity.item.ItemCache.*;
 
 public final class PestControlWaitingLobby extends MinigameLobby {
 	
@@ -196,7 +195,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 					}
 					if(Currency.PEST_POINTS.getCurrency().takeCurrency(player, (index == 0 ? 30 : 15))) {
 						//three items.
-						Drop pack = RandomUtils.random(DropManager.COMMON.get(packs[index]));
+						Drop pack = RandomUtils.random(COMMON.get(packs[index]));
 						player.getInventory().add(new Item(pack.getId(), RandomUtils.inclusive(pack.getMinimum(), pack.getMaximum())));
 					}
 					return true;
