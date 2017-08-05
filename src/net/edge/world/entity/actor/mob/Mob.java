@@ -174,7 +174,6 @@ public abstract class Mob extends Actor {
 		setVisible(false);
 		setPosition(new Position(1, 1));
 		World.get().getTask().cancel(this);
-		getRegion().removeChar(this);
 	}
 	
 	@Override

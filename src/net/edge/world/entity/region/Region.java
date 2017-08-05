@@ -219,7 +219,7 @@ public final class Region extends Entity {
 	 * @param e The entity to add.
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
-	public <T extends Actor> boolean addChar(T e) {
+	public <T extends Actor> boolean add(T e) {
 		if(e.getState() == EntityState.INACTIVE)
 			return false;
 		if(e.isPlayer()) {
@@ -233,7 +233,7 @@ public final class Region extends Entity {
 	 * Removes an {@link Actor} from the backing queue.
 	 * @param e The entity to remove.
 	 */
-	public <T extends Actor> boolean removeChar(T e) {
+	public <T extends Actor> boolean remove(T e) {
 		if(e.isPlayer()) {
 			return players.remove(e.toPlayer());
 		} else {

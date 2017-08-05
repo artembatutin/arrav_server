@@ -170,12 +170,12 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 	}
 	
 	/**
-	 * Adds {@code entity} to this list. Will throw an exception if this list is full, or if the entity being added has a state of
+	 * Adds {@code actor} to this list. Will throw an exception if this list is full, or if the actor being added has a state of
 	 * {@code ACTIVE}.
-	 * @param entity The entity to add to this list.
+	 * @param actor The actor to add to this list.
 	 */
-	public boolean add(E entity) {
-		if(entity.getState() == EntityState.ACTIVE)
+	public boolean add(E actor) {
+		if(actor.getState() == EntityState.ACTIVE)
 			return false;
 		if (size == capacity())
 			return false;
@@ -185,38 +185,42 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 		if (index >= limit) {
 			limit++;
 		}
-		entities[index] = entity;
-		entity.setSlot(index + 1);
-		entity.setState(EntityState.ACTIVE);
+		entities[index] = actor;
+		actor.setSlot(index + 1);
+		actor.setState(EntityState.ACTIVE);
+		if(actor.isPlayer())//thread safe
+			actor.getRegion().add(actor);
+		else
+			World.get().add(actor);
 		//Activating npc if region active.
-		if(entity.isMob()) {
-			Region reg = entity.getRegion();
+		if(actor.isMob()) {
+			Region reg = actor.getRegion();
 			if(reg != null && reg.getState() == EntityState.ACTIVE)
-				entity.toMob().setActive(true);
+				actor.toMob().setActive(true);
 		}
 		size++;
 		//Updating player count.
-		if(entity.isPlayer())
+		if(actor.isPlayer())
 			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
 		return true;
 	}
 	
 	/**
-	 * Removes {@code entity} from this list.
-	 * @param entity The entity to remove from this list.
+	 * Removes {@code actor} from this list.
+	 * @param actor The actor to remove from this list.
 	 */
-	public boolean remove(E entity) {
-		if(entity.getState() != EntityState.ACTIVE && entity.getState() != EntityState.AWAITING_REMOVAL) {
-			System.out.println("Couldn't remove: " + entity.toString() + " because not active.");
+	public boolean remove(E actor) {
+		if(actor.getState() != EntityState.ACTIVE && actor.getState() != EntityState.AWAITING_REMOVAL) {
+			System.out.println("Couldn't remove: " + actor.toString() + " because not active.");
 			return true;
 		}
-		if(entity.getSlot() == -1) {
-			System.out.println("Couldn't remove: " + entity.toString() + " because of slot.");
+		if(actor.getSlot() == -1) {
+			System.out.println("Couldn't remove: " + actor.toString() + " because of slot.");
 			return false;
 		}
-		int index = entity.getSlot();
+		int index = actor.getSlot();
 		int normal = index - 1;
-		if(entity.getSlot() != -1) {
+		if(actor.getSlot() != -1) {
 			indices.offer(normal);
 			entities[normal] = null;
 		}
@@ -225,9 +229,10 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 		}
 		
 		size--;
-		entity.setState(EntityState.INACTIVE);
-		if(entity.isPlayer()) {
-			Player player = entity.toPlayer();
+		actor.setState(EntityState.INACTIVE);
+		World.get().remove(actor);
+		if(actor.isPlayer()) {
+			Player player = actor.toPlayer();
 			player.getSession().getChannel().close();
 			if(player.getRights() != Rights.ADMINISTRATOR)
 				new Hiscores(World.getScore(), player).submit();

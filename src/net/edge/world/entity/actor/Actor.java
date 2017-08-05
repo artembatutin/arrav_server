@@ -239,8 +239,8 @@ public abstract class Actor extends Entity {
 	public void postUpdate() {
 		//Updating the region that the actor has entered.
 		if(regionChanged != null) {
-			World.getRegions().getRegion(regionChanged.getRegion()).removeChar(this);
-			World.getRegions().getRegion(getPosition().getRegion()).addChar(this);
+			World.getRegions().getRegion(regionChanged.getRegion()).remove(this);
+			World.getRegions().getRegion(getPosition().getRegion()).add(this);
 			regionChanged = null;
 		}
 		primaryDirection = Direction.NONE;
@@ -691,7 +691,6 @@ public abstract class Actor extends Entity {
 	 */
 	public final void setSlot(int slot) {
 		this.slot = slot;
-		getRegion().addChar(this);
 	}
 	
 	/**

@@ -30,8 +30,8 @@ public class Brawler extends Pest {
 		//}
 		//updating region, might not even need.
 		if(getSlot() != -1 && getPosition() != null && getPosition().getRegion() != position.getRegion()) {
-			World.getRegions().getRegion(getPosition().getRegion()).removeChar(this);
-			World.getRegions().getRegion(position.getRegion()).addChar(this);
+			World.getRegions().getRegion(getPosition().getRegion()).remove(this);
+			World.getRegions().getRegion(position.getRegion()).add(this);
 		}
 		//setting new position.
 		super.setPosition(position);

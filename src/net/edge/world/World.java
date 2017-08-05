@@ -2,7 +2,6 @@ package net.edge.world;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import net.edge.Application;
 import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.GameConstants;
 import net.edge.GamePulseHandler;
@@ -35,8 +34,7 @@ import java.util.*;
 import java.util.concurrent.*;
 
 import static net.edge.net.session.GameSession.outLimit;
-import static net.edge.world.entity.EntityState.AWAITING_REMOVAL;
-import static net.edge.world.entity.EntityState.IDLE;
+import static net.edge.world.entity.EntityState.*;
 
 /**
  * The static utility class that contains functions to manage and process game characters.
@@ -74,6 +72,16 @@ public final class World {
 	 * The queue of {@link Player}s waiting to be logged out.
 	 */
 	private final Queue<Player> logouts = new ConcurrentLinkedQueue<>();
+	
+	/**
+	 * The queue of {@link Actor}s waiting to be added to the world.
+	 */
+	private final Queue<Actor> registeringActors = new ConcurrentLinkedQueue<>();
+	
+	/**
+	 * The queue of {@link Actor}s waiting to be removed from the world.
+	 */
+	private final Queue<Actor> disposingActors = new ConcurrentLinkedQueue<>();
 	
 	/**
 	 * The collection of active NPCs.
@@ -145,11 +153,13 @@ public final class World {
 		
 		synchronized(this) {
 			dequeueLogins();
+			registerActors();
 			taskManager.sequence();
 			sync.preUpdate(players, mobs);
 			sync.update(players);
 			sync.postUpdate(players, mobs);
 			dequeueLogout();
+			disposeActors();
 			regionalTick++;
 			if(regionalTick == 10) {
 				Region[] regions = World.getRegions().getRegions();
@@ -202,6 +212,52 @@ public final class World {
 				} else if(player.isHuman()) {
 					player.getSession().getChannel().close();
 				}
+			}
+		}
+	}
+	
+	/**
+	 * Queues {@code actor} to be added to the world.
+	 * @param actor the actor adding.
+	 */
+	public void add(Actor actor) {
+		registeringActors.add(actor);
+	}
+	
+	/**
+	 * Dequeue all new registered mobs.
+	 */
+	private void registerActors() {
+		if(!registeringActors.isEmpty()) {
+			for(int i = 0; i < registeringActors.size(); i++) {
+				Actor actor = registeringActors.poll();
+				if(actor == null) {
+					break;
+				}
+				actor.getRegion().add(actor);
+			}
+		}
+	}
+	
+	/**
+	 * Queues {@code actor} to be removed to the world.
+	 * @param actor the actor removing.
+	 */
+	public void remove(Actor actor) {
+		disposingActors.add(actor);
+	}
+	
+	/**
+	 * Dequeue all old disposed mobs.
+	 */
+	private void disposeActors() {
+		if(!disposingActors.isEmpty()) {
+			for(int i = 0; i < disposingActors.size(); i++) {
+				Actor actor = disposingActors.poll();
+				if(actor == null) {
+					break;
+				}
+				actor.getRegion().remove(actor);
 			}
 		}
 	}
