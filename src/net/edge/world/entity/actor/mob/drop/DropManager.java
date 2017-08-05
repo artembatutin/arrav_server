@@ -56,6 +56,10 @@ public final class DropManager {
 	public static Int2ObjectOpenHashMap<DropTable> getTables() {
 		return TABLES;
 	}
+	
+	public static Int2IntArrayMap getRedirects() {
+		return REDIRECTS;
+	}
 
 	/**
 	 * Serializes the drops.

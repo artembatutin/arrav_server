@@ -13,7 +13,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.Item;
 
-public final class ItemOnNpcPacket implements IncomingPacket {
+public final class ItemOnMobPacket implements IncomingPacket {
 	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
@@ -22,7 +22,7 @@ public final class ItemOnNpcPacket implements IncomingPacket {
 		}
 		
 		int itemId = payload.getShort(false, ByteTransform.A);
-		int npc = payload.getShort(false, ByteTransform.A);
+		int mob = payload.getShort(false, ByteTransform.A);
 		int slot = payload.getShort(true, ByteOrder.LITTLE);
 		int container = payload.getShort(false, ByteTransform.A);
 		
@@ -30,7 +30,7 @@ public final class ItemOnNpcPacket implements IncomingPacket {
 		if(container == 3214) {
 			item = player.getInventory().get(slot);
 		}
-		Mob usedOn = World.get().getMobs().get(npc - 1);
+		Mob usedOn = World.get().getMobs().get(mob - 1);
 		
 		if(item == null || usedOn == null || item.getId() != itemId) {
 			return;

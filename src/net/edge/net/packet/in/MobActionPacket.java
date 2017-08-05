@@ -27,7 +27,7 @@ import java.util.Optional;
  * The message sent from the client when a player attacks or clicks on an NPC.
  * @author Artem Batutin <artembatutin@gmail.com
  */
-public final class NpcActionPacket implements IncomingPacket {
+public final class MobActionPacket implements IncomingPacket {
 	
 	/*
 	 * All of the npc events.

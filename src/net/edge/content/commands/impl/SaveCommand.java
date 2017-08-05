@@ -4,7 +4,7 @@ import net.edge.content.clanchat.ClanManager;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.market.MarketItem;
 import net.edge.content.scoreboard.ScoreboardManager;
-import net.edge.net.packet.in.NpcInformationPacket;
+import net.edge.net.packet.in.MobInformationPacket;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.World;
@@ -37,11 +37,11 @@ public final class SaveCommand implements Command {
 				DropManager.serializeDrops();
 				try {
 					BufferedWriter out = new BufferedWriter(new FileWriter("./data/suggested_drops.txt", true));
-					for(Drop d : NpcInformationPacket.SUGGESTED) {
+					for(Drop d : MobInformationPacket.SUGGESTED) {
 						out.write(d.toString());
 						out.newLine();
 					}
-					NpcInformationPacket.SUGGESTED.clear();
+					MobInformationPacket.SUGGESTED.clear();
 					out.close();
 				} catch(Exception e) {
 				}

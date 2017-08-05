@@ -12,6 +12,7 @@ import net.edge.world.entity.actor.mob.drop.DropTable;
 import net.edge.world.entity.item.ItemDefinition;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -330,12 +331,16 @@ public final class MobDefinition {
 	}
 	
 	private static void link(MobDefinition d, String name) {
-		//String url = "http://oldschoolrunescape.wikia.com/wiki/" + name + "?action=raw";
-		String url = "http://services.runescape.com/m=itemdb_rs/bestiary/beastData.json?beastid=" + d.getId();
+		if(!d.attackable) {
+			return;
+		}
+		String url = "http://oldschoolrunescape.wikia.com/wiki/" + name + "?action=raw";
+		//String url = "http://services.runescape.com/m=itemdb_rs/bestiary/beastData.json?beastid=" + d.getId();
 		try {
-			bestiary(url, d);
+			parseFrom07(url, d);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if(!(e instanceof FileNotFoundException))
+				e.printStackTrace();
 			System.out.println("(" + d.id + ") Failed to parse " + url + ", msg: " + e);
 		}
 	}
@@ -393,11 +398,15 @@ public final class MobDefinition {
 	}
 	
 	private static void parseFrom07(String url, MobDefinition def) throws Exception {
+		if(url.contains(" ")) {
+			url = url.replaceAll(" ", "%20");
+		}
 		URL oracle = new URL(url);
 		URLConnection yc = oracle.openConnection();
 		try (BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()))) {
 			String inputLine;
 			int cmb = 0;
+			boolean changed = false;
 			while ((inputLine = in.readLine()) != null) {
 				if(inputLine.contains("**[[") && inputLine.contains("Common")) {
 					System.out.println("Common: " + def.getName());
@@ -415,16 +424,25 @@ public final class MobDefinition {
 					if (value.contains(",")) {
 						value = value.split(",")[0];
 					}
-					
 					switch (key) {
 						case "combat":
+							if(cmb != 0)
+								changed = true;
 							cmb = parseInt(value);
 							break;
-						case "att":
-							if(def.combat != null && def.getCombatLevel() == cmb)
-								def.combat.attackLevel = parseInt(value);
+						case "attbns":
+							if(def.getCombatLevel() == cmb || !changed)
+								def.combat.attackMelee = parseInt(value);
 							break;
-						case "str":
+						case "amagic":
+							if(def.getCombatLevel() == cmb || !changed)
+								def.combat.attackMagic = parseInt(value);
+							break;
+						case "arange":
+							if(def.getCombatLevel() == cmb || !changed)
+								def.combat.attackRanged = parseInt(value);
+							break;
+						/*case "str":
 							if(def.combat != null && def.getCombatLevel() == cmb)
 								def.combat.strengthLevel = parseInt(value);
 							break;
@@ -443,16 +461,6 @@ public final class MobDefinition {
 						case "max hit":
 							if(def.combat != null && def.getCombatLevel() == cmb)
 								def.combat.maxHit = parseInt(value) * 10;
-							break;
-						
-							
-						case "amagic":
-							if(def.combat != null && def.getCombatLevel() == cmb)
-								def.combat.attackMagic = parseInt(value);
-							break;
-						case "arange":
-							if(def.combat != null && def.getCombatLevel() == cmb)
-								def.combat.attackRanged = parseInt(value);
 							break;
 						
 						case "dstab":
@@ -485,11 +493,11 @@ public final class MobDefinition {
 						case "attack speed":
 							if(def.combat != null && def.getCombatLevel() == cmb)
 								def.combat.attackDelay = (10 - parseInt(value));
-							break;
+							break;*/
 					}
 				}
 			}
-			System.out.println("Finished: " + def.getName());
+			System.out.println(def.getId() + " - " + def.getName() + (" - melee: " + def.getCombat().attackMelee)+ (" - range: " + def.getCombat().attackRanged)+ (" - magic: " + def.getCombat().attackMagic));
 		}
 	}
 	
@@ -497,6 +505,7 @@ public final class MobDefinition {
 		try {
 			return Integer.parseInt(value);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return 0;
 		}
 	}

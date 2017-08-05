@@ -7,7 +7,7 @@ import net.edge.content.skill.hunter.butterfly.ButterflyCatching;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.thieving.impl.Pickpocketing;
 import net.edge.action.Action;
-import net.edge.net.packet.in.NpcActionPacket;
+import net.edge.net.packet.in.MobActionPacket;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
@@ -20,19 +20,19 @@ public abstract class MobAction extends Action {
 	public abstract boolean click(Player player, Mob mob, int click);
 	
 	public void registerFirst(int npc) {
-		NpcActionPacket.FIRST.register(npc, this);
+		MobActionPacket.FIRST.register(npc, this);
 	}
 	
 	public void registerSecond(int npc) {
-		NpcActionPacket.SECOND.register(npc, this);
+		MobActionPacket.SECOND.register(npc, this);
 	}
 	
 	public void registerThird(int npc) {
-		NpcActionPacket.THIRD.register(npc, this);
+		MobActionPacket.THIRD.register(npc, this);
 	}
 	
 	public void registerFourth(int npc) {
-		NpcActionPacket.FOURTH.register(npc, this);
+		MobActionPacket.FOURTH.register(npc, this);
 	}
 	
 	public static void init() {

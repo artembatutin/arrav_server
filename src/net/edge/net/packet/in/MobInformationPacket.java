@@ -12,11 +12,13 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.ItemDefinition;
 
+import static net.edge.content.achievements.Achievement.DROP_A_SUG;
+
 /**
  * The message sent from the client which depends on the Mob Information panel integration.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public final class NpcInformationPacket implements IncomingPacket {
+public final class MobInformationPacket implements IncomingPacket {
 	
 	public static final ObjectList<SuggestedDrop> SUGGESTED = new ObjectArrayList<>();
 	
@@ -24,7 +26,7 @@ public final class NpcInformationPacket implements IncomingPacket {
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(opcode == 19) {
 			Chance chance = Chance.values()[payload.get()];
-			int npc = player.getAttr().get("npcInformation").getInt();
+			int mob = player.getAttr().get("npcInformation").getInt();
 			int item = payload.getShort();
 			int min = payload.getShort();
 			int max = payload.getShort();
@@ -36,20 +38,24 @@ public final class NpcInformationPacket implements IncomingPacket {
 					}
 				}
 			}
-			SuggestedDrop suggested = new SuggestedDrop(npc, item, min, max, chance);
+			SuggestedDrop suggested = new SuggestedDrop(mob, item, min, max, chance);
 			if(player.getRights() == Rights.ADMINISTRATOR) {
-				DropTable table = DropManager.getTables().get(npc);
+				int tableId = mob;
+				if(DropManager.getRedirects().containsKey(mob)) {
+					tableId = DropManager.getRedirects().get(mob);
+				}
+				DropTable table = DropManager.getTables().get(tableId);
 				if(table == null) {
-					table = new DropTable(new Drop[]{});
-					DropManager.getTables().put(npc, table);
+					table = new DropTable();
+					DropManager.getTables().put(tableId, table);
 				}
 				//to share table
 				if(min == 88) {
 					table = DropManager.getTables().get(max);
 					if(table != null) {
-						DropManager.getTables().put(npc, table);
+						DropManager.getTables().put(mob, table);
 					}
-					player.out(new SendMobDrop(npc, table));
+					player.out(new SendMobDrop(mob, table));
 					player.message("Shared with: " + MobDefinition.DEFINITIONS[max].getName());
 					return;
 				}
@@ -64,7 +70,7 @@ public final class NpcInformationPacket implements IncomingPacket {
 								table.getDrops().remove(index);
 								table.sort();
 								player.message("Removed: " + d.toString());
-								player.out(new SendMobDrop(npc, table));
+								player.out(new SendMobDrop(mob, table));
 								return;
 							}
 						}
@@ -76,8 +82,9 @@ public final class NpcInformationPacket implements IncomingPacket {
 				table.getDrops().add(suggested.toDrop());
 				table.sort();
 				player.message("Added " + suggested.toString());
-				player.out(new SendMobDrop(npc, table));
+				player.out(new SendMobDrop(mob, table));
 			} else {
+				DROP_A_SUG.inc(player);
 				SUGGESTED.add(suggested);
 				player.message("Your suggestion has been submitted.");
 			}

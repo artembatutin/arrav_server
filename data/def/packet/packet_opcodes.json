@@ -40,7 +40,7 @@
     "opcodes": [
       57
     ],
-    "class": "net.edge.net.packet.in.ItemOnNpcPacket"
+    "class": "net.edge.net.packet.in.ItemOnMobPacket"
   },
   {
     "opcodes": [
@@ -190,7 +190,7 @@
       21,
       18
     ],
-    "class": "net.edge.net.packet.in.NpcActionPacket"
+    "class": "net.edge.net.packet.in.MobActionPacket"
   },
   {
     "opcodes": [
@@ -243,7 +243,7 @@
       134,
       19
     ],
-    "class": "net.edge.net.packet.in.NpcInformationPacket"
+    "class": "net.edge.net.packet.in.MobInformationPacket"
   },
   {
     "opcodes": [

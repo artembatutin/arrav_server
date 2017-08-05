@@ -17,6 +17,7 @@ public enum Achievement {
 	NO_GUARD("Kill %s Edgevillian guards", 5, 50, 100, 500),
 	BURY_BONES("Bury %s bones (any)", 10, 50, 500, 5000),
 	VOTE("Redeem %s vote rewards", 1, 10, 25, 50),
+	DROP_A_SUG("Suggest a monster drop by using the monster database from quest tab", 1, 5, 20, 50),
 	//SETUP_PRELOADING_GEAR("Setup your first gear preset", 1),//TODO
 	TRIVIABOT("Answer %s Trivia bot questions", 10, 30, 100, 250),
 	HIGH_ALCHEMY("Cast high alchemy spell %s times", 100, 500, 15_000, 50_000),
