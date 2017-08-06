@@ -44,8 +44,15 @@ public final class ItemOnItemPacket implements IncomingPacket {
 			return;
 		}
 		ItemOnItemAction a = ACTIONS.get(itemUsed.getId());
-		if(a == null)
+		if(a != null) {
+			if(a.click(player, itemOn, itemUsed, firstSlot, secondSlot))
+				return;
+			else
+				a = ACTIONS.get(itemOn.getId());
+		}
+		if(a == null) {
 			a = ACTIONS.get(itemOn.getId());
+		}
 		if(a != null) {
 			if(a.click(player, itemOn, itemUsed, firstSlot, secondSlot))
 				return;

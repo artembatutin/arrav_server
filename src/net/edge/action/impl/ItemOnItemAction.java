@@ -1,6 +1,7 @@
 package net.edge.action.impl;
 
 import net.edge.action.Action;
+import net.edge.content.item.ArmourSet;
 import net.edge.content.skill.cooking.Cooking;
 import net.edge.content.skill.crafting.JewelleryMoulding;
 import net.edge.content.skill.crafting.Spinning;
@@ -26,7 +27,7 @@ public abstract class ItemOnItemAction extends Action {
 	}
 	
 	public static void init() {
-
+		ArmourSet.action();
 	}
 	
 }

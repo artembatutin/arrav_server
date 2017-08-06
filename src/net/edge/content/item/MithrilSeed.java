@@ -23,7 +23,7 @@ import net.edge.world.object.ObjectType;
  * @author Artem Batutin <artembatutin@gmail.com>
  * @since 27-6-2017.
  */
-public final class MithrilSeeds {
+public final class MithrilSeed {
 
     /**
      * The id's that represent flower objects with their item ids.
