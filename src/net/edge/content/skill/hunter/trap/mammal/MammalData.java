@@ -52,7 +52,7 @@ public enum MammalData {
 		this.reward = Item.convert(reward);
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(MammalData data : MammalData.values()) {
 			Mob.CUSTOM_MOBS.put(data.npcId, s -> new Mammal(data.npcId, s, data));
 		}

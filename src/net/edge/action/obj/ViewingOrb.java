@@ -12,7 +12,7 @@ public class ViewingOrb extends ActionInitializer {
 		ObjectAction l = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				player.setViewingOrb(new net.edge.content.ViewingOrb(player, new Position(2398, 5150), new Position(2384, 5157), new Position(2409, 5158), new Position(2388, 5138), new Position(2411, 5137)));
+				player.setViewingOrb(new net.edge.content.object.ViewingOrb(player, new Position(2398, 5150), new Position(2384, 5157), new Position(2409, 5158), new Position(2388, 5138), new Position(2411, 5137)));
 				player.getViewingOrb().open();
 				return true;
 			}

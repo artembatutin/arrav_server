@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.dialogue.impl.NpcDialogue;
-import net.edge.content.door.DoorHandler;
+import net.edge.content.object.door.DoorHandler;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.market.currency.Currency;

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
-import net.edge.content.MagicStaff;
+import net.edge.content.item.MagicStaff;
 import net.edge.content.TabInterface;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;

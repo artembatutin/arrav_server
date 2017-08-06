@@ -1,4 +1,4 @@
-package net.edge.content.door;
+package net.edge.content.object.door;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.action.impl.ObjectAction;

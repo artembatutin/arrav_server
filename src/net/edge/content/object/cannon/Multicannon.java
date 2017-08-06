@@ -1,0 +1,271 @@
+package net.edge.content.object.cannon;
+
+import net.edge.action.impl.ItemAction;
+import net.edge.action.impl.ItemOnObjectAction;
+import net.edge.action.impl.ObjectAction;
+import net.edge.task.Task;
+import net.edge.world.Animation;
+import net.edge.world.Direction;
+import net.edge.world.entity.EntityState;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Inventory;
+import net.edge.world.entity.region.Region;
+import net.edge.world.entity.region.TraversalConstants;
+import net.edge.world.locale.loc.Location;
+import net.edge.world.object.DynamicObject;
+import net.edge.world.object.GameObject;
+import net.edge.world.object.ObjectDirection;
+import net.edge.world.object.ObjectType;
+
+import java.util.Optional;
+
+/**
+ * Dwarf multicannon handler
+ * @author Artem Batutin <artembatutin@gmail.com>
+ */
+public class Multicannon extends DynamicObject {
+	
+	/**
+	 * The player who placed the cannon.
+	 */
+	protected final Player player;
+	
+	/**
+	 * The facing direction of the cannon.
+	 */
+	protected Direction facing;
+	
+	/**
+	 * The state if the cannon is firing.
+	 */
+	protected boolean firing;
+	
+	public Multicannon(Player player) {
+		super(7, player.getPosition(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, player.getInstance());
+		this.player = player;
+	}
+	
+	/**
+	 * Picking the cannon.
+	 */
+	public void pickup(boolean logout) {
+		Inventory inv = player.getInventory();
+		if(logout) {
+			if(getElements() > 0) {
+				inv.addOrBank(new Item(2, getElements()));
+			}
+			inv.addOrBank(new Item(6), new Item(8), new Item(10), new Item(12));
+			remove();
+			return;
+		}
+		int free = inv.remaining();
+		if(free == (getElements() > 0 ? 4 : 3)) {
+			player.message("You don't have enough inventory space to pickup your cannon.");
+			return;
+		}
+		if(getElements() > 0) {
+			inv.add(new Item(2, getElements()));
+		}
+		inv.addAll(new Item(6), new Item(8), new Item(10), new Item(12));
+		remove();
+	}
+	
+	/**
+	 * Attempting to fire with the cannon.
+	 */
+	public void fire() {
+		if(getElements() == 0) {
+			player.message("There is no cannon balls to fire with.");
+			return;
+		}
+		if(!firing)
+			new MulticannonTask(this).submit();
+	}
+	
+	/**
+	 * Initializes all of the cannon manipulation actions.
+	 */
+	public static void action() {
+		//setup action
+		ItemAction setup = new ItemAction() {
+			@Override
+			public boolean click(Player player, Item item, int container, int slot, int click) {
+				if(player.cannon.isPresent()) {
+					player.message("You can't setup a second cannon.");
+					return true;
+				}
+				//inventory and walk reset
+				Inventory inv = player.getInventory();
+				if(!inv.containsAll(6, 8, 10, 12)) {
+					player.message("You do not have all of the cannon parts.");
+					return true;
+				}
+				Region reg = player.getRegion();
+				player.getMovementQueue().reset();
+				
+				//clip & location
+				boolean clip = true;
+				for(int x = 0; x < 3; x++) {
+					if(!clip)
+						break;
+					for(int y = 0; y < 3; y++) {
+						if(reg.getTile(0, (player.getPosition().getX() & 0x3F) + x, (player.getPosition().getY() & 0x3F) + y).getFlags() != TraversalConstants.NONE) {
+							clip = false;
+							break;
+						}
+						if(reg.getObjects(player.getPosition().move(x, y)).hasInteractive()) {
+							clip = false;
+							break;
+						}
+					}
+				}
+				if(!clip || Location.isAtHome(player)) {
+					player.message("You can't set the cannon here.");
+					return true;
+				}
+				
+				//base
+				Multicannon cannon = new Multicannon(player);
+				player.cannon = Optional.of(cannon);
+				player.animation(new Animation(827));
+				player.facePosition(player.getPosition().move(1, 1));
+				inv.remove(new Item(6));
+				cannon.publish();
+				
+				//stand setup
+				(new Task(5) {
+					@Override
+					protected void execute() {
+						cancel();
+						if(player.getState() != EntityState.ACTIVE || !inv.contains(8)) {
+							inv.add(new Item(6));
+							cannon.remove();
+							return;
+						}
+						cannon.setId(8);
+						player.animation(new Animation(827));
+						inv.remove(new Item(8));
+						cannon.publish();
+						
+						//barrel setup
+						(new Task(5) {
+							@Override
+							protected void execute() {
+								cancel();
+								if(player.getState() != EntityState.ACTIVE || !inv.contains(10)) {
+									inv.add(new Item(6));
+									inv.add(new Item(8));
+									cannon.remove();
+									return;
+								}
+								cannon.setId(9);
+								player.animation(new Animation(827));
+								inv.remove(new Item(10));
+								cannon.publish();
+								
+								//furnace setup
+								(new Task(5) {
+									@Override
+									protected void execute() {
+										cancel();
+										if(player.getState() != EntityState.ACTIVE || !inv.contains(12)) {
+											inv.add(new Item(6));
+											inv.add(new Item(8));
+											inv.add(new Item(10));
+											cannon.remove();
+											return;
+										}
+										cannon.setId(6);
+										player.animation(new Animation(827));
+										inv.remove(new Item(12));
+										cannon.publish();
+									}
+								}).submit();
+							}
+						}).submit();
+					}
+				}).submit();
+				return true;
+			}
+		};
+		setup.register(6);
+		
+		//fire action
+		ObjectAction fire = new ObjectAction() {
+			@Override
+			public boolean click(Player player, GameObject object, int click) {
+				if(!player.cannon.isPresent())
+					return true;
+				Multicannon cannon = player.cannon.get();
+				if(!cannon.validate(player, object))
+					return true;
+				cannon.fire();
+				return true;
+			}
+		};
+		fire.registerFirst(6);
+		
+		//pickup action
+		ObjectAction pickup = new ObjectAction() {
+			@Override
+			public boolean click(Player player, GameObject object, int click) {
+				if(!player.cannon.isPresent())
+					return true;
+				Multicannon cannon = player.cannon.get();
+				if(!cannon.validate(player, object))
+					return true;
+				cannon.pickup(false);
+				return true;
+			}
+		};
+		pickup.registerSecond(6);
+		
+		//filling cannon balls
+		ItemOnObjectAction fill = new ItemOnObjectAction() {
+			@Override
+			public boolean click(Player player, GameObject object, Item item, int container, int slot) {
+				if(!player.cannon.isPresent())
+					return true;
+				Multicannon cannon = player.cannon.get();
+				if(!cannon.validate(player, object))
+					return true;
+				Inventory inv = player.getInventory();
+				int am = inv.computeAmountForId(2);
+				if(am == 0) {
+					player.message("You do not have any cannonballs.");
+					return true;
+				}
+				inv.remove(new Item(2, am));
+				cannon.setElements(cannon.getElements() + am);
+				return true;
+			}
+		};
+		fill.registerObj(6);
+		fill.registerItem(2);
+	}
+	
+	/**
+	 * Determines if the player manipulating is the owner of the cannon.
+	 */
+	private boolean validate(Player player, GameObject object) {
+		return this.player.same(player) && hashCode() == object.hashCode();
+	}
+	
+	public synchronized void publish() {
+		Region r = getRegion();
+		r.addObj(this);
+		clip(r);
+		player.cannon = Optional.of(this);
+		setDisabled(false);
+	}
+	
+	@Override
+	public synchronized void remove() {
+		Region r = getRegion();
+		r.removeObj(this);
+		unclip(r);
+		setDisabled(true);
+		player.cannon = Optional.empty();
+	}
+}

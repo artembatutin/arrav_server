@@ -1,4 +1,4 @@
-package net.edge.content;
+package net.edge.content.object;
 
 import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;

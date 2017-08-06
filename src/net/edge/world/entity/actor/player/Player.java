@@ -9,7 +9,8 @@ import net.edge.Application;
 import net.edge.GameConstants;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
-import net.edge.content.ViewingOrb;
+import net.edge.content.object.cannon.Multicannon;
+import net.edge.content.object.ViewingOrb;
 import net.edge.content.achievements.Achievement;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.clanchat.ClanMember;
@@ -617,6 +618,11 @@ public final class Player extends Actor {
 	private final boolean human;
 	
 	/**
+	 * The saved {@link Multicannon} instance.
+	 */
+	public Optional<Multicannon> cannon = Optional.empty();
+	
+	/**
 	 * Creates a new {@link Player}.
 	 */
 	public Player(PlayerCredentials credentials, boolean human) {
@@ -795,8 +801,9 @@ public final class Player extends Actor {
 		setSkillAction(Optional.empty());
 		resetOverloadEffect(true);
 		MinigameHandler.executeVoid(this, m -> m.onLogout(this));
-		getPrivateMessage().updateOtherList(false);
-		getClan().ifPresent(c -> c.getClan().remove(this, true));
+		privateMessage.updateOtherList(false);
+		clan.ifPresent(c -> c.getClan().remove(this, true));
+		cannon.ifPresent(c -> c.pickup(true));
 		WildernessActivity.leave(this);
 		save();
 	}

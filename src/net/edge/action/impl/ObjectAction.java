@@ -1,9 +1,10 @@
 package net.edge.action.impl;
 
-import net.edge.content.WebSlashing;
+import net.edge.content.object.WebSlashing;
 import net.edge.content.minigame.fightcaves.FightcavesMinigame;
 import net.edge.content.minigame.pestcontrol.PestControlWaitingLobby;
 import net.edge.content.minigame.warriorsguild.WarriorsGuild;
+import net.edge.content.object.cannon.Multicannon;
 import net.edge.content.skill.agility.impl.Shortcuts;
 import net.edge.content.skill.agility.impl.barb.BarbarianOutpostAgility;
 import net.edge.content.skill.agility.impl.gnome.GnomeStrongholdAgility;
@@ -69,13 +70,14 @@ public abstract class ObjectAction extends Action {
 		Shortcuts.action();
 		PotClaying.action();
 		Stalls.action();
-		Smelting.event();
-		HotSpots.event();
+		Smelting.action();
+		HotSpots.action();
 		PestControlWaitingLobby.event();
 		GodwarsFaction.event();
-		BirdData.event();
-		MammalData.event();
-		Hunter.event();
+		BirdData.action();
+		MammalData.action();
+		Hunter.action();
+		Multicannon.action();
 	}
 	
 }

@@ -1,4 +1,4 @@
-package net.edge.content;
+package net.edge.content.item;
 
 import com.google.common.collect.Sets;
 import net.edge.content.combat.weapon.WeaponInterface;

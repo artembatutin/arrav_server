@@ -1,5 +1,6 @@
-package net.edge.content;
+package net.edge.content.object;
 
+import net.edge.content.TabInterface;
 import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendForceTab;
 import net.edge.net.packet.out.SendMinimapState;

@@ -1,4 +1,4 @@
-package net.edge.content;
+package net.edge.content.item;
 
 import net.edge.content.item.PotionConsumable;
 import net.edge.world.entity.actor.player.Player;

@@ -18,15 +18,15 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * An attack on the builder's victim that is sent completely separate from the main combat session.
+ * An attack on the combat's victim that is sent completely separate from the main combat session.
  * @author lare96 <http://github.com/lare96>
  */
 public final class CombatHitTask extends Task {
 
 	/**
-	 * The builder this attack is executed for.
+	 * The combat this attack is executed for.
 	 */
-	private final Combat builder;
+	private final Combat combat;
 
 	/**
 	 * The combat data from the combat session.
@@ -40,20 +40,20 @@ public final class CombatHitTask extends Task {
 
 	/**
 	 * Creates a new {@link CombatHitTask}.
-	 * @param builder the builder this attack is executed for.
+	 * @param combat the combat this attack is executed for.
 	 * @param hit    the combat hit from the combat session.
 	 */
-	public CombatHitTask(Combat builder, CombatHit hit) {
-		super(hit.delay.orElse(CombatUtil.getDelay(builder.getCharacter(), builder.getVictim(), hit.getType())), false);
-		this.builder = builder;
+	public CombatHitTask(Combat combat, CombatHit hit) {
+		super(hit.delay.orElse(CombatUtil.getDelay(combat.getCharacter(), combat.getVictim(), hit.getType())), false);
+		this.combat = combat;
 		this.data = hit;
 	}
 
 	@Override
 	public void execute() {
 
-		Actor attacker = builder.getCharacter();
-		Actor victim = builder.getVictim();
+		Actor attacker = combat.getCharacter();
+		Actor victim = combat.getVictim();
 
 		if(attacker == null || victim == null || attacker.isDead() || attacker.getState() != EntityState.ACTIVE || victim.isDead() || victim.getState() != EntityState.ACTIVE) {
 			this.cancel();
@@ -159,15 +159,15 @@ public final class CombatHitTask extends Task {
 	 */
 	private void handleSpellEffects() {
 		/* VENGEANCE */
-		builder.getVictim().ifPlayer(player -> {
+		combat.getVictim().ifPlayer(player -> {
 			if(!player.isVenged()) {
 				return;
 			}
 
 			int amount = (int) (data.getHits()[0].getDamage() * 0.75D);
 
-			builder.getCharacter().damage(new Hit(amount));
-			builder.getCharacter().getCombat().getDamageCache().add(player, amount);
+			combat.getCharacter().damage(new Hit(amount));
+			combat.getCharacter().getCombat().getDamageCache().add(player, amount);
 			player.forceChat("Taste Vengeance!");
 			player.setVenged(false);
 		});
@@ -178,7 +178,7 @@ public final class CombatHitTask extends Task {
 	 */
 	private void handleArmorEffects() {
 		/* RECOIL **/
-		builder.getVictim().ifPlayer(player -> {
+		combat.getVictim().ifPlayer(player -> {
 			if(!player.getEquipment().contains(2550)) {
 				return;
 			}
@@ -191,11 +191,11 @@ public final class CombatHitTask extends Task {
 
 			int damage = hit < 10 ? 10 : (int) (hit * 0.10);
 
-			builder.getCharacter().damage(new Hit(damage));
-			builder.getDamageCache().add(builder.getVictim(), damage);
+			combat.getCharacter().damage(new Hit(damage));
+			combat.getDamageCache().add(combat.getVictim(), damage);
 		});
 		/* PHOENIX NECKLACE */
-		builder.getVictim().ifPlayer(player -> {
+		combat.getVictim().ifPlayer(player -> {
 			if(!player.getEquipment().contains(11090)) {
 				return;
 			}
@@ -222,22 +222,22 @@ public final class CombatHitTask extends Task {
 		});
 
 		if(RandomUtils.inclusive(4) == 0) {
-			if(CombatUtil.isFullGuthans(builder.getCharacter())) {
-				builder.getVictim().graphic(new Graphic(398));
-				builder.getCharacter().healEntity(counter);
+			if(CombatUtil.isFullGuthans(combat.getCharacter())) {
+				combat.getVictim().graphic(new Graphic(398));
+				combat.getCharacter().healEntity(counter);
 				return;
 			}
-			if(builder.getVictim().isPlayer()) {
-				Player victim = (Player) builder.getVictim();
+			if(combat.getVictim().isPlayer()) {
+				Player victim = (Player) combat.getVictim();
 
-				if(CombatUtil.isFullTorags(builder.getCharacter())) {
+				if(CombatUtil.isFullTorags(combat.getCharacter())) {
 					victim.setRunEnergy(RandomUtils.inclusive(1, (int) victim.getRunEnergy()));
 					victim.graphic(new Graphic(399));
-				} else if(CombatUtil.isFullAhrims(builder.getCharacter()) && victim.getSkills()[Skills.STRENGTH].getLevel() >= victim.getSkills()[Skills.STRENGTH].getRealLevel()) {
+				} else if(CombatUtil.isFullAhrims(combat.getCharacter()) && victim.getSkills()[Skills.STRENGTH].getLevel() >= victim.getSkills()[Skills.STRENGTH].getRealLevel()) {
 					victim.getSkills()[Skills.STRENGTH].decreaseLevel(RandomUtils.inclusive(1, 10));
 					Skills.refresh(victim, Skills.STRENGTH);
 					victim.graphic(new Graphic(400));
-				} else if(CombatUtil.isFullKarils(builder.getCharacter()) && victim.getSkills()[Skills.AGILITY].getLevel() >= victim.getSkills()[Skills.AGILITY].getRealLevel()) {
+				} else if(CombatUtil.isFullKarils(combat.getCharacter()) && victim.getSkills()[Skills.AGILITY].getLevel() >= victim.getSkills()[Skills.AGILITY].getRealLevel()) {
 					victim.graphic(new Graphic(401));
 					victim.getSkills()[Skills.AGILITY].decreaseLevel(RandomUtils.inclusive(1, 10));
 					Skills.refresh(victim, Skills.AGILITY);
@@ -305,7 +305,7 @@ public final class CombatHitTask extends Task {
 			}
 
 			//SMITE
-			if(builder.getCharacter().isPlayer() && Prayer.isActivated(builder.getCharacter().toPlayer(), Prayer.SMITE)) {
+			if(combat.getCharacter().isPlayer() && Prayer.isActivated(combat.getCharacter().toPlayer(), Prayer.SMITE)) {
 				victim.toPlayer().getSkills()[Skills.PRAYER].decreaseLevel(counter / 40, true);
 				Skills.refresh(victim.toPlayer(), Skills.PRAYER);
 			}

@@ -2,7 +2,7 @@ package net.edge.net.packet.in;
 
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ItemOnItemAction;
-import net.edge.content.PotionDecanting;
+import net.edge.content.item.PotionDecanting;
 import net.edge.content.item.ItemCombine;
 import net.edge.content.skill.cooking.DoughCreation;
 import net.edge.content.skill.cooking.PieCreation;

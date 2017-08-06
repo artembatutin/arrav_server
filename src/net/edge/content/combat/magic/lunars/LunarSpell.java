@@ -1,7 +1,7 @@
 package net.edge.content.combat.magic.lunars;
 
 import net.edge.util.Stopwatch;
-import net.edge.content.MagicStaff;
+import net.edge.content.item.MagicStaff;
 import net.edge.content.skill.Skills;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;

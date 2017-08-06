@@ -12,14 +12,21 @@ import net.edge.world.object.ObjectType;
 public final class SendObjectAnimation implements OutgoingPacket {
 	
 	private final Position position;
-	private final ObjectType type;
-	private final ObjectDirection direction;
+	private final int type;
+	private final int direction;
 	private final int animation;
 	
 	public SendObjectAnimation(Position position, int animation, ObjectType type, ObjectDirection direction) {
 		this.position = position;
 		this.animation = animation;
-		this.type = type;
+		this.type = type.getId();
+		this.direction = direction.getId();
+	}
+	
+	public SendObjectAnimation(Position position, int animation, ObjectType type, int direction) {
+		this.position = position;
+		this.animation = animation;
+		this.type = type.getId();
 		this.direction = direction;
 	}
 	
@@ -28,7 +35,7 @@ public final class SendObjectAnimation implements OutgoingPacket {
 		new SendCoordinates(position).write(player, msg);
 		msg.message(160);
 		msg.put(((0 & 7) << 4) + (0 & 7), ByteTransform.S);
-		msg.put((type.getId() << 2) + (direction.getId() & 3), ByteTransform.S);
+		msg.put((type << 2) + (direction & 3), ByteTransform.S);
 		msg.putShort(animation, ByteTransform.A);
 		return msg.getBuffer();
 	}

@@ -3,7 +3,7 @@ package net.edge.cache.decoder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.cache.FileSystem;
-import net.edge.content.door.DoorHandler;
+import net.edge.content.object.door.DoorHandler;
 import net.edge.util.ByteBufferUtil;
 import net.edge.util.CompressionUtil;
 import net.edge.util.LoggerUtils;

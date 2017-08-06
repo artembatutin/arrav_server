@@ -1,6 +1,6 @@
 package net.edge.content.minigame.pestcontrol.defence;
 
-import net.edge.content.door.Door;
+import net.edge.content.object.door.Door;
 import net.edge.content.skill.Skills;
 import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;

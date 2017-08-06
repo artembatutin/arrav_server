@@ -1,6 +1,6 @@
 package net.edge.world;
 
-import net.edge.content.MagicStaff;
+import net.edge.content.item.MagicStaff;
 import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.world.entity.actor.Actor;

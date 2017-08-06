@@ -531,7 +531,7 @@ public enum HotSpots {
 		this.roomType = roomType;
 	}
 	
-	public static void event() {
+	public static void action() {
 		for(HotSpots spot : values()) {
 			ObjectAction e = new ObjectAction() {
 				@Override

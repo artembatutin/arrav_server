@@ -1,4 +1,4 @@
-package net.edge.content.door;
+package net.edge.content.object.door;
 
 import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;

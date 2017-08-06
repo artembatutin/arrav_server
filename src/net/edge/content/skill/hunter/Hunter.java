@@ -125,7 +125,7 @@ public final class Hunter {
 		return true;
 	}
 	
-	public static void event() {
+	public static void action() {
 		ObjectAction action = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {

@@ -1,4 +1,4 @@
-package net.edge.content;
+package net.edge.content.item;
 
 import net.edge.action.impl.ItemAction;
 import net.edge.task.LinkedTaskSequence;

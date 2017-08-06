@@ -449,7 +449,7 @@ public final class Region extends Entity {
 	 * @param y      The y coordinate.
 	 * @return The tile in this region for the specified attributes.
 	 */
-	RegionTile getTile(int height, int x, int y) {
+	public RegionTile getTile(int height, int x, int y) {
 		if(tiles == null) {
 			tiles = new RegionTile[MAXIMUM_HEIGHT_LEVEL][REGION_SIZE * REGION_SIZE];
 		}

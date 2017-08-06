@@ -1,6 +1,6 @@
 package net.edge.action.impl;
 
-import net.edge.content.Dice;
+import net.edge.content.item.Dice;
 import net.edge.content.item.MithrilSeed;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
