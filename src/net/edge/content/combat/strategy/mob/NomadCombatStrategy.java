@@ -1,6 +1,8 @@
 package net.edge.content.combat.strategy.mob;
 
 import com.google.common.collect.ImmutableSet;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
@@ -35,7 +37,7 @@ public final class NomadCombatStrategy implements CombatStrategy {
 
     private int totalDamage;
 
-    private final List<Actor> victims = new ArrayList<>();
+    private final ObjectList<Actor> victims = new ObjectArrayList<>();
 
     /**
      * Executed when the {@code character} is hit by the {@code attacker}.

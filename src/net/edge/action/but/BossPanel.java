@@ -20,7 +20,7 @@ public class BossPanel extends ActionInitializer {
 			}
 		};
 		e.register(52);
-		//bork
+		//Bork
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
@@ -65,6 +65,15 @@ public class BossPanel extends ActionInitializer {
 			}
 		};
 		e.register(59);
+		//Nomad
+		e = new ButtonAction() {
+			@Override
+			public boolean click(Player player, int button) {
+				player.teleport(new Position(3360, 5854), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				return true;
+			}
+		};
+		e.register(60);
 		//jad
 		e = new ButtonAction() {
 			@Override
