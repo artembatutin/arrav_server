@@ -172,7 +172,6 @@ public abstract class Mob extends Actor {
 	@Override
 	public void dispose() {
 		setVisible(false);
-		setPosition(new Position(1, 1));
 		World.get().getTask().cancel(this);
 	}
 	

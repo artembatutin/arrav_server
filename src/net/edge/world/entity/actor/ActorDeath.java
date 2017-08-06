@@ -6,15 +6,15 @@ import net.edge.world.World;
 
 /**
  * The parent class that handles the death process for all characters.
- * @param <T> the type of character the death process is being executed for.
+ * @param <T> the type of actor the death process is being executed for.
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class ActorDeath<T extends Actor> extends Task {
 	
 	/**
-	 * The character who has died and needs the death process.
+	 * The actor who has died and needs the death process.
 	 */
-	private final T character;
+	private final T actor;
 	
 	/**
 	 * The counter that will determine which part of the death process we are
@@ -24,27 +24,27 @@ public abstract class ActorDeath<T extends Actor> extends Task {
 	
 	/**
 	 * Creates a new {@link ActorDeath}.
-	 * @param character the character who has died and needs the death process.
+	 * @param actor the actor who has died and needs the death process.
 	 */
-	public ActorDeath(T character) {
+	public ActorDeath(T actor) {
 		super(1, true);
-		this.character = character;
+		this.actor = actor;
 	}
 	
 	/**
-	 * The part of the death process where the character is prepared for the
+	 * The part of the death process where the actor is prepared for the
 	 * rest of the death process.
 	 */
 	public abstract void preDeath();
 	
 	/**
 	 * The main part of the death process where the killer is found for the
-	 * character.
+	 * actor.
 	 */
 	public abstract void death();
 	
 	/**
-	 * The last part of the death process where the character is reset.
+	 * The last part of the death process where the actor is reset.
 	 */
 	public abstract void postDeath();
 	
@@ -88,7 +88,7 @@ public abstract class ActorDeath<T extends Actor> extends Task {
 	}
 	
 	public T getActor() {
-		return character;
+		return actor;
 	}
 	
 	@Override
