@@ -19,7 +19,16 @@ public class BossPanel extends ActionInitializer {
 				return true;
 			}
 		};
-		e.register(54);
+		e.register(52);
+		//bork
+		e = new ButtonAction() {
+			@Override
+			public boolean click(Player player, int button) {
+				player.teleport(new Position(3114, 5528), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				return true;
+			}
+		};
+		e.register(53);
 		//tormented demons
 		e = new ButtonAction() {
 			@Override

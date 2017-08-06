@@ -40,6 +40,46 @@
     "walk-radius": 3
   },
   {
+    "id": 7133,
+    "position": {
+      "x": 3091,
+      "y": 5540,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 3
+  },
+  {
+    "id": 7135,
+    "position": {
+      "x": 3088,
+      "y": 5539,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 3
+  },
+  {
+    "id": 7135,
+    "position": {
+      "x": 3092,
+      "y": 5538,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 3
+  },
+  {
+    "id": 7135,
+    "position": {
+      "x": 3092,
+      "y": 5535,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 3
+  },
+  {
     "id": 3200,
     "position": {
       "x": 3263,
