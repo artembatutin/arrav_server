@@ -2,6 +2,8 @@ package net.edge.content.skill.runecrafting;
 
 import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.ObjectAction;
+import net.edge.content.skill.runecrafting.pouch.Pouch;
+import net.edge.content.skill.runecrafting.pouch.PouchType;
 import net.edge.task.Task;
 import net.edge.world.entity.item.container.impl.Inventory;
 import net.edge.content.skill.SkillData;
@@ -12,9 +14,8 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.object.GameObject;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.IntStream;
 
 import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.TRAINING_PORTAL;
 
@@ -53,6 +54,11 @@ public final class Runecrafting extends ProducingSkillAction {
 	 * Represents the crafting animation identification.
 	 */
 	private static final Animation RUNECRAFTING_ANIMATION = new Animation(791);
+
+	/**
+	 * Represents the a mapping for the Pouches
+	 */
+	private static Map<PouchType, Pouch> pouches = new HashMap<>(3);
 
 	/**
 	 * Constructs a new {@link Runecrafting}
@@ -181,6 +187,87 @@ public final class Runecrafting extends ProducingSkillAction {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * gets the essence id the player is using, we check for pure essence first
+	 *
+	 * @param player
+	 *            The player checking for essence
+	 * @return The id of the essence
+	 */
+	private static int getEssenceId(Player player) {
+		if (player.getInventory().contains(PURE_ESSENCE)) {
+			return PURE_ESSENCE.getId();
+		} else if (player.getInventory().contains(RUNE_ESSENCE)) {
+			return RUNE_ESSENCE.getId();
+		} else {
+			return -1;
+		}
+	}
+
+	public static void fill(Player player, PouchType type) {
+
+		int amount = player.getInventory().computeAmountForId(getEssenceId(player));
+
+		if(amount <= 0) {
+			player.message("You have no essence to store in the pouch.");
+			return;
+		}
+
+		amount = amount < type.getMaxAmount() ? amount : type.getMaxAmount();
+
+		Optional<Pouch> originalPouch = Optional.ofNullable(pouches.get(type));
+
+		if(originalPouch.isPresent()) {
+
+			if(originalPouch.get().getAmount() >= type.getMaxAmount()) {
+				player.message("Your pouch is already full.");
+				return;
+			}
+
+			amount -= originalPouch.get().getAmount();
+		}
+
+
+		Pouch pouch = new Pouch(getEssenceId(player), originalPouch.isPresent() ? originalPouch.get().getAmount() + amount : amount);
+
+		pouches.put(type, pouch);
+
+		IntStream.range(0, amount).forEach(i -> player.getInventory().remove(new Item(pouch.getId())));
+
+		player.message("You fill the " + amount + " essence.");
+
+	}
+
+
+	public static void examine(Player player, PouchType type) {
+
+		Optional<Pouch> pouch = Optional.ofNullable(pouches.get(type));
+
+		if(!pouch.isPresent()) {
+			player.message("This pouch does not contain any essence.");
+			return;
+		}
+
+		player.message("This pouch contains " + pouch.get().getAmount() +(pouch.get().getId() == PURE_ESSENCE.getId() ? " pure" : " rune")+ " essence.");
+
+	}
+
+	public static void empty(Player player, PouchType type) {
+
+		Optional<Pouch> pouch = Optional.ofNullable(pouches.get(type));
+
+		if(!pouch.isPresent()) {
+			player.message("This pouch does not contain any essence.");
+			return;
+		}
+
+		pouches.remove(type);
+
+		IntStream.range(0, pouch.get().getAmount()).forEach(i -> player.getInventory().add(new Item(pouch.get().getId())));
+		player.message("You empty the " + pouch.get().getAmount() + " essence left in the pouch.");
+
 	}
 
 }

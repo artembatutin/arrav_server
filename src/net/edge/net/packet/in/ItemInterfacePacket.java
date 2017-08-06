@@ -1,6 +1,8 @@
 package net.edge.net.packet.in;
 
 import net.edge.content.Attributes;
+import net.edge.content.skill.runecrafting.Runecrafting;
+import net.edge.content.skill.runecrafting.pouch.PouchType;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.item.container.session.ExchangeSession;
 import net.edge.world.entity.item.container.session.ExchangeSessionManager;
@@ -304,6 +306,23 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		Item item = player.getInventory().get(slot);
 		if(item == null || !Item.valid(item)) {
 			return;
+		}
+		switch(itemId) {
+			case 5509:
+				Runecrafting.empty(player, PouchType.SMALL);
+				return;
+
+			case 5510:
+				Runecrafting.empty(player, PouchType.MEDIUM);
+				return;
+
+			case 5512:
+				Runecrafting.empty(player, PouchType.LARGE);
+				return;
+
+			case 5514:
+				Runecrafting.empty(player, PouchType.GIANT);
+				return;
 		}
 		ItemAction e = EQUIP.get(item.getId());
 		player.getCombat().cooldown(false);

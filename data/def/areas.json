@@ -44,6 +44,21 @@
     ]
   },
   {
+    "name": "KING_BLACK_DRAGON",
+    "location": [
+      {
+        "square": {
+          "swX": 2292,
+          "swY": 4675,
+          "neX": 2252,
+          "neY": 4713,
+          "z": 0
+        },
+        "multi": true
+      }
+    ]
+  },
+  {
     "name": "CORPOREAL_BEAST",
     "location": [
       {

@@ -83,7 +83,7 @@ public final class KingBlackDragonCombatStrategy implements CombatStrategy {
 						this.setAccurate(true);
 						player.message("You are badly burnt by the dragon's fire breath!");
 					} else if(player.getEquipment().containsAny(1540, 11283) && !player.getAntifireDetails().isPresent()) {
-						this.getHits()[0] = new Hit(RandomUtils.inclusive(100, 200));
+						this.getHits()[0] = new Hit(RandomUtils.inclusive(1, 100));
 						this.setAccurate(true);
 						player.message("Your shield absorbs most of the dragon fire!");
 					} else if(!player.getEquipment().containsAny(1540, 11283) && player.getAntifireDetails().isPresent()) {
@@ -93,7 +93,7 @@ public final class KingBlackDragonCombatStrategy implements CombatStrategy {
 						
 						if(details.getType().equals(AntifireType.REGULAR)) {
 							regular = true;
-							this.getHits()[0] = new Hit(RandomUtils.inclusive(100, 200));
+							this.getHits()[0] = new Hit(RandomUtils.inclusive(1, 130));
 							this.setAccurate(true);
 						} else if(details.getType().equals(AntifireType.SUPER)) {
 							if(RandomUtils.nextBoolean()) {
