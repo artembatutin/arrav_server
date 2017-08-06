@@ -17,6 +17,7 @@ public class DonatorScrolls extends ActionInitializer {
 			public boolean click(Player player, Item item, int container, int slot, int click) {
 				if(container != Inventory.INVENTORY_DISPLAY_ID)
 					return true;
+
 				player.animation(new Animation(445));
 				player.graphic(new Graphic(40));
 				player.getInventory().remove(item, slot);
