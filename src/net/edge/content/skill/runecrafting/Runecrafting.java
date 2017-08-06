@@ -1,5 +1,6 @@
 package net.edge.content.skill.runecrafting;
 
+import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.ObjectAction;
 import net.edge.task.Task;
 import net.edge.world.entity.item.container.impl.Inventory;
@@ -14,6 +15,8 @@ import net.edge.world.object.GameObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.TRAINING_PORTAL;
 
 /**
  * Holds functionality for the runecrafting skill.
@@ -72,6 +75,14 @@ public final class Runecrafting extends ProducingSkillAction {
 				}
 			};
 			rc.registerFirst(a.getObjectId());
+			ItemAction action = new ItemAction() {
+				@Override
+				public boolean click(Player player, Item item, int container, int slot, int click) {
+					player.teleport(a.getPosition(), TRAINING_PORTAL);
+					return true;
+				}
+			};
+			action.register(a.getTalisman());
 		}
 	}
 

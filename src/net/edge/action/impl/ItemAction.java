@@ -6,6 +6,7 @@ import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.skill.herblore.Herb;
 import net.edge.content.skill.prayer.PrayerBoneBury;
+import net.edge.content.skill.runecrafting.Altar;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.summoning.SummoningData;
 import net.edge.action.Action;
