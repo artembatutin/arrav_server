@@ -9,6 +9,7 @@ import net.edge.content.skill.agility.impl.Shortcuts;
 import net.edge.content.skill.agility.impl.barb.BarbarianOutpostAgility;
 import net.edge.content.skill.agility.impl.gnome.GnomeStrongholdAgility;
 import net.edge.content.skill.agility.impl.wild.WildernessAgility;
+import net.edge.content.skill.agility.test.gnome.GnomeAgility;
 import net.edge.content.skill.construction.furniture.HotSpots;
 import net.edge.content.skill.crafting.PotClaying;
 import net.edge.content.skill.hunter.Hunter;
@@ -64,7 +65,8 @@ public abstract class ObjectAction extends Action {
 		Woodcutting.action();
 		Mining.action();
 		Runecrafting.action();
-		GnomeStrongholdAgility.action();
+//		GnomeStrongholdAgility.action();
+		GnomeAgility.action();
 		BarbarianOutpostAgility.action();
 		WildernessAgility.action();
 		Shortcuts.action();
