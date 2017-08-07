@@ -76,6 +76,7 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobAggression;
 import net.edge.world.entity.actor.mob.impl.gwd.GodwarsFaction;
+import net.edge.world.entity.actor.mob.impl.skeletal.SkeletalHorror;
 import net.edge.world.entity.actor.player.assets.*;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.actor.update.UpdateFlag;
@@ -88,6 +89,7 @@ import net.edge.world.locale.Position;
 import net.edge.world.locale.loc.Location;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.logging.Logger;
 
@@ -805,6 +807,7 @@ public final class Player extends Actor {
 		clan.ifPresent(c -> c.getClan().remove(this, true));
 		cannon.ifPresent(c -> c.pickup(true));
 		WildernessActivity.leave(this);
+		SkeletalHorror.quit(this);
 		save();
 	}
 	
@@ -996,6 +999,19 @@ public final class Player extends Actor {
 			setLastRegion(getPosition().copy());
 		super.setPosition(destination.copy());
 		setNeedsPlacement(true);
+	}
+	
+	/**
+	 * Sends a delayed task for this player.
+	 */
+	public void task(int delay, Consumer<Player> action) {
+		new Task(delay, false) {
+			@Override
+			protected void execute() {
+				action.accept(this);
+				cancel();
+			}
+		}.submit();
 	}
 	
 	/**
