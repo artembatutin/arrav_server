@@ -6,7 +6,7 @@ import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.magic.CombatWeaken;
-import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.content.combat.strategy.Strategy;
 import net.edge.world.entity.actor.mob.impl.skeletal.SkeletalHorror;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
@@ -21,8 +21,8 @@ import net.edge.world.entity.actor.mob.impl.glacor.Glacor;
 import net.edge.world.entity.actor.mob.impl.gwd.CommanderZilyana;
 import net.edge.world.entity.actor.mob.impl.gwd.GeneralGraardor;
 import net.edge.world.entity.actor.mob.impl.gwd.KreeArra;
-import net.edge.world.entity.actor.mob.strategy.impl.TormentedDemonCombatStrategy;
-import net.edge.world.entity.actor.mob.strategy.impl.WildyWyrmCombatStrategy;
+import net.edge.world.entity.actor.mob.strategy.impl.TormentedDemonStrategy;
+import net.edge.world.entity.actor.mob.strategy.impl.WildyWyrmStrategy;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.update.UpdateFlag;
 import net.edge.world.locale.loc.Location;
@@ -63,11 +63,11 @@ public abstract class Mob extends Actor {
 	public static Mob getNpc(int id, Position pos) {
 		if(id >= 8349 && id <= 8351) {
 			Mob mob = new DefaultMob(id, pos);
-			return mob.setStrategy(Optional.of(new TormentedDemonCombatStrategy(mob)));
+			return mob.setStrategy(Optional.of(new TormentedDemonStrategy(mob)));
 		}
 		if(id == 3334) {
 			Mob mob = new DefaultMob(id, pos);
-			return mob.setStrategy(Optional.of(new WildyWyrmCombatStrategy(mob)));
+			return mob.setStrategy(Optional.of(new WildyWyrmStrategy(mob)));
 		}
 		return CUSTOM_MOBS.containsKey(id) ? CUSTOM_MOBS.get(id).apply(pos).create() : new DefaultMob(id, pos);
 	}
@@ -143,7 +143,7 @@ public abstract class Mob extends Actor {
 	 * if this field is set, it'll use this strategy instead and each npc
 	 * will have it's own strategy instead of sharing it on a global state.
 	 */
-	private Optional<CombatStrategy> strategy = Optional.empty();
+	private Optional<Strategy> strategy = Optional.empty();
 	
 	/**
 	 * Creates a new {@link Mob}.
@@ -240,7 +240,7 @@ public abstract class Mob extends Actor {
 	}
 	
 	@Override
-	public CombatStrategy determineStrategy() {
+	public Strategy determineStrategy() {
 		return strategy.orElse(CombatUtil.determineStrategy(id));
 	}
 	
@@ -500,7 +500,7 @@ public abstract class Mob extends Actor {
 	 * Gets the combat strategy.
 	 * @return combat strategy.
 	 */
-	public Optional<CombatStrategy> getStrategy() {
+	public Optional<Strategy> getStrategy() {
 		return strategy;
 	}
 	
@@ -508,7 +508,7 @@ public abstract class Mob extends Actor {
 	 * Sets a new value for {@link #strategy}.
 	 * @param strategy the new value to set.
 	 */
-	public Mob setStrategy(Optional<CombatStrategy> strategy) {
+	public Mob setStrategy(Optional<Strategy> strategy) {
 		this.strategy = strategy;
 		return this;
 	}

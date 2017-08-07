@@ -29,12 +29,11 @@ import net.edge.util.Utility;
 import net.edge.util.json.impl.*;
 import net.edge.content.PlayerPanel;
 import net.edge.content.RestoreStatTask;
-import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.content.combat.strategy.Strategy;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.world.World;
 import net.edge.world.entity.actor.attribute.AttributeKey;
-import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.locale.InstanceManager;
 
 import java.time.DayOfWeek;
@@ -219,9 +218,9 @@ public final class Application {
 		launch.execute(new IndividualScoreboardRewardsLoader());
 		launch.execute(() -> new SlayerDefinitionLoader().load());
 		launch.execute(() -> {//Adding combat strategies.
-			for(String directory : Utility.getSubDirectories(CombatStrategy.class)) {
+			for(String directory : Utility.getSubDirectories(Strategy.class)) {
 				try {
-					List<CombatStrategy> s = Utility.getClassesInDirectory(CombatStrategy.class.getPackage().getName() + "." + directory).stream().map(clazz -> (CombatStrategy) clazz).collect(Collectors.toList());
+					List<Strategy> s = Utility.getClassesInDirectory(Strategy.class.getPackage().getName() + "." + directory).stream().map(clazz -> (Strategy) clazz).collect(Collectors.toList());
 					s.forEach(c -> {
 						for(int n : c.getMobs()) {
 							CombatConstants.DEFAULT_STRATEGIES.put(n, c);

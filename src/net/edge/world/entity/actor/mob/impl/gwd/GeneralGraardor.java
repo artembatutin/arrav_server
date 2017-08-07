@@ -7,7 +7,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobAggression;
 import net.edge.world.entity.actor.mob.impl.DefaultMob;
-import net.edge.world.entity.actor.mob.strategy.impl.gwd.GeneralGraardorCombatStrategy;
+import net.edge.world.entity.actor.mob.strategy.impl.gwd.GeneralGraardorStrategy;
 
 import java.util.Optional;
 
@@ -52,7 +52,7 @@ public final class GeneralGraardor extends Mob {
 	 */
 	public GeneralGraardor() {
 		super(6260, new Position(2868, 5360, 2));
-		this.setStrategy(Optional.of(new GeneralGraardorCombatStrategy(this)));
+		this.setStrategy(Optional.of(new GeneralGraardorStrategy(this)));
 		this.setOriginalRandomWalk(true);
 		this.getMovementCoordinator().setCoordinate(true);
 		this.getMovementCoordinator().setRadius(3);

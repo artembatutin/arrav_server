@@ -1,10 +1,12 @@
-package net.edge.content.combat.strategy.rfd;
+package net.edge.content.combat.strategy.mob;
 
+import net.edge.task.Task;
 import net.edge.content.combat.CombatHit;
-import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.strategy.Strategy;
+import net.edge.world.World;
+import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -14,117 +16,91 @@ import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
-public final class Karamel implements Strategy {
+public final class SpinolypStrategy implements Strategy {
 	
 	@Override
 	public boolean canOutgoingAttack(Actor actor, Actor victim) {
 		return actor.isMob() && victim.isPlayer();
 	}
-
+	
 	@Override
 	public CombatHit outgoingAttack(Actor actor, Actor victim) {
-		CombatType[] data = actor.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
-		CombatType type = RandomUtils.random(data);
-		return type(actor, victim, type);
-	}
-	
-	private CombatHit melee(Actor character, Actor victim) {
-		Animation animation = new Animation(422);
-		character.animation(animation);
-		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
-	}
-	
-	private CombatHit magic(Actor character, Actor victim) {
-		character.animation(new Animation(1979));
-		//TODO walk away only if the victim is using melee (basically if hes within 1 tile distance)
-		character.forceChat("Semolina-Go!");
-		CombatNormalSpell spell = SPELL;
-		character.setCurrentlyCasting(spell);
-		return new CombatHit(character, victim, 1, CombatType.MAGIC, false) {
+		actor.animation(new Animation(actor.toMob().getDefinition().getAttackAnimation()));
+		World.get().submit(new Task(1, false) {
 			@Override
-			public CombatHit preAttack() {
-				if(this.getType() == CombatType.MAGIC && victim.isPlayer() && this.isAccurate()) {
-					Player player = (Player) victim;
-					player.freeze(15);
-				}
-				return this;
+			public void execute() {
+				this.cancel();
+				if(actor.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || actor.isDead() || victim.isDead())
+					return;
+				SPELL.projectile(actor, victim).get().sendProjectile();
 			}
-		};
+		});
+		actor.setCurrentlyCasting(SPELL);
+		return new CombatHit(actor, victim, 1, CombatType.MAGIC, true);
 	}
 	
-	private CombatHit type(Actor character, Actor victim, CombatType type) {
-		switch(type) {
-			case MELEE:
-				return melee(character, victim);
-			case MAGIC:
-				return magic(character, victim);
-			default:
-				return magic(character, victim);
-		}
-	}
-
 	@Override
 	public int attackDelay(Actor actor) {
 		return actor.getAttackDelay();
 	}
-
+	
 	@Override
 	public int attackDistance(Actor actor) {
-		return 7;
+		return 8;
 	}
-
+	
 	@Override
 	public int[] getMobs() {
-		return new int[]{3495};
+		return new int[]{2896};
 	}
-
+	
 	private static final CombatNormalSpell SPELL = new CombatNormalSpell() {
-
+		
 		@Override
 		public int spellId() {
 			return 0;
 		}
-
+		
 		@Override
 		public int maximumHit() {
-			return 140;
+			return 100;
 		}
-
+		
 		@Override
 		public Optional<Animation> castAnimation() {
-			return Optional.of(new Animation(1979));
+			return Optional.empty();
 		}
-
+		
 		@Override
 		public Optional<Graphic> startGraphic() {
 			return Optional.empty();
 		}
-
+		
 		@Override
 		public Optional<Projectile> projectile(Actor cast, Actor castOn) {
-			return Optional.empty();
+			return Optional.of(new Projectile(cast, castOn, 1658, 3, 44, 43, 43, 0));
 		}
-
+		
 		@Override
 		public Optional<Graphic> endGraphic() {
-			return Optional.of(new Graphic(369));
+			return Optional.empty();
 		}
-
+		
 		@Override
 		public int levelRequired() {
 			return 0;
 		}
-
+		
 		@Override
 		public double baseExperience() {
 			return 0;
 		}
-
+		
 		@Override
 		public Optional<Item[]> itemsRequired(Player player) {
 			return Optional.empty();
 		}
-
+		
 		@Override
 		public Optional<Item[]> equipmentRequired(Player player) {
 			return Optional.empty();

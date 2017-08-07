@@ -4,8 +4,8 @@ import net.edge.world.locale.Position;
 import net.edge.world.Hit;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.strategy.impl.glacor.GlacorCombatStrategy;
-import net.edge.world.entity.actor.mob.strategy.impl.glacor.GlacyteCombatStrategy;
+import net.edge.world.entity.actor.mob.strategy.impl.glacor.GlacorStrategy;
+import net.edge.world.entity.actor.mob.strategy.impl.glacor.GlacyteStrategy;
 import net.edge.world.entity.actor.player.Player;
 
 import java.util.HashSet;
@@ -29,7 +29,7 @@ public final class Glacor extends Mob {
 	 */
 	public Glacor(Position position) {
 		super(14301, position);
-		setStrategy(Optional.of(new GlacorCombatStrategy(this)));
+		setStrategy(Optional.of(new GlacorStrategy(this)));
 	}
 	
 	/**
@@ -100,7 +100,7 @@ public final class Glacor extends Mob {
 			
 			for(GlacyteData glacyte : GlacyteData.VALUES) {
 				Glacyte g = new Glacyte(glacyte, new Position(this.getPosition().getX() + glacyte.ordinal(), this.getPosition().getY()), this);
-				g.setStrategy(Optional.of(new GlacyteCombatStrategy(g)));
+				g.setStrategy(Optional.of(new GlacyteStrategy(g)));
 				g.setRespawn(false);
 				this.getGlacytes().add(glacyte);
 				World.get().getMobs().add(g);

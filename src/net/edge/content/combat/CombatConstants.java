@@ -1,7 +1,7 @@
 package net.edge.content.combat;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.content.combat.strategy.Strategy;
 
 /**
  * The class that contains a collection of constants related to combat. This
@@ -144,7 +144,7 @@ public final class CombatConstants {
 	/**
 	 * The hash collection of all the default NPCs mapped to their combat strategies.
 	 */
-	public static final Int2ObjectArrayMap<CombatStrategy> DEFAULT_STRATEGIES = new Int2ObjectArrayMap<>();
+	public static final Int2ObjectArrayMap<Strategy> DEFAULT_STRATEGIES = new Int2ObjectArrayMap<>();
 	
 	/**
 	 * The default constructor.

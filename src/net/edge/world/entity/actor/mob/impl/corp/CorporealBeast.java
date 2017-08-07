@@ -7,7 +7,7 @@ import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.strategy.impl.corp.CorporealBeastCombatStrategy;
+import net.edge.world.entity.actor.mob.strategy.impl.corp.CorporealBeastStrategy;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.area.AreaManager;
 
@@ -35,7 +35,7 @@ public final class CorporealBeast extends Mob {
 	 */
 	public CorporealBeast() {
 		super(8133, new Position(2986, 4381, 2));
-		this.setStrategy(Optional.of(new CorporealBeastCombatStrategy(this)));
+		this.setStrategy(Optional.of(new CorporealBeastStrategy(this)));
 	}
 	
 	@Override

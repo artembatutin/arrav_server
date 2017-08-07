@@ -11,7 +11,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.magic.CombatSpell;
 import net.edge.content.combat.magic.CombatWeaken;
-import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.content.combat.strategy.Strategy;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.Entity;
 import net.edge.world.entity.EntityState;
@@ -371,7 +371,7 @@ public abstract class Actor extends Entity {
 	 * Calculates and retrieves the combat strategy for this entity.
 	 * @return the combat strategy.
 	 */
-	public abstract CombatStrategy determineStrategy();
+	public abstract Strategy determineStrategy();
 	
 	/**
 	 * Executed on a successful hit, used primarily for poison effects.

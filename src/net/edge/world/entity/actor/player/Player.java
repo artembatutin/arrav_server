@@ -23,7 +23,7 @@ import net.edge.content.combat.magic.CombatSpell;
 import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.ranged.CombatRangedDetails;
 import net.edge.content.combat.special.CombatSpecial;
-import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.content.combat.strategy.Strategy;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
@@ -873,7 +873,7 @@ public final class Player extends Actor {
 	}
 	
 	@Override
-	public CombatStrategy determineStrategy() {
+	public Strategy determineStrategy() {
 		if(specialActivated && castSpell == null) {
 			if(combatSpecial.getCombat() == CombatType.MELEE) {
 				return CombatUtil.newDefaultMeleeStrategy();

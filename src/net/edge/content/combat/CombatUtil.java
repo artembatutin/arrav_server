@@ -10,10 +10,10 @@ import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.magic.CombatSpells;
-import net.edge.content.combat.strategy.CombatStrategy;
-import net.edge.content.combat.strategy.base.MagicCombatStrategy;
-import net.edge.content.combat.strategy.base.MeleeCombatStrategy;
-import net.edge.content.combat.strategy.base.RangedCombatStrategy;
+import net.edge.content.combat.strategy.Strategy;
+import net.edge.content.combat.strategy.base.MagicStrategy;
+import net.edge.content.combat.strategy.base.MeleeStrategy;
+import net.edge.content.combat.strategy.base.RangedStrategy;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
@@ -222,8 +222,8 @@ public final class CombatUtil {
 	 * @param npc the npc to determine the combat strategy for.
 	 * @return the combat strategy.
 	 */
-	public static CombatStrategy determineStrategy(int npc) {
-		CombatStrategy combat = CombatConstants.DEFAULT_STRATEGIES.get(npc);
+	public static Strategy determineStrategy(int npc) {
+		Strategy combat = CombatConstants.DEFAULT_STRATEGIES.get(npc);
 		if(combat == null)
 			return CombatUtil.newDefaultMeleeStrategy();
 		return combat;
@@ -231,7 +231,7 @@ public final class CombatUtil {
 	
 	/**
 	 * Determines which spell {@code mob} will use when they have the
-	 * {@link MagicCombatStrategy} combat strategy.
+	 * {@link MagicStrategy} combat strategy.
 	 * @param mob the mob that needs a spell.
 	 * @return the spell that the mob will cast.
 	 */
@@ -661,8 +661,8 @@ public final class CombatUtil {
 	 * implementation.
 	 * @return the default melee combat strategy implementation.
 	 */
-	public static CombatStrategy newDefaultMeleeStrategy() {
-		return new MeleeCombatStrategy();
+	public static Strategy newDefaultMeleeStrategy() {
+		return new MeleeStrategy();
 	}
 	
 	/**
@@ -670,8 +670,8 @@ public final class CombatUtil {
 	 * implementation.
 	 * @return the default magic combat strategy implementation.
 	 */
-	public static CombatStrategy newDefaultMagicStrategy() {
-		return new MagicCombatStrategy();
+	public static Strategy newDefaultMagicStrategy() {
+		return new MagicStrategy();
 	}
 	
 	/**
@@ -679,8 +679,8 @@ public final class CombatUtil {
 	 * strategy implementation.
 	 * @return the default ranged combat strategy implementation.
 	 */
-	public static CombatStrategy newDefaultRangedStrategy() {
-		return new RangedCombatStrategy();
+	public static Strategy newDefaultRangedStrategy() {
+		return new RangedStrategy();
 	}
 	
 	public static <E extends Actor> List<E> actorsWithinDistance(Actor node, Iterator<E> target, int radius) {

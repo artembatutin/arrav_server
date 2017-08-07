@@ -7,7 +7,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobAggression;
 import net.edge.world.entity.actor.mob.impl.DefaultMob;
-import net.edge.world.entity.actor.mob.strategy.impl.gwd.KreeArraCombatStrategy;
+import net.edge.world.entity.actor.mob.strategy.impl.gwd.KreeArraStrategy;
 
 import java.util.Optional;
 
@@ -47,7 +47,7 @@ public final class KreeArra extends Mob {
 	 */
 	public KreeArra() {
 		super(6222, new Position(2832, 5302, 2));
-		setStrategy(Optional.of(new KreeArraCombatStrategy(this)));
+		setStrategy(Optional.of(new KreeArraStrategy(this)));
 		this.setOriginalRandomWalk(true);
 		this.getMovementCoordinator().setCoordinate(true);
 		this.getMovementCoordinator().setRadius(3);

@@ -2,14 +2,14 @@ package net.edge.content.combat.strategy.rfd;
 
 import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
-import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.content.combat.strategy.Strategy;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 
 import java.util.Arrays;
 
-public final class Dessourt implements CombatStrategy {
+public final class Dessourt implements Strategy {
 
 	@Override
 	public boolean canOutgoingAttack(Actor actor, Actor victim) {

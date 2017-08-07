@@ -1,7 +1,7 @@
 package net.edge.content.combat;
 
 import net.edge.task.TaskListener;
-import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.content.combat.strategy.Strategy;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
@@ -46,7 +46,7 @@ public final class Combat {
 	/**
 	 * The combat strategy this character attacking with.
 	 */
-	private CombatStrategy strategy;
+	private Strategy strategy;
 	
 	/**
 	 * The task that handles the pre-combat process.
@@ -320,7 +320,7 @@ public final class Combat {
 	 * Gets the combat strategy this character attacking with.
 	 * @return the combat strategy.
 	 */
-	public CombatStrategy getStrategy() {
+	public Strategy getStrategy() {
 		return strategy;
 	}
 	

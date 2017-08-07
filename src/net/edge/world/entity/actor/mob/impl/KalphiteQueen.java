@@ -6,7 +6,7 @@ import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.strategy.impl.KalphiteQueenCombatStrategy;
+import net.edge.world.entity.actor.mob.strategy.impl.KalphiteQueenStrategy;
 
 import java.util.Optional;
 
@@ -27,7 +27,7 @@ public final class KalphiteQueen extends Mob {
      */
     public KalphiteQueen(Position position) {
         super(Phase.PHASE_ONE.npcId, position);
-        this.setStrategy(Optional.of(new KalphiteQueenCombatStrategy(this)));
+        this.setStrategy(Optional.of(new KalphiteQueenStrategy(this)));
         this.phase = Phase.PHASE_ONE;
     }
 
