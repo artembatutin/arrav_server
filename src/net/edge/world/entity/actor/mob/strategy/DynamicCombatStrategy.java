@@ -74,32 +74,32 @@ public abstract class DynamicCombatStrategy<T extends Mob> implements CombatStra
 	public abstract int attackDistance();
 	
 	@Override
-	public final boolean canOutgoingAttack(Actor character, Actor victim) {
+	public final boolean canOutgoingAttack(Actor actor, Actor victim) {
 		return canOutgoingAttack(victim);
 	}
 
 	@Override
-	public final boolean canIncomingAttack(Actor character, Actor attacker) {
+	public final boolean canIncomingAttack(Actor actor, Actor attacker) {
 		return canIncomingAttack(attacker);
 	}
 
 	@Override
-	public final CombatHit outgoingAttack(Actor character, Actor victim) {
+	public final CombatHit outgoingAttack(Actor actor, Actor victim) {
 		return outgoingAttack(victim);
 	}
 	
 	@Override
-	public final void incomingAttack(Actor character, Actor attacker, CombatHit data) {
+	public final void incomingAttack(Actor actor, Actor attacker, CombatHit data) {
 		incomingAttack(attacker, data);
 	}
 	
 	@Override
-	public final int attackDelay(Actor character) {
+	public final int attackDelay(Actor actor) {
 		return attackDelay();
 	}
 	
 	@Override
-	public final int attackDistance(Actor character) {
+	public final int attackDistance(Actor actor) {
 		return attackDistance();
 	}
 	

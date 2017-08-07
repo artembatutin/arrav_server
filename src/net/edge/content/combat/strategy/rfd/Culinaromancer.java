@@ -9,23 +9,23 @@ import net.edge.world.Animation;
 public final class Culinaromancer implements CombatStrategy {
 	
 	@Override
-	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		return character.isMob() && victim.isPlayer();
+	public boolean canOutgoingAttack(Actor actor, Actor victim) {
+		return actor.isMob() && victim.isPlayer();
 	}
 	
 	@Override
-	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		character.animation(new Animation(15071));
-		return new CombatHit(character, victim, 1, CombatType.MELEE, false);
+	public CombatHit outgoingAttack(Actor actor, Actor victim) {
+		actor.animation(new Animation(15071));
+		return new CombatHit(actor, victim, 1, CombatType.MELEE, false);
 	}
 	
 	@Override
-	public int attackDelay(Actor character) {
-		return character.getAttackDelay();
+	public int attackDelay(Actor actor) {
+		return actor.getAttackDelay();
 	}
 	
 	@Override
-	public int attackDistance(Actor character) {
+	public int attackDistance(Actor actor) {
 		return 1;
 	}
 	

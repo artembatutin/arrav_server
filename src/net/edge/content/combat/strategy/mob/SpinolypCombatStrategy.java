@@ -19,33 +19,33 @@ import java.util.Optional;
 public final class SpinolypCombatStrategy implements CombatStrategy {
 	
 	@Override
-	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		return character.isMob() && victim.isPlayer();
+	public boolean canOutgoingAttack(Actor actor, Actor victim) {
+		return actor.isMob() && victim.isPlayer();
 	}
 	
 	@Override
-	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		character.animation(new Animation(character.toMob().getDefinition().getAttackAnimation()));
+	public CombatHit outgoingAttack(Actor actor, Actor victim) {
+		actor.animation(new Animation(actor.toMob().getDefinition().getAttackAnimation()));
 		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
 				this.cancel();
-				if(character.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || character.isDead() || victim.isDead())
+				if(actor.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || actor.isDead() || victim.isDead())
 					return;
-				SPELL.projectile(character, victim).get().sendProjectile();
+				SPELL.projectile(actor, victim).get().sendProjectile();
 			}
 		});
-		character.setCurrentlyCasting(SPELL);
-		return new CombatHit(character, victim, 1, CombatType.MAGIC, true);
+		actor.setCurrentlyCasting(SPELL);
+		return new CombatHit(actor, victim, 1, CombatType.MAGIC, true);
 	}
 	
 	@Override
-	public int attackDelay(Actor character) {
-		return character.getAttackDelay();
+	public int attackDelay(Actor actor) {
+		return actor.getAttackDelay();
 	}
 	
 	@Override
-	public int attackDistance(Actor character) {
+	public int attackDistance(Actor actor) {
 		return 8;
 	}
 	

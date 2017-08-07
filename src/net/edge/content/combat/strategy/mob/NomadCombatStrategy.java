@@ -41,12 +41,12 @@ public final class NomadCombatStrategy implements CombatStrategy {
 
     /**
      * Executed when the {@code character} is hit by the {@code attacker}.
-     * @param character the character being hit.
+     * @param actor the character being hit.
      * @param attacker  the attacker whom hit the character.
      * @param data      the combat session data chained to this hit.
      */
     @Override
-    public void incomingAttack(Actor character, Actor attacker, CombatHit data) {
+    public void incomingAttack(Actor actor, Actor attacker, CombatHit data) {
         if(charge != null) {
             switch(charge) {
                 case SARADOMIN:
@@ -80,11 +80,11 @@ public final class NomadCombatStrategy implements CombatStrategy {
 
     /**
      * Executed when the {@code character} is hit by the {@code attacker}.
-     * @param character the character being hit.
+     * @param actor the character being hit.
      * @param attacker  the attacker whom hit the character.
      */
     @Override
-    public boolean canIncomingAttack(Actor character, Actor attacker) {
+    public boolean canIncomingAttack(Actor actor, Actor attacker) {
         return true;
     }
 
@@ -92,12 +92,12 @@ public final class NomadCombatStrategy implements CombatStrategy {
      * Determines if {@code character} is able to make an attack on
      * {@code victim}.
      *
-     * @param character the character to has if able.
+     * @param actor the character to has if able.
      * @param victim    the character being attacked.
      * @return {@code true} if an attack can be made, {@code false} otherwise.
      */
     @Override
-    public boolean canOutgoingAttack(Actor character, Actor victim) {
+    public boolean canOutgoingAttack(Actor actor, Actor victim) {
         return charge == null;
     }
 
@@ -105,20 +105,20 @@ public final class NomadCombatStrategy implements CombatStrategy {
      * Executed when {@code character} has passed the initial {@code canAttack}
      * check and is about to attack {@code victim}.
      *
-     * @param character the character that is attacking.
+     * @param actor the character that is attacking.
      * @param victim    the character being attacked.
      * @return a container holding the data for the attack.
      */
     @Override
-    public CombatHit outgoingAttack(Actor character, Actor victim) {
+    public CombatHit outgoingAttack(Actor actor, Actor victim) {
         if(RandomUtils.inclusive(100) < 5) {
-            return charge(character);
+            return charge(actor);
         } else if(RandomUtils.inclusive(100) < 5) {
-            return superCharge(character);
+            return superCharge(actor);
         }
-        CombatType[] data = character.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE} : new CombatType[]{CombatType.MAGIC};
+        CombatType[] data = actor.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE} : new CombatType[]{CombatType.MAGIC};
         CombatType type = RandomUtils.random(data);
-        return type(character, victim, type);
+        return type(actor, victim, type);
     }
 
     private CombatHit type(Actor character, Actor victim, CombatType type) {
@@ -223,22 +223,22 @@ public final class NomadCombatStrategy implements CombatStrategy {
     /**
      * Determines the delay for when {@code character} will attack.
      *
-     * @param character the character waiting to attack.
+     * @param actor the character waiting to attack.
      * @return the value that the attack timer should be reset to.
      */
     @Override
-    public int attackDelay(Actor character) {
-        return character.getAttackDelay();
+    public int attackDelay(Actor actor) {
+        return actor.getAttackDelay();
     }
 
     /**
      * Determines how close {@code character} must be to attack.
      *
-     * @param character the character that is attacking.
+     * @param actor the character that is attacking.
      * @return the radius that the character must be in to attack.
      */
     @Override
-    public int attackDistance(Actor character) {
+    public int attackDistance(Actor actor) {
         return 6;
     }
 

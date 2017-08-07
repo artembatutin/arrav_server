@@ -82,30 +82,30 @@ public final class ChaosElementalCombatStrategy implements CombatStrategy {
     };
 
     @Override
-    public boolean canOutgoingAttack(Actor character, Actor victim) {
-        return character.isMob();
+    public boolean canOutgoingAttack(Actor actor, Actor victim) {
+        return actor.isMob();
     }
 
 
     @Override
-    public CombatHit outgoingAttack(Actor character, Actor victim) {
+    public CombatHit outgoingAttack(Actor actor, Actor victim) {
         int specialAttack = RandomUtils.inclusive(0, 100);
         if(specialAttack > 80) {
-            specialAttack(character, victim);
+            specialAttack(actor, victim);
             return null;
         }
         CombatType[] data = new CombatType[]{CombatType.MELEE, CombatType.MAGIC, CombatType.RANGED};
         CombatType type = RandomUtils.random(data);
-        return primaryAttack(character, victim, type);
+        return primaryAttack(actor, victim, type);
     }
 
     @Override
-    public int attackDelay(Actor character) {
+    public int attackDelay(Actor actor) {
         return 5;
     }
 
     @Override
-    public int attackDistance(Actor character) {
+    public int attackDistance(Actor actor) {
         return 14;
     }
 

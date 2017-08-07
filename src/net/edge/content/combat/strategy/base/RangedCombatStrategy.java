@@ -32,12 +32,12 @@ import net.edge.world.entity.item.ItemIdentifiers;
 public final class RangedCombatStrategy implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		if(character.isMob()) {
+	public boolean canOutgoingAttack(Actor actor, Actor victim) {
+		if(actor.isMob()) {
 			return true;
 		}
 		
-		Player player = character.toPlayer();
+		Player player = actor.toPlayer();
 		if(!MinigameHandler.execute(player, m -> m.canHit(player, victim, CombatType.RANGED))) {
 			return false;
 		}
@@ -49,35 +49,35 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		if(character.isMob()) {
-			Mob mob = character.toMob();
-			character.animation(new Animation(mob.getDefinition().getAttackAnimation()));
+	public CombatHit outgoingAttack(Actor actor, Actor victim) {
+		if(actor.isMob()) {
+			Mob mob = actor.toMob();
+			actor.animation(new Animation(mob.getDefinition().getAttackAnimation()));
 			CombatRangedAmmunition ammo = prepareAmmo(mob.getId());
 			
 			if(ammo.getGraphic().getId() != 0)
-				character.graphic(ammo.getGraphic());
-			return new CombatHit(character, victim, 1, CombatType.RANGED, true, new Projectile(character, victim, ammo.getProjectile(), ammo.getDelay(), ammo.getSpeed(), ammo.getStartHeight(), ammo.getEndHeight(), 0).getTravelTime());
+				actor.graphic(ammo.getGraphic());
+			return new CombatHit(actor, victim, 1, CombatType.RANGED, true, new Projectile(actor, victim, ammo.getProjectile(), ammo.getDelay(), ammo.getSpeed(), ammo.getStartHeight(), ammo.getEndHeight(), 0).getTravelTime());
 		}
 		
 		int delay = 0;
-		Player player = character.toPlayer();
+		Player player = actor.toPlayer();
 		CombatRangedWeapon weapon = player.getRangedDetails().getWeapon().get();
 		CombatRangedAmmo ammo = weapon.getAmmunition();
 		
 		if(!player.isSpecialActivated()) {
 			if(!player.isVisible()) {
-				return new CombatHit(character, victim, 1, CombatType.RANGED, true);
+				return new CombatHit(actor, victim, 1, CombatType.RANGED, true);
 			}
 			if(weapon.getWeapon() == ItemIdentifiers.DARK_BOW) {
-				delay = new Projectile(character, victim, ammo.getDefinition().getProjectile(), 64, 36, 40, 31, 0).sendProjectile().getTravelTime();
+				delay = new Projectile(actor, victim, ammo.getDefinition().getProjectile(), 64, 36, 40, 31, 0).sendProjectile().getTravelTime();
 			} else {
 				if(ammo.getDefinition().getProjectile() != -1) {
-					delay = new Projectile(character, victim, ammo.getDefinition().getProjectile(), ammo.getDefinition().getDelay(), ammo.getDefinition().getSpeed(), ammo.getDefinition().getStartHeight(), ammo.getDefinition().getEndHeight(), 0).sendProjectile().getTravelTime();
+					delay = new Projectile(actor, victim, ammo.getDefinition().getProjectile(), ammo.getDefinition().getDelay(), ammo.getDefinition().getSpeed(), ammo.getDefinition().getStartHeight(), ammo.getDefinition().getEndHeight(), 0).sendProjectile().getTravelTime();
 				}
 			}
 		} else {
-			int distance = (int) character.getCenterPosition().getDistance(victim.getCenterPosition());
+			int distance = (int) actor.getCenterPosition().getDistance(victim.getCenterPosition());
 			delay = Projectile.RANGED_DELAYS[distance > 10 ? 10 : distance];
 		}
 		
@@ -85,7 +85,7 @@ public final class RangedCombatStrategy implements CombatStrategy {
 		if(ammo.getDefinition().getGraphic(player).getId() != 0)
 			player.graphic(ammo.getDefinition().getGraphic(player));
 		
-		CombatHit data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatHit(character, victim, 1, CombatType.RANGED, true, delay + 1));
+		CombatHit data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatHit(actor, victim, 1, CombatType.RANGED, true, delay + 1));
 		new Task(delay, false) {
 			@Override
 			protected void execute() {
@@ -97,17 +97,17 @@ public final class RangedCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public int attackDelay(Actor character) {
-		return character.isPlayer() ? character.toPlayer().getRangedDetails().delay() : character.getAttackDelay();
+	public int attackDelay(Actor actor) {
+		return actor.isPlayer() ? actor.toPlayer().getRangedDetails().delay() : actor.getAttackDelay();
 	}
 	
 	@Override
-	public int attackDistance(Actor character) {
-		if(character.getAttr().get("master_archery").getBoolean())
+	public int attackDistance(Actor actor) {
+		if(actor.getAttr().get("master_archery").getBoolean())
 			return 15;
-		if(character.isMob())
+		if(actor.isMob())
 			return 6;
-		Player player = (Player) character;
+		Player player = (Player) actor;
 		return CombatUtil.getRangedDistance(player.getWeapon()) + (player.getFightType().getStyle() == FightStyle.DEFENSIVE ? 2 : 0);
 	}
 	

@@ -25,16 +25,16 @@ import java.util.Optional;
 public final class AviansieCombatStrategy implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		return character.isMob();
+	public boolean canOutgoingAttack(Actor actor, Actor victim) {
+		return actor.isMob();
 	}
 
 	@Override
-	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		character.animation(new Animation(character.toMob().getDefinition().getAttackAnimation()));
-		CombatType[] data = getCombatType(character.toMob(), victim);
+	public CombatHit outgoingAttack(Actor actor, Actor victim) {
+		actor.animation(new Animation(actor.toMob().getDefinition().getAttackAnimation()));
+		CombatType[] data = getCombatType(actor.toMob(), victim);
 		CombatType c = RandomUtils.random(data);
-		return type(character, victim, c);
+		return type(actor, victim, c);
 	}
 
 	private CombatHit type(Actor character, Actor victim, CombatType c) {
@@ -88,12 +88,12 @@ public final class AviansieCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public int attackDelay(Actor character) {
-		return character.getAttackDelay();
+	public int attackDelay(Actor actor) {
+		return actor.getAttackDelay();
 	}
 
 	@Override
-	public int attackDistance(Actor character) {
+	public int attackDistance(Actor actor) {
 		return 7;
 	}
 

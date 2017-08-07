@@ -17,15 +17,15 @@ import java.util.Optional;
 public final class Karamel implements CombatStrategy {
 	
 	@Override
-	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		return character.isMob() && victim.isPlayer();
+	public boolean canOutgoingAttack(Actor actor, Actor victim) {
+		return actor.isMob() && victim.isPlayer();
 	}
 
 	@Override
-	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		CombatType[] data = character.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
+	public CombatHit outgoingAttack(Actor actor, Actor victim) {
+		CombatType[] data = actor.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
 		CombatType type = RandomUtils.random(data);
-		return type(character, victim, type);
+		return type(actor, victim, type);
 	}
 	
 	private CombatHit melee(Actor character, Actor victim) {
@@ -64,12 +64,12 @@ public final class Karamel implements CombatStrategy {
 	}
 
 	@Override
-	public int attackDelay(Actor character) {
-		return character.getAttackDelay();
+	public int attackDelay(Actor actor) {
+		return actor.getAttackDelay();
 	}
 
 	@Override
-	public int attackDistance(Actor character) {
+	public int attackDistance(Actor actor) {
 		return 7;
 	}
 

@@ -7,6 +7,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.world.entity.actor.mob.impl.skeletal.SkeletalHorror;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.EntityType;
@@ -48,6 +49,7 @@ public abstract class Mob extends Actor {
 					.put(6247, s -> new CommanderZilyana())
 					.put(6260, s -> new GeneralGraardor())
 					.put(6222, s -> new KreeArra())
+					.put(9177, s -> new SkeletalHorror())
 					.put(8133, s -> new CorporealBeast())
 					.put(1158, KalphiteQueen::new)
 					.put(14301, Glacor::new).build());

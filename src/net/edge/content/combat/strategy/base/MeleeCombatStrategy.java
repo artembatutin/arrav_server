@@ -13,11 +13,11 @@ import net.edge.world.entity.actor.player.Player;
 public final class MeleeCombatStrategy implements CombatStrategy {
 	
 	@Override
-	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		if(character.isMob()) {
+	public boolean canOutgoingAttack(Actor actor, Actor victim) {
+		if(actor.isMob()) {
 			return true;
 		}
-		Player player = (Player) character;
+		Player player = (Player) actor;
 		
 		if(!MinigameHandler.execute(player, m -> m.canHit(player, victim, CombatType.MELEE))) {
 			return false;
@@ -28,31 +28,31 @@ public final class MeleeCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		if(character.isMob()) {
-			Mob mob = (Mob) character;
+	public CombatHit outgoingAttack(Actor actor, Actor victim) {
+		if(actor.isMob()) {
+			Mob mob = (Mob) actor;
 			mob.animation(new Animation(mob.getDefinition().getAttackAnimation()));
-		} else if(character.isPlayer()) {
-			Player player = (Player) character;
+		} else if(actor.isPlayer()) {
+			Player player = (Player) actor;
 			if(player.getWeaponAnimation() != null && !player.getFightType().isAnimationPrioritized()) {
 				player.animation(new Animation(player.getWeaponAnimation().getAttacking()[player.getFightType().getStyle().ordinal()], Animation.AnimationPriority.HIGH));
 			} else {
 				player.animation(new Animation(player.getFightType().getAnimation(), Animation.AnimationPriority.HIGH));
 			}
 		}
-		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
+		return new CombatHit(actor, victim, 1, CombatType.MELEE, true);
 	}
 	
 	@Override
-	public int attackDelay(Actor character) {
-		return character.getAttackDelay();
+	public int attackDelay(Actor actor) {
+		return actor.getAttackDelay();
 	}
 	
 	@Override
-	public int attackDistance(Actor character) {
-		if(character.isMob())
+	public int attackDistance(Actor actor) {
+		if(actor.isMob())
 			return 1;
-		if(character.toPlayer().getWeapon() == WeaponInterface.HALBERD)
+		if(actor.toPlayer().getWeapon() == WeaponInterface.HALBERD)
 			return 2;
 		return 1;
 	}

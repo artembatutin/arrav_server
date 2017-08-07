@@ -922,7 +922,7 @@ public abstract class Actor extends Entity {
 	 * Sets the value for {@link Actor#dead}.
 	 * @param dead the new value to set.
 	 */
-	public final void setDead(boolean dead) {
+	public void setDead(boolean dead) {
 		this.dead = dead;
 	}
 	

@@ -1005,10 +1005,11 @@ public final class Player extends Actor {
 	 * Sends a delayed task for this player.
 	 */
 	public void task(int delay, Consumer<Player> action) {
+		Player p = this;
 		new Task(delay, false) {
 			@Override
 			protected void execute() {
-				action.accept(this);
+				action.accept(p);
 				cancel();
 			}
 		}.submit();

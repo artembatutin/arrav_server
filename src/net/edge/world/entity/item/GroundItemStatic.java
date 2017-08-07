@@ -51,6 +51,8 @@ public final class GroundItemStatic extends GroundItem {
 	
 	@Override
 	public void onSequence() {
+		if(policy == null)
+			return;
 		switch(policy) {
 			case TIMEOUT:
 				setState(EntityState.INACTIVE);

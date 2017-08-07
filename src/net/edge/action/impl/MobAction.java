@@ -9,6 +9,7 @@ import net.edge.content.skill.thieving.impl.Pickpocketing;
 import net.edge.action.Action;
 import net.edge.net.packet.in.MobActionPacket;
 import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.impl.skeletal.SkeletalHorror;
 import net.edge.world.entity.actor.player.Player;
 
 /**
@@ -42,6 +43,7 @@ public abstract class MobAction extends Action {
 		StarSprite.action();
 		Pickpocketing.action();
 		Skillcape.action();
+		SkeletalHorror.action();
 	}
 	
 }

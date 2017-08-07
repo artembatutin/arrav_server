@@ -12,32 +12,32 @@ import java.util.Arrays;
 public final class Dessourt implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		return character.isMob() && victim.isPlayer();
+	public boolean canOutgoingAttack(Actor actor, Actor victim) {
+		return actor.isMob() && victim.isPlayer();
 	}
 
 	@Override
-	public CombatHit outgoingAttack(Actor character, Actor victim) {
+	public CombatHit outgoingAttack(Actor actor, Actor victim) {
 		victim.animation(new Animation(3508));
-		return new CombatHit(character, victim, 1, CombatType.MELEE, false);
+		return new CombatHit(actor, victim, 1, CombatType.MELEE, false);
 	}
 	
 	@Override
-	public void incomingAttack(Actor character, Actor victim, CombatHit data) {
+	public void incomingAttack(Actor actor, Actor victim, CombatHit data) {
 		if(data.getType() == CombatType.MELEE) {
 			Arrays.stream(data.getHits()).forEach(hit -> hit.setDamage(hit.getDamage() / 2));
-			character.graphic(new Graphic(550));
-			character.forceChat("Hssssssssssss");
+			actor.graphic(new Graphic(550));
+			actor.forceChat("Hssssssssssss");
 		}
 	}
 
 	@Override
-	public int attackDelay(Actor character) {
-		return character.getAttackDelay();
+	public int attackDelay(Actor actor) {
+		return actor.getAttackDelay();
 	}
 
 	@Override
-	public int attackDistance(Actor character) {
+	public int attackDistance(Actor actor) {
 		return 1;
 	}
 

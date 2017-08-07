@@ -14,32 +14,32 @@ import net.edge.world.entity.actor.mob.impl.gwd.GeneralGraardor;
 public final class SergeantGrimspikeCombatStrategy implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(Actor character, Actor victim) {
+	public boolean canOutgoingAttack(Actor actor, Actor victim) {
 		return victim.isPlayer() && GeneralGraardor.CHAMBER.inLocation(victim.getPosition());
 	}
 
 	@Override
-	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		character.animation(new Animation(6154));
+	public CombatHit outgoingAttack(Actor actor, Actor victim) {
+		actor.animation(new Animation(6154));
 		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
 				this.cancel();
-				if(character.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || character.isDead() || victim.isDead())
+				if(actor.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || actor.isDead() || victim.isDead())
 					return;
-				new Projectile(character, victim, 37, 44, 3, 43, 43, 0).sendProjectile();
+				new Projectile(actor, victim, 37, 44, 3, 43, 43, 0).sendProjectile();
 			}
 		});
-		return new CombatHit(character, victim, 1, CombatType.RANGED, true);
+		return new CombatHit(actor, victim, 1, CombatType.RANGED, true);
 	}
 
 	@Override
-	public int attackDelay(Actor character) {
-		return character.getAttackDelay();
+	public int attackDelay(Actor actor) {
+		return actor.getAttackDelay();
 	}
 
 	@Override
-	public int attackDistance(Actor character) {
+	public int attackDistance(Actor actor) {
 		return 7;
 	}
 

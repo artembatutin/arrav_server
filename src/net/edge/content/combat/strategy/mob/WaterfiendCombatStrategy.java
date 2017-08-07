@@ -8,22 +8,22 @@ import net.edge.world.entity.actor.Actor;
 public final class WaterfiendCombatStrategy implements CombatStrategy {
 	
 	@Override
-	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		return character.isMob() && victim.isPlayer();
+	public boolean canOutgoingAttack(Actor actor, Actor victim) {
+		return actor.isMob() && victim.isPlayer();
 	}
 	
 	@Override
-	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		return new CombatHit(character, victim, CombatType.MELEE, true);//FIXME waterfiend uses ranged and magic.
+	public CombatHit outgoingAttack(Actor actor, Actor victim) {
+		return new CombatHit(actor, victim, CombatType.MELEE, true);//FIXME waterfiend uses ranged and magic.
 	}
 	
 	@Override
-	public int attackDelay(Actor character) {
-		return character.getAttackDelay();
+	public int attackDelay(Actor actor) {
+		return actor.getAttackDelay();
 	}
 	
 	@Override
-	public int attackDistance(Actor character) {
+	public int attackDistance(Actor actor) {
 		return 6;
 	}
 	

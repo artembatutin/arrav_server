@@ -14,23 +14,23 @@ import net.edge.world.entity.actor.mob.impl.gwd.KreeArra;
 public final class FlightKilisaCombatStrategy implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(Actor character, Actor victim) {
+	public boolean canOutgoingAttack(Actor actor, Actor victim) {
 		return victim.isPlayer() && KreeArra.CHAMBER.inLocation(victim.getPosition());
 	}
 
 	@Override
-	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		character.animation(new Animation(character.toMob().getDefinition().getAttackAnimation()));
-		return new CombatHit(character, victim, 1, CombatType.MELEE, true);
+	public CombatHit outgoingAttack(Actor actor, Actor victim) {
+		actor.animation(new Animation(actor.toMob().getDefinition().getAttackAnimation()));
+		return new CombatHit(actor, victim, 1, CombatType.MELEE, true);
 	}
 
 	@Override
-	public int attackDelay(Actor character) {
-		return character.getAttackDelay();
+	public int attackDelay(Actor actor) {
+		return actor.getAttackDelay();
 	}
 
 	@Override
-	public int attackDistance(Actor character) {
+	public int attackDistance(Actor actor) {
 		return 1;
 	}
 

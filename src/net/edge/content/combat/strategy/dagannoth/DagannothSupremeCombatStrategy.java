@@ -16,12 +16,12 @@ import java.util.Objects;
 public final class DagannothSupremeCombatStrategy implements CombatStrategy {
 
 	@Override
-	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		return character.isMob() && victim.isPlayer();
+	public boolean canOutgoingAttack(Actor actor, Actor victim) {
+		return actor.isMob() && victim.isPlayer();
 	}
 	
 	@Override
-	public void incomingAttack(Actor character, Actor attacker, CombatHit data) {
+	public void incomingAttack(Actor actor, Actor attacker, CombatHit data) {
 		if(data.getType().equals(CombatType.RANGED) || data.getType().equals(CombatType.MAGIC)) {
 			attacker.toPlayer().message("Your attacks are completely blocked...");
 			Arrays.stream(data.getHits()).filter(Objects::nonNull).forEach(h -> h.setAccurate(false));
@@ -30,27 +30,27 @@ public final class DagannothSupremeCombatStrategy implements CombatStrategy {
 	}
 
 	@Override
-	public CombatHit outgoingAttack(Actor character, Actor victim) {
-		character.animation(new Animation(character.toMob().getDefinition().getAttackAnimation()));
+	public CombatHit outgoingAttack(Actor actor, Actor victim) {
+		actor.animation(new Animation(actor.toMob().getDefinition().getAttackAnimation()));
 		World.get().submit(new Task(1, false) {
 			@Override
 			protected void execute() {
 				this.cancel();
-				if(character.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || character.isDead() || victim.isDead())
+				if(actor.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || actor.isDead() || victim.isDead())
 					return;
-				new Projectile(character, victim, 1937, 44, 4, 60, 43, 0).sendProjectile();
+				new Projectile(actor, victim, 1937, 44, 4, 60, 43, 0).sendProjectile();
 			}
 		});
-		return new CombatHit(character, victim, 1, CombatType.RANGED, true, 2);
+		return new CombatHit(actor, victim, 1, CombatType.RANGED, true, 2);
 	}
 
 	@Override
-	public int attackDelay(Actor character) {
-		return character.getAttackDelay();
+	public int attackDelay(Actor actor) {
+		return actor.getAttackDelay();
 	}
 
 	@Override
-	public int attackDistance(Actor character) {
+	public int attackDistance(Actor actor) {
 		return 5;
 	}
 

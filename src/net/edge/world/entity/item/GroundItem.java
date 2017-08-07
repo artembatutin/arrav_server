@@ -52,7 +52,10 @@ public class GroundItem extends Entity {
 	
 	@Override
 	public void register() {
-		player.out(new SendItemNode(this));
+		if(player != null)
+			player.out(new SendItemNode(this));
+		else
+			onSequence();
 	}
 	
 	@Override
@@ -72,7 +75,7 @@ public class GroundItem extends Entity {
 			case SEEN_BY_OWNER:
 				World.getRegions().getAllSurroundingRegions(getPosition().getRegion()).forEach(r -> r.getPlayers().forEach(p -> {
 					if(!p.same(player) && p.getPosition().getZ() == super.getPosition().getZ() && p.getInstance() == super.getInstance())
-						p.out(new SendItemNode(new GroundItem(item, super.getPosition(), null)));
+						p.out(new SendItemNode(this));
 				}));
 				player = null;
 				state = GroundItemState.SEEN_BY_EVERYONE;

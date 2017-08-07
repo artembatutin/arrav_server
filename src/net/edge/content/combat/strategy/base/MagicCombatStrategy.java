@@ -16,12 +16,12 @@ import java.util.OptionalInt;
 public final class MagicCombatStrategy implements CombatStrategy {
 	
 	@Override
-	public boolean canOutgoingAttack(Actor character, Actor victim) {
-		if(character.isMob()) {
+	public boolean canOutgoingAttack(Actor actor, Actor victim) {
+		if(actor.isMob()) {
 			return true;
 		}
 		
-		Player player = (Player) character;
+		Player player = (Player) actor;
 		
 		if(!MinigameHandler.execute(player, m -> m.canHit(player, victim, CombatType.MAGIC))) {
 			return false;
@@ -38,32 +38,32 @@ public final class MagicCombatStrategy implements CombatStrategy {
 	}
 	
 	@Override
-	public CombatHit outgoingAttack(Actor character, Actor victim) {
+	public CombatHit outgoingAttack(Actor actor, Actor victim) {
 		int delay = 0;
-		if(character.isPlayer()) {
-			Player player = (Player) character;
+		if(actor.isPlayer()) {
+			Player player = (Player) actor;
 			if(player.getAttr().get("lunar_spellbook_swap").getBoolean()) {
 				player.getAttr().get("lunar_spellbook_swap").set(false);
 			}
 			delay = player.prepareSpell(get(player), victim);
-		} else if(character.isMob()) {
-			Mob mob = (Mob) character;
+		} else if(actor.isMob()) {
+			Mob mob = (Mob) actor;
 			delay = mob.prepareSpell(CombatUtil.prepareSpellCast(mob).getSpell(), victim);
 		}
 		
-		if(character.getCurrentlyCasting().maximumHit() == -1) {
-			return new CombatHit(character, victim, 0, CombatType.MAGIC, true, delay == 0 ? OptionalInt.empty() : OptionalInt.of(delay));
+		if(actor.getCurrentlyCasting().maximumHit() == -1) {
+			return new CombatHit(actor, victim, 0, CombatType.MAGIC, true, delay == 0 ? OptionalInt.empty() : OptionalInt.of(delay));
 		}
-		return new CombatHit(character, victim, 1, CombatType.MAGIC, true, delay + 1);
+		return new CombatHit(actor, victim, 1, CombatType.MAGIC, true, delay + 1);
 	}
 	
 	@Override
-	public int attackDelay(Actor character) {
+	public int attackDelay(Actor actor) {
 		return 7;
 	}
 	
 	@Override
-	public int attackDistance(Actor character) {
+	public int attackDistance(Actor actor) {
 		return 8;
 	}
 	
