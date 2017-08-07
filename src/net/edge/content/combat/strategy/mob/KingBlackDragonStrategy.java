@@ -32,6 +32,11 @@ public final class KingBlackDragonStrategy implements Strategy {
 	}
 	
 	@Override
+	public boolean hitBack() {
+		return true;
+	}
+	
+	@Override
 	public int attackDelay(Actor actor) {
 		return actor.getAttackDelay();
 	}

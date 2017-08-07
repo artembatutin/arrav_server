@@ -1,11 +1,14 @@
 package net.edge.content.combat;
 
+import net.edge.content.combat.magic.CombatSpell;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.special.CombatSpecial;
+import net.edge.world.Spell;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Hit;
 import net.edge.world.entity.actor.player.Player;
 
+import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
@@ -50,16 +53,21 @@ public class CombatHit {
 	private final int damage;
 	
 	/**
-	 * The flag that determines if at least one hit is accurate.
-	 */
-	private boolean accurate;
-	
-	/**
 	 * Tick delay which carries on inbetween hits hence
 	 * If delay = 2, The first hit will be instant, second hit will have a delay of 2, third hit will have a delay of 4 and so on..
 	 * First hit is instant due to the calculateHit method
 	 */
 	public final OptionalInt delay;
+	
+	/**
+	 * A possible spell casting on magic combat hit.
+	 */
+	public final Optional<CombatSpell> spell;
+	
+	/**
+	 * The flag that determines if at least one hit is accurate.
+	 */
+	private boolean accurate;
 	
 	/**
 	 * Determines if this hit should be ignored.
@@ -82,7 +90,11 @@ public class CombatHit {
 		this.checkAccuracy = checkAccuracy;
 		this.delay = delay;
 		this.experience = determineExperience();
-		
+		if(type == CombatType.MAGIC && attacker.getCurrentlyCasting() != null) {
+			spell = Optional.of(attacker.getCurrentlyCasting());
+		} else {
+			spell = Optional.empty();
+		}
 		this.getAttacker().getCombat().resetAttackTimer();
 		int counter = 0;
 		// No hit for this turn, but we still need to calculate accuracy.
@@ -279,4 +291,5 @@ public class CombatHit {
 	public final boolean isCheckAccuracy() {
 		return checkAccuracy;
 	}
+	
 }

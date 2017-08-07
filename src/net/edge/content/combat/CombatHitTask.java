@@ -29,9 +29,9 @@ public final class CombatHitTask extends Task {
 	private final Combat combat;
 
 	/**
-	 * The combat data from the combat session.
+	 * The combat hit from the combat task.
 	 */
-	private CombatHit data;
+	private CombatHit hit;
 
 	/**
 	 * The total amount of damage dealt during this attack.
@@ -46,7 +46,7 @@ public final class CombatHitTask extends Task {
 	public CombatHitTask(Combat combat, CombatHit hit) {
 		super(hit.delay.orElse(CombatUtil.getDelay(combat.getCharacter(), combat.getVictim(), hit.getType())), false);
 		this.combat = combat;
-		this.data = hit;
+		this.hit = hit;
 	}
 
 	@Override
@@ -60,52 +60,54 @@ public final class CombatHitTask extends Task {
 			return;
 		}
 
-		data = data.preAttack();
+		hit = hit.preAttack();
 
-		if(victim.getCombat().getStrategy() != null && !data.isIgnored()) {
-			victim.getCombat().getStrategy().incomingAttack(victim, attacker, data);
-		} else if(!data.isIgnored()) {
+		if(victim.getCombat().getStrategy() != null && !hit.isIgnored()) {
+			victim.getCombat().getStrategy().incomingAttack(victim, attacker, hit);
+		} else if(!hit.isIgnored()) {
 			victim.getCombat().determineStrategy();
-			victim.getCombat().getStrategy().incomingAttack(victim, attacker, data);
+			victim.getCombat().getStrategy().incomingAttack(victim, attacker, hit);
 			victim.getCombat().resetStrategy();
 		}
 
-		if(data.getHits().length != 0 && !data.isIgnored()) {
-			counter = data.attack();
+		if(hit.getHits().length != 0 && !hit.isIgnored()) {
+			counter = hit.attack();
 			victim.getCombat().getDamageCache().add(attacker, counter);
 		}
 
-		if(victim.getType() == EntityType.PLAYER && !data.isIgnored()) {
+		if(victim.getType() == EntityType.PLAYER && !hit.isIgnored()) {
 			Player player = (Player) victim;
 			Summoning.combatTeleport(player);
 		}
 
-		if(!data.isAccurate()) {
-			if(data.getType() == CombatType.MAGIC) {
-				if(!data.isIgnored()) {
+		if(!hit.isAccurate()) {
+			if(hit.getType() == CombatType.MAGIC) {
+				if(!hit.isIgnored()) {
 					victim.graphic(new Graphic(85));
 				}
-				attacker.getCurrentlyCasting().executeOnHit(attacker, victim, false, 0);
+				hit.spell.ifPresent(s -> s.executeOnHit(attacker, victim, false, 0));
 				attacker.setCurrentlyCasting(null);
 			}
-		} else if(data.isAccurate() && !data.isIgnored()) {
+		} else if(hit.isAccurate() && !hit.isIgnored()) {
 			handleSpellEffects();
 			handleArmorEffects();
 			handlePrayerEffects();
-			attacker.onSuccessfulHit(victim, data.getType());
-			if(data.getType() == CombatType.MAGIC) {
-				attacker.getCurrentlyCasting().endGraphic().ifPresent(victim::graphic);
-				attacker.getCurrentlyCasting().executeOnHit(attacker, victim, true, counter);
+			attacker.onSuccessfulHit(victim, hit.getType());
+			if(hit.getType() == CombatType.MAGIC) {
+				hit.spell.ifPresent(s -> {
+					s.endGraphic().ifPresent(victim::graphic);
+					s.executeOnHit(attacker, victim, true, counter);
+				});
 				attacker.setCurrentlyCasting(null);
 			}
 		}
 
-		if(victim.isPlayer() && !data.isIgnored()) {
+		if(victim.isPlayer() && !hit.isIgnored()) {
 			Player player = (Player) victim;
 
 			boolean activated = false;
 
-			switch(data.getType()) {
+			switch(hit.getType()) {
 				case MELEE:
 					if(Prayer.isActivated(player, Prayer.DEFLECT_MELEE)) {
 						player.graphic(new Graphic(2230));
@@ -133,7 +135,7 @@ public final class CombatHitTask extends Task {
 				World.get().submit(new Task(1, false) {
 					@Override
 					protected void execute() {
-						Arrays.stream(data.getHits()).forEach(hit -> {
+						Arrays.stream(hit.getHits()).forEach(hit -> {
 							int damage = (int) (hit.getDamage() * 0.10);
 							victim.getCombat().getDamageCache().add(attacker, damage);
 							attacker.damage(new Hit(damage, Hit.HitType.NORMAL, Hit.HitIcon.DEFLECT, victim.getSlot()));
@@ -142,13 +144,16 @@ public final class CombatHitTask extends Task {
 					}
 				});
 			}
-		} else if(victim.isMob() && !data.isIgnored()) {
+		} else if(victim.isMob() && !hit.isIgnored()) {
 			victim.animation(new Animation(victim.toMob().getDefinition().getDefenceAnimation(), Animation.AnimationPriority.LOW));
 		}
 
-		data.postAttack(counter);
+		hit.postAttack(counter);
 
-		if(victim.isAutoRetaliate() && !victim.getCombat().isAttacking() && !data.isIgnored()) {
+		if(victim.getCombat().getStrategy() != null && victim.getCombat().getStrategy().hitBack() && !attacker.same(victim.getCombat().getVictim())) {
+			victim.getCombat().attack(attacker);
+			victim.getCombat().instant();
+		} else if(victim.isAutoRetaliate() && !victim.getCombat().isAttacking() && !hit.isIgnored()) {
 			victim.getCombat().attack(attacker);
 		}
 		this.cancel();
@@ -164,7 +169,7 @@ public final class CombatHitTask extends Task {
 				return;
 			}
 
-			int amount = (int) (data.getHits()[0].getDamage() * 0.75D);
+			int amount = (int) (hit.getHits()[0].getDamage() * 0.75D);
 
 			combat.getCharacter().damage(new Hit(amount));
 			combat.getCharacter().getCombat().getDamageCache().add(player, amount);
@@ -183,7 +188,7 @@ public final class CombatHitTask extends Task {
 				return;
 			}
 
-			int hit = data.getHits()[0].getDamage();
+			int hit = this.hit.getHits()[0].getDamage();
 
 			if(hit < 1) {
 				return;
@@ -287,10 +292,10 @@ public final class CombatHitTask extends Task {
 	 * Handles all prayer effects that take place upon a successful attack.
 	 */
 	private void handlePrayerEffects() {
-		if(data.getHits().length != 0) {
+		if(hit.getHits().length != 0) {
 
-			Actor victim = data.getVictim();
-			Actor attacker = data.getAttacker();
+			Actor victim = hit.getVictim();
+			Actor attacker = hit.getAttacker();
 
 			//REDEMPTION
 			if(victim.isPlayer() && Prayer.isActivated(victim.toPlayer(), Prayer.REDEMPTION) && victim.toPlayer().getSkills()[Skills.HITPOINTS].getLevel() <= (victim.toPlayer().getSkills()[Skills.HITPOINTS].getRealLevel() / 10)) {
@@ -311,7 +316,7 @@ public final class CombatHitTask extends Task {
 			}
 
 			//SOULSPLIT
-			if(attacker.isPlayer() && Prayer.isActivated(attacker.toPlayer(), Prayer.SOUL_SPLIT) && data.isAccurate()) {
+			if(attacker.isPlayer() && Prayer.isActivated(attacker.toPlayer(), Prayer.SOUL_SPLIT) && hit.isAccurate()) {
 				new Projectile(attacker, victim, 2263, 44, 0, 11, 7, 0).sendProjectile();
 
 				LinkedTaskSequence seq = new LinkedTaskSequence();

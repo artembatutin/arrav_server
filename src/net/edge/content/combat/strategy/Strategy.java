@@ -47,6 +47,14 @@ public interface Strategy {
 	CombatHit outgoingAttack(Actor actor, Actor victim);
 	
 	/**
+	 * Condition if the strategist hits back.
+	 * @return hits back on an incoming attack.
+	 */
+	default boolean hitBack() {
+		return false;
+	}
+	
+	/**
 	 * Determines the delay for when {@code actor} will attack.
 	 * @param actor the actor waiting to attack.
 	 * @return the value that the attack timer should be reset to.
