@@ -1,12 +1,5 @@
 package net.edge.content.skill.prayer;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.Optional;
-
 public enum Bone {
 	BONES(526, 4.5),
 	BAT_BONES(530, 5.2),

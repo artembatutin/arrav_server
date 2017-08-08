@@ -76,7 +76,7 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobAggression;
 import net.edge.world.entity.actor.mob.impl.gwd.GodwarsFaction;
-import net.edge.world.entity.actor.mob.impl.skeletal.SkeletalHorror;
+import net.edge.world.entity.actor.mob.impl.SkeletalHorror;
 import net.edge.world.entity.actor.player.assets.*;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.actor.update.UpdateFlag;
@@ -807,7 +807,6 @@ public final class Player extends Actor {
 		clan.ifPresent(c -> c.getClan().remove(this, true));
 		cannon.ifPresent(c -> c.pickup(true));
 		WildernessActivity.leave(this);
-		SkeletalHorror.quit(this);
 		save();
 	}
 	

@@ -52,10 +52,7 @@ public class GroundItem extends Entity {
 	
 	@Override
 	public void register() {
-		if(player != null)
-			player.out(new SendItemNode(this));
-		else
-			onSequence();
+		player.out(new SendItemNode(this));
 	}
 	
 	@Override

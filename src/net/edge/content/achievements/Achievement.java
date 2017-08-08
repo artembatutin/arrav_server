@@ -29,6 +29,8 @@ public enum Achievement {
 	GRIZZLY_BEAR("Kill 15 grizzly bears", 15, 30, 50, 100),
 	BOX_TRAPPER("Trap %s animals in a box", 25, 75, 200, 400),
 	FEATHERING("Snare %s birds", 25, 75, 200, 400),
+	HORRORIFIC("Win %s horroris minigame matches.", 5, 10, 50, 200),
+	PEST_CONTROLLER("Win %s pest control matches.", 5, 10, 50, 200),
 	//SHEAR_30_SHEEPS("Shear %s Sheep", 30, 350, 800),//TODO
 	DRAGON_DAGGER("Use %s Dragon dagger specs", 100, 350, 500, 2000),
 	//CRYSTAL_CHEST("Open %s crystal chests", 10, 50, 150),//TODO

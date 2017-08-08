@@ -16,6 +16,7 @@ public final class SendGraphic implements OutgoingPacket {
 	public static void local(Player player, int id, Position position, int level) {
 		if(player.getState() == INACTIVE || !player.isHuman())
 			return;
+		player.out(new SendGraphic(id, position, level));
 		for(Player p : player.getLocalPlayers()) {
 			if(p == null)
 				continue;

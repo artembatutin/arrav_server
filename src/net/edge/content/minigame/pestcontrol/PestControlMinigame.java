@@ -27,6 +27,7 @@ import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.PEST_CONTROLLER;
 import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.LADDER;
 
 public final class PestControlMinigame extends SequencedMinigame {
@@ -276,6 +277,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 				Rights right = p.getRights();
 				int donatorBonus = right.equals(Rights.EXTREME_DONATOR) ? 3 : right.equals(Rights.SUPER_DONATOR) ? 2 : right.equals(Rights.DONATOR) ? 1 : 0;
 				Currency.PEST_POINTS.getCurrency().recieveCurrency(p, (p.getAttr().get("participation").getInt() / 300) + donatorBonus);
+				PEST_CONTROLLER.inc(p);
 			} else if(voidKnight.getCurrentHealth() > 0) {
 				p.getDialogueBuilder().append(new NpcDialogue(3784, p.getFormatUsername() +" you have Failed.", "You did participate enough to take down", "the portals. ", "Try Harder next time."));
 			} else {

@@ -1419,16 +1419,6 @@
     "face": "SOUTH"
   },
   {
-    "id": 9177,
-    "position": {
-      "x": 3388,
-      "y": 3516,
-      "z": 0
-    },
-    "random-walk": true,
-    "walk-radius": 4
-  },
-  {
     "id": 5082,
     "position": {
       "x": 3013,

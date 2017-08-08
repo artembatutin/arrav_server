@@ -73,9 +73,7 @@ public final class GameSession extends Session {
 					handle(packet);//item equipping
 					return;
 				}
-				World.get().run(() -> {
-					handle(packet);
-				});
+				World.get().run(() -> handle(packet));
 			}
 		}
 	}
@@ -117,6 +115,7 @@ public final class GameSession extends Session {
 	 * Writes the given {@link OutgoingPacket} to the stream.
 	 */
 	public void write(OutgoingPacket packet) {
+		System.out.println("direct write " + packet.getClass());
 		ByteBuf temp = packet.write(player, new GameBuffer(Unpooled.buffer(256), encryptor));
 		getChannel().write(temp, getChannel().voidPromise());
 	}

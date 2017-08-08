@@ -11,8 +11,17 @@ public class MinigamePanel extends ActionInitializer {
 	@Override
 	public void init() {
 		//Minigames 30-47
-		//barrows
+		//horroris
 		ButtonAction e = new ButtonAction() {
+			@Override
+			public boolean click(Player player, int button) {
+				player.teleport(new Position(3366, 3512), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				return true;
+			}
+		};
+		e.register(30);
+		//barrows
+		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
 				player.teleport(new Position(3565, 3306), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);

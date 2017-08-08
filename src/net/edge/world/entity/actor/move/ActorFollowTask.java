@@ -76,8 +76,6 @@ class ActorFollowTask extends Task {
 			}
 		}
 		
-		
-		
 		//Entity facing.
 		character.faceEntity(leader);
 		
@@ -101,11 +99,13 @@ class ActorFollowTask extends Task {
 			//Only moving when movement is done.
 			if(character.getMovementQueue().isMovementDone()) {
 				character.getMovementQueue().reset();
-				ObjectList<Position> pos = TraversalMap.getSurroundedTraversableTiles(leader.getPosition(), leader.size(), character.size());
-				if(pos.size() > 0) {
-					Position p = RandomUtils.random(pos);
-					character.getMovementQueue().walk(p);
-				}
+				//outside of the leader's boundary but still nearby
+				TraversalMap.traversablesNextToBoundary(
+						leader.getPosition(),
+						leader.size(),
+						character.size(),
+						new Boundary(character.getPosition(), character.size()),
+						p -> character.getMovementQueue().walk(p));
 			}
 			return;
 		}
@@ -141,12 +141,11 @@ class ActorFollowTask extends Task {
 			return;
 		}
 		
-		
 		//Setting new path depending on the follower's type.
 		Path path = character.isPlayer() || (character.isMob() && character.toMob().isSmart()) ? character.getAStarPathFinder().find(leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
 		if(path != null && path.isPossible()) {
-			//removing the points overlapping the leader's boundaries.
-			while(boundary.inside(path.poll(), leader.size()));
+			//removing the points overlapping the leader's boundaries. //TODO: fix or remove.
+			//while(boundary.inside(path.poll(), leader.size()));
 			character.getMovementQueue().walk(path.getMoves());
 			destination = path.getDestination();
 		} else {

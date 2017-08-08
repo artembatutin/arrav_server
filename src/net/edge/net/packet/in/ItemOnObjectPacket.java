@@ -1,5 +1,6 @@
 package net.edge.net.packet.in;
 
+import net.edge.Application;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ItemOnObjectAction;
 import net.edge.content.minigame.MinigameHandler;
@@ -59,9 +60,9 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 		Optional<GameObject> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
-		final GameObject object = o.get();
 		
-		if(player.getRights().greater(Rights.ADMINISTRATOR))
+		final GameObject object = o.get();
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[ItemOnObject message] objectId = " + object.toString() + ", itemId = " + item.getId());
 		
 		player.facePosition(position);

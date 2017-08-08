@@ -18,10 +18,13 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 
 	private final int itemId;
 	
+	private final boolean prayLoc;
+	
 	public PrayerBoneAltar(Player player, int itemId, GameObject object, Bone bone) {
 		super(player, Optional.of(object.getGlobalPos()));
 		this.bone = bone;
 		this.itemId = itemId;
+		prayLoc = object.getId() == 15050;
 	}
 	
 	public static void action() {
@@ -35,6 +38,7 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 				}
 			};
 			a.registerObj(409);
+			a.registerObj(15050);
 		}
 	}
 	
@@ -74,7 +78,7 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 	
 	@Override
 	public double experience() {
-		return (bone.getExperience() * 2);
+		return (bone.getExperience() * (prayLoc ? 3 : 2));
 	}
 	
 	@Override

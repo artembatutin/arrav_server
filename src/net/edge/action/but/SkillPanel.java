@@ -16,6 +16,14 @@ public class SkillPanel extends ActionInitializer {
 		ButtonAction e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
+				player.teleport(new Position(3366, 3509), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				return true;
+			}
+		};
+		e.register(Skills.PRAYER);
+		e = new ButtonAction() {
+			@Override
+			public boolean click(Player player, int button) {
 				player.teleport(new Position(3093, 3479, 1), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}

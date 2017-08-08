@@ -8,6 +8,7 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobAggression;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.locale.Boundary;
 
 import java.util.concurrent.TimeUnit;
 
@@ -84,17 +85,17 @@ public final class Combat {
 	public void attack(Actor target) {
 		if(character.same(target)) {
 			character.getMovementQueue().reset();
-			return;
+			//return;
 		}
 		if(character.isPlayer() && target.isMob() && character.toPlayer().getRights().equals(Rights.ADMINISTRATOR)) {
 			character.toPlayer().message("[DEBUG NPC ID] Mob = " + target.toMob().getId() + ", position = " + target.toMob().getPosition().toString());
 		}
-		//if(target.same(currentVictim)) {
-		//	determineStrategy();
-		//	if(new Boundary(character.getPosition(), character.size()).within(currentVictim.getPosition(), currentVictim.size(), strategy.attackDistance(character))) {
-		//		character.getMovementQueue().reset();
-		//	}
-		//}
+		if(target.same(currentVictim)) {
+			determineStrategy();
+			if(new Boundary(character.getPosition(), character.size()).within(currentVictim.getPosition(), currentVictim.size(), strategy.attackDistance(character))) {
+				character.getMovementQueue().reset();
+			}
+		}
 		if(character.isPlayer() && target.isMob()) {
 			Mob mob = target.toMob();
 			Player player = (Player) character;
@@ -412,8 +413,15 @@ public final class Combat {
 				this.cancel();
 				return false;
 			}
-			return true;
-			//return new Boundary(builder.character.getPosition(), builder.character.size()).within(victim.getPosition(), victim.size(), builder.strategy.attackDistance(builder.getActor()));
+			boolean in = new Boundary(builder.character.getPosition(), builder.character.size()).within(victim.getPosition(), victim.size(), builder.strategy.attackDistance(builder.getCharacter()));
+			//System.out.println(builder.getCharacter().getMovementQueue().isRunPath());
+			if(!in && builder.getCharacter().getMovementQueue().isMovementDone()) {
+				builder.getCharacter().getMovementQueue().reset();
+				builder.getCharacter().getMovementQueue().follow(victim);
+			} else if(!in && builder.getCharacter().getMovementQueue().isMovementDone()) {
+				builder.getCharacter().getMovementQueue().reset();
+			}
+			return in;
 		}
 		
 		@Override

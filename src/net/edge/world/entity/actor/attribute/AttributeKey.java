@@ -102,6 +102,7 @@ public final class AttributeKey<T> {
 		
 		//Mob
 		AttributeKey.forTransient("npc_facing", Direction.NONE);
+		AttributeKey.forTransient("ignoredAggressionLevel", false);
 		AttributeKey.forTransient("isRetreating", false);
 		AttributeKey.forTransient("npcInformation", 0);
 	}

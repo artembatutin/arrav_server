@@ -3,6 +3,7 @@ package net.edge.world.entity.region;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.util.rand.RandomUtils;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
 import net.edge.world.Direction;
@@ -13,6 +14,7 @@ import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectType;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import static net.edge.world.object.ObjectType.*;
 
@@ -1085,35 +1087,90 @@ public final class TraversalMap {
 		for(int x = from.getX() - 1; x < from.getX() + leaderSize; x++) {
 			Direction d = Direction.fromDeltas(Position.delta(new Position(x, from.getY() + (leaderSize), from.getZ()), from));
 			Direction d2 = Direction.fromDeltas(Position.delta(from, new Position(x, from.getY() + (leaderSize), from.getZ())));
-			if(isTraversable(new Position(x, from.getY() + (leaderSize), from.getZ()), d, followerSize) && isTraversable(from, d2, followerSize)) {
-				positions.add(new Position(x, from.getY() + (leaderSize), from.getZ()));
+			Position pos = new Position(x, from.getY() + (leaderSize), from.getZ());
+			if(isTraversable(pos, d, followerSize) && isTraversable(from, d2, followerSize)) {
+				positions.add(pos);
 			}
 		}
 		//south
 		for(int x = from.getX() - 1; x < from.getX() + leaderSize; x++) {
 			Direction d = Direction.fromDeltas(Position.delta(new Position(x, from.getY() - ((followerSize - 1) + 1), from.getZ()), from));
 			Direction d2 = Direction.fromDeltas(Position.delta(from, new Position(x, from.getY() - ((followerSize - 1) + 1), from.getZ())));
-			if(isTraversable(new Position(x, from.getY() - ((followerSize - 1) + 1), from.getZ()), d, followerSize) && isTraversable(from, d2, followerSize)) {
-				positions.add(new Position(x, from.getY() - ((followerSize - 1) + 1), from.getZ()));
+			Position pos = new Position(x, from.getY() - ((followerSize - 1) + 1), from.getZ());
+			if(isTraversable(pos, d, followerSize) && isTraversable(from, d2, followerSize)) {
+				positions.add(pos);
 			}
 		}
 		//west
 		for(int y = from.getY() - 1; y < from.getY() + leaderSize; y++) {
 			Direction d = Direction.fromDeltas(Position.delta(new Position(from.getX() - ((followerSize - 1) + 1), y, from.getZ()), from));
 			Direction d2 = Direction.fromDeltas(Position.delta(from, new Position(from.getX() - ((followerSize - 1) + 1), y, from.getZ())));
-			if(isTraversable(new Position(from.getX() - ((followerSize - 1) + 1), y, from.getZ()), d, followerSize) && isTraversable(from, d2, followerSize)) {
-				positions.add(new Position(from.getX() - ((followerSize - 1) + 1), y, from.getZ()));
+			Position pos = new Position(from.getX() - ((followerSize - 1) + 1), y, from.getZ());
+			if(isTraversable(pos, d, followerSize) && isTraversable(from, d2, followerSize)) {
+				positions.add(pos);
 			}
 		}
 		//east
 		for(int y = from.getY() - 1; y < from.getY() + leaderSize; y++) {
 			Direction d = Direction.fromDeltas(Position.delta(new Position(from.getX() + (leaderSize - 1) + 1, y, from.getZ()), from));
 			Direction d2 = Direction.fromDeltas(Position.delta(from, new Position(from.getX() + (leaderSize - 1) + 1, y, from.getZ())));
-			if(isTraversable(new Position(from.getX() + (leaderSize - 1) + 1, y, from.getZ()), d, followerSize) && isTraversable(from, d2, followerSize)) {
-				positions.add(new Position(from.getX() + (leaderSize - 1) + 1, y, from.getZ()));
+			Position pos = new Position(from.getX() + (leaderSize - 1) + 1, y, from.getZ());
+			if(isTraversable(pos, d, followerSize) && isTraversable(from, d2, followerSize)) {
+				positions.add(pos);
 			}
 		}
 		return positions;
+	}
+	
+	/**
+	 * Returns a {@link ObjectList} of position that are settable leader the
+	 * specified position depending on the leader's and follower's entity sizes.
+	 * @param leader         the position.
+	 * @param leaderSize   the leader's entity size.
+	 * @param followerSize the follower's entity size.
+	 * @return A {@link ObjectList} of positions.
+	 */
+	public static void traversablesNextToBoundary(Position leader, int leaderSize, int followerSize, Boundary boundary, Consumer<Position> nearby) {
+		//north
+		for(int x = leader.getX() - 1; x < leader.getX() + leaderSize; x++) {
+			Direction d = Direction.fromDeltas(Position.delta(new Position(x, leader.getY() + (leaderSize), leader.getZ()), leader));
+			Direction d2 = Direction.fromDeltas(Position.delta(leader, new Position(x, leader.getY() + (leaderSize), leader.getZ())));
+			Position pos = new Position(x, leader.getY() + (leaderSize), leader.getZ());
+			if(isTraversable(pos, d, followerSize) && isTraversable(leader, d2, followerSize) && boundary.within(pos, followerSize, 1)) {
+				nearby.accept(pos);
+				return;
+			}
+		}
+		//south
+		for(int x = leader.getX() - 1; x < leader.getX() + leaderSize; x++) {
+			Direction d = Direction.fromDeltas(Position.delta(new Position(x, leader.getY() - ((followerSize - 1) + 1), leader.getZ()), leader));
+			Direction d2 = Direction.fromDeltas(Position.delta(leader, new Position(x, leader.getY() - ((followerSize - 1) + 1), leader.getZ())));
+			Position pos = new Position(x, leader.getY() - ((followerSize - 1) + 1), leader.getZ());
+			if(isTraversable(pos, d, followerSize) && isTraversable(leader, d2, followerSize) && boundary.within(pos, followerSize, 1)) {
+				nearby.accept(pos);
+				return;
+			}
+		}
+		//west
+		for(int y = leader.getY() - 1; y < leader.getY() + leaderSize; y++) {
+			Direction d = Direction.fromDeltas(Position.delta(new Position(leader.getX() - ((followerSize - 1) + 1), y, leader.getZ()), leader));
+			Direction d2 = Direction.fromDeltas(Position.delta(leader, new Position(leader.getX() - ((followerSize - 1) + 1), y, leader.getZ())));
+			Position pos = new Position(leader.getX() - ((followerSize - 1) + 1), y, leader.getZ());
+			if(isTraversable(pos, d, followerSize) && isTraversable(leader, d2, followerSize) && boundary.within(pos, followerSize, 1)) {
+				nearby.accept(pos);
+				return;
+			}
+		}
+		//east
+		for(int y = leader.getY() - 1; y < leader.getY() + leaderSize; y++) {
+			Direction d = Direction.fromDeltas(Position.delta(new Position(leader.getX() + (leaderSize - 1) + 1, y, leader.getZ()), leader));
+			Direction d2 = Direction.fromDeltas(Position.delta(leader, new Position(leader.getX() + (leaderSize - 1) + 1, y, leader.getZ())));
+			Position pos = new Position(leader.getX() + (leaderSize - 1) + 1, y, leader.getZ());
+			if(isTraversable(pos, d, followerSize) && isTraversable(leader, d2, followerSize) && boundary.within(pos, followerSize, 1)) {
+				nearby.accept(pos);
+				return;
+			}
+		}
 	}
 	
 }

@@ -78,7 +78,7 @@ public final class MobAggression {
 			retreat(mob);//Retreats check.
 			return false;
 		}
-		if(player.determineCombatLevel() > (mob.getDefinition().getCombatLevel() * 2) && !wilderness)
+		if(player.determineCombatLevel() > (mob.getDefinition().getCombatLevel() * 2) && !wilderness && !player.getAttr().get("ignoredAggressionLevel").getBoolean())
 			return false;
 		return !mob.getCombat().isAttacking() && !mob.getCombat().isBeingAttacked() && !tolerance;
 	}

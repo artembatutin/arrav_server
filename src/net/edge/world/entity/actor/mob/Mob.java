@@ -7,7 +7,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.strategy.Strategy;
-import net.edge.world.entity.actor.mob.impl.skeletal.SkeletalHorror;
+import net.edge.world.entity.actor.mob.impl.SkeletalHorror;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.EntityType;
