@@ -27,6 +27,8 @@ import net.edge.world.entity.region.Region;
 
 import java.util.*;
 
+import static net.edge.content.achievements.Achievement.ANIMATOR;
+
 /**
  * The class which represents functionality for the animation room.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -159,6 +161,7 @@ public final class AnimationRoom extends GuildRoom {
 	@Override
 	public void onKill(Player player, Actor other) {
 		if(other.isMob() && armour.isPresent() && other.toMob().getId() == armour.get().getId()) {
+			ANIMATOR.inc(player);
 			drop(player, true);
 		}
 	}

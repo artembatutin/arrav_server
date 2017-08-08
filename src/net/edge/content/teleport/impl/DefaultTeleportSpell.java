@@ -19,6 +19,7 @@ import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.TELEPORTER;
 import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.OBELISK;
 
 /**
@@ -231,6 +232,7 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 		
 		@Override
 		public void onCancel() {
+			TELEPORTER.inc(player);
 			player.getActivityManager().enable();
 			spell.onDestination().ifPresent(ActionListener::execute);
 			spell.attach(Optional.empty());

@@ -7,6 +7,8 @@ import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.player.Player;
 
+import static net.edge.content.achievements.Achievement.WILD_ONE;
+
 /**
  * Handles some parts of wilderness activity.
  * @author Artem Batutin <artembatutin@gmail.com>
@@ -32,6 +34,7 @@ public final class WildernessActivity {
 	 */
 	public static void enter(Player player) {
 		PLAYERS.add(player);
+		WILD_ONE.inc(player);
 		PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + PLAYERS.size());
 	}
 	

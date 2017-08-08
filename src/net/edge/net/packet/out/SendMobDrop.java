@@ -21,7 +21,7 @@ public final class SendMobDrop implements OutgoingPacket {
 	
 	@Override
 	public boolean onSent(Player player) {
-		return id >= 1;
+		return id >= 0;
 	}
 	
 	@Override

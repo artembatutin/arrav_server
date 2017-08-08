@@ -21,6 +21,8 @@ import net.edge.world.entity.item.Item;
 import java.util.*;
 import java.util.Map.Entry;
 
+import static net.edge.content.achievements.Achievement.PKER_OF_THE_WEEK;
+
 /**
  * The manager for the scoreboards.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -155,6 +157,7 @@ public final class ScoreboardManager {
 				
 				ap.chain(new PlayerDialogue("I would like to claim my rewards."));
 				if(ScoreboardManager.get().getPlayerScoreboardRewards().containsKey(player.getFormatUsername())) {
+					PKER_OF_THE_WEEK.inc(player);
 					player.getInventory().addOrBank(new Item(12852, ScoreboardManager.get().getPlayerScoreboardRewards().get(player.getFormatUsername()).get()));
 					ScoreboardManager.get().getPlayerScoreboardRewards().remove(player.getFormatUsername());
 					ap.chain(new NpcDialogue(npc.getId(), "Ah yeah, there were some rewards waiting for you however,", "they have been added to your inventory or have been", "banked.").attachAfter(() -> ap.getBuilder().go(-10)));

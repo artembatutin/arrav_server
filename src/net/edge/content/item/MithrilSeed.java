@@ -17,6 +17,8 @@ import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectType;
 
+import static net.edge.content.achievements.Achievement.POKER_FLOWER;
+
 /**
  * The class which is responsible for mithril seeds.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -80,7 +82,7 @@ public final class MithrilSeed {
                     return true;
                 }
                 player.getDiceTimer().reset();
-    
+                POKER_FLOWER.inc(player);
                 player.getInventory().remove(new Item(299), slot);
                 player.animation(new Animation(827, Animation.AnimationPriority.HIGH));
                 getRandomFlowerObject(player).publish(120, GameObject::remove);

@@ -20,6 +20,8 @@ import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.DISASTER;
+
 /**
  * Holds functionality for the recipe for disaster minigame.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -80,7 +82,6 @@ public final class RFDMinigame extends SequencedMinigame {
 	public void enter(Player player) {
 		InstanceManager.get().isolate(player, instance);
 		player.move(new Position(1899, 5366, 2));
-		
 		player.message("The next wave will start in 6 seconds...");
 	}
 	
@@ -130,6 +131,7 @@ public final class RFDMinigame extends SequencedMinigame {
 			key.set(RFDData.WAVE_SIX);
 			player.message("You have completed the rfd minigame.");
 			leave(player);
+			DISASTER.inc(player);
 			return;
 		}
 		
