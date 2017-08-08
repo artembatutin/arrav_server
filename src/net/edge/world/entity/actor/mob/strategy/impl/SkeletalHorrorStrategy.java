@@ -13,6 +13,9 @@ import net.edge.world.entity.actor.player.Player;
 
 public final class SkeletalHorrorStrategy extends DynamicStrategy<SkeletalHorror> {
 	
+	private final String[] mins = {"Minion, attack!", "Soldier, help me", "You evil men!", "Leave me alone!", "Don't touch my bones"};
+	private final String[] bone = {"Argghh!", "Only undead survives", "Run away murderers", "Stupid prayer believers"};
+	
 	public SkeletalHorrorStrategy(SkeletalHorror npc) {
 		super(npc);
 	}
@@ -27,10 +30,11 @@ public final class SkeletalHorrorStrategy extends DynamicStrategy<SkeletalHorror
 		if(RandomUtils.inclusive(10) == 1) {
 			npc.animation(new Animation(12061));
 			SkeletalHorror.horroris.minion();
+			npc.forceChat(RandomUtils.random(mins));
 		} else if(RandomUtils.inclusive(9) == 1) {
 			npc.animation(new Animation(12064));
 			SkeletalHorror.horroris.bones();
-			npc.forceChat("");
+			npc.forceChat(RandomUtils.random(bone));
 		} else {
 			npc.animation(new Animation(12062));
 		}
