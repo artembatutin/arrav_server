@@ -989,6 +989,11 @@ public final class Player extends Actor {
 	 */
 	@Override
 	public void move(Position destination) {
+		boolean setInstantMove = false;
+		if(!isTeleporting()) {
+			setTeleportStage(10);
+			setInstantMove = true;
+		}
 		dialogueChain.interrupt();
 		getMovementQueue().reset();
 		closeWidget();
@@ -998,6 +1003,10 @@ public final class Player extends Actor {
 			setLastRegion(getPosition().copy());
 		super.setPosition(destination.copy());
 		setNeedsPlacement(true);
+
+		if(setInstantMove) {
+			task(2, p -> setTeleportStage(-1));
+		}
 	}
 	
 	/**
