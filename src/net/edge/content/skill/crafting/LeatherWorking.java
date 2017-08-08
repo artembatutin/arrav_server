@@ -122,7 +122,6 @@ public final class LeatherWorking extends ProducingSkillAction {
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			amount--;
-			
 			if(amount <= 0)
 				t.cancel();
 		}

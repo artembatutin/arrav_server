@@ -18,6 +18,8 @@ import net.edge.world.object.GameObject;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.GOLD_AND_RIGNS;
+
 /**
  * Holds functionality for moulding jewellery.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -169,9 +171,9 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			amount--;
-			
 			if(amount <= 0)
 				t.cancel();
+			GOLD_AND_RIGNS.inc(player);
 		}
 	}
 	

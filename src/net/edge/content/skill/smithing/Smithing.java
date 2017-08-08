@@ -20,6 +20,8 @@ import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.BLACKSMITH;
+
 /**
  * Holds functionality for creating items on an anvil.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -228,6 +230,7 @@ public final class Smithing extends ProducingSkillAction {
 			amount--;
 			if(amount < 1)
 				t.cancel();
+			BLACKSMITH.inc(player);
 		}
 	}
 	

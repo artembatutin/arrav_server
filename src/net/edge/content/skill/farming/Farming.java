@@ -17,6 +17,8 @@ import net.edge.world.locale.Position;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.FARMER;
+
 public final class Farming extends HarvestingSkillAction {
 	
 	public Patch patch;
@@ -96,6 +98,7 @@ public final class Farming extends HarvestingSkillAction {
 	public void onHarvest(Task t, Item[] items, boolean success) {
 		if(success) {
 			if (patch.getSeedType() != null) {
+				FARMER.inc(player, patch.getHarvestedItem().getAmount());
 				if (patch.getHarvestedItem().getAmount() + amountToHarvest > patch.getProduct().getAmount())
 					amountToHarvest = patch.getProduct().getAmount() - patch.getHarvestedItem().getAmount();
 				patch.getHarvestedItem().setAmount(patch.getHarvestedItem().getAmount() + amountToHarvest);

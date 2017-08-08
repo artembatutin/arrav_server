@@ -35,7 +35,6 @@ public class SeaTrollQueenStrategy implements Strategy {
     public CombatHit outgoingAttack(Actor actor, Actor victim) {
         CombatType[] data = actor.getPosition().withinDistance(victim.getPosition(), 3) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
         CombatType c = RandomUtils.random(data);
-        victim.toPlayer().message("Generating attack.");
         return type(actor, victim, c);
     }
 

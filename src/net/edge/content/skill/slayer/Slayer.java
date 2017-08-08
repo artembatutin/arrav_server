@@ -23,6 +23,8 @@ import net.edge.world.entity.item.container.impl.Inventory;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.SLAYER_MASTER;
+
 /**
  * Holds functionality for the Slayer skill.
  * @author <a href="http://www.rune-server.org/members/Stand+Up/">Stan</a>
@@ -217,6 +219,7 @@ public final class Slayer {
 			player.setSlayer(Optional.empty());
 			player.getAttr().get("slayer_tasks").set(player.getAttr().get("slayer_tasks").getInt() + 1);
 			PlayerPanel.SLAYER_COUNT.refresh(player, "@or2@ - Completed tasks: @yel@" + player.getAttr().get("slayer_tasks").getInt());
+			SLAYER_MASTER.inc(player);
 			return true;
 		} else {
 			PlayerPanel.SLAYER_TASK.refresh(player, "@or2@ - Slayer task: @yel@" + (player.getSlayer().isPresent() ? (player.getSlayer().get().getAmount() + " " + player.getSlayer().get().toString()) : "none"));

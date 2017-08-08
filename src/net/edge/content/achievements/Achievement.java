@@ -6,41 +6,61 @@ import net.edge.world.entity.actor.player.Player;
 
 /**
  * Holds all the achievements
- * @author Daniel
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum Achievement {
 	
-	COMPLETE_TUTORIAL("Complete the tutorial", 1),//TODO
+	//MISC
 	CHANGE_APPEARANCE("Change your appearance once", 1),
-	KILL_A_MAN("Kill %s times a man", 5, 25),
-	BONE_FIRE("Add %s logs to fire pit", 100, 400, 1000, 10_000),
-	NO_GUARD("Kill %s Edgevillian guards", 5, 50, 100, 500),
-	BURY_BONES("Bury %s bones (any)", 10, 50, 500, 5000),
 	VOTE("Redeem %s vote rewards", 1, 10, 25, 50),
 	DROP_A_SUG("Suggest a monster drop by using the monster database from quest tab", 1, 5, 20, 50),
-	//SETUP_PRELOADING_GEAR("Setup your first gear preset", 1),//TODO
 	TRIVIABOT("Answer %s Trivia bot questions", 10, 30, 100, 250),
-	HIGH_ALCHEMY("Cast high alchemy spell %s times", 100, 500, 15_000, 50_000),
-	BARROWS("Complete %s Barrows runs", 3, 25, 75, 250),
-	SKILL_MASTERY("Achieve level 99 in %s skills", 2, 5, 15, 20),
+	
+	//combat
+	KILL_A_MAN("Kill %s times a man", 5, 25),
 	KILLER("Kill %s players", 10, 50, 150, 1000, 1500, 10_000),
-	WOODCUTTING("Chop down %s trees", 100, 500, 1500, 5000),
-	MINER("Mine %s rocks", 500, 1500, 5000),
 	GRIZZLY_BEAR("Kill 15 grizzly bears", 15, 30, 50, 100),
-	BOX_TRAPPER("Trap %s animals in a box", 25, 75, 200, 400),
-	FEATHERING("Snare %s birds", 25, 75, 200, 400),
+	DRAGON_DAGGER("Use %s Dragon dagger specs", 100, 350, 500, 2000),
+	NO_GUARD("Kill %s Edgevillian guards", 5, 50, 100, 500),
+	
+	//minigames
 	HORRORIFIC("Win %s horroris minigame matches.", 5, 10, 50, 200),
 	PEST_CONTROLLER("Win %s pest control matches.", 5, 10, 50, 200),
-	//SHEAR_30_SHEEPS("Shear %s Sheep", 30, 350, 800),//TODO
-	DRAGON_DAGGER("Use %s Dragon dagger specs", 100, 350, 500, 2000),
+	BARROWS("Complete %s Barrows runs", 3, 25, 75, 250),
+	
+	//skills
+	SKILL_MASTERY("Achieve level 99 in %s skills", 2, 5, 15, 20),
+	SLAYER_MASTER("Finish %s slayer tasks", 5, 10, 25, 100),
+	MINER("Mine %s rocks", 500, 1500, 5000),
+	BONE_FIRE("Add %s logs to fire pit", 100, 400, 1000, 10_000),
+	BURY_BONES("Bury %s bones (any)", 10, 50, 500, 5000),
+	BOX_TRAPPER("Trap %s animals in a box", 25, 75, 200, 400),
+	FEATHERING("Snare %s birds", 25, 75, 200, 400),
+	BLACKSMITH("Forge %s items.", 40, 100, 200, 400),
+	ENCHANTER("Enchant %s bolts", 1500, 10_000, 30_000),
+	FISHER_MAN("Catch %s items in the water.", 100, 200, 300, 500),
+	FARMER("Harvest %s items from farming.", 100, 200, 300, 500),
+	ARCHER_SUPPORTER("Fletch %s arrows", 50, 100, 200, 500),
+	LEAVES_AND_STUMPS("Chop down %s trees", 100, 500, 1500, 5000),
+	RUNE_CRAFTER("Craft %s runes.", 200, 500, 4000, 8000),
+	POTION_MAKER("Make %s potions with herblore", 200, 500, 4000, 8000),
+	REAL_ROBERY("Steal %s times from stalls.", 200, 500, 4000, 8000),
+	HIGH_ALCHEMY("Cast high alchemy spell %s times", 100, 500, 15_000, 50_000),
+	PRICELESS_GEM("Cut %s gems.", 20, 50, 100, 200),
+	GOLD_AND_RIGNS("Create %s jewellery.", 20, 50, 100, 200),
+	QUALITY_HIDES("Carve %s hide items.", 20, 50, 100, 200),
+	POTTERY("Create %s pottery items.", 20, 50, 100, 200),
+	;
+	
+	//COMPLETE_TUTORIAL("Complete the tutorial", 1),//TODO
+	//SETUP_PRELOADING_GEAR("Setup your first gear preset", 1),//TODO
+	//BOSS_DESTROYER("Kill 1,000 of any boss", 1000),//TODO
+	//BOSS_DESTROYER("Kill 1,000 of any boss", 1000),//TODO
 	//CRYSTAL_CHEST("Open %s crystal chests", 10, 50, 150),//TODO
 	//HALL_OF_FAME("Become listed in the Hall of Fame", 1),//TODO
 	//AGS_MAX("Hit an 82 with an Armadyl godwsword", 82),//TODO
 	//BALLISTA_MAX("Hit an 80 with a Heavy ballista", 80),//TODO
 	//MAULED("Kill 75 players with a Granite maul", 75),//TODO
-	ENCHANTER("Enchant %s bolts", 1500, 10_000, 30_000),
-	//BOSS_DESTROYER("Kill 1,000 of any boss", 1000),//TODO
-	POTION_MAKER("Make %s potions with herblore", 200, 500, 4000, 8000);
 	
 	/**
 	 * Caches our enum values.

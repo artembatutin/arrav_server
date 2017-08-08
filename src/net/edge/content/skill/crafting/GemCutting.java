@@ -13,6 +13,8 @@ import net.edge.world.entity.item.ItemIdentifiers;
 import java.util.EnumSet;
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.PRICELESS_GEM;
+
 /**
  * Holds functionality for cutting gems.
  * @author <a href="http://www.rune-server.org/members/Golang/">Jay</a>
@@ -66,8 +68,10 @@ public final class GemCutting extends ProducingSkillAction {
 	
 	@Override
 	public void onProduce(Task t, boolean success) {
-		if(success)
+		if(success) {
 			player.animation(data.animation);
+			PRICELESS_GEM.inc(player);
+		}
 	}
 	
 	@Override

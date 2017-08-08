@@ -18,6 +18,8 @@ import net.edge.world.object.GameObject;
 import java.util.EnumSet;
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.POTTERY;
+
 /**
  * Holds functionality for transforming clay into different kind of pots.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -151,9 +153,9 @@ public final class PotClaying extends ProducingSkillAction {
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			counter--;
-			
 			if(counter <= 0)
 				t.cancel();
+			POTTERY.inc(player);
 		}
 	}
 	

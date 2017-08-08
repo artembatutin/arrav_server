@@ -17,6 +17,7 @@ import net.edge.world.object.GameObject;
 import java.util.*;
 import java.util.stream.IntStream;
 
+import static net.edge.content.achievements.Achievement.RUNE_CRAFTER;
 import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.TRAINING_PORTAL;
 
 /**
@@ -109,6 +110,7 @@ public final class Runecrafting extends ProducingSkillAction {
 			getPlayer().animation(RUNECRAFTING_ANIMATION);
 			getPlayer().graphic(RUNECRAFTING_GRAPHIC);
 			t.cancel();
+			RUNE_CRAFTER.inc(player, count);
 		}
 	}
 

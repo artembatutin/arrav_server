@@ -11,6 +11,8 @@ import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.FISHER_MAN;
+
 public final class Fishing extends HarvestingSkillAction {
 	
 	private final Tool tool;
@@ -23,10 +25,13 @@ public final class Fishing extends HarvestingSkillAction {
 	@Override
 	public void onHarvest(Task t, Item[] items, boolean success) {
 		if(success) {
+			int count = 0;
 			for(Item i : items) {
 				Catchable c = Catchable.getCatchable(i.getId()).orElse(null);
 				Skills.experience(getPlayer(), c.getExperience(), skill().getId());
+				count += i.getAmount();
 			}
+			FISHER_MAN.inc(player, count);
 		}
 		if(!(Boolean) player.getAttr().get("fishing").get()) {
 			player.getAttr().get("fishing").set(true);

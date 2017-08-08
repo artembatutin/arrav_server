@@ -11,6 +11,8 @@ import net.edge.world.entity.item.Item;
 import java.util.EnumSet;
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.ARCHER_SUPPORTER;
+
 /**
  * Holds functionality for creating arrows.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -90,6 +92,7 @@ public final class ArrowCreation extends ProducingSkillAction {
 		if(!checkFletching()) {
 			return false;
 		}
+		ARCHER_SUPPORTER.inc(player, 15);
 		return true;
 	}
 	

@@ -15,6 +15,8 @@ import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.REAL_ROBERY;
+
 /**
  * Represents functionality for stealing from a stall.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -114,6 +116,8 @@ public final class Stalls extends Thieving {
 				guard.get().faceEntity(player);
 				player.damage(new Hit(10, Hit.HitType.DISEASE, Hit.HitIcon.NONE));
 			}
+		} else {
+			REAL_ROBERY.inc(player);
 		}
 	}
 	
