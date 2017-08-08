@@ -33,7 +33,7 @@ public class SeaTrollQueenStrategy implements Strategy {
 
     @Override
     public CombatHit outgoingAttack(Actor actor, Actor victim) {
-        CombatType[] data = actor.getPosition().withinDistance(victim.getPosition(), 2) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
+        CombatType[] data = actor.getPosition().withinDistance(victim.getPosition(), 3) ? new CombatType[]{CombatType.MELEE, CombatType.MAGIC} : new CombatType[]{CombatType.MAGIC};
         CombatType c = RandomUtils.random(data);
         victim.toPlayer().message("Generating attack.");
         return type(actor, victim, c);
@@ -66,6 +66,7 @@ public class SeaTrollQueenStrategy implements Strategy {
      * @return
      */
     public CombatHit melee(Actor character, Actor victim) {
+        character.animation(new Animation(3991));
         return new CombatHit(character, victim, 1, CombatType.MELEE, true);
     }
 
@@ -93,12 +94,8 @@ public class SeaTrollQueenStrategy implements Strategy {
         character.setCurrentlyCasting(spell);
         character.animation(new Animation(3992));
         spell.projectile(character, victim).get().sendProjectile();
-        CombatHit session = new CombatHit(character, victim, 1, CombatType.MAGIC, false) {
-            @Override
-            public void postAttack(int counter) {
-                victim.toPlayer().getSkills()[Skills.PRAYER].decreaseLevel(prayerDrain);
-            }
-        };
+        victim.toPlayer().getSkills()[Skills.PRAYER].decreaseLevel(prayerDrain);
+        CombatHit session = new CombatHit(character, victim, 1, CombatType.MAGIC, false);
         session.ignore();
         return session;
     }

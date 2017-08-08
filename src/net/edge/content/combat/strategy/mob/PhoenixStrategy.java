@@ -51,7 +51,6 @@ public class PhoenixStrategy implements Strategy {
                     victim.toPlayer().getSkills()[i].decreaseLevel(1);
                 }
             }
-
         };
     }
 

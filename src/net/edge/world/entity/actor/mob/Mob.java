@@ -7,16 +7,13 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.strategy.Strategy;
-import net.edge.world.entity.actor.mob.impl.Phoenix;
-import net.edge.world.entity.actor.mob.impl.SkeletalHorror;
+import net.edge.world.entity.actor.mob.impl.*;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Hit;
 import net.edge.world.PoisonType;
-import net.edge.world.entity.actor.mob.impl.DefaultMob;
-import net.edge.world.entity.actor.mob.impl.KalphiteQueen;
 import net.edge.world.entity.actor.mob.impl.corp.CorporealBeast;
 import net.edge.world.entity.actor.mob.impl.glacor.Glacor;
 import net.edge.world.entity.actor.mob.impl.gwd.CommanderZilyana;
@@ -53,6 +50,7 @@ public abstract class Mob extends Actor {
 					.put(9177, s -> new SkeletalHorror())
 					.put(8133, s -> new CorporealBeast())
 					.put(8549, Phoenix::new)
+					.put(3847, SeaTrollQueen::new)
 					.put(1158, KalphiteQueen::new)
 					.put(14301, Glacor::new).build());
 
