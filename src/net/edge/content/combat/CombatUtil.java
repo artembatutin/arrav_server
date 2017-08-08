@@ -448,8 +448,6 @@ public final class CombatUtil {
 	 * @throws IllegalArgumentException if the combat type is invalid.
 	 */
 	public static Hit calculateRandomHit(Actor character, Actor victim, CombatType type, int delay, boolean checkAccuracy) {
-		if(type == CombatType.NONE)
-			throw new IllegalArgumentException("Invalid combat type!");
 		Formula formula = FORMULAS[type.ordinal()];
 		int max = formula.maxHit(character, victim);
 		int hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);

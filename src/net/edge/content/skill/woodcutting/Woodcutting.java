@@ -15,10 +15,9 @@ import net.edge.world.entity.item.Item;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.GameObject;
 
-import java.util.Arrays;
 import java.util.Optional;
 
-import static net.edge.content.achievements.Achievement.WOODCUTTING;
+import static net.edge.content.achievements.Achievement.LEAVES_AND_STUMPS;
 
 /**
  * Represents the procession for cutting logs.
@@ -164,7 +163,7 @@ public final class Woodcutting extends HarvestingSkillAction {
 				}
 			}
 			if(obj != null) {
-				WOODCUTTING.inc(player);
+				LEAVES_AND_STUMPS.inc(player);
 				int id = object.getId();//saved tree id.
 				object.setId(obj.getTransformable());
 				object.setDisabled(true);
