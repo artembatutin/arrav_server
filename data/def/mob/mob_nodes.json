@@ -349,6 +349,16 @@
   "face": "SOUTH"
   },
   {
+    "id": 3847,
+    "position": {
+      "x": 2345,
+      "y": 3702,
+      "z": 0
+    },
+    "random-walk": false,
+    "face": "SOUTH"
+  },
+  {
     "id": 2896,
     "position": {
       "x": 2928,

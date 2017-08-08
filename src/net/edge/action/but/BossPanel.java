@@ -24,7 +24,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2601, 5706), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(2343, 6387), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
