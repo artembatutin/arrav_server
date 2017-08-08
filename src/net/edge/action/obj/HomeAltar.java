@@ -31,6 +31,7 @@ public class HomeAltar extends ActionInitializer {
 			}
 		};
 		pray.registerFirst(409);
+		pray.registerFirst(41979);
 		
 		//prayer/magic switcher
 		ObjectAction change = new ObjectAction() {

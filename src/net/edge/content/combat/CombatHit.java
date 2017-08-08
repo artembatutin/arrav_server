@@ -91,9 +91,6 @@ public class CombatHit {
 		this.checkAccuracy = checkAccuracy;
 		this.delay = delay;
 		this.experience = determineExperience();
-		if(victim.isPlayer() && Application.DEBUG) {
-			victim.toPlayer().message("Combat Type:" +type);
-		}
 		if(type == CombatType.MAGIC && attacker.getCurrentlyCasting() != null) {
 			spell = Optional.of(attacker.getCurrentlyCasting());
 		} else {

@@ -224,9 +224,10 @@ public enum PlayerPanel {
 		PlayerPanel.TOOLS.refresh(player, "@or1@Quickies:");
 		PlayerPanel.COMMUNITY.refresh(player, "@or3@ - Forums");
 		PlayerPanel.DISCORD.refresh(player, "@or3@ - Discord");
-		PlayerPanel.VOTE.refresh(player, "@or3@ - Vote points: @yel@" + player.getVotePoints() + " points");
+		PlayerPanel.VOTE.refresh(player, "@or3@ - Vote");
 		PlayerPanel.STORE.refresh(player, "@or3@ - Store");
 		PlayerPanel.NPC_TOOL.refresh(player, "@or3@ - Monster Database");
+		
 		PlayerPanel.SERVER_STATISTICS.refresh(player, "@or1@Server Information:");
 		PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
 		PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + WildernessActivity.getPlayers().size());
