@@ -453,11 +453,10 @@ public final class CombatUtil {
 		Formula formula = FORMULAS[type.ordinal()];
 		int max = formula.maxHit(character, victim);
 		int hit = RandomUtils.inclusive(1, max < 1 ? 1 : max);
-		Hit.HitIcon icon = type == CombatType.MAGIC ? Hit.HitIcon.MAGIC : (type == CombatType.RANGED ? Hit.HitIcon.RANGED : (type == CombatType.MELEE ? Hit.HitIcon.MELEE : Hit.HitIcon.NONE));
 		if(Application.DEBUG && character.isPlayer()) {
 			character.toPlayer().message("[COMBAT-HIT]: " + "Max: [" + max + "] Hit: [" + hit + "].");
 		}
-		return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, icon, delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
+		return calculateSoaking(victim, type, new Hit(hit, ((hit * 100f) / max) > 95 ? Hit.HitType.CRITICAL : Hit.HitType.NORMAL, type.getIcon(), delay, !checkAccuracy || isAccurate(character, victim, type), character.getSlot()));
 	}
 	
 	/**
