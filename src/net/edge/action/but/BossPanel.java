@@ -20,11 +20,20 @@ public class BossPanel extends ActionInitializer {
 			}
 		};
 		e.register(50);
+		// Skeletal horror
+		e = new ButtonAction() {
+			@Override
+			public boolean click(Player player, int button) {
+				player.teleport(new Position(3366, 3512), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				return true;
+			}
+		};
+		e.register(51);
 		//sea troll queen
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2343, 6387), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(2343, 3687), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
