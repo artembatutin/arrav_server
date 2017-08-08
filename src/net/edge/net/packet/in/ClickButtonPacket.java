@@ -74,7 +74,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		int button = PROPER_READ ? payload.getShort() : hexToInt(payload.getBytes(2));
-		if(Application.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
+		if(Application.DEBUG && player.getRights().equals(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}
 		

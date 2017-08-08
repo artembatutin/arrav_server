@@ -22,9 +22,9 @@ import java.util.Optional;
  */
 public final class ChaosElementalStrategy implements Strategy {
 
-    private final int PRIMARY_PROJECTILE = 558;
-    private final int TELEPORT_PROJECTILE = 555;
-    private final int UNEQUIP_PROJECTILE = 552;
+    private final static int PRIMARY_PROJECTILE = 558;
+    private final static int TELEPORT_PROJECTILE = 555;
+    private final static int UNEQUIP_PROJECTILE = 552;
 
     private static final CombatNormalSpell SPELL = new CombatNormalSpell() {
 
@@ -87,14 +87,17 @@ public final class ChaosElementalStrategy implements Strategy {
 
     @Override
     public CombatHit outgoingAttack(Actor actor, Actor victim) {
-        int specialAttack = RandomUtils.inclusive(0, 100);
-        if(specialAttack > 80) {
-            specialAttack(actor, victim);
-            return null;
-        }
         CombatType[] data = new CombatType[]{CombatType.MELEE, CombatType.MAGIC, CombatType.RANGED};
         CombatType type = RandomUtils.random(data);
-        return primaryAttack(actor, victim, type);
+        int specialAttack = RandomUtils.inclusive(0, 100);
+        CombatHit session = primaryAttack(actor, victim, type);
+
+        if(specialAttack > 80) {
+            specialAttack(actor, victim);
+            session.ignore();
+        }
+
+        return session;
     }
 
     @Override

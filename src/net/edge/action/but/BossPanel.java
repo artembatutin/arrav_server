@@ -11,8 +11,17 @@ public class BossPanel extends ActionInitializer {
 	@Override
 	public void init() {
 		//Bosses 50-67
-		//sea troll queen
+		//Phoenix
 		ButtonAction e = new ButtonAction() {
+			@Override
+			public boolean click(Player player, int button) {
+				player.teleport(new Position(3535, 5186), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				return true;
+			}
+		};
+		e.register(50);
+		//sea troll queen
+		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
 				player.teleport(new Position(2601, 5706), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
@@ -47,6 +56,15 @@ public class BossPanel extends ActionInitializer {
 			}
 		};
 		e.register(56);
+		//Chaos elemental
+		e = new ButtonAction() {
+			@Override
+			public boolean click(Player player, int button) {
+				player.teleport(new Position(3260, 3923), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				return true;
+			}
+		};
+		e.register(57);
 		//kalphite queen
 		e = new ButtonAction() {
 			@Override
