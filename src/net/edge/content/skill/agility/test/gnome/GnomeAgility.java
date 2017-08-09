@@ -1,19 +1,10 @@
 package net.edge.content.skill.agility.test.gnome;
 
 import net.edge.action.impl.ObjectAction;
-import net.edge.content.skill.agility.impl.gnome.GnomeStrongholdAgility;
-import net.edge.content.skill.agility.impl.gnome.impl.JumpOverBarrier;
-import net.edge.content.skill.agility.impl.gnome.impl.PoleSwing;
-import net.edge.content.skill.agility.obstacle.ObstacleAction;
-import net.edge.content.skill.agility.obstacle.ObstacleType;
-import net.edge.content.skill.agility.obstacle.impl.Climbable;
-import net.edge.content.skill.agility.obstacle.impl.Movable;
-import net.edge.content.skill.agility.obstacle.impl.Walkable;
 import net.edge.content.skill.agility.test.Agility;
 import net.edge.content.skill.agility.test.obstacle.Obstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.ClimbableObstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.WalkableObstacle;
-import net.edge.task.LinkedTaskSequence;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
@@ -32,7 +23,7 @@ public final class GnomeAgility extends Agility {
      * @param object   {@link #object}.
      * @param crossing {@link #crossing}.
      */
-    public GnomeAgility(Player player, GameObject object, Obstacle crossing) {
+   private GnomeAgility(Player player, GameObject object, Obstacle crossing) {
         super(player, object, crossing);
     }
 
