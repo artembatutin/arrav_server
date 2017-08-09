@@ -38,5 +38,6 @@ public class ClimbableObstacle extends Obstacle {
         player.move(end);
         player.setTeleportStage(10);
         player.task(2, p -> p.setTeleportStage(0));
+        t.cancel();
     }
 }

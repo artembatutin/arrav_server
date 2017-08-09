@@ -44,6 +44,10 @@ public abstract class Obstacle {
         return true;
     }
 
+    public boolean findProperPosition(Player player) {
+        return true;
+    }
+
     public void initialize(Player player) {
 
     }
