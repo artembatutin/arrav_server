@@ -21,7 +21,7 @@ public final class NexMinion extends Mob {
 	
 	@Override
 	public Mob create() {
-		return new NexMinion();
+		return new NexMinion(getId(), getPosition());
 	}
 	
 }
