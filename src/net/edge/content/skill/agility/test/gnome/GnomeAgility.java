@@ -35,6 +35,11 @@ public final class GnomeAgility extends Agility {
                 public boolean click(Player player, GameObject object, int click) {
                     Obstacle obstacle = obstacleFunction.obstacles.apply(player);
 
+                    if(!obstacle.findProperPosition(player)) {
+                        new GnomeAgility(player, object, obstacle).start();
+                        return true;
+                    }
+
                     Position walk = null;
                     Position[] targets = obstacle.start;
                     if(targets.length == 0) {
@@ -82,7 +87,21 @@ public final class GnomeAgility extends Agility {
         TREE_BRANCH_UP(35970, p -> new ClimbableObstacle(new Position(2473, 3423, 1), new Position(2473, 3420, 2), 828, 1, 5)),
         TIGHT_ROPE(2312, p -> new WalkableObstacle(new Position(2477, 3420, 2), new Position(2483, 3420, 2), 762, 1, 7.5)),
         TREE_BRANCH_DOWN(new int[]{2314, 2315}, p -> new ClimbableObstacle(new Position(p.getPosition().getX(), p.getPosition().getY(), 2), new Position(p.getPosition().getX(), p.getPosition().getY(), 0), 828, 1, 5)),
-        OBSTACLE_NET_BACK(2286, p -> new ClimbableObstacle(OBSTACLE_NET_BACK_POSITIONS, new Position(p.getPosition().getX(), 3427), 828, 1, 7.5));
+        OBSTACLE_NET_BACK(2286, p -> new ClimbableObstacle(OBSTACLE_NET_BACK_POSITIONS, new Position(p.getPosition().getX(), 3427), 828, 1, 7.5)),
+        OBSTACLE_PIPES(new int[]{85547, 85546}, p -> new WalkableObstacle(new Position(p.getPosition().getX(), 3430, 0), new Position(p.getPosition().getX(), 3437, 0), 844, 1, 7.5) {
+            @Override
+            public boolean findProperPosition(Player player) {
+                return false;
+            }
+            @Override
+            public boolean crossable(Player player) {
+                if(player.getPosition().same(new Position(2483, 3430, 0)) || player.getPosition().same(new Position(2487, 3430, 0))) {
+                    return true;
+                }
+                player.message("You can't cross this obstacle from this side.");
+                return false;
+            }
+        });
 
         public final int[] ids;
 
