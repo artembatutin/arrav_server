@@ -982,7 +982,7 @@
   },
   {
     "id": 26,
-    "name": "Thieving black market",
+    "name": "Thief black market",
     "currency": "COINS",
     "items": [
       1963,
@@ -1048,6 +1048,22 @@
       21475,
       21465,
       21470
+    ]
+  },
+  {
+    "id": 29,
+    "name": "Farmer's pleasury",
+    "currency": "COINS",
+    "items": [
+      
+    ]
+  },
+  {
+    "id": 30,
+    "name": "Box sets",
+    "currency": "COINS",
+    "items": [
+      
     ]
   }
 ]

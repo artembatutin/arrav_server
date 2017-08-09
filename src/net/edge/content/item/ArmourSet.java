@@ -1,6 +1,7 @@
 package net.edge.content.item;
 
 import net.edge.action.impl.ItemOnItemAction;
+import net.edge.content.market.MarketCounter;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.ItemIdentifiers;
@@ -165,6 +166,7 @@ public enum ArmourSet {
 					return false;
 				}
 			};
+			MarketCounter.getShops().get(30).getItems().add(set.box.getId());
 			a.register(set.box.getId());
 		}
 	}

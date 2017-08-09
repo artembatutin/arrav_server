@@ -1,7 +1,6 @@
 package net.edge.content.skill.thieving;
 
 import net.edge.task.Task;
-import net.edge.util.rand.RandomUtils;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.SkillAction;
@@ -36,7 +35,7 @@ public abstract class Thieving extends SkillAction {
 	 * The loot the player receives upon stealing from this stall.
 	 * @return the array of items.
 	 */
-	public abstract Item[] loot();
+	public abstract Item loot();
 	
 	/**
 	 * The method executed upon stealing from this stall.
@@ -81,8 +80,10 @@ public abstract class Thieving extends SkillAction {
 	public void onStop() {
 		if(!failure() && canExecute()) {
 			onStop(true);
-			getPlayer().getInventory().add(RandomUtils.random(loot()));
-			Skills.experience(getPlayer(), experience(), skill().getId());
+			if(!failure()) {
+				getPlayer().getInventory().add(loot());
+				Skills.experience(getPlayer(), experience(), skill().getId());
+			}
 		}
 		onStop(false);
 	}

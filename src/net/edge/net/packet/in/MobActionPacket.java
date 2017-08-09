@@ -201,7 +201,6 @@ public final class MobActionPacket implements IncomingPacket {
 		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null)
 			return;
-		final int id = mob.getId();
 		Position position = mob.getPosition();
 		player.getMovementListener().append(() -> {
 			if(new Boundary(position, mob.size()).within(player.getPosition(), player.size(), 1)) {

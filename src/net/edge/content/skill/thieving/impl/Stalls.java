@@ -34,6 +34,11 @@ public final class Stalls extends Thieving {
 	private final DynamicObject object;
 	
 	/**
+	 * The possible loot stealing the stall.
+	 */
+	private final Item loot;
+	
+	/**
 	 * Constructs a new {@link Stalls}.
 	 * @param player {@link #getPlayer()}.
 	 * @param stall  the stall this player is stealing from.
@@ -43,6 +48,7 @@ public final class Stalls extends Thieving {
 		super(player, object.getGlobalPos());
 		this.stall = stall;
 		this.object = object;
+		this.loot = RandomUtils.random(stall.loot);
 	}
 	
 	public static void action() {
@@ -95,7 +101,7 @@ public final class Stalls extends Thieving {
 			return false;
 		}
 
-		if(!getPlayer().getInventory().hasCapacityFor(stall.loot)) {
+		if(!getPlayer().getInventory().hasCapacityFor(loot)) {
 			player.message("You don't have enough inventory space for the loot.");
 			return false;
 		}
@@ -133,8 +139,8 @@ public final class Stalls extends Thieving {
 	}
 	
 	@Override
-	public Item[] loot() {
-		return stall.loot;
+	public Item loot() {
+		return loot;
 	}
 	
 	@Override

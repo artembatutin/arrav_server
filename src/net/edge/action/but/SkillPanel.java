@@ -112,6 +112,22 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
+				player.teleport(new Position(2807, 3464), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				return true;
+			}
+		};
+		e.register(Skills.FARMING);
+		e = new ButtonAction() {
+			@Override
+			public boolean click(Player player, int button) {
+				player.teleport(new Position(3077, 3518), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				return true;
+			}
+		};
+		e.register(Skills.SUMMONING);
+		e = new ButtonAction() {
+			@Override
+			public boolean click(Player player, int button) {
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						player.teleport(new Position(2475, 3439), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);

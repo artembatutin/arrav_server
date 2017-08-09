@@ -35,6 +35,11 @@ public final class Pickpocketing extends Thieving {
 	private final Mob mob;
 	
 	/**
+	 * The possible loot for pickpocketing.
+	 */
+	private final Item loot;
+	
+	/**
 	 * Represents the animation specific to pickpocketing.
 	 */
 	private static final Animation ANIMATION = new Animation(881);
@@ -64,6 +69,7 @@ public final class Pickpocketing extends Thieving {
 		super(player, mob.getPosition());
 		this.definition = data;
 		this.mob = mob;
+		this.loot = RandomUtils.random(definition.loot);
 	}
 	
 	public static void action() {
@@ -76,8 +82,13 @@ public final class Pickpocketing extends Thieving {
 					return true;
 				}
 			};
-			for(int n : data.npcId)
-				e.registerSecond(n);
+			for(int n : data.npcId) {
+				if(n == 3299) {//master farmer
+					e.registerFourth(n);
+				} else {
+					e.registerSecond(n);
+				}
+			}
 		}
 	}
 	
@@ -114,11 +125,11 @@ public final class Pickpocketing extends Thieving {
 			return false;
 		}
 
-		if(!getPlayer().getInventory().hasCapacityFor(definition.loot)) {
+		if(!getPlayer().getInventory().hasCapacityFor(loot)) {
 			player.message("You don't have enough inventory space for the loot.");
 			return false;
 		}
-		if(!getPlayer().isStunned()) {
+		if(getPlayer().isStunned()) {
 			return false;
 		}
 		if(!player.getSkills()[skill().getId()].getDelay().elapsed(1800)) {
@@ -129,8 +140,8 @@ public final class Pickpocketing extends Thieving {
 	}
 	
 	@Override
-	public Item[] loot() {
-		return definition.loot;
+	public Item loot() {
+		return loot;
 	}
 	
 	@Override
@@ -142,7 +153,10 @@ public final class Pickpocketing extends Thieving {
 	public void onExecute(Task t) {
 		if(failure()) {
 			mob.forceChat("What do you think you're doing?");
-			mob.animation(NPC_ANIMATION);
+			if(mob.getDefinition().isAttackable())
+				mob.animation(new Animation(mob.getDefinition().getAttackAnimation()));
+			else
+				mob.animation(NPC_ANIMATION);
 			int hit = RandomUtils.inclusive(1, definition.damage);
 			getPlayer().damage(new Hit(hit));
 			getPlayer().animation(STUN_ANIMATION);
@@ -184,7 +198,6 @@ public final class Pickpocketing extends Thieving {
 		WARRIOR_WOMAN(new int[]{15}, new Item[]{new Item(995, 18)}, 25, 26, 3, 20),
 		AL_KHARID_WARRIOR(new int[]{18}, new Item[]{new Item(995, 18)}, 25, 26, 3, 20),
 		ROGUE(new int[]{187}, new Item[]{new Item(995, 120), new Item(556, 8), new Item(1523, 1), new Item(1219, 1), new Item(1993, 1), new Item(2357, 1), new Item(1227, 1)}, 32, 35.5, 3, 20),
-		MASTER_FARMER(new int[]{2234, 2235}, new Item[]{new Item(5318, 1), new Item(5319, 1), new Item(5324, 3), new Item(5323, 2), new Item(5321, 2), new Item(5305, 4), new Item(5307, 2), new Item(5308, 2), new Item(5306, 3), new Item(5309, 2), new Item(5310, 1), new Item(5311, 1), new Item(5101, 1), new Item(5102, 1), new Item(5103, 1), new Item(5104, 1), new Item(5105, 1), new Item(5106, 1), new Item(5096, 1), new Item(5097, 1), new Item(5098, 1), new Item(5099, 1), new Item(5100, 1), new Item(5291, 1), new Item(5292, 1), new Item(5293, 1), new Item(5294, 1), new Item(5295, 1), new Item(5296, 1), new Item(5297, 1), new Item(5298, 1), new Item(5299, 1), new Item(5300, 1), new Item(5301, 1), new Item(5302, 1), new Item(5303, 1), new Item(5304, 1), new Item(5280, 1), new Item(5281, 1)}, 38, 43, 3, 30),
 		GUARD(new int[]{9, 10, 5920, 3408}, new Item[]{new Item(995, 700), new Item(2351, 1), new Item(199, 1), new Item(313, 4), new Item(453, 1), new Item(562, 12), new Item(712, 1), new Item(950, 1), new Item(1623, 1)}, 40, 46.5, 3, 20),
 		POLLNIVIAN_BEARDED_BANDIT(new int[]{1880, 1881}, new Item[]{new Item(995, 40)}, 45, 65, 3, 50),
 		DESERT_BANDIT(new int[]{1926, 1927, 1928, 1929, 1930, 1931}, new Item[]{new Item(995, 30), new Item(179, 1), new Item(1523, 1)}, 53, 79.5, 3, 30),
@@ -194,12 +207,8 @@ public final class Pickpocketing extends Thieving {
 		MENAPHITE_THUG(new int[]{1904, 1905}, new Item[]{new Item(995, 60)}, 65, 137.5, 3, 50),
 		PALADIN(new int[]{20, 365, 2256}, new Item[]{new Item(995, 80), new Item(562, 2)}, 70, 151.75, 4, 3),
 		GNOME(new int[]{66, 67, 68}, new Item[]{new Item(995, 300), new Item(557, 1), new Item(444, 1), new Item(569, 1), new Item(2150, 1), new Item(2162, 1)}, 75, 198.5, 4, 10),
-		HERO(new int[]{21}, new Item[]{new Item(995, 300), new Item(560, 2), new Item(565, 1), new Item(444, 1), new Item(1993, 1), new Item(569, 1), new Item(1601, 1)}, 80, 273.3, 5, 40);
-		
-		/**
-		 * Caches our enum values.
-		 */
-		private static final ImmutableSet<PickpocketData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(PickpocketData.class));
+		MASTER_FARMER(new int[]{2234, 2235, 3299}, new Item[]{new Item(5318, 1), new Item(5319, 1), new Item(5324, 3), new Item(5323, 2), new Item(5321, 2), new Item(5305, 4), new Item(5307, 2), new Item(5308, 2), new Item(5306, 3), new Item(5309, 2), new Item(5310, 1), new Item(5311, 1), new Item(5101, 1), new Item(5102, 1), new Item(5103, 1), new Item(5104, 1), new Item(5105, 1), new Item(5106, 1), new Item(5096, 1), new Item(5097, 1), new Item(5098, 1), new Item(5099, 1), new Item(5100, 1), new Item(5291, 1), new Item(5292, 1), new Item(5293, 1), new Item(5294, 1), new Item(5295, 1), new Item(5296, 1), new Item(5297, 1), new Item(5298, 1), new Item(5299, 1), new Item(5300, 1), new Item(5301, 1), new Item(5302, 1), new Item(5303, 1), new Item(5304, 1), new Item(5280, 1), new Item(5281, 1)}, 80, 43, 3, 30),
+		HERO(new int[]{21}, new Item[]{new Item(995, 300), new Item(560, 2), new Item(565, 1), new Item(444, 1), new Item(1993, 1), new Item(569, 1), new Item(1601, 1)}, 82, 273.3, 5, 40);
 		
 		/**
 		 * The identifiers which represents this mob.
@@ -238,22 +247,6 @@ public final class Pickpocketing extends Thieving {
 			this.experience = experience / 2;
 			this.seconds = seconds;
 			this.damage = damage;
-		}
-		
-		/**
-		 * Gets the definition.
-		 * @param id the id to check for.
-		 * @return the pickpocketdata wrapped in an optional, {@link Optional#empty()} otherwise.
-		 */
-		protected static Optional<PickpocketData> getDefinition(int id) {
-			for(PickpocketData data : VALUES) {
-				for(int npcId : data.npcId) {
-					if(npcId == id) {
-						return Optional.of(data);
-					}
-				}
-			}
-			return Optional.empty();
 		}
 	}
 	

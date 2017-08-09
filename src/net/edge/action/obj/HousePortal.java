@@ -14,6 +14,10 @@ public class HousePortal extends ActionInitializer {
 		ObjectAction e = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
+				if(true) {
+					player.message("Construction coming soon.");
+					return true;
+				}
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						if(!Construction.hasHouse(player)) {

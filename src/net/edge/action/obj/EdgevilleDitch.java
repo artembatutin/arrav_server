@@ -31,5 +31,6 @@ public class EdgevilleDitch extends ActionInitializer {
 			}
 		};
 		jump.registerFirst(23271);
+		jump.registerFirst(43443);
 	}
 }
