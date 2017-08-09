@@ -24089,5 +24089,145 @@
     },
     "random-walk": true,
     "walk-radius": 4
+  },
+  {
+    "id": 3342,
+    "position": {
+      "x": 1757,
+      "y": 5236,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3342,
+    "position": {
+      "x": 1750,
+      "y": 5225,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3343,
+    "position": {
+      "x": 1759,
+      "y": 5218,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3342,
+    "position": {
+      "x": 1772,
+      "y": 5229,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3343,
+    "position": {
+      "x": 1772,
+      "y": 5206,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3340,
+    "position": {
+      "x": 1756,
+      "y": 5219,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3340,
+    "position": {
+      "x": 1738,
+      "y": 5224,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3340,
+    "position": {
+      "x": 1736,
+      "y": 5209,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3340,
+    "position": {
+      "x": 1754,
+      "y": 5200,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3340,
+    "position": {
+      "x": 1780,
+      "y": 5209,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3340,
+    "position": {
+      "x": 1762,
+      "y": 5184,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3340,
+    "position": {
+      "x": 1741,
+      "y": 5151,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3340,
+    "position": {
+      "x": 1760,
+      "y": 5164,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
+  },
+  {
+    "id": 3340,
+    "position": {
+      "x": 1778,
+      "y": 5178,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 2
   }
 ]

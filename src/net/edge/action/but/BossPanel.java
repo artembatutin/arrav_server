@@ -56,6 +56,15 @@ public class BossPanel extends ActionInitializer {
 			}
 		};
 		e.register(54);
+		//Giant moles
+		e = new ButtonAction() {
+			@Override
+			public boolean click(Player player, int button) {
+				player.teleport(new Position(1752, 5237), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				return true;
+			}
+		};
+		e.register(55);
 		//king black dragon
 		e = new ButtonAction() {
 			@Override

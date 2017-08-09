@@ -54,6 +54,7 @@ public abstract class Mob extends Actor {
 					.put(8549, Phoenix::new)
 					.put(3847, SeaTrollQueen::new)
 					.put(1158, KalphiteQueen::new)
+					.put(3340, GiantMole::new)
 					.put(14301, Glacor::new).build());
 
 	/**
