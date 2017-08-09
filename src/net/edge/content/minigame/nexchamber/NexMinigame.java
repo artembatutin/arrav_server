@@ -68,7 +68,7 @@ public class NexMinigame extends Minigame {
 		if(other.isPlayer())
 			return false;
 		Mob m = other.toMob();
-		if(nex.minionStage != m.getId() - 13450) {
+		if(nex.minionStage != m.getId() - 13450 && m.getId() != 13447) {
 			player.message("The avatar is not weak enough to damage this minion.");
 			return false;
 		}
