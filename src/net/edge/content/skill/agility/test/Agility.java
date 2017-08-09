@@ -77,12 +77,11 @@ public abstract class Agility extends SkillAction {
 
     @Override
     public final boolean instant() {
-        return true;
+        return false;
     }
 
     @Override
     public final boolean canExecute() {
-        //Method shouldn't be used since this checks each cycle, and with agility you only check on initialisation.
         return true;
     }
 
@@ -102,8 +101,6 @@ public abstract class Agility extends SkillAction {
         if(running) {
             player.getMovementQueue().setRunning(false);
         }
-
-        // ARTEM TODO DO THE SILLY WALK TO SPECIFIC POSITION
 
         player.getActivityManager().setAllExcept(ActivityManager.ActivityType.LOG_OUT);
     }

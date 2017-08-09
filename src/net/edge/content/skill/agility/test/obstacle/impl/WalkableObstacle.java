@@ -12,20 +12,16 @@ import net.edge.world.locale.Position;
  */
 public class WalkableObstacle extends Obstacle {
 
-    public WalkableObstacle(int[] ids, Position[] start, Position end, Animation animation, int requirement, double experience, boolean travelback) {
-        super(ids, start, end, animation, requirement, experience, 0, travelback);
+    public WalkableObstacle(Position[] start, Position end, Animation animation, int requirement, double experience) {
+        super(start, end, animation, requirement, experience, 0);
     }
 
-    public WalkableObstacle(int id, Position[] start, Position end, Animation animation, int requirement, double experience, boolean travelback) {
-        super(new int[]{id}, start, end, animation, requirement, experience, 0, travelback);
+    public WalkableObstacle(Position start, Position end, Animation animation, int requirement, double experience) {
+        super(new Position[]{start}, end, animation, requirement, experience, 0);
     }
 
-    public WalkableObstacle(int id, Position start, Position end, Animation animation, int requirement, double experience, boolean travelback) {
-        super(new int[]{id}, new Position[]{start}, end, animation, requirement, experience, 0, travelback);
-    }
-
-    public WalkableObstacle(int id, Position start, Position end, int animationId, int requirement, double experience, boolean travelback) {
-        super(new int[]{id}, new Position[]{start}, end, new Animation(animationId), requirement, experience, 0, travelback);
+    public WalkableObstacle(Position start, Position end, int animationId, int requirement, double experience) {
+        super(new Position[]{start}, end, new Animation(animationId), requirement, experience, 0);
     }
 
     @Override

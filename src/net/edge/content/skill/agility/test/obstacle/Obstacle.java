@@ -11,8 +11,6 @@ import net.edge.world.locale.Position;
  */
 public abstract class Obstacle {
 
-    public final int[] ids;
-
     public final Position[] start;
 
     public final Position end;
@@ -25,29 +23,21 @@ public abstract class Obstacle {
 
     public final int delay;
 
-    public final boolean travelback;
-
-    public Obstacle(int[] ids, Position[] start, Position end, Animation animation, int requirement, double experience, int delay, boolean travelback) {
-        this.ids = ids;
+    public Obstacle(Position[] start, Position end, Animation animation, int requirement, double experience, int delay) {
         this.start = start;
         this.end = end;
         this.animation = animation;
         this.requirement = requirement;
         this.experience = experience;
         this.delay = delay;
-        this.travelback = travelback;
     }
 
-    public Obstacle(int[] ids, Position start, Position end, int animation, int requirement, double experience, int delay, boolean travelback) {
-        this(ids, new Position[]{start}, end, new Animation(animation), requirement, experience, delay, travelback);
+    public Obstacle(Position start, Position end, int animation, int requirement, double experience, int delay) {
+        this(new Position[]{start}, end, new Animation(animation), requirement, experience, delay);
     }
 
-    public Obstacle(int ids, Position start, Position end, int animation, int requirement, double experience, int delay, boolean travelback) {
-        this(new int[]{ids}, new Position[]{start}, end, new Animation(animation), requirement, experience, delay, travelback);
-    }
-
-    public Obstacle(int[] ids, Position[] start, Position end, int animation, int requirement, double experience, int delay, boolean travelback) {
-        this(ids, start, end, new Animation(animation), requirement, experience, delay, travelback);
+    public Obstacle(Position[] start, Position end, int animation, int requirement, double experience, int delay) {
+        this(start, end, new Animation(animation), requirement, experience, delay);
     }
 
     public boolean crossable(Player player) {
