@@ -15,8 +15,8 @@ public final class NexMinion extends Mob {
 	/**
 	 * Constructs a new {@link NexMinion}.
 	 */
-	public NexMinion() {
-		super(9177, new Position(3386, 3517));
+	public NexMinion(int id, Position position) {
+		super(id, position);
 	}
 	
 	@Override

@@ -408,22 +408,26 @@ public abstract class Minigame {
 	}
 	
 	/**
-	 * The method executed when {@code player} has logged in while in the
-	 * minigame.
+	 * Condition if the dwarf multi cannon can be placed in the minigame.
+	 */
+	public boolean cannonSetup() {
+		return false;
+	}
+	
+	/**
+	 * The method executed when {@code player} has logged in while in the minigame.
 	 * @param player the player that has logged in.
 	 */
 	public abstract void onLogin(Player player);
 	
 	/**
-	 * The method executed when {@code player} has disconnected while in the
-	 * minigame.
+	 * The method executed when {@code player} has disconnected while in the minigame.
 	 * @param player the player that has logged out.
 	 */
 	public abstract void onLogout(Player player);
 	
 	/**
-	 * Functionality that should be handled as soon as the player enters the
-	 * minigame.
+	 * Functionality that should be handled as soon as the player enters the minigame.
 	 * @param player the player entering the minigame.
 	 */
 	public abstract void onEnter(Player player);

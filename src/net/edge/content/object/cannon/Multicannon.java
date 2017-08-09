@@ -91,6 +91,12 @@ public class Multicannon extends DynamicObject {
 		ItemAction setup = new ItemAction() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
+				if(player.getMinigame().isPresent()) {
+					if(!player.getMinigame().get().cannonSetup()) {
+						player.message("You can't setup the cannon here.");
+						return true;
+					}
+				}
 				if(player.cannon.isPresent()) {
 					player.message("You can't setup a second cannon.");
 					return true;
