@@ -14,9 +14,7 @@ import net.edge.world.entity.item.ItemCache;
 import net.edge.world.entity.actor.mob.drop.DropTable;
 import net.edge.world.entity.item.ItemDefinition;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
@@ -48,7 +46,7 @@ public final class MobDropTableLoader extends JsonLoader {
 	/**
 	 * The writer to write our ids.
 	 */
-	private PrintWriter writer;
+	private DataOutputStream out;
 	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
@@ -63,10 +61,14 @@ public final class MobDropTableLoader extends JsonLoader {
 			DropManager.getTables().put(array[i], new DropTable(unique));
 		}
 		
-		if(OUTPUT && writer != null) {
+		if(OUTPUT && out != null) {
 			for(int i : array) {
-				if(!written.contains(i)) {
-					writer.print(i + "-");
+				if(!written.contains(i) && i <= 14377 && i > 0) {
+					try {
+						out.writeShort(i);
+					} catch(IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -77,8 +79,8 @@ public final class MobDropTableLoader extends JsonLoader {
 	public void start() {
 		if(OUTPUT) {
 			try {
-				File out = new File("./drops2.txt");
-				writer = new PrintWriter(out);
+				File out = new File("./mob_drops.dat");
+				this.out = new DataOutputStream(new FileOutputStream(out));
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
@@ -87,9 +89,13 @@ public final class MobDropTableLoader extends JsonLoader {
 	
 	@Override
 	public void end() {
-		if(writer != null) {
-			writer.flush();
-			writer.close();
+		if(out != null) {
+			try {
+				out.flush();
+				out.close();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
 		}
 		written.clear();
 	}
