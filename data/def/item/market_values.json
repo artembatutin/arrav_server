@@ -47929,8 +47929,8 @@
     "name": "Gardening trowel",
     "stock": 0,
     "value": 30,
-    "price": 1148,
-    "unlimited": false,
+    "price": 3000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -47983,8 +47983,8 @@
     "name": "Watering can",
     "stock": 0,
     "value": 20,
-    "price": 2268,
-    "unlimited": false,
+    "price": 4000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -48064,8 +48064,8 @@
     "name": "Watering can (8)",
     "stock": 0,
     "value": 30,
-    "price": 3768,
-    "unlimited": false,
+    "price": 3000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -48073,8 +48073,8 @@
     "name": "Rake",
     "stock": 0,
     "value": 15,
-    "price": 1028,
-    "unlimited": false,
+    "price": 4000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -48091,8 +48091,8 @@
     "name": "Seed dibber",
     "stock": 0,
     "value": 15,
-    "price": 1124,
-    "unlimited": false,
+    "price": 3000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -54292,7 +54292,7 @@
     "name": "Compost",
     "stock": 0,
     "value": 50,
-    "price": 632,
+    "price": 800,
     "unlimited": true,
     "searchable": true
   },
@@ -54328,8 +54328,8 @@
     "name": "Plant cure",
     "stock": 0,
     "value": 100,
-    "price": 1000,
-    "unlimited": false,
+    "price": 2000,
+    "unlimited": true,
     "searchable": true
   },
   {

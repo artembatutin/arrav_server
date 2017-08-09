@@ -29,6 +29,7 @@ public class BankBooth extends ActionInitializer {
 		open.registerFirst(44216);
 		open.registerFirst(27663);
 		open.registerFirst(14367);
+		open.registerFirst(99267);
 		//second
 		open.registerSecond(3193);
 		open.registerSecond(2213);

@@ -17,7 +17,6 @@ import net.edge.action.ActionInitializer;
 import net.edge.action.impl.*;
 import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.ObjectAction;
-import net.edge.content.item.ArmourSet;
 import net.edge.content.shootingstar.ShootingStarManager;
 import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.trivia.TriviaTask;
@@ -129,7 +128,6 @@ public final class Application {
 			World.get().start();
 			InstanceManager.get().close(0);
 			TriviaTask.getBot().submit();
-			ArmourSet.action();
 			World.get().submit(World.getNpcMovementTask());
 			World.get().submit(new RestoreStatTask());
 			World.get().submit(new Task(100, false) {

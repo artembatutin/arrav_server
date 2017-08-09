@@ -1,5 +1,6 @@
 package net.edge.action.impl;
 
+import net.edge.content.minigame.nexchamber.NexMinigame;
 import net.edge.content.object.WebSlashing;
 import net.edge.content.minigame.fightcaves.FightcavesMinigame;
 import net.edge.content.minigame.pestcontrol.PestControlWaitingLobby;
@@ -66,6 +67,7 @@ public abstract class ObjectAction extends Action {
 		Mining.action();
 		Runecrafting.action();
 //		GnomeStrongholdAgility.action();
+		NexMinigame.action();
 		GnomeAgility.action();
 		BarbarianOutpostAgility.action();
 		WildernessAgility.action();

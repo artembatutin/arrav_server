@@ -8,6 +8,7 @@ import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.strategy.Strategy;
 import net.edge.world.entity.actor.mob.impl.*;
+import net.edge.world.entity.actor.mob.impl.nex.Nex;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.EntityType;
@@ -44,6 +45,7 @@ public abstract class Mob extends Actor {
 	 */
 	public static final Int2ObjectArrayMap<Function<Position, Mob>> CUSTOM_MOBS = new Int2ObjectArrayMap<>(
 			ImmutableMap.<Integer, Function<Position, Mob>>builder()
+					.put(13447, s -> new Nex())
 					.put(6247, s -> new CommanderZilyana())
 					.put(6260, s -> new GeneralGraardor())
 					.put(6222, s -> new KreeArra())

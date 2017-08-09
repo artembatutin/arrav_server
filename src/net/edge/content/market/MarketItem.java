@@ -80,6 +80,8 @@ public class MarketItem {
 	 * @return the value instance of the item.
 	 */
 	public static MarketItem get(int id) {
+		if(id <= 0 || id >= VALUES.length || VALUES[id] == null)
+			return VALUES[0];
 		return VALUES[id];
 	}
 	

@@ -10,6 +10,16 @@
     "walk-radius": 3
   },
   {
+    "id": 13447,
+    "position": {
+      "x": 2925,
+      "y": 5203,
+      "z": 0
+    },
+    "random-walk": true,
+    "walk-radius": 3
+  },
+  {
     "id": 3334,
     "position": {
       "x": 3203,

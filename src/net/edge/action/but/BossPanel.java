@@ -119,6 +119,15 @@ public class BossPanel extends ActionInitializer {
 			}
 		};
 		e.register(62);
+		//nex
+		e = new ButtonAction() {
+			@Override
+			public boolean click(Player player, int button) {
+				player.teleport(new Position(2903, 5205), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				return true;
+			}
+		};
+		e.register(63);
 		//god wars
 		e = new ButtonAction() {
 			@Override

@@ -31,7 +31,7 @@ public final class Nex extends Mob {
 	 * Constructs a new {@link Nex}.
 	 */
 	public Nex() {
-		super(9177, new Position(3386, 3517));
+		super(13447, new Position(2925, 5203));
 		setStrategy(Optional.of(new NexStrategy(this)));
 		for(NexMinion m : minions) {
 			World.get().getMobs().add(m);

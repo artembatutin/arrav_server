@@ -27,7 +27,7 @@ public abstract class ItemOnItemAction extends Action {
 	}
 	
 	public static void init() {
-	
+		ArmourSet.action();
 	}
 	
 }
