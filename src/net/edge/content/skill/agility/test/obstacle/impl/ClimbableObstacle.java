@@ -36,5 +36,7 @@ public class ClimbableObstacle extends Obstacle {
     @Override
     public void execute(Player player, Task t) {
         player.move(end);
+        player.setTeleportStage(10);
+        player.task(2, p -> p.setTeleportStage(0));
     }
 }

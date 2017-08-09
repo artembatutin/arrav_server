@@ -902,6 +902,14 @@ public class ItemContainer implements Iterable<Item> {
 	}
 	
 	/**
+	 * Determines if this item container is full.
+	 * @return {@code true} if this container is, {@code false} otherwise.
+	 */
+	public final boolean isFull() {
+		return remaining() == 0;
+	}
+	
+	/**
 	 * Adds an {@link ItemContainerListener} to this container.
 	 * @param listener The listener to add to this container.
 	 * @return {@code true} if the listener was added, {@code false} otherwise.

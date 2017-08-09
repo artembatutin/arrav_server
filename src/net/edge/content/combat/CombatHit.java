@@ -1,10 +1,8 @@
 package net.edge.content.combat;
 
-import net.edge.Application;
 import net.edge.content.combat.magic.CombatSpell;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.special.CombatSpecial;
-import net.edge.world.Spell;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Hit;
 import net.edge.world.entity.actor.player.Player;

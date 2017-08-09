@@ -59,10 +59,8 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 	@Override
 	public void onSuccess() {
 		player.getAgilityBonus().addGnomeObstacle(obstacle);
-		
 		if(player.getAgilityBonus().hasCompletedGnomeAgilityCourse()) {
 			player.getAgilityBonus().clearGnomeObstacles();
-			
 			player.message("You have successfully completed the gnome agility laps.");
 			Skills.experience(player, 39, Skills.AGILITY);
 		}

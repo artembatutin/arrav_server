@@ -52,7 +52,6 @@ public abstract class AgilityCourse extends SkillAction {
 	 */
 	public AgilityCourse(Player player, GameObject object, AgilityCourseType type) {
 		super(player, Optional.empty());
-		
 		this.type = type;
 		this.running = player.getMovementQueue().isRunning();
 		this.object = object;

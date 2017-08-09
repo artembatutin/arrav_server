@@ -89,12 +89,11 @@ public final class ChaosElementalStrategy implements Strategy {
     public CombatHit outgoingAttack(Actor actor, Actor victim) {
         CombatType[] data = new CombatType[]{CombatType.MELEE, CombatType.MAGIC, CombatType.RANGED};
         CombatType type = RandomUtils.random(data);
-        int specialAttack = RandomUtils.inclusive(0, 100);
         CombatHit session = primaryAttack(actor, victim, type);
 
-        if(specialAttack > 80) {
-            specialAttack(actor, victim);
-            session.ignore();
+        if(victim.isPlayer() && RandomUtils.inclusive(0, 100) > 80) {
+            if(specialAttack(actor, victim.toPlayer()))
+             session.ignore();
         }
 
         return session;
@@ -119,43 +118,41 @@ public final class ChaosElementalStrategy implements Strategy {
      * Chaos elemental handles a 'primary' attack through out the combat
      * This can deal either magic, ranged or melee damage - it is impossible
      * to distinguish what damage is dealt until the attack is hit.
-     * @param character
-     * @param victim
-     * @param type
      */
     private CombatHit primaryAttack(Actor character, Actor victim, CombatType type) {
         if(type == CombatType.MAGIC) {
             character.setCurrentlyCasting(SPELL);
         }
-        new Projectile(character, victim, PRIMARY_PROJECTILE, 50, 3, 43, 31, 0).sendProjectile();
-        return new CombatHit(character, victim, 1, type, true, 5);
+        int delay = new Projectile(character, victim, PRIMARY_PROJECTILE, 50, 3, 43, 31, 0).sendProjectile().getDelay();
+        return new CombatHit(character, victim, 1, type, true, delay);
     }
 
     /**
      * Chaos elemental handles two random 'special' attacks -
      * One; moves(teleports) his victim into a near-by randomized area
      * Two; Forces the victim to unequip a certain item.
-     * @param character
-     * @param victim
      */
-    private void specialAttack(Actor character, Actor victim) {
+    private boolean specialAttack(Actor character, Player victim) {
         if(RandomUtils.inclusive(100) > 50 ) {
             new Projectile(character, victim, TELEPORT_PROJECTILE, 50, 3, 43, 31, 0).sendProjectile();
-            victim.toPlayer().move(new Position(victim.getPosition().getX() + RandomUtils.inclusive(12), victim.getPosition().getY() + RandomUtils.inclusive(12)));
-        } else {
+            victim.move(new Position(victim.getPosition().getX() + RandomUtils.inclusive(6), victim.getPosition().getY() + RandomUtils.inclusive(6)));
+            return true;
+        } else if(!victim.getInventory().isFull()) {
             new Projectile(character, victim, UNEQUIP_PROJECTILE, 50, 3, 43, 31, 0).sendProjectile();
-            if(victim.toPlayer().getEquipment().get(3) != null) {
-                victim.toPlayer().getEquipment().unequip(3);
+            if(victim.getEquipment().get(3) != null) {
+                victim.getEquipment().unequip(3);
             } else {
                 for(int i=0; i < 13; i++) {
-                    if (victim.toPlayer().getEquipment().get(i) != null) {
-                        victim.toPlayer().getEquipment().unequip(i);
+                    if (victim.getEquipment().get(i) != null) {
+                        victim.getEquipment().unequip(i);
                         break;
                     }
                 }
             }
-            victim.toPlayer().message("The chaos elemental's tentacle removes your equipment.");
+            victim.message("The chaos elemental's tentacle removes your equipment.");
+            return true;
         }
+        return false;
     }
 
 }

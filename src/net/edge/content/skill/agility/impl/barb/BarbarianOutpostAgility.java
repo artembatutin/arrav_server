@@ -67,10 +67,8 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 	@Override
 	public void onSuccess() {
 		player.getAgilityBonus().addBarbarianObstacle(obstacle);
-		
 		if(player.getAgilityBonus().hasCompletedBarbarianAgilityCourse()) {
 			player.getAgilityBonus().clearBarbarianObstacles();
-			
 			player.message("You have successfully completed the barbarian agility laps.");
 			Skills.experience(player, 498.9, Skills.AGILITY);
 		}
