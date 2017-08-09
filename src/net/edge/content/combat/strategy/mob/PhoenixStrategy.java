@@ -40,6 +40,7 @@ public class PhoenixStrategy implements Strategy {
         int dustAttackChance = RandomUtils.inclusive(100);
         CombatNormalSpell spell = (dustAttackChance > 20 ? FIRE_ATTACK : DUST_ATTACK);
         actor.animation(new Animation(11076));
+        actor.graphic(new Graphic(2953));
         actor.setCurrentlyCasting(spell);
         spell.projectile(actor, victim).get().sendProjectile();
         return new CombatHit(actor, victim, 1, CombatType.MAGIC, false) {

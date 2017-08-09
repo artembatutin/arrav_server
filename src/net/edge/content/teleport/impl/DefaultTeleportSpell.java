@@ -253,7 +253,7 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 		OBELISK(3, 6, Optional.of(new Animation(8939)), Optional.of(new Animation(8941)), Optional.of(new Graphic(661)), Optional.empty()),
 		VOID_FAMILIAR(3, 2, Optional.of(new Animation(8136)), Optional.of(new Animation(8137)), Optional.of(new Graphic(1503)), Optional.of(new Graphic(1502))),
 		FREEZE(5, 8, Optional.of(new Animation(11044)), Optional.empty(), Optional.of(new Graphic(1973)), Optional.empty()),
-		TRAINING_PORTAL(5, 3, Optional.of(new Animation(10100)), Optional.of(new Animation(9013)), Optional.of(new Graphic(606)), Optional.empty()),
+		TRAINING_PORTAL(2, 4, Optional.of(new Animation(10100)), Optional.of(new Animation(9013)), Optional.of(new Graphic(606)), Optional.empty()),
 		BOSS_PORTAL(4, 3, Optional.of(new Animation(10100)), Optional.of(new Animation(9013)), Optional.of(new Graphic(2128)), Optional.empty()),
 		PVP_PORTAL(2, 5, Optional.of(new Animation(9602)), Optional.of(new Animation(9013)), Optional.empty(), Optional.empty());
 		

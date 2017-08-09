@@ -1,4 +1,4 @@
-package net.edge.world.entity.actor.mob.strategy.impl.corp;
+package net.edge.world.entity.actor.mob.strategy.impl;
 
 import com.google.common.collect.ImmutableList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -9,6 +9,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.magic.CombatNormalSpell;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.skill.SkillData;
+import net.edge.world.entity.actor.mob.strategy.DynamicStrategy;
 import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
@@ -16,7 +17,6 @@ import net.edge.world.*;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.impl.corp.CorporealBeast;
-import net.edge.world.entity.actor.mob.strategy.DynamicStrategy;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.locale.area.AreaManager;
