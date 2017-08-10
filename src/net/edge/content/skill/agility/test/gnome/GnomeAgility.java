@@ -4,11 +4,13 @@ import net.edge.action.impl.ObjectAction;
 import net.edge.content.skill.agility.test.Agility;
 import net.edge.content.skill.agility.test.obstacle.Obstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.ClimbableObstacle;
+import net.edge.content.skill.agility.test.obstacle.impl.FMObstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.WalkableObstacle;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
+import java.util.OptionalInt;
 import java.util.function.Function;
 
 /**
@@ -101,7 +103,13 @@ public final class GnomeAgility extends Agility {
                 player.message("You can't cross this obstacle from this side.");
                 return false;
             }
-        });
+        }),
+
+        //ADVANCED COURSES
+        ADVANCED_TREE_BRANCH_UP(85531, p -> new ClimbableObstacle(new Position(p.getPosition().getX(), 3420, 2), new Position(2472, 3419, 3), 828, 85, 25)),
+        RUN_ACROSS_SIGNPOST(85584, p -> new FMObstacle(105, OptionalInt.of(6), new Position(2476, 3418, 3), new Position(2484, 3418, 3), 2922, 60, 25)),
+        POLE_SWING(85532, p -> new PoleSwing(new Position(p.getPosition().getX(), 3432, 3))),
+        JUMP_OVER_BARRIER(85542, p -> new JumpOverBarrier(new Position(p.getPosition().getX(), p.getPosition().getY(), 3)));
 
         public final int[] ids;
 
@@ -116,6 +124,5 @@ public final class GnomeAgility extends Agility {
             this.obstacles = obstacles;
             this.ids = new int[]{id};
         }
-
     }
 }
