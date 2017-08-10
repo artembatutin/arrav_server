@@ -310,7 +310,7 @@ public final class CombatHitTask extends Task {
 			}
 
 			//SMITE
-			if(combat.getCharacter().isPlayer() && Prayer.isActivated(combat.getCharacter().toPlayer(), Prayer.SMITE)) {
+			if(combat.getCharacter().isPlayer() && Prayer.isActivated(combat.getCharacter().toPlayer(), Prayer.SMITE) && victim.isPlayer()) {
 				victim.toPlayer().getSkills()[Skills.PRAYER].decreaseLevel(counter / 40, true);
 				Skills.refresh(victim.toPlayer(), Skills.PRAYER);
 			}

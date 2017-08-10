@@ -101,7 +101,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 		if(!o.isPresent())
 			return;
 		final GameObject object = o.get();
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
+		if(player.getRights().equals(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[OBJ"+action+"]:" + object.getId() + " - " + object.getGlobalPos().toString());
 		boolean distanceIgnore = (action == 1 && (objectId == 85584 || objectId == 85532 || objectId == 85534));
 		Boundary boundary = new Boundary(position, object.getDefinition().getSize());
