@@ -37,7 +37,7 @@ public final class Nex extends Mob {
 	 * This should probably be handled on entering the area.
 	 */
 	public Nex() {
-		super(13447, new Position(2925, 5203));
+		super(13447, new Position(2924, 5202));
 		this.animation(new Animation(6355));
 		this.forceChat("AT LAST!");
 		setStrategy(Optional.of(new NexStrategy(this)));

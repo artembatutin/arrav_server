@@ -190,6 +190,20 @@ public final class Combat {
 			attackTimer = strategy.attackDelay(character);
 		}
 	}
+
+	/**
+	 * Starts the cooldown sequence for this controller.
+	 * @param resetAttack if the attack timer should be reset.
+	 */
+	public void cooldownTimer(boolean resetAttack, int cool) {
+		if(strategy == null)
+			return;
+		cooldown = cool;
+		character.setFollowing(false);
+		if(resetAttack) {
+			attackTimer = strategy.attackDelay(character);
+		}
+	}
 	
 	/**
 	 * Calculates and sets the combat strategy.

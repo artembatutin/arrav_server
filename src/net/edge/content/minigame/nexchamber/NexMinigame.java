@@ -32,16 +32,20 @@ public class NexMinigame extends Minigame {
 	 */
 	private final Nex nex;
 	
-	/**
-	 * The players in the chamber.
-	 */
 	private static final ObjectList<Player> players = new ObjectArrayList<>();
 	
 	public NexMinigame(Nex nex) {
 		super("Nex", MinigameSafety.DEFAULT, MinigameType.NORMAL);
 		this.nex = nex;
 	}
-	
+
+	/**
+	 * The players in the chamber.
+	 */
+	public static ObjectList<Player> getPlayers() {
+		return players;
+	}
+
 	@Override
 	public void onLogin(Player player) {
 		onLogout(player);
@@ -49,7 +53,7 @@ public class NexMinigame extends Minigame {
 	
 	@Override
 	public void onLogout(Player player) {
-		players.remove(player);
+		getPlayers().remove(player);
 		player.out(new SendFade(20, 100, 160));
 		player.task(2, pl -> pl.move(new Position(2907, 5204)));
 		player.setMinigame(Optional.empty());
@@ -57,7 +61,7 @@ public class NexMinigame extends Minigame {
 	
 	@Override
 	public void onEnter(Player player) {
-		players.add(player);
+		getPlayers().add(player);
 		player.out(new SendFade(20, 100, 160));
 		player.task(2, pl -> pl.move(new Position(2911, 5204)));
 		player.setMinigame(this);
@@ -86,7 +90,7 @@ public class NexMinigame extends Minigame {
 	
 	@Override
 	public boolean contains(Player player) {
-		return players.contains(player);
+		return getPlayers().contains(player);
 	}
 	
 	@Override
