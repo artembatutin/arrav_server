@@ -1,10 +1,9 @@
 package net.edge.world.entity.actor.mob.impl.nex;
 
-import net.edge.content.combat.CombatType;
 import net.edge.content.minigame.nexchamber.NexMinigame;
+import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.world.Animation;
-import net.edge.world.Projectile;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.strategy.impl.NexStrategy;
@@ -25,6 +24,8 @@ public final class Nex extends Mob {
 	 */
 	public int minionStage;
 
+
+	
 	private final NexMinion[] minions = {
 		new NexMinion(13451, new Position(2914, 5215, 0)),
 		new NexMinion(13452, new Position(2936, 5215, 0)),
@@ -55,45 +56,75 @@ public final class Nex extends Mob {
 
 	public void spawn(Mob mob) {
 		mob.getMovementQueue().setLockMovement(true);
-		World.get().submit(new Task(6, false) {
-			int ticks;
-			@Override
-			protected void execute() {
-				switch(ticks) {
-					case 0:
-						mob.facePosition(new Position(2913, 5216));
-						mob.animation(new Animation(6986));
-						World.get().getMobs().add(minions[0]);
-						mob.forceChat("Fumus!");
-						break;
-					case 1:
-						mob.facePosition(new Position(2937, 5216));
-						mob.animation(new Animation(6986));
-						World.get().getMobs().add(minions[1]);
-						mob.forceChat("Umbra!");
-						break;
-					case 2:
-						mob.facePosition(new Position(2937, 5191));
-						mob.animation(new Animation(6986));
-						World.get().getMobs().add(minions[2]);
-						mob.forceChat("Cruor!");
-						break;
-					case 3:
-						mob.facePosition(new Position(2913, 5191));
-						mob.animation(new Animation(6986));
-						World.get().getMobs().add(minions[3]);
-						mob.forceChat("Glacies!");
-						break;
-					case 4:
-						mob.forceChat("Fill my soul with smoke!");
-						new Projectile(minions[0].getCenterPosition(), mob.getCenterPosition(), 0, 2244, 44, 4, 60, 43, 0, minions[0].getInstance(), CombatType.MAGIC).sendProjectile();
-						minionStage = 2;
-						mob.getMovementQueue().setLockMovement(false);
-						break;
-				}
-				ticks++;
-			}
+		LinkedTaskSequence seq = new LinkedTaskSequence();
+		seq.connect(1, () -> {
+			mob.facePosition(new Position(2913, 5216));
+			mob.animation(new Animation(6986));
+			World.get().getMobs().add(minions[0]);
+			mob.forceChat("Fumus!");
 		});
+		seq.connect(6, () -> {
+			mob.facePosition(new Position(2937, 5216));
+			mob.animation(new Animation(6986));
+			World.get().getMobs().add(minions[1]);
+			mob.forceChat("Umbra!");
+		});
+		seq.connect(6, () -> {
+			mob.facePosition(new Position(2937, 5191));
+			mob.animation(new Animation(6986));
+			World.get().getMobs().add(minions[2]);
+			mob.forceChat("Cruor!");
+		});
+		seq.connect(6, () -> {
+			mob.facePosition(new Position(2913, 5191));
+			mob.animation(new Animation(6986));
+			World.get().getMobs().add(minions[3]);
+			mob.forceChat("Glacies!");
+		});
+		seq.connect(6, () -> {
+			mob.forceChat("Fill my soul with smoke!");
+			minionStage = 1;
+			mob.getMovementQueue().setLockMovement(false);
+		});
+		seq.start();
+//		World.get().submit(new Task(6, false) {
+//			int ticks;
+//			@Override
+//			protected void execute() {
+//				switch(ticks) {
+//					case 0:
+//						mob.facePosition(new Position(2913, 5216));
+//						mob.animation(new Animation(6986));
+//						World.get().getMobs().add(minions[0]);
+//						mob.forceChat("Fumus!");
+//						break;
+//					case 1:
+//						mob.facePosition(new Position(2937, 5216));
+//						mob.animation(new Animation(6986));
+//						World.get().getMobs().add(minions[1]);
+//						mob.forceChat("Umbra!");
+//						break;
+//					case 2:
+//						mob.facePosition(new Position(2937, 5191));
+//						mob.animation(new Animation(6986));
+//						World.get().getMobs().add(minions[2]);
+//						mob.forceChat("Cruor!");
+//						break;
+//					case 3:
+//						mob.facePosition(new Position(2913, 5191));
+//						mob.animation(new Animation(6986));
+//						World.get().getMobs().add(minions[3]);
+//						mob.forceChat("Glacies!");
+//						break;
+//					case 4:
+//						mob.forceChat("Fill my soul with smoke!");
+//						minionStage = 1;
+//						mob.getMovementQueue().setLockMovement(false);
+//						break;
+//				}
+//				ticks++;
+//			}
+//		});
 
 	}
 	
