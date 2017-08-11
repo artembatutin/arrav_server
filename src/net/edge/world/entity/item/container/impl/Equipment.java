@@ -235,6 +235,16 @@ public final class Equipment extends ItemContainer {
 			} else if(unequipPrimary.isPresent()) {//one item
 				if(unequipPrimary.get().getDefinition().getEquipmentType().getSlot() == type.getSlot())
 					possible = true;
+			} else if(unequipSecondary.isPresent()) {
+				if(equipItem.getDefinition().getEquipmentType().getSlot() == SHIELD_SLOT) {//shield equip on 2h
+					if(unequipSecondary.get().getDefinition().isTwoHanded())
+						possible = true;
+				} else if(equipItem.getDefinition().getEquipmentType().getSlot() == WEAPON_SLOT) {//2h equip on shield
+					if(get(WEAPON_SLOT) == null && get(SHIELD_SLOT) != null) {
+						if(get(SHIELD_SLOT).getId() == unequipSecondary.get().getId())
+							possible = true;
+					}
+				}
 			}
 			if(!possible) {
 				player.message("You do not have enough space in your inventory.");

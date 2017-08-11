@@ -567,7 +567,7 @@ public final class CombatUtil {
 		}
 		if(Application.DEBUG && attacker.isPlayer())
 			attacker.toPlayer().message("[" + attacker.toPlayer().getFormatUsername() + "]: " + attackRoll + ", Defender: [" + defenceRoll + "], roll: " + roll);
-		if(Application.DEBUG && victim.isPlayer())
+		if(Application.DEBUG && victim.isPlayer() && attacker.isMob())
 			victim.toPlayer().message("[" + attacker.toMob().getDefinition().getName() + "]: " + attackRoll + ", Defender: [" + defenceRoll + "], roll: " + roll);
 		return RandomUtils.success(roll);
 	}
