@@ -1075,8 +1075,7 @@ public final class Player extends Actor {
 			godwarsInterface = false;
 		}
 		if(Location.inWilderness(this)) {
-			int calculateY = this.getPosition().getY() > 6400 ? super.getPosition().getY() - 6400 : super.getPosition()
-					.getY();
+			int calculateY = this.getPosition().getY() > 6400 ? super.getPosition().getY() - 6400 : super.getPosition().getY();
 			wildernessLevel = (((calculateY - 3520) / 8) + 1);
 			if(!wildernessInterface) {
 				out(new SendWalkable(197));
@@ -1115,7 +1114,7 @@ public final class Player extends Actor {
 	 * Restores run energy based on the last time it was restored.
 	 */
 	public void restoreRunEnergy() {
-		if(lastEnergy.elapsed(3500) && runEnergy < 100 && !this.getMovementQueue().isRunning()) {
+		if(lastEnergy.elapsed(3500) && runEnergy < 100 && (this.getMovementQueue().isMovementDone() || !getMovementQueue().isRunning())) {
 			double restoreRate = 0.45D;
 			double agilityFactor = 0.01 * skills[Skills.AGILITY].getLevel();
 			setRunEnergy(runEnergy + (restoreRate + agilityFactor));
