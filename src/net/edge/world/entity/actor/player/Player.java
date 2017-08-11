@@ -1075,8 +1075,7 @@ public final class Player extends Actor {
 			godwarsInterface = false;
 		}
 		if(Location.inWilderness(this)) {
-			int calculateY = this.getPosition().getY() > 6400 ? super.getPosition().getY() - 6400 : super.getPosition()
-					.getY();
+			int calculateY = this.getPosition().getY() > 6400 ? super.getPosition().getY() - 6400 : super.getPosition().getY();
 			wildernessLevel = (((calculateY - 3520) / 8) + 1);
 			if(!wildernessInterface) {
 				out(new SendWalkable(197));

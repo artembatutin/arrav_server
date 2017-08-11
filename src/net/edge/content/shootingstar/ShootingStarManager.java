@@ -1,5 +1,6 @@
 package net.edge.content.shootingstar;
 
+import net.edge.Application;
 import net.edge.util.Stopwatch;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
@@ -33,6 +34,9 @@ public final class ShootingStarManager {
 	 * The process method which is invoked every minute on start-up.
 	 */
 	public void process() {
+		if(Application.STARTING) {
+			return;
+		}
 		if(!stopwatch.elapsed(28, TimeUnit.MINUTES) || (star != null && star.sprite.getState().equals(EntityState.ACTIVE))) { // 1 minute correction, because task runs every minute and it might skip.
 			return;
 		}
@@ -49,8 +53,12 @@ public final class ShootingStarManager {
 	 */
 	public void spawn() {
 		star = generateStar();
-		star.publish();
-		World.get().message(star.locationData.message, true);
+		if(!star.getRegion().isPresent()) {
+			star = null;
+		} else {
+			star.publish();
+			World.get().message(star.locationData.message, true);
+		}
 	}
 	
 	/**
