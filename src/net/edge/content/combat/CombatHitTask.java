@@ -104,9 +104,7 @@ public final class CombatHitTask extends Task {
 
 		if(victim.isPlayer() && !hit.isIgnored()) {
 			Player player = (Player) victim;
-
 			boolean activated = false;
-
 			switch(hit.getType()) {
 				case MELEE:
 					if(Prayer.isActivated(player, Prayer.DEFLECT_MELEE)) {
@@ -149,7 +147,6 @@ public final class CombatHitTask extends Task {
 		}
 
 		hit.postAttack(counter);
-
 		if(victim.getCombat().getStrategy() != null && victim.getCombat().getStrategy().hitBack() && !attacker.same(victim.getCombat().getVictim())) {
 			victim.getCombat().attack(attacker);
 			victim.getCombat().instant();

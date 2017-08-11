@@ -170,7 +170,6 @@ public enum PlayerPanel {
 	EMPTY1,
 	
 	PVE_HEADER,
-	
 	HIGHEST_KILLSTREAK,
 	CURRENT_KILLSTREAK,
 	TOTAL_PLAYER_KILLS,
@@ -181,7 +180,6 @@ public enum PlayerPanel {
 	EMPTY2,
 	
 	INDIVIDUAL_SCOREBOARD_STATISTICS,
-	
 	INDIVIDUAL_HIGHEST_KILLSTREAKS,
 	INDIVIDUAL_CURRENT_KILLSTREAKS,
 	INDIVIDUAL_KILLS,
@@ -254,7 +252,7 @@ public enum PlayerPanel {
 		PlayerPanel.TOTAL_NPC_DEATHS.refresh(player, "@or2@ - Total Mob deaths: @yel@" + player.getDeathsByNpc().get());
 		
 		PlayerPanel.EMPTY2.refresh(player, "");
-		PlayerPanel.INDIVIDUAL_SCOREBOARD_STATISTICS.refresh(player, "@or1@Indiv. Scoreboard Statistics:");
+		PlayerPanel.INDIVIDUAL_SCOREBOARD_STATISTICS.refresh(player, "@or1@Player Killing Statistics:");
 		PlayerScoreboardStatistic s = ScoreboardManager.get().getPlayerScoreboard().get(player.getFormatUsername());
 		PlayerPanel.INDIVIDUAL_HIGHEST_KILLSTREAKS.refresh(player, "@or2@ - Highest Killstreak: @yel@" + (s == null ? 0 : s.getHighestKillstreak()));
 		PlayerPanel.INDIVIDUAL_CURRENT_KILLSTREAKS.refresh(player, "@or2@ - Current Killstreak: @yel@" + (s == null ? 0 : s.getCurrentKillstreak()));

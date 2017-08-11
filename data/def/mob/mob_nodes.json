@@ -1762,16 +1762,6 @@
   {
     "id": 3408,
     "position": {
-      "x": 3093,
-      "y": 3477,
-      "z": 1
-    },
-    "random-walk": true,
-    "walk-radius": 5
-  },
-  {
-    "id": 3408,
-    "position": {
       "x": 3087,
       "y": 3494,
       "z": 0

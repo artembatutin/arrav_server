@@ -172,7 +172,17 @@ public class CombatHit {
 				Player p = attacker.toPlayer();
 				p.getMinigame().ifPresent(m -> m.onInflictDamage(p, victim, container));
 			}
-			victim.damage(container);
+			if(container.length > 2) {
+				victim.damage(container[0], container[1]);
+				victim.taskA(delay.orElse(2), v -> v.damage(container[2], container[3]));
+			} else {
+				if(delay.isPresent() && container.length > 1) {
+					victim.damage(container[0]);
+					victim.taskA(delay.getAsInt(), v -> v.damage(container[1]));
+				} else {
+					victim.damage(container);
+				}
+			}
 		}
 		return damage;
 	}
