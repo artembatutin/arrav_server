@@ -24,7 +24,7 @@ public class Shops extends ActionInitializer {
 		MINING_PICKAXES(3295, 11, 1),
 		CRAFTING(805, 7, 1),
 		COOKING_CHEF(847, 6, 1),
-		ORNAMENTAL_ARMORY(4657, 23, true, true),
+		SIR_PRYSIN(4657, 30, true, true),
 		THIEVING(2270, 26, 1),
 		PET_SHOP(6892, 25, 2),
 		WILDERNESS_BANKER_CAPES(7605, 22, 2),

@@ -919,13 +919,13 @@ public final class Player extends Actor {
 	
 	public int getMaximumHealth() {
 		int hitpoints = skills[Skills.HITPOINTS].getRealLevel();
-		if(Arrays.stream(new int[]{20135, 20147, 20159}).anyMatch(equipment::contains)) {//nex helms
+		if(equipment.containsAny(20135, 20147, 20159)) {//nex helms
 			hitpoints += 13;
 		}
-		if(Arrays.stream(new int[]{20139, 20151, 20163}).anyMatch(equipment::contains)) {//nex bodies
+		if(equipment.containsAny(20139, 20151, 20163)) {//nex bodies
 			hitpoints += 20;
 		}
-		if(Arrays.stream(new int[]{20143, 20155, 20167}).anyMatch(equipment::contains)) {//nex platelegs
+		if(equipment.containsAny(20143, 20155, 20167)) {//nex platelegs
 			hitpoints += 7;
 		}
 		return hitpoints * 10;

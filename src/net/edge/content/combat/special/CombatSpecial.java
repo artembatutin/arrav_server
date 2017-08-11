@@ -240,7 +240,7 @@ public enum CombatSpecial {
 		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(10961, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(1950, 50));
-			return new CombatHit(player, target, 4, CombatType.MELEE, true);
+			return new CombatHit(player, target, 4, CombatType.MELEE, true, 2);
 		}
 	},
 	DRAGON_DAGGER(new int[]{1215, 1231, 5680, 5698}, 25, 1.15, 1.25, CombatType.MELEE, WeaponInterface.DAGGER) {

@@ -417,7 +417,7 @@ public final class Combat {
 				return false;
 			}
 			
-			if(!builder.getCharacter().inMulti() && victim.getCombat().isBeingAttacked() && !victim.getCombat().getAggressor().same(builder.getCharacter())) {
+			if(!builder.getCharacter().inMulti() && victim.getCombat().isBeingAttacked() && victim.getCombat().getAggressor() != null && !victim.getCombat().getAggressor().same(builder.getCharacter())) {
 				if(builder.getCharacter().isPlayer()) {
 					Player player = builder.getCharacter().toPlayer();
 					player.message("They are already under attack!");
@@ -428,7 +428,6 @@ public final class Combat {
 				return false;
 			}
 			boolean in = new Boundary(builder.character.getPosition(), builder.character.size()).within(victim.getPosition(), victim.size(), builder.strategy.attackDistance(builder.getCharacter()));
-			//System.out.println(builder.getCharacter().getMovementQueue().isRunPath());
 			if(!in && builder.getCharacter().getMovementQueue().isMovementDone()) {
 				builder.getCharacter().getMovementQueue().reset();
 				builder.getCharacter().getMovementQueue().follow(victim);

@@ -18,7 +18,7 @@ public class Votebook extends ActionInitializer {
 					return true;
 				player.setVotePoints(1);
 				player.setTotalVotes(1);
-				player.message("You received a vote point...");
+				player.message("You received a vote point, you can access the vote shop in the quest tab.");
 				Item reward = VoteRewards.getReward().orElse(null);
 				player.getInventory().remove(item);
 				if(reward == null) {

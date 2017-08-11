@@ -7,6 +7,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.strategy.Strategy;
+import net.edge.task.Task;
 import net.edge.world.entity.actor.mob.impl.*;
 import net.edge.world.entity.actor.mob.impl.nex.Nex;
 import net.edge.world.locale.Position;
@@ -30,6 +31,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -334,6 +336,20 @@ public abstract class Mob extends Actor {
 				appendDeath();
 			}
 		}
+	}
+	
+	/**
+	 * Sends a delayed task for this player.
+	 */
+	public void task(int delay, Consumer<Mob> action) {
+		Mob p = this;
+		new Task(delay, false) {
+			@Override
+			protected void execute() {
+				action.accept(p);
+				cancel();
+			}
+		}.submit();
 	}
 	
 	/**

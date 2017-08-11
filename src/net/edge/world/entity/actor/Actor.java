@@ -645,6 +645,20 @@ public abstract class Actor extends Entity {
 	}
 	
 	/**
+	 * Sends a delayed task for this player.
+	 */
+	public void taskA(int delay, Consumer<Actor> action) {
+		Actor p = this;
+		new Task(delay, false) {
+			@Override
+			protected void execute() {
+				action.accept(p);
+				cancel();
+			}
+		}.submit();
+	}
+	
+	/**
 	 * @return The {@link AttributeMap} instance assigned to this {@code MobileEntity}.
 	 */
 	public final AttributeMap getAttr() {

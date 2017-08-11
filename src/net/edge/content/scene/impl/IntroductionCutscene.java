@@ -75,7 +75,7 @@ public final class IntroductionCutscene extends Cutscene {
 					TabInterface.QUEST.sendInterface(player, 638);
 					player.out(new SendForceTab(TabInterface.QUEST));
 				}),	new GiveItemDialogue(new Item(19000, 200), "Each player kill will give you blood money.", Optional.empty()).attach(() -> {
-				}), new StatementDialogue("You can view your personal individual statistics by", "clicking the quest tab which is just next to your skill tab.").attach(() -> {
+				}), new StatementDialogue("You can view your player killing statistics by", "clicking the quest tab which is just next to your skill tab.").attach(() -> {
 				}), new StatementDialogue("This shiny portal allows you to", "get anywhere: @red@skills, minigames, bosses.").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3087, 3514), 340, 2, 10));
 					player.out(new SendCameraAngle(new Position(3083, 3514), 320, 2, 5));
@@ -87,7 +87,7 @@ public final class IntroductionCutscene extends Cutscene {
 				}), new StatementDialogue("This is @red@Party Pete", "He changes edge tokens into precious goods.").attach(() -> {
 					player.out(new SendCameraAngle(new Position(3089, 3502), 250, 4, 10));
 				}),	new GiveItemDialogue(new Item(7478, 20), "You can get edge tokens by donating on our website.", Optional.empty()).attach(() -> {
-				}), new StatementDialogue("As you may noticed, this is the @red@Garden.", "One day, you might be able to farm here.").attach(() -> {
+				}), new StatementDialogue("As you may noticed, this is the @red@Garden.", "You can plant trees here!").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3087, 3502), 1800, 2, 10));
 					player.out(new SendCameraAngle(new Position(3087, 3496), 2000, 2, 10));
 				}), new StatementDialogue("You will discover these two buildings on your own.", "Let's move on...").attach(() -> {
