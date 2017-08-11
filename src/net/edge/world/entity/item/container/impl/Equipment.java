@@ -199,11 +199,19 @@ public final class Equipment extends ItemContainer {
 		Optional<Item> unequipPrimary;
 		Optional<Item> unequipSecondary = Optional.empty();
 		if(type == WEAPON) { // If we're equipping a 2h sword, unequip shield.
+			if(player.getInventory().isFull()) {
+				player.message("You don't have enough inventory space to do this!");
+				return false;
+			}
 			unequipSecondary = def.isTwoHanded() && getItems()[SHIELD_SLOT] != null ? Optional.of(getItems()[SHIELD_SLOT]) : Optional.empty();
 		} else if(type == EquipmentType.SHIELD) { // If we're equipping a shield while wearing a 2h sword, unequip sword.
 			int weapon = computeIdForIndex(WEAPON_SLOT);
 			boolean weaponTwoHanded = false;
 			if(weapon != -1 && Item.valid(weapon)) {
+				if(player.getInventory().isFull()) {
+					player.message("You don't have enough inventory space to do this!");
+					return false;
+				}
 				weaponTwoHanded = ItemDefinition.get(weapon).isTwoHanded();
 			}
 			unequipSecondary = weaponTwoHanded && getItems()[WEAPON_SLOT] != null ? Optional.of(getItems()[WEAPON_SLOT]) : Optional.empty();
