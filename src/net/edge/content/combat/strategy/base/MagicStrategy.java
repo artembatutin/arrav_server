@@ -78,6 +78,8 @@ public final class MagicStrategy implements Strategy {
 		if(player.isAutocast() && player.getCastSpell() != null && player.getAutocastSpell() != null || !player.isAutocast() && player.getAutocastSpell() == null) {
 			return player.getCastSpell();
 		}
-		return player.getAutocastSpell();
+		if(player.getAutocastSpell() != null)
+			return player.getAutocastSpell();
+		return player.getCastSpell();
 	}
 }

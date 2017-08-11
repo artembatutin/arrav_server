@@ -1,5 +1,6 @@
 package net.edge.content.combat;
 
+import net.edge.Application;
 import net.edge.task.TaskListener;
 import net.edge.content.combat.strategy.Strategy;
 import net.edge.world.World;
@@ -87,7 +88,7 @@ public final class Combat {
 			character.getMovementQueue().reset();
 			//return;
 		}
-		if(character.isPlayer() && target.isMob() && character.toPlayer().getRights().equals(Rights.ADMINISTRATOR)) {
+		if(character.isPlayer() && target.isMob() && character.toPlayer().getRights().equals(Rights.ADMINISTRATOR) && Application.DEBUG) {
 			character.toPlayer().message("[DEBUG NPC ID] Mob = " + target.toMob().getId() + ", position = " + target.toMob().getPosition().toString());
 		}
 		if(target.same(currentVictim)) {
