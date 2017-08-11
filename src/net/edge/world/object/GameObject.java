@@ -1,14 +1,17 @@
 package net.edge.world.object;
 
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.packet.out.SendObject;
 import net.edge.net.packet.out.SendObjectRemoval;
 import net.edge.task.Task;
+import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.region.Region;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static net.edge.world.object.ObjectDirection.*;
@@ -56,14 +59,25 @@ public abstract class GameObject {
 	}
 	
 	public void visible(boolean on) {
-		World.getRegions().getAllSurroundingRegions(getRegion().getRegionId()).forEach(r -> r.getPlayers().forEach(p -> {
-			if(getZ() == p.getPosition().getZ() && getInstance() == p.getInstance()) {
-				if(on)
-					p.out(new SendObject(this));
-				else
-					p.out(new SendObjectRemoval(this));
+		getRegion().ifPresent(r -> {
+			ObjectList<Region> surrounding = r.getSurroundingRegions();
+			if(surrounding != null) {
+				for(Region s : surrounding) {
+					if(s == null)
+						continue;
+					for(Player p : s.getPlayers()) {
+						if(p == null)
+							continue;
+						if(getZ() == p.getPosition().getZ() && getInstance() == p.getInstance()) {
+							if(on)
+								p.out(new SendObject(this));
+							else
+								p.out(new SendObjectRemoval(this));
+						}
+					}
+				}
 			}
-		}));
+		});
 	}
 	
 	/**
@@ -163,7 +177,7 @@ public abstract class GameObject {
 	 * Gets the region of this object.
 	 * @return region of this object.
 	 */
-	public abstract Region getRegion();
+	public abstract Optional<Region> getRegion();
 	
 	/**
 	 * Setting a new position for this object.
@@ -188,19 +202,22 @@ public abstract class GameObject {
 	 * @return <code>true</code> if it is, <code>false</code> otherwise.
 	 */
 	public boolean isReg() {
-		return getRegion().getObject(getId(), getLocalPos()).isPresent();
+		Region region = getRegion().orElse(null);
+		return region != null && region.getObject(getId(), getLocalPos()).isPresent();
 	}
 	
 	public synchronized void publish() {
-		Region r = getRegion();
-		r.addObj(this);
-		clip(r);
+		getRegion().ifPresent(r -> {
+			r.addObj(this);
+			clip(r);
+		});
 	}
 	
 	public synchronized void remove() {
-		Region r = getRegion();
-		r.removeObj(this);
-		unclip(r);
+		getRegion().ifPresent(r -> {
+			r.removeObj(this);
+			unclip(r);
+		});
 	}
 	
 	/**
@@ -241,7 +258,8 @@ public abstract class GameObject {
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
 	public boolean delete() {
-		return getRegion().getRemovedObjects().add(this);
+		Region region = getRegion().orElse(null);
+		return region != null && region.getRemovedObjects().add(this);
 	}
 	
 	/**
@@ -249,7 +267,8 @@ public abstract class GameObject {
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
 	public boolean restore() {
-		return getRegion().getRemovedObjects().remove(this);
+		Region region = getRegion().orElse(null);
+		return region != null && region.getRemovedObjects().remove(this);
 	}
 	
 	/**

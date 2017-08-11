@@ -185,7 +185,7 @@ public final class RangedStrategy implements Strategy {
 			double chance = ava_collector ? 0.35 : 0.70;
 			if(ammo.getDefinition().isDroppable() && RandomUtils.success(chance)) {//register item to floor
 				GroundItem am = new GroundItem(new Item(item.getId()), victim.getPosition(), player);
-				am.getRegion().register(am, true);
+				am.getRegion().ifPresent(r -> r.register(am, true));
 			}
 		}
 

@@ -1,5 +1,6 @@
 package net.edge.world.entity.item;
 
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.packet.out.SendItemNode;
 import net.edge.net.packet.out.SendItemNodeRemoval;
 import net.edge.util.MutableNumber;
@@ -10,6 +11,8 @@ import net.edge.world.entity.EntityState;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.region.Region;
+
+import java.util.Optional;
 
 /**
  * The node implementation that represents an item on the ground.
@@ -57,10 +60,19 @@ public class GroundItem extends Entity {
 	
 	@Override
 	public void dispose() {
-		World.getRegions().getAllSurroundingRegions(getPosition().getRegion()).forEach(r -> r.getPlayers().forEach(p -> {
-			if(p.getPosition().getZ() == super.getPosition().getZ() && p.getInstance() == super.getInstance())
-				p.out(new SendItemNodeRemoval(this));
-		}));
+		ObjectList<Region> surrounding = World.getRegions().getAllSurroundingRegions(getPosition().getRegion());
+		if(surrounding != null) {
+			for(Region r : surrounding) {
+				if(r == null)
+					continue;
+				for(Player p : r.getPlayers()) {
+					if(p == null)
+						continue;
+					if(p.getPosition().getZ() == super.getPosition().getZ() && p.getInstance() == super.getInstance())
+						p.out(new SendItemNodeRemoval(this));
+				}
+			}
+		}
 	}
 	
 	/**
@@ -70,10 +82,19 @@ public class GroundItem extends Entity {
 	public void onSequence() {
 		switch(state) {
 			case SEEN_BY_OWNER:
-				World.getRegions().getAllSurroundingRegions(getPosition().getRegion()).forEach(r -> r.getPlayers().forEach(p -> {
-					if(!p.same(player) && p.getPosition().getZ() == super.getPosition().getZ() && p.getInstance() == super.getInstance())
-						p.out(new SendItemNode(this));
-				}));
+				ObjectList<Region> surrounding = World.getRegions().getAllSurroundingRegions(getPosition().getRegion());
+				if(surrounding != null) {
+					for(Region r : surrounding) {
+						if(r == null)
+							continue;
+						for(Player p : r.getPlayers()) {
+							if(p == null)
+								continue;
+							if(!p.same(player) && p.getPosition().getZ() == super.getPosition().getZ() && p.getInstance() == super.getInstance())
+								p.out(new SendItemNode(this));
+						}
+					}
+				}
 				player = null;
 				state = GroundItemState.SEEN_BY_EVERYONE;
 				break;
@@ -147,7 +168,7 @@ public class GroundItem extends Entity {
 	 * Gets the region on which the item is standing.
 	 * @return the region of this item.
 	 */
-	public Region getRegion() {
+	public Optional<Region> getRegion() {
 		return World.getRegions().getRegion(getPosition());
 	}
 	

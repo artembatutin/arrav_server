@@ -11,6 +11,7 @@ import net.edge.content.skill.firemaking.Bonfire;
 import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.skill.prayer.PrayerBoneAltar;
 import net.edge.content.skill.smithing.Smithing;
+import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
 import net.edge.net.codec.IncomingMsg;
@@ -56,8 +57,10 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 		if(item.getId() != itemId) {
 			return;
 		}
-		
-		Optional<GameObject> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
+		Region reg = World.getRegions().getRegion(position).orElse(null);
+		if(reg == null)
+			return;
+		Optional<GameObject> o = reg.getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
 		

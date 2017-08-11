@@ -252,7 +252,6 @@ public final class PlayerDeath extends ActorDeath<Player> {
 	private void calculateDropItems(Player character, Optional<Player> killer, boolean dropAll) {
 		ObjectList<Item> keep = new ObjectArrayList<>();
 		ObjectList<Item> items = new ObjectArrayList<>();
-		Region region = character.getRegion();
 		killer.ifPresent(player -> {
             if(!getActor().getLastKiller().equalsIgnoreCase(player.getFormatUsername())) {
             	Rights right = player.getRights();
@@ -307,11 +306,16 @@ public final class PlayerDeath extends ActorDeath<Player> {
 					amount--;
 				}
 			}
-			region.register(killer.map(player -> new GroundItem(new Item(526), character.getPosition(), player)).orElseGet(() -> new GroundItem(new Item(526), character.getPosition(), character)));
-			items.forEach(item -> region.register(killer.map(player -> new GroundItem(item, character.getPosition(), player)).orElseGet(() -> new GroundItem(item, character.getPosition(), character))));
+			character.getRegion().ifPresent(r -> {
+				r.register(killer.map(player -> new GroundItem(new Item(526), character.getPosition(), player)).orElseGet(() -> new GroundItem(new Item(526), character.getPosition(), character)));
+				items.forEach(item -> r.register(killer.map(player -> new GroundItem(item, character.getPosition(), player)).orElseGet(() -> new GroundItem(item, character.getPosition(), character))));
+				
+			});
 			character.getInventory().addAll(keep.toArray(new Item[keep.size()]));
 		} else {
-			region.register(killer.map(player -> new GroundItem(new Item(526), character.getPosition(), player)).orElseGet(() -> new GroundItem(new Item(526), character.getPosition(), character)));
+			character.getRegion().ifPresent(r -> {
+				r.register(killer.map(player -> new GroundItem(new Item(526), character.getPosition(), player)).orElseGet(() -> new GroundItem(new Item(526), character.getPosition(), character)));
+			});
 		}
 	}
 }

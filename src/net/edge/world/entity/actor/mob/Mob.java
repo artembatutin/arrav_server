@@ -224,12 +224,12 @@ public abstract class Mob extends Actor {
 	
 	@Override
 	public Set<Player> getLocalPlayers() {
-		return getRegion().getPlayers();
+		return getRegion().get().getPlayers();
 	}
 	
 	@Override
 	public Set<Mob> getLocalMobs() {
-		return getRegion().getMobs();
+		return getRegion().get().getMobs();
 	}
 	
 	@Override

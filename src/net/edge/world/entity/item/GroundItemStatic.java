@@ -1,5 +1,7 @@
 package net.edge.world.entity.item;
 
+import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendItemNode;
 import net.edge.world.World;
@@ -46,7 +48,18 @@ public final class GroundItemStatic extends GroundItem {
 	
 	@Override
 	public void register() {
-		World.getRegions().getAllSurroundingRegions(getPosition().getRegion()).forEach(r -> r.getPlayers().forEach(p -> p.out(new SendItemNode(this))));
+		ObjectList<Region> surrounding = World.getRegions().getAllSurroundingRegions(getPosition().getRegion());
+		if(surrounding != null) {
+			for(Region r : surrounding) {
+				if(r == null)
+					continue;
+				for(Player p : r.getPlayers()) {
+					if(p == null)
+						continue;
+					p.out(new SendItemNode(this));
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -72,7 +85,7 @@ public final class GroundItemStatic extends GroundItem {
 		if(player.getInventory().add(super.getItem()) != -1) {
 			switch(policy) {
 				case TIMEOUT:
-					getRegion().unregister(this);
+					getRegion().ifPresent(r -> r.unregister(this));
 					break;
 				case RESPAWN:
 					dispose();

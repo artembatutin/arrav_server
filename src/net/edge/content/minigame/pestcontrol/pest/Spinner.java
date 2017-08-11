@@ -38,12 +38,13 @@ public class Spinner extends Pest {
 			World.get().submit(new Task(1, false) {
 				@Override
 				protected void execute() {
-					Region reg = getRegion();
-					reg.getPlayers().forEach(p -> {
-						if(p.getPosition().withinDistance(getPosition(), 2)) {
-							p.poison(PoisonType.DEFAULT_NPC);
-							p.damage(new Hit(50, Hit.HitType.POISON, Hit.HitIcon.NONE));
-						}
+					getRegion().ifPresent(reg -> {
+						reg.getPlayers().forEach(p -> {
+							if(p.getPosition().withinDistance(getPosition(), 2)) {
+								p.poison(PoisonType.DEFAULT_NPC);
+								p.damage(new Hit(50, Hit.HitType.POISON, Hit.HitIcon.NONE));
+							}
+						});
 					});
 					cancel();
 				}

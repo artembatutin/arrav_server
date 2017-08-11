@@ -10,6 +10,8 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.object.GameObject;
 
+import java.util.Optional;
+
 /**
  * Manages all of the cached {@link Region}s and the {@link Actor}s contained within them.
  * @author lare96 <http://github.org/lare96>
@@ -26,7 +28,7 @@ public final class RegionManager {
 	 * @param pos The position.
 	 * @return The region in accordance with this {@code pos}.
 	 */
-	public Region getRegion(Position pos) {
+	public Optional<Region> getRegion(Position pos) {
 		return getRegion(pos.getRegion());
 	}
 	
@@ -35,12 +37,12 @@ public final class RegionManager {
 	 * @param regionId The region id.
 	 * @return The region in accordance with {@code coordinates}.
 	 */
-	public Region getRegion(int regionId) {
-		if(regionId < 0 || regionId >= regions.length)
-			return null;
+	public Optional<Region> getRegion(int regionId) {
+		if(regionId < 0 || regionId >= regions.length || !exists(regionId))
+			return Optional.empty();
 		if(regions[regionId] == null)
 			regions[regionId] = new Region(regionId, this);
-		return regions[regionId];
+		return Optional.of(regions[regionId]);
 	}
 	
 	/**
@@ -69,8 +71,10 @@ public final class RegionManager {
 	public ObjectSet<Player> getPlayers(Position pos) {
 		ObjectList<Region> allRegions = getAllSurroundingRegions(pos.getRegion());
 		ObjectSet<Player> localPlayers = new ObjectOpenHashSet<>();
-		for(Region region : allRegions) {
-			localPlayers.addAll(region.getPlayers());
+		if(allRegions != null) {
+			for(Region region : allRegions) {
+				localPlayers.addAll(region.getPlayers());
+			}
 		}
 		return localPlayers;
 	}
@@ -81,18 +85,20 @@ public final class RegionManager {
 	 */
 	public void updateRegionObjects(Player player) {
 		ObjectList<Region> allRegions = getAllSurroundingRegions(player.getPosition().getRegion());
-		for(Region region : allRegions) {
-			if(!region.getRemovedObjects().isEmpty()) {
-				for(GameObject obj : region.getRemovedObjects()) {
-					System.out.println("remove " + obj);
-					player.out(new SendObjectRemoval(obj));
+		if(allRegions != null) {
+			for(Region region : allRegions) {
+				if(!region.getRemovedObjects().isEmpty()) {
+					for(GameObject obj : region.getRemovedObjects()) {
+						System.out.println("remove " + obj);
+						player.out(new SendObjectRemoval(obj));
+					}
 				}
+				region.dynamicAction(o -> {
+					if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance()) {
+						player.out(new SendObject(o));
+					}
+				});
 			}
-			region.dynamicAction(o -> {
-				if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance()) {
-					player.out(new SendObject(o));
-				}
-			});
 		}
 	}
 	
@@ -102,7 +108,8 @@ public final class RegionManager {
 	 * @return The surrounding regions.
 	 */
 	public ObjectList<Region> getAllSurroundingRegions(int region) {
-		return getRegion(region).getSurroundingRegions();
+		Optional<Region> r = getRegion(region);
+		return r.map(Region::getSurroundingRegions).orElse(null);
 	}
 	
 	public Region[] getRegions() {

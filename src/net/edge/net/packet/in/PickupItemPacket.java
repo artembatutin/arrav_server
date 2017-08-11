@@ -32,21 +32,20 @@ public final class PickupItemPacket implements IncomingPacket {
 		player.getMovementListener().append(() -> {
 			if(player.getPosition().same(new Position(itemX, itemY, player.getPosition().getZ()))) {
 				Position position = new Position(itemX, itemY, player.getPosition().getZ());
-				Region region = World.getRegions().getRegion(position);
-				if(region == null)
-					return;
-				Optional<GroundItem> item = region.getItem(itemId, position);
-				if(item.isPresent()) {
-					if(!MinigameHandler.execute(player, m -> m.canPickup(player, item.get()))) {
-						return;
+				World.getRegions().getRegion(position).ifPresent(region -> {
+					Optional<GroundItem> item = region.getItem(itemId, position);
+					if(item.isPresent()) {
+						if(!MinigameHandler.execute(player, m -> m.canPickup(player, item.get()))) {
+							return;
+						}
+						if(!player.getInventory().hasCapacityFor(new Item(itemId, item.get().getItem().getAmount()))) {
+							player.message("You don't have enough inventory space to pick this item up.");
+							return;
+						}
+						item.get().onPickup(player);
+						MinigameHandler.executeVoid(player, m -> m.onPickup(player, item.get().getItem()));
 					}
-					if(!player.getInventory().hasCapacityFor(new Item(itemId, item.get().getItem().getAmount()))) {
-						player.message("You don't have enough inventory space to pick this item up.");
-						return;
-					}
-					item.get().onPickup(player);
-					MinigameHandler.executeVoid(player, m -> m.onPickup(player, item.get().getItem()));
-				}
+				});
 			}
 		});
 		player.getActivityManager().execute(ActivityManager.ActivityType.PICKUP_ITEM);

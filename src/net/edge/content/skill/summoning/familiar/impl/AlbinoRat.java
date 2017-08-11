@@ -12,6 +12,7 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItemStatic;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.region.Region;
 
 import java.util.Optional;
 
@@ -43,8 +44,8 @@ public final class AlbinoRat extends Familiar {
 			t.getFamiliar().get().forceChat("Rawrgh, mai cheese!");
 			return;
 		}
-		GroundItemStatic eggs = new GroundItemStatic(new Item(1985), t.getFamiliar().get().getPosition());
-		eggs.getRegion().register(eggs);
+		GroundItemStatic cheese = new GroundItemStatic(new Item(1985), t.getFamiliar().get().getPosition());
+		cheese.getRegion().ifPresent(r -> r.register(cheese));
 	});
 	
 	@Override

@@ -150,7 +150,7 @@ public class Inventory extends ItemContainer {
 	public void addOrDrop(List<Item> items) {
 		addOrExecute(t -> {
 			GroundItem node = new GroundItem(t, player.getPosition(), player);
-			node.getRegion().register(node);
+			node.getRegion().ifPresent(r -> r.register(node));
 		}, "Some of the items were dropped beneath you instead...", items);
 	}
 	

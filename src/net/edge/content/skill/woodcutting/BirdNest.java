@@ -6,6 +6,7 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.region.Region;
 
 import java.util.EnumSet;
 
@@ -70,7 +71,7 @@ public enum BirdNest {
 		if(RandomUtils.inclusive(100) <= randomNest.rarity + (modifier ? 10 : 0)) {
 			player.message("A bird's nest falls out of the tree.");
 			GroundItem nest = new GroundItem(new Item(randomNest.nest), player.getPosition(), player);
-			nest.getRegion().register(nest);
+			nest.getRegion().ifPresent(r -> r.register(nest));
 		}
 	}
 	

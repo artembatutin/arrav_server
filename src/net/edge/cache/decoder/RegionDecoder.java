@@ -72,27 +72,28 @@ public final class RegionDecoder implements Runnable {
 		final int x = (hash >> 8 & 0xFF) * 64;
 		final int y = (hash & 0xFF) * 64;
 		final boolean isNew = def.isNew();
-		Region region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6));
-		try {
-			ObjectList<Position> downHeights = new ObjectArrayList<>();
-			ByteBuffer terrainData = fs.getFile(FileSystem.MAP_INDEX, def.getTerrainFile());
-			ByteBuffer terrainBuffer = ByteBuffer.wrap(CompressionUtil.gunzip(terrainData.array()));
-			parseTerrain(region, terrainBuffer, x, y, downHeights);
-			
-			ByteBuffer gameObjectData = fs.getFile(FileSystem.MAP_INDEX, def.getObjectFile());
-			ByteBuffer gameObjectBuffer = ByteBuffer.wrap(CompressionUtil.gunzip(gameObjectData.array()));
-			ObjectList<StaticObject> objects = parseGameObject(region, gameObjectBuffer, x, y, downHeights, isNew);
-			for(StaticObject o : objects) {
-				TraversalMap.markObject(region, o, true, true);
-				if(o.getDefinition() != null && DoorHandler.isDoor(o.getDefinition()))
-					DoorHandler.APPENDER.registerFirst(o.getId());
+		World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6)).ifPresent(r -> {
+			try {
+				ObjectList<Position> downHeights = new ObjectArrayList<>();
+				ByteBuffer terrainData = fs.getFile(FileSystem.MAP_INDEX, def.getTerrainFile());
+				ByteBuffer terrainBuffer = ByteBuffer.wrap(CompressionUtil.gunzip(terrainData.array()));
+				parseTerrain(r, terrainBuffer, x, y, downHeights);
+				
+				ByteBuffer gameObjectData = fs.getFile(FileSystem.MAP_INDEX, def.getObjectFile());
+				ByteBuffer gameObjectBuffer = ByteBuffer.wrap(CompressionUtil.gunzip(gameObjectData.array()));
+				ObjectList<StaticObject> objects = parseGameObject(r, gameObjectBuffer, x, y, downHeights, isNew);
+				for(StaticObject o : objects) {
+					TraversalMap.markObject(r, o, true, true);
+					if(o.getDefinition() != null && DoorHandler.isDoor(o.getDefinition()))
+						DoorHandler.APPENDER.registerFirst(o.getId());
+				}
+				downHeights.clear();
+				objects.clear();
+				decoded++;
+			} catch(Exception e) {
+				errors++;
 			}
-			downHeights.clear();
-			objects.clear();
-			decoded++;
-		} catch(Exception e) {
-			errors++;
-		}
+		});
 	}
 	
 	/**

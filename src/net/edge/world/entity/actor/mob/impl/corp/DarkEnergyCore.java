@@ -3,6 +3,7 @@ package net.edge.world.entity.actor.mob.impl.corp;
 import net.edge.content.combat.CombatType;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
+import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
@@ -104,8 +105,12 @@ public final class DarkEnergyCore extends Mob {
 		
 		@Override
 		protected void execute() {
-			Player victim = RandomUtils.random(core.getRegion().getPlayers().stream().filter(p -> AreaManager.get().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList()));
-			if(core.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || core.isDead() || victim.isDead()) {
+			Region reg = core.getRegion().orElse(null);
+			Player victim = null;
+			if(reg != null) {
+				victim = RandomUtils.random(reg.getPlayers().stream().filter(p -> AreaManager.get().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList()));
+			}
+			if(victim == null || core.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || core.isDead() || victim.isDead()) {
 				return;
 			}
 			
@@ -166,9 +171,10 @@ public final class DarkEnergyCore extends Mob {
 			if(core.getState() != EntityState.ACTIVE || core.isDead() || !core.isVisible()) {
 				return;
 			}
-			
-			List<Player> possibleVictims = core.getRegion().getPlayers().stream().filter(p -> AreaManager.get().inArea(p.getPosition(), "CORPOREAL_BEAST") && new Boundary(p.getPosition(), p.size()).inside(core.getPosition(), 3)).collect(Collectors.toList());
-			
+			Region reg = core.getRegion().orElse(null);
+			if(reg == null)
+				return;
+			List<Player> possibleVictims = reg.getPlayers().stream().filter(p -> AreaManager.get().inArea(p.getPosition(), "CORPOREAL_BEAST") && new Boundary(p.getPosition(), p.size()).inside(core.getPosition(), 3)).collect(Collectors.toList());
 			if(possibleVictims.isEmpty()) {
 				return;
 			}

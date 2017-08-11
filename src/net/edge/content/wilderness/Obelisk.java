@@ -69,7 +69,9 @@ public enum Obelisk {
 			public boolean click(Player player, GameObject object, int click) {
 				Optional<Obelisk> obelisk = get(object);
 				if(obelisk.isPresent()) {
-					World.get().submit(new ObeliskTask(obelisk.get(), player.getRegion()));
+					player.getRegion().ifPresent(r -> {
+						World.get().submit(new ObeliskTask(obelisk.get(), r));
+					});
 					return true;
 				}
 				return false;

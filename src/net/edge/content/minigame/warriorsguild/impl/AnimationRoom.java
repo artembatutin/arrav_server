@@ -183,10 +183,9 @@ public final class AnimationRoom extends GuildRoom {
 		if(tokens) {
 			items.add(new GroundItem(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), armour.get().data.tokens), armour.get().getPosition(), player));
 		}
-		Region region = World.getRegions().getRegion(armour.get().getPosition());
-		if(region == null)
-			return;
-		items.forEach(item -> region.register(item, item.getItem().getId() == WarriorsGuild.WARRIOR_GUILD_TOKEN.getId()));
+		World.getRegions().getRegion(armour.get().getPosition()).ifPresent(region -> {
+			items.forEach(item -> region.register(item, item.getItem().getId() == WarriorsGuild.WARRIOR_GUILD_TOKEN.getId()));
+		});
 		armour.ifPresent(World.get().getMobs()::remove);
 		armour = Optional.empty();
 	}

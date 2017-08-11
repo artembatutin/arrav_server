@@ -220,12 +220,14 @@ public final class PestControlMinigame extends SequencedMinigame {
 					pest.getCombat().attack(voidKnight);
 					continue;
 				}
-				for(Player p : pest.getRegion().getPlayers()) {
-					if(p.getPosition().withinDistance(pest.getPosition(), pest.ranged() ? 10 : 5)) {
-						pest.getCombat().attack(p);
-						break;
+				pest.getRegion().ifPresent(r -> {
+					for(Player p : r.getPlayers()) {
+						if(p.getPosition().withinDistance(pest.getPosition(), pest.ranged() ? 10 : 5)) {
+							pest.getCombat().attack(p);
+							break;
+						}
 					}
-				}
+				});
 			}
 		}
 		return true;

@@ -46,13 +46,15 @@ public class DoorHandler {
 				}
 				
 			} else {
-				Door door = new Door(object);
-				door.append(player);
-				doors.put(door.getCurrentOne(), door);
-				Position sec = door.getCurrentSecond();
-				if(sec != null) {
-					doors.put(sec, door);
-				}
+				object.getRegion().ifPresent(r -> {
+					Door door = new Door(object, r);
+					door.append(player);
+					doors.put(door.getCurrentOne(), door);
+					Position sec = door.getCurrentSecond();
+					if(sec != null) {
+						doors.put(sec, door);
+					}
+				});
 			}
 			return true;
 		}

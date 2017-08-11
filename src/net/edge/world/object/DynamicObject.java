@@ -4,6 +4,8 @@ import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.region.Region;
 
+import java.util.Optional;
+
 /**
  * An implementation of {@link GameObject} that is in a dynamic state.
  * @author Artem Batutin <artembatutin@gmail.com>
@@ -100,7 +102,7 @@ public class DynamicObject extends GameObject {
 	}
 	
 	@Override
-	public Region getRegion() {
+	public Optional<Region> getRegion() {
 		return World.getRegions().getRegion(position);
 	}
 	
@@ -118,7 +120,7 @@ public class DynamicObject extends GameObject {
 	
 	@Override
 	public StaticObject toStatic() {
-		return new StaticObject(getRegion(), getId(), position.getLocalX(), position.getLocalY(), getZ(), getDirection(), getObjectType());
+		return new StaticObject(getRegion().orElse(null), getId(), position.getLocalX(), position.getLocalY(), getZ(), getDirection(), getObjectType());
 	}
 	
 	@Override

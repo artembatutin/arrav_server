@@ -107,7 +107,9 @@ public class Multicannon extends DynamicObject {
 					player.message("You do not have all of the cannon parts.");
 					return true;
 				}
-				Region reg = player.getRegion();
+				Region reg = player.getRegion().orElse(null);
+				if(reg == null)
+					return true;
 				player.getMovementQueue().reset();
 				
 				//clip & location
@@ -259,18 +261,20 @@ public class Multicannon extends DynamicObject {
 	}
 	
 	public synchronized void publish() {
-		Region r = getRegion();
-		r.addObj(this);
-		clip(r);
+		getRegion().ifPresent(r -> {
+			r.addObj(this);
+			clip(r);
+		});
 		player.cannon = Optional.of(this);
 		setDisabled(false);
 	}
 	
 	@Override
 	public synchronized void remove() {
-		Region r = getRegion();
-		r.removeObj(this);
-		unclip(r);
+		getRegion().ifPresent(r -> {
+			r.removeObj(this);
+			unclip(r);
+		});
 		setDisabled(true);
 		player.cannon = Optional.empty();
 	}

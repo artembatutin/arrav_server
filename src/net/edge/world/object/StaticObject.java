@@ -4,6 +4,8 @@ import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.region.Region;
 
+import java.util.Optional;
+
 /**
  * An implementation of {@link GameObject} that is in a static state.
  * @author Artem Batutin <artembatutin@gmail.com>
@@ -83,16 +85,17 @@ public class StaticObject extends GameObject {
 	}
 	
 	@Override
-	public Region getRegion() {
-		return region;
+	public Optional<Region> getRegion() {
+		if(region == null)
+			return Optional.empty();
+		return Optional.of(region);
 	}
 	
 	@Override
 	public StaticObject setPosition(Position pos) {
 		//Removing from the region as it has been changed.
 		remove();
-		Region reg = World.getRegions().getRegion(pos);
-		return new StaticObject(reg, getId(), pos.getX(), pos.getY(), pos.getZ(), getDirection(), getObjectType());
+		return new StaticObject(World.getRegions().getRegion(pos).orElse(null), getId(), pos.getX(), pos.getY(), pos.getZ(), getDirection(), getObjectType());
 	}
 	
 	@Override

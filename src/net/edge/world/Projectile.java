@@ -1,5 +1,6 @@
 package net.edge.world;
 
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.combat.CombatType;
 import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Position;
@@ -177,10 +178,15 @@ public final class Projectile {
 	public Projectile sendProjectile() {
 		int regionId = start.getRegion();
 		RegionManager m = World.getRegions();
-		m.getRegion(regionId).getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-		for(Region r : m.getRegion(regionId).getSurroundingRegions()) {
+		m.getRegion(regionId).ifPresent(r -> {
 			r.getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
-		}
+			ObjectList<Region> surrounding = r.getSurroundingRegions();
+			if(surrounding != null) {
+				for(Region s : surrounding) {
+					s.getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
+				}
+			}
+		});
 		return this;
 	}
 	

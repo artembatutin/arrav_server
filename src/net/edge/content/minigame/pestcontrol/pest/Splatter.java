@@ -55,21 +55,22 @@ public class Splatter extends Pest {
 	public void appendDeath() {
 		setDead(true);
 		World.get().submit(new MobDeath(this));
-		Region reg = getRegion();
-		//hitting players.
-		reg.getPlayers().forEach(p -> {
-			if(p.getPosition().withinDistance(getPosition(), 1)) {
-				p.damage(new Hit(p.getMaximumHealth() / 5, Hit.HitType.NORMAL, Hit.HitIcon.NONE));
-			}
-		});
-		//hitting npcs.
-		reg.getMobs().forEach(n -> {
-			int id = n.getId();
-			if(id < 6142 || id > 6145) {//ignoring portals.
-				if(n.getPosition().withinDistance(getPosition(), 1)) {
-					n.damage(new Hit(n.getMaxHealth() / 3, Hit.HitType.NORMAL, Hit.HitIcon.NONE));
+		getRegion().ifPresent(reg -> {
+			//hitting players.
+			reg.getPlayers().forEach(p -> {
+				if(p.getPosition().withinDistance(getPosition(), 1)) {
+					p.damage(new Hit(p.getMaximumHealth() / 5, Hit.HitType.NORMAL, Hit.HitIcon.NONE));
 				}
-			}
+			});
+			//hitting npcs.
+			reg.getMobs().forEach(n -> {
+				int id = n.getId();
+				if(id < 6142 || id > 6145) {//ignoring portals.
+					if(n.getPosition().withinDistance(getPosition(), 1)) {
+						n.damage(new Hit(n.getMaxHealth() / 3, Hit.HitType.NORMAL, Hit.HitIcon.NONE));
+					}
+				}
+			});
 		});
 	}
 	

@@ -4,6 +4,7 @@ import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.DestructionSkillAction;
+import net.edge.world.entity.region.Region;
 import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.Position;
@@ -95,7 +96,10 @@ public final class Firemaking extends DestructionSkillAction {
 	@Override
 	public boolean init() {
 		Position p = getPlayer().getPosition();
-		if(!familiar && getPlayer().getRegion().getObjects(p).hasInteractive() || !TraversalMap.isTraversable(p, Direction.WEST, getPlayer().size()) && !TraversalMap
+		Region reg = getPlayer().getRegion().orElse(null);
+		if(reg == null)
+			return false;
+		if(!familiar && reg.getObjects(p).hasInteractive() || !TraversalMap.isTraversable(p, Direction.WEST, getPlayer().size()) && !TraversalMap
 				.isTraversable(p, Direction.EAST, getPlayer().size()) || Location.isAtHome(getPlayer())) {
 			getPlayer().message("You can't start a fire here.");
 			return false;

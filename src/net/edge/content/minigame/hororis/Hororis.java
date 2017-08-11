@@ -115,10 +115,11 @@ public class Hororis extends Minigame {
 			World.get().getMobs().remove(m);
 		}
 		minions.clear();
-		Region reg = horror.getRegion();
-		for(GroundItem b : bones) {
-			reg.unregister(b);
-		}
+		horror.getRegion().ifPresent(reg -> {
+			for(GroundItem b : bones) {
+				reg.unregister(b);
+			}
+		});
 		bones.clear();
 		for(Player p : players) {
 			p.out(new SendFade(20, 100, 160));
@@ -152,7 +153,7 @@ public class Hororis extends Minigame {
 					p.damage(new Hit(RandomUtils.inclusive(20, 100), Hit.HitType.DISEASE, Hit.HitIcon.MAGIC));
 				}
 			}
-			horror.getRegion().register(item);
+			horror.getRegion().ifPresent(r -> r.register(item));
 			bones.add(item);
 		}
 	}

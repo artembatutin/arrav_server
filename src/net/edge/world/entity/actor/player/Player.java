@@ -85,6 +85,7 @@ import net.edge.world.entity.item.container.impl.Bank;
 import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.world.entity.item.container.impl.Inventory;
 import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Position;
 import net.edge.world.locale.loc.Location;
 
@@ -825,8 +826,8 @@ public final class Player extends Actor {
 			if(getTeleportStage() == -1)
 				setTeleportStage(0);
 		}
-		if(getSession() != null)
-			UpdateManager.prepare(this);
+		//if(getSession() != null)
+		//	UpdateManager.prepare(this);
 	}
 	
 	@Override
@@ -992,8 +993,10 @@ public final class Player extends Actor {
 		dialogueChain.interrupt();
 		getMovementQueue().reset();
 		closeWidget();
-		if(getRegion().getPosition() == getLastRegion())
-			setUpdateRegion(false);
+		getRegion().ifPresent(prev -> {
+			if(prev.getPosition() == getLastRegion())
+				setUpdateRegion(false);
+		});
 		if(getLastRegion() == null)
 			setLastRegion(getPosition().copy());
 		super.setPosition(destination.copy());

@@ -2,6 +2,7 @@ package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.world.locale.Position;
@@ -48,10 +49,15 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 			}
 			
 			int added = 0;
-			processPlayers(player.getRegion(), player, blockMsg, msg, added);
-			for(Region r : player.getRegion().getSurroundingRegions()) {
+			player.getRegion().ifPresent(r -> {
 				processPlayers(r, player, blockMsg, msg, added);
-			}
+				ObjectList<Region> surrounding = r.getSurroundingRegions();
+				if(surrounding != null) {
+					for(Region s : surrounding) {
+						processPlayers(s, player, blockMsg, msg, added);
+					}
+				}
+			});
 			
 			if(blockMsg.getBuffer().writerIndex() > 0) {
 				msg.putBits(11, 2047);
@@ -73,21 +79,23 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 	 * Processing the addition of player from a region.
 	 */
 	private void processPlayers(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, int added) {
-		if(!region.getPlayers().isEmpty()) {
-			for(Player other : region.getPlayers()) {
-				if(added == 15 || player.getLocalPlayers().size() >= 255)
-					break;
-				if(other == null || other.same(player))
-					continue;
-				if(other.getState() != EntityState.ACTIVE)
-					continue;
-				if(other.getInstance() != player.getInstance())
-					continue;
-				if(other.isVisible() && other.getPosition().isViewableFrom(player.getPosition())) {
-					if(player.getLocalPlayers().add(other)) {
-						added++;
-						addPlayer(msg, player, other);
-						UpdateManager.encode(player, other, blockMsg, UpdateState.ADD_LOCAL);
+		if(region != null) {
+			if(!region.getPlayers().isEmpty()) {
+				for(Player other : region.getPlayers()) {
+					if(added == 15 || player.getLocalPlayers().size() >= 255)
+						break;
+					if(other == null || other.same(player))
+						continue;
+					if(other.getState() != EntityState.ACTIVE)
+						continue;
+					if(other.getInstance() != player.getInstance())
+						continue;
+					if(other.isVisible() && other.getPosition().isViewableFrom(player.getPosition())) {
+						if(player.getLocalPlayers().add(other)) {
+							added++;
+							addPlayer(msg, player, other);
+							UpdateManager.encode(player, other, blockMsg, UpdateState.ADD_LOCAL);
+						}
 					}
 				}
 			}

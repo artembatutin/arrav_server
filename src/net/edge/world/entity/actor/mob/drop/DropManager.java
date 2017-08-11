@@ -42,15 +42,14 @@ public final class DropManager {
 		if(table == null) {
 			return;
 		}
-		List<Item> dropItems = table.toItems(killer, victim);
-		Region region = victim.getRegion();
-		if(region == null)
-			return;
-		for(Item drop : dropItems) {
-			if(drop == null)
-				continue;
-			region.register(new GroundItem(drop, victim.getPosition(), killer));
-		}
+		victim.getRegion().ifPresent(r -> {
+			List<Item> dropItems = table.toItems(killer, victim);
+			for(Item drop : dropItems) {
+				if(drop == null)
+					continue;
+				r.register(new GroundItem(drop, victim.getPosition(), killer));
+			}
+		});
 	}
 
 	public static Int2ObjectOpenHashMap<DropTable> getTables() {

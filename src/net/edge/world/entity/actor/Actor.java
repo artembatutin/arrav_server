@@ -12,6 +12,7 @@ import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.magic.CombatSpell;
 import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.strategy.Strategy;
+import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.Entity;
 import net.edge.world.entity.EntityState;
@@ -239,8 +240,8 @@ public abstract class Actor extends Entity {
 	public void postUpdate() {
 		//Updating the region that the actor has entered.
 		if(regionChanged != null) {
-			World.getRegions().getRegion(regionChanged.getRegion()).remove(this);
-			World.getRegions().getRegion(getPosition().getRegion()).add(this);
+			World.getRegions().getRegion(regionChanged.getRegion()).ifPresent(r -> r.remove(this));
+			World.getRegions().getRegion(getPosition().getRegion()).ifPresent(r -> r.add(this));
 			regionChanged = null;
 		}
 		primaryDirection = Direction.NONE;

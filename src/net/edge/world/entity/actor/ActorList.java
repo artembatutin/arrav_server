@@ -189,14 +189,15 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 		actor.setSlot(index + 1);
 		actor.setState(EntityState.ACTIVE);
 		if(actor.isPlayer())//thread safe
-			actor.getRegion().add(actor);
+			actor.getRegion().ifPresent(r -> r.add(actor));
 		else
 			World.get().add(actor);
 		//Activating npc if region active.
 		if(actor.isMob()) {
-			Region reg = actor.getRegion();
-			if(reg != null && reg.getState() == EntityState.ACTIVE)
-				actor.toMob().setActive(true);
+			actor.getRegion().ifPresent(r -> {
+				if(r.getState() == EntityState.ACTIVE)
+					actor.toMob().setActive(true);
+			});
 		}
 		size++;
 		//Updating player count.

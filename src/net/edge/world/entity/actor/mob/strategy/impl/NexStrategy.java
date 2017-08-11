@@ -117,27 +117,29 @@ public final class NexStrategy extends DynamicStrategy<Nex> {
 		if (victim.toPlayer().getMinigame().isPresent()) {
 			if (RandomUtils.inclusive(100) < 25) {
 				character.toMob().forceChat("Let the virus flow through you!");
-					character.toMob().getRegion().getPlayers().forEach(p -> {
-						if (p.getPosition().withinDistance(victim.getPosition(), 3)) {
-							p.message(victim.toPlayer().getFormatUsername() +"'s virus infection is spreading and has infected you.");
-						}
+					character.toMob().getRegion().ifPresent(r -> {
+						r.getPlayers().forEach(p -> {
+							if (p.getPosition().withinDistance(victim.getPosition(), 3)) {
+								p.message(victim.toPlayer().getFormatUsername() +"'s virus infection is spreading and has infected you.");
+							}
+						});
 					});
 			}
-				character.setCurrentlyCasting(CombatSpells.SMOKE_BARRAGE.getSpell());
-				character.animation(new Animation(6987, Animation.AnimationPriority.HIGH));
-				CombatUtil.playersWithinDistance(victim, p -> character.getCurrentlyCasting().projectile(character, p), 5);
-				return new CombatHit(character, victim, 1, CombatType.MAGIC, false) {
-					@Override
-					public CombatHit preAttack() {
-						CombatUtil.playersWithinDistance(victim, p -> {
-									p.getCombat().getDamageCache().add(character, CombatUtil.calculateRandomHit(character, p, CombatType.MAGIC, 0, false).getDamage());
-									p.damage(CombatUtil.calculateRandomHit(character, p, CombatType.MAGIC, 0, false));
-								}, 5
-							);
-						return this;
-					}
-				};
-			}
+			character.setCurrentlyCasting(CombatSpells.SMOKE_BARRAGE.getSpell());
+			character.animation(new Animation(6987, Animation.AnimationPriority.HIGH));
+			CombatUtil.playersWithinDistance(victim, p -> character.getCurrentlyCasting().projectile(character, p), 5);
+			return new CombatHit(character, victim, 1, CombatType.MAGIC, false) {
+				@Override
+				public CombatHit preAttack() {
+					CombatUtil.playersWithinDistance(victim, p -> {
+								p.getCombat().getDamageCache().add(character, CombatUtil.calculateRandomHit(character, p, CombatType.MAGIC, 0, false).getDamage());
+								p.damage(CombatUtil.calculateRandomHit(character, p, CombatType.MAGIC, 0, false));
+							}, 5
+					);
+					return this;
+				}
+			};
+		}
 		return new CombatHit(character, victim, 1, CombatType.MAGIC, false);
 	}
 

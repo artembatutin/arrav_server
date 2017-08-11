@@ -26,12 +26,11 @@ public class Door {
 	private final GameObject original;
 	private final GameObject originalSecond;
 
-	public Door(GameObject object) {
+	public Door(GameObject object, Region reg) {
 		boolean closed = object.getDefinition().hasAction("open");
 		original = object.copy();
-		Region reg = original.getRegion();
-		Position pos = original.getGlobalPos();
 		
+		Position pos = original.getGlobalPos();
 		//getting second door if found.
 		if(original.getObjectType() == STRAIGHT_WALL) {
 			if(original.getDirection() == WEST || original.getDirection() == EAST) {

@@ -2,6 +2,7 @@ package net.edge.world;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import net.edge.Application;
 import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.GameConstants;
 import net.edge.GamePulseHandler;
@@ -116,8 +117,8 @@ public final class World {
 	static {
 		int amtCpu = Runtime.getRuntime().availableProcessors();
 		try {
-			//donation = new Database(!Application.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_donate", !Application.DEBUG ? "root" : "edge_avro", !Application.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
-			//score = new Database(!Application.DEBUG ? "127.0.0.1" : "192.95.33.132", "edge_score", !Application.DEBUG ? "root" : "edge_avro", !Application.DEBUG ? "FwKVM3/2Cjh)f?=j" : "%GL5{)hAJBU(MB3h", amtCpu);
+			donation = new Database(Application.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_donate", Application.DEBUG ? "edge_avro" : "root", Application.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
+			score = new Database(Application.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_score", Application.DEBUG ? "edge_avro" : "root", Application.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -202,7 +203,7 @@ public final class World {
 				if(player == null) {
 					break;
 				}
-				if(players.add(player)) {
+				if(!playerByNames.containsKey(player.getCredentials().getUsernameHash()) && players.add(player)) {
 					playerByNames.put(player.getCredentials().getUsernameHash(), player);
 				} else if(player.isHuman()) {
 					player.getSession().getChannel().close();
@@ -229,7 +230,7 @@ public final class World {
 				if(actor == null) {
 					break;
 				}
-				actor.getRegion().add(actor);
+				actor.getRegion().ifPresent(r -> r.add(actor));
 			}
 		}
 	}
@@ -252,7 +253,7 @@ public final class World {
 				if(actor == null) {
 					break;
 				}
-				actor.getRegion().remove(actor);
+				actor.getRegion().ifPresent(r -> r.remove(actor));
 			}
 		}
 	}

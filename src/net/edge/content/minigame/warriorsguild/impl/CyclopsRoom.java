@@ -17,6 +17,7 @@ import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.warriorsguild.GuildRoom;
 import net.edge.content.minigame.warriorsguild.WarriorsGuild;
+import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Position;
 import net.edge.world.locale.loc.SquareLocation;
 import net.edge.world.World;
@@ -149,8 +150,8 @@ public final class CyclopsRoom extends GuildRoom {
 		Defender defender = Defender.getNext(player);
 		boolean rollRare = true; // 10% chance.
 		if(rollRare) {
-			GroundItem node = new GroundItem(defender.item, other.getPosition(), player);
-			node.getRegion().register(node);
+			GroundItem item = new GroundItem(defender.item, other.getPosition(), player);
+			item.getRegion().ifPresent(r -> r.register(item));
 		}
 	}
 

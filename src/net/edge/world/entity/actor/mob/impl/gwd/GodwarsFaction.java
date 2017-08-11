@@ -2,6 +2,7 @@ package net.edge.world.entity.actor.mob.impl.gwd;
 
 import net.edge.action.impl.ObjectAction;
 import net.edge.content.combat.CombatType;
+import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
@@ -274,29 +275,34 @@ public enum GodwarsFaction {
 			if(getCombat().inCombat())
 				return;
 			if(check % 18 == 17) {
-				for(Player player : getRegion().getPlayers()) {
-					if(!player.getPosition().withinDistance(getPosition(), 5))
-						continue;
-					//if the target is a player but hes wearing items which will protect him they will not attack.
-					if(!GodwarsFaction.isProtected(player, faction)) {
-						getCombat().attack(player);
+				getRegion().ifPresent(r -> {
+					for(Player player : r.getPlayers()) {
+						if(!player.getPosition().withinDistance(getPosition(), 5))
+							continue;
+						//if the target is a player but hes wearing items which will protect him they will not attack.
+						if(!GodwarsFaction.isProtected(player, faction)) {
+							getCombat().attack(player);
+						}
 					}
-				}
+				});
 			}
 			if(check >= 150) {
 				int count = 0;
-				for(Mob mob : getRegion().getMobs()) {
-					count++;
-					if(count >= 10)
-						break;
-					MobType t = mob.getMobType();
-					if(t != MobType.ARMADYL_SOLDIER && t != MobType.ZAMORAK_SOLDIER && t != MobType.SARADOMIN_SOLDIER && t != MobType.BANDOS_SOLIDER)
-						continue;
-					if(canAttack(this, (GodwarsSoldier) mob)) {
-						mob.setAutoRetaliate(true);
-						getCombat().attack(mob);
-						mob.getCombat().attack(this);
-						break;
+				Region reg = getRegion().orElse(null);
+				if(reg != null) {
+					for(Mob mob : reg.getMobs()) {
+						count++;
+						if(count >= 10)
+							break;
+						MobType t = mob.getMobType();
+						if(t != MobType.ARMADYL_SOLDIER && t != MobType.ZAMORAK_SOLDIER && t != MobType.SARADOMIN_SOLDIER && t != MobType.BANDOS_SOLIDER)
+							continue;
+						if(canAttack(this, (GodwarsSoldier) mob)) {
+							mob.setAutoRetaliate(true);
+							getCombat().attack(mob);
+							mob.getCombat().attack(this);
+							break;
+						}
 					}
 				}
 				check = 0;

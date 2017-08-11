@@ -123,17 +123,18 @@ public final class CorporealBeast extends Mob {
 		
 		@Override
 		protected void execute() {
-			Collection<Player> players = beast.getRegion().getPlayers();
-			if(players.isEmpty() || players.stream().noneMatch(player -> AreaManager.get().inArea(player.getPosition(), "CORPOREAL_BEAST"))) {
-				beast.healEntity(beast.getMaxHealth());//this is capped.
-				beast.task.ifPresent(t -> {
-					t.setRunning(false);
-					beast.task = Optional.empty();
-				});
-				
-				this.cancel();
-				return;
-			}
+			beast.getRegion().ifPresent(r -> {
+				if(r.getPlayers().isEmpty() || r.getPlayers().stream().noneMatch(player -> AreaManager.get().inArea(player.getPosition(), "CORPOREAL_BEAST"))) {
+					beast.healEntity(beast.getMaxHealth());//this is capped.
+					beast.task.ifPresent(t -> {
+						t.setRunning(false);
+						beast.task = Optional.empty();
+					});
+					
+					this.cancel();
+					return;
+				}
+			});
 			
 			if(beast.isDead() || !beast.task.isPresent()) {
 				this.cancel();

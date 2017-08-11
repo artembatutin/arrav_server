@@ -2,6 +2,7 @@ package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
@@ -42,10 +43,15 @@ public final class SendMobUpdate implements OutgoingPacket {
 			}
 			
 			int added = 0;
-			processMobs(player.getRegion(), player, blockMsg, msg, added);
-			for(Region r : player.getRegion().getSurroundingRegions()) {
+			player.getRegion().ifPresent(r -> {
 				processMobs(r, player, blockMsg, msg, added);
-			}
+				ObjectList<Region> surrounding = r.getSurroundingRegions();
+				if(surrounding != null) {
+					for(Region s : surrounding) {
+						processMobs(s, player, blockMsg, msg, added);
+					}
+				}
+			});
 			
 			if(blockMsg.getBuffer().writerIndex() > 0) {
 				msg.putBits(14, 16383);
@@ -68,21 +74,23 @@ public final class SendMobUpdate implements OutgoingPacket {
 	 * Processing the addition of npc from a region.
 	 */
 	private void processMobs(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, int added) {
-		if(!region.getMobs().isEmpty()) {
-			for(Mob mob : region.getMobs()) {
-				if(added == 15 || player.getLocalMobs().size() >= 255)
-					break;
-				if(mob == null)
-					continue;
-				if(mob.getState() != EntityState.ACTIVE)
-					continue;
-				if(mob.getInstance() != player.getInstance())
-					continue;
-				if(mob.isVisible() && mob.getPosition().isViewableFrom(player.getPosition())) {
-					if(player.getLocalMobs().add(mob)) {
-						addNpc(player, mob, msg);
-						UpdateManager.encode(player, mob, blockMsg, UpdateState.ADD_LOCAL);
-						added++;
+		if(region != null) {
+			if(!region.getMobs().isEmpty()) {
+				for(Mob mob : region.getMobs()) {
+					if(added == 15 || player.getLocalMobs().size() >= 255)
+						break;
+					if(mob == null)
+						continue;
+					if(mob.getState() != EntityState.ACTIVE)
+						continue;
+					if(mob.getInstance() != player.getInstance())
+						continue;
+					if(mob.isVisible() && mob.getPosition().isViewableFrom(player.getPosition())) {
+						if(player.getLocalMobs().add(mob)) {
+							addNpc(player, mob, msg);
+							UpdateManager.encode(player, mob, blockMsg, UpdateState.ADD_LOCAL);
+							added++;
+						}
 					}
 				}
 			}

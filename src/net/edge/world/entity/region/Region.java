@@ -434,9 +434,14 @@ public final class Region extends Entity {
 	 * @return {@code true} if there is a player around regionally, {@code false} otherwise.
 	 */
 	boolean playersAround() {
-		for(Region r : World.getRegions().getAllSurroundingRegions(getRegionId())) {
-			if(!r.getPlayers().isEmpty())
-				return true;
+		ObjectList<Region> surrounding = getSurroundingRegions();
+		if(surrounding != null) {
+			for(Region r : surrounding) {
+				if(r == null)
+					continue;
+				if(!r.getPlayers().isEmpty())
+					return true;
+			}
 		}
 		return false;
 	}
@@ -482,23 +487,15 @@ public final class Region extends Entity {
 	public ObjectList<Region> getSurroundingRegions() {
 		if (surroundingRegions == null) {
 			ObjectList<Region> regions = new ObjectArrayList<>();
-			regions.add(manager.getRegion(regionId));
-			if (manager.exists(regionId + 256))
-				regions.add(manager.getRegion(regionId + 256));
-			if (manager.exists(regionId - 256))
-				regions.add(manager.getRegion(regionId - 256));
-			if (manager.exists(regionId + 1))
-				regions.add(manager.getRegion(regionId + 1));
-			if (manager.exists(regionId - 1))
-				regions.add(manager.getRegion(regionId - 1));
-			if (manager.exists(regionId + 257))
-				regions.add(manager.getRegion(regionId + 257));
-			if (manager.exists(regionId - 255))
-				regions.add(manager.getRegion(regionId - 255));
-			if (manager.exists(regionId + 255))
-				regions.add(manager.getRegion(regionId + 255));
-			if (manager.exists(regionId - 257))
-				regions.add(manager.getRegion(regionId - 257));
+			manager.getRegion(regionId).ifPresent(regions::add);
+			manager.getRegion(regionId + 256).ifPresent(regions::add);
+			manager.getRegion(regionId - 256).ifPresent(regions::add);
+			manager.getRegion(regionId + 1).ifPresent(regions::add);
+			manager.getRegion(regionId - 1).ifPresent(regions::add);
+			manager.getRegion(regionId + 257).ifPresent(regions::add);
+			manager.getRegion(regionId - 255).ifPresent(regions::add);
+			manager.getRegion(regionId + 255).ifPresent(regions::add);
+			manager.getRegion(regionId - 257).ifPresent(regions::add);
 			surroundingRegions = regions;
 		}
 		return surroundingRegions;

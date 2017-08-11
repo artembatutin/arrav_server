@@ -34,6 +34,9 @@ public final class UpdateManager {
 	};
 	
 	public static void prepare(Player other) {
+		if(other.getLocalPlayers().size() == 0) {
+			return;
+		}
 		if(other.getFlags().get(UpdateFlag.CHAT)) {
 			return;
 		}
@@ -110,8 +113,8 @@ public final class UpdateManager {
 		}
 		boolean cacheBlocks = (state != UpdateState.ADD_LOCAL && state != UpdateState.UPDATE_SELF);
 		if(other.getCachedUpdateBlock() != null && cacheBlocks) {
-			msg.putBytes(other.getCachedUpdateBlock());
-			return;
+			//msg.putBytes(other.getCachedUpdateBlock().getBuffer().array());
+			//return;
 		}
 		GameBuffer encodedBlock = new GameBuffer(Unpooled.buffer(64));
 		int mask = 0;
@@ -187,7 +190,7 @@ public final class UpdateManager {
 		
 		msg.putBytes(encodedBlock);
 		if(cacheBlocks) {
-			other.setCachedUpdateBlock(encodedBlock);
+			//other.setCachedUpdateBlock(encodedBlock);
 		}
 	}
 	

@@ -3,6 +3,7 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
+import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
@@ -30,6 +31,6 @@ public final class ItemNodeLoader extends JsonLoader {
 		int amount = reader.get("amount").getAsInt();
 		Position position = Objects.requireNonNull(builder.fromJson(reader.get("position"), Position.class));
 		GroundItem item = new GroundItemStatic(new Item(id, amount), position, GroundItemPolicy.RESPAWN);
-		item.getRegion().register(item);
+		item.getRegion().ifPresent(r -> r.register(item));
 	}
 }

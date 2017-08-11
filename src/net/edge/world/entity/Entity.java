@@ -8,6 +8,8 @@ import net.edge.world.entity.item.GroundItem;
 import net.edge.world.object.GameObject;
 import net.edge.world.entity.region.Region;
 
+import java.util.Optional;
+
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
@@ -148,7 +150,7 @@ public abstract class Entity {
 	 * Gets the region on which the entity is standing.
 	 * @return the region of this object.
 	 */
-	public Region getRegion() {
+	public Optional<Region> getRegion() {
 		return World.getRegions().getRegion(getPosition());
 	}
 	

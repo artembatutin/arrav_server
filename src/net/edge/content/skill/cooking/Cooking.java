@@ -9,6 +9,7 @@ import net.edge.world.Graphic;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.ItemDefinition;
+import net.edge.world.entity.region.Region;
 import net.edge.world.object.GameObject;
 
 import java.util.Optional;
@@ -130,7 +131,10 @@ public final class Cooking extends ProducingSkillAction {
 	private boolean checkCooking() {
 		if(counter == 0)
 			return false;
-		if(!spell && object.getDefinition().getName().contains("fire") && !object.getRegion().getObject(object.getId(), object.getLocalPos()).isPresent()) {
+		Region reg = object.getRegion().orElse(null);
+		if(reg == null)
+			return false;
+		if(!spell && object.getDefinition().getName().contains("fire") && !reg.getObject(object.getId(), object.getLocalPos()).isPresent()) {
 			return false;//Fire doesn't exist.
 		}
 		if(!player.getInventory().contains(data.getRawId())) {

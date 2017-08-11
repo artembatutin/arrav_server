@@ -46,14 +46,15 @@ public class MulticannonTask extends Task {
 			cannon.player.message("Your cannon is now on the floor because you weren't close enough to repair it in time.");
 			cancel();
 			cannon.remove();
-			Region r = cannon.getRegion();
-			if(cannon.getElements() > 0) {
-				r.register(new GroundItem(new Item(2, cannon.getElements()), cannon.getGlobalPos(), cannon.player));
-			}
-			r.register(new GroundItem(new Item(6), cannon.getGlobalPos(), cannon.player));
-			r.register(new GroundItem(new Item(8), cannon.getGlobalPos(), cannon.player));
-			r.register(new GroundItem(new Item(10), cannon.getGlobalPos(), cannon.player));
-			r.register(new GroundItem(new Item(12), cannon.getGlobalPos(), cannon.player));
+			cannon.getRegion().ifPresent(r -> {
+				if(cannon.getElements() > 0) {
+					r.register(new GroundItem(new Item(2, cannon.getElements()), cannon.getGlobalPos(), cannon.player));
+				}
+				r.register(new GroundItem(new Item(6), cannon.getGlobalPos(), cannon.player));
+				r.register(new GroundItem(new Item(8), cannon.getGlobalPos(), cannon.player));
+				r.register(new GroundItem(new Item(10), cannon.getGlobalPos(), cannon.player));
+				r.register(new GroundItem(new Item(12), cannon.getGlobalPos(), cannon.player));
+			});
 		} else if(cannon.getElements() < 1) {
 			cannon.player.message("Your cannon has run out of ammo!");
 			cancel();

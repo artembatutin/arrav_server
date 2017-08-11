@@ -3,6 +3,7 @@ package net.edge.content.skill.summoning.familiar;
 import com.google.common.collect.ImmutableList;
 import net.edge.world.entity.item.GroundItemStatic;
 import net.edge.world.entity.item.container.ItemContainer;
+import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -155,7 +156,7 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 	final void dropAll(Position position) {
 		container.forEach(item -> {
 			GroundItemStatic ground = new GroundItemStatic(item, position);
-			ground.getRegion().register(ground);
+			ground.getRegion().ifPresent(r -> r.register(ground));
 		});
 		container.clear();
 	}

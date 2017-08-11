@@ -7,6 +7,7 @@ import net.edge.content.skill.firemaking.Bonfire;
 import net.edge.content.skill.hunter.Hunter;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ObjectAction;
+import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
 import net.edge.net.codec.IncomingMsg;
@@ -97,7 +98,10 @@ public final class ObjectActionPacket implements IncomingPacket {
 				});
 			}
 		}
-		Optional<GameObject> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
+		Region reg = World.getRegions().getRegion(position).orElse(null);
+		if(reg == null)
+			return;
+		Optional<GameObject> o = reg.getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
 		final GameObject object = o.get();
@@ -177,7 +181,10 @@ public final class ObjectActionPacket implements IncomingPacket {
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(spell < 0 || objectId < 0 || objectX < 0 || objectY < 0)
 			return;
-		Optional<GameObject> o = World.getRegions().getRegion(position).getObject(objectId, position.toLocalPacked());
+		Region reg = World.getRegions().getRegion(position).orElse(null);
+		if(reg == null)
+			return;
+		Optional<GameObject> o = reg.getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
 		//Controlling data.
