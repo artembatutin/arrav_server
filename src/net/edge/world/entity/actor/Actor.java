@@ -599,7 +599,9 @@ public abstract class Actor extends Entity {
 	 */
 	public final int prepareSpell(CombatSpell spell, Actor victim) {
 		currentlyCasting = spell;
-		return currentlyCasting.startCast(this, victim);
+		if(currentlyCasting != null)
+			return currentlyCasting.startCast(this, victim);
+		return 1;
 	}
 	
 	/**
