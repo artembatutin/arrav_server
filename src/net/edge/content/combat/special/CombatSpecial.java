@@ -404,8 +404,13 @@ public enum CombatSpecial {
 				@Override
 				public void execute() {
 					if(tick == 0) {
-						delay[0] = new Projectile(player, target, 1099, 44, 3, 43, 31, 0, CombatType.RANGED).sendProjectile().getTravelTime();
-						new Projectile(player, target, 1099, 60, 3, 43, 31, 0, CombatType.RANGED).sendProjectile();
+						if (player.getEquipment().contains(11212)) {
+							delay[0] = new Projectile(player, target, 1099, 44, 3, 43, 31, 0, CombatType.RANGED).sendProjectile().getTravelTime();
+							new Projectile(player, target, 1099, 60, 3, 43, 31, 0, CombatType.RANGED).sendProjectile();
+						} else {
+							delay[0] = new Projectile(player, target, 1101, 44, 3, 43, 31, 0, CombatType.RANGED).sendProjectile().getTravelTime();
+							new Projectile(player, target, 1101, 60, 3, 43, 31, 0, CombatType.RANGED).sendProjectile();
+						}
 					} else if(tick >= 1) {
 						target.graphic(new Graphic(1100, 100));
 						this.cancel();
