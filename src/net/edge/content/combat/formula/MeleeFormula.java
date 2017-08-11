@@ -39,7 +39,7 @@ public class MeleeFormula implements Formula {
 			} else if(Prayer.isActivated(player, Prayer.PIETY)) {
 				attackLevel *= 1.20;
 			} else if(Prayer.isActivated(player, Prayer.TURMOIL)) {
-				attackLevel += 10;
+                attackLevel *= 1.15 + (defender.isPlayer() ? (defender.toPlayer().getSkills()[Skills.ATTACK].getRealLevel() / 1000D) : 0.0);
 			}
 			//rounding
 			attackLevel = Math.round(attackLevel);
@@ -102,7 +102,7 @@ public class MeleeFormula implements Formula {
 			level *= 1.23;
 		} else if(Prayer.isActivated(player, Prayer.TURMOIL)) {
 			//1000 because if strength is 99 / 100 * 10 = 9.9 which is way to much.
-			level *= (defender.toPlayer().getSkills()[Skills.STRENGTH].getRealLevel() / 1000) * 10;
+			level *= 1.23 + (defender.isPlayer() ? (defender.toPlayer().getSkills()[Skills.STRENGTH].getRealLevel() / 1000D) : 0.0);
 		}
 		//rounding
 		level = Math.round(level);

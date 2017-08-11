@@ -45,7 +45,7 @@ public interface Formula {
 			} else if(Prayer.isActivated(player, Prayer.CHIVALRY)) {
 				defenceLevel *= 1.20;
 			} else if(Prayer.isActivated(player, Prayer.PIETY)) {
-				defenceLevel *= 1.25;
+				defenceLevel *= 1.15 + (attacker.isPlayer() ? (attacker.toPlayer().getSkills()[Skills.ATTACK].getRealLevel() / 1000D) : 0.0);
 			}
 			//rounding
 			defenceLevel = Math.round(defenceLevel);
