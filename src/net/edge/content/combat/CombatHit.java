@@ -112,7 +112,7 @@ public class CombatHit {
 					counter += hits[i].getDamage();
 				}
 			}
-			
+
 			// dragon claws special attack
 			if(getAttacker().isPlayer() && getAttacker().toPlayer().isSpecialActivated()) {
 				Player player = getAttacker().toPlayer();

@@ -1,22 +1,16 @@
 package net.edge.world.entity.actor.mob.strategy.impl;
 
-import net.edge.content.combat.Combat;
+import com.google.common.graph.Graph;
 import net.edge.content.combat.CombatHit;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.CombatUtil;
-import net.edge.content.combat.formula.MagicFormula;
-import net.edge.content.combat.magic.CombatNormalSpell;
-import net.edge.content.combat.magic.CombatSpell;
 import net.edge.content.combat.magic.CombatSpells;
-import net.edge.content.combat.magic.ancients.CombatAncientSpell;
+import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.nexchamber.NexMinigame;
-import net.edge.content.skill.Skill;
-import net.edge.content.skill.Skills;
+import net.edge.net.packet.out.SendGraphic;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.Animation;
-import net.edge.world.Hit;
-import net.edge.world.World;
+import net.edge.world.*;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.impl.SkeletalHorror;
 import net.edge.world.entity.actor.mob.impl.nex.Nex;
@@ -38,12 +32,12 @@ public final class NexStrategy extends DynamicStrategy<Nex> {
 
 	@Override
 	public boolean canIncomingAttack(Actor attacker) {
-		return npc.minionStage == 1 && attacker.toPlayer().getMinigame().isPresent();
+		return npc.minionStage > 0 && attacker.toPlayer().getMinigame().isPresent();
 	}
 
 	@Override
 	public boolean canOutgoingAttack(Actor victim) {
-		return npc.minionStage == 1 && victim.toPlayer().getMinigame().isPresent();
+		return npc.minionStage > 0 && victim.toPlayer().getMinigame().isPresent();
 	}
 	
 	@Override
@@ -54,11 +48,13 @@ public final class NexStrategy extends DynamicStrategy<Nex> {
 
 
 	/**
+	 * NO ESCAPE is available during all nex's phases
 	 *
 	 * @param character
 	 * @param victim
-	 * @return
+	 * @return {@link CombatHit}
 	 * @TODO: MORE EFFICIENT WAY  OF HANDLING SPAWN LOC AND CHECK IF IN PATH.
+	 * SQUARE LOCATION, X => &&  Y =>
 	 *
 	 */
 
@@ -150,8 +146,46 @@ public final class NexStrategy extends DynamicStrategy<Nex> {
 	 * @return
 	 */
 	public CombatHit shadow(Actor character, Actor victim) {
-		return new CombatHit(character, victim, 1, CombatType.MAGIC, false);
+		int random = RandomUtils.inclusive(100);
+		character.animation(new Animation(6987, Animation.AnimationPriority.HIGH));
+		if(random > 50) {
+			new Projectile(character, victim, 380, 44, 0, 43, 20, 0, CombatType.RANGED).sendProjectile();
+			return new CombatHit(character, victim, 1, CombatType.RANGED, false);
+		}
+		if(random > 70) {
+		    fearShadow(character, victim);
+        }
+			return new CombatHit(character, victim, 1, CombatType.RANGED, false) {
+				@Override
+				public CombatHit preAttack() {
+				CombatUtil.playersWithinDistance(character, p -> {
+					new Projectile(character, p, 380, 44, 0, 43, 20, 0, CombatType.RANGED).sendProjectile();
+					p.getCombat().getDamageCache().add(character, CombatUtil.calculateRandomHit(character, p, CombatType.RANGED, 0, false).getDamage());
+					p.damage(CombatUtil.calculateRandomHit(character, p, CombatType.RANGED, 0, false));
+					}, 10);
+				this.ignore();
+				return this;
+			}
+			};
 	}
+
+	public void fearShadow(Actor character, Actor victim) {
+        for (Player p : NexMinigame.getPlayers()) {
+            Position originalVictimPosition = p.getPosition();
+            SendGraphic.local(p, 383, originalVictimPosition, 0);
+            World.get().submit(new Task(1, false) {
+                @Override
+                protected void execute() {
+                    if (p.getPosition() == originalVictimPosition) {
+                        p.getCombat().getDamageCache().add(character, CombatUtil.calculateRandomHit(character, p, CombatType.RANGED, 0, false).getDamage());
+                        p.damage(CombatUtil.calculateRandomHit(character, p, CombatType.RANGED, 0, false));
+                    }
+                }
+                //new Projectile(npc.getCenterPosition(), originalVictimPosition, 0, 1824, 44, 3, 60, 36, 0, npc.getInstance(), CombatType.MAGIC).sendProjectile();
+            });
+        }
+    }
+
 
 	/**
 	 * Represents the nex's 'smoke' phase.
@@ -235,7 +269,7 @@ public final class NexStrategy extends DynamicStrategy<Nex> {
 	
 	@Override
 	public int attackDelay() {
-		return 3;
+		return 5;
 	}
 	
 	@Override

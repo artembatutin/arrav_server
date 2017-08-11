@@ -173,7 +173,7 @@ public enum PotionConsumable {
 
 		@Override
 		public void onEffect(Player player) {
-			PotionConsumable.onBasicEffect(player, Skills.RANGED, BoostType.EXTREME);
+			PotionConsumable.onBasicEffect(player, Skills.RANGED, BoostType.MODERATE_EXTREME);
 		}
 	},
 	EXTREME_MAGIC_FLASKS(14337, 14335, 14333, 14331, 14329, 14327) {
@@ -199,7 +199,7 @@ public enum PotionConsumable {
 
 		@Override
 		public void onEffect(Player player) {
-			PotionConsumable.onBasicEffect(player, Skills.MAGIC, BoostType.EXTREME);
+			PotionConsumable.onBasicEffect(player, Skills.MAGIC, BoostType.EXTREME_MAGIC);
 		}
 	},
 	RECOVER_SPECIAL_FLASKS(14385, 14383, 14381, 14379, 14377, 14375) {
@@ -289,7 +289,7 @@ public enum PotionConsumable {
 	RANGE_POTIONS(2444, 169, 171, 173) {
 		@Override
 		public void onEffect(Player player) {
-			PotionConsumable.onBasicEffect(player, Skills.RANGED, BoostType.NORMAL);
+			PotionConsumable.onBasicEffect(player, Skills.RANGED, BoostType.MODERATE);
 		}
 	},
 	ENERGY_POTIONS(3008, 3010, 3012, 3014) {
@@ -684,7 +684,7 @@ public enum PotionConsumable {
 		if(skill == Skills.HITPOINTS)
 			realLevel *= 10;//constitution check.
 
-		int boostLevel = Math.round(realLevel * type.getAmount() + type.getBase());
+		int boostLevel = (int)Math.floor(type.getBase() + (realLevel * type.getAmount()));
 		int cap = realLevel + boostLevel;
 
 		if((s.getLevel() + boostLevel) > (realLevel + boostLevel + 1)) {
@@ -707,8 +707,10 @@ public enum PotionConsumable {
 					PotionConsumable.onBasicEffect(player, i, BoostType.OVERLOAD);
 					break;
 				case Skills.MAGIC:
+					PotionConsumable.onBasicEffect(player, i, BoostType.EXTREME_MAGIC);
+					break;
 				case Skills.RANGED:
-					PotionConsumable.onBasicEffect(player, i, BoostType.EXTREME);
+					PotionConsumable.onBasicEffect(player, i, BoostType.MODERATE_EXTREME);
 					break;
 			}
 		}
@@ -768,11 +770,13 @@ public enum PotionConsumable {
 	 * @author lare96 <http://github.com/lare96>
 	 */
 	public enum BoostType {
-		NORMAL(1, .08F),
-		MODERATE(3, 0.10F),//combat potion
-		SUPER(2, .12F),
-		EXTREME(3, .15F),
-		OVERLOAD(3, .24F);
+		NORMAL(3, .10F),
+		MODERATE(4, 0.10F),//combat potion && Ranging Potion
+		SUPER(5, .15F),
+		MODERATE_EXTREME(3, .15F), //Ranging
+		EXTREME_MAGIC(7, 0),
+		EXTREME(5, .22F),
+		OVERLOAD(5, .22F);
 
 		/**
 		 * The base which we will increment by.

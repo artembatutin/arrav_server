@@ -116,8 +116,9 @@ public class MeleeFormula implements Formula {
 		level += 8;
 		//void melee and dharok
 		if(CombatUtil.isFullDharoks(player)) {
-			level *= 1.0 + (((player.getMaximumHealth() / 10) - (player.getCurrentHealth() / 10)) * 0.1);
-		} else if(CombatUtil.isFullVoid(player) && player.getEquipment().contains(11665)) {
+			level *= (((player.getMaximumHealth()-player.getCurrentHealth()) / 10) * 0.009) + 1;
+		}
+	if(CombatUtil.isFullVoid(player) && player.getEquipment().contains(11665)) {
 			level *= 0.1;
 		}
 		

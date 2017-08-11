@@ -1,8 +1,10 @@
 package net.edge.world.entity.actor.mob.impl.nex;
 
+import net.edge.content.combat.CombatType;
 import net.edge.content.minigame.nexchamber.NexMinigame;
 import net.edge.task.Task;
 import net.edge.world.Animation;
+import net.edge.world.Projectile;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.strategy.impl.NexStrategy;
@@ -23,8 +25,6 @@ public final class Nex extends Mob {
 	 */
 	public int minionStage;
 
-
-	
 	private final NexMinion[] minions = {
 		new NexMinion(13451, new Position(2914, 5215, 0)),
 		new NexMinion(13452, new Position(2936, 5215, 0)),
@@ -86,7 +86,8 @@ public final class Nex extends Mob {
 						break;
 					case 4:
 						mob.forceChat("Fill my soul with smoke!");
-						minionStage = 1;
+						new Projectile(minions[0].getCenterPosition(), mob.getCenterPosition(), 0, 2244, 44, 4, 60, 43, 0, minions[0].getInstance(), CombatType.MAGIC).sendProjectile();
+						minionStage = 2;
 						mob.getMovementQueue().setLockMovement(false);
 						break;
 				}
