@@ -35,7 +35,7 @@ public class WalkableObstacle extends Obstacle {
         player.setTurn90CCWIndex(animation);
         player.setTurnIndex(animation);
         player.getFlags().flag(UpdateFlag.APPEARANCE);
-        player.getMovementQueue().walk(end);
+        player.getMovementQueue().walk(travelback() && player.getPosition().same(end) ? start[0] : end);
     }
 
     @Override

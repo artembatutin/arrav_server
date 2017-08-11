@@ -1,7 +1,9 @@
-package net.edge.content.skill.agility.test.gnome;
+package net.edge.content.skill.agility.test.barb;
 
 import net.edge.action.impl.ObjectAction;
 import net.edge.content.skill.agility.test.Agility;
+import net.edge.content.skill.agility.test.gnome.JumpOverBarrier;
+import net.edge.content.skill.agility.test.gnome.PoleSwing;
 import net.edge.content.skill.agility.test.obstacle.Obstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.ClimbableObstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.FMObstacle;
@@ -17,7 +19,7 @@ import java.util.function.Function;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  * @since 4-8-2017.
  */
-public final class GnomeAgility extends Agility {
+public final class BarbAgility extends Agility {
 
     /**
      * Constructs a new {@link Agility}.
@@ -25,7 +27,7 @@ public final class GnomeAgility extends Agility {
      * @param object   {@link #object}.
      * @param crossing {@link #crossing}.
      */
-    private GnomeAgility(Player player, GameObject object, Obstacle crossing) {
+   private BarbAgility(Player player, GameObject object, Obstacle crossing) {
         super(player, object, crossing);
     }
 
@@ -38,7 +40,7 @@ public final class GnomeAgility extends Agility {
                     Obstacle obstacle = obstacleFunction.obstacles.apply(player);
 
                     if(!obstacle.findProperPosition(player)) {
-                        new GnomeAgility(player, object, obstacle).start();
+                        new BarbAgility(player, object, obstacle).start();
                         return true;
                     }
 
@@ -60,7 +62,7 @@ public final class GnomeAgility extends Agility {
                     player.getMovementQueue().smartWalk(walk);
                     player.getMovementListener().append(() -> {
                         if(player.getPosition().same(dest)) {
-                            new GnomeAgility(player, object, obstacleFunction.obstacles.apply(player)).start();
+                            new BarbAgility(player, object, obstacleFunction.obstacles.apply(player)).start();
                         }
                     });
 
@@ -79,37 +81,21 @@ public final class GnomeAgility extends Agility {
         return 39;
     }
 
-    private static final Position[] OBSTACLE_NET_POSITIONS = new Position[]{new Position(2476, 3426), new Position(2475, 3426), new Position(2474, 3426), new Position(2473, 3426), new Position(2472, 3426), new Position(2471, 3426)};
-
-    private static final Position[] OBSTACLE_NET_BACK_POSITIONS = new Position[]{new Position(2483, 3425), new Position(2484, 3425), new Position(2485, 3425), new Position(2486, 3425), new Position(2487, 3425), new Position(2488, 3425),};
-
     public enum Obstacles {
-        LOG_BALANCE(2295, p -> new WalkableObstacle(new Position(2474, 3436), new Position(2474, 3429), 762, 1, 7)),
-        OBSTACLE_NET(2285, p -> new ClimbableObstacle(OBSTACLE_NET_POSITIONS, new Position(p.getPosition().getX(), 3424, 1), 828, 1, 7.5)),
-        TREE_BRANCH_UP(35970, p -> new ClimbableObstacle(new Position(2473, 3423, 1), new Position(2473, 3420, 2), 828, 1, 5)),
-        TIGHT_ROPE(2312, p -> new WalkableObstacle(new Position(2477, 3420, 2), new Position(2483, 3420, 2), 762, 1, 7.5)),
-        TREE_BRANCH_DOWN(new int[]{2314, 2315}, p -> new ClimbableObstacle(new Position(p.getPosition().getX(), p.getPosition().getY(), 2), new Position(p.getPosition().getX(), p.getPosition().getY(), 0), 828, 1, 5)),
-        OBSTACLE_NET_BACK(2286, p -> new ClimbableObstacle(OBSTACLE_NET_BACK_POSITIONS, new Position(p.getPosition().getX(), 3427), 828, 1, 7.5)),
-        OBSTACLE_PIPES(new int[]{85547, 85546}, p -> new WalkableObstacle(new Position(p.getPosition().getX(), 3430, 0), new Position(p.getPosition().getX(), 3437, 0), 844, 1, 7.5) {
+        ROPE_SWING(43526, p -> new FMObstacle(90, OptionalInt.of(3), new Position[]{new Position(2551, 3554), new Position(2552, 3554)}, new Position(p.getPosition().getX(), 3549), 751, 35, 22) {
             @Override
             public boolean findProperPosition(Player player) {
                 return false;
             }
             @Override
             public boolean crossable(Player player) {
-                if(player.getPosition().same(new Position(2483, 3430, 0)) || player.getPosition().same(new Position(2487, 3430, 0))) {
+                if(player.getPosition().same(new Position(2552, 3554, 0)) || player.getPosition().same(new Position(2551, 3554, 0))) {
                     return true;
                 }
-                player.message("You can't cross this obstacle from this side.");
+                player.message("You must be standing infront one of the ropes.");
                 return false;
             }
-        }),
-
-        //ADVANCED COURSES
-        ADVANCED_TREE_BRANCH_UP(85531, p -> new ClimbableObstacle(new Position(p.getPosition().getX(), 3420, 2), new Position(2472, 3419, 3), 828, 85, 25)),
-        RUN_ACROSS_SIGNPOST(85584, p -> new FMObstacle(105, OptionalInt.of(6), new Position(2476, 3418, 3), new Position(2484, 3418, 3), 2922, 60, 25)),
-        POLE_SWING(85532, p -> new PoleSwing(new Position(p.getPosition().getX(), 3432, 3))),
-        JUMP_OVER_BARRIER(85542, p -> new JumpOverBarrier(new Position(p.getPosition().getX(), p.getPosition().getY(), 3)));
+        });
 
         public final int[] ids;
 

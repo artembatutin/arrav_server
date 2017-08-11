@@ -48,6 +48,10 @@ public abstract class Obstacle {
         return true;
     }
 
+    public boolean travelback() {
+        return false;
+    }
+
     public void initialize(Player player) {
 
     }

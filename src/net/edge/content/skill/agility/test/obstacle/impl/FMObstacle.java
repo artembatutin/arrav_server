@@ -43,10 +43,16 @@ public class FMObstacle extends Obstacle {
         this.timer = timer;
     }
 
+    public FMObstacle(int speed, OptionalInt timer, Position start[], Position end, int animationId, int requirement, double experience) {
+        super(start, end, new Animation(animationId), requirement, experience, 0);
+        this.speed = speed;
+        this.timer = timer;
+    }
+
     public void start(Player player) {
         ForcedMovement movement = new ForcedMovement(player);
         movement.setFirst(player.getPosition());
-        movement.setSecond(end);
+        movement.setSecond(travelback() && player.getPosition().same(end) ? start[0] : end);
         movement.setFirstSpeed(10);
         movement.setSecondSpeed(speed);
         movement.setAnimation(animation);

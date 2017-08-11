@@ -35,17 +35,24 @@ public abstract class Agility extends SkillAction {
      */
     public final GameObject object;
 
+    public final boolean travelback;
+
     /**
      * Constructs a new {@link SkillAction}.
      * @param player   {@link #player}.
      * @param object   {@link #object}.
      * @param crossing {@link #crossing}.
      */
-    public Agility(Player player, GameObject object, Obstacle crossing) {
+    public Agility(Player player, GameObject object, Obstacle crossing, boolean travelback) {
         super(player, Optional.empty());
         this.crossing = crossing;
         this.running = player.getMovementQueue().isRunning();
         this.object = object;
+        this.travelback = travelback;
+    }
+
+    public Agility(Player player, GameObject object, Obstacle crossing) {
+        this(player, object, crossing, false);
     }
 
     /**
@@ -96,11 +103,11 @@ public abstract class Agility extends SkillAction {
 
     @Override
     public final void onSubmit() {
-        crossing.initialize(player);
-
         if(running) {
             player.getMovementQueue().setRunning(false);
         }
+
+        crossing.initialize(player);
 
         player.getActivityManager().setAllExcept(ActivityManager.ActivityType.LOG_OUT);
     }
@@ -111,10 +118,14 @@ public abstract class Agility extends SkillAction {
      */
     @Override
     public final void execute(Task t) {
-        if(getPlayer().getPosition().same(crossing.end)) {
+        if(!travelback && player.getPosition().same(crossing.end)) {
+            t.cancel();
+            return;
+        } else if(travelback && player.getPosition().same(crossing.start[0])) {
             t.cancel();
             return;
         }
+
         crossing.execute(player, t);
     }
 
