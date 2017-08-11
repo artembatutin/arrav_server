@@ -113,30 +113,28 @@ public class CombatHit {
 				}
 			}
 
-			// dragon claws special attack
-			if(getAttacker().isPlayer() && getAttacker().toPlayer().isSpecialActivated()) {
-				Player player = getAttacker().toPlayer();
-				if(player.getCombatSpecial().equals(CombatSpecial.DRAGON_CLAWS) && amount == 4) {
-					int first = hits[0].getDamage();
-					if(first > 360) {
-						first = 360 + RandomUtils.inclusive(10);
-					}
-					int second = first <= 0 ? hits[1].getDamage() : first / 2;
-					int third = first <= 0 && second > 0 ? second / 2 : first <= 0 && second <= 0 ? hits[2].getDamage() : RandomUtils.inclusive(second);
-					int fourth = first <= 0 && second <= 0 && third <= 0 ? hits[3].getDamage() + RandomUtils.inclusive(7) : first <= 0 && second <= 0 ? hits[3].getDamage() : third;
-					hits[0].setDamage(first);
-					hits[1].setDamage(second);
-					hits[2].setDamage(third);
-					hits[3].setDamage(fourth);
-					if(hits[0].isAccurate())
-						counter += hits[0].getDamage();
-					if(hits[1].isAccurate())
-						counter += hits[1].getDamage();
-					if(hits[2].isAccurate())
-						counter += hits[2].getDamage();
-					if(hits[3].isAccurate())
-						counter += hits[3].getDamage();
-				}
+            // dragon claws special attack
+            if(getAttacker().isPlayer() && getAttacker().toPlayer().isSpecialActivated()) {
+                Player player = getAttacker().toPlayer();
+                if(player.getCombatSpecial().equals(CombatSpecial.DRAGON_CLAWS) && amount == 4) {
+                    int first = hits[0].getDamage();
+                    int second = (int)Math.floor(first / 2);
+                    int third = (int)Math.ceil(second / 2);
+                    int fourth = (int)Math.floor(second / 2);
+                    hits[0].setDamage(first);
+                    hits[1].setDamage(second);
+                    hits[2].setDamage(third);
+                    hits[3].setDamage(fourth);
+                    System.out.println(+hits[0].getDamage() + ", "+ hits[1].getDamage() +", " + hits[2].getDamage()+ ", " +hits[3].getDamage());
+                    if(hits[0].isAccurate())
+                        counter += hits[0].getDamage();
+                    if(hits[1].isAccurate())
+                        counter += hits[1].getDamage();
+                    if(hits[2].isAccurate())
+                        counter += hits[2].getDamage();
+                    if(hits[3].isAccurate())
+                        counter += hits[3].getDamage();
+                }
 			}
 			this.damage = counter;
 		}
