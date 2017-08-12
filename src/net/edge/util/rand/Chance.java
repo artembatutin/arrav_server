@@ -12,38 +12,38 @@ public enum Chance {
 	ALWAYS(new Rational(1, 1)),
 	
 	/**
-	 * Describing a {@code VERY_COMMON} chance (50%, 1 in 2 chance).
+	 * Describing a {@code VERY_COMMON} chance (25%, 1 in 4 chance).
 	 */
-	VERY_COMMON(new Rational(1, 2)),
+	VERY_COMMON(new Rational(1, 4)),
 	
 	/**
-	 * Describing an {@code COMMON} chance (25%, 1 in 4 chance).
+	 * Describing an {@code COMMON} chance (10%, 1 in 10 chance).
 	 */
-	COMMON(new Rational(1, 4)),
+	COMMON(new Rational(1, 10)),
 	
 	/**
-	 * Describing an {@code UNCOMMON} chance (20%, 2 in 10 chance).
+	 * Describing an {@code UNCOMMON} chance (5%, 1 in 20 chance).
 	 */
-	UNCOMMON(new Rational(2, 10)),
+	UNCOMMON(new Rational(1, 20)),
 	
 	/**
-	 * Describing an {@code VERY_UNCOMMON} chance (15%, 3 in 20 chance).
+	 * Describing an {@code VERY_UNCOMMON} chance (4%, 2 in 50 chance).
 	 * chance is now
 	 */
-	VERY_UNCOMMON(new Rational(3, 20)),
+	VERY_UNCOMMON(new Rational(2, 50)),
 	
 	/**
-	 * Describing an {@code RARE} chance (5%, 2 in 40 chance).
+	 * Describing an {@code RARE} chance (2%, 1 in 100 chance).
 	 */
-	RARE(new Rational(2, 40)),
+	RARE(new Rational(1, 50)),
 	
 	/**
-	 * Describing an {@code VERY_RARE} chance (2.5%, 1 in 40 chance).
+	 * Describing an {@code VERY_RARE} chance (1.428%, 1 in 70 chance).
 	 */
-	VERY_RARE(new Rational(1, 40)),
+	VERY_RARE(new Rational(1, 70)),
 	
 	/**
-	 * Describing an {@code VERY_RARE} chance (1%, 1 in 125 chance).
+	 * Describing an {@code VERY_RARE} chance (0.8%, 1 in 125 chance).
 	 */
 	EXTREMELY_RARE(new Rational(1, 125));
 	
