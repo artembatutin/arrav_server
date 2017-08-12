@@ -26,6 +26,13 @@ public final class GameConstants {
 	 * Determines if the double blood money event is active.
 	 */
 	public static boolean DOUBLE_BLOOD_MONEY_EVENT = false;
+
+	/**
+	 * Disabling game functions in case of emergency
+	 */
+	public static boolean TRADE_DISABLED = false;
+	public static boolean DUEL_DISABLED = false;
+	public static boolean DROP_DISABLED = false;
 	
 	/**
 	 * How long the player will stay logged in for after they have x-logged
