@@ -7,7 +7,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"ipmute"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Use this command as ::ipmute username")
+@CommandSignature(alias = {"ipmute"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::ipmute username")
 public final class IPMutingCommand implements Command {
 	
 	@Override

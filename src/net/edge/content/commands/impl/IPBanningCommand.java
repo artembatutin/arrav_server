@@ -7,7 +7,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"ipban"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Use this command as ::ipban username")
+@CommandSignature(alias = {"ipban"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::ipban username")
 public final class IPBanningCommand implements Command {
 	
 	@Override

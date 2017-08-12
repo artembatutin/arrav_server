@@ -6,7 +6,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"givevote"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Use this command as ::givevote player amount")
+@CommandSignature(alias = {"givevote"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::givevote player amount")
 public final class GiveVoteCommand implements Command {
 	
 	@Override

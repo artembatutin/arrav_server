@@ -7,6 +7,7 @@ import net.edge.content.skill.crafting.JewelleryMoulding;
 import net.edge.content.skill.crafting.Spinning;
 import net.edge.content.skill.farming.FarmingAction;
 import net.edge.content.skill.firemaking.Bonfire;
+import net.edge.content.skill.fletching.DartCreation;
 import net.edge.content.skill.prayer.PrayerBoneAltar;
 import net.edge.net.packet.in.ItemOnItemPacket;
 import net.edge.net.packet.in.ItemOnObjectPacket;
@@ -28,6 +29,7 @@ public abstract class ItemOnItemAction extends Action {
 	
 	public static void init() {
 		ArmourSet.action();
+		DartCreation.action();
 	}
 	
 }

@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
+import net.edge.task.Task;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
@@ -34,7 +35,7 @@ public final class ArrowCreation extends ProducingSkillAction {
 	 * @param player     {@link #getPlayer()}
 	 * @param definition the definition we're currently handling.
 	 */
-	public ArrowCreation(Player player, ArrowData definition) {
+	private ArrowCreation(Player player, ArrowData definition) {
 		super(player, Optional.empty());
 		this.definition = definition;
 	}
@@ -85,14 +86,18 @@ public final class ArrowCreation extends ProducingSkillAction {
 		}
 		return true;
 	}
-	
+
+	@Override
+	public void onProduce(Task t, boolean success) {
+		if(success) {
+			ARCHER_SUPPORTER.inc(player, 15);
+			t.cancel();
+		}
+	}
+
 	@Override
 	public boolean canExecute() {
-		if(!checkFletching()) {
-			return false;
-		}
-		ARCHER_SUPPORTER.inc(player, 15);
-		return true;
+		return checkFletching();
 	}
 	
 	@Override
