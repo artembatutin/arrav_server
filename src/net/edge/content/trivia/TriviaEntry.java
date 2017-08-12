@@ -101,7 +101,7 @@ public final class TriviaEntry {
             World.get().message("@red@[Trivia Bot]: @blu@Attempted answers: @red@" + attemptedAnswers.toString() + "@blu@!");
         }
         TRIVIABOT.inc(player);
-        int amount = RandomUtils.inclusive(10_000, 30_000);
+        int amount = RandomUtils.inclusive(100_000, 500_000);
         player.getBank().add(0, new Item(995, amount));
         player.message("@red@[Trivia Bot]: @blu@" + TextUtils.formatPrice(amount) + " coins were added into your bank.");
         reset();
