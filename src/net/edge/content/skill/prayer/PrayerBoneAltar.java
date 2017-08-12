@@ -15,15 +15,12 @@ import java.util.Optional;
 public final class PrayerBoneAltar extends DestructionSkillAction {
 	
 	private final Bone bone;
-
-	private final int itemId;
 	
 	private final boolean prayLoc;
 	
-	public PrayerBoneAltar(Player player, int itemId, GameObject object, Bone bone) {
+	public PrayerBoneAltar(Player player, GameObject object, Bone bone) {
 		super(player, Optional.of(object.getGlobalPos()));
 		this.bone = bone;
-		this.itemId = itemId;
 		prayLoc = object.getId() == 15050;
 	}
 	
@@ -32,13 +29,19 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 			ItemOnObjectAction a = new ItemOnObjectAction() {
 				@Override
 				public boolean click(Player player, GameObject object, Item item, int container, int slot) {
-					PrayerBoneAltar altarAction = new PrayerBoneAltar(player, item.getId(), object, bone);
-					altarAction.start();
-					return true;
+					if(object.getId() == 409 || object.getId() == 15050) {
+						if(item.getDefinition().isNoted()) {
+							player.message("You can't use noted bones.");
+							return true;
+						}
+						PrayerBoneAltar altarAction = new PrayerBoneAltar(player, object, bone);
+						altarAction.start();
+						return true;
+					}
+					return false;
 				}
 			};
-			a.registerObj(409);
-			a.registerObj(15050);
+			a.registerItem(bone.getId());
 		}
 	}
 	
@@ -54,14 +57,14 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 	
 	@Override
 	public Item destructItem() {
-		return new Item(itemId);
+		return new Item(bone.getId());
 	}
 	
 	@Override
 	public void onDestruct(Task t, boolean success) {
 		if(success) {
 			getPlayer().animation(new Animation(713));
-			SendGraphic.local(getPlayer(), 624, position.get(), 0);
+			position.ifPresent(c -> SendGraphic.local(getPlayer(), 624, c, 0));
 			getPlayer().message("You offer the " + bone + " to the gods... they seem pleased.");
 		}
 	}
@@ -78,7 +81,8 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 	
 	@Override
 	public double experience() {
-		return (bone.getExperience() * (prayLoc ? 3 : 2));
+		System.out.println(bone);
+		return (bone.getExperience() * (prayLoc ? 2 : 1.4));
 	}
 	
 	@Override

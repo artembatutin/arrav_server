@@ -29,8 +29,13 @@ public final class PrayerBoneBury extends DestructionSkillAction {
 			ItemAction e = new ItemAction() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
-					if(container != Inventory.INVENTORY_DISPLAY_ID)
+					if(container != Inventory.INVENTORY_DISPLAY_ID) {
 						return true;
+					}
+					if(item.getDefinition().isNoted()) {
+						player.message("You can't use noted bones.");
+						return true;
+					}
 					PrayerBoneBury buryAction = new PrayerBoneBury(player, item.getId(), b);
 					buryAction.start();
 					return true;
