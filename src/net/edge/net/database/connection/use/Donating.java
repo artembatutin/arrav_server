@@ -72,6 +72,7 @@ public class Donating {
 				int product = rs.getInt("tokens");
 				player.getBank().add(0, new Item(7478, TOKENS[product]));
 				player.message("We added " + TOKENS[product] + " edge tokens to your bank, thank you for donating!");
+				player.increaseTotalDonated(TOKENS[product]);
 				PreparedStatement stmt1 = con.prepareStatement("UPDATE purchase_history SET claimed = 1 WHERE id= ?");
 				stmt1.setInt(1, id);
 				stmt1.execute();

@@ -36,7 +36,7 @@ public final class RangedStrategy implements Strategy {
 		if(actor.isMob()) {
 			return true;
 		}
-		
+
 		Player player = actor.toPlayer();
 		if(!MinigameHandler.execute(player, m -> m.canHit(player, victim, CombatType.RANGED))) {
 			return false;
@@ -47,24 +47,24 @@ public final class RangedStrategy implements Strategy {
 		player.getCombat().setCombatType(CombatType.RANGED);
 		return true;
 	}
-	
+
 	@Override
 	public CombatHit outgoingAttack(Actor actor, Actor victim) {
 		if(actor.isMob()) {
 			Mob mob = actor.toMob();
 			actor.animation(new Animation(mob.getDefinition().getAttackAnimation()));
 			CombatRangedAmmunition ammo = prepareAmmo(mob.getId());
-			
+
 			if(ammo.getGraphic().getId() != 0)
 				actor.graphic(ammo.getGraphic());
 			return new CombatHit(actor, victim, 1, CombatType.RANGED, true, new Projectile(actor, victim, ammo.getProjectile(), ammo.getDelay(), ammo.getSpeed(), ammo.getStartHeight(), ammo.getEndHeight(), 0).getTravelTime());
 		}
-		
+
 		int delay = 0;
 		Player player = actor.toPlayer();
 		CombatRangedWeapon weapon = player.getRangedDetails().getWeapon().get();
 		CombatRangedAmmo ammo = weapon.getAmmunition();
-		
+
 		if(!player.isSpecialActivated()) {
 			if(!player.isVisible()) {
 				return new CombatHit(actor, victim, 1, CombatType.RANGED, true);
@@ -80,27 +80,21 @@ public final class RangedStrategy implements Strategy {
 			int distance = (int) actor.getCenterPosition().getDistance(victim.getCenterPosition());
 			delay = Projectile.RANGED_DELAYS[distance > 10 ? 10 : distance];
 		}
-		
+
 		startAnimation(player);
 		if(ammo.getDefinition().getGraphic(player).getId() != 0)
 			player.graphic(ammo.getDefinition().getGraphic(player));
-		
+
 		CombatHit data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatHit(actor, victim, 1, CombatType.RANGED, true, delay + 1));
-		new Task(delay, false) {
-			@Override
-			protected void execute() {
-				decrementAmmo(player, victim, weapon, ammo);
-				this.cancel();
-			}
-		}.submit();
+		decrementAmmo(player, victim, weapon, ammo);
 		return data;
 	}
-	
+
 	@Override
 	public int attackDelay(Actor actor) {
 		return actor.isPlayer() ? actor.toPlayer().getRangedDetails().delay() : actor.getAttackDelay();
 	}
-	
+
 	@Override
 	public int attackDistance(Actor actor) {
 		if(actor.getAttr().get("master_archery").getBoolean())
@@ -110,7 +104,7 @@ public final class RangedStrategy implements Strategy {
 		Player player = (Player) actor;
 		return CombatUtil.getRangedDistance(player.getWeapon()) + (player.getFightType().getStyle() == FightStyle.DEFENSIVE ? 2 : 0);
 	}
-	
+
 	@Override
 	public int[] getMobs() {
 		return new int[]{
@@ -119,7 +113,7 @@ public final class RangedStrategy implements Strategy {
 				2028,//karil
 		};
 	}
-	
+
 	private void startAnimation(Player player) {
 		if(player.getWeaponAnimation() != null && player.getWeaponAnimation().getAttacking()[0] != 422) {
 			player.animation(new Animation(player.getWeaponAnimation().getAttacking()[player.getFightType().getStyle().ordinal()], AnimationPriority.HIGH));
@@ -127,7 +121,7 @@ public final class RangedStrategy implements Strategy {
 			player.animation(new Animation(player.getFightType().getAnimation(), Animation.AnimationPriority.HIGH));
 		}
 	}
-	
+
 	private CombatRangedAmmunition prepareAmmo(int id) {
 		switch(id) {
 			case 8776:
@@ -153,18 +147,18 @@ public final class RangedStrategy implements Strategy {
 				return CombatRangedAmmunition.BRONZE_ARROW;
 		}
 	}
-	
+
 	private boolean prerequisites(Player player) {
 		return player.getRangedDetails().determine();
 	}
-	
+
 	private void decrementAmmo(Player player, Actor victim, CombatRangedWeapon weapon, CombatRangedAmmo ammo) {
 		if(weapon.getType().isSpecialBow()) {
 			return;
 		}
-		
+
 		Item item = ammo.getItem();
-		
+
 		if(item == null) {
 			throw new IllegalStateException("Player doesn't have ammunition at this stage which is not permissible.");
 		}
@@ -179,7 +173,7 @@ public final class RangedStrategy implements Strategy {
 				collected = RandomUtils.success(chance);
 			}
 		}
-		
+
 		if(!collected) {//if not collected decrement arrow count
 			item.decrementAmount();
 			double chance = ava_collector ? 0.35 : 0.70;

@@ -136,7 +136,12 @@ public final class Player extends Actor {
 	 * The total amount of times this player has voted.
 	 */
 	private int totalVotes;
-	
+
+	/**
+	 * The total amount of tokens the player has donated for.
+	 */
+	private int totalDonated;
+
 	/**
 	 * Player's voting points.
 	 */
@@ -1171,7 +1176,28 @@ public final class Player extends Actor {
 	public int getTotalVotes() {
 		return totalVotes;
 	}
-	
+
+	/**
+	 * Gets the total amount of donations for the player.
+	 * @param dollars	whether you want to determine howmany dollars or tokens the player has purchased.
+	 * @return the amount.
+	 */
+	public int getTotalDonated(boolean dollars) {
+		return dollars ? totalDonated / 100 : totalDonated;
+	}
+
+	public void setTotalDonated(int amount) {
+		this.totalDonated = amount;
+	}
+
+	/**
+	 * Increases the total donate for this player.
+	 * @param tokens	the amount of tokens to increase with.
+	 */
+	public void increaseTotalDonated(int tokens) {
+		this.totalDonated += tokens;
+	}
+
 	/**
 	 * Sets the total amount of times this player has voted.
 	 * @param vote the amount to set.
