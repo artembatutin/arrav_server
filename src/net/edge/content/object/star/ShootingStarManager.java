@@ -56,7 +56,6 @@ public final class ShootingStarManager {
 		if(!star.getRegion().isPresent()) {
 			star = null;
 		} else {
-			System.out.println(star.getGlobalPos() + " added star");
 			star.publish();
 			World.get().message(star.locationData.message, true);
 		}
