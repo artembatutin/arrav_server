@@ -58,7 +58,7 @@ public enum StarLocationData {
 	 * @param message       the message to send to the world.
 	 * @param messageActive the message to send to the world if this star hasn't been mined fully.
 	 */
-	private StarLocationData(int x, int y, int z, String message, String messageActive) {
+	StarLocationData(int x, int y, int z, String message, String messageActive) {
 		this.position = new Position(x, y, z);
 		this.message = message;
 		this.messageActive = messageActive;
