@@ -16,6 +16,7 @@ public enum VoteRewards {
     FREMENNIK_RINGS(0.1, 6731, 6733, 6735, 6737),
     FREMENNIK_RINGS_I(0.01, 13426, 13427, 15020, 15220),
     DEFENDERS(0.2, 8844, 8845, 8846, 8847, 8848, 8849, 8850),
+    DRAGON_PICK(0.2, 15259, 20786),
     FOOD(0.8, new Item(384, 75), new Item(390, 50), new Item(396, 50), new Item(15271, 25));
     
     private static Item[] OTHERS = {

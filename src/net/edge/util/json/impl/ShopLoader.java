@@ -11,7 +11,6 @@ import java.util.Objects;
 
 /**
  * The {@link JsonLoader} implementation that loads all shops.
- * @author lare96 <http://github.com/lare96>
  */
 public final class ShopLoader extends JsonLoader {
 	
@@ -30,8 +29,6 @@ public final class ShopLoader extends JsonLoader {
 		int[] items = builder.fromJson(reader.get("items").getAsJsonArray(), int[].class);
 		Currency currency = Objects.requireNonNull(Currency.valueOf(reader.get("currency").getAsString()));
 		MarketShop shop = new MarketShop(id, name, currency, iron, items);
-		if(MarketCounter.getShops().containsKey(id))
-			throw new IllegalStateException("Duplicate shop id: " + id);
 		MarketCounter.getShops().put(id, shop);
 	}
 }

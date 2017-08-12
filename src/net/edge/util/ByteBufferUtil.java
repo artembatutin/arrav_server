@@ -93,10 +93,8 @@ public final class ByteBufferUtil {
 	public static int getSmart(ByteBuffer buffer) {
 		int peek = buffer.get(buffer.position()) & 0xFF;
 		if(peek < 128) {
-			//System.out.println("reading byte");
 			return buffer.get() & 0xFF;
 		}
-		//System.out.println("reading short");
 		return (buffer.getShort() & 0xFFFF) - 32768;
 	}
 	
@@ -107,10 +105,8 @@ public final class ByteBufferUtil {
 	 */
 	public static void putSmart(ByteBuffer buffer, int value) {
 		if(value < 128) {
-			//System.out.println("writing byte");
 			buffer.put((byte) value);
 		} else {
-			//System.out.println("writing short");
 			value += 32768;
 			buffer.put((byte) (value >> 8));
 			buffer.put((byte) value);

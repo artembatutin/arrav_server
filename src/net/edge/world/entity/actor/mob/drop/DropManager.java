@@ -11,6 +11,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.region.Region;
+import net.edge.world.locale.Position;
 
 import java.util.*;
 
@@ -42,12 +43,17 @@ public final class DropManager {
 		if(table == null) {
 			return;
 		}
+		Position pos = victim.getPosition();
+		if(victim.getId() == 3847) {//sea troll
+			pos = new Position(2346, 3700);
+		}
+		final Position p = pos;
 		victim.getRegion().ifPresent(r -> {
 			List<Item> dropItems = table.toItems(killer, victim);
 			for(Item drop : dropItems) {
 				if(drop == null)
 					continue;
-				r.register(new GroundItem(drop, victim.getPosition(), killer));
+				r.register(new GroundItem(drop, p, killer));
 			}
 		});
 	}

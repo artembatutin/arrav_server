@@ -72,11 +72,13 @@ public final class GlacorExplodeTask extends Task {
 		
 		mob.damage(new Hit(npcDamage));
 		
-		for(Player t : new ObjectArrayList<>(World.get().getLocalPlayers(mob))) {
+		for(Player t : mob.getLocalPlayers()) {
+			if(t == null) {
+				continue;
+			}
 			if(t.isDead()) {
 				continue;
 			}
-			
 			if(new Boundary(t.getPosition(), t.size()).inside(mob.getPosition(), radius)) {
 				int hit = t.getMaximumHealth() / 3;
 				t.damage(new Hit(hit));
