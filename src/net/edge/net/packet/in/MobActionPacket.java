@@ -3,7 +3,7 @@ package net.edge.net.packet.in;
 import net.edge.Application;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.pets.Pet;
+import net.edge.content.item.pets.Pet;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.action.ActionContainer;

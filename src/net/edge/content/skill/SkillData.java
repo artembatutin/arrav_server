@@ -36,15 +36,15 @@ public enum SkillData {
 	SLAYER(Skills.SLAYER, 12122, 47130),
 	FARMING(Skills.FARMING, 5267, 54104),
 	RUNECRAFTING(Skills.RUNECRAFTING, 4267, 33224),
-	CONSTRUCTION(Skills.CONSTRUCTION, 7267, 105243),
 	HUNTER(Skills.HUNTER, 8267, 105244),
+	CONSTRUCTION(Skills.CONSTRUCTION, 7267, 105243),
 	SUMMONING(Skills.SUMMONING, 9267, 105245),
 	DUNGEONEERING(Skills.DUNGEONEERING, 10267, 105246);
 	
 	/**
 	 * Caches our enum values.
 	 */
-	private static final ImmutableSet<SkillData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(SkillData.class));
+	public static final ImmutableSet<SkillData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(SkillData.class));
 	
 	/**
 	 * The identification for this skill in the skills array.

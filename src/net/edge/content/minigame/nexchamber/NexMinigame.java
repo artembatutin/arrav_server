@@ -104,13 +104,20 @@ public class NexMinigame extends Minigame {
 			public boolean click(Player player, GameObject object, int click) {
 				if(game == null)
 					return true;
-				if(game.contains(player))
+				if(game.contains(player)) {
 					game.onLogout(player);
+					return true;
+				}
 				game.onEnter(player);
 				return true;
 			}
 		};
 		enter.registerFirst(99228);
+	}
+	
+	@Override
+	public boolean canLogout(Player player) {
+		return true;
 	}
 	
 	/**

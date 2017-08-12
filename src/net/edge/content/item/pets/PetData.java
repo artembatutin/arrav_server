@@ -1,4 +1,4 @@
-package net.edge.content.pets;
+package net.edge.content.item.pets;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;

@@ -1,11 +1,10 @@
 package net.edge.action.but;
 
-import net.edge.content.pets.Pet;
+import net.edge.content.item.pets.Pet;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ButtonAction;
 import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
-import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;

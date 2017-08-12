@@ -15,7 +15,7 @@ public final class MutingCommand implements Command {
 		if(mute != null && (mute.getRights().less(Rights.MODERATOR) || player.getRights().equals(Rights.ADMINISTRATOR)) && mute != player) {
 			player.message("Successfully muted " + mute.getFormatUsername() + ".");
 			mute.message("@red@You have been muted by " + player.getFormatUsername() + ".");
-			player.setMuted(true);
+			mute.setMuted(true);
 		}
 	}
 }

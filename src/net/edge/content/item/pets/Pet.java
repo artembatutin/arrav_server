@@ -1,4 +1,4 @@
-package net.edge.content.pets;
+package net.edge.content.item.pets;
 
 import net.edge.net.packet.out.SendForceTab;
 import net.edge.net.packet.out.SendInterfaceAnimation;

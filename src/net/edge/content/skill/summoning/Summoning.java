@@ -5,7 +5,7 @@ import net.edge.net.packet.out.SendContainer;
 import net.edge.net.packet.out.SendInventoryInterface;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.pets.Pet;
+import net.edge.content.item.pets.Pet;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;

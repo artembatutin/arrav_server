@@ -1,6 +1,6 @@
 package net.edge.net.packet.in;
 
-import net.edge.content.pets.Pet;
+import net.edge.content.item.pets.Pet;
 import net.edge.content.skill.crafting.Tanning;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.net.codec.IncomingMsg;
