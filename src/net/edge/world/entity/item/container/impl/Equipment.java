@@ -199,19 +199,11 @@ public final class Equipment extends ItemContainer {
 		Optional<Item> unequipPrimary;
 		Optional<Item> unequipSecondary = Optional.empty();
 		if(type == WEAPON) { // If we're equipping a 2h sword, unequip shield.
-			if(player.getInventory().isFull()) {
-				player.message("You don't have enough inventory space to do this!");
-				return false;
-			}
 			unequipSecondary = def.isTwoHanded() && getItems()[SHIELD_SLOT] != null ? Optional.of(getItems()[SHIELD_SLOT]) : Optional.empty();
 		} else if(type == EquipmentType.SHIELD) { // If we're equipping a shield while wearing a 2h sword, unequip sword.
 			int weapon = computeIdForIndex(WEAPON_SLOT);
 			boolean weaponTwoHanded = false;
 			if(weapon != -1 && Item.valid(weapon)) {
-				if(player.getInventory().isFull()) {
-					player.message("You don't have enough inventory space to do this!");
-					return false;
-				}
 				weaponTwoHanded = ItemDefinition.get(weapon).isTwoHanded();
 			}
 			unequipSecondary = weaponTwoHanded && getItems()[WEAPON_SLOT] != null ? Optional.of(getItems()[WEAPON_SLOT]) : Optional.empty();
@@ -234,33 +226,12 @@ public final class Equipment extends ItemContainer {
 			inventory.nonQueue(false);
 			return false;
 		}
-		
-		if(!inventory.hasCapacityFor(unequipPrimary.orElse(null), unequipSecondary.orElse(null))) {
-			boolean possible = false;
-			if(unequipPrimary.isPresent() && unequipSecondary.isPresent()) {
-				if(equipItem.getDefinition().isTwoHanded() && unequipPrimary.get().getDefinition().getEquipmentType().getSlot() == type.getSlot())
-					possible = true;
-			} else if(unequipPrimary.isPresent()) {//one item
-				if(unequipPrimary.get().getDefinition().getEquipmentType().getSlot() == type.getSlot())
-					possible = true;
-			} else if(unequipSecondary.isPresent()) {
-				if(equipItem.getDefinition().getEquipmentType().getSlot() == SHIELD_SLOT) {//shield equip on 2h
-					if(unequipSecondary.get().getDefinition().isTwoHanded())
-						possible = true;
-				} else if(equipItem.getDefinition().getEquipmentType().getSlot() == WEAPON_SLOT) {//2h equip on shield
-					if(get(WEAPON_SLOT) == null && get(SHIELD_SLOT) != null) {
-						if(get(SHIELD_SLOT).getId() == unequipSecondary.get().getId())
-							possible = true;
-					}
-				}
-			}
-			if(!possible) {
-				player.message("You do not have enough space in your inventory.");
-				inventory.nonQueue(false);
-				return false;
-			}
+
+		if(!player.getInventory().hasCapacityAfter(new Item[]{unequipPrimary.orElse(null), unequipSecondary.orElse(null)}, finalEquipItem)) {
+			player.message("You don't have enough inventory space for this.");
+			return false;
 		}
-		
+
 		inventory.set(inventoryIndex, null, true);
 		unequipPrimary.ifPresent(i -> this.unequip(i.getDefinition().getEquipmentType().getSlot(), player.getInventory(), true, inventoryIndex));
 		unequipSecondary.ifPresent(i -> this.unequip(i.getDefinition().getEquipmentType().getSlot(), player.getInventory(), true, -1));
