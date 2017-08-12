@@ -91,6 +91,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 		ItemOnObjectAction a = new ItemOnObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, Item item, int container, int slot) {
+				player.message("item on object");
 				if(!object.getDefinition().getName().contains("Pottery Oven") && !object.getDefinition().getName().contains("Furnace"))
 					return false;
 				JewelleryData[] rings = GROUP.get(RING_MOULD.getId());
@@ -164,6 +165,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 				return true;
 			}
 		};
+		a.registerObj(2643);
 		a.registerItem(GOLD_BAR.getId());
 	}
 	
