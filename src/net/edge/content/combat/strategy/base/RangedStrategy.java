@@ -181,7 +181,7 @@ public final class RangedStrategy implements Strategy {
 		}
 
 		if(!collected) {//if not collected decrement arrow count
-			item.decrementAmount();
+			item.decrementAmountBy(1);
 			double chance = ava_collector ? 0.35 : 0.70;
 			if(ammo.getDefinition().isDroppable() && RandomUtils.success(chance)) {//register item to floor
 				GroundItem am = new GroundItem(new Item(item.getId()), victim.getPosition(), player);
