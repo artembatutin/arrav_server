@@ -86,7 +86,7 @@ public class Donating {
 						case DONATOR:
 							if(player.getTotalDonated(true) > 75) {
 								player.setRights(Rights.SUPER_DONATOR);
-								player.message("You have donated over 200 dollars, you have received the sup. donator rank.");
+								player.message("You have donated over 75 dollars, you have received the sup. donator rank.");
 							}
 							break;
 						case SUPER_DONATOR:
