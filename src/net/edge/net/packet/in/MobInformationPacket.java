@@ -66,7 +66,7 @@ public final class MobInformationPacket implements IncomingPacket {
 					for(Drop d : table.getDrops()) {
 						if(d != null) {
 							String name = ItemDefinition.get(d.getId()).getName().toLowerCase().replaceAll(" ", "_");
-							if(itemName.equals(name)) {
+							if(itemName.contains(name)) {
 								table.getDrops().remove(index);
 								table.sort();
 								player.message("Removed: " + d.toString());
