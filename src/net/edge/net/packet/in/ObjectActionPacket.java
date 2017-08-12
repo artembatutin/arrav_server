@@ -2,7 +2,7 @@ package net.edge.net.packet.in;
 
 import net.edge.Application;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.object.shootingstar.ShootingStarManager;
+import net.edge.content.object.star.ShootingStarManager;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ObjectAction;
 import net.edge.world.entity.region.Region;

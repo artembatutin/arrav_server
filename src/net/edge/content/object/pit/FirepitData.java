@@ -1,4 +1,4 @@
-package net.edge.content.skill.firemaking.pits;
+package net.edge.content.object.pit;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;

@@ -1,4 +1,4 @@
-package net.edge.content.object.shootingstar;
+package net.edge.content.object.star;
 
 import net.edge.Application;
 import net.edge.util.Stopwatch;
@@ -56,6 +56,7 @@ public final class ShootingStarManager {
 		if(!star.getRegion().isPresent()) {
 			star = null;
 		} else {
+			System.out.println(star.getGlobalPos() + " added star");
 			star.publish();
 			World.get().message(star.locationData.message, true);
 		}

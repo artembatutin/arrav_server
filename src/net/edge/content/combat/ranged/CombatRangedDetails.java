@@ -79,10 +79,14 @@ public final class CombatRangedDetails {
 	 */
 	public CombatRangedAmmunition determineAmmo(Item ammunition, CombatRangedWeapon def) {
 		if(def.type.equals(CombatRangedType.SPECIAL_BOW)) {
-			return CombatRangedDetails.RANGED_WEAPONS.get(def.getWeapon()).ammunitions[0];
+			CombatRangedWeapon w = CombatRangedDetails.RANGED_WEAPONS.get(def.getWeapon());
+			if(w != null)
+				return w.ammunitions[0];
 		}
 		for(CombatRangedAmmunition ammo : def.getAmmunitions()) {
 			for(Item i : ammo.getAmmus()) {
+				if(i == null)
+					continue;
 				if(ammunition.getId() == i.getId())
 					return ammo;
 			}

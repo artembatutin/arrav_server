@@ -94,6 +94,7 @@ public final class RegionManager {
 					}
 				}
 				region.dynamicAction(o -> {
+					System.out.println(o + " - " + o.getGlobalPos());
 					if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance()) {
 						player.out(new SendObject(o));
 					}

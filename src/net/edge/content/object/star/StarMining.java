@@ -1,4 +1,4 @@
-package net.edge.content.object.shootingstar;
+package net.edge.content.object.star;
 
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;

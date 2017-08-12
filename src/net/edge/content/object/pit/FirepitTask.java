@@ -1,4 +1,4 @@
-package net.edge.content.skill.firemaking.pits;
+package net.edge.content.object.pit;
 
 import net.edge.task.Task;
 import net.edge.GameConstants;

@@ -1,4 +1,4 @@
-package net.edge.content.object.shootingstar;
+package net.edge.content.object.star;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;

@@ -2,15 +2,14 @@ package net.edge.content.skill.firemaking;
 
 import net.edge.action.impl.ItemOnObjectAction;
 import net.edge.action.impl.ObjectAction;
-import net.edge.content.skill.firemaking.pits.FirepitManager;
+import net.edge.content.object.pit.FirepitManager;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.DestructionSkillAction;
-import net.edge.content.skill.firemaking.pits.FirepitData;
-import net.edge.content.skill.firemaking.pits.FirepitObject;
+import net.edge.content.object.pit.FirepitData;
+import net.edge.content.object.pit.FirepitObject;
 import net.edge.world.Animation;
-import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.object.DynamicObject;
@@ -24,7 +23,7 @@ public final class Bonfire extends DestructionSkillAction {
 	
 	private final LogType log;
 	
-	private final DynamicObject object;
+	public final DynamicObject object;
 	
 	private final FirepitObject pit;
 	
