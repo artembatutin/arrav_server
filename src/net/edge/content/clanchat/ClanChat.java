@@ -70,7 +70,7 @@ public final class ClanChat {
 	public boolean add(Player player, ClanChatRank rank) {
 		int pos = -1;
 		for(int i = cursor; i < members.length; i++) {
-			if(members[i] == null) {
+			if(i > 0 && i < members.length && members[i] == null) {
 				pos = i;
 				break;
 			}
@@ -108,7 +108,7 @@ public final class ClanChat {
 			return;
 		}
 		ClanMember m = player.getClan().get();
-		if(cursor > m.getPos()) {
+		if(cursor > m.getPos() && m.getPos() > 0) {
 			cursor = m.getPos();
 		}
 		members[m.getPos()] = null;

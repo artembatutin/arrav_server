@@ -150,7 +150,7 @@ public class MobDefinitionCombat {
 		this.poisonous = poisonous;
 		this.respawnTime = respawnTime;
 		this.maxHit = maxHit;
-		this.hitpoints = hitpoints;
+		this.hitpoints = (hitpoints == 0 ? 600 : hitpoints);
 		this.attackDelay = attackDelay;
 		this.attackAnimation = attackAnimation;
 		this.defenceAnimation = defenceAnimation;

@@ -71,8 +71,12 @@ public abstract class HarvestingSkillAction extends SkillAction {
 			Item[] harvestItems = harvestItems();
 			
 			for(Item item : harvestItems) {
+				if(item == null)
+					continue;
+				if(item.getDefinition() == null)
+					continue;
 				getPlayer().getInventory().add(item);
-				if(harvestMessage()) {
+				if(harvestMessage() && item.getDefinition() != null && item.getDefinition().getName() != null) {
 					getPlayer().message("You get some " + item.getDefinition().getName() + ".");
 				}
 			}
