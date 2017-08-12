@@ -148,10 +148,12 @@ public final class CyclopsRoom extends GuildRoom {
 	@Override
 	public void onKill(Player player, Actor other) {
 		Defender defender = Defender.getNext(player);
-		boolean rollRare = true; // 10% chance.
+		boolean rollRare = RandomUtils.inclusive(3) == 1; // 10% chance.
 		if(rollRare) {
 			GroundItem item = new GroundItem(defender.item, other.getPosition(), player);
 			item.getRegion().ifPresent(r -> r.register(item));
+		} else {
+			player.message("Keep killing! Better luck on the next kill.");
 		}
 	}
 

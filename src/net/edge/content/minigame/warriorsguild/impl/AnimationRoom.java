@@ -28,6 +28,7 @@ import net.edge.world.entity.region.Region;
 import java.util.*;
 
 import static net.edge.content.achievements.Achievement.ANIMATOR;
+import static net.edge.world.entity.item.ItemIdentifiers.WARRIOR_GUILD_TOKEN;
 
 /**
  * The class which represents functionality for the animation room.
@@ -180,14 +181,8 @@ public final class AnimationRoom extends GuildRoom {
 		if(!armour.isPresent()) {
 			return;
 		}
-		ObjectList<GroundItem> items = new ObjectArrayList<>();
-		Arrays.stream(armour.get().data.set).forEach(item -> items.add(new GroundItem(item, armour.get().getPosition(), player)));
-		if(tokens) {
-			items.add(new GroundItem(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), armour.get().data.tokens), armour.get().getPosition().move(0, 2), player));
-		}
-		World.getRegions().getRegion(armour.get().getPosition()).ifPresent(region -> {
-			items.forEach(item -> region.register(item, item.getItem().getId() == WarriorsGuild.WARRIOR_GUILD_TOKEN.getId()));
-		});
+		player.getInventory().addOrDrop(new Item(WARRIOR_GUILD_TOKEN, armour.get().data.tokens));
+		player.getInventory().addOrDrop(armour.get().data.set);
 		armour.ifPresent(World.get().getMobs()::remove);
 		armour = Optional.empty();
 	}
