@@ -73,6 +73,8 @@ public final class FirepitObject extends DynamicObject {
 	 * @return the string which identifies the log requirement.
 	 */
 	public String getLogRequirement() {
+		if(data.log == null)
+			return "none, let it burn down";
 		return TextUtils.capitalize(data.log.toString());
 	}
 

@@ -2,9 +2,7 @@ package net.edge.net.packet.in;
 
 import net.edge.Application;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.shootingstar.ShootingStarManager;
-import net.edge.content.skill.firemaking.Bonfire;
-import net.edge.content.skill.hunter.Hunter;
+import net.edge.content.object.shootingstar.ShootingStarManager;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ObjectAction;
 import net.edge.world.entity.region.Region;
@@ -16,7 +14,6 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
-import net.edge.world.entity.item.Item;
 import net.edge.world.object.*;
 
 import java.util.Optional;

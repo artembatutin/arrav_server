@@ -1,4 +1,4 @@
-package net.edge.content.pets;
+package net.edge.content.item.pets;
 
 import net.edge.task.Task;
 import net.edge.content.TabInterface;

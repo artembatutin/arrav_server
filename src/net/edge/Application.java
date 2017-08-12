@@ -17,7 +17,7 @@ import net.edge.action.ActionInitializer;
 import net.edge.action.impl.*;
 import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.ObjectAction;
-import net.edge.content.shootingstar.ShootingStarManager;
+import net.edge.content.object.shootingstar.ShootingStarManager;
 import net.edge.content.skill.firemaking.pits.FirepitManager;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.net.EdgevilleChannelInitializer;

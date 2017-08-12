@@ -1,4 +1,4 @@
-package net.edge.content.shootingstar;
+package net.edge.content.object.shootingstar;
 
 import net.edge.content.market.MarketCounter;
 import net.edge.action.impl.MobAction;

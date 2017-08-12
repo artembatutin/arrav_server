@@ -1,7 +1,7 @@
 package net.edge.net.packet.in;
 
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.pets.Pet;
+import net.edge.content.item.pets.Pet;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;

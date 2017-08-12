@@ -27,6 +27,8 @@ public final class Fishing extends HarvestingSkillAction {
 		if(success) {
 			int count = 0;
 			for(Item i : items) {
+				if(i == null)
+					continue;
 				Catchable c = Catchable.getCatchable(i.getId()).orElse(null);
 				Skills.experience(getPlayer(), c.getExperience(), skill().getId());
 				count += i.getAmount();
