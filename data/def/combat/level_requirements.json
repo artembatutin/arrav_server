@@ -883,9 +883,11 @@
       2577
     ],
     "levelId": [
+      1,
       4
     ],
     "requiredLevel": [
+      40,
       40
     ]
   },
@@ -898,9 +900,11 @@
       10499
     ],
     "levelId": [
+      1,
       4
     ],
     "requiredLevel": [
+      40,
       50
     ]
   },
@@ -910,9 +914,11 @@
       2495
     ],
     "levelId": [
+      1,
       4
     ],
     "requiredLevel": [
+      40,
       60
     ]
   },
@@ -923,9 +929,11 @@
       2503
     ],
     "levelId": [
+      1,
       4
     ],
     "requiredLevel": [
+      40,
       70
     ]
   },
