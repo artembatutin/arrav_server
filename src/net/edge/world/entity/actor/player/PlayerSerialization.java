@@ -299,6 +299,16 @@ public final class PlayerSerialization {
 		public void fromJson(Gson b, Player p, JsonElement n) {
 			p.setIron(n.getAsInt(), true);
 		}
+	}, new Token("totalDonated") {
+		@Override
+		public Object toJson(Player p) {
+			return p.getTotalDonated(false);
+		}
+
+		@Override
+		public void fromJson(Gson b, Player p, JsonElement n) {
+			p.setTotalDonated(n.getAsInt());
+		}
 	}, new Token("totalVotes") {
 
 		@Override
