@@ -1,6 +1,6 @@
 package net.edge.content.skill.summoning;
 
-import net.edge.content.pets.Pet;
+import net.edge.content.item.pets.Pet;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.impl.*;

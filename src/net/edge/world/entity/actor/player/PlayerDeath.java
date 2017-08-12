@@ -257,7 +257,9 @@ public final class PlayerDeath extends ActorDeath<Player> {
             	Rights right = player.getRights();
             	int baseAmount = RandomUtils.inclusive(10, 50) * (GameConstants.DOUBLE_BLOOD_MONEY_EVENT ? 2 : 1);
             	int amount = right.equals(Rights.EXTREME_DONATOR) ? ((int) (baseAmount * 1.05))  : right.equals(Rights.SUPER_DONATOR) ? ((int) (baseAmount * 1.10)) : right.equals(Rights.DONATOR) ? ((int) (baseAmount * 1.15)) : baseAmount;
-                items.add(new Item(19000, amount));
+				if(!PunishmentHandler.same(player, killer.get())) {
+					items.add(new Item(19000, amount));
+				}
             }
         });
 		character.getEquipment().forEach($it -> {

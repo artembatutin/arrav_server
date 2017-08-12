@@ -1,7 +1,6 @@
 package net.edge.content.skill;
 
 import net.edge.util.Stopwatch;
-import net.edge.world.entity.actor.player.Player;
 
 /**
  * The representation of a single skill that can be trained by a player.

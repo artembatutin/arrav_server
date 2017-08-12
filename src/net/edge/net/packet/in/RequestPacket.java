@@ -1,5 +1,6 @@
 package net.edge.net.packet.in;
 
+import net.edge.GameConstants;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.item.container.session.ExchangeSession;
 import net.edge.world.entity.item.container.session.ExchangeSessionManager;
@@ -43,6 +44,9 @@ public final class RequestPacket implements IncomingPacket {
 	private void tradeRequest(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
 		Player other = World.get().getPlayers().get(index - 1);
+		if(GameConstants.TRADE_DISABLED) {
+			player.message("Trading has been temporarily disabled!");
+		}
 		if(other == null || !validate(player, other))
 			return;
 		if(!MinigameHandler.execute(player, m -> m.canTrade(player, other)))
@@ -58,6 +62,9 @@ public final class RequestPacket implements IncomingPacket {
 	private void duelRequest(Player player, IncomingMsg payload) {
 		int index = payload.getShort(false);
 		Player other = World.get().getPlayers().get(index - 1);
+		if(GameConstants.DUEL_DISABLED) {
+			player.message("Duelling has been temporarily disabled!");
+		}
 		if(other == null || !validate(player, other))
 			return;
 		ExchangeSessionManager.get().request(new DuelSession(player, other, ExchangeSession.REQUEST));

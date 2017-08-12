@@ -403,7 +403,7 @@ public final class HideWorking extends ProducingSkillAction {
 			.put(6289, new HideData[]{HideData.SNAKESKIN_BODY, HideData.SNAKESKIN_CHAPS, HideData.SNAKESKIN_VAMBRACES, HideData.SNAKESKIN_BANDANA, HideData.SNAKESKIN_BOOTS})
 			.put(1745, new HideData[]{HideData.GREEN_DHIDE_BODY, HideData.GREEN_DHIDE_CHAPS, HideData.GREEN_DHIDE_VAMBRACES})
 			.put(2505, new HideData[]{HideData.BLUE_DHIDE_BODY, HideData.BLUE_DHIDE_CHAPS, HideData.BLUE_DHIDE_VAMBRACES})
-			.put(507, new HideData[]{HideData.RED_DHIDE_BODY, HideData.RED_DHIDE_CHAPS, HideData.RED_DHIDE_VAMBRACES})
+			.put(2507, new HideData[]{HideData.RED_DHIDE_BODY, HideData.RED_DHIDE_CHAPS, HideData.RED_DHIDE_VAMBRACES})
 			.put(2509, new HideData[]{HideData.BLACK_DHIDE_BODY, HideData.BLACK_DHIDE_CHAPS, HideData.BLACK_DHIDE_VAMBRACES})
 			.build());
 	

@@ -684,28 +684,82 @@
     "table": "BARROWS",
     "items": [
       {
+        "id": 995,
+        "minimum": 10000,
+        "maximum": 100000,
+        "chance": "COMMON"
+      },
+      {
+        "id": 384,
+        "minimum": 4,
+        "maximum": 40,
+        "chance": "COMMON"
+      },
+      {
+        "id": 139,
+        "minimum": 1,
+        "maximum": 1,
+        "chance": "COMMON"
+      },
+      {
+        "id": 127,
+        "minimum": 1,
+        "maximum": 1,
+        "chance": "COMMON"
+      },
+      {
+        "id": 163,
+        "minimum": 1,
+        "maximum": 1,
+        "chance": "COMMON"
+      },
+      {
+        "id": 565,
+        "minimum": 35,
+        "maximum": 1200,
+        "chance": "COMMON"
+      },
+      {
+        "id": 562,
+        "minimum": 35,
+        "maximum": 3000,
+        "chance": "COMMON"
+      },
+      {
+        "id": 560,
+        "minimum": 35,
+        "maximum": 1800,
+        "chance": "COMMON"
+      },
+      {
+        "id": 558,
+        "minimum": 35,
+        "maximum": 6000,
+        "chance": "COMMON"
+      },
+      {
         "id": 4708,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4710,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4712,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4714,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4716,
@@ -735,103 +789,103 @@
         "id": 4724,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4726,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4728,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4730,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4732,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4734,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4736,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4738,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4740,
-        "minimum": 10,
-        "maximum": 120,
+        "minimum": 36,
+        "maximum": 320,
         "chance": "VERY_COMMON"
       },
       {
         "id": 4745,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4747,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4749,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4751,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4753,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4755,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4757,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       },
       {
         "id": 4759,
         "minimum": 1,
         "maximum": 1,
-        "chance": "UNCOMMON"
+        "chance": "RARE"
       }
     ]
   }

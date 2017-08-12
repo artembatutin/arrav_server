@@ -1,7 +1,6 @@
 package net.edge.world.entity.actor.player;
 
 import com.google.gson.*;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.edge.content.achievements.Achievement;
@@ -14,11 +13,9 @@ import net.edge.content.skill.farming.patch.PatchType;
 import net.edge.content.skill.summoning.SummoningData;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.minigame.barrows.BarrowsData;
-import net.edge.content.pets.Pet;
-import net.edge.content.pets.PetManager;
-import net.edge.content.pets.PetProgress;
-import net.edge.content.quest.Quest;
-import net.edge.content.quest.QuestManager.Quests;
+import net.edge.content.item.pets.Pet;
+import net.edge.content.item.pets.PetManager;
+import net.edge.content.item.pets.PetProgress;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.slayer.Slayer;

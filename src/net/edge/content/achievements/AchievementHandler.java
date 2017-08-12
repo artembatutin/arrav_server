@@ -16,35 +16,23 @@ public class AchievementHandler {
 	 * achievement, they will receive their reward.
 	 * @param player      The player activating the achievement.
 	 * @param achievement The achievement for activation.
-	 */
-	public static void activate(Player player, Achievement achievement) {
-		activate(player, achievement, 1);
-	}
-	
-	/**
-	 * Activates the achievement for the individual player. Increments the
-	 * completed amount for the player. If the player has completed the
-	 * achievement, they will receive their reward.
-	 * @param player      The player activating the achievement.
-	 * @param achievement The achievement for activation.
 	 * @param increase    The amount to increase the achievement.
 	 */
 	public static void activate(Player player, Achievement achievement, int increase) {
 		final int prev = player.getAchievements().computeIfAbsent(achievement, a -> 0);
 		player.getAchievements().put(achievement, prev + increase);
-		int dif = 0;
 		boolean updated = false;
 		for(int i : achievement.getAmount()) {
 			if(prev >= i)
 				continue;
 			if(prev + increase >= i) {
-				player.out(new SendTask(String.format(achievement.getTask(), achievement.getAmount()[dif])));
-				player.getBank().deposit(new Item(995, AchievementDifficulty.DIF[dif].getReward()));
-				player.message(AchievementDifficulty.DIF[dif].getReward() + " coins have been added into your bank.");
+				int tier = getTier(player, achievement);
+				player.out(new SendTask(String.format(achievement.getTask(), achievement.getAmount()[tier])));
+				player.getBank().deposit(new Item(995, AchievementDifficulty.DIF[tier].getReward()));
+				player.message(AchievementDifficulty.DIF[tier].getReward() + " coins have been added into your bank.");
 				update(player, achievement);
 				updated = true;
 			}
-			dif++;
 		}
 		if(!updated) {
 			int tier = getTier(player, achievement);

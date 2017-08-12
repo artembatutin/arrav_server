@@ -42,9 +42,9 @@ public final class GameShutdownHook extends Thread {
 	public void run() {
 		try {
 			exit.submit(() -> {
-				Player p;
-				Iterator<Player> it = World.get().getPlayers().iterator();
-				while((p = it.next()) != null) {
+				for(Player p : World.get().getPlayers()) {
+					if(p == null)
+						continue;
 					new PlayerSerialization(p).serialize();
 				}
 			});

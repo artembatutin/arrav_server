@@ -97,6 +97,7 @@ public final class Spinning extends ProducingSkillAction {
 					return true;
 				}
 			};
+			a.registerObj(2644);
 			a.registerItem(data.item.getId());
 		}
 	}

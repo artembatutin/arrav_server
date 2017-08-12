@@ -1,4 +1,4 @@
-package net.edge.content.shootingstar;
+package net.edge.content.object.star;
 
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.world.entity.actor.player.Player;

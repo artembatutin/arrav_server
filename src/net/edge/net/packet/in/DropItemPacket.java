@@ -1,7 +1,8 @@
 package net.edge.net.packet.in;
 
+import net.edge.GameConstants;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.pets.Pet;
+import net.edge.content.item.pets.Pet;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;
@@ -20,6 +21,10 @@ public final class DropItemPacket implements IncomingPacket {
 	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+		if(GameConstants.DROP_DISABLED) {
+			player.message("Dropping items has temporary been disabled!");
+			return;
+		}
 		if(player.getActivityManager().contains(ActivityType.DROP_ITEM)) {
 			return;
 		}

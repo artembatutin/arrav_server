@@ -7,7 +7,7 @@ import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.MobAction;
-import net.edge.content.skill.firemaking.pits.FirepitManager;
+import net.edge.content.object.pit.FirepitManager;
 import net.edge.util.Utility;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;

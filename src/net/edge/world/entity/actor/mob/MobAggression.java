@@ -64,9 +64,12 @@ public final class MobAggression {
 			}
 			return false;
 		}
+		if(!player.isVisible()) {
+			return false;
+		}
 		if(!AGGRESSIVE.contains(mob.getId()) && !wilderness || mob.getCombat().inCombat())
 			return false;
-		if(!mob.getPosition().withinDistance(player.getPosition(), 40)) {
+		if(!mob.getPosition().withinDistance(player.getPosition(), 12)) {
 			retreat(mob);//Too far.
 			return false;
 		}

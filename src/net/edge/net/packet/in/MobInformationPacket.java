@@ -63,18 +63,20 @@ public final class MobInformationPacket implements IncomingPacket {
 				if(min == 99) {
 					int index = 0;
 					String itemName = ItemDefinition.get(item).getName().toLowerCase().replaceAll(" ", "_");
-					for(Drop d : table.getDrops()) {
-						if(d != null) {
-							String name = ItemDefinition.get(d.getId()).getName().toLowerCase().replaceAll(" ", "_");
-							if(itemName.equals(name)) {
-								table.getDrops().remove(index);
-								table.sort();
-								player.message("Removed: " + d.toString());
-								player.out(new SendMobDrop(mob, table));
-								return;
+					if(itemName != null) {
+						for(Drop d : table.getDrops()) {
+							if(d != null) {
+								String name = ItemDefinition.get(d.getId()).getName().toLowerCase().replaceAll(" ", "_");
+								if(itemName.contains(name.toLowerCase()) || name.contains(itemName.toLowerCase())) {
+									table.getDrops().remove(index);
+									table.sort();
+									player.message("Removed: " + d.toString());
+									player.out(new SendMobDrop(mob, table));
+									return;
+								}
 							}
+							index++;
 						}
-						index++;
 					}
 					player.message("Couldn't remove any drop.");
 					return;

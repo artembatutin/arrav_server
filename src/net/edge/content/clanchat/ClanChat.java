@@ -111,7 +111,8 @@ public final class ClanChat {
 		if(cursor > m.getPos() && m.getPos() > 0) {
 			cursor = m.getPos();
 		}
-		members[m.getPos()] = null;
+		if(m.getPos() > 0 && m.getPos() < members.length)
+			members[m.getPos()] = null;
 		ClanManager.get().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, this, m);
 		ClanManager.get().clearOnLogin(player);
 		m.setPos(-1);

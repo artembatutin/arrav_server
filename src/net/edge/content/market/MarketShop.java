@@ -43,6 +43,11 @@ public class MarketShop {
 	private final Currency currency;
 	
 	/**
+	 * Flag if the iron man access this shop.
+	 */
+	private final boolean ironAccess;
+	
+	/**
 	 * The result of our search.
 	 */
 	private IntArrayList items;
@@ -52,10 +57,11 @@ public class MarketShop {
 	 * @param title the tile of this shop.
 	 * @param items items in this shop.
 	 */
-	public MarketShop(int id, String title, Currency currency, int[] items) {
+	public MarketShop(int id, String title, Currency currency, boolean ironAccess, int... items) {
 		this.id = id;
 		this.currency = currency;
 		this.title = title;
+		this.ironAccess = ironAccess;
 		this.items = new IntArrayList(items);
 	}
 	
@@ -70,6 +76,7 @@ public class MarketShop {
 		search = search.replace("_", " ");
 		this.currency = COINS;
 		this.title = "Items found for: " + search;
+		this.ironAccess = false;
 		items = MarketItem.search(player, search);
 		openShop(player);
 	}
@@ -103,9 +110,11 @@ public class MarketShop {
 	 * Opens the shop.
 	 */
 	public void openShop(Player player) {
-		if(player.isIronMan() && !player.isIronMaxed() && !(id == 29 || id == 24 || id == 27 || id == 22 || id == 28 || id == 2 || id == 3 || id == 11 || id == 7 || id == 18 || id == 4 || id == 9 || id == 25 || id == 26 || id == 14)) {
-			player.dialogue(new NpcDialogue(3705, "Your an iron man and you haven't maxed your skills yet.", "You can only open the iron man shop located in the iron", "man building on the second floor."));
-			return;
+		if(!ironAccess) {
+			if(player.isIronMan() && !player.isIronMaxed()) {
+				player.dialogue(new NpcDialogue(3705, "Your an iron man and you haven't maxed your skills yet.", "You can only open the iron man shop located in the iron", "man building on the second floor."));
+				return;
+			}
 		}
 		clearFromShop(player);
 		player.setMarketShop(this);

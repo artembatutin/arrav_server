@@ -118,7 +118,7 @@ public final class BirdSnare extends Trap {
 					kill(bird);
 					updateObject(bird.getData().objectId);
 					setState(TrapState.CAUGHT, mob);
-					FEATHERING.inc(player, 5);
+					FEATHERING.inc(player);
 				}
 			}
 			

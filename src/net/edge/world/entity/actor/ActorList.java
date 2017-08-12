@@ -187,17 +187,25 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 		}
 		entities[index] = actor;
 		actor.setSlot(index + 1);
-		actor.setState(EntityState.ACTIVE);
-		if(actor.isPlayer())//thread safe
-			actor.getRegion().ifPresent(r -> r.add(actor));
-		else
-			World.get().add(actor);
-		//Activating npc if region active.
-		if(actor.isMob()) {
-			actor.getRegion().ifPresent(r -> {
-				if(r.getState() == EntityState.ACTIVE)
-					actor.toMob().setActive(true);
-			});
+		try {
+			actor.setState(EntityState.ACTIVE);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			if(actor.isPlayer())//thread safe
+				actor.getRegion().ifPresent(r -> r.add(actor));
+			else
+				World.get().add(actor);
+			//Activating npc if region active.
+			if(actor.isMob()) {
+				actor.getRegion().ifPresent(r -> {
+					if(r.getState() == EntityState.ACTIVE)
+						actor.toMob().setActive(true);
+				});
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		size++;
 		//Updating player count.
@@ -224,24 +232,31 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 		if(actor.getSlot() != -1) {
 			indices.offer(normal);
 			entities[normal] = null;
+			size--;
 		}
 		if (index >= limit) {
 			limit--;
 		}
-		
-		size--;
-		actor.setState(EntityState.INACTIVE);
-		World.get().remove(actor);
-		if(actor.isPlayer()) {
-			Player player = actor.toPlayer();
-			player.getSession().getChannel().close();
-			if(player.getRights() != Rights.ADMINISTRATOR)
-				new Hiscores(World.getScore(), player).submit();
-			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
-			if(player.getRights().isStaff()) {
-				World.get().setStaffCount(World.get().getStaffCount() - 1);
-				PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
+		try {
+			actor.setState(EntityState.INACTIVE);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			World.get().remove(actor);
+			if(actor.isPlayer()) {
+				Player player = actor.toPlayer();
+				player.getSession().getChannel().close();
+				if(player.getRights() != Rights.ADMINISTRATOR)
+					new Hiscores(World.getScore(), player).submit();
+				PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
+				if(player.getRights().isStaff()) {
+					World.get().setStaffCount(World.get().getStaffCount() - 1);
+					PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
+				}
 			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		return true;
 	}
