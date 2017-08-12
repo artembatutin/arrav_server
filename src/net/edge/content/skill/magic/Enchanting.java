@@ -327,10 +327,10 @@ public final class Enchanting extends ProducingSkillAction {
 		LEVEL_6_ENCHANT(6003, 87, 97, new Item[]{}, new Item[]{new Item(557, 15), new Item(554, 15), new Item(564)}, new Animation(721), new Graphic(452, 75)) {
 			
 			private final Int2IntArrayMap ONYX = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
-					.put(6564, 6583)
-					.put(6565, 11128)
+					.put(6575, 6583)
+					.put(6577, 11128)
 					.put(11130, 11133)
-					.put(6566, 6585)
+					.put(6581, 6585)
 					.build()
 			);
 			
