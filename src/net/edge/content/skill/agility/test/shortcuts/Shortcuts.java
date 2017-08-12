@@ -1,13 +1,10 @@
 package net.edge.content.skill.agility.test.shortcuts;
 
 import net.edge.action.impl.ObjectAction;
-import net.edge.content.skill.agility.obstacle.impl.Walkable;
 import net.edge.content.skill.agility.test.Agility;
-import net.edge.content.skill.agility.test.gnome.JumpOverBarrier;
-import net.edge.content.skill.agility.test.gnome.PoleSwing;
 import net.edge.content.skill.agility.test.obstacle.Obstacle;
-import net.edge.content.skill.agility.test.obstacle.impl.ClimbableObstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.FMObstacle;
+import net.edge.content.skill.agility.test.obstacle.impl.SteppableObstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.WalkableObstacle;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.world.entity.actor.player.Player;
@@ -98,7 +95,9 @@ public final class Shortcuts extends Agility {
             public boolean travelback() {
                 return true;
             }
-        });
+        }),
+        BRIMHAVEN_OBSTACLE_ROCKS(5111, p -> new SteppableObstacle(new Position(2647, 9557), new Position[]{new Position(2647, 9558), new Position(2647, 9559), new Position(2647, 9560), new Position(2648, 9560), new Position(2649, 9560), new Position(2649, 9561)}, new Position(2649, 9562), 30, 0)),
+        BRIMHAVEN_OBSTACLE_ROCKS_OTHERWAY(5110, p -> new SteppableObstacle(new Position(2649, 9562), new Position[]{new Position(2649, 9561), new Position(2649, 9560), new Position(2648, 9560), new Position(2647, 9560), new Position(2647, 9559), new Position(2647, 9558)}, new Position(2647, 9557), 30, 0));
 
 
         public final int[] ids;
