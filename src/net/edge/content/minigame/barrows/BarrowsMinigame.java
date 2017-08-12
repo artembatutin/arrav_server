@@ -190,10 +190,14 @@ public final class BarrowsMinigame extends Minigame {
 			if(!container.getCurrent().isPresent()) {
 				BARROWS.inc(player);
 				ObjectList<Item> loot = new ObjectArrayList<>();
-				for(int i = 0; i < 20; i++) {
-					Drop drop = RandomUtils.random(ItemCache.COMMON.get(ItemCache.BARROWS));
+				int item = RandomUtils.inclusive(3, 7);
+				while(item != 0) {
+					Drop[] drops = ItemCache.COMMON.get(ItemCache.BARROWS);
+					int d = RandomUtils.inclusive(RandomUtils.nextBoolean() ? drops.length - 1 : 6);
+					Drop drop = drops[d];
 					if(drop.roll(ThreadLocalRandom.current())) {
 						loot.add(new Item(drop.getId(), RandomUtils.inclusive(drop.getMinimum(), drop.getMaximum())));
+						item--;
 					}
 				}
 				
