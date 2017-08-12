@@ -125,6 +125,11 @@ public final class Player extends Actor {
 	private final PlayerCredentials credentials;
 	
 	/**
+	 * Experience lock.
+	 */
+	public boolean xpLock;
+	
+	/**
 	 * Determines if this player is playing in iron man mode.
 	 * 0 - not
 	 * 1 - iron man mode

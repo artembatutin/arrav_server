@@ -58,7 +58,8 @@ public class PestGate {
 		door.publish();
 		player.animation(new Animation(3684));
 		player.getInventory().remove(new Item(1511));
-		player.getSkills()[Skills.CONSTRUCTION].increaseExperience(20);
+		if(!player.xpLock)
+			player.getSkills()[Skills.CONSTRUCTION].increaseExperience(20);
 		player.getAttr().get("participation").set(player.getAttr().get("participation").getInt() + 25);
 		player.text(21116, "" + player.getAttr().get("participation").getInt());
 	}

@@ -88,7 +88,6 @@ public class CombatHit {
 		this.type = type;
 		this.checkAccuracy = checkAccuracy;
 		this.delay = delay;
-		this.experience = determineExperience();
 		if(type == CombatType.MAGIC && attacker.getCurrentlyCasting() != null) {
 			spell = Optional.of(attacker.getCurrentlyCasting());
 		} else {
@@ -138,6 +137,7 @@ public class CombatHit {
 			}
 			this.damage = counter;
 		}
+		this.experience = determineExperience();
 	}
 	
 	public CombatHit(Actor attacker, Actor victim, int amount, CombatType type, boolean checkAccuracy) {

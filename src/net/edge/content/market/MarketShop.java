@@ -103,7 +103,7 @@ public class MarketShop {
 	 * Opens the shop.
 	 */
 	public void openShop(Player player) {
-		if(player.isIronMan() && !player.isIronMaxed() && !(id == 24 || id == 27 || id == 22 || id == 28 || id == 2 || id == 3 || id == 11 || id == 7 || id == 18 || id == 4 || id == 9 || id == 25 || id == 26 || id == 14)) {
+		if(player.isIronMan() && !player.isIronMaxed() && !(id == 29 || id == 24 || id == 27 || id == 22 || id == 28 || id == 2 || id == 3 || id == 11 || id == 7 || id == 18 || id == 4 || id == 9 || id == 25 || id == 26 || id == 14)) {
 			player.dialogue(new NpcDialogue(3705, "Your an iron man and you haven't maxed your skills yet.", "You can only open the iron man shop located in the iron", "man building on the second floor."));
 			return;
 		}
@@ -264,16 +264,19 @@ public class MarketShop {
 	 * otherwise.
 	 */
 	public boolean sell(Player player, Item item, int fromSlot) {
-		if(!Item.valid(item))
+		if(!Item.valid(item)) {
 			return false;
-		if(player.getInventory().get(fromSlot) == null)
+		}
+		if(player.getInventory().get(fromSlot) == null) {
 			return false;
+		}
 		if(Arrays.stream(GameConstants.INVALID_SHOP_ITEMS).anyMatch(i -> i == item.getId())) {
 			player.message("You can't sell " + item.getDefinition().getName() + " here.");
 			return false;
 		}
-		if(!player.getInventory().contains(item.getId()))
+		if(!player.getInventory().contains(item.getId())) {
 			return false;
+		}
 		if(!item.getDefinition().isTradable()) {
 			player.message("This item cannot be bought by the store owner.");
 			return false;
@@ -296,7 +299,7 @@ public class MarketShop {
 			item.setAmount(player.getInventory().get(fromSlot).getAmount());
 		}
 		player.getInventory().remove(item, fromSlot);
-		getCurrency().getCurrency().recieveCurrency(player, item.getAmount() * (int) Math.floor(determinePrice(player, item) / 2));
+		getCurrency().getCurrency().recieveCurrency(player, item.getAmount() * ((int) Math.floor(determinePrice(player, item) / 2)));
 		
 		MarketItem marketItem = MarketItem.get(item.getId());
 		if(!marketItem.isUnlimitedStock()) {
