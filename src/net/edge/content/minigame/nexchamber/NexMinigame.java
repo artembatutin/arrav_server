@@ -102,6 +102,10 @@ public class NexMinigame extends Minigame {
 		ObjectAction enter = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
+				if(true) {
+					player.message("In construction.");
+					return true;
+				}
 				if(game == null)
 					return true;
 				if(game.contains(player)) {

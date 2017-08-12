@@ -34,7 +34,7 @@ public abstract class CombatSpell extends Spell {
 			});
 			return p.get().getTravelTime();
 		}
-		return 0;
+		return p.isPresent() ? p.get().getTravelTime() : 0;
 	}
 	
 	/**

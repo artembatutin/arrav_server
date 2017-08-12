@@ -124,7 +124,6 @@ public class CombatHit {
                     hits[1].setDamage(second);
                     hits[2].setDamage(third);
                     hits[3].setDamage(fourth);
-                    System.out.println(+hits[0].getDamage() + ", "+ hits[1].getDamage() +", " + hits[2].getDamage()+ ", " +hits[3].getDamage());
                     if(hits[0].isAccurate())
                         counter += hits[0].getDamage();
                     if(hits[1].isAccurate())
