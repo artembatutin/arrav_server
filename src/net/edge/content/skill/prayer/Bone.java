@@ -1,5 +1,9 @@
 package net.edge.content.skill.prayer;
 
+import com.google.common.collect.ImmutableSet;
+
+import java.util.Optional;
+
 public enum Bone {
 	BONES(526, 7.5),
 	BAT_BONES(530, 2.9),//buyable in jatix store.
@@ -10,6 +14,8 @@ public enum Bone {
 	DRAGON_BONES(536, 52),
 	OURG_BONES(4834, 90),
 	DAGANNOTH_BONES(6729, 120);
+
+	private static final ImmutableSet<Bone> VALUES = ImmutableSet.copyOf(Bone.values());
 
 	private final int id;
 	private final double experience;
@@ -25,6 +31,10 @@ public enum Bone {
 
 	public double getExperience() {
 		return experience;
+	}
+
+	public static Optional<Bone> getBone(int id) {
+		return VALUES.stream().filter(i -> i.id == id).findFirst();
 	}
 
 	@Override

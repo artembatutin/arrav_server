@@ -5,12 +5,13 @@ import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.skill.Skills;
+import net.edge.content.skill.prayer.Bone;
 import net.edge.util.json.JsonSaver;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.GroundItem;
-import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Position;
 
 import java.util.*;
@@ -25,7 +26,7 @@ public final class DropManager {
 	/**
 	 * The {@link HashMap} that consists of the drops for {@link Mob}s.
 	 */
-	public final static Int2ObjectOpenHashMap<DropTable> TABLES = new Int2ObjectOpenHashMap<>();
+	private final static Int2ObjectOpenHashMap<DropTable> TABLES = new Int2ObjectOpenHashMap<>();
 
 	/**
 	 * Mob sharing the same table drop redirects.
@@ -53,6 +54,15 @@ public final class DropManager {
 			for(Item drop : dropItems) {
 				if(drop == null)
 					continue;
+
+				boolean bonecrusher = killer.getInventory().contains(18337);
+
+				if(bonecrusher) {
+					Optional<Bone> bone = Bone.getBone(drop.getId());
+					bone.ifPresent(b -> Skills.experience(killer, b.getExperience() / 2, Skills.PRAYER));
+					continue;//don't submit bone to floor but dont break the loop either.
+				}
+
 				r.register(new GroundItem(drop, p, killer));
 			}
 		});
