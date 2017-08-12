@@ -43,7 +43,6 @@ public final class PotionDecanting {
 		}
 		
 		final int doses = getDoses(used.getId()) + getDoses(usedOn.getId());
-		
 		if(doses <= (first.getIds().length + 1)) {
 			player.getInventory().replace(used.getId(), first.getIdForDose(doses), false);
 			player.getInventory().replace(usedOn.getId(), 229, false);
@@ -51,8 +50,7 @@ public final class PotionDecanting {
 			player.getInventory().replace(used.getId(), first.getIds()[0], false);
 			player.getInventory().replace(usedOn.getId(), second.getIdForDose(doses - 4), false);
 		}
-		
-		//player.getInventory().updateBulk();
+		player.getInventory().updateBulk();
 		return true;
 	}
 	
