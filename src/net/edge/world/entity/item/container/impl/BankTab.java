@@ -76,10 +76,10 @@ final class BankTab extends ItemContainer {
 		
 		if(canAdd(newDepositItem) && container.canRemove(depositItem)) {
 			add(newDepositItem, -1, refresh);
-			container.remove(depositItem, inventoryIndex, refresh);
+			boolean p = container.remove(depositItem, inventoryIndex, refresh) != -1;
 			if(refresh)
 				forceRefresh(player);
-			return true;
+			return p;
 		}
 		return false;
 	}

@@ -89,12 +89,10 @@ public final class RegionManager {
 			for(Region region : allRegions) {
 				if(!region.getRemovedObjects().isEmpty()) {
 					for(GameObject obj : region.getRemovedObjects()) {
-						System.out.println("remove " + obj);
 						player.out(new SendObjectRemoval(obj));
 					}
 				}
 				region.dynamicAction(o -> {
-					System.out.println(o + " - " + o.getGlobalPos());
 					if(o.getZ() == player.getPosition().getZ() && o.getInstance() == player.getInstance()) {
 						player.out(new SendObject(o));
 					}

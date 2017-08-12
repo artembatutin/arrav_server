@@ -7,5 +7,5 @@ package net.edge.world.entity.item.container.session;
  */
 public enum ExchangeSessionType {
 	TRADE,
-	DUEL;
+	DUEL
 }

@@ -16,8 +16,8 @@
     ]
   },
   {
-    "owner": "ug0t0wned",
-    "name": "Help",
+    "owner": "rela",
+    "name": "Rela",
     "loot": false,
     "ban": "OWNER",
     "mute": "OWNER",
@@ -26,96 +26,8 @@
     "bans": [],
     "ranked": [
       {
-        "name": "ug0t0wned",
+        "name": "rela",
         "rank": "OWNER"
-      }
-    ]
-  },
-  {
-    "owner": "edgeville",
-    "name": "Edgeville",
-    "loot": false,
-    "ban": "OWNER",
-    "mute": "OWNER",
-    "talk": "MEMBER",
-    "mutes": [],
-    "bans": [],
-    "ranked": [
-      {
-        "name": "edgeville",
-        "rank": "OWNER"
-      }
-    ]
-  },
-  {
-    "owner": "dharry",
-    "name": "Dharry",
-    "loot": false,
-    "ban": "OWNER",
-    "mute": "OWNER",
-    "talk": "MEMBER",
-    "mutes": [],
-    "bans": [],
-    "ranked": [
-      {
-        "name": "dharry",
-        "rank": "OWNER"
-      }
-    ]
-  },
-  {
-    "owner": "dynamit",
-    "name": "Dynamit",
-    "loot": false,
-    "ban": "OWNER",
-    "mute": "OWNER",
-    "talk": "MEMBER",
-    "mutes": [],
-    "bans": [],
-    "ranked": [
-      {
-        "name": "dynamit",
-        "rank": "OWNER"
-      }
-    ]
-  },
-  {
-    "owner": "minion",
-    "name": "Help",
-    "loot": false,
-    "ban": "OWNER",
-    "mute": "OWNER",
-    "talk": "MEMBER",
-    "mutes": [],
-    "bans": [],
-    "ranked": [
-      {
-        "name": "minion",
-        "rank": "OWNER"
-      }
-    ]
-  },
-  {
-    "owner": "ironmen",
-    "name": "Welcome",
-    "loot": false,
-    "ban": "OWNER",
-    "mute": "OWNER",
-    "talk": "MEMBER",
-    "mutes": [],
-    "bans": [],
-    "ranked": [
-      {
-        "name": "ironmen",
-        "rank": "OWNER"
-      },
-      {
-        "name": "raw",
-        "rank": "RECRUIT"
-      },
-      {
-        "name": "ball",
-        "rank": "RECRUIT"
       }
     ]
   }

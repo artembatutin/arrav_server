@@ -21,10 +21,12 @@ public class Synchronizer {
 	 */
 	public void preUpdate(ActorList<Player> players, ActorList<Mob> mobs) {
 		//long time = System.currentTimeMillis();
-		phaser.bulkRegister(players.size());
+		int pCount = players.size();
+		phaser.bulkRegister(pCount);
 		for(Player player : players) {
 			if(player == null)
 				continue;
+			pCount--;
 			executor.submit(() -> {
 				try {
 					player.preUpdate();
@@ -33,15 +35,21 @@ public class Synchronizer {
 				}
 			});
 		}
+		while(pCount > 0) {
+			pCount--;
+			phaser.arriveAndDeregister();
+		}
 		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-PLAYER]: " + (System.currentTimeMillis() - time));
 		
 		
 		//time = System.currentTimeMillis();
-		phaser.bulkRegister(mobs.size());
+		int mCount = mobs.size();
+		phaser.bulkRegister(mCount);
 		for(Mob mob : mobs) {
 			if(mob == null)
 				continue;
+			mCount--;
 			executor.submit(() -> {
 				try {
 					mob.preUpdate();
@@ -49,6 +57,10 @@ public class Synchronizer {
 					phaser.arriveAndDeregister();
 				}
 			});
+		}
+		while(mCount > 0) {
+			mCount--;
+			phaser.arriveAndDeregister();
 		}
 		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-NPC]: " + (System.currentTimeMillis() - time));
@@ -60,10 +72,12 @@ public class Synchronizer {
 	 */
 	public void update(ActorList<Player> players) {
 		//long time = System.currentTimeMillis();
-		phaser.bulkRegister(players.size());
+		int pCount = players.size();
+		phaser.bulkRegister(pCount);
 		for(Player player : players) {
 			if(player == null)
 				continue;
+			pCount--;
 			executor.submit(() -> {
 				try {
 					player.update();
@@ -71,6 +85,10 @@ public class Synchronizer {
 					phaser.arriveAndDeregister();
 				}
 			});
+		}
+		while(pCount > 0) {
+			pCount--;
+			phaser.arriveAndDeregister();
 		}
 		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[SYNC]: " + (System.currentTimeMillis() - time));

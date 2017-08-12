@@ -103,14 +103,12 @@ public final class CorporealBeastStrategy extends DynamicStrategy<CorporealBeast
 		List<Player> stompables = players.stream().filter(p -> new Boundary(p.getPosition(), p.size()).inside(npc.getPosition(), npc.size() + 1)).collect(Collectors.toList());
 
 		if(!stompables.isEmpty()) {
-
 			return new CombatHit(npc, stompables.get(0), 1, CombatType.MELEE, true) {
-
 				@Override
 				public CombatHit preAttack() {
 					Arrays.fill(this.getHits(), null);
 
-					this.getHits()[0] = new Hit(RandomUtils.inclusive(200, 450), Hit.HitType.NORMAL, Hit.HitIcon.MELEE, victim.getSlot());
+					this.getHits()[0] = new Hit(RandomUtils.inclusive(50, 400), Hit.HitType.NORMAL, Hit.HitIcon.MELEE, victim.getSlot());
 					this.setAccurate(true);
 					npc.animation(new Animation(10496));
 					npc.graphic(new Graphic(1834));

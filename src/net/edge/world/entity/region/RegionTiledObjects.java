@@ -2,6 +2,7 @@ package net.edge.world.entity.region;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectType;
 
@@ -16,7 +17,7 @@ import static net.edge.world.object.ObjectGroup.WALL;
  */
 public class RegionTiledObjects {
 	
-	private final GameObject[] objects = new GameObject[12];
+	private final GameObject[] objects = new GameObject[23];
 	
 	public RegionTiledObjects() {
 		reset();

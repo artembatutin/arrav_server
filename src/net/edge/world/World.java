@@ -203,7 +203,9 @@ public final class World {
 				if(player == null) {
 					break;
 				}
-				if(!playerByNames.containsKey(player.getCredentials().getUsernameHash()) && players.add(player)) {
+				if(playerByNames.containsKey(player.getCredentials().getUsernameHash())) {
+					player.getSession().getChannel().close();
+				} else if(players.add(player)) {
 					playerByNames.put(player.getCredentials().getUsernameHash(), player);
 				} else if(player.isHuman()) {
 					player.getSession().getChannel().close();

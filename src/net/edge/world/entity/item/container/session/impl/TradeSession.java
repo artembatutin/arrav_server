@@ -82,7 +82,7 @@ public final class TradeSession extends ExchangeSession {
 		String tradeAmount;
 		int count = 0;
 		for(Item item : items) {
-			if(item == null || (item != null && tradeItems.contains(item.getDefinition().getName()))) {
+			if(item == null || tradeItems.contains(item.getDefinition().getName())) {
 				continue;
 			}
 			int amount = this.getExchangeSession().get(player).computeAmountForId(item.getId());

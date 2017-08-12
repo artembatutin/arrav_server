@@ -35,6 +35,7 @@ public class Shops extends ActionInitializer {
 		SMITHING_THURGO(604, 19, 1),
 		SLAYER_SHOP(8462, 2, 4),
 		FARMING_SHOP(3299, 29, 1),
+		SUMMONING_SHOP(6970, 31, 1),
 		;
 		
 		private final int owner, shop;
