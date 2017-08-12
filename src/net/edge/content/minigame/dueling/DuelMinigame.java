@@ -107,12 +107,6 @@ public final class DuelMinigame extends Minigame {
 		
 		this.restore(winner);
 
-		if(!session.getExchangeSession().get(winner).isEmpty()) {
-			for (Item item : session.getExchangeSession().get(winner)) {
-				winner.getInventory().add(item);
-			}
-		}
-
 		if(session.getExchangeSession().get(loser).isEmpty()) {
 			winner.setMinigame(Optional.empty());
 			return;
