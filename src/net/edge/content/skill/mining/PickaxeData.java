@@ -23,7 +23,8 @@ public enum PickaxeData {
 	ADAMANT(1271, 488, 476, 628, 31, 0.2),
 	RUNE(1275, 490, 478, 624, 41, 0.25),
 	INFERNO_ADZE(13661, 10222, 41, 0.55),
-	DRAGON(15259, 12188, 61, 0.6);
+	DRAGON(15259, 12188, 61, 0.6),
+	DRAGONG(20786, 12188, 61, 0.6);
 
 	/**
 	 * Caches our enum values.

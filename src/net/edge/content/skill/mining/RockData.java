@@ -102,7 +102,7 @@ enum RockData {
 		this.object = object;
 		this.item = new Item(item);
 		this.requirement = requirement;
-		this.experience = experience;
+		this.experience = experience * 1.2;//increased a bit.
 		this.respawnTime = respawnTime;
 		this.prospectdelay = prospectdelay;
 		this.oreCount = oreCount;

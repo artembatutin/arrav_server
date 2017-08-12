@@ -74,7 +74,7 @@ public enum Tree {
 		this.object = object;
 		this.item = new Item(item);
 		this.requirement = requirement;
-		this.experience = experience / 1.2D;//Artem: decreased woodcutting experience.
+		this.experience = experience;
 		this.respawnTime = respawnTime;
 		this.success = success;
 		this.logCount = logCount;

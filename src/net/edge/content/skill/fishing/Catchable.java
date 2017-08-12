@@ -62,7 +62,7 @@ public enum Catchable {
 		this.id = id;
 		this.level = level;
 		this.chance = chance;
-		this.experience = experience;
+		this.experience = experience * 1.40;//increased a bit.
 	}
 
 	@Override

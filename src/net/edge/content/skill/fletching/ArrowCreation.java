@@ -36,7 +36,6 @@ public final class ArrowCreation extends ProducingSkillAction {
 	 */
 	public ArrowCreation(Player player, ArrowData definition) {
 		super(player, Optional.empty());
-		
 		this.definition = definition;
 	}
 	
