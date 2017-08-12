@@ -249,7 +249,7 @@ public enum CombatSpecial {
 			Achievement.DRAGON_DAGGER.inc(player);
 			player.animation(new Animation(1062, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(252, 100));
-			return new CombatHit(player, target, 2, CombatType.MELEE, true, 2);
+			return new CombatHit(player, target, 2, CombatType.MELEE, true, 1);
 		}
 	},
 	DRAGON_HALBERD(new int[]{3204, 11716}, 30, 1, 1, CombatType.MELEE, WeaponInterface.HALBERD) {
