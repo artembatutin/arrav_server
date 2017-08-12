@@ -23,13 +23,20 @@ public abstract class Obstacle {
 
     public final int delay;
 
-    public Obstacle(Position[] start, Position end, Animation animation, int requirement, double experience, int delay) {
+    public final boolean instant;
+
+    public Obstacle(Position[] start, Position end, Animation animation, int requirement, double experience, int delay, boolean instant) {
         this.start = start;
         this.end = end;
         this.animation = animation;
         this.requirement = requirement;
         this.experience = experience;
         this.delay = delay;
+        this.instant = instant;
+    }
+
+    public Obstacle(Position[] start, Position end, Animation animation, int requirement, double experience, int delay) {
+        this(start, end, animation, requirement, experience, delay, false);
     }
 
     public Obstacle(Position start, Position end, int animation, int requirement, double experience, int delay) {
@@ -38,6 +45,10 @@ public abstract class Obstacle {
 
     public Obstacle(Position[] start, Position end, int animation, int requirement, double experience, int delay) {
         this(start, end, new Animation(animation), requirement, experience, delay);
+    }
+
+    public Obstacle(Position start, Position end, int animation, int requirement, double experience, int delay, boolean instant) {
+        this(new Position[]{start}, end, new Animation(animation), requirement, experience, delay, instant);
     }
 
     public boolean crossable(Player player) {

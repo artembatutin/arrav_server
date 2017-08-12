@@ -76,6 +76,14 @@ public enum PlayerPanel {
 			player.out(new SendLink("store/"));
 		}
 	},
+	EXP_LOCK() {
+		@Override
+		public void onClick(Player player) {
+			player.xpLock = !player.xpLock;
+			player.message("Your experience is now : " + (player.xpLock ? "Locked" : "Unlocked"));
+			this.refresh(player, "@or3@ - Experience Lock: @yel@" + (player.xpLock ? "@gre@yes" : "@red@no"));
+		}
+	},
 	NPC_TOOL() {
 		@Override
 		public void onClick(Player player) {
@@ -224,6 +232,7 @@ public enum PlayerPanel {
 		PlayerPanel.DISCORD.refresh(player, "@or3@ - Discord");
 		PlayerPanel.VOTE.refresh(player, "@or3@ - Vote");
 		PlayerPanel.STORE.refresh(player, "@or3@ - Store");
+		PlayerPanel.EXP_LOCK.refresh(player, "@or3@ - Experience Lock: @yel@" + (player.xpLock ? "@gre@yes" : "@red@no"));
 		PlayerPanel.NPC_TOOL.refresh(player, "@or3@ - Monster Database");
 		
 		PlayerPanel.SERVER_STATISTICS.refresh(player, "@or1@Server Information:");

@@ -1,12 +1,10 @@
 package net.edge.content.skill.agility.test;
 
-import net.edge.action.impl.ObjectAction;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.SkillAction;
 import net.edge.content.skill.agility.test.obstacle.Obstacle;
 import net.edge.task.Task;
-import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -28,7 +26,7 @@ public abstract class Agility extends SkillAction {
     /**
      * The obstacle the player is crossing.
      */
-    public final Obstacle crossing;
+    protected final Obstacle crossing;
 
     /**
      * The object that we're crossing.
@@ -84,7 +82,7 @@ public abstract class Agility extends SkillAction {
 
     @Override
     public final boolean instant() {
-        return false;
+        return crossing.instant;
     }
 
     @Override

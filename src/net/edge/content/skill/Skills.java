@@ -189,7 +189,8 @@ public final class Skills {
 		amount *= (player.getSkills()[skill].getRealLevel() == 99 && combatLevel ? 0.2 : 1);
 		Rights right = player.getRights();
 		amount *= right.equals(Rights.EXTREME_DONATOR) ? 1.10 : right.equals(Rights.SUPER_DONATOR) ? 1.05 : right.equals(Rights.DONATOR) ? 1.025 : 1;
-		player.getSkills()[skill].increaseExperience(amount);
+		if(!player.xpLock)
+			player.getSkills()[skill].increaseExperience(amount);
 		if(oldLevel < 99) {
 			int newLevel = player.getSkills()[skill].getLevelForExperience();
 			if(oldLevel < newLevel) {
@@ -342,7 +343,7 @@ public final class Skills {
 	public static boolean maxed(Player player) {
 		for(int i = 0; i < player.getSkills().length; i++) {
 			Skill s = player.getSkills()[i];
-			if(i == DUNGEONEERING || i == CONSTRUCTION || i == FARMING)
+			if(i == DUNGEONEERING || i == CONSTRUCTION)
 				continue;
 			if(s.getRealLevel() < 99)
 				return false;

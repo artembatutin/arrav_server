@@ -186,7 +186,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			}
 			empty = false;
 		}
-		if(this.wave == 15 && empty) {
+		if(this.wave == 14 && empty) {
 			player.setMinigame(Optional.empty());
 			player.message("You have successfully completed the minigame...");
 			int reward = player.getAttr().get("fight_caves_advanced").getBoolean() ? 19111 : 6570;
@@ -201,7 +201,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 			started = false;
 			timer = DELAY;
 			this.wave += 1;
-			player.getDialogueBuilder().append(new NpcDialogue(2617, (this.wave == 15 ? "Prepare to fight for your life!" : "Prepare for wave " + (this.wave + 1) + "!")));
+			player.getDialogueBuilder().append(new NpcDialogue(2617, (this.wave == 13 ? "Prepare to fight for your life!" : "Prepare for wave " + (this.wave + 1) + "!")));
 		}
 	}
 	
@@ -235,8 +235,8 @@ public final class FightcavesMinigame extends SequencedMinigame {
 				continue;
 			World.get().getMobs().remove(monster);
 		}
-		InstanceManager.get().open(instance);
 		player.setInstance(0);
+		InstanceManager.get().open(instance);
 		player.setMinigame(Optional.empty());
 		player.move(new Position(2436, 5169));
 		player.message("You failed to complete the fight cave...");
