@@ -1,9 +1,6 @@
 package net.edge.action.impl;
 
-import net.edge.content.item.Dice;
-import net.edge.content.item.MithrilSeed;
-import net.edge.content.item.FoodConsumable;
-import net.edge.content.item.PotionConsumable;
+import net.edge.content.item.*;
 import net.edge.content.skill.herblore.Herb;
 import net.edge.content.skill.prayer.PrayerBoneBury;
 import net.edge.content.skill.slayer.Slayer;
@@ -40,6 +37,7 @@ public abstract class ItemAction extends Action {
 		Dice.action();
 		MithrilSeed.action();
 		SummoningData.action();
+		ExperienceLamp.handleItem();
 	}
 	
 }
