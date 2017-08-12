@@ -8,6 +8,7 @@ import net.edge.net.packet.out.SendUpdateTimer;
 import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.PlayerSerialization;
 import net.edge.world.entity.actor.player.assets.Rights;
 
 import java.util.Iterator;
@@ -39,10 +40,11 @@ public final class UpdateCommand implements Command {
 					inProgess = 2;
 					System.out.println("Setting player into updating mode.");
 					System.out.println("Logging players out... - Players online: " + World.get().getPlayers().size());
-					Player other;
-					Iterator<Player> it = World.get().getPlayers().iterator();
-					while((other = it.next()) != null) {
-						other.out(new SendLogout());
+					for(Player p : World.get().getPlayers()) {
+						if(p == null)
+							continue;
+						new PlayerSerialization(p).serialize();
+						p.out(new SendLogout());
 					}
 					System.out.println("Waiting for shutdown.");
 					World.get().getTask().submit(new Task(10, false) {
