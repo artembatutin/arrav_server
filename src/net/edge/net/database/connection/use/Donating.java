@@ -1,6 +1,7 @@
 package net.edge.net.database.connection.use;
 
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.Item;
 
 import java.io.IOException;
@@ -73,6 +74,35 @@ public class Donating {
 				player.getBank().add(0, new Item(7478, TOKENS[product]));
 				player.message("We added " + TOKENS[product] + " edge tokens to your bank, thank you for donating!");
 				player.increaseTotalDonated(TOKENS[product]);
+
+				if(!player.getRights().isStaff()) {
+					switch(player.getRights()) {
+						case PLAYER:
+							if(player.getTotalDonated(true) > 25) {
+								player.setRights(Rights.DONATOR);
+								player.message("You have donated over 25 dollars, you have received the reg. donator rank.");
+							}
+							break;
+						case DONATOR:
+							if(player.getTotalDonated(true) > 75) {
+								player.setRights(Rights.SUPER_DONATOR);
+								player.message("You have donated over 200 dollars, you have received the sup. donator rank.");
+							}
+							break;
+						case SUPER_DONATOR:
+							if(player.getTotalDonated(true) > 200) {
+								player.setRights(Rights.EXTREME_DONATOR);
+								player.message("You have donated over 200 dollars, you have received the ext. donator rank.");
+							}
+							break;
+						case EXTREME_DONATOR:
+							if(player.getTotalDonated(true) > 1000) {
+								player.setRights(Rights.GOLDEN_DONATOR);
+								player.message("You have donated over 1000 dollars, you have received the gold. donator rank.");
+							}
+							break;
+					}
+				}
 				PreparedStatement stmt1 = con.prepareStatement("UPDATE purchase_history SET claimed = 1 WHERE id= ?");
 				stmt1.setInt(1, id);
 				stmt1.execute();
