@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -54,17 +55,19 @@ public final class ExchangeSessionManager {
 			return false;
 		}
 		
-		if(player.isIronMan() && !player.isIronMaxed()) {
-			if(requested.isIronMan()) {
-				player.message("You cannot start an exchange session because you're an iron man member.");
-				return false;
+		if(!(player.isIronMan() && requested.isIronMan())) {
+			if(player.isIronMan() && !player.isIronMaxed()) {
+				if(requested.isIronMan() && player.getRights().less(Rights.ADMINISTRATOR)) {
+					player.message("You cannot start an exchange session because you're an iron man member.");
+					return false;
+				}
 			}
-		}
-		
-		if(requested.isIronMan() && !requested.isIronMaxed()) {
-			if(!player.isIronMan()) {
-				player.message("This player is in iron man mode and can't start an exchange session.");
-				return false;
+			
+			if(requested.isIronMan() && !requested.isIronMaxed()) {
+				if(!player.isIronMan() && player.getRights().less(Rights.ADMINISTRATOR)) {
+					player.message("This player is in iron man mode and can't start an exchange session.");
+					return false;
+				}
 			}
 		}
 		

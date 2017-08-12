@@ -47,7 +47,8 @@ public class FarmingAction {
 								if(!farming.patch.hasAttribute(PatchAttribute.CHECKED_HEALTH)) {
 									final int experience = farming.patch.getSeedType().getExperience()[1];
 									farming.patch.addAttribute(PatchAttribute.CHECKED_HEALTH);
-									player.getSkills()[Skills.FARMING].increaseExperience(experience);
+									if(!player.xpLock)
+										player.getSkills()[Skills.FARMING].increaseExperience(experience);
 									player.message("You check the tree's health and gain experience.");
 									FarmingManager.updatePatch(player, patchType);
 									return true;
@@ -143,7 +144,8 @@ public class FarmingAction {
 							}
 							if(!farming.patch.hasAttribute(PatchAttribute.CHECKED_HEALTH)) {
 								farming.patch.addAttribute(PatchAttribute.CHECKED_HEALTH);
-								player.getSkills()[Skills.FARMING].increaseExperience(experience);
+								if(!player.xpLock)
+									player.getSkills()[Skills.FARMING].increaseExperience(experience);
 								player.message("You check the crop's health and gain experience.");
 							} else {
 								player.message("You have already checked this crops' health.");
@@ -421,7 +423,8 @@ public class FarmingAction {
 								player.getPatches().put(patchType, newPatch);
 								FarmingManager.updatePatch(player, patchType);
 								newPatch.submitGrowthTask(player);
-								player.getSkills()[Skills.FARMING].increaseExperience(finalSeedType.getExperience()[0]);
+								if(!player.xpLock)
+									player.getSkills()[Skills.FARMING].increaseExperience(finalSeedType.getExperience()[0]);
 								cancel();
 							}
 						}).submit();

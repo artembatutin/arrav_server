@@ -83,7 +83,9 @@ public class Hororis extends Minigame {
 	@Override
 	public boolean onFirstClickNpc(Player player, Mob mob) {
 		if(mob.getId() == 9181 || mob.getId() == 9182 || mob.getId() == 9183) {
-			player.getSkills()[Skills.PRAYER].increaseExperience(300);
+			if(!player.xpLock) {
+				player.getSkills()[Skills.PRAYER].increaseExperience(300);
+			}
 			World.get().getMobs().remove(mob);
 			return true;
 		}
@@ -124,7 +126,9 @@ public class Hororis extends Minigame {
 		for(Player p : players) {
 			p.out(new SendFade(20, 100, 160));
 			p.task(2, pl -> pl.move(new Position(3367, 3513)));
-			p.getSkills()[Skills.PRAYER].increaseExperience(400);
+			if(!p.xpLock) {
+				p.getSkills()[Skills.PRAYER].increaseExperience(400);
+			}
 			p.getAttr().get("ignoredAggressionLevel").set(false);
 			p.message("The skeletal horror didn't stand a chance! Good job.");
 			HORRORIFIC.inc(p);

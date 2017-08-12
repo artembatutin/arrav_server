@@ -50,10 +50,10 @@ public enum Achievement {
 	POTION_MAKER("Make %s potions with herblore", 200, 500, 4000, 8000),
 	REAL_ROBERY("Steal %s times from stalls", 200, 500, 4000, 8000),
 	HIGH_ALCHEMY("Cast high alchemy spell %s times", 100, 500, 15_000, 50_000),
-	PRICELESS_GEM("Cut %s gems", 20, 50, 100, 200),
-	GOLD_AND_RIGNS("Create %s jewellery", 20, 50, 100, 200),
-	QUALITY_HIDES("Carve %s hide items", 20, 50, 100, 200),
-	POTTERY("Create %s pottery items", 20, 50, 100, 200),
+	PRICELESS_GEM("Cut %s gems", 20, 50, 500, 1000),
+	GOLD_AND_RIGNS("Create %s jewellery", 20, 50, 100, 1000),
+	QUALITY_HIDES("Carve %s hide items", 20, 50, 500, 1000),
+	POTTERY("Create %s pottery items", 20, 50, 500, 1000),
 	;
 	
 	//COMPLETE_TUTORIAL("Complete the tutorial", 1),//TODO
