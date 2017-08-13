@@ -45,7 +45,8 @@ public enum Chance {
 	/**
 	 * Describing an {@code VERY_RARE} chance (0.8%, 1 in 125 chance).
 	 */
-	EXTREMELY_RARE(new Rational(1, 125));
+	EXTREMELY_RARE(new Rational(1, 125)),
+	FUCKING_RARE(new Rational(1, 250));
 	
 	private final Rational rational;
 	
