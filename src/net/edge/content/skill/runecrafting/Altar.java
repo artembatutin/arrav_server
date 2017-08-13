@@ -22,10 +22,10 @@ public enum Altar {
 	BODY(2483, Rune.BODY, 20, 20.0, new Position(2521, 4835), false, 1446),
 	COSMIC(2484, Rune.COSMIC, 27, 50.0, new Position(2162, 4833), false, 1454),
 	CHAOS(2487, Rune.CHAOS, 35, 55.0, new Position(2281, 4837), false, 1452),
-	NATURE(2486, Rune.NATURE, 44, 60.0, new Position(2400, 4835), false, 1462),
-	LAW(2485, Rune.LAW, 54, 75.0, new Position(2464, 4818), false, 1458),
+	NATURE(44489, Rune.NATURE, 44, 60.0, new Position(2400, 4835), false, 1462),
+	LAW(44488, Rune.LAW, 54, 75.0, new Position(2464, 4818), false, 1458),
 	DEATH(2488, Rune.DEATH, 65, 80.0, new Position(2208, 4830), false, 1456),
-	BLOOD(30624, Rune.BLOOD, 80, 90.0, new Position(3027, 4834), false, 1450),
+	BLOOD(72627, Rune.BLOOD, 80, 90.0, new Position(3027, 4834), false, 1450),
 	SOUL(7138, Rune.SOUL, 95, 100.0, new Position(3050, 4829), false, 1460);
 
 	/**

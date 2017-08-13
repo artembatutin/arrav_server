@@ -54,15 +54,6 @@ public final class DropManager {
 			for(Item drop : dropItems) {
 				if(drop == null)
 					continue;
-
-				boolean bonecrusher = killer.getInventory().contains(18337);
-
-				if(bonecrusher) {
-					Optional<Bone> bone = Bone.getBone(drop.getId());
-					bone.ifPresent(b -> Skills.experience(killer, b.getExperience() / 2, Skills.PRAYER));
-					continue;//don't submit bone to floor but dont break the loop either.
-				}
-
 				r.register(new GroundItem(drop, p, killer));
 			}
 		});

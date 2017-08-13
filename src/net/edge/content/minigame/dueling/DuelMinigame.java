@@ -2,6 +2,7 @@ package net.edge.content.minigame.dueling;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendContainer;
 import net.edge.net.packet.out.SendContextMenu;
 import net.edge.task.LinkedTaskSequence;
@@ -68,22 +69,22 @@ public final class DuelMinigame extends Minigame {
 	/**
 	 * The square location for the obstacles dueling arena.
 	 */
-	private static final SquareLocation OBSTACLES_ARENA_CHECK = new SquareLocation(3364, 3244, 3389, 3258, 0);
+	private static final SquareLocation OBSTACLES_ARENA_CHECK = new SquareLocation(3367, 3246, 3384, 3256, 0);
 	
 	/**
 	 * The square location for the default dueling arena.
 	 */
-	private static final SquareLocation DEFAULT_ARENA_CHECK = new SquareLocation(3332, 3244, 3357, 3258, 0);
+	private static final SquareLocation DEFAULT_ARENA_CHECK = new SquareLocation(3336, 3246, 3354, 3256, 0);
 	
 	/**
 	 * The square location for the obstacles dueling arena.
 	 */
-	private static final SquareLocation OBSTACLES_ARENA = new SquareLocation(3366, 3246, 3386, 3256, 0);
+	private static final SquareLocation OBSTACLES_ARENA = new SquareLocation(3367, 3246, 3384, 3256, 0);
 	
 	/**
 	 * The square location for the default dueling arena.
 	 */
-	private static final SquareLocation DEFAULT_ARENA = new SquareLocation(3335, 3246, 3355, 3256, 0);
+	private static final SquareLocation DEFAULT_ARENA = new SquareLocation(3336, 3246, 3354, 3256, 0);
 	
 	/**
 	 * Applies the staked items to the winner and clears the minigame session.
@@ -142,6 +143,12 @@ public final class DuelMinigame extends Minigame {
 	public void onEnter(Player player) {
 		session.getPlayers().forEach(this::restore);
 		Player other = session.getOther(player);
+
+		if(rules.contains(DuelingRules.NO_DRINKS)) {
+			for (int i = 0; i < player.getSkills().length; i++) {
+				player.getSkills()[i].setLevel(player.getSkills()[i].getRealLevel(), true);
+			}
+		}
 		
 		if(rules.contains(DuelingRules.OBSTACLES)) {
 			player.move(OBSTACLES_ARENA.random());

@@ -30,5 +30,21 @@
         "rank": "OWNER"
       }
     ]
+  },
+  {
+    "owner": "dharry",
+    "name": "Dharry",
+    "loot": false,
+    "ban": "OWNER",
+    "mute": "OWNER",
+    "talk": "MEMBER",
+    "mutes": [],
+    "bans": [],
+    "ranked": [
+      {
+        "name": "dharry",
+        "rank": "OWNER"
+      }
+    ]
   }
 ]

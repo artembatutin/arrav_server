@@ -45,7 +45,7 @@ public class MarketShop {
 	/**
 	 * Flag if the iron man access this shop.
 	 */
-	private final boolean ironAccess;
+	protected final boolean ironAccess;
 	
 	/**
 	 * The result of our search.

@@ -3,6 +3,8 @@ package net.edge.world.entity.actor.mob.drop;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.market.MarketItem;
+import net.edge.content.skill.Skills;
+import net.edge.content.skill.prayer.Bone;
 import net.edge.world.entity.item.ItemDefinition;
 import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.GameConstants;
@@ -72,6 +74,11 @@ public final class DropTable {
 			if(drop.getChance() == Chance.ALWAYS) {
 				// 100% Chance to drop an item from the always table, the lowest chance tier.
 				items.add(drop.toItem());
+				//bone crusher
+				if(player.getInventory().contains(18337)) {
+					Optional<Bone> bone = Bone.getBone(drop.getId());
+					bone.ifPresent(b -> Skills.experience(player, b.getExperience() / 2, Skills.PRAYER));
+				}
 			} else if(rollRare && drop.isRare()) {
 				// 20% Chance to roll an item from the rare table, pick one drop
 				// from the table and roll it.

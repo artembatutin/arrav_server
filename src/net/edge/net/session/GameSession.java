@@ -83,7 +83,6 @@ public final class GameSession extends Session {
 		if(player.getState() == EntityState.ACTIVE) {
 			World.get().queueLogout(player);
 		}
-		setActive(false);
 		outgoing.clear();
 	}
 	
@@ -145,7 +144,8 @@ public final class GameSession extends Session {
 	 * the cycle.
 	 */
 	public void flushQueue() {
-		getChannel().flush();
+		if(isActive())
+			getChannel().flush();
 	}
 	
 	/**

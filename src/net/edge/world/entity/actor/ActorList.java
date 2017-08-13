@@ -232,7 +232,8 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 		if(actor.getSlot() != -1) {
 			indices.offer(normal);
 			entities[normal] = null;
-			size--;
+			if(size > -1)
+				size--;
 		}
 		if (index >= limit) {
 			limit--;

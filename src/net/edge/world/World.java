@@ -283,6 +283,7 @@ public final class World {
 					continue;
 				}
 				if (!logout(player)) {
+					player.getSession().setActive(false);
 					logouts.offer(player);
 				}
 			}
@@ -564,14 +565,10 @@ public final class World {
 	/**
 	 * Gets the donation database connection pool.
 	 */
-	public static Connection getDonation() {
+	public static ConnectionPool getDonation() {
 		if(donation == null)
 			return null;
-		try {
-			return donation.getConnection();
-		} catch(SQLException e) {
-			return null;
-		}
+		return donation.getPool();
 	}
 	
 	/**

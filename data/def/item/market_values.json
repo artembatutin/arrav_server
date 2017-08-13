@@ -875,7 +875,7 @@
   {
     "id": 97,
     "name": "Harralander potion (unf)",
-    "stock": 2,
+    "stock": 3,
     "value": 50,
     "price": 3748,
     "unlimited": false,
@@ -929,7 +929,7 @@
   {
     "id": 103,
     "name": "Avantoe potion (unf)",
-    "stock": 0,
+    "stock": 10,
     "value": 120,
     "price": 14744,
     "unlimited": false,
@@ -1037,7 +1037,7 @@
   {
     "id": 115,
     "name": "Strength potion (3)",
-    "stock": 1,
+    "stock": 11,
     "value": 982,
     "price": 1228,
     "unlimited": false,
@@ -1091,7 +1091,7 @@
   {
     "id": 121,
     "name": "Attack potion (3)",
-    "stock": 35,
+    "stock": 54,
     "value": 374,
     "price": 468,
     "unlimited": false,
@@ -1253,7 +1253,7 @@
   {
     "id": 139,
     "name": "Prayer potion (3)",
-    "stock": 0,
+    "stock": 80,
     "value": 245,
     "price": 6152,
     "unlimited": false,
@@ -1415,7 +1415,7 @@
   {
     "id": 157,
     "name": "Super strength (3)",
-    "stock": 74,
+    "stock": 104,
     "value": 357,
     "price": 16572,
     "unlimited": false,
@@ -1469,7 +1469,7 @@
   {
     "id": 163,
     "name": "Super defence (3)",
-    "stock": 62,
+    "stock": 67,
     "value": 11632,
     "price": 14540,
     "unlimited": false,
@@ -1867,7 +1867,7 @@
     "name": "Grimy ranarr",
     "stock": 0,
     "value": 2,
-    "price": 11250,
+    "price": 10200,
     "unlimited": true,
     "searchable": true
   },
@@ -1885,7 +1885,7 @@
     "name": "Grimy irit",
     "stock": 0,
     "value": 2,
-    "price": 20000,
+    "price": 12500,
     "unlimited": true,
     "searchable": true
   },
@@ -1903,7 +1903,7 @@
     "name": "Grimy avantoe",
     "stock": 0,
     "value": 1375,
-    "price": 17000,
+    "price": 11000,
     "unlimited": true,
     "searchable": true
   },
@@ -1921,7 +1921,7 @@
     "name": "Grimy kwuarm",
     "stock": 0,
     "value": 2,
-    "price": 22000,
+    "price": 12000,
     "unlimited": true,
     "searchable": true
   },
@@ -1939,7 +1939,7 @@
     "name": "Grimy cadantine",
     "stock": 0,
     "value": 2,
-    "price": 27000,
+    "price": 18000,
     "unlimited": true,
     "searchable": true
   },
@@ -1957,7 +1957,7 @@
     "name": "Grimy dwarf weed",
     "stock": 0,
     "value": 2,
-    "price": 30000,
+    "price": 22000,
     "unlimited": true,
     "searchable": true
   },
@@ -1975,7 +1975,7 @@
     "name": "Grimy torstol",
     "stock": 0,
     "value": 2,
-    "price": 32000,
+    "price": 26000,
     "unlimited": true,
     "searchable": true
   },
@@ -2057,7 +2057,7 @@
     "stock": 0,
     "value": 25,
     "price": 216,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -2072,7 +2072,7 @@
   {
     "id": 230,
     "name": "Vial (noted)",
-    "stock": 0,
+    "stock": 6,
     "value": 6,
     "price": 8,
     "unlimited": false,
@@ -2243,7 +2243,7 @@
   {
     "id": 249,
     "name": "Clean guam",
-    "stock": 65,
+    "stock": 146,
     "value": 75,
     "price": 420,
     "unlimited": false,
@@ -2261,7 +2261,7 @@
   {
     "id": 251,
     "name": "Clean marrentill",
-    "stock": 26,
+    "stock": 80,
     "value": 12,
     "price": 628,
     "unlimited": false,
@@ -2279,7 +2279,7 @@
   {
     "id": 253,
     "name": "Clean tarromin",
-    "stock": 29,
+    "stock": 73,
     "value": 27,
     "price": 716,
     "unlimited": false,
@@ -2297,7 +2297,7 @@
   {
     "id": 255,
     "name": "Clean harralander",
-    "stock": 52,
+    "stock": 124,
     "value": 50,
     "price": 3128,
     "unlimited": false,
@@ -2315,7 +2315,7 @@
   {
     "id": 257,
     "name": "Clean ranarr",
-    "stock": 26,
+    "stock": 27,
     "value": 62,
     "price": 11476,
     "unlimited": false,
@@ -3179,7 +3179,7 @@
   {
     "id": 353,
     "name": "Raw mackerel",
-    "stock": 87,
+    "stock": 94,
     "value": 65,
     "price": 188,
     "unlimited": false,
@@ -3269,7 +3269,7 @@
   {
     "id": 363,
     "name": "Raw bass",
-    "stock": 30,
+    "stock": 34,
     "value": 700,
     "price": 960,
     "unlimited": false,
@@ -3413,7 +3413,7 @@
   {
     "id": 379,
     "name": "Lobster",
-    "stock": 303,
+    "stock": 312,
     "value": 670,
     "price": 658,
     "unlimited": false,
@@ -3532,8 +3532,8 @@
     "name": "Manta ray (noted)",
     "stock": 0,
     "value": 1250,
-    "price": 9636,
-    "unlimited": false,
+    "price": 7666,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -3665,7 +3665,7 @@
   {
     "id": 407,
     "name": "Oyster",
-    "stock": 35,
+    "stock": 37,
     "value": 500,
     "price": 16340,
     "unlimited": false,
@@ -3971,7 +3971,7 @@
   {
     "id": 441,
     "name": "Iron ore (noted)",
-    "stock": 0,
+    "stock": 200,
     "value": 42,
     "price": 1244,
     "unlimited": false,
@@ -4079,7 +4079,7 @@
   {
     "id": 453,
     "name": "Coal",
-    "stock": 0,
+    "stock": 1,
     "value": 112,
     "price": 687,
     "unlimited": false,
@@ -4736,7 +4736,7 @@
   {
     "id": 526,
     "name": "Bones",
-    "stock": 1,
+    "stock": 8,
     "value": 2,
     "price": 744,
     "unlimited": false,
@@ -6410,7 +6410,7 @@
   {
     "id": 712,
     "name": "Cup of tea",
-    "stock": 1,
+    "stock": 2,
     "value": 25,
     "price": 556,
     "unlimited": false,
@@ -6980,7 +6980,7 @@
     "stock": 0,
     "value": 0,
     "price": 0,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -7265,10 +7265,10 @@
   {
     "id": 807,
     "name": "Iron dart",
-    "stock": 19999,
+    "stock": 19199,
     "value": 5,
     "price": 200,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -7277,7 +7277,7 @@
     "stock": 14999,
     "value": 25,
     "price": 300,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -7286,25 +7286,25 @@
     "stock": 9149,
     "value": 62,
     "price": 400,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": true
   },
   {
     "id": 810,
     "name": "Adamant dart",
-    "stock": 8455,
+    "stock": 3397,
     "value": 162,
     "price": 560,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": true
   },
   {
     "id": 811,
     "name": "Rune dart",
-    "stock": 1687,
+    "stock": 0,
     "value": 547,
-    "price": 1000,
-    "unlimited": false,
+    "price": 1500,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -7373,7 +7373,7 @@
   {
     "id": 819,
     "name": "Bronze dart tip",
-    "stock": 0,
+    "stock": 10,
     "value": 2,
     "price": 150,
     "unlimited": false,
@@ -7580,7 +7580,7 @@
   {
     "id": 842,
     "name": "Shortbow (noted)",
-    "stock": 0,
+    "stock": 1,
     "value": 125,
     "price": 1204,
     "unlimited": false,
@@ -7634,7 +7634,7 @@
   {
     "id": 848,
     "name": "Willow longbow (noted)",
-    "stock": 0,
+    "stock": 69,
     "value": 352,
     "price": 440,
     "unlimited": false,
@@ -7670,7 +7670,7 @@
   {
     "id": 852,
     "name": "Maple longbow (noted)",
-    "stock": 0,
+    "stock": 19,
     "value": 1017,
     "price": 1272,
     "unlimited": false,
@@ -7679,7 +7679,7 @@
   {
     "id": 853,
     "name": "Maple shortbow",
-    "stock": 793,
+    "stock": 792,
     "value": 1000,
     "price": 4000,
     "unlimited": false,
@@ -7715,7 +7715,7 @@
   {
     "id": 857,
     "name": "Yew shortbow",
-    "stock": 1787,
+    "stock": 1786,
     "value": 2000,
     "price": 7304,
     "unlimited": false,
@@ -7751,7 +7751,7 @@
   {
     "id": 861,
     "name": "Magic shortbow",
-    "stock": 718,
+    "stock": 710,
     "value": 4000,
     "price": 15000,
     "unlimited": false,
@@ -7769,7 +7769,7 @@
   {
     "id": 863,
     "name": "Iron knife",
-    "stock": 15914,
+    "stock": 15264,
     "value": 145,
     "price": 320,
     "unlimited": false,
@@ -7787,7 +7787,7 @@
   {
     "id": 865,
     "name": "Steel knife",
-    "stock": 14199,
+    "stock": 14184,
     "value": 170,
     "price": 680,
     "unlimited": false,
@@ -7805,7 +7805,7 @@
   {
     "id": 867,
     "name": "Adamant knife",
-    "stock": 6999,
+    "stock": 6329,
     "value": 165,
     "price": 1800,
     "unlimited": false,
@@ -7814,7 +7814,7 @@
   {
     "id": 868,
     "name": "Rune knife",
-    "stock": 2317,
+    "stock": 2047,
     "value": 417,
     "price": 6100,
     "unlimited": false,
@@ -8525,7 +8525,7 @@
   {
     "id": 947,
     "name": "Knife (noted)",
-    "stock": 0,
+    "stock": 1,
     "value": 62,
     "price": 244,
     "unlimited": false,
@@ -8552,7 +8552,7 @@
   {
     "id": 950,
     "name": "Silk",
-    "stock": 7,
+    "stock": 9,
     "value": 137,
     "price": 208,
     "unlimited": false,
@@ -9533,7 +9533,7 @@
   {
     "id": 1059,
     "name": "Leather gloves",
-    "stock": 1059,
+    "stock": 1067,
     "value": 15,
     "price": 220,
     "unlimited": false,
@@ -9551,7 +9551,7 @@
   {
     "id": 1061,
     "name": "Leather boots",
-    "stock": 1056,
+    "stock": 1067,
     "value": 15,
     "price": 224,
     "unlimited": false,
@@ -9569,7 +9569,7 @@
   {
     "id": 1063,
     "name": "Leather vambraces",
-    "stock": 999,
+    "stock": 998,
     "value": 45,
     "price": 144,
     "unlimited": false,
@@ -9596,7 +9596,7 @@
   {
     "id": 1066,
     "name": "Green d'hide vambraces (noted)",
-    "stock": 0,
+    "stock": 9,
     "value": 3846,
     "price": 4808,
     "unlimited": false,
@@ -9605,7 +9605,7 @@
   {
     "id": 1067,
     "name": "Iron platelegs",
-    "stock": 500,
+    "stock": 501,
     "value": 700,
     "price": 1436,
     "unlimited": false,
@@ -9641,7 +9641,7 @@
   {
     "id": 1071,
     "name": "Mithril platelegs",
-    "stock": 535,
+    "stock": 538,
     "value": 3536,
     "price": 4420,
     "unlimited": false,
@@ -9650,7 +9650,7 @@
   {
     "id": 1072,
     "name": "Mithril platelegs (noted)",
-    "stock": 1,
+    "stock": 9,
     "value": 3536,
     "price": 4420,
     "unlimited": false,
@@ -9659,7 +9659,7 @@
   {
     "id": 1073,
     "name": "Adamant platelegs",
-    "stock": 495,
+    "stock": 490,
     "value": 9296,
     "price": 11620,
     "unlimited": false,
@@ -9713,7 +9713,7 @@
   {
     "id": 1079,
     "name": "Rune platelegs",
-    "stock": 415,
+    "stock": 389,
     "value": 160000,
     "price": 164000,
     "unlimited": false,
@@ -9722,7 +9722,7 @@
   {
     "id": 1080,
     "name": "Rune platelegs (noted)",
-    "stock": 16,
+    "stock": 18,
     "value": 117625,
     "price": 147032,
     "unlimited": false,
@@ -9857,7 +9857,7 @@
   {
     "id": 1095,
     "name": "Leather chaps",
-    "stock": 1014,
+    "stock": 1013,
     "value": 50,
     "price": 444,
     "unlimited": false,
@@ -10037,7 +10037,7 @@
   {
     "id": 1115,
     "name": "Iron platebody",
-    "stock": 562,
+    "stock": 563,
     "value": 1400,
     "price": 9124,
     "unlimited": false,
@@ -10046,7 +10046,7 @@
   {
     "id": 1116,
     "name": "Iron platebody (noted)",
-    "stock": 2,
+    "stock": 213,
     "value": 1400,
     "price": 9124,
     "unlimited": false,
@@ -10091,7 +10091,7 @@
   {
     "id": 1121,
     "name": "Mithril platebody",
-    "stock": 575,
+    "stock": 566,
     "value": 7513,
     "price": 9392,
     "unlimited": false,
@@ -10109,7 +10109,7 @@
   {
     "id": 1123,
     "name": "Adamant platebody",
-    "stock": 495,
+    "stock": 490,
     "value": 28534,
     "price": 35668,
     "unlimited": false,
@@ -10145,7 +10145,7 @@
   {
     "id": 1127,
     "name": "Rune platebody",
-    "stock": 415,
+    "stock": 388,
     "value": 162500,
     "price": 173600,
     "unlimited": false,
@@ -10154,7 +10154,7 @@
   {
     "id": 1128,
     "name": "Rune platebody (noted)",
-    "stock": 16,
+    "stock": 18,
     "value": 120057,
     "price": 150072,
     "unlimited": false,
@@ -10163,7 +10163,7 @@
   {
     "id": 1129,
     "name": "Leather body",
-    "stock": 997,
+    "stock": 996,
     "value": 52,
     "price": 456,
     "unlimited": false,
@@ -10226,7 +10226,7 @@
   {
     "id": 1136,
     "name": "Green d'hide body (noted)",
-    "stock": 0,
+    "stock": 13,
     "value": 13123,
     "price": 16404,
     "unlimited": false,
@@ -10379,7 +10379,7 @@
   {
     "id": 1153,
     "name": "Iron full helm",
-    "stock": 522,
+    "stock": 523,
     "value": 385,
     "price": 580,
     "unlimited": false,
@@ -10433,7 +10433,7 @@
   {
     "id": 1159,
     "name": "Mithril full helm",
-    "stock": 508,
+    "stock": 498,
     "value": 2688,
     "price": 3360,
     "unlimited": false,
@@ -10451,7 +10451,7 @@
   {
     "id": 1161,
     "name": "Adamant full helm",
-    "stock": 495,
+    "stock": 490,
     "value": 4729,
     "price": 5912,
     "unlimited": false,
@@ -10460,7 +10460,7 @@
   {
     "id": 1162,
     "name": "Adamant full helm (noted)",
-    "stock": 0,
+    "stock": 1,
     "value": 4729,
     "price": 5912,
     "unlimited": false,
@@ -10469,7 +10469,7 @@
   {
     "id": 1163,
     "name": "Rune full helm",
-    "stock": 457,
+    "stock": 443,
     "value": 68800,
     "price": 86000,
     "unlimited": false,
@@ -10478,7 +10478,7 @@
   {
     "id": 1164,
     "name": "Rune full helm (noted)",
-    "stock": 6999,
+    "stock": 7000,
     "value": 62886,
     "price": 78608,
     "unlimited": false,
@@ -10505,7 +10505,7 @@
   {
     "id": 1167,
     "name": "Leather cowl",
-    "stock": 997,
+    "stock": 996,
     "value": 60,
     "price": 348,
     "unlimited": false,
@@ -10523,7 +10523,7 @@
   {
     "id": 1169,
     "name": "Coif",
-    "stock": 584,
+    "stock": 582,
     "value": 500,
     "price": 1444,
     "unlimited": false,
@@ -10721,7 +10721,7 @@
   {
     "id": 1191,
     "name": "Iron kiteshield",
-    "stock": 512,
+    "stock": 514,
     "value": 595,
     "price": 2788,
     "unlimited": false,
@@ -10775,7 +10775,7 @@
   {
     "id": 1197,
     "name": "Mithril kiteshield",
-    "stock": 510,
+    "stock": 512,
     "value": 5525,
     "price": 7608,
     "unlimited": false,
@@ -10784,7 +10784,7 @@
   {
     "id": 1198,
     "name": "Mithril kiteshield (noted)",
-    "stock": 0,
+    "stock": 9,
     "value": 5525,
     "price": 7608,
     "unlimited": false,
@@ -10811,7 +10811,7 @@
   {
     "id": 1201,
     "name": "Rune kiteshield",
-    "stock": 468,
+    "stock": 461,
     "value": 136000,
     "price": 142800,
     "unlimited": false,
@@ -11081,7 +11081,7 @@
   {
     "id": 1231,
     "name": "Dragon dagger (p)",
-    "stock": 453,
+    "stock": 441,
     "value": 58880,
     "price": 75000,
     "unlimited": false,
@@ -11846,7 +11846,7 @@
   {
     "id": 1316,
     "name": "Mithril 2h sword (noted)",
-    "stock": 0,
+    "stock": 8,
     "value": 6500,
     "price": 7160,
     "unlimited": false,
@@ -11855,7 +11855,7 @@
   {
     "id": 1317,
     "name": "Adamant 2h sword",
-    "stock": 18,
+    "stock": 32,
     "value": 16000,
     "price": 20956,
     "unlimited": false,
@@ -11864,7 +11864,7 @@
   {
     "id": 1318,
     "name": "Adamant 2h sword (noted)",
-    "stock": 2,
+    "stock": 7,
     "value": 16000,
     "price": 20956,
     "unlimited": false,
@@ -11999,7 +11999,7 @@
   {
     "id": 1333,
     "name": "Rune scimitar",
-    "stock": 482,
+    "stock": 486,
     "value": 64000,
     "price": 64000,
     "unlimited": false,
@@ -12341,7 +12341,7 @@
   {
     "id": 1371,
     "name": "Adamant battleaxe",
-    "stock": 0,
+    "stock": 7,
     "value": 10400,
     "price": 12500,
     "unlimited": false,
@@ -12350,7 +12350,7 @@
   {
     "id": 1372,
     "name": "Adamant battleaxe (noted)",
-    "stock": 0,
+    "stock": 5,
     "value": 10400,
     "price": 12500,
     "unlimited": false,
@@ -12548,7 +12548,7 @@
   {
     "id": 1394,
     "name": "Fire battlestaff (noted)",
-    "stock": 0,
+    "stock": 2,
     "value": 25756,
     "price": 32196,
     "unlimited": false,
@@ -12584,7 +12584,7 @@
   {
     "id": 1398,
     "name": "Air battlestaff (noted)",
-    "stock": 0,
+    "stock": 4,
     "value": 26022,
     "price": 32528,
     "unlimited": false,
@@ -12602,7 +12602,7 @@
   {
     "id": 1400,
     "name": "Earth battlestaff (noted)",
-    "stock": 0,
+    "stock": 3,
     "value": 27152,
     "price": 33940,
     "unlimited": false,
@@ -12775,7 +12775,7 @@
     "name": "Scythe",
     "stock": 0,
     "value": 0,
-    "price": 15,
+    "price": 200,
     "unlimited": true,
     "searchable": false
   },
@@ -13862,7 +13862,7 @@
   {
     "id": 1540,
     "name": "Anti-dragon shield",
-    "stock": 2923,
+    "stock": 2901,
     "value": 360,
     "price": 3200,
     "unlimited": false,
@@ -14411,7 +14411,7 @@
   {
     "id": 1601,
     "name": "Diamond",
-    "stock": 2949,
+    "stock": 7192,
     "value": 5000,
     "price": 9972,
     "unlimited": false,
@@ -14420,7 +14420,7 @@
   {
     "id": 1602,
     "name": "Diamond (noted)",
-    "stock": 6417,
+    "stock": 9821,
     "value": 5000,
     "price": 9972,
     "unlimited": false,
@@ -14429,7 +14429,7 @@
   {
     "id": 1603,
     "name": "Ruby",
-    "stock": 98,
+    "stock": 224,
     "value": 2500,
     "price": 7028,
     "unlimited": false,
@@ -14438,7 +14438,7 @@
   {
     "id": 1604,
     "name": "Ruby (noted)",
-    "stock": 26,
+    "stock": 78,
     "value": 2500,
     "price": 7028,
     "unlimited": false,
@@ -14447,7 +14447,7 @@
   {
     "id": 1605,
     "name": "Emerald",
-    "stock": 2,
+    "stock": 65,
     "value": 1250,
     "price": 4232,
     "unlimited": false,
@@ -14456,7 +14456,7 @@
   {
     "id": 1606,
     "name": "Emerald (noted)",
-    "stock": 26,
+    "stock": 53,
     "value": 1250,
     "price": 4232,
     "unlimited": false,
@@ -14465,7 +14465,7 @@
   {
     "id": 1607,
     "name": "Sapphire",
-    "stock": 174,
+    "stock": 257,
     "value": 625,
     "price": 1524,
     "unlimited": false,
@@ -14474,7 +14474,7 @@
   {
     "id": 1608,
     "name": "Sapphire (noted)",
-    "stock": 52,
+    "stock": 104,
     "value": 625,
     "price": 1540,
     "unlimited": false,
@@ -14483,7 +14483,7 @@
   {
     "id": 1609,
     "name": "Opal",
-    "stock": 61,
+    "stock": 179,
     "value": 250,
     "price": 1700,
     "unlimited": false,
@@ -14492,7 +14492,7 @@
   {
     "id": 1610,
     "name": "Opal (noted)",
-    "stock": 26,
+    "stock": 73,
     "value": 250,
     "price": 1700,
     "unlimited": false,
@@ -14501,7 +14501,7 @@
   {
     "id": 1611,
     "name": "Jade",
-    "stock": 5,
+    "stock": 31,
     "value": 375,
     "price": 3712,
     "unlimited": false,
@@ -14519,7 +14519,7 @@
   {
     "id": 1613,
     "name": "Red topaz",
-    "stock": 0,
+    "stock": 3,
     "value": 500,
     "price": 6328,
     "unlimited": false,
@@ -14537,7 +14537,7 @@
   {
     "id": 1615,
     "name": "Dragonstone",
-    "stock": 70,
+    "stock": 72,
     "value": 25000,
     "price": 66800,
     "unlimited": false,
@@ -14546,7 +14546,7 @@
   {
     "id": 1616,
     "name": "Dragonstone (noted)",
-    "stock": 89,
+    "stock": 141,
     "value": 25000,
     "price": 37704,
     "unlimited": false,
@@ -14683,7 +14683,7 @@
     "name": "Uncut dragonstone",
     "stock": 0,
     "value": 2500,
-    "price": 60000,
+    "price": 750000,
     "unlimited": true,
     "searchable": true
   },
@@ -15341,7 +15341,7 @@
     "stock": 0,
     "value": 44062,
     "price": 72800,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -15530,7 +15530,7 @@
     "stock": 0,
     "value": 5062,
     "price": 11352,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -15725,7 +15725,7 @@
   {
     "id": 1747,
     "name": "Black dragonhide",
-    "stock": 17,
+    "stock": 19,
     "value": 12483,
     "price": 15604,
     "unlimited": false,
@@ -15770,7 +15770,7 @@
   {
     "id": 1752,
     "name": "Blue dragonhide (noted)",
-    "stock": 0,
+    "stock": 49,
     "value": 100,
     "price": 10744,
     "unlimited": false,
@@ -15836,7 +15836,7 @@
     "stock": 0,
     "value": 12,
     "price": 3992,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -20576,7 +20576,7 @@
   {
     "id": 2286,
     "name": "Incomplete pizza (noted)",
-    "stock": 0,
+    "stock": 6,
     "value": 25,
     "price": 1748,
     "unlimited": false,
@@ -21161,7 +21161,7 @@
   {
     "id": 2351,
     "name": "Iron bar",
-    "stock": 0,
+    "stock": 2,
     "value": 70,
     "price": 2308,
     "unlimited": false,
@@ -21224,7 +21224,7 @@
   {
     "id": 2358,
     "name": "Gold bar (noted)",
-    "stock": 24,
+    "stock": 696,
     "value": 750,
     "price": 1052,
     "unlimited": false,
@@ -21973,7 +21973,7 @@
     "name": "Super strength (4) (noted)",
     "stock": 9855,
     "value": 452,
-    "price": 22500,
+    "price": 17000,
     "unlimited": true,
     "searchable": false
   },
@@ -21991,7 +21991,7 @@
     "name": "Super defence (4) (noted)",
     "stock": 9972,
     "value": 15209,
-    "price": 19000,
+    "price": 13000,
     "unlimited": true,
     "searchable": false
   },
@@ -22369,7 +22369,7 @@
     "name": "Grimy lantadyme",
     "stock": 0,
     "value": 2,
-    "price": 29000,
+    "price": 19000,
     "unlimited": true,
     "searchable": true
   },
@@ -22484,7 +22484,7 @@
   {
     "id": 2498,
     "name": "Black d'hide chaps (noted)",
-    "stock": 0,
+    "stock": 1,
     "value": 15550,
     "price": 15848,
     "unlimited": false,
@@ -22538,7 +22538,7 @@
   {
     "id": 2504,
     "name": "Black d'hide body (noted)",
-    "stock": 0,
+    "stock": 1,
     "value": 22921,
     "price": 28652,
     "unlimited": false,
@@ -22954,8 +22954,8 @@
     "name": "Ring of recoil",
     "stock": 0,
     "value": 2250,
-    "price": 4728,
-    "unlimited": false,
+    "price": 13000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -23197,8 +23197,8 @@
     "name": "Ranger boots",
     "stock": 0,
     "value": 500,
-    "price": 108000000,
-    "unlimited": false,
+    "price": 25,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -23233,8 +23233,8 @@
     "name": "Robin hood hat",
     "stock": 0,
     "value": 1125,
-    "price": 2928036,
-    "unlimited": false,
+    "price": 20,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -27164,7 +27164,7 @@
   {
     "id": 3018,
     "name": "Super energy (3)",
-    "stock": 20,
+    "stock": 30,
     "value": 4944,
     "price": 6180,
     "unlimited": false,
@@ -27373,7 +27373,7 @@
     "name": "Magic potion (4) (noted)",
     "stock": 9998,
     "value": 1155,
-    "price": 19000,
+    "price": 13000,
     "unlimited": true,
     "searchable": false
   },
@@ -27445,7 +27445,7 @@
     "name": "Grimy toadflax",
     "stock": 0,
     "value": 2,
-    "price": 20350,
+    "price": 11500,
     "unlimited": true,
     "searchable": true
   },
@@ -27463,7 +27463,7 @@
     "name": "Grimy snapdragon",
     "stock": 0,
     "value": 2,
-    "price": 25000,
+    "price": 15000,
     "unlimited": true,
     "searchable": true
   },
@@ -27949,8 +27949,8 @@
     "name": "Rock climbing boots",
     "stock": 1,
     "value": 187500,
-    "price": 305088,
-    "unlimited": false,
+    "price": 87000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -28301,7 +28301,7 @@
     "stock": 0,
     "value": 1150,
     "price": 21928,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -31331,7 +31331,7 @@
   {
     "id": 3481,
     "name": "Gilded platebody",
-    "stock": 2,
+    "stock": 3,
     "value": 162500,
     "price": 25000,
     "unlimited": false,
@@ -31349,7 +31349,7 @@
   {
     "id": 3483,
     "name": "Gilded platelegs",
-    "stock": 1,
+    "stock": 2,
     "value": 160000,
     "price": 22500,
     "unlimited": false,
@@ -31376,7 +31376,7 @@
   {
     "id": 3486,
     "name": "Gilded full helm",
-    "stock": 0,
+    "stock": 1,
     "value": 88000,
     "price": 20000,
     "unlimited": false,
@@ -33746,7 +33746,7 @@
     "stock": 0,
     "value": 143481,
     "price": 179352,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -34564,8 +34564,8 @@
     "name": "Holy book",
     "stock": 0,
     "value": 0,
-    "price": 0,
-    "unlimited": false,
+    "price": 100000,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -34600,8 +34600,8 @@
     "name": "Book of balance",
     "stock": 0,
     "value": 0,
-    "price": 0,
-    "unlimited": false,
+    "price": 100000,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -36751,7 +36751,7 @@
     "name": "Sled",
     "stock": 0,
     "value": 0,
-    "price": 0,
+    "price": 200,
     "unlimited": false,
     "searchable": false
   },
@@ -37091,7 +37091,7 @@
   {
     "id": 4121,
     "name": "Iron boots",
-    "stock": 499,
+    "stock": 498,
     "value": 210,
     "price": 8404,
     "unlimited": false,
@@ -37181,7 +37181,7 @@
   {
     "id": 4131,
     "name": "Rune boots",
-    "stock": 435,
+    "stock": 418,
     "value": 31250,
     "price": 33908,
     "unlimited": false,
@@ -37381,8 +37381,8 @@
     "name": "Granite maul",
     "stock": 0,
     "value": 125000,
-    "price": 137200,
-    "unlimited": false,
+    "price": 274000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -37516,7 +37516,7 @@
     "name": "Nose peg",
     "stock": 0,
     "value": 500,
-    "price": 25,
+    "price": 100,
     "unlimited": true,
     "searchable": false
   },
@@ -40889,7 +40889,7 @@
   {
     "id": 4543,
     "name": "Lantern lens (noted)",
-    "stock": 0,
+    "stock": 1,
     "value": 175,
     "price": 416,
     "unlimited": false,
@@ -41089,7 +41089,7 @@
     "name": "Basket of eggs",
     "stock": 0,
     "value": 0,
-    "price": 0,
+    "price": 200,
     "unlimited": false,
     "searchable": false
   },
@@ -41285,7 +41285,7 @@
   {
     "id": 4587,
     "name": "Dragon scimitar",
-    "stock": 411,
+    "stock": 391,
     "value": 250000,
     "price": 280000,
     "unlimited": false,
@@ -42392,7 +42392,7 @@
   {
     "id": 4710,
     "name": "Ahrim's staff",
-    "stock": 4,
+    "stock": 5,
     "value": 212500,
     "price": 9410092,
     "unlimited": false,
@@ -42428,7 +42428,7 @@
   {
     "id": 4714,
     "name": "Ahrim's robe skirt",
-    "stock": 2,
+    "stock": 3,
     "value": 117500,
     "price": 2019072,
     "unlimited": false,
@@ -42518,7 +42518,7 @@
   {
     "id": 4724,
     "name": "Guthan's helm",
-    "stock": 4,
+    "stock": 5,
     "value": 257500,
     "price": 9600000,
     "unlimited": false,
@@ -42536,7 +42536,7 @@
   {
     "id": 4726,
     "name": "Guthan's warspear",
-    "stock": 3,
+    "stock": 4,
     "value": 250000,
     "price": 9600000,
     "unlimited": false,
@@ -42626,7 +42626,7 @@
   {
     "id": 4736,
     "name": "Karil's top",
-    "stock": 5,
+    "stock": 6,
     "value": 125000,
     "price": 12606172,
     "unlimited": false,
@@ -42644,7 +42644,7 @@
   {
     "id": 4738,
     "name": "Karil's skirt",
-    "stock": 3,
+    "stock": 4,
     "value": 117500,
     "price": 5511056,
     "unlimited": false,
@@ -42725,7 +42725,7 @@
   {
     "id": 4747,
     "name": "Torag's hammers",
-    "stock": 5,
+    "stock": 6,
     "value": 400000,
     "price": 678040,
     "unlimited": false,
@@ -42743,7 +42743,7 @@
   {
     "id": 4749,
     "name": "Torag's platebody",
-    "stock": 4,
+    "stock": 5,
     "value": 700000,
     "price": 9087352,
     "unlimited": false,
@@ -42797,7 +42797,7 @@
   {
     "id": 4755,
     "name": "Verac's flail",
-    "stock": 5,
+    "stock": 6,
     "value": 400000,
     "price": 707600,
     "unlimited": false,
@@ -55795,8 +55795,8 @@
     "name": "Mystery box",
     "stock": 0,
     "value": 0,
-    "price": 0,
-    "unlimited": false,
+    "price": 500,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -58757,7 +58757,7 @@
     "stock": 0,
     "value": 0,
     "price": 774400,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -59116,8 +59116,8 @@
     "name": "Obsidian cape",
     "stock": 100,
     "value": 150000,
-    "price": 2400000,
-    "unlimited": false,
+    "price": 250000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -59134,8 +59134,8 @@
     "name": "Fire cape",
     "stock": 0,
     "value": 0,
-    "price": 0,
-    "unlimited": false,
+    "price": 25,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -59998,8 +59998,8 @@
     "name": "Flippers",
     "stock": 0,
     "value": 0,
-    "price": 0,
-    "unlimited": false,
+    "price": 50,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -60178,7 +60178,7 @@
     "name": "Saradomin brew (4) (noted)",
     "stock": 9999,
     "value": 375,
-    "price": 25000,
+    "price": 18000,
     "unlimited": true,
     "searchable": false
   },
@@ -60583,8 +60583,8 @@
     "name": "Seers' ring",
     "stock": 0,
     "value": 25000,
-    "price": 337908,
-    "unlimited": false,
+    "price": 20,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -60601,8 +60601,8 @@
     "name": "Archers' ring",
     "stock": 0,
     "value": 25000,
-    "price": 13600000,
-    "unlimited": false,
+    "price": 20,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -60637,8 +60637,8 @@
     "name": "Berserker ring",
     "stock": 0,
     "value": 25000,
-    "price": 15600000,
-    "unlimited": false,
+    "price": 20,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -60718,8 +60718,8 @@
     "name": "Darklight",
     "stock": 0,
     "value": 0,
-    "price": 0,
-    "unlimited": false,
+    "price": 1000,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -66764,7 +66764,7 @@
   {
     "id": 7418,
     "name": "Mole skin",
-    "stock": 0,
+    "stock": 5,
     "value": 1000,
     "price": 18508,
     "unlimited": false,
@@ -67585,8 +67585,8 @@
     "name": "Dwarven rock cake",
     "stock": 0,
     "value": 0,
-    "price": 0,
-    "unlimited": false,
+    "price": 7,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -82631,7 +82631,7 @@
   {
     "id": 9181,
     "name": "Mith crossbow",
-    "stock": 798,
+    "stock": 797,
     "value": 1957,
     "price": 15000,
     "unlimited": false,
@@ -82667,7 +82667,7 @@
   {
     "id": 9185,
     "name": "Rune crossbow",
-    "stock": 344,
+    "stock": 328,
     "value": 26819,
     "price": 35000,
     "unlimited": false,
@@ -82703,7 +82703,7 @@
   {
     "id": 9189,
     "name": "Sapphire bolt tips",
-    "stock": 60,
+    "stock": 648,
     "value": 42,
     "price": 244,
     "unlimited": false,
@@ -82712,7 +82712,7 @@
   {
     "id": 9190,
     "name": "Emerald bolt tips",
-    "stock": 0,
+    "stock": 5424,
     "value": 82,
     "price": 332,
     "unlimited": false,
@@ -82721,7 +82721,7 @@
   {
     "id": 9191,
     "name": "Ruby bolt tips",
-    "stock": 12,
+    "stock": 5088,
     "value": 167,
     "price": 552,
     "unlimited": false,
@@ -82730,7 +82730,7 @@
   {
     "id": 9192,
     "name": "Diamond bolt tips",
-    "stock": 22764,
+    "stock": 25572,
     "value": 332,
     "price": 753,
     "unlimited": false,
@@ -87014,7 +87014,7 @@
   {
     "id": 9668,
     "name": "Initiate harness m",
-    "stock": 4999,
+    "stock": 4998,
     "value": 50000,
     "price": 100000,
     "unlimited": false,
@@ -89804,7 +89804,7 @@
   {
     "id": 9978,
     "name": "Raw bird meat",
-    "stock": 2,
+    "stock": 11,
     "value": 157,
     "price": 648,
     "unlimited": false,
@@ -90308,7 +90308,7 @@
   {
     "id": 10034,
     "name": "Red chinchompa",
-    "stock": 0,
+    "stock": 367,
     "value": 400,
     "price": 7564,
     "unlimited": false,
@@ -90785,7 +90785,7 @@
   {
     "id": 10087,
     "name": "Stripy feather",
-    "stock": 6,
+    "stock": 12,
     "value": 50,
     "price": 212,
     "unlimited": false,
@@ -90794,7 +90794,7 @@
   {
     "id": 10088,
     "name": "Red feather",
-    "stock": 0,
+    "stock": 2,
     "value": 25,
     "price": 232,
     "unlimited": false,
@@ -90812,7 +90812,7 @@
   {
     "id": 10090,
     "name": "Yellow feather",
-    "stock": 4,
+    "stock": 5,
     "value": 32,
     "price": 236,
     "unlimited": false,
@@ -90821,7 +90821,7 @@
   {
     "id": 10091,
     "name": "Orange feather",
-    "stock": 1,
+    "stock": 2,
     "value": 37,
     "price": 240,
     "unlimited": false,
@@ -92974,7 +92974,7 @@
     "name": "Third-age range top",
     "stock": 0,
     "value": 0,
-    "price": 5000,
+    "price": 1500,
     "unlimited": true,
     "searchable": false
   },
@@ -92992,7 +92992,7 @@
     "name": "Third-age range legs",
     "stock": 0,
     "value": 0,
-    "price": 5000,
+    "price": 1500,
     "unlimited": true,
     "searchable": false
   },
@@ -93010,7 +93010,7 @@
     "name": "Third-age range coif",
     "stock": 0,
     "value": 0,
-    "price": 5000,
+    "price": 1000,
     "unlimited": true,
     "searchable": false
   },
@@ -93046,8 +93046,8 @@
     "name": "Third-age robe top",
     "stock": 0,
     "value": 0,
-    "price": 308000000,
-    "unlimited": false,
+    "price": 1500,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -93064,8 +93064,8 @@
     "name": "Third-age robe",
     "stock": 0,
     "value": 0,
-    "price": 84400000,
-    "unlimited": false,
+    "price": 1500,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -93082,8 +93082,8 @@
     "name": "Third-age mage hat",
     "stock": 0,
     "value": 0,
-    "price": 110400000,
-    "unlimited": false,
+    "price": 1000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -93118,8 +93118,8 @@
     "name": "Third-age platelegs",
     "stock": 0,
     "value": 0,
-    "price": 384000000,
-    "unlimited": false,
+    "price": 2500,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -93136,8 +93136,8 @@
     "name": "Third-age platebody",
     "stock": 0,
     "value": 0,
-    "price": 292800000,
-    "unlimited": false,
+    "price": 2500,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -93154,8 +93154,8 @@
     "name": "Third-age full helmet",
     "stock": 0,
     "value": 0,
-    "price": 94400000,
-    "unlimited": false,
+    "price": 2000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -94936,7 +94936,7 @@
     "name": "Fighter hat",
     "stock": 0,
     "value": 0,
-    "price": 100,
+    "price": 50,
     "unlimited": true,
     "searchable": false
   },
@@ -97454,7 +97454,7 @@
   {
     "id": 10828,
     "name": "Helm of neitiznot",
-    "stock": 236,
+    "stock": 222,
     "value": 125000,
     "price": 142000,
     "unlimited": false,
@@ -100139,7 +100139,7 @@
     "stock": 0,
     "value": 52600,
     "price": 70800,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -101551,7 +101551,7 @@
     "name": "Dragonfire shield",
     "stock": 0,
     "value": 3809459,
-    "price": 250,
+    "price": 80,
     "unlimited": true,
     "searchable": true
   },
@@ -105592,8 +105592,8 @@
     "name": "Dragon boots",
     "stock": 0,
     "value": 36003,
-    "price": 45004,
-    "unlimited": false,
+    "price": 40,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -106105,7 +106105,7 @@
     "name": "Grim reaper hood",
     "stock": 0,
     "value": 2,
-    "price": 15,
+    "price": 150,
     "unlimited": true,
     "searchable": true
   },
@@ -106634,7 +106634,7 @@
   {
     "id": 11848,
     "name": "Barrows - dharok's set",
-    "stock": 5000,
+    "stock": 4999,
     "value": 0,
     "price": 80000000,
     "unlimited": false,
@@ -107138,7 +107138,7 @@
   {
     "id": 11904,
     "name": "Trimmed blue wizard set",
-    "stock": 999,
+    "stock": 998,
     "value": 0,
     "price": 400000,
     "unlimited": false,
@@ -107156,7 +107156,7 @@
   {
     "id": 11906,
     "name": "Gold-trimmed blue wizard set",
-    "stock": 999,
+    "stock": 998,
     "value": 0,
     "price": 500000,
     "unlimited": false,
@@ -107444,7 +107444,7 @@
   {
     "id": 11938,
     "name": "Gilded armour set (lg)",
-    "stock": 998,
+    "stock": 997,
     "value": 0,
     "price": 20000000,
     "unlimited": false,
@@ -107705,7 +107705,7 @@
   {
     "id": 11967,
     "name": "Dwarf cannon set",
-    "stock": 999,
+    "stock": 998,
     "value": 50,
     "price": 5000000,
     "unlimited": false,
@@ -112855,7 +112855,7 @@
     "name": "Grenwall spikes",
     "stock": 0,
     "value": 500,
-    "price": 35000,
+    "price": 30000,
     "unlimited": true,
     "searchable": true
   },
@@ -119371,8 +119371,8 @@
     "name": "Slayer helmet",
     "stock": 0,
     "value": 1625,
-    "price": 150800000,
-    "unlimited": false,
+    "price": 1500,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -122954,7 +122954,7 @@
     "stock": 0,
     "value": 0,
     "price": 50000,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -123611,7 +123611,7 @@
     "stock": 0,
     "value": 118524,
     "price": 148156,
-    "unlimited": false,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -135166,7 +135166,7 @@
     "name": "Seers' ring (i)",
     "stock": 0,
     "value": 25000,
-    "price": 400,
+    "price": 1000,
     "unlimited": true,
     "searchable": false
   },
@@ -135175,7 +135175,7 @@
     "name": "Archers' ring (i)",
     "stock": 0,
     "value": 25000,
-    "price": 400,
+    "price": 1000,
     "unlimited": true,
     "searchable": false
   },
@@ -136984,7 +136984,7 @@
     "name": "Berserker ring (i)",
     "stock": 0,
     "value": 25000,
-    "price": 400,
+    "price": 1000,
     "unlimited": true,
     "searchable": false
   },
@@ -137335,8 +137335,8 @@
     "name": "Dragon pickaxe",
     "stock": 0,
     "value": 312500,
-    "price": 50000,
-    "unlimited": false,
+    "price": 10000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -139396,7 +139396,7 @@
     "name": "Hexcrest",
     "stock": 0,
     "value": 7500,
-    "price": 200,
+    "price": 750,
     "unlimited": true,
     "searchable": false
   },
@@ -139414,7 +139414,7 @@
     "name": "Focus sight",
     "stock": 0,
     "value": 7500,
-    "price": 120,
+    "price": 650,
     "unlimited": true,
     "searchable": false
   },
@@ -165037,8 +165037,8 @@
     "name": "Bonecrusher",
     "stock": 0,
     "value": 0,
-    "price": 0,
-    "unlimited": false,
+    "price": 50,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -180652,7 +180652,7 @@
     "name": "Dragon defender",
     "stock": 0,
     "value": 0,
-    "price": 150,
+    "price": 15,
     "unlimited": true,
     "searchable": false
   },
@@ -181219,8 +181219,8 @@
     "name": "Torva full helm",
     "stock": 0,
     "value": 1000000,
-    "price": 23062280,
-    "unlimited": false,
+    "price": 4000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -181255,8 +181255,8 @@
     "name": "Torva platebody",
     "stock": 0,
     "value": 1250000,
-    "price": 119549388,
-    "unlimited": false,
+    "price": 5000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -181291,8 +181291,8 @@
     "name": "Torva platelegs",
     "stock": 0,
     "value": 1000000,
-    "price": 80831000,
-    "unlimited": false,
+    "price": 5000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -181327,8 +181327,8 @@
     "name": "Pernix cowl",
     "stock": 0,
     "value": 1000000,
-    "price": 24408028,
-    "unlimited": false,
+    "price": 4000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -181363,8 +181363,8 @@
     "name": "Pernix body",
     "stock": 0,
     "value": 1250000,
-    "price": 95793720,
-    "unlimited": false,
+    "price": 5000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -181399,8 +181399,8 @@
     "name": "Pernix chaps",
     "stock": 0,
     "value": 1000000,
-    "price": 92259576,
-    "unlimited": false,
+    "price": 5000,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -181435,8 +181435,8 @@
     "name": "Virtus mask",
     "stock": 0,
     "value": 1000000,
-    "price": 22459340,
-    "unlimited": false,
+    "price": 3500,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -181471,8 +181471,8 @@
     "name": "Virtus robe top",
     "stock": 0,
     "value": 1250000,
-    "price": 55169944,
-    "unlimited": false,
+    "price": 4500,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -181507,8 +181507,8 @@
     "name": "Virtus robe legs",
     "stock": 0,
     "value": 1000000,
-    "price": 59467720,
-    "unlimited": false,
+    "price": 4500,
+    "unlimited": true,
     "searchable": true
   },
   {
@@ -185987,7 +185987,7 @@
   {
     "id": 20665,
     "name": "Toolkit (noted)",
-    "stock": 20,
+    "stock": 65,
     "value": 0,
     "price": 0,
     "unlimited": false,
@@ -188365,8 +188365,8 @@
     "name": "Ornate katana",
     "stock": 0,
     "value": 0,
-    "price": 0,
-    "unlimited": false,
+    "price": 4000,
+    "unlimited": true,
     "searchable": false
   },
   {
@@ -193252,7 +193252,7 @@
     "name": "Vanguard helm",
     "stock": 0,
     "value": 0,
-    "price": 5000,
+    "price": 7500,
     "unlimited": true,
     "searchable": false
   },
@@ -193261,7 +193261,7 @@
     "name": "Vanguard body",
     "stock": 0,
     "value": 0,
-    "price": 5000,
+    "price": 7500,
     "unlimited": true,
     "searchable": false
   },
@@ -193270,7 +193270,7 @@
     "name": "Vanguard legs",
     "stock": 0,
     "value": 0,
-    "price": 5000,
+    "price": 7500,
     "unlimited": true,
     "searchable": false
   },
