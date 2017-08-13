@@ -2,6 +2,7 @@ package net.edge.content.minigame.dueling;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendContainer;
 import net.edge.net.packet.out.SendContextMenu;
 import net.edge.task.LinkedTaskSequence;
@@ -142,6 +143,10 @@ public final class DuelMinigame extends Minigame {
 	public void onEnter(Player player) {
 		session.getPlayers().forEach(this::restore);
 		Player other = session.getOther(player);
+
+		for(int i = 0; i < player.getSkills().length; i++) {
+			player.getSkills()[i].setLevel(player.getSkills()[i].getRealLevel(), true);
+		}
 		
 		if(rules.contains(DuelingRules.OBSTACLES)) {
 			player.move(OBSTACLES_ARENA.random());
