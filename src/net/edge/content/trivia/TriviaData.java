@@ -10,7 +10,7 @@ public enum TriviaData {
     _1("Who are the owners of Edgeville?", "avro and Stan", "avro & Stan"),
     _2("Name one game developer.", "avro", "stan"),
     _3("What is the maximum combat level?", "138"),
-    _4("How much coins does a starterpack in Edgeville contain?", "200k", "200000"),
+    _4("How much coins does a starterpack in Edgeville contain?", "5m", "5000000", "5million"),
     _5("Who is the shop owner of the Blood money store?", "hazelmere"),
     _6("Who is the shop owner of the Edge tokens store?", "party Pete"),
     _7("How many Hitpoints do Sharks heal?", "20", "Twenty", "200", "two hundred"),
