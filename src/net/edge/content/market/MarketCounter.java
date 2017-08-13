@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.edge.util.json.JsonSaver;
 import net.edge.content.market.exchange.personal.PlayerCounter;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 
 /**
  * Controls all the Avarrockian market.
@@ -48,8 +49,9 @@ public class MarketCounter {
 			
 			item_values_saver.current().addProperty("id", id);
 			item_values_saver.current().addProperty("name", s.getTitle());
+			item_values_saver.current().addProperty("iron", s.ironAccess);
 			item_values_saver.current().addProperty("currency", s.getCurrency().name().toUpperCase());
-			item_values_saver.current().addProperty("items", new Gson().toJson(s.getItems()));
+			item_values_saver.current().addProperty("items", new Gson().toJson(s.getItems(), Item[].class));
 			item_values_saver.split();
 		}
 		item_values_saver.publish("./data/def/item/market_shops2.json");

@@ -97,13 +97,6 @@ public class MysteryBox extends ActionInitializer {
 			new Drop(21373, 1, 1, Chance.RARE),
 			new Drop(21374, 1, 1, Chance.RARE),
 			new Drop(21375, 1, 1, Chance.RARE),
-			//party hat
-			new Drop(1038, 1, 1, Chance.VERY_RARE),
-			new Drop(1040, 1, 1, Chance.VERY_RARE),
-			new Drop(1042, 1, 1, Chance.VERY_RARE),
-			new Drop(1044, 1, 1, Chance.VERY_RARE),
-			new Drop(1046, 1, 1, Chance.VERY_RARE),
-			new Drop(1048, 1, 1, Chance.VERY_RARE),
 			//dragon claws
 			new Drop(14484, 1, 1, Chance.VERY_RARE),
 			//armadyl godsword
@@ -114,6 +107,13 @@ public class MysteryBox extends ActionInitializer {
 			new Drop(19314, 1, 1, Chance.VERY_RARE),
 			new Drop(19317, 1, 1, Chance.VERY_RARE),
 			new Drop(19320, 1, 1, Chance.VERY_RARE),
+			//party hat
+			new Drop(1038, 1, 1, Chance.EXTREMELY_RARE),
+			new Drop(1040, 1, 1, Chance.EXTREMELY_RARE),
+			new Drop(1042, 1, 1, Chance.EXTREMELY_RARE),
+			new Drop(1044, 1, 1, Chance.EXTREMELY_RARE),
+			new Drop(1046, 1, 1, Chance.EXTREMELY_RARE),
+			new Drop(1048, 1, 1, Chance.EXTREMELY_RARE),
 			//torva
 			new Drop(20135, 1, 1, Chance.EXTREMELY_RARE),
 			new Drop(20139, 1, 1, Chance.EXTREMELY_RARE),
