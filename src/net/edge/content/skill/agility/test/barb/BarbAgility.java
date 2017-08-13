@@ -54,7 +54,6 @@ public final class BarbAgility extends Agility {
                         double dist = -50;
                         for(Position p : targets) {
                             double d = player.getPosition().getDistance(p);
-                            System.out.println(d + " - " + p);
                             if(dist == -50 || dist > d) {
                                 walk = p;
                                 dist = d;
@@ -62,7 +61,6 @@ public final class BarbAgility extends Agility {
                         }
                     }
                     final Position dest = walk;
-                    player.message(""+ dest);
                     player.getMovementQueue().smartWalk(walk);
                     player.getMovementListener().append(() -> {
                         if(player.getPosition().same(dest)) {
@@ -118,10 +116,6 @@ public final class BarbAgility extends Agility {
             boolean startPoint = p.getPosition().getDistance(new Position(2538, 3553)) < p.getPosition().getDistance(new Position(2543, 3553));
             Position destination = startPoint ? new Position(2538, 3553) : new Position(2543, 3553);
             return new FMObstacle(57, OptionalInt.of(2), new Position[]{new Position(2536, 3553), new Position(2541, 3553)}, destination, 839, 35, 13.7) {
-                @Override
-                public boolean findProperPosition(Player player) {
-                    return true;
-                }
                 @Override
                 public boolean crossable(Player player) {
                     if(player.getPosition().same(new Position(2536, 3553, 0)) || player.getPosition().same(new Position(2541, 3553, 0))) {
