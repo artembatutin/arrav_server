@@ -115,17 +115,17 @@ public class MysteryBox extends ActionInitializer {
 			new Drop(1046, 1, 1, Chance.EXTREMELY_RARE),
 			new Drop(1048, 1, 1, Chance.EXTREMELY_RARE),
 			//torva
-			new Drop(20135, 1, 1, Chance.EXTREMELY_RARE),
-			new Drop(20139, 1, 1, Chance.EXTREMELY_RARE),
-			new Drop(20143, 1, 1, Chance.EXTREMELY_RARE),
+			new Drop(20135, 1, 1, Chance.FUCKING_RARE),
+			new Drop(20139, 1, 1, Chance.FUCKING_RARE),
+			new Drop(20143, 1, 1, Chance.FUCKING_RARE),
 			//pernix
-			new Drop(20147, 1, 1, Chance.EXTREMELY_RARE),
-			new Drop(20151, 1, 1, Chance.EXTREMELY_RARE),
-			new Drop(20155, 1, 1, Chance.EXTREMELY_RARE),
+			new Drop(20147, 1, 1, Chance.FUCKING_RARE),
+			new Drop(20151, 1, 1, Chance.FUCKING_RARE),
+			new Drop(20155, 1, 1, Chance.FUCKING_RARE),
 			//virtus
-			new Drop(20159, 1, 1, Chance.EXTREMELY_RARE),
-			new Drop(20163, 1, 1, Chance.EXTREMELY_RARE),
-			new Drop(20167, 1, 1, Chance.EXTREMELY_RARE),
+			new Drop(20159, 1, 1, Chance.FUCKING_RARE),
+			new Drop(20163, 1, 1, Chance.FUCKING_RARE),
+			new Drop(20167, 1, 1, Chance.FUCKING_RARE),
 	};
 	
 	@Override
