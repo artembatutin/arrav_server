@@ -24,7 +24,7 @@ public final class TrapTask extends Task {
 	 */
 	public TrapTask(Player player) {
 		super(10, false);
-		this.player = player;
+		this.player = player;=
 	}
 	
 	@Override
@@ -34,17 +34,21 @@ public final class TrapTask extends Task {
 			return;
 		}
 		ObjectList<Trap> traps = Hunter.GLOBAL_TRAPS.get(player).getTraps();
-		traps.forEach(t -> {
-			boolean withinDistance = player.getPosition().withinDistance(t.getObject().getGlobalPos(), 25);
-			if(!withinDistance && !t.isAbandoned()) {
-				Hunter.abandon(player, t, false);
+		if(traps.isEmpty()) {
+			this.cancel();
+		} else {
+			traps.forEach(t -> {
+				boolean withinDistance = player.getPosition().withinDistance(t.getObject().getGlobalPos(), 25);
+				if(!withinDistance && !t.isAbandoned()) {
+					Hunter.abandon(player, t, false);
+				}
+			});
+			
+			Trap trap = RandomUtils.random(traps);
+			if(!Hunter.getTrap(player, trap.getObject()).isPresent() || !trap.getState().equals(Trap.TrapState.PENDING)) {
+				return;
 			}
-		});
-		
-		Trap trap = RandomUtils.random(traps);
-		if(!Hunter.getTrap(player, trap.getObject()).isPresent() || !trap.getState().equals(Trap.TrapState.PENDING)) {
-			return;
+			trap.onSequence(this);
 		}
-		trap.onSequence(this);
 	}
 }
