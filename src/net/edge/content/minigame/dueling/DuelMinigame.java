@@ -144,8 +144,10 @@ public final class DuelMinigame extends Minigame {
 		session.getPlayers().forEach(this::restore);
 		Player other = session.getOther(player);
 
-		for(int i = 0; i < player.getSkills().length; i++) {
-			player.getSkills()[i].setLevel(player.getSkills()[i].getRealLevel(), true);
+		if(rules.contains(DuelingRules.NO_DRINKS)) {
+			for (int i = 0; i < player.getSkills().length; i++) {
+				player.getSkills()[i].setLevel(player.getSkills()[i].getRealLevel(), true);
+			}
 		}
 		
 		if(rules.contains(DuelingRules.OBSTACLES)) {
