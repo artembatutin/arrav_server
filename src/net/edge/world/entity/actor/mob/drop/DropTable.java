@@ -56,33 +56,27 @@ public final class DropTable {
 	 * @param victim    the npc that was killed.
 	 * @return the array of items that were calculated.
 	 */
-	List<Item> toItems(Player player, Mob victim) {
+	ObjectList<Item> toItems(Player player, Mob victim) {
 		ThreadLocalRandom random = ThreadLocalRandom.current();
 		ObjectList<Item> items = new ObjectArrayList<>();
 		
-		// Determines if the rare, common, and dynamic tables should be rolled.
-		// The breakdown of each of the formulas are touched upon later on.
-		int rate = (player.getEquipment().getId(Equipment.RING_SLOT) == 2572 ? 4 : 5);
-		boolean rollRare = random.nextInt(rate) == 0; // 20%/25% chance.
-		boolean rollDynamic = random.nextBoolean(); // 50% chance.
-		
-		// Iterate through the unique table, drop ALWAYS items, roll a RARE+
-		// item if possible, and roll dynamic items if possible.
 		int amount = 0;
-		
+		boolean rare = true;
 		for(Drop drop : drops) {
+			if(drop == null)
+				continue;
 			if(drop.getChance() == Chance.ALWAYS) {
-				// 100% Chance to drop an item from the always table, the lowest chance tier.
 				items.add(drop.toItem());
 				//bone crusher
 				if(player.getInventory().contains(18337)) {
 					Optional<Bone> bone = Bone.getBone(drop.getId());
 					bone.ifPresent(b -> Skills.experience(player, b.getExperience() / 2, Skills.PRAYER));
 				}
-			} else if(rollRare && drop.isRare()) {
-				// 20% Chance to roll an item from the rare table, pick one drop
-				// from the table and roll it.
-				if(drop.roll(random)) {
+			} else if(drop.isRare() && rare) {
+				boolean row = player.getEquipment().getId(Equipment.RING_SLOT) == 2572 && random.nextInt(50) == 1;
+				if(drop.roll(random) || row) {
+					if(row)
+						player.message("Your ring of wealth got you a rare drop!");
 					Item item = drop.toItem();
 					items.add(item);
 					int val = MarketItem.get(item.getId()) != null ? MarketItem.get(item.getId()).getPrice() * item.getAmount() : 0;
@@ -91,13 +85,9 @@ public final class DropTable {
 						World.get().message(player.getFormatUsername() + " just got an extremely rare drop: " + item.getDefinition().getName());
 					}
 				}
-				rollRare = false;
-			} else if(rollDynamic && !drop.isRare()) {
-				// 50% Chance to roll an item from the dynamic table, pick one
-				// drop from the table and roll it.
-				if(amount++ == GameConstants.DROP_THRESHOLD)
-					rollDynamic = false;
-				if(drop.roll(random))
+				rare = false;
+			} else if(!drop.isRare()) {
+				if(drop.roll(random) && amount++ <= GameConstants.DROP_THRESHOLD)
 					items.add(drop.toItem());
 			}
 		}
