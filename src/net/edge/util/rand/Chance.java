@@ -33,7 +33,7 @@ public enum Chance {
 	VERY_UNCOMMON(new Rational(2, 50)),
 	
 	/**
-	 * Describing an {@code RARE} chance (2%, 1 in 100 chance).
+	 * Describing an {@code RARE} chance (2%, 1 in 50 chance).
 	 */
 	RARE(new Rational(1, 50)),
 	

@@ -59,6 +59,7 @@ public final class DropManager {
 				if(bonecrusher) {
 					Optional<Bone> bone = Bone.getBone(drop.getId());
 					bone.ifPresent(b -> Skills.experience(killer, b.getExperience() / 2, Skills.PRAYER));
+					
 					continue;//don't submit bone to floor but dont break the loop either.
 				}
 				r.register(new GroundItem(drop, p, killer));

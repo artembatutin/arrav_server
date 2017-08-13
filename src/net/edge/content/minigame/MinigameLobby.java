@@ -103,13 +103,9 @@ public abstract class MinigameLobby {
 	 * Submits this minigame lobby.
 	 */
 	public final void submit(Player player) {
-		if(task.isPresent()) {
-			throw new IllegalStateException("Minigame lobby has already started.");
-		}
 		if(!canEnter(player)) {
 			return;
 		}
-		
 		onEnter(player);
 		if(!task.isPresent()) {
 			task = Optional.of(new MinigameLobbyTask(this));

@@ -26,7 +26,7 @@ public class PartyPete extends ActionInitializer {
 						player.out(new SendLink("store/"));
 						player.getDialogueBuilder().last();
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						new Donating(player, World.getDonation());
+						new Donating(player, World.getDonation()).submit();
 						player.closeWidget();
 					} else {
 						player.closeWidget();

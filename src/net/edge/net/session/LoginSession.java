@@ -10,9 +10,12 @@ import net.edge.net.codec.login.LoginCode;
 import net.edge.net.codec.login.LoginResponse;
 import net.edge.GameConstants;
 import net.edge.world.World;
+import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.PlayerCredentials;
 import net.edge.world.entity.actor.player.PlayerSerialization;
+
+import static net.edge.net.codec.login.LoginCode.COULD_NOT_COMPLETE_LOGIN;
 
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during login.
@@ -20,6 +23,10 @@ import net.edge.world.entity.actor.player.PlayerSerialization;
  */
 public final class LoginSession extends Session {
 	
+	/**
+	 * Created player instance.
+	 */
+	private Player player;
 	
 	/**
 	 * Creates a new {@link LoginSession}.
@@ -39,12 +46,19 @@ public final class LoginSession extends Session {
 	
 	@Override
 	public void terminate() {
-	
+		if(player != null) {
+			if(player.getState() == EntityState.ACTIVE) {
+				World.get().queueLogout(player);
+			} else {
+				getChannel().writeAndFlush(new LoginResponse(COULD_NOT_COMPLETE_LOGIN));
+				getChannel().close();
+			}
+		}
 	}
 	
 	@Override
 	public Player getPlayer() {
-		return null;
+		return player;
 	}
 	
 	/**
@@ -53,7 +67,7 @@ public final class LoginSession extends Session {
 	 * @throws Exception If any errors occur while handling credentials.
 	 */
 	private void handleRequest(final LoginRequest request) throws Exception {
-		Player player = new Player(new PlayerCredentials(request.getUsername(), request.getPassword()), true);
+		player = new Player(new PlayerCredentials(request.getUsername(), request.getPassword()), true);
 		LoginCode response = LoginCode.NORMAL;
 		Channel channel = getChannel();
 		
