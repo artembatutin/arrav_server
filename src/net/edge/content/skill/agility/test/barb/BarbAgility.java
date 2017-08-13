@@ -1,16 +1,18 @@
 package net.edge.content.skill.agility.test.barb;
 
 import net.edge.action.impl.ObjectAction;
+import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.test.Agility;
-import net.edge.content.skill.agility.test.gnome.JumpOverBarrier;
-import net.edge.content.skill.agility.test.gnome.PoleSwing;
 import net.edge.content.skill.agility.test.obstacle.Obstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.ClimbableObstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.FMObstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.WalkableObstacle;
+import net.edge.net.packet.out.SendObjectAnimation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
+import net.edge.world.object.ObjectDirection;
+import net.edge.world.object.ObjectType;
 
 import java.util.OptionalInt;
 import java.util.function.Function;
@@ -49,10 +51,10 @@ public final class BarbAgility extends Agility {
                     if(targets.length == 0) {
                         walk = targets[0];
                     } else {
-                        double dist = 0;
+                        double dist = -50;
                         for(Position p : targets) {
                             double d = player.getPosition().getDistance(p);
-                            if(dist == 0 || dist > d) {
+                            if(dist == -50 || dist > d) {
                                 walk = p;
                                 dist = d;
                             }
@@ -95,6 +97,35 @@ public final class BarbAgility extends Agility {
                 player.message("You must be standing infront one of the ropes.");
                 return false;
             }
+            @Override
+            public void initialize(Player player) {
+                super.initialize(player);
+                player.out(new SendObjectAnimation(new Position(player.getPosition().getX(), 3550), 497, ObjectType.GENERAL_PROP, ObjectDirection.WEST));
+            }
+        }),
+        LOG_BALANCE(43595, p -> new WalkableObstacle(new Position(2551, 3546, 0), new Position(2541, 3546, 0), 762, 35, 13.7) {
+            @Override
+            public boolean findProperPosition(Player player) {
+                return true;
+            }
+        }),
+        OBSTACLE_NET(20211, p -> new ClimbableObstacle(new Position[]{new Position(2539, 3546), new Position(2539, 3545)}, new Position(2537, p.getPosition().getY(), 1), 828, 35, 8.2)),
+        BALANCING_LEDGE(2302, p -> new WalkableObstacle(new Position(2536, 3547, 1), new Position(2532, 3547, 1), 756, 35, 22)),
+        LADDER_DOWN(3205, p -> new ClimbableObstacle(new Position(2532, 3546, 1), new Position(2532, 3546, 0), 828, 30, 0)),
+        CRUMBLING_WALL(1948, p -> {
+            boolean startPoint = p.getPosition().getDistance(new Position(2538, 3553)) < p.getPosition().getDistance(new Position(2543, 3553));
+            Position destination = startPoint ? new Position(2538, 3553) : new Position(2543, 3553);
+            return new FMObstacle(57, OptionalInt.of(2), new Position[]{new Position(2536, 3553), new Position(2541, 3553)}, destination, 839, 35, 13.7) {
+                @Override
+                public boolean crossable(Player player) {
+                    if(player.getPosition().same(new Position(2536, 3553, 0)) || player.getPosition().same(new Position(2541, 3553, 0))) {
+                        return true;
+                    }
+
+                    player.message("You can't cross this obstacle from this side.");
+                    return false;
+                }
+            };
         });
 
         public final int[] ids;
