@@ -64,7 +64,6 @@ public final class RangedStrategy implements Strategy {
 		Player player = actor.toPlayer();
 		CombatRangedWeapon weapon = player.getRangedDetails().getWeapon().get();
 		CombatRangedAmmo ammo = weapon.getAmmunition();
-
 		if(!player.isSpecialActivated()) {
 			if(!player.isVisible()) {
 				return new CombatHit(actor, victim, 1, CombatType.RANGED, true);
@@ -86,13 +85,7 @@ public final class RangedStrategy implements Strategy {
 			player.graphic(ammo.getDefinition().getGraphic(player));
 
 		CombatHit data = ammo.getDefinition().applyEffects(player, weapon, victim, new CombatHit(actor, victim, 1, CombatType.RANGED, true, delay + 1));
-		new Task(delay, false) {
-			@Override
-			protected void execute() {
-				decrementAmmo(player, victim, weapon, ammo);
-				this.cancel();
-			}
-		}.submit();
+		decrementAmmo(player, victim, weapon, ammo);
 		return data;
 	}
 
