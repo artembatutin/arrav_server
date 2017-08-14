@@ -51,16 +51,13 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		Player victim = World.get().getPlayers().get(index - 1);
 		
 		Optional<CombatSpells> spell = CombatSpells.getSpell(spellId);
-		
 		if(!spell.isPresent()) {
 			LunarSpells.castCombatSpells(player, victim, spellId);
 			return;
 		}
-		
 		if(index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !checkAttack(player, victim)) {
 			return;
 		}
-		
 		player.setCastSpell(spell.get().getSpell());
 		player.getCombat().attack(victim);
 	}
@@ -89,6 +86,10 @@ public final class AttackPlayerPacket implements IncomingPacket {
 	private boolean checkAttack(Player attacker, Player victim) {
 		if(victim == null || victim.same(attacker)) {
 			attacker.getMovementQueue().reset();
+			return false;
+		}
+		if(victim.isIronMan() && !victim.isIronMaxed()) {
+			attacker.message("You can't initiate combat with an iron man member.");
 			return false;
 		}
 		if(!attacker.inMulti() && attacker.getCombat().isBeingAttacked() && attacker.getCombat().getAggressor() != victim && attacker.getCombat().pjingCheck()) {

@@ -17,6 +17,8 @@ import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.TOO_FAST;
+
 /**
  * Holds functionality for passing obstacles for the GnomeStronghold Agility course.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -62,7 +64,8 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		if(player.getAgilityBonus().hasCompletedGnomeAgilityCourse()) {
 			player.getAgilityBonus().clearGnomeObstacles();
 			player.message("You have successfully completed the gnome agility laps.");
-			Skills.experience(player, 39, Skills.AGILITY);
+			Skills.experience(player, 200, Skills.AGILITY);
+			TOO_FAST.inc(player);
 		}
 	}
 	

@@ -1,10 +1,13 @@
 package net.edge.content.combat.magic;
 
+import net.edge.content.combat.CombatType;
 import net.edge.task.Task;
 import net.edge.world.*;
 import net.edge.world.entity.actor.Actor;
 
 import java.util.Optional;
+
+import static net.edge.world.Projectile.MAGIC_DELAYS;
 
 /**
  * The {@link Spell} extension with support for combat related functions such as
@@ -34,7 +37,12 @@ public abstract class CombatSpell extends Spell {
 			});
 			return p.get().getTravelTime();
 		}
-		return p.isPresent() ? p.get().getTravelTime() : 0;
+		int delay = p.map(Projectile::getTravelTime).orElse(0);
+		if(delay == 0) {
+			int distance = (int) cast.getPosition().getDistance(castOn.getPosition());
+			delay = MAGIC_DELAYS[distance > 10 ? 10 : distance];
+		}
+		return delay;
 	}
 	
 	/**

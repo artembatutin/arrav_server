@@ -11,6 +11,8 @@ import net.edge.world.entity.item.Item;
 import java.util.EnumSet;
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.BON_APETITE;
+
 /**
  * Holds functionality for adding toppings to a plain pizza.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -60,6 +62,7 @@ public final class PizzaTopping extends ProducingSkillAction {
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			t.cancel();
+			BON_APETITE.inc(player, 20);
 		}
 	}
 	

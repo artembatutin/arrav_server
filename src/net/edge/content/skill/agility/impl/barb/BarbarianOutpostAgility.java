@@ -25,6 +25,8 @@ import net.edge.world.object.ObjectType;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.TOO_FAST;
+
 /**
  * Holds functionality for passing obstacles for the BarbarianOutpost Agility course.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -70,7 +72,8 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 		if(player.getAgilityBonus().hasCompletedBarbarianAgilityCourse()) {
 			player.getAgilityBonus().clearBarbarianObstacles();
 			player.message("You have successfully completed the barbarian agility laps.");
-			Skills.experience(player, 498.9, Skills.AGILITY);
+			Skills.experience(player, 500, Skills.AGILITY);
+			TOO_FAST.inc(player);
 		}
 	}
 	

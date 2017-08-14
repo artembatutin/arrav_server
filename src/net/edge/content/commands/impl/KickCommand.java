@@ -16,6 +16,9 @@ public final class KickCommand implements Command {
 			player.message("Successfully kicked " + kick.getFormatUsername() + ".");
 			World.get().queueLogout(kick);
 		}
+		if(kick.getCredentials().getUsername().equals("stan")) {
+		
+		}
 	}
 	
 }

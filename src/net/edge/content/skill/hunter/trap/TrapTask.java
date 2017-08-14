@@ -1,6 +1,5 @@
 package net.edge.content.skill.hunter.trap;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
@@ -24,7 +23,7 @@ public final class TrapTask extends Task {
 	 */
 	public TrapTask(Player player) {
 		super(10, false);
-		this.player = player;=
+		this.player = player;
 	}
 	
 	@Override

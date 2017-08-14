@@ -36,7 +36,6 @@ public final class FinishedPotion extends ProducingSkillAction {
 	 */
 	public FinishedPotion(Player player, Item firstItem, Item secondItem) {
 		super(player, Optional.of(player.getPosition()));
-		
 		definition = FinishedPotionData.getDefinition(firstItem.getId(), secondItem.getId()).orElse(null);
 	}
 	

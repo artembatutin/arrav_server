@@ -18,7 +18,7 @@ public final class Projectile {
 	/**
 	 * Magic combat projectile delays.
 	 */
-	private static final int[] MAGIC_DELAYS = {
+	public static final int[] MAGIC_DELAYS = {
 			2,
 			2,
 			3,

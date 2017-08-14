@@ -19,6 +19,8 @@ import net.edge.world.object.ObjectType;
 
 import java.util.Optional;
 
+import static net.edge.content.achievements.Achievement.TOO_FAST;
+
 /**
  * Holds functionality for passing obstacles for the Wilderness Agility course.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -61,12 +63,11 @@ public final class WildernessAgility extends AgilityCourse {
 	@Override
 	public void onSuccess() {
 		player.getAgilityBonus().addWildernessObstacle(data);
-		
 		if(player.getAgilityBonus().hasCompletedWildernessAgilityCourse()) {
 			player.getAgilityBonus().clearWildernessObstacles();
-			
 			player.message("You have successfully completed the wilderness agility laps.");
-			Skills.experience(player, 498.9, Skills.AGILITY);
+			Skills.experience(player, 800, Skills.AGILITY);
+			TOO_FAST.inc(player);
 		}
 	}
 	

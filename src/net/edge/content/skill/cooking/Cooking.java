@@ -15,6 +15,8 @@ import net.edge.world.object.GameObject;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static net.edge.content.achievements.Achievement.BON_APETITE;
+
 public final class Cooking extends ProducingSkillAction {
 	
 	static final Item BURNT_PIE = new Item(2329);
@@ -63,6 +65,8 @@ public final class Cooking extends ProducingSkillAction {
 			counter--;
 			if(counter == 0)
 				t.cancel();
+			if(!burned)
+				BON_APETITE.inc(player);
 		}
 	}
 	

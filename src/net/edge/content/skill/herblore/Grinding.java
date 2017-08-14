@@ -39,7 +39,6 @@ public final class Grinding extends ProducingSkillAction {
 	 */
 	public Grinding(Player player, Item firstItem, Item secondItem) {
 		super(player, Optional.of(player.getPosition()));
-		
 		Item item = firstItem.getId() == PESTLE_MORTAR.getId() ? secondItem : firstItem;
 		this.definition = GrindingData.getDefinition(item.getId()).orElse(null);
 	}
@@ -53,11 +52,9 @@ public final class Grinding extends ProducingSkillAction {
 	 */
 	public static boolean produce(Player player, Item firstItem, Item secondItem) {
 		Grinding grinding = new Grinding(player, firstItem, secondItem);
-		
 		if(grinding.definition == null) {
 			return false;
 		}
-		
 		if(firstItem.getId() == PESTLE_MORTAR.getId() && secondItem.getId() == grinding.definition.item.getId() || firstItem.getId() == grinding.definition.item.getId() && secondItem.getId() == PESTLE_MORTAR.getId()) {
 			grinding.start();
 			return true;
@@ -135,27 +132,27 @@ public final class Grinding extends ProducingSkillAction {
 	 */
 	private enum GrindingData {
 		UNICORN_HORN(237, 235, 20.0),
-		CHOCOLATE_BAR(1973, 1975, 50),
-		NEST(5075, 6693, 65),
-		KEBBIT_TEETH(10109, 10111, 100),
-		BLUE_DRAGON_SCALE(243, 241, 175),
-		DIAMOND_ROOT(14703, 14704, 225),
-		DESERT_GOAT_HORN(9735, 9736, 320),
-		RUNE_SHARDS(6466, 6467, 300),
-		MUD_RUNE(4698, 9594, 350),
-		ASHES(592, 8865, 380),
-		SEAWEED(401, 6683, 400),
-		EDIBLE_SEAWEED(403, 6683, 420),
-		BAT_BONES(530, 2391, 445),
-		CHARCOAL(973, 704, 460),
-		RAW_COD(341, 7528, 490),
-		KELP(7516, 7517, 520),
-		CRAB_MEAT(7518, 7527, 540),
-		ASTRAL_RUNE_SHARDS(11156, 11155, 600),
-		SUQAH_TOOTH(9079, 9082, 650),
-		DRIED_THISTLE(3263, 3264, 710),
-		GARLIC(1550, 4698, 765),
-		BLACK_MUSHROOM(4620, 4622, 840);
+		CHOCOLATE_BAR(1973, 1975, 30),
+		NEST(5075, 6693, 45),
+		KEBBIT_TEETH(10109, 10111, 50),
+		BLUE_DRAGON_SCALE(243, 241, 65),
+		DIAMOND_ROOT(14703, 14704, 75),
+		DESERT_GOAT_HORN(9735, 9736, 80),
+		RUNE_SHARDS(6466, 6467, 90),
+		MUD_RUNE(4698, 9594, 100),
+		ASHES(592, 8865, 110),
+		SEAWEED(401, 6683, 120),
+		EDIBLE_SEAWEED(403, 6683, 130),
+		BAT_BONES(530, 2391, 145),
+		CHARCOAL(973, 704, 160),
+		RAW_COD(341, 7528, 170),
+		KELP(7516, 7517, 190),
+		CRAB_MEAT(7518, 7527, 200),
+		ASTRAL_RUNE_SHARDS(11156, 11155, 215),
+		SUQAH_TOOTH(9079, 9082, 230),
+		DRIED_THISTLE(3263, 3264, 240),
+		GARLIC(1550, 4698, 255),
+		BLACK_MUSHROOM(4620, 4622, 280);
 		
 		/**
 		 * Caches our enum values.
@@ -183,7 +180,7 @@ public final class Grinding extends ProducingSkillAction {
 		 * @param product    {@link #product}.
 		 * @param experience {@link #experience}.
 		 */
-		private GrindingData(int item, int product, double experience) {
+		GrindingData(int item, int product, double experience) {
 			this.item = new Item(item);
 			this.product = new Item(product);
 			this.experience = experience;

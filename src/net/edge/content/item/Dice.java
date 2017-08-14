@@ -30,11 +30,9 @@ public final class Dice {
 		if(player.getCombat().inCombat()) {
 			return true;
 		}
-
-		if(player.getRights().less(Rights.EXTREME_DONATOR)) {
+		if(player.getRights().less(Rights.SUPER_DONATOR)) {
 			return true;
 		}
-
 		if(!player.getDiceTimer().elapsed(1800)) {
 			return true;
 		}
@@ -56,9 +54,7 @@ public final class Dice {
 			player.graphic(data.graphic);
 			
 			LinkedTaskSequence seq = new LinkedTaskSequence();
-			seq.connect(1, () -> {
-				member.message(data.clanChatformat(), "[Dice: " + player.getFormatUsername() + "]");
-			});
+			seq.connect(1, () -> member.message(data.clanChatformat(), "[Dice: " + player.getFormatUsername() + "]"));
 			seq.start();
 			return true;
 		}
