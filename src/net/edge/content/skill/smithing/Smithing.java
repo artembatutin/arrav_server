@@ -69,7 +69,6 @@ public final class Smithing extends ProducingSkillAction {
 		}
 		
 		SmithingTable table = null;
-		
 		for(int i = 0; i < FRAME_DATA.length; i++) {
 			if(FRAME_DATA[i][3] == interfaceId && slot == FRAME_DATA[i][2]) {
 				if(i >= values.length)

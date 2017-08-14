@@ -16,6 +16,9 @@ public enum PetData {
 	BLACK_AND_GREY_CAT(1, new PetPolicy(1561, 768, BLACK_AND_GREY_OVERGROWN_CAT), PetType.CAT),
 	BLACK_AND_GREY_KITTEN(0, new PetPolicy(1555, 761, BLACK_AND_GREY_CAT), PetType.CAT),
 	
+	//collectors
+	IMP(0, new PetPolicy(9952, 1531, null), PetType.IMP),
+	
 	//bosses
 	ABYSSAL_ORPHAN(0, new PetPolicy(3904, 3167, null), PetType.ABYSSAL_ORPHAN),
 	JAD_JADIKU(0, new PetPolicy(3906, 3168, null), PetType.JAD_JADIKU),

@@ -174,7 +174,7 @@ public final class DartCreation extends ProducingSkillAction {
             this.itemId = itemId;
             this.tips = tips;
             this.requirement = requirement;
-            this.experience = experience;
+            this.experience = experience * 1.70;
         }
 
         public static Optional<DartData> getDefinition(int firstItem, int secondItem) {

@@ -34,7 +34,11 @@ public enum Bone {
 	}
 
 	public static Optional<Bone> getBone(int id) {
-		return VALUES.stream().filter(i -> i.id == id).findFirst();
+		for(Bone bone : VALUES) {
+			if(bone.id == id)
+				return Optional.of(bone);
+		}
+		return Optional.empty();
 	}
 
 	@Override

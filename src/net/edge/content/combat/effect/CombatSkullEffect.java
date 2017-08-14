@@ -58,13 +58,12 @@ public final class CombatSkullEffect extends CombatEffect {
 	public boolean onLogin(Actor c) {
 		if(c.isPlayer()) {
 			Player player = (Player) c;
-			
 			if(player.getSkullTimer().get() > 0) {
 				player.setSkullIcon(Player.WHITE_SKULL);
 				return true;
 			}
-			//			if(FightCavesHandler.isChampion(player))
-			//				player.setSkullIcon(Player.RED_SKULL);
+			//if(FightCavesHandler.isChampion(player))
+			//  player.setSkullIcon(Player.RED_SKULL);
 		}
 		return false;
 	}

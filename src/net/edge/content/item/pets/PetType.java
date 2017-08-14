@@ -8,6 +8,9 @@ public enum PetType {
 	BIRD(0.698888, "Piw", PetFoodType.FISH),
 	DRAGON(0.52, "Rawr", PetFoodType.FISH, PetFoodType.MEAT),
 	
+	//collectors
+	IMP("Charm catcher at your service!"),
+	
 	//bosses
 	ABYSSAL_ORPHAN("Pss"),
 	JAD_JADIKU("Warg"),

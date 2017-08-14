@@ -74,7 +74,7 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 					if(a.click(player, object, item, container, slot))
 						return;
 				}
-				a = ITEMS.get(objectId);
+				a = ITEMS.get(item.getId());
 				if(a != null) {
 					if(a.click(player, object, item, container, slot))
 						return;

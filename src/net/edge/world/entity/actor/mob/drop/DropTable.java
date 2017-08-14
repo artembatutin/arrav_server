@@ -59,20 +59,23 @@ public final class DropTable {
 	ObjectList<Item> toItems(Player player, Mob victim) {
 		ThreadLocalRandom random = ThreadLocalRandom.current();
 		ObjectList<Item> items = new ObjectArrayList<>();
-		
+		boolean dropRare = random.nextBoolean();
+		boolean dropDynamic = random.nextBoolean();
 		int amount = 0;
 		boolean rare = true;
 		for(Drop drop : drops) {
 			if(drop == null)
 				continue;
 			if(drop.getChance() == Chance.ALWAYS) {
-				items.add(drop.toItem());
 				//bone crusher
 				if(player.getInventory().contains(18337)) {
 					Optional<Bone> bone = Bone.getBone(drop.getId());
-					bone.ifPresent(b -> Skills.experience(player, b.getExperience() / 2, Skills.PRAYER));
+					bone.ifPresent(b -> Skills.experience(player, b.getExperience() * 1.5, Skills.PRAYER));
+					if(bone.isPresent())
+						continue;
 				}
-			} else if(drop.isRare() && rare) {
+				items.add(drop.toItem());
+			} else if(dropRare && drop.isRare() && rare) {
 				boolean row = player.getEquipment().getId(Equipment.RING_SLOT) == 2572 && random.nextInt(50) == 1;
 				if(drop.roll(random) || row) {
 					if(row)
@@ -86,7 +89,7 @@ public final class DropTable {
 					}
 				}
 				rare = false;
-			} else if(!drop.isRare()) {
+			} else if(dropDynamic && !drop.isRare()) {
 				if(drop.roll(random) && amount++ <= GameConstants.DROP_THRESHOLD)
 					items.add(drop.toItem());
 			}

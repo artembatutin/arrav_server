@@ -169,7 +169,7 @@ public final class ArrowCreation extends ProducingSkillAction {
 			this.tips = new Item(tips);
 			this.arrow = new Item(arrow);
 			this.requirement = requirement;
-			this.experience = experience;
+			this.experience = experience * 1.70;
 		}
 		
 		public static Optional<ArrowData> getDefinition(int firstItem, int secondItem) {

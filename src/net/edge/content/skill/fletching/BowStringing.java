@@ -167,11 +167,11 @@ public final class BowStringing extends ProducingSkillAction {
 		 * @param experience  {@link #experience}.
 		 * @param animation   {@link #animation}.
 		 */
-		private StringingData(int unstrung, int strung, int requirement, double experience, int animation) {
+		StringingData(int unstrung, int strung, int requirement, double experience, int animation) {
 			this.unstrung = new Item(unstrung);
 			this.strung = new Item(strung);
 			this.requirement = requirement;
-			this.experience = experience;
+			this.experience = experience * 1.70;
 			this.animation = new Animation(animation);
 		}
 		

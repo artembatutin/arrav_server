@@ -167,7 +167,6 @@ public final class DarkEnergyCore extends Mob {
 			if(core.getState() != EntityState.ACTIVE || core.isDead() || !core.isVisible()) {
 				return;
 			}
-			
 			Region reg = core.getRegion().orElse(null);
 			if(reg == null)
 				return;

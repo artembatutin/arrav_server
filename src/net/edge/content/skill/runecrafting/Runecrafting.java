@@ -171,7 +171,7 @@ public final class Runecrafting extends ProducingSkillAction {
 
 	@Override
 	public double experience() {
-		return altar.getExperience();
+		return altar.getExperience() * count;
 	}
 
 	@Override

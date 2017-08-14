@@ -372,7 +372,7 @@ public final class BowCarving extends ProducingSkillAction {
 		public ProduciblePolicy(Item producible, int requirement, double experience, ButtonConfiguration... button) {
 			this.producible = producible;
 			this.requirement = requirement;
-			this.experience = experience;
+			this.experience = experience * 1.70;
 			this.button = button;
 		}
 		

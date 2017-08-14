@@ -168,12 +168,12 @@ public final class CrossbowLimbing extends ProducingSkillAction {
 		 * @param experience  {@link #experience}.
 		 * @param animation   {@link #animation}.
 		 */
-		private CrossbowData(int stock, int crossbow_u, int limb, int requirement, double experience, int animation) {
+		CrossbowData(int stock, int crossbow_u, int limb, int requirement, double experience, int animation) {
 			this.stock = new Item(stock);
 			this.limb = new Item(limb);
 			this.crossbow_u = new Item(crossbow_u);
 			this.requirement = requirement;
-			this.experience = experience;
+			this.experience = experience * 1.70;
 			this.animation = new Animation(animation);
 		}
 		

@@ -188,12 +188,12 @@ public final class BoltCreation extends ProducingSkillAction {
 		 * @param requirement {@link #required}.
 		 * @param experience  {@link #experience}.
 		 */
-		private BoltData(int unfinished, int required, int product, int requirement, double experience) {
+		BoltData(int unfinished, int required, int product, int requirement, double experience) {
 			this.unfinished = new Item(unfinished);
 			this.required = new Item(required);
 			this.product = new Item(product);
 			this.requirement = requirement;
-			this.experience = experience;
+			this.experience = experience * 1.70;
 		}
 		
 		public static Optional<BoltData> getDefinition(int itemUsed, int usedOn) {
