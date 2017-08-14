@@ -311,6 +311,7 @@ public final class DuelMinigame extends Minigame {
 		}
 		if(!session.getOther(player).same(victim)) {
 			player.message("You can't attack this person.");
+			player.getCombat().reset();
 			return false;
 		}
 		if(!started) {
