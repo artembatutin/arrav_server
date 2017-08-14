@@ -975,7 +975,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 				if(!MinigameHandler.execute(player, m -> m.canUseSpecialAttacks(player, player.getCombatSpecial()))) {
 					break;
 				}
-				
+
 				if(player.isSpecialActivated()) {
 					player.out(new SendConfig(301, 0));
 					player.setSpecialActivated(false);
@@ -984,12 +984,21 @@ public final class ClickButtonPacket implements IncomingPacket {
 						player.message("You do not have enough special energy left!");
 						break;
 					}
-					player.out(new SendConfig(301, 1));
 					player.setSpecialActivated(true);
-					if(player.getCombatSpecial() == CombatSpecial.GRANITE_MAUL && player.getCombat().isAttacking() && !player.getCombat().isCooldown()) {
+
+					if(player.getCombatSpecial().equals(CombatSpecial.GRANITE_MAUL) && player.getCombat().isAttacking() && !player.getCombat().getVictim().isDead() && !player.getCombat().isCooldown()) {
+						if(player.isAutocast()) {
+							player.setAutocast(false);
+						}
+
+						player.getCombat().setAttackTimer(0);
+						player.getCombat().attack(player.getCombat().getVictim());
 						player.getCombat().instant();
-						break;
+						return;
 					}
+
+					player.out(new SendConfig(301, 1));
+
 					World.get().submit(new Task(1, false) {
 						@Override
 						public void execute() {
