@@ -67,7 +67,6 @@ public final class InputXOptionPacket implements IncomingPacket {
 							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).get();
 							int slot1 = player.getAttr().get("enter_x_item_slot").getInt();
 							session.add(player, slot1, amount);
-							session.updateMainComponents();
 						} else if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).isPresent()) {
 							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.DUEL).get();
 							int slot1 = player.getAttr().get("enter_x_item_slot").getInt();
@@ -106,7 +105,6 @@ public final class InputXOptionPacket implements IncomingPacket {
 							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).get();
 							Item item = session.getExchangeSession().get(player).get(player.getAttr().get("enter_x_item_slot").getInt());
 							session.remove(player, new Item(item.getId(), amount));
-							session.updateMainComponents();
 						}
 					}));
 				}
