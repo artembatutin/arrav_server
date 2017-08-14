@@ -64,10 +64,6 @@ public final class InputXOptionPacket implements IncomingPacket {
 					player.out(new SendEnterAmount("How many you would like to deposit?", t -> () -> {
 						int amount = Integer.parseInt(t);
 						if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
-							if(true) {
-								player.message("Disabled temporary");
-								return;
-							}
 							ExchangeSession session = ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).get();
 							int slot1 = player.getAttr().get("enter_x_item_slot").getInt();
 							session.add(player, slot1, amount);
@@ -104,10 +100,6 @@ public final class InputXOptionPacket implements IncomingPacket {
 				break;
 			case 3415://Trade -> inventory
 				if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
-				if(true) {
-					player.message("Disabled temporary");
-					return;
-				}
 					player.out(new SendEnterAmount("How many you would like to withdraw?", t -> () -> {
 						int amount = Integer.parseInt(t);
 						if(ExchangeSessionManager.get().getExchangeSession(player, ExchangeSessionType.TRADE).isPresent()) {
