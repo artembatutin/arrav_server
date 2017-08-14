@@ -172,7 +172,7 @@ public enum DuelingRules {
 	 * Caches our enum values.
 	 */
 	public static final ImmutableSet<DuelingRules> VALUES = Sets.immutableEnumSet(EnumSet.allOf(DuelingRules.class));
-	
+
 	/**
 	 * The button identification of this rule.
 	 */
@@ -181,7 +181,7 @@ public enum DuelingRules {
 	/**
 	 * The slot of this equipment.
 	 */
-	private final int slot;
+	public final int slot;
 	
 	/**
 	 * The message displayed on the interface if this rule is enabled.
