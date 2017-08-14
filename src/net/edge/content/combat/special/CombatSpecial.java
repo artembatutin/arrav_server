@@ -344,7 +344,6 @@ public enum CombatSpecial {
 		public CombatHit container(Player player, Actor target) {
 			player.animation(new Animation(1667, Animation.AnimationPriority.HIGH));
 			player.graphic(new Graphic(340, 40));
-			player.getCombat().setAttackTimer(1);
 			return new CombatHit(player, target, 1, CombatType.MELEE, true);
 		}
 	},
