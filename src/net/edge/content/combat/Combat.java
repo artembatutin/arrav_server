@@ -1,6 +1,7 @@
 package net.edge.content.combat;
 
 import net.edge.Application;
+import net.edge.content.combat.special.CombatSpecial;
 import net.edge.task.TaskListener;
 import net.edge.content.combat.strategy.Strategy;
 import net.edge.world.World;
@@ -166,6 +167,9 @@ public final class Combat {
 	 * strategy.
 	 */
 	public void resetAttackTimer() {
+		if(character.isPlayer() && character.toPlayer().isSpecialActivated() && character.toPlayer().getCombatSpecial() == CombatSpecial.GRANITE_MAUL) {
+			return;
+		}
 		if(strategy == null)
 			return;
 		attackTimer = strategy.attackDelay(character);
