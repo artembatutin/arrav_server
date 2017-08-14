@@ -155,7 +155,8 @@ public final class DuelMinigame extends Minigame {
 
 		if(getRules().contains(DuelingRules.NO_DRINKS)) {
 			for (int i = 0; i < player.getSkills().length; i++) {
-				player.getSkills()[i].setLevel(player.getSkills()[i].getRealLevel(), true);
+				player.resetOverloadEffect(true);
+				player.getSkills()[i].setLevel(player.getSkills()[i].getRealLevel(), false);
 			}
 		}
 		
@@ -221,7 +222,7 @@ public final class DuelMinigame extends Minigame {
 		player.getInventory().addOrDrop(items);
 		player.setMinigame(Optional.empty());
 	}
-	
+
 	@Override
 	public boolean canLogout(Player player) {
 		return true;
@@ -250,6 +251,14 @@ public final class DuelMinigame extends Minigame {
 
 		return canEquip;
 	}
+	@Override
+	public boolean canTrade(Player player, Player other) {
+		return false;
+	}
+	@Override
+	public boolean canTeleport(Player player, Position position) {
+		return false;
+	}
 	
 	@Override
 	public boolean canEat(Player player, FoodConsumable food) {
@@ -259,7 +268,7 @@ public final class DuelMinigame extends Minigame {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean canPot(Player player, PotionConsumable potion) {
 		if(getRules().contains(DuelingRules.NO_DRINKS)) {

@@ -57,6 +57,10 @@ public final class DuelSession extends ExchangeSession {
 			player.message("The challenger must be in the duel arena area to do this.");
 			return;
 		}
+		if(player.getMinigame().isPresent()) {
+			player.message("Please finish, what you're doing before challenging players.");
+			return;
+		}
 		
 		DuelSession session = (DuelSession) ExchangeSessionManager.get().isAvailable(player, requested, ExchangeSessionType.DUEL).orElse(null);
 		
