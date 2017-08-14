@@ -2,12 +2,17 @@ package net.edge.content.skill.agility.test.barb;
 
 import net.edge.action.impl.ObjectAction;
 import net.edge.content.skill.agility.obstacle.ObstacleType;
+import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.test.Agility;
 import net.edge.content.skill.agility.test.obstacle.Obstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.ClimbableObstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.FMObstacle;
 import net.edge.content.skill.agility.test.obstacle.impl.WalkableObstacle;
 import net.edge.net.packet.out.SendObjectAnimation;
+import net.edge.task.LinkedTaskSequence;
+import net.edge.world.Animation;
+import net.edge.world.entity.actor.move.ForcedMovement;
+import net.edge.world.entity.actor.move.ForcedMovementManager;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
@@ -126,7 +131,104 @@ public final class BarbAgility extends Agility {
                     return false;
                 }
             };
-        });
+        }),
+        //ADVANCED
+        RUN_UP_WALL(43533, p -> new FMObstacle(50, OptionalInt.of(1), new Position(2538, 3542, 0), new Position(2538, 3545, 2), 10439, 90, 15) {
+            @Override
+            public void initialize(Player player) {
+                player.facePosition(new Position(2538, 3543, 0));
+                LinkedTaskSequence sequence = new LinkedTaskSequence();
+                sequence.connect(1, () -> player.animation(new Animation(10492)));
+                sequence.connect(7, () -> {
+                    player.move(new Position(2538, 3543, 2));
+                    ForcedMovement movement = new ForcedMovement(player);
+                    movement.setFirst(player.getPosition());
+                    movement.setSecond(new Position(2538, 3545, 2));
+                    movement.setSecondSpeed(20);
+                    movement.setAnimation(10493);
+                    ForcedMovementManager.submit(player, movement);
+                });
+                sequence.start();
+            }
+        }),
+        CLIMB_UP_WALL(43597, p -> new ClimbableObstacle(new Position(2537, 3546, 2), new Position(2536, 3546, 3), ObstacleType.CLIMB_UP_WALL.getAnimation(), 90, 15) {
+            @Override
+            public void initialize(Player player) {
+                player.facePosition(new Position(2536, 3546));
+
+                super.initialize(player);
+            }
+
+            @Override
+            public void onStop(Player player) {
+                player.animation(new Animation(11794));
+            }
+        }),
+        SPRING_DEVICE(43587, p -> new FMObstacle(80, OptionalInt.of(4), new Position(2533, 3547, 3), new Position(2532, 3553, 3), 4189, 90, 15) {
+            @Override
+            public void initialize(Player player) {
+                player.facePosition(new Position(player.getPosition().getX(), player.getPosition().getY() + 1));
+                player.out(new SendObjectAnimation(new Position(2532, 3544, 3), 11819, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
+
+                super.initialize(player);
+            }
+        }),
+        BALANCE_BEAM(43527, P -> new FMObstacle(-1, OptionalInt.empty(), new Position(2533, 3553, 3), new Position(2536, 3553, 3), 16079, 90, 15) {
+            @Override
+            public void initialize(Player player) {
+                ForcedMovement movement = new ForcedMovement(player);
+                movement.setFirst(player.getPosition());
+                movement.setSecond(new Position(2535, 3553, 3));
+                movement.setFirstSpeed(10);
+                movement.setSecondSpeed(65);
+                movement.setAnimation(animation);
+                ForcedMovementManager.submit(player, movement);
+            }
+        }),
+        JUMP_GAP(85534, p -> new FMObstacle(35, OptionalInt.of(1), new Position(2535, 3553, 3), new Position(2538, 3553, 2), 2586, 90, 15) {
+            @Override
+            public void onStop(Player player) {
+                player.animation(new Animation(2588));
+            }
+        }),
+        SLIDE_DOWN_ROOF(43532, p -> new FMObstacle(-1, OptionalInt.empty(), new Position(2539, p.getPosition().getY(), 2), new Position(2543, p.getPosition().getY(), 0), ObstacleType.SLIDE_ROOF.getAnimation(), 90, 615) {
+            @Override
+            public void initialize(Player player) {
+                final ForcedMovement[] movements = new ForcedMovement[]{new ForcedMovement(player), // first slide
+                        new ForcedMovement(player), // second slide
+                        new ForcedMovement(player), // jump down
+                };
+
+                LinkedTaskSequence seq = new LinkedTaskSequence();
+                seq.connect(2, () -> {
+                    player.animation(new Animation(2588, 20));
+                    movements[0].setFirst(player.getPosition());
+                    movements[0].setSecond(new Position(2540, player.getPosition().getY(), 1));
+                    movements[0].setSecondSpeed(60);
+                    movements[0].setTimer(2);
+                    movements[0].setAnimation(11792);
+                    ForcedMovementManager.submit(player, movements[0]);
+                });
+                seq.connect(2, () -> {
+                    movements[1].setFirst(new Position(2540, player.getPosition().getY(), 1));
+                    movements[1].setSecond(new Position(2542, player.getPosition().getY(), 1));
+                    movements[1].setSecondSpeed(20);
+                    movements[1].setAnimation(11790);
+                    movements[1].setTimer(2);
+                    ForcedMovementManager.submit(player, movements[1]);
+                });
+                seq.connect(2, () -> {
+                    movements[2].setFirst(new Position(2542, player.getPosition().getY(), 1));
+                    movements[2].setSecond(end);
+                    movements[2].setSecondSpeed(20);
+                    movements[2].setAnimation(11791);
+                    movements[2].setTimer(0);
+                    ForcedMovementManager.submit(player, movements[2]);
+                });
+                seq.start();
+            }
+        })
+        ;
 
         public final int[] ids;
 
