@@ -27,17 +27,17 @@ import java.util.Optional;
  * @author lare96 <http://github.com/lare96>
  */
 public final class ItemInterfacePacket implements IncomingPacket {
-	
+
 	/**
 	 * Events called on item equip action.
 	 */
 	public static final ActionContainer<ItemAction> EQUIP = new ActionContainer<>();
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_INTERFACE))
 			return;
-		
+
 		switch(opcode) {
 			case 145:
 				firstSlot(player, payload);
@@ -63,7 +63,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.ITEM_INTERFACE);
 	}
-	
+
 	/**
 	 * Handles the first item slot click on an interface.
 	 * @param player  the player to handle this for.
@@ -73,7 +73,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		int interfaceId = payload.getShort(ByteTransform.A);
 		int slot = payload.getShort(ByteTransform.A);
 		int itemId = payload.getShort(ByteTransform.A);
-		
+
 		if(interfaceId < 0 || slot < 0 || itemId < 0)
 			return;
 		if(interfaceId == 3900) {
@@ -129,7 +129,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Handles the second item slot click on an interface.
 	 * @param player  the player to handle this for.
@@ -185,7 +185,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Handles the third item slot click on an interface.
 	 * @param player  the player to handle this for.
@@ -240,7 +240,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Handles the fourth item slot click on an interface.
 	 * @param player  the player to handle this for.
@@ -290,7 +290,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Handles the equipping of an item for {@code player}.
 	 * @param player  the player to handle this for.
@@ -302,7 +302,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		int interfaceId = payload.getShort(false, ByteTransform.A);
 		if(interfaceId < 0 || slot < 0 || itemId < 0 || itemId > ItemDefinition.DEFINITIONS.length)
 			return;
-		
+
 		Item item = player.getInventory().get(slot);
 		if(item == null || !Item.valid(item)) {
 			return;
@@ -325,13 +325,14 @@ public final class ItemInterfacePacket implements IncomingPacket {
 				return;
 		}
 		ItemAction e = EQUIP.get(item.getId());
-		player.getCombat().cooldown(false);
+		if(item.getId() != 4153)
+			player.getCombat().cooldown(false);
 		if(e != null)
 			if(e.click(player, item, interfaceId, slot, 5))
 				return;
 		player.getEquipment().equip(slot);
 	}
-	
+
 	/**
 	 * Handles the swapping of items on an interface for {@code player}.
 	 * @param player  the player to handle this for.
@@ -363,7 +364,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Handles the bank tab switching of items on the bank panel for the {@code player}.
 	 * @param player  the player to handle this for.

@@ -177,7 +177,11 @@ public final class Combat {
 	void clearAttackTimer() {
 		attackTimer = 0;
 	}
-	
+
+	public void setAttackTimer(int attackTimer) {
+		this.attackTimer = attackTimer;
+	}
+
 	/**
 	 * Starts the cooldown sequence for this controller.
 	 * @param resetAttack if the attack timer should be reset.
