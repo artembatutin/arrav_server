@@ -15,10 +15,10 @@ public final class GameConstants {
 	/**
 	 * The public client build number for the login authentication.
 	 */
-	public static final int CLIENT_BUILD = 30;
+	public static final int CLIENT_BUILD = 31;
 	
 	/**
-	 * The experience mltiplier for the game.
+	 * The experience multiplier for the game.
 	 */
 	public static double EXPERIENCE_MULTIPLIER = 1;
 	
