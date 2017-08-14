@@ -88,6 +88,10 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			attacker.getMovementQueue().reset();
 			return false;
 		}
+		if(!attacker.isVisible()) {
+			attacker.message("You're invisible and unable to attack other players.");
+			return false;
+		}
 		if(victim.isIronMan() && !victim.isIronMaxed()) {
 			attacker.message("You can't initiate combat with an iron man member.");
 			return false;
@@ -95,6 +99,10 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		if(!attacker.inMulti() && attacker.getCombat().isBeingAttacked() && attacker.getCombat().getAggressor() != victim && attacker.getCombat().pjingCheck()) {
 			attacker.message("You are already under attack!");
 			attacker.getMovementQueue().reset();
+			return false;
+		}
+		if(attacker.getMinigame().isPresent() && Location.inWilderness(attacker)) {
+			attacker.message("Something went wrong there! You are still in a minigame, please re-log!");
 			return false;
 		}
 		if(Location.inDuelArena(attacker) && !attacker.getMinigame().isPresent()) {

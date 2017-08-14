@@ -2,16 +2,18 @@ package net.edge.content.minigame.dueling;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendContainer;
 import net.edge.net.packet.out.SendContextMenu;
 import net.edge.task.LinkedTaskSequence;
+import net.edge.util.TextUtils;
 import net.edge.util.log.Log;
 import net.edge.util.log.impl.DuelLog;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.special.CombatSpecial;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.item.container.impl.Equipment;
+import net.edge.world.entity.item.container.impl.EquipmentType;
 import net.edge.world.entity.item.container.session.impl.DuelSession;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.FoodConsumable;
@@ -28,7 +30,9 @@ import net.edge.world.entity.item.Item;
 import net.edge.world.object.GameObject;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Holds functionality for the fighting session of the dueling minigame.
@@ -41,11 +45,7 @@ public final class DuelMinigame extends Minigame {
 	 */
 	private final DuelSession session;
 	
-	/**
-	 * The rules for this duel minigame.
-	 */
 	private final EnumSet<DuelingRules> rules;
-	
 	/**
 	 * The flag which determines if the fight started.
 	 */
@@ -141,23 +141,33 @@ public final class DuelMinigame extends Minigame {
 	
 	@Override
 	public void onEnter(Player player) {
+
 		session.getPlayers().forEach(this::restore);
 		Player other = session.getOther(player);
 
-		if(rules.contains(DuelingRules.NO_DRINKS)) {
+		rules.forEach(e -> {
+			if(e.getSlot() != -1 && player.getInventory().computeFreeIndex() != -1) {
+				player.getEquipment().unequip(e.getSlot());
+			} else {
+				player.message("You do not have enough free space to un-equip the disabled items.");
+			}
+		});
+
+		if(getRules().contains(DuelingRules.NO_DRINKS)) {
 			for (int i = 0; i < player.getSkills().length; i++) {
-				player.getSkills()[i].setLevel(player.getSkills()[i].getRealLevel(), true);
+				player.resetOverloadEffect(true);
+				player.getSkills()[i].setLevel(player.getSkills()[i].getRealLevel(), false);
 			}
 		}
 		
-		if(rules.contains(DuelingRules.OBSTACLES)) {
+		if(getRules().contains(DuelingRules.OBSTACLES)) {
 			player.move(OBSTACLES_ARENA.random());
 			other.move(OBSTACLES_ARENA.random());
 			startCountdown();
 			return;
 		}
 		
-		if(rules.contains(DuelingRules.NO_MOVEMENT)) {
+		if(getRules().contains(DuelingRules.NO_MOVEMENT)) {
 			player.move(DEFAULT_ARENA_CHECK.random());
 			ObjectList<Position> pos = TraversalMap.getSurroundedTraversableTiles(player.getPosition(), player.size(), other.size());
 			if(pos.size() > 0) {
@@ -212,7 +222,7 @@ public final class DuelMinigame extends Minigame {
 		player.getInventory().addOrDrop(items);
 		player.setMinigame(Optional.empty());
 	}
-	
+
 	@Override
 	public boolean canLogout(Player player) {
 		return true;
@@ -227,19 +237,41 @@ public final class DuelMinigame extends Minigame {
 	public Position deathPosition(Player player) {
 		return new Position(3361 + RandomUtils.inclusive(11), 3264 + RandomUtils.inclusive(3), 0);
 	}
+
+	@Override
+	public boolean canEquip(Player player, Item item, EquipmentType type) {
+		player.message("type: "+type);
+		//private final List<DuelingRules> selected_equipment_rules = getRules().stream().filter(DuelingRules.EQUIPMENT_RULES::contains).collect(Collectors.toList());
+
+
+		boolean canEquip = rules.stream().anyMatch(r -> r.getSlot() != -1 && r.getSlot() != type.getSlot());
+
+		if(!canEquip) // Je gebruikt nooit brackets bij if statementS?
+			player.message("Wearing " + TextUtils.appendIndefiniteArticle(type.name().toLowerCase()) + " has been disabled during this duel.");
+
+		return canEquip;
+	}
+	@Override
+	public boolean canTrade(Player player, Player other) {
+		return false;
+	}
+	@Override
+	public boolean canTeleport(Player player, Position position) {
+		return false;
+	}
 	
 	@Override
 	public boolean canEat(Player player, FoodConsumable food) {
-		if(rules.contains(DuelingRules.NO_FOOD)) {
+		if(getRules().contains(DuelingRules.NO_FOOD)) {
 			player.message("Eating food has been disabled during this duel.");
 			return false;
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean canPot(Player player, PotionConsumable potion) {
-		if(rules.contains(DuelingRules.NO_DRINKS)) {
+		if(getRules().contains(DuelingRules.NO_DRINKS)) {
 			player.message("Drinking potions have been disabled during this duel.");
 			return false;
 		}
@@ -248,7 +280,7 @@ public final class DuelMinigame extends Minigame {
 	
 	@Override
 	public boolean canPray(Player player, Prayer prayer) {
-		if(rules.contains(DuelingRules.NO_PRAYER)) {
+		if(getRules().contains(DuelingRules.NO_PRAYER)) {
 			player.message("Activating prayers have been disabled during this duel.");
 			return false;
 		}
@@ -258,7 +290,7 @@ public final class DuelMinigame extends Minigame {
 	@Override
 	public boolean onFirstClickObject(Player player, GameObject object) {
 		if(object.getId() == 3203) {
-			if(rules.contains(DuelingRules.NO_FORFEIT)) {
+			if(getRules().contains(DuelingRules.NO_FORFEIT)) {
 				player.message("Forfeiting has been disabled during this duel.");
 				return false;
 			}
@@ -279,13 +311,14 @@ public final class DuelMinigame extends Minigame {
 		}
 		if(!session.getOther(player).same(victim)) {
 			player.message("You can't attack this person.");
+			player.getCombat().reset();
 			return false;
 		}
 		if(!started) {
 			player.message("You can't attack yet...");
 			return false;
 		}
-		if(rules.contains(DuelingRules.WHIP_DDS_ONLY)) {
+		if(getRules().contains(DuelingRules.WHIP_DDS_ONLY)) {
 			if(!type.equals(CombatType.MELEE)) {
 				player.message("You can only hit the opponent with a whip or dds.");
 				player.getCombat().reset();
@@ -297,21 +330,21 @@ public final class DuelMinigame extends Minigame {
 				return false;
 			}
 		}
-		if(rules.contains(DuelingRules.NO_MAGIC)) {
+		if(getRules().contains(DuelingRules.NO_MAGIC)) {
 			if(type.equals(CombatType.MAGIC)) {
 				player.message("Magical attacks have been disabled during this duel.");
 				player.getCombat().reset();
 				return false;
 			}
 		}
-		if(rules.contains(DuelingRules.NO_RANGED)) {
+		if(getRules().contains(DuelingRules.NO_RANGED)) {
 			if(type.equals(CombatType.RANGED)) {
 				player.message("Ranged attacks have been disabled during this duel.");
 				player.getCombat().reset();
 				return false;
 			}
 		}
-		if(rules.contains(DuelingRules.NO_MELEE)) {
+		if(getRules().contains(DuelingRules.NO_MELEE)) {
 			if(type.equals(CombatType.MELEE)) {
 				player.message("Melee attacks have been disabled during this duel.");
 				player.getCombat().reset();
@@ -323,7 +356,7 @@ public final class DuelMinigame extends Minigame {
 	
 	@Override
 	public boolean canUseSpecialAttacks(Player player, CombatSpecial special) {
-		if(rules.contains(DuelingRules.NO_SPECIAL_ATTACKS)) {
+		if(getRules().contains(DuelingRules.NO_SPECIAL_ATTACKS)) {
 			player.message("Special attacks have been disabled during this duel.");
 			return false;
 		}
@@ -332,7 +365,7 @@ public final class DuelMinigame extends Minigame {
 	
 	@Override
 	public boolean canWalk(Player player) {
-		if(rules.contains(DuelingRules.NO_MOVEMENT)) {
+		if(getRules().contains(DuelingRules.NO_MOVEMENT)) {
 			player.message("Walking has been disabled during this duel.");
 			return false;
 		}
@@ -340,5 +373,12 @@ public final class DuelMinigame extends Minigame {
 			onInterfaceClick(player);
 		}
 		return true;
+	}
+
+	/**
+	 * The rules for this duel minigame.
+	 */
+	public EnumSet<DuelingRules> getRules() {
+		return rules;
 	}
 }
