@@ -72,8 +72,8 @@ public final class DarkEnergyCore extends Mob {
 	
 	@Override
 	public void appendDeath() {
-		moveTask.setRunning(false);
-		leechTask.setRunning(false);
+		moveTask.cancel();
+		leechTask.cancel();
 		super.appendDeath();
 	}
 	
@@ -107,13 +107,12 @@ public final class DarkEnergyCore extends Mob {
 		protected void execute() {
 			Region reg = core.getRegion().orElse(null);
 			Player victim = null;
-			if(reg != null) {
-				victim = RandomUtils.random(reg.getPlayers().stream().filter(p -> AreaManager.get().inArea(p.getPosition(), "CORPOREAL_BEAST")).collect(Collectors.toList()));
+			if(reg != null && !reg.getPlayers().isEmpty()) {
+				victim = RandomUtils.random(reg.getPlayers().stream().filter(p -> p.getPosition().withinDistance(core.getPosition(), 5)).collect(Collectors.toList()));
 			}
 			if(victim == null || core.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || core.isDead() || victim.isDead()) {
 				return;
 			}
-			
 			if(core.isStunned()) {
 				return;
 			}
@@ -121,7 +120,6 @@ public final class DarkEnergyCore extends Mob {
 			core.setVisible(false);
 			core.getMovementQueue().setLockMovement(false);
 			Position position = victim.getPosition();
-			
 			new Projectile(core.getCenterPosition(), position, 0, 1828, 44, 4, 60, 43, 0, core.getInstance(), CombatType.MAGIC).sendProjectile();
 			World.get().submit(new Task(2) {
 				@Override
@@ -163,14 +161,13 @@ public final class DarkEnergyCore extends Mob {
 			if(this.getDelay() == 3) {
 				this.setDelay(1);//we give the players a small chance to move quickly away before getting hit severely.
 			}
-			
 			if(core.isStunned()) {
 				return;
 			}
-			
 			if(core.getState() != EntityState.ACTIVE || core.isDead() || !core.isVisible()) {
 				return;
 			}
+			
 			Region reg = core.getRegion().orElse(null);
 			if(reg == null)
 				return;
