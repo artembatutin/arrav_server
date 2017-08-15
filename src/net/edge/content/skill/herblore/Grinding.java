@@ -2,6 +2,7 @@ package net.edge.content.skill.herblore;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.content.skill.action.SkillAction;
 import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
@@ -81,7 +82,7 @@ public final class Grinding extends ProducingSkillAction {
 	
 	@Override
 	public int delay() {
-		return 3;
+		return 4;
 	}
 	
 	@Override
@@ -91,18 +92,19 @@ public final class Grinding extends ProducingSkillAction {
 	
 	@Override
 	public boolean init() {
-		if(!checkGrinding()) {
-			return false;
-		}
-		return true;
+		return checkGrinding();
 	}
 	
 	@Override
 	public boolean canExecute() {
-		if(!checkGrinding()) {
-			return false;
+		return checkGrinding();
+	}
+	
+	@Override
+	public void onSkillAction(SkillAction other) {
+		if(other instanceof Grinding) {
+			this.stop();
 		}
-		return true;
 	}
 	
 	@Override

@@ -37,8 +37,8 @@ public abstract class ProducingSkillAction extends SkillAction {
 	
 	@Override
 	public final boolean canRun(Task t) {
-		Optional<Item[]> removeItem = removeItem();
 		getPlayer().getInventory().test();
+		Optional<Item[]> removeItem = removeItem();
 		
 		//Looking if player has empty space for produce items.
 		if(!player.getInventory().hasCapacityAfter(produceItem().orElse(null), removeItem.orElse(null))) {
@@ -53,6 +53,8 @@ public abstract class ProducingSkillAction extends SkillAction {
 				//loop checking specifics if message not present.
 				if(!message().isPresent()) {
 					for(Item item : removeItem.get()) {
+						if(item == null)
+							continue;
 						if(!getPlayer().getInventory().contains(item)) {
 							String anyOrEnough = item.getAmount() == 1 ? "any" : "enough";
 							getPlayer().message("You don't have " + anyOrEnough + " " + TextUtils.appendPluralCheck(item.getDefinition().getName()) + ".");

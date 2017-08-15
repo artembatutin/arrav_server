@@ -46,6 +46,7 @@ public abstract class SkillAction {
 			getPlayer().message("You currently cannot do this.");
 			return;
 		}
+		player.getSkillActionTask().ifPresent(a -> a.getAction().onSkillAction(this));
 		
 		/** This will cancel previous skill, if you're mining and you try to fletch,
 		 * mining will get stopped, and fletching will start.*/
@@ -144,6 +145,14 @@ public abstract class SkillAction {
 	 */
 	public void onSubmit() {
 		
+	}
+	
+	/**
+	 * The method executed when another skill action is submitted.
+	 * @param other other skill action.
+	 */
+	public void onSkillAction(SkillAction other) {
+	
 	}
 	
 	/**

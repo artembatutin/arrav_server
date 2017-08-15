@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.market.MarketItem;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
@@ -202,7 +203,7 @@ public final class FinishedPotion extends ProducingSkillAction {
 		 * @param level            {@link #level}.
 		 * @param experience       {@link #experience}.
 		 */
-		private FinishedPotionData(int finishedPotion, int unfinishedPotion, int[] requiredItem, int level, double experience) {
+		FinishedPotionData(int finishedPotion, int unfinishedPotion, int[] requiredItem, int level, double experience) {
 			this.finishedPotion = new Item(finishedPotion);
 			this.unfinishedPotion = new Item(unfinishedPotion);
 			this.requiredItem = Item.convert(requiredItem);
@@ -218,7 +219,7 @@ public final class FinishedPotion extends ProducingSkillAction {
 		 * @param level            {@link #level}.
 		 * @param experience       {@link #experience}.
 		 */
-		private FinishedPotionData(int finishedPotion, int unfinishedPotion, int requiredItem, int level, double experience) {
+		FinishedPotionData(int finishedPotion, int unfinishedPotion, int requiredItem, int level, double experience) {
 			this.finishedPotion = new Item(finishedPotion);
 			this.unfinishedPotion = new Item(unfinishedPotion);
 			this.requiredItem = new Item[]{new Item(requiredItem)};
