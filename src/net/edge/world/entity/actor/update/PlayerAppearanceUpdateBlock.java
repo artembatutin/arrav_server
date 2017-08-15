@@ -1,5 +1,6 @@
 package net.edge.world.entity.actor.update;
 
+import com.google.common.collect.ImmutableMap;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.ByteTransform;
 import net.edge.world.entity.item.container.impl.Equipment;
@@ -18,6 +19,22 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 	PlayerAppearanceUpdateBlock() {
 		super(0x10, UpdateFlag.APPEARANCE);
 	}
+
+	private final ImmutableMap<Integer, Integer> NEW_HALF_BODY_APPEARANCES =ImmutableMap.<Integer, Integer>builder().
+			put(443, 614).
+			put(444, 599).
+			put(445, 590).
+			put(446, 598).
+			put(447, 610).
+			put(448, 611).
+			put(449, 612).
+			put(450, 609).
+			put(451, 602).
+			put(452, 595).
+			put(453, 604).
+			put(454, 605).
+			put(455, 606).
+			put(456, 619).build();
 
 	@Override
 	public int write(Player player, Player other, GameBuffer msg) {
@@ -59,10 +76,7 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 			}
 			if(other.getEquipment().getId(Equipment.CHEST_SLOT) > 1) {
 				if(!other.getEquipment().get(Equipment.CHEST_SLOT).getDefinition().isPlatebody()) {
-					//the ternary is done because of newer appearances whom's body also changes arms
-					//the ones where body also changes arms sets arm appearances to 0 which bugs out
-					//when wearing body's which update arms while it's on.
-					buf.putShort(appearance.getArms() == 0 ? 0x100 + 26 : 0x100 + appearance.getArms());
+					buf.putShort(appearance.getArms() == 0 ? 0x100 + NEW_HALF_BODY_APPEARANCES.get(appearance.getChest()) : 0x100 + appearance.getArms());
 				} else {
 					buf.put(0);
 				}
