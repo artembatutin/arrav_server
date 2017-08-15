@@ -21,13 +21,14 @@ import static java.util.Objects.requireNonNull;
 public final class EdgevilleUpstreamHandler extends ChannelInboundHandlerAdapter {
 	
 	/**
-	 * A default access level constructor to discourage external instantiation outside of the {@code io.luna.org} package.
+	 * A default access level constructor to discourage external instantiation outside of the {@code net.edge.net} package.
 	 */
 	EdgevilleUpstreamHandler() { }
 	
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
 		e.printStackTrace();
+		ctx.channel().close();
 	}
 	
 	@Override
