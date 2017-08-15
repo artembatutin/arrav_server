@@ -240,6 +240,8 @@ public class Multicannon extends DynamicObject {
 					return true;
 				Inventory inv = player.getInventory();
 				int am = inv.computeAmountForId(2);
+				if(am > 30)
+					am = 30;
 				if(am == 0) {
 					player.message("You do not have any cannonballs.");
 					return true;
