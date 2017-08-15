@@ -63,8 +63,8 @@ public final class CacheIndex {
 	/**
 	 * Tests whether or not this index is valid.
 	 */
-	public void check() {
-		Preconditions.checkArgument(length > 0);
+	public boolean check() {
+		return length > 0;
 	}
 
 }

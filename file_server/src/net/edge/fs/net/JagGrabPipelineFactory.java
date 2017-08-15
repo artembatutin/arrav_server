@@ -33,14 +33,11 @@ public final class JagGrabPipelineFactory extends ChannelInitializer<SocketChann
 	@Override
 	protected void initChannel(SocketChannel channel) throws Exception {
 		final ChannelPipeline pipeline = channel.pipeline();
-				
 		// decoders
 		pipeline.addLast("string-decoder", new StringDecoder(FileServerConstants.JAGGRAB_CHARSET));
 		pipeline.addLast("decoder", new JagGrabDecoder());
-		
 		// encoders
 		pipeline.addLast("encoder", new JagGrabEncoder());
-		
 		// handler
 		pipeline.addLast("timeout", new IdleStateHandler(FileServerConstants.SESSION_TIMEOUT, 0, 0));
 		pipeline.addLast("handler", handler);

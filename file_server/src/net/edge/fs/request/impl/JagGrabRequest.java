@@ -38,7 +38,6 @@ public final class JagGrabRequest extends Request {
 		//If we loaded the file, send it.
 		//Otherwise close the channel.
 		if (file != null) {
-			System.out.println(new JagGrabResponse(file).getBuffer().readableBytes());
 			getChannel().writeAndFlush(new JagGrabResponse(file)).addListener(ChannelFutureListener.CLOSE);
 		} else {
 			getChannel().close();

@@ -219,7 +219,8 @@ public final class MovementQueue {
 	 * Finishes the current path for this character.
 	 */
 	public void finish() {
-		waypoints.removeFirst();
+		if(!waypoints.isEmpty())
+			waypoints.removeFirst();
 	}
 	
 	/**

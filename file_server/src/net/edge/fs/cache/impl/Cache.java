@@ -116,8 +116,10 @@ public final class Cache {
 		buffer.flip();
 
 		CacheIndex index = CacheIndex.decode(buffer);
-		index.check();
-		return index;
+		if(index.check()) {
+			return index;
+		}
+		return null;
 	}
 
 	/**

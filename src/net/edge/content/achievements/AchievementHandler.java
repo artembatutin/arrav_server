@@ -22,17 +22,18 @@ public class AchievementHandler {
 		final int prev = player.getAchievements().computeIfAbsent(achievement, a -> 0);
 		player.getAchievements().put(achievement, prev + increase);
 		boolean updated = false;
+		int dif = 0;
 		for(int i : achievement.getAmount()) {
 			if(prev >= i)
 				continue;
 			if(prev + increase >= i) {
-				int tier = getTier(player, achievement);
-				player.out(new SendTask(String.format(achievement.getTask(), achievement.getAmount()[tier])));
-				player.getBank().deposit(new Item(995, AchievementDifficulty.DIF[tier].getReward()));
-				player.message(AchievementDifficulty.DIF[tier].getReward() + " coins have been added into your bank.");
+				player.out(new SendTask(String.format(achievement.getTask(), achievement.getAmount()[dif])));
+				player.getBank().deposit(new Item(995, AchievementDifficulty.DIF[dif].getReward()));
+				player.message(AchievementDifficulty.DIF[dif].getReward() + " coins have been added into your bank.");
 				update(player, achievement);
 				updated = true;
 			}
+			dif++;
 		}
 		if(!updated) {
 			int tier = getTier(player, achievement);

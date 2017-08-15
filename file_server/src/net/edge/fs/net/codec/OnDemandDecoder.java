@@ -24,7 +24,6 @@ public final class OnDemandDecoder extends ByteToMessageDecoder {
 			int fileType = buf.readUnsignedByte() + 1;
 			//Read file id
 			int fileId = buf.readInt();
-			System.out.println("requesting : " + fileType + " - " + fileId);
 			//Create the request..
 			out.add(new OnDemandRequest(ctx.channel(), fileType, fileId));
 		}

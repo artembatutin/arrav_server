@@ -38,7 +38,7 @@ public class FileServerConstants {
 	/**
 	 * The time required for the channel to time out
 	 */
-	public static final int SESSION_TIMEOUT = 30;
+	public static final int SESSION_TIMEOUT = 15;
 
 	/**
 	 * The character set used in a JagGrab request.

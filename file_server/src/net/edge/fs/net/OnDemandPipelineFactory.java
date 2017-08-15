@@ -32,13 +32,10 @@ public final class OnDemandPipelineFactory extends ChannelInitializer<SocketChan
 	@Override
 	protected void initChannel(SocketChannel channel) throws Exception {
 		final ChannelPipeline pipeline = channel.pipeline();
-				
 		// decoders
 		pipeline.addLast("decoder", new OnDemandDecoder());
-		
 		// encoders
 		pipeline.addLast("encoder", new OnDemandEncoder());
-		
 		// handler
 		pipeline.addLast("timeout", new IdleStateHandler(FileServerConstants.SESSION_TIMEOUT, 0, 0));
 		pipeline.addLast("handler", handler);

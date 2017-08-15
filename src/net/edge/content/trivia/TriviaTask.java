@@ -42,13 +42,11 @@ public final class TriviaTask extends Task {
             entry.ask();
             return;
         }
-
         if(!reminded) {
             entry.reminder();
             reminded = true;
             return;
         }
-
         World.get().message("@red@[Trivia Bot]: @blu@The last trivia question hasn't been answered and has expired!");
         entry.reset();
         reminded = false;
