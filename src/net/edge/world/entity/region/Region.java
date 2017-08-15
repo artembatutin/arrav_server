@@ -180,11 +180,9 @@ public final class Region extends Entity {
 				continue;
 			player.out(new SendItemNodeRemoval(item));
 			if(item.getPosition().withinDistance(player.getPosition(), 60)) {
-				if(item.getPlayer() == null && item.getItemState() == GroundItemState.SEEN_BY_EVERYONE) {
+				if(item.getItemState() == GroundItemState.SEEN_BY_EVERYONE) {
 					player.out(new SendItemNode(item));
-					continue;
-				}
-				if(item.getPlayer().same(player) && item.getItemState() == GroundItemState.SEEN_BY_OWNER) {
+				} else if(item.getPlayer().same(player) && item.getItemState() == GroundItemState.SEEN_BY_OWNER) {
 					player.out(new SendItemNode(item));
 				}
 			}

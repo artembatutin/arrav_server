@@ -95,7 +95,6 @@ public class GroundItem extends Entity {
 						}
 					}
 				}
-				player = null;
 				state = GroundItemState.SEEN_BY_EVERYONE;
 				break;
 			case SEEN_BY_EVERYONE:
