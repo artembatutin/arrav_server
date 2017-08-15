@@ -59,7 +59,10 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 			}
 			if(other.getEquipment().getId(Equipment.CHEST_SLOT) > 1) {
 				if(!other.getEquipment().get(Equipment.CHEST_SLOT).getDefinition().isPlatebody()) {
-					buf.putShort(0x100 + appearance.getArms());
+					//the ternary is done because of newer appearances whom's body also changes arms
+					//the ones where body also changes arms sets arm appearances to 0 which bugs out
+					//when wearing body's which update arms while it's on.
+					buf.putShort(appearance.getArms() == 0 ? 0x100 + 26 : 0x100 + appearance.getArms());
 				} else {
 					buf.put(0);
 				}
