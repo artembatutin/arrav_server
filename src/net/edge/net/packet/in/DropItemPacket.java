@@ -69,8 +69,9 @@ public final class DropItemPacket implements IncomingPacket {
 			player.getSkillActionTask().get().cancel();
 		
 		int amount = ItemDefinition.DEFINITIONS[id].isStackable() ? item.getAmount() : 1;
-		player.getInventory().remove(new Item(id, amount), slot);
-		player.getRegion().ifPresent(r -> r.register(new GroundItem(new Item(id, amount), player.getPosition(), player)));
-		player.getActivityManager().execute(ActivityType.DROP_ITEM);
+		if(player.getInventory().remove(new Item(id, amount), slot) == amount) {
+			player.getRegion().ifPresent(r -> r.register(new GroundItem(new Item(id, amount), player.getPosition(), player)));
+			player.getActivityManager().execute(ActivityType.DROP_ITEM);
+		}
 	}
 }
