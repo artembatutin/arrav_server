@@ -145,7 +145,8 @@ public final class Runecrafting extends ProducingSkillAction {
 
 	@Override
 	public Optional<Item[]> produceItem() {
-		int amount = altar.getRune().getBestMultiplier(player).getMultiply();
+		Optional<RunecraftingMultiplier> m = altar.getRune().getBestMultiplier(player);
+		int amount = m.map(RunecraftingMultiplier::getMultiply).orElse(1);
 		return Optional.of(new Item[]{new Item(altar.getRune().getItem().getId(), count * amount)});
 	}
 

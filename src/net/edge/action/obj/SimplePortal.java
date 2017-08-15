@@ -25,6 +25,7 @@ public class SimplePortal extends ActionInitializer {
 			}
 		};
 		portal.registerFirst(2273);
+		portal.registerFirst(44276);
 		
 	}
 }

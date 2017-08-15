@@ -75,14 +75,16 @@ public enum Rune {
 	 * @param player {@link the player we're getting this multiplier for.
 	 * @return the best multiplier, otherwise a standard one.
 	 */
-	public RunecraftingMultiplier getBestMultiplier(Player player) {
+	public Optional<RunecraftingMultiplier> getBestMultiplier(Player player) {
+		if(!multiplier.isPresent())
+			return Optional.empty();
 		RunecraftingMultiplier best = new RunecraftingMultiplier(1, 1);
 		for(RunecraftingMultiplier multiply : multiplier.get()) {
 			if(player.getSkills()[Skills.RUNECRAFTING].reqLevel(multiply.getRequirement())) {
 				best = multiply;
 			}
 		}
-		return best;
+		return Optional.of(best);
 	}
 
 }

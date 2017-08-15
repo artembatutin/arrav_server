@@ -25,7 +25,7 @@ public enum Altar {
 	NATURE(44489, Rune.NATURE, 44, 60.0, new Position(2400, 4835), false, 1462),
 	LAW(44488, Rune.LAW, 54, 75.0, new Position(2464, 4818), false, 1458),
 	DEATH(2488, Rune.DEATH, 65, 80.0, new Position(2208, 4830), false, 1456),
-	BLOOD(72627, Rune.BLOOD, 80, 90.0, new Position(3027, 4834), false, 1450),
+	BLOOD(72627, Rune.BLOOD, 80, 90.0, new Position(2466, 4888), false, 1450),
 	SOUL(7138, Rune.SOUL, 95, 100.0, new Position(3050, 4829), false, 1460);
 
 	/**
