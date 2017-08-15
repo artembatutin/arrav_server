@@ -1,7 +1,5 @@
 package net.edge.content;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import net.edge.content.achievements.Achievement;
 import net.edge.content.achievements.AchievementHandler;
 import net.edge.content.commands.impl.RedeemCommand;
@@ -22,7 +20,6 @@ import net.edge.content.scoreboard.PlayerScoreboardStatistic;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 
-import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
@@ -32,8 +29,7 @@ import java.util.concurrent.TimeUnit;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum PlayerPanel {
-	TAB,
-	TOOLS,
+	QUICKIES,
 	COMMUNITY() {
 		@Override
 		public void onClick(Player player) {
@@ -176,8 +172,7 @@ public enum PlayerPanel {
 	},
 	
 	EMPTY1,
-	
-	PVE_HEADER,
+	MONSTER_HEADER,
 	HIGHEST_KILLSTREAK,
 	CURRENT_KILLSTREAK,
 	TOTAL_PLAYER_KILLS,
@@ -186,17 +181,11 @@ public enum PlayerPanel {
 	TOTAL_NPC_DEATHS,
 	
 	EMPTY2,
-	
-	INDIVIDUAL_SCOREBOARD_STATISTICS,
-	INDIVIDUAL_HIGHEST_KILLSTREAKS,
-	INDIVIDUAL_CURRENT_KILLSTREAKS,
-	INDIVIDUAL_KILLS,
-	INDIVIDUAL_DEATHS();
-	
-	/**
-	 * Caches our enum values.
-	 */
-	private static final ImmutableSet<PlayerPanel> VALUES = Sets.immutableEnumSet(EnumSet.allOf(PlayerPanel.class));
+	PVP_SCOREBOARD_STATISTICS,
+	PVP_HIGHEST_KILLSTREAKS,
+	PVP_CURRENT_KILLSTREAKS,
+	PVP_KILLS,
+	PVP_DEATHS();
 	
 	/**
 	 * The button identification.
@@ -223,36 +212,36 @@ public enum PlayerPanel {
 	 * @param player the player logging in.
 	 */
 	public static void refreshAll(Player player) {
-		if(!player.isHuman())
+		if(!player.isHuman()) {
 			return;
+		}
 		player.out(new SendClearText(16026, 100));
-		PlayerPanel.TAB.refresh(player, "@or2@Informative @or1@- @or3@Clickable");
-		PlayerPanel.TOOLS.refresh(player, "@or1@Quickies:");
+		PlayerPanel.QUICKIES.refresh(player, "@or1@Quickies @or3@[clickable]@or1@:");
 		PlayerPanel.COMMUNITY.refresh(player, "@or3@ - Forums");
 		PlayerPanel.DISCORD.refresh(player, "@or3@ - Discord");
-		PlayerPanel.VOTE.refresh(player, "@or3@ - Vote");
+		PlayerPanel.VOTE.refresh(player, "@or3@ - Vote points: @yel@" + player.getVotePoints() + " points", true);
 		PlayerPanel.STORE.refresh(player, "@or3@ - Store");
 		PlayerPanel.EXP_LOCK.refresh(player, "@or3@ - Experience Lock: @yel@" + (player.xpLock ? "@gre@yes" : "@red@no"));
 		PlayerPanel.NPC_TOOL.refresh(player, "@or3@ - Monster Database");
 		
 		PlayerPanel.SERVER_STATISTICS.refresh(player, "@or1@Server Information:");
-		PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
-		PlayerPanel.PLAYERS_IN_WILD.refreshAll("@or2@ - Players in wild: @yel@" + WildernessActivity.getPlayers().size());
-		PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
+		PlayerPanel.UPTIME.refresh(player, "@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
+		PlayerPanel.PLAYERS_IN_WILD.refresh(player, "@or2@ - Players in wild: @yel@" + WildernessActivity.getPlayers().size());
+		PlayerPanel.STAFF_ONLINE.refresh(player, "@or3@ - Staff online: @yel@" + World.get().getStaffCount(), true);
 		PlayerPanel.PLAYER_STATISTICS.refresh(player, "@or1@Player Information:");
 		
 		PlayerPanel.EMPTY.refresh(player, "");
 		PlayerPanel.USERNAME.refresh(player, "@or2@ - Username: @yel@" + TextUtils.capitalize(player.getCredentials().getUsername()));
 		PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.capitalize(TextUtils.passwordCheck(player.getCredentials().getPassword())));
-		PlayerPanel.IRON.refresh(player, "@or3@ - Iron man: @yel@" + (player.isIronMan() ? "@gre@yes" : "@red@no"));
 		PlayerPanel.RANK.refresh(player, "@or2@ - Rank: @yel@" + TextUtils.capitalize(player.getRights().toString()));
-		PlayerPanel.SLAYER_POINTS.refresh(player, "@or2@ - Slayer points: @yel@" + player.getSlayerPoints());
+		PlayerPanel.IRON.refresh(player, "@or3@ - Iron man: @yel@" + (player.isIronMan() ? "@gre@yes" : "@red@no"), true);
+		PlayerPanel.SLAYER_POINTS.refresh(player, "@or2@ - Slayer points: @yel@" + player.getSlayerPoints(), true);
 		PlayerPanel.SLAYER_TASK.refresh(player, "@or2@ - Slayer task: @yel@" + (player.getSlayer().isPresent() ? (player.getSlayer().get().toString()) : "none"));
 		PlayerPanel.SLAYER_COUNT.refresh(player, "@or2@ - Completed tasks: @yel@" + player.getAttr().get("slayer_tasks").getInt());
 		PlayerPanel.PEST_POINTS.refresh(player, "@or2@ - Pest points: @yel@" + player.getPest());
 		PlayerPanel.TOTAL_VOTES.refresh(player, "@or2@ - Total votes: @yel@" + player.getTotalVotes());
 		
-		PlayerPanel.PVE_HEADER.refresh(player, "@or1@PvE Statistics:");
+		PlayerPanel.MONSTER_HEADER.refresh(player, "@or1@Killing Statistics:");
 		PlayerPanel.HIGHEST_KILLSTREAK.refresh(player, "@or2@ - Highest Killstreak: @yel@" + player.getHighestKillstreak().get());
 		PlayerPanel.CURRENT_KILLSTREAK.refresh(player, "@or2@ - Current Killstreak: @yel@" + player.getCurrentKillstreak().get());
 		PlayerPanel.TOTAL_PLAYER_KILLS.refresh(player, "@or2@ - Total Players killed: @yel@" + player.getPlayerKills().get());
@@ -261,12 +250,12 @@ public enum PlayerPanel {
 		PlayerPanel.TOTAL_NPC_DEATHS.refresh(player, "@or2@ - Total Mob deaths: @yel@" + player.getDeathsByNpc().get());
 		
 		PlayerPanel.EMPTY2.refresh(player, "");
-		PlayerPanel.INDIVIDUAL_SCOREBOARD_STATISTICS.refresh(player, "@or1@Player Killing Statistics:");
 		PlayerScoreboardStatistic s = ScoreboardManager.get().getPlayerScoreboard().get(player.getFormatUsername());
-		PlayerPanel.INDIVIDUAL_HIGHEST_KILLSTREAKS.refresh(player, "@or2@ - Highest Killstreak: @yel@" + (s == null ? 0 : s.getHighestKillstreak()));
-		PlayerPanel.INDIVIDUAL_CURRENT_KILLSTREAKS.refresh(player, "@or2@ - Current Killstreak: @yel@" + (s == null ? 0 : s.getCurrentKillstreak()));
-		PlayerPanel.INDIVIDUAL_KILLS.refresh(player, "@or2@ - Players killed: @yel@" + (s == null ? 0 : s.getKills()));
-		PlayerPanel.INDIVIDUAL_DEATHS.refresh(player, "@or2@ - Player deaths: @yel@" + (s == null ? 0 : s.getDeaths()));
+		PlayerPanel.PVP_SCOREBOARD_STATISTICS.refresh(player, "@or1@Scoreboard Statistics:");
+		PlayerPanel.PVP_HIGHEST_KILLSTREAKS.refresh(player, "@or2@ - Highest Killstreak: @yel@" + (s == null ? 0 : s.getHighestKillstreak()));
+		PlayerPanel.PVP_CURRENT_KILLSTREAKS.refresh(player, "@or2@ - Current Killstreak: @yel@" + (s == null ? 0 : s.getCurrentKillstreak()));
+		PlayerPanel.PVP_KILLS.refresh(player, "@or2@ - Players killed: @yel@" + (s == null ? 0 : s.getKills()));
+		PlayerPanel.PVP_DEATHS.refresh(player, "@or2@ - Player deaths: @yel@" + (s == null ? 0 : s.getDeaths()));
 		
 		//achievements
 		for(Achievement a : Achievement.VALUES) {
@@ -316,8 +305,18 @@ public enum PlayerPanel {
 	 * Refreshes the tab asset for a specified player
 	 * @param player the player we're refreshing this {@code enumerator} for.
 	 * @param text   the new string to set.
+	 * @param skipCheck The condition if we should skip the check.
+	 */
+	public void refresh(Player player, String text, boolean skipCheck) {
+		player.text(16026 + ordinal(), text, skipCheck);
+	}
+	
+	/**
+	 * Refreshes the tab asset for a specified player
+	 * @param player the player we're refreshing this {@code enumerator} for.
+	 * @param text   the new string to set.
 	 */
 	public void refresh(Player player, String text) {
-		player.text(16026 + ordinal(), text);
+		player.text(16026 + ordinal(), text, false);
 	}
 }

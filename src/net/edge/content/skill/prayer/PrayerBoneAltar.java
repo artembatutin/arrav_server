@@ -81,7 +81,6 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 	
 	@Override
 	public double experience() {
-		System.out.println(bone);
 		return (bone.getExperience() * (prayLoc ? 2 : 1.4));
 	}
 	

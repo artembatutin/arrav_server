@@ -1222,7 +1222,7 @@ public final class Player extends Actor {
 	 */
 	public void setVotePoints(int vote) {
 		this.votePoints += vote;
-		PlayerPanel.VOTE.refresh(this, "@or3@ - Vote points: @yel@" + this.getVotePoints() + " points");
+		PlayerPanel.VOTE.refresh(this, "@or3@ - Vote points: @yel@" + this.getVotePoints() + " points", true);
 	}
 	
 	public String getLastKiller() {
@@ -2389,7 +2389,7 @@ public final class Player extends Actor {
 	 */
 	public void updateSlayers(int points) {
 		this.slayerPoints += points;
-		PlayerPanel.SLAYER_POINTS.refresh(this, "@or2@ - Slayer points: @yel@" + slayerPoints);
+		PlayerPanel.SLAYER_POINTS.refresh(this, "@or2@ - Slayer points: @yel@" + slayerPoints, true);
 	}
 	
 	/**

@@ -32,7 +32,6 @@ import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.update.UpdateFlag;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.GroundItem;
-import net.edge.world.entity.region.Region;
 
 import java.util.Iterator;
 import java.util.Optional;
@@ -161,7 +160,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			if(characterStatistic == null) {
 				characterStatistic = new PlayerScoreboardStatistic(getActor().getFormatUsername());
 			}
-			PlayerPanel.INDIVIDUAL_DEATHS.refresh(getActor(), "@or2@ - Current Player deaths: @yel@" + characterStatistic.getDeaths().incrementAndGet());
+			PlayerPanel.PVP_DEATHS.refresh(getActor(), "@or2@ - Current Player deaths: @yel@" + characterStatistic.getDeaths().incrementAndGet());
 			PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(getActor(), "@or2@ - Total Player deaths: @yel@" + getActor().getDeathsByPlayer().incrementAndGet());
 			
 			//kills
@@ -170,7 +169,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				killerStatistic = new PlayerScoreboardStatistic(k.getFormatUsername());
 			}
 			
-			PlayerPanel.INDIVIDUAL_KILLS.refresh(k, "@or2@ - Current Players killed: @yel@" + killerStatistic.getKills().incrementAndGet());
+			PlayerPanel.PVP_KILLS.refresh(k, "@or2@ - Current Players killed: @yel@" + killerStatistic.getKills().incrementAndGet());
 			PlayerPanel.TOTAL_PLAYER_KILLS.refresh(k, "@or2@ - Total Players killed: @yel@" + k.getPlayerKills().incrementAndGet());
 
 			//killstreak
@@ -183,9 +182,9 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			
 			if(killerStatistic.getCurrentKillstreak().incrementAndGet() > killerStatistic.getHighestKillstreak().get()) {
 				killerStatistic.getHighestKillstreak().set(killerStatistic.getCurrentKillstreak().get());
-				PlayerPanel.INDIVIDUAL_HIGHEST_KILLSTREAKS.refresh(k, "@or2@ - Highest Killstreak: @yel@" + killerStatistic.getHighestKillstreak().get());
+				PlayerPanel.PVP_HIGHEST_KILLSTREAKS.refresh(k, "@or2@ - Highest Killstreak: @yel@" + killerStatistic.getHighestKillstreak().get());
 			}
-			PlayerPanel.INDIVIDUAL_CURRENT_KILLSTREAKS.refresh(k, "@or2@ - Current Killstreak: @yel@" + killerStatistic.getCurrentKillstreak().get());
+			PlayerPanel.PVP_CURRENT_KILLSTREAKS.refresh(k, "@or2@ - Current Killstreak: @yel@" + killerStatistic.getCurrentKillstreak().get());
 
 			k.message(RandomUtils.random(GameConstants.DEATH_MESSAGES).replaceAll("-victim-", getActor().getFormatUsername()).replaceAll("-killer-", k.getFormatUsername()));
 		});
