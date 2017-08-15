@@ -10,6 +10,7 @@ import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.combat.weapon.FightType;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.action.impl.ButtonAction;
+import net.edge.content.newcombat.weapon.WeaponFactory;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendEnterName;
@@ -73,7 +74,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
-		int button = PROPER_READ ? payload.getShort() : hexToInt(payload.getBytes(2));
+		int button = !PROPER_READ ? payload.getShort() : hexToInt(payload.getBytes(2));
 		if(Application.DEBUG && player.getRights().equals(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}
@@ -92,6 +93,9 @@ public final class ClickButtonPacket implements IncomingPacket {
 			if(e.click(player, button)) {
 				return;
 			}
+		}
+		if (WeaponFactory.clickAttackStyle(player, button) && WeaponFactory.clickAttackStance(player, button)) {
+			return;
 		}
 		if(Prayer.activate(player, true, button)) {
 			return;
@@ -309,285 +313,6 @@ public final class ClickButtonPacket implements IncomingPacket {
 			case 24017:
 			case 7212:
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				break;
-			//FIGHT TYPES
-			case 1080: // staff
-				player.setFightType(FightType.STAFF_BASH);
-				break;
-			case 1079:
-				player.setFightType(FightType.STAFF_POUND);
-				break;
-			case 1078:
-				player.setFightType(FightType.STAFF_FOCUS);
-				break;
-			case 1177: // warhammer
-				player.setFightType(FightType.WARHAMMER_POUND);
-				break;
-			case 1176:
-				player.setFightType(FightType.WARHAMMER_PUMMEL);
-				break;
-			case 1175:
-				player.setFightType(FightType.WARHAMMER_BLOCK);
-				break;
-			case 3014: // scythe
-				player.setFightType(FightType.SCYTHE_REAP);
-				break;
-			case 3017:
-				player.setFightType(FightType.SCYTHE_CHOP);
-				break;
-			case 3016:
-				player.setFightType(FightType.SCYTHE_JAB);
-				break;
-			case 3015:
-				player.setFightType(FightType.SCYTHE_BLOCK);
-				break;
-			case 6168: // battle axe
-				player.setFightType(FightType.BATTLEAXE_CHOP);
-				break;
-			case 6171:
-				player.setFightType(FightType.BATTLEAXE_HACK);
-				break;
-			case 6170:
-				player.setFightType(FightType.BATTLEAXE_SMASH);
-				break;
-			case 6169:
-				player.setFightType(FightType.BATTLEAXE_BLOCK);
-				break;
-			case 14218: // mace
-				player.setFightType(FightType.MACE_POUND);
-				break;
-			case 14221:
-				player.setFightType(FightType.MACE_PUMMEL);
-				break;
-			case 14220:
-				player.setFightType(FightType.MACE_SPIKE);
-				break;
-			case 14219:
-				player.setFightType(FightType.MACE_BLOCK);
-				break;
-			case 18077: // spear
-				player.setFightType(FightType.SPEAR_LUNGE);
-				break;
-			case 18080:
-				player.setFightType(FightType.SPEAR_SWIPE);
-				break;
-			case 18079:
-				player.setFightType(FightType.SPEAR_POUND);
-				break;
-			case 18078:
-				player.setFightType(FightType.SPEAR_BLOCK);
-				break;
-			case 18106://2h sword
-				player.setFightType(FightType.TWOHANDEDSWORD_SLASH);
-				break;
-			case 18105:
-				player.setFightType(FightType.TWOHANDEDSWORD_SMASH);
-				break;
-			case 18104:
-				player.setFightType(FightType.TWOHANDEDSWORD_BLOCK);
-				break;
-			case 18103:
-				player.setFightType(FightType.TWOHANDEDSWORD_CHOP);
-				break;
-			case 15106:
-				player.setFightType(FightType.TWOHANDEDSWORD_SLASH);
-				break;
-			case 21200: // pickaxe
-				player.setFightType(FightType.PICKAXE_SPIKE);
-				break;
-			case 21203:
-				player.setFightType(FightType.PICKAXE_IMPALE);
-				break;
-			case 21202:
-				player.setFightType(FightType.PICKAXE_SMASH);
-				break;
-			case 21201:
-				player.setFightType(FightType.PICKAXE_BLOCK);
-				break;
-			case 30088: // claws
-				player.setFightType(FightType.CLAWS_CHOP);
-				break;
-			case 30091:
-				player.setFightType(FightType.CLAWS_SLASH);
-				break;
-			case 30090:
-				player.setFightType(FightType.CLAWS_LUNGE);
-				break;
-			case 30089:
-				player.setFightType(FightType.CLAWS_BLOCK);
-				break;
-			case 33018: // halberd
-				player.setFightType(FightType.HALBERD_JAB);
-				break;
-			case 33020:
-				player.setFightType(FightType.HALBERD_SWIPE);
-				break;
-			case 33016:
-				player.setFightType(FightType.HALBERD_FEND);
-				break;
-			case 22228: // unarmed
-				player.setFightType(FightType.UNARMED_PUNCH);
-				break;
-			case 22230:
-				player.setFightType(FightType.UNARMED_KICK);
-				break;
-			case 22229:
-				player.setFightType(FightType.UNARMED_BLOCK);
-				break;
-			case 48010: // whip
-				player.setFightType(FightType.WHIP_FLICK);
-				break;
-			case 48009:
-				player.setFightType(FightType.WHIP_LASH);
-				break;
-			case 48008:
-				player.setFightType(FightType.WHIP_DEFLECT);
-				break;
-			case 94014:
-				player.setFightType(FightType.SCORCH);
-				break;
-			case 94015:
-				player.setFightType(FightType.FLARE);
-				break;
-			case 94016:
-				player.setFightType(FightType.BLAZE);
-				break;
-			case 93251:
-				if(player.getWeapon().equals(WeaponInterface.CHINCHOMPA)) {
-					player.setFightType(FightType.SHORT_FUSE);
-				}
-				break;
-			case 93252:
-				if(player.getWeapon().equals(WeaponInterface.CHINCHOMPA)) {
-					player.setFightType(FightType.MEDIUM_FUSE);
-				}
-				break;
-			case 93253:
-				if(player.getWeapon().equals(WeaponInterface.CHINCHOMPA)) {
-					player.setFightType(FightType.LONG_FUSE);
-				}
-				break;
-			case 17102: // knife, thrownaxe, dart & javelin
-				if(player.getWeapon() == WeaponInterface.KNIFE) {
-					player.setFightType(FightType.KNIFE_ACCURATE);
-				} else if(player.getWeapon() == WeaponInterface.THROWNAXE) {
-					player.setFightType(FightType.THROWNAXE_ACCURATE);
-				} else if(player.getWeapon() == WeaponInterface.DART) {
-					player.setFightType(FightType.DART_ACCURATE);
-				} else if(player.getWeapon() == WeaponInterface.JAVELIN) {
-					player.setFightType(FightType.JAVELIN_ACCURATE);
-				}
-				break;
-			case 17101:
-				if(player.getWeapon() == WeaponInterface.KNIFE) {
-					player.setFightType(FightType.KNIFE_RAPID);
-				} else if(player.getWeapon() == WeaponInterface.THROWNAXE) {
-					player.setFightType(FightType.THROWNAXE_RAPID);
-				} else if(player.getWeapon() == WeaponInterface.DART) {
-					player.setFightType(FightType.DART_RAPID);
-				} else if(player.getWeapon() == WeaponInterface.JAVELIN) {
-					player.setFightType(FightType.JAVELIN_RAPID);
-				}
-				break;
-			case 17100:
-				if(player.getWeapon() == WeaponInterface.KNIFE) {
-					player.setFightType(FightType.KNIFE_LONGRANGE);
-				} else if(player.getWeapon() == WeaponInterface.THROWNAXE) {
-					player.setFightType(FightType.THROWNAXE_LONGRANGE);
-				} else if(player.getWeapon() == WeaponInterface.DART) {
-					player.setFightType(FightType.DART_LONGRANGE);
-				} else if(player.getWeapon() == WeaponInterface.JAVELIN) {
-					player.setFightType(FightType.JAVELIN_LONGRANGE);
-				}
-				break;
-			case 6236: // shortbow & longbow & crossbow
-				if(player.getWeapon() == WeaponInterface.SHORTBOW) {
-					player.setFightType(FightType.SHORTBOW_ACCURATE);
-				} else if(player.getWeapon() == WeaponInterface.LONGBOW) {
-					player.setFightType(FightType.LONGBOW_ACCURATE);
-				} else if(player.getWeapon() == WeaponInterface.CROSSBOW) {
-					player.setFightType(FightType.CROSSBOW_ACCURATE);
-				} else if(player.getWeapon() == WeaponInterface.COMPOSITE_BOW) {
-					player.setFightType(FightType.LONGBOW_ACCURATE);
-				}
-				break;
-			case 6235:
-				if(player.getWeapon() == WeaponInterface.SHORTBOW) {
-					player.setFightType(FightType.SHORTBOW_RAPID);
-				} else if(player.getWeapon() == WeaponInterface.LONGBOW) {
-					player.setFightType(FightType.LONGBOW_RAPID);
-				} else if(player.getWeapon() == WeaponInterface.CROSSBOW) {
-					player.setFightType(FightType.CROSSBOW_RAPID);
-				} else if(player.getWeapon() == WeaponInterface.COMPOSITE_BOW) {
-					player.setFightType(FightType.LONGBOW_RAPID);
-				}
-				break;
-			case 6234:
-				if(player.getWeapon() == WeaponInterface.SHORTBOW) {
-					player.setFightType(FightType.SHORTBOW_LONGRANGE);
-				} else if(player.getWeapon() == WeaponInterface.LONGBOW) {
-					player.setFightType(FightType.LONGBOW_LONGRANGE);
-				} else if(player.getWeapon() == WeaponInterface.CROSSBOW) {
-					player.setFightType(FightType.CROSSBOW_LONGRANGE);
-				} else if(player.getWeapon() == WeaponInterface.COMPOSITE_BOW) {
-					player.setFightType(FightType.LONGBOW_LONGRANGE);
-				}
-				break;
-			case 8234: // dagger & sword
-				if(player.getWeapon() == WeaponInterface.DAGGER) {
-					player.setFightType(FightType.DAGGER_STAB);
-				} else if(player.getWeapon() == WeaponInterface.SWORD) {
-					player.setFightType(FightType.SWORD_STAB);
-				}
-				break;
-			case 8237:
-				if(player.getWeapon() == WeaponInterface.DAGGER) {
-					player.setFightType(FightType.DAGGER_LUNGE);
-				} else if(player.getWeapon() == WeaponInterface.SWORD) {
-					player.setFightType(FightType.SWORD_LUNGE);
-				}
-				break;
-			case 8236:
-				if(player.getWeapon() == WeaponInterface.DAGGER) {
-					player.setFightType(FightType.DAGGER_SLASH);
-				} else if(player.getWeapon() == WeaponInterface.SWORD) {
-					player.setFightType(FightType.SWORD_SLASH);
-				}
-				break;
-			case 8235:
-				if(player.getWeapon() == WeaponInterface.DAGGER) {
-					player.setFightType(FightType.DAGGER_BLOCK);
-				} else if(player.getWeapon() == WeaponInterface.SWORD) {
-					player.setFightType(FightType.SWORD_BLOCK);
-				}
-				break;
-			case 9125: // scimitar & longsword
-				if(player.getWeapon() == WeaponInterface.SCIMITAR) {
-					player.setFightType(FightType.SCIMITAR_CHOP);
-				} else if(player.getWeapon() == WeaponInterface.LONGSWORD) {
-					player.setFightType(FightType.LONGSWORD_CHOP);
-				}
-				break;
-			case 9128:
-				if(player.getWeapon() == WeaponInterface.SCIMITAR) {
-					player.setFightType(FightType.SCIMITAR_SLASH);
-				} else if(player.getWeapon() == WeaponInterface.LONGSWORD) {
-					player.setFightType(FightType.LONGSWORD_SLASH);
-				}
-				break;
-			case 9127:
-				if(player.getWeapon() == WeaponInterface.SCIMITAR) {
-					player.setFightType(FightType.SCIMITAR_LUNGE);
-				} else if(player.getWeapon() == WeaponInterface.LONGSWORD) {
-					player.setFightType(FightType.LONGSWORD_LUNGE);
-				}
-				break;
-			case 9126:
-				if(player.getWeapon() == WeaponInterface.SCIMITAR) {
-					player.setFightType(FightType.SCIMITAR_BLOCK);
-				} else if(player.getWeapon() == WeaponInterface.LONGSWORD) {
-					player.setFightType(FightType.LONGSWORD_BLOCK);
-				}
 				break;
 			//AUTOCASTING
 			case 51133:

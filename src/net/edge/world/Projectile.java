@@ -53,12 +53,12 @@ public final class Projectile {
 	 * The starting position of the projectile.
 	 */
 	private final Position start;
-	
+
 	/**
 	 * The offset position of the projectile.
 	 */
 	private final Position offset;
-	
+
 	/**
 	 * The speed of the projectile.
 	 */
@@ -98,7 +98,7 @@ public final class Projectile {
 	 * The instance on which this projectile is being active.
 	 */
 	private final int instance;
-	
+
 	/**
 	 * The time to travel in ticks.
 	 */
@@ -189,7 +189,7 @@ public final class Projectile {
 		});
 		return this;
 	}
-	
+
 	/**
 	 * Gets the starting position of the projectile.
 	 * @return the starting position of the projectile.
@@ -197,7 +197,7 @@ public final class Projectile {
 	public Position getStart() {
 		return start;
 	}
-	
+
 	/**
 	 * Gets the offset position of the projectile.
 	 * @return the offset position of the projectile.
@@ -205,7 +205,7 @@ public final class Projectile {
 	public Position getOffset() {
 		return offset;
 	}
-	
+
 	/**
 	 * Gets the speed of the projectile.
 	 * @return the speed of the projectile.
@@ -269,7 +269,7 @@ public final class Projectile {
 	public int getInstance() {
 		return instance;
 	}
-	
+
 	/**
 	 * Gets the travel time of this projectile depending on it's configuration.
 	 * @return the travel time in ticks.

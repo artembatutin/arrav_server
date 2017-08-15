@@ -17,6 +17,7 @@ import net.edge.action.ActionInitializer;
 import net.edge.action.impl.*;
 import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.ObjectAction;
+import net.edge.content.newcombat.CombatProjectileDefinition;
 import net.edge.content.object.star.ShootingStarManager;
 import net.edge.content.object.pit.FirepitManager;
 import net.edge.content.trivia.TriviaTask;
@@ -217,6 +218,7 @@ public final class Application {
 		launch.execute(new EquipmentRequirementLoader());
 		launch.execute(new IndividualScoreboardRewardsLoader());
 		launch.execute(() -> new SlayerDefinitionLoader().load());
+		launch.execute(() -> CombatProjectileDefinition.createLoader().load());
 		launch.execute(() -> {//Adding combat strategies.
 			for(String directory : Utility.getSubDirectories(Strategy.class)) {
 				try {

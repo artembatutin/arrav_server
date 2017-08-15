@@ -75,7 +75,9 @@ public final class MobActionPacket implements IncomingPacket {
 		if(mob == null || !checkAttack(player, mob))
 			return;
 		player.getTolerance().reset();
-		player.getCombat().attack(mob);
+		if (player.getRights() == Rights.ADMINISTRATOR) {
+			player.getNewCombat().attack(mob);
+		} else player.getCombat().attack(mob);
 	}
 	
 	/**

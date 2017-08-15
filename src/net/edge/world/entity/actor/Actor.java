@@ -2,32 +2,31 @@ package net.edge.world.entity.actor;
 
 import com.google.common.base.Preconditions;
 import net.edge.content.combat.Combat;
-import net.edge.world.*;
-import net.edge.task.Task;
-import net.edge.util.MutableNumber;
-import net.edge.util.Stopwatch;
-import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatType;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.magic.CombatSpell;
 import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.strategy.Strategy;
-import net.edge.world.entity.region.Region;
-import net.edge.world.locale.Position;
+import net.edge.task.Task;
+import net.edge.util.MutableNumber;
+import net.edge.util.Stopwatch;
+import net.edge.world.*;
 import net.edge.world.entity.Entity;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.attribute.AttributeMap;
+import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.move.ForcedMovement;
 import net.edge.world.entity.actor.move.MovementQueue;
 import net.edge.world.entity.actor.move.MovementQueueListener;
 import net.edge.world.entity.actor.move.path.AStarPathFinder;
 import net.edge.world.entity.actor.move.path.distance.Manhattan;
-import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.actor.update.UpdateFlag;
 import net.edge.world.entity.actor.update.UpdateFlagHolder;
+import net.edge.world.locale.Position;
 
 import java.util.Objects;
 import java.util.Set;
@@ -220,6 +219,7 @@ public abstract class Actor extends Entity {
 	 * The pathfinder used by this {@link Actor}.
 	 */
 	private final AStarPathFinder aStarPathFinder;
+	private int health;
 
 	/**
 	 * Creates a new {@link Actor}.
@@ -367,7 +367,7 @@ public abstract class Actor extends Entity {
 	 * @return the modified hit after the health was decremented.
 	 */
 	public abstract Hit decrementHealth(Hit hit);
-	
+
 	/**
 	 * Calculates and retrieves the combat strategy for this entity.
 	 * @return the combat strategy.
@@ -502,7 +502,7 @@ public abstract class Actor extends Entity {
 		secondaryHit = decrementHealth(Objects.requireNonNull(hit));
 		flags.flag(UpdateFlag.SECONDARY_HIT);
 	}
-	
+
 	/**
 	 * Deals a series of hits to this entity.
 	 * @param hits the hits to deal to this entity.
@@ -524,7 +524,7 @@ public abstract class Actor extends Entity {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Deals {@code hit} to this entity.
 	 * @param hit the hit to deal to this entity.
@@ -536,7 +536,7 @@ public abstract class Actor extends Entity {
 		}
 		primaryDamage(hit);
 	}
-	
+
 	/**
 	 * Deals {@code hit} and {@code hit2} to this entity.
 	 * @param hit  the first hit to deal to this entity.
@@ -546,7 +546,7 @@ public abstract class Actor extends Entity {
 		sendDamage(hit);
 		secondaryDamage(hit2);
 	}
-	
+
 	/**
 	 * Deals {@code hit}, {@code hit2}, and {@code hit3} to this entity.
 	 * @param hit  the first hit to deal to this entity.
@@ -555,7 +555,7 @@ public abstract class Actor extends Entity {
 	 */
 	private void sendDamage(Hit hit, Hit hit2, Hit hit3) {
 		sendDamage(hit, hit2);
-		
+
 		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
@@ -567,7 +567,7 @@ public abstract class Actor extends Entity {
 			}
 		});
 	}
-	
+
 	/**
 	 * Deals {@code hit}, {@code hit2}, {@code hit3}, and {@code hit4} to this
 	 * entity.
@@ -578,7 +578,7 @@ public abstract class Actor extends Entity {
 	 */
 	private void sendDamage(Hit hit, Hit hit2, Hit hit3, Hit hit4) {
 		sendDamage(hit, hit2);
-		
+
 		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {
@@ -590,7 +590,7 @@ public abstract class Actor extends Entity {
 			}
 		});
 	}
-	
+
 	/**
 	 * Prepares to cast the {@code spell} on {@code victim}.
 	 * @param spell  the spell to cast on the victim.
@@ -968,7 +968,15 @@ public abstract class Actor extends Entity {
 	public final Combat getCombat() {
 		return combat;
 	}
-	
+
+	public abstract net.edge.content.newcombat.Combat<? extends Actor> getNewCombat();
+
+	public abstract int getBonus(int index);
+
+	public abstract void appendBonus(int index, int bonus);
+
+	public abstract int getSkillLevel(int skill);
+
 	/**
 	 * Gets the movement queue that will handle all movement processing for this
 	 * entity.
@@ -1163,5 +1171,5 @@ public abstract class Actor extends Entity {
 	public void setAggressionTick(int aggressionTick) {
 		this.aggressionTick = aggressionTick;
 	}
-	
+
 }

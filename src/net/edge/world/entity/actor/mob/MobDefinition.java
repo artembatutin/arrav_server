@@ -66,7 +66,7 @@ public final class MobDefinition {
 	 * The mob's combat definition.
 	 */
 	private MobDefinitionCombat combat;
-	
+
 	/**
 	 * Creates a new {@link MobDefinition}.
 	 */
@@ -509,5 +509,8 @@ public final class MobDefinition {
 			return 0;
 		}
 	}
-	
+
+	public int getStrengthLevel() {
+		return combat.strengthLevel;
+	}
 }

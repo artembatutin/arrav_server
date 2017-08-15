@@ -46,12 +46,14 @@ public final class MovementQueuePacket implements IncomingPacket {
 		}
 		
 		if(player.isFrozen()) {
-			player.message("You are frozen and unable to " + "move!");
+			player.message("You are frozen and unable to move!");
 			return;
 		}
 		
 		if(player.getDialogueBuilder() != null && !player.getMovementQueue().isLockMovement())
 			player.getDialogueBuilder().interrupt();
+
+		player.getNewCombat().reset();
 		
 		player.closeWidget();
 		if(player.getMarketShop() != null) {

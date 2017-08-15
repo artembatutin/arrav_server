@@ -2,11 +2,14 @@ package net.edge.world.entity.actor.mob;
 
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.magic.CombatWeaken;
 import net.edge.content.combat.strategy.Strategy;
+import net.edge.content.newcombat.Combat;
+import net.edge.content.skill.Skills;
 import net.edge.task.Task;
 import net.edge.world.entity.actor.mob.impl.*;
 import net.edge.world.entity.actor.mob.impl.nex.Nex;
@@ -195,6 +198,7 @@ public abstract class Mob extends Actor {
 		if(active()) {
 			update();
 			getMovementQueue().sequence();
+			getNewCombat().tick();
 		}
 	}
 	
@@ -566,5 +570,65 @@ public abstract class Mob extends Actor {
 	public String toString() {
 		return "NPC[slot= " + getSlot() + ", name=" + getDefinition().getName() + "]";
 	}
-	
+
+	private final Combat<Mob> mobCombat = new Combat<>(this);
+
+	@Override
+	public Combat<Mob> getNewCombat() {
+		return mobCombat;
+	}
+
+	@Override
+	public int getBonus(int index) {
+		if (index == CombatConstants.DEFENCE_CRUSH) {
+			return getDefinition().getCombat().getDefenceCrush();
+		}
+		if (index == CombatConstants.DEFENCE_STAB) {
+			return getDefinition().getCombat().getDefenceCrush();
+		}
+		if (index == CombatConstants.DEFENCE_SLASH) {
+			return getDefinition().getCombat().getDefenceSlash();
+		}
+		if (index == CombatConstants.DEFENCE_RANGED) {
+			return getDefinition().getCombat().getDefenceRanged();
+		}
+		if (index == CombatConstants.DEFENCE_MAGIC) {
+			return getDefinition().getCombat().getDefenceMagic();
+		}
+
+		if (index == CombatConstants.ATTACK_CRUSH || index == CombatConstants.ATTACK_STAB || index == CombatConstants.ATTACK_SLASH) {
+			return getDefinition().getCombat().getAttackMelee();
+		}
+		if (index == CombatConstants.ATTACK_MAGIC) {
+			return getDefinition().getCombat().getAttackMagic();
+		}
+		if (index == CombatConstants.ATTACK_RANGED) {
+			return getDefinition().getCombat().getAttackRanged();
+		}
+		return 0;
+	}
+
+	@Override
+	public void appendBonus(int index, int bonus) {
+	}
+
+	@Override
+	public int getSkillLevel(int skill) {
+		if (skill == Skills.ATTACK) {
+			return getDefinition().getAttackLevel();
+		}
+		if (skill == Skills.STRENGTH) {
+			return getDefinition().getStrengthLevel();
+		}
+		if (skill == Skills.DEFENCE) {
+			return getDefinition().getDefenceLevel();
+		}
+		if (skill == Skills.RANGED) {
+			return getDefinition().getRangedLevel();
+		}
+		if (skill == Skills.MAGIC) {
+			return getDefinition().getMagicLevel();
+		}
+		return 0;
+	}
 }
