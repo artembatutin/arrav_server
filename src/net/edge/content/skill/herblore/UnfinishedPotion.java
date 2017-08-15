@@ -132,17 +132,22 @@ public final class UnfinishedPotion extends ProducingSkillAction {
 	 */
 	private enum UnfinishedPotionData {
 		GUAM(249, 91, 1),
-		MARRENTIL(251, 93, 5),
-		TARROMIN(253, 95, 11),
-		HARRALANDER(255, 97, 20),
+		TARROMIN(253, 95, 5),
+		MARRENTIL(251, 93, 9),
+		HARRALANDER(255, 97, 18),
 		RANARR(257, 99, 25),
+		TOADFLAX(2998, 3002, 30),
+		SPIRIT_WEED(12172, 12181, 35),
 		IRIT(259, 101, 40),
+		WERGALI(14854, 14856, 41),
 		AVANTOE(261, 103, 48),
 		KWUARM(263, 105, 54),
-		CADATINE(265, 107, 65),
-		LANTADYME(2481, 2483, 69),
+		SNAPDRAGON(3000, 3004, 59),
+		CADANTINE(265, 107, 65),
+		LANTADYME(2481, 2483, 67),
 		DWARFWEED(267, 109, 70),
-		TORSTOL(269, 111, 75);
+		TORSTOL(269, 111, 75),
+		FELLSTALK(21624, 21628, 91);
 		
 		/**
 		 * Caches our enum values.
@@ -170,7 +175,7 @@ public final class UnfinishedPotion extends ProducingSkillAction {
 		 * @param unfpot {@link #unfpot}.
 		 * @param level  {@link #level}.
 		 */
-		private UnfinishedPotionData(int herb, int unfpot, int level) {
+		UnfinishedPotionData(int herb, int unfpot, int level) {
 			this.herb = new Item(herb);
 			this.unfpot = new Item(unfpot);
 			this.level = level;
@@ -204,7 +209,6 @@ public final class UnfinishedPotion extends ProducingSkillAction {
 		
 		/**
 		 * Gets the definition for this unfinished potion.
-		 * @param identifier the identifier to check for.
 		 * @return an optional holding the {@link UnfinishedPotionData} value found,
 		 * {@link Optional#empty} otherwise.
 		 */
