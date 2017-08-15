@@ -272,7 +272,7 @@ public final class Smithing extends ProducingSkillAction {
 			return false;
 		}
 		if(!player.getSkills()[Skills.SMITHING].reqLevel(definition.getLevelRequirement())) {
-			player.message("You need a smithing level of " + definition.getLevelRequirement() + " to smith " + TextUtils.appendIndefiniteArticle(definition.getName()));
+			player.message("You need a smithing level of " + definition.getLevelRequirement() + " to smith " + TextUtils.appendIndefiniteArticle(definition.getName().toLowerCase()) + ".");
 			return false;
 		}
 		return true;

@@ -295,7 +295,7 @@ public final class Smelting extends ProducingSkillAction {
 			this.buttonId = buttonId;
 			this.required = required;
 			this.produced = produced;
-			this.experience = experience * 2;
+			this.experience = experience;
 			this.requirement = requirement;
 			this.amount = 1;
 		}
@@ -310,7 +310,7 @@ public final class Smelting extends ProducingSkillAction {
 			this.buttonId = buttonId;
 			this.required = definition.required;
 			this.produced = definition.produced;
-			this.experience = definition.experience * 2;
+			this.experience = definition.experience;
 			this.requirement = definition.requirement;
 			this.amount = amount;
 		}

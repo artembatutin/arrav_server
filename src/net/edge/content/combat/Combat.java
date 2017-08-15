@@ -167,9 +167,6 @@ public final class Combat {
 	 * strategy.
 	 */
 	public void resetAttackTimer() {
-		if(character.isPlayer() && character.toPlayer().isSpecialActivated() && character.toPlayer().getCombatSpecial() == CombatSpecial.GRANITE_MAUL) {
-			return;
-		}
 		if(strategy == null)
 			return;
 		attackTimer = strategy.attackDelay(character);
