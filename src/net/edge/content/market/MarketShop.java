@@ -335,22 +335,8 @@ public class MarketShop {
 	}
 	
 	public boolean canSell(Player player, int item) {
-		if(getCurrency() == VOTE_POINTS)
+		if(getCurrency() != COINS)
 			return false;
-		if(getCurrency() == EDGE_TOKENS)
-			return false;
-		if(getCurrency() == BLOOD_MONEY)
-			return false;
-		if(getCurrency() != COINS) {
-			boolean has = false;
-			for(int i : getItems()) {
-				if(i == item) {
-					has = true;
-					break;
-				}
-			}
-			return has;
-		}
 		ItemDefinition def = ItemDefinition.get(item);
 		if(def == null)
 			return false;

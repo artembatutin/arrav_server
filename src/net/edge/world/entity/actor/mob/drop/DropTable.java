@@ -76,7 +76,7 @@ public final class DropTable {
 				}
 				items.add(drop.toItem());
 			} else if(dropRare && drop.isRare() && rare) {
-				boolean row = player.getEquipment().getId(Equipment.RING_SLOT) == 2572 && random.nextInt(50) == 1;
+				boolean row = player.getEquipment().getId(Equipment.RING_SLOT) == 2572 && random.nextInt(100) == 1;
 				if(drop.roll(random) || row) {
 					if(row)
 						player.message("Your ring of wealth got you a rare drop!");

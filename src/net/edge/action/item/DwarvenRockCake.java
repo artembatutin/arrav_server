@@ -21,7 +21,6 @@ public class DwarvenRockCake extends ActionInitializer {
 					return true;
 				if(player.getCurrentHealth() <= 10)
 					return true;
-
 				player.animation(new Animation(829));
 				Hit hit = new Hit(10, Hit.HitType.NORMAL, Hit.HitIcon.NONE);
 				player.damage(hit);

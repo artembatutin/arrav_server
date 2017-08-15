@@ -118,7 +118,7 @@ public class Drop {
 	 * @return condition if successful.
 	 */
 	public boolean roll(ThreadLocalRandom rand) {
-		return chance.getRational().doubleValue() >= rand.nextDouble();
+		return chance.getRoll() >= rand.nextDouble();
 	}
 	
 	@Override
