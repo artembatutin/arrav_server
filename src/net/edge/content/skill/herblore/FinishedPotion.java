@@ -24,7 +24,7 @@ import static net.edge.content.achievements.Achievement.POTION_MAKER;
 public final class FinishedPotion extends ProducingSkillAction {
 	
 	/**
-	 * The {@link UnfinishedPotionData} holding all the data required for processing
+	 * The {@link FinishedPotion} holding all the data required for processing
 	 * the creation of {@link UnfinishedPotion}'s.
 	 */
 	private final FinishedPotionData definition;
@@ -132,28 +132,32 @@ public final class FinishedPotion extends ProducingSkillAction {
 	 */
 	private enum FinishedPotionData {
 		ATTACK_POTION(121, 91, 221, 1, 25),
-		ANTIPOISON(175, 93, 235, 5, 38),
-		STRENGTH_POTION(115, 95, 225, 12, 50),
-		RESTORE_POTION(127, 97, 223, 22, 63),
-		ENERGY_POTION(3010, 97, 1975, 26, 68),
-		DEFENCE_POTION(133, 99, 239, 30, 75),
+		RANGING_POTION(169, 109, 245, 3, 30),
+		MAGIC_POTION(3042, 2483, 3138, 5, 35),
+		STRENGTH_POTION(115, 95, 225, 7, 40),
+		DEFENCE_POTION(133, 99, 239, 9, 45),
+		ANTIPOISON(175, 93, 235, 13, 50),
+		RESTORE_POTION(127, 97, 223, 22, 62.5),
+		ENERGY_POTION(3010, 97, 1975, 26, 67.5),
 		AGILITY_POTION(3034, 3002, 2152, 34, 80),
 		COMBAT_POTION(9741, 97, 9736, 36, 84),
-		PRAYER_POTION(139, 99, 231, 38, 88),
+		PRAYER_POTION(139, 99, 231, 38, 87.5),
 		SUMMONING_POTION(12142, 12181, 12109, 40, 92),
-		CRAFTING_POTION(14840, 14856, 5004, 42, 92),
+		CRAFTING_POTION(14840, 14856, 5004, 42, 95),
 		SUPER_ATTACK(145, 101, 221, 45, 100),
 		VIAL_OF_STENCH(18661, 101, 1871, 46, 0),
-		FISHING_POTION(181, 101, 235, 48, 106),
-		SUPER_ENERGY(3018, 103, 2970, 52, 118),
+		SUPER_ANTIPOISON(181, 101, 235, 48, 106.3),
+		FISHING_POTION(151, 103, 231, 50, 112.5),
+		SUPER_ENERGY(3018, 103, 2970, 52, 117.5),
+		HUNTER_POTION(10000, 103, 10109, 53, 120),
 		SUPER_STRENGTH(157, 105, 225, 55, 125),
-		WEAPON_POISON(187, 105, 241, 60, 138),
-		SUPER_RESTORE(3026, 3004, 223, 63, 143),
+		FLETCHING_POTION(14848, 14856, 11525, 58, 132),
+		WEAPON_POISON(187, 105, 241, 60, 137.5),
+		SUPER_RESTORE(3026, 3004, 223, 63, 142.5),
+		SANFEW_SERUM(10927, 3024, new int[]{235, 1526, 10937}, 65, 160),
 		SUPER_DEFENCE(163, 107, 239, 66, 150),
-		ANTIFIRE(2454, 2483, 241, 69, 158),
-		RANGING_POTION(169, 109, 245, 72, 163),
-		MAGIC_POTION(3042, 2483, 3138, 76, 173),
-		ZAMORAK_BREW(189, 111, 247, 78, 175),
+		ANTIFIRE(2454, 2483, 241, 69, 157.5),
+		ZAMORAK_BREW(189, 111, 247, 78, 177.5),
 		SARADOMIN_BREW(6687, 3002, 6693, 81, 180),
 		RECOVER_SPECIAL(15301, 3018, 5972, 84, 200),
 		SUPER_ANTIFIRE(15305, 2454, 4621, 85, 210),
@@ -163,6 +167,7 @@ public final class FinishedPotion extends ProducingSkillAction {
 		EXTREME_MAGIC(15321, 3042, 9594, 91, 250),
 		EXTREME_RANGING(15325, 169, 12539, 92, 260),
 		SUPER_PRAYER(15329, 139, 4255, 94, 270),
+		PRAYER_RENEWAL(21632, 21628, 21622, 94, 190),
 		OVERLOAD(15332, 269, new int[]{15309, 15313, 15317, 15321, 15325}, 96, 1000);
 		
 		/**
@@ -234,8 +239,7 @@ public final class FinishedPotion extends ProducingSkillAction {
 		
 		/**
 		 * Gets the definition for this finished potion.
-		 * @param identifier the identifier to check for.
-		 * @return an optional holding the {@link FinishedPotionDate} value found,
+		 * @return an optional holding the {@link FinishedPotionData} value found,
 		 * {@link Optional#empty} otherwise.
 		 */
 		public static Optional<FinishedPotionData> getDefinition(int ingredient, int secondIngredient) {
