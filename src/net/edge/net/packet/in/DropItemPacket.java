@@ -70,8 +70,8 @@ public final class DropItemPacket implements IncomingPacket {
 		
 		int amount = ItemDefinition.DEFINITIONS[id].isStackable() ? item.getAmount() : 1;
 
-		if(player.getInventory().remove(new Item(id, amount), slot) == -1) {
-		    return;
+			if(player.getInventory().remove(new Item(id, amount), slot) == -1) {
+			return;
         }
 
 		player.getRegion().ifPresent(r -> r.register(new GroundItem(new Item(id, amount), player.getPosition(), player)));
