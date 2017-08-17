@@ -138,7 +138,7 @@ public final class CombatUtil {
 	 * @return {@code true} if the character is close enough
 	 */
 	public static boolean checkAttackDistance(Actor attacker) {
-		Actor defender = attacker.getNewCombat().getDefender();
+		Actor defender = attacker.getNewCombat().getLastDefender();
 		CombatStrategy strategy = attacker.getNewCombat().getStrategy();
 		if (strategy == null) {
 			return false;

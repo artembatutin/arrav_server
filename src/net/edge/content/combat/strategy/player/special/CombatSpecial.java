@@ -480,17 +480,20 @@ public enum CombatSpecial {
 //		}
 //	};
 
-	GRANITE_MAUL(new int[]{4153}, 50, new GraniteMaul()) {
+    ARMADYL_GODSWORD(new int[]{11694, 13450}, 50, new ArmadylGodsword()),
+    GRANITE_MAUL(new int[]{4153}, 50, new GraniteMaul()) {
 		@Override
 		public void enable(Player player) {
 			Combat<Player> combat = player.getNewCombat();
-			if (combat.getDefender() == null) {
-                super.enable(player);
+            CombatStrategy<Player> strategy = new GraniteMaul();
+            if (!combat.isAttacking()) {
+                combat.setStrategy(strategy);
             } else {
-                CombatStrategy<Player> strategy = new GraniteMaul();
-                if (strategy.canAttack(player, combat.getDefender())) {
-                    combat.submitStrategy(combat.getDefender(), strategy);
+                if (strategy.canAttack(player, combat.getLastDefender())) {
+                    combat.submitStrategy(combat.getLastDefender(), strategy);
                     player.getCombatSpecial().drain(player);
+                } else {
+                    combat.setStrategy(strategy);
                 }
             }
 		}
