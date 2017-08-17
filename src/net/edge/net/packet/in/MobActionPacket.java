@@ -1,18 +1,16 @@
 package net.edge.net.packet.in;
 
 import net.edge.Application;
-import net.edge.content.combat.magic.CombatSpells;
-import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.item.pets.Pet;
-import net.edge.content.skill.slayer.Slayer;
-import net.edge.content.skill.summoning.Summoning;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.MobAction;
-import net.edge.world.locale.Boundary;
-import net.edge.world.locale.Position;
-import net.edge.net.codec.IncomingMsg;
+import net.edge.content.combat.magic.CombatSpells;
+import net.edge.content.item.pets.Pet;
+import net.edge.content.minigame.MinigameHandler;
+import net.edge.content.skill.slayer.Slayer;
+import net.edge.content.skill.summoning.Summoning;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
@@ -20,6 +18,8 @@ import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
 
 import java.util.Optional;
 
@@ -75,9 +75,7 @@ public final class MobActionPacket implements IncomingPacket {
 		if(mob == null || !checkAttack(player, mob))
 			return;
 		player.getTolerance().reset();
-		if (player.getRights() == Rights.ADMINISTRATOR) {
-			player.getNewCombat().attack(mob);
-		} else player.getCombat().attack(mob);
+		player.getCombat().attack(mob);
 	}
 	
 	/**
@@ -236,9 +234,6 @@ public final class MobActionPacket implements IncomingPacket {
 			player.message("You are already under attack!");
 			return false;
 		}
-		if(!Slayer.canAttack(player, mob)) {
-			return false;
-		}
-		return true;
+		return Slayer.canAttack(player, mob);
 	}
 }

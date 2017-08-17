@@ -3,14 +3,14 @@ package net.edge.net.packet.in;
 import net.edge.Application;
 import net.edge.content.market.MarketShop;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.world.locale.Position;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import net.edge.world.locale.Position;
 
 /**
  * The message sent from the client when a player makes a yellow {@code X} click,
@@ -53,8 +53,6 @@ public final class MovementQueuePacket implements IncomingPacket {
 		if(player.getDialogueBuilder() != null && !player.getMovementQueue().isLockMovement())
 			player.getDialogueBuilder().interrupt();
 
-		player.getNewCombat().reset();
-		
 		player.closeWidget();
 		if(player.getMarketShop() != null) {
 			MarketShop.clearFromShop(player);

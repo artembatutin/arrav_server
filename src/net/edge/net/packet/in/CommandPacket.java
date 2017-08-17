@@ -1,12 +1,8 @@
 package net.edge.net.packet.in;
 
 import net.edge.content.commands.CommandDispatcher;
-import net.edge.content.newcombat.strategy.npc.NpcMeleeStrategy;
-import net.edge.content.newcombat.strategy.player.melee.LongswordOrScimitarWeapon;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
-import net.edge.world.World;
-import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
@@ -23,18 +19,6 @@ public final class CommandPacket implements IncomingPacket {
 			return;
 		String command = payload.getCString();
 		String[] parts = command.toLowerCase().split(" ");
-
-		if (parts[0].startsWith("shit")) {
-			Mob npc = Mob.getNpc(1677, player.getPosition().copy().move(1, 0));
-			npc.setOwner(player);
-			npc.setRespawn(false);
-			World.get().getMobs().add(npc);
-
-			player.getNewCombat().setStrategy(new LongswordOrScimitarWeapon());
-			npc.getNewCombat().setStrategy(new NpcMeleeStrategy());
-
-			player.getNewCombat().attack(npc);
-		}
 
 		CommandDispatcher.execute(player, parts, command);
 		player.getActivityManager().execute(ActivityManager.ActivityType.COMMAND_MESSAGE);

@@ -969,14 +969,6 @@ public abstract class Actor extends Entity {
 		return combat;
 	}
 
-	public abstract net.edge.content.newcombat.Combat<? extends Actor> getNewCombat();
-
-	public abstract int getBonus(int index);
-
-	public abstract void appendBonus(int index, int bonus);
-
-	public abstract int getSkillLevel(int skill);
-
 	/**
 	 * Gets the movement queue that will handle all movement processing for this
 	 * entity.

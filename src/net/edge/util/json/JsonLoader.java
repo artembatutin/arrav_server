@@ -30,14 +30,6 @@ public abstract class JsonLoader implements Runnable {
 	}
 
 	/**
-	 * Initializes the loader with the size of the objects array.
-	 *
-	 * @param size the object array size
-	 */
-	protected void initialize(int size) {
-	}
-	
-	/**
 	 * A dynamic method that allows the user to read and modify the parsed data.
 	 * @param reader  the reader for retrieving the parsed data.
 	 * @param builder the builder for retrieving the parsed data.
@@ -56,7 +48,6 @@ public abstract class JsonLoader implements Runnable {
 			JsonArray array = (JsonArray) parser.parse(in);
 			Gson builder = new GsonBuilder().create();
 
-			initialize(array.size());
 			for(int i = 0; i < array.size(); i++) {
 				JsonObject reader = (JsonObject) array.get(i);
 				load(reader, builder);

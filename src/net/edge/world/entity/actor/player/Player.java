@@ -9,7 +9,6 @@ import net.edge.Application;
 import net.edge.GameConstants;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
-import net.edge.content.newcombat.Combat;
 import net.edge.content.object.cannon.Multicannon;
 import net.edge.content.object.ViewingOrb;
 import net.edge.content.achievements.Achievement;
@@ -822,7 +821,6 @@ public final class Player extends Actor {
 	@Override
 	public void preUpdate() {
 		getMovementQueue().sequence();
-		getNewCombat().tick();
 		MobAggression.sequence(this);
 		restoreRunEnergy();
 		int deltaX = getPosition().getX() - getLastRegion().getRegionX() * 8;
@@ -2505,26 +2503,5 @@ public final class Player extends Actor {
 		this.aggressionTick = aggressionTick;
 	}
 
-	private final Combat<Player> newCombat = new Combat<>(this);
-
-	@Override
-	public Combat<Player> getNewCombat() {
-		return newCombat;
-	}
-
-	@Override
-	public int getBonus(int index) {
-		return getEquipment().getBonuses()[index];
-	}
-
-	@Override
-	public void appendBonus(int index, int bonus) {
-		getEquipment().getBonuses()[index] += bonus;
-	}
-
-	@Override
-	public int getSkillLevel(int skill) {
-		return skills[skill].getLevel();
-	}
 
 }
