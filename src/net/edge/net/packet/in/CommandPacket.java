@@ -1,13 +1,13 @@
 package net.edge.net.packet.in;
 
 import net.edge.content.commands.CommandDispatcher;
-import net.edge.content.newcombat.content.MagicSpell;
-import net.edge.content.newcombat.content.RangedAmmunition;
-import net.edge.content.newcombat.strategy.npc.NpcMeleeStrategy;
-import net.edge.content.newcombat.strategy.player.PlayerMagicStrategy;
-import net.edge.content.newcombat.strategy.player.PlayerMeleeStrategy;
-import net.edge.content.newcombat.strategy.player.PlayerRangedStrategy;
-import net.edge.content.newcombat.weapon.RangedWeaponDefinition;
+import net.edge.content.combat.content.MagicSpell;
+import net.edge.content.combat.content.RangedAmmunition;
+import net.edge.content.combat.strategy.npc.NpcMeleeStrategy;
+import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
+import net.edge.content.combat.strategy.player.PlayerMeleeStrategy;
+import net.edge.content.combat.strategy.player.PlayerRangedStrategy;
+import net.edge.content.combat.weapon.RangedWeaponDefinition;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
@@ -39,7 +39,7 @@ public final class CommandPacket implements IncomingPacket {
 				RangedWeaponDefinition def = new RangedWeaponDefinition(levelreq, type, ammo);
 				player.getNewCombat().setStrategy(new PlayerRangedStrategy(def));
 			} else if (parts[0].equalsIgnoreCase("shit3")) {
-				player.getNewCombat().setStrategy(new PlayerMeleeStrategy());
+				player.getNewCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
 			} else if (parts[0].equalsIgnoreCase("shit2")) {
 //				CombatProjectileDefinition.createLoader().load();
 				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ, false));

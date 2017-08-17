@@ -1,41 +1,23 @@
 package net.edge.world.entity.actor.mob;
 
-import com.google.common.collect.ImmutableMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatConstants;
-import net.edge.content.combat.CombatUtil;
-import net.edge.content.combat.CombatType;
-import net.edge.content.combat.effect.CombatPoisonEffect;
-import net.edge.content.combat.magic.CombatWeaken;
-import net.edge.content.combat.strategy.Strategy;
-import net.edge.content.newcombat.Combat;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.content.skill.Skills;
 import net.edge.task.Task;
-import net.edge.world.entity.actor.mob.impl.*;
-import net.edge.world.entity.actor.mob.impl.nex.Nex;
-import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.Hit;
-import net.edge.world.PoisonType;
-import net.edge.world.entity.actor.mob.impl.corp.CorporealBeast;
-import net.edge.world.entity.actor.mob.impl.glacor.Glacor;
-import net.edge.world.entity.actor.mob.impl.gwd.CommanderZilyana;
-import net.edge.world.entity.actor.mob.impl.gwd.GeneralGraardor;
-import net.edge.world.entity.actor.mob.impl.gwd.KreeArra;
-import net.edge.world.entity.actor.mob.strategy.impl.TormentedDemonStrategy;
-import net.edge.world.entity.actor.mob.strategy.impl.WildyWyrmStrategy;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.update.UpdateFlag;
+import net.edge.world.locale.Position;
 import net.edge.world.locale.loc.Location;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * The character implementation that represents a node that is operated by the server.
@@ -46,38 +28,13 @@ import java.util.function.Function;
 public abstract class Mob extends Actor {
 	
 	/**
-	 * A mapping which contains all the custom npcs by their id.
-	 */
-	public static final Int2ObjectArrayMap<Function<Position, Mob>> CUSTOM_MOBS = new Int2ObjectArrayMap<>(
-			ImmutableMap.<Integer, Function<Position, Mob>>builder()
-					.put(13447, s -> new Nex())
-					.put(6247, s -> new CommanderZilyana())
-					.put(6260, s -> new GeneralGraardor())
-					.put(6222, s -> new KreeArra())
-					.put(9177, s -> new SkeletalHorror())
-					.put(8133, s -> new CorporealBeast())
-					.put(8549, Phoenix::new)
-					.put(3847, SeaTrollQueen::new)
-					.put(1158, KalphiteQueen::new)
-					.put(3340, GiantMole::new)
-					.put(14301, Glacor::new).build());
-
-	/**
 	 * Gets a certain npc by the specified {@code id} and supplies it's position.
 	 * @param id  the id to get the npc by.
 	 * @param pos the position to supply this npc to.
 	 * @return the npc.
 	 */
 	public static Mob getNpc(int id, Position pos) {
-		if(id >= 8349 && id <= 8351) {
-			Mob mob = new DefaultMob(id, pos);
-			return mob.setStrategy(Optional.of(new TormentedDemonStrategy(mob)));
-		}
-		if(id == 3334) {
-			Mob mob = new DefaultMob(id, pos);
-			return mob.setStrategy(Optional.of(new WildyWyrmStrategy(mob)));
-		}
-		return CUSTOM_MOBS.containsKey(id) ? CUSTOM_MOBS.get(id).apply(pos).create() : new DefaultMob(id, pos);
+		return new DefaultMob(id, pos);
 	}
 	
 	/**
@@ -116,11 +73,6 @@ public abstract class Mob extends Actor {
 	private boolean respawn;
 	
 	/**
-	 * The spell that this NPC is weakened by.
-	 */
-	private CombatWeaken weakenedBy;
-	
-	/**
 	 * The player slot this npc was spawned for.
 	 */
 	private int owner = -1;
@@ -144,14 +96,6 @@ public abstract class Mob extends Actor {
 	 * The special amount of this npc, between 0 and 100. 101 sets it off.
 	 */
 	private OptionalInt special = OptionalInt.empty();
-	
-	/**
-	 * The cached field to determine this npcs dynamic combat strategy.
-	 * <p></p>
-	 * if this field is set, it'll use this strategy instead and each npc
-	 * will have it's own strategy instead of sharing it on a global state.
-	 */
-	private Optional<Strategy> strategy = Optional.empty();
 	
 	/**
 	 * Creates a new {@link Mob}.
@@ -217,8 +161,8 @@ public abstract class Mob extends Actor {
 	public Hit decrementHealth(Hit hit) {
 		if(hit.getDamage() > currentHealth) {
 			hit.setDamage(currentHealth);
-			if(hit.getType() == Hit.HitType.CRITICAL) {
-				hit.setType(Hit.HitType.NORMAL);
+			if(hit.getHitsplat() == Hitsplat.CRITICAL) {
+				hit.set(Hitsplat.NORMAL);
 			}
 		}
 		currentHealth -= hit.getDamage();
@@ -247,18 +191,7 @@ public abstract class Mob extends Actor {
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
-	
-	@Override
-	public Strategy determineStrategy() {
-		return strategy.orElse(CombatUtil.determineStrategy(id));
-	}
-	
-	@Override
-	public void onSuccessfulHit(Actor victim, CombatType type) {
-		if(getDefinition().poisonous())
-			victim.poison(CombatPoisonEffect.getPoisonType(id).orElse(PoisonType.DEFAULT_NPC));
-	}
-	
+
 	@Override
 	public void healEntity(int damage) {
 		if((currentHealth + damage) > maxHealth) {
@@ -266,15 +199,6 @@ public abstract class Mob extends Actor {
 			return;
 		}
 		currentHealth += damage;
-	}
-	
-	@Override
-	public boolean weaken(CombatWeaken effect) {
-		if(weakenedBy == null) {
-			weakenedBy = effect;
-			return true;
-		}
-		return false;
 	}
 	
 	@Override
@@ -411,23 +335,7 @@ public abstract class Mob extends Actor {
 	public void setOriginalRandomWalk(boolean originalRandomWalk) {
 		this.originalRandomWalk = originalRandomWalk;
 	}
-	
-	/**
-	 * Gets the spell that this NPC is weakened by.
-	 * @return the weakening spell.
-	 */
-	public CombatWeaken getWeakenedBy() {
-		return weakenedBy;
-	}
-	
-	/**
-	 * Sets the value for {@link Mob#weakenedBy}.
-	 * @param weakenedBy the new value to set.
-	 */
-	public void setWeakenedBy(CombatWeaken weakenedBy) {
-		this.weakenedBy = weakenedBy;
-	}
-	
+
 	/**
 	 * Determines if this NPC respawns.
 	 * @return {@code true} if this NPC respawns, {@code false} otherwise.
@@ -517,23 +425,6 @@ public abstract class Mob extends Actor {
 	 */
 	public OptionalInt getTransform() {
 		return transform;
-	}
-	
-	/**
-	 * Gets the combat strategy.
-	 * @return combat strategy.
-	 */
-	public Optional<Strategy> getStrategy() {
-		return strategy;
-	}
-	
-	/**
-	 * Sets a new value for {@link #strategy}.
-	 * @param strategy the new value to set.
-	 */
-	public Mob setStrategy(Optional<Strategy> strategy) {
-		this.strategy = strategy;
-		return this;
 	}
 	
 	/**

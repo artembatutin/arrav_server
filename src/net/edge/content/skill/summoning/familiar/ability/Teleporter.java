@@ -1,7 +1,6 @@
 package net.edge.content.skill.summoning.familiar.ability;
 
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
-import net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
 
@@ -19,11 +18,6 @@ public final class Teleporter extends FamiliarAbility {
 	private final Position destination;
 	
 	/**
-	 * The teleport type chained to this teleporter.
-	 */
-	private final TeleportType teleportType;
-	
-	/**
 	 * The teleport policy chained to this teleporter ability.
 	 */
 	private final Optional<TeleportPolicy> policy;
@@ -31,14 +25,12 @@ public final class Teleporter extends FamiliarAbility {
 	/**
 	 * Constructs a new {@link Teleporter} ability type.
 	 * @param destination {@link #destination}.
-	 * @param teleport    {@link #teleportType}.
 	 * @param policy      {@link #policy}.
 	 */
-	public Teleporter(Position destination, TeleportType teleport, Optional<TeleportPolicy> policy) {
+	public Teleporter(Position destination, Optional<TeleportPolicy> policy) {
 		super(FamiliarAbilityType.TELEPORTER);
 		
 		this.destination = destination;
-		this.teleportType = teleport;
 		this.policy = policy;
 	}
 	
@@ -56,7 +48,7 @@ public final class Teleporter extends FamiliarAbility {
 		if(policy.isPresent()) {
 			return false;
 		}
-		player.teleport(destination);
+//		player.teleport(destination); FIXME: add teleports
 		player.message("Your familiar teleports you away...");
 		return true;
 	}
@@ -71,7 +63,7 @@ public final class Teleporter extends FamiliarAbility {
 		
 		int amount = player.getMaximumHealth() / policy.percentage;
 		
-		if(policy.combat && !player.getCombat().inCombat() && player.getCurrentHealth() < amount) {
+		if(policy.combat && !player.getNewCombat().inCombat() && player.getCurrentHealth() < amount) {
 			player.message("This familiar will only teleport you while you're in combat.");
 			return false;
 		}
@@ -80,7 +72,7 @@ public final class Teleporter extends FamiliarAbility {
 			return false;
 		}
 		
-		player.teleport(destination, teleportType);
+//		player.teleport(destination, teleportType); FIXME: add teleports
 		player.message("Your familiar teleports you safely away...");
 		return true;
 	}

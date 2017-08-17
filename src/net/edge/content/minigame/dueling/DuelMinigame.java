@@ -2,6 +2,7 @@ package net.edge.content.minigame.dueling;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.combat.CombatType;
 import net.edge.net.packet.out.SendContainer;
 import net.edge.net.packet.out.SendContextMenu;
 import net.edge.task.LinkedTaskSequence;
@@ -9,10 +10,8 @@ import net.edge.util.TextUtils;
 import net.edge.util.log.Log;
 import net.edge.util.log.impl.DuelLog;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatType;
-import net.edge.content.combat.special.CombatSpecial;
+import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.world.entity.item.container.impl.EquipmentType;
 import net.edge.world.entity.item.container.session.impl.DuelSession;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -30,9 +29,7 @@ import net.edge.world.entity.item.Item;
 import net.edge.world.object.GameObject;
 
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Holds functionality for the fighting session of the dueling minigame.
@@ -311,7 +308,7 @@ public final class DuelMinigame extends Minigame {
 		}
 		if(!session.getOther(player).same(victim)) {
 			player.message("You can't attack this person.");
-			player.getCombat().reset();
+			player.getNewCombat().reset();
 			return false;
 		}
 		if(!started) {
@@ -321,33 +318,33 @@ public final class DuelMinigame extends Minigame {
 		if(getRules().contains(DuelingRules.WHIP_DDS_ONLY)) {
 			if(!type.equals(CombatType.MELEE)) {
 				player.message("You can only hit the opponent with a whip or dds.");
-				player.getCombat().reset();
+				player.getNewCombat().reset();
 				return false;
 			}
 			if(!player.getEquipment().containsAny(4151, 1215, 1231, 5680, 5698)) {
 				player.message("You can only hit the opponent with a whip or dds.");
-				player.getCombat().reset();
+				player.getNewCombat().reset();
 				return false;
 			}
 		}
 		if(getRules().contains(DuelingRules.NO_MAGIC)) {
 			if(type.equals(CombatType.MAGIC)) {
 				player.message("Magical attacks have been disabled during this duel.");
-				player.getCombat().reset();
+				player.getNewCombat().reset();
 				return false;
 			}
 		}
 		if(getRules().contains(DuelingRules.NO_RANGED)) {
 			if(type.equals(CombatType.RANGED)) {
 				player.message("Ranged attacks have been disabled during this duel.");
-				player.getCombat().reset();
+				player.getNewCombat().reset();
 				return false;
 			}
 		}
 		if(getRules().contains(DuelingRules.NO_MELEE)) {
 			if(type.equals(CombatType.MELEE)) {
 				player.message("Melee attacks have been disabled during this duel.");
-				player.getCombat().reset();
+				player.getNewCombat().reset();
 				return false;
 			}
 		}

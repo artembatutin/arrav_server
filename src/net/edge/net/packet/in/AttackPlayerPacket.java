@@ -1,8 +1,8 @@
 package net.edge.net.packet.in;
 
 import net.edge.content.combat.CombatUtil;
-import net.edge.content.combat.magic.CombatSpells;
-import net.edge.content.combat.magic.lunars.LunarSpells;
+import net.edge.content.combat.content.MagicSpell;
+import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.world.entity.item.container.session.ExchangeSession;
 import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.entity.item.container.session.impl.DuelSession;
@@ -49,17 +49,14 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		int index = payload.getShort(true, ByteTransform.A);
 		int spellId = payload.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
-		
-		Optional<CombatSpells> spell = CombatSpells.getSpell(spellId);
-		if(!spell.isPresent()) {
-			LunarSpells.castCombatSpells(player, victim, spellId);
+
+		MagicSpell spell = MagicSpell.forId(spellId);
+		if(spell == null || index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !checkAttack(player, victim)) {
 			return;
 		}
-		if(index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !checkAttack(player, victim)) {
-			return;
-		}
-		player.setCastSpell(spell.get().getSpell());
-		player.getCombat().attack(victim);
+
+		player.getNewCombat().setStrategy(new PlayerMagicStrategy(spell, true));
+		player.getNewCombat().attack(victim);
 	}
 	
 	/**
@@ -73,7 +70,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		Player victim = World.get().getPlayers().get(index - 1);
 		if(index < 0 || index > World.get().getPlayers().capacity() || !checkAttack(player, victim))
 			return;
-		player.getCombat().attack(victim);
+		player.getNewCombat().attack(victim);
 	}
 	
 	/**
@@ -96,7 +93,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			attacker.message("You can't initiate combat with an iron man member.");
 			return false;
 		}
-		if(!attacker.inMulti() && attacker.getCombat().isBeingAttacked() && attacker.getCombat().getAggressor() != victim && attacker.getCombat().pjingCheck()) {
+		if(!attacker.inMulti() && attacker.getNewCombat().isUnderAttack() && !attacker.getNewCombat().isUnderAttackBy(victim)) {
 			attacker.message("You are already under attack!");
 			attacker.getMovementQueue().reset();
 			return false;

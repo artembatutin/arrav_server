@@ -2,33 +2,32 @@ package net.edge.content.minigame.pestcontrol;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.content.combat.special.CombatSpecial;
 import net.edge.content.dialogue.impl.NpcDialogue;
-import net.edge.content.object.door.DoorHandler;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.market.currency.Currency;
 import net.edge.content.minigame.SequencedMinigame;
 import net.edge.content.minigame.pestcontrol.defence.PestGate;
 import net.edge.content.minigame.pestcontrol.pest.Pest;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.strategy.player.special.CombatSpecial;
+import net.edge.content.object.door.DoorHandler;
 import net.edge.content.skill.Skills;
-import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.Hit;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
 import static net.edge.content.achievements.Achievement.PEST_CONTROLLER;
-import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.LADDER;
 
 public final class PestControlMinigame extends SequencedMinigame {
 	
@@ -127,7 +126,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 		player.getAttr().get("master_archery").set(false);
 		CombatSpecial.restore(player, 100);
 		Skills.restoreAll(player);
-		player.getCombat().reset();
+		player.getNewCombat().reset();
 		player.getInventory().remove(new Item(1511, 28));//removing logs.
 	}
 
@@ -153,29 +152,29 @@ public final class PestControlMinigame extends SequencedMinigame {
 	public boolean onFirstClickObject(Player player, GameObject object) {
 		Position pos = object.getGlobalPos();
 		//west north ladder.
-		if(object.getId() == 14296 && pos.getX() == 2644) {
-			player.teleport(new Position(player.getPosition().getX() <= 2643 ? 2645 : 2643, 2601), LADDER);
-			player.getAttr().get("master_archery").set(player.getPosition().getX() <= 2643);
-			return false;
-		}
-		//east north ladder.
-		if(object.getId() == 14296 && pos.getX() == 2669) {
-			player.teleport(new Position(player.getPosition().getX() >= 2670 ? 2668 : 2670, 2601), LADDER);
-			player.getAttr().get("master_archery").set(player.getPosition().getX() < 2670);
-			return false;
-		}
-		//west south ladder
-		if(object.getId() == 14296 && pos.getX() == 2647) {
-			player.teleport(new Position(2647, player.getPosition().getY() <= 2585 ? 2587 : 2585), LADDER);
-			player.getAttr().get("master_archery").set(!(player.getPosition().getY() <= 2585));
-			return false;
-		}
-		//east south ladder
-		if(object.getId() == 14296 && pos.getX() == 2666) {
-			player.teleport(new Position(2666, player.getPosition().getY() <= 2585 ? 2587 : 2585), LADDER);
-			player.getAttr().get("master_archery").set(!(player.getPosition().getY() <= 2585));
-			return false;
-		}
+//		if(object.getId() == 14296 && pos.getX() == 2644) {
+//			player.teleport(new Position(player.getPosition().getX() <= 2643 ? 2645 : 2643, 2601), LADDER); FIXME: FIX TELEPORTS
+//			player.getAttr().get("master_archery").set(player.getPosition().getX() <= 2643);
+//			return false;
+//		}
+//		//east north ladder.
+//		if(object.getId() == 14296 && pos.getX() == 2669) {
+//			player.teleport(new Position(player.getPosition().getX() >= 2670 ? 2668 : 2670, 2601), LADDER);
+//			player.getAttr().get("master_archery").set(player.getPosition().getX() < 2670);
+//			return false;
+//		}
+//		//west south ladder
+//		if(object.getId() == 14296 && pos.getX() == 2647) {
+//			player.teleport(new Position(2647, player.getPosition().getY() <= 2585 ? 2587 : 2585), LADDER);
+//			player.getAttr().get("master_archery").set(!(player.getPosition().getY() <= 2585));
+//			return false;
+//		}
+//		//east south ladder
+//		if(object.getId() == 14296 && pos.getX() == 2666) {
+//			player.teleport(new Position(2666, player.getPosition().getY() <= 2585 ? 2587 : 2585), LADDER);
+//			player.getAttr().get("master_archery").set(!(player.getPosition().getY() <= 2585));
+//			return false;
+//		}
 		for(PestGate gate : gates) {
 			if(gate.clicked(object.getGlobalPos())) {
 				gate.click(player);
@@ -215,15 +214,15 @@ public final class PestControlMinigame extends SequencedMinigame {
 				continue;
 			if(!pest.aggressive())
 				continue;
-			if(!pest.getCombat().isAttacking()) {
+			if(!pest.getNewCombat().isAttacking()) {
 				if(pest.getPosition().withinDistance(voidKnight.getPosition(), pest.ranged() ? 15 : 5)) {
-					pest.getCombat().attack(voidKnight);
+					pest.getNewCombat().attack(voidKnight);
 					continue;
 				}
 				pest.getRegion().ifPresent(r -> {
 					for(Player p : r.getPlayers()) {
 						if(p.getPosition().withinDistance(pest.getPosition(), pest.ranged() ? 10 : 5)) {
-							pest.getCombat().attack(p);
+							pest.getNewCombat().attack(p);
 							break;
 						}
 					}

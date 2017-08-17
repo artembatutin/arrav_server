@@ -2,26 +2,23 @@ package net.edge.content.minigame.barrows;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.net.packet.out.SendMinimapState;
-import net.edge.util.rand.RandomUtils;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.Minigame;
-import net.edge.content.teleport.impl.DefaultTeleportSpell;
-import net.edge.world.locale.Position;
+import net.edge.net.packet.out.SendMinimapState;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.drop.DropManager;
-import net.edge.world.entity.item.ItemCache;
 import net.edge.world.entity.actor.mob.drop.Drop;
-import net.edge.world.entity.actor.mob.drop.DropTable;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.ItemCache;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
 import java.util.Optional;
@@ -77,7 +74,7 @@ public final class BarrowsMinigame extends Minigame {
 		player.getMinigameContainer().getBarrowsContainer().setCurrent(current);
 		World.get().getMobs().add(current);
 		current.forceChat("How dare you disturb our grave!");
-		current.getCombat().attack(player);
+		current.getNewCombat().attack(player);
 	}
 	
 	/**
@@ -184,7 +181,7 @@ public final class BarrowsMinigame extends Minigame {
 				player.getMinigameContainer().getBarrowsContainer().setCurrent(container.getCurrent().get());
 				World.get().getMobs().add(container.getCurrent().get());
 				container.getCurrent().get().forceChat("How dare you steal from us!");
-				container.getCurrent().get().getCombat().attack(player);
+				container.getCurrent().get().getNewCombat().attack(player);
 				return true;
 			}
 			if(!container.getCurrent().isPresent()) {
@@ -202,15 +199,14 @@ public final class BarrowsMinigame extends Minigame {
 				}
 				
 				Position position = new Position(BarrowsData.AHRIM.getLocation().getX(), BarrowsData.AHRIM.getLocation().getY(), BarrowsData.AHRIM.getLocation().getZ());
-				DefaultTeleportSpell teleport = new DefaultTeleportSpell(position, DefaultTeleportSpell.TeleportType.NORMAL);
 				player.out(new SendMinimapState(0));
 				if(loot.isEmpty())
 					player.message("You open the chest and it's... empty?");
 				else {
 					player.message("You grabbed one thing from the chest and a magical force teleported you.");
-					teleport.attach(() -> player.getInventory().addOrDrop(loot));
+//					teleport.attach(() -> player.getInventory().addOrDrop(loot)); FIXME: teleport attachments
 				}
-				DefaultTeleportSpell.teleport(player, teleport);
+//				DefaultTeleportSpell.teleport(player, teleport); TODO: add telepors
 				player.getMinigameContainer().getBarrowsContainer().getKilledBrothers().clear();
 				
 				return true;

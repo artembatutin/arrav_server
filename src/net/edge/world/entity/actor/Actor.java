@@ -1,13 +1,9 @@
 package net.edge.world.entity.actor;
 
 import com.google.common.base.Preconditions;
-import net.edge.content.combat.Combat;
-import net.edge.content.combat.CombatType;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.effect.CombatEffectType;
-import net.edge.content.combat.magic.CombatSpell;
-import net.edge.content.combat.magic.CombatWeaken;
-import net.edge.content.combat.strategy.Strategy;
+import net.edge.content.combat.hit.Hit;
 import net.edge.task.Task;
 import net.edge.util.MutableNumber;
 import net.edge.util.Stopwatch;
@@ -48,11 +44,6 @@ public abstract class Actor extends Entity {
 	 * An {@link AttributeMap} instance assigned to this {@code Actor}.
 	 */
 	protected final AttributeMap attr = new AttributeMap();
-	
-	/**
-	 * The combat builder that will handle all combat operations for this entity.
-	 */
-	private final Combat combat = new Combat(this);
 	
 	/**
 	 * The movement queue that will handle all movement processing for this entity.
@@ -139,12 +130,7 @@ public abstract class Actor extends Entity {
 	 * The flag that determines if this entity needs a region update.
 	 */
 	private boolean needsRegionUpdate;
-	
-	/**
-	 * The combat spell currently being casted by this entity.
-	 */
-	private CombatSpell currentlyCasting;
-	
+
 	/**
 	 * The current animation being performed by this entity.
 	 */
@@ -174,7 +160,7 @@ public abstract class Actor extends Entity {
 	 * The current primary hit being dealt on this entity.
 	 */
 	private Hit primaryHit;
-	
+
 	/**
 	 * The current secondary hit being dealt on this entity.
 	 */
@@ -330,14 +316,6 @@ public abstract class Actor extends Entity {
 	public abstract void appendDeath();
 	
 	/**
-	 * Weakens this entity using {@code effect}.
-	 * @param effect the effect to use to weaken this entity.
-	 * @return {@code true} if the entity was weakened, {@code false}
-	 * otherwise.
-	 */
-	public abstract boolean weaken(CombatWeaken effect);
-	
-	/**
 	 * Gets a set of local players.
 	 * @return local players
 	 */
@@ -368,19 +346,6 @@ public abstract class Actor extends Entity {
 	 */
 	public abstract Hit decrementHealth(Hit hit);
 
-	/**
-	 * Calculates and retrieves the combat strategy for this entity.
-	 * @return the combat strategy.
-	 */
-	public abstract Strategy determineStrategy();
-	
-	/**
-	 * Executed on a successful hit, used primarily for poison effects.
-	 * @param entity the victim in this successful hit.
-	 * @param type   the combat type currently being used.
-	 */
-	public abstract void onSuccessfulHit(Actor entity, CombatType type);
-	
 	/**
 	 * Restores this entity's health level by {@code amount}.
 	 * @param amount the amount to restore this health level by.
@@ -591,19 +556,6 @@ public abstract class Actor extends Entity {
 		});
 	}
 
-	/**
-	 * Prepares to cast the {@code spell} on {@code victim}.
-	 * @param spell  the spell to cast on the victim.
-	 * @param victim the victim that the spell will be cast on.
-	 * @return the delay of the hit depending on projectile.
-	 */
-	public final int prepareSpell(CombatSpell spell, Actor victim) {
-		currentlyCasting = spell;
-		if(currentlyCasting != null)
-			return currentlyCasting.startCast(this, victim);
-		return 1;
-	}
-	
 	/**
 	 * Freezes this entity for the desired time in {@code SECONDS}.
 	 * @param time the time to freeze this entity for.
@@ -819,22 +771,6 @@ public abstract class Actor extends Entity {
 	}
 	
 	/**
-	 * Gets the spell that this entity is currently casting.
-	 * @return the spell currently being casted.
-	 */
-	public final CombatSpell getCurrentlyCasting() {
-		return currentlyCasting;
-	}
-	
-	/**
-	 * Sets the value for {@link Actor#currentlyCasting}.
-	 * @param currentlyCasting the new value to set.
-	 */
-	public final void setCurrentlyCasting(CombatSpell currentlyCasting) {
-		this.currentlyCasting = currentlyCasting;
-	}
-	
-	/**
 	 * Gets the last region this entity is in.
 	 * @return the current region.
 	 */
@@ -960,16 +896,7 @@ public abstract class Actor extends Entity {
 		this.visible = visible;
 	}
 	
-	/**
-	 * Gets the combat builder that will handle all combat operations for this
-	 * entity.
-	 * @return the combat builder.
-	 */
-	public final Combat getCombat() {
-		return combat;
-	}
-
-	public abstract net.edge.content.newcombat.Combat<? extends Actor> getNewCombat();
+	public abstract net.edge.content.combat.Combat<? extends Actor> getNewCombat();
 
 	public abstract int getBonus(int index);
 

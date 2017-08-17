@@ -2,12 +2,6 @@ package net.edge.content.minigame.warriorsguild.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.net.packet.out.SendInterfaceItem;
-import net.edge.net.packet.out.SendWalkable;
-import net.edge.task.Task;
-import net.edge.util.TextUtils;
-import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatType;
 import net.edge.content.dialogue.Conversation;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
@@ -17,18 +11,24 @@ import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.warriorsguild.GuildRoom;
 import net.edge.content.minigame.warriorsguild.WarriorsGuild;
-import net.edge.world.entity.region.Region;
-import net.edge.world.locale.Position;
-import net.edge.world.locale.loc.SquareLocation;
+import net.edge.content.combat.CombatType;
+import net.edge.net.packet.out.SendInterfaceItem;
+import net.edge.net.packet.out.SendWalkable;
+import net.edge.task.Task;
+import net.edge.util.TextUtils;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
+import net.edge.world.locale.Position;
+import net.edge.world.locale.loc.SquareLocation;
 import net.edge.world.object.GameObject;
 
-import java.util.*;
+import java.util.EnumSet;
+import java.util.Optional;
 
 /**
  * The class which represents functionality for the cyclops room.
@@ -247,12 +247,12 @@ public final class CyclopsRoom extends GuildRoom {
 				player.move(new Position(2846, RandomUtils.nextBoolean() ? 3541 : 3540, 2));
 				player.getDialogueBuilder().append(new NpcDialogue(4289, Expression.CALM, "Your time is up..."));
 				
-				if(player.getCombat().isAttacking()) {
-					player.getCombat().reset();
+				if(player.getNewCombat().isAttacking()) {
+					player.getNewCombat().reset();
 				}
 				
-				if(player.getCombat().getVictim() != null) {
-					player.getCombat().getVictim().getCombat().reset();
+				if(player.getNewCombat().getDefender() != null) {
+					player.getNewCombat().getDefender().getNewCombat().reset();
 				}
 				
 				this.cancel();

@@ -1,18 +1,17 @@
 package net.edge.net.packet.in;
 
 import net.edge.Application;
-import net.edge.content.combat.magic.CombatSpells;
-import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.item.pets.Pet;
-import net.edge.content.skill.slayer.Slayer;
-import net.edge.content.skill.summoning.Summoning;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.MobAction;
-import net.edge.world.locale.Boundary;
-import net.edge.world.locale.Position;
-import net.edge.net.codec.IncomingMsg;
+import net.edge.content.item.pets.Pet;
+import net.edge.content.minigame.MinigameHandler;
+import net.edge.content.combat.content.MagicSpell;
+import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
+import net.edge.content.skill.slayer.Slayer;
+import net.edge.content.skill.summoning.Summoning;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
@@ -20,8 +19,8 @@ import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
-
-import java.util.Optional;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
 
 /**
  * The message sent from the client when a player attacks or clicks on an NPC.
@@ -75,9 +74,7 @@ public final class MobActionPacket implements IncomingPacket {
 		if(mob == null || !checkAttack(player, mob))
 			return;
 		player.getTolerance().reset();
-		if (player.getRights() == Rights.ADMINISTRATOR) {
-			player.getNewCombat().attack(mob);
-		} else player.getCombat().attack(mob);
+		player.getNewCombat().attack(mob);
 	}
 	
 	/**
@@ -89,12 +86,15 @@ public final class MobActionPacket implements IncomingPacket {
 		int index = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int spellId = payload.getShort(true, ByteTransform.A);
 		Mob mob = World.get().getMobs().get(index - 1);
-		Optional<CombatSpells> spell = CombatSpells.getSpell(spellId);
-		if(mob == null || !spell.isPresent() || !checkAttack(player, mob))
+		MagicSpell spell = MagicSpell.forId(spellId);
+
+		if(mob == null || spell == null || !checkAttack(player, mob)) {
 			return;
-		player.setCastSpell(spell.get().getSpell());
+		}
+
 		player.getTolerance().reset();
-		player.getCombat().attack(mob);
+		player.getNewCombat().setStrategy(new PlayerMagicStrategy(spell, true));
+		player.getNewCombat().attack(mob);
 	}
 	
 	/**
@@ -232,7 +232,7 @@ public final class MobActionPacket implements IncomingPacket {
 	private boolean checkAttack(Player player, Mob mob) {
 		if(!MobDefinition.DEFINITIONS[mob.getId()].isAttackable())
 			return false;
-		if(!player.inMulti() && player.getCombat().isBeingAttacked() && !mob.same(player.getCombat().getAggressor())) {
+		if(!player.inMulti() && player.getNewCombat().isUnderAttack() && !player.getNewCombat().isUnderAttackBy(mob)) {
 			player.message("You are already under attack!");
 			return false;
 		}

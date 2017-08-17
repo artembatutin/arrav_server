@@ -3,6 +3,10 @@ package net.edge.world.entity.actor.player;
 import com.google.common.collect.Ordering;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.combat.CombatConstants;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.HitIcon;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.net.PunishmentHandler;
 import net.edge.net.packet.out.SendConfig;
@@ -11,7 +15,6 @@ import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.rand.RandomUtils;
 import net.edge.GameConstants;
 import net.edge.content.PlayerPanel;
-import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.content.minigame.Minigame;
@@ -27,7 +30,6 @@ import net.edge.world.entity.actor.ActorDeath;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.Hit;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.update.UpdateFlag;
 import net.edge.world.entity.item.Item;
@@ -74,14 +76,14 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			getActor().graphic(new Graphic(437));
 			final int hit = RandomUtils.inclusive(CombatConstants.MAXIMUM_RETRIBUTION_DAMAGE);
 			if(getActor().inMulti()) {
-				getActor().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getActor().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
+				getActor().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getActor().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit, Hitsplat.NORMAL, HitIcon.NONE)));
 				if(getActor().inWilderness()) {
-					getActor().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getActor().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit)));
+					getActor().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getActor().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit, Hitsplat.NORMAL, HitIcon.NONE)));
 				}
 			} else {
-				Actor victim = getActor().getCombat().getVictim();
+				Actor victim = getActor().getNewCombat().getDefender();
 				if(victim != null && victim.getPosition().withinDistance(getActor().getPosition(), 2)) {
-					victim.damage(new Hit(RandomUtils.inclusive(hit)));
+					victim.damage(new Hit(RandomUtils.inclusive(hit), Hitsplat.NORMAL, HitIcon.NONE));
 				}
 			}
 		}
@@ -102,14 +104,14 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			}
 			int maxHit = (int) ((getActor().getSkills()[Skills.PRAYER].getLevel() / 100.D) * 25);
 			if(getActor().inMulti()) {
-				getActor().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getActor().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
+				getActor().getLocalMobs().stream().filter(n -> n.getPosition().withinDistance(getActor().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit), Hitsplat.NORMAL, HitIcon.NONE)));
 				if(getActor().inWilderness()) {
-					getActor().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getActor().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit))));
+					getActor().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getActor().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit), Hitsplat.NORMAL, HitIcon.NONE)));
 				}
 			} else {
-				Actor victim = getActor().getCombat().getVictim();
+				Actor victim = getActor().getNewCombat().getDefender();
 				if(victim != null && victim.getPosition().withinDistance(getActor().getPosition(), 3)) {
-					victim.damage(new Hit(RandomUtils.inclusive(maxHit)));
+					victim.damage(new Hit(RandomUtils.inclusive(maxHit), Hitsplat.NORMAL, HitIcon.NONE));
 				}
 			}
 		}
@@ -122,7 +124,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 	
 	@Override
 	public void death() {
-		Optional<Player> killer = getActor().getCombat().getDamageCache().getPlayerKiller();
+		Optional<Player> killer = getActor().getNewCombat().getDamageCache().getPlayerKiller();
 		Optional<Minigame> optional = MinigameHandler.getMinigame(getActor());
 		if(optional.isPresent()) {
 			optional.get().onDeath(getActor());
@@ -189,7 +191,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			k.message(RandomUtils.random(GameConstants.DEATH_MESSAGES).replaceAll("-victim-", getActor().getFormatUsername()).replaceAll("-killer-", k.getFormatUsername()));
 		});
 		
-		getActor().getCombat().getDamageCache().calculateProperKiller().ifPresent(e -> {
+		getActor().getNewCombat().getDamageCache().calculateProperKiller().ifPresent(e -> {
 			if(e.isMob()) {
 				getActor().getDeathsByNpc().incrementAndGet();
 				PlayerPanel.TOTAL_NPC_DEATHS.refresh(getActor(), "@or2@ - Total Mob deaths: @yel@" + getActor().getDeathsByNpc().get());
@@ -200,8 +202,8 @@ public final class PlayerDeath extends ActorDeath<Player> {
 	@Override
 	public void postDeath() {
 		getActor().closeWidget();
-		getActor().getCombat().reset();
-		getActor().getCombat().getDamageCache().clear();
+		getActor().getNewCombat().reset();
+		getActor().getNewCombat().getDamageCache().clear();
 		getActor().getTolerance().reset();
 		getActor().getSpecialPercentage().set(100);
 		getActor().out(new SendConfig(301, 0));

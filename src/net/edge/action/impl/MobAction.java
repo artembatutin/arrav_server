@@ -1,15 +1,14 @@
 package net.edge.action.impl;
 
+import net.edge.action.Action;
 import net.edge.content.item.Skillcape;
-import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.object.star.StarSprite;
+import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.skill.hunter.butterfly.ButterflyCatching;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.thieving.impl.Pickpocketing;
-import net.edge.action.Action;
 import net.edge.net.packet.in.MobActionPacket;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.impl.SkeletalHorror;
 import net.edge.world.entity.actor.player.Player;
 
 /**
@@ -43,7 +42,6 @@ public abstract class MobAction extends Action {
 		StarSprite.action();
 		Pickpocketing.action();
 		Skillcape.action();
-		SkeletalHorror.action();
 	}
 	
 }

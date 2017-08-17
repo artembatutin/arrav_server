@@ -1,9 +1,11 @@
 package net.edge.content.combat.effect;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.HitIcon;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.Hit;
 import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.entity.actor.player.Player;
@@ -57,7 +59,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 	@Override
 	public void process(Actor t) {
 		amount--;
-		t.damage(new Hit(t.getPoisonDamage().get(), Hit.HitType.POISON, Hit.HitIcon.NONE));
+		t.damage(new Hit(t.getPoisonDamage().get(), Hitsplat.POISON, HitIcon.NONE));
 		if(amount == 0) {
 			amount = 4;
 			t.getPoisonDamage().decrementAndGet();

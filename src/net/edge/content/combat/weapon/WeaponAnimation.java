@@ -1,6 +1,7 @@
 package net.edge.content.combat.weapon;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.content.combat.attack.FightStyle;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 

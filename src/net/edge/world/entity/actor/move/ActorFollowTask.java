@@ -1,19 +1,17 @@
 package net.edge.world.entity.actor.move;
 
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.combat.CombatUtil;
-import net.edge.task.Task;
-import net.edge.util.rand.RandomUtils;
 import net.edge.content.skill.summoning.Summoning;
-import net.edge.world.entity.region.TraversalMap;
-import net.edge.world.locale.Boundary;
-import net.edge.world.locale.Position;
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.move.path.Path;
 import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.move.path.Path;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
 
 import java.util.Optional;
 
@@ -111,10 +109,9 @@ class ActorFollowTask extends Task {
 		}
 		
 		//Combat distance check.
-		if(character.getCombat().isAttacking()) {
+		if(character.getNewCombat().isAttacking()) {
 			if(character.isPlayer()) {
-				character.getCombat().determineStrategy();
-				if(CombatUtil.checkAttackDistance(character.getCombat())) {
+				if(CombatUtil.checkAttackDistance(character, character.getNewCombat().getLastDefender(), character.getNewCombat().getStrategy())) {
 					return;
 				}
 			}

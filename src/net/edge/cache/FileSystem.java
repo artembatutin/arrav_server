@@ -144,7 +144,7 @@ public final class FileSystem {
 	 */
 	public static FileSystem create(String directory) throws IOException {
 		Path root = Paths.get(directory);
-		Preconditions.checkArgument(Files.isDirectory(root), "Supplied path must be a directory!");
+		Preconditions.checkArgument(Files.isDirectory(root), "Supplied path must be a directory! " + root);
 		
 		Path data = root.resolve(DATA_PREFIX);
 		Preconditions.checkArgument(Files.exists(data), "No data file found in the specified path!");

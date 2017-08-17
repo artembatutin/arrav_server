@@ -1,7 +1,7 @@
 package net.edge.content.skill.construction;
 
+import net.edge.world.entity.actor.mob.DefaultMob;
 import net.edge.world.locale.Position;
-import net.edge.world.entity.actor.mob.impl.DefaultMob;
 import net.edge.world.entity.item.Item;
 
 /**

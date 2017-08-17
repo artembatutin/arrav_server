@@ -1,17 +1,15 @@
 package net.edge.action.impl;
 
-import net.edge.content.minigame.nexchamber.NexMinigame;
-import net.edge.content.object.WebSlashing;
+import net.edge.action.Action;
 import net.edge.content.minigame.fightcaves.FightcavesMinigame;
+import net.edge.content.minigame.nexchamber.NexMinigame;
 import net.edge.content.minigame.pestcontrol.PestControlWaitingLobby;
 import net.edge.content.minigame.warriorsguild.WarriorsGuild;
-import net.edge.content.object.cannon.Multicannon;
-import net.edge.content.skill.agility.test.shortcuts.Shortcuts;
-import net.edge.content.skill.agility.impl.barb.BarbarianOutpostAgility;
-import net.edge.content.skill.agility.impl.gnome.GnomeStrongholdAgility;
+import net.edge.content.object.WebSlashing;
 import net.edge.content.skill.agility.impl.wild.WildernessAgility;
 import net.edge.content.skill.agility.test.barb.BarbAgility;
 import net.edge.content.skill.agility.test.gnome.GnomeAgility;
+import net.edge.content.skill.agility.test.shortcuts.Shortcuts;
 import net.edge.content.skill.construction.furniture.HotSpots;
 import net.edge.content.skill.crafting.PotClaying;
 import net.edge.content.skill.hunter.Hunter;
@@ -23,9 +21,7 @@ import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.thieving.impl.Stalls;
 import net.edge.content.skill.woodcutting.Woodcutting;
 import net.edge.content.wilderness.Obelisk;
-import net.edge.action.Action;
 import net.edge.net.packet.in.ObjectActionPacket;
-import net.edge.world.entity.actor.mob.impl.gwd.GodwarsFaction;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.object.GameObject;
 
@@ -79,11 +75,9 @@ public abstract class ObjectAction extends Action {
 		Smelting.action();
 		HotSpots.action();
 		PestControlWaitingLobby.event();
-		GodwarsFaction.event();
 		BirdData.action();
 		MammalData.action();
 		Hunter.action();
-		Multicannon.action();
 	}
 	
 }

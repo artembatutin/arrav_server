@@ -7,15 +7,15 @@ import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.SequencedMinigame;
 import net.edge.content.skill.prayer.Prayer;
-import net.edge.world.entity.item.GroundItem;
-import net.edge.world.locale.InstanceManager;
-import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.attribute.AttributeValue;
+import net.edge.world.entity.actor.mob.DefaultMob;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.impl.DefaultMob;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.GroundItem;
+import net.edge.world.locale.InstanceManager;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
 import java.util.Optional;
@@ -72,7 +72,7 @@ public final class RFDMinigame extends SequencedMinigame {
 				Mob mob = this.currentNpc.get();
 				InstanceManager.get().isolate(mob, instance);
 				World.get().getMobs().add(mob);
-				mob.getCombat().attack(player);
+				mob.getNewCombat().attack(player);
 				timer = 0;
 			}
 		}
@@ -196,7 +196,7 @@ public final class RFDMinigame extends SequencedMinigame {
 		player.setMinigame(Optional.empty());
 		player.setInstance(0);
 		InstanceManager.get().open(instance);
-		player.teleport(GameConstants.STARTING_POSITION);
+//		player.teleport(GameConstants.STARTING_POSITION); TODO: add teleports
 		this.destruct();
 	}
 }

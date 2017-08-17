@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.edge.content.achievements.Achievement;
 import net.edge.content.clanchat.ClanManager;
-import net.edge.content.combat.weapon.FightType;
+import net.edge.content.combat.attack.FightType;
 import net.edge.content.skill.construction.House;
 import net.edge.content.skill.construction.room.Room;
 import net.edge.content.skill.farming.patch.Patch;

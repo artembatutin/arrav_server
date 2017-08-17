@@ -1,12 +1,6 @@
 package net.edge.content.skill.hunter.trap.bird;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.item.Item;
-
-import java.util.EnumSet;
-import java.util.Optional;
 
 /**
  * The enumerated type whose elements represent a set of constants
@@ -69,9 +63,9 @@ public enum BirdData {
 	}
 	
 	public static void action() {
-		for(BirdData data : BirdData.values()) {
-			Mob.CUSTOM_MOBS.put(data.getNpcId(), s -> new Bird(data.getNpcId(), s, data));
-		}
+//		for(BirdData data : BirdData.values()) {
+//			Mob.CUSTOM_MOBS.put(data.getNpcId(), s -> new Bird(data.getNpcId(), s, data)); TODO: birds hehe
+//		}
 	}
 	
 }

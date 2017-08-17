@@ -3,22 +3,22 @@ package net.edge.content.minigame.hororis;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.minigame.Minigame;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.HitIcon;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendFade;
 import net.edge.net.packet.out.SendGraphic;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
-import net.edge.world.Hit;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.impl.DefaultMob;
-import net.edge.world.entity.actor.mob.impl.SkeletalHorror;
+import net.edge.world.entity.actor.mob.DefaultMob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.GroundItemPolicy;
 import net.edge.world.entity.item.GroundItemStatic;
 import net.edge.world.entity.item.Item;
-import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
@@ -32,10 +32,7 @@ import static net.edge.content.achievements.Achievement.HORRORIFIC;
  */
 public class Hororis extends Minigame {
 	
-	/**
-	 * The skeletal horror instance.
-	 */
-	private final SkeletalHorror horror;
+//	private final SkeletalHorror horror;
 	
 	/**
 	 * Skeleton minions.
@@ -52,9 +49,8 @@ public class Hororis extends Minigame {
 	 */
 	private static final ObjectList<Player> players = new ObjectArrayList<>();
 	
-	public Hororis(SkeletalHorror horror) {
+	public Hororis() {
 		super("Hororis", MinigameSafety.SAFE, MinigameType.NORMAL);
-		this.horror = horror;
 	}
 	
 	@Override
@@ -117,11 +113,11 @@ public class Hororis extends Minigame {
 			World.get().getMobs().remove(m);
 		}
 		minions.clear();
-		horror.getRegion().ifPresent(reg -> {
-			for(GroundItem b : bones) {
-				reg.unregister(b);
-			}
-		});
+//		horror.getRegion().ifPresent(reg -> {
+//			for(GroundItem b : bones) {
+//				reg.unregister(b);
+//			}
+//		});
 		bones.clear();
 		for(Player p : players) {
 			p.out(new SendFade(20, 100, 160));
@@ -143,7 +139,7 @@ public class Hororis extends Minigame {
 		if(players.size() > 0) {
 			Player p = RandomUtils.random(players);
 			if(p != null)
-				mob.getCombat().attack(p);
+				mob.getNewCombat().attack(p);
 		}
 	}
 	
@@ -154,10 +150,10 @@ public class Hororis extends Minigame {
 			for(Player p : players) {
 				p.out(new SendGraphic(520, pos, 0));
 				if(p.getPosition().same(pos)) {
-					p.damage(new Hit(RandomUtils.inclusive(20, 100), Hit.HitType.DISEASE, Hit.HitIcon.MAGIC));
+					p.damage(new Hit(RandomUtils.inclusive(20, 100), Hitsplat.DISEASE, HitIcon.MAGIC));
 				}
 			}
-			horror.getRegion().ifPresent(r -> r.register(item));
+//			horror.getRegion().ifPresent(r -> r.register(item));
 			bones.add(item);
 		}
 	}

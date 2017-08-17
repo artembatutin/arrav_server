@@ -1,23 +1,21 @@
 package net.edge.world.entity.item.container.impl;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.content.combat.CombatConstants;
-import net.edge.content.combat.ranged.CombatRangedAmmunition;
-import net.edge.content.combat.ranged.CombatRangedDetails;
-import net.edge.content.combat.weapon.WeaponAnimation;
-import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.net.packet.out.SendConfig;
-import net.edge.world.entity.item.container.ItemContainer;
-import net.edge.world.entity.item.container.ItemContainerAdapter;
-import net.edge.world.entity.item.container.ItemWeightListener;
 import net.edge.content.item.Requirement;
 import net.edge.content.item.Skillcape;
 import net.edge.content.minigame.MinigameHandler;
+import net.edge.content.combat.CombatConstants;
+import net.edge.content.combat.weapon.WeaponAnimation;
+import net.edge.content.combat.weapon.WeaponInterface;
+import net.edge.net.packet.out.SendConfig;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.ShieldAnimation;
 import net.edge.world.entity.actor.update.UpdateFlag;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.ItemDefinition;
+import net.edge.world.entity.item.container.ItemContainer;
+import net.edge.world.entity.item.container.ItemContainerAdapter;
+import net.edge.world.entity.item.container.ItemWeightListener;
 
 import java.util.Optional;
 
@@ -244,8 +242,6 @@ public final class Equipment extends ItemContainer {
 		if(type == WEAPON && def.isWeapon()) {
 			WeaponInterface.execute(player, equipItem);
 			WeaponAnimation.execute(player, equipItem);
-			player.setCastSpell(null);
-			player.setAutocastSpell(null);
 			player.setAutocast(false);
 			player.out(new SendConfig(108, 0));
 			player.out(new SendConfig(301, 0));
@@ -293,8 +289,6 @@ public final class Equipment extends ItemContainer {
 			}
 			if(equipmentIndex == Equipment.WEAPON_SLOT) {
 				WeaponInterface.execute(player, null);
-				player.setCastSpell(null);
-				player.setAutocastSpell(null);
 				player.setAutocast(false);
 				player.out(new SendConfig(108, 0));
 				WeaponAnimation.execute(player, new Item(0));
@@ -362,19 +356,19 @@ public final class Equipment extends ItemContainer {
 		if(wep.getDefinition().getEquipmentType() != WEAPON)
 			return;
 		//Updating ranged weapon
-		CombatRangedDetails.CombatRangedWeapon ranged = CombatRangedDetails.RANGED_WEAPONS.get(wep.getId());
-		player.getRangedDetails().setWeapon(ranged);
-		if(ranged != null) {
-			int slot = ranged.getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
-			Item ammunition = player.getEquipment().get(slot);
-			if(ammunition != null) {
-				CombatRangedAmmunition ammu = player.getRangedDetails().determineAmmo(ammunition, ranged);
-				player.getRangedDetails().setAmmunition(ammu);
-				if (ammu != null) {
-					player.getRangedDetails().getWeapon().ifPresent(w -> w.setAmmunition(new CombatRangedDetails.CombatRangedAmmo(ammunition, ammu)));
-				}
-			}
-		}
+//		RangedWeaponDefinition ranged = CombatRangedDetails.RANGED_WEAPONS.get(wep.getId());
+//		player.getRangedDetails().setWeapon(ranged);
+//		if(ranged != null) {
+//			int slot = ranged.getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
+//			Item ammunition = player.getEquipment().get(slot);
+//			if(ammunition != null) {
+//				CombatRangedAmmunition ammu = player.getRangedDetails().determineAmmo(ammunition, ranged);
+//				player.getRangedDetails().setAmmunition(ammu);
+//				if (ammu != null) {
+//					player.getRangedDetails().getWeapon().ifPresent(w -> w.setAmmunition(new CombatRangedDetails.CombatRangedAmmo(ammunition, ammu)));
+//				}
+//			}
+//		}
 	}
 	
 	/**

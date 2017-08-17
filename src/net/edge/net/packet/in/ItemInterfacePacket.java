@@ -99,7 +99,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		switch(interfaceId) {
 			case 1688:
 				player.getEquipment().unequip(slot);
-				player.getCombat().cooldown(true);
+				player.getNewCombat().reset();
 				break;
 			case 3322:
 				if(!session.isPresent()) {
@@ -326,7 +326,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		}
 		ItemAction e = EQUIP.get(item.getId());
 		if(item.getId() != 4153)
-			player.getCombat().cooldown(false);
+			player.getNewCombat().reset();
 		if(e != null)
 			if(e.click(player, item, interfaceId, slot, 5))
 				return;

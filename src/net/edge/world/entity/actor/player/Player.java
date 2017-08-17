@@ -9,23 +9,16 @@ import net.edge.Application;
 import net.edge.GameConstants;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
-import net.edge.content.newcombat.Combat;
-import net.edge.content.object.cannon.Multicannon;
-import net.edge.content.object.ViewingOrb;
 import net.edge.content.achievements.Achievement;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.clanchat.ClanMember;
-import net.edge.content.combat.CombatType;
-import net.edge.content.combat.CombatUtil;
+import net.edge.content.combat.Combat;
+import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectTask;
-import net.edge.content.combat.effect.CombatPoisonEffect;
-import net.edge.content.combat.magic.CombatSpell;
-import net.edge.content.combat.magic.CombatWeaken;
-import net.edge.content.combat.ranged.CombatRangedDetails;
-import net.edge.content.combat.special.CombatSpecial;
-import net.edge.content.combat.strategy.Strategy;
-import net.edge.content.combat.weapon.FightType;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.Hitsplat;
+import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.commands.impl.UpdateCommand;
@@ -35,15 +28,17 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.item.OverloadEffectTask;
 import net.edge.content.item.PotionConsumable;
+import net.edge.content.item.pets.Pet;
+import net.edge.content.item.pets.PetManager;
 import net.edge.content.market.MarketShop;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.MinigameContainer;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.item.pets.Pet;
-import net.edge.content.item.pets.PetManager;
+import net.edge.content.object.ViewingOrb;
+import net.edge.content.object.pit.FirepitManager;
+import net.edge.content.object.star.ShootingStarManager;
 import net.edge.content.quest.QuestManager;
 import net.edge.content.scene.impl.IntroductionCutscene;
-import net.edge.content.object.star.ShootingStarManager;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.SkillActionTask;
@@ -53,13 +48,11 @@ import net.edge.content.skill.construction.House;
 import net.edge.content.skill.farming.FarmingManager;
 import net.edge.content.skill.farming.patch.Patch;
 import net.edge.content.skill.farming.patch.PatchType;
-import net.edge.content.object.pit.FirepitManager;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.content.skill.summoning.familiar.Familiar;
-import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.content.wilderness.WildernessActivity;
 import net.edge.net.codec.GameBuffer;
@@ -69,14 +62,12 @@ import net.edge.net.session.GameSession;
 import net.edge.task.Task;
 import net.edge.util.*;
 import net.edge.world.Graphic;
-import net.edge.world.Hit;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobAggression;
-import net.edge.world.entity.actor.mob.impl.gwd.GodwarsFaction;
 import net.edge.world.entity.actor.player.assets.*;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.actor.update.UpdateFlag;
@@ -395,20 +386,11 @@ public final class Player extends Actor {
 	private String[] blockedTasks = new String[5];
 	
 	/**
-	 * The combat spell currently selected.
-	 */
-	private CombatSpell castSpell;
-	
-	/**
 	 * The flag that determines if the player is autocasting.
 	 */
 	private boolean autocast;
 	
-	/**
-	 * The combat spell currently being autocasted.
-	 */
-	private CombatSpell autocastSpell;
-	
+
 	/**
 	 * The combat special that has been activated.
 	 */
@@ -418,12 +400,7 @@ public final class Player extends Actor {
 	 * The condition if the player's screen is on focus.
 	 */
 	private boolean focused;
-	
-	/**
-	 * The ranged details for this player.
-	 */
-	private final CombatRangedDetails rangedDetails = new CombatRangedDetails(this);
-	
+
 	/**
 	 * The current viewing orb that this player has openShop.
 	 */
@@ -629,11 +606,6 @@ public final class Player extends Actor {
 	private final boolean human;
 	
 	/**
-	 * The saved {@link Multicannon} instance.
-	 */
-	public Optional<Multicannon> cannon = Optional.empty();
-	
-	/**
 	 * Creates a new {@link Player}.
 	 */
 	public Player(PlayerCredentials credentials, boolean human) {
@@ -814,7 +786,6 @@ public final class Player extends Actor {
 		MinigameHandler.executeVoid(this, m -> m.onLogout(this));
 		privateMessage.updateOtherList(false);
 		clan.ifPresent(c -> c.getClan().remove(this, true));
-		cannon.ifPresent(c -> c.pickup(true));
 		WildernessActivity.leave(this);
 		save();
 	}
@@ -865,8 +836,8 @@ public final class Player extends Actor {
 	public Hit decrementHealth(Hit hit) {
 		if(hit.getDamage() > skills[Skills.HITPOINTS].getLevel()) {
 			hit.setDamage(skills[Skills.HITPOINTS].getLevel());
-			if(hit.getType() == Hit.HitType.CRITICAL) {
-				hit.setType(Hit.HitType.NORMAL);
+			if(hit.getHitsplat() == Hitsplat.CRITICAL) {
+				hit.set(Hitsplat.NORMAL);
 			}
 		}
 		skills[Skills.HITPOINTS].decreaseLevel(hit.getDamage());
@@ -880,36 +851,7 @@ public final class Player extends Actor {
 		}
 		return hit;
 	}
-	
-	@Override
-	public Strategy determineStrategy() {
-		if(specialActivated && castSpell == null) {
-			if(combatSpecial.getCombat() == CombatType.MELEE) {
-				return CombatUtil.newDefaultMeleeStrategy();
-			} else if(combatSpecial.getCombat() == CombatType.RANGED) {
-				return CombatUtil.newDefaultRangedStrategy();
-			} else if(combatSpecial.getCombat() == CombatType.MAGIC) {
-				return CombatUtil.newDefaultMagicStrategy();
-			}
-		}
-		if(castSpell != null || autocastSpell != null) {
-			return CombatUtil.newDefaultMagicStrategy();
-		}
-		if(weapon == WeaponInterface.SHORTBOW || weapon == WeaponInterface.COMPOSITE_BOW || weapon == WeaponInterface.LONGBOW || weapon == WeaponInterface.CROSSBOW || weapon == WeaponInterface.DART || weapon == WeaponInterface.JAVELIN || weapon == WeaponInterface.THROWNAXE || weapon == WeaponInterface.KNIFE || weapon == WeaponInterface.CHINCHOMPA || weapon == WeaponInterface.SALAMANDER) {
-			return CombatUtil.newDefaultRangedStrategy();
-		}
-		return CombatUtil.newDefaultMeleeStrategy();
-	}
-	
-	@Override
-	public void onSuccessfulHit(Actor victim, CombatType type) {
-		if(type == CombatType.MELEE || weapon == WeaponInterface.DART || weapon == WeaponInterface.KNIFE || weapon == WeaponInterface.THROWNAXE || weapon == WeaponInterface.JAVELIN) {
-			victim.poison(CombatPoisonEffect.getPoisonType(equipment.get(Equipment.WEAPON_SLOT)).orElse(null));
-		} else if(type == CombatType.RANGED) {
-			victim.poison(CombatPoisonEffect.getPoisonType(equipment.get(Equipment.ARROWS_SLOT)).orElse(null));
-		}
-	}
-	
+
 	@Override
 	public int getAttackDelay() {
 		int speed = weapon.getSpeed();
@@ -965,34 +907,7 @@ public final class Player extends Actor {
 			PotionConsumable.onAntiPoisonEffect(this, false, 0);
 		message("You have been healed.");
 	}
-	
-	@Override
-	public boolean weaken(CombatWeaken effect) {
-		int id = (effect == CombatWeaken.ATTACK_LOW || effect == CombatWeaken.ATTACK_HIGH ? Skills.ATTACK : effect == CombatWeaken.STRENGTH_LOW || effect == CombatWeaken.STRENGTH_HIGH ? Skills.STRENGTH : Skills.DEFENCE);
-		if(skills[id].getLevel() < skills[id].getRealLevel())
-			return false;
-		skills[id].decreaseLevel((int) ((effect.getRate()) * (skills[id].getLevel())));
-		message("You feel slightly weakened.");
-		return true;
-	}
-	
-	/**
-	 * Attempts to teleport to the {@code destination}.
-	 * @param destination the destination to teleport to.
-	 */
-	public void teleport(Position destination) {
-		DefaultTeleportSpell.startTeleport(this, destination);
-	}
-	
-	/**
-	 * Attempts to teleport to the {@code destination}.
-	 * @param destination the destination to teleport to.
-	 * @param type        the type which this player will be teleported on.
-	 */
-	public void teleport(Position destination, DefaultTeleportSpell.TeleportType type) {
-		DefaultTeleportSpell.startTeleport(this, destination, type);
-	}
-	
+
 	/**
 	 * Moves this player to {@code position}.
 	 * @param destination the position to move this player to.
@@ -1075,7 +990,7 @@ public final class Player extends Actor {
 		}
 		if(Location.inGodwars(this)) {
 			if(!godwarsInterface) {
-				GodwarsFaction.refreshInterface(this);
+//				GodwarsFaction.refreshInterface(this); TODO: Godwars interface
 				out(new SendWalkable(16210));
 				godwarsInterface = true;
 			}
@@ -1691,22 +1606,6 @@ public final class Player extends Actor {
 	}
 	
 	/**
-	 * Gets the combat spell currently selected.
-	 * @return the selected combat spell.
-	 */
-	public CombatSpell getCastSpell() {
-		return castSpell;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#castSpell}.
-	 * @param castSpell the new value to set.
-	 */
-	public void setCastSpell(CombatSpell castSpell) {
-		this.castSpell = castSpell;
-	}
-	
-	/**
 	 * Determines if the player is autocasting.
 	 * @return {@code true} if they are autocasting, {@code false} otherwise.
 	 */
@@ -1721,23 +1620,7 @@ public final class Player extends Actor {
 	public void setAutocast(boolean autocast) {
 		this.autocast = autocast;
 	}
-	
-	/**
-	 * Gets the combat spell currently being autocasted.
-	 * @return the autocast spell.
-	 */
-	public CombatSpell getAutocastSpell() {
-		return autocastSpell;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#autocastSpell}.
-	 * @param autocastSpell the new value to set.
-	 */
-	public void setAutocastSpell(CombatSpell autocastSpell) {
-		this.autocastSpell = autocastSpell;
-	}
-	
+
 	/**
 	 * Gets the combat special that has been activated.
 	 * @return the activated combat special.
@@ -1753,15 +1636,7 @@ public final class Player extends Actor {
 	public void setCombatSpecial(CombatSpecial combatSpecial) {
 		this.combatSpecial = combatSpecial;
 	}
-	
-	/**
-	 * Gets the ranged details for this player.
-	 * @return the ranged details.
-	 */
-	public CombatRangedDetails getRangedDetails() {
-		return rangedDetails;
-	}
-	
+
 	/**
 	 * Determines if the special bar has been activated.
 	 * @return {@code true} if it has been activated, {@code false} otherwise.

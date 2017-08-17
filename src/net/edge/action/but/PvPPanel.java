@@ -1,10 +1,9 @@
 package net.edge.action.but;
 
-import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ButtonAction;
-import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.Position;
 
 public class PvPPanel extends ActionInitializer {
 	
@@ -24,7 +23,7 @@ public class PvPPanel extends ActionInitializer {
 			ButtonAction e = new ButtonAction() {
 				@Override
 				public boolean click(Player player, int button) {
-					player.teleport(teleports[index], DefaultTeleportSpell.TeleportType.PVP_PORTAL);
+//					player.teleport(teleports[index], DefaultTeleportSpell.TeleportType.PVP_PORTAL); TODO: add teleports
 					return true;
 				}
 			};

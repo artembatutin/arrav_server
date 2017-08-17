@@ -21,6 +21,6 @@ public final class HomeCommand implements Command{
      */
     @Override
     public void execute(Player player, String[] cmd, String command) throws Exception {
-        player.teleport(new Position(3085, 3508));
+//        player.teleport(new Position(3085, 3508)); TODO: add teleport
     }
 }

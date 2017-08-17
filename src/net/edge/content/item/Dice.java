@@ -27,7 +27,7 @@ public final class Dice {
 	 * @return {@code true} if the dice was rolled, {@code false} otherwise.
 	 */
 	public static boolean roll(Player player, DiceData data, boolean clanchat) {
-		if(player.getCombat().inCombat()) {
+		if(player.getNewCombat().inCombat()) {
 			return true;
 		}
 		if(player.getRights().less(Rights.SUPER_DONATOR)) {

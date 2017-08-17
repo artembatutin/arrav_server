@@ -12,12 +12,11 @@ import net.edge.cache.FileSystem;
 import net.edge.cache.decoder.MapDefinitionDecoder;
 import net.edge.cache.decoder.ObjectDefinitionDecoder;
 import net.edge.cache.decoder.RegionDecoder;
-import net.edge.content.combat.CombatConstants;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.*;
 import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.ObjectAction;
-import net.edge.content.newcombat.CombatProjectileDefinition;
+import net.edge.content.combat.CombatProjectileDefinition;
 import net.edge.content.object.star.ShootingStarManager;
 import net.edge.content.object.pit.FirepitManager;
 import net.edge.content.trivia.TriviaTask;
@@ -30,7 +29,6 @@ import net.edge.util.Utility;
 import net.edge.util.json.impl.*;
 import net.edge.content.PlayerPanel;
 import net.edge.content.RestoreStatTask;
-import net.edge.content.combat.strategy.Strategy;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.world.World;
@@ -187,7 +185,7 @@ public final class Application {
 		//object/region decoding must be done before parallel.
 		new ObjectDefinitionDecoder(fs).run();
 		new MapDefinitionDecoder(fs).run();
-		new RegionDecoder(fs).run();
+//		new RegionDecoder(fs).run();
 		FirepitManager.get().register();
 		//Item decoding.
 		launch.execute(() -> {
@@ -214,25 +212,10 @@ public final class Application {
 		launch.execute(new ShieldAnimationLoader());
 		launch.execute(new WeaponAnimationLoader());
 		launch.execute(new WeaponInterfaceLoader());
-		launch.execute(new CombatRangedBowLoader());
 		launch.execute(new EquipmentRequirementLoader());
 		launch.execute(new IndividualScoreboardRewardsLoader());
 		launch.execute(() -> new SlayerDefinitionLoader().load());
 		launch.execute(() -> CombatProjectileDefinition.createLoader().load());
-		launch.execute(() -> {//Adding combat strategies.
-			for(String directory : Utility.getSubDirectories(Strategy.class)) {
-				try {
-					List<Strategy> s = Utility.getClassesInDirectory(Strategy.class.getPackage().getName() + "." + directory).stream().map(clazz -> (Strategy) clazz).collect(Collectors.toList());
-					s.forEach(c -> {
-						for(int n : c.getMobs()) {
-							CombatConstants.DEFAULT_STRATEGIES.put(n, c);
-						}
-					});
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 		launch.execute(PunishmentHandler::parseIPBans);
 		launch.execute(PunishmentHandler::parseIPMutes);
 		launch.execute(PunishmentHandler::parseStarters);

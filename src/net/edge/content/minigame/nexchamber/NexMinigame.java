@@ -3,13 +3,12 @@ package net.edge.content.minigame.nexchamber;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.action.impl.ObjectAction;
-import net.edge.content.combat.CombatType;
 import net.edge.content.minigame.Minigame;
+import net.edge.content.combat.CombatType;
 import net.edge.net.packet.out.SendFade;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.impl.nex.Nex;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
@@ -27,16 +26,12 @@ public class NexMinigame extends Minigame {
 	 */
 	public static NexMinigame game;
 	
-	/**
-	 * The main nex avatar.
-	 */
-	private final Nex nex;
+//	private final Nex nex;
 	
 	private static final ObjectList<Player> players = new ObjectArrayList<>();
 	
-	public NexMinigame(Nex nex) {
+	public NexMinigame() {
 		super("Nex", MinigameSafety.DEFAULT, MinigameType.NORMAL);
-		this.nex = nex;
 	}
 
 	/**
@@ -72,10 +67,10 @@ public class NexMinigame extends Minigame {
 		if(other.isPlayer())
 			return false;
 		Mob m = other.toMob();
-		if(nex.minionStage != m.getId() - 13450 && m.getId() != 13447) {
-			player.message("The avatar is not weak enough to damage this minion.");
-			return false;
-		}
+//		if(nex.minionStage != m.getId() - 13450 && m.getId() != 13447) {
+//			player.message("The avatar is not weak enough to damage this minion.");
+//			return false;
+//		}
 		return true;
 	}
 	

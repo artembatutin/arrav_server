@@ -1,11 +1,9 @@
 package net.edge.action.but;
 
-import net.edge.content.dialogue.impl.OptionDialogue;
-import net.edge.content.teleport.impl.DefaultTeleportSpell;
-import net.edge.content.wilderness.WildernessActivity;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ButtonAction;
-import net.edge.world.locale.Position;
+import net.edge.content.dialogue.impl.OptionDialogue;
+import net.edge.content.wilderness.WildernessActivity;
 import net.edge.net.packet.out.SendWildernessActivity;
 import net.edge.world.entity.actor.player.Player;
 
@@ -19,7 +17,7 @@ public class Spellbook extends ActionInitializer {
 		ButtonAction e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3085, 3508));
+//				player.teleport(new Position(3085, 3508)); TODO: add teleports
 				return true;
 			}
 		};
@@ -99,13 +97,13 @@ public class Spellbook extends ActionInitializer {
 			public boolean click(Player player, int button) {
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.teleport(new Position(3223, 3218), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+		//				player.teleport(new Position(3223, 3218), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(2964, 3378), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+		//				player.teleport(new Position(2964, 3378), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(3093, 3244), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+		//				player.teleport(new Position(3093, 3244), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 					} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
-						player.teleport(new Position(2815, 3447), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+		//				player.teleport(new Position(2815, 3447), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 					} else {
 						player.getDialogueBuilder().advance();
 					}
@@ -116,9 +114,9 @@ public class Spellbook extends ActionInitializer {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						player.getDialogueBuilder().previous();
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(2529, 3307), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+		//				player.teleport(new Position(2529, 3307), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(2662, 3305), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+		//				player.teleport(new Position(2662, 3305), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 					}
 					
 					if(!t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {

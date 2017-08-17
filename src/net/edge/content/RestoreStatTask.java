@@ -2,7 +2,7 @@ package net.edge.content;
 
 import net.edge.content.skill.Skill;
 import net.edge.task.Task;
-import net.edge.content.combat.special.CombatSpecial;
+import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.World;

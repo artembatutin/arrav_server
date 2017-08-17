@@ -8,7 +8,6 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.ActorDeath;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.mob.drop.DropManager;
-import net.edge.world.entity.actor.mob.impl.gwd.GodwarsFaction;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
@@ -42,17 +41,16 @@ public final class MobDeath extends ActorDeath<Mob> {
 
 	@Override
 	public void preDeath() {
-		if(getActor().getCombat().getVictim() != null) {
-			getActor().getCombat().getVictim().getCombat().reset();
+		if(getActor().getNewCombat().getDefender() != null) {
+			getActor().getNewCombat().getDefender().getNewCombat().reset();
 		}
 		getActor().animation(new Animation(getActor().getDefinition().getDeathAnimation(), Animation.AnimationPriority.HIGH));
 	}
 	
 	@Override
 	public void death() {
-		Optional<Player> killer = getActor().getCombat().getDamageCache().getPlayerKiller();
+		Optional<Player> killer = getActor().getNewCombat().getDamageCache().getPlayerKiller();
 		killer.ifPresent(k ->  {
-			GodwarsFaction.increment(k, getActor());
 			Slayer.decrement(k, getActor());
 			MinigameHandler.getMinigame(k).ifPresent(m -> m.onKill(k, getActor()));
 			if(NON_DROPPABLES.stream().noneMatch(t -> t == getActor().getId())) {

@@ -1,14 +1,12 @@
 package net.edge.action.obj;
 
-import net.edge.content.dialogue.impl.OptionDialogue;
-import net.edge.content.skill.Skill;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ObjectAction;
-import net.edge.world.locale.Position;
+import net.edge.content.dialogue.impl.OptionDialogue;
+import net.edge.content.skill.Skill;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
-
-import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.LADDER;
 
 public class HomePortal extends ActionInitializer {
 	@Override
@@ -47,7 +45,7 @@ public class HomePortal extends ActionInitializer {
 							return true;
 						}
 					}
-					player.teleport(new Position(3081, 3510, 1), LADDER);
+//					player.teleport(new Position(3081, 3510, 1), LADDER); TODO: add teleports
 				}
 				return true;
 			}

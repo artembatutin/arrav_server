@@ -7,13 +7,13 @@ import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.minigame.SequencedMinigame;
+import net.edge.world.entity.actor.mob.DefaultMob;
 import net.edge.world.locale.InstanceManager;
 import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.impl.DefaultMob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.object.GameObject;
@@ -156,7 +156,7 @@ public final class FightcavesMinigame extends SequencedMinigame {
 					InstanceManager.get().isolate(monsters[i], instance);
 					World.get().getMobs().add(monsters[i]);
 					monsters[i].setViewingDistance(100);
-					monsters[i].getCombat().attack(player);
+					monsters[i].getNewCombat().attack(player);
 				}
 				started = true;
 				timer = DELAY;

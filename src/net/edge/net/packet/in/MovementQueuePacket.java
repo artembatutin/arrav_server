@@ -34,13 +34,13 @@ public final class MovementQueuePacket implements IncomingPacket {
 		
 		if(opcode == 248) {
 			player.setFollowing(false);
-			player.getCombat().cooldown(false);
+			player.getNewCombat().reset();
 			size -= 14;
 		}
 		
 		if(opcode == 164) {
 			player.setFollowing(false);
-			player.getCombat().cooldown(false);
+			player.getNewCombat().reset();
 		} else if(opcode == 98) {
 			
 		}

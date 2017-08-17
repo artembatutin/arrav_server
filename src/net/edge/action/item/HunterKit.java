@@ -17,12 +17,12 @@ public class HunterKit extends ActionInitializer {
 			public boolean click(Player player, Item item, int container, int slot, int click) {
 				if(container != Inventory.INVENTORY_DISPLAY_ID)
 					return true;
-				if(player.getInventory().remaining() < (net.edge.content.combat.magic.lunars.impl.spells.HunterKit.ITEMS.length - 2)) {//-2 because we remove the hunter kit toolbox before adding the items
-					player.message("You don't have enough inventory space to unlock the hunter kit...");
-					return true;
-				}
-				player.getInventory().remove(net.edge.content.combat.magic.lunars.impl.spells.HunterKit.HUNTER_KIT);
-				player.getInventory().addAll(net.edge.content.combat.magic.lunars.impl.spells.HunterKit.ITEMS);
+//				if(player.getInventory().remaining() < (HunterKit.ITEMS.length - 2)) {//-2 because we remove the hunter kit toolbox before adding the items
+//					player.message("You don't have enough inventory space to unlock the hunter kit...");
+//					return true;
+//				}
+//				player.getInventory().remove(HunterKit.HUNTER_KIT);
+//				player.getInventory().addAll(HunterKit.ITEMS);
 				return true;
 			}
 		};

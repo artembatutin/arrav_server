@@ -11,7 +11,6 @@ import net.edge.content.skill.summoning.familiar.ability.Teleporter;
 import net.edge.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.SummoningData;
-import net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType;
 import net.edge.world.locale.loc.Location;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
@@ -90,7 +89,7 @@ public abstract class VoidFamiliar extends Familiar {
 			super(SummoningData.VOID_SHIFTER);
 		}
 		
-		private final Teleporter ability = new Teleporter(Location.PEST_CONTROL, TeleportType.VOID_FAMILIAR, Optional.of(new Teleporter.TeleportPolicy(true, 10)));
+		private final Teleporter ability = new Teleporter(Location.PEST_CONTROL, Optional.of(new Teleporter.TeleportPolicy(true, 10)));
 		
 		@Override
 		public FamiliarAbility getAbilityType() {

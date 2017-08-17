@@ -1,26 +1,27 @@
 package net.edge.content.minigame;
 
+
+import net.edge.content.item.FoodConsumable;
+import net.edge.content.item.PotionConsumable;
+import net.edge.content.combat.CombatType;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.strategy.player.special.CombatSpecial;
+import net.edge.content.combat.weapon.WeaponInterface;
+import net.edge.content.skill.Skills;
+import net.edge.content.skill.prayer.Prayer;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.CombatType;
-import net.edge.content.combat.special.CombatSpecial;
-import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.world.Hit;
-import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.item.GroundItem;
-import net.edge.world.entity.item.container.impl.Equipment;
-import net.edge.world.entity.item.container.impl.EquipmentType;
-import net.edge.content.item.FoodConsumable;
-import net.edge.content.item.PotionConsumable;
-import net.edge.content.skill.Skills;
-import net.edge.content.skill.prayer.Prayer;
-import net.edge.world.locale.Position;
 import net.edge.world.Animation;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.update.UpdateFlag;
+import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Equipment;
+import net.edge.world.entity.item.container.impl.EquipmentType;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
 import java.util.Optional;
@@ -445,8 +446,8 @@ public abstract class Minigame {
 	 */
 	public final void restore(Player player) {
 		player.closeWidget();
-		player.getCombat().reset();
-		player.getCombat().getDamageCache().clear();
+		player.getNewCombat().reset();
+		player.getNewCombat().getDamageCache().clear();
 		player.getTolerance().reset();
 		player.getSpecialPercentage().set(100);
 		player.getPoisonDamage().set(0);
