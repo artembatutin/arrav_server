@@ -59,8 +59,6 @@ public final class DropTable {
 	ObjectList<Item> toItems(Player player, Mob victim) {
 		ThreadLocalRandom random = ThreadLocalRandom.current();
 		ObjectList<Item> items = new ObjectArrayList<>();
-		boolean dropRare = random.nextBoolean();
-		boolean dropDynamic = random.nextBoolean();
 		int amount = 0;
 		boolean rare = true;
 		for(Drop drop : drops) {
@@ -75,7 +73,7 @@ public final class DropTable {
 						continue;
 				}
 				items.add(drop.toItem());
-			} else if(dropRare && drop.isRare() && rare) {
+			} else if(drop.isRare() && rare) {
 				boolean row = player.getEquipment().getId(Equipment.RING_SLOT) == 2572 && random.nextInt(100) == 1;
 				if(drop.roll(random) || row) {
 					if(row)
@@ -89,12 +87,12 @@ public final class DropTable {
 					}
 				}
 				rare = false;
-			} else if(dropDynamic && !drop.isRare()) {
-				if(drop.roll(random) && amount++ <= GameConstants.DROP_THRESHOLD)
+			} else if(!drop.isRare()) {
+				if(amount++ <= GameConstants.DROP_THRESHOLD && drop.roll(random)) {
 					items.add(drop.toItem());
+				}
 			}
 		}
-		
 		return items;
 	}
 	
