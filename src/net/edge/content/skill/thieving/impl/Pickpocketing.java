@@ -96,10 +96,10 @@ public final class Pickpocketing extends Thieving {
 	 * The lower the return value, the lower the failure rate
 	 * @return an integer to determine how often you will fail.
 	 */
-	private int failureRate() {
+	private double failureRate() {
 		double npcFactor = definition.requirement / 10;
 		double levelFactor = 100 / ((getPlayer().getSkills()[Skills.THIEVING].getLevel() + 1) - definition.requirement);
-		return  (int) Math.floor((levelFactor + npcFactor) / 2);
+		return  Math.floor((levelFactor + npcFactor) / 2);
 	}
 
 	@Override

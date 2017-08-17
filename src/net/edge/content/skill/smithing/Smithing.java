@@ -77,11 +77,9 @@ public final class Smithing extends ProducingSkillAction {
 				break;
 			}
 		}
-		
 		if(table == null) {
 			return false;
 		}
-		
 		Smithing smithing = new Smithing(player, table, amount);
 		smithing.start();
 		return true;
@@ -291,7 +289,13 @@ public final class Smithing extends ProducingSkillAction {
 	/**
 	 * The map which contains all the bar ids with their respective tables.
 	 */
-	private static final Int2ObjectArrayMap<SmithingTable[]> TABLE = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, SmithingTable[]>builder().put(2349, SmithingTable.BronzeTable.values()).put(2351, SmithingTable.IronTable.values()).put(2353, SmithingTable.SteelTable.values()).put(2359, SmithingTable.MithrilTable.values()).put(2361, SmithingTable.AdamantTable.values()).put(2363, SmithingTable.RuniteTable.values()).build());
+	private static final Int2ObjectArrayMap<SmithingTable[]> TABLE = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, SmithingTable[]>builder()
+			.put(2349, SmithingTable.BronzeTable.values())
+			.put(2351, SmithingTable.IronTable.values())
+			.put(2353, SmithingTable.SteelTable.values())
+			.put(2359, SmithingTable.MithrilTable.values())
+			.put(2361, SmithingTable.AdamantTable.values())
+			.put(2363, SmithingTable.RuniteTable.values()).build());
 	
 	/**
 	 * The array containing all of the frames data.
