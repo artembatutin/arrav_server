@@ -35,6 +35,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     public boolean canAttack(Player attacker, Actor defender) {
         if (attacker.getSkillLevel(Skills.RANGED) < rangedDefinition.getLevel()) {
             attacker.out(new SendMessage("You need a Ranged level of " + rangedDefinition.getLevel() + " to use this weapon."));
+            attacker.getNewCombat().reset();
             return false;
         }
 
@@ -42,6 +43,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 
         if (ammo != null) {
             if (rangedDefinition.getAllowed() == null) {
+                attacker.getNewCombat().reset();
                 return false;
             }
 
@@ -57,6 +59,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 
             attacker.out(new SendMessage(getInvalidAmmunitionMessage(rangedDefinition.getType())));
         } else attacker.out(new SendMessage(getNoAmmunitionMessage(rangedDefinition.getType())));
+        attacker.getNewCombat().reset();
         return false;
     }
 

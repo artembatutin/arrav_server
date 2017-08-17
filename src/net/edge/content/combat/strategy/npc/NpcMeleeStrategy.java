@@ -14,11 +14,6 @@ import net.edge.world.entity.actor.mob.Mob;
 public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
 
     @Override
-    public boolean canAttack(Mob attacker, Actor defender) {
-        return true;
-    }
-
-    @Override
     public void hit(Mob attacker, Actor defender, Hit hit, Hit[] hits) {
         if (attacker.getDefinition().poisonous()) {
             defender.poison(CombatPoisonEffect.getPoisonType(attacker.getId()).orElse(PoisonType.DEFAULT_NPC));

@@ -481,129 +481,144 @@ public enum CombatSpecial {
 //	};
 
 	GRANITE_MAUL(new int[]{4153}, 50, new GraniteMaul()) {
-		public void activate(Player player) {
-			GraniteMaul strategy = new GraniteMaul();
-			player.getNewCombat().setStrategy(strategy);
-
+		@Override
+		public void enable(Player player) {
 			Combat<Player> combat = player.getNewCombat();
+
 			if (combat.getDefender() != null) {
-				player.getNewCombat().submitStrategy(combat.getDefender(), strategy);
+				CombatStrategy<Player> strategy = new GraniteMaul();
+
+				if (strategy.canAttack(player, combat.getDefender())) {
+					combat.submitStrategy(combat.getDefender(), strategy);
+					player.getCombatSpecial().drain(player);
+					return;
+				}
 			}
+
+			super.enable(player);
 		}
-	};
-	
+	},;
+
 	/**
 	 * The identifiers for the weapons that perform this special.
-	 */
-	private final int[] ids;
-	
-	/**
-	 * The amount of special energy drained by this attack.
-	 */
-	private final int amount;
+     */
+    private final int[] ids;
 
-	/**
-	 * The strength bonus added when performing this special attack.
-	 */
-	private final CombatStrategy<Player> strategy;
-	
-	/**
-	 * Creates a new {@link CombatSpecial}.
-	 * @param ids      the identifiers for the weapons that perform this special.
-	 * @param amount   the amount of special energy drained by this attack.
-	 */
-	CombatSpecial(int[] ids, int amount, CombatStrategy<Player> strategy) {
-		this.ids = ids;
-		this.amount = amount;
-		this.strategy = strategy;
-	}
-	
-	/**
-	 * Executes exactly when {@code player} activates the special bar.
-	 * @param player the player who activated the special bar.
-	 */
-	public void activate(Player player) {
-		player.getNewCombat().setStrategy(strategy);
-	}
-	
-	/**
-	 * Drains the special bar for {@code player}.
-	 * @param player the player who's special bar will be drained.
-	 */
-	public void drain(Player player) {
-		player.getSpecialPercentage().decrementAndGet(amount, 0);
-		updateSpecialAmount(player);
-		player.out(new SendConfig(301, 0));
-		player.setSpecialActivated(false);
-	}
-	
-	/**
-	 * Restores the special bar for {@code player}.
-	 * @param player the player who's special bar will be restored.
-	 * @param amount the amount of energy to restore to the special bar.
-	 */
-	public static void restore(Player player, int amount) {
-		player.getSpecialPercentage().incrementAndGet(amount, 100);
-		updateSpecialAmount(player);
-	}
-	
-	/**
-	 * Updates the special bar with the amount of special energy {@code player}
-	 * has.
-	 * @param player the player who's special bar will be updated.
-	 */
-	public static void updateSpecialAmount(Player player) {
-		if(player.getWeapon().getSpecialBar() == -1 || player.getWeapon().getSpecialMeter() == -1) {
-			return;
-		}
-		
-		int specialCheck = 10;
-		int specialBar = player.getWeapon().getSpecialMeter();
-		int specialAmount = player.getSpecialPercentage().get() / 10;
-		
-		for(int i = 0; i < 10; i++) {
-			player.out(new SendUpdateSpecial(--specialBar, specialAmount >= specialCheck ? 500 : 0));
-			specialCheck--;
-		}
-	}
-	
-	/**
-	 * Updates the weapon interface with a special bar if needed.
-	 * @param player the player to update the interface for.
-	 */
-	public static void assign(Player player) {
-		if(player.getWeapon().getSpecialBar() == -1) {
-			player.setCombatSpecial(null);
-			return;
-		}
-		Item item = player.getEquipment().get(Equipment.WEAPON_SLOT);
-		if(item == null) {
-			return;
-		}
-		Optional<CombatSpecial> special = Arrays.stream(CombatSpecial.values()).filter(c -> Arrays.stream(c.getIds()).anyMatch(id -> item.getId() == id)).findFirst();
-		if(special.isPresent()) {
-			player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), false));
-			player.setCombatSpecial(special.get());
-			return;
-		}
-		player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), true));
-		player.setCombatSpecial(null);
-	}
+    /**
+     * The amount of special energy drained by this attack.
+     */
+    private final int amount;
 
-	/**
-	 * Gets the identifiers for the weapons that perform this special.
-	 * @return the identifiers for the weapons.
-	 */
-	public final int[] getIds() {
-		return ids;
-	}
+    /**
+     * The strength bonus added when performing this special attack.
+     */
+    private final CombatStrategy<Player> strategy;
 
-	/**
-	 * Gets the amount of special energy drained by this attack.
-	 * @return the amount of special energy drained.
-	 */
-	public final int getAmount() {
-		return amount;
-	}
+    /**
+     * Creates a new {@link CombatSpecial}.
+     *
+     * @param ids    the identifiers for the weapons that perform this special.
+     * @param amount the amount of special energy drained by this attack.
+     */
+    CombatSpecial(int[] ids, int amount, CombatStrategy<Player> strategy) {
+        this.ids = ids;
+        this.amount = amount;
+        this.strategy = strategy;
+    }
+
+    /**
+     * Executes exactly when {@code player} activates the special bar.
+     *
+     * @param player the player who activated the special bar.
+     */
+    public void enable(Player player) {
+        player.getNewCombat().setStrategy(strategy);
+    }
+
+    /**
+     * Drains the special bar for {@code player}.
+     *
+     * @param player the player who's special bar will be drained.
+     */
+    public void drain(Player player) {
+        player.getSpecialPercentage().decrementAndGet(amount, 0);
+        updateSpecialAmount(player);
+        player.out(new SendConfig(301, 0));
+        player.setSpecialActivated(false);
+    }
+
+    /**
+     * Restores the special bar for {@code player}.
+     *
+     * @param player the player who's special bar will be restored.
+     * @param amount the amount of energy to restore to the special bar.
+     */
+    public static void restore(Player player, int amount) {
+        player.getSpecialPercentage().incrementAndGet(amount, 100);
+        updateSpecialAmount(player);
+    }
+
+    /**
+     * Updates the special bar with the amount of special energy {@code player}
+     * has.
+     *
+     * @param player the player who's special bar will be updated.
+     */
+    public static void updateSpecialAmount(Player player) {
+        if (player.getWeapon().getSpecialBar() == -1 || player.getWeapon().getSpecialMeter() == -1) {
+            return;
+        }
+
+        int specialCheck = 10;
+        int specialBar = player.getWeapon().getSpecialMeter();
+        int specialAmount = player.getSpecialPercentage().get() / 10;
+
+        for (int i = 0; i < 10; i++) {
+            player.out(new SendUpdateSpecial(--specialBar, specialAmount >= specialCheck ? 500 : 0));
+            specialCheck--;
+        }
+    }
+
+    /**
+     * Updates the weapon interface with a special bar if needed.
+     *
+     * @param player the player to update the interface for.
+     */
+    public static void assign(Player player) {
+        if (player.getWeapon().getSpecialBar() == -1) {
+            player.setCombatSpecial(null);
+            return;
+        }
+        Item item = player.getEquipment().get(Equipment.WEAPON_SLOT);
+        if (item == null) {
+            return;
+        }
+        Optional<CombatSpecial> special = Arrays.stream(CombatSpecial.values()).filter(c -> Arrays.stream(c.getIds()).anyMatch(id -> item.getId() == id)).findFirst();
+        if (special.isPresent()) {
+            player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), false));
+            player.setCombatSpecial(special.get());
+            return;
+        }
+        player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), true));
+        player.setCombatSpecial(null);
+    }
+
+    /**
+     * Gets the identifiers for the weapons that perform this special.
+     *
+     * @return the identifiers for the weapons.
+     */
+    public final int[] getIds() {
+        return ids;
+    }
+
+    /**
+     * Gets the amount of special energy drained by this attack.
+     *
+     * @return the amount of special energy drained.
+     */
+    public final int getAmount() {
+        return amount;
+    }
 
 }

@@ -695,6 +695,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 					}
 					player.setSpecialActivated(true);
 					player.out(new SendConfig(301, 1));
+					player.getCombatSpecial().enable(player);
 				}
 				break;
 		}

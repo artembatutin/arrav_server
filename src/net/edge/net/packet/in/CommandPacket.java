@@ -1,5 +1,6 @@
 package net.edge.net.packet.in;
 
+import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.combat.content.MagicSpell;
 import net.edge.content.combat.content.RangedAmmunition;
@@ -32,18 +33,19 @@ public final class CommandPacket implements IncomingPacket {
 
 
 		if (player.getRights() == Rights.ADMINISTRATOR) {
-			if (parts[0].equalsIgnoreCase("shit4")) {
-				int levelreq = 50;
-				RangedAmmunition[] ammo = new RangedAmmunition[] { RangedAmmunition.RUNE_KNIFE };
-				RangedWeaponDefinition.AttackType type = RangedWeaponDefinition.AttackType.THROWN;
-				RangedWeaponDefinition def = new RangedWeaponDefinition(levelreq, type, ammo);
-				player.getNewCombat().setStrategy(new PlayerRangedStrategy(def));
-			} else if (parts[0].equalsIgnoreCase("shit3")) {
+			if (parts[0].equalsIgnoreCase("spec")) {
+//				int levelreq = 50;
+//				RangedAmmunition[] ammo = new RangedAmmunition[] { RangedAmmunition.RUNE_KNIFE };
+//				RangedWeaponDefinition.AttackType type = RangedWeaponDefinition.AttackType.THROWN;
+//				RangedWeaponDefinition def = new RangedWeaponDefinition(levelreq, type, ammo);
+//				player.getNewCombat().setStrategy(new PlayerRangedStrategy(def));
+				CombatSpecial.restore(player, 100);
+			} else if (parts[0].equalsIgnoreCase("melee")) {
 				player.getNewCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
-			} else if (parts[0].equalsIgnoreCase("shit2")) {
+			} else if (parts[0].equalsIgnoreCase("blitz")) {
 //				CombatProjectileDefinition.createLoader().load();
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ, false));
-			} else if (parts[0].equalsIgnoreCase("shit")) {
+				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ, true));
+			} else if (parts[0].equalsIgnoreCase("spider")) {
 				Mob npc = Mob.getNpc(1677, player.getPosition().copy().move(1, 0));
 				npc.setOwner(player);
 				npc.setRespawn(false);

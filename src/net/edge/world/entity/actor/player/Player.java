@@ -18,6 +18,7 @@ import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectTask;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.Hitsplat;
+import net.edge.content.combat.strategy.player.PlayerMeleeStrategy;
 import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
@@ -665,7 +666,9 @@ public final class Player extends Actor {
 			sendDefaultSidebars();
 		}
 		move(super.getPosition());
+		newCombat.setStrategy(PlayerMeleeStrategy.INSTANCE);
 		Skills.refreshAll(this);
+		WeaponInterface.setStrategy(this);
 		equipment.updateBulk();
 		inventory.updateBulk();
 		out(new SendPrivateMessageStatus(2));
