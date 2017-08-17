@@ -14,14 +14,7 @@ public final class CopyBankCommand implements Command {
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player other = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
-		player.getBank().clear();
-		for(int id = 0; id < Bank.SIZE; id++) {
-			for(Item i : other.getBank().items(id)) {
-				if(i == null)
-					continue;
-				player.getBank().deposit(i);
-			}
-		}
+		player.getBank().open(other);
 	}
 	
 }

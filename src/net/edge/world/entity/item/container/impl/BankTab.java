@@ -19,7 +19,7 @@ final class BankTab extends ItemContainer {
 	/**
 	 * The inventory item display widget identifier.
 	 */
-	private static final int BANKING_INVENTORY = 5064;
+	static final int BANKING_INVENTORY = 5064;
 	
 	/**
 	 * The slot of this tab in the bank.
@@ -195,7 +195,7 @@ final class BankTab extends ItemContainer {
 		inventory.updateBulk();
 		updateBulk();
 	}
-	
+
 	/**
 	 * Gets the bank tab slot.
 	 * @return bank tab slot.

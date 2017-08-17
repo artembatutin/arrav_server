@@ -8,12 +8,14 @@ import net.edge.content.minigame.MinigameHandler;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
+import java.util.Optional;
+
 public final class Bank {
-	
+
 	/**
 	 * The tab size.
 	 */
-	public final static int SIZE = 9;
+	private final static int SIZE = 9;
 	
 	/**
 	 * The main player to which this bank is associated to.
@@ -34,7 +36,9 @@ public final class Bank {
 	 * The currently selected tab index.
 	 */
 	private int selectedTab;
-	
+
+	public Optional<Player> viewing = Optional.empty();
+
 	public Bank(Player player) {
 		this.player = player;
 		this.selectedTab = 0;
@@ -61,13 +65,6 @@ public final class Bank {
 	 * Opens and refreshes the bank for {@code player}.
 	 */
 	public void open() {
-		open(player);
-	}
-	
-	/**
-	 * Opens and refreshes the bank for {@code player}.
-	 */
-	public void open(Player player) {
 		if(!MinigameHandler.execute(player, m -> m.canBank(player))) {
 			return;
 		}
@@ -80,6 +77,41 @@ public final class Bank {
 		if(!bulkStartSent) {
 			refreshAll();
 			bulkStartSent = true;
+		}
+	}
+
+	public void open(Player p) {
+		if(!MinigameHandler.execute(player, m -> m.canBank(player))) {
+			return;
+		}
+
+		Bank bank = p.getBank();
+
+		p.getBank().shiftAll();
+
+		player.getAttr().get("banking").set(true);
+		player.out(new SendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0));
+		player.out(new SendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0));
+		player.out(new SendInventoryInterface(-3, 5063));
+		player.out(new SendContainer(5064, this.player.getInventory()));
+
+		viewing = Optional.of(p);
+
+		updateViewer(player, bank, false);
+	}
+
+	private void updateViewer(Player viewing, Bank bank, boolean refreshInventory) {
+		if(refreshInventory) {
+			viewing.getInventory().refreshBulk(player, BankTab.BANKING_INVENTORY);
+			viewing.getInventory().updateBulk();
+		}
+
+		for(int i = 0; i < SIZE; i++) {
+			if(bank.tabs[i] == null) {
+				continue;
+			}
+
+			viewing.out(new SendContainer(270 + i, bank.tabs[i]));
 		}
 	}
 
@@ -103,7 +135,15 @@ public final class Bank {
 	 * @return {@code true} if the item was withdrawn, {@code false} otherwise.
 	 */
 	public boolean withdraw(Player player, int tab, int bankSlot, int amount) {
-		return tabs[tab].withdraw(player, bankSlot, amount, true);
+		boolean withdrawed = viewing.isPresent() ? viewing.get().getBank().tabs[tab].withdraw(player, bankSlot, amount, false) : tabs[tab].withdraw(player, bankSlot, amount, true);
+		viewing.ifPresent(v -> {
+			if(!withdrawed) {
+				return;
+			}
+			updateViewer(player, v.getBank(), true);
+			v.message(player.getFormatUsername() + " has just removed an item from ur bank!");
+		});
+		return withdrawed;
 	}
 	
 	/**
