@@ -1,7 +1,8 @@
 package net.edge.content.newcombat.strategy.npc;
 
+import net.edge.content.combat.weapon.FightType;
+import net.edge.content.newcombat.CombatType;
 import net.edge.content.newcombat.attack.AttackModifier;
-import net.edge.content.newcombat.attack.AttackStance;
 import net.edge.content.newcombat.hit.CombatHit;
 import net.edge.content.newcombat.hit.Hit;
 import net.edge.content.newcombat.strategy.CombatStrategy;
@@ -44,13 +45,13 @@ public abstract class MultiStrategy extends CombatStrategy<Mob> {
     }
 
     @Override
-    public int getAttackDelay(AttackStance stance) {
-        return currentStrategy.getAttackDelay(stance);
+    public int getAttackDelay(FightType fightType) {
+        return currentStrategy.getAttackDelay(fightType);
     }
 
     @Override
-    public int getAttackDistance(AttackStance stance) {
-        return currentStrategy.getAttackDistance(stance);
+    public int getAttackDistance(FightType fightType) {
+        return currentStrategy.getAttackDistance(fightType);
     }
 
     @Override
@@ -61,6 +62,11 @@ public abstract class MultiStrategy extends CombatStrategy<Mob> {
     @Override
     public Optional<AttackModifier> getModifier(Mob attacker, Actor defender) {
         return currentStrategy.getModifier(attacker, defender);
+    }
+
+    @Override
+    public CombatType getCombatType() {
+        return currentStrategy.getCombatType();
     }
 
     protected final CombatStrategy<? super Mob> getRandomStrategy() {

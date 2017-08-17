@@ -4,7 +4,7 @@ import net.edge.content.newcombat.hit.CombatHit;
 import net.edge.world.entity.actor.Actor;
 
 public class CombatEvent {
-    final int delay;
+    private final int delay;
     private int ticks;
 
     private Actor defender;
@@ -28,7 +28,7 @@ public class CombatEvent {
     }
 
     boolean canExecute() {
-        return ++ticks > delay;
+        return ++ticks >= delay;
     }
 
     public void execute() {

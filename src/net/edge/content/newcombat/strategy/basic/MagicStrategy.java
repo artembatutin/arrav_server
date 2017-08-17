@@ -1,6 +1,6 @@
 package net.edge.content.newcombat.strategy.basic;
 
-import net.edge.content.newcombat.attack.AttackStance;
+import net.edge.content.combat.weapon.FightType;
 import net.edge.content.newcombat.hit.Hit;
 import net.edge.content.newcombat.strategy.CombatStrategy;
 import net.edge.content.skill.Skills;
@@ -16,8 +16,8 @@ public abstract class MagicStrategy<T extends Actor> extends CombatStrategy<T> {
 
     @Override
     public boolean withinDistance(T attacker, Actor defender) {
-        AttackStance stance = attacker.getNewCombat().getAttackStance();
-        int distance = getAttackDistance(stance);
+        FightType fightType = attacker.getNewCombat().getFightType();
+        int distance = getAttackDistance(fightType);
 
         MovementQueue movement = attacker.getMovementQueue();
         MovementQueue otherMovement = defender.getMovementQueue();
@@ -32,12 +32,8 @@ public abstract class MagicStrategy<T extends Actor> extends CombatStrategy<T> {
                 distance += 2;
             }
         }
-
-        if (attacker.getAttr().get("master_archery").getBoolean()) {
-            return true;
-        }
-
         if (!World.getSimplePathChecker().checkProjectile(attacker.getPosition(), defender.getPosition())) {
+
             if (!attacker.isFollowing()) {
                 attacker.getMovementQueue().follow(defender);
                 attacker.setFollowing(true);

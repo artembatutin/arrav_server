@@ -1,7 +1,5 @@
 package net.edge.content.newcombat.hit;
 
-import net.edge.content.newcombat.CombatType;
-
 import java.util.function.Function;
 
 /**
@@ -17,8 +15,8 @@ public class Hit {
     /** The hitsplat type. */
     private Hitsplat hitsplat;
 
-    /** The combat type. */
-    private final CombatType combatType;
+    /** The hit icon. */
+    private HitIcon hitIcon;
 
     /** Whether or not this hit is accurate. */
     private final boolean accurate;
@@ -28,13 +26,13 @@ public class Hit {
      *
      * @param damage   the damage amount
      * @param hitsplat the hitsplat type
-     * @param type     the combat type
+     * @param hitIcon  the hit icon
      * @param accurate whether or not this hit is accurate
      */
-    public Hit(int damage, Hitsplat hitsplat, CombatType type, boolean accurate) {
+    public Hit(int damage, Hitsplat hitsplat, HitIcon hitIcon, boolean accurate) {
         this.damage = damage;
         this.hitsplat = hitsplat;
-        this.combatType = type;
+        this.hitIcon = hitIcon;
         this.accurate = accurate;
     }
 
@@ -58,9 +56,7 @@ public class Hit {
 
         if (damage <= 0) {
             damage = 0;
-            hitsplat = Hitsplat.BLOCK;
-        } else if (hitsplat == Hitsplat.BLOCK) {
-            hitsplat = Hitsplat.NORMAL_HIT;
+            hitsplat = Hitsplat.NORMAL;
         }
     }
 
@@ -74,21 +70,21 @@ public class Hit {
     }
 
     /**
-     * Gets the hitsplat type.
+     * Gets the damage type.
      *
-     * @return the hitsplat type
+     * @return the damage type
      */
     public Hitsplat getHitsplat() {
         return hitsplat;
     }
 
     /**
-     * Gets the combat type.
+     * Gets the hit icon.
      *
-     * @return the combat type
+     * @return the hit icon
      */
-    public CombatType getCombatType() {
-        return combatType;
+    public HitIcon getHitIcon() {
+        return hitIcon;
     }
 
     /**

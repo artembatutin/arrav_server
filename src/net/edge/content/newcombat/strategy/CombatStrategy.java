@@ -1,9 +1,11 @@
 package net.edge.content.newcombat.strategy;
 
-import net.edge.content.newcombat.attack.AttackStance;
-import net.edge.content.newcombat.formula.FormulaFactory;
+import net.edge.content.combat.weapon.FightType;
+import net.edge.content.newcombat.CombatType;
+import net.edge.content.newcombat.attack.FormulaFactory;
 import net.edge.content.newcombat.hit.CombatHit;
 import net.edge.content.newcombat.hit.Hit;
+import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;
 
 public abstract class CombatStrategy<T extends Actor> implements CombatAttack<T> {
@@ -12,11 +14,15 @@ public abstract class CombatStrategy<T extends Actor> implements CombatAttack<T>
 
     public abstract boolean canAttack(T attacker, Actor defender);
 
-    public abstract int getAttackDelay(AttackStance stance);
+    public abstract int getAttackDelay(FightType stance);
 
-    public abstract int getAttackDistance(AttackStance stance);
+    public abstract int getAttackDistance(FightType stance);
 
     public abstract CombatHit[] getHits(T attacker, Actor defender);
+
+    protected abstract Animation getAttackAnimation(T attacker, Actor defender);
+
+    protected abstract Animation getBlockAnimation(T attacker, Actor defender);
 
     @Override
     public void attack(T attacker, Actor defender, Hit hit, Hit[] hits) {
@@ -36,9 +42,6 @@ public abstract class CombatStrategy<T extends Actor> implements CombatAttack<T>
 
     @Override
     public void onDeath(Actor attacker, T defender, Hit hit, Hit[] hits) {
-        /*
-        let me show you have I have so far
-         */
     }
 
     @Override
@@ -74,7 +77,8 @@ public abstract class CombatStrategy<T extends Actor> implements CombatAttack<T>
     }
 
     protected static int poisonStrength(String name) {
-        return name.endsWith("p)") ? 2 : name.endsWith("p+)") ? 4 : name.endsWith("p++)") ? 6 : 2;
+        return name.endsWith("p++)") ? 6 : name.endsWith("p+)") ? 4 : name.endsWith("p)") ? 2 : 0;
     }
 
+    public abstract CombatType getCombatType();
 }

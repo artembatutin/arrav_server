@@ -1,13 +1,19 @@
 package net.edge.net.packet.in;
 
 import net.edge.content.commands.CommandDispatcher;
+import net.edge.content.newcombat.content.MagicSpell;
+import net.edge.content.newcombat.content.RangedAmmunition;
 import net.edge.content.newcombat.strategy.npc.NpcMeleeStrategy;
-import net.edge.content.newcombat.strategy.player.melee.LongswordOrScimitarWeapon;
+import net.edge.content.newcombat.strategy.player.PlayerMagicStrategy;
+import net.edge.content.newcombat.strategy.player.PlayerMeleeStrategy;
+import net.edge.content.newcombat.strategy.player.PlayerRangedStrategy;
+import net.edge.content.newcombat.weapon.RangedWeaponDefinition;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 /**
@@ -24,16 +30,26 @@ public final class CommandPacket implements IncomingPacket {
 		String command = payload.getCString();
 		String[] parts = command.toLowerCase().split(" ");
 
-		if (parts[0].startsWith("shit")) {
-			Mob npc = Mob.getNpc(1677, player.getPosition().copy().move(1, 0));
-			npc.setOwner(player);
-			npc.setRespawn(false);
-			World.get().getMobs().add(npc);
 
-			player.getNewCombat().setStrategy(new LongswordOrScimitarWeapon());
-			npc.getNewCombat().setStrategy(new NpcMeleeStrategy());
-
-			player.getNewCombat().attack(npc);
+		if (player.getRights() == Rights.ADMINISTRATOR) {
+			if (parts[0].equalsIgnoreCase("shit4")) {
+				int levelreq = 50;
+				RangedAmmunition[] ammo = new RangedAmmunition[] { RangedAmmunition.RUNE_KNIFE };
+				RangedWeaponDefinition.AttackType type = RangedWeaponDefinition.AttackType.THROWN;
+				RangedWeaponDefinition def = new RangedWeaponDefinition(levelreq, type, ammo);
+				player.getNewCombat().setStrategy(new PlayerRangedStrategy(def));
+			} else if (parts[0].equalsIgnoreCase("shit3")) {
+				player.getNewCombat().setStrategy(new PlayerMeleeStrategy());
+			} else if (parts[0].equalsIgnoreCase("shit2")) {
+//				CombatProjectileDefinition.createLoader().load();
+				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ, false));
+			} else if (parts[0].equalsIgnoreCase("shit")) {
+				Mob npc = Mob.getNpc(1677, player.getPosition().copy().move(1, 0));
+				npc.setOwner(player);
+				npc.setRespawn(false);
+				World.get().getMobs().add(npc);
+				npc.getNewCombat().setStrategy(new NpcMeleeStrategy());
+			}
 		}
 
 		CommandDispatcher.execute(player, parts, command);

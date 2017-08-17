@@ -1,6 +1,6 @@
 package net.edge.content.newcombat.strategy.basic;
 
-import net.edge.content.newcombat.attack.AttackStance;
+import net.edge.content.combat.weapon.FightType;
 import net.edge.content.newcombat.hit.Hit;
 import net.edge.content.newcombat.strategy.CombatStrategy;
 import net.edge.content.skill.Skills;
@@ -16,8 +16,8 @@ public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> 
 
     @Override
     public boolean withinDistance(T attacker, Actor defender) {
-        AttackStance stance = attacker.getNewCombat().getAttackStance();
-        int distance = getAttackDistance(stance);
+        FightType fightType = attacker.getNewCombat().getFightType();
+        int distance = getAttackDistance(fightType);
 
         MovementQueue movement = attacker.getMovementQueue();
         MovementQueue otherMovement = defender.getMovementQueue();
@@ -72,13 +72,11 @@ public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> 
         int exp = hit.getDamage() * BASE_EXPERIENCE_MULTIPLIER;
 
         Skills.experience(player, exp / 3, Skills.HITPOINTS);
-        switch (player.getNewCombat().getAttackStance()) {
-            case RAPID:
+        switch (player.getNewCombat().getFightType().getStyle()) {
             case ACCURATE:
             case CONTROLLED:
                 Skills.experience(player, exp, Skills.RANGED);
                 break;
-            case LONGRANGE:
             case DEFENSIVE:
                 Skills.experience(player, exp / 2, Skills.DEFENCE);
                 Skills.experience(player, exp / 2, Skills.RANGED);

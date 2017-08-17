@@ -2,6 +2,7 @@ package net.edge.content.newcombat;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import net.edge.content.combat.CombatType;
 import net.edge.content.newcombat.content.ProjectileEffect;
 import net.edge.util.json.JsonLoader;
 import net.edge.world.Animation;
@@ -37,8 +38,12 @@ public final class CombatProjectileDefinition {
         return maxHit;
     }
 
-    public int getHitDelay() {
-        return hitDelay;
+    public int getHitDelay(Actor attacker, Actor defender, boolean magic) {
+        int distance = (int) attacker.getPosition().getDistance(defender.getPosition());
+        if (magic) {
+            return Projectile.MAGIC_DELAYS[distance > 10 ? 10 : distance];
+        }
+        return Projectile.RANGED_DELAYS[distance > 10 ? 10 : distance];
     }
 
     public int getHitsplatDelay() {
@@ -46,23 +51,25 @@ public final class CombatProjectileDefinition {
     }
 
     public Optional<CombatEffect> getEffect() {
-        return Optional.of(effect);
+        return Optional.ofNullable(effect);
     }
 
     public Optional<Animation> getAnimation() {
-        return Optional.of(animation);
+        return Optional.ofNullable(animation);
     }
 
     public Optional<Graphic> getStart() {
-        return Optional.of(start);
+        return Optional.ofNullable(start);
     }
 
     public Optional<Graphic> getEnd() {
-        return Optional.of(end);
+        return Optional.ofNullable(end);
     }
 
-    public void sendProjectile(Actor attacker, Actor defender) {
-        Optional.of(projectile).ifPresent(projectile -> projectile.send(attacker, defender));
+    public void sendProjectile(Actor attacker, Actor defender, boolean magic) {
+        if(projectile != null) {
+            projectile.send(attacker, defender, magic);
+        }
     }
 
     public static CombatProjectileDefinition getDefinition(String name) {
@@ -80,7 +87,7 @@ public final class CombatProjectileDefinition {
             public void load(JsonObject reader, Gson builder) {
                 CombatProjectileDefinition definition = new CombatProjectileDefinition(reader.get("name").getAsString());
 
-                definition.hitDelay = 2;
+                definition.hitDelay = -1;
                 if (reader.has("hit-delay")) {
                     definition.hitDelay = reader.get("hit-delay").getAsInt();
                 }
@@ -134,9 +141,14 @@ public final class CombatProjectileDefinition {
         private byte endHeight;
         private byte curve;
 
-        public void send(Actor attacker, Actor defender) {
-            Projectile projectile = new Projectile(attacker, defender, id, duration, delay, startHeight, endHeight, curve);
+        public void send(Actor attacker, Actor defender, boolean magic) {
+            Projectile projectile = new Projectile(attacker, defender, id, duration, delay, startHeight, endHeight, curve, magic ? CombatType.MAGIC : CombatType.RANGED);
             projectile.sendProjectile();
+        }
+
+        int getHitDelay(Actor attacker, Actor defender, boolean magic) {
+            Projectile projectile = new Projectile(attacker, defender, id, duration, delay, startHeight, endHeight, curve, magic ? CombatType.MAGIC : CombatType.RANGED);
+            return projectile.getTravelTime();
         }
 
     }

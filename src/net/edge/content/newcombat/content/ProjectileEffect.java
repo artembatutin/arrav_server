@@ -1,7 +1,7 @@
 package net.edge.content.newcombat.content;
 
 import net.edge.content.newcombat.CombatEffect;
-import net.edge.content.newcombat.formula.FormulaFactory;
+import net.edge.content.newcombat.attack.FormulaFactory;
 import net.edge.content.newcombat.hit.CombatHit;
 import net.edge.content.newcombat.hit.Hit;
 import net.edge.content.skill.Skills;
@@ -176,7 +176,7 @@ public enum ProjectileEffect {
             Actor defender = player.getNewCombat().getDefender();
 
             if (!defender.equals(actor)) {
-                player.getNewCombat().submitHit(actor, hit);
+                player.getNewCombat().submitHits(actor, hit);
             }
         }
     }

@@ -22,7 +22,7 @@ public final class CombatHit extends Hit {
      * @param hitsplatDelay the hitsplat delay
      */
     public CombatHit(Hit hit, int hitDelay, int hitsplatDelay) {
-        super(hit.getDamage(), hit.getHitsplat(), hit.getCombatType(), hit.isAccurate());
+        super(hit.getDamage(), hit.getHitsplat(), hit.getHitIcon(), hit.isAccurate());
         this.hitDelay = hitDelay;
         this.hitsplatDelay = hitsplatDelay;
     }

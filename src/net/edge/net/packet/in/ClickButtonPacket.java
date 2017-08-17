@@ -1,21 +1,14 @@
 package net.edge.net.packet.in;
 
 import net.edge.Application;
+import net.edge.action.ActionContainer;
+import net.edge.action.impl.ButtonAction;
 import net.edge.content.Emote;
 import net.edge.content.TabInterface;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.combat.magic.lunars.LunarSpells;
 import net.edge.content.combat.special.CombatSpecial;
-import net.edge.content.combat.weapon.FightType;
-import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.action.impl.ButtonAction;
-import net.edge.content.newcombat.weapon.WeaponFactory;
-import net.edge.net.packet.IncomingPacket;
-import net.edge.net.packet.out.SendConfig;
-import net.edge.net.packet.out.SendEnterName;
-import net.edge.net.packet.out.SendLogout;
-import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.content.dialogue.Dialogues;
 import net.edge.content.item.Skillcape;
 import net.edge.content.market.MarketShop;
@@ -31,8 +24,11 @@ import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.summoning.Summoning;
-import net.edge.action.ActionContainer;
 import net.edge.net.codec.IncomingMsg;
+import net.edge.net.packet.IncomingPacket;
+import net.edge.net.packet.out.SendConfig;
+import net.edge.net.packet.out.SendEnterName;
+import net.edge.net.packet.out.SendLogout;
 import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
@@ -40,6 +36,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.Spellbook;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.object.GameObject;
 
@@ -93,9 +90,6 @@ public final class ClickButtonPacket implements IncomingPacket {
 			if(e.click(player, button)) {
 				return;
 			}
-		}
-		if (WeaponFactory.clickAttackStyle(player, button) && WeaponFactory.clickAttackStance(player, button)) {
-			return;
 		}
 		if(Prayer.activate(player, true, button)) {
 			return;

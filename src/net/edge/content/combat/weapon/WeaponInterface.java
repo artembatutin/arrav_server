@@ -15,6 +15,8 @@ public enum WeaponInterface {
 	
 	STAFF(328, 355, 6, new FightType[]{FightType.STAFF_BASH, FightType.STAFF_POUND, FightType.STAFF_FOCUS}),
 	
+	MAGIC_STAFF(328, 355, 6, new FightType[]{FightType.STAFF_BASH, FightType.STAFF_POUND, FightType.STAFF_FOCUS}),
+
 	WARHAMMER(425, 428, 6, new FightType[]{FightType.WARHAMMER_POUND, FightType.WARHAMMER_PUMMEL, FightType.WARHAMMER_BLOCK}, 7474, 7486),
 	
 	SCYTHE(776, 779, 6, new FightType[]{FightType.SCYTHE_REAP, FightType.SCYTHE_CHOP, FightType.SCYTHE_JAB, FightType.SCYTHE_BLOCK}),

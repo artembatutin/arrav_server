@@ -1,6 +1,6 @@
 package net.edge.content.newcombat.strategy.basic;
 
-import net.edge.content.newcombat.attack.AttackStance;
+import net.edge.content.combat.weapon.FightType;
 import net.edge.content.newcombat.hit.Hit;
 import net.edge.content.newcombat.strategy.CombatStrategy;
 import net.edge.content.skill.Skills;
@@ -16,7 +16,7 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
 
     @Override
     public boolean withinDistance(T attacker, Actor defender) {
-        AttackStance stance = attacker.getNewCombat().getAttackStance();
+        FightType stance = attacker.getNewCombat().getFightType();
         int distance = getAttackDistance(stance);
 
         MovementQueue movement = attacker.getMovementQueue();
@@ -73,7 +73,7 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
         int exp = hit.getDamage() * BASE_EXPERIENCE_MULTIPLIER;
 
         Skills.experience(player, exp / 3, Skills.HITPOINTS);
-        switch (player.getNewCombat().getAttackStance()) {
+        switch (player.getNewCombat().getFightType().getStyle()) {
             case ACCURATE:
                 Skills.experience(player, exp, Skills.ATTACK);
                 break;
