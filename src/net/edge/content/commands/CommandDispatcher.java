@@ -5,6 +5,7 @@ import net.edge.util.LoggerUtils;
 import net.edge.util.Utility;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 
 import java.lang.annotation.Annotation;
@@ -23,7 +24,7 @@ public final class CommandDispatcher {
 	/**
 	 * The object map which contains all the commands on the world.
 	 */
-	private static final Object2ObjectArrayMap<CommandSignature, Command> COMMANDS = new Object2ObjectArrayMap<>();
+	private static final Object2ObjectArrayMap<String, CommandSet> COMMANDS = new Object2ObjectArrayMap<>();
 	
 	/**
 	 * The logger that will print important information.
@@ -40,7 +41,7 @@ public final class CommandDispatcher {
 			ExchangeSessionManager.get().reset(player);
 		}
 		
-		Optional<Command> cmd = getCommand(parts[0]);
+		Optional<CommandSet> cmd = getCommand(parts[0]);
 		
 		if(!cmd.isPresent()) {
 			player.message("Command [::" + parts[0] + "] does not exist!");
@@ -53,7 +54,7 @@ public final class CommandDispatcher {
 		}
 		
 		try {
-			cmd.get().execute(player, parts, command);
+			cmd.get().command.execute(player, parts, command);
 		} catch(Exception e) {
 			e.printStackTrace();
 			sendSyntax(player, cmd.get());
@@ -65,15 +66,8 @@ public final class CommandDispatcher {
 	 * @param identifier the identifier to check for matches.
 	 * @return an Optional with the found value, {@link Optional#empty} otherwise.
 	 */
-	private static Optional<Command> getCommand(String identifier) {
-		for(Entry<CommandSignature, Command> command : COMMANDS.entrySet()) {
-			for(String s : command.getKey().alias()) {
-				if(s.equalsIgnoreCase(identifier)) {
-					return Optional.of(command.getValue());
-				}
-			}
-		}
-		return Optional.empty();
+	private static Optional<CommandSet> getCommand(String identifier) {
+		return Optional.ofNullable(COMMANDS.get(identifier));
 	}
 	
 	/**
@@ -82,10 +76,8 @@ public final class CommandDispatcher {
 	 * @param player  the player to send this syntax for.
 	 * @param command the command that was misinterpreted.
 	 */
-	private static void sendSyntax(Player player, Command command) {
-		Annotation annotation = command.getClass().getAnnotation(CommandSignature.class);
-		CommandSignature sig = (CommandSignature) annotation;
-		player.message("[COMMAND SYNTAX] " + sig.syntax());
+	private static void sendSyntax(Player player, CommandSet command) {
+		player.message("[COMMAND SYNTAX] " + command.syntax);
 	}
 	
 	/**
@@ -94,10 +86,8 @@ public final class CommandDispatcher {
 	 * @param command the command that was executed.
 	 * @return <true> if the command was executed, <false> otherwise.
 	 */
-	private static boolean hasPrivileges(Player player, Command command) {
-		Annotation annotation = command.getClass().getAnnotation(CommandSignature.class);
-		CommandSignature sig = (CommandSignature) annotation;
-		return Arrays.stream(sig.rights()).anyMatch(right -> player.getRights().equals(right));
+	private static boolean hasPrivileges(Player player, CommandSet command) {
+		return Arrays.stream(command.required).anyMatch(right -> player.getRights().equals(right));
 	}
 	
 	/**
@@ -113,10 +103,11 @@ public final class CommandDispatcher {
 			List<Command> commands = Utility.getClassesInDirectory(CommandDispatcher.class.getPackage().getName() + "." + directory).stream().map(clazz -> (Command) clazz).collect(Collectors.toList());
 			
 			for(Command command : commands) {
-				if(command.getClass().getAnnotation(CommandSignature.class) == null) {
+				CommandSignature sig = command.getClass().getAnnotation(CommandSignature.class);
+				if(sig == null) {
 					throw new IncompleteAnnotationException(CommandSignature.class, command.getClass().getName() + " has no annotation.");
 				}
-				COMMANDS.put(command.getClass().getAnnotation(CommandSignature.class), command);
+				Arrays.stream(sig.alias()).forEach(s -> COMMANDS.put(s, new CommandSet(s, command, sig.rights(), sig.syntax())));
 				count += 1;
 			}
 		}
@@ -133,5 +124,22 @@ public final class CommandDispatcher {
 		COMMANDS.clear();
 		load();
 	}
-	
+
+	public static final class CommandSet {
+
+		public final String alias;
+
+		public final Command command;
+
+		public final Rights[] required;
+
+		public final String syntax;
+
+		CommandSet(String alias, Command command, Rights[] required, String syntax) {
+			this.alias = alias;
+			this.command = command;
+			this.required = required;
+			this.syntax = syntax;
+		}
+	}
 }
