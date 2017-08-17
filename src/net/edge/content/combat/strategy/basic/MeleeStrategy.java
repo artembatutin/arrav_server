@@ -17,7 +17,7 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
     @Override
     public boolean withinDistance(T attacker, Actor defender) {
         FightType stance = attacker.getNewCombat().getFightType();
-        int distance = getAttackDistance(stance);
+        int distance = getAttackDistance(attacker, stance);
 
         MovementQueue movement = attacker.getMovementQueue();
         MovementQueue otherMovement = defender.getMovementQueue();

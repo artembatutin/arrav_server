@@ -1,5 +1,6 @@
 package net.edge.content.combat.strategy.player.special;
 
+import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.player.PlayerMeleeStrategy;
 import net.edge.content.combat.weapon.WeaponInterface;
@@ -24,9 +25,7 @@ public class GraniteMaul extends PlayerMeleeStrategy {
 
     @Override
     public void finish(Player attacker, Actor defender, Hit[] hits) {
-        if (attacker.getNewCombat().getStrategy() == this) {
-            WeaponInterface.setStrategy(attacker);
-        }
+        WeaponInterface.setStrategy(attacker);
     }
 
     @Override
@@ -34,4 +33,8 @@ public class GraniteMaul extends PlayerMeleeStrategy {
         return ANIMATION;
     }
 
+    @Override
+    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
+        return 1;
+    }
 }

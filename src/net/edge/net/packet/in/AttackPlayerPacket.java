@@ -3,19 +3,19 @@ package net.edge.net.packet.in;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.content.MagicSpell;
 import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
-import net.edge.world.entity.item.container.session.ExchangeSession;
-import net.edge.world.entity.item.container.session.ExchangeSessionManager;
-import net.edge.world.entity.item.container.session.impl.DuelSession;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.world.locale.loc.Location;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import net.edge.world.entity.item.container.session.ExchangeSession;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.item.container.session.impl.DuelSession;
+import net.edge.world.locale.loc.Location;
 
 import java.util.Optional;
 

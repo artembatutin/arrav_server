@@ -14,9 +14,9 @@ public abstract class CombatStrategy<T extends Actor> implements CombatAttack<T>
 
     public abstract boolean canAttack(T attacker, Actor defender);
 
-    public abstract int getAttackDelay(FightType stance);
+    public abstract int getAttackDelay(T attacker, Actor defender, FightType stance);
 
-    public abstract int getAttackDistance(FightType stance);
+    public abstract int getAttackDistance(T attacker, FightType stance);
 
     public abstract CombatHit[] getHits(T attacker, Actor defender);
 

@@ -26,12 +26,12 @@ public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
     }
 
     @Override
-    public int getAttackDelay(FightType fightType) {
+    public int getAttackDelay(Mob attacker, Actor defender, FightType fightType) {
         return 4;
     }
 
     @Override
-    public int getAttackDistance(FightType fightType) {
+    public int getAttackDistance(Mob attacker, FightType fightType) {
         return 1;
     }
 

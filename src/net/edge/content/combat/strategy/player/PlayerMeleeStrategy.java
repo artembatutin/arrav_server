@@ -42,12 +42,12 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
     }
 
     @Override
-    public int getAttackDelay(FightType fightType) {
-        return 4;
+    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
+        return 6;
     }
 
     @Override
-    public int getAttackDistance(FightType fightType) {
+    public int getAttackDistance(Player attacker, FightType fightType) {
         return 1;
     }
 

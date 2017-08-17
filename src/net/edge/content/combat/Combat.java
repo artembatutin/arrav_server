@@ -1,6 +1,7 @@
 package net.edge.content.combat;
 
 import net.edge.content.combat.attack.AttackModifier;
+import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.content.Poison;
 import net.edge.content.combat.events.CombatEvent;
 import net.edge.content.combat.events.CombatEventManager;
@@ -8,7 +9,6 @@ import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.CombatAttack;
 import net.edge.content.combat.strategy.CombatStrategy;
-import net.edge.content.combat.attack.FightType;
 import net.edge.util.Stopwatch;
 import net.edge.world.entity.actor.Actor;
 
@@ -72,23 +72,31 @@ public class Combat<T extends Actor> {
 
             if (!isHitActive) {
                 if (!pendingAddition.isEmpty()) {
-                    pendingAddition.forEach(attacks::add);
+                    pendingAddition.forEach(attack -> {
+                        attacks.add(attack);
+                        attack.getModifier(attacker, defender).ifPresent(this::addModifier);
+                    });
                     pendingAddition.clear();
                 }
 
                 if (!pendingRemoval.isEmpty()) {
-                    pendingRemoval.forEach(attacks::remove);
+                    pendingRemoval.forEach(attack -> {
+                        attacks.remove(attack);
+                        attack.getModifier(attacker, defender).ifPresent(this::removeModifier);
+                    });
                     pendingRemoval.clear();
                 }
             }
 
-            if (strategy != null) {
-                if (delays[strategy.getCombatType().ordinal()] > 0) {
-                    delays[strategy.getCombatType().ordinal()]--;
-                } else if (defender != null) {
+            for (int next = 0; next < delays.length; next++) {
+                if (delays[next] > 0) {
+                    delays[next]--;
+                } else if (strategy != null && defender != null && strategy.getCombatType().ordinal() == next) {
                     submitStrategy(defender, strategy);
+                    delays[strategy.getCombatType().ordinal()] = strategy.getAttackDelay(attacker, defender, type);
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,64 +111,46 @@ public class Combat<T extends Actor> {
             return;
         }
 
+        strategy.getModifier(attacker, defender).ifPresent(this::addModifier);
         CombatHit[] hits = strategy.getHits(attacker, defender);
-        delays[strategy.getCombatType().ordinal()] = strategy.getAttackDelay(type);
-
-        if (this.strategy != strategy) {
-            submitHits(defender, strategy, hits);
-        } else {
-            submitHits(defender, hits);
-        }
+        strategy.getModifier(attacker, defender).ifPresent(this::removeModifier);
+        submitHits(defender, strategy, hits);
     }
 
     private void submitHits(Actor defender, CombatStrategy<? super T> strategy, CombatHit... hits) {
         int shortest = Integer.MAX_VALUE;
+
         for (CombatHit hit : hits) {
             int delay = 0;
             eventManager.add(new CombatEvent(defender, delay, hit, hits, (def, _hit, _hits) -> {
                 isHitActive = true;
-                attacks.add(strategy);
-                strategy.getModifier(attacker, defender).ifPresent(this::addModifier);
                 attack(def, _hit, _hits);
+                strategy.attack(attacker, def, _hit, _hits);
             }));
 
             delay += hit.getHitDelay();
-            eventManager.add(new CombatEvent(defender, delay, hit, hits, this::hit));
+            eventManager.add(new CombatEvent(defender, delay, hit, hits, (def, _hit, _hits) -> {
+                hit(def, _hit, _hits);
+                strategy.hit(attacker, def, _hit, _hits);
+            }));
 
             delay += hit.getHitsplatDelay();
-            eventManager.add(new CombatEvent(defender, delay, hit, hits, this::hitsplat));
+            eventManager.add(new CombatEvent(defender, delay, hit, hits, (def, _hit, _hits) -> {
+                hitsplat(def, _hit, _hits);
+                strategy.hitsplat(attacker, def, _hit, _hits);
+            }));
 
             if (shortest > delay) shortest = delay;
         }
-        eventManager.add(new CombatEvent(defender, shortest, hits, (def, hit, hits2) -> {
-            finish(def, hits2);
-            attacks.remove(strategy);
-            strategy.getModifier(attacker, defender).ifPresent(this::removeModifier);
+        eventManager.add(new CombatEvent(defender, shortest, hits, (def, _hit, _hits) -> {
+            finish(def, _hits);
+            strategy.finish(attacker, def, _hits);
             isHitActive = false;
         }));
     }
 
     public void submitHits(Actor defender, CombatHit... hits) {
-        int shortest = Integer.MAX_VALUE;
-        for (CombatHit hit : hits) {
-            int delay = 0;
-            eventManager.add(new CombatEvent(defender, delay, hit, hits, (def, _hit, _hits) -> {
-                isHitActive = true;
-                attack(def, _hit, _hits);
-            }));
-
-            delay += hit.getHitDelay();
-            eventManager.add(new CombatEvent(defender, delay, hit, hits, this::hit));
-
-            delay += hit.getHitsplatDelay();
-            eventManager.add(new CombatEvent(defender, delay, hit, hits, this::hitsplat));
-
-            if (shortest > delay) shortest = delay;
-        }
-        eventManager.add(new CombatEvent(defender, shortest, hits, (def, hit, hits2) -> {
-            finish(def, hits2);
-            isHitActive = false;
-        }));
+        submitHits(defender, strategy, hits);
     }
 
     public void poison(int strength) {
@@ -268,19 +258,7 @@ public class Combat<T extends Actor> {
     }
 
     public void setStrategy(CombatStrategy<? super T> next) {
-        if (strategy != next) {
-            if (strategy != null) {
-                removeListener(strategy);
-                strategy.getModifier(attacker, defender).ifPresent(this::removeModifier);
-            }
-
-            if (next != null) {
-                addListener(next);
-                next.getModifier(attacker, defender).ifPresent(this::addModifier);
-            }
-
-            strategy = next;
-        }
+        strategy = next;
     }
 
     public Actor getDefender() {

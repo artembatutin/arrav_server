@@ -17,7 +17,7 @@ public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> 
     @Override
     public boolean withinDistance(T attacker, Actor defender) {
         FightType fightType = attacker.getNewCombat().getFightType();
-        int distance = getAttackDistance(fightType);
+        int distance = getAttackDistance(attacker, fightType);
 
         MovementQueue movement = attacker.getMovementQueue();
         MovementQueue otherMovement = defender.getMovementQueue();

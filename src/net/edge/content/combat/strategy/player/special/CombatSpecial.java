@@ -484,18 +484,15 @@ public enum CombatSpecial {
 		@Override
 		public void enable(Player player) {
 			Combat<Player> combat = player.getNewCombat();
-
-			if (combat.getDefender() != null) {
-				CombatStrategy<Player> strategy = new GraniteMaul();
-
-				if (strategy.canAttack(player, combat.getDefender())) {
-					combat.submitStrategy(combat.getDefender(), strategy);
-					player.getCombatSpecial().drain(player);
-					return;
-				}
-			}
-
-			super.enable(player);
+			if (combat.getDefender() == null) {
+                super.enable(player);
+            } else {
+                CombatStrategy<Player> strategy = new GraniteMaul();
+                if (strategy.canAttack(player, combat.getDefender())) {
+                    combat.submitStrategy(combat.getDefender(), strategy);
+                    player.getCombatSpecial().drain(player);
+                }
+            }
 		}
 	},;
 

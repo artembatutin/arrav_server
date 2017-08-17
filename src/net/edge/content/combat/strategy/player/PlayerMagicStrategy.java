@@ -17,7 +17,6 @@ import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
-import net.edge.world.entity.item.container.impl.Equipment;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -87,9 +86,11 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 
     @Override
     public void finish(Player attacker, Actor defender, Hit[] hits) {
-        if (singleCast) {
-            attacker.getNewCombat().reset();
-            WeaponInterface.setStrategy(attacker);
+        if (attacker.getNewCombat().getStrategy() == this) {
+            if (singleCast) {
+                attacker.getNewCombat().reset();
+                WeaponInterface.setStrategy(attacker);
+            }
         }
     }
 
@@ -99,12 +100,12 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
     }
 
     @Override
-    public int getAttackDelay(FightType fightType) {
+    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
         return 4;
     }
 
     @Override
-    public int getAttackDistance(FightType fightType) {
+    public int getAttackDistance(Player attacker, FightType fightType) {
         return 10;
     }
 

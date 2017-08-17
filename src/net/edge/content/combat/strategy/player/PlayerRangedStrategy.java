@@ -3,6 +3,7 @@ package net.edge.content.combat.strategy.player;
 import net.edge.content.combat.CombatEffect;
 import net.edge.content.combat.CombatProjectileDefinition;
 import net.edge.content.combat.CombatType;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.content.RangedAmmunition;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.hit.CombatHit;
@@ -108,18 +109,41 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     }
 
     @Override
-    public int getAttackDelay(FightType fightType) {
-        return 4;
+    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
+        int speed = CombatUtil.getDelay(attacker, defender, getCombatType());
+        switch (fightType) {
+            case CROSSBOW_RAPID:
+            case DART_RAPID:
+            case JAVELIN_RAPID:
+            case KNIFE_RAPID:
+            case LONGBOW_RAPID:
+            case SHORTBOW_RAPID:
+            case THROWNAXE_RAPID:
+                speed--;
+        }
+        return speed;
     }
 
     @Override
-    public int getAttackDistance(FightType fightType) {
-        return 8;
+    public int getAttackDistance(Player attacker, FightType fightType) {
+        int distance = CombatUtil.getRangedDistance(attacker.getWeapon());
+        switch (fightType) {
+            case CROSSBOW_LONGRANGE:
+            case DART_LONGRANGE:
+            case JAVELIN_LONGRANGE:
+            case KNIFE_LONGRANGE:
+            case LONGBOW_LONGRANGE:
+            case SHORTBOW_LONGRANGE:
+            case THROWNAXE_LONGRANGE:
+                distance += 2;
+        }
+        if (distance > 10) distance = 10;
+        return distance;
     }
 
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        return new CombatHit[] { nextRangedHit(attacker, defender, projectileDefinition.getHitDelay(attacker, defender, false), projectileDefinition.getHitsplatDelay()) };
+        return new CombatHit[] { nextRangedHit(attacker, defender, projectileDefinition.getHitDelay(attacker, defender, false), 0) };
     }
 
     @Override

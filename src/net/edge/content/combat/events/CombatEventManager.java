@@ -20,7 +20,7 @@ public class CombatEventManager {
     public void add(CombatEvent event) {
         events.add(event);
     }
-    
+
     public void cancelAll() {
         events.clear();
     }
