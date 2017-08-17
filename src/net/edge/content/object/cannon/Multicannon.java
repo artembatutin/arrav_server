@@ -68,6 +68,7 @@ public class Multicannon extends DynamicObject {
 			inv.add(new Item(2, getElements()));
 		}
 		inv.addAll(new Item(6), new Item(8), new Item(10), new Item(12));
+		firing = false;
 		remove();
 	}
 	
@@ -79,8 +80,10 @@ public class Multicannon extends DynamicObject {
 			player.message("There is no cannon balls to fire with.");
 			return;
 		}
-		if(!firing)
+		if(!firing) {
+			firing = true;
 			new MulticannonTask(this).submit();
+		}
 	}
 	
 	/**
