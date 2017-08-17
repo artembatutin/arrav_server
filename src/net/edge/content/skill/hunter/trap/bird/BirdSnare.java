@@ -90,6 +90,7 @@ public final class BirdSnare extends Trap {
 		}
 		
 		Bird bird = (Bird) mob;
+		setState(TrapState.CATCHING, mob);
 		event = Optional.of(new Task(1, false) {
 			
 			@Override
@@ -170,6 +171,10 @@ public final class BirdSnare extends Trap {
 	
 	@Override
 	public void setState(TrapState state, Mob mob) {
+		if(state.equals(TrapState.CATCHING)) {
+			super.setState(state, mob);
+			return;
+		}
 		if(state.equals(TrapState.PENDING)) {
 			throw new IllegalArgumentException("Cannot set trap state back to pending.");
 		}

@@ -134,6 +134,9 @@ public final class Hunter {
 					if(trap == null) {
 						return false;
 					}
+					if(trap.getState().equals(Trap.TrapState.CATCHING)) {
+						return true;
+					}
 					if(trap.getState().equals(Trap.TrapState.CAUGHT)) {
 						if(!trap.getPlayer().getFormatUsername().equals(player.getFormatUsername())) {
 							player.message("You can't claim the rewards of someone elses trap...");
