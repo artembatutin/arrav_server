@@ -38,7 +38,8 @@ public final class MithrilSeed {
             .put(2984, 2468)
             .put(2985, 2470)
             .put(2986, 2472)
-            .put(2987, 2474).build());
+            .put(2987, 2474)
+            .put(2988, 2476).build());
 
     public static void action() {
         for(int objectId : FLOWER_OBJECT_IDS.keySet()) {
@@ -72,12 +73,10 @@ public final class MithrilSeed {
                     player.message("You are currently in combat.");
                     return true;
                 }
-    
-                if(player.getRights().less(Rights.EXTREME_DONATOR)) {
-                    player.message("You need to be an extreme donator to do plant this.");
+                if(player.getRights().less(Rights.DONATOR)) {
+                    player.message("You need to be a donator to be able to gamble.");
                     return true;
                 }
-    
                 if(!player.getDiceTimer().elapsed(1800)) {
                     return true;
                 }
@@ -96,11 +95,16 @@ public final class MithrilSeed {
                 return true;
             }
         };
-
         itemEvent.register(299);//mithril seed item id.
     }
 
     private static DynamicObject getRandomFlowerObject(Player player) {
-        return new DynamicObject(RandomUtils.random(FLOWER_OBJECT_IDS.keySet().toIntArray()), player.getPosition(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, player.getSlot(), 0);
+        int[] flowers = FLOWER_OBJECT_IDS.keySet().toIntArray();
+        int flower = RandomUtils.random(flowers);
+        if(flower == 2987)//white flowers, rare
+            flower = RandomUtils.random(flowers);
+        if(flower == 2988)//black flowers, rare
+            flower = RandomUtils.random(flowers);
+        return new DynamicObject(flower, player.getPosition(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, player.getSlot(), 0);
     }
 }

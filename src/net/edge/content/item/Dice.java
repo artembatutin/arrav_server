@@ -30,7 +30,8 @@ public final class Dice {
 		if(player.getCombat().inCombat()) {
 			return true;
 		}
-		if(player.getRights().less(Rights.SUPER_DONATOR)) {
+		if(player.getRights().less(Rights.DONATOR)) {
+			player.message("You have to be a donator to be able to gamble");
 			return true;
 		}
 		if(!player.getDiceTimer().elapsed(1800)) {
