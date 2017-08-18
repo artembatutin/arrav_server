@@ -21,6 +21,7 @@ import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.region.Region;
 import net.edge.world.locale.loc.Location;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.ActorDeath;
@@ -128,11 +129,11 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			optional.get().onDeath(getActor());
 			if(optional.get().getSafety().equals(Minigame.MinigameSafety.DEFAULT)) {
 				if(getActor().getRights().less(Rights.ADMINISTRATOR)) {
-					calculateDropItems(getActor(), killer, false);
+					dropItems(getActor(), killer, false);
 				}
 			} else if(optional.get().getSafety().equals(Minigame.MinigameSafety.DANGEROUS)) {
 				if(getActor().getRights().less(Rights.ADMINISTRATOR)) {
-					calculateDropItems(getActor(), killer, true);
+					dropItems(getActor(), killer, true);
 				}
 			}
 			getActor().move(optional.get().deathPosition(getActor()));
@@ -140,7 +141,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			return;
 		}
 		if(getActor().getRights().less(Rights.ADMINISTRATOR)) {
-			calculateDropItems(getActor(), killer, false);
+			dropItems(getActor(), killer, false);
 			getActor().move(new Position(3084, 3514));
 		}
 
@@ -242,63 +243,68 @@ public final class PlayerDeath extends ActorDeath<Player> {
 	}
 	
 	/**
-	 * Calculates and drops all of the items from {@code character} for
+	 * Calculates and drops all of the items from {@code player} for
 	 * {@code killer}.
-	 * @param character the character whose items are being dropped.
+	 * @param player the player whose items are being dropped.
 	 * @param killer    the killer who the items are being dropped for.
 	 * @param dropAll   indicates no-items will be kept except the untradables.
 	 */
-	private void calculateDropItems(Player character, Optional<Player> killer, boolean dropAll) {
+	private void dropItems(Player player, Optional<Player> killer, boolean dropAll) {
 		ObjectList<Item> keep = new ObjectArrayList<>();
-		ObjectList<Item> items = new ObjectArrayList<>();
-		killer.ifPresent(player -> {
-            if(!getActor().getLastKiller().equalsIgnoreCase(player.getFormatUsername())) {
-            	Rights right = player.getRights();
-            	int baseAmount = RandomUtils.inclusive(10, 50) * (GameConstants.DOUBLE_BLOOD_MONEY_EVENT ? 2 : 1);
-            	int amount = right.equals(Rights.EXTREME_DONATOR) ? ((int) (baseAmount * 1.05))  : right.equals(Rights.SUPER_DONATOR) ? ((int) (baseAmount * 1.10)) : right.equals(Rights.DONATOR) ? ((int) (baseAmount * 1.15)) : baseAmount;
-				if(!PunishmentHandler.same(player, killer.get())) {
-					items.add(new Item(19000, amount));
+		ObjectList<Item> drop = new ObjectArrayList<>();
+		killer.ifPresent(p -> {
+            if(!getActor().getLastKiller().equalsIgnoreCase(p.getFormatUsername())) {
+	            if(!PunishmentHandler.same(player, p)) {
+		            Rights right = p.getRights();
+            	    int baseAmount = RandomUtils.inclusive(10, 50) * (GameConstants.DOUBLE_BLOOD_MONEY_EVENT ? 2 : 1);
+            	    int amount = right.equals(Rights.EXTREME_DONATOR) ? ((int) (baseAmount * 1.30))  : right.equals(Rights.SUPER_DONATOR) ? ((int) (baseAmount * 1.20)) : right.equals(Rights.DONATOR) ? ((int) (baseAmount * 1.10)) : baseAmount;
+					drop.add(new Item(19000, amount));
 				}
             }
+            getActor().setLastKiller(player.getFormatUsername());
         });
-		character.getEquipment().forEach($it -> {
-			if($it.getDefinition().isTradable()) {
-				items.add($it);
+		for(Item i : player.getEquipment().getItems()) {
+			if(i == null)
+				continue;
+			if(i.getDefinition().isTradable()) {
+				drop.add(i);
 			} else {
-				keep.add($it);
+				keep.add(i);
 			}
-		});
-		character.getInventory().forEach($it -> {
-			if($it.getDefinition().isTradable()) {
-				items.add($it);
+		}
+		for(Item i : player.getInventory().getItems()) {
+			if(i == null)
+				continue;
+			if(i.getDefinition().isTradable()) {
+				drop.add(i);
 			} else {
-				keep.add($it);
+				keep.add(i);
 			}
-		});
-		if(items.size() > 0) {
-			character.getEquipment().clear();
-			character.getInventory().clear();
-			character.getEquipment().updateBulk();
-			character.getInventory().updateBulk();
-			int amount = dropAll ? 0 : character.getSkullTimer().get() > 0 ? 0 : 3;
-			if(Prayer.isActivated(character, Prayer.PROTECT_ITEM) || Prayer.isActivated(character, Prayer.CURSES_PROTECT_ITEM)) {
+		}
+		Player viewer = killer.orElse(player);
+		Region reg = player.getRegion().orElse(null);
+		if(drop.size() > 0) {
+			player.getEquipment().clear();
+			player.getInventory().clear();
+			int amount = dropAll ? 0 : player.getSkullTimer().get() > 0 ? 0 : 3;
+			if(Prayer.isActivated(player, Prayer.PROTECT_ITEM) || Prayer.isActivated(player, Prayer.CURSES_PROTECT_ITEM)) {
 				if(!dropAll) {
 					amount++;
 				}
 			}
 			if(amount > 0) {
-				items.sort(new Ordering<Item>() {
+				drop.sort(new Ordering<Item>() {
 					@Override
 					public int compare(Item left, Item right) {
 						return Integer.compare(left.getValue().getValue(), right.getValue().getValue());
 					}
 				}.reverse());
-				for(Iterator<Item> it = items.iterator(); it.hasNext(); ) {
+				for(Iterator<Item> it = drop.iterator(); it.hasNext(); ) {
 					Item next = it.next();
 					if(amount == 0) {
 						break;
 					}
-					character.getInventory().add(new Item(next.getId()));
+					player.getInventory().add(new Item(next.getId()));
 					if(next.getDefinition().isStackable() && next.getAmount() > 1) {
 						next.decrementAmountBy(1);
 					} else {
@@ -307,16 +313,21 @@ public final class PlayerDeath extends ActorDeath<Player> {
 					amount--;
 				}
 			}
-			character.getRegion().ifPresent(r -> {
-				r.register(killer.map(player -> new GroundItem(new Item(526), character.getPosition(), player)).orElseGet(() -> new GroundItem(new Item(526), character.getPosition(), character)));
-				items.forEach(item -> r.register(killer.map(player -> new GroundItem(item, character.getPosition(), player)).orElseGet(() -> new GroundItem(item, character.getPosition(), character))));
-				
-			});
-			character.getInventory().addAll(keep.toArray(new Item[keep.size()]));
+			player.getEquipment().updateBulk();
+			player.getInventory().updateBulk();
+			if(reg != null) {
+				reg.register(new GroundItem(new Item(526), player.getPosition(), viewer));
+				for(Item droppedItem : drop) {
+					if(droppedItem == null)
+						continue;
+					reg.register(new GroundItem(droppedItem, player.getPosition(), viewer));
+				}
+			}
+			player.getInventory().addAll(keep.toArray(new Item[keep.size()]));
 		} else {
-			character.getRegion().ifPresent(r -> {
-				r.register(killer.map(player -> new GroundItem(new Item(526), character.getPosition(), player)).orElseGet(() -> new GroundItem(new Item(526), character.getPosition(), character)));
-			});
+			if(reg != null) {
+				reg.register(new GroundItem(new Item(526), player.getPosition(), viewer));
+			}
 		}
 	}
 }

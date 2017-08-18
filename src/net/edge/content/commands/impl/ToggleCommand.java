@@ -3,6 +3,7 @@ package net.edge.content.commands.impl;
 import net.edge.GameConstants;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
+import net.edge.content.object.pit.PitFiring;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -12,11 +13,18 @@ import net.edge.world.entity.actor.player.assets.Rights;
  * Date: 12/08/2017
  * https://github.com/ophionB | https://www.rune-server.ee/members/ophion/
  */
-@CommandSignature(alias = {"disable", "enable"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::disable/enable [trade/duel/drop Here]")
-public class DisableCommand implements Command {
+@CommandSignature(alias = {"disable", "enable"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::disable/enable [trade/duel/drop]")
+public class ToggleCommand implements Command {
     @Override
     public void execute(Player player, String[] cmd, String command) throws Exception {
         switch(cmd[1].toLowerCase()) {
+            case"pit":
+                if (command.equals("disable")) {
+                    if(PitFiring.burning != null) {
+                        PitFiring.burning.setDelay(20);
+                    }
+                }
+                break;
             case "trade":
                 if (command.equals("enable")) {
                     GameConstants.TRADE_DISABLED = false;

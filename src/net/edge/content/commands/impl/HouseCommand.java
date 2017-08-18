@@ -9,7 +9,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 /**
  * The assist command for staff members.
  */
-@CommandSignature(alias = {"house"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::house")
+@CommandSignature(alias = {"house"}, rights = {Rights.ADMINISTRATOR}, syntax = "House testing command, ::house")
 public final class HouseCommand implements Command {
 	
 	@Override

@@ -7,17 +7,16 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"ipmute"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::ipmute username")
+@CommandSignature(alias = {"ipmute"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR}, syntax = "IP mute, ::ipmute username")
 public final class IPMutingCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Player ipMute = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
-		
-		if(ipMute != null && (ipMute.getRights().less(Rights.ADMINISTRATOR) || player.getRights().equals(Rights.ADMINISTRATOR)) && ipMute != player) {
-			player.message("Successfully IP muted " + ipMute.getFormatUsername() + ".");
-			ipMute.message("@red@You have been IP-muted by " + player.getFormatUsername() + ".");
-			PunishmentHandler.addIPMute(ipMute.getSession().getHost(), ipMute.getCredentials().getUsername());
+		Player muted = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
+		if(muted != null && (muted.getRights().less(Rights.ADMINISTRATOR) || player.getRights().equals(Rights.ADMINISTRATOR)) && muted != player) {
+			player.message("Successfully IP muted " + muted.getFormatUsername() + ".");
+			muted.message("@red@You have been IP-muted by " + player.getFormatUsername() + ".");
+			PunishmentHandler.addIPMute(muted);
 		}
 	}
 	

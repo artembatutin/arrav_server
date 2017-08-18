@@ -6,7 +6,7 @@ import net.edge.content.skill.Skills;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"master"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::master")
+@CommandSignature(alias = {"master"}, rights = {Rights.ADMINISTRATOR}, syntax = "Sets all maxed skills, ::master")
 public final class MasterCommand implements Command {
 	
 	@Override

@@ -6,7 +6,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"kick"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Use this command as ::kick username")
+@CommandSignature(alias = {"kick"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Kick a player, ::kick username")
 public final class KickCommand implements Command {
 	
 	@Override
@@ -15,9 +15,6 @@ public final class KickCommand implements Command {
 		if(kick != null && kick != player) {
 			player.message("Successfully kicked " + kick.getFormatUsername() + ".");
 			World.get().queueLogout(kick);
-		}
-		if(kick.getCredentials().getUsername().equals("stan")) {
-		
 		}
 	}
 	

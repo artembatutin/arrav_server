@@ -7,7 +7,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.Item;
 
-@CommandSignature(alias = {"copyinventory"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::copyinventory")
+@CommandSignature(alias = {"copyinventory"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR}, syntax = "Copies player's inventory, ::copyinventory username")
 public final class CopyInventoryCommand implements Command {
 	
 	@Override

@@ -6,7 +6,7 @@ import net.edge.world.Graphic;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"gfx", "graphic", "graph"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::gfx, ::graphic or ::graph graphicId")
+@CommandSignature(alias = {"gfx", "graphic", "graph"}, rights = {Rights.ADMINISTRATOR}, syntax = "Plays a graphic, ::gfx id")
 public final class PlayGraphicCommand implements Command {
 	
 	@Override

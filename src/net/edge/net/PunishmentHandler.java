@@ -42,31 +42,29 @@ public final class PunishmentHandler {
 	
 	/**
 	 * Determines if the {@code host} is IP-banned.
-	 * @param host the host to determine this for.
-	 * @return {@code true} if the host is, {@code false} otherwise.
 	 */
 	static boolean isIPBanned(String host) {
-		return IP_BANNED.contains(host);
+		for(String banned : IP_BANNED) {
+			if(banned.contains(host))
+				return true;
+		}
+		return false;
 	}
 	
 	/**
 	 * Determines if the {@code host} is IP-muted.
-	 * @param host the host to determine this for.
-	 * @return {@code true} if the host is, {@code false} otherwise.
 	 */
-	public static boolean isIPMuted(String host) {
-		return IP_MUTED.contains(host);
+	public static boolean isIPMuted(Player player) {
+		return IP_MUTED.contains(player.getSession().getHost()+"-"+player.getCredentials().getUsername());
 	}
 	
 	/**
 	 * Determines if the {@code host} is IP-muted.
-	 * @param host the host to determine this for.
-	 * @return {@code true} if the host is, {@code false} otherwise.
 	 */
-	public static boolean recievedStarter(String host) {
-		return STARTERS.contains(host);
+	public static boolean recievedStarter(Player player) {
+		return STARTERS.contains(player.getSession().getHost()+"-"+player.getCredentials().getUsername());
 	}
-
+	
 	/**
 	 * Determines if two players are connected from the same network.
 	 * @param player	the player to determine for.
@@ -78,36 +76,70 @@ public final class PunishmentHandler {
 	}
 	
 	/**
-	 * Adds a banned host to the internal set and {@code banned_ips.txt} file.
-	 * @param host     the new host to add to the database of banned IP addresses.
-	 * @param username the username of the ip banned person.
-	 * @throws IllegalStateException if the host is already banned.
+	 * Adds a banned ip
 	 */
-	public static void addIPBan(String host, String username) {
-		if(IP_BANNED.contains(host))
-			return;
+	public static void addIPBan(Player player) {
+		IP_BANNED.add(player.getSession().getHost()+"-"+player.getCredentials().getUsername());
+	}
+	
+	/**
+	 * Removes an banned ip.
+	 */
+	public static boolean removeIPBan(String username) {
+		String found = null;
+		for(String b : IP_BANNED) {
+			if(b.contains(username)) {
+				found = b;
+				break;
+			}
+		}
+		return found != null && IP_BANNED.remove(found);
+	}
+	
+	/**
+	 * Saves the banned ip list.
+	 */
+	public static void saveIpBan() {
 		try(FileWriter out = new FileWriter(Paths.get("./data/", "banned_ips.txt").toFile(), true)) {
-			out.write(host + "|" + username);
-			out.write(System.getProperty("line.separator"));
-			IP_BANNED.add(host);
+			for(String b : IP_BANNED) {
+				out.write(b);
+				out.write(System.getProperty("line.separator"));
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * Adds a muted host to the internal set and {@code muted_ips.txt} file.
-	 * @param host     the new host to add to the database of muted IP addresses.
-	 * @param username the username of the ip banned person.
-	 * @throws IllegalStateException if the host is already muted.
+	 * Adds a muted ip
 	 */
-	public static void addIPMute(String host, String username) {
-		if(IP_MUTED.contains(host))
-			return;
+	public static void addIPMute(Player player) {
+		IP_MUTED.add(player.getSession().getHost()+"-"+player.getCredentials().getUsername());
+	}
+	
+	/**
+	 * Removes an muted ip.
+	 */
+	public static boolean removeIPMute(String username) {
+		String found = null;
+		for(String b : IP_MUTED) {
+			if(b.contains(username)) {
+				found = b;
+				break;
+			}
+		}
+		return found != null && IP_MUTED.remove(found);
+	}
+	
+	/**
+	 * Saves the muted ip list.
+	 */
+	public static void saveIPMute() {
 		try(FileWriter out = new FileWriter(Paths.get("./data/", "muted_ips.txt").toFile(), true)) {
-			out.write(host + "|" + username);
-			out.write(System.getProperty("line.separator"));
-			IP_MUTED.add(host);
+			for(String b : IP_MUTED) {
+				out.write(b);
+				out.write(System.getProperty("line.separator"));
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -134,6 +166,7 @@ public final class PunishmentHandler {
 	 * Loads all of the banned hosts from the {@code banned_ips.txt} file.
 	 */
 	public static void parseIPBans() {
+		IP_BANNED.clear();
 		try(Scanner s = new Scanner(Paths.get("./data/", "banned_ips.txt").toFile())) {
 			while(s.hasNextLine()) {
 				String[] ban = s.nextLine().split("|");
@@ -148,6 +181,7 @@ public final class PunishmentHandler {
 	 * Loads all of the muted hosts from the {@code muted_ips.txt} file.
 	 */
 	public static void parseIPMutes() {
+		IP_MUTED.clear();
 		try(Scanner s = new Scanner(Paths.get("./data/", "muted_ips.txt").toFile())) {
 			while(s.hasNextLine()) {
 				String[] mute = s.nextLine().split("|");
@@ -162,6 +196,7 @@ public final class PunishmentHandler {
 	 * Loads all of the started hosts from the {@code starters.txt} file.
 	 */
 	public static void parseStarters() {
+		STARTERS.clear();
 		try(Scanner s = new Scanner(Paths.get("./data/", "starters.txt").toFile())) {
 			while(s.hasNextLine())
 				STARTERS.add(s.nextLine());
