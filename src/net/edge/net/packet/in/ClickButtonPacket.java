@@ -6,6 +6,7 @@ import net.edge.action.impl.ButtonAction;
 import net.edge.content.Emote;
 import net.edge.content.TabInterface;
 import net.edge.content.clanchat.ClanManager;
+import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.dialogue.Dialogues;
 import net.edge.content.item.Skillcape;
 import net.edge.content.market.MarketShop;
@@ -688,6 +689,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 				if(player.isSpecialActivated()) {
 					player.out(new SendConfig(301, 0));
 					player.setSpecialActivated(false);
+					WeaponInterface.setStrategy(player);
 				} else {
 					if (player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
 						player.message("You do not have enough special energy left!");
