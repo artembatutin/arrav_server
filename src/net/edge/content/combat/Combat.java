@@ -125,26 +125,26 @@ public class Combat<T extends Actor> {
             eventManager.add(new CombatEvent(defender, delay, hit, hits, (def, _hit, _hits) -> {
                 isHitActive = true;
                 attack(def, _hit, _hits);
-                strategy.attack(attacker, def, _hit, _hits);
+                strategy.attack(attacker, def, _hit);
             }));
 
             delay += hit.getHitDelay();
             eventManager.add(new CombatEvent(defender, delay, hit, hits, (def, _hit, _hits) -> {
                 hit(def, _hit, _hits);
-                strategy.hit(attacker, def, _hit, _hits);
+                strategy.hit(attacker, def, _hit);
             }));
 
             delay += hit.getHitsplatDelay();
             eventManager.add(new CombatEvent(defender, delay, hit, hits, (def, _hit, _hits) -> {
                 hitsplat(def, _hit, _hits);
-                strategy.hitsplat(attacker, def, _hit, _hits);
+                strategy.hitsplat(attacker, def, _hit);
             }));
 
             if (shortest > delay) shortest = delay;
         }
         eventManager.add(new CombatEvent(defender, shortest, hits, (def, _hit, _hits) -> {
             finish(def, _hits);
-            strategy.finish(attacker, def, _hits);
+            strategy.finish(attacker, def);
             isHitActive = false;
         }));
     }
@@ -173,15 +173,15 @@ public class Combat<T extends Actor> {
     private void attack(Actor defender, CombatHit hit, CombatHit[] hits) {
         lastAttacked.reset();
         lastDefender = defender;
-        attacks.forEach(attack -> attack.attack(attacker, defender, hit, hits));
+        attacks.forEach(attack -> attack.attack(attacker, defender, hit));
     }
 
     private void hit(Actor defender, Hit hit, Hit[] hits) {
-        attacks.forEach(attack -> attack.hit(attacker, defender, hit, hits));
+        attacks.forEach(attack -> attack.hit(attacker, defender, hit));
     }
 
     private void hitsplat(Actor defender, Hit hit, Hit[] hits) {
-        attacks.forEach(attack -> attack.hitsplat(attacker, defender, hit, hits));
+        attacks.forEach(attack -> attack.hitsplat(attacker, defender, hit));
         defender.getNewCombat().block(attacker, hit, hits);
         defender.damage(hit);
 
@@ -196,17 +196,17 @@ public class Combat<T extends Actor> {
         lastBlocked.reset();
         lastAttacker = attacker;
         defender.getMovementQueue().reset();
-        attacks.forEach(attack -> attack.block(attacker, defender, hit, hits));
+        attacks.forEach(attack -> attack.block(attacker, defender, hit));
     }
 
     private void onDeath(Actor attacker, Hit hit, Hit[] hits) {
         T defender = this.attacker;
-        attacks.forEach(attack -> attack.onDeath(attacker, defender, hit, hits));
+        attacks.forEach(attack -> attack.onDeath(attacker, defender, hit));
         defender.getMovementQueue().reset();
     }
 
     private void finish(Actor defender, Hit[] hits) {
-        attacks.forEach(attack -> attack.finish(attacker, defender, hits));
+        attacks.forEach(attack -> attack.finish(attacker, defender));
     }
 
     public void addModifier(AttackModifier modifier) {

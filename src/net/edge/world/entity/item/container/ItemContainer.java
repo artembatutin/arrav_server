@@ -349,7 +349,7 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public int remove(Item item, int preferredIndex, boolean refresh) {
 		checkArgument(preferredIndex >= -1, "invalid index identifier");
-		
+
 		ItemDefinition def = item.getDefinition();
 		if(def == null) {
 			items[preferredIndex] = null;

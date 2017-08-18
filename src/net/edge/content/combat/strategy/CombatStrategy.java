@@ -25,27 +25,27 @@ public abstract class CombatStrategy<T extends Actor> implements CombatAttack<T>
     protected abstract Animation getBlockAnimation(T attacker, Actor defender);
 
     @Override
-    public void attack(T attacker, Actor defender, Hit hit, Hit[] hits) {
+    public void attack(T attacker, Actor defender, Hit hit) {
     }
 
     @Override
-    public void hit(T attacker, Actor defender, Hit hit, Hit[] hits) {
+    public void hit(T attacker, Actor defender, Hit hit) {
     }
 
     @Override
-    public void hitsplat(T attacker, Actor defender, Hit hit, Hit[] hits) {
+    public void hitsplat(T attacker, Actor defender, Hit hit) {
     }
 
     @Override
-    public void block(Actor attacker, T defender, Hit hit, Hit[] hits) {
+    public void block(Actor attacker, T defender, Hit hit) {
     }
 
     @Override
-    public void onDeath(Actor attacker, T defender, Hit hit, Hit[] hits) {
+    public void onDeath(Actor attacker, T defender, Hit hit) {
     }
 
     @Override
-    public void finish(T attacker, Actor defender, Hit[] hits) {
+    public void finish(T attacker, Actor defender) {
     }
 
     protected final CombatHit nextMeleeHit(T attacker, Actor defender) {

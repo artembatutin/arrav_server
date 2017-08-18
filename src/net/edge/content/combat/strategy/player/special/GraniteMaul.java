@@ -14,8 +14,8 @@ public class GraniteMaul extends PlayerMeleeStrategy {
     private static final Graphic GRAPHIC = new Graphic(340);
 
     @Override
-    public void attack(Player attacker, Actor defender, Hit hit, Hit[] hits) {
-        super.attack(attacker, defender, hit, hits);
+    public void attack(Player attacker, Actor defender, Hit hit) {
+        super.attack(attacker, defender, hit);
         attacker.graphic(GRAPHIC);
 
         if (attacker.getNewCombat().getStrategy() == this) {
@@ -24,7 +24,7 @@ public class GraniteMaul extends PlayerMeleeStrategy {
     }
 
     @Override
-    public void finish(Player attacker, Actor defender, Hit[] hits) {
+    public void finish(Player attacker, Actor defender) {
         WeaponInterface.setStrategy(attacker);
     }
 

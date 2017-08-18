@@ -21,7 +21,7 @@ public class NpcMagicStrategy extends MagicStrategy<Mob> {
     }
 
     @Override
-    public void hit(Mob attacker, Actor defender, Hit hit, Hit[] hits) {
+    public void hit(Mob attacker, Actor defender, Hit hit) {
         if (attacker.getDefinition().poisonous()) {
             defender.poison(CombatPoisonEffect.getPoisonType(attacker.getId()).orElse(PoisonType.DEFAULT_NPC));
         }

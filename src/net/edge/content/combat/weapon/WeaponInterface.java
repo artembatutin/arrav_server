@@ -195,6 +195,7 @@ public enum WeaponInterface {
             player.setWeapon(WeaponInterface.UNARMED);
             setStrategy(player);
             CombatSpecial.assign(player);
+            WeaponFactory.updateAttackStyle(player, UNARMED);
             for (FightType type : player.getWeapon().getFightTypes()) {
                 if (type.getStyle() == player.getFightType().getStyle()) {
                     player.setFightType(type);
@@ -221,6 +222,7 @@ public enum WeaponInterface {
         setStrategy(player);
         CombatSpecial.assign(player);
         CombatSpecial.updateSpecialAmount(player);
+        WeaponFactory.updateAttackStyle(player, weapon);
         for (FightType type : weapon.getFightTypes()) {
             if (type.getStyle() == player.getFightType().getStyle()) {
                 player.setFightType(type);

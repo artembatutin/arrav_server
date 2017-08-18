@@ -67,18 +67,18 @@ public final class CombatUtil {
 	public static int getDelay(Actor attacker, Actor defender, CombatType type) {
 		int delay = attacker.isPlayer() && defender.isMob() ? 1 : 0;
 		if (attacker.isPlayer() && attacker.toPlayer().getWeapon().equals(WeaponInterface.SALAMANDER)) {
-			return 1 + delay;
+			return delay;
 		}
 		if (type.equals(CombatType.MELEE)) {
-			return 1 + delay;
+			return delay;
 		}
 		if (type.equals(CombatType.RANGED)) {
-			return 2 + delay;
+			return 1 + delay;
 		}
 		if (type.equals(CombatType.MAGIC)) {
-			return 3 + delay;
+			return 2 + delay;
 		}
-		return 1 + delay;
+		return delay;
 	}
 
 	/**

@@ -65,19 +65,19 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     }
 
     @Override
-    public void attack(Player attacker, Actor defender, Hit hit, Hit[] hits) {
+    public void attack(Player attacker, Actor defender, Hit hit) {
         attacker.animation(getAttackAnimation(attacker, defender));
         projectileDefinition.getStart().ifPresent(attacker::graphic);
         projectileDefinition.sendProjectile(attacker, defender, false);
+        removeAmmunition(attacker, defender, rangedDefinition.getType());
         addCombatExperience(attacker, hit);
     }
 
     @Override
-    public void hit(Player attacker, Actor defender, Hit hit, Hit[] hits) {
+    public void hit(Player attacker, Actor defender, Hit hit) {
         Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
         Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit);
         projectileDefinition.getEffect().filter(Objects::nonNull).filter(filter).ifPresent(execute);
-        removeAmmunition(attacker, defender, rangedDefinition.getType());
 
         if (hit.getDamage() > 0) {
             defender.poison(CombatPoisonEffect.getPoisonType(attacker.getEquipment().get(rangedDefinition.getSlot())).orElse(null));
@@ -85,7 +85,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     }
 
     @Override
-    public void block(Actor attacker, Player defender, Hit hit, Hit[] hits) {
+    public void block(Actor attacker, Player defender, Hit hit) {
         defender.animation(getBlockAnimation(defender, attacker));
     }
 
@@ -110,7 +110,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 
     @Override
     public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
-        int speed = CombatUtil.getDelay(attacker, defender, getCombatType());
+        int speed = attacker.getWeapon().getSpeed();
         switch (fightType) {
             case CROSSBOW_RAPID:
             case DART_RAPID:
@@ -120,6 +120,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
             case SHORTBOW_RAPID:
             case THROWNAXE_RAPID:
                 speed--;
+                break;
         }
         return speed;
     }
@@ -152,12 +153,13 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     }
 
     private void removeAmmunition(Player attacker, Actor defender, RangedWeaponDefinition.AttackType type) {
-        if (attacker.getEquipment().remove(new Item(ammunition.getId())) > 0) {
-            new GroundItem(new Item(ammunition.getId()), defender.getPosition(), attacker).register();
+        Item next = attacker.getEquipment().get(type.getSlot());
+        next.decrementAmount();
+        attacker.getEquipment().set(type.getSlot(), next, true);
+        new GroundItem(new Item(ammunition.getId(), 1), defender.getPosition(), attacker).register();
 
-            if (!attacker.getEquipment().contains(ammunition.getId())) {
-                attacker.out(new SendMessage(getLastFiredMessage(type)));
-            }
+        if (!attacker.getEquipment().contains(ammunition.getId())) {
+            attacker.out(new SendMessage(getLastFiredMessage(type)));
         }
     }
 

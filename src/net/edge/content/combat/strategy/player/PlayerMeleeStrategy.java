@@ -1,5 +1,6 @@
 package net.edge.content.combat.strategy.player;
 
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.CombatType;
@@ -19,31 +20,31 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
     }
 
     @Override
-    public void attack(Player attacker, Actor defender, Hit hit, Hit[] hits) {
+    public void attack(Player attacker, Actor defender, Hit hit) {
         attacker.animation(getAttackAnimation(attacker, defender));
         addCombatExperience(attacker, hit);
     }
 
     @Override
-    public void hit(Player attacker, Actor defender, Hit hit, Hit[] hits) {
+    public void hit(Player attacker, Actor defender, Hit hit) {
         if (hit.getDamage() > 0) {
             defender.poison(CombatPoisonEffect.getPoisonType(attacker.getEquipment().get(Equipment.WEAPON_SLOT)).orElse(null));
         }
     }
 
     @Override
-    public void block(Actor attacker, Player defender, Hit hit, Hit[] hits) {
+    public void block(Actor attacker, Player defender, Hit hit) {
         defender.animation(getBlockAnimation(defender, attacker));
     }
 
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        return new CombatHit[]{nextMeleeHit(attacker, defender, 1, 1)};
+        return new CombatHit[]{nextMeleeHit(attacker, defender, 1, CombatUtil.getDelay(attacker, defender, getCombatType())) };
     }
 
     @Override
     public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
-        return 6;
+        return 4;
     }
 
     @Override

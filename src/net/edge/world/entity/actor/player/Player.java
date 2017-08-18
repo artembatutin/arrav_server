@@ -688,7 +688,6 @@ public final class Player extends Actor {
 		WeaponInterface.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		WeaponAnimation.execute(this, equipment.get(Equipment.WEAPON_SLOT));
 		ShieldAnimation.execute(this, equipment.get(Equipment.SHIELD_SLOT));
-		equipment.updateRange();
 		out(new SendConfig(173, super.getMovementQueue().isRunning() ? 0 : 1));
 		out(new SendConfig(174, super.isPoisoned() ? 1 : 0));
 		out(new SendConfig(172, super.isAutoRetaliate() ? 1 : 0));

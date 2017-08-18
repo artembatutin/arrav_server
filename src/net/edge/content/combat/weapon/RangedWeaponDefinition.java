@@ -39,5 +39,9 @@ public class RangedWeaponDefinition {
         AttackType(int slot) {
             this.slot = slot;
         }
+
+        public int getSlot() {
+            return slot;
+        }
     }
 }

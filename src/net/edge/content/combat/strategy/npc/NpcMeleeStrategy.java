@@ -14,14 +14,14 @@ import net.edge.world.entity.actor.mob.Mob;
 public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
 
     @Override
-    public void hit(Mob attacker, Actor defender, Hit hit, Hit[] hits) {
+    public void hit(Mob attacker, Actor defender, Hit hit) {
         if (attacker.getDefinition().poisonous()) {
             defender.poison(CombatPoisonEffect.getPoisonType(attacker.getId()).orElse(PoisonType.DEFAULT_NPC));
         }
     }
 
     @Override
-    public void block(Actor attacker, Mob defender, Hit hit, Hit[] hits) {
+    public void block(Actor attacker, Mob defender, Hit hit) {
         defender.animation(getBlockAnimation(defender, attacker));
     }
 

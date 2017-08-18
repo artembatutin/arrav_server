@@ -1,5 +1,6 @@
 package net.edge.content.combat.strategy.player;
 
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.combat.CombatEffect;
@@ -57,7 +58,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
     }
 
     @Override
-    public void attack(Player attacker, Actor defender, Hit hit, Hit[] hits) {
+    public void attack(Player attacker, Actor defender, Hit hit) {
         MagicRune.remove(attacker, spell.getRunes());
         addCombatExperience(attacker, spell.getBaseExperience(), hit);
 
@@ -71,7 +72,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
     }
 
     @Override
-    public void hit(Player attacker, Actor defender, Hit hit, Hit[] hits) {
+    public void hit(Player attacker, Actor defender, Hit hit) {
         if (!hit.isAccurate()) {
             defender.graphic(SPLASH);
         } else {
@@ -80,12 +81,12 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
     }
 
     @Override
-    public void block(Actor attacker, Player defender, Hit hit, Hit[] hits) {
+    public void block(Actor attacker, Player defender, Hit hit) {
         defender.animation(getBlockAnimation(defender, attacker));
     }
 
     @Override
-    public void finish(Player attacker, Actor defender, Hit[] hits) {
+    public void finish(Player attacker, Actor defender) {
         if (attacker.getNewCombat().getStrategy() == this) {
             if (singleCast) {
                 attacker.getNewCombat().reset();
@@ -96,7 +97,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        return new CombatHit[] { nextMagicHit(attacker, defender, spell.getMaxHit(), spell.getHitDelay(attacker, defender), spell.getHitsplatDelay()) };
+        return new CombatHit[] { nextMagicHit(attacker, defender, spell.getMaxHit(), spell.getHitDelay(attacker, defender), CombatUtil.getDelay(attacker, defender, getCombatType())) };
     }
 
     @Override

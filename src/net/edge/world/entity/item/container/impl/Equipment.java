@@ -244,14 +244,12 @@ public final class Equipment extends ItemContainer {
 			WeaponAnimation.execute(player, equipItem);
 			player.getNewCombat().reset();
 			player.setAutocast(false);
+			player.setSpecialActivated(false);
 			player.out(new SendConfig(108, 0));
 			player.out(new SendConfig(301, 0));
 			player.setSpecialActivated(false);
 		}
 
-		if(type == WEAPON || type == ARROWS) {
-			updateRange();
-		}
 		inventory.nonQueue(false);
 		return true;
 	}
@@ -297,9 +295,6 @@ public final class Equipment extends ItemContainer {
 				player.out(new SendConfig(301, 0));
 				player.setSpecialActivated(false);
 			}
-			if(equipmentIndex == Equipment.WEAPON_SLOT || equipmentIndex == Equipment.ARROWS_SLOT) {
-				updateRange();
-			}
 			return true;
 		}
 		return false;
@@ -344,33 +339,6 @@ public final class Equipment extends ItemContainer {
 					bonuses[i] += newBonuses[i];
 			}
 		}
-	}
-	
-	/**
-	 * Updating ranged weaponry and ammunition if present.
-	 */
-	public void updateRange() {
-		Item wep = get(Equipment.WEAPON_SLOT);
-		if(wep == null)
-			return;
-		if(!wep.getDefinition().isWeapon())
-			return;
-		if(wep.getDefinition().getEquipmentType() != WEAPON)
-			return;
-		//Updating ranged weapon
-//		RangedWeaponDefinition ranged = CombatRangedDetails.RANGED_WEAPONS.get(wep.getId());
-//		player.getRangedDetails().setWeapon(ranged);
-//		if(ranged != null) {
-//			int slot = ranged.getType().checkAmmunition() ? Equipment.ARROWS_SLOT : Equipment.WEAPON_SLOT;
-//			Item ammunition = player.getEquipment().get(slot);
-//			if(ammunition != null) {
-//				CombatRangedAmmunition ammu = player.getRangedDetails().determineAmmo(ammunition, ranged);
-//				player.getRangedDetails().setAmmunition(ammu);
-//				if (ammu != null) {
-//					player.getRangedDetails().getWeapon().ifPresent(w -> w.setAmmunition(new CombatRangedDetails.CombatRangedAmmo(ammunition, ammu)));
-//				}
-//			}
-//		}
 	}
 	
 	/**

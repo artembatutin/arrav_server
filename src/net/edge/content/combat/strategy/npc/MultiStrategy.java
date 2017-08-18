@@ -4,7 +4,6 @@ import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.attack.AttackModifier;
 import net.edge.content.combat.hit.CombatHit;
-import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
@@ -40,7 +39,7 @@ public abstract class MultiStrategy extends CombatStrategy<Mob> {
     }
 
     @Override
-    public void finish(Mob attacker, Actor defender, Hit[] hits) {
+    public void finish(Mob attacker, Actor defender) {
         currentStrategy = getRandomStrategy();
     }
 
