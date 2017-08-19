@@ -6,7 +6,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"mute"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.MODERATOR}, syntax = "Mutes a player, ::mute username")
+@CommandSignature(alias = {"mute"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.MODERATOR, Rights.HELPER}, syntax = "Mutes a player, ::mute username")
 public final class MutingCommand implements Command {
 	
 	@Override

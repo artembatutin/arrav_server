@@ -12,7 +12,7 @@ import java.util.Optional;
  * The class which represents a drop log.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
-public final class NpcDropLog extends LogDetails {
+public final class MobDropLog extends LogDetails {
 	
 	/**
 	 * The npc whom dropped this item for this drop log.
@@ -25,11 +25,11 @@ public final class NpcDropLog extends LogDetails {
 	private final Item item;
 	
 	/**
-	 * Constructs a new {@link NpcDropLog}.
+	 * Constructs a new {@link MobDropLog}.
 	 * @param npc  {@link #npc}.
 	 * @param item {@link #item}.
 	 */
-	public NpcDropLog(Player player, MobDefinition npc, Item item) {
+	public MobDropLog(Player player, MobDefinition npc, Item item) {
 		super(player.getFormatUsername(), "Drop");
 		this.npc = npc;
 		this.item = item;

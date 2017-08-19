@@ -3,7 +3,9 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import net.edge.content.skill.prayer.Bone;
 import net.edge.util.json.JsonLoader;
 import net.edge.util.rand.RandomUtils;
@@ -15,10 +17,7 @@ import net.edge.world.entity.actor.mob.drop.DropTable;
 import net.edge.world.entity.item.ItemDefinition;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The {@link JsonLoader} implementation that loads all npc drops.
@@ -51,14 +50,14 @@ public final class MobDropTableLoader extends JsonLoader {
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		int[] array = builder.fromJson(reader.get("ids"), int[].class);
-		Drop[] unique = Objects.requireNonNull(builder.fromJson(reader.get("drop"), Drop[].class));
-		//setting drops
+		Drop[] common = Objects.requireNonNull(builder.fromJson(reader.get("common"), Drop[].class));
+		Drop[] rare = Objects.requireNonNull(builder.fromJson(reader.get("rare"), Drop[].class));
 		int first = array[0];
 		for(int i = 0; i < array.length; i++) {
 			int id = array[i];
 			if(id != first)
 				DropManager.REDIRECTS.put(array[i], first);
-			DropManager.getTables().put(array[i], new DropTable(unique));
+			DropManager.getTables().put(array[i], new DropTable(common, rare));
 		}
 		
 		if(OUTPUT && out != null) {

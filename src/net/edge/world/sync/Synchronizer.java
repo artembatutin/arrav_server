@@ -14,6 +14,8 @@ public class Synchronizer {
 	
 	private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 	
+	public int errorPreMob, errorPrePlayer, errorPlayer;
+	
 	/**
 	 * The pre-update of preparing players and mobs.
 	 * @param players players list.
@@ -37,6 +39,7 @@ public class Synchronizer {
 		}
 		while(pCount > 0) {
 			pCount--;
+			errorPreMob++;
 			phaser.arriveAndDeregister();
 		}
 		phaser.arriveAndAwaitAdvance();
@@ -60,6 +63,7 @@ public class Synchronizer {
 		}
 		while(mCount > 0) {
 			mCount--;
+			errorPrePlayer++;
 			phaser.arriveAndDeregister();
 		}
 		phaser.arriveAndAwaitAdvance();
@@ -88,6 +92,7 @@ public class Synchronizer {
 		}
 		while(pCount > 0) {
 			pCount--;
+			errorPlayer++;
 			phaser.arriveAndDeregister();
 		}
 		phaser.arriveAndAwaitAdvance();

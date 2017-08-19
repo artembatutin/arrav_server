@@ -64,11 +64,25 @@ public final class MobInformationPacket implements IncomingPacket {
 					int index = 0;
 					String itemName = ItemDefinition.get(item).getName().toLowerCase().replaceAll(" ", "_");
 					if(itemName != null) {
-						for(Drop d : table.getDrops()) {
+						for(Drop d : table.getCommon()) {
 							if(d != null) {
 								String name = ItemDefinition.get(d.getId()).getName().toLowerCase().replaceAll(" ", "_");
 								if(itemName.contains(name.toLowerCase()) || name.contains(itemName.toLowerCase())) {
-									table.getDrops().remove(index);
+									table.getCommon().remove(index);
+									table.sort();
+									player.message("Removed: " + d.toString());
+									player.out(new SendMobDrop(mob, table));
+									return;
+								}
+							}
+							index++;
+						}
+						index = 0;
+						for(Drop d : table.getRare()) {
+							if(d != null) {
+								String name = ItemDefinition.get(d.getId()).getName().toLowerCase().replaceAll(" ", "_");
+								if(itemName.contains(name.toLowerCase()) || name.contains(itemName.toLowerCase())) {
+									table.getRare().remove(index);
 									table.sort();
 									player.message("Removed: " + d.toString());
 									player.out(new SendMobDrop(mob, table));
@@ -81,7 +95,10 @@ public final class MobInformationPacket implements IncomingPacket {
 					player.message("Couldn't remove any drop.");
 					return;
 				}
-				table.getDrops().add(suggested.toDrop());
+				if(suggested.isRare())
+					table.getRare().add(suggested.toDrop());
+				else
+					table.getCommon().add(suggested.toDrop());
 				table.sort();
 				player.message("Added " + suggested.toString());
 				player.out(new SendMobDrop(mob, table));

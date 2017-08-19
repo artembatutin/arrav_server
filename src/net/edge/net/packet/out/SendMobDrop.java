@@ -34,9 +34,17 @@ public final class SendMobDrop implements OutgoingPacket {
 			MobDefinition def = MobDefinition.DEFINITIONS[id];
 			if(def == null)
 				return null;
-			msg.putShort(table == null || table.getDrops() == null ? 0 : table.getDrops().size());
-			if(table != null && table.getDrops() != null) {
-				for(Drop d : table.getDrops()) {
+			msg.putShort(table == null ? 0 : table.getCommon().size() + table.getRare().size());
+			if(table != null && table.getCommon() != null) {
+				for(Drop d : table.getCommon()) {
+					msg.putShort(d.getId());
+					msg.putShort(d.getMinimum());
+					msg.putShort(d.getMaximum());
+					msg.put(d.getChance().ordinal());
+				}
+			}
+			if(table != null && table.getRare() != null) {
+				for(Drop d : table.getRare()) {
 					msg.putShort(d.getId());
 					msg.putShort(d.getMinimum());
 					msg.putShort(d.getMaximum());

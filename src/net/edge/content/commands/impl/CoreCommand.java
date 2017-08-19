@@ -6,7 +6,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"core"}, rights = {Rights.ADMINISTRATOR}, syntax = "Sends core information about the core.")
+@CommandSignature(alias = {"core"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR}, syntax = "Sends core information about the core.")
 public final class CoreCommand implements Command {
 
 	@Override

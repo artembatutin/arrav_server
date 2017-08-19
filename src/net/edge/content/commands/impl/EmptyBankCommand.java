@@ -7,7 +7,7 @@ import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"emptybank"}, rights = {Rights.ADMINISTRATOR}, syntax = "Empties your bank, ::emptybank")
+@CommandSignature(alias = {"emptybank"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR}, syntax = "Empties your bank, ::emptybank")
 public final class EmptyBankCommand implements Command {
 	
 	@Override

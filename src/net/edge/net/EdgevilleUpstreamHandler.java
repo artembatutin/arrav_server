@@ -7,6 +7,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.ReadTimeoutException;
 import net.edge.net.session.Session;
 
+import java.nio.channels.ClosedChannelException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,29 +29,50 @@ public final class EdgevilleUpstreamHandler extends ChannelInboundHandlerAdapter
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
 		e.printStackTrace();
-		ctx.channel().close();
+		Session session = getSession(ctx);
+		if(session != null) {
+			session.terminate();
+		} else {
+			ctx.close();
+		}
 	}
 	
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
 		Session session = getSession(ctx);
-		session.terminate();
+		if(session != null) {
+			session.terminate();
+		} else {
+			ctx.close();
+		}
 	}
 	
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		Session session = getSession(ctx);
-		session.handleUpstreamMessage(msg);
+		if(session != null) {
+			session.handleUpstreamMessage(msg);
+		} else {
+			ctx.close();
+		}
+	}
+	
+	@Override
+	public void channelInactive(ChannelHandlerContext ctx) throws java.lang.Exception {
+		Session session = getSession(ctx);
+		if(session != null) {
+			session.terminate();
+		} else {
+			ctx.close();
+		}
 	}
 	
 	/**
-	 * Gets the {@link Session} instance from the {@link ChannelHandlerContext}, and validates it to ensure it isn't {@code
-	 * null}.
+	 * Gets the {@link Session} instance from the {@link ChannelHandlerContext}.
 	 * @param ctx The channel handler context.
 	 * @return The session instance.
 	 */
 	private Session getSession(ChannelHandlerContext ctx) {
-		Session session = ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
-		return requireNonNull(session, "session == null");
+		return ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
 	}
 }
