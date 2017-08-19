@@ -108,7 +108,9 @@ public final class DarkEnergyCore extends Mob {
 			Region reg = core.getRegion().orElse(null);
 			Player victim = null;
 			if(reg != null && !reg.getPlayers().isEmpty()) {
-				victim = RandomUtils.random(reg.getPlayers().stream().filter(p -> p.getPosition().withinDistance(core.getPosition(), 5)).collect(Collectors.toList()));
+				List<Player> players = reg.getPlayers().stream().filter(p -> p.getPosition().withinDistance(core.getPosition(), 5)).collect(Collectors.toList());
+				if(!players.isEmpty())
+					victim = RandomUtils.random(players);
 			}
 			if(victim == null || core.getState() != EntityState.ACTIVE || victim.getState() != EntityState.ACTIVE || core.isDead() || victim.isDead()) {
 				return;
