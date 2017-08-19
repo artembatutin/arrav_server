@@ -168,7 +168,7 @@ public final class Slayer {
 						} else {
 							player.getDialogueBuilder().skip();
 						}
-					}, "Buy the slayer gem", "Nevermind"), new RequestItemDialogue(new Item(995, 10000), new Item(4155), "You hand over 10,000 coins to buy \\na slayer gem.", Optional.empty()).attach(() -> player.closeWidget()), new PlayerDialogue("Nevermind").attach(() -> player.closeWidget()));
+					}, "Buy the slayer gem", "Nevermind"), new RequestItemDialogue(new Item(995, 100000), new Item(4155), "You hand over 100,000 coins to buy \\na slayer gem.", Optional.empty()).attach(() -> player.closeWidget()), new PlayerDialogue("Nevermind").attach(() -> player.closeWidget()));
 					return true;
 				}
 			};
@@ -400,12 +400,10 @@ public final class Slayer {
 		for(SlayerKeyPolicy task : SLAYER_KEYS.get(master)) {
 			if(skill.getRealLevel() < SLAYER_LEVELS.getOrDefault(task.getKey(), 99))
 				continue;//Player wont be able to do slayer on a higher boss slayer requirement.
-			if(!MobDefinition.fromSlayerKey(task.getKey()).isPresent())
-				continue;//Awful way to check through a loop but alright... - we checking if any npc key exist of that type.
 			if(blocked.contains(task.getKey()))
 				continue;//The player blocked this task.
 			int dif = combat - task.getCombatRequirement();
-			if(dif <= 40 && dif >= -40) {
+			if(dif <= 30 && dif >= -30) {
 				tasks.add(count, task);
 				count++;
 			}

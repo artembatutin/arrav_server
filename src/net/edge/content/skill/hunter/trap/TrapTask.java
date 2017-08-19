@@ -33,21 +33,27 @@ public final class TrapTask extends Task {
 			return;
 		}
 		ObjectList<Trap> traps = Hunter.GLOBAL_TRAPS.get(player).getTraps();
+		//close if no traps.
 		if(traps.isEmpty()) {
 			this.cancel();
 		} else {
+			//distance check.
 			traps.forEach(t -> {
 				boolean withinDistance = player.getPosition().withinDistance(t.getObject().getGlobalPos(), 25);
 				if(!withinDistance && !t.isAbandoned()) {
 					Hunter.abandon(player, t, false);
 				}
 			});
-			
-			Trap trap = RandomUtils.random(traps);
-			if(!Hunter.getTrap(player, trap.getObject()).isPresent() || !trap.getState().equals(Trap.TrapState.PENDING)) {
-				return;
+			//might have abandoned some traps.
+			if(traps.isEmpty()) {
+				this.cancel();
+			} else {
+				Trap trap = RandomUtils.random(traps);
+				if(!Hunter.getTrap(player, trap.getObject()).isPresent() || !trap.getState().equals(Trap.TrapState.PENDING)) {
+					return;
+				}
+				trap.onSequence(this);
 			}
-			trap.onSequence(this);
 		}
 	}
 }

@@ -6,6 +6,7 @@ import net.edge.util.json.JsonLoader;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.slayer.SlayerKeyPolicy;
 import net.edge.content.skill.slayer.SlayerMaster;
+import net.edge.world.entity.actor.mob.MobDefinition;
 
 import java.util.Arrays;
 import java.util.Objects;
