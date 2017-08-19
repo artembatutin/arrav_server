@@ -19,7 +19,7 @@ public final class FirepitObject extends DynamicObject {
 	/**
 	 * The data for this fire pit object.
 	 */
-	FirepitData data;
+	public FirepitData data;
 
 	/**
 	 * Determines if this fire pit is active.

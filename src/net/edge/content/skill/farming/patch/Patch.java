@@ -59,9 +59,9 @@ public final class Patch {
 		growthTaskSubmitted = true;
 		
 		long waitTime = 60_000;
-		//if(player.getPlayerFields().getFarmingTime() > 0) {
-		//	waitTime = player.getPlayerFields().getFarmingTime();
-		//}
+		if(player.farmingTime > 0) {
+			waitTime = player.farmingTime;
+		}
 		
 		final long waitTimer = waitTime;
 		final int totalMinutes = seedType.getGrowthTime()[0] * seedType.getGrowthTime()[1];

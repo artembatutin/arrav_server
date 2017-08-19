@@ -4,6 +4,7 @@ import net.edge.content.clanchat.ClanManager;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.market.MarketItem;
 import net.edge.content.scoreboard.ScoreboardManager;
+import net.edge.net.PunishmentHandler;
 import net.edge.net.packet.in.MobInformationPacket;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
@@ -67,8 +68,12 @@ public final class SaveCommand implements Command {
 				ItemDefinition.serializeDefinitions();
 				player.message("Serialized item definitions!");
 				break;
+			case "ips":
+				PunishmentHandler.saveIpBan();
+				PunishmentHandler.saveIPMute();
+				break;
 			default:
-				player.message("Possible choices: players, drops, shops, market, clans, board, itemdefs.");
+				player.message("Possible choices: players, drops, shops, market, clans, board, itemdefs, ips.");
 				break;
 		}
 	}

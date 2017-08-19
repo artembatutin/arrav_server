@@ -231,6 +231,11 @@ public final class Player extends Actor {
 	private Object2ObjectArrayMap<PatchType, Patch> playerPatches = new Object2ObjectArrayMap<>(PatchType.VALUES.size());
 	
 	/**
+	 * Farming saved timer.
+	 */
+	public long farmingTime;
+	
+	/**
 	 * The I/O manager that manages I/O operations for this player.
 	 */
 	private GameSession session;

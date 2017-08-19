@@ -2,6 +2,7 @@ package net.edge.content.commands.impl;
 
 import net.edge.Application;
 import net.edge.content.commands.CommandDispatcher;
+import net.edge.net.PunishmentHandler;
 import net.edge.task.Task;
 import net.edge.util.json.impl.*;
 import net.edge.content.commands.Command;
@@ -37,6 +38,12 @@ public final class ReloadCommand implements Command {
 			case "commands":
 				CommandDispatcher.reload();
 				player.message("Reloaded commands.");
+				break;
+			case "ips":
+				PunishmentHandler.parseIPBans();
+				PunishmentHandler.parseIPMutes();
+				PunishmentHandler.parseStarters();
+				player.message("Reloaded IP punishments.");
 				break;
 			default:
 				World.get().getTask().submit(new Task(3, false) {

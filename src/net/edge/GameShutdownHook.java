@@ -7,6 +7,7 @@ import net.edge.content.clanchat.ClanManager;
 import net.edge.content.commands.impl.BugCommand;
 import net.edge.content.market.MarketItem;
 import net.edge.content.scoreboard.ScoreboardManager;
+import net.edge.net.PunishmentHandler;
 import net.edge.net.packet.in.MobInformationPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.drop.Drop;
@@ -47,6 +48,10 @@ public final class GameShutdownHook extends Thread {
 						continue;
 					new PlayerSerialization(p).serialize();
 				}
+			});
+			exit.submit(() -> {
+				PunishmentHandler.saveIpBan();
+				PunishmentHandler.saveIPMute();
 			});
 			exit.submit(() -> {
 				ClanManager.get().save();
