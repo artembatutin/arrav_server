@@ -173,7 +173,7 @@ public final class Stalls extends Thieving {
 		GENERAL_STALL(new int[]{4876}, EMPTY_STALLS[1], 50, new Item[]{new Item(4073, 1)}, 70, 4),
 		MAGIC_STALL(new int[]{4877}, EMPTY_STALLS[1], 75, new Item[]{new Item(14061, 1)}, 150, 8),
 		SCIMITAR_STALL(new int[]{4878}, EMPTY_STALLS[1], 90, new Item[]{new Item(6611, 1)}, 220, 12),
-		VEGETABLE(new int[]{4706}, EMPTY_STALLS[0], 1, new Item[]{new Item(995, 50)}, 10, 2),
+		/*VEGETABLE(new int[]{4706}, EMPTY_STALLS[0], 1, new Item[]{new Item(995, 50)}, 10, 2),
 		BAKERS(new int[]{2561}, EMPTY_STALLS[0], 5, new Item[]{new Item(995, 100)}, 16, 3),
 		TEA(new int[]{635}, EMPTY_STALLS[0], 5, new Item[]{new Item(995, 500)}, 16, 7),
 		SILK(new int[]{2560}, EMPTY_STALLS[0], 20, new Item[]{new Item(995, 1000)}, 24, 8),
@@ -185,7 +185,8 @@ public final class Stalls extends Thieving {
 		SILVER(new int[]{2565}, EMPTY_STALLS[0], 50, new Item[]{new Item(995, 15000)}, 54, 20),
 		CUSTOMS_EVIDENCE_FILES(new int[]{-1}, -1, 63, new Item[]{new Item(995, 17500)}, 75, 20),
 		SPICE(new int[]{2564}, EMPTY_STALLS[0], 65, new Item[]{new Item(995, 20000)}, 81, 40),
-		GEM(new int[]{2562}, EMPTY_STALLS[0], 75, new Item[]{new Item(995, 35000)}, 160, 80);
+		GEM(new int[]{2562}, EMPTY_STALLS[0], 75, new Item[]{new Item(995, 35000)}, 160, 80)*/
+		;
 		
 		/**
 		 * The object identification for this stall.
