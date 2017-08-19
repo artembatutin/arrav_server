@@ -29,8 +29,8 @@ public enum ItemCombine {
 				player.message("You need 55 crafting to create the slayer helmet.");
 				return false;
 			}
-			if(player.getAttr().get("slayer_tasks").getInt() < 100) {
-				player.message("You must complete at least 100 slayer tasks.");
+			if(player.getAttr().get("slayer_tasks").getInt() < 35) {
+				player.message("You must complete at least 35 slayer tasks.");
 				return false;
 			}
 			player.message("Don't attempt to color this item.");
