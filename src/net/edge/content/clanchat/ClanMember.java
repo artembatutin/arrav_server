@@ -193,15 +193,17 @@ public final class ClanMember {
 		} else {
 			rank = ClanChatRank.forAction(action, false, true);
 		}
+		System.out.println(rank.isPresent());
 		if(rank.isPresent()) {
+			System.out.println(rank.get());
 			if(member.getRank().getValue() < rank.get().getValue()) {
-				//member.getPlayer().getMessages().sendClanMessage("", "You were promoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER);
+				member.getPlayer().out(new SendClanMessage("", "You were promoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER));
 				member.setRank(rank.get());
-				//World.getClanManager().update(ClanChatUpdate.MEMBER_REFRESH, index, this);
+				ClanManager.get().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, clan, member);
 			} else if(member.getRank().getValue() > rank.get().getValue()) {
-				//member.getPlayer().getMessages().sendClanMessage("", "You were demoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER);
+				member.getPlayer().out(new SendClanMessage("", "You were demoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER));
 				member.setRank(rank.get());
-				//World.getClanManager().update(ClanChatUpdate.MEMBER_REFRESH, index, this);
+				ClanManager.get().update(ClanChatUpdate.MEMBER_LIST_MODIFICATION, clan, member);
 			}
 		}
 	}
