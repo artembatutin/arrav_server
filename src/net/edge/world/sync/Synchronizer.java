@@ -32,6 +32,8 @@ public class Synchronizer {
 			executor.submit(() -> {
 				try {
 					player.preUpdate();
+				} catch(Exception e) {
+					e.printStackTrace();
 				} finally {
 					phaser.arriveAndDeregister();
 				}
@@ -56,6 +58,8 @@ public class Synchronizer {
 			executor.submit(() -> {
 				try {
 					mob.preUpdate();
+				} catch(Exception e) {
+					e.printStackTrace();
 				} finally {
 					phaser.arriveAndDeregister();
 				}
@@ -85,6 +89,8 @@ public class Synchronizer {
 			executor.submit(() -> {
 				try {
 					player.update();
+				} catch(Exception e) {
+					e.printStackTrace();
 				} finally {
 					phaser.arriveAndDeregister();
 				}
@@ -109,7 +115,11 @@ public class Synchronizer {
 		for(Player player : players) {
 			if(player == null)
 				continue;
-			player.postUpdate();
+			try {
+				player.postUpdate();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		//System.out.println("[POST-PLAYER]: " + (System.currentTimeMillis() - time));
 		
@@ -118,7 +128,11 @@ public class Synchronizer {
 		for(Mob mob : mobs) {
 			if(mob == null)
 				continue;
-			mob.postUpdate();
+			try {
+				mob.postUpdate();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		//System.out.println("[POST-NPC]: " + (System.currentTimeMillis() - time));
 	}

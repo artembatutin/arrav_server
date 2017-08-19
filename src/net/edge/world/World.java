@@ -437,6 +437,10 @@ public final class World {
 		return players;
 	}
 	
+	/**
+	 * Gets the map of all player by their hashed usernames.
+	 * @return player online map.
+	 */
 	public Long2ObjectMap<Player> getPlayerByNames() {
 		return playerByNames;
 	}
@@ -463,6 +467,14 @@ public final class World {
 	 */
 	public ActorList<Mob> getMobs() {
 		return mobs;
+	}
+	
+	/**
+	 * Gets the server synchronizer.
+	 * @return
+	 */
+	public Synchronizer getSync() {
+		return sync;
 	}
 
 
@@ -510,6 +522,7 @@ public final class World {
 	
 	
 	/* ASSETS GATHERS METHODS. */
+	
 	
 	/**
 	 * Returns this world's {@link LoggingManager}.

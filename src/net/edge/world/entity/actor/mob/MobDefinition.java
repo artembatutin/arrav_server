@@ -1,25 +1,15 @@
 package net.edge.world.entity.actor.mob;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.edge.util.json.JsonSaver;
-import net.edge.util.rand.Chance;
-import net.edge.world.entity.actor.mob.drop.Drop;
-import net.edge.world.entity.actor.mob.drop.DropManager;
-import net.edge.world.entity.actor.mob.drop.DropTable;
-import net.edge.world.entity.item.ItemDefinition;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * The container that represents an Mob definition.
@@ -77,10 +67,6 @@ public final class MobDefinition {
 		this.size = size;
 		this.attackable = attackable;
 		this.combat = combat;
-	}
-	
-	public static Optional<MobDefinition> fromSlayerKey(String key) {
-		return Arrays.stream(DEFINITIONS).filter($it -> $it.getSlayerKey().equalsIgnoreCase(key)).findAny();
 	}
 	
 	/**

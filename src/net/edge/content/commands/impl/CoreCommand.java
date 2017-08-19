@@ -11,7 +11,7 @@ public final class CoreCommand implements Command {
 
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		player.message("Took " + World.millis + "ms on sync.");
+		player.message("Took " + World.millis + "ms on sync, " + World.get().getSync().errorPreMob + " - " + World.get().getSync().errorPrePlayer + " - " + World.get().getSync().errorPlayer);
 	}
 
 }

@@ -274,18 +274,6 @@ public enum GodwarsFaction {
 			check++;
 			if(getCombat().inCombat())
 				return;
-			if(check % 18 == 17) {
-				getRegion().ifPresent(r -> {
-					for(Player player : r.getPlayers()) {
-						if(!player.getPosition().withinDistance(getPosition(), 5))
-							continue;
-						//if the target is a player but hes wearing items which will protect him they will not attack.
-						if(!GodwarsFaction.isProtected(player, faction)) {
-							getCombat().attack(player);
-						}
-					}
-				});
-			}
 			if(check >= 150) {
 				int count = 0;
 				Region reg = getRegion().orElse(null);
