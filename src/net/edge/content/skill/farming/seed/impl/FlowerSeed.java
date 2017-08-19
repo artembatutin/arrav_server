@@ -21,7 +21,7 @@ public enum FlowerSeed implements SeedType {
 	 * [Lily]: UNSUPPORTER 508 38 to 41
 	 */
 	MARIGOLD(2, new Item(5096), //seeds
-			new int[]{4, 5}, //growth time
+			new int[]{2, 5}, //growth time
 			new Item[]{new Item(6010)}, //rewards
 			null, //protection fee
 			new int[]{9, 0, 47}, //experience (plant, check_health, harvest)
@@ -29,7 +29,7 @@ public enum FlowerSeed implements SeedType {
 	//8, 9, 10, 11, 12
 	
 	ROSEMARY(11, new Item(5097), //seeds
-			new int[]{4, 5}, //growth time
+			new int[]{2, 5}, //growth time
 			new Item[]{new Item(6014)}, //rewards
 			null, //protection fee
 			new int[]{12, 0, 67}, //experience (plant, check_health, harvest)
@@ -37,7 +37,7 @@ public enum FlowerSeed implements SeedType {
 	//13, 14, 15, 16, 17
 	
 	NASTURTIUM(24, new Item(5098), //seeds
-			new int[]{4, 5}, //growth time
+			new int[]{2, 5}, //growth time
 			new Item[]{new Item(6012)}, //rewards
 			null, //protection fee
 			new int[]{20, 0, 111}, //experience (plant, check_health, harvest)
@@ -45,7 +45,7 @@ public enum FlowerSeed implements SeedType {
 	//18, 19, 20, 21, 22
 	
 	WOAD(25, new Item(5099), //seeds
-			new int[]{4, 5}, //growth time
+			new int[]{2, 5}, //growth time
 			new Item[]{new Item(1793)}, //rewards
 			null, //protection fee
 			new int[]{21, 0, 116}, //experience (plant, check_health, harvest)
@@ -53,7 +53,7 @@ public enum FlowerSeed implements SeedType {
 	//23, 24, 25, 26, 27
 	
 	LIMPWURT(25, new Item(5100), //seeds
-			new int[]{4, 5}, //growth time
+			new int[]{2, 5}, //growth time
 			new Item[]{new Item(225)}, //rewards
 			null, //protection fee
 			new int[]{22, 19, 120}, //experience (plant, check_health, harvest)
@@ -61,7 +61,7 @@ public enum FlowerSeed implements SeedType {
 	//28, 29, 30, 31, 32
 	
 	WHITE_LILY(52, new Item(14589), //seeds
-			new int[]{6, 20}, //growth time
+			new int[]{3, 20}, //growth time
 			new Item[]{new Item(14583)}, //rewards
 			null, //protection fee
 			new int[]{55, 19, 230}, //experience (plant, check_health, harvest)
@@ -145,6 +145,6 @@ public enum FlowerSeed implements SeedType {
 	
 	@Override
 	public int getHarvestAmount(Patch patch) {
-		return 1 + RandomUtils.inclusive(3);
+		return 3 + RandomUtils.inclusive(2);
 	}
 }

@@ -10,17 +10,16 @@ import net.edge.world.entity.item.Item;
 
 public enum TreeSeed implements SeedType {
 	
-	/*ACORN(15,
-			new Item(5358), //seeds
-			new int[] { 4, 40 }, //growth time
+	ACORN(15, new Item(5358), //seeds
+			new int[] { 5, 20 }, //growth time
 			new Item[] { new Item(1521) }, //rewards
 			null, //protection fee
 			new int[] { 14, 467, 0 }, //experience (plant, check_health, harvest)
 			new int[] { 0x08, 0x09, 0x0A, 0x0B, 0x0C }),
 			//8, 9, 10, 11, 12, 13
-*/
+
 	WILLOW(30, new Item(5371), //seeds
-			new int[]{7, 40}, //growth time
+			new int[]{5, 28}, //growth time
 			new Item[]{new Item(1519)}, //rewards
 			null, //protection fee
 			new int[]{25, 1457, 0}, //experience (plant, check_health, harvest)
@@ -28,7 +27,7 @@ public enum TreeSeed implements SeedType {
 	//15, 16, 17, 18, 19, 20, 21
 	
 	MAPLE(45, new Item(5372), //seeds
-			new int[]{7, 40}, //growth time
+			new int[]{5, 32}, //growth time
 			new Item[]{new Item(1517)}, //rewards
 			null, //protection fee
 			new int[]{45, 3403, 0}, //experience (plant, check_health, harvest)
@@ -36,7 +35,7 @@ public enum TreeSeed implements SeedType {
 	//24, 25, 26, 27, 28, 29, 30, 31, 32
 	
 	YEW(60, new Item(5373), //seeds
-			new int[]{7, 40}, //growth time
+			new int[]{5, 38}, //growth time
 			new Item[]{new Item(1515)}, //rewards
 			null, //protection fee
 			new int[]{81, 7070, 0}, //experience (plant, check_health, harvest)
@@ -44,7 +43,7 @@ public enum TreeSeed implements SeedType {
 	//35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45
 	
 	MAGIC(75, new Item(5374), //seeds
-			new int[]{7, 40}, //growth time
+			new int[]{5, 46}, //growth time
 			new Item[]{new Item(1513)}, //rewards
 			null, //protection fee
 			new int[]{146, 13768, 0}, //experience (plant, check_health, harvest)

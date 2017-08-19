@@ -12,6 +12,7 @@ import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.Item;
 
 public final class Patch {
@@ -59,10 +60,13 @@ public final class Patch {
 		growthTaskSubmitted = true;
 		
 		long waitTime = 60_000;
-		if(player.farmingTime > 0) {
-			waitTime = player.farmingTime;
+		if(player.getRights().equal(Rights.EXTREME_DONATOR)) {
+			waitTime = 30_000;
+		} else if(player.getRights().equal(Rights.SUPER_DONATOR)) {
+			waitTime = 45_000;
+		} else if(player.getRights().equal(Rights.DONATOR)) {
+			waitTime = 50_000;
 		}
-		
 		final long waitTimer = waitTime;
 		final int totalMinutes = seedType.getGrowthTime()[0] * seedType.getGrowthTime()[1];
 		final int minutesForGrowth = totalMinutes / seedType.getValues().length;

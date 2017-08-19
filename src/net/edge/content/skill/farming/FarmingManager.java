@@ -13,10 +13,10 @@ public final class FarmingManager {
 	
 	public static void login(Player player) {
 		for(Patch patch : player.getPatches().values()) {
-			patch.submitGrowthTask(player);
 			if(patch.getSeedType() == null && patch.getSeedTypeName() != null) {
 				patch.setSeedType(patch.getSeedClass().getInstance(patch.getSeedTypeName()));
 			}
+			patch.submitGrowthTask(player);
 			if(patch.getPatchType() != null) {
 				updatePatch(player, patch.getPatchType());
 			}

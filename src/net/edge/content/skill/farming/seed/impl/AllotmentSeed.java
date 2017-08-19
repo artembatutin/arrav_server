@@ -11,7 +11,7 @@ import net.edge.world.entity.item.Item;
 public enum AllotmentSeed implements SeedType {
 	
 	POTATO(1, new Item(5318, 3), //seeds
-			new int[]{4, 10}, //growth time
+			new int[]{4, 5}, //growth time
 			new Item[]{new Item(1942)}, //rewards
 			new Item[]{new Item(FarmingConstants.COMPOST_ITEM_ID, 2)}, //protection fee
 			new int[]{8, 0, 9}, //experience (plant, check_health, harvest)
@@ -19,7 +19,7 @@ public enum AllotmentSeed implements SeedType {
 	//6, 7, 8, 9, 12
 	
 	ONION(5, new Item(5319, 3), //seeds
-			new int[]{4, 10}, //growth time
+			new int[]{4, 5}, //growth time
 			new Item[]{new Item(1957)}, //rewards
 			new Item[]{new Item(5438)}, //protection fee
 			new int[]{10, 0, 11}, //experience (plant, check_health, harvest)
@@ -27,7 +27,7 @@ public enum AllotmentSeed implements SeedType {
 	//13, 14, 15, 16, 19
 	
 	CABBAGE(7, new Item(5324, 3), //seeds
-			new int[]{4, 10}, //growth time
+			new int[]{4, 5}, //growth time
 			new Item[]{new Item(1965)}, //rewards
 			new Item[]{new Item(5458)}, //protection fee
 			new int[]{10, 0, 12}, //experience (plant, check_health, harvest)
@@ -35,7 +35,7 @@ public enum AllotmentSeed implements SeedType {
 	//20, 21, 22, 23, 26
 	
 	TOMATO(12, new Item(5322, 3), //seeds
-			new int[]{4, 10}, //growth time
+			new int[]{4, 5}, //growth time
 			new Item[]{new Item(1982)}, //rewards
 			new Item[]{new Item(5478, 2)}, //protection fee
 			new int[]{13, 0, 14}, //experience (plant, check_health, harvest)
@@ -43,7 +43,7 @@ public enum AllotmentSeed implements SeedType {
 	//27, 28, 29, 30, 33
 	
 	SWEETCORN(20, new Item(5320, 3), //seeds
-			new int[]{5, 10}, //growth time
+			new int[]{5, 5}, //growth time
 			new Item[]{new Item(5986)}, //rewards
 			new Item[]{new Item(5931, 10)}, //protection fee
 			new int[]{17, 0, 19}, //experience (plant, check_health, harvest)
@@ -51,7 +51,7 @@ public enum AllotmentSeed implements SeedType {
 	//34, 35, 36, 37, 38, 39, 42
 	
 	STRAWBERRY(31, new Item(5323, 3), //seeds
-			new int[]{6, 10}, //growth time
+			new int[]{6, 5}, //growth time
 			new Item[]{new Item(5504)}, //rewards
 			new Item[]{new Item(5386)}, //protection fee
 			new int[]{26, 0, 29}, //experience (plant, check_health, harvest)
@@ -59,7 +59,7 @@ public enum AllotmentSeed implements SeedType {
 	//43, 44, 45, 46, 47, 48, 51
 	
 	WATERMELON(47, new Item(5321, 3), //seeds
-			new int[]{8, 10}, //growth time
+			new int[]{8, 6}, //growth time
 			new Item[]{new Item(5982)}, //rewards
 			new Item[]{new Item(5970, 10)}, //protection fee
 			new int[]{49, 0, 55}, //experience (plant, check_health, harvest)

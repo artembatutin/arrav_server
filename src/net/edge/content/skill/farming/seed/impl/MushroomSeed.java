@@ -10,7 +10,7 @@ import net.edge.world.entity.item.Item;
 public enum MushroomSeed implements SeedType {
 	
 	BITTERCAP(53, new Item(5282, 1), //seeds
-			new int[]{6, 40}, //growth time
+			new int[]{6, 20}, //growth time
 			new Item[]{new Item(6004, 4)}, //rewards
 			null, //protection fee
 			new int[]{62, 0, 58}, //experience (plant, check_health, harvest)

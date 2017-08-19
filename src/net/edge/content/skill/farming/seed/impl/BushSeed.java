@@ -10,7 +10,7 @@ import net.edge.world.entity.item.Item;
 public enum BushSeed implements SeedType {
 	
 	REDBERRY(10, new Item(5101, 1), //seeds
-			new int[]{5, 20}, //growth time
+			new int[]{5, 10}, //growth time
 			new Item[]{new Item(1951, 4)}, //rewards
 			new Item[]{new Item(5466), new Item(5468), new Item(5470), new Item(5472), new Item(5474), new Item(5476), new Item(5478)}, //protection fee
 			new int[]{12, 64, 5}, //experience (plant, check_health, harvest)
@@ -18,7 +18,7 @@ public enum BushSeed implements SeedType {
 	//5, 6, 7, 8, 9, 14
 	
 	CADAVABERRY(22, new Item(5102, 1), //seeds
-			new int[]{6, 20}, //growth time
+			new int[]{6, 10}, //growth time
 			new Item[]{new Item(753, 4)}, //rewards
 			new Item[]{new Item(5964), new Item(5966), new Item(5968)}, //protection fee
 			new int[]{18, 103, 7}, //experience (plant, check_health, harvest)
@@ -26,7 +26,7 @@ public enum BushSeed implements SeedType {
 	//15, 16, 17, 18, 19, 25
 	
 	DWELLVERRY(36, new Item(5103, 1), //seeds
-			new int[]{7, 20}, //growth time
+			new int[]{7, 10}, //growth time
 			new Item[]{new Item(2126, 4)}, //rewards
 			new Item[]{new Item(5402), new Item(5404), new Item(5406)}, //protection fee
 			new int[]{32, 178, 12}, //experience (plant, check_health, harvest)
@@ -34,7 +34,7 @@ public enum BushSeed implements SeedType {
 	//26, 27, 28, 29, 30, 31, 37
 	
 	JANGERBERRY(48, new Item(5104, 1), //seeds
-			new int[]{8, 20}, //growth time
+			new int[]{8, 10}, //growth time
 			new Item[]{new Item(247, 4)}, //rewards
 			new Item[]{new Item(5982, 6)}, //protection fee
 			new int[]{51, 285, 19}, //experience (plant, check_health, harvest)
@@ -42,7 +42,7 @@ public enum BushSeed implements SeedType {
 	//38, 39, 40, 41, 42, 43, 50
 	
 	WHITEBERRY(59, new Item(5105, 1), //seeds
-			new int[]{8, 20}, //growth time
+			new int[]{8, 10}, //growth time
 			new Item[]{new Item(239, 4)}, //rewards
 			new Item[]{new Item(6004, 8)}, //protection fee
 			new int[]{78, 438, 29}, //experience (plant, check_health, harvest)
@@ -50,7 +50,7 @@ public enum BushSeed implements SeedType {
 	//51, 52, 53, 54, 55, 56, 57, 63
 	
 	POISON_IVY(70, new Item(5106, 1), //seeds
-			new int[]{8, 20}, //growth time
+			new int[]{8, 10}, //growth time
 			new Item[]{new Item(6018, 4)}, //rewards
 			null, //protection fee
 			new int[]{120, 675, 45}, //experience (plant, check_health, harvest)
