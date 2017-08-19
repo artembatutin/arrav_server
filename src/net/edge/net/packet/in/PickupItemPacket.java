@@ -1,6 +1,8 @@
 package net.edge.net.packet.in;
 
+import net.edge.content.market.MarketItem;
 import net.edge.content.minigame.MinigameHandler;
+import net.edge.util.log.impl.DropItemLog;
 import net.edge.world.locale.Position;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
@@ -42,6 +44,13 @@ public final class PickupItemPacket implements IncomingPacket {
 							player.message("You don't have enough inventory space to pick this item up.");
 							return;
 						}
+
+						if(item.get().getPlayer() != null) {
+							int val = MarketItem.get(item.get().getItem().getId()) != null ? MarketItem.get(item.get().getItem().getId()).getPrice() * item.get().getItem().getAmount() : 0;
+							if(val > 1_000)
+								World.getLoggingManager().write(new DropItemLog(player, item.get().getItem(), player.getPosition(), Optional.of(item.get())));
+						}
+
 						item.get().onPickup(player);
 						MinigameHandler.executeVoid(player, m -> m.onPickup(player, item.get().getItem()));
 					}

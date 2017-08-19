@@ -1,9 +1,11 @@
 package net.edge.world.entity.item;
 
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.market.MarketItem;
 import net.edge.net.packet.out.SendItemNode;
 import net.edge.net.packet.out.SendItemNodeRemoval;
 import net.edge.util.MutableNumber;
+import net.edge.util.log.impl.DropItemLog;
 import net.edge.world.locale.Position;
 import net.edge.world.World;
 import net.edge.world.entity.Entity;
@@ -20,27 +22,27 @@ import java.util.Optional;
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class GroundItem extends Entity {
-	
+
 	/**
 	 * The item concealed within this node.
 	 */
 	private final Item item;
-	
+
 	/**
 	 * The counter that contains the amount of ticks this node has.
 	 */
 	private final MutableNumber counter = new MutableNumber();
-	
+
 	/**
 	 * The item state of this node.
 	 */
 	private GroundItemState state = GroundItemState.SEEN_BY_OWNER;
-	
+
 	/**
 	 * The player attached to this node.
 	 */
 	private Player player;
-	
+
 	/**
 	 * Creates new {@link GroundItem}.
 	 * @param item     the item concealed within this node.
@@ -52,12 +54,12 @@ public class GroundItem extends Entity {
 		this.item = item.copy();
 		this.player = player;
 	}
-	
+
 	@Override
 	public void register() {
 		player.out(new SendItemNode(this));
 	}
-	
+
 	@Override
 	public void dispose() {
 		ObjectList<Region> surrounding = World.getRegions().getAllSurroundingRegions(getPosition().getRegion());
@@ -74,7 +76,7 @@ public class GroundItem extends Entity {
 			}
 		}
 	}
-	
+
 	/**
 	 * The method executed on every sequence by the item node manager.
 	 * @throws IllegalStateException if the item node is in an incorrect state.
@@ -96,6 +98,9 @@ public class GroundItem extends Entity {
 					}
 				}
 				state = GroundItemState.SEEN_BY_EVERYONE;
+				int val = MarketItem.get(item.getId()) != null ? MarketItem.get(item.getId()).getPrice() * item.getAmount() : 0;
+				if(val > 1_000)
+					World.getLoggingManager().write(new DropItemLog(player, item, player.getPosition(), Optional.empty()));
 				break;
 			case SEEN_BY_EVERYONE:
 				this.setState(EntityState.INACTIVE);
@@ -104,7 +109,7 @@ public class GroundItem extends Entity {
 				throw new IllegalStateException("Invalid item node state!");
 		}
 	}
-	
+
 	/**
 	 * The method executed when {@code player} attempts to pickup this item.
 	 * @param player the player attempting to pickup this item.
@@ -114,7 +119,7 @@ public class GroundItem extends Entity {
 			this.setState(EntityState.INACTIVE);
 		}
 	}
-	
+
 	/**
 	 * Gets the item state of this node.
 	 * @return the item state.
@@ -122,7 +127,7 @@ public class GroundItem extends Entity {
 	public final GroundItemState getItemState() {
 		return state;
 	}
-	
+
 	/**
 	 * Sets the value for {@link GroundItem#state}.
 	 * @param state the new value to set.
@@ -130,7 +135,7 @@ public class GroundItem extends Entity {
 	public final void setState(GroundItemState state) {
 		this.state = state;
 	}
-	
+
 	/**
 	 * Gets the player attached to this node.
 	 * @return the player attached.
@@ -138,7 +143,7 @@ public class GroundItem extends Entity {
 	public final Player getPlayer() {
 		return player;
 	}
-	
+
 	/**
 	 * Sets the value for {@link GroundItem#player}.
 	 * @param player the new value to set.
@@ -146,7 +151,7 @@ public class GroundItem extends Entity {
 	public final void setPlayer(Player player) {
 		this.player = player;
 	}
-	
+
 	/**
 	 * Gets the item concealed within this node.
 	 * @return the item concealed.
@@ -154,7 +159,7 @@ public class GroundItem extends Entity {
 	public final Item getItem() {
 		return item;
 	}
-	
+
 	/**
 	 * Gets the counter that contains the amount of ticks this node has.
 	 * @return the counter that contains the ticks.
@@ -162,7 +167,7 @@ public class GroundItem extends Entity {
 	public final MutableNumber getCounter() {
 		return counter;
 	}
-	
+
 	/**
 	 * Gets the region on which the item is standing.
 	 * @return the region of this item.
@@ -170,6 +175,6 @@ public class GroundItem extends Entity {
 	public Optional<Region> getRegion() {
 		return World.getRegions().getRegion(getPosition());
 	}
-	
-	
+
+
 }

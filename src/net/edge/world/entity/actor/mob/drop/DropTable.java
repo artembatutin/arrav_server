@@ -9,9 +9,8 @@ import net.edge.world.entity.item.ItemDefinition;
 import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.GameConstants;
 import net.edge.util.log.Log;
-import net.edge.util.log.impl.DropLog;
+import net.edge.util.log.impl.NpcDropLog;
 import net.edge.util.rand.Chance;
-import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
@@ -81,7 +80,7 @@ public final class DropTable {
 					Item item = drop.toItem();
 					items.add(item);
 					int val = MarketItem.get(item.getId()) != null ? MarketItem.get(item.getId()).getPrice() * item.getAmount() : 0;
-					World.getLoggingManager().write(Log.create(new DropLog(player, victim.getDefinition(), item)));
+					World.getLoggingManager().write(Log.create(new NpcDropLog(player, victim.getDefinition(), item)));
 					if(drop.getChance() == Chance.EXTREMELY_RARE && val > 5_000_000) {//5m drop+
 						World.get().message(player.getFormatUsername() + " just got an extremely rare drop: " + item.getDefinition().getName());
 					}

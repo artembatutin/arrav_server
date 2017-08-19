@@ -1,5 +1,7 @@
 package net.edge.util.log;
 
+import net.edge.world.World;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -7,7 +9,7 @@ import java.time.format.DateTimeFormatter;
  * The class which represents a single log.
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
-public final class Log {
+public class Log {
 	
 	/**
 	 * Represents the users username.
@@ -28,7 +30,7 @@ public final class Log {
 	 * The information this logger has issued.
 	 */
 	private final String information;
-	
+
 	/**
 	 * Constructs a new {@link Log}.
 	 * @param username    {@link #username}.
@@ -60,7 +62,11 @@ public final class Log {
 	public static Log create(LogDetails details) {
 		return new Log(details.getUsername(), details.getCatagory(), details.formatInformation().orElse(details.getInformation()));
 	}
-	
+
+	public String getPath() {
+		return World.getLoggingManager().parent.getAbsolutePath() + "/" + this.getUsername();
+	}
+
 	@Override
 	public String toString() {
 		return "[Username = " + username + ", date = " + date + ", catagory = " + catagory + ", information = " + information + "]";

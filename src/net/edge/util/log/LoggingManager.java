@@ -22,7 +22,7 @@ public final class LoggingManager {
 	/**
 	 * The parent folder containing all the logs.
 	 */
-	private final File parent = new File("./data/logs/");
+	public final File parent = new File("./data/logs/");
 	
 	/**
 	 * The logger which will print out important information.
@@ -35,7 +35,7 @@ public final class LoggingManager {
 	 */
 	public void write(Log log) {
 		pool.execute(() -> {
-			File file = new File(parent.getAbsolutePath() + "/" + log.getUsername());
+			File file = new File(log.getPath());
 			if(!file.exists()) {
 				file.mkdirs();
 			}
