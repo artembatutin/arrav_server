@@ -8,16 +8,16 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 import java.util.Iterator;
 
-@CommandSignature(alias = {"listplayers"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Use this command as just ::players")
+@CommandSignature(alias = {"listplayers"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Lists online players, ::listplayers")
 public final class ListPlayersCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		player.message("There is currently " + World.get().getPlayers().size() + " player online.");
 		if(!World.get().getPlayers().isEmpty()) {
-			Player other;
-			Iterator<Player> it = World.get().getPlayers().iterator();
-			while((other = it.next()) != null) {
+			for(Player other : World.get().getPlayers()) {
+				if(other == null)
+					continue;
 				player.message(" - " + other.getFormatUsername());
 			}
 		}

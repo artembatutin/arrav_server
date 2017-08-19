@@ -13,11 +13,10 @@ public final class YellCommand implements Command {
 
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		if(player.isMuted() || PunishmentHandler.isIPMuted(player.getSession().getHost())) {
+		if(player.isMuted() || PunishmentHandler.isIPMuted(player)) {
 			player.message("You cannot yell while being muted.");
 			return;
 		}
-
 		String c = cmd[0];
 		String message = TextUtils.capitalize(command.substring(c.length(), command.length()).substring(1));
 		World.get().yell(player.getFormatUsername(), message, player.getRights());

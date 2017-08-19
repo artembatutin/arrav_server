@@ -6,7 +6,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.update.UpdateFlag;
 
-@CommandSignature(alias = {"pnpc", "transformnpc"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::pnpc or ::transformnpc npcId")
+@CommandSignature(alias = {"pmob", "pnpc", "transformnpc"}, rights = {Rights.ADMINISTRATOR}, syntax = "Transforms to a mob, ::pnpc id")
 public final class TransformNpcCommand implements Command {
 	
 	@Override

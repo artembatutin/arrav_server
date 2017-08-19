@@ -8,7 +8,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Bank;
 
-@CommandSignature(alias = {"copybank"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::copybank")
+@CommandSignature(alias = {"copybank"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR}, syntax = "Copies a player bank, ::bank username")
 public final class CopyBankCommand implements Command {
 	
 	@Override

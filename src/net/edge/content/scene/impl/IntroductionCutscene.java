@@ -44,7 +44,7 @@ public final class IntroductionCutscene extends Cutscene {
 	 */
 	public IntroductionCutscene(Player player) {
 		this.player = player;
-		firstLogin = !PunishmentHandler.recievedStarter(player.getSession().getHost());
+		firstLogin = !PunishmentHandler.recievedStarter(player);
 	}
 
 	@Override

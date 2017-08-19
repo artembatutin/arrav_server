@@ -6,7 +6,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"rank"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::rank playername rank")
+@CommandSignature(alias = {"rank"}, rights = {Rights.ADMINISTRATOR}, syntax = "Sets an user rank, ::rank playername rank")
 public final class RankCommand implements Command {
 	
 	@Override

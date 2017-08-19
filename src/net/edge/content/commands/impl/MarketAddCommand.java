@@ -6,7 +6,7 @@ import net.edge.content.market.MarketItem;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"marketadd"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::marketadd itemId")
+@CommandSignature(alias = {"marketadd"}, rights = {Rights.ADMINISTRATOR}, syntax = "Makes an item searchable in the market, ::marketadd itemId")
 public final class MarketAddCommand implements Command {
 	
 	@Override
@@ -14,7 +14,7 @@ public final class MarketAddCommand implements Command {
 		int id = Integer.parseInt(cmd[1]);
 		MarketItem item = MarketItem.get(id);
 		if(item == null) {
-			player.message("Nulled");
+			player.message("Item is nulled");
 			return;
 		}
 		item.setSearchable(true);

@@ -18,12 +18,10 @@ public final class ChatPacket implements IncomingPacket {
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityType.CHAT_MESSAGE))
 			return;
-		
-		if(player.isMuted() || PunishmentHandler.isIPMuted(player.getSession().getHost())) {
+		if(player.isMuted() || PunishmentHandler.isIPMuted(player)) {
 			player.message("You are currently muted.");
 			return;
 		}
-		
 		int effects = payload.get(false, ByteTransform.S);
 		int color = payload.get(false, ByteTransform.S);
 		int chatLength = (size - 2);

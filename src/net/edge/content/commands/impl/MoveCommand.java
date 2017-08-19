@@ -6,7 +6,7 @@ import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"move"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Use this command as ::move position [z/height axis is optional]")
+@CommandSignature(alias = {"move"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Moves to a position, ::move x y z")
 public final class MoveCommand implements Command {
 
 	@Override

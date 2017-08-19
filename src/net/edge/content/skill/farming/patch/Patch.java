@@ -41,8 +41,6 @@ public final class Patch {
 	
 	private int attributes;
 	
-	private long timePlanted;
-	
 	private int diseaseImmunity = FarmingConstants.DISEASE_IMMUNITY;
 	
 	private Item harvestedItem;
@@ -50,6 +48,8 @@ public final class Patch {
 	private Item product;
 	
 	private transient boolean growthTaskSubmitted;
+	
+	private long timePlanted;
 	
 	private long wateredTimer;
 	
@@ -306,14 +306,6 @@ public final class Patch {
 	
 	public boolean hasAttribute(PatchAttribute patchAttribute) {
 		return (attributes & patchAttribute.getShift()) != 0;
-	}
-	
-	public long getTimePlanted() {
-		return timePlanted;
-	}
-	
-	public void setTimePlanted(long timePlanted) {
-		this.timePlanted = timePlanted;
 	}
 	
 	public int getDiseaseImmunity() {

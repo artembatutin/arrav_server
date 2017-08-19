@@ -34,9 +34,10 @@ public final class RestoreStatTask extends Task {
 	public void execute() {
 		if(World.get().getPlayers().isEmpty())
 			return;
-		Player player;
-		Iterator<Player> it = World.get().getPlayers().iterator();
-		while((player = it.next()) != null) {
+		for(Player player : World.get().getPlayers()) {
+			if(player == null) {
+				continue;
+			}
 			if(player.getState() != EntityState.ACTIVE) {
 				continue;
 			}
@@ -59,10 +60,8 @@ public final class RestoreStatTask extends Task {
 				}
 				Skills.refresh(player, Skills.HITPOINTS);
 			}
-
 			if(run != 6)//Excluding the other skills to restore.
 				continue;
-			
 			for(int i = 0; i < player.getSkills().length; i++) {
 				if(i == Skills.HITPOINTS)
 					continue;

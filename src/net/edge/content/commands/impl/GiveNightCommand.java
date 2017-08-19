@@ -6,7 +6,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"night"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::night player")
+@CommandSignature(alias = {"ironman"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Gives iron man, ::ironman username")
 public final class GiveNightCommand implements Command {
 	
 	@Override

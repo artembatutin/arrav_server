@@ -25,7 +25,7 @@ public class IronManSelection extends ActionInitializer {
 				player.getInventory().clear(false);
 				if(iron) {
 					player.getInventory().fillItems(GameConstants.IRON_STARTER);
-				} else if(!PunishmentHandler.recievedStarter(player.getSession().getHost())) {
+				} else if(!PunishmentHandler.recievedStarter(player)) {
 					player.getInventory().fillItems(GameConstants.REGULAR_STARTER);
 					PunishmentHandler.addStarter(player.getSession().getHost());
 				} else {

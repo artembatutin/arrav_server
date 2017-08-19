@@ -11,7 +11,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 /**
  * The assist command for staff members.
  */
-@CommandSignature(alias = {"assist", "help"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Use this command as ::assist username")
+@CommandSignature(alias = {"assist", "help"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Assisting a player by ::assist username")
 public final class AssistCommand implements Command {
 	
 	@Override

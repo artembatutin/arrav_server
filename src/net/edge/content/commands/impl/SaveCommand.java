@@ -19,7 +19,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.Iterator;
 
-@CommandSignature(alias = {"save"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Use this command as ::save type")
+@CommandSignature(alias = {"save"}, rights = {Rights.ADMINISTRATOR}, syntax = "Saves, ::save type")
 public final class SaveCommand implements Command {
 	
 	@Override

@@ -13,7 +13,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 import java.util.Iterator;
 
-@CommandSignature(alias = {"update"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as ::update seconds")
+@CommandSignature(alias = {"update"}, rights = {Rights.ADMINISTRATOR}, syntax = "Updates the server, ::update seconds")
 public final class UpdateCommand implements Command {
 	
 	/**

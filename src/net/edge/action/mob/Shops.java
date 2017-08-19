@@ -31,7 +31,7 @@ public class Shops extends ActionInitializer {
 		HAZELMERE_BLOOD_MONEY(669, 0, 2),
 		PARTY_PETE_EDGE_TOKENS(659, 1, 2),
 		CULINAROMANCER_GLOVES(3400, 3, 2),
-		HUNTER_SHOP(5113, 4, true, false, true, false),
+		HUNTER_SHOP(5113, 4, true, false, false, true),
 		SMITHING_THURGO(604, 19, 1),
 		SLAYER_SHOP(8462, 2, 4),
 		FARMING_SHOP(3299, 29, 1),
