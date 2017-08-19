@@ -9,8 +9,9 @@ import net.edge.world.entity.item.ItemDefinition;
 import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.GameConstants;
 import net.edge.util.log.Log;
-import net.edge.util.log.impl.NpcDropLog;
+import net.edge.util.log.impl.MobDropLog;
 import net.edge.util.rand.Chance;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
@@ -26,24 +27,37 @@ import java.util.concurrent.ThreadLocalRandom;
 public final class DropTable {
 	
 	/**
-	 * The drop list that consists of both dynamic and rare drops.
+	 * The drop list that consists of common drops.
 	 */
-	private final ObjectList<Drop> drops;
+	private final ObjectList<Drop> common;
+	
+	/**
+	 * The drop list that consists of rare drops.
+	 */
+	private final ObjectList<Drop> rare;
 	
 	/**
 	 * Creates a new {@link DropTable}.
-	 * @param drops the drops array.
 	 */
-	public DropTable(Drop... drops) {
-		this.drops = new ObjectArrayList<>(drops);
+	public DropTable(Drop[] common, Drop... rare) {
+		this.common = new ObjectArrayList<>(common);
+		this.rare = new ObjectArrayList<>(rare);
 	}
 	
 	/**
 	 * Creates a new {@link DropTable}.
-	 * @param drops the drops list.
 	 */
-	public DropTable(ObjectList<Drop> drops) {
-		this.drops = drops;
+	public DropTable(ObjectList<Drop> common, ObjectList<Drop> rare) {
+		this.common = common;
+		this.rare = rare;
+	}
+	
+	/**
+	 * Creates a new {@link DropTable}.
+	 */
+	public DropTable() {
+		this.common = new ObjectArrayList<>();
+		this.rare = new ObjectArrayList<>();
 	}
 	
 	/**
@@ -59,36 +73,39 @@ public final class DropTable {
 		ThreadLocalRandom random = ThreadLocalRandom.current();
 		ObjectList<Item> items = new ObjectArrayList<>();
 		int amount = 0;
-		boolean rare = true;
-		for(Drop drop : drops) {
-			if(drop == null)
-				continue;
-			if(drop.getChance() == Chance.ALWAYS) {
-				//bone crusher
-				if(player.getInventory().contains(18337)) {
-					Optional<Bone> bone = Bone.getBone(drop.getId());
-					bone.ifPresent(b -> Skills.experience(player, b.getExperience() * 1.5, Skills.PRAYER));
-					if(bone.isPresent())
-						continue;
-				}
-				items.add(drop.toItem());
-			} else if(drop.isRare() && rare) {
-				boolean row = player.getEquipment().getId(Equipment.RING_SLOT) == 2572 && random.nextInt(100) == 1;
-				if(drop.roll(random) || row) {
-					if(row)
-						player.message("Your ring of wealth got you a rare drop!");
-					Item item = drop.toItem();
-					items.add(item);
-					int val = MarketItem.get(item.getId()) != null ? MarketItem.get(item.getId()).getPrice() * item.getAmount() : 0;
-					World.getLoggingManager().write(Log.create(new NpcDropLog(player, victim.getDefinition(), item)));
-					if(drop.getChance() == Chance.EXTREMELY_RARE && val > 5_000_000) {//5m drop+
-						World.get().message(player.getFormatUsername() + " just got an extremely rare drop: " + item.getDefinition().getName());
+		if(!common.isEmpty()) {
+			for(Drop drop : common) {
+				if(drop == null)
+					continue;
+				if(drop.getChance() == Chance.ALWAYS) {
+					//bone crusher
+					if(player.getInventory().contains(18337)) {
+						Optional<Bone> bone = Bone.getBone(drop.getId());
+						bone.ifPresent(b -> Skills.experience(player, b.getExperience() * 1.5, Skills.PRAYER));
+						if(bone.isPresent())
+							continue;
+					}
+					items.add(drop.toItem());
+				} else if(!drop.isRare()) {
+					if(amount++ <= GameConstants.DROP_THRESHOLD && drop.roll(random)) {
+						items.add(drop.toItem());
 					}
 				}
-				rare = false;
-			} else if(!drop.isRare()) {
-				if(amount++ <= GameConstants.DROP_THRESHOLD && drop.roll(random)) {
-					items.add(drop.toItem());
+			}
+		}
+		if(!rare.isEmpty()) {
+			boolean row = player.getEquipment().getId(Equipment.RING_SLOT) == 2572;
+			int count = rare.size() > GameConstants.DROP_RARE_ATTEMPTS ? GameConstants.DROP_RARE_ATTEMPTS + (row ? 1 : 0) : rare.size();
+			for(int i = 0; i < count; i++) {
+				Drop rareDrop = RandomUtils.random(rare);
+				if(rareDrop.roll(random)) {
+					Item item = rareDrop.toItem();
+					items.add(item);
+					int val = MarketItem.get(item.getId()) != null ? MarketItem.get(item.getId()).getPrice() * item.getAmount() : 0;
+					if(val > 5_000_000) {//5m drop+
+						World.getLoggingManager().write(Log.create(new MobDropLog(player, victim.getDefinition(), item)));
+						World.get().message(player.getFormatUsername() + " just got an rare drop: " + item.getDefinition().getName());
+					}
 				}
 			}
 		}
@@ -99,7 +116,8 @@ public final class DropTable {
 	 * Sorting the drop table by chance tiers.
 	 */
 	public void sort() {
-		drops.sort(Comparator.comparingInt(o -> o.getChance().ordinal()));
+		common.sort(Comparator.comparingInt(o -> o.getChance().ordinal()));
+		rare.sort(Comparator.comparingInt(o -> o.getChance().ordinal()));
 	}
 	
 	/**
@@ -109,21 +127,38 @@ public final class DropTable {
 	 */
 	public boolean contains(Drop drop) {
 		ItemDefinition defDrop = ItemDefinition.get(drop.getId());
-		for(Drop d : drops) {
-			if(d == null)
-				continue;
-			if(d.getId() == drop.getId() && d.getChance() == drop.getChance() && d.getMinimum() == drop.getMinimum())
-				return true;
-			ItemDefinition def = ItemDefinition.get(d.getId());
-			if(def.getName().equalsIgnoreCase(defDrop.getName())) {
-				return true;
+		if(drop.isRare()) {
+			for(Drop d : common) {
+				if(d == null)
+					continue;
+				if(d.getId() == drop.getId() && d.getChance() == drop.getChance() && d.getMinimum() == drop.getMinimum())
+					return true;
+				ItemDefinition def = ItemDefinition.get(d.getId());
+				if(def.getName().equalsIgnoreCase(defDrop.getName())) {
+					return true;
+				}
+			}
+		} else {
+			for(Drop d : rare) {
+				if(d == null)
+					continue;
+				if(d.getId() == drop.getId() && d.getChance() == drop.getChance() && d.getMinimum() == drop.getMinimum())
+					return true;
+				ItemDefinition def = ItemDefinition.get(d.getId());
+				if(def.getName().equalsIgnoreCase(defDrop.getName())) {
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 	
-	public ObjectList<Drop> getDrops() {
-		return drops;
+	public ObjectList<Drop> getCommon() {
+		return common;
+	}
+	
+	public ObjectList<Drop> getRare() {
+		return rare;
 	}
 	
 }

@@ -87,7 +87,8 @@ public final class DropManager {
 				}
 			});
 			drops_saver.current().add("ids", new Gson().toJsonTree(redirects.toArray()));
-			drops_saver.current().add("drop", new Gson().toJsonTree(table.getDrops().toArray()));
+			drops_saver.current().add("common", new Gson().toJsonTree(table.getCommon().toArray()));
+			drops_saver.current().add("rare", new Gson().toJsonTree(table.getRare().toArray()));
 			drops_saver.split();
 		}
 		drops_saver.publish("./data/def/mob/mob_drops2.json");

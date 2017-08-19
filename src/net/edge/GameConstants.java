@@ -71,6 +71,11 @@ public final class GameConstants {
 	public static final int DROP_THRESHOLD = 2;
 	
 	/**
+	 * The attempted looped of randomized rare mob drops.
+	 */
+	public static final int DROP_RARE_ATTEMPTS = 4;
+	
+	/**
 	 * The time in seconds that has to be spent in a region before {@link Mob}s
 	 * stop acting aggressive towards a specific {@link Player}.
 	 */

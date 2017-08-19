@@ -100,7 +100,7 @@ public class Drop {
 	 * Gets the pricing value of this drop.
 	 * @return value.
 	 */
-	boolean isRare() {
+	public boolean isRare() {
 		return chance == RARE || chance == VERY_RARE || chance == EXTREMELY_RARE;
 	}
 	
