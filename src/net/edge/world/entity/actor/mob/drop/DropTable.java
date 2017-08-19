@@ -95,7 +95,13 @@ public final class DropTable {
 		}
 		if(!rare.isEmpty()) {
 			boolean row = player.getEquipment().getId(Equipment.RING_SLOT) == 2572;
-			int count = rare.size() > GameConstants.DROP_RARE_ATTEMPTS ? GameConstants.DROP_RARE_ATTEMPTS + (row ? 1 : 0) : rare.size();
+			int count = rare.size() / 4;
+			if(count <= 0)
+				count = 1;
+			if(count > GameConstants.DROP_RARE_ATTEMPTS)
+				count = GameConstants.DROP_RARE_ATTEMPTS;
+			if(row)
+				count += 1;
 			for(int i = 0; i < count; i++) {
 				Drop rareDrop = RandomUtils.random(rare);
 				if(rareDrop.roll(random)) {

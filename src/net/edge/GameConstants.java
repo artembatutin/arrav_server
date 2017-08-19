@@ -73,7 +73,7 @@ public final class GameConstants {
 	/**
 	 * The attempted looped of randomized rare mob drops.
 	 */
-	public static final int DROP_RARE_ATTEMPTS = 4;
+	public static final int DROP_RARE_ATTEMPTS = 5;
 	
 	/**
 	 * The time in seconds that has to be spent in a region before {@link Mob}s
