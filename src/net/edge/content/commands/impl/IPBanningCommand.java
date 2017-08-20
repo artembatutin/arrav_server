@@ -13,10 +13,12 @@ public final class IPBanningCommand implements Command {
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player banned = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
-		if(banned != null && (banned.getRights().less(Rights.ADMINISTRATOR) || player.getRights().equals(Rights.ADMINISTRATOR)) && banned != player) {
+		if(banned != null && banned != player) {
 			player.message("Successfully IP banned " + banned.getFormatUsername() + ".");
 			PunishmentHandler.addIPBan(banned);
 			World.get().queueLogout(banned);
+		} else {
+			player.message("Can't find " + cmd[1].replaceAll("_", " ") + ".");
 		}
 	}
 	

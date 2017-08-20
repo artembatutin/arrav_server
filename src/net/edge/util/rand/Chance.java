@@ -27,30 +27,30 @@ public enum Chance {
 	UNCOMMON(16),
 	
 	/**
-	 * Describing an {@code VERY_UNCOMMON} chance (4%, 2 in 50 chance).
+	 * Describing an {@code VERY_UNCOMMON} chance (4%, 1 in 40 chance).
 	 * chance is now
 	 */
-	VERY_UNCOMMON(25),
+	VERY_UNCOMMON(40),
 	
 	/**
-	 * Describing an {@code RARE} chance (2%, 1 in 50 chance).
+	 * Describing an {@code RARE} chance (2%, 1 in 100 chance).
 	 */
-	RARE(50),
+	RARE(100),
 	
 	/**
-	 * Describing an {@code VERY_RARE} chance (1.428%, 1 in 70 chance).
+	 * Describing an {@code VERY_RARE} chance (1.428%, 1 in 125 chance).
 	 */
-	VERY_RARE(70),
+	VERY_RARE(125),
 	
 	/**
-	 * Describing an {@code EXTREMELY_RARE} chance (0.8%, 1 in 125 chance).
+	 * Describing an {@code EXTREMELY_RARE} chance (0.8%, 1 in 200 chance).
 	 */
-	EXTREMELY_RARE(100),
+	EXTREMELY_RARE(200),
 	
 	/**
-	 * Describing an {@code FUCKING_RARE} chance (0.8%, 1 in 125 chance).
+	 * Describing an {@code FUCKING_RARE} chance (0.8%, 1 in 400 chance).
 	 */
-	FUCKING_RARE(300);
+	FUCKING_RARE(400);
 	
 	private final double roll;
 	
