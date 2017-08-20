@@ -8,22 +8,22 @@ public enum AchievementDifficulty {
 	/**
 	 * The easy achievement difficulty.
 	 */
-	EASY(75_000, 0xb3b4b3),
+	EASY(75_000, 0xb3b4b3, "75K"),
 	
 	/**
 	 * The medium achievement difficulty.
 	 */
-	MEDIUM(225_000, 0xD9750B),
+	MEDIUM(225_000, 0xD9750B, "225k"),
 	
 	/**
 	 * The hard achievement difficulty.
 	 */
-	HARD(750_000, 0xbe7056),
+	HARD(750_000, 0xbe7056, "750k"),
 	
 	/**
 	 * The elite achievement difficulty.
 	 */
-	ELITE(1_500_000, 0xC41414);
+	ELITE(1_500_000, 0xC41414, "1.5m");
 	
 	/**
 	 * Cached difficulty array.
@@ -41,11 +41,17 @@ public enum AchievementDifficulty {
 	private final int color;
 	
 	/**
+	 * The reward outgoing text.
+	 */
+	private final String out;
+	
+	/**
 	 * Achievement difficulty
 	 */
-	AchievementDifficulty(int reward, int color) {
+	AchievementDifficulty(int reward, int color, String out) {
 		this.reward = reward;
 		this.color = color;
+		this.out = out;
 	}
 	
 	/**
@@ -60,5 +66,12 @@ public enum AchievementDifficulty {
 	 */
 	public int getColor() {
 		return color;
+	}
+	
+	/**
+	 * Out going reward string.
+	 */
+	public String getOut() {
+		return out;
 	}
 }

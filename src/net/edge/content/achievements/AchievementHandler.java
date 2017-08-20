@@ -20,16 +20,19 @@ public class AchievementHandler {
 	 */
 	public static void activate(Player player, Achievement achievement, int increase) {
 		final int prev = player.getAchievements().computeIfAbsent(achievement, a -> 0);
-		player.getAchievements().put(achievement, prev + increase);
+		final int curr = prev + increase;
+		player.getAchievements().put(achievement, curr);
 		boolean updated = false;
 		int dif = 0;
 		for(int i : achievement.getAmount()) {
-			if(prev >= i)
+			if(prev >= i) {
+				dif++;
 				continue;
-			if(prev + increase >= i) {
+			}
+			if(curr >= i) {
 				player.out(new SendTask(String.format(achievement.getTask(), achievement.getAmount()[dif])));
 				player.getBank().deposit(new Item(995, AchievementDifficulty.DIF[dif].getReward()));
-				player.message(AchievementDifficulty.DIF[dif].getReward() + " coins have been added into your bank.");
+				player.message(AchievementDifficulty.DIF[dif].getOut() + " coins have been added into your bank.");
 				update(player, achievement);
 				updated = true;
 			}
@@ -37,8 +40,7 @@ public class AchievementHandler {
 		}
 		if(!updated) {
 			int tier = getTier(player, achievement);
-			player.text(26100 + achievement.ordinal(), String.format(achievement.getTask(), achievement.getAmount()[tier]) + " - " + prev + " / " + achievement
-					.getAmount()[tier]);
+			player.text(26100 + achievement.ordinal(), String.format(achievement.getTask(), achievement.getAmount()[tier]) + " - " + prev + " / " + achievement.getAmount()[tier]);
 		}
 	}
 	
