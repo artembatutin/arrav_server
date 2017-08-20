@@ -452,8 +452,6 @@ public abstract class Actor extends Entity {
 	public final void damage(Hit... hits) {
 		Preconditions.checkArgument(hits.length >= 1 && hits.length <= 4);
 
-		System.out.println(isMob() + " " + hits[0].getDamage() + " " + hits[0].getHitIcon());
-
 		for (Hit hit : hits) {
 			decrementHealth(hit);
 			hitQueue.add(hit);

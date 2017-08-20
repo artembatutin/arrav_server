@@ -203,9 +203,10 @@ public class Combat<T extends Actor> {
     private void hit(Actor defender, Hit hit) {
         attacks.forEach(attack -> attack.hit(attacker, defender, hit));
 
-//        if (defender.isAutoRetaliate()) {
+        if (defender.isAutoRetaliate()) {
 //            defender.getCombat().attack(attacker);
-//        }
+//            defender.getCombat().reset();
+        }
     }
 
     private void hitsplat(Actor defender, Hit hit, CombatType combatType) {

@@ -112,9 +112,9 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
     @Override
     public Animation getAttackAnimation(Player attacker, Actor defender) {
         if (attacker.getWeaponAnimation() != null && attacker.getWeaponAnimation().getAttacking()[0] != 422) {
-            return new Animation(attacker.getWeaponAnimation().getAttacking()[attacker.getFightType().getStyle().ordinal()], Animation.AnimationPriority.HIGH);
+            return new Animation(attacker.getWeaponAnimation().getAttacking()[attacker.getCombat().getFightType().getStyle().ordinal()], Animation.AnimationPriority.HIGH);
         }
-        return new Animation(attacker.getFightType().getAnimation(), Animation.AnimationPriority.HIGH);
+        return new Animation(attacker.getCombat().getFightType().getAnimation(), Animation.AnimationPriority.HIGH);
     }
 
     @Override

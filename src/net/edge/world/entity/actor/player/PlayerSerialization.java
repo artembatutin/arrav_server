@@ -382,12 +382,12 @@ public final class PlayerSerialization {
 	},new Token("fight-type") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getFightType();
+			return p.getCombat().getFightType();
 		}
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setFightType(FightType.valueOf(n.getAsString()));
+			p.getCombat().setFightType(FightType.valueOf(n.getAsString()));
 		}
 	}, new Token("poison-damage") {
 		@Override

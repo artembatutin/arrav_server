@@ -168,21 +168,27 @@ public enum WeaponInterface {
     public static void setStrategy(Player player) {
         if (player.isAutocast()) {
             player.getCombat().setStrategy(new PlayerMagicStrategy(player.getAutocastSpell()));
-        } else {
-            Item item = player.getEquipment().get(Equipment.WEAPON_SLOT);
-            WeaponInterface weapon = item == null ? null : INTERFACES.get(item.getId());
-
-            if (weapon != null && weapon.isRanged()) {
-                RangedWeaponDefinition def = CombatRangedBowLoader.DEFINITIONS.get(item.getId());
-
-                if (def != null) {
-                    player.getCombat().setStrategy(new PlayerRangedStrategy(def));
-                    return;
-                }
-            }
-
-            player.getCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
+            return;
         }
+
+        if (player.isSpecialActivated()) {
+            player.getCombatSpecial().enable(player);
+            return;
+        }
+
+        Item item = player.getEquipment().get(Equipment.WEAPON_SLOT);
+        WeaponInterface weapon = item == null ? null : INTERFACES.get(item.getId());
+
+        if (weapon != null && weapon.isRanged()) {
+            RangedWeaponDefinition def = CombatRangedBowLoader.DEFINITIONS.get(item.getId());
+
+            if (def != null) {
+                player.getCombat().setStrategy(new PlayerRangedStrategy(def));
+                return;
+            }
+        }
+
+        player.getCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
     }
 
     /**
@@ -203,9 +209,9 @@ public enum WeaponInterface {
             CombatSpecial.assign(player);
             WeaponFactory.updateAttackStyle(player, UNARMED);
             for (FightType type : player.getWeapon().getFightTypes()) {
-                if (type.getStyle() == player.getFightType().getStyle()) {
-                    player.setFightType(type);
-                    player.out(new SendConfig(player.getFightType().getParent(), player.getFightType().getChild()));
+                if (type.getStyle() == player.getCombat().getFightType().getStyle()) {
+                    player.getCombat().setFightType(type);
+                    player.out(new SendConfig(player.getCombat().getFightType().getParent(), player.getCombat().getFightType().getChild()));
                     return;
                 }
             }
@@ -230,14 +236,14 @@ public enum WeaponInterface {
         CombatSpecial.updateSpecialAmount(player);
         WeaponFactory.updateAttackStyle(player, weapon);
         for (FightType type : weapon.getFightTypes()) {
-            if (type.getStyle() == player.getFightType().getStyle()) {
-                player.setFightType(type);
-                player.out(new SendConfig(player.getFightType().getParent(), player.getFightType().getChild()));
+            if (type.getStyle() == player.getCombat().getFightType().getStyle()) {
+                player.getCombat().setFightType(type);
+                player.out(new SendConfig(player.getCombat().getFightType().getParent(), player.getCombat().getFightType().getChild()));
                 return;
             }
         }
-        player.setFightType(player.getWeapon().getFightTypes()[0]);
-        player.out(new SendConfig(player.getFightType().getParent(), player.getFightType().getChild()));
+        player.getCombat().setFightType(player.getWeapon().getFightTypes()[0]);
+        player.out(new SendConfig(player.getCombat().getFightType().getParent(), player.getCombat().getFightType().getChild()));
     }
 
     /**

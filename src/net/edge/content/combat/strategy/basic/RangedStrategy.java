@@ -69,20 +69,17 @@ public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> 
     }
 
     protected static void addCombatExperience(Player player, Hit hit) {
-        int exp = hit.getDamage() * BASE_EXPERIENCE_MULTIPLIER;
-
+        int exp = hit.getDamage() / 10 * BASE_EXPERIENCE_MULTIPLIER;
+        System.out.println(hit.getDamage() + " -- ranged: " + exp + " hitpoints: " + (exp / 3));
         Skills.experience(player, exp / 3, Skills.HITPOINTS);
         switch (player.getCombat().getFightType().getStyle()) {
-            case ACCURATE:
-            case CONTROLLED:
+            default:
                 Skills.experience(player, exp, Skills.RANGED);
                 break;
             case DEFENSIVE:
                 Skills.experience(player, exp / 2, Skills.DEFENCE);
                 Skills.experience(player, exp / 2, Skills.RANGED);
                 break;
-
-            default: break;
         }
     }
 

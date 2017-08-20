@@ -423,11 +423,6 @@ public final class Player extends Actor {
 	private Optional<SkillActionTask> action = Optional.empty();
 	
 	/**
-	 * The current fight type the player is using.
-	 */
-	private FightType fightType = FightType.UNARMED_PUNCH;
-	
-	/**
 	 * The weapon animation for appearance updating.
 	 */
 	private WeaponAnimation weaponAnimation;
@@ -691,7 +686,7 @@ public final class Player extends Actor {
 		out(new SendConfig(173, super.getMovementQueue().isRunning() ? 0 : 1));
 		out(new SendConfig(174, super.isPoisoned() ? 1 : 0));
 		out(new SendConfig(172, super.isAutoRetaliate() ? 1 : 0));
-		out(new SendConfig(fightType.getParent(), fightType.getChild()));
+		out(new SendConfig(combat.getFightType().getParent(), combat.getFightType().getChild()));
 		out(new SendConfig(427, ((Boolean) getAttr().get("accept_aid").get()) ? 0 : 1));
 		out(new SendConfig(108, 0));
 		out(new SendConfig(301, 0));
@@ -856,6 +851,7 @@ public final class Player extends Actor {
 	@Override
 	public int getAttackDelay() {
 		int speed = weapon.getSpeed();
+		FightType fightType = combat.getFightType();
 		if(fightType == FightType.CROSSBOW_RAPID || fightType == FightType.SHORTBOW_RAPID || fightType == FightType.LONGBOW_RAPID || fightType == FightType.DART_RAPID || fightType == FightType.KNIFE_RAPID || fightType == FightType.THROWNAXE_RAPID || fightType == FightType.JAVELIN_RAPID) {
 			speed--;
 		} else if(fightType == FightType.CROSSBOW_LONGRANGE || fightType == FightType.SHORTBOW_LONGRANGE || fightType == FightType.LONGBOW_LONGRANGE || fightType == FightType.DART_LONGRANGE || fightType == FightType.KNIFE_LONGRANGE || fightType == FightType.THROWNAXE_LONGRANGE || fightType == FightType.JAVELIN_LONGRANGE) {
@@ -1667,22 +1663,6 @@ public final class Player extends Actor {
 		this.specialActivated = specialActivated;
 	}
 
-	/**
-	 * Gets the current fight type the player is using.
-	 * @return the current fight type.
-	 */
-	public FightType getFightType() {
-		return fightType;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#fightType}.
-	 * @param fightType the new value to set.
-	 */
-	public void setFightType(FightType fightType) {
-		this.fightType = fightType;
-	}
-	
 	/**
 	 * Gets the weapon animation for appearance updating.
 	 * @return the weapon animation.
