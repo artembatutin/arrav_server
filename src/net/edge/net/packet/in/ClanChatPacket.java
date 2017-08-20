@@ -23,6 +23,10 @@ public final class ClanChatPacket implements IncomingPacket {
 			return;
 		}
 		if(player.getClan().isPresent()) {
+			if(player.isMuted()) {
+				player.message("You are muted and unable to talk!");
+				return;
+			}
 			player.getClan().get().message(player.isIronMan() ? "@ora@" : "" + input);
 		} else {
 			player.message("You're not in a clan.");
