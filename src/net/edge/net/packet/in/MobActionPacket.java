@@ -93,7 +93,7 @@ public final class MobActionPacket implements IncomingPacket {
 		}
 
 		player.getTolerance().reset();
-		player.getCombat().setStrategy(new PlayerMagicStrategy(spell, true));
+		player.getCombat().setStrategy(new PlayerMagicStrategy(spell));
 		player.getCombat().attack(mob);
 	}
 	

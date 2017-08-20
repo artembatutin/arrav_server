@@ -29,7 +29,7 @@ public final class Projectile {
 			4,
 			5,
 			5,
-			15
+			5
 	};
 	
 	/**

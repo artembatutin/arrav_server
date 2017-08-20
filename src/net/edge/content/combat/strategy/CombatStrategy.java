@@ -22,9 +22,6 @@ public abstract class CombatStrategy<T extends Actor> implements CombatAttack<T>
 
     protected abstract Animation getAttackAnimation(T attacker, Actor defender);
 
-    protected abstract Animation getBlockAnimation(T attacker, Actor defender);
-
-    @Override
     public void attack(T attacker, Actor defender, Hit hit) {
     }
 
@@ -37,7 +34,7 @@ public abstract class CombatStrategy<T extends Actor> implements CombatAttack<T>
     }
 
     @Override
-    public void block(Actor attacker, T defender, Hit hit) {
+    public void block(Actor attacker, T defender, Hit hit, CombatType combatType) {
     }
 
     @Override

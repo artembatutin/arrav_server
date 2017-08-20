@@ -41,13 +41,14 @@ public final class CommandPacket implements IncomingPacket {
 				player.getCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
 			} else if (parts[0].equalsIgnoreCase("blitz")) {
 //				CombatProjectileDefinition.createLoader().load();
-				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ, true));
-			} else if (parts[0].equalsIgnoreCase("spider")) {
-				Mob npc = Mob.getNpc(1677, player.getPosition().copy().move(1, 0));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ));
+			} else if (parts[0].equalsIgnoreCase("man")) {
+				Mob npc = Mob.getNpc(1, player.getPosition().copy().move(1, 0));
 				npc.setOwner(player);
 				npc.setRespawn(false);
-				World.get().getMobs().add(npc);
+				npc.setCurrentHealth(100_000);
 				npc.getCombat().setStrategy(new NpcMeleeStrategy());
+				World.get().getMobs().add(npc);
 			}
 		}
 

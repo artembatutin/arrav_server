@@ -3,6 +3,7 @@ package net.edge.world;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.edge.Application;
+import net.edge.content.combat.Combat;
 import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.GameConstants;
 import net.edge.GamePulseHandler;
@@ -155,6 +156,7 @@ public final class World {
 			registerActors();
 			taskManager.sequence();
 			sync.preUpdate(players, mobs);
+			Combat.update();
 			sync.update(players);
 			sync.postUpdate(players, mobs);
 			dequeueLogout();

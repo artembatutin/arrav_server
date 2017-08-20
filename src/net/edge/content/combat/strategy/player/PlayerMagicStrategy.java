@@ -2,6 +2,7 @@ package net.edge.content.combat.strategy.player;
 
 import net.edge.content.combat.CombatEffect;
 import net.edge.content.combat.CombatType;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.AttackModifier;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.content.MagicRune;
@@ -28,9 +29,6 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
     /** The magic spell definition. */
     private final MagicSpell spell;
 
-    /** Whether or not this cast is single or auto */
-    private final boolean singleCast;
-
     /** The spell splash graphic. */
     private static final Graphic SPLASH = new Graphic(85);
 
@@ -40,9 +38,8 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
      *
      * @param spell the magic spell spell to be used.
      */
-    public PlayerMagicStrategy(MagicSpell spell, boolean singleCast) {
+    public PlayerMagicStrategy(MagicSpell spell) {
         this.spell = spell;
-        this.singleCast = singleCast;
     }
 
     @Override
@@ -68,6 +65,11 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
         Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
         Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit);
         spell.getEffect().filter(Objects::nonNull).filter(filter).ifPresent(execute);
+
+        if (!attacker.isAutocast()) {
+            WeaponInterface.setStrategy(attacker);
+            attacker.getCombat().reset();
+        }
     }
 
     @Override
@@ -80,28 +82,17 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
     }
 
     @Override
-    public void block(Actor attacker, Player defender, Hit hit) {
-        defender.animation(getBlockAnimation(defender, attacker));
-    }
-
-    @Override
-    public void finish(Player attacker, Actor defender) {
-        if (attacker.getCombat().getStrategy() == this) {
-            if (singleCast) {
-                attacker.getCombat().reset();
-                WeaponInterface.setStrategy(attacker);
-            }
-        }
-    }
-
-    @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        return new CombatHit[] { nextMagicHit(attacker, defender, spell.getMaxHit(), spell.getHitDelay(attacker, defender), spell.getHitsplatDelay()) };
+        int distance = (int) attacker.getPosition().getDistance(defender.getPosition());
+        return new CombatHit[] { nextMagicHit(attacker, defender, spell.getMaxHit(), spell.getHitDelay(distance), CombatUtil.getDelay(attacker, defender)) };
     }
 
     @Override
     public int getAttackDelay(Player attacker, FightType fightType) {
-        return 4;
+        if (attacker.getPosition().getDistance(attacker.getCombat().getDefender().getPosition()) > 4) {
+            return 6;
+        }
+        return 5;
     }
 
     @Override
@@ -124,17 +115,6 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
             return new Animation(attacker.getWeaponAnimation().getAttacking()[attacker.getFightType().getStyle().ordinal()], Animation.AnimationPriority.HIGH);
         }
         return new Animation(attacker.getFightType().getAnimation(), Animation.AnimationPriority.HIGH);
-    }
-
-    @Override
-    public Animation getBlockAnimation(Player attacker, Actor defender) {
-        int animation = 404;
-        if (attacker.getShieldAnimation() != null) {
-            animation = attacker.getShieldAnimation().getBlock();
-        } else if (attacker.getWeaponAnimation() != null) {
-            animation = attacker.getWeaponAnimation().getBlocking();
-        }
-        return new Animation(animation, Animation.AnimationPriority.LOW);
     }
 
     @Override

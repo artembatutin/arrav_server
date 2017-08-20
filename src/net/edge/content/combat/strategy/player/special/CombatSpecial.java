@@ -5,6 +5,7 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendInterfaceLayer;
 import net.edge.net.packet.out.SendUpdateSpecial;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Equipment;
@@ -484,22 +485,22 @@ public enum CombatSpecial {
     GRANITE_MAUL(new int[]{4153}, 50, new GraniteMaul()) {
 		@Override
 		public void enable(Player player) {
-			Combat<Player> combat = player.getCombat();
+            Combat<Player> combat = player.getCombat();
             CombatStrategy<Player> strategy = new GraniteMaul();
-            if (combat.isAttacking(combat.getLastDefender())) {
-                boolean canAttack = true;
-                canAttack &= combat.canAttack(combat.getLastDefender());
-                canAttack &= strategy.withinDistance(player, combat.getLastDefender());
-                canAttack &= strategy.canAttack(player, combat.getLastDefender());
+            Actor defender = combat.getLastDefender();
+
+            if (combat.isAttacking(defender)) {
+                boolean canAttack = combat.canAttack(defender);
+                canAttack &= strategy.withinDistance(player, defender);
+                canAttack &= strategy.canAttack(player, defender);
+
                 if (canAttack) {
-                    if (combat.getDefender() != combat.getLastDefender()) {
-                        combat.attack(combat.getLastDefender());
-                    }
-                    combat.submitStrategy(combat.getLastDefender(), strategy);
+                    combat.submitStrategy(defender, strategy);
                     player.getCombatSpecial().drain(player);
                     return;
                 }
             }
+
             combat.setStrategy(strategy);
         }
 	};

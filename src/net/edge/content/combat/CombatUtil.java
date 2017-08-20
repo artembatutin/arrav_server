@@ -6,6 +6,7 @@ import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.HitIcon;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.combat.weapon.WeaponInterface;
+import net.edge.world.Animation;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.move.MovementQueue;
@@ -60,25 +61,11 @@ public final class CombatUtil {
 	 *
 	 * @param attacker the character doing the hit.
 	 * @param defender the victim being hit.
-	 * @param type     the combat type to retrieve the delay for.
 	 * @return the delay for the combat type.
 	 * @throws IllegalArgumentException if the combat type is invalid.
 	 */
-	public static int getDelay(Actor attacker, Actor defender, CombatType type) {
-		int delay = attacker.isPlayer() && defender.isMob() ? 1 : 0;
-		if (attacker.isPlayer() && attacker.toPlayer().getWeapon().equals(WeaponInterface.SALAMANDER)) {
-			return delay;
-		}
-		if (type.equals(CombatType.MELEE)) {
-			return delay;
-		}
-		if (type.equals(CombatType.RANGED)) {
-			return 1 + delay;
-		}
-		if (type.equals(CombatType.MAGIC)) {
-			return 2 + delay;
-		}
-		return delay;
+	public static int getDelay(Actor attacker, Actor defender) {
+		return attacker.isPlayer() && defender.isMob() ? 1 : 0;
 	}
 
 	/**
@@ -195,6 +182,21 @@ public final class CombatUtil {
 		}
 
 		return new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance);
+	}
+
+	public static Animation getBlockAnimation(Actor actor) {
+		if (actor.isPlayer()) {
+			int animation = 404;
+			Player player = actor.toPlayer();
+			if (player.getShieldAnimation() != null) {
+				animation = player.getShieldAnimation().getBlock();
+			} else if (player.getWeaponAnimation() != null) {
+				animation = player.getWeaponAnimation().getBlocking();
+			}
+			return new Animation(animation, Animation.AnimationPriority.LOW);
+		}
+
+		return new Animation(actor.toMob().getDefinition().getDefenceAnimation(), Animation.AnimationPriority.HIGH);
 	}
 
 }

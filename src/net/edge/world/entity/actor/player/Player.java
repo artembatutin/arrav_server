@@ -14,6 +14,7 @@ import net.edge.content.clanchat.ClanManager;
 import net.edge.content.clanchat.ClanMember;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.attack.FightType;
+import net.edge.content.combat.content.MagicSpell;
 import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectTask;
 import net.edge.content.combat.hit.Hit;
@@ -385,17 +386,16 @@ public final class Player extends Actor {
 	 * A list containing all the blocked slayer tasks of the player.
 	 */
 	private String[] blockedTasks = new String[5];
-	
-	/**
-	 * The flag that determines if the player is autocasting.
-	 */
-	private boolean autocast;
-	
 
 	/**
 	 * The combat special that has been activated.
 	 */
 	private CombatSpecial combatSpecial;
+
+	/**
+	 * The spell that has been selected to auto-cast.
+	 */
+	private MagicSpell autocastSpell;
 	
 	/**
 	 * The condition if the player's screen is on focus.
@@ -795,13 +795,6 @@ public final class Player extends Actor {
 	@Override
 	public void preUpdate() {
 		getMovementQueue().sequence();
-		getCombat().tick();
-		if (!getHitQueue().isEmpty()) {
-			flags.flag(UpdateFlag.PRIMARY_HIT);
-			if (getHitQueue().size() > 1) {
-				flags.flag(UpdateFlag.SECONDARY_HIT);
-			}
-		}
 		MobAggression.sequence(this);
 		restoreRunEnergy();
 		int deltaX = getPosition().getX() - getLastRegion().getRegionX() * 8;
@@ -1612,21 +1605,34 @@ public final class Player extends Actor {
 	public QuestManager getQuestManager() {
 		return quest_manager;
 	}
-	
+
 	/**
-	 * Determines if the player is autocasting.
-	 * @return {@code true} if they are autocasting, {@code false} otherwise.
+	 * Gets the auto-cast spell.
+	 *
+	 * @return the {@link MagicSpell} to auto-cast
+	 */
+	public MagicSpell getAutocastSpell() {
+		return autocastSpell;
+	}
+
+	/**
+	 * Sets the auto-cast spell.
+	 *
+	 * @param autocastSpell the {@link MagicSpell} to auto-cast
+	 */
+	public void setAutocastSpell(MagicSpell autocastSpell) {
+		this.autocastSpell = autocastSpell;
+		WeaponInterface.setStrategy(this);
+		combat.reset();
+	}
+
+	/**
+	 * Checks whether or not an auto-cast spell is set.
+	 *
+	 * @return {@code true} if there is an active auto-cast spell
 	 */
 	public boolean isAutocast() {
-		return autocast;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#autocast}.
-	 * @param autocast the new value to set.
-	 */
-	public void setAutocast(boolean autocast) {
-		this.autocast = autocast;
+		return autocastSpell != null;
 	}
 
 	/**
@@ -1636,7 +1642,7 @@ public final class Player extends Actor {
 	public CombatSpecial getCombatSpecial() {
 		return combatSpecial;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Player#combatSpecial}.
 	 * @param combatSpecial the new value to set.

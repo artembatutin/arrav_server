@@ -129,9 +129,9 @@ public final class FormulaFactory {
             chance = 1 - ((defenceRoll + 1) / (attackRoll * 2));
         }
 
-//        System.out.println(attacker.getName() + " " + accuracy + " " + attacker.getCombat().getAttackStance() + " " + style);
-//        System.out.println(defender.getName() + " " + defence  + " " + defender.getCombat().getAttackStance() + " " + style);
-//        System.out.println(attacker.getName() + " " + ((int) (chance * 1000) / 10.0) + "% " + attackRoll + " " + defenceRoll);
+//        System.out.println(attacker.isPlayer() + " " + accuracy + " " + attacker.getCombat().getFightType() + " " + attacker.getCombat().getFightType().getStyle());
+//        System.out.println(defender.isPlayer() + " " + defence  + " " + defender.getCombat().getFightType() + " " + defender.getCombat().getFightType().getStyle());
+//        System.out.println(attacker.isPlayer() + " " + ((int) (chance * 10000) / 100.0) + "% " + attackRoll + " " + defenceRoll);
 //        System.out.println();
 
         return random(chance*100) > random(100 - chance*100);

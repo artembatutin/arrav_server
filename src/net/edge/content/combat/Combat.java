@@ -10,7 +10,10 @@ import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.CombatAttack;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.util.Stopwatch;
+import net.edge.world.World;
+import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.update.UpdateFlag;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -58,8 +61,22 @@ public class Combat<T extends Actor> {
         attacker.getMovementQueue().reset();
     }
 
-    public void tick() {
-        try {
+    public static void update() {
+        for(Actor a : World.get().getActors()) {
+            if (a == null || !a.getState().equals(EntityState.ACTIVE)) continue;
+            a.getCombat().tick();
+
+            if (!a.getHitQueue().isEmpty()) {
+                a.getFlags().flag(UpdateFlag.PRIMARY_HIT);
+                if (a.getHitQueue().size() > 1) {
+                    a.getFlags().flag(UpdateFlag.SECONDARY_HIT);
+                }
+            }
+        }
+    }
+
+    private void tick() {
+//        try {
             handleListeners();
             if (poison != null) poison.sequence(attacker);
             for (int index = 0; index < delays.length; index++) {
@@ -72,9 +89,9 @@ public class Combat<T extends Actor> {
                 }
             }
             eventManager.sequence();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void handleListeners() {
@@ -131,8 +148,6 @@ public class Combat<T extends Actor> {
                 }
                 attack(def, _hit);
                 strategy.attack(attacker, def, _hit);
-                if (attacker.isPlayer())
-                System.out.println(hit.getHitIcon() + " " + attacker.toPlayer().getWeapon());
             }));
 
             delay += hit.getHitDelay();
@@ -153,7 +168,7 @@ public class Combat<T extends Actor> {
                     eventManager.cancel(defender);
                     return;
                 }
-                hitsplat(def, _hit);
+                hitsplat(def, _hit, strategy.getCombatType());
                 strategy.hitsplat(attacker, def, _hit);
             }));
 
@@ -187,32 +202,45 @@ public class Combat<T extends Actor> {
 
     private void hit(Actor defender, Hit hit) {
         attacks.forEach(attack -> attack.hit(attacker, defender, hit));
+
+//        if (defender.isAutoRetaliate()) {
+//            defender.getCombat().attack(attacker);
+//        }
     }
 
-    private void hitsplat(Actor defender, Hit hit) {
+    private void hitsplat(Actor defender, Hit hit, CombatType combatType) {
         attacks.forEach(attack -> attack.hitsplat(attacker, defender, hit));
-        defender.getCombat().block(attacker, hit);
+        defender.getCombat().block(attacker, hit, combatType);
         defender.getCombat().damageCache.add(attacker, hit.getDamage());
-        defender.damage(hit);
 
-        if (defender.getCurrentHealth() <= 0) {
-            defender.getCombat().onDeath(attacker, hit);
-            reset();
+        if (combatType != CombatType.MAGIC || defender.isMob()) {
+            defender.animation(CombatUtil.getBlockAnimation(defender));
+        }
+
+        if (combatType != CombatType.MAGIC || hit.isAccurate()) {
+            defender.damage(hit);
+
+            if (defender.getCurrentHealth() <= 0) {
+                defender.getCombat().onDeath(attacker, hit);
+                defender.getCombat().reset();
+                reset();
+            }
         }
     }
 
-    private void block(Actor attacker, Hit hit) {
+    private void block(Actor attacker, Hit hit, CombatType combatType) {
         T defender = this.attacker;
         lastBlocked.reset();
         lastAttacker = attacker;
+        attacks.forEach(attack -> attack.block(attacker, defender, hit, combatType));
         defender.getMovementQueue().reset();
-        attacks.forEach(attack -> attack.block(attacker, defender, hit));
     }
 
     private void onDeath(Actor attacker, Hit hit) {
         T defender = this.attacker;
         attacks.forEach(attack -> attack.onDeath(attacker, defender, hit));
         defender.getMovementQueue().reset();
+
         if (!defender.getHitQueue().isEmpty()) {
             defender.getHitQueue().clear();
         }

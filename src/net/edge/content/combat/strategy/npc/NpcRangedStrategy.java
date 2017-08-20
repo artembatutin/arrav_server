@@ -39,17 +39,13 @@ public class NpcRangedStrategy extends RangedStrategy<Mob> {
 
     @Override
     public CombatHit[] getHits(Mob attacker, Actor defender) {
-        return new CombatHit[] { nextMagicHit(attacker, defender, projectileDefinition.getMaxHit(), projectileDefinition.getHitDelay(attacker, defender, false), projectileDefinition.getHitsplatDelay()) };
+        int distance = (int) attacker.getPosition().getDistance(defender.getPosition());
+        return new CombatHit[] { nextMagicHit(attacker, defender, projectileDefinition.getMaxHit(), projectileDefinition.getHitDelay(distance, false), projectileDefinition.getHitsplatDelay()) };
     }
 
     @Override
     protected Animation getAttackAnimation(Mob attacker, Actor defender) {
         return new Animation(attacker.getDefinition().getAttackAnimation(), Animation.AnimationPriority.HIGH);
-    }
-
-    @Override
-    protected Animation getBlockAnimation(Mob attacker, Actor defender) {
-        return new Animation(attacker.getDefinition().getDefenceAnimation(), Animation.AnimationPriority.HIGH);
     }
 
     @Override

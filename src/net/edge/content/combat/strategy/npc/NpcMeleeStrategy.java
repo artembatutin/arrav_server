@@ -1,5 +1,6 @@
 package net.edge.content.combat.strategy.npc;
 
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.CombatType;
@@ -21,11 +22,6 @@ public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
     }
 
     @Override
-    public void block(Actor attacker, Mob defender, Hit hit) {
-        defender.animation(getBlockAnimation(defender, attacker));
-    }
-
-    @Override
     public int getAttackDelay(Mob attacker, FightType fightType) {
         return 4;
     }
@@ -37,17 +33,12 @@ public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
 
     @Override
     public CombatHit[] getHits(Mob attacker, Actor defender) {
-        return new CombatHit[] { nextMeleeHit(attacker, defender, 1, 0) };
+        return new CombatHit[] { nextMeleeHit(attacker, defender, 1, CombatUtil.getDelay(attacker, defender)) };
     }
 
     @Override
     protected Animation getAttackAnimation(Mob attacker, Actor defender) {
         return new Animation(attacker.getDefinition().getAttackAnimation(), Animation.AnimationPriority.HIGH);
-    }
-
-    @Override
-    protected Animation getBlockAnimation(Mob defender, Actor attacker) {
-        return new Animation(defender.getDefinition().getDefenceAnimation(), Animation.AnimationPriority.HIGH);
     }
 
     @Override

@@ -55,7 +55,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			return;
 		}
 
-		player.getCombat().setStrategy(new PlayerMagicStrategy(spell, true));
+		player.getCombat().setStrategy(new PlayerMagicStrategy(spell));
 		player.getCombat().attack(victim);
 	}
 	

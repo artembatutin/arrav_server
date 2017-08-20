@@ -34,13 +34,8 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
     }
 
     @Override
-    public void block(Actor attacker, Player defender, Hit hit) {
-        defender.animation(getBlockAnimation(defender, attacker));
-    }
-
-    @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        return new CombatHit[]{nextMeleeHit(attacker, defender, 1, CombatUtil.getDelay(attacker, defender, getCombatType())) };
+        return new CombatHit[]{nextMeleeHit(attacker, defender, 1, CombatUtil.getDelay(attacker, defender)) };
     }
 
     @Override
@@ -59,17 +54,6 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
         FightType fightType = attacker.getCombat().getFightType();
         int animation = attacker.getWeaponAnimation().getAttacking()[fightType.getStyle().ordinal()];
         return new Animation(animation, Animation.AnimationPriority.HIGH);
-    }
-
-    @Override
-    public Animation getBlockAnimation(Player player, Actor defender) {
-        int animation = 404;
-        if (player.getShieldAnimation() != null) {
-            animation = player.getShieldAnimation().getBlock();
-        } else if (player.getWeaponAnimation() != null) {
-            animation = player.getWeaponAnimation().getBlocking();
-        }
-        return new Animation(animation, Animation.AnimationPriority.LOW);
     }
 
     @Override

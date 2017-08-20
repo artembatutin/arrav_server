@@ -142,14 +142,6 @@ public abstract class Mob extends Actor {
 		if (active()) {
 			update();
 			getMovementQueue().sequence();
-			getCombat().tick();
-
-			if (!getHitQueue().isEmpty()) {
-				flags.flag(UpdateFlag.PRIMARY_HIT);
-				if (getHitQueue().size() > 1) {
-					flags.flag(UpdateFlag.SECONDARY_HIT);
-				}
-			}
 		}
 	}
 	

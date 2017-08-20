@@ -1,5 +1,6 @@
 package net.edge.content.combat.strategy;
 
+import net.edge.content.combat.CombatType;
 import net.edge.content.combat.attack.AttackModifier;
 import net.edge.content.combat.hit.Hit;
 import net.edge.world.entity.actor.Actor;
@@ -16,7 +17,7 @@ public interface CombatAttack<T extends Actor> {
 
     /**
      * Called when the attacking hit executes on the defender.
-     *  @param attacker the attacking actor
+     * @param attacker the attacking actor
      * @param defender the defending actor
      * @param hit      the hit to apply
      */
@@ -40,11 +41,12 @@ public interface CombatAttack<T extends Actor> {
 
     /**
      * Called when the defending actor blocks a hit from the attacker.
-     *  @param attacker the attacking actor
+     * @param attacker the attacking actor
      * @param defender the defending actor
      * @param hit      the hit being applied
+     * @param combatType
      */
-    void block(Actor attacker, T defender, Hit hit);
+    void block(Actor attacker, T defender, Hit hit, CombatType combatType);
 
     /**
      * Called when the defending actor blocks a hit from the attacker.

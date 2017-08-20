@@ -1,15 +1,14 @@
 package net.edge.content.combat.strategy.player;
 
 import net.edge.content.combat.*;
+import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.basic.RangedStrategy;
-import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.weapon.RangedAmmunition;
 import net.edge.content.combat.weapon.RangedWeaponDefinition;
 import net.edge.content.item.Requirement;
-import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendMessage;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;
@@ -83,27 +82,11 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     }
 
     @Override
-    public void block(Actor attacker, Player defender, Hit hit) {
-        defender.animation(getBlockAnimation(defender, attacker));
-    }
-
-    @Override
     public Animation getAttackAnimation(Player attacker, Actor defender) {
         if (attacker.getWeaponAnimation() != null && attacker.getWeaponAnimation().getAttacking()[0] != 422) {
             return new Animation(attacker.getWeaponAnimation().getAttacking()[attacker.getFightType().getStyle().ordinal()], Animation.AnimationPriority.HIGH);
         }
         return new Animation(attacker.getFightType().getAnimation(), Animation.AnimationPriority.HIGH);
-    }
-
-    @Override
-    public Animation getBlockAnimation(Player attacker, Actor defender) {
-        int animation = 404;
-        if (attacker.getShieldAnimation() != null) {
-            animation = attacker.getShieldAnimation().getBlock();
-        } else if (attacker.getWeaponAnimation() != null) {
-            animation = attacker.getWeaponAnimation().getBlocking();
-        }
-        return new Animation(animation, Animation.AnimationPriority.LOW);
     }
 
     @Override
@@ -130,14 +113,19 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
         Item arrows = attacker.getEquipment().get(Equipment.ARROWS_SLOT);
+        int distance = (int) attacker.getPosition().getDistance(defender.getPosition());
+        int hitDelay = projectileDefinition.getHitDelay(distance, false);
+        int hitsplatDelay = CombatUtil.getDelay(attacker, defender);
+
         if (rangedDefinition.getType() == RangedWeaponDefinition.AttackType.THROWN && arrows != null) {
             int bonus = arrows.getDefinition().getBonus()[CombatConstants.BONUS_RANGED_STRENGTH];
             attacker.appendBonus(Equipment.ARROWS_SLOT, -bonus);
-            CombatHit hit = nextRangedHit(attacker, defender, projectileDefinition.getHitDelay(attacker, defender, false), CombatUtil.getDelay(attacker, defender, getCombatType()));
+            CombatHit hit = nextRangedHit(attacker, defender, hitDelay, hitsplatDelay);
             attacker.appendBonus(Equipment.ARROWS_SLOT, arrows.getDefinition().getBonus()[CombatConstants.BONUS_RANGED_STRENGTH]);
             return new CombatHit[] { hit };
         }
-        return new CombatHit[] { nextRangedHit(attacker, defender, projectileDefinition.getHitDelay(attacker, defender, false), CombatUtil.getDelay(attacker, defender, getCombatType())) };
+
+        return new CombatHit[] { nextRangedHit(attacker, defender, hitDelay, hitsplatDelay) };
     }
 
     @Override

@@ -37,8 +37,7 @@ public final class CombatProjectileDefinition {
         return maxHit;
     }
 
-    public int getHitDelay(Actor attacker, Actor defender, boolean magic) {
-        int distance = (int) attacker.getPosition().getDistance(defender.getPosition());
+    public int getHitDelay(int distance, boolean magic) {
         if (magic) {
             return Projectile.MAGIC_DELAYS[distance > 10 ? 10 : distance];
         }
