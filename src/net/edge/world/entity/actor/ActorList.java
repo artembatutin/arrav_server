@@ -247,7 +247,6 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 			World.get().remove(actor);
 			if(actor.isPlayer()) {
 				Player player = actor.toPlayer();
-				player.getSession().getChannel().close();
 				if(player.getRights() != Rights.ADMINISTRATOR)
 					new Hiscores(World.getScore(), player).submit();
 				PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
@@ -255,6 +254,9 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 					World.get().setStaffCount(World.get().getStaffCount() - 1);
 					PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 				}
+				System.out.println("Closed channel " + player);
+				player.getSession().getChannel().pipeline().fireChannelUnregistered();
+				player.getSession().setTerminating(true);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

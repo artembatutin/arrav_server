@@ -23,7 +23,7 @@ public final class ClanChatPacket implements IncomingPacket {
 			return;
 		}
 		if(player.getClan().isPresent()) {
-			player.getClan().get().message(player.isIronMan() ? "@ora@" : "" + input);
+			player.getClan().get().message(input);
 		} else {
 			player.message("You're not in a clan.");
 		}

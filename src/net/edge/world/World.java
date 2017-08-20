@@ -412,7 +412,7 @@ public final class World {
 			}
 			player.getMobs().clear();
 			if(response) {
-				System.out.println(this + " logged out.");
+				System.out.println(player + " logged out.");
 				playerByNames.remove(player.getCredentials().getUsernameHash());
 			}
 			return response;
