@@ -109,7 +109,7 @@ class ActorFollowTask extends Task {
 		}
 		
 		//Combat distance check.
-		if(character.getNewCombat().isAttacking()) {
+		if(character.getCombat().isAttacking()) {
 			if(character.isPlayer()) {
 				if(CombatUtil.checkAttackDistance(character)) {
 					return;

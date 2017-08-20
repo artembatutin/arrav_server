@@ -22,7 +22,7 @@ public class Shifter extends Pest {
 	@Override
 	public void sequence(Mob knight) {
 		//teleporting towards the knight.
-		if((!getPosition().withinDistance(knight.getPosition(), 6) && getNewCombat().getLastAttacker() == null) || RandomUtils.inclusive(3) == 1) {
+		if((!getPosition().withinDistance(knight.getPosition(), 6) && getCombat().getLastAttacker() == null) || RandomUtils.inclusive(3) == 1) {
 			Position delta = Position.delta(getPosition(), knight.getPosition());
 			int x = RandomUtils.inclusive(delta.getX() < 0 ? -delta.getX() : delta.getX());
 			int y = RandomUtils.inclusive(delta.getY() < 0 ? -delta.getY() : delta.getY());
@@ -30,14 +30,14 @@ public class Shifter extends Pest {
 			Optional<Position> destination = TraversalMap.getRandomTraversableTile(move, size());
 			destination.ifPresent(this::move);
 			graphic(new Graphic(308, 100));
-			getNewCombat().reset();
+			getCombat().reset();
 		}
 		
-		if(!getNewCombat().isAttacking()) {
-			if(getNewCombat().getLastAttacker().isPlayer())
-				getNewCombat().attack(getNewCombat().getLastAttacker());
+		if(!getCombat().isAttacking()) {
+			if(getCombat().getLastAttacker().isPlayer())
+				getCombat().attack(getCombat().getLastAttacker());
 			else if(getPosition().withinDistance(knight.getPosition(), 6))
-				getNewCombat().attack(knight);
+				getCombat().attack(knight);
 		}
 	}
 	

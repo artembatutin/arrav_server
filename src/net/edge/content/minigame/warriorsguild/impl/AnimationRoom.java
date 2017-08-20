@@ -143,7 +143,7 @@ public final class AnimationRoom extends GuildRoom {
 		seq.connect(2, () -> {
 			arm.forceChat("I'M ALIVE!!!!");
 		});
-		seq.connect(1, () -> arm.getNewCombat().attack(player));
+		seq.connect(1, () -> arm.getCombat().attack(player));
 		seq.connect(1, () -> player.getActivityManager().enable());
 		seq.start();
 	}

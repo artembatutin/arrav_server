@@ -1,16 +1,14 @@
 package net.edge.content.combat.strategy.player;
 
-import net.edge.content.combat.CombatEffect;
-import net.edge.content.combat.CombatProjectileDefinition;
-import net.edge.content.combat.CombatType;
-import net.edge.content.combat.CombatUtil;
-import net.edge.content.combat.content.RangedAmmunition;
+import net.edge.content.combat.*;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.basic.RangedStrategy;
 import net.edge.content.combat.attack.FightType;
+import net.edge.content.combat.weapon.RangedAmmunition;
 import net.edge.content.combat.weapon.RangedWeaponDefinition;
+import net.edge.content.item.Requirement;
 import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendMessage;
 import net.edge.world.Animation;
@@ -18,6 +16,7 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Equipment;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -29,14 +28,13 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     private Item ammunition;
 
     public PlayerRangedStrategy(RangedWeaponDefinition definition) {
-        this.rangedDefinition = definition;
+        this.rangedDefinition = Objects.requireNonNull(definition);
     }
 
     @Override
     public boolean canAttack(Player attacker, Actor defender) {
-        if (attacker.getSkillLevel(Skills.RANGED) < rangedDefinition.getLevel()) {
-            attacker.out(new SendMessage("You need a Ranged level of " + rangedDefinition.getLevel() + " to use this weapon."));
-            attacker.getNewCombat().reset();
+        if (!Requirement.canEquip(attacker, attacker.getEquipment().get(Equipment.WEAPON_SLOT))) {
+            attacker.getCombat().reset();
             return false;
         }
 
@@ -44,7 +42,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 
         if (ammo != null) {
             if (rangedDefinition.getAllowed() == null) {
-                attacker.getNewCombat().reset();
+                attacker.getCombat().reset();
                 return false;
             }
 
@@ -60,7 +58,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 
             attacker.out(new SendMessage(getInvalidAmmunitionMessage(rangedDefinition.getType())));
         } else attacker.out(new SendMessage(getNoAmmunitionMessage(rangedDefinition.getType())));
-        attacker.getNewCombat().reset();
+        attacker.getCombat().reset();
         return false;
     }
 
@@ -109,20 +107,8 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     }
 
     @Override
-    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
-        int speed = attacker.getWeapon().getSpeed();
-        switch (fightType) {
-            case CROSSBOW_RAPID:
-            case DART_RAPID:
-            case JAVELIN_RAPID:
-            case KNIFE_RAPID:
-            case LONGBOW_RAPID:
-            case SHORTBOW_RAPID:
-            case THROWNAXE_RAPID:
-                speed--;
-                break;
-        }
-        return speed;
+    public int getAttackDelay(Player attacker, FightType fightType) {
+        return attacker.getAttackDelay();
     }
 
     @Override
@@ -136,15 +122,22 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
             case LONGBOW_LONGRANGE:
             case SHORTBOW_LONGRANGE:
             case THROWNAXE_LONGRANGE:
-                distance += 2;
+                return (distance += 2) > 10 ? 10 : distance;
         }
-        if (distance > 10) distance = 10;
         return distance;
     }
 
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        return new CombatHit[] { nextRangedHit(attacker, defender, projectileDefinition.getHitDelay(attacker, defender, false), 0) };
+        Item arrows = attacker.getEquipment().get(Equipment.ARROWS_SLOT);
+        if (rangedDefinition.getType() == RangedWeaponDefinition.AttackType.THROWN && arrows != null) {
+            int bonus = arrows.getDefinition().getBonus()[CombatConstants.BONUS_RANGED_STRENGTH];
+            attacker.appendBonus(Equipment.ARROWS_SLOT, -bonus);
+            CombatHit hit = nextRangedHit(attacker, defender, projectileDefinition.getHitDelay(attacker, defender, false), CombatUtil.getDelay(attacker, defender, getCombatType()));
+            attacker.appendBonus(Equipment.ARROWS_SLOT, arrows.getDefinition().getBonus()[CombatConstants.BONUS_RANGED_STRENGTH]);
+            return new CombatHit[] { hit };
+        }
+        return new CombatHit[] { nextRangedHit(attacker, defender, projectileDefinition.getHitDelay(attacker, defender, false), CombatUtil.getDelay(attacker, defender, getCombatType())) };
     }
 
     @Override
@@ -156,7 +149,9 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
         Item next = attacker.getEquipment().get(type.getSlot());
         next.decrementAmount();
         attacker.getEquipment().set(type.getSlot(), next, true);
-        new GroundItem(new Item(ammunition.getId(), 1), defender.getPosition(), attacker).register();
+
+        GroundItem groundItem = new GroundItem(new Item(ammunition.getId(), 1), defender.getPosition(), attacker);
+        groundItem.getRegion().ifPresent(r -> r.register(groundItem, true));
 
         if (!attacker.getEquipment().contains(ammunition.getId())) {
             attacker.out(new SendMessage(getLastFiredMessage(type)));

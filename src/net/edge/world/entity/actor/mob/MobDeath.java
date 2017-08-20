@@ -41,15 +41,15 @@ public final class MobDeath extends ActorDeath<Mob> {
 
 	@Override
 	public void preDeath() {
-		if(getActor().getNewCombat().getDefender() != null) {
-			getActor().getNewCombat().getDefender().getNewCombat().reset();
+		if(getActor().getCombat().getDefender() != null) {
+			getActor().getCombat().getDefender().getCombat().reset();
 		}
 		getActor().animation(new Animation(getActor().getDefinition().getDeathAnimation(), Animation.AnimationPriority.HIGH));
 	}
 	
 	@Override
 	public void death() {
-		Optional<Player> killer = getActor().getNewCombat().getDamageCache().getPlayerKiller();
+		Optional<Player> killer = getActor().getCombat().getDamageCache().getPlayerKiller();
 		killer.ifPresent(k ->  {
 			Slayer.decrement(k, getActor());
 			MinigameHandler.getMinigame(k).ifPresent(m -> m.onKill(k, getActor()));

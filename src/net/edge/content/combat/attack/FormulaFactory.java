@@ -37,7 +37,7 @@ public final class FormulaFactory {
             int max = maxHit(level, bonus);
 
             verdict = random(max);
-            verdict += verdict * attacker.getNewCombat().getDamageModifier();
+            verdict += verdict * attacker.getCombat().getDamageModifier();
 
             if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
@@ -66,7 +66,7 @@ public final class FormulaFactory {
             int max = maxHit(level, bonus);
 
             verdict = random(max);
-            verdict += verdict * attacker.getNewCombat().getDamageModifier();
+            verdict += verdict * attacker.getCombat().getDamageModifier();
 
             if (verdict > 0) {
                 hitsplat = Hitsplat.NORMAL;
@@ -92,7 +92,7 @@ public final class FormulaFactory {
         Hitsplat hitsplat = Hitsplat.NORMAL;
         if (isAccurate(attacker, defender, CombatType.MAGIC)) {
             verdict = random(max);
-            verdict += verdict * attacker.getNewCombat().getDamageModifier();
+            verdict += verdict * attacker.getCombat().getDamageModifier();
 
             if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
@@ -116,8 +116,8 @@ public final class FormulaFactory {
     private static boolean isAccurate(Actor attacker, Actor defender, CombatType type) {
         int accuracy = getEffectiveAccuracy(attacker, type);
         int defence = getEffectiveDefence(defender, type);
-        FightType attType = attacker.getNewCombat().getFightType();
-        FightType defType = defender.getNewCombat().getFightType();
+        FightType attType = attacker.getCombat().getFightType();
+        FightType defType = defender.getCombat().getFightType();
 
         double attackRoll = roll(attacker, accuracy, attType, true);
         double defenceRoll = roll(defender, defence, defType, false);
@@ -129,8 +129,8 @@ public final class FormulaFactory {
             chance = 1 - ((defenceRoll + 1) / (attackRoll * 2));
         }
 
-//        System.out.println(attacker.getName() + " " + accuracy + " " + attacker.getNewCombat().getAttackStance() + " " + style);
-//        System.out.println(defender.getName() + " " + defence  + " " + defender.getNewCombat().getAttackStance() + " " + style);
+//        System.out.println(attacker.getName() + " " + accuracy + " " + attacker.getCombat().getAttackStance() + " " + style);
+//        System.out.println(defender.getName() + " " + defence  + " " + defender.getCombat().getAttackStance() + " " + style);
 //        System.out.println(attacker.getName() + " " + ((int) (chance * 1000) / 10.0) + "% " + attackRoll + " " + defenceRoll);
 //        System.out.println();
 
@@ -145,7 +145,7 @@ public final class FormulaFactory {
      * @return the effective accuracy
      */
     private static int getEffectiveAccuracy(Actor actor, CombatType type) {
-        double modifier = actor.getNewCombat().getAccuracyModifier();
+        double modifier = actor.getCombat().getAccuracyModifier();
         switch (type) {
             default:
             case MELEE:  return getEffectiveAttack(actor, modifier);
@@ -163,7 +163,7 @@ public final class FormulaFactory {
      * @return the effective strength
      */
     private static int getEffectiveStrength(Actor actor, CombatType type) {
-        double modifier = actor.getNewCombat().getAggressiveModifier();
+        double modifier = actor.getCombat().getAggressiveModifier();
         switch (type) {
             default:
             case MELEE:  return getEffectiveStrength(actor, modifier);
@@ -180,7 +180,7 @@ public final class FormulaFactory {
      * @return the effective defence
      */
     private static int getEffectiveDefence(Actor actor, CombatType type) {
-        double modifier = actor.getNewCombat().getDefensiveModifier();
+        double modifier = actor.getCombat().getDefensiveModifier();
         switch (type) {
             case MAGIC: return (int) (getEffectiveMagic(actor, modifier) * 0.70 + getEffectiveDefence(actor, modifier) * 0.30);
             default:    return getEffectiveDefence(actor, modifier);

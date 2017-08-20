@@ -1,12 +1,12 @@
 package net.edge.world.entity.item.container.impl;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.content.item.Requirement;
-import net.edge.content.item.Skillcape;
-import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
+import net.edge.content.item.Requirement;
+import net.edge.content.item.Skillcape;
+import net.edge.content.minigame.MinigameHandler;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.ShieldAnimation;
@@ -19,7 +19,6 @@ import net.edge.world.entity.item.container.ItemWeightListener;
 
 import java.util.Optional;
 
-import static net.edge.world.entity.item.container.impl.EquipmentType.ARROWS;
 import static net.edge.world.entity.item.container.impl.EquipmentType.WEAPON;
 
 /**
@@ -235,14 +234,15 @@ public final class Equipment extends ItemContainer {
 		unequipSecondary.ifPresent(i -> this.unequip(i.getDefinition().getEquipmentType().getSlot(), player.getInventory(), true, -1));
 		set(type.getSlot(), equipItem, true);
 		appearanceForIndex(type.getSlot());
-		
-		if(type == EquipmentType.SHIELD) {
+
+		if (type == EquipmentType.SHIELD) {
 			ShieldAnimation.execute(player, equipItem);
 		}
-		if(type == WEAPON && def.isWeapon()) {
+
+		if (type == WEAPON && def.isWeapon()) {
 			WeaponInterface.execute(player, equipItem);
 			WeaponAnimation.execute(player, equipItem);
-			player.getNewCombat().reset();
+			player.getCombat().reset();
 			player.setAutocast(false);
 			player.setSpecialActivated(false);
 			player.out(new SendConfig(108, 0));
@@ -289,7 +289,7 @@ public final class Equipment extends ItemContainer {
 			if(equipmentIndex == Equipment.WEAPON_SLOT) {
 				WeaponInterface.execute(player, null);
 				WeaponAnimation.execute(player, new Item(0));
-				player.getNewCombat().reset();
+				player.getCombat().reset();
 				player.setAutocast(false);
 				player.out(new SendConfig(108, 0));
 				player.out(new SendConfig(301, 0));

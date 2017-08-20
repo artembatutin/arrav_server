@@ -7,6 +7,7 @@ import net.edge.content.combat.CombatType;
 import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.basic.MeleeStrategy;
+import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
@@ -43,18 +44,19 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
     }
 
     @Override
-    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
-        return 4;
+    public int getAttackDelay(Player attacker, FightType fightType) {
+        return attacker.getAttackDelay();
     }
 
     @Override
     public int getAttackDistance(Player attacker, FightType fightType) {
+        if (attacker.getWeapon() == WeaponInterface.HALBERD) return 2;
         return 1;
     }
 
     @Override
     public Animation getAttackAnimation(Player attacker, Actor defender) {
-        FightType fightType = attacker.getNewCombat().getFightType();
+        FightType fightType = attacker.getCombat().getFightType();
         int animation = attacker.getWeaponAnimation().getAttacking()[fightType.getStyle().ordinal()];
         return new Animation(animation, Animation.AnimationPriority.HIGH);
     }

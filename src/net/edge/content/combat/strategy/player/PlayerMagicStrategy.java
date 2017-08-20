@@ -1,16 +1,15 @@
 package net.edge.content.combat.strategy.player;
 
-import net.edge.content.combat.CombatUtil;
-import net.edge.content.combat.attack.FightType;
-import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.combat.CombatEffect;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.attack.AttackModifier;
+import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.content.MagicRune;
 import net.edge.content.combat.content.MagicSpell;
 import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.basic.MagicStrategy;
+import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendMessage;
 import net.edge.world.Animation;
@@ -53,7 +52,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
         }
 
         attacker.out(new SendMessage("You need some runes to cast this spell."));
-        attacker.getNewCombat().reset();
+        attacker.getCombat().reset();
         return false;
     }
 
@@ -87,9 +86,9 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 
     @Override
     public void finish(Player attacker, Actor defender) {
-        if (attacker.getNewCombat().getStrategy() == this) {
+        if (attacker.getCombat().getStrategy() == this) {
             if (singleCast) {
-                attacker.getNewCombat().reset();
+                attacker.getCombat().reset();
                 WeaponInterface.setStrategy(attacker);
             }
         }
@@ -97,11 +96,11 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        return new CombatHit[] { nextMagicHit(attacker, defender, spell.getMaxHit(), spell.getHitDelay(attacker, defender), CombatUtil.getDelay(attacker, defender, getCombatType())) };
+        return new CombatHit[] { nextMagicHit(attacker, defender, spell.getMaxHit(), spell.getHitDelay(attacker, defender), spell.getHitsplatDelay()) };
     }
 
     @Override
-    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
+    public int getAttackDelay(Player attacker, FightType fightType) {
         return 4;
     }
 

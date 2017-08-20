@@ -7,6 +7,7 @@ import net.edge.content.combat.strategy.player.PlayerMeleeStrategy;
 import net.edge.content.combat.strategy.player.PlayerRangedStrategy;
 import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.net.packet.out.SendConfig;
+import net.edge.util.json.impl.CombatRangedBowLoader;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Equipment;
@@ -168,14 +169,14 @@ public enum WeaponInterface {
         WeaponInterface weapon = item == null ? null : INTERFACES.get(item.getId());
 
         if (weapon != null && weapon.isRanged()) {
-            // TODO: get ranged weapon definitions from the weapons
-            int levelreq = 50;
-            net.edge.content.combat.content.RangedAmmunition[] ammo = new net.edge.content.combat.content.RangedAmmunition[] { net.edge.content.combat.content.RangedAmmunition.RUNE_KNIFE };
-            RangedWeaponDefinition.AttackType type = RangedWeaponDefinition.AttackType.THROWN;
-            RangedWeaponDefinition def = new RangedWeaponDefinition(levelreq, type, ammo);
-            player.getNewCombat().setStrategy(new PlayerRangedStrategy(def));
+            RangedWeaponDefinition def = CombatRangedBowLoader.DEFINITIONS.get(item.getId());
+            if (def != null) {
+                player.getCombat().setStrategy(new PlayerRangedStrategy(def));
+            } else {
+                player.getCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
+            }
         } else {
-            player.getNewCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
+            player.getCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
         }
     }
 

@@ -29,8 +29,6 @@ import net.edge.world.entity.region.Region;
 import net.edge.world.entity.region.RegionManager;
 import net.edge.world.sync.Synchronizer;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -265,7 +263,7 @@ public final class World {
 	 * @param player the player to log out.
 	 */
 	public void queueLogout(Player player) {
-		if(player.getNewCombat().inCombat())
+		if(player.getCombat().inCombat())
 			player.getLogoutTimer().reset();
 		player.setState(AWAITING_REMOVAL);
 		player.out(new SendLogout());
@@ -403,7 +401,7 @@ public final class World {
 		try {
 			// If the player x-logged, don't log the player out. Keep the
 			// player queued until they are out of combat to prevent x-logging.
-			if(player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getNewCombat().isUnderAttack() && UpdateCommand.inProgess != 2) {
+			if(player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombat().isUnderAttack() && UpdateCommand.inProgess != 2) {
 				return false;
 			}
 			boolean response = players.remove(player);

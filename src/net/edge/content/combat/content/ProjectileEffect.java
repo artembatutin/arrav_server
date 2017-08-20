@@ -96,7 +96,7 @@ public enum ProjectileEffect {
 
     private static void poison(Actor attacker, Actor actor, Hit hit, int strength) {
         if (attacker.isMob() || hit.getDamage() > 0) {
-            actor.getNewCombat().poison(strength);
+            actor.getCombat().poison(strength);
         }
     }
 
@@ -173,10 +173,10 @@ public enum ProjectileEffect {
     private static void hitEvent(Actor attacker, Actor actor, CombatHit hit) {
         if (attacker.isPlayer()) {
             Player player = (Player) attacker;
-            Actor defender = player.getNewCombat().getDefender();
+            Actor defender = player.getCombat().getDefender();
 
             if (!defender.equals(actor)) {
-                player.getNewCombat().submitHits(actor, hit);
+                player.getCombat().submitHits(actor, hit);
             }
         }
     }

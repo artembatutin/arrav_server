@@ -44,8 +44,8 @@ public abstract class MultiStrategy extends CombatStrategy<Mob> {
     }
 
     @Override
-    public int getAttackDelay(Mob attacker, Actor defender, FightType fightType) {
-        return currentStrategy.getAttackDelay(attacker, defender, fightType);
+    public int getAttackDelay(Mob attacker, FightType fightType) {
+        return currentStrategy.getAttackDelay(attacker, fightType);
     }
 
     @Override

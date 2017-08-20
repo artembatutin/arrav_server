@@ -136,13 +136,20 @@ public abstract class Mob extends Actor {
 		setUpdates(true, true);
 		setTeleportStage(-1);
 	}
-	
+
 	@Override
 	public void preUpdate() {
-		if(active()) {
+		if (active()) {
 			update();
 			getMovementQueue().sequence();
-			getNewCombat().tick();
+			getCombat().tick();
+
+			if (!getHitQueue().isEmpty()) {
+				flags.flag(UpdateFlag.PRIMARY_HIT);
+				if (getHitQueue().size() > 1) {
+					flags.flag(UpdateFlag.SECONDARY_HIT);
+				}
+			}
 		}
 	}
 	
@@ -465,7 +472,7 @@ public abstract class Mob extends Actor {
 	private final Combat<Mob> mobCombat = new Combat<>(this);
 
 	@Override
-	public Combat<Mob> getNewCombat() {
+	public Combat<Mob> getCombat() {
 		return mobCombat;
 	}
 

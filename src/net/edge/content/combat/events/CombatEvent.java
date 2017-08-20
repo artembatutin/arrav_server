@@ -9,22 +9,23 @@ public class CombatEvent {
 
     private Actor defender;
     private CombatHit hit;
-    private CombatHit[] hits;
     private EventInterface execute;
 
-    public CombatEvent(Actor defender, int delay, CombatHit hit, CombatHit[] hits, EventInterface execute) {
+    public CombatEvent(Actor defender, int delay, CombatHit hit, EventInterface execute) {
         this.delay = delay;
         this.defender = defender;
         this.hit = hit;
-        this.hits = hits;
         this.execute = execute;
     }
 
-    public CombatEvent(Actor defender, int delay, CombatHit[] hits, EventInterface execute) {
+    public CombatEvent(Actor defender, int delay, EventInterface execute) {
         this.delay = delay;
         this.defender = defender;
-        this.hits = hits;
         this.execute = execute;
+    }
+
+    public Actor getDefender() {
+        return defender;
     }
 
     boolean canExecute() {
@@ -32,7 +33,7 @@ public class CombatEvent {
     }
 
     public void execute() {
-        execute.execute(defender, hit, hits);
+        execute.execute(defender, hit);
     }
 
 }

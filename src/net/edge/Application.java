@@ -213,6 +213,7 @@ public final class Application {
 		launch.execute(new WeaponAnimationLoader());
 		launch.execute(new WeaponInterfaceLoader());
 		launch.execute(new EquipmentRequirementLoader());
+		launch.execute(new CombatRangedBowLoader());
 		launch.execute(new IndividualScoreboardRewardsLoader());
 		launch.execute(() -> new SlayerDefinitionLoader().load());
 		launch.execute(() -> CombatProjectileDefinition.createLoader().load());

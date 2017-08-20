@@ -21,7 +21,7 @@ public class ArmadylGodsword extends PlayerMeleeStrategy {
         super.attack(attacker, defender, hit);
         attacker.graphic(GRAPHIC);
 
-        if (attacker.getNewCombat().getStrategy() == this) {
+        if (attacker.getCombat().getStrategy() == this) {
             attacker.getCombatSpecial().drain(attacker);
         }
     }
@@ -32,7 +32,7 @@ public class ArmadylGodsword extends PlayerMeleeStrategy {
     }
 
     @Override
-    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
+    public int getAttackDelay(Player attacker, FightType fightType) {
         return 4;
     }
 

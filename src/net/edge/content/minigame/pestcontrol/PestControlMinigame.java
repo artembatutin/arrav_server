@@ -126,7 +126,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 		player.getAttr().get("master_archery").set(false);
 		CombatSpecial.restore(player, 100);
 		Skills.restoreAll(player);
-		player.getNewCombat().reset();
+		player.getCombat().reset();
 		player.getInventory().remove(new Item(1511, 28));//removing logs.
 	}
 
@@ -214,15 +214,15 @@ public final class PestControlMinigame extends SequencedMinigame {
 				continue;
 			if(!pest.aggressive())
 				continue;
-			if(!pest.getNewCombat().isAttacking()) {
+			if(!pest.getCombat().isAttacking()) {
 				if(pest.getPosition().withinDistance(voidKnight.getPosition(), pest.ranged() ? 15 : 5)) {
-					pest.getNewCombat().attack(voidKnight);
+					pest.getCombat().attack(voidKnight);
 					continue;
 				}
 				pest.getRegion().ifPresent(r -> {
 					for(Player p : r.getPlayers()) {
 						if(p.getPosition().withinDistance(pest.getPosition(), pest.ranged() ? 10 : 5)) {
-							pest.getNewCombat().attack(p);
+							pest.getCombat().attack(p);
 							break;
 						}
 					}

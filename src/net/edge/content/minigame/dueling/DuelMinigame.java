@@ -308,7 +308,7 @@ public final class DuelMinigame extends Minigame {
 		}
 		if(!session.getOther(player).same(victim)) {
 			player.message("You can't attack this person.");
-			player.getNewCombat().reset();
+			player.getCombat().reset();
 			return false;
 		}
 		if(!started) {
@@ -318,33 +318,33 @@ public final class DuelMinigame extends Minigame {
 		if(getRules().contains(DuelingRules.WHIP_DDS_ONLY)) {
 			if(!type.equals(CombatType.MELEE)) {
 				player.message("You can only hit the opponent with a whip or dds.");
-				player.getNewCombat().reset();
+				player.getCombat().reset();
 				return false;
 			}
 			if(!player.getEquipment().containsAny(4151, 1215, 1231, 5680, 5698)) {
 				player.message("You can only hit the opponent with a whip or dds.");
-				player.getNewCombat().reset();
+				player.getCombat().reset();
 				return false;
 			}
 		}
 		if(getRules().contains(DuelingRules.NO_MAGIC)) {
 			if(type.equals(CombatType.MAGIC)) {
 				player.message("Magical attacks have been disabled during this duel.");
-				player.getNewCombat().reset();
+				player.getCombat().reset();
 				return false;
 			}
 		}
 		if(getRules().contains(DuelingRules.NO_RANGED)) {
 			if(type.equals(CombatType.RANGED)) {
 				player.message("Ranged attacks have been disabled during this duel.");
-				player.getNewCombat().reset();
+				player.getCombat().reset();
 				return false;
 			}
 		}
 		if(getRules().contains(DuelingRules.NO_MELEE)) {
 			if(type.equals(CombatType.MELEE)) {
 				player.message("Melee attacks have been disabled during this duel.");
-				player.getNewCombat().reset();
+				player.getCombat().reset();
 				return false;
 			}
 		}

@@ -43,16 +43,16 @@ public final class WeaponFactory {
     }
 
     private static void chinchompa(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.SHORT_FUSE);
+                player.getCombat().setFightType(FightType.SHORT_FUSE);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.LONG_FUSE);
+                player.getCombat().setFightType(FightType.LONG_FUSE);
                 break;
             case AGGRESSIVE:
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.MEDIUM_FUSE);
+                player.getCombat().setFightType(FightType.MEDIUM_FUSE);
                 break;
         }
     }
@@ -67,76 +67,76 @@ public final class WeaponFactory {
     }
 
     private static void crossbow(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.CROSSBOW_ACCURATE);
+                player.getCombat().setFightType(FightType.CROSSBOW_ACCURATE);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.CROSSBOW_LONGRANGE);
+                player.getCombat().setFightType(FightType.CROSSBOW_LONGRANGE);
                 break;
             case AGGRESSIVE:
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.CROSSBOW_RAPID);
+                player.getCombat().setFightType(FightType.CROSSBOW_RAPID);
                 break;
         }
     }
 
     private static void knife(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.KNIFE_ACCURATE);
+                player.getCombat().setFightType(FightType.KNIFE_ACCURATE);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.KNIFE_LONGRANGE);
+                player.getCombat().setFightType(FightType.KNIFE_LONGRANGE);
                 break;
             case AGGRESSIVE:
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.KNIFE_RAPID);
+                player.getCombat().setFightType(FightType.KNIFE_RAPID);
                 break;
         }
     }
 
     private static void dart(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.DART_ACCURATE);
+                player.getCombat().setFightType(FightType.DART_ACCURATE);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.DART_LONGRANGE);
+                player.getCombat().setFightType(FightType.DART_LONGRANGE);
                 break;
             case AGGRESSIVE:
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.DART_RAPID);
+                player.getCombat().setFightType(FightType.DART_RAPID);
                 break;
         }
     }
 
     private static void javelin(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.JAVELIN_ACCURATE);
+                player.getCombat().setFightType(FightType.JAVELIN_ACCURATE);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.JAVELIN_LONGRANGE);
+                player.getCombat().setFightType(FightType.JAVELIN_LONGRANGE);
                 break;
             case AGGRESSIVE:
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.JAVELIN_RAPID);
+                player.getCombat().setFightType(FightType.JAVELIN_RAPID);
                 break;
         }
     }
 
     private static void salamander(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.FLARE);
+                player.getCombat().setFightType(FightType.FLARE);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.BLAZE);
+                player.getCombat().setFightType(FightType.BLAZE);
                 break;
             case AGGRESSIVE:
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.SCORCH);
+                player.getCombat().setFightType(FightType.SCORCH);
                 break;
         }
     }
@@ -181,7 +181,7 @@ public final class WeaponFactory {
     }
 
     private static int getAttackStyleConfig(Player player) {
-        FightStyle fightStyle = player.getNewCombat().getFightType().getStyle();
+        FightStyle fightStyle = player.getCombat().getFightType().getStyle();
 
         switch (getAttackStyle(player.getWeapon())) {
             case ACCURATE_AGGRESSIVE_DEFENSIVE:
@@ -232,276 +232,276 @@ public final class WeaponFactory {
     }
 
     private static void whip(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.WHIP_FLICK);
+                player.getCombat().setFightType(FightType.WHIP_FLICK);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.WHIP_DEFLECT);
+                player.getCombat().setFightType(FightType.WHIP_DEFLECT);
                 break;
             case AGGRESSIVE:
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.WHIP_LASH);
+                player.getCombat().setFightType(FightType.WHIP_LASH);
                 break;
         }
     }
 
     private static void reap(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.SCYTHE_REAP);
+                player.getCombat().setFightType(FightType.SCYTHE_REAP);
                 break;
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.SCYTHE_JAB);
+                player.getCombat().setFightType(FightType.SCYTHE_JAB);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.SCYTHE_BLOCK);
+                player.getCombat().setFightType(FightType.SCYTHE_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.SCYTHE_CHOP);
+                player.getCombat().setFightType(FightType.SCYTHE_CHOP);
                 break;
         }
     }
 
     private static void battleaxe(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.BATTLEAXE_CHOP);
+                player.getCombat().setFightType(FightType.BATTLEAXE_CHOP);
                 break;
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.BATTLEAXE_HACK);
+                player.getCombat().setFightType(FightType.BATTLEAXE_HACK);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.BATTLEAXE_BLOCK);
+                player.getCombat().setFightType(FightType.BATTLEAXE_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.BATTLEAXE_SMASH);
+                player.getCombat().setFightType(FightType.BATTLEAXE_SMASH);
                 break;
         }
     }
 
     private static void sword(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.SWORD_STAB);
+                player.getCombat().setFightType(FightType.SWORD_STAB);
                 break;
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.SWORD_LUNGE);
+                player.getCombat().setFightType(FightType.SWORD_LUNGE);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.SWORD_BLOCK);
+                player.getCombat().setFightType(FightType.SWORD_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.SWORD_SLASH);
+                player.getCombat().setFightType(FightType.SWORD_SLASH);
                 break;
         }
     }
 
     private static void scimitar(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.SCIMITAR_CHOP);
+                player.getCombat().setFightType(FightType.SCIMITAR_CHOP);
                 break;
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.SCIMITAR_LUNGE);
+                player.getCombat().setFightType(FightType.SCIMITAR_LUNGE);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.SCIMITAR_BLOCK);
+                player.getCombat().setFightType(FightType.SCIMITAR_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.SCIMITAR_SLASH);
+                player.getCombat().setFightType(FightType.SCIMITAR_SLASH);
                 break;
         }
     }
 
     private static void dagger(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.DAGGER_STAB);
+                player.getCombat().setFightType(FightType.DAGGER_STAB);
                 break;
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.DAGGER_LUNGE);
+                player.getCombat().setFightType(FightType.DAGGER_LUNGE);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.DAGGER_BLOCK);
+                player.getCombat().setFightType(FightType.DAGGER_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.DAGGER_SLASH);
+                player.getCombat().setFightType(FightType.DAGGER_SLASH);
                 break;
         }
     }
 
     private static void longsword(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.LONGSWORD_CHOP);
+                player.getCombat().setFightType(FightType.LONGSWORD_CHOP);
                 break;
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.LONGSWORD_LUNGE);
+                player.getCombat().setFightType(FightType.LONGSWORD_LUNGE);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.LONGSWORD_BLOCK);
+                player.getCombat().setFightType(FightType.LONGSWORD_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.LONGSWORD_SLASH);
+                player.getCombat().setFightType(FightType.LONGSWORD_SLASH);
                 break;
         }
     }
 
     private static void twoHandedSword(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.TWOHANDEDSWORD_CHOP);
+                player.getCombat().setFightType(FightType.TWOHANDEDSWORD_CHOP);
                 break;
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.TWOHANDEDSWORD_SMASH);
+                player.getCombat().setFightType(FightType.TWOHANDEDSWORD_SMASH);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.TWOHANDEDSWORD_BLOCK);
+                player.getCombat().setFightType(FightType.TWOHANDEDSWORD_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.TWOHANDEDSWORD_SLASH);
+                player.getCombat().setFightType(FightType.TWOHANDEDSWORD_SLASH);
                 break;
         }
     }
 
     private static void pickaxe(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.PICKAXE_SPIKE);
+                player.getCombat().setFightType(FightType.PICKAXE_SPIKE);
                 break;
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.PICKAXE_SMASH);
+                player.getCombat().setFightType(FightType.PICKAXE_SMASH);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.PICKAXE_BLOCK);
+                player.getCombat().setFightType(FightType.PICKAXE_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.PICKAXE_IMPALE);
+                player.getCombat().setFightType(FightType.PICKAXE_IMPALE);
                 break;
         }
     }
 
     private static void mace(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.MACE_POUND);
+                player.getCombat().setFightType(FightType.MACE_POUND);
                 break;
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.MACE_SPIKE);
+                player.getCombat().setFightType(FightType.MACE_SPIKE);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.MACE_BLOCK);
+                player.getCombat().setFightType(FightType.MACE_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.MACE_PUMMEL);
+                player.getCombat().setFightType(FightType.MACE_PUMMEL);
                 break;
         }
     }
 
     private static void claws(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.CLAWS_CHOP);
+                player.getCombat().setFightType(FightType.CLAWS_CHOP);
                 break;
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.CLAWS_LUNGE);
+                player.getCombat().setFightType(FightType.CLAWS_LUNGE);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.CLAWS_BLOCK);
+                player.getCombat().setFightType(FightType.CLAWS_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.CLAWS_SLASH);
+                player.getCombat().setFightType(FightType.CLAWS_SLASH);
                 break;
         }
     }
 
     private static void staff(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.STAFF_BASH);
+                player.getCombat().setFightType(FightType.STAFF_BASH);
                 break;
             case CONTROLLED:
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.STAFF_FOCUS);
+                player.getCombat().setFightType(FightType.STAFF_FOCUS);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.STAFF_POUND);
+                player.getCombat().setFightType(FightType.STAFF_POUND);
                 break;
         }
     }
 
     private static void magicStaff(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.STAFF_BASH);
+                player.getCombat().setFightType(FightType.STAFF_BASH);
                 break;
             case CONTROLLED:
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.STAFF_FOCUS);
+                player.getCombat().setFightType(FightType.STAFF_FOCUS);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.STAFF_POUND);
+                player.getCombat().setFightType(FightType.STAFF_POUND);
                 break;
         }
     }
 
     private static void spear(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.SPEAR_LUNGE);
+                player.getCombat().setFightType(FightType.SPEAR_LUNGE);
                 break;
             case CONTROLLED:
-                player.getNewCombat().setFightType(FightType.SPEAR_POUND);
+                player.getCombat().setFightType(FightType.SPEAR_POUND);
                 break;
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.SPEAR_BLOCK);
+                player.getCombat().setFightType(FightType.SPEAR_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.SPEAR_SWIPE);
+                player.getCombat().setFightType(FightType.SPEAR_SWIPE);
                 break;
         }
     }
 
     private static void halbard(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.HALBERD_SWIPE);
+                player.getCombat().setFightType(FightType.HALBERD_SWIPE);
                 break;
             case CONTROLLED:
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.HALBERD_FEND);
+                player.getCombat().setFightType(FightType.HALBERD_FEND);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.HALBERD_SWIPE);
+                player.getCombat().setFightType(FightType.HALBERD_SWIPE);
                 break;
         }
     }
 
     private static void warhammar(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.WARHAMMER_POUND);
+                player.getCombat().setFightType(FightType.WARHAMMER_POUND);
             case CONTROLLED:
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.WARHAMMER_BLOCK);
+                player.getCombat().setFightType(FightType.WARHAMMER_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.WARHAMMER_PUMMEL);
+                player.getCombat().setFightType(FightType.WARHAMMER_PUMMEL);
                 break;
         }
     }
 
     private static void unarmed(Player player) {
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
-                player.getNewCombat().setFightType(FightType.UNARMED_PUNCH);
+                player.getCombat().setFightType(FightType.UNARMED_PUNCH);
             case CONTROLLED:
             case DEFENSIVE:
-                player.getNewCombat().setFightType(FightType.UNARMED_BLOCK);
+                player.getCombat().setFightType(FightType.UNARMED_BLOCK);
                 break;
             case AGGRESSIVE:
-                player.getNewCombat().setFightType(FightType.UNARMED_KICK);
+                player.getCombat().setFightType(FightType.UNARMED_KICK);
                 break;
         }
     }

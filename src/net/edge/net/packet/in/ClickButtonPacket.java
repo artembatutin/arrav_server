@@ -304,304 +304,304 @@ public final class ClickButtonPacket implements IncomingPacket {
 			//AUTOCASTING
 			case 51133:
 			case 50139:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SMOKE_RUSH, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SMOKE_RUSH, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51185:
 			case 50187:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SHADOW_RUSH, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SHADOW_RUSH, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51091:
 			case 50101:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.BLOOD_RUSH, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.BLOOD_RUSH, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 24018:
 			case 50061:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_RUSH, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_RUSH, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51159:
 			case 50163:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SMOKE_BURST, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SMOKE_BURST, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51211:
 			case 50211:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SHADOW_BURST, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SHADOW_BURST, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51111:
 			case 50119:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.BLOOD_BURST, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.BLOOD_BURST, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51069:
 			case 50081:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BURST, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BURST, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51146:
 			case 50151:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SMOKE_BLITZ, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SMOKE_BLITZ, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51198:
 			case 50199:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SHADOW_BLITZ, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SHADOW_BLITZ, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51102:
 			case 50111:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.BLOOD_BLITZ, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.BLOOD_BLITZ, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51058:
 			case 50071:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51172:
 			case 50175:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SMOKE_BARRAGE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SMOKE_BARRAGE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51224:
 			case 50223:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SHADOW_BARRAGE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SHADOW_BARRAGE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51122:
 			case 50129:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.BLOOD_BARRAGE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.BLOOD_BARRAGE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51080:
 			case 50091:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BARRAGE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BARRAGE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7038:
 			case 4128:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WIND_STRIKE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WIND_STRIKE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7039:
 			case 4130:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WATER_STRIKE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WATER_STRIKE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7040:
 			case 4132:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.EARTH_STRIKE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.EARTH_STRIKE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7041:
 			case 4134:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.FIRE_STRIKE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.FIRE_STRIKE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7042:
 			case 4136:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WIND_BOLT, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WIND_BOLT, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7043:
 			case 4139:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WATER_BOLT, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WATER_BOLT, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7044:
 			case 4142:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.EARTH_BOLT, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.EARTH_BOLT, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7045:
 			case 4145:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.FIRE_BOLT, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.FIRE_BOLT, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7046:
 			case 4148:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WIND_BLAST, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WIND_BLAST, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7047:
 			case 4151:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WATER_BLAST, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WATER_BLAST, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7048:
 			case 4153:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.EARTH_BLAST, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.EARTH_BLAST, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7049:
 			case 4157:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.FIRE_BLAST, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.FIRE_BLAST, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7050:
 			case 4159:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WIND_WAVE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WIND_WAVE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7051:
 			case 4161:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WATER_WAVE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WATER_WAVE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7052:
 			case 4164:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.EARTH_WAVE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.EARTH_WAVE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7053:
 			case 4165:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.FIRE_WAVE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.FIRE_WAVE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 4129:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.CONFUSE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.CONFUSE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 4133:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WEAKEN, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.WEAKEN, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 4137:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.CURSE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.CURSE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6036:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.BIND, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.BIND, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6003:
-//				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.IBAN_BLAST, false));
+//				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.IBAN_BLAST, false));
 //				player.setAutocast(true);
 //				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 //				player.out(new SendConfig(108, 3));
 				player.out(new SendMessage("NEED IBAN BLAST")); // TODO: Iban blast
 				break;
 			case 47005:
-//				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.MAGIC_DART, false));
+//				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.MAGIC_DART, false));
 //				player.setAutocast(true);
 //				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 //				player.out(new SendConfig(108, 3));
 				player.out(new SendMessage("NEED MAGIC DART")); // TODO: Magic dart
 				break;
 			case 4166:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SARADOMIN_STRIKE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.SARADOMIN_STRIKE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 4167:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.CLAWS_OF_GUTHIX, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.CLAWS_OF_GUTHIX, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 4168:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.FLAMES_OF_ZAMORAK, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.FLAMES_OF_ZAMORAK, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6006:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.VULNERABILITY, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.VULNERABILITY, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6007:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ENFEEBLE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ENFEEBLE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6056:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ENTANGLE, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ENTANGLE, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6026:
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.STUN, false));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.STUN, false));
 				player.setAutocast(true);
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));

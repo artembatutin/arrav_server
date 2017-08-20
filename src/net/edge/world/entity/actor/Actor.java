@@ -1,6 +1,7 @@
 package net.edge.world.entity.actor;
 
 import com.google.common.base.Preconditions;
+import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.hit.Hit;
@@ -24,8 +25,7 @@ import net.edge.world.entity.actor.update.UpdateFlag;
 import net.edge.world.entity.actor.update.UpdateFlagHolder;
 import net.edge.world.locale.Position;
 
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
@@ -157,14 +157,9 @@ public abstract class Actor extends Entity {
 	private Position facePosition;
 	
 	/**
-	 * The current primary hit being dealt on this entity.
+	 * The hits being queued to this entity.
 	 */
-	private Hit primaryHit;
-
-	/**
-	 * The current secondary hit being dealt on this entity.
-	 */
-	private Hit secondaryHit;
+	private Deque<Hit> hitQueue = new LinkedList<>();
 	
 	/**
 	 * The last known region that this {@code Player} was in.
@@ -449,24 +444,6 @@ public abstract class Actor extends Entity {
 		Position copy = new Position(this.getPosition().getX() + direction.getX(), this.getPosition().getY() + direction.getY());
 		facePosition(copy);
 	}
-	
-	/**
-	 * Deals {@code hit} on this entity as a primary hitmark.
-	 * @param hit the hit to deal on this entity.
-	 */
-	private void primaryDamage(Hit hit) {
-		primaryHit = decrementHealth(Objects.requireNonNull(hit));
-		flags.flag(UpdateFlag.PRIMARY_HIT);
-	}
-	
-	/**
-	 * Deals {@code hit} on this entity as a secondary hitmark.
-	 * @param hit the hit to deal on this entity.
-	 */
-	private void secondaryDamage(Hit hit) {
-		secondaryHit = decrementHealth(Objects.requireNonNull(hit));
-		flags.flag(UpdateFlag.SECONDARY_HIT);
-	}
 
 	/**
 	 * Deals a series of hits to this entity.
@@ -474,86 +451,10 @@ public abstract class Actor extends Entity {
 	 */
 	public final void damage(Hit... hits) {
 		Preconditions.checkArgument(hits.length >= 1 && hits.length <= 4);
-		switch(hits.length) {
-			case 1:
-				sendDamage(hits[0]);
-				break;
-			case 2:
-				sendDamage(hits[0], hits[1]);
-				break;
-			case 3:
-				sendDamage(hits[0], hits[1], hits[2]);
-				break;
-			case 4:
-				sendDamage(hits[0], hits[1], hits[2], hits[3]);
-				break;
+		for (Hit hit : hits) {
+			decrementHealth(hit);
+			hitQueue.add(hit);
 		}
-	}
-
-	/**
-	 * Deals {@code hit} to this entity.
-	 * @param hit the hit to deal to this entity.
-	 */
-	private void sendDamage(Hit hit) {
-		if(flags.get(UpdateFlag.PRIMARY_HIT)) {
-			secondaryDamage(hit);
-			return;
-		}
-		primaryDamage(hit);
-	}
-
-	/**
-	 * Deals {@code hit} and {@code hit2} to this entity.
-	 * @param hit  the first hit to deal to this entity.
-	 * @param hit2 the second hit to deal to this entity.
-	 */
-	private void sendDamage(Hit hit, Hit hit2) {
-		sendDamage(hit);
-		secondaryDamage(hit2);
-	}
-
-	/**
-	 * Deals {@code hit}, {@code hit2}, and {@code hit3} to this entity.
-	 * @param hit  the first hit to deal to this entity.
-	 * @param hit2 the second hit to deal to this entity.
-	 * @param hit3 the third hit to deal to this entity.
-	 */
-	private void sendDamage(Hit hit, Hit hit2, Hit hit3) {
-		sendDamage(hit, hit2);
-
-		World.get().submit(new Task(1, false) {
-			@Override
-			public void execute() {
-				this.cancel();
-				if(getState() != EntityState.ACTIVE) {
-					return;
-				}
-				sendDamage(hit3);
-			}
-		});
-	}
-
-	/**
-	 * Deals {@code hit}, {@code hit2}, {@code hit3}, and {@code hit4} to this
-	 * entity.
-	 * @param hit  the first hit to deal to this entity.
-	 * @param hit2 the second hit to deal to this entity.
-	 * @param hit3 the third hit to deal to this entity.
-	 * @param hit4 the fourth hit to deal to this entity.
-	 */
-	private void sendDamage(Hit hit, Hit hit2, Hit hit3, Hit hit4) {
-		sendDamage(hit, hit2);
-
-		World.get().submit(new Task(1, false) {
-			@Override
-			public void execute() {
-				this.cancel();
-				if(getState() != EntityState.ACTIVE) {
-					return;
-				}
-				sendDamage(hit3, hit4);
-			}
-		});
 	}
 
 	/**
@@ -896,7 +797,7 @@ public abstract class Actor extends Entity {
 		this.visible = visible;
 	}
 	
-	public abstract net.edge.content.combat.Combat<? extends Actor> getNewCombat();
+	public abstract Combat<? extends Actor> getCombat();
 
 	public abstract int getBonus(int index);
 
@@ -983,17 +884,21 @@ public abstract class Actor extends Entity {
 	 * @return the primary hit update block value.
 	 */
 	public final Hit getPrimaryHit() {
-		return primaryHit;
+		return hitQueue.pollFirst();
 	}
-	
+
 	/**
 	 * Gets the secondary hit update block value.
 	 * @return the secondary hit update block value.
 	 */
 	public final Hit getSecondaryHit() {
-		return secondaryHit;
+		return hitQueue.pollFirst();
 	}
-	
+
+	public Deque<Hit> getHitQueue() {
+		return hitQueue;
+	}
+
 	/**
 	 * Gets the type of poison that was previously applied.
 	 * @return the type of poison.

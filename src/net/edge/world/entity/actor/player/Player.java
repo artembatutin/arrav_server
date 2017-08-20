@@ -666,7 +666,7 @@ public final class Player extends Actor {
 			sendDefaultSidebars();
 		}
 		move(super.getPosition());
-		newCombat.setStrategy(PlayerMeleeStrategy.INSTANCE);
+		combat.setStrategy(PlayerMeleeStrategy.INSTANCE);
 		Skills.refreshAll(this);
 		WeaponInterface.setStrategy(this);
 		equipment.updateBulk();
@@ -795,7 +795,13 @@ public final class Player extends Actor {
 	@Override
 	public void preUpdate() {
 		getMovementQueue().sequence();
-		getNewCombat().tick();
+		getCombat().tick();
+		if (!getHitQueue().isEmpty()) {
+			flags.flag(UpdateFlag.PRIMARY_HIT);
+			if (getHitQueue().size() > 1) {
+				flags.flag(UpdateFlag.SECONDARY_HIT);
+			}
+		}
 		MobAggression.sequence(this);
 		restoreRunEnergy();
 		int deltaX = getPosition().getX() - getLastRegion().getRegionX() * 8;
@@ -2382,11 +2388,11 @@ public final class Player extends Actor {
 		this.aggressionTick = aggressionTick;
 	}
 
-	private final Combat<Player> newCombat = new Combat<>(this);
+	private final Combat<Player> combat = new Combat<>(this);
 
 	@Override
-	public Combat<Player> getNewCombat() {
-		return newCombat;
+	public Combat<Player> getCombat() {
+		return combat;
 	}
 
 	@Override

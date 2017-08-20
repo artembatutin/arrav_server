@@ -484,20 +484,25 @@ public enum CombatSpecial {
     GRANITE_MAUL(new int[]{4153}, 50, new GraniteMaul()) {
 		@Override
 		public void enable(Player player) {
-			Combat<Player> combat = player.getNewCombat();
+			Combat<Player> combat = player.getCombat();
             CombatStrategy<Player> strategy = new GraniteMaul();
-            if (!combat.isAttacking()) {
-                combat.setStrategy(strategy);
-            } else {
-                if (strategy.canAttack(player, combat.getLastDefender())) {
+            if (combat.isAttacking(combat.getLastDefender())) {
+                boolean canAttack = true;
+                canAttack &= combat.canAttack(combat.getLastDefender());
+                canAttack &= strategy.withinDistance(player, combat.getLastDefender());
+                canAttack &= strategy.canAttack(player, combat.getLastDefender());
+                if (canAttack) {
+                    if (combat.getDefender() != combat.getLastDefender()) {
+                        combat.attack(combat.getLastDefender());
+                    }
                     combat.submitStrategy(combat.getLastDefender(), strategy);
                     player.getCombatSpecial().drain(player);
-                } else {
-                    combat.setStrategy(strategy);
+                    return;
                 }
             }
-		}
-	},;
+            combat.setStrategy(strategy);
+        }
+	};
 
 	/**
 	 * The identifiers for the weapons that perform this special.
@@ -532,7 +537,7 @@ public enum CombatSpecial {
      * @param player the player who activated the special bar.
      */
     public void enable(Player player) {
-        player.getNewCombat().setStrategy(strategy);
+        player.getCombat().setStrategy(strategy);
     }
 
     /**

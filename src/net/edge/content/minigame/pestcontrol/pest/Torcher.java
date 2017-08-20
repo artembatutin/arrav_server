@@ -21,9 +21,9 @@ public class Torcher extends Pest {
 	
 	@Override
 	public void sequence(Mob knight) {
-		if(getNewCombat().getLastAttacker() != null && getNewCombat().getLastAttacker().isPlayer()) {
-			getNewCombat().attack(getNewCombat().getLastAttacker());
-		} else if(!getPosition().withinDistance(knight.getPosition(), 15) && !getNewCombat().isAttacking()) {
+		if(getCombat().getLastAttacker() != null && getCombat().getLastAttacker().isPlayer()) {
+			getCombat().attack(getCombat().getLastAttacker());
+		} else if(!getPosition().withinDistance(knight.getPosition(), 15) && !getCombat().isAttacking()) {
 			Position delta = Position.delta(getPosition(), knight.getPosition());
 			int x = RandomUtils.inclusive(delta.getX() < 0 ? -delta.getX() : delta.getX());
 			int y = RandomUtils.inclusive(delta.getY() < 0 ? -delta.getY() : delta.getY());

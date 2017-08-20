@@ -16,7 +16,7 @@ public abstract class MagicStrategy<T extends Actor> extends CombatStrategy<T> {
 
     @Override
     public boolean withinDistance(T attacker, Actor defender) {
-        FightType fightType = attacker.getNewCombat().getFightType();
+        FightType fightType = attacker.getCombat().getFightType();
         int distance = getAttackDistance(attacker, fightType);
 
         MovementQueue movement = attacker.getMovementQueue();

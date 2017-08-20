@@ -59,7 +59,7 @@ class KorasiChain extends Task {
 			n.damage(new Hit(chainedDamage / 2, Hitsplat.NORMAL, HitIcon.MAGIC));
 			n.animation(new Animation(n.getDefinition().getDefenceAnimation()));
 			n.graphic(new Graphic(1730));
-			n.getNewCombat().attack(player);
+			n.getCombat().attack(player);
 			hitted.add(n);
 			chainedDamage = chainedDamage / 2;
 			position = n.getPosition();

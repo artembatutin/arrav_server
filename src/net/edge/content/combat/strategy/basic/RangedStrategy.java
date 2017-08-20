@@ -16,7 +16,7 @@ public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> 
 
     @Override
     public boolean withinDistance(T attacker, Actor defender) {
-        FightType fightType = attacker.getNewCombat().getFightType();
+        FightType fightType = attacker.getCombat().getFightType();
         int distance = getAttackDistance(attacker, fightType);
 
         MovementQueue movement = attacker.getMovementQueue();
@@ -72,7 +72,7 @@ public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> 
         int exp = hit.getDamage() * BASE_EXPERIENCE_MULTIPLIER;
 
         Skills.experience(player, exp / 3, Skills.HITPOINTS);
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
             case CONTROLLED:
                 Skills.experience(player, exp, Skills.RANGED);

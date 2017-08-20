@@ -16,7 +16,7 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
 
     @Override
     public boolean withinDistance(T attacker, Actor defender) {
-        FightType stance = attacker.getNewCombat().getFightType();
+        FightType stance = attacker.getCombat().getFightType();
         int distance = getAttackDistance(attacker, stance);
 
         MovementQueue movement = attacker.getMovementQueue();
@@ -73,7 +73,7 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
         int exp = hit.getDamage() * BASE_EXPERIENCE_MULTIPLIER;
 
         Skills.experience(player, exp / 3, Skills.HITPOINTS);
-        switch (player.getNewCombat().getFightType().getStyle()) {
+        switch (player.getCombat().getFightType().getStyle()) {
             case ACCURATE:
                 Skills.experience(player, exp, Skills.ATTACK);
                 break;

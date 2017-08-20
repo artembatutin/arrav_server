@@ -139,7 +139,7 @@ public class Hororis extends Minigame {
 		if(players.size() > 0) {
 			Player p = RandomUtils.random(players);
 			if(p != null)
-				mob.getNewCombat().attack(p);
+				mob.getCombat().attack(p);
 		}
 	}
 	

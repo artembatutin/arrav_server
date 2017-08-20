@@ -26,7 +26,7 @@ public class Poison {
         }
 
         if (ticks == 0) {
-            actor.getNewCombat().poison(-1);
+            actor.getCombat().poison(-1);
         }
     }
 

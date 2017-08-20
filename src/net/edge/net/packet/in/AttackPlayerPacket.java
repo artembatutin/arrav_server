@@ -55,8 +55,8 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			return;
 		}
 
-		player.getNewCombat().setStrategy(new PlayerMagicStrategy(spell, true));
-		player.getNewCombat().attack(victim);
+		player.getCombat().setStrategy(new PlayerMagicStrategy(spell, true));
+		player.getCombat().attack(victim);
 	}
 	
 	/**
@@ -70,7 +70,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		Player victim = World.get().getPlayers().get(index - 1);
 		if(index < 0 || index > World.get().getPlayers().capacity() || !checkAttack(player, victim))
 			return;
-		player.getNewCombat().attack(victim);
+		player.getCombat().attack(victim);
 	}
 	
 	/**
@@ -93,7 +93,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			attacker.message("You can't initiate combat with an iron man member.");
 			return false;
 		}
-		if(!attacker.inMulti() && attacker.getNewCombat().isUnderAttack() && !attacker.getNewCombat().isUnderAttackBy(victim)) {
+		if(!attacker.inMulti() && attacker.getCombat().isUnderAttack() && !attacker.getCombat().isUnderAttackBy(victim)) {
 			attacker.message("You are already under attack!");
 			attacker.getMovementQueue().reset();
 			return false;

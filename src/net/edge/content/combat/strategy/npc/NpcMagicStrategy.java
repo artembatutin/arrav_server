@@ -28,7 +28,7 @@ public class NpcMagicStrategy extends MagicStrategy<Mob> {
     }
 
     @Override
-    public int getAttackDelay(Mob attacker, Actor defender, FightType fightType) {
+    public int getAttackDelay(Mob attacker, FightType fightType) {
         return 4;
     }
 

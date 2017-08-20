@@ -81,7 +81,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 					getActor().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getActor().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit, Hitsplat.NORMAL, HitIcon.NONE)));
 				}
 			} else {
-				Actor victim = getActor().getNewCombat().getDefender();
+				Actor victim = getActor().getCombat().getDefender();
 				if(victim != null && victim.getPosition().withinDistance(getActor().getPosition(), 2)) {
 					victim.damage(new Hit(RandomUtils.inclusive(hit), Hitsplat.NORMAL, HitIcon.NONE));
 				}
@@ -109,7 +109,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 					getActor().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getActor().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit), Hitsplat.NORMAL, HitIcon.NONE)));
 				}
 			} else {
-				Actor victim = getActor().getNewCombat().getDefender();
+				Actor victim = getActor().getCombat().getDefender();
 				if(victim != null && victim.getPosition().withinDistance(getActor().getPosition(), 3)) {
 					victim.damage(new Hit(RandomUtils.inclusive(maxHit), Hitsplat.NORMAL, HitIcon.NONE));
 				}
@@ -124,7 +124,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 	
 	@Override
 	public void death() {
-		Optional<Player> killer = getActor().getNewCombat().getDamageCache().getPlayerKiller();
+		Optional<Player> killer = getActor().getCombat().getDamageCache().getPlayerKiller();
 		Optional<Minigame> optional = MinigameHandler.getMinigame(getActor());
 		if(optional.isPresent()) {
 			optional.get().onDeath(getActor());
@@ -191,7 +191,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			k.message(RandomUtils.random(GameConstants.DEATH_MESSAGES).replaceAll("-victim-", getActor().getFormatUsername()).replaceAll("-killer-", k.getFormatUsername()));
 		});
 		
-		getActor().getNewCombat().getDamageCache().calculateProperKiller().ifPresent(e -> {
+		getActor().getCombat().getDamageCache().calculateProperKiller().ifPresent(e -> {
 			if(e.isMob()) {
 				getActor().getDeathsByNpc().incrementAndGet();
 				PlayerPanel.TOTAL_NPC_DEATHS.refresh(getActor(), "@or2@ - Total Mob deaths: @yel@" + getActor().getDeathsByNpc().get());
@@ -202,8 +202,8 @@ public final class PlayerDeath extends ActorDeath<Player> {
 	@Override
 	public void postDeath() {
 		getActor().closeWidget();
-		getActor().getNewCombat().reset();
-		getActor().getNewCombat().getDamageCache().clear();
+		getActor().getCombat().reset();
+		getActor().getCombat().getDamageCache().clear();
 		getActor().getTolerance().reset();
 		getActor().getSpecialPercentage().set(100);
 		getActor().out(new SendConfig(301, 0));

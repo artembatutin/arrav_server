@@ -74,7 +74,7 @@ public final class BarrowsMinigame extends Minigame {
 		player.getMinigameContainer().getBarrowsContainer().setCurrent(current);
 		World.get().getMobs().add(current);
 		current.forceChat("How dare you disturb our grave!");
-		current.getNewCombat().attack(player);
+		current.getCombat().attack(player);
 	}
 	
 	/**
@@ -181,7 +181,7 @@ public final class BarrowsMinigame extends Minigame {
 				player.getMinigameContainer().getBarrowsContainer().setCurrent(container.getCurrent().get());
 				World.get().getMobs().add(container.getCurrent().get());
 				container.getCurrent().get().forceChat("How dare you steal from us!");
-				container.getCurrent().get().getNewCombat().attack(player);
+				container.getCurrent().get().getCombat().attack(player);
 				return true;
 			}
 			if(!container.getCurrent().isPresent()) {

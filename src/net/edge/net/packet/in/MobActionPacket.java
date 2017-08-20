@@ -74,7 +74,7 @@ public final class MobActionPacket implements IncomingPacket {
 		if(mob == null || !checkAttack(player, mob))
 			return;
 		player.getTolerance().reset();
-		player.getNewCombat().attack(mob);
+		player.getCombat().attack(mob);
 	}
 	
 	/**
@@ -93,8 +93,8 @@ public final class MobActionPacket implements IncomingPacket {
 		}
 
 		player.getTolerance().reset();
-		player.getNewCombat().setStrategy(new PlayerMagicStrategy(spell, true));
-		player.getNewCombat().attack(mob);
+		player.getCombat().setStrategy(new PlayerMagicStrategy(spell, true));
+		player.getCombat().attack(mob);
 	}
 	
 	/**
@@ -232,7 +232,7 @@ public final class MobActionPacket implements IncomingPacket {
 	private boolean checkAttack(Player player, Mob mob) {
 		if(!MobDefinition.DEFINITIONS[mob.getId()].isAttackable())
 			return false;
-		if(!player.inMulti() && player.getNewCombat().isUnderAttack() && !player.getNewCombat().isUnderAttackBy(mob)) {
+		if(!player.inMulti() && player.getCombat().isUnderAttack() && !player.getCombat().isUnderAttackBy(mob)) {
 			player.message("You are already under attack!");
 			return false;
 		}

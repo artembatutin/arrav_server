@@ -307,12 +307,12 @@ public final class Summoning {
 			return false;
 		}
 		
-		if(!player.getNewCombat().inCombat()) {
+		if(!player.getCombat().inCombat()) {
 			player.message("Your familiar cannot fight whilst you are not in combat.");
 			return false;
 		}
 		
-		familiar.getNewCombat().attack(victim);
+		familiar.getCombat().attack(victim);
 		return true;
 	}
 	

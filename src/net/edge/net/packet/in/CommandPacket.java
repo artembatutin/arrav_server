@@ -3,12 +3,9 @@ package net.edge.net.packet.in;
 import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.combat.content.MagicSpell;
-import net.edge.content.combat.content.RangedAmmunition;
 import net.edge.content.combat.strategy.npc.NpcMeleeStrategy;
 import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.content.combat.strategy.player.PlayerMeleeStrategy;
-import net.edge.content.combat.strategy.player.PlayerRangedStrategy;
-import net.edge.content.combat.weapon.RangedWeaponDefinition;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
@@ -38,19 +35,19 @@ public final class CommandPacket implements IncomingPacket {
 //				RangedAmmunition[] ammo = new RangedAmmunition[] { RangedAmmunition.RUNE_KNIFE };
 //				RangedWeaponDefinition.AttackType type = RangedWeaponDefinition.AttackType.THROWN;
 //				RangedWeaponDefinition def = new RangedWeaponDefinition(levelreq, type, ammo);
-//				player.getNewCombat().setStrategy(new PlayerRangedStrategy(def));
+//				player.getCombat().setStrategy(new PlayerRangedStrategy(def));
 				CombatSpecial.restore(player, 100);
 			} else if (parts[0].equalsIgnoreCase("melee")) {
-				player.getNewCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
+				player.getCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
 			} else if (parts[0].equalsIgnoreCase("blitz")) {
 //				CombatProjectileDefinition.createLoader().load();
-				player.getNewCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ, true));
+				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ, true));
 			} else if (parts[0].equalsIgnoreCase("spider")) {
 				Mob npc = Mob.getNpc(1677, player.getPosition().copy().move(1, 0));
 				npc.setOwner(player);
 				npc.setRespawn(false);
 				World.get().getMobs().add(npc);
-				npc.getNewCombat().setStrategy(new NpcMeleeStrategy());
+				npc.getCombat().setStrategy(new NpcMeleeStrategy());
 			}
 		}
 

@@ -68,7 +68,7 @@ public final class MithrilSeed {
         ItemAction itemEvent = new net.edge.action.impl.ItemAction() {
             @Override
             public boolean click(Player player, Item item, int container, int slot, int click) {
-                if(player.getNewCombat().inCombat()) {
+                if(player.getCombat().inCombat()) {
                     player.message("You are currently in combat.");
                     return true;
                 }

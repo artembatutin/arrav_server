@@ -1,6 +1,5 @@
 package net.edge.content.minigame.rfd;
 
-import net.edge.GameConstants;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.item.FoodConsumable;
@@ -72,7 +71,7 @@ public final class RFDMinigame extends SequencedMinigame {
 				Mob mob = this.currentNpc.get();
 				InstanceManager.get().isolate(mob, instance);
 				World.get().getMobs().add(mob);
-				mob.getNewCombat().attack(player);
+				mob.getCombat().attack(player);
 				timer = 0;
 			}
 		}

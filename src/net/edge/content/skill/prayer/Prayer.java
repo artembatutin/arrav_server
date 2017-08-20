@@ -512,7 +512,7 @@ public enum Prayer {
 			Arrays.stream(prayer.get().deactivate().get()).forEach(it -> it.deactivate(player));
 		}
 		player.getPrayerActive().add(prayer.get());
-		player.getNewCombat().addModifier(prayer.get().modifier);
+		player.getCombat().addModifier(prayer.get().modifier);
 		player.out(new SendConfig(prayer.get().getConfig(), 1));
 		if(prayer.get().getHeadIcon() != -1) {
 			player.setHeadIcon(prayer.get().getHeadIcon());
@@ -615,7 +615,7 @@ public enum Prayer {
 			return;
 		player.getPrayerActive().remove(this);
 		player.out(new SendConfig(config, 0));
-		player.getNewCombat().removeModifier(modifier);
+		player.getCombat().removeModifier(modifier);
 		if(headIcon != -1) {
 			player.setHeadIcon(-1);
 			player.getFlags().flag(UpdateFlag.APPEARANCE);

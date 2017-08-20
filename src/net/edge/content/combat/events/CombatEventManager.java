@@ -1,18 +1,18 @@
 package net.edge.content.combat.events;
 
-import java.util.Iterator;
-import java.util.LinkedList;
+import net.edge.world.entity.actor.Actor;
+
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CombatEventManager {
-    private List<CombatEvent> events = new LinkedList<>();
+    private List<CombatEvent> events = new CopyOnWriteArrayList<>();
 
     public void sequence() {
-        for (Iterator<CombatEvent> iterator = events.iterator(); iterator.hasNext();) {
-            CombatEvent event = iterator.next();
+        for (CombatEvent event : events) {
             if (event.canExecute()) {
                 event.execute();
-                iterator.remove();
+                events.remove(event);
             }
         }
     }
@@ -21,8 +21,8 @@ public class CombatEventManager {
         events.add(event);
     }
 
-    public void cancelAll() {
-        events.clear();
+    public void cancel(Actor defender) {
+        events.removeIf(next -> next.getDefender() == defender);
     }
 
 }
