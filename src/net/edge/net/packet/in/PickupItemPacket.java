@@ -31,32 +31,31 @@ public final class PickupItemPacket implements IncomingPacket {
 		int itemX = payload.getShort(ByteOrder.LITTLE);
 		if(itemY < 0 || itemId < 0 || itemX < 0)
 			return;
-		player.getMovementListener().append(() -> {
-			if(player.getPosition().same(new Position(itemX, itemY, player.getPosition().getZ()))) {
-				Position position = new Position(itemX, itemY, player.getPosition().getZ());
-				World.getRegions().getRegion(position).ifPresent(region -> {
-					Optional<GroundItem> item = region.getItem(itemId, position);
-					if(item.isPresent()) {
-						if(!MinigameHandler.execute(player, m -> m.canPickup(player, item.get()))) {
+		Position position = new Position(itemX, itemY, player.getPosition().getZ());
+		Optional<Region> reg = World.getRegions().getRegion(position);
+		if(reg.isPresent()) {
+			Optional<GroundItem> item = reg.get().getItem(itemId, position);
+			item.ifPresent(groundItem -> player.getMovementListener().append(() -> {
+				if(player.getPosition().same(new Position(itemX, itemY, player.getPosition().getZ()))) {
+					World.getRegions().getRegion(position).ifPresent(region -> {
+						if(!MinigameHandler.execute(player, m -> m.canPickup(player, groundItem))) {
 							return;
 						}
-						if(!player.getInventory().hasCapacityFor(new Item(itemId, item.get().getItem().getAmount()))) {
+						if(!player.getInventory().hasCapacityFor(new Item(itemId, groundItem.getItem().getAmount()))) {
 							player.message("You don't have enough inventory space to pick this item up.");
 							return;
 						}
-
-						if(item.get().getPlayer() != null) {
-							int val = MarketItem.get(item.get().getItem().getId()) != null ? MarketItem.get(item.get().getItem().getId()).getPrice() * item.get().getItem().getAmount() : 0;
-							if(val > 1_000)
-								World.getLoggingManager().write(new DropItemLog(player, item.get().getItem(), player.getPosition(), Optional.of(item.get())));
+						if(groundItem.getPlayer() != null) {
+							int val = MarketItem.get(groundItem.getItem().getId()) != null ? MarketItem.get(groundItem.getItem().getId()).getPrice() * groundItem.getItem().getAmount() : 0;
+							if(val > 5_000)
+								World.getLoggingManager().write(new DropItemLog(player, groundItem.getItem(), player.getPosition(), Optional.of(groundItem)));
 						}
-
-						item.get().onPickup(player);
-						MinigameHandler.executeVoid(player, m -> m.onPickup(player, item.get().getItem()));
-					}
-				});
-			}
-		});
+						groundItem.onPickup(player);
+						MinigameHandler.executeVoid(player, m -> m.onPickup(player, groundItem.getItem()));
+					});
+				}
+			}));
+		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.PICKUP_ITEM);
 	}
 }

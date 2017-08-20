@@ -723,7 +723,6 @@ public final class Player extends Actor {
 		text(149, (int) runEnergy + "%");
 		out(new SendEnergy());
 		Prayer.VALUES.forEach(c -> out(new SendConfig(c.getConfig(), 0)));
-		logger.info(this + " has logged in.");
 		if(getPetManager().getPet().isPresent()) {
 			Pet.onLogin(this);
 		}

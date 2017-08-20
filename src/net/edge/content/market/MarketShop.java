@@ -172,11 +172,13 @@ public class MarketShop {
 					player.out(new SendEnterAmount(shopItem.getName() + ": set stock to?", s -> () -> shopItem.setStock(Integer.parseInt(s))));
 				} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 					shopItem.toggleUnlimited();
+					openShop(player);
 				} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
 					if(player.getMarketShop() != null && player.getMarketShop().getId() != -1) {
 						int shopId = player.getMarketShop().getId();
 						MarketShop shop = MarketCounter.getShops().get(shopId);
 						shop.getItems().rem(item.getId());
+						openShop(player);
 					}
 				}
 			}, "Change price", "Change stock", "toggle: " + (shopItem.isUnlimitedStock() ? "unlimited stock" : "variable stock"), "Remove from shop"));

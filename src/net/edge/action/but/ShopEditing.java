@@ -20,6 +20,7 @@ public class ShopEditing extends ActionInitializer {
 						int shopId = player.getMarketShop().getId();
 						MarketShop shop = MarketCounter.getShops().get(shopId);
 						shop.getItems().add(id);
+						shop.openShop(player);
 					}
 				}));
 				return true;

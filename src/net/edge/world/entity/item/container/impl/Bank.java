@@ -119,11 +119,7 @@ public final class Bank {
 	 * Deposits a newly created item into the bank.
 	 */
 	public int deposit(Item item) {
-		int tab = contains(item.getId());
-		if(tab == -1)
-			return tabs[getSelectedTab()].add(item);
-		else
-			return tabs[tab].add(item);
+		return tabs[getSelectedTab()].add(item);
 	}
 
 	/**
@@ -201,13 +197,7 @@ public final class Bank {
 	 * @return {@code true} if the item was deposited, {@code false} otherwise.
 	 */
 	public boolean deposit(int slot, int amount, ItemContainer from, boolean refresh) {
-		if(from.get(slot) == null)
-			return false;
-		int tab = contains(from.get(slot));
-		if(tab == -1)
-			return tabs[getSelectedTab()].deposit(player, slot, amount, refresh, from);
-		else
-			return tabs[tab].deposit(player, slot, amount, refresh, from);
+		return from.get(slot) != null && tabs[getSelectedTab()].deposit(player, slot, amount, refresh, from);
 	}
 	
 	/**

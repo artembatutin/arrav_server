@@ -80,6 +80,7 @@ public final class GameSession extends Session {
 	
 	@Override
 	public void terminate() {
+		System.out.println("Game session terminating " + player);
 		if(player.getState() == EntityState.ACTIVE) {
 			World.get().queueLogout(player);
 		}
