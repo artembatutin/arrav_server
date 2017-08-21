@@ -352,8 +352,8 @@ public final class World {
 	 */
 	public Set<Actor> getActors() {
 		Set<Actor> actors = new HashSet<>();
-		players.forEach(actors::add);
 		mobs.forEach(actors::add);
+		players.forEach(actors::add);
 		return actors;
 	}
 	

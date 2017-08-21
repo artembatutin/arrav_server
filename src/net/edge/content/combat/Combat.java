@@ -12,6 +12,9 @@ import net.edge.util.Stopwatch;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.ActorList;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.update.UpdateFlag;
 
 import java.util.LinkedList;
