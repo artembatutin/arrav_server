@@ -70,67 +70,67 @@ public abstract class Mob extends Actor {
 		CombatStrategy<Mob> strategy = type.equals(CombatType.MAGIC) ? new NpcMagicStrategy(definition) : new NpcRangedStrategy(definition);
 		return Optional.of(strategy);
 	}
-	
+
 	/**
 	 * The identification for this NPC.
 	 */
 	private final int id;
-	
+
 	/**
 	 * The maximum health of this NPC.
 	 */
 	private final int maxHealth;
-	
+
 	/**
 	 * The original position that this NPC was created on.
 	 */
 	private final Position originalPosition;
-	
+
 	/**
 	 * The movement coordinator for this NPC.
 	 */
 	private final MobMovementCoordinator movementCoordinator = new MobMovementCoordinator(this);
-	
+
 	/**
 	 * The current health of this NPC.
 	 */
 	private int currentHealth;
-	
+
 	/**
 	 * Determines if this NPC was originally random walking.
 	 */
 	private boolean originalRandomWalk;
-	
+
 	/**
 	 * Determines if this NPC respawns.
 	 */
 	private boolean respawn;
-	
+
 	/**
 	 * The player slot this npc was spawned for.
 	 */
 	private int owner = -1;
-	
+
 	/**
 	 * The transformation identifier.
 	 */
 	private OptionalInt transform = OptionalInt.empty();
-	
+
 	/**
 	 * The flag determining if this {@link Mob} is active in his region.
 	 */
 	private boolean active = false;
-	
+
 	/**
 	 * The flag determining if the {@link Mob} is a smart npc.
 	 */
 	private boolean smart;
-	
+
 	/**
 	 * The special amount of this npc, between 0 and 100. 101 sets it off.
 	 */
 	private OptionalInt special = OptionalInt.empty();
-	
+
 	/**
 	 * Creates a new {@link Mob}.
 	 * @param id       the identification for this NPC.
@@ -145,24 +145,24 @@ public abstract class Mob extends Actor {
 		this.owner = -1;
 		getMovementCoordinator().setRadius(3);
 	}
-	
+
 	/**
 	 * Creates the particular {@link Mob instance}.
 	 * @return new {@link Mob} instance.
 	 */
 	public abstract Mob create();
-	
+
 	@Override
 	public void register() {
-		
+
 	}
-	
+
 	@Override
 	public void dispose() {
 		setVisible(false);
 		World.get().getTask().cancel(this);
 	}
-	
+
 	@Override
 	public void move(Position destination) {
 		getMovementQueue().reset();
@@ -176,27 +176,20 @@ public abstract class Mob extends Actor {
 		if (active()) {
 			update();
 			getMovementQueue().sequence();
-
-			if (!getHitQueue().isEmpty()) {
-				getFlags().flag(UpdateFlag.PRIMARY_HIT);
-				if (getHitQueue().size() > 1) {
-					getFlags().flag(UpdateFlag.SECONDARY_HIT);
-				}
-			}
 		}
 	}
-	
+
 	@Override
 	public void update() {
 		//No sequencing.
 	}
-	
+
 	@Override
 	public void appendDeath() {
 		setDead(true);
 		World.get().submit(new MobDeath(this));
 	}
-	
+
 	@Override
 	public Hit decrementHealth(Hit hit) {
 		if(hit.getDamage() > currentHealth) {
@@ -211,22 +204,22 @@ public abstract class Mob extends Actor {
 		}
 		return hit;
 	}
-	
+
 	@Override
 	public Set<Player> getLocalPlayers() {
 		return getRegion().get().getPlayers();
 	}
-	
+
 	@Override
 	public Set<Mob> getLocalMobs() {
 		return getRegion().get().getMobs();
 	}
-	
+
 	@Override
 	public int getAttackDelay() {
 		return this.getDefinition().getAttackDelay();
 	}
-	
+
 	@Override
 	public int getCurrentHealth() {
 		return currentHealth;
@@ -240,17 +233,17 @@ public abstract class Mob extends Actor {
 		}
 		currentHealth += damage;
 	}
-	
+
 	@Override
 	public boolean inMulti() {
 		return Location.inMultiCombat(this);
 	}
-	
+
 	@Override
 	public boolean inWilderness() {
 		return Location.inWilderness(this);
 	}
-	
+
 	/**
 	 * Activates the {@code TRANSFORM} update mask for this non-player
 	 * character.
@@ -260,7 +253,7 @@ public abstract class Mob extends Actor {
 		transform = OptionalInt.of(id);
 		getFlags().flag(UpdateFlag.TRANSFORM);
 	}
-	
+
 	/**
 	 * Removes the {@code TRANSFORM} update mask for this non-player character.
 	 */
@@ -276,7 +269,7 @@ public abstract class Mob extends Actor {
 	public int getId() {
 		return id;
 	}
-	
+
 	/**
 	 * Gets the {@link MobType} of this npc.
 	 * @return type.
@@ -284,7 +277,7 @@ public abstract class Mob extends Actor {
 	public MobType getMobType() {
 		return MobType.NONE;
 	}
-	
+
 	/**
 	 * Gets the maximum health of this NPC.
 	 * @return the maximum health.
@@ -292,7 +285,7 @@ public abstract class Mob extends Actor {
 	public int getMaxHealth() {
 		return maxHealth;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Mob#currentHealth}.
 	 * @param currentHealth the new value to set.
@@ -305,7 +298,7 @@ public abstract class Mob extends Actor {
 			}
 		}
 	}
-	
+
 	/**
 	 * Sends a delayed task for this player.
 	 */
@@ -319,7 +312,7 @@ public abstract class Mob extends Actor {
 			}
 		}.submit();
 	}
-	
+
 	/**
 	 * Gets the special amount for this NPC.
 	 * @return the special amount.
@@ -327,7 +320,7 @@ public abstract class Mob extends Actor {
 	public OptionalInt getSpecial() {
 		return special;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Mob#special}.
 	 * @param special the new value to set.
@@ -335,14 +328,14 @@ public abstract class Mob extends Actor {
 	public void setSpecial(int special) {
 		this.special = OptionalInt.of(special);
 	}
-	
+
 	/**
 	 * Resets the {@link Mob#special}.
 	 */
 	public void resetSpecial() {
 		this.special = OptionalInt.empty();
 	}
-	
+
 	/**
 	 * Gets the original position that this NPC was created on.
 	 * @return the original position.
@@ -350,7 +343,7 @@ public abstract class Mob extends Actor {
 	public Position getOriginalPosition() {
 		return originalPosition;
 	}
-	
+
 	/**
 	 * Gets the movement coordinator for this NPC.
 	 * @return the movement coordinator.
@@ -358,7 +351,7 @@ public abstract class Mob extends Actor {
 	public MobMovementCoordinator getMovementCoordinator() {
 		return movementCoordinator;
 	}
-	
+
 	/**
 	 * Determines if this NPC was originally random walking.
 	 * @return {@code true} if this NPC was originally walking, {@code false}
@@ -367,7 +360,7 @@ public abstract class Mob extends Actor {
 	public boolean isOriginalRandomWalk() {
 		return originalRandomWalk;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Mob#originalRandomWalk}.
 	 * @param originalRandomWalk the new value to set.
@@ -383,7 +376,7 @@ public abstract class Mob extends Actor {
 	public boolean isRespawn() {
 		return respawn;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Mob#respawn}.
 	 * @param respawn the new value to set.
@@ -391,14 +384,14 @@ public abstract class Mob extends Actor {
 	public void setRespawn(boolean respawn) {
 		this.respawn = respawn;
 	}
-	
+
 	/**
 	 * @return the player's slot this npc was spawned for.
 	 */
 	public int getOwner() {
 		return owner;
 	}
-	
+
 	/**
 	 * The flag which identifies if this npc was spawned for the player by the username.
 	 * @param spawnedFor the player to check for.
@@ -407,7 +400,7 @@ public abstract class Mob extends Actor {
 	public boolean isOwner(Player spawnedFor) {
 		return this.owner != -1 && this.owner == spawnedFor.getSlot();
 	}
-	
+
 	/**
 	 * Sets the player's slot this npc was spawned for.
 	 * @param player the player we're spawning this npc for.
@@ -416,12 +409,12 @@ public abstract class Mob extends Actor {
 		this.owner = player.getSlot();
 		player.getMobs().add(this);
 	}
-	
+
 	@Override
 	public boolean active() {
 		return active;
 	}
-	
+
 	/**
 	 * Sets the new value for {@link Mob#active}.
 	 * @param active the new value to set.
@@ -434,7 +427,7 @@ public abstract class Mob extends Actor {
 			World.getNpcMovementTask().getMobs().add(this);
 		}
 	}
-	
+
 	/**
 	 * Determines if the npc is a smart npc.
 	 * @return {@code true} if the npc is smart, {@code false} otherwise.
@@ -442,7 +435,7 @@ public abstract class Mob extends Actor {
 	public boolean isSmart() {
 		return smart;
 	}
-	
+
 	/**
 	 * Sets the new value for {@link Mob#smart}.
 	 * @param smart the new value to set.
@@ -450,7 +443,7 @@ public abstract class Mob extends Actor {
 	public void setSmart(boolean smart) {
 		this.smart = smart;
 	}
-	
+
 	/**
 	 * Gets the definition for this NPC.
 	 * @return the definition.
@@ -458,7 +451,7 @@ public abstract class Mob extends Actor {
 	public MobDefinition getDefinition() {
 		return MobDefinition.DEFINITIONS[transform.orElse(id)];
 	}
-	
+
 	/**
 	 * Gets the transformation identifier.
 	 * @return the transformation id.
@@ -466,7 +459,7 @@ public abstract class Mob extends Actor {
 	public OptionalInt getTransform() {
 		return transform;
 	}
-	
+
 	/**
 	 * Determines if this npc is a familiar.
 	 * @return <true> if the npc is a familiar, <false> otherwise.
@@ -474,7 +467,7 @@ public abstract class Mob extends Actor {
 	public boolean isFamiliar() {
 		return false;
 	}
-	
+
 	/**
 	 * Determines if this npc is a pet.
 	 * @return <true> if the npc is a pet, <false> otherwise.
@@ -482,7 +475,7 @@ public abstract class Mob extends Actor {
 	public boolean isPet() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Mob) {
@@ -491,12 +484,12 @@ public abstract class Mob extends Actor {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(getId(), getSlot());
 	}
-	
+
 	@Override
 	public String toString() {
 		return "NPC[slot= " + getSlot() + ", name=" + getDefinition().getName() + "]";

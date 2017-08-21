@@ -76,9 +76,11 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
         Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit);
         projectileDefinition.getEffect().filter(Objects::nonNull).filter(filter).ifPresent(execute);
 
-        if (hit.getDamage() > 0) {
-            defender.poison(CombatPoisonEffect.getPoisonType(attacker.getEquipment().get(rangedDefinition.getSlot())).orElse(null));
-        }
+        CombatPoisonEffect.getPoisonType(attacker.getEquipment().get(Equipment.WEAPON_SLOT)).ifPresent(p -> {
+            if(hit.isAccurate()) {
+                defender.poison(p);
+            }
+        });
     }
 
     @Override

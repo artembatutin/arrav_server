@@ -20,7 +20,7 @@ public final class MobPrimaryHitUpdateBlock extends MobUpdateBlock {
 	
 	@Override
 	public int write(Player player, Mob mob, GameBuffer msg) {
-		Hit hit = mob.getPrimaryHit();
+		Hit hit = mob.primaryHit;
 		msg.putShort(hit.getDamage());
 		msg.put(hit.getHitsplat().getId()); // TODO: add local hits (hit.hasSource() && hit.getSource() != player.getSlot() ? 5 : 0)
 		msg.put(hit.getHitIcon().getId());

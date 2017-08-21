@@ -63,10 +63,12 @@ public class Combat<T extends Actor> {
         for(Actor actor : World.get().getMobs()) {
             if (actor == null || !actor.getState().equals(EntityState.ACTIVE)) continue;
             actor.getCombat().tick();
+            actor.prepareHits();
         }
         for(Actor actor : World.get().getPlayers()) {
             if (actor == null || !actor.getState().equals(EntityState.ACTIVE)) continue;
             actor.getCombat().tick();
+            actor.prepareHits();
         }
     }
 

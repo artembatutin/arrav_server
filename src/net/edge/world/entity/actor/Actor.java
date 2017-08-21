@@ -34,7 +34,11 @@ import java.util.function.Consumer;
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class Actor extends Entity {
-	
+
+	public Hit primaryHit;
+
+	public Hit secondaryHit;
+
 	/**
 	 * The current teleport stage that this player is in.
 	 */
@@ -227,6 +231,8 @@ public abstract class Actor extends Entity {
 		}
 		primaryDirection = Direction.NONE;
 		secondaryDirection = Direction.NONE;
+		primaryHit = null;
+		secondaryHit = null;
 		needsRegionUpdate = false;
 		needsPlacement = false;
 		animation = null;
@@ -451,10 +457,28 @@ public abstract class Actor extends Entity {
 	 */
 	public final void damage(Hit... hits) {
 		Preconditions.checkArgument(hits.length >= 1 && hits.length <= 4);
-
 		for (Hit hit : hits) {
-			decrementHealth(hit);
 			hitQueue.add(hit);
+		}
+	}
+
+	/**
+	 * Preparing the hits for this tick.
+	 */
+	public final void prepareHits() {
+		if (!getHitQueue().isEmpty()) {
+			primaryHit = getHitQueue().pollFirst();
+			if(primaryHit != null) {
+				getFlags().flag(UpdateFlag.PRIMARY_HIT);
+				decrementHealth(primaryHit);
+				if (getHitQueue().size() > 1) {
+					secondaryHit = getHitQueue().pollFirst();
+					if(secondaryHit != null) {
+						getFlags().flag(UpdateFlag.SECONDARY_HIT);
+						decrementHealth(secondaryHit);
+					}
+				}
+			}
 		}
 	}
 
@@ -879,13 +903,13 @@ public abstract class Actor extends Entity {
 	public final Position getFacePosition() {
 		return facePosition;
 	}
-	
+
 	/**
 	 * Gets the primary hit update block value.
 	 * @return the primary hit update block value.
 	 */
 	public final Hit getPrimaryHit() {
-		return hitQueue.pollFirst();
+		return hitQueue.peek();
 	}
 
 	/**
@@ -893,7 +917,7 @@ public abstract class Actor extends Entity {
 	 * @return the secondary hit update block value.
 	 */
 	public final Hit getSecondaryHit() {
-		return hitQueue.pollFirst();
+		return hitQueue.peek();
 	}
 
 	public Deque<Hit> getHitQueue() {

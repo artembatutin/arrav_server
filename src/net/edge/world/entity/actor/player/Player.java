@@ -793,13 +793,6 @@ public final class Player extends Actor {
 		MobAggression.sequence(this);
 		restoreRunEnergy();
 
-		if (!getHitQueue().isEmpty()) {
-			getFlags().flag(UpdateFlag.PRIMARY_HIT);
-			if (getHitQueue().size() > 1) {
-				getFlags().flag(UpdateFlag.SECONDARY_HIT);
-			}
-		}
-
 		int deltaX = getPosition().getX() - getLastRegion().getRegionX() * 8;
 		int deltaY = getPosition().getY() - getLastRegion().getRegionY() * 8;
 		if(deltaX < 16 || deltaX >= 88 || deltaY < 16 || deltaY > 88 || isNeedsRegionUpdate() || getTeleportStage() == -1) {
@@ -826,6 +819,7 @@ public final class Player extends Actor {
 		if(isHuman()) {
 			getSession().flushQueue();
 		}
+
 		super.postUpdate();
 		cachedUpdateBlock = null;
 	}

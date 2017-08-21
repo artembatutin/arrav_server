@@ -9,6 +9,7 @@ import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.basic.MeleeStrategy;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.Animation;
+import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.container.impl.Equipment;
@@ -28,9 +29,11 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
 
     @Override
     public void hit(Player attacker, Actor defender, Hit hit) {
-        if (hit.getDamage() > 0) {
-            defender.poison(CombatPoisonEffect.getPoisonType(attacker.getEquipment().get(Equipment.WEAPON_SLOT)).orElse(null));
-        }
+        CombatPoisonEffect.getPoisonType(attacker.getEquipment().get(Equipment.WEAPON_SLOT)).ifPresent(p -> {
+            if(hit.isAccurate()) {
+                defender.poison(p);
+            }
+        });
     }
 
     @Override
@@ -54,7 +57,13 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
     @Override
     public Animation getAttackAnimation(Player attacker, Actor defender) {
         FightType fightType = attacker.getCombat().getFightType();
-        int animation = attacker.getWeaponAnimation().getAttacking()[fightType.getStyle().ordinal()];
+        int animation;
+
+        if(attacker.getWeaponAnimation() != null && !attacker.getCombat().getFightType().isAnimationPrioritized()) {
+            animation = attacker.getWeaponAnimation().getAttacking()[fightType.getStyle().ordinal()];
+        } else {
+            animation = fightType.getAnimation();
+        }
         return new Animation(animation, Animation.AnimationPriority.HIGH);
     }
 

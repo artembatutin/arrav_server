@@ -43,9 +43,11 @@ public class NpcMagicStrategy extends MagicStrategy<Mob> {
         Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit);
         projectileDefinition.getEffect().filter(Objects::nonNull).filter(filter).ifPresent(execute);
 
-        if (hit.getDamage() > 0 && attacker.getDefinition().poisonous()) {
-            defender.poison(CombatPoisonEffect.getPoisonType(attacker.getId()).orElse(PoisonType.DEFAULT_NPC));
-        }
+        CombatPoisonEffect.getPoisonType(attacker.getId()).ifPresent(p -> {
+            if(hit.isAccurate() && attacker.getDefinition().poisonous()) {
+                defender.poison(p);
+            }
+        });
 
         if (!hit.isAccurate()) {
             defender.graphic(SPLASH);

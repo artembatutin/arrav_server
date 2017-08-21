@@ -19,7 +19,7 @@ public final class PlayerSecondaryHitUpdateBlock extends PlayerUpdateBlock {
 
 	@Override
 	public int write(Player player, Player other, GameBuffer msg) {
-		Hit hit = other.getSecondaryHit();
+		Hit hit = other.secondaryHit;
 		boolean local = other == player; // TODO: add local hits || (hit.hasSource() && hit.getSource() == player.getSlot());
 		msg.putShort(hit.getDamage());
 		msg.put(hit.getHitsplat().getId() + (!local ? 5 : 0));

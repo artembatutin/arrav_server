@@ -1,10 +1,17 @@
 package net.edge.content.combat.strategy.player.special;
 
 import net.edge.content.combat.Combat;
+import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.content.combat.strategy.player.PlayerMeleeStrategy;
+import net.edge.content.combat.weapon.WeaponInterface;
+import net.edge.content.skill.SkillData;
+import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendInterfaceLayer;
 import net.edge.net.packet.out.SendUpdateSpecial;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -18,7 +25,7 @@ import java.util.Optional;
  * @author lare96 <http://github.com/lare96>
  */
 public enum CombatSpecial {
-	//int[] ids, int amount, double strength, double accuracy, CombatType combat, WeaponInterface weapon
+    //int[] ids, int amount, double strength, double accuracy, CombatType combat, WeaponInterface weapon
 //	ABYSSAL_WHIP(new int[]{4151, 13444, 15441, 15442, 15443, 15444}, 50, 1, 1, CombatType.MELEE, WeaponInterface.WHIP) {
 //		@Override
 //		public CombatHit container(Player player, Actor target) {
@@ -64,43 +71,6 @@ public enum CombatSpecial {
 //			player.animation(new Animation(11989, Animation.AnimationPriority.HIGH));
 //			player.graphic(new Graphic(2113));
 //			return new CombatHit(player, target, 1, CombatType.MELEE, true);
-//		}
-//	},
-//	BANDOS_GODSWORD(new int[]{11696}, 50, 1.21, 1.5, CombatType.MELEE, WeaponInterface.WARHAMMER) {
-//		@Override
-//		public CombatHit container(Player player, Actor target) {
-//			player.animation(new Animation(11991, Animation.AnimationPriority.HIGH));
-//			player.graphic(new Graphic(2114));
-//			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
-//				@Override
-//				public void postAttack(int counter) {
-//					if(target.isPlayer() && counter != 0) {
-//						Player victim = target.toPlayer();
-//						int[] skillOrder = {Skills.DEFENCE, Skills.STRENGTH, Skills.ATTACK, Skills.PRAYER, Skills.MAGIC, Skills.RANGED};
-//						for(int s : skillOrder) {
-//							//Getting of the loop if the damage is negative of null;
-//							if(counter <= 0)
-//								break;
-//							//Getting the skill value to decrease.
-//							int removeFromSkill;
-//							if(counter > victim.getSkills()[s].getLevel()) {
-//								int difference = counter - victim.getSkills()[s].getLevel();
-//								removeFromSkill = counter - difference;
-//							} else
-//								removeFromSkill = counter;
-//							//Decreasing the skill.
-//							victim.getSkills()[s].decreaseLevel(removeFromSkill);
-//							Skills.refresh(victim, s);
-//							//Changing the damage left to decrease.
-//							counter -= removeFromSkill;
-//							SkillData data = SkillData.forId(s);
-//							String skill = data.toString();
-//							player.message("You've drained " + victim.getCredentials().getUsername() + "'s " + skill + " level by " + removeFromSkill + ".");
-//							victim.message("Your " + skill + " level has been drained.");
-//						}
-//					}
-//				}
-//			};
 //		}
 //	},
 //	ZAMORAK_GODSWORD(new int[]{11700}, 50, 1.1, 1.4, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
@@ -479,12 +449,13 @@ public enum CombatSpecial {
 //				}
 //			};
 //		}
-//	};
-
+//	},
+    DRAGON_DAGGER(new int[]{1215, 1231, 5680, 5698}, 25, new DragonDagger()),
+    BANDOS_GODSWORD(new int[]{11696}, 50, new BandosGodsword()),
     ARMADYL_GODSWORD(new int[]{11694, 13450}, 50, new ArmadylGodsword()),
     GRANITE_MAUL(new int[]{4153}, 50, new GraniteMaul()) {
-		@Override
-		public void enable(Player player) {
+        @Override
+        public void enable(Player player) {
             Combat<Player> combat = player.getCombat();
             CombatStrategy<Player> strategy = new GraniteMaul();
             Actor defender = combat.getLastDefender();
@@ -503,10 +474,10 @@ public enum CombatSpecial {
 
             combat.setStrategy(strategy);
         }
-	};
+    };
 
-	/**
-	 * The identifiers for the weapons that perform this special.
+    /**
+     * The identifiers for the weapons that perform this special.
      */
     private final int[] ids;
 

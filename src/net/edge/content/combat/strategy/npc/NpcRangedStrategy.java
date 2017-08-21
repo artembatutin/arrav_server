@@ -14,6 +14,7 @@ import net.edge.world.Graphic;
 import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.item.container.impl.Equipment;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -40,9 +41,11 @@ public class NpcRangedStrategy extends RangedStrategy<Mob> {
         Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit);
         projectileDefinition.getEffect().filter(Objects::nonNull).filter(filter).ifPresent(execute);
 
-        if (hit.getDamage() > 0 && attacker.getDefinition().poisonous()) {
-            defender.poison(CombatPoisonEffect.getPoisonType(attacker.getId()).orElse(PoisonType.DEFAULT_NPC));
-        }
+        CombatPoisonEffect.getPoisonType(attacker.getId()).ifPresent(p -> {
+            if(hit.isAccurate() && attacker.getDefinition().poisonous()) {
+                defender.poison(p);
+            }
+        });
 
         projectileDefinition.getEnd().ifPresent(defender::graphic);
     }

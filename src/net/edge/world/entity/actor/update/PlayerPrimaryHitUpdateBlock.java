@@ -19,7 +19,7 @@ public final class PlayerPrimaryHitUpdateBlock extends PlayerUpdateBlock {
 	
 	@Override
 	public int write(Player player, Player other, GameBuffer msg) {
-		Hit hit = other.getPrimaryHit();
+		Hit hit = other.primaryHit;
 		boolean local = other == player; // TODO: add local hits || (hit.hasSource() && hit.getSource() == player.getSlot());
 		msg.putShort(hit.getDamage());
 		msg.put(hit.getHitsplat().getId() + (!local ? 5 : 0));
@@ -30,7 +30,8 @@ public final class PlayerPrimaryHitUpdateBlock extends PlayerUpdateBlock {
 		msg.putShort(other.getCurrentHealth() / 10);
 		if(local) {
 			return change;
-		}
+		}//dude, the other player hit queue is 0 so it returns null is how it looks like
+		//and here its the other player. nop
 		return -1;
 	}
 }
