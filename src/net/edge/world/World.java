@@ -156,9 +156,9 @@ public final class World {
 			registerActors();
 			taskManager.sequence();
 			sync.preUpdate(players, mobs);
-			Combat.update();
 			sync.update(players);
 			sync.postUpdate(players, mobs);
+			Combat.update();
 			dequeueLogout();
 			disposeActors();
 			regionalTick++;

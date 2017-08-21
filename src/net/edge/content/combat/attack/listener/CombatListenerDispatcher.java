@@ -28,7 +28,7 @@ public final class CombatListenerDispatcher {
 
     public static void load() {
         ITEM_LISTENERS = loadItems();
-        NPC_LISTENERS = loadNpcs();
+         NPC_LISTENERS = loadNpcs ();
     }
 
     /**
@@ -66,7 +66,7 @@ public final class CombatListenerDispatcher {
         Map<Integer, CombatListener<Mob>> listeners = new HashMap<>();
         logger.info("Loading npc listeners...");
         for (String directory : Utility.getSubDirectories(CombatListenerDispatcher.class)) {
-            List<CombatListener<Mob>> listeners_class = Utility.getClassesInDirectory(CombatListenerDispatcher.class.getPackage().getName() + "." + directory).stream().map(clazz->(CombatListener<Mob>) clazz).collect(Collectors.toList());
+            List<CombatListener<Mob>> listeners_class = Utility.getClassesInDirectory(CombatListenerDispatcher.class.getPackage().getName() + "." + directory).stream().map(clazz-> (CombatListener<Mob>) clazz).collect(Collectors.toList());
             for (CombatListener<Mob> l : listeners_class) {
                 NpcCombatListenerSignature meta = l.getClass().getAnnotation(NpcCombatListenerSignature.class);
                 if (meta == null) {
@@ -80,9 +80,5 @@ public final class CombatListenerDispatcher {
         logger.info("Successfully loaded " + listeners.size() + " npc listeners.");
         return ImmutableMap.copyOf(listeners);
     }
-
-    /* used else it gives warning lel */
-    private interface PlayerCombatListener extends CombatListener<Player> { }
-    private interface NpcCombatListener extends CombatListener<Mob> { }
 
 }

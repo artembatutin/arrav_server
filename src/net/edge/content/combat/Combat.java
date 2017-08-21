@@ -60,17 +60,13 @@ public class Combat<T extends Actor> {
     }
 
     public static void update() {
-        for(Actor actor : World.get().getActors()) {
+        for(Actor actor : World.get().getMobs()) {
             if (actor == null || !actor.getState().equals(EntityState.ACTIVE)) continue;
             actor.getCombat().tick();
-
-            if (!actor.getHitQueue().isEmpty()) {
-                actor.getFlags().flag(UpdateFlag.PRIMARY_HIT);
-                if (actor.getHitQueue().size() > 1) {
-                    actor.getFlags().flag(UpdateFlag.SECONDARY_HIT);
-
-                }
-            }
+        }
+        for(Actor actor : World.get().getPlayers()) {
+            if (actor == null || !actor.getState().equals(EntityState.ACTIVE)) continue;
+            actor.getCombat().tick();
         }
     }
 
@@ -200,13 +196,13 @@ public class Combat<T extends Actor> {
         defender.getCombat().block(attacker, hit, combatType);
         defender.getCombat().damageCache.add(attacker, hit.getDamage());
 
-        if (combatType != CombatType.MAGIC || defender.isMob()) {
-            defender.animation(CombatUtil.getBlockAnimation(defender));
-        }
-
         if (defender.getCombat().defender == null && defender.isAutoRetaliate()) {
             defender.getCombat().attack(attacker);
 //            defender.getCombat().reset();
+        }
+
+        if (combatType != CombatType.MAGIC || defender.isMob()) {
+            defender.animation(CombatUtil.getBlockAnimation(defender));
         }
 
         if (combatType != CombatType.MAGIC || hit.isAccurate()) {

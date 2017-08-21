@@ -29,7 +29,6 @@ public final class CommandPacket implements IncomingPacket {
 		String command = payload.getCString();
 		String[] parts = command.toLowerCase().split(" ");
 
-
 		if (player.getRights() == Rights.ADMINISTRATOR) {
 			if (parts[0].equalsIgnoreCase("spec")) {
 //				int levelreq = 50;
@@ -45,10 +44,10 @@ public final class CommandPacket implements IncomingPacket {
 //				CombatProjectileDefinition.createLoader().load();
 				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ));
 			} else if (parts[0].equalsIgnoreCase("man")) {
-				Mob npc = Mob.getNpc(2026, player.getPosition().copy().move(1, 0));
+				Mob npc = Mob.getNpc(1, player.getPosition().copy().move(1, 0));
 				npc.setOwner(player);
 				npc.setRespawn(false);
-//				npc.setCurrentHealth(100_000);
+				npc.setCurrentHealth(100_000);
 				World.get().getMobs().add(npc);
 			}
 		}

@@ -176,6 +176,13 @@ public abstract class Mob extends Actor {
 		if (active()) {
 			update();
 			getMovementQueue().sequence();
+
+			if (!getHitQueue().isEmpty()) {
+				getFlags().flag(UpdateFlag.PRIMARY_HIT);
+				if (getHitQueue().size() > 1) {
+					getFlags().flag(UpdateFlag.SECONDARY_HIT);
+				}
+			}
 		}
 	}
 	
