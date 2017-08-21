@@ -28,7 +28,7 @@ public class CombatEvent {
         return defender;
     }
 
-    boolean canExecute() {
+    public boolean canExecute() {
         return ++ticks >= delay;
     }
 

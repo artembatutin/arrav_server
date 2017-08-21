@@ -43,93 +43,93 @@ public abstract class Actor extends Entity {
 	 * The current teleport stage that this player is in.
 	 */
 	private int teleportStage;
-	
+
 	/**
 	 * An {@link AttributeMap} instance assigned to this {@code Actor}.
 	 */
 	protected final AttributeMap attr = new AttributeMap();
-	
+
 	/**
 	 * The movement queue that will handle all movement processing for this entity.
 	 */
 	private final MovementQueue movementQueue = new MovementQueue(this);
-	
+
 	/**
 	 * The movement queue listener that will allow for actions to be appended to
 	 * the end of the movement queue.
 	 */
 	private final MovementQueueListener movementListener = new MovementQueueListener(this);
-	
+
 	/**
 	 * An {@link UpdateFlagHolder} instance assigned to this {@code MobileEntity}.
 	 */
 	protected final UpdateFlagHolder flags = new UpdateFlagHolder();
-	
+
 	/**
 	 * The collection of stopwatches used for various timing operations.
 	 */
 	private final Stopwatch lastCombat = new Stopwatch(), freezeTimer = new Stopwatch(), stunTimer = new Stopwatch();
-	
+
 	/**
 	 * A saved position of the previous region to be moved from.
 	 */
 	protected Position regionChanged;
-	
+
 	/**
 	 * The slot this entity has been assigned to.
 	 */
 	private int slot = -1;
-	
+
 	/**
 	 * The flag that determines if this entity is visible or not.
 	 */
 	private boolean visible = true;
-	
+
 	/**
 	 * The aggression tick timer to not check npc aggression each tick.
 	 */
 	private int aggressionTick;
-	
+
 	/**
 	 * The viewing distance of a {@link Actor}.
 	 */
 	private int viewingDistance = 30;
-	
+
 	/**
 	 * The amount of poison damage this entity has.
 	 */
 	private final MutableNumber poisonDamage = new MutableNumber();
-	
+
 	/**
 	 * The type of poison that was previously applied.
 	 */
 	private PoisonType poisonType;
-	
+
 	/**
 	 * The primary movement direction of this entity.
 	 */
 	private Direction primaryDirection = Direction.NONE;
-	
+
 	/**
 	 * The secondary movement direction of this entity.
 	 */
 	private Direction secondaryDirection = Direction.NONE;
-	
+
 	/**
 	 * The last movement direction made by this entity.
 	 */
 	private Direction lastDirection = Direction.NONE;
-	
+
 	/**
 	 * The forced movement.
 	 */
 	private ForcedMovement forcedMovement;
-	
+
 	/**
 	 * The flag that determines if this entity needs placement.
 	 */
 	private boolean needsPlacement;
-	
+
 	/**
 	 * The flag that determines if this entity needs a region update.
 	 */
@@ -139,67 +139,62 @@ public abstract class Actor extends Entity {
 	 * The current animation being performed by this entity.
 	 */
 	private Animation animation;
-	
+
 	/**
 	 * The current graphic being performed by this entity.
 	 */
 	private Graphic graphic;
-	
+
 	/**
 	 * The current text being forced by this entity.
 	 */
 	private String forcedText;
-	
+
 	/**
 	 * The current index being faced by this entity.
 	 */
 	private int faceIndex;
-	
+
 	/**
 	 * The current coordinates being face by this entity.
 	 */
 	private Position facePosition;
-	
-	/**
-	 * The hits being queued to this entity.
-	 */
-	private Deque<Hit> hitQueue = new LinkedList<>();
-	
+
 	/**
 	 * The last known region that this {@code Player} was in.
 	 */
 	private Position lastRegion;
-	
+
 	/**
 	 * The delay representing how long this entity is frozen for.
 	 */
 	private long freezeDelay;
-	
+
 	/**
 	 * The delay representing how long this entity is stunned for.
 	 */
 	private long stunDelay;
-	
+
 	/**
 	 * The flag determining if this entity should fight back when attacked.
 	 */
 	private boolean autoRetaliate;
-	
+
 	/**
 	 * The flag determining if this entity is following someone.
 	 */
 	private boolean following;
-	
+
 	/**
 	 * The entity this entity is currently following.
 	 */
 	private Actor followentity;
-	
+
 	/**
 	 * The flag determining if this entity is dead.
 	 */
 	private boolean dead;
-	
+
 	/**
 	 * The pathfinder used by this {@link Actor}.
 	 */
@@ -217,11 +212,11 @@ public abstract class Actor extends Entity {
 		this.autoRetaliate = (type == EntityType.NPC);
 		this.aStarPathFinder = new AStarPathFinder(this, new Manhattan());
 	}
-	
+
 	public abstract void preUpdate();
-	
+
 	public abstract void update();
-	
+
 	public void postUpdate() {
 		//Updating the region that the actor has entered.
 		if(regionChanged != null) {
@@ -238,7 +233,7 @@ public abstract class Actor extends Entity {
 		animation = null;
 		flags.clear();
 	}
-	
+
 	/**
 	 * Sets the value for {@link Entity#position}.
 	 * @param position the new value to set.
@@ -251,11 +246,11 @@ public abstract class Actor extends Entity {
 		}
 		super.setPosition(position);
 	}
-	
+
 	public boolean same(Actor other) {
 		return other != null && getType().equals(other.getType()) && getSlot() == other.getSlot();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if(obj == null)
@@ -267,7 +262,7 @@ public abstract class Actor extends Entity {
 		Actor other = (Actor) obj;
 		return this.same(other);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		int prime = 31;
@@ -276,7 +271,7 @@ public abstract class Actor extends Entity {
 		result = prime * result + getSlot();
 		return result;
 	}
-	
+
 	@Override
 	public String toString() {
 		if(slot == -1)
@@ -287,59 +282,59 @@ public abstract class Actor extends Entity {
 			return World.get().getMobs().get(slot - 1).toString();
 		throw new IllegalStateException("Invalid entity node type!");
 	}
-	
+
 	/**
 	 * Condition if the {@link Actor} is in multi combat area.
 	 * @return multi area combat flag.
 	 */
 	public abstract boolean inMulti();
-	
+
 	/**
 	 * Condition if the {@link Actor} is in wilderness area.
 	 * @return wilderness area flag.
 	 */
 	public abstract boolean inWilderness();
-	
+
 	/**
 	 * Condition if this {@link Actor} is active in the world.
 	 * @return {@code true} if it is, false otherwise.
 	 */
 	public abstract boolean active();
-	
+
 	/**
 	 * Attempts to move this entity node to the {@code destination}.
 	 */
 	public abstract void move(Position destination);
-	
+
 	/**
 	 * The death appending method when the {@link Actor} is about to die.
 	 */
 	public abstract void appendDeath();
-	
+
 	/**
 	 * Gets a set of local players.
 	 * @return local players
 	 */
 	public abstract Set<Player> getLocalPlayers();
-	
+
 	/**
 	 * Gets a set of local mobs.
 	 * @return local mobs
 	 */
 	public abstract Set<Mob> getLocalMobs();
-	
+
 	/**
 	 * Gets the attack speed for this entity.
 	 * @return the attack speed.
 	 */
 	public abstract int getAttackDelay();
-	
+
 	/**
 	 * Gets this entity's current health.
 	 * @return this charater's health.
 	 */
 	public abstract int getCurrentHealth();
-	
+
 	/**
 	 * Decrements this entity's health based on {@code hit}.
 	 * @param hit the hit to decrement this entity's health by.
@@ -352,7 +347,7 @@ public abstract class Actor extends Entity {
 	 * @param amount the amount to restore this health level by.
 	 */
 	public abstract void healEntity(int amount);
-	
+
 	/**
 	 * Applies poison with an intensity of {@code type} to the entity.
 	 * @param type the poison type to apply.
@@ -361,7 +356,7 @@ public abstract class Actor extends Entity {
 		poisonType = type;
 		CombatUtil.effect(this, CombatEffectType.POISON);
 	}
-	
+
 	/**
 	 * Calculates and returns the size of this entity.
 	 * @return the size of this entity.
@@ -371,7 +366,7 @@ public abstract class Actor extends Entity {
 			return 1;
 		return toMob().getDefinition().getSize();
 	}
-	
+
 	/**
 	 * Gets the center position for this entity node.
 	 * @return the center position for this entity node.
@@ -382,7 +377,7 @@ public abstract class Actor extends Entity {
 		}
 		return new Position((this.getPosition().getX() + toMob().getDefinition().getSize() / 2), this.getPosition().getY() + (toMob().getDefinition().getSize() / 2));
 	}
-	
+
 	/**
 	 * Executes {@code animation} for this entity.
 	 * @param animation the animation to execute, or {@code null} to reset the current
@@ -396,7 +391,7 @@ public abstract class Actor extends Entity {
 			flags.flag(UpdateFlag.ANIMATION);
 		}
 	}
-	
+
 	/**
 	 * Executes {@code graphic} for this entity.
 	 * @param graphic the graphic to execute.
@@ -408,7 +403,7 @@ public abstract class Actor extends Entity {
 		this.graphic = graphic.copy();
 		flags.flag(UpdateFlag.GRAPHIC);
 	}
-	
+
 	/**
 	 * Executes {@code forcedText} for this entity.
 	 * @param forcedText the forced text to execute.
@@ -417,7 +412,7 @@ public abstract class Actor extends Entity {
 		this.forcedText = forcedText;
 		flags.flag(UpdateFlag.FORCE_CHAT);
 	}
-	
+
 	/**
 	 * Prompts this entity to face {@code entity}.
 	 * @param entity the entity to face, or {@code null} to reset the face.
@@ -426,7 +421,7 @@ public abstract class Actor extends Entity {
 		this.faceIndex = entity == null ? 65535 : entity.isPlayer() ? entity.slot + 32768 : entity.slot;
 		flags.flag(UpdateFlag.FACE_ENTITY);
 	}
-	
+
 	/**
 	 * Prompts this entity to face {@code position}.
 	 * @param position the position to face.
@@ -441,7 +436,7 @@ public abstract class Actor extends Entity {
 			facePosition = new Position(2 * position.getX() + 1, 2 * position.getY() + 1);
 		flags.flag(UpdateFlag.FACE_COORDINATE);
 	}
-	
+
 	/**
 	 * Attempts to view a direction.
 	 * @param direction the direction to face.
@@ -458,26 +453,12 @@ public abstract class Actor extends Entity {
 	public final void damage(Hit... hits) {
 		Preconditions.checkArgument(hits.length >= 1 && hits.length <= 4);
 		for (Hit hit : hits) {
-			hitQueue.add(hit);
-		}
-	}
-
-	/**
-	 * Preparing the hits for this tick.
-	 */
-	public final void prepareHits() {
-		if (!getHitQueue().isEmpty()) {
-			primaryHit = getHitQueue().pollFirst();
-			if(primaryHit != null) {
+			if (flags.get(UpdateFlag.PRIMARY_HIT)) {
+				secondaryHit = decrementHealth(hit);
+				getFlags().flag(UpdateFlag.SECONDARY_HIT);
+			} else {
+				primaryHit = decrementHealth(hit);
 				getFlags().flag(UpdateFlag.PRIMARY_HIT);
-				decrementHealth(primaryHit);
-				if (getHitQueue().size() > 1) {
-					secondaryHit = getHitQueue().pollFirst();
-					if(secondaryHit != null) {
-						getFlags().flag(UpdateFlag.SECONDARY_HIT);
-						decrementHealth(secondaryHit);
-					}
-				}
 			}
 		}
 	}
@@ -493,7 +474,7 @@ public abstract class Actor extends Entity {
 		freezeTimer.reset();
 		movementQueue.reset();
 	}
-	
+
 	/**
 	 * Unfreezes this entity completely allowing them to reestablish
 	 * movement.
@@ -502,7 +483,7 @@ public abstract class Actor extends Entity {
 		freezeDelay = 0;
 		freezeTimer.stop();
 	}
-	
+
 	/**
 	 * Stuns this entity for the desired time in {@code SECONDS}.
 	 * @param time the time to stun this entity for.
@@ -514,7 +495,7 @@ public abstract class Actor extends Entity {
 		stunTimer.reset();
 		movementQueue.reset();
 	}
-	
+
 	/**
 	 * Un-stuns this entity completely allowing them to reestablish
 	 * movement.
@@ -523,7 +504,7 @@ public abstract class Actor extends Entity {
 		stunDelay = 0;
 		stunTimer.stop();
 	}
-	
+
 	/**
 	 * Sends a delayed task for this player.
 	 */
@@ -537,14 +518,14 @@ public abstract class Actor extends Entity {
 			}
 		}.submit();
 	}
-	
+
 	/**
 	 * @return The {@link AttributeMap} instance assigned to this {@code MobileEntity}.
 	 */
 	public final AttributeMap getAttr() {
 		return attr;
 	}
-	
+
 	/**
 	 * Determines if this entity is poisoned.
 	 * @return {@code true} if this entity is poisoned, {@code false}
@@ -553,7 +534,7 @@ public abstract class Actor extends Entity {
 	public final boolean isPoisoned() {
 		return poisonDamage.get() > 0;
 	}
-	
+
 	/**
 	 * Determines if this entity is frozen.
 	 * @return {@code true} if this entity is frozen, {@code false}
@@ -562,7 +543,7 @@ public abstract class Actor extends Entity {
 	public final boolean isFrozen() {
 		return !freezeTimer.elapsed(freezeDelay, TimeUnit.SECONDS);
 	}
-	
+
 	/**
 	 * Determines if this entity is frozen.
 	 * @return {@code true} if this entity is frozen, {@code false}
@@ -571,7 +552,7 @@ public abstract class Actor extends Entity {
 	public final boolean isStunned() {
 		return !stunTimer.elapsed(stunDelay, TimeUnit.SECONDS);
 	}
-	
+
 	/**
 	 * Gets the slot this entity has been assigned to.
 	 * @return the slot of this entity.
@@ -579,7 +560,7 @@ public abstract class Actor extends Entity {
 	public final int getSlot() {
 		return slot;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Actor#slot}.
 	 * @param slot the new value to set.
@@ -587,7 +568,7 @@ public abstract class Actor extends Entity {
 	public final void setSlot(int slot) {
 		this.slot = slot;
 	}
-	
+
 	/**
 	 * Gets the amount of poison damage this entity has.
 	 * @return the amount of poison damage.
@@ -595,7 +576,7 @@ public abstract class Actor extends Entity {
 	public final MutableNumber getPoisonDamage() {
 		return poisonDamage;
 	}
-	
+
 	/**
 	 * Gets the primary direction this entity is facing.
 	 * @return the primary direction.
@@ -603,7 +584,7 @@ public abstract class Actor extends Entity {
 	public final Direction getPrimaryDirection() {
 		return primaryDirection;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Actor#primaryDirection}.
 	 * @param primaryDirection the new value to set.
@@ -611,7 +592,7 @@ public abstract class Actor extends Entity {
 	public final void setPrimaryDirection(Direction primaryDirection) {
 		this.primaryDirection = primaryDirection;
 	}
-	
+
 	/**
 	 * Gets the secondary direction this entity is facing.
 	 * @return the secondary direction.
@@ -619,7 +600,7 @@ public abstract class Actor extends Entity {
 	public final Direction getSecondaryDirection() {
 		return secondaryDirection;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Actor#secondaryDirection}.
 	 * @param secondaryDirection the new value to set.
@@ -627,7 +608,7 @@ public abstract class Actor extends Entity {
 	public final void setSecondaryDirection(Direction secondaryDirection) {
 		this.secondaryDirection = secondaryDirection;
 	}
-	
+
 	/**
 	 * Gets the last direction this entity was facing.
 	 * @return the last direction.
@@ -635,7 +616,7 @@ public abstract class Actor extends Entity {
 	public final Direction getLastDirection() {
 		return lastDirection;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Actor#lastDirection}.
 	 * @param lastDirection the new value to set.
@@ -643,7 +624,7 @@ public abstract class Actor extends Entity {
 	public final void setLastDirection(Direction lastDirection) {
 		this.lastDirection = lastDirection;
 	}
-	
+
 	/**
 	 * Gets the entity's forced movement.
 	 * @return entity's forced movement.
@@ -651,7 +632,7 @@ public abstract class Actor extends Entity {
 	public ForcedMovement getForcedMovement() {
 		return forcedMovement;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Actor#forcedMovement}
 	 * @param forcedMovement the new value to set.
@@ -659,7 +640,7 @@ public abstract class Actor extends Entity {
 	public void setForcedMovement(ForcedMovement forcedMovement) {
 		this.forcedMovement = forcedMovement;
 	}
-	
+
 	/**
 	 * Determines if this entity needs region update.
 	 * @return {@code true} if this entity needs region update, {@code false}
@@ -668,7 +649,7 @@ public abstract class Actor extends Entity {
 	public final boolean isNeedsRegionUpdate() {
 		return needsRegionUpdate;
 	}
-	
+
 	/**
 	 * Determines if this entity needs placement.
 	 * @return {@code true} if this entity needs placement, {@code false}
@@ -677,7 +658,7 @@ public abstract class Actor extends Entity {
 	public final boolean isNeedsPlacement() {
 		return needsPlacement;
 	}
-	
+
 	/**
 	 * Sets a new value for {@link #needsPlacement}.
 	 * @param needsPlacement new value to set.
@@ -685,7 +666,7 @@ public abstract class Actor extends Entity {
 	public final void setNeedsPlacement(boolean needsPlacement) {
 		this.needsPlacement = needsPlacement;
 	}
-	
+
 	/**
 	 * Sets regional and placement updates on this {@link Actor}.
 	 * @param needsPlacement this flag describes if the entity needs placement.
@@ -695,7 +676,7 @@ public abstract class Actor extends Entity {
 		this.needsPlacement = needsPlacement;
 		this.needsRegionUpdate = region;
 	}
-	
+
 	/**
 	 * Gets the last region this entity is in.
 	 * @return the current region.
@@ -703,7 +684,7 @@ public abstract class Actor extends Entity {
 	public Position getLastRegion() {
 		return lastRegion;
 	}
-	
+
 	/**
 	 * Gets the current teleport stage that this player is in.
 	 * @return the teleport stage.
@@ -711,7 +692,7 @@ public abstract class Actor extends Entity {
 	public int getTeleportStage() {
 		return teleportStage;
 	}
-	
+
 	/**
 	 * Checks if the player is teleporting.
 	 * @return <true> if the player is, <false> otherwise.
@@ -719,7 +700,7 @@ public abstract class Actor extends Entity {
 	public boolean isTeleporting() {
 		return teleportStage > 0 || teleportStage == -1;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Player#teleportStage}.
 	 * @param teleportStage the new value to set.
@@ -727,7 +708,7 @@ public abstract class Actor extends Entity {
 	public void setTeleportStage(int teleportStage) {
 		this.teleportStage = teleportStage;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Actor#lastRegion}.
 	 * @param lastRegion the new value to set.
@@ -735,7 +716,7 @@ public abstract class Actor extends Entity {
 	public void setLastRegion(Position lastRegion) {
 		this.lastRegion = lastRegion;
 	}
-	
+
 	/**
 	 * Determines if this entity is auto-retaliating.
 	 * @return {@code true} if this entity is auto-retaliating, {@code false}
@@ -744,7 +725,7 @@ public abstract class Actor extends Entity {
 	public final boolean isAutoRetaliate() {
 		return autoRetaliate;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Actor#autoRetaliate}.
 	 * @param autoRetaliate the new value to set.
@@ -752,7 +733,7 @@ public abstract class Actor extends Entity {
 	public void setAutoRetaliate(boolean autoRetaliate) {
 		this.autoRetaliate = autoRetaliate;
 	}
-	
+
 	/**
 	 * Determines if this entity is following someone.
 	 * @return {@code true} if this entity is following someone,
@@ -761,7 +742,7 @@ public abstract class Actor extends Entity {
 	public final boolean isFollowing() {
 		return following;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Actor#following}.
 	 * @param following the new value to set.
@@ -769,7 +750,7 @@ public abstract class Actor extends Entity {
 	public final void setFollowing(boolean following) {
 		this.following = following;
 	}
-	
+
 	/**
 	 * Gets the entity that is currently being followed.
 	 * @return the entity being followed.
@@ -777,7 +758,7 @@ public abstract class Actor extends Entity {
 	public final Actor getFollowEntity() {
 		return followentity;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Actor#followentity}.
 	 * @param followentity the new value to set.
@@ -785,7 +766,7 @@ public abstract class Actor extends Entity {
 	public final void setFollowEntity(Actor followentity) {
 		this.followentity = followentity;
 	}
-	
+
 	/**
 	 * Determines if this entity is dead or not.
 	 * @return {@code true} if this entity is dead, {@code false} otherwise.
@@ -804,7 +785,7 @@ public abstract class Actor extends Entity {
 	public void setDead(boolean dead) {
 		this.dead = dead;
 	}
-	
+
 	/**
 	 * Determines if this entity is visible or not.
 	 * @return {@code true} if this entity is visible, {@code false}
@@ -813,7 +794,7 @@ public abstract class Actor extends Entity {
 	public boolean isVisible() {
 		return visible;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Actor#visible}.
 	 * @param visible the new value to set.
@@ -821,7 +802,7 @@ public abstract class Actor extends Entity {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
-	
+
 	public abstract Combat<? extends Actor> getCombat();
 
 	public abstract int getBonus(int index);
@@ -838,7 +819,7 @@ public abstract class Actor extends Entity {
 	public final MovementQueue getMovementQueue() {
 		return movementQueue;
 	}
-	
+
 	/**
 	 * Gets the movement queue listener that will allow for actions to be
 	 * appended to the end of the movement queue.
@@ -847,14 +828,14 @@ public abstract class Actor extends Entity {
 	public final MovementQueueListener getMovementListener() {
 		return movementListener;
 	}
-	
+
 	/**
 	 * @return The {@link UpdateFlagHolder} instance assigned to this {@code Actor}.
 	 */
 	public final UpdateFlagHolder getFlags() {
 		return flags;
 	}
-	
+
 	/**
 	 * Gets the timer that records the difference in time between now and the
 	 * last time the player was in combat.
@@ -863,7 +844,7 @@ public abstract class Actor extends Entity {
 	public final Stopwatch getLastCombat() {
 		return lastCombat;
 	}
-	
+
 	/**
 	 * Gets the animation update block value.
 	 * @return the animation update block value.
@@ -871,7 +852,7 @@ public abstract class Actor extends Entity {
 	public final Animation getAnimation() {
 		return animation;
 	}
-	
+
 	/**
 	 * Gets the graphic update block value.
 	 * @return the graphic update block value.
@@ -879,7 +860,7 @@ public abstract class Actor extends Entity {
 	public final Graphic getGraphic() {
 		return graphic;
 	}
-	
+
 	/**
 	 * Gets the forced text update block value.
 	 * @return the forced text update block value.
@@ -887,7 +868,7 @@ public abstract class Actor extends Entity {
 	public final String getForcedText() {
 		return forcedText;
 	}
-	
+
 	/**
 	 * Gets the face index update block value.
 	 * @return the face index update block value.
@@ -895,7 +876,7 @@ public abstract class Actor extends Entity {
 	public final int getFaceIndex() {
 		return faceIndex;
 	}
-	
+
 	/**
 	 * Gets the face position update block value.
 	 * @return the face position update block value.
@@ -909,7 +890,7 @@ public abstract class Actor extends Entity {
 	 * @return the primary hit update block value.
 	 */
 	public final Hit getPrimaryHit() {
-		return hitQueue.peek();
+		return primaryHit;
 	}
 
 	/**
@@ -917,11 +898,7 @@ public abstract class Actor extends Entity {
 	 * @return the secondary hit update block value.
 	 */
 	public final Hit getSecondaryHit() {
-		return hitQueue.peek();
-	}
-
-	public Deque<Hit> getHitQueue() {
-		return hitQueue;
+		return secondaryHit;
 	}
 
 	/**
@@ -931,7 +908,7 @@ public abstract class Actor extends Entity {
 	public PoisonType getPoisonType() {
 		return poisonType;
 	}
-	
+
 	/**
 	 * Sets the value for {@link Actor#poisonType}.
 	 * @param poisonType the new value to set.
@@ -939,7 +916,7 @@ public abstract class Actor extends Entity {
 	public void setPoisonType(PoisonType poisonType) {
 		this.poisonType = poisonType;
 	}
-	
+
 	/**
 	 * Determines if this entity is a {@link Player}.
 	 * @return {@code true} if this entity is a {@link Player}, {@code false}
@@ -948,7 +925,7 @@ public abstract class Actor extends Entity {
 	public final boolean isPlayer() {
 		return getType() == EntityType.PLAYER;
 	}
-	
+
 	/**
 	 * Executes the specified action if the underlying node is a player.
 	 * @param action the action to execute.
@@ -959,7 +936,7 @@ public abstract class Actor extends Entity {
 		}
 		action.accept(this.toPlayer());
 	}
-	
+
 	/**
 	 * Casts the {@link Actor} to a {@link Player}.
 	 * @return an instance of this {@link Actor} as a {@link Player}.
@@ -968,7 +945,7 @@ public abstract class Actor extends Entity {
 		Preconditions.checkArgument(isPlayer(), "Cannot cast this entity to player.");
 		return (Player) this;
 	}
-	
+
 	/**
 	 * Determines if this entity is a {@link Mob}.
 	 * @return {@code true} if this entity is a {@link Mob}, {@code false}
@@ -977,7 +954,7 @@ public abstract class Actor extends Entity {
 	public final boolean isMob() {
 		return getType() == EntityType.NPC;
 	}
-	
+
 	/**
 	 * Executes the specified action if the underlying node is a player.
 	 * @param action the action to execute.
@@ -987,7 +964,7 @@ public abstract class Actor extends Entity {
 			return;
 		action.accept(this.toMob());
 	}
-	
+
 	/**
 	 * Casts the {@link Actor} to a {@link Mob}.
 	 * @return an instance of this {@link Actor} as a {@link Mob}.
@@ -996,7 +973,7 @@ public abstract class Actor extends Entity {
 		Preconditions.checkArgument(isMob(), "Cannot cast this entity to npc.");
 		return (Mob) this;
 	}
-	
+
 	/**
 	 * Gets the viewing distance.
 	 * @return viewing distance.
@@ -1004,7 +981,7 @@ public abstract class Actor extends Entity {
 	public int getViewingDistance() {
 		return viewingDistance;
 	}
-	
+
 	/**
 	 * Viewing distance.
 	 * @param viewingDistance viewing distance.
@@ -1012,7 +989,7 @@ public abstract class Actor extends Entity {
 	public void setViewingDistance(int viewingDistance) {
 		this.viewingDistance = viewingDistance;
 	}
-	
+
 	/**
 	 * Gets the aggression tick timer.
 	 * @return aggression tick timer.

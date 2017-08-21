@@ -12,9 +12,6 @@ import net.edge.util.Stopwatch;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.ActorList;
-import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.update.UpdateFlag;
 
 import java.util.LinkedList;
@@ -66,12 +63,10 @@ public class Combat<T extends Actor> {
         for(Actor actor : World.get().getMobs()) {
             if (actor == null || !actor.getState().equals(EntityState.ACTIVE)) continue;
             actor.getCombat().tick();
-            actor.prepareHits();
         }
         for(Actor actor : World.get().getPlayers()) {
             if (actor == null || !actor.getState().equals(EntityState.ACTIVE)) continue;
             actor.getCombat().tick();
-            actor.prepareHits();
         }
     }
 
@@ -161,7 +156,12 @@ public class Combat<T extends Actor> {
                 }
                 hitsplat(def, _hit, strategy.getCombatType());
                 strategy.hitsplat(attacker, def, _hit);
-            }));
+            })
+            {
+                public boolean canExecute() {
+                    return super.canExecute() && !attacker.getFlags().get(UpdateFlag.SECONDARY_HIT);
+                }
+            });
 
             if (shortest > delay) shortest = delay;
         }
@@ -174,7 +174,12 @@ public class Combat<T extends Actor> {
             finish(def);
             strategy.finish(attacker, def);
             strategy.getModifier(attacker).ifPresent(this::removeModifier);
-        }));
+        })
+        {
+            public boolean canExecute() {
+                return super.canExecute() && !attacker.getFlags().get(UpdateFlag.SECONDARY_HIT);
+            }
+        });
     }
 
     public void submitHits(Actor defender, CombatHit... hits) {
@@ -203,7 +208,6 @@ public class Combat<T extends Actor> {
 
         if (defender.getCombat().defender == null && defender.isAutoRetaliate()) {
             defender.getCombat().attack(attacker);
-//            defender.getCombat().reset();
         }
 
         if (combatType != CombatType.MAGIC || defender.isMob()) {
@@ -233,10 +237,6 @@ public class Combat<T extends Actor> {
         T defender = this.attacker;
         attacks.forEach(attack -> attack.onDeath(attacker, defender, hit));
         defender.getMovementQueue().reset();
-
-        if (!defender.getHitQueue().isEmpty()) {
-            defender.getHitQueue().clear();
-        }
     }
 
     private void finish(Actor defender) {

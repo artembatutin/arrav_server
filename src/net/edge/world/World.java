@@ -156,7 +156,7 @@ public final class World {
 			registerActors();
 			taskManager.sequence();
 			sync.preUpdate(players, mobs);
-			Combat.update();
+			Combat.update();//why retaliate? ask mike, i tested and auto ret doesnt work if its here
 			sync.update(players);
 			sync.postUpdate(players, mobs);
 			dequeueLogout();
