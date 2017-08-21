@@ -158,7 +158,7 @@ public final class World {
 			sync.preUpdate(players, mobs);
 			sync.update(players);
 			sync.postUpdate(players, mobs);
-			Combat.update();
+			Combat.update(players, mobs);
 			dequeueLogout();
 			disposeActors();
 			regionalTick++;
@@ -352,8 +352,8 @@ public final class World {
 	 */
 	public Set<Actor> getActors() {
 		Set<Actor> actors = new HashSet<>();
-		players.forEach(actors::add);
 		mobs.forEach(actors::add);
+		players.forEach(actors::add);
 		return actors;
 	}
 	

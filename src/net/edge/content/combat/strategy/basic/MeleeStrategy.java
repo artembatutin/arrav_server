@@ -70,7 +70,7 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
     }
 
     protected static void addCombatExperience(Player player, Hit hit) {
-        int exp = hit.getDamage() * BASE_EXPERIENCE_MULTIPLIER;
+        int exp = (hit.getDamage() / 10) * BASE_EXPERIENCE_MULTIPLIER;
 
         Skills.experience(player, exp / 3, Skills.HITPOINTS);
         switch (player.getCombat().getFightType().getStyle()) {

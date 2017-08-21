@@ -12,6 +12,9 @@ import net.edge.util.Stopwatch;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.ActorList;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.update.UpdateFlag;
 
 import java.util.LinkedList;
@@ -59,14 +62,14 @@ public class Combat<T extends Actor> {
         attacker.getMovementQueue().reset();
     }
 
-    public static void update() {
-        for(Actor actor : World.get().getMobs()) {
-            if (actor == null || !actor.getState().equals(EntityState.ACTIVE)) continue;
-            actor.getCombat().tick();
+    public static void update(ActorList<Player> players, ActorList<Mob> mobs) {
+        for(Actor mob : mobs) {
+            if (mob == null || !mob.getState().equals(EntityState.ACTIVE)) continue;
+            mob.getCombat().tick();
         }
-        for(Actor actor : World.get().getPlayers()) {
-            if (actor == null || !actor.getState().equals(EntityState.ACTIVE)) continue;
-            actor.getCombat().tick();
+        for(Actor player : players) {
+            if (player == null || !player.getState().equals(EntityState.ACTIVE)) continue;
+            player.getCombat().tick();
         }
     }
 

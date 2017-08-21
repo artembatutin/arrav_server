@@ -19,6 +19,11 @@ public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
     private NpcMeleeStrategy() { }
 
     @Override
+    public void attack(Mob attacker, Actor defender, Hit hit) {
+        attacker.animation(getAttackAnimation(attacker, defender));
+    }
+
+    @Override
     public void hit(Mob attacker, Actor defender, Hit hit) {
         if (hit.isAccurate() && attacker.getDefinition().poisonous()) {
             defender.poison(CombatPoisonEffect.getPoisonType(attacker.getId()).orElse(PoisonType.DEFAULT_NPC));

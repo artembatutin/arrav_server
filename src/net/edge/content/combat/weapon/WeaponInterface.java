@@ -60,7 +60,7 @@ public enum WeaponInterface {
 
     HALBERD(8460, 8463, 6, new FightType[]{FightType.HALBERD_JAB, FightType.HALBERD_SWIPE, FightType.HALBERD_FEND}, 8493, 8505),
 
-    UNARMED(5855, 5857, 6, new FightType[]{FightType.UNARMED_PUNCH, FightType.UNARMED_KICK, FightType.UNARMED_BLOCK}),
+    UNARMED(5855, 5857, 4, new FightType[]{FightType.UNARMED_PUNCH, FightType.UNARMED_KICK, FightType.UNARMED_BLOCK}),
 
     WHIP(12290, 12293, 4, new FightType[]{FightType.WHIP_FLICK, FightType.WHIP_LASH, FightType.WHIP_DEFLECT}, 12323, 12335),
 
