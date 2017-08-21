@@ -29,18 +29,19 @@ public class DharokListener extends SimplifiedListener<Actor> {
 
     @Override
     public Optional<AttackModifier> getModifier(Actor attacker) {
+        int maxHealth;
+
         if (attacker.isMob()) {
-            int maxHealth = attacker.toMob().getDefinition().getHitpoints();
-            int health = attacker.getCurrentHealth() > maxHealth ? 0 : maxHealth - attacker.getCurrentHealth();
-            AttackModifier modifier = new AttackModifier().damage(health * 0.01);
-            return Optional.of(modifier);
+            maxHealth = attacker.toMob().getDefinition().getHitpoints();
         } else if (hasArmor(attacker.toPlayer())) {
-            int maxHealth = attacker.toPlayer().getSkills()[Skills.HITPOINTS].getRealLevel();
-            int health = attacker.getCurrentHealth() > maxHealth * 10 ? 0 : maxHealth * 10 - attacker.getCurrentHealth();
-            AttackModifier modifier = new AttackModifier().damage(health * 0.01);
-            return Optional.of(modifier);
+            maxHealth = attacker.toPlayer().getSkills()[Skills.HITPOINTS].getRealLevel();
+        } else {
+            return Optional.empty();
         }
-        return Optional.empty();
+
+        int health = attacker.getCurrentHealth() > maxHealth ? 0 : maxHealth - attacker.getCurrentHealth();
+        AttackModifier modifier = new AttackModifier().damage(health * 0.001);
+        return Optional.of(modifier);
     }
 
     private static boolean hasArmor(Player player) {
