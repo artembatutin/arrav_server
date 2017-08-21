@@ -1,15 +1,12 @@
 package net.edge.net.packet.in;
 
-import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
+import net.edge.content.combat.content.MagicSpell;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.HitIcon;
 import net.edge.content.combat.hit.Hitsplat;
+import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.content.commands.CommandDispatcher;
-import net.edge.content.combat.content.MagicSpell;
-import net.edge.content.combat.strategy.npc.NpcMeleeStrategy;
-import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
-import net.edge.content.combat.strategy.player.PlayerMeleeStrategy;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
@@ -48,10 +45,10 @@ public final class CommandPacket implements IncomingPacket {
 //				CombatProjectileDefinition.createLoader().load();
 				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ));
 			} else if (parts[0].equalsIgnoreCase("man")) {
-				Mob npc = Mob.getNpc(1, player.getPosition().copy().move(1, 0));
+				Mob npc = Mob.getNpc(2026, player.getPosition().copy().move(1, 0));
 				npc.setOwner(player);
 				npc.setRespawn(false);
-				npc.setCurrentHealth(100_000);
+//				npc.setCurrentHealth(100_000);
 				World.get().getMobs().add(npc);
 			}
 		}
