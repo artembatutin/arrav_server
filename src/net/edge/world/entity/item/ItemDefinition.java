@@ -110,7 +110,7 @@ public final class ItemDefinition {
 	 * The array of ground actions for this item.
 	 */
 	private final String[] groundActions;
-	
+
 	/**
 	 * Creates a new {@link ItemDefinition}.
 	 * @param id               the identifier for the item.

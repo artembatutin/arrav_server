@@ -107,8 +107,7 @@ public final class CommandDispatcher {
 	 */
 	public static void load() {
 		logger.info("Loading commands...");
-		int count = 0;
-		
+
 		for(String directory : Utility.getSubDirectories(CommandDispatcher.class)) {
 			List<Command> commands = Utility.getClassesInDirectory(CommandDispatcher.class.getPackage().getName() + "." + directory).stream().map(clazz -> (Command) clazz).collect(Collectors.toList());
 			
@@ -117,10 +116,9 @@ public final class CommandDispatcher {
 					throw new IncompleteAnnotationException(CommandSignature.class, command.getClass().getName() + " has no annotation.");
 				}
 				COMMANDS.put(command.getClass().getAnnotation(CommandSignature.class), command);
-				count += 1;
 			}
 		}
-		logger.info("Successfully loaded " + count + " commands.");
+		logger.info("Successfully loaded " + COMMANDS.size() + " commands.");
 	}
 	
 	/**

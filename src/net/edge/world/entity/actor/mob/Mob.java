@@ -1,9 +1,18 @@
 package net.edge.world.entity.actor.mob;
 
+import com.google.common.collect.ImmutableMap;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatConstants;
+import net.edge.content.combat.CombatProjectileDefinition;
+import net.edge.content.combat.CombatType;
+import net.edge.content.combat.attack.listener.CombatListener;
+import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.Hitsplat;
+import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.content.combat.strategy.npc.NpcMagicStrategy;
+import net.edge.content.combat.strategy.npc.NpcMeleeStrategy;
+import net.edge.content.combat.strategy.npc.NpcRangedStrategy;
 import net.edge.content.skill.Skills;
 import net.edge.task.Task;
 import net.edge.world.World;
@@ -15,9 +24,11 @@ import net.edge.world.locale.Position;
 import net.edge.world.locale.loc.Location;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * The character implementation that represents a node that is operated by the server.
@@ -26,7 +37,9 @@ import java.util.function.Consumer;
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class Mob extends Actor {
-	
+
+	private static final ImmutableMap<Integer, Supplier<CombatStrategy<Mob>>> STRATEGIES = ImmutableMap.of();
+
 	/**
 	 * Gets a certain npc by the specified {@code id} and supplies it's position.
 	 * @param id  the id to get the npc by.
@@ -34,7 +47,28 @@ public abstract class Mob extends Actor {
 	 * @return the npc.
 	 */
 	public static Mob getNpc(int id, Position pos) {
-		return new DefaultMob(id, pos);
+		Mob mob = new DefaultMob(id, pos);
+		Combat<Mob> combat = mob.getCombat();
+		CombatListener<Mob> listener = CombatListenerDispatcher.NPC_LISTENERS.get(id);
+
+		if (listener != null) {
+			combat.addListener(listener);
+		}
+
+		combat.setStrategy(STRATEGIES.getOrDefault(id, () -> loadStrategy(mob).orElse(NpcMeleeStrategy.INSTANCE)).get());
+		return mob;
+	}
+
+	private static Optional<CombatStrategy<Mob>> loadStrategy(Mob mob) {
+		if(!mob.getDefinition().getCombatAttackData().isPresent()) {
+			return Optional.empty();
+		}
+
+		MobDefinition.CombatAttackData data = mob.getDefinition().getCombatAttackData().get();
+		CombatType type = data.type;
+		CombatProjectileDefinition definition = data.getDefinition();
+		CombatStrategy<Mob> strategy = type.equals(CombatType.MAGIC) ? new NpcMagicStrategy(definition) : new NpcRangedStrategy(definition);
+		return Optional.of(strategy);
 	}
 	
 	/**

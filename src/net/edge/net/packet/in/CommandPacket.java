@@ -1,5 +1,9 @@
 package net.edge.net.packet.in;
 
+import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.HitIcon;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.combat.content.MagicSpell;
@@ -37,8 +41,9 @@ public final class CommandPacket implements IncomingPacket {
 //				RangedWeaponDefinition def = new RangedWeaponDefinition(levelreq, type, ammo);
 //				player.getCombat().setStrategy(new PlayerRangedStrategy(def));
 				CombatSpecial.restore(player, 100);
-			} else if (parts[0].equalsIgnoreCase("melee")) {
-				player.getCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
+			} else if (parts[0].equalsIgnoreCase("test")) {
+//				CombatListenerDispatcher.load();
+				player.damage(new Hit(240, Hitsplat.NORMAL, HitIcon.NONE));
 			} else if (parts[0].equalsIgnoreCase("blitz")) {
 //				CombatProjectileDefinition.createLoader().load();
 				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ));
@@ -47,7 +52,6 @@ public final class CommandPacket implements IncomingPacket {
 				npc.setOwner(player);
 				npc.setRespawn(false);
 				npc.setCurrentHealth(100_000);
-				npc.getCombat().setStrategy(new NpcMeleeStrategy());
 				World.get().getMobs().add(npc);
 			}
 		}

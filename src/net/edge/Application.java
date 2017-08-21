@@ -11,12 +11,12 @@ import io.netty.util.ResourceLeakDetector;
 import net.edge.cache.FileSystem;
 import net.edge.cache.decoder.MapDefinitionDecoder;
 import net.edge.cache.decoder.ObjectDefinitionDecoder;
-import net.edge.cache.decoder.RegionDecoder;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.*;
 import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.ObjectAction;
 import net.edge.content.combat.CombatProjectileDefinition;
+import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
 import net.edge.content.object.star.ShootingStarManager;
 import net.edge.content.object.pit.FirepitManager;
 import net.edge.content.trivia.TriviaTask;
@@ -195,6 +195,7 @@ public final class Application {
 		});
 		//NPC decoding.
 		launch.execute(() -> {
+			CombatProjectileDefinition.createLoader().load();
 			new MobDefinitionLoader().load();
 			new MobNodeLoader().load();
 			new ItemCacheLoader().load();
@@ -216,13 +217,13 @@ public final class Application {
 		launch.execute(new CombatRangedBowLoader());
 		launch.execute(new IndividualScoreboardRewardsLoader());
 		launch.execute(() -> new SlayerDefinitionLoader().load());
-		launch.execute(() -> CombatProjectileDefinition.createLoader().load());
 		launch.execute(PunishmentHandler::parseIPBans);
 		launch.execute(PunishmentHandler::parseIPMutes);
 		launch.execute(PunishmentHandler::parseStarters);
 	}
 	
 	private void prepare() {
+		CombatListenerDispatcher.load();
 		CommandDispatcher.load();
 		loadEvents();
 		ButtonAction.init();

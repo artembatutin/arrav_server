@@ -2,6 +2,8 @@ package net.edge.world.entity.item.container.impl;
 
 import com.google.common.collect.ImmutableSet;
 import net.edge.content.combat.CombatConstants;
+import net.edge.content.combat.attack.listener.CombatListener;
+import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.item.Requirement;
@@ -50,6 +52,18 @@ public final class Equipment extends ItemContainer {
 				updateItem(container, newItem, slot);
 			updateBonus(oldItem, newItem);
 			writeBonuses();
+			if (oldItem != null) {
+				CombatListener<Player> listener = CombatListenerDispatcher.ITEM_LISTENERS.get(oldItem.getId());
+				if (listener != null) {
+					player.getCombat().removeListener(listener);
+				}
+			}
+			if (newItem != null) {
+				CombatListener<Player> listener = CombatListenerDispatcher.ITEM_LISTENERS.get(newItem.getId());
+				if (listener != null) {
+					player.getCombat().addListener(listener);
+				}
+			}
 		}
 		
 		@Override

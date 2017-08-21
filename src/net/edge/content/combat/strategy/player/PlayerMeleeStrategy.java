@@ -35,7 +35,9 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
 
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        return new CombatHit[]{nextMeleeHit(attacker, defender, 1, CombatUtil.getDelay(attacker, defender)) };
+        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
+        int hitsplatDelay = CombatUtil.getHitsplatDelay(attacker, defender);
+        return new CombatHit[] { nextMeleeHit(attacker, defender, hitDelay, hitsplatDelay) };
     }
 
     @Override

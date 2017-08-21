@@ -1,16 +1,23 @@
 package net.edge.content.combat.strategy.npc;
 
-import net.edge.content.combat.effect.CombatPoisonEffect;
-import net.edge.content.combat.hit.Hit;
-import net.edge.content.combat.attack.FightType;
+import net.edge.content.combat.CombatEffect;
 import net.edge.content.combat.CombatProjectileDefinition;
 import net.edge.content.combat.CombatType;
+import net.edge.content.combat.CombatUtil;
+import net.edge.content.combat.attack.FightType;
+import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.hit.CombatHit;
+import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.basic.RangedStrategy;
 import net.edge.world.Animation;
+import net.edge.world.Graphic;
 import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
+
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class NpcRangedStrategy extends RangedStrategy<Mob> {
 
@@ -21,15 +28,35 @@ public class NpcRangedStrategy extends RangedStrategy<Mob> {
     }
 
     @Override
+    public void attack(Mob attacker, Actor defender, Hit hit) {
+        projectileDefinition.getAnimation().ifPresent(attacker::animation);
+        projectileDefinition.getStart().ifPresent(attacker::graphic);
+        projectileDefinition.sendProjectile(attacker, defender, true);
+    }
+
+    @Override
     public void hit(Mob attacker, Actor defender, Hit hit) {
-        if (attacker.getDefinition().poisonous()) {
+        Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
+        Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit);
+        projectileDefinition.getEffect().filter(Objects::nonNull).filter(filter).ifPresent(execute);
+
+        if (hit.getDamage() > 0 && attacker.getDefinition().poisonous()) {
             defender.poison(CombatPoisonEffect.getPoisonType(attacker.getId()).orElse(PoisonType.DEFAULT_NPC));
         }
+
+        projectileDefinition.getEnd().ifPresent(defender::graphic);
+    }
+
+    @Override
+    public CombatHit[] getHits(Mob attacker, Actor defender) {
+        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
+        int hitsplatDelay = CombatUtil.getHitsplatDelay(attacker, defender);
+        return new CombatHit[] { nextRangedHit(attacker, defender, hitDelay, hitsplatDelay) };
     }
 
     @Override
     public int getAttackDelay(Mob attacker, FightType fightType) {
-        return 4;
+        return attacker.getAttackDelay();
     }
 
     @Override
@@ -38,13 +65,7 @@ public class NpcRangedStrategy extends RangedStrategy<Mob> {
     }
 
     @Override
-    public CombatHit[] getHits(Mob attacker, Actor defender) {
-        int distance = (int) attacker.getPosition().getDistance(defender.getPosition());
-        return new CombatHit[] { nextMagicHit(attacker, defender, projectileDefinition.getMaxHit(), projectileDefinition.getHitDelay(distance, false), projectileDefinition.getHitsplatDelay()) };
-    }
-
-    @Override
-    protected Animation getAttackAnimation(Mob attacker, Actor defender) {
+    public Animation getAttackAnimation(Mob attacker, Actor defender) {
         return new Animation(attacker.getDefinition().getAttackAnimation(), Animation.AnimationPriority.HIGH);
     }
 
@@ -52,4 +73,5 @@ public class NpcRangedStrategy extends RangedStrategy<Mob> {
     public CombatType getCombatType() {
         return CombatType.RANGED;
     }
+
 }

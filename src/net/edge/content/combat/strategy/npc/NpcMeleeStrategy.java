@@ -14,9 +14,13 @@ import net.edge.world.entity.actor.mob.Mob;
 
 public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
 
+    public static final NpcMeleeStrategy INSTANCE = new NpcMeleeStrategy();
+
+    private NpcMeleeStrategy() { }
+
     @Override
     public void hit(Mob attacker, Actor defender, Hit hit) {
-        if (attacker.getDefinition().poisonous()) {
+        if (hit.isAccurate() && attacker.getDefinition().poisonous()) {
             defender.poison(CombatPoisonEffect.getPoisonType(attacker.getId()).orElse(PoisonType.DEFAULT_NPC));
         }
     }
@@ -33,11 +37,13 @@ public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
 
     @Override
     public CombatHit[] getHits(Mob attacker, Actor defender) {
-        return new CombatHit[] { nextMeleeHit(attacker, defender, 1, CombatUtil.getDelay(attacker, defender)) };
+        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
+        int hitsplatDelay = CombatUtil.getHitsplatDelay(attacker, defender);
+        return new CombatHit[] { nextMeleeHit(attacker, defender, hitDelay, hitsplatDelay) };
     }
 
     @Override
-    protected Animation getAttackAnimation(Mob attacker, Actor defender) {
+    public Animation getAttackAnimation(Mob attacker, Actor defender) {
         return new Animation(attacker.getDefinition().getAttackAnimation(), Animation.AnimationPriority.HIGH);
     }
 

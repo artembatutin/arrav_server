@@ -6,23 +6,23 @@ public final class AttackModifier {
     private double defensive = 1;
     private double damage = 1;
 
-    public AttackModifier accuracy(double accuracy) {
-        this.accuracy = accuracy;
+    public AttackModifier accuracy(double percentage) {
+        accuracy = percentage;
         return this;
     }
 
-    public AttackModifier aggressive(double aggressive) {
-        this.aggressive = aggressive;
+    public AttackModifier aggressive(double percentage) {
+        aggressive = percentage;
         return this;
     }
 
-    public AttackModifier defensive(double defensive) {
-        this.defensive = defensive;
+    public AttackModifier defensive(double percentage) {
+        defensive = percentage;
         return this;
     }
 
-    public AttackModifier damage(double damage) {
-        this.damage = damage;
+    public AttackModifier damage(double percentage) {
+        damage = percentage;
         return this;
     }
 
@@ -57,4 +57,5 @@ public final class AttackModifier {
     public double getDamage() {
         return damage;
     }
+
 }

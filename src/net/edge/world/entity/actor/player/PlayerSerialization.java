@@ -6,22 +6,23 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.edge.content.achievements.Achievement;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.combat.attack.FightType;
+import net.edge.content.combat.attack.listener.CombatListener;
+import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
+import net.edge.content.item.pets.Pet;
+import net.edge.content.item.pets.PetManager;
+import net.edge.content.item.pets.PetProgress;
+import net.edge.content.minigame.barrows.BarrowsData;
+import net.edge.content.skill.Skill;
+import net.edge.content.skill.Skills;
 import net.edge.content.skill.construction.House;
 import net.edge.content.skill.construction.room.Room;
 import net.edge.content.skill.farming.patch.Patch;
 import net.edge.content.skill.farming.patch.PatchType;
-import net.edge.content.skill.summoning.SummoningData;
-import net.edge.content.skill.summoning.familiar.FamiliarAbility;
-import net.edge.content.minigame.barrows.BarrowsData;
-import net.edge.content.item.pets.Pet;
-import net.edge.content.item.pets.PetManager;
-import net.edge.content.item.pets.PetProgress;
-import net.edge.content.skill.Skill;
-import net.edge.content.skill.Skills;
 import net.edge.content.skill.slayer.Slayer;
+import net.edge.content.skill.summoning.SummoningData;
 import net.edge.content.skill.summoning.familiar.Familiar;
+import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;
-import net.edge.world.locale.Position;
 import net.edge.net.codec.login.LoginCode;
 import net.edge.util.json.GsonUtils;
 import net.edge.world.entity.actor.attribute.AttributeKey;
@@ -31,6 +32,7 @@ import net.edge.world.entity.actor.player.assets.PrayerBook;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.Spellbook;
 import net.edge.world.entity.item.Item;
+import net.edge.world.locale.Position;
 
 import java.io.File;
 import java.io.FileReader;
@@ -42,9 +44,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static net.edge.content.skill.summoning.familiar.FamiliarAbility.FamiliarAbilityType.BEAST_OF_BURDEN;
-import static net.edge.net.codec.login.LoginCode.ACCOUNT_DISABLED;
-import static net.edge.net.codec.login.LoginCode.COULD_NOT_COMPLETE_LOGIN;
-import static net.edge.net.codec.login.LoginCode.INVALID_CREDENTIALS;
+import static net.edge.net.codec.login.LoginCode.*;
 
 /**
  * The serializer that will serialize and deserialize character files for
@@ -509,6 +509,15 @@ public final class PlayerSerialization {
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
 			p.getEquipment().fillItems(b.fromJson(n, Item[].class));
+
+			for (Item item : p.getEquipment().getItems()) {
+				if (item != null) {
+					CombatListener<Player> listener = CombatListenerDispatcher.ITEM_LISTENERS.get(item.getId());
+					if (listener != null) {
+						p.getCombat().addListener(listener);
+					}
+				}
+			}
 		}
 	}, bank(0), bank(1), bank(2), bank(3), bank(4), bank(5), bank(6), bank(7), bank(8), new Token("friends") {
 		@Override

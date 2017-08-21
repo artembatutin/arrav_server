@@ -3,12 +3,13 @@ package net.edge.content.combat.strategy;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.attack.FormulaFactory;
+import net.edge.content.combat.attack.listener.CombatListener;
 import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;
 
-public abstract class CombatStrategy<T extends Actor> implements CombatAttack<T> {
+public abstract class CombatStrategy<T extends Actor> implements CombatListener<T> {
 
     public abstract boolean withinDistance(T attacker, Actor defender);
 
@@ -20,7 +21,7 @@ public abstract class CombatStrategy<T extends Actor> implements CombatAttack<T>
 
     public abstract CombatHit[] getHits(T attacker, Actor defender);
 
-    protected abstract Animation getAttackAnimation(T attacker, Actor defender);
+    public abstract Animation getAttackAnimation(T attacker, Actor defender);
 
     public void attack(T attacker, Actor defender, Hit hit) {
     }

@@ -2,12 +2,11 @@ package net.edge.content.combat;
 
 import net.edge.content.combat.attack.AttackModifier;
 import net.edge.content.combat.attack.FightType;
-import net.edge.content.combat.content.Poison;
+import net.edge.content.combat.attack.listener.CombatListener;
 import net.edge.content.combat.events.CombatEvent;
 import net.edge.content.combat.events.CombatEventManager;
 import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
-import net.edge.content.combat.strategy.CombatAttack;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.util.Stopwatch;
 import net.edge.world.World;
@@ -29,19 +28,18 @@ public class Combat<T extends Actor> {
     private Stopwatch lastAttacked = new Stopwatch();
     private Stopwatch lastBlocked = new Stopwatch();
 
-    private Poison poison;
     private FightType type;
 
     private CombatStrategy<? super T> strategy;
     private AttackModifier attackModifier = new AttackModifier();
-    private List<CombatAttack<? super T>> attacks = new LinkedList<>();
+    private List<CombatListener<? super T>> attacks = new LinkedList<>();
     private CombatEventManager eventManager = new CombatEventManager();
 
     /** The cache of damage dealt to this controller during combat. */
     private final CombatDamage damageCache = new CombatDamage();
 
-    private List<CombatAttack<? super T>> pendingAddition = new LinkedList<>();
-    private List<CombatAttack<? super T>> pendingRemoval = new LinkedList<>();
+    private List<CombatListener<? super T>> pendingAddition = new LinkedList<>();
+    private List<CombatListener<? super T>> pendingRemoval = new LinkedList<>();
     private int[] delays = new int[3];
 
     public Combat(T attacker) {
@@ -62,54 +60,44 @@ public class Combat<T extends Actor> {
     }
 
     public static void update() {
-        for(Actor a : World.get().getActors()) {
-            if (a == null || !a.getState().equals(EntityState.ACTIVE)) continue;
-            a.getCombat().tick();
+        for(Actor actor : World.get().getActors()) {
+            if (actor == null || !actor.getState().equals(EntityState.ACTIVE)) continue;
+            actor.getCombat().tick();
 
-            if (!a.getHitQueue().isEmpty()) {
-                a.getFlags().flag(UpdateFlag.PRIMARY_HIT);
-                if (a.getHitQueue().size() > 1) {
-                    a.getFlags().flag(UpdateFlag.SECONDARY_HIT);
+            if (!actor.getHitQueue().isEmpty()) {
+                actor.getFlags().flag(UpdateFlag.PRIMARY_HIT);
+                if (actor.getHitQueue().size() > 1) {
+                    actor.getFlags().flag(UpdateFlag.SECONDARY_HIT);
+
                 }
             }
         }
     }
 
     private void tick() {
-//        try {
-            handleListeners();
-            if (poison != null) poison.sequence(attacker);
-            for (int index = 0; index < delays.length; index++) {
-                if (delays[index] > 0) {
-                    delays[index]--;
-                } else {
-                    if (defender == null || strategy == null) continue;
-                    if (strategy.getCombatType().ordinal() != index) continue;
-                    submitStrategy(defender, strategy);
-                }
+        updateListeners();
+
+        for (int index = 0; index < delays.length; index++) {
+            if (delays[index] > 0) {
+                delays[index]--;
+            } else {
+                if (defender == null || strategy == null) continue;
+                if (strategy.getCombatType().ordinal() != index) continue;
+                submitStrategy(defender, strategy);
             }
-            eventManager.sequence();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        }
+
+        eventManager.sequence();
     }
 
-    private void handleListeners() {
+    private void updateListeners() {
         if (!pendingAddition.isEmpty()) {
-            pendingAddition.forEach(attack -> {
-                attacks.add(attack);
-                attack.getModifier(attacker, defender)
-                        .ifPresent(this::addModifier);
-            });
+            pendingAddition.forEach(attacks::add);
             pendingAddition.clear();
         }
 
         if (!pendingRemoval.isEmpty()) {
-            pendingRemoval.forEach(attack -> {
-                attacks.remove(attack);
-                attack.getModifier(attacker, defender)
-                        .ifPresent(this::removeModifier);
-            });
+            pendingRemoval.forEach(attacks::remove);
             pendingRemoval.clear();
         }
     }
@@ -127,10 +115,12 @@ public class Combat<T extends Actor> {
             return false;
         }
 
-        strategy.getModifier(attacker, defender).ifPresent(this::addModifier);
+        attacks.forEach(attack -> attack.getModifier(attacker).ifPresent(this::addModifier));
+        strategy.getModifier(attacker).ifPresent(this::addModifier);
+
         CombatHit[] hits = strategy.getHits(attacker, defender);
-        strategy.getModifier(attacker, defender).ifPresent(this::removeModifier);
         submitHits(defender, strategy, hits);
+
         int delayType = strategy.getCombatType().ordinal();
         setDelay(delayType, strategy.getAttackDelay(attacker, type));
         return true;
@@ -182,6 +172,7 @@ public class Combat<T extends Actor> {
             }
             finish(def);
             strategy.finish(attacker, def);
+            strategy.getModifier(attacker).ifPresent(this::removeModifier);
         }));
     }
 
@@ -202,11 +193,6 @@ public class Combat<T extends Actor> {
 
     private void hit(Actor defender, Hit hit) {
         attacks.forEach(attack -> attack.hit(attacker, defender, hit));
-
-        if (defender.isAutoRetaliate()) {
-//            defender.getCombat().attack(attacker);
-//            defender.getCombat().reset();
-        }
     }
 
     private void hitsplat(Actor defender, Hit hit, CombatType combatType) {
@@ -216,6 +202,11 @@ public class Combat<T extends Actor> {
 
         if (combatType != CombatType.MAGIC || defender.isMob()) {
             defender.animation(CombatUtil.getBlockAnimation(defender));
+        }
+
+        if (defender.getCombat().defender == null && defender.isAutoRetaliate()) {
+            defender.getCombat().attack(attacker);
+//            defender.getCombat().reset();
         }
 
         if (combatType != CombatType.MAGIC || hit.isAccurate()) {
@@ -248,7 +239,10 @@ public class Combat<T extends Actor> {
     }
 
     private void finish(Actor defender) {
-        attacks.forEach(attack -> attack.finish(attacker, defender));
+        attacks.forEach(attack -> {
+            attack.finish(attacker, defender);
+            attack.getModifier(attacker).ifPresent(this::removeModifier);
+        });
     }
 
     public void reset() {
@@ -264,11 +258,19 @@ public class Combat<T extends Actor> {
         attackModifier.remove(modifier);
     }
 
-    private void addListener(CombatAttack<? super T> attack) {
+    public void addListener(CombatListener<? super T> attack) {
+        if (attacks.contains(attack) || pendingAddition.contains(attack)) {
+            return;
+        }
+
         pendingAddition.add(attack);
     }
 
-    private void removeListener(CombatAttack<? super T> attack) {
+    public void removeListener(CombatListener<? super T> attack) {
+        if (!attacks.contains(attack) || !pendingAddition.contains(attack)) {
+            return;
+        }
+
         pendingRemoval.add(attack);
     }
 
@@ -290,18 +292,6 @@ public class Combat<T extends Actor> {
 
     public boolean isUnderAttackBy(Actor attacker) {
         return attacker != null && lastAttacker == attacker && !stopwatchElapsed(lastBlocked, CombatConstants.COMBAT_TIMER);
-    }
-
-    public void poison(int strength) {
-        if (strength <= 0) {
-            poison = null;
-        } else {
-            Poison next = new Poison(strength);
-
-            if (poison != null && poison.replace(next)) {
-                poison = next;
-            }
-        }
     }
 
     public double getAccuracyModifier() {
@@ -326,14 +316,6 @@ public class Combat<T extends Actor> {
 
     public void setFightType(FightType type) {
         this.type = type;
-    }
-
-    public Poison getPoison() {
-        return poison;
-    }
-
-    public void setPoison(Poison poison) {
-        this.poison = poison;
     }
 
     public void setStrategy(CombatStrategy<? super T> next) {

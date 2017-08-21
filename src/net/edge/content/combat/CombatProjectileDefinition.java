@@ -15,8 +15,6 @@ import java.util.Optional;
 public final class CombatProjectileDefinition {
     private final String name;
     private int maxHit;
-    private int hitDelay;
-    private int hitsplatDelay;
     private CombatEffect effect;
     private Animation animation;
     private Graphic start;
@@ -35,17 +33,6 @@ public final class CombatProjectileDefinition {
 
     public int getMaxHit() {
         return maxHit;
-    }
-
-    public int getHitDelay(int distance, boolean magic) {
-        if (magic) {
-            return Projectile.MAGIC_DELAYS[distance > 10 ? 10 : distance];
-        }
-        return Projectile.RANGED_DELAYS[distance > 10 ? 10 : distance];
-    }
-
-    public int getHitsplatDelay() {
-        return hitsplatDelay;
     }
 
     public Optional<CombatEffect> getEffect() {
@@ -84,16 +71,6 @@ public final class CombatProjectileDefinition {
             @Override
             public void load(JsonObject reader, Gson builder) {
                 CombatProjectileDefinition definition = new CombatProjectileDefinition(reader.get("name").getAsString());
-
-                definition.hitDelay = -1;
-                if (reader.has("hit-delay")) {
-                    definition.hitDelay = reader.get("hit-delay").getAsInt();
-                }
-
-                definition.hitsplatDelay = 1;
-                if (reader.has("hitsplat-delay")) {
-                    definition.hitsplatDelay = reader.get("hitsplat-delay").getAsInt();
-                }
 
                 definition.maxHit = 0;
                 if (reader.has("max-hit")) {
@@ -142,11 +119,6 @@ public final class CombatProjectileDefinition {
         public void send(Actor attacker, Actor defender, boolean magic) {
             Projectile projectile = new Projectile(attacker, defender, id, duration, delay, startHeight, endHeight, curve, magic ? CombatType.MAGIC : CombatType.RANGED);
             projectile.sendProjectile();
-        }
-
-        int getHitDelay(Actor attacker, Actor defender, boolean magic) {
-            Projectile projectile = new Projectile(attacker, defender, id, duration, delay, startHeight, endHeight, curve, magic ? CombatType.MAGIC : CombatType.RANGED);
-            return projectile.getTravelTime();
         }
 
     }

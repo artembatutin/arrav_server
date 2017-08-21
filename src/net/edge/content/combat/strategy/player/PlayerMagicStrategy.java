@@ -83,8 +83,9 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        int distance = (int) attacker.getPosition().getDistance(defender.getPosition());
-        return new CombatHit[] { nextMagicHit(attacker, defender, spell.getMaxHit(), spell.getHitDelay(distance), CombatUtil.getDelay(attacker, defender)) };
+        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
+        int hitsplatDelay = CombatUtil.getHitsplatDelay(attacker, defender);
+        return new CombatHit[] { nextMagicHit(attacker, defender, spell.getMaxHit(), hitDelay, hitsplatDelay) };
     }
 
     @Override
@@ -101,7 +102,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
     }
 
     @Override
-    public Optional<AttackModifier> getModifier(Player attacker, Actor defender) {
+    public Optional<AttackModifier> getModifier(Player attacker) {
         if (attacker.getSkills()[Skills.MAGIC].getRealLevel() > spell.getLevel()) {
             double modifier = (attacker.getSkills()[Skills.MAGIC].getRealLevel() - spell.getLevel()) * 0.003;
             return Optional.of(new AttackModifier().accuracy(modifier));

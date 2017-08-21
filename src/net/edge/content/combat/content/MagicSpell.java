@@ -464,14 +464,6 @@ public enum MagicSpell {
         return baseExperience;
     }
 
-    public int getHitDelay(int distance) {
-        return projectileDefinition.getHitDelay(distance, true);
-    }
-
-    public int getHitsplatDelay() {
-        return projectileDefinition.getHitsplatDelay();
-    }
-
     public Optional<CombatEffect> getEffect() {
         return projectileDefinition.getEffect();
     }

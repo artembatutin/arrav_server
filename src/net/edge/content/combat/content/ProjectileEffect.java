@@ -6,6 +6,7 @@ import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendMessage;
+import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 
@@ -26,9 +27,9 @@ public enum ProjectileEffect {
     ENFEEBLE(((attacker, defender, hit) -> lowerSkill(defender, Skills.STRENGTH, 10))),
     STUN(((attacker, defender, hit) -> lowerSkill(defender, Skills.ATTACK, 10))),
 
-    SMOKE_RUSH((attacker, defender, hit) -> poison(attacker, defender, hit, 2)),
+    SMOKE_RUSH((attacker, defender, hit) -> poison(attacker, defender, hit, PoisonType.DEFAULT_RANGED)),
     SMOKE_BURST((attacker, defender, hit) -> getSurrounding(attacker, defender).forEach(actor -> smokeBurst(attacker, actor))),
-    SMOKE_BLITZ((attacker, defender, hit) -> poison(attacker, defender, hit, 4)),
+    SMOKE_BLITZ((attacker, defender, hit) -> poison(attacker, defender, hit, PoisonType.DEFAULT_MELEE)),
     SMOKE_BARRAGE((attacker, defender, hit) -> getSurrounding(attacker, defender).forEach(actor -> smokeBarrage(attacker, actor))),
 
     SHADOW_RUSH((attacker, defender, hit) -> lowerSkill(defender, Skills.ATTACK, 10)),
@@ -94,9 +95,9 @@ public enum ProjectileEffect {
 //        }
     }
 
-    private static void poison(Actor attacker, Actor actor, Hit hit, int strength) {
+    private static void poison(Actor attacker, Actor actor, Hit hit, PoisonType type) {
         if (attacker.isMob() || hit.getDamage() > 0) {
-            actor.getCombat().poison(strength);
+            actor.poison(type);
         }
     }
 
@@ -125,13 +126,13 @@ public enum ProjectileEffect {
     private static void smokeBurst(Actor attacker, Actor actor) {
         CombatHit hit = new CombatHit(FormulaFactory.nextMagicHit(attacker, actor, 18), 2, 1);
         hitEvent(attacker, actor, hit);
-        poison(attacker, actor, hit, 2);
+        poison(attacker, actor, hit, PoisonType.DEFAULT_RANGED);
     }
 
     private static void smokeBarrage(Actor attacker, Actor actor) {
         CombatHit hit = new CombatHit(FormulaFactory.nextMagicHit(attacker, actor, 27), 2, 0);
         hitEvent(attacker, actor, hit);
-        poison(attacker, actor, hit, 4);
+        poison(attacker, actor, hit, PoisonType.DEFAULT_MELEE);
     }
 
     private static void shadowBurst(Actor attacker, Actor actor) {

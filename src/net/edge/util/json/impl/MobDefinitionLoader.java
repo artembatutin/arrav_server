@@ -2,6 +2,7 @@ package net.edge.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import net.edge.content.combat.CombatType;
 import net.edge.util.json.JsonLoader;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.world.entity.actor.mob.MobAggression;
@@ -31,6 +32,7 @@ public final class MobDefinitionLoader extends JsonLoader {
 		int size = reader.get("size").getAsInt();
 		boolean attackable = reader.get("attackable").getAsBoolean();
 		MobDefinitionCombat combat = null;
+		MobDefinition.CombatAttackData data = null;
 		if(attackable) {
 			boolean aggressive = reader.get("aggressive").getAsBoolean();
 			boolean retreats = reader.get("retreats").getAsBoolean();
@@ -72,7 +74,15 @@ public final class MobDefinitionLoader extends JsonLoader {
 				MobAggression.AGGRESSIVE.add(index);
 			}
 			combat = new MobDefinitionCombat(aggressive, retreats, poisonous, respawnTime, maxHit, hitpoints, attackDelay, attackAnim, defenceAnim, deathAnim, combatLevel, attackLevel, magicLevel, rangedLevel, defenceLevel, slayerRequirement, slayerKey, weakness, attackMelee, attackMagic, attackRanged, defenceStab, defenceSlash, defenceCrush, defenceMagic, defenceRanged);
+
+			if(reader.has("type") && reader.has("key")) {
+				CombatType type = builder.fromJson(reader.get("type"), CombatType.class);
+				String key = builder.fromJson(reader.get("key"), String.class);
+				data = new MobDefinition.CombatAttackData(type, key);
+			}
+
 		}
-		MobDefinition.DEFINITIONS[index] = new MobDefinition(index, name, description, size, attackable, combat);
+
+		MobDefinition.DEFINITIONS[index] = new MobDefinition(index, name, description, size, attackable, combat, data);
 	}
 }

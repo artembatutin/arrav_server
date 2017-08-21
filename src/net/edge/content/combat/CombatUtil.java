@@ -7,6 +7,7 @@ import net.edge.content.combat.hit.HitIcon;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.Animation;
+import net.edge.world.Projectile;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.move.MovementQueue;
@@ -57,15 +58,42 @@ public final class CombatUtil {
 	}
 
 	/**
-	 * Gets the delay for the specified {@code type}.
+	 * Gets the hit delay for the specified {@code type}.
+	 *
+	 * @param attacker the character doing the hit
+	 * @param defender the victim being hit
+	 * @param type     the combat type of this hit
+	 * @return the delay for the combat type
+	 * @throws IllegalArgumentException if the combat type is invalid
+	 */
+	public static int getHitDelay(Actor attacker, Actor defender, CombatType type) {
+		if (type.equals(CombatType.MELEE)) {
+			return 1;
+		}
+
+		int distance = (int) attacker.getPosition().getDistance(defender.getPosition());
+
+		if (type.equals(CombatType.MAGIC)) {
+			return Projectile.MAGIC_DELAYS[distance > 10 ? 10 : distance];
+		}
+
+		if (type.equals(CombatType.RANGED)) {
+			return Projectile.RANGED_DELAYS[distance > 10 ? 10 : distance];
+		}
+
+		return 1;
+	}
+
+	/**
+	 * Gets the hitsplat delay for the specified {@code type}.
 	 *
 	 * @param attacker the character doing the hit.
 	 * @param defender the victim being hit.
 	 * @return the delay for the combat type.
 	 * @throws IllegalArgumentException if the combat type is invalid.
 	 */
-	public static int getDelay(Actor attacker, Actor defender) {
-		return attacker.isPlayer() && defender.isMob() ? 1 : 0;
+	public static int getHitsplatDelay(Actor attacker, Actor defender) {
+		return defender.isMob() ? 1 : 0;
 	}
 
 	/**
