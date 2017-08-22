@@ -16,8 +16,8 @@ public class HitsplatEvent<T extends Actor> extends CombatEvent<T> {
     private final CombatStrategy<? super T> strategy;
     private final CombatHit hit;
 
-    public HitsplatEvent(T attacker, Actor defender, List<CombatListener<? super T>> listeners, CombatStrategy<? super T> strategy, CombatHit hit) {
-        super(listeners, hit.getHitsplatDelay());
+    public HitsplatEvent(T attacker, Actor defender, List<CombatListener<? super T>> listeners, CombatStrategy<? super T> strategy, CombatHit hit, int hitsplatDelay) {
+        super(listeners, hitsplatDelay);
         this.attacker = attacker;
         this.defender = defender;
         this.strategy = strategy;
@@ -55,6 +55,7 @@ public class HitsplatEvent<T extends Actor> extends CombatEvent<T> {
                 defender.getCombat().reset();
             }
         }
+        attacker.getCombat().decrementQueuedHits();
         setActive(false);
     }
 

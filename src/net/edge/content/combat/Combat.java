@@ -119,6 +119,8 @@ public class Combat<T extends Actor> {
         return true;
     }
 
+    private int hitsQueued;
+
     private void submitHits(Actor defender, CombatStrategy<? super T> strategy, CombatHit... hits) {
         CombatEvent<T> startEvent = new StartEvent<>(attacker, defender, listeners, strategy);
         CombatEvent<T> finishEvent = new FinishEvent<>(attacker, defender, listeners, strategy);
@@ -127,12 +129,18 @@ public class Combat<T extends Actor> {
 
         for (CombatHit hit : hits) {
             CombatChain<T> chain = CombatChain.create();
+            hitsQueued++;
+
             chain.link(new AttackEvent<>(attacker, defender, listeners, strategy, hit));
             chain.link(new HitEvent<>(attacker, defender, listeners, strategy, hit));
-            chain.link(new HitsplatEvent<>(attacker, defender, listeners, strategy, hit));
-            eventManager.add(chain);
-        }
 
+            int hsDelay = hitsQueued > 2 ? 2 * ((hitsQueued - 3) / 2 + 1) - 1 : 0;
+            hsDelay += hit.getHitsplatDelay();
+
+            chain.link(new HitsplatEvent<>(attacker, defender, listeners, strategy, hit, hsDelay));
+
+            eventManager.add(chain.link(finishEvent));
+        }
         eventManager.add(finishEvent);
     }
 
@@ -190,6 +198,10 @@ public class Combat<T extends Actor> {
         T defender = this.attacker;
         listeners.forEach(attack -> attack.onDeath(attacker, defender, hit));
         defender.getMovementQueue().reset();
+    }
+
+    public void decrementQueuedHits() {
+        hitsQueued--;
     }
 
     public boolean inCombat() {

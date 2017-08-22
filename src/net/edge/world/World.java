@@ -158,11 +158,11 @@ public final class World {
 		synchronized(this) {
 			dequeueLogins();
 			registerActors();
+			Combat.update();//why retaliate? ask mike, i tested and auto ret doesnt work if its here
 			taskManager.sequence();
 			sync.preUpdate(players, mobs);
 			sync.update(players);
 			sync.postUpdate(players, mobs);
-			Combat.update();//why retaliate? ask mike, i tested and auto ret doesnt work if its here
 			dequeueLogout();
 			disposeActors();
 			regionalTick++;

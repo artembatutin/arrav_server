@@ -1,6 +1,8 @@
 package net.edge.net.packet.in;
 
+import net.edge.content.combat.attack.FormulaFactory;
 import net.edge.content.combat.content.MagicSpell;
+import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.HitIcon;
 import net.edge.content.combat.hit.Hitsplat;
@@ -9,6 +11,7 @@ import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
@@ -31,17 +34,15 @@ public final class CommandPacket implements IncomingPacket {
 
 		if (player.getRights() == Rights.ADMINISTRATOR) {
 			if (parts[0].equalsIgnoreCase("spec")) {
-//				int levelreq = 50;
-//				RangedAmmunition[] ammo = new RangedAmmunition[] { RangedAmmunition.RUNE_KNIFE };
-//				RangedWeaponDefinition.AttackType type = RangedWeaponDefinition.AttackType.THROWN;
-//				RangedWeaponDefinition def = new RangedWeaponDefinition(levelreq, type, ammo);
-//				player.getCombat().setStrategy(new PlayerRangedStrategy(def));
 				CombatSpecial.restore(player, 100);
 			} else if (parts[0].equalsIgnoreCase("test")) {
-//				CombatListenerDispatcher.load();
-				player.damage(new Hit(240, Hitsplat.NORMAL, HitIcon.NONE));
+				player.heal();
+				CombatHit[] hits = new CombatHit[8];
+				for (int index = 0; index < hits.length; index++) {
+					hits[index] = new CombatHit(FormulaFactory.nextMeleeHit(player, player), 1, 0);
+				}
+				player.getCombat().submitHits(player, hits);
 			} else if (parts[0].equalsIgnoreCase("blitz")) {
-//				CombatProjectileDefinition.createLoader().load();
 				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ));
 			} else if (parts[0].equalsIgnoreCase("man")) {
 				Mob npc = Mob.getNpc(1, player.getPosition().copy().move(1, 0));
