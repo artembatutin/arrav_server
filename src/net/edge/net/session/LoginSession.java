@@ -15,8 +15,6 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.PlayerCredentials;
 import net.edge.world.entity.actor.player.PlayerSerialization;
 
-import static net.edge.net.codec.login.LoginCode.COULD_NOT_COMPLETE_LOGIN;
-
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during login.
  * @author Artem Batutin <artembatutin@gmail.com>
@@ -49,9 +47,6 @@ public final class LoginSession extends Session {
 		if(player != null) {
 			if(player.getState() == EntityState.ACTIVE) {
 				World.get().queueLogout(player);
-			} else {
-				getChannel().writeAndFlush(new LoginResponse(COULD_NOT_COMPLETE_LOGIN));
-				getChannel().close();
 			}
 		}
 	}

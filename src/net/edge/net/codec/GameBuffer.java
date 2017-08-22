@@ -1,6 +1,7 @@
 package net.edge.net.codec;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import net.edge.net.codec.crypto.IsaacRandom;
 import net.edge.net.packet.PacketUtils;
 
@@ -54,6 +55,14 @@ public final class GameBuffer {
      */
     public GameBuffer(ByteBuf buf, IsaacRandom encryptor) {
         this.buf = buf;
+        this.encryptor = encryptor;
+    }
+    
+    /**
+     * Creates a new {@link GameBuffer}.
+     */
+    public GameBuffer(IsaacRandom encryptor) {
+        this.buf = Unpooled.buffer(128);
         this.encryptor = encryptor;
     }
 

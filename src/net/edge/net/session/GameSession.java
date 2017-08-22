@@ -30,11 +30,6 @@ public final class GameSession extends Session {
 	public static int outLimit = 200;
 	
 	/**
-	 * The queue of {@link OutgoingPacket}s.
-	 */
-	private final Queue<OutgoingPacket> outgoing = new MpscLinkedAtomicQueue<>();
-	
-	/**
 	 * The player assigned to this {@code GameSession}.
 	 */
 	private final Player player;
@@ -59,7 +54,6 @@ public final class GameSession extends Session {
 		super(channel);
 		this.player = player;
 		this.encryptor = encryptor;
-		getChannel().pipeline().replace("login-encoder", "game-encoder", new GameEncoder(encryptor, player));
 		getChannel().pipeline().replace("login-decoder", "game-decoder", new GameDecoder(decryptor, this));
 	}
 	
@@ -89,7 +83,6 @@ public final class GameSession extends Session {
 			if(player.getState() == EntityState.ACTIVE) {
 				World.get().queueLogout(player);
 			}
-			outgoing.clear();
 			setTerminating(true);
 		}
 	}
@@ -103,7 +96,8 @@ public final class GameSession extends Session {
 	 * Enqueues the given {@link OutgoingPacket} for transport.
 	 */
 	public void equeue(OutgoingPacket pkt) {
-		outgoing.offer(pkt);
+		ByteBuf temp = pkt.write(player, new GameBuffer(Unpooled.buffer(128), encryptor));
+		getChannel().write(temp);
 	}
 	
 	/**
@@ -124,26 +118,6 @@ public final class GameSession extends Session {
 	public void write(OutgoingPacket packet) {
 		ByteBuf temp = packet.write(player, new GameBuffer(Unpooled.buffer(256), encryptor));
 		getChannel().write(temp);
-	}
-	
-	/**
-	 * Writes all enqueued packets to the stream.
-	 */
-	public void pollOutgoingMessages() {
-		int written = 0;
-		Channel channel = getChannel();
-		if (!outgoing.isEmpty()) {
-			if (channel.isActive() && channel.isOpen()) {
-				while (channel.isWritable() && written < outLimit) {
-					OutgoingPacket packet = outgoing.poll();
-					if(packet == null) {
-						break;
-					}
-					getChannel().write(packet, getChannel().voidPromise());
-					written++;
-				}
-			}
-		}
 	}
 	
 	/**

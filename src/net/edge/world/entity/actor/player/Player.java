@@ -842,7 +842,6 @@ public final class Player extends Actor {
 	public void update() {
 		write(new SendPlayerUpdate());
 		write(new SendMobUpdate());
-		getSession().pollOutgoingMessages();
 	}
 	
 	@Override

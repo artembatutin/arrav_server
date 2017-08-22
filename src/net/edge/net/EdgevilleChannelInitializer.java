@@ -27,7 +27,7 @@ public final class EdgevilleChannelInitializer extends ChannelInitializer<Socket
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ch.attr(NetworkConstants.SESSION_KEY).setIfAbsent(new LoginSession(ch));
-		ch.pipeline().addLast("read-timeout", new ReadTimeoutHandler(NetworkConstants.INPUT_TIMEOUT));
+		ch.pipeline().addLast("read-timeout", new ReadTimeoutHandler(NetworkConstants.SESSION_TIMEOUT));
 		ch.pipeline().addLast("channel-filter", FILTER);
 		ch.pipeline().addLast("login-decoder", new LoginDecoder());
 		ch.pipeline().addLast("login-encoder", new LoginEncoder());
