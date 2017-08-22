@@ -12,6 +12,9 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.item.Skillcape;
 import net.edge.content.market.currency.Currency;
 import net.edge.content.minigame.rfd.RFDData;
+import net.edge.util.log.Log;
+import net.edge.util.log.impl.ShopLog;
+import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.Item;
@@ -197,24 +200,12 @@ public class MarketShop {
 	
 	/**
 	 * The method that allows {@code player} to purchase {@code item}.
-	 * @param player the player who will purchase this item.
-	 * @param item   the item that will be purchased.
+	 * @param player  the player who will purchase this item.
+	 * @param item    the item that will be purchased.
 	 * @return {@code true} if the player purchased the item, {@code false}
 	 * otherwise.
 	 */
 	public boolean purchase(Player player, Item item) {
-		return purchase(player, item, false);
-	}
-	
-	/**
-	 * The method that allows {@code player} to purchase {@code item}.
-	 * @param player  the player who will purchase this item.
-	 * @param item    the item that will be purchased.
-	 * @param toLimit the condition if we seek to still buy even if limit is reached.
-	 * @return {@code true} if the player purchased the item, {@code false}
-	 * otherwise.
-	 */
-	private boolean purchase(Player player, Item item, boolean toLimit) {
 		MarketItem marketItem = MarketItem.get(item.getId());
 		if(!RFDData.canBuy(player, marketItem)) {
 			player.getDialogueBuilder().append(new NpcDialogue(3400, Expression.MAD, "Are you trying to fool me? You haven't", "completed the wave to buy these pair of gloves."));
@@ -233,12 +224,8 @@ public class MarketShop {
 		}
 		int value = item.getValue().getPrice();
 		if(!(getCurrency().getCurrency().currencyAmount(player) >= (value * item.getAmount()))) {
-			if(toLimit) {
-				item.setAmount((int) (getCurrency().getCurrency().currencyAmount(player) / (value * 1.0)));
-			} else {
-				player.message("You do not have enough " + getCurrency() + " to buy this item.");
-				return false;
-			}
+			player.message("You do not have enough " + getCurrency() + " to buy " + item.getAmount() + " of these.");
+			return false;
 		}
 		//buy out all the stock left.
 		if(!marketItem.isUnlimitedStock() && item.getAmount() > marketItem.getStock()) {
@@ -246,7 +233,7 @@ public class MarketShop {
 		}
 		boolean tangible = this.getCurrency().getCurrency().tangible();
 		int currencyId = tangible ? ((ItemCurrency) this.getCurrency().getCurrency()).getId() : -1;
-		
+		World.getLoggingManager().write(Log.create(new ShopLog(player, null, item)));
 		int spacesFill = player.getInventory().slotCount(false, false, item);
 		int spacesEmpty = tangible ? player.getInventory().slotCount(false, true, new Item(currencyId, item.getAmount() * value)) : 0;
 		boolean hasSpace = player.getInventory().remaining() - spacesEmpty >= spacesFill;
@@ -304,20 +291,22 @@ public class MarketShop {
 		if(def == null)
 			return false;
 		int amount = player.getInventory().computeAmountForId(item.getId());
+		World.getLoggingManager().write(Log.create(new ShopLog(player, item, null)));
 		if(item.getAmount() > amount && !item.getDefinition().isStackable()) {
 			item.setAmount(amount);
 		} else if(item.getAmount() > player.getInventory().get(fromSlot).getAmount() && item.getDefinition().isStackable()) {
 			item.setAmount(player.getInventory().get(fromSlot).getAmount());
 		}
-		player.getInventory().remove(item, fromSlot);
-		getCurrency().getCurrency().recieveCurrency(player, item.getAmount() * ((int) Math.floor(determinePrice(player, item) / 2)));
-		
-		MarketItem marketItem = MarketItem.get(item.getId());
-		if(!marketItem.isUnlimitedStock()) {
-			marketItem.increaseStock(item.getAmount());
-			marketItem.updateStock();
+		int slots = def.isStackable() ? 1 : amount;
+		int removed = player.getInventory().remove(item, fromSlot);
+		if(removed == slots) {
+			getCurrency().getCurrency().recieveCurrency(player, item.getAmount() * ((int) Math.floor(determinePrice(player, item) / 2)));
+			MarketItem marketItem = MarketItem.get(item.getId());
+			if(!marketItem.isUnlimitedStock()) {
+				marketItem.increaseStock(item.getAmount());
+				marketItem.updateStock();
+			}
 		}
-		
 		player.out(new SendContainer(3823, player.getInventory()));
 		return true;
 	}

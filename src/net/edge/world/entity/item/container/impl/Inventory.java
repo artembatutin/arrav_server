@@ -54,7 +54,6 @@ public class Inventory extends ItemContainer {
 	/**
 	 * Creates a new {@link Inventory}.
 	 * @param player The {@link Player} this instance is dedicated to.
-	 * @param test test condition flag.
 	 */
 	public Inventory(Player player) {
 		super(28, StackPolicy.STANDARD);

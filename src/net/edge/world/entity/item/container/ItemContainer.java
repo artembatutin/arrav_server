@@ -236,7 +236,6 @@ public class ItemContainer implements Iterable<Item> {
 		} else {
 			int remaining = remaining();
 			int until = (remaining > item.getAmount()) ? item.getAmount() : remaining;
-			
 			for(int index = 0; index < until; index++) {
 				preferredIndex = (preferredIndex > capacity || preferredIndex < 0 || items[preferredIndex] == null) ? preferredIndex : computeFreeIndex();
 				if(preferredIndex == -1) {//Couldn't find an empty spot.
@@ -1163,22 +1162,6 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public void untest() {
 		test = false;
-	}
-	
-	/**
-	 * Condition if packets are non-queued.
-	 * @return non-queued flag.
-	 */
-	public boolean nonQueued() {
-		return nonQueued;
-	}
-	
-	/**
-	 * Sets if the packets should be direct or queued.
-	 * @param nonQueued flag to set.
-	 */
-	public void nonQueue(boolean nonQueued) {
-		this.nonQueued = nonQueued;
 	}
 	
 }

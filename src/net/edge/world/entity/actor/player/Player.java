@@ -1302,7 +1302,7 @@ public final class Player extends Actor {
 	 * @param packet packet to be queued.
 	 */
 	public void out(OutgoingPacket packet) {
-		if(packet.onSent(this))
+		if(packet.onSent(this) && human)
 			getSession().equeue(packet);
 	}
 	
@@ -1311,7 +1311,8 @@ public final class Player extends Actor {
 	 * @param packet packet to be written.
 	 */
 	public void write(OutgoingPacket packet) {
-		getSession().write(packet);
+		if(human)
+			getSession().write(packet);
 	}
 	
 	/**

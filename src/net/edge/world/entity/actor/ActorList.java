@@ -255,7 +255,7 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 					PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 				}
 				System.out.println("Closed channel " + player);
-				player.getSession().getChannel().pipeline().fireChannelUnregistered();
+				player.getSession().getChannel().close();
 				player.getSession().setTerminating(true);
 			}
 		} catch(Exception e) {

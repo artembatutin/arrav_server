@@ -15,7 +15,7 @@ public final class Bank {
 	/**
 	 * The tab size.
 	 */
-	private final static int SIZE = 9;
+	public final static int SIZE = 9;
 	
 	/**
 	 * The main player to which this bank is associated to.
@@ -327,6 +327,15 @@ public final class Bank {
 	 */
 	public final Item[] items(int index) {
 		return tabs[index].getItems();
+	}
+	
+	/**
+	 * Fills up the items from the array.
+	 * @param index bank tab id.
+	 * @param items items to fill with.
+	 */
+	public final void fillItems(int index, Item[] items) {
+		tabs[index].fillItems(items);
 	}
 	
 	/**

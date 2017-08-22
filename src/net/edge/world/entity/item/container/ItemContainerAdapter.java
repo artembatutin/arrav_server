@@ -2,6 +2,9 @@ package net.edge.world.entity.item.container;
 
 import net.edge.net.packet.out.SendContainer;
 import net.edge.net.packet.out.SendItemOnInterfaceSlot;
+import net.edge.util.log.Log;
+import net.edge.util.log.impl.ContainerLog;
+import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
@@ -29,6 +32,7 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	public void singleUpdate(ItemContainer container, Item oldItem, Item newItem, int slot, boolean update) {
 		if(update)
 			updateItem(container, newItem, slot);
+		World.getLoggingManager().write(Log.create(new ContainerLog(player, container, oldItem, newItem, slot)));
 	}
 	
 	@Override
@@ -45,20 +49,14 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	 * Updates many items on a widget.
 	 */
 	protected void updateItems(ItemContainer container) {
-		if(container.nonQueued())
-			player.write(new SendContainer(widget(), container));
-		else
-			player.out(new SendContainer(widget(), container));
+		player.out(new SendContainer(widget(), container));
 	}
 	
 	/**
 	 * Updates a single item on a widget.
 	 */
 	protected void updateItem(ItemContainer container, Item item, int slot) {
-		if(container.nonQueued())
-			player.write(new SendItemOnInterfaceSlot(widget(), item, slot));
-		else
-			player.out(new SendItemOnInterfaceSlot(widget(), item, slot));
+		player.out(new SendItemOnInterfaceSlot(widget(), item, slot));
 	}
 	
 	/**

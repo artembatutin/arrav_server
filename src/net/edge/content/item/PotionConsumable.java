@@ -495,16 +495,18 @@ public enum PotionConsumable {
 					}
 					player.animation(new Animation(829));
 					player.getPotionTimer().reset();
-					player.getInventory().remove(item, slot);
-					int length = potion.getIds().length;
-					Item replace = length > 4 ? FLASK : VIAL;
-					for(int index = 0; index < length; index++) {
-						if(potion.getIds()[index] == item.getId() && index + 1 < length) {
-							replace = new Item(potion.getIds()[index + 1]);
+					boolean removed = player.getInventory().remove(item, slot) == 1;
+					if(removed) {
+						int length = potion.getIds().length;
+						Item replace = length > 4 ? FLASK : VIAL;
+						for(int index = 0; index < length; index++) {
+							if(potion.getIds()[index] == item.getId() && index + 1 < length) {
+								replace = new Item(potion.getIds()[index + 1]);
+							}
 						}
+						player.getInventory().add(replace, slot, true);
+						potion.onEffect(player);
 					}
-					player.getInventory().add(replace, slot, true);
-					potion.onEffect(player);
 					return true;
 				}
 			};

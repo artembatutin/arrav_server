@@ -6,7 +6,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"phide", "pinvisible"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.MODERATOR}, syntax = "Turn a player invisible, ::pinvisible username")
+@CommandSignature(alias = {"phide", "pinvisible"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Turn a player invisible, ::pinvisible username")
 public final class TurnPlayerInvisibleCommand implements Command {
 	
 	@Override

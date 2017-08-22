@@ -162,7 +162,6 @@ public final class Equipment extends ItemContainer {
 		this.player = player;
 		addListener(new EquipmentListener());
 		addListener(new ItemWeightListener(player));
-		nonQueue(true);
 	}
 	
 	@Override
@@ -193,7 +192,6 @@ public final class Equipment extends ItemContainer {
 			return false;
 		if(!Skillcape.verifySkillCape(player, equipItem))
 			return false;
-		inventory.nonQueue(true);
 		ItemDefinition def = equipItem.getDefinition();
 		EquipmentType type = def.getEquipmentType();
 		Optional<Item> unequipPrimary;
@@ -223,7 +221,6 @@ public final class Equipment extends ItemContainer {
 		//Just a check, had to put it in final.
 		Item finalEquipItem = equipItem;
 		if(!MinigameHandler.execute(player, m -> m.canEquip(player, finalEquipItem, finalEquipItem.getDefinition().getEquipmentType()))) {
-			inventory.nonQueue(false);
 			return false;
 		}
 
@@ -255,7 +252,6 @@ public final class Equipment extends ItemContainer {
 		if(type == WEAPON || type == ARROWS) {
 			updateRange();
 		}
-		inventory.nonQueue(false);
 		return true;
 	}
 	

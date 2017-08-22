@@ -40,14 +40,14 @@ public final class GameSession extends Session {
 	private final Player player;
 	
 	/**
-	 * The message decryptor.
-	 */
-	private final IsaacRandom decryptor;
-	
-	/**
 	 * The message encryptor.
 	 */
 	private final IsaacRandom encryptor;
+	
+	/**
+	 * The amount of messages received in a tick from this session.
+	 */
+	private int handledMessages;
 
 	/**
 	 * Creates a new {@link GameSession}.
@@ -58,7 +58,6 @@ public final class GameSession extends Session {
 	GameSession(Player player, Channel channel, IsaacRandom encryptor, IsaacRandom decryptor) {
 		super(channel);
 		this.player = player;
-		this.decryptor = decryptor;
 		this.encryptor = encryptor;
 		getChannel().pipeline().replace("login-encoder", "game-encoder", new GameEncoder(encryptor, player));
 		getChannel().pipeline().replace("login-decoder", "game-decoder", new GameDecoder(decryptor, this));
@@ -66,9 +65,14 @@ public final class GameSession extends Session {
 	
 	@Override
 	public void handleUpstreamMessage(Object msg) {
+		if(handledMessages >= 20) {
+			//packet flooding
+			return;
+		}
 		if(msg instanceof IncomingMsg) {
 			IncomingMsg packet = (IncomingMsg) msg;
 			if(packet.getOpcode() != 0) {
+				handledMessages++;
 				if(packet.getOpcode() == 41) {
 					handle(packet);//item equipping
 					return;
@@ -150,6 +154,7 @@ public final class GameSession extends Session {
 	public void flushQueue() {
 		if(isActive())
 			getChannel().flush();
+		handledMessages = 0;
 	}
 	
 	/**

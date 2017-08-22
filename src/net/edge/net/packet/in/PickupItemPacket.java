@@ -37,22 +37,20 @@ public final class PickupItemPacket implements IncomingPacket {
 			Optional<GroundItem> item = reg.get().getItem(itemId, position);
 			item.ifPresent(groundItem -> player.getMovementListener().append(() -> {
 				if(player.getPosition().same(new Position(itemX, itemY, player.getPosition().getZ()))) {
-					World.getRegions().getRegion(position).ifPresent(region -> {
-						if(!MinigameHandler.execute(player, m -> m.canPickup(player, groundItem))) {
-							return;
-						}
-						if(!player.getInventory().hasCapacityFor(new Item(itemId, groundItem.getItem().getAmount()))) {
-							player.message("You don't have enough inventory space to pick this item up.");
-							return;
-						}
-						if(groundItem.getPlayer() != null) {
-							int val = MarketItem.get(groundItem.getItem().getId()) != null ? MarketItem.get(groundItem.getItem().getId()).getPrice() * groundItem.getItem().getAmount() : 0;
-							if(val > 5_000)
-								World.getLoggingManager().write(new DropItemLog(player, groundItem.getItem(), player.getPosition(), Optional.of(groundItem)));
-						}
-						groundItem.onPickup(player);
-						MinigameHandler.executeVoid(player, m -> m.onPickup(player, groundItem.getItem()));
-					});
+					if(!MinigameHandler.execute(player, m -> m.canPickup(player, groundItem))) {
+						return;
+					}
+					if(!player.getInventory().hasCapacityFor(new Item(itemId, groundItem.getItem().getAmount()))) {
+						player.message("You don't have enough inventory space to pick this item up.");
+						return;
+					}
+					if(groundItem.getPlayer() != null) {
+						int val = MarketItem.get(groundItem.getItem().getId()) != null ? MarketItem.get(groundItem.getItem().getId()).getPrice() * groundItem.getItem().getAmount() : 0;
+						if(val > 5_000)
+							World.getLoggingManager().write(new DropItemLog(player, groundItem.getItem(), player.getPosition(), Optional.of(groundItem)));
+					}
+					groundItem.onPickup(player);
+					MinigameHandler.executeVoid(player, m -> m.onPickup(player, groundItem.getItem()));
 				}
 			}));
 		}
