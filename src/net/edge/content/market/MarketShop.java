@@ -112,7 +112,7 @@ public class MarketShop {
 	public void openShop(Player player) {
 		if(!ironAccess) {
 			if(player.isIronMan() && !player.isIronMaxed()) {
-				player.dialogue(new NpcDialogue(3705, "Your an iron man and you haven't maxed your skills yet.", "You can only open the iron man shop located in the iron", "man building on the second floor."));
+				player.dialogue(new NpcDialogue(3705, "You're an iron man and you haven't maxed your skills yet.", "You can only open the iron man shop located in the iron", "man building on the second floor."));
 				return;
 			}
 		}
@@ -186,10 +186,6 @@ public class MarketShop {
 		}
 		if(shopItem.getStock() <= 0 && !shopItem.isUnlimitedStock()) {
 			player.message("There is none of this item left in stock!");
-			return;
-		}
-		if(!canSell(player, item.getId())) {
-			player.message("You can't sell " + item.getDefinition().getName() + " " + "to this store.");
 			return;
 		}
 		player.message(item.getDefinition().getName() + ": " + "shop will sell for " + TextUtils.formatPrice(determinePrice(player, item)) + " " + getCurrency() + ".");
