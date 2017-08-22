@@ -18,9 +18,6 @@ public class GraniteMaul extends PlayerMeleeStrategy {
     public void attack(Player attacker, Actor defender, Hit hit) {
         super.attack(attacker, defender, hit);
         attacker.graphic(GRAPHIC);
-        if (attacker.getCombat().getStrategy() == this) {
-            attacker.getCombatSpecial().drain(attacker);
-        }
     }
 
     @Override

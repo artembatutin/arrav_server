@@ -1654,7 +1654,7 @@ public final class Player extends Actor {
 	 * @return {@code true} if it has been activated, {@code false} otherwise.
 	 */
 	public boolean isSpecialActivated() {
-		return specialActivated;
+		return specialActivated && getCombatSpecial() != null;
 	}
 	
 	/**

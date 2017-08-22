@@ -22,6 +22,13 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
     }
 
     @Override
+    public void start(Player attacker, Actor defender) {
+        if (attacker.isSpecialActivated()) {
+            attacker.getCombatSpecial().drain(attacker);
+        }
+    }
+
+    @Override
     public void attack(Player attacker, Actor defender, Hit hit) {
         attacker.animation(getAttackAnimation(attacker, defender));
         addCombatExperience(attacker, hit);

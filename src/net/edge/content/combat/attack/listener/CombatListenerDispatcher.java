@@ -7,6 +7,7 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 import java.lang.annotation.IncompleteAnnotationException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
  */
 public final class CombatListenerDispatcher {
 
-    public static ImmutableMap<Integer, CombatListener<Player>> ITEM_LISTENERS;
+    public static ImmutableMap<Integer, CombatListenerSet> ITEM_LISTENERS;
     public static ImmutableMap<Integer, CombatListener<Mob>> NPC_LISTENERS;
 
     /**
@@ -28,7 +29,7 @@ public final class CombatListenerDispatcher {
 
     public static void load() {
         ITEM_LISTENERS = loadItems();
-         NPC_LISTENERS = loadNpcs ();
+        NPC_LISTENERS = loadNpcs ();
     }
 
     /**
@@ -37,8 +38,8 @@ public final class CombatListenerDispatcher {
      * @return a map populated with all the item listeners chained to their item
      * id.
      */
-    private static ImmutableMap<Integer, CombatListener<Player>> loadItems() {
-        Map<Integer, CombatListener<Player>> listeners = new HashMap<>();
+    private static ImmutableMap<Integer, CombatListenerSet> loadItems() {
+        Map<Integer, CombatListenerSet> listeners = new HashMap<>();
         logger.info("Loading item listeners...");
         for (String directory : Utility.getSubDirectories(CombatListenerDispatcher.class)) {
             List<CombatListener<Player>> listeners_class = Utility.getClassesInDirectory(CombatListenerDispatcher.class.getPackage().getName() + "." + directory).stream().map(clazz -> (CombatListener<Player>) clazz).collect(Collectors.toList());
@@ -47,9 +48,7 @@ public final class CombatListenerDispatcher {
                 if (meta == null) {
                     throw new IncompleteAnnotationException(PlayerCombatListenerSignature.class, l.getClass().getName() + " has no annotation.");
                 }
-                for (int i : meta.items()) {
-                    listeners.put(i, l);
-                }
+                Arrays.stream(meta.items()).forEach(i -> listeners.put(i, new CombatListenerSet(meta.items(), l)));
             }
         }
         logger.info("Successfully loaded " + listeners.size() + " item listeners.");
@@ -81,4 +80,15 @@ public final class CombatListenerDispatcher {
         return ImmutableMap.copyOf(listeners);
     }
 
+    public static final class CombatListenerSet {
+
+        public final int[] set;
+
+        public final CombatListener<Player> listener;
+
+        public CombatListenerSet(int[] set, CombatListener<Player> listener) {
+            this.set = set;
+            this.listener = listener;
+        }
+    }
 }

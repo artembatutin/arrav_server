@@ -124,6 +124,15 @@ public class Combat<T extends Actor> {
 
     private void submitHits(Actor defender, CombatStrategy<? super T> strategy, CombatHit... hits) {
         int shortest = Integer.MAX_VALUE;
+        eventManager.add(new CombatEvent(defender, 0, (def, _hit) -> {
+            if (!canAttack(def)) {
+                reset();
+                eventManager.cancel(defender);
+                return;
+            }
+            start(def);
+            strategy.start(attacker, def);
+        }));
         for (CombatHit hit : hits) {
             int delay = 0;
             eventManager.add(new CombatEvent(defender, delay, hit, (def, _hit) -> {
@@ -152,6 +161,7 @@ public class Combat<T extends Actor> {
                 if (!canAttack(def)) {
                     reset();
                     eventManager.cancel(defender);
+                    System.out.println("Fuck it got cancelled");
                     return;
                 }
                 hitsplat(def, _hit, strategy.getCombatType());
@@ -159,7 +169,7 @@ public class Combat<T extends Actor> {
             })
             {
                 public boolean canExecute() {
-                    return super.canExecute() && !attacker.getFlags().get(UpdateFlag.SECONDARY_HIT);
+                    return super.canExecute() && (!defender.getFlags().get(UpdateFlag.PRIMARY_HIT) || !defender.getFlags().get(UpdateFlag.SECONDARY_HIT));
                 }
             });
 
@@ -177,7 +187,7 @@ public class Combat<T extends Actor> {
         })
         {
             public boolean canExecute() {
-                return super.canExecute() && !attacker.getFlags().get(UpdateFlag.SECONDARY_HIT);
+                return super.canExecute() && (!defender.getFlags().get(UpdateFlag.PRIMARY_HIT) || !defender.getFlags().get(UpdateFlag.SECONDARY_HIT));
             }
         });
     }
@@ -188,7 +198,12 @@ public class Combat<T extends Actor> {
 
     public boolean canAttack(Actor defender) {
         return validate(attacker) && validate(defender) && attacker.getInstance() == defender.getInstance();
+    }
 
+    private void start(Actor defender) {
+        lastDefender = defender;
+        lastAttacked.reset();
+        attacks.forEach(attack -> attack.start(attacker, defender));
     }
 
     private void attack(Actor defender, CombatHit hit) {
@@ -268,7 +283,7 @@ public class Combat<T extends Actor> {
     }
 
     public void removeListener(CombatListener<? super T> attack) {
-        if (!attacks.contains(attack) || !pendingAddition.contains(attack)) {
+        if (!attacks.contains(attack) || pendingRemoval.contains(attack)) {
             return;
         }
 

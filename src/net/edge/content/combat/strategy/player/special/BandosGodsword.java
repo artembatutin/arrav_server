@@ -45,7 +45,6 @@ public class BandosGodsword extends PlayerMeleeStrategy {
                 victim.message("Your " + skill + " level has been drained.");
             }
         }
-        attacker.getCombatSpecial().drain(attacker);
     }
 
     @Override

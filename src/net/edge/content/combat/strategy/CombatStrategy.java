@@ -23,6 +23,11 @@ public abstract class CombatStrategy<T extends Actor> implements CombatListener<
 
     public abstract Animation getAttackAnimation(T attacker, Actor defender);
 
+    @Override
+    public void start(T attacker, Actor defender) {
+    }
+
+    @Override
     public void attack(T attacker, Actor defender, Hit hit) {
     }
 

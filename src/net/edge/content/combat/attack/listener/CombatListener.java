@@ -16,6 +16,14 @@ import java.util.Optional;
 public interface CombatListener<T extends Actor> {
 
     /**
+     * Called when the strategy starts.
+     *
+     * @param attacker the attacking actor
+     * @param defender the defending actor
+     */
+    void start(T attacker, Actor defender);
+
+    /**
      * Called when the attacking hit executes on the defender.
      *
      * @param attacker the attacking actor

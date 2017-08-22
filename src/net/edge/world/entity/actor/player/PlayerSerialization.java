@@ -512,9 +512,10 @@ public final class PlayerSerialization {
 
 			for (Item item : p.getEquipment().getItems()) {
 				if (item != null) {
-					CombatListener<Player> listener = CombatListenerDispatcher.ITEM_LISTENERS.get(item.getId());
-					if (listener != null) {
-						p.getCombat().addListener(listener);
+					CombatListenerDispatcher.CombatListenerSet listenerSet = CombatListenerDispatcher.ITEM_LISTENERS.get(item.getId());
+
+					if(listenerSet != null && p.getEquipment().containsAll(listenerSet.set)) {
+						p.getCombat().addListener(listenerSet.listener);
 					}
 				}
 			}

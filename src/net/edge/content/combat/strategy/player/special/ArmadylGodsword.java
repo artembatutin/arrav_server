@@ -20,7 +20,6 @@ public class ArmadylGodsword extends PlayerMeleeStrategy {
     public void attack(Player attacker, Actor defender, Hit hit) {
         super.attack(attacker, defender, hit);
         attacker.graphic(GRAPHIC);
-        attacker.getCombatSpecial().drain(attacker);
     }
 
     @Override

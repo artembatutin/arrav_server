@@ -448,8 +448,9 @@ public enum CombatSpecial {
 //					});
 //				}
 //			};
-//		}
+//		}ya
 //	},
+    DRAGON_CLAWS(new int[]{14484, 14486}, 50, new DragonClaws()),
     DRAGON_DAGGER(new int[]{1215, 1231, 5680, 5698}, 25, new DragonDagger()),
     BANDOS_GODSWORD(new int[]{11696}, 50, new BandosGodsword()),
     ARMADYL_GODSWORD(new int[]{11694, 13450}, 50, new ArmadylGodsword()),

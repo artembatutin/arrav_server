@@ -453,12 +453,12 @@ public abstract class Actor extends Entity {
 	public final void damage(Hit... hits) {
 		Preconditions.checkArgument(hits.length >= 1 && hits.length <= 4);
 		for (Hit hit : hits) {
-			if (flags.get(UpdateFlag.PRIMARY_HIT)) {
-				secondaryHit = decrementHealth(hit);
-				getFlags().flag(UpdateFlag.SECONDARY_HIT);
-			} else {
+			if (!flags.get(UpdateFlag.PRIMARY_HIT)) {
 				primaryHit = decrementHealth(hit);
 				getFlags().flag(UpdateFlag.PRIMARY_HIT);
+			} else {
+				secondaryHit = decrementHealth(hit);
+				getFlags().flag(UpdateFlag.SECONDARY_HIT);
 			}
 		}
 	}

@@ -45,6 +45,7 @@ public final class CommandPacket implements IncomingPacket {
 				player.getCombat().setStrategy(new PlayerMagicStrategy(MagicSpell.ICE_BLITZ));
 			} else if (parts[0].equalsIgnoreCase("man")) {
 				Mob npc = Mob.getNpc(1, player.getPosition().copy().move(1, 0));
+				npc.getMovementQueue().setLockMovement(true);
 				npc.setOwner(player);
 				npc.setRespawn(false);
 				npc.setCurrentHealth(100_000);
