@@ -10,11 +10,8 @@ import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.basic.RangedStrategy;
 import net.edge.world.Animation;
-import net.edge.world.Graphic;
-import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.item.container.impl.Equipment;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -52,9 +49,7 @@ public class NpcRangedStrategy extends RangedStrategy<Mob> {
 
     @Override
     public CombatHit[] getHits(Mob attacker, Actor defender) {
-        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
-        int hitsplatDelay = CombatUtil.getHitsplatDelay(attacker, defender);
-        return new CombatHit[] { nextRangedHit(attacker, defender, hitDelay, hitsplatDelay) };
+        return new CombatHit[] { nextRangedHit(attacker, defender) };
     }
 
     @Override

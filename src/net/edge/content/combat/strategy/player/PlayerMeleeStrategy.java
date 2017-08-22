@@ -1,15 +1,14 @@
 package net.edge.content.combat.strategy.player;
 
-import net.edge.content.combat.CombatUtil;
-import net.edge.content.combat.effect.CombatPoisonEffect;
-import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.CombatType;
+import net.edge.content.combat.CombatUtil;
+import net.edge.content.combat.attack.FightType;
+import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.basic.MeleeStrategy;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.world.Animation;
-import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.container.impl.Equipment;
@@ -26,11 +25,12 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
         if (attacker.isSpecialActivated()) {
             attacker.getCombatSpecial().drain(attacker);
         }
+
+        attacker.animation(getAttackAnimation(attacker, defender));
     }
 
     @Override
     public void attack(Player attacker, Actor defender, Hit hit) {
-        attacker.animation(getAttackAnimation(attacker, defender));
         addCombatExperience(attacker, hit);
     }
 
@@ -45,9 +45,7 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
 
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
-        int hitsplatDelay = CombatUtil.getHitsplatDelay(attacker, defender);
-        return new CombatHit[] { nextMeleeHit(attacker, defender, hitDelay, hitsplatDelay) };
+        return new CombatHit[] { nextMeleeHit(attacker, defender) };
     }
 
     @Override

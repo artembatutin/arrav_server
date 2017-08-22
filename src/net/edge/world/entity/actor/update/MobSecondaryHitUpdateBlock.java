@@ -20,11 +20,12 @@ public final class MobSecondaryHitUpdateBlock extends MobUpdateBlock {
 	
 	@Override
 	public int write(Player player, Mob mob, GameBuffer msg) {
-		Hit hit = mob.secondaryHit;
+		Hit hit = mob.getSecondaryHit();
+//		System.out.println("Second hit: " + hit.getDamage());
 		msg.putShort(hit.getDamage());
 		msg.put(hit.getHitsplat().getId()); // TODO: add (hit.hasSource() && hit.getSource() != player.getSlot() ? 5 : 0)
 		msg.put(hit.getHitIcon().getId());
-		msg.putShort((int) Math.round((((double) mob.getCurrentHealth()) / ((double) mob.getMaxHealth())) * 100));
+		msg.putShort((int) (mob.getCurrentHealth() * 100.0 /  mob.getMaxHealth()));
 		msg.put(mob.getSpecial().isPresent() ? mob.getSpecial().getAsInt() : 101);
 		return -1;
 	}

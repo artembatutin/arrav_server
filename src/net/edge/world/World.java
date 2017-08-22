@@ -3,10 +3,10 @@ package net.edge.world;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.edge.Application;
-import net.edge.content.combat.Combat;
-import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.GameConstants;
 import net.edge.GamePulseHandler;
+import net.edge.content.combat.Combat;
+import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
 import net.edge.net.packet.out.SendLogout;
@@ -19,10 +19,10 @@ import net.edge.util.ThreadUtil;
 import net.edge.util.log.LoggingManager;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.ActorList;
-import net.edge.world.entity.actor.move.path.SimplePathChecker;
-import net.edge.world.entity.actor.move.path.impl.SimplePathFinder;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobMovementTask;
+import net.edge.world.entity.actor.move.path.SimplePathChecker;
+import net.edge.world.entity.actor.move.path.impl.SimplePathFinder;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.GroundItem;
@@ -31,10 +31,14 @@ import net.edge.world.entity.region.RegionManager;
 import net.edge.world.sync.Synchronizer;
 
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static net.edge.net.session.GameSession.outLimit;
-import static net.edge.world.entity.EntityState.*;
+import static net.edge.world.entity.EntityState.AWAITING_REMOVAL;
+import static net.edge.world.entity.EntityState.IDLE;
 
 /**
  * The static utility class that contains functions to manage and process game characters.
@@ -156,9 +160,9 @@ public final class World {
 			registerActors();
 			taskManager.sequence();
 			sync.preUpdate(players, mobs);
-			Combat.update();//why retaliate? ask mike, i tested and auto ret doesnt work if its here
 			sync.update(players);
 			sync.postUpdate(players, mobs);
+			Combat.update();//why retaliate? ask mike, i tested and auto ret doesnt work if its here
 			dequeueLogout();
 			disposeActors();
 			regionalTick++;
@@ -345,9 +349,11 @@ public final class World {
 			return character.toPlayer().getLocalMobs().iterator();
 		return mobs.iterator();
 	}
-	
+
 	/**
-	 * Gets every single actor in the player and npc character lists.
+	 * Creates a set of every single actor in the player and npc character
+	 * lists, with {@link Mob} actors first and {@link Player} actors second.
+	 *
 	 * @return a set containing every single character.
 	 */
 	public Set<Actor> getActors() {

@@ -1,5 +1,6 @@
 package net.edge.content.combat.strategy;
 
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.attack.FormulaFactory;
@@ -52,15 +53,21 @@ public abstract class CombatStrategy<T extends Actor> implements CombatListener<
     }
 
     protected final CombatHit nextMeleeHit(T attacker, Actor defender) {
-        return nextMeleeHit(attacker, defender, 0, 1);
+        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
+        int hitsplatDelay = CombatUtil.getHitsplatDelay(getCombatType());
+        return nextMeleeHit(attacker, defender, hitDelay, hitsplatDelay);
     }
 
     protected final CombatHit nextRangedHit(T attacker, Actor defender) {
-        return nextRangedHit(attacker, defender, 2, 1);
+        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
+        int hitsplatDelay = CombatUtil.getHitsplatDelay(getCombatType());
+        return nextRangedHit(attacker, defender, hitDelay, hitsplatDelay);
     }
 
     protected final CombatHit nextMagicHit(T attacker, Actor defender, int max) {
-        return nextMagicHit(attacker, defender, max, 2, 1);
+        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
+        int hitsplatDelay = CombatUtil.getHitsplatDelay(getCombatType());
+        return nextMagicHit(attacker, defender, max, hitDelay, hitsplatDelay);
     }
 
     protected final CombatHit nextMeleeHit(T attacker, Actor defender, int hitDelay, int hitsplatDelay) {

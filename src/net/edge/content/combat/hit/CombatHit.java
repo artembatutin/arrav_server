@@ -1,5 +1,7 @@
 package net.edge.content.combat.hit;
 
+import java.util.function.Function;
+
 /**
  * A wrapper for a {@link Hit} object, adding additional variables for hit and
  * hitsplat delays.
@@ -9,10 +11,10 @@ package net.edge.content.combat.hit;
 public final class CombatHit extends Hit {
 
     /** The hit delay. */
-    private final int hitDelay;
+    private int hitDelay;
 
     /** The hitsplat delay. */
-    private final int hitsplatDelay;
+    private int hitsplatDelay;
 
     /**
      * Constructs a new {@link CombatHit} object.
@@ -24,6 +26,20 @@ public final class CombatHit extends Hit {
     public CombatHit(Hit hit, int hitDelay, int hitsplatDelay) {
         super(hit.getDamage(), hit.getHitsplat(), hit.getHitIcon(), hit.isAccurate());
         this.hitDelay = hitDelay;
+        this.hitsplatDelay = hitsplatDelay;
+    }
+
+    public CombatHit copyAndModify(Function<Integer, Integer> modifier) {
+        CombatHit next = new CombatHit(this, hitDelay, hitsplatDelay);
+        next.modifyDamage(modifier);
+        return next;
+    }
+
+    public void setHitDelay(int hitDelay) {
+        this.hitDelay = hitDelay;
+    }
+
+    public void setHitsplatDelay(int hitsplatDelay) {
         this.hitsplatDelay = hitsplatDelay;
     }
 

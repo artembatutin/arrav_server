@@ -83,9 +83,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
-        int hitsplatDelay = CombatUtil.getHitsplatDelay(attacker, defender);
-        return new CombatHit[] { nextMagicHit(attacker, defender, spell.getMaxHit(), hitDelay, hitsplatDelay) };
+        return new CombatHit[] { nextMagicHit(attacker, defender, spell.getMaxHit()) };
     }
 
     @Override

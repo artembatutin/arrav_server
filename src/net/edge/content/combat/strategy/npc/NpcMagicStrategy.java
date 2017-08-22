@@ -11,7 +11,6 @@ import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.basic.MagicStrategy;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 
@@ -58,9 +57,7 @@ public class NpcMagicStrategy extends MagicStrategy<Mob> {
 
     @Override
     public CombatHit[] getHits(Mob attacker, Actor defender) {
-        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
-        int hitsplatDelay = CombatUtil.getHitsplatDelay(attacker, defender);
-        return new CombatHit[] { nextMagicHit(attacker, defender, projectileDefinition.getMaxHit(), hitDelay, hitsplatDelay) };
+        return new CombatHit[] { nextMagicHit(attacker, defender, projectileDefinition.getMaxHit()) };
     }
 
     @Override

@@ -1,17 +1,10 @@
 package net.edge.content.combat.strategy.player.special;
 
 import net.edge.content.combat.Combat;
-import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.CombatStrategy;
-import net.edge.content.combat.strategy.player.PlayerMeleeStrategy;
-import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.content.skill.SkillData;
-import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendInterfaceLayer;
 import net.edge.net.packet.out.SendUpdateSpecial;
-import net.edge.world.Animation;
-import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -448,7 +441,7 @@ public enum CombatSpecial {
 //					});
 //				}
 //			};
-//		}ya
+//		}
 //	},
     DRAGON_CLAWS(new int[]{14484, 14486}, 50, new DragonClaws()),
     DRAGON_DAGGER(new int[]{1215, 1231, 5680, 5698}, 25, new DragonDagger()),
@@ -461,16 +454,9 @@ public enum CombatSpecial {
             CombatStrategy<Player> strategy = new GraniteMaul();
             Actor defender = combat.getLastDefender();
 
-            if (combat.isAttacking(defender)) {
-                boolean canAttack = combat.canAttack(defender);
-                canAttack &= strategy.withinDistance(player, defender);
-                canAttack &= strategy.canAttack(player, defender);
-
-                if (canAttack) {
-                    combat.submitStrategy(defender, strategy);
-                    player.getCombatSpecial().drain(player);
-                    return;
-                }
+            if (combat.isAttacking(defender) && combat.submitStrategy(defender, strategy)) {
+                player.getCombatSpecial().drain(player);
+                return;
             }
 
             combat.setStrategy(strategy);

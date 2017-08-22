@@ -1,39 +1,48 @@
 package net.edge.content.combat.events;
 
-import net.edge.content.combat.hit.CombatHit;
+import net.edge.content.combat.attack.listener.CombatListener;
 import net.edge.world.entity.actor.Actor;
 
-public class CombatEvent {
+import java.util.List;
+
+public abstract class CombatEvent<T extends Actor> {
     private final int delay;
+    protected final List<CombatListener<? super T>> listeners;
+
+    private CombatEvent<T> next;
     private int ticks;
+    private boolean active;
 
-    private Actor defender;
-    private CombatHit hit;
-    private EventInterface execute;
-
-    public CombatEvent(Actor defender, int delay, CombatHit hit, EventInterface execute) {
+    protected CombatEvent(List<CombatListener<? super T>> listeners, int delay) {
+        this.listeners = listeners;
         this.delay = delay;
-        this.defender = defender;
-        this.hit = hit;
-        this.execute = execute;
+        active = true;
     }
 
-    public CombatEvent(Actor defender, int delay, EventInterface execute) {
-        this.delay = delay;
-        this.defender = defender;
-        this.execute = execute;
-    }
-
-    public Actor getDefender() {
-        return defender;
+    void tick() {
+        ticks++;
     }
 
     public boolean canExecute() {
-        return ++ticks >= delay;
+        return active && ticks > delay;
     }
 
-    public void execute() {
-        execute.execute(defender, hit);
+    protected abstract void execute();
+
+    boolean isActive() {
+        return active;
+    }
+
+    protected void setActive(boolean active) {
+        this.active = active;
+    }
+
+    CombatEvent<T> getNext() {
+        return next;
+    }
+
+    void setNext(CombatEvent<T> next) {
+        this.next = next;
     }
 
 }

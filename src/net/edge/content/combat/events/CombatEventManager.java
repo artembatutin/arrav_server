@@ -5,24 +5,26 @@ import net.edge.world.entity.actor.Actor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class CombatEventManager {
-    private List<CombatEvent> events = new CopyOnWriteArrayList<>();
+public class CombatEventManager<T extends Actor> {
+    private List<CombatEvent<T>> events = new CopyOnWriteArrayList<>();
 
     public void sequence() {
-        for (CombatEvent event : events) {
-            if (event.canExecute()) {
+        for (CombatEvent<T> event : events) {
+            event.tick();
+
+
+            while (event.canExecute()) {
                 event.execute();
+            }
+
+            if (!event.isActive()) {
                 events.remove(event);
             }
         }
     }
     
-    public void add(CombatEvent event) {
+    public void add(CombatEvent<T> event) {
         events.add(event);
-    }
-
-    public void cancel(Actor defender) {
-        events.removeIf(next -> next.getDefender() == defender);
     }
 
 }

@@ -59,7 +59,6 @@ public final class CombatUtil {
 
 	/**
 	 * Gets the hit delay for the specified {@code type}.
-	 *
 	 * @param attacker the character doing the hit
 	 * @param defender the victim being hit
 	 * @param type     the combat type of this hit
@@ -67,33 +66,33 @@ public final class CombatUtil {
 	 * @throws IllegalArgumentException if the combat type is invalid
 	 */
 	public static int getHitDelay(Actor attacker, Actor defender, CombatType type) {
+		int delay = defender.isMob() ? 1 : 0;
+
 		if (type.equals(CombatType.MELEE)) {
-			return 1;
+			return delay;
 		}
 
 		int distance = (int) attacker.getPosition().getDistance(defender.getPosition());
 
 		if (type.equals(CombatType.MAGIC)) {
-			return Projectile.MAGIC_DELAYS[distance > 10 ? 10 : distance];
+			return Projectile.MAGIC_DELAYS[distance > 10 ? 10 : distance] - 1;
 		}
 
 		if (type.equals(CombatType.RANGED)) {
-			return Projectile.RANGED_DELAYS[distance > 10 ? 10 : distance];
+			return Projectile.RANGED_DELAYS[distance > 10 ? 10 : distance] - 1;
 		}
 
-		return 1;
+		return delay;
 	}
 
 	/**
 	 * Gets the hitsplat delay for the specified {@code type}.
-	 *
-	 * @param attacker the character doing the hit.
-	 * @param defender the victim being hit.
+	 * @param type     the combat type of this hit
 	 * @return the delay for the combat type.
 	 * @throws IllegalArgumentException if the combat type is invalid.
 	 */
-	public static int getHitsplatDelay(Actor attacker, Actor defender) {
-		return defender.isMob() ? 1 : 0;
+	public static int getHitsplatDelay(CombatType type) {
+		return type != CombatType.MELEE ? 1 : 0;
 	}
 
 	/**
@@ -225,6 +224,15 @@ public final class CombatUtil {
 		}
 
 		return new Animation(actor.toMob().getDefinition().getDefenceAnimation(), Animation.AnimationPriority.HIGH);
+	}
+
+
+	public static boolean canAttack(Actor attacker, Actor defender) {
+		return validate(attacker) && validate(defender) && attacker.getInstance() == defender.getInstance();
+	}
+
+	private static boolean validate(Actor actor) {
+		return actor != null && !actor.isDead() && actor.isVisible() && !actor.isTeleporting() && !actor.isNeedsPlacement();
 	}
 
 }

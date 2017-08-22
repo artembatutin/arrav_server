@@ -10,7 +10,6 @@ import net.edge.util.MutableNumber;
 import net.edge.util.Stopwatch;
 import net.edge.world.*;
 import net.edge.world.entity.Entity;
-import net.edge.world.entity.EntityState;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.attribute.AttributeMap;
 import net.edge.world.entity.actor.mob.Mob;
@@ -25,7 +24,7 @@ import net.edge.world.entity.actor.update.UpdateFlag;
 import net.edge.world.entity.actor.update.UpdateFlagHolder;
 import net.edge.world.locale.Position;
 
-import java.util.*;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
@@ -34,10 +33,8 @@ import java.util.function.Consumer;
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class Actor extends Entity {
-
-	public Hit primaryHit;
-
-	public Hit secondaryHit;
+	private Hit primaryHit;
+	private Hit secondaryHit;
 
 	/**
 	 * The current teleport stage that this player is in.
@@ -226,12 +223,13 @@ public abstract class Actor extends Entity {
 		}
 		primaryDirection = Direction.NONE;
 		secondaryDirection = Direction.NONE;
-		primaryHit = null;
-		secondaryHit = null;
 		needsRegionUpdate = false;
 		needsPlacement = false;
 		animation = null;
 		flags.clear();
+
+		primaryHit = null;
+		secondaryHit = null;
 	}
 
 	/**
@@ -448,18 +446,15 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Deals a series of hits to this entity.
-	 * @param hits the hits to deal to this entity.
+	 * @param hit the hit to deal to this entity.
 	 */
-	public final void damage(Hit... hits) {
-		Preconditions.checkArgument(hits.length >= 1 && hits.length <= 4);
-		for (Hit hit : hits) {
-			if (!flags.get(UpdateFlag.PRIMARY_HIT)) {
-				primaryHit = decrementHealth(hit);
-				getFlags().flag(UpdateFlag.PRIMARY_HIT);
-			} else {
-				secondaryHit = decrementHealth(hit);
-				getFlags().flag(UpdateFlag.SECONDARY_HIT);
-			}
+	public final void damage(Hit hit) {
+		if (primaryHit == null) {
+			primaryHit = decrementHealth(hit);
+			getFlags().flag(UpdateFlag.PRIMARY_HIT);
+		} else if (secondaryHit == null) {
+			secondaryHit = decrementHealth(hit);
+			getFlags().flag(UpdateFlag.SECONDARY_HIT);
 		}
 	}
 
@@ -899,6 +894,14 @@ public abstract class Actor extends Entity {
 	 */
 	public final Hit getSecondaryHit() {
 		return secondaryHit;
+	}
+
+	/**
+	 * Checks if this actor can append any more hits for this update cycle.
+	 * @return {@code true} if the actor can add more hits
+	 */
+	public boolean canAppendHit() {
+		return primaryHit == null || secondaryHit == null;
 	}
 
 	/**

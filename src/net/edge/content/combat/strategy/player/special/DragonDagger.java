@@ -33,14 +33,7 @@ public class DragonDagger extends PlayerMeleeStrategy {
 
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
-        int hitsplatDelay = CombatUtil.getHitsplatDelay(attacker, defender);
-        return new CombatHit[] { nextMeleeHit(attacker, defender, hitDelay, hitsplatDelay), nextMeleeHit(attacker, defender, hitDelay, hitsplatDelay) };
-    }
-
-    @Override
-    public int getAttackDelay(Player attacker, FightType fightType) {
-        return 4;
+        return new CombatHit[] { nextMeleeHit(attacker, defender), nextMeleeHit(attacker, defender) };
     }
 
     @Override
