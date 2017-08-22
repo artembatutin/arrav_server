@@ -1,5 +1,6 @@
 package net.edge.content.skill.farming;
 
+import net.edge.GameConstants;
 import net.edge.action.impl.ItemOnItemAction;
 import net.edge.action.impl.ItemOnObjectAction;
 import net.edge.action.impl.ObjectAction;
@@ -48,7 +49,7 @@ public class FarmingAction {
 									final int experience = farming.patch.getSeedType().getExperience()[1];
 									farming.patch.addAttribute(PatchAttribute.CHECKED_HEALTH);
 									if(!player.xpLock)
-										player.getSkills()[Skills.FARMING].increaseExperience(experience);
+										Skills.experience(player, experience, Skills.FARMING);
 									player.message("You check the tree's health and gain experience.");
 									FarmingManager.updatePatch(player, patchType);
 									return true;
@@ -145,7 +146,7 @@ public class FarmingAction {
 							if(!farming.patch.hasAttribute(PatchAttribute.CHECKED_HEALTH)) {
 								farming.patch.addAttribute(PatchAttribute.CHECKED_HEALTH);
 								if(!player.xpLock)
-									player.getSkills()[Skills.FARMING].increaseExperience(experience);
+									Skills.experience(player, experience, Skills.FARMING);
 								player.message("You check the crop's health and gain experience.");
 							} else {
 								player.message("You have already checked this crops' health.");
@@ -424,7 +425,7 @@ public class FarmingAction {
 								FarmingManager.updatePatch(player, patchType);
 								newPatch.submitGrowthTask(player);
 								if(!player.xpLock)
-									player.getSkills()[Skills.FARMING].increaseExperience(finalSeedType.getExperience()[0]);
+									Skills.experience(player, finalSeedType.getExperience()[0], Skills.FARMING);
 								cancel();
 							}
 						}).submit();
