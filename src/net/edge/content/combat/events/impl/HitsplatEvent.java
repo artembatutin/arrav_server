@@ -38,14 +38,6 @@ public class HitsplatEvent<T extends Actor> extends CombatEvent<T> {
         defender.getCombat().block(attacker, hit, strategy.getCombatType());
         defender.getCombat().getDamageCache().add(attacker, hit.getDamage());
 
-//        if (defender.getCombat().defender == null && defender.isAutoRetaliate()) {
-//            defender.getCombat().attack(attacker);
-//        }
-
-        if (strategy.getCombatType() != CombatType.MAGIC || defender.isMob()) {
-            defender.animation(CombatUtil.getBlockAnimation(defender));
-        }
-
         if (strategy.getCombatType() != CombatType.MAGIC || hit.isAccurate()) {
             defender.damage(hit);
 

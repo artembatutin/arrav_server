@@ -1,5 +1,6 @@
 package net.edge.content.combat.events.impl;
 
+import net.edge.content.combat.CombatType;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.listener.CombatListener;
 import net.edge.content.combat.events.CombatEvent;
@@ -29,6 +30,14 @@ public class HitEvent<T extends Actor> extends CombatEvent<T> {
             attacker.getCombat().reset();
             setActive(false);
             return;
+        }
+
+        if (defender.getCombat().getDefender() == null && defender.isAutoRetaliate()) {
+            defender.getCombat().attack(attacker);
+        }
+
+        if (strategy.getCombatType() != CombatType.MAGIC || defender.isMob()) {
+            defender.animation(CombatUtil.getBlockAnimation(defender));
         }
 
         strategy.hit(attacker, defender, hit);

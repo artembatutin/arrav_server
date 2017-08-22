@@ -10,6 +10,7 @@ import net.edge.content.combat.events.impl.*;
 import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.task.Task;
 import net.edge.util.Stopwatch;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
@@ -141,6 +142,7 @@ public class Combat<T extends Actor> {
 
             eventManager.add(chain.link(finishEvent));
         }
+
         eventManager.add(finishEvent);
     }
 
@@ -201,7 +203,13 @@ public class Combat<T extends Actor> {
     }
 
     public void decrementQueuedHits() {
-        hitsQueued--;
+        new Task(3) {
+            @Override
+            protected void execute() {
+                hitsQueued--;
+                cancel();
+            }
+        }.submit();
     }
 
     public boolean inCombat() {
