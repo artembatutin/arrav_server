@@ -92,7 +92,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     }
 
     @Override
-    public int getAttackDelay(Player attacker, FightType fightType) {
+    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
         return attacker.getAttackDelay();
     }
 

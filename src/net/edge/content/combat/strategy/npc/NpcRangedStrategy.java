@@ -3,7 +3,6 @@ package net.edge.content.combat.strategy.npc;
 import net.edge.content.combat.CombatEffect;
 import net.edge.content.combat.CombatProjectileDefinition;
 import net.edge.content.combat.CombatType;
-import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.hit.CombatHit;
@@ -53,7 +52,7 @@ public class NpcRangedStrategy extends RangedStrategy<Mob> {
     }
 
     @Override
-    public int getAttackDelay(Mob attacker, FightType fightType) {
+    public int getAttackDelay(Mob attacker, Actor defender, FightType fightType) {
         return attacker.getAttackDelay();
     }
 

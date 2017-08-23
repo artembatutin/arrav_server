@@ -455,7 +455,6 @@ public enum CombatSpecial {
             Actor defender = combat.getLastDefender();
 
             if (combat.isAttacking(defender) && combat.submitStrategy(defender, strategy)) {
-                player.getCombatSpecial().drain(player);
                 return;
             }
 

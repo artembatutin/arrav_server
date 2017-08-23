@@ -19,7 +19,7 @@ public abstract class LinkedTask {
 	 * The delay of this link after the previous link.
 	 */
 	private final int delay;
-	
+
 	/**
 	 * Creates a new {@link LinkedTask}.
 	 * @param name  the name of this link.

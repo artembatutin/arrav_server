@@ -15,8 +15,8 @@ public class GraniteMaul extends PlayerMeleeStrategy {
     private static final Graphic GRAPHIC = new Graphic(340);
 
     @Override
-    public void attack(Player attacker, Actor defender, Hit hit) {
-        super.attack(attacker, defender, hit);
+    public void start(Player attacker, Actor defender) {
+        super.start(attacker, defender);
         attacker.graphic(GRAPHIC);
     }
 
@@ -27,7 +27,7 @@ public class GraniteMaul extends PlayerMeleeStrategy {
 
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        return new CombatHit[] { nextMeleeHit(attacker, defender, 0, 0) };
+        return new CombatHit[] { nextMeleeHit(attacker, defender) };
     }
 
     @Override
@@ -36,7 +36,7 @@ public class GraniteMaul extends PlayerMeleeStrategy {
     }
 
     @Override
-    public int getAttackDelay(Player attacker, FightType fightType) {
+    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
         return 1;
     }
 }

@@ -15,6 +15,7 @@ import net.edge.action.ActionInitializer;
 import net.edge.action.impl.*;
 import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.ObjectAction;
+import net.edge.cache.decoder.RegionDecoder;
 import net.edge.content.combat.CombatProjectileDefinition;
 import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
 import net.edge.content.object.star.ShootingStarManager;
@@ -185,7 +186,7 @@ public final class Application {
 		//object/region decoding must be done before parallel.
 		new ObjectDefinitionDecoder(fs).run();
 		new MapDefinitionDecoder(fs).run();
-//		new RegionDecoder(fs).run();
+		new RegionDecoder(fs).run();
 		FirepitManager.get().register();
 		//Item decoding.
 		launch.execute(() -> {

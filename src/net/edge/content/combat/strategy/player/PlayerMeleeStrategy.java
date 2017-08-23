@@ -1,7 +1,6 @@
 package net.edge.content.combat.strategy.player;
 
 import net.edge.content.combat.CombatType;
-import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.effect.CombatPoisonEffect;
 import net.edge.content.combat.hit.CombatHit;
@@ -49,7 +48,7 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
     }
 
     @Override
-    public int getAttackDelay(Player attacker, FightType fightType) {
+    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
         return attacker.getAttackDelay();
     }
 

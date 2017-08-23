@@ -11,10 +11,10 @@ import java.util.function.Function;
 public final class CombatHit extends Hit {
 
     /** The hit delay. */
-    private int hitDelay;
+    private final int hitDelay;
 
     /** The hitsplat delay. */
-    private int hitsplatDelay;
+    private final int hitsplatDelay;
 
     /**
      * Constructs a new {@link CombatHit} object.
@@ -33,14 +33,6 @@ public final class CombatHit extends Hit {
         CombatHit next = new CombatHit(this, hitDelay, hitsplatDelay);
         next.modifyDamage(modifier);
         return next;
-    }
-
-    public void setHitDelay(int hitDelay) {
-        this.hitDelay = hitDelay;
-    }
-
-    public void setHitsplatDelay(int hitsplatDelay) {
-        this.hitsplatDelay = hitsplatDelay;
     }
 
     /**

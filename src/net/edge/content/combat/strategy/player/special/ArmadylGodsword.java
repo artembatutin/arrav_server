@@ -28,7 +28,7 @@ public class ArmadylGodsword extends PlayerMeleeStrategy {
     }
 
     @Override
-    public int getAttackDelay(Player attacker, FightType fightType) {
+    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
         return 4;
     }
 

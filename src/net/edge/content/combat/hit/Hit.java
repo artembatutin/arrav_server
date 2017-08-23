@@ -38,13 +38,38 @@ public class Hit {
 
     /**
      * Constructs a new {@link Hit} object.
-     *
      * @param damage   the damage amount
      * @param hitsplat the hitsplat type
      * @param hitIcon  the hit icon
      */
     public Hit(int damage, Hitsplat hitsplat, HitIcon hitIcon) {
         this(damage, hitsplat, hitIcon, damage > 0);
+    }
+
+    /**
+     * Constructs a new {@link Hit} object.
+     * @param damage   the damage amount
+     * @param hitIcon  the hit icon
+     */
+    public Hit(int damage, HitIcon hitIcon) {
+        this(damage, Hitsplat.NORMAL, hitIcon, damage > 0);
+    }
+
+    /**
+     * Constructs a new {@link Hit} object.
+     * @param damage   the damage amount
+     * @param hitsplat the hitsplat type
+     */
+    public Hit(int damage, Hitsplat hitsplat) {
+        this(damage, hitsplat, HitIcon.NONE, damage > 0);
+    }
+
+    /**
+     * Constructs a new {@link Hit} object.
+     * @param damage   the damage amount
+     */
+    public Hit(int damage) {
+        this(damage, Hitsplat.NORMAL, HitIcon.NONE, damage > 0);
     }
 
     /**

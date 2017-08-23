@@ -2,7 +2,6 @@ package net.edge.content.combat.strategy.player;
 
 import net.edge.content.combat.CombatEffect;
 import net.edge.content.combat.CombatType;
-import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.AttackModifier;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.content.MagicRune;
@@ -87,8 +86,8 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
     }
 
     @Override
-    public int getAttackDelay(Player attacker, FightType fightType) {
-        if (attacker.getPosition().getDistance(attacker.getCombat().getDefender().getPosition()) > 4) {
+    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
+        if (attacker.getPosition().getDistance(defender.getPosition()) > 4) {
             return 6;
         }
         return 5;

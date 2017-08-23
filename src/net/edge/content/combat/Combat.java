@@ -3,11 +3,8 @@ package net.edge.content.combat;
 import net.edge.content.combat.attack.AttackModifier;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.attack.listener.CombatListener;
-import net.edge.content.combat.events.CombatChain;
-import net.edge.content.combat.events.CombatEvent;
-import net.edge.content.combat.events.CombatEventManager;
-import net.edge.content.combat.events.impl.*;
 import net.edge.content.combat.hit.CombatHit;
+import net.edge.content.combat.hit.CombatTaskData;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.task.Task;
@@ -16,13 +13,14 @@ import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
 
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Combat<T extends Actor> {
     private final T attacker;
-    private   Actor defender;
+    private Actor defender;
 
     private Actor lastAttacker;
     private Actor lastDefender;
@@ -35,7 +33,6 @@ public class Combat<T extends Actor> {
     private CombatStrategy<? super T> strategy;
     private AttackModifier attackModifier = new AttackModifier();
     private List<CombatListener<? super T>> listeners = new LinkedList<>();
-    private CombatEventManager<T> eventManager = new CombatEventManager<>();
 
     /** The cache of damage dealt to this controller during combat. */
     private final CombatDamage damageCache = new CombatDamage();
@@ -43,6 +40,9 @@ public class Combat<T extends Actor> {
     private List<CombatListener<? super T>> pendingAddition = new LinkedList<>();
     private List<CombatListener<? super T>> pendingRemoval = new LinkedList<>();
     private int[] delays = new int[3];
+
+    private Deque<CombatTaskData<T>> hitQueue = new LinkedList<>();
+    private int[] lastHitDelays = new int[4];
 
     public Combat(T attacker) {
         this.attacker = attacker;
@@ -62,8 +62,9 @@ public class Combat<T extends Actor> {
     }
 
     public static void update() {
-        for(Actor actor : World.get().getActors()) {
-            if (actor == null || !actor.getState().equals(EntityState.ACTIVE)) continue;
+        for (Actor actor : World.get().getActors()) {
+            if (actor == null || !actor.getState().equals(EntityState.ACTIVE))
+                continue;
             actor.getCombat().tick();
         }
     }
@@ -81,7 +82,24 @@ public class Combat<T extends Actor> {
             }
         }
 
-        eventManager.sequence();
+        for (int index = 0, sent = 0; index < lastHitDelays.length; index++) {
+            if (lastHitDelays[index] > 0) {
+                lastHitDelays[index]--;
+            } else if (sent < 2 && sendNextHit()) {
+                lastHitDelays[index] = 2;
+                sent++;
+            }
+        }
+    }
+
+    private boolean sendNextHit() {
+        if (hitQueue.isEmpty()) {
+            return false;
+        }
+
+        CombatTaskData<T> data = hitQueue.poll();
+        hitTask(data).submit();
+        return true;
     }
 
     private void updateListeners() {
@@ -112,38 +130,25 @@ public class Combat<T extends Actor> {
         listeners.forEach(attack -> attack.getModifier(attacker).ifPresent(this::addModifier));
         strategy.getModifier(attacker).ifPresent(this::addModifier);
 
-        CombatHit[] hits = strategy.getHits(attacker, defender);
-        submitHits(defender, strategy, hits);
+        submitHits(defender, strategy, strategy.getHits(attacker, defender));
 
-        int delayType = strategy.getCombatType().ordinal();
-        setDelay(delayType, strategy.getAttackDelay(attacker, type));
+        int delayIndex = strategy.getCombatType().ordinal();
+        setDelay(delayIndex, strategy.getAttackDelay(attacker, defender, type));
         return true;
     }
 
-    private int hitsQueued;
-
     private void submitHits(Actor defender, CombatStrategy<? super T> strategy, CombatHit... hits) {
-        CombatEvent<T> startEvent = new StartEvent<>(attacker, defender, listeners, strategy);
-        CombatEvent<T> finishEvent = new FinishEvent<>(attacker, defender, listeners, strategy);
-
-        eventManager.add(startEvent);
-
         for (CombatHit hit : hits) {
-            CombatChain<T> chain = CombatChain.create();
-            hitsQueued++;
+            CombatTaskData<T> data = new CombatTaskData<>(attacker, defender, hit, strategy);
 
-            chain.link(new AttackEvent<>(attacker, defender, listeners, strategy, hit));
-            chain.link(new HitEvent<>(attacker, defender, listeners, strategy, hit));
+            if (!data.isActive()) {
+                data.setActive(true);
+                start(defender, strategy);
+            }
 
-            int hsDelay = hitsQueued > 2 ? 2 * ((hitsQueued - 3) / 2 + 1) - 1 : 0;
-            hsDelay += hit.getHitsplatDelay();
-
-            chain.link(new HitsplatEvent<>(attacker, defender, listeners, strategy, hit, hsDelay));
-
-            eventManager.add(chain.link(finishEvent));
+            attack(defender, hit, strategy);
+            hitQueue.add(data);
         }
-
-        eventManager.add(finishEvent);
     }
 
     public void submitHits(Actor defender, CombatHit... hits) {
@@ -158,6 +163,103 @@ public class Combat<T extends Actor> {
                 delays[idx] = delay;
             }
         }
+    }
+
+    private void start(Actor defender, CombatStrategy<? super T> strategy) {
+        if (!CombatUtil.canAttack(attacker, defender)) {
+            hitQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            reset();
+            return;
+        }
+
+        strategy.start(attacker, defender);
+        listeners.forEach(listener -> listener.start(attacker, defender));
+    }
+
+    private void attack(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
+        if (!CombatUtil.canAttack(attacker, defender)) {
+            hitQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            reset();
+            return;
+        }
+
+        lastDefender = defender;
+        lastAttacked.reset();
+
+        strategy.attack(attacker, defender, hit);
+        listeners.forEach(listener -> listener.attack(attacker, defender, hit));
+    }
+
+    private void hit(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
+        if (!CombatUtil.canAttack(attacker, defender)) {
+            hitQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            reset();
+            return;
+        }
+
+//        if (defender.getCombat().getDefender() == null && defender.isAutoRetaliate()) {
+//            defender.getCombat().attack(attacker);
+//        }
+
+        if (strategy.getCombatType() != CombatType.MAGIC || defender.isMob()) {
+            defender.animation(CombatUtil.getBlockAnimation(defender));
+        }
+
+        strategy.hit(attacker, defender, hit);
+        listeners.forEach(listener -> listener.hit(attacker, defender, hit));
+    }
+
+    private void hitsplat(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
+        if (!CombatUtil.canAttack(attacker, defender)) {
+            hitQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            reset();
+            return;
+        }
+
+        strategy.hitsplat(attacker, defender, hit);
+        listeners.forEach(listener -> listener.hitsplat(attacker, defender, hit));
+
+        defender.getCombat().block(attacker, hit, strategy.getCombatType());
+        defender.getCombat().getDamageCache().add(attacker, hit.getDamage());
+
+        if (strategy.getCombatType() != CombatType.MAGIC || hit.isAccurate()) {
+            defender.damage(hit);
+
+            if (defender.getCurrentHealth() <= 0) {
+                defender.getCombat().onDeath(defender, hit);
+            }
+        }
+    }
+
+    public void block(Actor attacker, Hit hit, CombatType combatType) {
+        T defender = this.attacker;
+        lastBlocked.reset();
+        lastAttacker = attacker;
+        listeners.forEach(attack -> attack.block(attacker, defender, hit, combatType));
+    }
+
+    private void onDeath(Actor attacker, Hit hit) {
+        T defender = this.attacker;
+        listeners.forEach(attack -> attack.onDeath(attacker, defender, hit));
+        defender.getMovementQueue().reset();
+        attacker.getCombat().reset();
+        defender.getCombat().reset();
+    }
+
+    private void finish(Actor defender) {
+        if (!CombatUtil.canAttack(attacker, defender)) {
+            hitQueue.removeIf(hit -> hit.getDefender() == defender);
+            reset();
+            return;
+        }
+
+        strategy.finish(attacker, defender);
+        strategy.getModifier(attacker).ifPresent(attacker.getCombat()::removeModifier);
+
+        listeners.forEach(attack -> {
+            attack.finish(attacker, defender);
+            attack.getModifier(attacker).ifPresent(attacker.getCombat()::removeModifier);
+        });
     }
 
     public void reset() {
@@ -187,29 +289,6 @@ public class Combat<T extends Actor> {
         }
 
         pendingRemoval.add(attack);
-    }
-
-    public void block(Actor attacker, Hit hit, CombatType combatType) {
-        T defender = this.attacker;
-        lastBlocked.reset();
-        lastAttacker = attacker;
-        listeners.forEach(attack -> attack.block(attacker, defender, hit, combatType));
-    }
-
-    public void onDeath(Actor attacker, Hit hit) {
-        T defender = this.attacker;
-        listeners.forEach(attack -> attack.onDeath(attacker, defender, hit));
-        defender.getMovementQueue().reset();
-    }
-
-    public void decrementQueuedHits() {
-        new Task(3) {
-            @Override
-            protected void execute() {
-                hitsQueued--;
-                cancel();
-            }
-        }.submit();
     }
 
     public boolean inCombat() {
@@ -280,9 +359,31 @@ public class Combat<T extends Actor> {
         return lastDefender;
     }
 
-    public void setLastDefender(Actor lastDefender) {
-        this.lastDefender = lastDefender;
-        lastAttacked.reset();
+    private Task hitTask(CombatTaskData<T> data) {
+        return new Task(data.getHitDelay(), data.getHitDelay() == 0) {
+            @Override
+            protected void execute() {
+                hit(data.getDefender(), data.getHit(), data.getStrategy());
+                hitsplatTask(data).submit();
+                cancel();
+            }
+        };
+    }
+
+    private Task hitsplatTask(CombatTaskData<T> data) {
+        return new Task(data.getHitsplatDelay(), data.getHitsplatDelay() == 0) {
+            @Override
+            protected void execute() {
+                hitsplat(data.getDefender(), data.getHit(), data.getStrategy());
+
+                if (data.isActive()) {
+                    finish(data.getDefender());
+                    data.setActive(false);
+                }
+
+                cancel();
+            }
+        };
     }
 
     private static boolean stopwatchElapsed(Stopwatch stopwatch, int seconds) {

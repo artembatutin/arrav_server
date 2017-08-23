@@ -16,7 +16,7 @@ public abstract class CombatStrategy<T extends Actor> implements CombatListener<
 
     public abstract boolean canAttack(T attacker, Actor defender);
 
-    public abstract int getAttackDelay(T attacker, FightType fightType);
+    public abstract int getAttackDelay(T attacker, Actor defender, FightType fightType);
 
     public abstract int getAttackDistance(T attacker, FightType fightType);
 
@@ -42,6 +42,7 @@ public abstract class CombatStrategy<T extends Actor> implements CombatListener<
 
     @Override
     public void block(Actor attacker, T defender, Hit hit, CombatType combatType) {
+        throw new UnsupportedOperationException("Combat strategies can't define a block method!");
     }
 
     @Override
