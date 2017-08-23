@@ -267,6 +267,12 @@ public final class FormulaFactory {
         return (int) damage;
     }
 
+    public static int getMaxMeleeHit(Actor attacker) {
+        int level = getEffectiveStrength(attacker, CombatType.MELEE);
+        int bonus = attacker.getBonus(CombatConstants.BONUS_STRENGTH);
+        return maxHit(level, bonus);
+    }
+
     /**
      * Generates a roll boundary for a specific {@code Actor}.
      *
