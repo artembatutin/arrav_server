@@ -127,8 +127,8 @@ public class Combat<T extends Actor> {
             return false;
         }
 
-        listeners.forEach(attack -> attack.getModifier(attacker).ifPresent(this::addModifier));
         strategy.getModifier(attacker).ifPresent(this::addModifier);
+        listeners.forEach(attack -> attack.getModifier(attacker).ifPresent(this::addModifier));
 
         submitHits(defender, strategy, strategy.getHits(attacker, defender));
 
@@ -138,12 +138,13 @@ public class Combat<T extends Actor> {
     }
 
     private void submitHits(Actor defender, CombatStrategy<? super T> strategy, CombatHit... hits) {
+        boolean first = true;
         for (CombatHit hit : hits) {
-            CombatTaskData<T> data = new CombatTaskData<>(attacker, defender, hit, strategy);
+            CombatTaskData<T> data = new CombatTaskData<>(attacker, defender, hit, strategy, first);
+            first = false;
 
-            if (!data.isActive()) {
-                data.setActive(true);
-                start(defender, strategy);
+            if (data.isFirstHit()) {
+                start(defender, strategy, hits);
             }
 
             attack(defender, hit, strategy);
@@ -165,15 +166,15 @@ public class Combat<T extends Actor> {
         }
     }
 
-    private void start(Actor defender, CombatStrategy<? super T> strategy) {
+    private void start(Actor defender, CombatStrategy<? super T> strategy, Hit... hits) {
         if (!CombatUtil.canAttack(attacker, defender)) {
             hitQueue.removeIf(_hit -> _hit.getDefender() == defender);
             reset();
             return;
         }
 
-        strategy.start(attacker, defender);
-        listeners.forEach(listener -> listener.start(attacker, defender));
+        strategy.start(attacker, defender, hits);
+        listeners.forEach(listener -> listener.start(attacker, defender, hits));
     }
 
     private void attack(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
@@ -246,7 +247,7 @@ public class Combat<T extends Actor> {
         defender.getCombat().reset();
     }
 
-    private void finish(Actor defender) {
+    private void finish(Actor defender, CombatStrategy<? super T> strategy) {
         if (!CombatUtil.canAttack(attacker, defender)) {
             hitQueue.removeIf(hit -> hit.getDefender() == defender);
             reset();
@@ -376,9 +377,8 @@ public class Combat<T extends Actor> {
             protected void execute() {
                 hitsplat(data.getDefender(), data.getHit(), data.getStrategy());
 
-                if (data.isActive()) {
-                    finish(data.getDefender());
-                    data.setActive(false);
+                if (data.isFirstHit()) {
+                    finish(data.getDefender(), data.getStrategy());
                 }
 
                 cancel();

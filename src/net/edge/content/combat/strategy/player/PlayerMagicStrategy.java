@@ -2,6 +2,7 @@ package net.edge.content.combat.strategy.player;
 
 import net.edge.content.combat.CombatEffect;
 import net.edge.content.combat.CombatType;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.AttackModifier;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.content.MagicRune;
@@ -53,17 +54,16 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
     }
 
     @Override
-    public void attack(Player attacker, Actor defender, Hit hit) {
-        MagicRune.remove(attacker, spell.getRunes());
-        addCombatExperience(attacker, spell.getBaseExperience(), hit);
-
+    public void start(Player attacker, Actor defender, Hit[] hits) {
         spell.getAnimation().ifPresent(attacker::animation);
         spell.getStart().ifPresent(attacker::graphic);
+        addCombatExperience(attacker, spell.getBaseExperience(), hits);
         spell.sendProjectile(attacker, defender);
+    }
 
-        Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
-        Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit);
-        spell.getEffect().filter(Objects::nonNull).filter(filter).ifPresent(execute);
+    @Override
+    public void attack(Player attacker, Actor defender, Hit hit) {
+        MagicRune.remove(attacker, spell.getRunes());
 
         if (!attacker.isAutocast()) {
             WeaponInterface.setStrategy(attacker);
@@ -73,6 +73,10 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 
     @Override
     public void hit(Player attacker, Actor defender, Hit hit) {
+        Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
+        Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit);
+        spell.getEffect().filter(filter).ifPresent(execute);
+
         if (!hit.isAccurate()) {
             defender.graphic(SPLASH);
         } else {
@@ -82,7 +86,9 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 
     @Override
     public CombatHit[] getHits(Player attacker, Actor defender) {
-        return new CombatHit[] { nextMagicHit(attacker, defender, spell.getMaxHit()) };
+        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
+        int hitsplatDelay = CombatUtil.getHitsplatDelay(getCombatType());
+        return new CombatHit[] { nextMagicHit(attacker, defender, spell.getMaxHit(), spell.getHitDelay().orElse(hitDelay), spell.getHitsplatDelay().orElse(hitsplatDelay)) };
     }
 
     @Override

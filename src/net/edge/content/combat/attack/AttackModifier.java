@@ -1,10 +1,10 @@
 package net.edge.content.combat.attack;
 
 public final class AttackModifier {
-    private double accuracy = 1;
-    private double aggressive = 1;
-    private double defensive = 1;
-    private double damage = 1;
+    private double accuracy;
+    private double aggressive;
+    private double defensive;
+    private double damage;
 
     public AttackModifier accuracy(double percentage) {
         accuracy = percentage;

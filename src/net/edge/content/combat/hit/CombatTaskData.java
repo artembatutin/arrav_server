@@ -22,8 +22,8 @@ public final class CombatTaskData<T extends Actor> {
     /** The combat strategy. */
     private final CombatStrategy<? super T> strategy;
 
-    /** The active state. */
-    private boolean active;
+    /** Whether or not this hit is the first one. */
+    private final boolean firstHit;
 
     /**
      * Constructs a new {@code CombatHitData} object.
@@ -32,12 +32,14 @@ public final class CombatTaskData<T extends Actor> {
      * @param defender the defender
      * @param hit      the combat hit
      * @param strategy the strategy
+     * @param firstHit whether or not this hit is the first one
      */
-    public CombatTaskData(T attacker, Actor defender, CombatHit hit, CombatStrategy<? super T> strategy) {
+    public CombatTaskData(T attacker, Actor defender, CombatHit hit, CombatStrategy<? super T> strategy, boolean firstHit) {
         this.attacker = attacker;
         this.defender = defender;
         this.hit = hit;
         this.strategy = strategy;
+        this.firstHit = firstHit;
     }
 
     /**
@@ -95,21 +97,12 @@ public final class CombatTaskData<T extends Actor> {
     }
 
     /**
-     * Checks if this hit data is still active.
+     * Checks if this hit data is the first hit.
      *
-     * @return {@code true} if this hit data is still active
+     * @return {@code true} if this hit data is the first hit
      */
-    public boolean isActive() {
-        return active;
-    }
-
-    /**
-     * Sets the active flag.
-     *
-     * @param active if this hit data is still active
-     */
-    public void setActive(boolean active) {
-        this.active = active;
+    public boolean isFirstHit() {
+        return firstHit;
     }
 
 }

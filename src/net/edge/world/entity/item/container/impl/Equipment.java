@@ -287,7 +287,7 @@ public final class Equipment extends ItemContainer {
 		}
 		if(!MinigameHandler.execute(player, m -> m.canUnequip(player, unequip, unequip.getDefinition().getEquipmentType())))
 			return false;
-		if(container.add(unequip, preferredSlot, refresh) >= 0) {
+		if(container == null || container.add(unequip, preferredSlot, refresh) >= 0) {
 			set(equipmentIndex, null, refresh);
 			appearanceForIndex(equipmentIndex);
 			if(equipmentIndex == Equipment.SHIELD_SLOT) {

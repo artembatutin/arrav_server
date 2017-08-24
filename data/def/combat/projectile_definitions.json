@@ -799,7 +799,6 @@
   {
     "name": "Trident of the swamp",
     "max-hit": 33,
-    "hit-delay": 1,
     "animation": {
       "id": 791,
       "delay": 0,
@@ -911,6 +910,7 @@
     "name": "Ice Blitz",
     "combat-effect": "ICE_BLITZ",
     "max-hit": 26,
+    "hitsplat-delay": 1,
     "animation": {
       "id": 1978,
       "delay": 0,
@@ -4512,7 +4512,6 @@
   },
   {
     "name": "Crystal Arrow",
-    "hit-delay": 1,
     "animation": {
       "id": 426,
       "delay": 0,

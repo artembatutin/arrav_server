@@ -15,8 +15,8 @@ public class GraniteMaul extends PlayerMeleeStrategy {
     private static final Graphic GRAPHIC = new Graphic(340);
 
     @Override
-    public void start(Player attacker, Actor defender) {
-        super.start(attacker, defender);
+    public void start(Player attacker, Actor defender, Hit[] hits) {
+        super.start(attacker, defender, hits);
         attacker.graphic(GRAPHIC);
     }
 

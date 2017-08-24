@@ -75,11 +75,11 @@ public final class CombatUtil {
 		int distance = (int) attacker.getPosition().getDistance(defender.getPosition());
 
 		if (type.equals(CombatType.MAGIC)) {
-			return Projectile.MAGIC_DELAYS[distance > 10 ? 10 : distance] - 1;
+			return Projectile.MAGIC_DELAYS[distance > 10 ? 10 : distance];
 		}
 
 		if (type.equals(CombatType.RANGED)) {
-			return Projectile.RANGED_DELAYS[distance > 10 ? 10 : distance] - 1;
+			return Projectile.RANGED_DELAYS[distance > 10 ? 10 : distance];
 		}
 
 		return delay;

@@ -32,10 +32,32 @@ public final class FormulaFactory {
         int verdict = 0;
         Hitsplat hitsplat = Hitsplat.NORMAL;
         if (isAccurate(attacker, defender, CombatType.MELEE)) {
-            int level = getEffectiveStrength(attacker, CombatType.MELEE);
-            int bonus = attacker.getBonus(CombatConstants.BONUS_STRENGTH);
-            int max = maxHit(level, bonus);
+            int max = getMaxHit(attacker, CombatType.MELEE);
+            verdict = random(max);
+            verdict += verdict * attacker.getCombat().getDamageModifier();
 
+            if (verdict > 0) {
+                if (verdict > defender.getCurrentHealth()) {
+                    verdict = defender.getCurrentHealth();
+                }
+            } else verdict = 0;
+
+            return new Hit(verdict, hitsplat, HitIcon.MELEE, true);
+        }
+        return new Hit(verdict, hitsplat, HitIcon.MELEE, false);
+    }
+
+    /**
+     * Builds the next hit for the {@code attacker}. If the hit is accurate,
+     * then the max hit formula will calculate a random number to be generated
+     * from a range of range [0, max].
+     *
+     * @return a {@code Hit} representing the damage done
+     */
+    public static Hit nextMeleeHit(Actor attacker, Actor defender, int max) {
+        int verdict = 0;
+        Hitsplat hitsplat = Hitsplat.NORMAL;
+        if (isAccurate(attacker, defender, CombatType.MELEE)) {
             verdict = random(max);
             verdict += verdict * attacker.getCombat().getDamageModifier();
 
@@ -59,17 +81,39 @@ public final class FormulaFactory {
      */
     public static Hit nextRangedHit(Actor attacker, Actor defender) {
         int verdict = 0;
-        Hitsplat hitsplat = Hitsplat.HEAL;
+        Hitsplat hitsplat = Hitsplat.NORMAL;
         if (isAccurate(attacker, defender, CombatType.RANGED)) {
-            int level = getEffectiveStrength(attacker, CombatType.RANGED);
-            int bonus = attacker.getBonus(CombatConstants.BONUS_RANGED_STRENGTH);
-            int max = maxHit(level, bonus);
+            int max = getMaxHit(attacker, CombatType.RANGED);
 
             verdict = random(max);
             verdict += verdict * attacker.getCombat().getDamageModifier();
 
             if (verdict > 0) {
-                hitsplat = Hitsplat.NORMAL;
+                if (verdict > defender.getCurrentHealth()) {
+                    verdict = defender.getCurrentHealth();
+                }
+            } else verdict = 0;
+
+            return new Hit(verdict, hitsplat, HitIcon.RANGED, true);
+        }
+        return new Hit(verdict, hitsplat, HitIcon.RANGED, false);
+    }
+
+    /**
+     * Builds the next hit for the {@code attacker}. If the hit is accurate,
+     * then the max hit formula will calculate a random number to be generated
+     * from a range of range [0, max].
+     *
+     * @return a {@code Hit} representing the damage done
+     */
+    public static Hit nextRangedHit(Actor attacker, Actor defender, int max) {
+        int verdict = 0;
+        Hitsplat hitsplat = Hitsplat.NORMAL;
+        if (isAccurate(attacker, defender, CombatType.RANGED)) {
+            verdict = random(max);
+            verdict += verdict * attacker.getCombat().getDamageModifier();
+
+            if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
                     verdict = defender.getCurrentHealth();
                 }
@@ -134,23 +178,26 @@ public final class FormulaFactory {
 //        System.out.println(attacker.isPlayer() + " " + ((int) (chance * 10000) / 100.0) + "% " + attackRoll + " " + defenceRoll);
 //        System.out.println();
 
-        return random(chance*100) > random(100 - chance*100);
+        return random(chance * 100) > random(100 - chance * 100);
     }
 
     /**
      * Gets the effective accuracy level for a actor based on a combat type.
      *
-     * @param actor  the actor
-     * @param type the combat type
+     * @param actor the actor
+     * @param type  the combat type
      * @return the effective accuracy
      */
     private static int getEffectiveAccuracy(Actor actor, CombatType type) {
         double modifier = actor.getCombat().getAccuracyModifier();
         switch (type) {
             default:
-            case MELEE:  return getEffectiveAttack(actor, modifier);
-            case RANGED: return getEffectiveRanged(actor, modifier);
-            case MAGIC:  return getEffectiveMagic(actor, modifier);
+            case MELEE:
+                return getEffectiveAttack(actor, modifier);
+            case RANGED:
+                return getEffectiveRanged(actor, modifier);
+            case MAGIC:
+                return getEffectiveMagic(actor, modifier);
         }
     }
 
@@ -158,39 +205,44 @@ public final class FormulaFactory {
     /**
      * Gets the effective strength level for a actor based on a combat type.
      *
-     * @param actor  the actor
-     * @param type the combat type
+     * @param actor the actor
+     * @param type  the combat type
      * @return the effective strength
      */
     private static int getEffectiveStrength(Actor actor, CombatType type) {
         double modifier = actor.getCombat().getAggressiveModifier();
         switch (type) {
             default:
-            case MELEE:  return getEffectiveStrength(actor, modifier);
-            case RANGED: return getEffectiveRanged(actor, modifier);
-            case MAGIC:  return getEffectiveMagic(actor, modifier);
+            case MELEE:
+                return getEffectiveStrength(actor, modifier);
+            case RANGED:
+                return getEffectiveRanged(actor, modifier);
+            case MAGIC:
+                return getEffectiveMagic(actor, modifier);
         }
     }
 
     /**
      * Gets the effective defence for a actor based on a combat type.
      *
-     * @param actor  the actor
-     * @param type the combat type
+     * @param actor the actor
+     * @param type  the combat type
      * @return the effective defence
      */
     private static int getEffectiveDefence(Actor actor, CombatType type) {
         double modifier = actor.getCombat().getDefensiveModifier();
         switch (type) {
-            case MAGIC: return (int) (getEffectiveMagic(actor, modifier) * 0.70 + getEffectiveDefence(actor, modifier) * 0.30);
-            default:    return getEffectiveDefence(actor, modifier);
+            case MAGIC:
+                return (int) (getEffectiveMagic(actor, modifier) * 0.70 + getEffectiveDefence(actor, modifier) * 0.30);
+            default:
+                return getEffectiveDefence(actor, modifier);
         }
     }
 
     /**
      * Gets the effective attack level for a actor.
      *
-     * @param actor      the actor
+     * @param actor    the actor
      * @param modifier the multiplicative modifier to the final level
      * @return the effective attack level
      */
@@ -203,7 +255,7 @@ public final class FormulaFactory {
     /**
      * Gets the effective strength level for a actor.
      *
-     * @param actor      the actor
+     * @param actor    the actor
      * @param modifier the multiplicative modifier to the final level
      * @return the effective strength level
      */
@@ -216,7 +268,7 @@ public final class FormulaFactory {
     /**
      * Gets the effective defence for a actor.
      *
-     * @param actor      the actor
+     * @param actor    the actor
      * @param modifier the multiplicative modifier to the final level
      * @return the effective defence
      */
@@ -229,7 +281,7 @@ public final class FormulaFactory {
     /**
      * Gets the effective ranged level for a actor.
      *
-     * @param actor      the actor
+     * @param actor    the actor
      * @param modifier the multiplicative modifier to the final level
      * @return the effective ranged level
      */
@@ -242,7 +294,7 @@ public final class FormulaFactory {
     /**
      * Gets the effective magic level for a actor.
      *
-     * @param actor      the actor
+     * @param actor    the actor
      * @param modifier the multiplicative modifier to the final level
      * @return the effective magic level
      */
@@ -252,6 +304,25 @@ public final class FormulaFactory {
         return level;
     }
 
+    public static int getMaxHit(Actor attacker, CombatType type) {
+        int level = getEffectiveStrength(attacker, type);
+        int bonus;
+
+        switch (type) {
+            case MELEE:
+                bonus = attacker.getBonus(CombatConstants.BONUS_STRENGTH);
+                return maxHit(level, bonus);
+            case RANGED:
+                bonus = attacker.getBonus(CombatConstants.BONUS_RANGED_STRENGTH);
+                return maxHit(level, bonus);
+            case MAGIC:
+                bonus = attacker.getBonus(CombatConstants.BONUS_MAGIC_DAMAGE);
+                return maxHit(level, 0) * bonus / 100;
+        }
+
+        throw new IllegalArgumentException("Combat type not found: " + type);
+    }
+
     /**
      * Gets the max hit based on level and bonus.
      *
@@ -259,26 +330,20 @@ public final class FormulaFactory {
      * @param bonus the total item bonuses
      * @return the max hit
      */
-    public static int maxHit(double level, double bonus) {
+    private static int maxHit(double level, double bonus) {
         double damage = 1 + 1 / 3.0;
         damage += level / 10.0;
         damage += bonus / 80.0;
         damage += level * bonus / 640.0;
-        return (int) damage;
-    }
-
-    public static int getMaxMeleeHit(Actor attacker) {
-        int level = getEffectiveStrength(attacker, CombatType.MELEE);
-        int bonus = attacker.getBonus(CombatConstants.BONUS_STRENGTH);
-        return maxHit(level, bonus);
+        return (int) (damage * 10);
     }
 
     /**
      * Generates a roll boundary for a specific {@code Actor}.
      *
-     * @param actor    the actor to roll for
-     * @param level  the level
-     * @param fightType  the fight type
+     * @param actor     the actor to roll for
+     * @param level     the level
+     * @param fightType the fight type
      * @return the roll
      */
     private static double roll(Actor actor, double level, FightType fightType, boolean offensive) {
@@ -354,12 +419,12 @@ public final class FormulaFactory {
      * interval {@code [min, max]} if {@code true}, or {@code [min, max)} if
      * {@code false}.
      *
-     * @param max       the upper bound
+     * @param max the upper bound
      * @return a pseudo-random number
      */
     private static int random(double max) {
-        if (max <= 0) return 0;
-        return (int) (RANDOM.nextDouble() * max);
+        if (1 > max) return 0;
+        return (int) (RANDOM.nextDouble() * (max + 1));
     }
 
 }

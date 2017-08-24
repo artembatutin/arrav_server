@@ -17,11 +17,11 @@ public interface CombatListener<T extends Actor> {
 
     /**
      * Called when the strategy starts.
-     *
-     * @param attacker the attacking actor
+     *  @param attacker the attacking actor
      * @param defender the defending actor
+     * @param hits
      */
-    void start(T attacker, Actor defender);
+    void start(T attacker, Actor defender, Hit[] hits);
 
     /**
      * Called when the attacking hit executes on the defender.

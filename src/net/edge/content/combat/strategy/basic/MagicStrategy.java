@@ -65,8 +65,15 @@ public abstract class MagicStrategy<T extends Actor> extends CombatStrategy<T> {
         return true;
     }
 
-    protected static void addCombatExperience(Player player, float base, Hit hit) {
-        int exp = (int) (hit.getDamage() * base * BASE_EXPERIENCE_MULTIPLIER);
+    protected static void addCombatExperience(Player player, float base, Hit... hits) {
+        int exp = 0;
+
+        for (Hit hit : hits) {
+            exp += hit.getDamage();
+        }
+
+        exp /= 10;
+        exp *= base * BASE_EXPERIENCE_MULTIPLIER;
 
         if (exp <= 0) {
             Skills.experience(player, base, Skills.MAGIC);

@@ -8,6 +8,7 @@ import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.basic.RangedStrategy;
 import net.edge.content.combat.weapon.RangedAmmunition;
 import net.edge.content.combat.weapon.RangedWeaponDefinition;
+import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.item.Requirement;
 import net.edge.net.packet.out.SendMessage;
 import net.edge.world.Animation;
@@ -62,22 +63,26 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     }
 
     @Override
-    public void attack(Player attacker, Actor defender, Hit hit) {
+    public void start(Player attacker, Actor defender, Hit[] hits) {
         attacker.animation(getAttackAnimation(attacker, defender));
         projectileDefinition.getStart().ifPresent(attacker::graphic);
         projectileDefinition.sendProjectile(attacker, defender, false);
+        addCombatExperience(attacker, hits);
+    }
+
+    @Override
+    public void attack(Player attacker, Actor defender, Hit hit) {
         removeAmmunition(attacker, defender, rangedDefinition.getType());
-        addCombatExperience(attacker, hit);
     }
 
     @Override
     public void hit(Player attacker, Actor defender, Hit hit) {
         Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
         Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit);
-        projectileDefinition.getEffect().filter(Objects::nonNull).filter(filter).ifPresent(execute);
+        projectileDefinition.getEffect().filter(filter).ifPresent(execute);
 
         CombatPoisonEffect.getPoisonType(attacker.getEquipment().get(Equipment.WEAPON_SLOT)).ifPresent(p -> {
-            if(hit.isAccurate()) {
+            if(hit.getDamage() > 0) {
                 defender.poison(p);
             }
         });
@@ -134,14 +139,16 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 
     private void removeAmmunition(Player attacker, Actor defender, RangedWeaponDefinition.AttackType type) {
         Item next = attacker.getEquipment().get(type.getSlot());
+
         next.decrementAmount();
         attacker.getEquipment().set(type.getSlot(), next, true);
 
         GroundItem groundItem = new GroundItem(new Item(ammunition.getId(), 1), defender.getPosition(), attacker);
         groundItem.getRegion().ifPresent(r -> r.register(groundItem, true));
 
-        if (!attacker.getEquipment().contains(ammunition.getId())) {
+        if (next.getAmount() == 0) {
             attacker.out(new SendMessage(getLastFiredMessage(type)));
+            attacker.getEquipment().unequip(type.getSlot(), null, true, -1);
         }
     }
 

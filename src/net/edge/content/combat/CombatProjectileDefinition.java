@@ -11,6 +11,7 @@ import net.edge.world.entity.actor.Actor;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public final class CombatProjectileDefinition {
     private final String name;
@@ -20,6 +21,9 @@ public final class CombatProjectileDefinition {
     private Graphic start;
     private Graphic end;
     private ProjectileBuilder projectile;
+
+    private int hitDelay;
+    private int hitsplatDelay;
 
     private CombatProjectileDefinition(String name) {
         this.name = name;
@@ -51,6 +55,20 @@ public final class CombatProjectileDefinition {
         return Optional.ofNullable(end);
     }
 
+    public OptionalInt getHitDelay() {
+        if (hitDelay ==  -1) {
+            return OptionalInt.empty();
+        }
+        return OptionalInt.of(hitDelay);
+    }
+
+    public OptionalInt getHitsplatDelay() {
+        if (hitsplatDelay == -1) {
+            return OptionalInt.empty();
+        }
+        return OptionalInt.of(hitsplatDelay);
+    }
+
     public void sendProjectile(Actor attacker, Actor defender, boolean magic) {
         if(projectile != null) {
             projectile.send(attacker, defender, magic);
@@ -71,6 +89,16 @@ public final class CombatProjectileDefinition {
             @Override
             public void load(JsonObject reader, Gson builder) {
                 CombatProjectileDefinition definition = new CombatProjectileDefinition(reader.get("name").getAsString());
+
+                definition.hitDelay = -1;
+                if (reader.has("hit-delay")) {
+                    definition.hitDelay = reader.get("hit-delay").getAsInt();
+                }
+
+                definition.hitsplatDelay = -1;
+                if (reader.has("hitsplat-delay")) {
+                    definition.hitsplatDelay = reader.get("hitsplat-delay").getAsInt();
+                }
 
                 definition.maxHit = 0;
                 if (reader.has("max-hit")) {
@@ -107,14 +135,13 @@ public final class CombatProjectileDefinition {
         };
     }
 
-    private final class ProjectileBuilder {
-        private short id;
-        private byte size;
-        private byte delay;
-        private byte duration;
-        private byte startHeight;
-        private byte endHeight;
-        private byte curve;
+    private static final class ProjectileBuilder {
+        short id;
+        byte delay;
+        byte duration;
+        byte startHeight;
+        byte endHeight;
+        byte curve;
 
         public void send(Actor attacker, Actor defender, boolean magic) {
             Projectile projectile = new Projectile(attacker, defender, id, duration, delay, startHeight, endHeight, curve, magic ? CombatType.MAGIC : CombatType.RANGED);

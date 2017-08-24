@@ -8,6 +8,7 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public enum MagicSpell {
     WIND_STRIKE(1152, 1, 5.5f, null,
@@ -458,6 +459,14 @@ public enum MagicSpell {
 
     public int getMaxHit() {
         return projectileDefinition.getMaxHit();
+    }
+
+    public OptionalInt getHitDelay() {
+        return projectileDefinition.getHitDelay();
+    }
+
+    public OptionalInt getHitsplatDelay() {
+        return projectileDefinition.getHitsplatDelay();
     }
 
     public float getBaseExperience() {

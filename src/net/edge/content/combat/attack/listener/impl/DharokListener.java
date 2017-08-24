@@ -6,8 +6,6 @@ import net.edge.content.combat.attack.listener.PlayerCombatListenerSignature;
 import net.edge.content.combat.attack.listener.SimplifiedListener;
 import net.edge.content.skill.Skills;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -32,9 +30,7 @@ public class DharokListener extends SimplifiedListener<Actor> {
 
     @Override
     public Optional<AttackModifier> getModifier(Actor attacker) {
-        System.out.println("MODIFIER FOR DHAROKS IS ACTIVE MADAVAKA");
         int maxHealth;
-
         if (attacker.isMob()) {
             maxHealth = attacker.toMob().getDefinition().getHitpoints();
         } else {
