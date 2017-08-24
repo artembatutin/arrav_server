@@ -132,7 +132,11 @@ final class BankTab extends ItemContainer {
 			if(remove(withdrawItem, -1, refresh) > 0) {
 				shiftingReq = true;
 			}
-			inventory.add(newWithdrawItem, -1, refresh);
+			int slot = -1;
+			if(newDef.isStackable()) {
+				slot = inventory.computeIndexForId(newWithdrawItem.getId());
+			}
+			inventory.add(newWithdrawItem, slot, refresh);
 			if(refresh)
 				forceRefresh(player);
 			return true;

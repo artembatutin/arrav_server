@@ -230,7 +230,8 @@ public class ItemContainer implements Iterable<Item> {
 				}
 				filled++;
 			} else if(!test) {
-				items[preferredIndex] = current.createAndIncrement(item.getAmount());
+				if(current.getId() == item.getId())
+					items[preferredIndex] = current.createAndIncrement(item.getAmount());
 			}
 			updateSingle(current, items[preferredIndex], preferredIndex, refresh);
 		} else {
@@ -374,10 +375,10 @@ public class ItemContainer implements Iterable<Item> {
 		if(stackable) {
 			Item current = items[preferredIndex];
 			if(current.getAmount() > item.getAmount()) {
-				if(!test)
+				if(!test && item.getId() == current.getId())
 					items[preferredIndex] = current.createAndDecrement(item.getAmount());
 			} else {
-				if(!test) {
+				if(!test && item.getId() == current.getId()) {
 					items[preferredIndex] = null;
 					size--;
 				}

@@ -167,10 +167,6 @@ public final class ItemDefinition {
 		return DEFINITIONS[id];
 	}
 	
-	public static Optional<ItemDefinition> fromString(String name, boolean contains, boolean noted) {
-		return Arrays.stream(DEFINITIONS).filter(Objects::nonNull).filter($it -> (contains ? $it.getName().contains(name) : $it.getName().equalsIgnoreCase(name)) && (!noted || $it.isNoted())).findAny();
-	}
-	
 	public static List<ItemDefinition> collect(String name) {
 		return Arrays.stream(DEFINITIONS).filter(Objects::nonNull).filter($it -> $it.getName().contains(name)).collect(Collectors.toList());
 	}
