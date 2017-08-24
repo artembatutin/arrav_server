@@ -7,7 +7,8 @@ import net.edge.content.clanchat.ClanManager;
 import net.edge.content.commands.impl.BugCommand;
 import net.edge.content.market.MarketItem;
 import net.edge.content.scoreboard.ScoreboardManager;
-import net.edge.net.PunishmentHandler;
+import net.edge.net.host.HostListType;
+import net.edge.net.host.HostManager;
 import net.edge.net.packet.in.MobInformationPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.drop.Drop;
@@ -17,7 +18,6 @@ import net.edge.world.entity.actor.player.PlayerSerialization;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -34,7 +34,7 @@ public final class GameShutdownHook extends Thread {
 	 */
 	private final ListeningExecutorService exit;
 	
-	public GameShutdownHook() {
+	GameShutdownHook() {
 		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleShutdown").build());
 		exit = MoreExecutors.listeningDecorator(delegateService);
 	}
@@ -50,8 +50,11 @@ public final class GameShutdownHook extends Thread {
 				}
 			});
 			exit.submit(() -> {
-				PunishmentHandler.saveIpBan();
-				PunishmentHandler.saveIPMute();
+				HostManager.serialize(HostListType.BANNED_MAC);
+				HostManager.serialize(HostListType.BANNED_IP);
+				HostManager.serialize(HostListType.MUTED_IP);
+				HostManager.serialize(HostListType.STARTER_RECEIVED);
+
 			});
 			exit.submit(() -> {
 				ClanManager.get().save();

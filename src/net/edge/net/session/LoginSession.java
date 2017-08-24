@@ -75,12 +75,6 @@ public final class LoginSession extends Session {
 		if(response == LoginCode.NORMAL) {
 			player.getCredentials().setUsername(request.getUsername());
 			player.getCredentials().setPassword(request.getPassword());
-			if(World.get().getPlayer(player.getCredentials().getUsernameHash()).isPresent()) {
-				response = LoginCode.ACCOUNT_ONLINE;
-			}
-			if(request.getBuild() != GameConstants.CLIENT_BUILD) {
-				response = LoginCode.WRONG_BUILD_NUMBER;
-			}
 		}
 
 		// Deserialization

@@ -34,14 +34,14 @@ public class Multicannon extends DynamicObject {
 	/**
 	 * The facing direction of the cannon.
 	 */
-	protected Direction facing;
+	Direction facing;
 	
 	/**
 	 * The state if the cannon is firing.
 	 */
-	protected boolean firing;
+	boolean firing;
 	
-	public Multicannon(Player player) {
+	private Multicannon(Player player) {
 		super(7, player.getPosition(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, player.getInstance());
 		this.player = player;
 	}

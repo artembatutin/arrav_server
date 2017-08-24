@@ -24,8 +24,9 @@ import net.edge.content.object.star.ShootingStarManager;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.net.EdgevilleChannelInitializer;
+import net.edge.net.host.HostListType;
 import net.edge.net.NetworkConstants;
-import net.edge.net.PunishmentHandler;
+import net.edge.net.host.HostManager;
 import net.edge.task.Task;
 import net.edge.util.LoggerUtils;
 import net.edge.util.Utility;
@@ -184,7 +185,7 @@ public final class Application {
 		//object/region decoding must be done before parallel.
 		new ObjectDefinitionDecoder(fs).run();
 		new MapDefinitionDecoder(fs).run();
-		new RegionDecoder(fs).run();
+		//new RegionDecoder(fs).run();
 		FirepitManager.get().register();
 		//Item decoding.
 		launch.execute(() -> {
@@ -229,9 +230,10 @@ public final class Application {
 				}
 			}
 		});
-		launch.execute(PunishmentHandler::parseIPBans);
-		launch.execute(PunishmentHandler::parseIPMutes);
-		launch.execute(PunishmentHandler::parseStarters);
+		launch.execute(() -> HostManager.deserialize(HostListType.BANNED_MAC));
+		launch.execute(() -> HostManager.deserialize(HostListType.BANNED_IP));
+		launch.execute(() -> HostManager.deserialize(HostListType.MUTED_IP));
+		launch.execute(() -> HostManager.deserialize(HostListType.STARTER_RECEIVED));
 	}
 	
 	private void prepare() {

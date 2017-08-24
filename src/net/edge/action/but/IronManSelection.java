@@ -3,7 +3,8 @@ package net.edge.action.but;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ButtonAction;
 import net.edge.GameConstants;
-import net.edge.net.PunishmentHandler;
+import net.edge.net.host.HostListType;
+import net.edge.net.host.HostManager;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
@@ -25,11 +26,13 @@ public class IronManSelection extends ActionInitializer {
 				player.getInventory().clear(false);
 				if(iron) {
 					player.getInventory().fillItems(GameConstants.IRON_STARTER);
-				} else if(!PunishmentHandler.recievedStarter(player)) {
+				} else if(player.firstLogin) {
 					player.getInventory().fillItems(GameConstants.REGULAR_STARTER);
-					PunishmentHandler.addStarter(player.getSession().getHost());
+					HostManager.add(player, HostListType.STARTER_RECEIVED);
 				} else {
-					player.getInventory().add(new Item(995, 500000));
+					player.getInventory().clear(false);
+					player.getInventory().add(new Item(995, 500000), 0, false);
+					player.getInventory().updateBulk();
 					player.message("You already received your regular starter package before.");
 				}
 				player.getInventory().updateBulk();

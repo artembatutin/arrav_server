@@ -1,6 +1,7 @@
 package net.edge.net.packet.in;
 
-import net.edge.net.PunishmentHandler;
+import net.edge.net.host.HostListType;
+import net.edge.net.host.HostManager;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.packet.IncomingPacket;
@@ -18,7 +19,7 @@ public final class ChatPacket implements IncomingPacket {
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityType.CHAT_MESSAGE))
 			return;
-		if(player.isMuted() || PunishmentHandler.isIPMuted(player)) {
+		if(player.isMuted() || HostManager.contains(player.getCredentials().getUsername(), HostListType.MUTED_IP)) {
 			player.message("You are currently muted.");
 			return;
 		}

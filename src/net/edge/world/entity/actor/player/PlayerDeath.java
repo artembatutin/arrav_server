@@ -4,7 +4,7 @@ import com.google.common.collect.Ordering;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.scoreboard.ScoreboardManager;
-import net.edge.net.PunishmentHandler;
+import net.edge.net.host.HostManager;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendGraphic;
 import net.edge.net.packet.out.SendWalkable;
@@ -147,7 +147,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 
 		killer.ifPresent(k -> {
 			KILLER.inc(k);
-			if(PunishmentHandler.same(getActor(), k)) {
+			if(HostManager.same(getActor(), k)) {
 				k.message("You don't receive any points because you and " + getActor().getFormatUsername() + " are connected from the same network.");
 				return;
 			}
@@ -254,7 +254,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		ObjectList<Item> drop = new ObjectArrayList<>();
 		killer.ifPresent(p -> {
             if(!getActor().getLastKiller().equalsIgnoreCase(p.getFormatUsername())) {
-	            if(!PunishmentHandler.same(player, p)) {
+	            if(!HostManager.same(player, p)) {
 		            Rights right = p.getRights();
             	    int baseAmount = RandomUtils.inclusive(10, 50) * (GameConstants.DOUBLE_BLOOD_MONEY_EVENT ? 2 : 1);
             	    int amount = right.equals(Rights.EXTREME_DONATOR) ? ((int) (baseAmount * 1.30))  : right.equals(Rights.SUPER_DONATOR) ? ((int) (baseAmount * 1.20)) : right.equals(Rights.DONATOR) ? ((int) (baseAmount * 1.10)) : baseAmount;

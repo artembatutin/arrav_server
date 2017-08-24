@@ -2,15 +2,22 @@ package net.edge.net.codec.login;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.Attribute;
+import net.edge.GameConstants;
 import net.edge.net.NetworkConstants;
 import net.edge.net.codec.crypto.IsaacRandom;
+import net.edge.net.host.HostList;
+import net.edge.net.host.HostListType;
+import net.edge.net.host.HostManager;
 import net.edge.net.packet.PacketUtils;
 import net.edge.net.session.LoginSession;
 import net.edge.net.session.Session;
 import net.edge.util.TextUtils;
+import net.edge.world.World;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -65,11 +72,13 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 * @throws Exception If any exceptions occur while decoding this portion of the protocol.
 	 */
 	private void decodeHandshake(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-		if(in.readableBytes() >= 2) {
+		System.out.println("handshake "  + in.readableBytes());
+		if(in.readableBytes() >= 1) {
 			int opcode = in.readUnsignedByte();
-			@SuppressWarnings("unused") int nameHash = in.readUnsignedByte();
-			checkState(opcode == 14, "id != 14");
-			
+			if(opcode != 14) {
+				write(ctx, LoginCode.COULD_NOT_COMPLETE_LOGIN);
+				return;
+			}
 			ByteBuf buf = ctx.alloc().buffer(17);
 			buf.writeLong(0);
 			buf.writeByte(0);
@@ -87,10 +96,16 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 */
 	private void decodeLoginType(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 		if(in.readableBytes() >= 2) {
-			int loginType = in.readUnsignedByte();
-			checkState(loginType == 16 || loginType == 18, "loginType != 16 or 18");
+			int build = in.readUnsignedShort();
+			if(build != GameConstants.CLIENT_BUILD) {
+				write(ctx, LoginCode.WRONG_BUILD_NUMBER);
+				return;
+			}
 			rsaBlockSize = in.readUnsignedByte();
-			checkState((rsaBlockSize - 40) > 0, "(rsaBlockSize - 40) <= 0");
+			System.out.println("rsa " + rsaBlockSize);
+			if((rsaBlockSize - 40) <= 0) {
+				write(ctx, LoginCode.COULD_NOT_COMPLETE_LOGIN);
+			}
 		}
 	}
 	
@@ -101,27 +116,19 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 * @param out The list of decoded messages.
 	 */
 	private void decodeRsaBlock(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+		System.out.println("size " + in.readableBytes() + " - " + rsaBlockSize);
 		if(in.readableBytes() >= rsaBlockSize) {
-			int magicId = in.readUnsignedByte();
-			checkState(magicId == 255, "magicId != 255");
-			int build = in.readUnsignedShort();
-			@SuppressWarnings("unused") int memoryVersion = in.readUnsignedByte();
-			
-			for(int i = 0; i < 9; i++) {
-				in.readInt();
-			}
-			
 			int expectedSize = in.readUnsignedByte();
-			checkState(expectedSize == (rsaBlockSize - 41), "expectedSize != (rsaBlockSize - 41) -> " + rsaBlockSize);
-
+			System.out.println("size " + expectedSize);
+			if(expectedSize != rsaBlockSize - 41) {
+				write(ctx, LoginCode.COULD_NOT_COMPLETE_LOGIN);
+				return;
+			}
 			byte[] rsaBytes = new byte[rsaBlockSize - 41];
 			in.readBytes(rsaBytes);
 			byte[] rsaData = new BigInteger(rsaBytes).toByteArray();
 			ByteBuf rsaBuffer = Unpooled.wrappedBuffer(rsaData);
 			try {
-				int rsaOpcode = rsaBuffer.readUnsignedByte();
-				checkState(rsaOpcode == 10, "rsaOpcode != 10");
-
 				long clientHalf = rsaBuffer.readLong();
 				long serverHalf = rsaBuffer.readLong();
 				int[] isaacSeed = {(int) (clientHalf >> 32), (int) clientHalf, (int) (serverHalf >> 32), (int) serverHalf};
@@ -130,18 +137,35 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 					isaacSeed[i] += 50;
 				}
 				IsaacRandom encryptor = new IsaacRandom(isaacSeed);
-
-				@SuppressWarnings("unused") int uid = rsaBuffer.readInt();
+				String mac = PacketUtils.getCString(rsaBuffer);
 				String username = PacketUtils.getCString(rsaBuffer).toLowerCase().trim();
 				String password = PacketUtils.getCString(rsaBuffer).toLowerCase();
 				long usernameHash = TextUtils.nameToHash(username);
-				out.add(new LoginRequest(username, usernameHash, password, build, encryptor, decryptor, ctx.channel().pipeline()));
+				if (World.get().getPlayer(usernameHash).isPresent()) {
+					write(ctx, LoginCode.ACCOUNT_ONLINE);
+				} else if(HostManager.contains(mac, HostListType.BANNED_MAC)) {
+					write(ctx, LoginCode.ACCOUNT_DISABLED);
+				} else {
+					out.add(new LoginRequest(username, usernameHash, password, build, encryptor, decryptor, ctx.channel().pipeline()));
+				}
 			} finally {
 				if (rsaBuffer.isReadable()) {
 					rsaBuffer.release();
 				}
 			}
 		}
+	}
+
+	/**
+	 * Wrties a closed response to the login channel.
+	 */
+	private void write(ChannelHandlerContext ctx, LoginCode response) {
+		System.out.println("written: " + response);
+		Channel channel = ctx.channel();
+		LoginResponse message = new LoginResponse(response);
+		ByteBuf initialMessage = ctx.alloc().buffer(8).writeLong(0); // Write initial message.
+		channel.write(initialMessage, channel.voidPromise());
+		channel.writeAndFlush(message).addListener(ChannelFutureListener.CLOSE); // Write response message.
 	}
 	
 	/**

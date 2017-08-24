@@ -1,7 +1,8 @@
 package net.edge.content.scene.impl;
 
 import net.edge.content.clanchat.ClanManager;
-import net.edge.net.PunishmentHandler;
+import net.edge.net.host.HostListType;
+import net.edge.net.host.HostManager;
 import net.edge.net.packet.out.*;
 import net.edge.task.Task;
 import net.edge.content.TabInterface;
@@ -14,7 +15,6 @@ import net.edge.content.scene.Cutscene;
 import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
 import net.edge.world.entity.item.Item;
@@ -32,11 +32,6 @@ public final class IntroductionCutscene extends Cutscene {
 	 * The player this introduction is for.
 	 */
 	private final Player player;
-	
-	/**
-	 * The player logs in for the first time.
-	 */
-	private final boolean firstLogin;
 
 	/**
 	 * Constructs a new {@link IntroductionCutscene}.
@@ -44,7 +39,7 @@ public final class IntroductionCutscene extends Cutscene {
 	 */
 	public IntroductionCutscene(Player player) {
 		this.player = player;
-		firstLogin = !PunishmentHandler.recievedStarter(player);
+		this.player.firstLogin = !HostManager.contains(player.getCredentials().getUsername(), HostListType.STARTER_RECEIVED);
 	}
 
 	@Override
@@ -144,7 +139,7 @@ public final class IntroductionCutscene extends Cutscene {
 		player.getActivityManager().setAllExcept(ActivityType.CLICK_BUTTON, ActivityType.LOG_OUT, ActivityType.CHARACTER_SELECTION, ActivityType.DIALOGUE_INTERACTION, ActivityType.FACE_POSITION);
 		if(player.getAttr().get("introduction_stage").getInt() < 2) {
 			player.setVisible(false);
-			if(firstLogin) {
+			if(player.firstLogin) {
 				submit();
 				return;
 			}

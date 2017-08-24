@@ -2,7 +2,8 @@ package net.edge.content.commands.impl;
 
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
-import net.edge.net.PunishmentHandler;
+import net.edge.net.host.HostListType;
+import net.edge.net.host.HostManager;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -13,7 +14,7 @@ public final class IPUnMutingCommand implements Command {
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player muted = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
-		if(PunishmentHandler.removeIPMute(cmd[1])) {
+		if(HostManager.remove(cmd[1], HostListType.MUTED_IP)) {
 			player.message("Successfully IP unmuted " + cmd[1] + ".");
 			if(muted != null) {
 				muted.message("You have been IP unmuted by " + player.getFormatUsername() + ".");

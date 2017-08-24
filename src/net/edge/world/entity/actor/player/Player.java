@@ -155,6 +155,11 @@ public final class Player extends Actor {
 	 * The aggression tick timer to not check npc aggression each tick.
 	 */
 	private int aggressionTick;
+
+	/**
+	 * If the player logged in for the first time.
+	 */
+	public boolean firstLogin = false;
 	
 	/**
 	 * The last username that killed this player.

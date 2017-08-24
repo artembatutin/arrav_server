@@ -1,6 +1,7 @@
 package net.edge.content.commands.impl;
 
-import net.edge.net.PunishmentHandler;
+import net.edge.net.host.HostListType;
+import net.edge.net.host.HostManager;
 import net.edge.util.TextUtils;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
@@ -8,12 +9,16 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"yell", "shout"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR, Rights.GOLDEN_DONATOR, Rights.EXTREME_DONATOR, Rights.SUPER_DONATOR, Rights.DONATOR, Rights.DESIGNER, Rights.YOUTUBER}, syntax = "Use this command as ::yell or ::shout message")
+@CommandSignature(alias = {"yell", "shout"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR, Rights.GOLDEN_DONATOR, Rights.EXTREME_DONATOR, Rights.SUPER_DONATOR, Rights.DONATOR, Rights.DESIGNER, Rights.YOUTUBER, Rights.PLAYER}, syntax = "Use this command as ::yell or ::shout message")
 public final class YellCommand implements Command {
 
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		if(player.isMuted() || PunishmentHandler.isIPMuted(player)) {
+		if(player.getRights().equals(Rights.PLAYER)) {
+			player.message("Regular players can't yell or shout worldwide.");
+			return;
+		}
+		if(player.isMuted() || HostManager.contains(player.getCredentials().getUsername(), HostListType.MUTED_IP)) {
 			player.message("You cannot yell while being muted.");
 			return;
 		}

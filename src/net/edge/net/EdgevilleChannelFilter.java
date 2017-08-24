@@ -15,6 +15,8 @@ import net.edge.Application;
 import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.net.codec.login.LoginCode;
 import net.edge.net.codec.login.LoginResponse;
+import net.edge.net.host.HostListType;
+import net.edge.net.host.HostManager;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -30,7 +32,7 @@ import java.net.InetSocketAddress;
  */
 @Sharable
 public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<InetSocketAddress> {
-	
+
 	/**
 	 * An {@link AttributeKey} used to access an {@link Attribute} describing which {@link LoginCode} should be sent for
 	 * rejected channels.
@@ -53,7 +55,7 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 			response(ctx, LoginCode.SERVER_STARTING);
 			return false;
 		}
-		if(PunishmentHandler.isIPBanned(address)) {
+		if(HostManager.contains(address, HostListType.BANNED_IP)) {
 			response(ctx, LoginCode.ACCOUNT_DISABLED);
 			return false;
 		}
@@ -70,6 +72,7 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 		String address = address(remoteAddress);
 		ChannelFuture future = ctx.channel().closeFuture(); // Remove address once disconnected.
 		future.addListener(it -> connections.remove(address));
+		System.out.println(address);
 		connections.add(address);
 	}
 	
@@ -90,7 +93,7 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 		InetAddress inet = remoteAddress.getAddress();
 		return inet.getHostAddress();
 	}
-	
+
 	/**
 	 * Sets the {@code RESPONSE_KEY} attribute to {@code response}.
 	 */
