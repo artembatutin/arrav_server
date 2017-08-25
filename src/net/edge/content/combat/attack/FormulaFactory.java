@@ -173,9 +173,7 @@ public final class FormulaFactory {
             chance = 1 - ((defenceRoll + 1) / (attackRoll * 2));
         }
 
-//        System.out.println(attacker.isPlayer() + " " + accuracy + " " + attacker.getCombat().getFightType() + " " + attacker.getCombat().getFightType().getStyle());
-//        System.out.println(defender.isPlayer() + " " + defence  + " " + defender.getCombat().getFightType() + " " + defender.getCombat().getFightType().getStyle());
-//        System.out.println(attacker.isPlayer() + " " + ((int) (chance * 10000) / 100.0) + "% " + attackRoll + " " + defenceRoll);
+//        System.out.println(((int) (chance * 10000) / 100.0) + "% accuracy | attack roll: " + attackRoll + " -- defence roll: " + defenceRoll);
 //        System.out.println();
 
         return random(chance * 100) > random(100 - chance * 100);
@@ -348,10 +346,10 @@ public final class FormulaFactory {
      * @return the roll
      */
     private static double roll(Actor actor, double level, FightType fightType, CombatType type, boolean offensive) {
-        if (offensive) {//if its offensive
+        if (offensive) {
             if (actor.isPlayer()) {
                 Player player = actor.toPlayer();
-                int bonus = player.getEquipment().getBonuses()[fightType.getBonus()];//u grab the bonus with the fight type, if its aggressive its like 3 right? mkm
+                int bonus = player.getEquipment().getBonuses()[fightType.getBonus()];
                 if (type == CombatType.MAGIC) {
                     bonus = player.getEquipment().getBonuses()[CombatConstants.ATTACK_MAGIC];
                     return roll(level, bonus, 0);
@@ -376,7 +374,7 @@ public final class FormulaFactory {
 
         if (actor.isPlayer()) {
             Player player = actor.toPlayer();
-            int bonus = player.getEquipment().getBonuses()[fightType.getBonus()];//this is defensive, but its still 3 if ur on aggressive.
+            int bonus = player.getEquipment().getBonuses()[fightType.getBonus()];
             if (type == CombatType.MAGIC) {
                 bonus = player.getEquipment().getBonuses()[CombatConstants.DEFENCE_MAGIC];
                 return roll(level, bonus, 0);

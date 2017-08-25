@@ -52,7 +52,7 @@ public class NpcRangedStrategy extends RangedStrategy<Mob> {
 
     @Override
     public CombatHit[] getHits(Mob attacker, Actor defender) {
-        return new CombatHit[] { nextRangedHit(attacker, defender) };
+        return new CombatHit[] { nextRangedHit(attacker, defender, attacker.getDefinition().getMaxHit()) };
     }
 
     @Override

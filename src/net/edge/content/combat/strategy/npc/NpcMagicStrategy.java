@@ -56,16 +56,18 @@ public class NpcMagicStrategy extends MagicStrategy<Mob> {
 
     @Override
     public CombatHit[] getHits(Mob attacker, Actor defender) {
-        return new CombatHit[] { nextMagicHit(attacker, defender, projectileDefinition.getMaxHit()) };
+        return new CombatHit[] { nextMagicHit(attacker, defender, attacker.getDefinition().getMaxHit()) };
     }
 
     @Override
     public int getAttackDelay(Mob attacker, Actor defender, FightType fightType) {
+        int delay = attacker.getDefinition().getAttackDelay();
+
         if (attacker.getPosition().getDistance(defender.getPosition()) > 4) {
-            return 6;
+            return 1 + delay;
         }
 
-        return 5;
+        return delay;
     }
 
     @Override

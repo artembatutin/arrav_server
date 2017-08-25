@@ -27,7 +27,7 @@ public final class Vengeance extends LunarButtonSpell {
 	public void effect(Actor caster, Optional<Actor> victim) {
 		super.effect(caster, victim);
 		caster.toPlayer().setVenged(true);
-		caster.toPlayer().getCombat().addListener(new VengenceListener());
+		caster.toPlayer().getCombat().addListener(VengenceListener.INSTANCE);
 	}
 	
 	@Override

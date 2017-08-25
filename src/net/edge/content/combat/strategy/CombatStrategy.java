@@ -60,6 +60,7 @@ public abstract class CombatStrategy<T extends Actor> implements CombatListener<
         int hitsplatDelay = CombatUtil.getHitsplatDelay(getCombatType());
         return nextMeleeHit(attacker, defender, hitDelay, hitsplatDelay);
     }
+
     protected final CombatHit nextMeleeHit(T attacker, Actor defender, int maxHit) {
         int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
         int hitsplatDelay = CombatUtil.getHitsplatDelay(getCombatType());
@@ -72,22 +73,32 @@ public abstract class CombatStrategy<T extends Actor> implements CombatListener<
         return nextRangedHit(attacker, defender, hitDelay, hitsplatDelay);
     }
 
+    protected final CombatHit nextRangedHit(T attacker, Actor defender, int max) {
+        int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
+        int hitsplatDelay = CombatUtil.getHitsplatDelay(getCombatType());
+        return nextRangedHit(attacker, defender, max, hitDelay, hitsplatDelay);
+    }
+
     protected final CombatHit nextMagicHit(T attacker, Actor defender, int max) {
         int hitDelay = CombatUtil.getHitDelay(attacker, defender, getCombatType());
         int hitsplatDelay = CombatUtil.getHitsplatDelay(getCombatType());
         return nextMagicHit(attacker, defender, max, hitDelay, hitsplatDelay);
     }
 
-    protected CombatHit nextMeleeHit(T attacker, Actor defender, int maxHit, int hitDelay, int hitsplatDelay) {
+    private CombatHit nextMeleeHit(T attacker, Actor defender, int maxHit, int hitDelay, int hitsplatDelay) {
         return new CombatHit(FormulaFactory.nextMeleeHit(attacker, defender, maxHit), hitDelay, hitsplatDelay);
     }
 
-    protected CombatHit nextMeleeHit(T attacker, Actor defender, int hitDelay, int hitsplatDelay) {
+    private CombatHit nextMeleeHit(T attacker, Actor defender, int hitDelay, int hitsplatDelay) {
         return new CombatHit(FormulaFactory.nextMeleeHit(attacker, defender), hitDelay, hitsplatDelay);
     }
 
     private CombatHit nextRangedHit(T attacker, Actor defender, int hitDelay, int hitsplatDelay) {
         return new CombatHit(FormulaFactory.nextRangedHit(attacker, defender), hitDelay, hitsplatDelay);
+    }
+
+    private CombatHit nextRangedHit(T attacker, Actor defender, int max, int hitDelay, int hitsplatDelay) {
+        return new CombatHit(FormulaFactory.nextRangedHit(attacker, defender, max), hitDelay, hitsplatDelay);
     }
 
     protected CombatHit nextMagicHit(T attacker, Actor defender, int max, int hitDelay, int hitsplatDelay) {

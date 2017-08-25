@@ -225,7 +225,7 @@ public enum SpellEffects {
 
     private static CombatHit hitEvent(Actor attacker, Actor defender, Actor actor, int max, List<Hit> extra) {
         if (!defender.same(actor)) {
-            int hitDelay = CombatUtil.getHitDelay(attacker, defender, CombatType.MAGIC);
+            int hitDelay = CombatUtil.getHitDelay(attacker, actor, CombatType.MAGIC);
             int hitsplatDelay = CombatUtil.getHitsplatDelay(CombatType.MAGIC);
             CombatHit hit = new CombatHit(FormulaFactory.nextMagicHit(attacker, actor, max), hitDelay, hitsplatDelay);
             attacker.getCombat().submitHits(actor, hit);

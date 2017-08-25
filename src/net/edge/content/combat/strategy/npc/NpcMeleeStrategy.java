@@ -32,7 +32,7 @@ public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
 
     @Override
     public int getAttackDelay(Mob attacker, Actor defender, FightType fightType) {
-        return 4;
+        return attacker.getAttackDelay();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
 
     @Override
     public CombatHit[] getHits(Mob attacker, Actor defender) {
-        return new CombatHit[] { nextMeleeHit(attacker, defender) };
+        return new CombatHit[] { nextMeleeHit(attacker, defender, attacker.getDefinition().getMaxHit()) };
     }
 
     @Override

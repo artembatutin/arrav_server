@@ -36,7 +36,7 @@ public final class VengeanceOther extends LunarCombatSpell {
 		
 		player.graphic(new Graphic(725, 100));
 		player.setVenged(true);
-		player.getCombat().addListener(new VengenceListener());
+		player.getCombat().addListener(VengenceListener.INSTANCE);
 	}
 	
 	@Override

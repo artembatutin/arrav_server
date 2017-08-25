@@ -12,6 +12,10 @@ import net.edge.world.entity.actor.player.Player;
  */
 public class VengenceListener extends SimplifiedListener<Player> {
 
+    public static final VengenceListener INSTANCE = new VengenceListener();
+
+    private VengenceListener() { }
+
     @Override
     public void block(Actor attacker, Player defender, Hit hit, CombatType combatType) {
         if (hit.getDamage() < 1) {

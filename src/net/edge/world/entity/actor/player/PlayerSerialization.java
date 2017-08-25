@@ -8,6 +8,7 @@ import net.edge.content.clanchat.ClanManager;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.attack.listener.CombatListener;
 import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
+import net.edge.content.combat.content.VengenceListener;
 import net.edge.content.item.pets.Pet;
 import net.edge.content.item.pets.PetManager;
 import net.edge.content.item.pets.PetProgress;
@@ -478,6 +479,9 @@ public final class PlayerSerialization {
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
 			p.setVenged(n.getAsBoolean());
+			if (p.isVenged()) {
+				p.getCombat().addListener(VengenceListener.INSTANCE);
+			}
 		}
 	}, new Token("skills") {
 		@Override

@@ -40,6 +40,7 @@ public class Combat<T extends Actor> {
     private final CombatDamage damageCache = new CombatDamage();
     private final Deque<CombatTaskData<T>> combatQueue = new LinkedList<>();
     private final Deque<Hit> damageQueue = new LinkedList<>();
+
     private final int[] hitsplatDelays = new int[4];
     private final int[] combatDelays = new int[3];
 
@@ -207,10 +208,11 @@ public class Combat<T extends Actor> {
             return;
         }
 
-//        if (defender.getCombat().getDefender() == null && defender.isAutoRetaliate()) {
-//            defender.getCombat().attack(attacker);
-//        }
+        if (defender.getCombat().getDefender() == null && defender.isAutoRetaliate()) {
+            defender.getCombat().attack(attacker);
+        }
 
+        defender.getCombat().block(attacker, hit, strategy.getCombatType());
         if (strategy.getCombatType() != CombatType.MAGIC || defender.isMob()) {
             defender.animation(CombatUtil.getBlockAnimation(defender));
         }
@@ -237,8 +239,6 @@ public class Combat<T extends Actor> {
                 defender.getCombat().onDeath(attacker, hit);
             }
         }
-
-        defender.getCombat().block(attacker, hit, strategy.getCombatType());
     }
 
     public void block(Actor attacker, Hit hit, CombatType combatType) {
