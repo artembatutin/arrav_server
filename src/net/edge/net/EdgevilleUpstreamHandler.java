@@ -4,26 +4,16 @@ import com.google.common.base.Objects;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
-import io.netty.handler.timeout.ReadTimeoutException;
 import net.edge.net.session.Session;
-
-import java.nio.channels.ClosedChannelException;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * A {@link ChannelInboundHandlerAdapter} implementation that handles upstream messages from Netty.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 @Sharable
-public final class EdgevilleUpstreamHandler extends SimpleChannelInboundHandler<Object> {
-	
+public final class EdgevilleUpstreamHandler extends ChannelInboundHandlerAdapter {
 	/**
 	 * A default access level constructor to discourage external instantiation outside of the {@code net.edge.net} package.
 	 */
@@ -34,20 +24,18 @@ public final class EdgevilleUpstreamHandler extends SimpleChannelInboundHandler<
 		if (NetworkConstants.IGNORED_NETWORK_EXCEPTIONS.stream().noneMatch($it -> Objects.equal($it, e.getMessage()))) {
 			e.printStackTrace();
 		}
+
 		ctx.close();
 	}
 	
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-		try {
-			Session session = ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
-			if (session == null) {
-				throw new IllegalStateException("session == null");
-			}
-			session.handleUpstreamMessage(msg);
-		} catch(Exception e) {
-			e.printStackTrace();
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		Session session = ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
+		if (session == null) {
+			throw new IllegalStateException("session == null");
 		}
+
+		session.handleUpstreamMessage(msg);
 	}
 	
 	@Override
@@ -63,7 +51,7 @@ public final class EdgevilleUpstreamHandler extends SimpleChannelInboundHandler<
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws java.lang.Exception {
 		Session session = ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
-		if(session != null) {
+		if (session != null) {
 			session.terminate();
 		}
 	}

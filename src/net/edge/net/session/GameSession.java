@@ -10,24 +10,32 @@ import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.crypto.IsaacRandom;
 import net.edge.net.codec.game.GameDecoder;
-import net.edge.net.codec.game.GameEncoder;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.player.Player;
 
-import java.util.Queue;
+import java.util.AbstractQueue;
 
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during gameplay.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class GameSession extends Session {
-	
 	/**
 	 * The cap limit of outgoing packets per session.
 	 */
-	public static int outLimit = 200;
+	public static int UPDATE_LIMIT = 200; // 200? damn boy, testen maar
+
+	/**
+	 * The queue of {@link IncomingMsg}s.
+	 */
+	private final AbstractQueue<IncomingMsg> incoming = new MpscLinkedAtomicQueue<>();
+
+	/**
+	 * The queue of {@link OutgoingPacket}s.
+	 */
+	private final AbstractQueue<OutgoingPacket> outgoing = new MpscLinkedAtomicQueue<>();
 	
 	/**
 	 * The player assigned to this {@code GameSession}.
@@ -38,11 +46,6 @@ public final class GameSession extends Session {
 	 * The message encryptor.
 	 */
 	private final IsaacRandom encryptor;
-	
-	/**
-	 * The amount of messages received in a tick from this session.
-	 */
-	private int handledMessages;
 
 	/**
 	 * Creates a new {@link GameSession}.
@@ -59,31 +62,26 @@ public final class GameSession extends Session {
 	
 	@Override
 	public void handleUpstreamMessage(Object msg) {
-		if(handledMessages >= 20) {
-			//packet flooding
-			return;
-		}
 		if(msg instanceof IncomingMsg) {
 			IncomingMsg packet = (IncomingMsg) msg;
 			if(packet.getOpcode() != 0) {
-				handledMessages++;
 				if(packet.getOpcode() == 41) {
 					handle(packet);//item equipping
 					return;
 				}
-				World.get().run(() -> handle(packet));
+
+				incoming.offer(packet);
 			}
 		}
 	}
 	
 	@Override
 	public void terminate() {
-		if(!isTerminating()) {
+		if(!isTerminating()) { // heh waarom lol
 			System.out.println("Game session terminating " + player);
 			if(player.getState() == EntityState.ACTIVE) {
 				World.get().queueLogout(player);
 			}
-			setTerminating(true);
 		}
 	}
 	
@@ -95,11 +93,10 @@ public final class GameSession extends Session {
 	/**
 	 * Enqueues the given {@link OutgoingPacket} for transport.
 	 */
-	public void equeue(OutgoingPacket pkt) {
-		ByteBuf temp = pkt.write(player, new GameBuffer(Unpooled.buffer(128), encryptor));
-		getChannel().write(temp);
+	public void enqueue(OutgoingPacket pkt) {
+		outgoing.offer(pkt);
 	}
-	
+
 	/**
 	 * Handling an incoming packet/message.
 	 * @param packet incoming message.
@@ -111,13 +108,45 @@ public final class GameSession extends Session {
 			packet.getBuffer().release();
 		}
 	}
-	
+
+	public void pollIncomingPackets() {
+		if (!incoming.isEmpty()) {
+			int count = 0;
+			while (!incoming.isEmpty() && count < 20) {
+				IncomingMsg msg = incoming.poll();
+
+				handle(msg);
+
+				count++;
+			}
+		}
+	}
+
+	public void pollOutgoingPackets() {
+		if (!outgoing.isEmpty()) {
+			int count = 0;
+
+			while (!outgoing.isEmpty() && count < UPDATE_LIMIT) {
+				OutgoingPacket pkt = outgoing.poll();
+				if (getChannel().isWritable()) {
+					write(pkt);
+				} else {
+					outgoing.offer(pkt);
+				}
+
+				count++;
+			}
+		}
+	}
+
 	/**
 	 * Writes the given {@link OutgoingPacket} to the stream.
 	 */
 	public void write(OutgoingPacket packet) {
-		ByteBuf temp = packet.write(player, new GameBuffer(Unpooled.buffer(256), encryptor));
-		getChannel().write(temp);
+		if (getChannel().isActive() && getChannel().isRegistered()) {
+			ByteBuf temp = packet.write(player, new GameBuffer(Unpooled.buffer(256), encryptor));
+			getChannel().write(temp);
+		}
 	}
 	
 	/**
@@ -128,7 +157,6 @@ public final class GameSession extends Session {
 	public void flushQueue() {
 		if(isActive())
 			getChannel().flush();
-		handledMessages = 0;
 	}
 	
 	/**

@@ -67,8 +67,6 @@ import net.edge.net.packet.out.*;
 import net.edge.net.session.GameSession;
 import net.edge.task.Task;
 import net.edge.util.*;
-import net.edge.util.rand.RandomUtils;
-import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.Hit;
 import net.edge.world.World;
@@ -647,11 +645,11 @@ public final class Player extends Actor {
 		this.credentials = credentials;
 		this.human = human;
 	}
-	
+
 	public PlayerCredentials getCredentials() {
 		return credentials;
 	}
-	
+
 	public void sendDefaultSidebars() {
 		TabInterface.CLAN_CHAT.sendInterface(this, 50128);
 		TabInterface.SKILL.sendInterface(this, 3917);
@@ -847,6 +845,8 @@ public final class Player extends Actor {
 	public void update() {
 		write(new SendPlayerUpdate());
 		write(new SendMobUpdate());
+
+		session.pollOutgoingPackets();
 	}
 	
 	@Override
@@ -1307,7 +1307,7 @@ public final class Player extends Actor {
 	 */
 	public void out(OutgoingPacket packet) {
 		if(packet.onSent(this) && human)
-			getSession().equeue(packet);
+			getSession().enqueue(packet);
 	}
 	
 	/**

@@ -8,8 +8,8 @@ import net.edge.GameConstants;
 import net.edge.GamePulseHandler;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
-import net.edge.net.packet.out.SendLogout;
 import net.edge.net.packet.out.SendYell;
+import net.edge.net.session.GameSession;
 import net.edge.task.Task;
 import net.edge.task.TaskManager;
 import net.edge.util.Stopwatch;
@@ -29,12 +29,10 @@ import net.edge.world.entity.region.Region;
 import net.edge.world.entity.region.RegionManager;
 import net.edge.world.sync.Synchronizer;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.*;
 
-import static net.edge.net.session.GameSession.outLimit;
+import static net.edge.net.session.GameSession.UPDATE_LIMIT;
 import static net.edge.world.entity.EntityState.*;
 
 /**
@@ -145,7 +143,21 @@ public final class World {
 	public void shutdown() {
 		pulser.shutdownNow();
 	}
-	
+
+	/**
+	 * Handles incoming packets for players.
+	 */
+	private void handleIncomingPackets() {
+		for(Player player : players) {
+			if (player != null) {
+				GameSession session = player.getSession();
+				if (session != null) {
+					session.pollIncomingPackets();
+				}
+			}
+		}
+	}
+
 	/**
 	 * The method that executes the update sequence for all in game characters every cycle.
 	 */
@@ -156,6 +168,7 @@ public final class World {
 			dequeueLogins();
 			registerActors();
 			taskManager.sequence();
+			handleIncomingPackets();
 			sync.preUpdate(players, mobs);
 			sync.update(players);
 			sync.postUpdate(players, mobs);
@@ -172,11 +185,11 @@ public final class World {
 		if(millis > 600)
 			over++;
 		if(millis > 400) {
-			outLimit -= 20;
-			if(outLimit < 40)
-				outLimit = 40;
-		} else if(outLimit < 200) {
-			outLimit += 20;
+			UPDATE_LIMIT -= 20;
+			if(UPDATE_LIMIT < 40)
+				UPDATE_LIMIT = 40;
+		} else if(UPDATE_LIMIT < 200) {
+			UPDATE_LIMIT += 20;
 		}
 		//System.out.println("took: " + millis + " - players online: " + players.size() + " parsing packets: " + outLimit + " - went over 600ms " + over + " times");
 	}
@@ -268,7 +281,6 @@ public final class World {
 		if(player.getCombat().inCombat())
 			player.getLogoutTimer().reset();
 		player.setState(AWAITING_REMOVAL);
-		player.out(new SendLogout());
 		logouts.add(player);
 	}
 	
