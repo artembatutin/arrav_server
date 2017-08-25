@@ -6,15 +6,12 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import io.netty.util.Attribute;
 import net.edge.GameConstants;
 import net.edge.net.NetworkConstants;
 import net.edge.net.codec.crypto.IsaacRandom;
 import net.edge.net.host.HostListType;
 import net.edge.net.host.HostManager;
 import net.edge.net.packet.PacketUtils;
-import net.edge.net.session.LoginSession;
-import net.edge.net.session.Session;
 import net.edge.util.TextUtils;
 import net.edge.world.World;
 
@@ -71,11 +68,26 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 * @throws Exception If any exceptions occur while decoding this portion of the protocol.
 	 */
 	private void decodeHandshake(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-		if(in.readableBytes() >= 2) {
+		System.out.println(in.readableBytes() + " read");
+		if(in.readableBytes() >= 14) {
 			int build = in.readUnsignedShort();
 			if(build != GameConstants.CLIENT_BUILD) {
 				write(ctx, LoginCode.WRONG_BUILD_NUMBER);
 				return;
+			}
+			//mac address
+			int macId = in.readInt();
+			String mac = String.valueOf(macId);
+			if(HostManager.contains(mac, HostListType.BANNED_MAC)) {
+				write(ctx, LoginCode.ACCOUNT_DISABLED);
+				return;
+			}
+			//username hash
+			long usernameHash = in.readLong();
+			System.out.println("long is " + usernameHash);
+			ctx.channel().attr(NetworkConstants.USR_HASH).set(usernameHash);
+			if (World.get().getPlayer(usernameHash).isPresent()) {
+				write(ctx, LoginCode.ACCOUNT_ONLINE);
 			}
 			ByteBuf buf = ctx.alloc().buffer(17);
 			buf.writeLong(0);
@@ -86,7 +98,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	}
 
 	/**
-	 * Decodes the portion of the login protocol where the login type and RSA block size are determined.
+	 * Decodes the portion of the login protocol where the RSA block size and mac address are determined.
 	 * @param ctx The channel handler context.
 	 * @param in  The data that is being decoded.
 	 * @param out The list of decoded messages.
@@ -94,9 +106,11 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 */
 	private void decodeLoginType(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 		if(in.readableBytes() >= 1) {
+			//RSA size
 			rsaBlockSize = in.readUnsignedByte();
 			if(rsaBlockSize == 0) {
 				write(ctx, LoginCode.COULD_NOT_COMPLETE_LOGIN);
+				return;
 			}
 		}
 	}
@@ -127,18 +141,10 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 					isaacSeed[i] += 50;
 				}
 				IsaacRandom encryptor = new IsaacRandom(isaacSeed);
-				int macId = rsaBuffer.readInt();
-				String username = PacketUtils.getCString(rsaBuffer).toLowerCase().trim();
 				String password = PacketUtils.getCString(rsaBuffer).toLowerCase();
-				long usernameHash = TextUtils.nameToHash(username);
-				String mac = String.valueOf(macId);
-				if (World.get().getPlayer(usernameHash).isPresent()) {
-					write(ctx, LoginCode.ACCOUNT_ONLINE);
-				} else if(HostManager.contains(mac, HostListType.BANNED_MAC)) {
-					write(ctx, LoginCode.ACCOUNT_DISABLED);
-				} else {
-					out.add(new LoginRequest(username, usernameHash, password, encryptor, decryptor));
-				}
+				long usernameHash = ctx.channel().attr(NetworkConstants.USR_HASH).get();
+				String username = TextUtils.hashToName(usernameHash).toLowerCase().trim();
+				out.add(new LoginRequest(username, usernameHash, password, encryptor, decryptor));
 			} finally {
 				if (rsaBuffer.isReadable()) {
 					rsaBuffer.release();
