@@ -49,10 +49,16 @@ public final class NetworkConstants {
 	
 	/**
 	 * The {@link AttributeKey} value that is used to retrieve the session
-	 * instance from the attribute tool.mapviewer of a {@link io.netty.channel.Channel}.
+	 * instance from the attribute map of a {@link io.netty.channel.Channel}.
 	 */
 	public static final AttributeKey<Session> SESSION_KEY = AttributeKey.valueOf("session.KEY");
-	
+
+	/**
+	 * The {@link AttributeKey} value that is used to retrieve the username hash
+	 * instance from the attribute map of a {@link io.netty.channel.Channel}.
+	 */
+	public static final AttributeKey<Long> USR_HASH = AttributeKey.valueOf("session.HASH");
+
 	/**
 	 * The private RSA modulus value.
 	 */

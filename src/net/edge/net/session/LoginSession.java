@@ -77,6 +77,11 @@ public final class LoginSession extends Session {
 			player.getCredentials().setPassword(request.getPassword());
 		}
 
+		// Validating player login possibility.
+		if(response == LoginCode.NORMAL && World.get().getPlayer(request.getUsernameHash()).isPresent()) {
+			response = LoginCode.ACCOUNT_ONLINE;
+		}
+
 		// Deserialization
 		PlayerSerialization.SerializeResponse serial = null;
 		if(response == LoginCode.NORMAL) {
