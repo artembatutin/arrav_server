@@ -475,13 +475,23 @@ public final class PlayerSerialization {
 		public Object toJson(Player p) {
 			return p.isVenged();
 		}
-		
+
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
 			p.setVenged(n.getAsBoolean());
 			if (p.isVenged()) {
 				p.getCombat().addListener(VengenceListener.INSTANCE);
 			}
+		}
+	}, new Token("ringOfRecoil") {
+		@Override
+		public Object toJson(Player p) {
+			return p.getRingOfRecoil();
+		}
+
+		@Override
+		public void fromJson(Gson b, Player p, JsonElement n) {
+			p.setRingOfRecoil(n.getAsInt());
 		}
 	}, new Token("skills") {
 		@Override

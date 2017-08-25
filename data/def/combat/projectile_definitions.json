@@ -1204,30 +1204,28 @@
     "combat-effect": "AHRIM_BLAST",
     "max-hit": 25,
     "animation": {
-      "id": 1162,
+      "id": 14223,
       "delay": 0,
       "priority": "HIGH"
     },
     "start": {
-      "id": 155,
-      "delay": 0,
-      "height": 6553600,
-      "priority": "HIGH"
+      "id": 2728,
+      "height": 0,
+      "delay": 0
     },
     "end": {
-      "id": 157,
-      "delay": 10,
-      "height": 6553600,
-      "priority": "HIGH"
+      "id": 2740,
+      "height": 100,
+      "delay": 0
     },
     "projectile": {
-      "id": 156,
+      "id": 2735,
       "size": 1,
-      "delay": 52,
-      "duration": 68,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 20
+      "delay": 55,
+      "duration": 75,
+      "startHeight": 23,
+      "endHeight": 21,
+      "curve": 0
     }
   },
   {

@@ -18,7 +18,7 @@ public class VengenceListener extends SimplifiedListener<Player> {
 
     @Override
     public void block(Actor attacker, Player defender, Hit hit, CombatType combatType) {
-        if (hit.getDamage() < 1) {
+        if (hit.getDamage() < 2) {
             return;
         }
 

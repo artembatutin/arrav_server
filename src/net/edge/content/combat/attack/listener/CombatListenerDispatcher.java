@@ -6,7 +6,6 @@ import net.edge.util.Utility;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
-import java.lang.annotation.IncompleteAnnotationException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -45,10 +44,9 @@ public final class CombatListenerDispatcher {
             List<CombatListener<Player>> listeners_class = Utility.getClassesInDirectory(CombatListenerDispatcher.class.getPackage().getName() + "." + directory).stream().map(clazz -> (CombatListener<Player>) clazz).collect(Collectors.toList());
             for (CombatListener<Player> l : listeners_class) {
                 PlayerCombatListenerSignature meta = l.getClass().getAnnotation(PlayerCombatListenerSignature.class);
-                if (meta == null) {
-                    throw new IncompleteAnnotationException(PlayerCombatListenerSignature.class, l.getClass().getName() + " has no annotation.");
+                if (meta != null) {
+                    Arrays.stream(meta.items()).forEach(i -> listeners.put(i, new CombatListenerSet(meta.items(), l)));
                 }
-                Arrays.stream(meta.items()).forEach(i -> listeners.put(i, new CombatListenerSet(meta.items(), l)));
             }
         }
         logger.info("Successfully loaded " + listeners.size() + " item listeners.");
@@ -68,11 +66,11 @@ public final class CombatListenerDispatcher {
             List<CombatListener<Mob>> listeners_class = Utility.getClassesInDirectory(CombatListenerDispatcher.class.getPackage().getName() + "." + directory).stream().map(clazz-> (CombatListener<Mob>) clazz).collect(Collectors.toList());
             for (CombatListener<Mob> l : listeners_class) {
                 NpcCombatListenerSignature meta = l.getClass().getAnnotation(NpcCombatListenerSignature.class);
-                if (meta == null) {
-                    throw new IncompleteAnnotationException(NpcCombatListenerSignature.class, l.getClass().getName() + " has no annotation.");
-                }
-                for (int i : meta.npcs()) {
-                    listeners.put(i, l);
+                if (meta != null) {
+                    Arrays.stream(meta.npcs()).forEach(i -> listeners.put(i, l));
+                    for (int i : meta.npcs()) {
+                        listeners.put(i, l);
+                    }
                 }
             }
         }

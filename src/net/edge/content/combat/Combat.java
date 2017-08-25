@@ -179,6 +179,7 @@ public class Combat<T extends Actor> {
     private void start(Actor defender, CombatStrategy<? super T> strategy, Hit... hits) {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            defender.getCombat().damageQueue.clear();
             reset();
             return;
         }
@@ -190,6 +191,7 @@ public class Combat<T extends Actor> {
     private void attack(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            defender.getCombat().damageQueue.clear();
             reset();
             return;
         }
@@ -204,6 +206,7 @@ public class Combat<T extends Actor> {
     private void hit(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            defender.getCombat().damageQueue.clear();
             reset();
             return;
         }
@@ -224,6 +227,7 @@ public class Combat<T extends Actor> {
     private void hitsplat(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            defender.getCombat().damageQueue.clear();
             reset();
             return;
         }
@@ -243,7 +247,6 @@ public class Combat<T extends Actor> {
 
     public void block(Actor attacker, Hit hit, CombatType combatType) {
         T defender = this.attacker;
-
         lastBlocked.reset();
         lastAttacker = attacker;
         listeners.forEach(attack -> attack.block(attacker, defender, hit, combatType));
@@ -260,6 +263,7 @@ public class Combat<T extends Actor> {
     private void finish(Actor defender, CombatStrategy<? super T> strategy) {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(hit -> hit.getDefender() == defender);
+            defender.getCombat().damageQueue.clear();
             reset();
             return;
         }

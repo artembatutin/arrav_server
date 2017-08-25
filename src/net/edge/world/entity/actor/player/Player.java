@@ -316,6 +316,9 @@ public final class Player extends Actor {
 	 * The container of appearance values for this player.
 	 */
 	private final PlayerAppearance appearance = new PlayerAppearance();
+
+	/** The ring of recoil charges. */
+	private int ringOfRecoil = 400;
 	
 	/**
 	 * The venged flag of this player.
@@ -1548,7 +1551,23 @@ public final class Player extends Actor {
 	public void setMuted(boolean muted) {
 		this.muted = muted;
 	}
-	
+
+	/**
+	 * Gets the ring of recoil charges.
+	 * @return the ring of recoil charges
+	 */
+	public int getRingOfRecoil() {
+		return ringOfRecoil;
+	}
+
+	/**
+	 * Sets the ring of recoil charges.
+	 * @param charges the charges to set
+	 */
+	public void setRingOfRecoil(int charges) {
+		this.ringOfRecoil = charges;
+	}
+
 	/**
 	 * Returns the flag if the player is venged.
 	 * @return {@code true} if the player is venged, {@code false} otherwise.
