@@ -20,6 +20,7 @@ import net.edge.util.log.LoggingManager;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.ActorList;
 import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobAggression;
 import net.edge.world.entity.actor.mob.MobMovementTask;
 import net.edge.world.entity.actor.move.path.SimplePathChecker;
 import net.edge.world.entity.actor.move.path.impl.SimplePathFinder;
@@ -158,9 +159,8 @@ public final class World {
 		synchronized(this) {
 			dequeueLogins();
 			registerActors();
-			taskManager.sequence();
 			sync.preUpdate(players, mobs);
-			Combat.update();//why retaliate? ask mike, i tested and auto ret doesnt work if its here
+			taskManager.sequence();
 			sync.update(players);
 			sync.postUpdate(players, mobs);
 			dequeueLogout();

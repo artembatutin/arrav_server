@@ -806,6 +806,8 @@ public final class Player extends Actor {
 			if(getTeleportStage() == -1)
 				setTeleportStage(0);
 		}
+
+		getCombat().tick();
 		//if(getSession() != null)
 		//	UpdateManager.prepare(this);
 	}

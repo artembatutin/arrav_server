@@ -64,7 +64,7 @@ public final class MobAggression {
 			}
 			return false;
 		}
-		if(!player.isVisible()) {
+		if(!player.isVisible() || player.getCombat().isUnderAttack() && !player.inMulti()) {
 			return false;
 		}
 		if(!AGGRESSIVE.contains(mob.getId()) && !wilderness || mob.getCombat().inCombat())

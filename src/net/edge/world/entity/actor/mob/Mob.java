@@ -178,6 +178,7 @@ public abstract class Mob extends Actor {
 		if (active()) {
 			update();
 			getMovementQueue().sequence();
+			getCombat().tick();
 		}
 	}
 

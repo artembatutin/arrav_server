@@ -14,6 +14,7 @@ import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
 
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -33,8 +34,8 @@ public class Combat<T extends Actor> {
     private CombatStrategy<? super T> strategy;
     private final AttackModifier attackModifier = new AttackModifier();
     private final List<CombatListener<? super T>> listeners = new LinkedList<>();
-    private final List<CombatListener<? super T>> pendingAddition = new LinkedList<>();
-    private final List<CombatListener<? super T>> pendingRemoval = new LinkedList<>();
+    private final Deque<CombatListener<? super T>> pendingAddition = new LinkedList<>();
+    private final Deque<CombatListener<? super T>> pendingRemoval = new LinkedList<>();
 
     /** The cache of damage dealt to this controller during combat. */
     private final CombatDamage damageCache = new CombatDamage();
@@ -61,15 +62,7 @@ public class Combat<T extends Actor> {
         attacker.getMovementQueue().reset();
     }
 
-    public static void update() {
-        for (Actor actor : World.get().getActors()) {
-            if (actor == null || !actor.getState().equals(EntityState.ACTIVE))
-                continue;
-            actor.getCombat().tick();
-        }
-    }
-
-    private void tick() {
+    public void tick() {
         updateListeners();
 
         for (int index = 0; index < combatDelays.length; index++) {
@@ -104,6 +97,7 @@ public class Combat<T extends Actor> {
         }
 
         if (attacker.isDead() || attacker.isNeedsPlacement() || attacker.isTeleporting()) {
+            damageQueue.clear();
             return false;
         }
 
@@ -113,14 +107,18 @@ public class Combat<T extends Actor> {
     }
 
     private void updateListeners() {
-        if (!pendingAddition.isEmpty()) {
-            pendingAddition.forEach(listeners::add);
-            pendingAddition.clear();
+        CombatListener<? super T> next;
+
+        next = pendingAddition.poll();
+        while (next != null) {
+            listeners.add(next);
+            next = pendingAddition.poll();
         }
 
-        if (!pendingRemoval.isEmpty()) {
-            pendingRemoval.forEach(listeners::remove);
-            pendingRemoval.clear();
+        next = pendingRemoval.poll();
+        while (next != null) {
+            listeners.remove(next);
+            next = pendingRemoval.poll();
         }
     }
 
