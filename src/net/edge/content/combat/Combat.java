@@ -103,6 +103,10 @@ public class Combat<T extends Actor> {
             return false;
         }
 
+        if (attacker.isDead() || attacker.isNeedsPlacement() || attacker.isTeleporting()) {
+            return false;
+        }
+
         Hit hit = damageQueue.poll();
         attacker.writeDamage(hit);
         return true;
@@ -163,7 +167,15 @@ public class Combat<T extends Actor> {
     }
 
     public void queueDamage(Hit hit) {
-        damageQueue.add(hit);
+        if (damageQueue.size() >= 8) {
+            return;
+        }
+
+        if (hit.getDamage() < 0) {
+            damageQueue.addFirst(hit);
+        } else {
+            damageQueue.addLast(hit);
+        }
     }
 
     private void setDelay(int index, int delay) {
@@ -267,13 +279,6 @@ public class Combat<T extends Actor> {
         // are recoiled instead of just one hit
         if (defender == null && strategy == null) {
             listeners.forEach(attack -> attack.finish(attacker, null));
-            return;
-        }
-
-        if (!CombatUtil.canAttack(attacker, defender)) {
-            combatQueue.removeIf(hit -> hit.getDefender() == defender);
-            defender.getCombat().damageQueue.clear();
-            reset();
             return;
         }
 
