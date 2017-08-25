@@ -1,7 +1,5 @@
 package net.edge.net.codec.login;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelPipeline;
 import net.edge.net.codec.crypto.IsaacRandom;
 
 /**
@@ -26,11 +24,6 @@ public final class LoginRequest {
 	private final String password;
 	
 	/**
-	 * The build number of the player connecting.
-	 */
-	private final int build;
-	
-	/**
 	 * The encryptor for encrypting messages.
 	 */
 	private final IsaacRandom encryptor;
@@ -41,26 +34,18 @@ public final class LoginRequest {
 	private final IsaacRandom decryptor;
 	
 	/**
-	 * The pipeline for the underlying {@link Channel}.
-	 */
-	private final ChannelPipeline pipeline;
-	
-	/**
 	 * Creates a new {@link LoginRequest}.
 	 * @param username  the username of the player.
 	 * @param password  the password of the player.
-	 * @param build     the build number of the player connecting.
 	 * @param encryptor the encryptor for encrypting messages.
 	 * @param decryptor the decryptor for decrypting messages.
 	 */
-	LoginRequest(String username, long usernameHash, String password, int build, IsaacRandom encryptor, IsaacRandom decryptor, ChannelPipeline pipeline) {
+	LoginRequest(String username, long usernameHash, String password, IsaacRandom encryptor, IsaacRandom decryptor) {
 		this.username = username;
 		this.usernameHash = usernameHash;
 		this.password = password;
-		this.build = build;
 		this.encryptor = encryptor;
 		this.decryptor = decryptor;
-		this.pipeline = pipeline;
 	}
 	
 	/**
@@ -87,14 +72,6 @@ public final class LoginRequest {
 	}
 	
 	/**
-	 * Gets the build number of the player's client.
-	 * @return the build number of the client.
-	 */
-	public int getBuild() {
-		return build;
-	}
-	
-	/**
 	 * Gets the encryptor for encrypting messages.
 	 * @return the encryptor.
 	 */
@@ -109,11 +86,5 @@ public final class LoginRequest {
 	public IsaacRandom getDecryptor() {
 		return decryptor;
 	}
-	
-	/**
-	 * @return The pipeline for the underlying {@link Channel}.
-	 */
-	public ChannelPipeline getPipeline() {
-		return pipeline;
-	}
+
 }

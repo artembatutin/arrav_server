@@ -10,7 +10,6 @@ import io.netty.util.Attribute;
 import net.edge.GameConstants;
 import net.edge.net.NetworkConstants;
 import net.edge.net.codec.crypto.IsaacRandom;
-import net.edge.net.host.HostList;
 import net.edge.net.host.HostListType;
 import net.edge.net.host.HostManager;
 import net.edge.net.packet.PacketUtils;
@@ -31,22 +30,22 @@ import static com.google.common.base.Preconditions.checkState;
  * @author lare96 <http://github.org/lare96>
  */
 public final class LoginDecoder extends ByteToMessageDecoder {
-	
+
 	/**
 	 * A cryptographically secure random number generator.
 	 */
 	private static final Random RANDOM = new SecureRandom();
-	
+
 	/**
 	 * The current state of decoding the protocol.
 	 */
 	private State state = State.HANDSHAKE;
-	
+
 	/**
 	 * The size of the last portion of the protocol.
 	 */
 	private int rsaBlockSize;
-	
+
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 		switch(state) {
@@ -63,7 +62,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Decodes the handshake portion of the login protocol.
 	 * @param ctx The channel handler context.
@@ -72,11 +71,10 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 * @throws Exception If any exceptions occur while decoding this portion of the protocol.
 	 */
 	private void decodeHandshake(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-		System.out.println("handshake "  + in.readableBytes());
-		if(in.readableBytes() >= 1) {
-			int opcode = in.readUnsignedByte();
-			if(opcode != 14) {
-				write(ctx, LoginCode.COULD_NOT_COMPLETE_LOGIN);
+		if(in.readableBytes() >= 2) {
+			int build = in.readUnsignedShort();
+			if(build != GameConstants.CLIENT_BUILD) {
+				write(ctx, LoginCode.WRONG_BUILD_NUMBER);
 				return;
 			}
 			ByteBuf buf = ctx.alloc().buffer(17);
@@ -86,7 +84,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			ctx.writeAndFlush(buf, ctx.voidPromise());
 		}
 	}
-	
+
 	/**
 	 * Decodes the portion of the login protocol where the login type and RSA block size are determined.
 	 * @param ctx The channel handler context.
@@ -95,20 +93,14 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 * @throws Exception If any exceptions occur while decoding this portion of the protocol.
 	 */
 	private void decodeLoginType(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-		if(in.readableBytes() >= 2) {
-			int build = in.readUnsignedShort();
-			if(build != GameConstants.CLIENT_BUILD) {
-				write(ctx, LoginCode.WRONG_BUILD_NUMBER);
-				return;
-			}
+		if(in.readableBytes() >= 1) {
 			rsaBlockSize = in.readUnsignedByte();
-			System.out.println("rsa " + rsaBlockSize);
-			if((rsaBlockSize - 40) <= 0) {
+			if(rsaBlockSize == 0) {
 				write(ctx, LoginCode.COULD_NOT_COMPLETE_LOGIN);
 			}
 		}
 	}
-	
+
 	/**
 	 * Decodes the RSA portion of the login protocol.
 	 * @param ctx The channel handler context.
@@ -116,15 +108,13 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 * @param out The list of decoded messages.
 	 */
 	private void decodeRsaBlock(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-		System.out.println("size " + in.readableBytes() + " - " + rsaBlockSize);
 		if(in.readableBytes() >= rsaBlockSize) {
 			int expectedSize = in.readUnsignedByte();
-			System.out.println("size " + expectedSize);
-			if(expectedSize != rsaBlockSize - 41) {
+			if(expectedSize != rsaBlockSize - 1) {
 				write(ctx, LoginCode.COULD_NOT_COMPLETE_LOGIN);
 				return;
 			}
-			byte[] rsaBytes = new byte[rsaBlockSize - 41];
+			byte[] rsaBytes = new byte[rsaBlockSize - 1];
 			in.readBytes(rsaBytes);
 			byte[] rsaData = new BigInteger(rsaBytes).toByteArray();
 			ByteBuf rsaBuffer = Unpooled.wrappedBuffer(rsaData);
@@ -137,16 +127,17 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 					isaacSeed[i] += 50;
 				}
 				IsaacRandom encryptor = new IsaacRandom(isaacSeed);
-				String mac = PacketUtils.getCString(rsaBuffer);
+				int macId = rsaBuffer.readInt();
 				String username = PacketUtils.getCString(rsaBuffer).toLowerCase().trim();
 				String password = PacketUtils.getCString(rsaBuffer).toLowerCase();
 				long usernameHash = TextUtils.nameToHash(username);
+				String mac = String.valueOf(macId);
 				if (World.get().getPlayer(usernameHash).isPresent()) {
 					write(ctx, LoginCode.ACCOUNT_ONLINE);
 				} else if(HostManager.contains(mac, HostListType.BANNED_MAC)) {
 					write(ctx, LoginCode.ACCOUNT_DISABLED);
 				} else {
-					out.add(new LoginRequest(username, usernameHash, password, build, encryptor, decryptor, ctx.channel().pipeline()));
+					out.add(new LoginRequest(username, usernameHash, password, encryptor, decryptor));
 				}
 			} finally {
 				if (rsaBuffer.isReadable()) {
@@ -167,7 +158,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 		channel.write(initialMessage, channel.voidPromise());
 		channel.writeAndFlush(message).addListener(ChannelFutureListener.CLOSE); // Write response message.
 	}
-	
+
 	/**
 	 * An enumerated type whose elements represent the various stages of the login protocol.
 	 */
