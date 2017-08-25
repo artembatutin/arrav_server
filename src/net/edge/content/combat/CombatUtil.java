@@ -14,6 +14,10 @@ import net.edge.world.entity.actor.move.MovementQueue;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Boundary;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 /**
  * A collection of utility methods and constants related to combat.
  * @author lare96 <http://github.com/lare96>
@@ -55,6 +59,19 @@ public final class CombatUtil {
 			default:
 				throw new IllegalArgumentException("Invalid weapon interface type!");
 		}
+	}
+
+	public static <A extends Actor> List<A> actorsWithinDistance(Actor player, Set<A> actors, int radius) {
+		List<A> collected = new LinkedList<>();
+
+		for (A other : actors) {
+			if (other == null) continue;
+			if (!other.getPosition().withinDistance(player.getPosition(), radius)) continue;
+			if (other.same(player)) continue;
+			if (other.getCurrentHealth() <= 0 || other.isDead()) continue;
+			collected.add(other);
+		}
+		return collected;
 	}
 
 	/**

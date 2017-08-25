@@ -2,7 +2,9 @@ package net.edge.content.combat.content.lunars.impl.spells;
 
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
-import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
+import net.edge.content.combat.content.MagicRune;
+import net.edge.content.combat.content.RequiredRune;
+import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -21,30 +23,30 @@ public final class Humidify extends LunarButtonSpell {
 	 * Constructs a new {@link Humidify}.
 	 */
 	public Humidify() {
-		super(117104);
+		super("Humidify", 117104, 68, 65, new RequiredRune(MagicRune.ASTRAL_RUNE, 1), new RequiredRune(MagicRune.FIRE_RUNE, 1), new RequiredRune(MagicRune.WATER_RUNE, 3));
 	}
 
 	@Override
-	public void effect(Player caster, Actor victim) {
+	public void effect(Actor caster, Optional<Actor> victim) {
+		super.effect(caster, victim);
+
 		VIALS.forEach((empty, filled) -> {
-			if(caster.getInventory().contains(empty)) {
-				caster.getInventory().replaceAll(empty, filled);
+			if(caster.toPlayer().getInventory().contains(empty)) {
+				caster.toPlayer().getInventory().replaceAll(empty, filled);
 			}
 		});
 	}
 
 	@Override
-	public boolean prerequisites(Player caster, Actor victim) {
-		if(VIALS.keySet().stream().noneMatch(caster.getInventory()::contains)) {
-			caster.message("You don't have any empty vessels that can be filled with water.");
+	public boolean canCast(Actor caster, Optional<Actor> victim) {
+		if(!super.canCast(caster, victim)) {
+			return false;
+		}
+		if(VIALS.keySet().stream().noneMatch(caster.toPlayer().getInventory()::contains)) {
+			caster.toPlayer().message("You don't have any empty vessels that can be filled with water.");
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public String name() {
-		return "Humidify";
 	}
 
 	@Override
@@ -57,21 +59,6 @@ public final class Humidify extends LunarButtonSpell {
 		return Optional.of(new Graphic(1061));
 	}
 
-	@Override
-	public int levelRequired() {
-		return 68;
-	}
-
-	@Override
-	public double baseExperience() {
-		return 65;
-	}
-
-	@Override
-	public Optional<Item[]> itemsRequired(Player player) {
-		return Optional.of(new Item[]{new Item(9075, 1), new Item(554, 1), new Item(555, 3)});
-	}
-	
 	private static final Int2IntArrayMap VIALS = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
 			.put(1925, 1929)//bucket of water
 			.put(1935, 1937)//jug of water

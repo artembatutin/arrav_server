@@ -1,8 +1,10 @@
 package net.edge.content.combat.content.lunars.impl.spells;
 
+import net.edge.content.combat.content.MagicRune;
+import net.edge.content.combat.content.RequiredRune;
+import net.edge.content.combat.content.lunars.LunarSpell;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
-import net.edge.content.combat.magic.lunars.LunarSpell;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
@@ -24,31 +26,38 @@ public final class SpellbookSwap extends LunarSpell {
 	 * The option type the player selected;
 	 */
 	private final OptionDialogue.OptionType type;
-	
+
 	/**
 	 * Constructs a new {@link SpellbookSwap}.
 	 * @param type the type the player clicked.
 	 */
 	public SpellbookSwap(OptionDialogue.OptionType type) {
+		super("Spellbook Swap", 96, 130, new RequiredRune(MagicRune.LAW_RUNE, 1), new RequiredRune(MagicRune.COSMIC_RUNE, 2), new RequiredRune(MagicRune.ASTRAL_RUNE, 3));
 		this.type = type;
+
 	}
-	
+
 	@Override
-	public void effect(Player caster, Actor victim) {
-		caster.getActivityManager().disable();
+	public void effect(Actor caster, Optional<Actor> victim) {
+		super.effect(caster, victim);
+		caster.toPlayer().getActivityManager().disable();
 		LinkedTaskSequence seq = new LinkedTaskSequence();
 		seq.connect(11, () -> {
-			Spellbook.convert(caster, type.equals(OptionDialogue.OptionType.FIRST_OPTION) ? Spellbook.NORMAL : Spellbook.ANCIENT);
+			Spellbook.convert(caster.toPlayer(), type.equals(OptionDialogue.OptionType.FIRST_OPTION) ? Spellbook.NORMAL : Spellbook.ANCIENT);
 			caster.getAttr().get("lunar_spellbook_swap").set(true);
-			World.get().submit(new SpellbookSwapTask(caster, type.equals(OptionDialogue.OptionType.FIRST_OPTION) ? Spellbook.NORMAL : Spellbook.ANCIENT));
-			caster.getActivityManager().enable();
+			World.get().submit(new SpellbookSwapTask(caster.toPlayer(), type.equals(OptionDialogue.OptionType.FIRST_OPTION) ? Spellbook.NORMAL : Spellbook.ANCIENT));
+			caster.toPlayer().getActivityManager().enable();
 		});
 		seq.start();
 		
 	}
 	
 	@Override
-	public boolean prerequisites(Player caster, Actor victim) {
+	public boolean canCast(Actor caster, Optional<Actor> victim) {
+		if(!super.canCast(caster, victim)) {
+			return false;
+		}
+
 		if(type.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
 			return false;
 		}
@@ -64,27 +73,7 @@ public final class SpellbookSwap extends LunarSpell {
 	public Optional<Graphic> startGraphic() {
 		return Optional.of(new Graphic(1062));
 	}
-	
-	@Override
-	public String name() {
-		return "Spellbook Swap";
-	}
-	
-	@Override
-	public int levelRequired() {
-		return 96;
-	}
-	
-	@Override
-	public double baseExperience() {
-		return 130;
-	}
-	
-	@Override
-	public Optional<Item[]> itemsRequired(Player player) {
-		return Optional.of(new Item[]{new Item(563, 1), new Item(564, 2), new Item(9075, 3)});
-	}
-	
+
 	/**
 	 * Holds functionality for the timers when the {@link LunarSpells#SPELLBOOK_SWAP}
 	 * is casted.

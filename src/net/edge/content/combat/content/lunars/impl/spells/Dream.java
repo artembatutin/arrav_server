@@ -1,14 +1,15 @@
 package net.edge.content.combat.content.lunars.impl.spells;
 
+import net.edge.content.combat.content.MagicRune;
+import net.edge.content.combat.content.RequiredRune;
+import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
-import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -22,47 +23,32 @@ public final class Dream extends LunarButtonSpell {
 	 * Constructs a new {@link Dream}.
 	 */
 	public Dream() {
-		super(117226);
+		super("Dream", 117226, 79, 82, new RequiredRune(MagicRune.ASTRAL_RUNE, 2), new RequiredRune(MagicRune.COSMIC_RUNE, 1), new RequiredRune(MagicRune.BODY_RUNE, 5));
 	}
 
 	@Override
-	public void effect(Player caster, Actor victim) {
-		caster.getActivityManager().disable();
-		World.get().submit(new DreamTask(caster));
+	public void effect(Actor caster, Optional<Actor> victim) {
+		super.effect(caster, victim);
+
+		caster.toPlayer().getActivityManager().disable();
+		World.get().submit(new DreamTask(caster.toPlayer()));
 	}
 
 	@Override
-	public boolean prerequisites(Player caster, Actor victim) {
+	public boolean canCast(Actor caster, Optional<Actor> victim) {
+		if(!super.canCast(caster, victim)) {
+			return false;
+		}
 		if(caster.getAttr().get("lunar_dream").getBoolean()) {
-			caster.message("You are already dreaming...");
+			caster.toPlayer().message("You are already dreaming...");
 			return false;
 		}
 
-		if(caster.getCurrentHealth() >= caster.getMaximumHealth()) {
-			caster.message("You have no need to cast this spell since your life points are already full.");
+		if(caster.getCurrentHealth() >= caster.toPlayer().getMaximumHealth()) {
+			caster.toPlayer().message("You have no need to cast this spell since your life points are already full.");
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public String name() {
-		return "Dream";
-	}
-
-	@Override
-	public int levelRequired() {
-		return 79;
-	}
-
-	@Override
-	public double baseExperience() {
-		return 82;
-	}
-
-	@Override
-	public Optional<Item[]> itemsRequired(Player player) {
-		return Optional.of(new Item[]{new Item(9075, 2), new Item(564, 1), new Item(559, 5)});
 	}
 
 	/**

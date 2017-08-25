@@ -8,6 +8,7 @@ import net.edge.content.TabInterface;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.content.MagicSpells;
+import net.edge.content.combat.content.lunars.LunarSpells;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.dialogue.Dialogues;
 import net.edge.content.item.Skillcape;
@@ -148,6 +149,9 @@ public final class ClickButtonPacket implements IncomingPacket {
 			return;
 		}
 		if(Slayer.clickButton(player, button)) {
+			return;
+		}
+		if(LunarSpells.castButtonSpell(player, button)) {
 			return;
 		}
 		//Bank 100-109

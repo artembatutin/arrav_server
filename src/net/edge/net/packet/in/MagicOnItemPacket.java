@@ -1,5 +1,6 @@
 package net.edge.net.packet.in;
 
+import net.edge.content.combat.content.lunars.LunarSpells;
 import net.edge.content.skill.magic.Enchanting;
 import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.IncomingMsg;
@@ -50,6 +51,10 @@ public final class MagicOnItemPacket implements IncomingPacket {
 		delay.reset();
 		
 		if(Enchanting.cast(player, item, interfaceId, spellId, slot)) {
+			return;
+		}
+
+		if(LunarSpells.castItemSpells(player, item, spellId, interfaceId)) {
 			return;
 		}
 		

@@ -2,6 +2,7 @@ package net.edge.net.packet.in;
 
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.content.MagicSpells;
+import net.edge.content.combat.content.lunars.LunarSpells;
 import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.MinigameHandler;
@@ -49,6 +50,10 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		int index = payload.getShort(true, ByteTransform.A);
 		int spellId = payload.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
+
+		if(LunarSpells.castCombatSpells(player, victim, spellId)) {
+			return;
+		}
 
 		MagicSpells spell = MagicSpells.forId(spellId);
 		if(spell == null || index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !checkAttack(player, victim)) {

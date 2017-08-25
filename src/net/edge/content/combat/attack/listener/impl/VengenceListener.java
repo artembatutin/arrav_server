@@ -15,10 +15,12 @@ public class VengenceListener extends SimplifiedListener<Player> {
     @Override
     public void block(Actor attacker, Player defender, Hit hit, CombatType combatType) {
         Hit recoil = new Hit(hit.getDamage(), HitIcon.DEFLECT);
-        defender.damage(recoil);
-        defender.forceChat("Taste vengeance!");
+        attacker.damage(recoil);
         attacker.getCombat().getDamageCache().add(defender, recoil.getDamage());
+
+        defender.forceChat("Taste vengeance!");
         defender.getCombat().removeListener(this);
+        defender.setVenged(false);
     }
 
 }

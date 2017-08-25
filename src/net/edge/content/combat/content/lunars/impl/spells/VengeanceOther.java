@@ -1,6 +1,9 @@
 package net.edge.content.combat.content.lunars.impl.spells;
 
-import net.edge.content.combat.magic.lunars.impl.LunarCombatSpell;
+import net.edge.content.combat.attack.listener.impl.VengenceListener;
+import net.edge.content.combat.content.MagicRune;
+import net.edge.content.combat.content.RequiredRune;
+import net.edge.content.combat.content.lunars.impl.LunarCombatSpell;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -14,51 +17,49 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class VengeanceOther extends LunarCombatSpell {
-	
+
 	/**
-	 * Constructs a new {@link VengeanceOther}.
+	 * Constructs a new {@link LunarCombatSpell}.
 	 */
 	public VengeanceOther() {
-		super(30282);
+		super("Vengeance Other", 30282, 93, 108, new RequiredRune(MagicRune.ASTRAL_RUNE, 3), new RequiredRune(MagicRune.DEATH_RUNE, 2), new RequiredRune(MagicRune.EARTH_RUNE, 10));
 	}
-	
+
 	@Override
-	public void effect(Player caster, Actor victim) {
-		Player player = victim.toPlayer();
+	public void effect(Actor caster, Optional<Actor> victim) {
+		super.effect(caster, victim);
+
+		Player player = victim.get().toPlayer();
 		
-		caster.faceEntity(victim);
+		caster.facePosition(player.getPosition());
 		
-		player.message(caster.getFormatUsername() + " has casted vengeance on you... ");
+		player.message(caster.toPlayer().getFormatUsername() + " has casted vengeance on you... ");
 		
 		player.graphic(new Graphic(725, 100));
 		player.setVenged(true);
+		player.getCombat().addListener(new VengenceListener());
 	}
 	
 	@Override
-	public boolean prerequisites(Player caster, Actor victim) {
-		if(!victim.isPlayer()) {
+	public boolean canCast(Actor caster, Optional<Actor> victim) {
+		if(!super.canCast(caster, victim)) {
 			return false;
 		}
-		
-		Player player = victim.toPlayer();
+
+		Player player = victim.get().toPlayer();
 		
 		caster.getMovementQueue().reset();
 		
 		if(!player.getAttr().get("accept_aid").getBoolean()) {
-			player.message("This player is not accepting any aid.");
+			caster.toPlayer().message("This player is not accepting any aid.");
 			return false;
 		}
 		
 		if(player.isVenged()) {
-			caster.message(player.getFormatUsername() + " already has a vengeance spell casted...");
+			caster.toPlayer().message(player.getFormatUsername() + " already has a vengeance spell casted...");
 			return false;
 		}
 		return true;
-	}
-	
-	@Override
-	public String name() {
-		return "Vengeance Other";
 	}
 	
 	@Override
@@ -71,19 +72,6 @@ public final class VengeanceOther extends LunarCombatSpell {
 		return Optional.of(new Animation(4411));
 	}
 	
-	@Override
-	public int levelRequired() {
-		return 93;
-	}
-	
-	@Override
-	public double baseExperience() {
-		return 108;
-	}
-	
-	@Override
-	public Optional<Item[]> itemsRequired(Player player) {
-		return Optional.of(new Item[]{new Item(9075, 3), new Item(560, 2), new Item(557, 10)});
-	}
+
 	
 }

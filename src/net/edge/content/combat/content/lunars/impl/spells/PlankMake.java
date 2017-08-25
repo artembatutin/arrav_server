@@ -2,11 +2,12 @@ package net.edge.content.combat.content.lunars.impl.spells;
 
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
-import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
+import net.edge.content.combat.content.MagicRune;
+import net.edge.content.combat.content.RequiredRune;
+import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
@@ -16,36 +17,36 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class PlankMake extends LunarButtonSpell {
-	
+
 	/**
 	 * Constructs a new {@link PlankMake}.
 	 */
 	public PlankMake() {
-		super(118034);
+		super("Plank Make", 118034, 86, 90, new RequiredRune(MagicRune.ASTRAL_RUNE, 3), new RequiredRune(MagicRune.EARTH_RUNE, 15), new RequiredRune(MagicRune.NATURE_RUNE, 1));
 	}
-	
+
 	@Override
-	public void effect(Player caster, Actor victim) {
+	public void effect(Actor caster, Optional<Actor> victim) {
+		super.effect(caster, victim);
+
 		for(int i : PLANKS.keySet()) {
-			if(caster.getInventory().contains(i)) {
-				caster.getInventory().remove(new Item(i));
-				caster.getInventory().add(new Item(PLANKS.get(i)));
+			if(caster.toPlayer().getInventory().contains(i)) {
+				caster.toPlayer().getInventory().remove(new Item(i));
+				caster.toPlayer().getInventory().add(new Item(PLANKS.get(i)));
 			}
 		}
 	}
 	
 	@Override
-	public boolean prerequisites(Player caster, Actor victim) {
-		if(PLANKS.keySet().stream().noneMatch(caster.getInventory()::contains)) {
-			caster.message("You don't have any logs that can be made into planks.");
+	public boolean canCast(Actor caster, Optional<Actor> victim) {
+		if(!super.canCast(caster, victim)) {
+			return false;
+		}
+		if(PLANKS.keySet().stream().noneMatch(caster.toPlayer().getInventory()::contains)) {
+			caster.toPlayer().message("You don't have any logs that can be made into planks.");
 			return false;
 		}
 		return true;
-	}
-	
-	@Override
-	public String name() {
-		return "Plank Make";
 	}
 	
 	@Override
@@ -57,22 +58,7 @@ public final class PlankMake extends LunarButtonSpell {
 	public Optional<Graphic> startGraphic() {
 		return Optional.of(new Graphic(1063, 100));
 	}
-	
-	@Override
-	public int levelRequired() {
-		return 86;
-	}
-	
-	@Override
-	public double baseExperience() {
-		return 90;
-	}
-	
-	@Override
-	public Optional<Item[]> itemsRequired(Player player) {
-		return Optional.of(new Item[]{new Item(9075, 3), new Item(557, 15), new Item(561, 1)});
-	}
-	
+
 	private static final Int2IntArrayMap PLANKS = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
 			.put(1511, 960)//regular plank
 			.put(1521, 8778)//oak plank

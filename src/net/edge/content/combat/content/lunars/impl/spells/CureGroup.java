@@ -1,14 +1,14 @@
 package net.edge.content.combat.content.lunars.impl.spells;
 
 import net.edge.content.combat.CombatUtil;
-import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
+import net.edge.content.combat.content.MagicRune;
+import net.edge.content.combat.content.RequiredRune;
+import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
 import net.edge.net.packet.out.SendConfig;
-import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.item.Item;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,34 +18,41 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class CureGroup extends LunarButtonSpell {
-	
+
+	List<Player> local_players;
+
 	/**
 	 * Constructs a new {@link CureGroup}.
 	 */
 	public CureGroup() {
-		super(117170);
+		super("Cure Group", 117170, 74, 74, new RequiredRune(MagicRune.ASTRAL_RUNE, 2), new RequiredRune(MagicRune.COSMIC_RUNE, 2));
 	}
-	
-	List<Player> local_players;
-	
+
 	@Override
-	public void effect(Player caster, Actor victim) {
+	public void effect(Actor caster, Optional<Actor> victim) {
+		super.effect(caster, victim);
+
 		for(Player target : local_players) {
+			if(!target.getAttr().get("accept_aid").getBoolean()) {
+				continue;
+			}
 			target.graphic(new Graphic(744, 90));
 			target.getPoisonDamage().set(0);
 			target.out(new SendConfig(174, 0));
-			target.message("Your poison has been cured by " + caster.getFormatUsername());
+			target.message("Your poison has been cured by " + caster.toPlayer().getFormatUsername());
 		}
 	}
-	
+
 	@Override
-	public boolean prerequisites(Player caster, Actor victim) {
-		local_players = CombatUtil.actorsWithinDistance(caster, World.get().getLocalPlayers(caster), 1);
-		
+	public boolean canCast(Actor caster, Optional<Actor> victim) {
+		if(!super.canCast(caster, victim)) {
+			return false;
+		}
+
+		local_players = CombatUtil.actorsWithinDistance(caster, caster.getLocalPlayers(), 1);
+
 		if(local_players.isEmpty()) {
-			if(caster.isPlayer()) {
-				caster.toPlayer().message("There are no players within your radius to cast this spell for.");
-			}
+			caster.toPlayer().message("There are no players within your radius to cast this spell for.");
 			return false;
 		}
 		for(Player target : local_players) {
@@ -56,34 +63,12 @@ public final class CureGroup extends LunarButtonSpell {
 				return true;
 			}
 		}
-		Player player = (Player) caster;
-		player.message("There are no players within your radius which are poisoned.");
+		caster.toPlayer().message("There are no players within your radius which are poisoned.");
 		return false;
 	}
-	
-	@Override
-	public String name() {
-		return "Cure Group";
-	}
-	
+
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.of(new Animation(4409));
 	}
-	
-	@Override
-	public int levelRequired() {
-		return 74;
-	}
-	
-	@Override
-	public double baseExperience() {
-		return 74;
-	}
-	
-	@Override
-	public Optional<Item[]> itemsRequired(Player player) {
-		return Optional.of(new Item[]{new Item(9075, 2), new Item(564, 2)});
-	}
-	
 }

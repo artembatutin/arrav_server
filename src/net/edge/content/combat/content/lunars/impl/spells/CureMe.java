@@ -1,12 +1,12 @@
 package net.edge.content.combat.content.lunars.impl.spells;
 
-import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
+import net.edge.content.combat.content.MagicRune;
+import net.edge.content.combat.content.RequiredRune;
+import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
@@ -20,7 +20,7 @@ public final class CureMe extends LunarButtonSpell {
 	 * Constructs a new {@link CureMe}.
 	 */
 	public CureMe() {
-		super(117139);
+		super("Cure Me", 117139, 71, 69, new RequiredRune(MagicRune.ASTRAL_RUNE, 2), new RequiredRune(MagicRune.COSMIC_RUNE, 2));
 	}
 
 	@Override
@@ -34,39 +34,23 @@ public final class CureMe extends LunarButtonSpell {
 	}
 
 	@Override
-	public void effect(Player caster, Actor victim) {
-		caster.message("You are no longer poisoned...");
-		caster.out(new SendConfig(174, 0));
+	public void effect(Actor caster, Optional<Actor> victim) {
+		super.effect(caster, victim);
+
+		caster.toPlayer().message("You are no longer poisoned...");
+		caster.toPlayer().out(new SendConfig(174, 0));
 		caster.getPoisonDamage().set(0);
 	}
 
 	@Override
-	public boolean prerequisites(Player caster, Actor victim) {
+	public boolean canCast(Actor caster, Optional<Actor> victim) {
+		if(!super.canCast(caster, victim)) {
+			return false;
+		}
 		if(!caster.isPoisoned()) {
-			caster.message("You are not poisoned.");
+			caster.toPlayer().message("You are not poisoned.");
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public String name() {
-		return "Cure Me";
-	}
-
-	@Override
-	public int levelRequired() {
-		return 71;
-	}
-
-	@Override
-	public double baseExperience() {
-		return 69;
-	}
-
-	@Override
-	public Optional<Item[]> itemsRequired(Player player) {
-		return Optional.of(new Item[]{new Item(9075, 2), new Item(564, 2)});
-
 	}
 }

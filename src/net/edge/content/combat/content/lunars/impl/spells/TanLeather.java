@@ -1,6 +1,8 @@
 package net.edge.content.combat.content.lunars.impl.spells;
 
-import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
+import net.edge.content.combat.content.MagicRune;
+import net.edge.content.combat.content.RequiredRune;
+import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
 import net.edge.content.skill.crafting.Tanning;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
@@ -15,27 +17,32 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class TanLeather extends LunarButtonSpell {
-	
+
+	private Tanning.TanningData data;
+
 	/**
 	 * Constructs a new {@link TanLeather}.
 	 */
 	public TanLeather() {
-		super(118122);
+		super("Tan Leather", 118122, 78, 81, new RequiredRune(MagicRune.NATURE_RUNE, 1), new RequiredRune(MagicRune.ASTRAL_RUNE, 2), new RequiredRune(MagicRune.FIRE_RUNE, 5));
+	}
+
+	@Override
+	public void effect(Actor caster, Optional<Actor> victim) {
+		super.effect(caster, victim);
+		Tanning.create(caster.toPlayer(), data, 5, true);
 	}
 	
-	private Tanning.TanningData data;
-	
 	@Override
-	public void effect(Player caster, Actor victim) {
-		Tanning.create(caster, data, 5, true);
-	}
-	
-	@Override
-	public boolean prerequisites(Player caster, Actor victim) {
-		Tanning.TanningData data = Tanning.TanningData.getByPlayer(caster).orElse(null);
+	public boolean canCast(Actor caster, Optional<Actor> victim) {
+		if(!super.canCast(caster, victim)) {
+			return false;
+		}
+
+		Tanning.TanningData data = Tanning.TanningData.getByPlayer(caster.toPlayer()).orElse(null);
 		
 		if(data == null) {
-			caster.message("You don't have any leather or hides that can be tanned.");
+			caster.toPlayer().message("You don't have any leather or hides that can be tanned.");
 			return false;
 		}
 		
@@ -43,11 +50,7 @@ public final class TanLeather extends LunarButtonSpell {
 		return true;
 	}
 	
-	@Override
-	public String name() {
-		return "Tan Leather";
-	}
-	
+
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.of(new Animation(713, 10));
@@ -58,19 +61,6 @@ public final class TanLeather extends LunarButtonSpell {
 		return Optional.of(new Graphic(983, 0));
 	}
 	
-	@Override
-	public int levelRequired() {
-		return 78;
-	}
-	
-	@Override
-	public double baseExperience() {
-		return 81;
-	}
-	
-	@Override
-	public Optional<Item[]> itemsRequired(Player player) {
-		return Optional.of(new Item[]{new Item(561, 1), new Item(9075, 2), new Item(554, 5)});
-	}
+
 	
 }

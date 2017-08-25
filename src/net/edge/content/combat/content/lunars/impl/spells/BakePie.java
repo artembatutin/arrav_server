@@ -22,8 +22,8 @@ public final class BakePie extends LunarItemSpell {
 	/**
 	 * Constructs a new {@link BakePie}.
 	 */
-	public BakePie(String name, int spellId, int interfaceId, int level, double baseExperience, RequiredRune... runes) {
-		super("Bake Pie", 30017, 3186, 63, 60, new RequiredRune(MagicRune.ASTRAL_RUNE, 1));
+	public BakePie() {
+		super("Bake Pie", 30017, 3186, 63, 60, new RequiredRune(MagicRune.ASTRAL_RUNE, 1), new RequiredRune(MagicRune.FIRE_RUNE, 5), new RequiredRune(MagicRune.WATER_RUNE, 4));
 	}
 
 	@Override
@@ -48,11 +48,4 @@ public final class BakePie extends LunarItemSpell {
 		this.data = data;
 		return true;
 	}
-
-
-	@Override
-	public Optional<Item[]> itemsRequired(Player player) {
-		return Optional.of(new Item[]{new Item(9075, 1), new Item(554, 5), new Item(555, 4)});
-	}
-
 }

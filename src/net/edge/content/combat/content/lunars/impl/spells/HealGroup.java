@@ -1,14 +1,14 @@
 package net.edge.content.combat.content.lunars.impl.spells;
 
 import net.edge.content.combat.CombatUtil;
-import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
-import net.edge.world.World;
+import net.edge.content.combat.content.MagicRune;
+import net.edge.content.combat.content.RequiredRune;
+import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
+import net.edge.content.combat.hit.Hit;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.Hit;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.item.Item;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,24 +18,29 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class HealGroup extends LunarButtonSpell {
-	
+
+	List<Player> local_players;
+
 	/**
 	 * Constructs a new {@link HealGroup}.
 	 */
 	public HealGroup() {
-		super(118106);
+		super("Heal Group", 118106, 74, 74, new RequiredRune(MagicRune.ASTRAL_RUNE, 2), new RequiredRune(MagicRune.COSMIC_RUNE, 2));
 	}
-	
-	List<Player> local_players;
-	
+
 	@Override
-	public void effect(Player caster, Actor victim) {
+	public void effect(Actor caster, Optional<Actor> victim) {
+		super.effect(caster, victim);
+
 		int transfer = (int) ((caster.getCurrentHealth() / 100.0f) * 75.0f);
 		caster.damage(new Hit(transfer));
 		transfer = transfer / local_players.size();
-		String name = caster.getFormatUsername();
+		String name = caster.toPlayer().getFormatUsername();
 		for(Player target : local_players) {
-			
+			if(target.getCurrentHealth() >= (target.getMaximumHealth() / 10) || !target.getAttr().get("accept_aid").getBoolean()) {
+				continue;
+			}
+
 			int victimMaxHealth = target.getMaximumHealth() * 10;
 			
 			if(transfer + target.getCurrentHealth() > victimMaxHealth) {
@@ -50,16 +55,19 @@ public final class HealGroup extends LunarButtonSpell {
 	}
 	
 	@Override
-	public boolean prerequisites(Player caster, Actor victim) {
-		if(caster.getCurrentHealth() < ((caster.getMaximumHealth()) / 100.0f) * 11.0f) {
-			caster.message("Your hitpoints are too low to cast this spell.");
+	public boolean canCast(Actor caster, Optional<Actor> victim) {
+		if(!super.canCast(caster, victim)) {
+			return false;
+		}
+		if(caster.getCurrentHealth() < ((caster.toPlayer().getMaximumHealth()) / 100.0f) * 11.0f) {
+			caster.toPlayer().message("Your hitpoints are too low to cast this spell.");
 			return false;
 		}
 		
-		local_players = CombatUtil.actorsWithinDistance(caster, World.get().getLocalPlayers(caster), 1);
+		local_players = CombatUtil.actorsWithinDistance(caster, caster.getLocalPlayers(), 1);
 		
 		if(local_players.isEmpty()) {
-			caster.message("There are no players within your radius to cast this spell for.");
+			caster.toPlayer().message("There are no players within your radius to cast this spell for.");
 			return false;
 		}
 		
@@ -71,13 +79,8 @@ public final class HealGroup extends LunarButtonSpell {
 				return true;
 			}
 		}
-		caster.message("There are no players within your radius which are below full health.");
+		caster.toPlayer().message("There are no players within your radius which are below full health.");
 		return false;
-	}
-	
-	@Override
-	public String name() {
-		return "Cure Group";
 	}
 	
 	@Override
@@ -85,19 +88,6 @@ public final class HealGroup extends LunarButtonSpell {
 		return Optional.of(new Animation(4409));
 	}
 	
-	@Override
-	public int levelRequired() {
-		return 74;
-	}
-	
-	@Override
-	public double baseExperience() {
-		return 74;
-	}
-	
-	@Override
-	public Optional<Item[]> itemsRequired(Player player) {
-		return Optional.of(new Item[]{new Item(9075, 2), new Item(564, 2)});
-	}
+
 	
 }

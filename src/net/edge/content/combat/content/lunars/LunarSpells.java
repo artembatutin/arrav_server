@@ -85,6 +85,10 @@ public final class LunarSpells {
 			return false;
 		}
 
+		if(!spell.canCast(player, Optional.empty())) {
+			return false;
+		}
+
 		spell.effect(player, Optional.empty());
 		return true;
 	}
@@ -127,6 +131,10 @@ public final class LunarSpells {
 		LunarCombatSpell spell = getCombatSpell(spellId).orElse(null);
 
 		if(spell == null) {
+			return false;
+		}
+
+		if(!spell.canCast(player, Optional.of(other))) {
 			return false;
 		}
 
