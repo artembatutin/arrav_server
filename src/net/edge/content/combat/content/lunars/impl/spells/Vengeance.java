@@ -1,5 +1,6 @@
 package net.edge.content.combat.content.lunars.impl.spells;
 
+import net.edge.content.combat.attack.listener.impl.VengenceListener;
 import net.edge.content.combat.content.MagicRune;
 import net.edge.content.combat.content.RequiredRune;
 import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
@@ -25,7 +26,7 @@ public final class Vengeance extends LunarButtonSpell {
 	@Override
 	public void effect(Actor caster, Optional<Actor> victim) {
 		caster.toPlayer().setVenged(true);
-		caster.getCombat().addListener(new VengenceListener());
+		caster.toPlayer().getCombat().addListener(new VengenceListener());
 	}
 	
 	@Override
