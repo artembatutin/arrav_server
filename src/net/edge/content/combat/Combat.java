@@ -261,6 +261,15 @@ public class Combat<T extends Actor> {
     }
 
     private void finish(Actor defender, CombatStrategy<? super T> strategy) {
+
+        // special case for some listeners
+        // for example, vengeance needs to be active until all hits
+        // are recoiled instead of just one hit
+        if (defender == null && strategy == null) {
+            listeners.forEach(attack -> attack.finish(attacker, null));
+            return;
+        }
+
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(hit -> hit.getDefender() == defender);
             defender.getCombat().damageQueue.clear();
@@ -393,6 +402,7 @@ public class Combat<T extends Actor> {
 
                 if (data.isFirstHit()) {
                     finish(data.getDefender(), data.getStrategy());
+                    data.getDefender().getCombat().finish(null, null);
                 }
 
                 cancel();

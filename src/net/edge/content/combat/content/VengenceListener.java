@@ -23,12 +23,16 @@ public class VengenceListener extends SimplifiedListener<Player> {
         }
 
         defender.forceChat("Taste vengeance!");
-        defender.getCombat().removeListener(this);
-        defender.setVenged(false);
 
         Hit recoil = new Hit((int) (hit.getDamage() * 0.75), HitIcon.DEFLECT);
         attacker.damage(recoil);
         attacker.getCombat().getDamageCache().add(defender, recoil.getDamage());
+    }
+
+    @Override
+    public void finish(Player attacker, Actor defender) {
+        attacker.getCombat().removeListener(this);
+        attacker.setVenged(false);
     }
 
 }

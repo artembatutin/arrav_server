@@ -27,7 +27,6 @@ public class RingOfRecoilListener extends SimplifiedListener<Player> {
         if (charges <= 0) {
             defender.out(new SendMessage("Your ring of recoil has shattered!"));
             defender.getEquipment().unequip(Equipment.RING_SLOT, null, true, -1);
-            defender.getCombat().removeListener(this);
 
             // if charge is negative, recoil was too high for it's charge
             // so we add the -charges to get the amount of recoil left
@@ -38,6 +37,11 @@ public class RingOfRecoilListener extends SimplifiedListener<Player> {
         defender.setRingOfRecoil(charges);
         attacker.damage(new Hit(recoil, HitIcon.DEFLECT));
         attacker.getCombat().getDamageCache().add(defender, recoil);
+    }
+
+    @Override
+    public void finish(Player attacker, Actor defender) {
+        attacker.getCombat().removeListener(this);
     }
 
 }
