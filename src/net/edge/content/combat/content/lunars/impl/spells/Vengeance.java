@@ -1,11 +1,11 @@
 package net.edge.content.combat.content.lunars.impl.spells;
 
-import net.edge.content.combat.magic.lunars.impl.LunarButtonSpell;
-import net.edge.world.entity.actor.Actor;
+import net.edge.content.combat.content.MagicRune;
+import net.edge.content.combat.content.RequiredRune;
+import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.item.Item;
+import net.edge.world.entity.actor.Actor;
 
 import java.util.Optional;
 
@@ -14,32 +14,30 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Vengeance extends LunarButtonSpell {
-	
+
 	/**
 	 * Constructs a new {@link Vengeance}.
-	 * @param buttonId {@link #getButtonId()}
 	 */
 	public Vengeance() {
-		super(118082);
+		super("Vengeance", 118082, 94, 112, new RequiredRune(MagicRune.ASTRAL_RUNE, 4), new RequiredRune(MagicRune.DEATH_RUNE, 2), new RequiredRune(MagicRune.LAW_RUNE, 10));
+	}
+
+	@Override
+	public void effect(Actor caster, Optional<Actor> victim) {
+		caster.toPlayer().setVenged(true);
+		caster.getCombat().addListener(new VengenceListener());
 	}
 	
 	@Override
-	public void effect(Player caster, Actor victim) {
-		caster.setVenged(true);
-	}
-	
-	@Override
-	public boolean prerequisites(Player caster, Actor victim) {
-		if(caster.isVenged()) {
-			caster.message("You have already casted this spell...");
+	public boolean canCast(Actor caster, Optional<Actor> victim) {
+		if(!super.canCast(caster, victim)) {
+			return false;
+		}
+		if(caster.toPlayer().isVenged()) {
+			caster.toPlayer().message("You have already casted this spell...");
 			return false;
 		}
 		return true;
-	}
-	
-	@Override
-	public String name() {
-		return "Vengeance";
 	}
 	
 	@Override
@@ -55,20 +53,5 @@ public final class Vengeance extends LunarButtonSpell {
 	@Override
 	public Optional<Graphic> startGraphic() {
 		return Optional.of(new Graphic(726, 100));
-	}
-	
-	@Override
-	public int levelRequired() {
-		return 94;
-	}
-	
-	@Override
-	public double baseExperience() {
-		return 112;
-	}
-	
-	@Override
-	public Optional<Item[]> itemsRequired(Player player) {
-		return Optional.of(new Item[]{new Item(9075, 4), new Item(560, 2), new Item(557, 10)});
 	}
 }

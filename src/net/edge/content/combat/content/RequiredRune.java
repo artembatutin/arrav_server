@@ -4,7 +4,7 @@ public class RequiredRune {
     private final MagicRune rune;
     private final int amount;
 
-    RequiredRune(MagicRune rune, int amount) {
+    public RequiredRune(MagicRune rune, int amount) {
         this.rune = rune;
         this.amount = amount;
     }
