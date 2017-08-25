@@ -286,6 +286,16 @@ public final class PlayerSerialization {
 		public void fromJson(Gson b, Player p, JsonElement n) {
 			p.setRights(Rights.valueOf(n.getAsString()));
 		}
+	}, new Token("xp-lock") {
+		@Override
+		public Object toJson(Player p) {
+			return p.xpLock;
+		}
+
+		@Override
+		public void fromJson(Gson b, Player p, JsonElement n) {
+			p.xpLock = n.getAsBoolean();
+		}
 	}, new Token("ironman") {
 		@Override
 		public Object toJson(Player p) {
