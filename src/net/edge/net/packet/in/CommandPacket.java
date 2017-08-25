@@ -1,13 +1,18 @@
 package net.edge.net.packet.in;
 
+import net.edge.content.TabInterface;
+import net.edge.content.combat.hit.CombatHit;
+import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.assets.Spellbook;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 /**
@@ -27,20 +32,46 @@ public final class CommandPacket implements IncomingPacket {
 		if (player.getRights() == Rights.ADMINISTRATOR) {
 			if (parts[0].equalsIgnoreCase("spec")) {
 				CombatSpecial.restore(player, 100);
+				player.setSpellbook(Spellbook.ANCIENT);
+				TabInterface.MAGIC.sendInterface(player, 12855);
+				return;
+			} else if (parts[0].equalsIgnoreCase("test2")) {
+//				CombatProjectileDefinition.createLoader().load();
+
+				CombatHit[] hits = new CombatHit[8];
+				for (int index = 0; index < hits.length; index++) {
+					hits[index] = new CombatHit(new Hit(index * 10 + 10), 1, 0);
+				}
+				player.damage(hits);
+
 				return;
 			} else if (parts[0].equalsIgnoreCase("test")) {
 //				CombatProjectileDefinition.createLoader().load();
 
-				int first = 21;
-				int second;
-				int third;
-				int fourth;
+				new Task(1, false) {
+					int ticks = 0;
+					@Override
+					protected void execute() {
+						if (ticks == 0) {
+							CombatHit[] hits = new CombatHit[1];
+							for (int index = 0; index < hits.length; index++) {
+								hits[index] = new CombatHit(new Hit(index * 10 + 10), 2, 0);
+							}
+							player.getCombat().submitHits(player, hits);
+						}
 
-				second = first / 2;
-				third  = second / 2;
-				fourth = first - second - third;
+						if (ticks == 1) {
+							CombatHit[] hits = new CombatHit[2];
+							for (int index = 0; index < hits.length; index++) {
+								hits[index] = new CombatHit(new Hit(index * 10 + 20), 1, 0);
+							}
+							player.getCombat().submitHits(player, hits);
+							cancel();
+						}
 
-				System.out.println(first + " -- " + second + " -- " + third + " -- " + fourth);
+						ticks++;
+					}
+				}.submit();
 
 				return;
 			} else if (parts[0].equalsIgnoreCase("man")) {

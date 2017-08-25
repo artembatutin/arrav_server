@@ -70,9 +70,7 @@ public abstract class MagicStrategy<T extends Actor> extends CombatStrategy<T> {
 
         for (Hit hit : hits) {
             exp += hit.getDamage();
-            System.out.print(hit.getDamage() + " --");
         }
-        System.out.println();
 
         exp /= 10;
         exp *= BASE_EXPERIENCE_MULTIPLIER;

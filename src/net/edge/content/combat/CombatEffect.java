@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CombatEffect {
 
-    default boolean canEffect(Actor attacker, Actor defender, Hit hits) {
+    default boolean canEffect(Actor attacker, Actor defender, Hit hit) {
         return true;
     }
 

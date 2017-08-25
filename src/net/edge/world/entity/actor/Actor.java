@@ -446,9 +446,20 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Deals a series of hits to this entity.
-	 * @param hit the hit to deal to this entity.
+	 * @param hits the hits to deal to this entity.
 	 */
-	public final void damage(Hit hit) {
+	public final void damage(Hit... hits) {
+		for (Hit hit : hits) {
+			getCombat().queueDamage(hit);
+		}
+	}
+
+	/**
+	 * Writes the {@code hit} to the {@code primary} and {@code secondary} hit
+	 * update variables.
+	 * @param hit the hit to write
+	 */
+	public final void writeDamage(Hit hit) {
 		if (primaryHit == null) {
 			primaryHit = decrementHealth(hit);
 			getFlags().flag(UpdateFlag.PRIMARY_HIT);

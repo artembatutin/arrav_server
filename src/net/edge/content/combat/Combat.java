@@ -14,7 +14,6 @@ import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
 
 import java.util.Deque;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -26,24 +25,23 @@ public class Combat<T extends Actor> {
     private Actor lastAttacker;
     private Actor lastDefender;
 
-    private Stopwatch lastAttacked = new Stopwatch();
-    private Stopwatch lastBlocked = new Stopwatch();
+    private final Stopwatch lastAttacked = new Stopwatch();
+    private final Stopwatch lastBlocked = new Stopwatch();
 
     private FightType type;
 
     private CombatStrategy<? super T> strategy;
-    private AttackModifier attackModifier = new AttackModifier();
-    private List<CombatListener<? super T>> listeners = new LinkedList<>();
+    private final AttackModifier attackModifier = new AttackModifier();
+    private final List<CombatListener<? super T>> listeners = new LinkedList<>();
+    private final List<CombatListener<? super T>> pendingAddition = new LinkedList<>();
+    private final List<CombatListener<? super T>> pendingRemoval = new LinkedList<>();
 
     /** The cache of damage dealt to this controller during combat. */
     private final CombatDamage damageCache = new CombatDamage();
-
-    private List<CombatListener<? super T>> pendingAddition = new LinkedList<>();
-    private List<CombatListener<? super T>> pendingRemoval = new LinkedList<>();
-    private int[] delays = new int[3];
-
-    private Deque<CombatTaskData<T>> hitQueue = new LinkedList<>();
-    private int[] lastHitDelays = new int[4];
+    private final Deque<CombatTaskData<T>> combatQueue = new LinkedList<>();
+    private final Deque<Hit> damageQueue = new LinkedList<>();
+    private final int[] hitsplatDelays = new int[4];
+    private final int[] combatDelays = new int[3];
 
     public Combat(T attacker) {
         this.attacker = attacker;
@@ -73,9 +71,9 @@ public class Combat<T extends Actor> {
     private void tick() {
         updateListeners();
 
-        for (int index = 0; index < delays.length; index++) {
-            if (delays[index] > 0) {
-                delays[index]--;
+        for (int index = 0; index < combatDelays.length; index++) {
+            if (combatDelays[index] > 0) {
+                combatDelays[index]--;
             } else {
                 if (defender == null || strategy == null) continue;
                 if (strategy.getCombatType().ordinal() != index) continue;
@@ -83,31 +81,29 @@ public class Combat<T extends Actor> {
             }
         }
 
-        for (Iterator<CombatTaskData<T>> it = hitQueue.iterator(); it.hasNext();) {
-            CombatTaskData<T> data = it.next();
-            if (data.getDefender() != defender) {
-                hitTask(data).submit();
-                it.remove();
-            }
+        while (!combatQueue.isEmpty()) {
+            CombatTaskData<T> data = combatQueue.poll();
+            hitTask(data).submit();
         }
 
-        for (int index = 0, sent = 0; index < lastHitDelays.length; index++) {
-            if (lastHitDelays[index] > 0) {
-                lastHitDelays[index]--;
-            } else if (sent < 2 && sendNextHit()) {
-                lastHitDelays[index] = 2;
+        for (int index = 0, sent = 0; index < hitsplatDelays.length; index++) {
+            if (hitsplatDelays[index] > 0) {
+                hitsplatDelays[index]--;
+            } else if (sent < 2 && sendNextHitsplat()) {
+                hitsplatDelays[index] = 2;
                 sent++;
             }
         }
+
     }
 
-    private boolean sendNextHit() {
-        if (hitQueue.isEmpty()) {
+    private boolean sendNextHitsplat() {
+        if (damageQueue.isEmpty()) {
             return false;
         }
 
-        CombatTaskData<T> data = hitQueue.poll();
-        hitTask(data).submit();
+        Hit hit = damageQueue.poll();
+        attacker.writeDamage(hit);
         return true;
     }
 
@@ -150,14 +146,14 @@ public class Combat<T extends Actor> {
         boolean first = true;
         for (CombatHit hit : hits) {
             CombatTaskData<T> data = new CombatTaskData<>(attacker, defender, hit, strategy, first);
-            first = false;
 
             if (data.isFirstHit()) {
                 start(defender, strategy, hits);
             }
 
             attack(defender, hit, strategy);
-            hitQueue.add(data);
+            combatQueue.add(data);
+            first = false;
         }
     }
 
@@ -165,19 +161,23 @@ public class Combat<T extends Actor> {
         submitHits(defender, strategy, hits);
     }
 
+    public void queueDamage(Hit hit) {
+        damageQueue.add(hit);
+    }
+
     private void setDelay(int index, int delay) {
-        for (int idx = 0; idx < delays.length; idx++) {
+        for (int idx = 0; idx < combatDelays.length; idx++) {
             if (idx != index) {
-                delays[idx] += 2;
-            } else if (delays[idx] < delay) {
-                delays[idx] = delay;
+                combatDelays[idx] += 2;
+            } else if (combatDelays[idx] < delay) {
+                combatDelays[idx] = delay;
             }
         }
     }
 
     private void start(Actor defender, CombatStrategy<? super T> strategy, Hit... hits) {
         if (!CombatUtil.canAttack(attacker, defender)) {
-            hitQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
             reset();
             return;
         }
@@ -188,7 +188,7 @@ public class Combat<T extends Actor> {
 
     private void attack(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
         if (!CombatUtil.canAttack(attacker, defender)) {
-            hitQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
             reset();
             return;
         }
@@ -202,7 +202,7 @@ public class Combat<T extends Actor> {
 
     private void hit(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
         if (!CombatUtil.canAttack(attacker, defender)) {
-            hitQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
             reset();
             return;
         }
@@ -221,7 +221,7 @@ public class Combat<T extends Actor> {
 
     private void hitsplat(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
         if (!CombatUtil.canAttack(attacker, defender)) {
-            hitQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
             reset();
             return;
         }
@@ -229,20 +229,21 @@ public class Combat<T extends Actor> {
         strategy.hitsplat(attacker, defender, hit);
         listeners.forEach(listener -> listener.hitsplat(attacker, defender, hit));
 
-        defender.getCombat().block(attacker, hit, strategy.getCombatType());
-        defender.getCombat().getDamageCache().add(attacker, hit.getDamage());
-
         if (strategy.getCombatType() != CombatType.MAGIC || hit.isAccurate()) {
-            defender.damage(hit);
+            defender.getCombat().queueDamage(hit);
+            defender.getCombat().damageCache.add(attacker, hit.getDamage());
 
             if (defender.getCurrentHealth() <= 0) {
-                defender.getCombat().onDeath(defender, hit);
+                defender.getCombat().onDeath(attacker, hit);
             }
         }
+
+        defender.getCombat().block(attacker, hit, strategy.getCombatType());
     }
 
     public void block(Actor attacker, Hit hit, CombatType combatType) {
         T defender = this.attacker;
+
         lastBlocked.reset();
         lastAttacker = attacker;
         listeners.forEach(attack -> attack.block(attacker, defender, hit, combatType));
@@ -253,12 +254,12 @@ public class Combat<T extends Actor> {
         listeners.forEach(attack -> attack.onDeath(attacker, defender, hit));
         defender.getMovementQueue().reset();
         attacker.getCombat().reset();
-        defender.getCombat().reset();
+        reset();
     }
 
     private void finish(Actor defender, CombatStrategy<? super T> strategy) {
         if (!CombatUtil.canAttack(attacker, defender)) {
-            hitQueue.removeIf(hit -> hit.getDefender() == defender);
+            combatQueue.removeIf(hit -> hit.getDefender() == defender);
             reset();
             return;
         }

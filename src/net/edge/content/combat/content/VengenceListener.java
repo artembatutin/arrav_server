@@ -1,4 +1,4 @@
-package net.edge.content.combat.attack.listener.impl;
+package net.edge.content.combat.content;
 
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.attack.listener.SimplifiedListener;
@@ -14,13 +14,17 @@ public class VengenceListener extends SimplifiedListener<Player> {
 
     @Override
     public void block(Actor attacker, Player defender, Hit hit, CombatType combatType) {
-        Hit recoil = new Hit(hit.getDamage(), HitIcon.DEFLECT);
-        attacker.damage(recoil);
-        attacker.getCombat().getDamageCache().add(defender, recoil.getDamage());
+        if (hit.getDamage() < 1) {
+            return;
+        }
 
         defender.forceChat("Taste vengeance!");
         defender.getCombat().removeListener(this);
         defender.setVenged(false);
+
+        Hit recoil = new Hit((int) (hit.getDamage() * 0.75), HitIcon.DEFLECT);
+        attacker.damage(recoil);
+        attacker.getCombat().getDamageCache().add(defender, recoil.getDamage());
     }
 
 }

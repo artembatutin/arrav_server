@@ -2,7 +2,7 @@ package net.edge.content.combat;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import net.edge.content.combat.content.ProjectileEffect;
+import net.edge.content.combat.content.SpellEffects;
 import net.edge.util.json.JsonLoader;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -107,7 +107,7 @@ public final class CombatProjectileDefinition {
 
                 definition.effect = null;
                 if (reader.has("combat-effect")) {
-                    definition.effect = ProjectileEffect.valueOf(reader.get("combat-effect").getAsString()).getEffect();
+                    definition.effect = SpellEffects.valueOf(reader.get("combat-effect").getAsString()).getEffect();
                 }
 
                 definition.animation = null;

@@ -29,6 +29,12 @@ public final class CombatHit extends Hit {
         this.hitsplatDelay = hitsplatDelay;
     }
 
+    /**
+     * Copies and modifies this combat hit.
+     *
+     * @param modifier the damage modification
+     * @return a copy of this combat hit with the damage modifier applied
+     */
     public CombatHit copyAndModify(Function<Integer, Integer> modifier) {
         CombatHit next = new CombatHit(this, hitDelay, hitsplatDelay);
         next.modifyDamage(modifier);
