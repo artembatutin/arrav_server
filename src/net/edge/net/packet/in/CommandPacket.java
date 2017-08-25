@@ -32,8 +32,8 @@ public final class CommandPacket implements IncomingPacket {
 		if (player.getRights() == Rights.ADMINISTRATOR) {
 			if (parts[0].equalsIgnoreCase("spec")) {
 				CombatSpecial.restore(player, 100);
-//				player.setSpellbook(Spellbook.ANCIENT);
-//				TabInterface.MAGIC.sendInterface(player, Spellbook.ANCIENT.getId());
+				player.setSpellbook(Spellbook.ANCIENT);
+				TabInterface.MAGIC.sendInterface(player, Spellbook.ANCIENT.getId());
 				return;
 			} else if (parts[0].equalsIgnoreCase("test2")) {
 //				CombatProjectileDefinition.createLoader().load();

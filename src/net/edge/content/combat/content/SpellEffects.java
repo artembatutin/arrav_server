@@ -143,14 +143,19 @@ public enum SpellEffects {
     }
 
     private static void heal(Actor attacker, Hit hit) {
-        if (attacker.getCurrentHealth() < attacker.getSkillLevel(Skills.HITPOINTS)) {
-            int heal = hit.getDamage() / 4;
+        Skill skill = attacker.toPlayer().getSkills()[Skills.HITPOINTS];
+        int current = attacker.getCurrentHealth();
+        int real = skill.getRealLevel() * 10;
 
-            if (heal + attacker.getCurrentHealth() > attacker.getSkillLevel(Skills.HITPOINTS)) {
-                heal = attacker.getSkillLevel(Skills.HITPOINTS) - attacker.getCurrentHealth();
+        if (current < real) {
+            float heal = hit.getDamage() / 40f;
+
+            if (heal + current > real) {
+                heal = real - current;
             }
 
-            attacker.healEntity(heal);
+            attacker.healEntity((int) (heal * 10));
+            System.out.println((int) (heal * 10));
         }
     }
 
