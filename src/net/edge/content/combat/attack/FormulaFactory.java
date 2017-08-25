@@ -163,8 +163,8 @@ public final class FormulaFactory {
         FightType attType = attacker.getCombat().getFightType();
         FightType defType = defender.getCombat().getFightType();
 
-        double attackRoll = roll(attacker, accuracy, attType, true);
-        double defenceRoll = roll(defender, defence, defType, false);
+        double attackRoll = roll(attacker, accuracy, attType, type, true);
+        double defenceRoll = roll(defender, defence, defType, type, false);
         double chance;
 
         if (attackRoll < defenceRoll) {
@@ -173,10 +173,10 @@ public final class FormulaFactory {
             chance = 1 - ((defenceRoll + 1) / (attackRoll * 2));
         }
 
-//        System.out.println(attacker.isPlayer() + " " + accuracy + " " + attacker.getCombat().getFightType() + " " + attacker.getCombat().getFightType().getStyle());
-//        System.out.println(defender.isPlayer() + " " + defence  + " " + defender.getCombat().getFightType() + " " + defender.getCombat().getFightType().getStyle());
-//        System.out.println(attacker.isPlayer() + " " + ((int) (chance * 10000) / 100.0) + "% " + attackRoll + " " + defenceRoll);
-//        System.out.println();
+        System.out.println(attacker.isPlayer() + " " + accuracy + " " + attacker.getCombat().getFightType() + " " + attacker.getCombat().getFightType().getStyle());
+        System.out.println(defender.isPlayer() + " " + defence  + " " + defender.getCombat().getFightType() + " " + defender.getCombat().getFightType().getStyle());
+        System.out.println(attacker.isPlayer() + " " + ((int) (chance * 10000) / 100.0) + "% " + attackRoll + " " + defenceRoll);
+        System.out.println();
 
         return random(chance * 100) > random(100 - chance * 100);
     }
@@ -262,6 +262,7 @@ public final class FormulaFactory {
     private static int getEffectiveStrength(Actor actor, double modifier) {
         int level = actor.getSkillLevel(Skills.STRENGTH);
         level += level * modifier;
+        level += actor.getCombat().getFightType().getStyle().getStrengthIncrease();
         return level;
     }
 
@@ -346,22 +347,27 @@ public final class FormulaFactory {
      * @param fightType the fight type
      * @return the roll
      */
-    private static double roll(Actor actor, double level, FightType fightType, boolean offensive) {
-        if (offensive) {
+    private static double roll(Actor actor, double level, FightType fightType, CombatType type, boolean offensive) {
+        if (offensive) {//if its offensive
             if (actor.isPlayer()) {
                 Player player = actor.toPlayer();
-                int bonus = player.getEquipment().getBonuses()[fightType.getBonus()];
+                int bonus = player.getEquipment().getBonuses()[fightType.getBonus()];//u grab the bonus with the fight type, if its aggressive its like 3 right? mkm
+                if (type == CombatType.MAGIC) {
+                    bonus = player.getEquipment().getBonuses()[CombatConstants.ATTACK_MAGIC];
+                    return roll(level, bonus, 0);
+                }
                 return roll(level, bonus, fightType.getStyle().getAccuracyIncrease());
             }
-            int bonus;
-            switch (fightType.getBonus()) {
-                case CombatConstants.ATTACK_RANGED:
+
+            int bonus = 0;
+            switch (type) {
+                case RANGED:
                     bonus = actor.toMob().getDefinition().getCombat().getAttackRanged();
                     break;
-                case CombatConstants.ATTACK_MAGIC:
+                case MAGIC:
                     bonus = actor.toMob().getDefinition().getCombat().getAttackMagic();
                     break;
-                default:
+                case MELEE:
                     bonus = actor.toMob().getDefinition().getCombat().getAttackMelee();
                     break;
             }
@@ -370,31 +376,37 @@ public final class FormulaFactory {
 
         if (actor.isPlayer()) {
             Player player = actor.toPlayer();
-            int bonus = player.getEquipment().getBonuses()[fightType.getBonus()];
+            int bonus = player.getEquipment().getBonuses()[fightType.getBonus()];//this is defensive, but its still 3 if ur on aggressive.
+            if (type == CombatType.MAGIC) {
+                bonus = player.getEquipment().getBonuses()[CombatConstants.DEFENCE_MAGIC];
+                return roll(level, bonus, 0);
+            }
             return roll(level, bonus, fightType.getStyle().getDefensiveIncrease());
         }
 
         int bonus = 0;
-        switch (fightType.getBonus()) {
-            case CombatConstants.DEFENCE_RANGED:
+        switch (type) {
+            case MELEE:
+                switch (fightType.getBonus()) {
+                    case CombatConstants.DEFENCE_STAB:
+                        bonus = actor.toMob().getDefinition().getCombat().getDefenceStab();
+                        break;
+                    case CombatConstants.DEFENCE_CRUSH:
+                        bonus = actor.toMob().getDefinition().getCombat().getDefenceCrush();
+                        break;
+                    case CombatConstants.DEFENCE_SLASH:
+                        bonus = actor.toMob().getDefinition().getCombat().getDefenceSlash();
+                        break;
+                }
+                break;
+            case MAGIC:
+                bonus = actor.toMob().getDefinition().getCombat().getDefenceMagic();
+                break;
+            case RANGED:
                 bonus = actor.toMob().getDefinition().getCombat().getDefenceRanged();
                 break;
 
-            case CombatConstants.DEFENCE_MAGIC:
-                bonus = actor.toMob().getDefinition().getCombat().getDefenceMagic();
-                break;
 
-            case CombatConstants.DEFENCE_STAB:
-                bonus = actor.toMob().getDefinition().getCombat().getDefenceStab();
-                break;
-
-            case CombatConstants.DEFENCE_CRUSH:
-                bonus = actor.toMob().getDefinition().getCombat().getDefenceCrush();
-                break;
-
-            case CombatConstants.DEFENCE_SLASH:
-                bonus = actor.toMob().getDefinition().getCombat().getDefenceSlash();
-                break;
         }
         return roll(level, bonus, fightType.getStyle().getDefensiveIncrease());
     }

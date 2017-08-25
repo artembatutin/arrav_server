@@ -16,14 +16,14 @@ import java.util.Optional;
  */
 
 @PlayerCombatListenerSignature(items = {
-        4716,/* 4880, 4881, 4882, 4883,*/
-        4718,/* 4886, 4887, 4888, 4889,*/
-        4720,/* 4892, 4893, 4894, 4895,*/
-        4722,/* 4898, 4899, 4900, 4901*/
+    4716,/* 4880, 4881, 4882, 4883,*/
+    4718,/* 4886, 4887, 4888, 4889,*/
+    4720,/* 4892, 4893, 4894, 4895,*/
+    4722,/* 4898, 4899, 4900, 4901*/
 })
 
 @NpcCombatListenerSignature(npcs = {
-        2026
+    2026
 })
 
 public class DharokListener extends SimplifiedListener<Actor> {

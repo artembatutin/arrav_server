@@ -5,7 +5,7 @@ import net.edge.action.ActionContainer;
 import net.edge.action.impl.MobAction;
 import net.edge.content.item.pets.Pet;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.combat.content.MagicSpell;
+import net.edge.content.combat.content.MagicSpells;
 import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.summoning.Summoning;
@@ -86,7 +86,7 @@ public final class MobActionPacket implements IncomingPacket {
 		int index = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int spellId = payload.getShort(true, ByteTransform.A);
 		Mob mob = World.get().getMobs().get(index - 1);
-		MagicSpell spell = MagicSpell.forId(spellId);
+		MagicSpells spell = MagicSpells.forId(spellId);
 
 		if(mob == null || spell == null || !checkAttack(player, mob)) {
 			return;

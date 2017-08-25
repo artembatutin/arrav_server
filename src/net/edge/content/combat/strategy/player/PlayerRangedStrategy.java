@@ -8,7 +8,6 @@ import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.basic.RangedStrategy;
 import net.edge.content.combat.weapon.RangedAmmunition;
 import net.edge.content.combat.weapon.RangedWeaponDefinition;
-import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.item.Requirement;
 import net.edge.net.packet.out.SendMessage;
 import net.edge.world.Animation;
@@ -18,6 +17,9 @@ import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Equipment;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -67,7 +69,16 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
         attacker.animation(getAttackAnimation(attacker, defender));
         projectileDefinition.getStart().ifPresent(attacker::graphic);
         projectileDefinition.sendProjectile(attacker, defender, false);
-        addCombatExperience(attacker, hits);
+
+        List<Hit> extra = new LinkedList<>();
+        for (Hit hit : hits) {
+            Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
+            Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit, extra);
+            projectileDefinition.getEffect().filter(filter).ifPresent(execute);
+        }
+
+        Collections.addAll(extra, hits);
+        addCombatExperience(attacker, extra.toArray(new Hit[0]));
     }
 
     @Override
@@ -77,10 +88,6 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 
     @Override
     public void hit(Player attacker, Actor defender, Hit hit) {
-        Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
-        Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit);
-        projectileDefinition.getEffect().filter(filter).ifPresent(execute);
-
         CombatPoisonEffect.getPoisonType(attacker.getEquipment().get(Equipment.WEAPON_SLOT)).ifPresent(p -> {
             if(hit.getDamage() > 0) {
                 defender.poison(p);

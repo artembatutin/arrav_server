@@ -14,7 +14,7 @@ import net.edge.content.clanchat.ClanManager;
 import net.edge.content.clanchat.ClanMember;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.attack.FightType;
-import net.edge.content.combat.content.MagicSpell;
+import net.edge.content.combat.content.MagicSpells;
 import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectTask;
 import net.edge.content.combat.hit.Hit;
@@ -395,7 +395,7 @@ public final class Player extends Actor {
 	/**
 	 * The spell that has been selected to auto-cast.
 	 */
-	private MagicSpell autocastSpell;
+	private MagicSpells autocastSpell;
 	
 	/**
 	 * The condition if the player's screen is on focus.
@@ -1607,18 +1607,18 @@ public final class Player extends Actor {
 	/**
 	 * Gets the auto-cast spell.
 	 *
-	 * @return the {@link MagicSpell} to auto-cast
+	 * @return the {@link MagicSpells} to auto-cast
 	 */
-	public MagicSpell getAutocastSpell() {
+	public MagicSpells getAutocastSpell() {
 		return autocastSpell;
 	}
 
 	/**
 	 * Sets the auto-cast spell.
 	 *
-	 * @param autocastSpell the {@link MagicSpell} to auto-cast
+	 * @param autocastSpell the {@link MagicSpells} to auto-cast
 	 */
-	public void setAutocastSpell(MagicSpell autocastSpell) {
+	public void setAutocastSpell(MagicSpells autocastSpell) {
 		this.autocastSpell = autocastSpell;
 		WeaponInterface.setStrategy(this);
 		combat.reset();

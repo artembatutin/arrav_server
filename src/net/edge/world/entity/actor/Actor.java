@@ -65,7 +65,7 @@ public abstract class Actor extends Entity {
 	/**
 	 * The collection of stopwatches used for various timing operations.
 	 */
-	private final Stopwatch lastCombat = new Stopwatch(), freezeTimer = new Stopwatch(), stunTimer = new Stopwatch();
+	private final Stopwatch freezeTimer = new Stopwatch(), stunTimer = new Stopwatch();
 
 	/**
 	 * A saved position of the previous region to be moved from.
@@ -829,15 +829,6 @@ public abstract class Actor extends Entity {
 	 */
 	public final UpdateFlagHolder getFlags() {
 		return flags;
-	}
-
-	/**
-	 * Gets the timer that records the difference in time between now and the
-	 * last time the player was in combat.
-	 * @return the timer that determines when the player was last in combat.
-	 */
-	public final Stopwatch getLastCombat() {
-		return lastCombat;
 	}
 
 	/**

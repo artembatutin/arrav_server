@@ -27,10 +27,11 @@ public final class CommandPacket implements IncomingPacket {
 		if (player.getRights() == Rights.ADMINISTRATOR) {
 			if (parts[0].equalsIgnoreCase("spec")) {
 				CombatSpecial.restore(player, 100);
+				return;
 			} else if (parts[0].equalsIgnoreCase("test")) {
 //				CombatProjectileDefinition.createLoader().load();
 
-				int first = 199;
+				int first = 21;
 				int second;
 				int third;
 				int fourth;
@@ -41,13 +42,23 @@ public final class CommandPacket implements IncomingPacket {
 
 				System.out.println(first + " -- " + second + " -- " + third + " -- " + fourth);
 
+				return;
 			} else if (parts[0].equalsIgnoreCase("man")) {
 				Mob npc = Mob.getNpc(1, player.getPosition().copy().move(1, 0));
-				npc.getMovementQueue().setLockMovement(true);
 				npc.setOwner(player);
 				npc.setRespawn(false);
 				npc.setCurrentHealth(100_000);
 				World.get().getMobs().add(npc);
+				return;
+			} else if (parts[0].equalsIgnoreCase("men")) {
+				for (int i = 0; i < 3; i++) {
+					Mob npc = Mob.getNpc(1, player.getPosition().copy().move(i - 1, 0));
+					npc.getMovementQueue().setLockMovement(true); //nice
+					npc.setOwner(player);
+					npc.setRespawn(false);
+					npc.setCurrentHealth(100_000);
+					World.get().getMobs().add(npc);
+				}
 				return;
 			}
 		}

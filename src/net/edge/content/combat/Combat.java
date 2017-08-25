@@ -14,6 +14,7 @@ import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
 
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -79,6 +80,14 @@ public class Combat<T extends Actor> {
                 if (defender == null || strategy == null) continue;
                 if (strategy.getCombatType().ordinal() != index) continue;
                 submitStrategy(defender, strategy);
+            }
+        }
+
+        for (Iterator<CombatTaskData<T>> it = hitQueue.iterator(); it.hasNext();) {
+            CombatTaskData<T> data = it.next();
+            if (data.getDefender() != defender) {
+                hitTask(data).submit();
+                it.remove();
             }
         }
 
@@ -386,8 +395,16 @@ public class Combat<T extends Actor> {
         };
     }
 
+    public boolean hasPassed(int delay) {
+        return stopwatchElapsed(lastAttacked, delay) || stopwatchElapsed(lastBlocked, delay);
+    }
+
     private static boolean stopwatchElapsed(Stopwatch stopwatch, int seconds) {
         return stopwatch.elapsed(seconds, TimeUnit.SECONDS);
     }
 
+    public long elapsedTime() {
+        long elapsed = lastAttacked.elapsedTime();
+        return lastBlocked.elapsedTime() > elapsed ? elapsed : lastBlocked.elapsedTime();
+    }
 }

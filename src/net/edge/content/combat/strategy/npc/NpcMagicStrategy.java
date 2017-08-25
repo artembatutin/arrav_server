@@ -38,7 +38,7 @@ public class NpcMagicStrategy extends MagicStrategy<Mob> {
     @Override
     public void hit(Mob attacker, Actor defender, Hit hit) {
         Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
-        Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit);
+        Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit, null);
         projectileDefinition.getEffect().filter(Objects::nonNull).filter(filter).ifPresent(execute);
 
         CombatPoisonEffect.getPoisonType(attacker.getId()).ifPresent(p -> {

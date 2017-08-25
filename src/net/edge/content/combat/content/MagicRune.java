@@ -21,7 +21,8 @@ public enum MagicRune {
     LAW_RUNE(563, null, null),
     COSMIC_RUNE(564, null, null),
     BLOOD_RUNE(565, null, null),
-    SOUL_RUNE(566, null, null);
+    SOUL_RUNE(566, null, null),
+    ASTRAL_RUNE(9075, null, null);
 
     private final int mainId;
     private final int[] combos;

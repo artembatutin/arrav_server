@@ -81,7 +81,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 					getActor().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getActor().getPosition(), 2)).forEach(h -> h.damage(new Hit(hit, Hitsplat.NORMAL, HitIcon.NONE)));
 				}
 			} else {
-				Actor victim = getActor().getCombat().getDefender();
+				Actor victim = getActor().getCombat().getLastDefender();
 				if(victim != null && victim.getPosition().withinDistance(getActor().getPosition(), 2)) {
 					victim.damage(new Hit(RandomUtils.inclusive(hit), Hitsplat.NORMAL, HitIcon.NONE));
 				}
@@ -109,7 +109,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 					getActor().getLocalPlayers().stream().filter(p -> p.getPosition().withinDistance(getActor().getPosition(), 3)).forEach(h -> h.damage(new Hit(RandomUtils.inclusive(maxHit), Hitsplat.NORMAL, HitIcon.NONE)));
 				}
 			} else {
-				Actor victim = getActor().getCombat().getDefender();
+				Actor victim = getActor().getCombat().getLastDefender();
 				if(victim != null && victim.getPosition().withinDistance(getActor().getPosition(), 3)) {
 					victim.damage(new Hit(RandomUtils.inclusive(maxHit), Hitsplat.NORMAL, HitIcon.NONE));
 				}

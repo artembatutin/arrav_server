@@ -32,7 +32,7 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
     @Override
     public void hit(Player attacker, Actor defender, Hit hit) {
         CombatPoisonEffect.getPoisonType(attacker.getEquipment().get(Equipment.WEAPON_SLOT)).ifPresent(p -> {
-            if(hit.isAccurate()) {
+            if(hit.getDamage() > 0) {
                 defender.poison(p);
             }
         });

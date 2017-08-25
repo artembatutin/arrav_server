@@ -35,8 +35,8 @@ public class Ravager extends Pest {
 		}
 		if(gate != null) {
 			if(gate.destroyed()) {
-				if(!getPosition().withinDistance(knight.getPosition(), 5) && getCombat().getDefender() != null) {
-					Optional<Position> destination = TraversalMap.getRandomTraversableTile(getCombat().getDefender().getPosition(), size());
+				if(!getPosition().withinDistance(knight.getPosition(), 5) && getCombat().getLastDefender() != null) {
+					Optional<Position> destination = TraversalMap.getRandomTraversableTile(getCombat().getLastDefender().getPosition(), size());
 					destination.ifPresent(d -> getMovementQueue().smartWalk(d));
 				}
 			} else {

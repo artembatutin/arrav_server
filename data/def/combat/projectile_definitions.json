@@ -910,7 +910,7 @@
     "name": "Ice Blitz",
     "combat-effect": "ICE_BLITZ",
     "max-hit": 26,
-    "hitsplat-delay": 1,
+    "hitsplat-delay": 2,
     "animation": {
       "id": 1978,
       "delay": 0,
@@ -948,6 +948,7 @@
   {
     "name": "Ice Barrage",
     "combat-effect": "ICE_BARRAGE",
+    "hitsplat-delay": 0,
     "max-hit": 30,
     "animation": {
       "id": 1979,
