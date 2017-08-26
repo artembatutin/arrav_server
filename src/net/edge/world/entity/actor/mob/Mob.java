@@ -13,8 +13,8 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.combat.strategy.npc.NpcMagicStrategy;
 import net.edge.content.combat.strategy.npc.NpcMeleeStrategy;
 import net.edge.content.combat.strategy.npc.NpcRangedStrategy;
-import net.edge.content.combat.strategy.npc.boss.kbd.KingBlackDragon;
-import net.edge.content.combat.strategy.npc.impl.Dragon;
+import net.edge.content.combat.strategy.npc.boss.KingBlackDragonStrategy;
+import net.edge.content.combat.strategy.npc.impl.DragonStrategy;
 import net.edge.content.skill.Skills;
 import net.edge.task.Task;
 import net.edge.world.World;
@@ -42,7 +42,7 @@ public abstract class Mob extends Actor {
 
 	private static final ImmutableMap<Integer, Supplier<CombatStrategy<Mob>>> STRATEGIES = ImmutableMap.of(
 
-		50, KingBlackDragon::new
+		50, KingBlackDragonStrategy::new
 
 	);
 
@@ -90,10 +90,10 @@ public abstract class Mob extends Actor {
 	}
 
 	private static CombatStrategy<Mob> loadMultiStrategy(Mob mob) {
-		if (CombatUtil.isChromaticDragon(mob)) {
-			return new Dragon();
+		if (CombatUtil.isChromaticDragon(mob) || CombatUtil.isMetalicDragon(mob)) {
+			return new DragonStrategy(CombatUtil.isChromaticDragon(mob));
 		}
-		throw new AssertionError("Could not find multi-strategy for Mob[id=" + mob.id + ", name=" + mob.getDefinition().getName() + "].");
+		throw new AssertionError("Could not find multi-strategy for Mob[id=" + mob.id + ", name=" + mob.getDefinition().getName() + "]");
 	}
 
 	/**
