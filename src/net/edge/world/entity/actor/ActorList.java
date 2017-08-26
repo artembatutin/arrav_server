@@ -225,7 +225,7 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 		}
 		if(actor.getSlot() == -1) {
 			System.out.println("Couldn't remove: " + actor.toString() + " because of slot.");
-			return false;
+			return true;
 		}
 		int index = actor.getSlot();
 		int normal = index - 1;

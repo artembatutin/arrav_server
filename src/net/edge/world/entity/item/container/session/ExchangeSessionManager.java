@@ -2,6 +2,7 @@ package net.edge.world.entity.item.container.session;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.net.host.HostManager;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -55,18 +56,23 @@ public final class ExchangeSessionManager {
 			return false;
 		}
 		
-		if(!(player.isIronMan() && requested.isIronMan())) {
-			if(player.isIronMan() && !player.isIronMaxed()) {
-				if(requested.isIronMan() && player.getRights().less(Rights.ADMINISTRATOR)) {
-					player.message("You cannot start an exchange session because you're an iron man member.");
-					return false;
-				}
+		if(!player.getRights().equal(Rights.ADMINISTRATOR) && requested.getRights().equal(Rights.ADMINISTRATOR)) {
+			if(HostManager.same(player, requested)) {
+				player.message("You can't trade over the same network.");
+				return false;
 			}
-			
-			if(requested.isIronMan() && !requested.isIronMaxed()) {
-				if(!player.isIronMan() && player.getRights().less(Rights.ADMINISTRATOR)) {
-					player.message("This player is in iron man mode and can't start an exchange session.");
-					return false;
+			if(!(player.isIronMan() && requested.isIronMan())) {
+				if(player.isIronMan() && !player.isIronMaxed()) {
+					if(requested.isIronMan() && player.getRights().less(Rights.ADMINISTRATOR)) {
+						player.message("You cannot start an exchange session because you're an iron man member.");
+						return false;
+					}
+				}
+				if(requested.isIronMan() && !requested.isIronMaxed()) {
+					if(!player.isIronMan() && player.getRights().less(Rights.ADMINISTRATOR)) {
+						player.message("This player is in iron man mode and can't start an exchange session.");
+						return false;
+					}
 				}
 			}
 		}
