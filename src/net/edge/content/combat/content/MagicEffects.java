@@ -69,7 +69,7 @@ public enum MagicEffects {
         this.effect = new CombatEffect() {
             @Override
             public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
-                return hit.isAccurate();
+                return hit.isAccurate() && effect.canEffect(attacker, defender, hit);
             }
 
             @Override
@@ -87,8 +87,8 @@ public enum MagicEffects {
         List<Actor> actors = new LinkedList<>();
         actors.add(defender);
 
-//        if (!attacker.inMulti() || !defender.inMulti())
-//            return actors;
+        if (!attacker.inMulti() || !defender.inMulti())
+            return actors;
 
         for (Mob other : defender.getLocalMobs()) {
             if (other == null) continue;
@@ -96,7 +96,7 @@ public enum MagicEffects {
             if (other.same(attacker) || other.same(defender)) continue;
             if (other.getCurrentHealth() <= 0 || other.isDead()) continue;
             if (!other.getDefinition().isAttackable()) continue;
-//            if (!other.inMulti()) continue;
+            if (!other.inMulti()) continue;
             actors.add(other);
         }
 
@@ -167,7 +167,7 @@ public enum MagicEffects {
         }
 
         if (defender.isPlayer()) {
-            defender.toPlayer().out(new SendMessage("You have been frozen!"));
+            defender.toPlayer().out(new SendMessage("You've been frozen!"));
         }
 
         defender.freeze(timer);
@@ -186,7 +186,6 @@ public enum MagicEffects {
             }
 
             attacker.healEntity((int) (heal * 10));
-            System.out.println((int) (heal * 10));
         }
     }
 

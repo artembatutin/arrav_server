@@ -21,7 +21,17 @@ public final class AntifireDetails {
 	}
 	
 	public enum AntifireType {
-		REGULAR,
-		SUPER
+		REGULAR(450),
+		SUPER(900);
+
+		final int reduction;
+
+		AntifireType(int reduction) {
+			this.reduction = reduction;
+		}
+
+		public int getReduction() {
+			return reduction;
+		}
 	}
 }

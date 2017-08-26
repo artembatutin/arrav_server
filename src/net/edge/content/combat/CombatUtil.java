@@ -8,6 +8,8 @@ import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.HitIcon;
 import net.edge.content.combat.hit.Hitsplat;
 import net.edge.content.combat.weapon.WeaponInterface;
+import net.edge.content.skill.prayer.Prayer;
+import net.edge.net.packet.out.SendMessage;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Projectile;
@@ -199,25 +201,50 @@ public final class CombatUtil {
         return actor != null && !actor.isDead() && actor.isVisible() && !actor.isTeleporting() && !actor.isNeedsPlacement();
     }
 
-    public static CombatHit generateDragonfire(Mob attacker, Actor defender, int minimumHit) {
+    public static CombatHit generateDragonfire(Mob attacker, Actor defender) {
+        return generateDragonfire(attacker, defender, 600, true);
+    }
+
+    public static CombatHit generateDragonfire(Mob attacker, Actor defender, int max, boolean prayer) {
+        int damage;
         int hitDelay = CombatUtil.getHitDelay(attacker, defender, CombatType.MAGIC);
         int hitsplatDelay = CombatUtil.getHitsplatDelay(CombatType.MAGIC);
 
-        int max = 650;
         if (defender.isPlayer()) {
             Player player = defender.toPlayer();
+            prayer &= player.getPrayerActive().contains(Prayer.PROTECT_FROM_MAGIC);
             boolean shield = player.getEquipment().containsAny(1540, 11283);
+            boolean potion = player.getAntifireDetails().isPresent();
 
-            if (shield && player.getAntifireDetails().isPresent()) {
+            if (shield && potion) {
                 max = 0;
-            } else if (player.getAntifireDetails().isPresent()) {
-                max = player.getAntifireDetails().get().getType() == AntifireDetails.AntifireType.REGULAR ? 162 : 81;
+                player.out(new SendMessage("Your potion and shield fully protects you from the heat of the dragon's breath."));
+            } else if (potion) {
+                AntifireDetails.AntifireType type = player.getAntifireDetails().get().getType();
+                max -= type.getReduction();
+                if (max <= 0) {
+                    max = 0;
+                    player.out(new SendMessage("Your potion fully protects you from the heat of the dragon's breath."));
+                } else {
+                    player.out(new SendMessage("Your potion slightly protects you from the heat of the dragon's breath."));
+                }
             } else if (shield) {
-                max = 150;
+                max -= 500;
+            } else if (prayer) {
+                max -= 450;
+                player.out(new SendMessage("Your prayers resist some of the dragonfire."));
             }
+
+            damage = max == 0 ? 0 : RandomUtils.inclusive(max);
+            if (damage >= 150) {
+                player.out(new SendMessage("You are horribly burned by the dragonfire!"));
+            } else if (!shield && !potion && !prayer && damage < 90 && damage > 0) {
+                player.out(new SendMessage("You manage to resist some of the dragonfire."));
+            }
+        } else {
+            damage = max == 0 ? 0 : RandomUtils.inclusive(max);
         }
 
-        int damage = max < minimumHit ? 0 : RandomUtils.inclusive(minimumHit, max);
         Hit hit = new Hit(damage, Hitsplat.NORMAL, HitIcon.NONE, true);
         return new CombatHit(hit, hitDelay, hitsplatDelay);
     }
@@ -232,5 +259,13 @@ public final class CombatUtil {
     private static final ImmutableSet<Integer> METALIC_DRAGONS = ImmutableSet.of(
         1590, 1591, 1592, 3590, 5363, 8424, 10776, 10777, 10778, 10779, 10780, 10781
     );
+
+    public static boolean isChromaticDragon(Mob mob) {
+        return CHROMATIC_DRAGONS.contains(mob.getId());
+    }
+
+    public static boolean isMetalicDragon(Mob mob) {
+        return METALIC_DRAGONS.contains(mob.getId());
+    }
 
 }

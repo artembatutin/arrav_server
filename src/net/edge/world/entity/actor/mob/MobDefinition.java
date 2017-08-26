@@ -1,25 +1,16 @@
 package net.edge.world.entity.actor.mob;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.edge.content.combat.CombatProjectileDefinition;
-import net.edge.content.combat.CombatType;
 import net.edge.util.json.JsonSaver;
-import net.edge.util.rand.Chance;
-import net.edge.world.entity.actor.mob.drop.Drop;
-import net.edge.world.entity.actor.mob.drop.DropManager;
-import net.edge.world.entity.actor.mob.drop.DropTable;
-import net.edge.world.entity.item.ItemDefinition;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -528,11 +519,11 @@ public final class MobDefinition {
 
 	public static final class CombatAttackData {
 
-		public final CombatType type;
+		public final StrategyType type;
 
 		public final String key;
 
-		public CombatAttackData(CombatType type, String key) {
+		public CombatAttackData(StrategyType type, String key) {
 			this.type = type;
 			this.key = key;
 		}
@@ -540,5 +531,13 @@ public final class MobDefinition {
 		public CombatProjectileDefinition getDefinition() {
 			return CombatProjectileDefinition.getDefinition(key);
 		}
+
+		public enum StrategyType {
+			MELEE,
+			RANGED,
+			MAGIC,
+			MULTI
+		}
 	}
+
 }

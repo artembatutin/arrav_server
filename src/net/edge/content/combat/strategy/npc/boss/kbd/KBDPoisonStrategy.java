@@ -17,22 +17,17 @@ public class KBDPoisonStrategy extends NpcMagicStrategy {
     }
 
     @Override
-    public int getAttackDelay(Mob attacker, Actor defender, FightType fightType) {
-        return 5;
-    }
-
-    @Override
     public int getAttackDistance(Mob attacker, FightType fightType) {
         return 10;
     }
 
     @Override
-    public CombatHit[] getHits(Mob attacker, Actor defender) {
-        return new CombatHit[] { CombatUtil.generateDragonfire(attacker, defender, 100) };
+    public Animation getAttackAnimation(Mob attacker, Actor defender) {
+        return ANIMATION;
     }
 
     @Override
-    public Animation getAttackAnimation(Mob attacker, Actor defender) {
-        return ANIMATION;
+    public CombatHit[] getHits(Mob attacker, Actor defender) {
+        return new CombatHit[] { CombatUtil.generateDragonfire(attacker, defender, 650, true) };
     }
 }

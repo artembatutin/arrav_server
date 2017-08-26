@@ -46,7 +46,6 @@ public final class CommandPacket implements IncomingPacket {
 				CombatProjectileDefinition.createLoader().load();
 				return;
 			} else if (parts[0].equalsIgnoreCase("test")) {
-
 				new Task(1, false) {
 					int ticks = 0;
 					@Override
@@ -58,7 +57,6 @@ public final class CommandPacket implements IncomingPacket {
 							}
 							player.getCombat().submitHits(player, hits);
 						}
-
 						if (ticks == 1) {
 							CombatHit[] hits = new CombatHit[2];
 							for (int index = 0; index < hits.length; index++) {
@@ -67,11 +65,9 @@ public final class CommandPacket implements IncomingPacket {
 							player.getCombat().submitHits(player, hits);
 							cancel();
 						}
-
 						ticks++;
 					}
 				}.submit();
-
 				return;
 			} else if (parts[0].equalsIgnoreCase("man")) {
 				Mob npc = Mob.getNpc(1, player.getPosition().copy().move(1, 0));

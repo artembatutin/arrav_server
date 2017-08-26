@@ -4,7 +4,6 @@ import net.edge.content.combat.CombatProjectileDefinition;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.hit.CombatHit;
-import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.npc.NpcMagicStrategy;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;
@@ -15,11 +14,6 @@ public class KBDFreezeStrategy extends NpcMagicStrategy {
 
     KBDFreezeStrategy() {
         super(CombatProjectileDefinition.getDefinition("KBD freeze"));
-    }
-
-    @Override
-    public int getAttackDelay(Mob attacker, Actor defender, FightType fightType) {
-        return 5;
     }
 
     @Override
@@ -34,7 +28,7 @@ public class KBDFreezeStrategy extends NpcMagicStrategy {
 
     @Override
     public CombatHit[] getHits(Mob attacker, Actor defender) {
-        return new CombatHit[] { CombatUtil.generateDragonfire(attacker, defender, 100) };
+        return new CombatHit[] { CombatUtil.generateDragonfire(attacker, defender, 650, true) };
     }
 
 }

@@ -1,14 +1,15 @@
 package net.edge.content.combat.strategy.npc.boss.kbd;
 
 import net.edge.content.combat.CombatType;
+import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.CombatStrategy;
-import net.edge.content.combat.strategy.npc.boss.BossStrategy;
+import net.edge.content.combat.strategy.npc.MultiStrategy;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 
 /** @author Michael | Chex */
-public class KingBlackDragon extends BossStrategy {
+public class KingBlackDragon extends MultiStrategy {
     private static final KBDMeleeStrategy MELEE = new KBDMeleeStrategy();
     private static final KBDDragonFireStrategy DRAGONFIRE = new KBDDragonFireStrategy();
     private static final KBDPoisonStrategy POISON = new KBDPoisonStrategy();
@@ -44,6 +45,11 @@ public class KingBlackDragon extends BossStrategy {
         } else {
             currentStrategy = randomStrategy(NON_MELEE);
         }
+    }
+
+    @Override
+    public int getAttackDelay(Mob attacker, Actor defender, FightType fightType) {
+        return attacker.getDefinition().getAttackDelay();
     }
 
 }

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.CombatProjectileDefinition;
-import net.edge.content.combat.CombatType;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.listener.CombatListener;
 import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
 import net.edge.content.combat.hit.Hit;
@@ -14,6 +14,7 @@ import net.edge.content.combat.strategy.npc.NpcMagicStrategy;
 import net.edge.content.combat.strategy.npc.NpcMeleeStrategy;
 import net.edge.content.combat.strategy.npc.NpcRangedStrategy;
 import net.edge.content.combat.strategy.npc.boss.kbd.KingBlackDragon;
+import net.edge.content.combat.strategy.npc.impl.Dragon;
 import net.edge.content.skill.Skills;
 import net.edge.task.Task;
 import net.edge.world.World;
@@ -70,10 +71,29 @@ public abstract class Mob extends Actor {
 		}
 
 		MobDefinition.CombatAttackData data = mob.getDefinition().getCombatAttackData().get();
-		CombatType type = data.type;
-		CombatProjectileDefinition definition = data.getDefinition();
-		CombatStrategy<Mob> strategy = type.equals(CombatType.MAGIC) ? new NpcMagicStrategy(definition) : new NpcRangedStrategy(definition);
-		return Optional.of(strategy);
+		MobDefinition.CombatAttackData.StrategyType type = data.type;
+		switch (type) {
+			case RANGED: {
+				CombatProjectileDefinition definition = data.getDefinition();
+				return Optional.of(new NpcRangedStrategy(definition));
+			}
+			case MAGIC: {
+				CombatProjectileDefinition definition = data.getDefinition();
+				return Optional.of(new NpcMagicStrategy(definition));
+			}
+			case MULTI:
+				return Optional.of(loadMultiStrategy(mob));
+			case MELEE:
+				return Optional.of(NpcMeleeStrategy.INSTANCE);
+		}
+		return Optional.empty();
+	}
+
+	private static CombatStrategy<Mob> loadMultiStrategy(Mob mob) {
+		if (CombatUtil.isChromaticDragon(mob)) {
+			return new Dragon();
+		}
+		throw new AssertionError("Could not find multi-strategy for Mob[id=" + mob.id + ", name=" + mob.getDefinition().getName() + "].");
 	}
 
 	/**
