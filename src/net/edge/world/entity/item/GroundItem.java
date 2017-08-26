@@ -115,8 +115,10 @@ public class GroundItem extends Entity {
 	 * @param player the player attempting to pickup this item.
 	 */
 	public void onPickup(Player player) {
-		if(player.getInventory().add(item) != -1) {
-			this.setState(EntityState.INACTIVE);
+		if(getState() == EntityState.ACTIVE) {
+			if(player.getInventory().add(item) != -1) {
+				this.setState(EntityState.INACTIVE);
+			}
 		}
 	}
 
