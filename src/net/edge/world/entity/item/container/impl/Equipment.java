@@ -220,13 +220,14 @@ public final class Equipment extends ItemContainer {
 
 		//Just a check, had to put it in final.
 		Item finalEquipItem = equipItem;
-		if(!MinigameHandler.execute(player, m -> m.canEquip(player, finalEquipItem, finalEquipItem.getDefinition().getEquipmentType()))) {
-			inventory.nonQueue(false);
-			return false;
-		}
 
 		if(!player.getInventory().hasCapacityAfter(new Item[]{unequipPrimary.orElse(null), unequipSecondary.orElse(null)}, finalEquipItem)) {
 			player.message("You don't have enough inventory space for this.");
+			return false;
+		}
+
+		if(!MinigameHandler.execute(player, m -> m.canEquip(player, finalEquipItem, finalEquipItem.getDefinition().getEquipmentType()))) {
+			inventory.nonQueue(false);
 			return false;
 		}
 
@@ -257,6 +258,7 @@ public final class Equipment extends ItemContainer {
 			System.out.println("added listener");
 			player.getCombat().addListener(listenerSet.listener);
 		}
+
 		inventory.nonQueue(false);
 		return true;
 	}

@@ -1,8 +1,8 @@
 package net.edge.content.combat.strategy;
 
+import net.edge.content.combat.CombatType;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.FightType;
-import net.edge.content.combat.CombatType;
 import net.edge.content.combat.attack.FormulaFactory;
 import net.edge.content.combat.attack.listener.CombatListener;
 import net.edge.content.combat.hit.CombatHit;
@@ -37,12 +37,11 @@ public abstract class CombatStrategy<T extends Actor> implements CombatListener<
     }
 
     @Override
-    public final void hitsplat(T attacker, Actor defender, Hit hit) {
+    public void hitsplat(T attacker, Actor defender, Hit hit) {
     }
 
     @Override
     public void block(Actor attacker, T defender, Hit hit, CombatType combatType) {
-        throw new UnsupportedOperationException("Combat strategies can't define a block method!");
     }
 
     @Override

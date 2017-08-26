@@ -55,7 +55,8 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
     @Override
     public void start(Player attacker, Actor defender, Hit[] hits) {
         if (attacker.getCombat().getDefender() == defender) {
-            spell.getAnimation().ifPresent(attacker::animation);
+            Animation animation = spell.getAnimation().orElse(getAttackAnimation(attacker, defender));
+            attacker.animation(animation);
             spell.getStart().ifPresent(attacker::graphic);
             spell.sendProjectile(attacker, defender);
 

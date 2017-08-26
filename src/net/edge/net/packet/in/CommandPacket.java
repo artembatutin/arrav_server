@@ -1,6 +1,7 @@
 package net.edge.net.packet.in;
 
 import net.edge.content.TabInterface;
+import net.edge.content.combat.CombatProjectileDefinition;
 import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.player.special.CombatSpecial;
@@ -9,11 +10,14 @@ import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.task.Task;
 import net.edge.world.World;
+import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.Spellbook;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import org.omg.PortableInterceptor.ACTIVE;
 
 /**
  * The message that is sent from the client when the player chats anything
@@ -38,15 +42,14 @@ public final class CommandPacket implements IncomingPacket {
 			} else if (parts[0].equalsIgnoreCase("test2")) {
 //				CombatProjectileDefinition.createLoader().load();
 
-				CombatHit[] hits = new CombatHit[8];
-				for (int index = 0; index < hits.length; index++) {
-					hits[index] = new CombatHit(new Hit(index * 10 + 10), 1, 0);
+				for (MobDefinition def : MobDefinition.DEFINITIONS) {
+					if (def.getName().toLowerCase().contains("dragon")) {
+						System.out.println(def.getId() + " " +  def.getName());
+					}
 				}
-				player.damage(hits);
 
 				return;
 			} else if (parts[0].equalsIgnoreCase("test")) {
-//				CombatProjectileDefinition.createLoader().load();
 
 				new Task(1, false) {
 					int ticks = 0;
@@ -90,6 +93,13 @@ public final class CommandPacket implements IncomingPacket {
 					npc.setCurrentHealth(100_000);
 					World.get().getMobs().add(npc);
 				}
+				return;
+			} else if (parts[0].equalsIgnoreCase("kbd")) {
+				Mob npc = Mob.getNpc(50, player.getPosition().copy().move(3, 0));
+				npc.setOwner(player);
+				npc.setRespawn(false);
+				World.get().getMobs().add(npc);
+				npc.setState(EntityState.ACTIVE);
 				return;
 			}
 		}

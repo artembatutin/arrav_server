@@ -26,12 +26,9 @@ public class NpcRangedStrategy extends RangedStrategy<Mob> {
 
     @Override
     public void start(Mob attacker, Actor defender, Hit[] hits) {
-        projectileDefinition.getAnimation().ifPresent(attacker::animation);
+        Animation animation = projectileDefinition.getAnimation().orElse(getAttackAnimation(attacker, defender));
+        attacker.animation(animation);
         projectileDefinition.getStart().ifPresent(attacker::graphic);
-    }
-
-    @Override
-    public void attack(Mob attacker, Actor defender, Hit hit) {
         projectileDefinition.sendProjectile(attacker, defender, true);
     }
 

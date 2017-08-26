@@ -910,7 +910,7 @@
     "name": "Ice Blitz",
     "combat-effect": "ICE_BLITZ",
     "max-hit": 26,
-    "hitsplat-delay": 2,
+    "hitsplat-delay": 1,
     "animation": {
       "id": 1978,
       "delay": 0,
@@ -4574,6 +4574,54 @@
     },
     "projectile": {
       "id": 1203,
+      "size": 1,
+      "delay": 50,
+      "duration": 75,
+      "startHeight": 43,
+      "endHeight": 31,
+      "curve": 16
+    }
+  },
+  {
+    "name": "KBD fire",
+    "projectile": {
+      "id": 393,
+      "size": 1,
+      "delay": 50,
+      "duration": 75,
+      "startHeight": 43,
+      "endHeight": 31,
+      "curve": 16
+    }
+  },
+  {
+    "name": "KBD poison",
+    "projectile": {
+      "id": 394,
+      "size": 1,
+      "delay": 50,
+      "duration": 75,
+      "startHeight": 43,
+      "endHeight": 31,
+      "curve": 16
+    }
+  },
+  {
+    "name": "KBD shock",
+    "projectile": {
+      "id": 395,
+      "size": 1,
+      "delay": 50,
+      "duration": 75,
+      "startHeight": 43,
+      "endHeight": 31,
+      "curve": 16
+    }
+  },
+  {
+    "name": "KBD freeze",
+    "projectile": {
+      "id": 396,
       "size": 1,
       "delay": 50,
       "duration": 75,

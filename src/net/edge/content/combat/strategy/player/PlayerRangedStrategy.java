@@ -66,7 +66,8 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 
     @Override
     public void start(Player attacker, Actor defender, Hit[] hits) {
-        attacker.animation(getAttackAnimation(attacker, defender));
+        Animation animation = projectileDefinition.getAnimation().orElse(getAttackAnimation(attacker, defender));
+        attacker.animation(animation);
         projectileDefinition.getStart().ifPresent(attacker::graphic);
         projectileDefinition.sendProjectile(attacker, defender, false);
 

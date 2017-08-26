@@ -13,6 +13,7 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.combat.strategy.npc.NpcMagicStrategy;
 import net.edge.content.combat.strategy.npc.NpcMeleeStrategy;
 import net.edge.content.combat.strategy.npc.NpcRangedStrategy;
+import net.edge.content.combat.strategy.npc.boss.kbd.KingBlackDragon;
 import net.edge.content.skill.Skills;
 import net.edge.task.Task;
 import net.edge.world.World;
@@ -39,6 +40,8 @@ import java.util.function.Supplier;
 public abstract class Mob extends Actor {
 
 	private static final ImmutableMap<Integer, Supplier<CombatStrategy<Mob>>> STRATEGIES = ImmutableMap.of(
+
+		50, KingBlackDragon::new
 
 	);
 

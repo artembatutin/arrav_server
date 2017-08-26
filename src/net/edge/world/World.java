@@ -159,8 +159,8 @@ public final class World {
 		synchronized(this) {
 			dequeueLogins();
 			registerActors();
-			sync.preUpdate(players, mobs);
 			taskManager.sequence();
+			sync.preUpdate(players, mobs);
 			sync.update(players);
 			sync.postUpdate(players, mobs);
 			dequeueLogout();
@@ -495,7 +495,7 @@ public final class World {
 	private static final SimplePathChecker SIMPLE_PATH_CHECKER = new SimplePathChecker();
 	
 	/**
-	 * This world's {@link LoggingManager} used to log player actions.
+	 * This world's {@link LoggingManatger} used to log player actions.
 	 */
 	private static final LoggingManager LOG_MANAGER = new LoggingManager();
 	

@@ -9,12 +9,10 @@ import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.task.Task;
 import net.edge.util.Stopwatch;
-import net.edge.world.World;
-import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 import java.util.Deque;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -52,14 +50,8 @@ public class Combat<T extends Actor> {
 
     public void attack(Actor defender) {
         this.defender = defender;
-
-        if (strategy == null || !strategy.withinDistance(attacker, defender)) {
-            attacker.getMovementQueue().follow(defender);
-            return;
-        }
-
-        attacker.faceEntity(defender);
-        attacker.getMovementQueue().reset();
+        attacker.getMovementQueue().follow(defender);
+        attacker.setFollowing(true);
     }
 
     public void tick() {
@@ -71,6 +63,7 @@ public class Combat<T extends Actor> {
             } else {
                 if (defender == null || strategy == null) continue;
                 if (strategy.getCombatType().ordinal() != index) continue;
+                attacker.faceEntity(defender);
                 submitStrategy(defender, strategy);
             }
         }
@@ -88,7 +81,6 @@ public class Combat<T extends Actor> {
                 sent++;
             }
         }
-
     }
 
     private boolean sendNextHitsplat() {
@@ -414,7 +406,7 @@ public class Combat<T extends Actor> {
     }
 
     public boolean hasPassed(int delay) {
-        return stopwatchElapsed(lastAttacked, delay) || stopwatchElapsed(lastBlocked, delay);
+        return stopwatchElapsed(lastAttacked, delay) && stopwatchElapsed(lastBlocked, delay);
     }
 
     private static boolean stopwatchElapsed(Stopwatch stopwatch, int seconds) {

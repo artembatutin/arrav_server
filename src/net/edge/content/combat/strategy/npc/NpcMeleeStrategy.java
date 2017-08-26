@@ -14,7 +14,7 @@ public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
 
     public static final NpcMeleeStrategy INSTANCE = new NpcMeleeStrategy();
 
-    private NpcMeleeStrategy() { }
+    protected NpcMeleeStrategy() { }
 
     @Override
     public void attack(Mob attacker, Actor defender, Hit hit) {

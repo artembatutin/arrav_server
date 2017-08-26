@@ -30,7 +30,8 @@ public class NpcMagicStrategy extends MagicStrategy<Mob> {
 
     @Override
     public void attack(Mob attacker, Actor defender, Hit hit) {
-        projectileDefinition.getAnimation().ifPresent(attacker::animation);
+        Animation animation = projectileDefinition.getAnimation().orElse(getAttackAnimation(attacker, defender));
+        attacker.animation(animation);
         projectileDefinition.getStart().ifPresent(attacker::graphic);
         projectileDefinition.sendProjectile(attacker, defender, true);
     }

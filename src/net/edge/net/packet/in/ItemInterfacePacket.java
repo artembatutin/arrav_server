@@ -325,8 +325,6 @@ public final class ItemInterfacePacket implements IncomingPacket {
 				return;
 		}
 		ItemAction e = EQUIP.get(item.getId());
-		if(item.getId() != 4153)
-			player.getCombat().reset();
 		if(e != null)
 			if(e.click(player, item, interfaceId, slot, 5))
 				return;
