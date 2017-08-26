@@ -13,12 +13,10 @@ import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class NpcMagicStrategy extends MagicStrategy<Mob> {
-
     private final CombatProjectileDefinition projectileDefinition;
 
     /** The spell splash graphic. */
@@ -29,7 +27,7 @@ public class NpcMagicStrategy extends MagicStrategy<Mob> {
     }
 
     @Override
-    public void attack(Mob attacker, Actor defender, Hit hit) {
+    public void start(Mob attacker, Actor defender, Hit[] hits) {
         Animation animation = projectileDefinition.getAnimation().orElse(getAttackAnimation(attacker, defender));
         attacker.animation(animation);
         projectileDefinition.getStart().ifPresent(attacker::graphic);
@@ -37,17 +35,20 @@ public class NpcMagicStrategy extends MagicStrategy<Mob> {
     }
 
     @Override
-    public void hit(Mob attacker, Actor defender, Hit hit) {
+    public void attack(Mob attacker, Actor defender, Hit hit) {
         Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
         Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit, null);
-        projectileDefinition.getEffect().filter(Objects::nonNull).filter(filter).ifPresent(execute);
+        projectileDefinition.getEffect().filter(filter).ifPresent(execute);
 
         CombatPoisonEffect.getPoisonType(attacker.getId()).ifPresent(p -> {
-            if(hit.isAccurate() && attacker.getDefinition().poisonous()) {
+            if (hit.isAccurate() && attacker.getDefinition().poisonous()) {
                 defender.poison(p);
             }
         });
+    }
 
+    @Override
+    public void hit(Mob attacker, Actor defender, Hit hit) {
         if (!hit.isAccurate()) {
             defender.graphic(SPLASH);
         } else {
@@ -57,7 +58,7 @@ public class NpcMagicStrategy extends MagicStrategy<Mob> {
 
     @Override
     public CombatHit[] getHits(Mob attacker, Actor defender) {
-        return new CombatHit[] { nextMagicHit(attacker, defender, attacker.getDefinition().getMaxHit()) };
+        return new CombatHit[]{nextMagicHit(attacker, defender, attacker.getDefinition().getMaxHit())};
     }
 
     @Override

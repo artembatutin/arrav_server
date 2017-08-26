@@ -22,11 +22,6 @@ public enum PoisonType {
 	STRONG_RANGED(3),
 
 	/**
-	 * The weakest poison type for mobs.
-	 */
-	LOW_NPC(3),
-
-	/**
 	 * The strongest poison type for magic spells.
 	 */
 	SUPER_MAGIC(4),

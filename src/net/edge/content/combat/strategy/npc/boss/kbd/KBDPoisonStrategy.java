@@ -4,10 +4,8 @@ import net.edge.content.combat.CombatProjectileDefinition;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.hit.CombatHit;
-import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.npc.NpcMagicStrategy;
 import net.edge.world.Animation;
-import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 
@@ -16,11 +14,6 @@ public class KBDPoisonStrategy extends NpcMagicStrategy {
 
     KBDPoisonStrategy() {
         super(CombatProjectileDefinition.getDefinition("KBD poison"));
-    }
-
-    @Override
-    public void hit(Mob attacker, Actor defender, Hit hit) {
-        defender.poison(PoisonType.LOW_NPC);
     }
 
     @Override

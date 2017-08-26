@@ -4,6 +4,7 @@ import net.edge.content.combat.CombatProjectileDefinition;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.hit.CombatHit;
+import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.npc.NpcMagicStrategy;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;

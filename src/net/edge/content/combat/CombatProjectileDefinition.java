@@ -2,7 +2,8 @@ package net.edge.content.combat;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import net.edge.content.combat.content.SpellEffects;
+import net.edge.content.combat.content.RangedEffects;
+import net.edge.content.combat.content.MagicEffects;
 import net.edge.util.json.JsonLoader;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -81,6 +82,7 @@ public final class CombatProjectileDefinition {
 
     public static JsonLoader createLoader() {
         return new JsonLoader("./data/def/combat/projectile_definitions.json") {
+
             @Override
             protected void initialize(int size) {
                 if (DEFINITIONS == null || DEFINITIONS.size() != size) {
@@ -108,8 +110,12 @@ public final class CombatProjectileDefinition {
                 }
 
                 definition.effect = null;
-                if (reader.has("combat-effect")) {
-                    definition.effect = SpellEffects.valueOf(reader.get("combat-effect").getAsString()).getEffect();
+                if (reader.has("magic-effect")) {
+                    String name = reader.get("magic-effect").getAsString();
+                    definition.effect = MagicEffects.valueOf(name).getEffect();
+                } else if (reader.has("ranged-effect")) {
+                    String name = reader.get("ranged-effect").getAsString();
+                    definition.effect = RangedEffects.valueOf(name).getEffect();
                 }
 
                 definition.animation = null;

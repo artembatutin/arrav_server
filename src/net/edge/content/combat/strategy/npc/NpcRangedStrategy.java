@@ -12,7 +12,6 @@ import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -33,17 +32,20 @@ public class NpcRangedStrategy extends RangedStrategy<Mob> {
     }
 
     @Override
-    public void hit(Mob attacker, Actor defender, Hit hit) {
+    public void attack(Mob attacker, Actor defender, Hit hit) {
         Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
         Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit, null);
-        projectileDefinition.getEffect().filter(Objects::nonNull).filter(filter).ifPresent(execute);
+        projectileDefinition.getEffect().filter(filter).ifPresent(execute);
 
         CombatPoisonEffect.getPoisonType(attacker.getId()).ifPresent(p -> {
-            if(hit.isAccurate() && attacker.getDefinition().poisonous()) {
+            if (attacker.getDefinition().poisonous()) {
                 defender.poison(p);
             }
         });
+    }
 
+    @Override
+    public void hit(Mob attacker, Actor defender, Hit hit) {
         projectileDefinition.getEnd().ifPresent(defender::graphic);
     }
 

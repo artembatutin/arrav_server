@@ -9,6 +9,7 @@ import net.edge.content.combat.hit.Hit;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendMessage;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
@@ -17,7 +18,7 @@ import net.edge.world.entity.actor.player.Player;
 import java.util.LinkedList;
 import java.util.List;
 
-public enum SpellEffects {
+public enum MagicEffects {
 
     BIND((attacker, defender, hit, extra) -> freeze(defender, 5)),
     SNARE(((attacker, defender, hit, extra) -> freeze(defender, 10))),
@@ -51,6 +52,10 @@ public enum SpellEffects {
     ICE_BLITZ((attacker, defender, hit, extra) -> freeze(defender, 15)),
     ICE_BARRAGE((attacker, defender, hit, extra) -> getSurrounding(attacker, defender).forEach(actor -> iceBarrage(attacker, defender, actor, extra))),
 
+    KBD_FREEZE((attacker, defender, hit, extra) -> freeze(defender, 5)),
+    KBD_POISON((attacker, defender, hit, extra) -> poison(attacker, defender, hit, PoisonType.DEFAULT_NPC)),
+    KBD_SHOCK((attacker, defender, hit, extra) -> kbdShock(defender)),
+
     AHRIM_BLAST((attacker, defender, hit, extra) -> {
 //        if (hit.isAccurate() && Math.random() < 0.20) {
 //            defender.skills.get(Skills.STRENGTH).removeLevel(5);
@@ -60,8 +65,18 @@ public enum SpellEffects {
 
     private final CombatEffect effect;
 
-    SpellEffects(CombatEffect effect) {
-        this.effect = effect;
+    MagicEffects(CombatEffect effect) {
+        this.effect = new CombatEffect() {
+            @Override
+            public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
+                return hit.isAccurate();
+            }
+
+            @Override
+            public void execute(Actor attacker, Actor defender, Hit hit, List<Hit> hits) {
+                effect.execute(attacker, defender, hit, hits);
+            }
+        };
     }
 
     public CombatEffect getEffect() {
@@ -97,6 +112,21 @@ public enum SpellEffects {
         return actors;
     }
 
+    private static void kbdShock(Actor defender) {
+        if (!defender.isPlayer()) {
+            return;
+        }
+
+        Player player = defender.toPlayer();
+        int id = RandomUtils.inclusiveExcludes(Skills.ATTACK, Skills.MAGIC, Skills.HITPOINTS);
+        Skill skill = player.getSkills()[id];
+
+        if (skill.getLevel() - 1 >= 0) {
+            skill.decreaseLevel(1, true);
+            Skills.refresh(player, id);
+        }
+    }
+
     private static void lowerSkill(Actor defender, int id, int percentage) {
         if (!defender.isPlayer()) {
             return;
@@ -115,6 +145,7 @@ public enum SpellEffects {
 
         if (amount > 0) {
             skill.decreaseLevel(amount);
+            Skills.refresh(player, id);
         }
     }
 

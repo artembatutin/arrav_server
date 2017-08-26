@@ -11,20 +11,19 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 
 public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
-
     public static final NpcMeleeStrategy INSTANCE = new NpcMeleeStrategy();
 
     protected NpcMeleeStrategy() { }
 
     @Override
-    public void attack(Mob attacker, Actor defender, Hit hit) {
+    public void start(Mob attacker, Actor defender, Hit[] hits) {
         attacker.animation(getAttackAnimation(attacker, defender));
     }
 
     @Override
-    public void hit(Mob attacker, Actor defender, Hit hit) {
+    public void attack(Mob attacker, Actor defender, Hit hit) {
         CombatPoisonEffect.getPoisonType(attacker.getId()).ifPresent(p -> {
-            if(hit.isAccurate() && attacker.getDefinition().poisonous()) {
+            if (attacker.getDefinition().poisonous()) {
                 defender.poison(p);
             }
         });
@@ -42,7 +41,7 @@ public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
 
     @Override
     public CombatHit[] getHits(Mob attacker, Actor defender) {
-        return new CombatHit[] { nextMeleeHit(attacker, defender, attacker.getDefinition().getMaxHit()) };
+        return new CombatHit[]{nextMeleeHit(attacker, defender, attacker.getDefinition().getMaxHit())};
     }
 
     @Override
