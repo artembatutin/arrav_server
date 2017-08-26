@@ -13,26 +13,32 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public final class RefillableAction extends ProducingSkillAction {
+	/**
+	 * Represents the refillable
+	 */
+	private Refillable refillable;
 
-		private Refillable refillable;
+	/**
+	 * Represents the game object
+	 */
+	private GameObject gameObject;
 
-		/**                                                                       	
-		 * Represents the refill animation                                        	
-	   	 */                                                                       
-		private static final Animation ANIMATION = new Animation(832);
+	/**
+	 * Represents the refill animation
+	 */
+	private static final Animation ANIMATION = new Animation(832);
 
 	public static void action() {
 		for(Refillable refillable : Refillable.values()) {
 			ItemOnObjectAction a = new ItemOnObjectAction() {
 				@Override
 				public boolean click(Player player, GameObject object, Item item, int container, int slot) {
-						RefillableAction refillableAction = new RefillableAction(player, refillable);
+						RefillableAction refillableAction = new RefillableAction(player, refillable, object);
 						refillableAction.start();
 						return true;
 				}
 			};
 			a.registerItem(refillable.getNeeded());
-			Arrays.stream(refillable.getObjects()).forEach(a::registerObj);
 		}
 	}
 
@@ -42,18 +48,24 @@ public final class RefillableAction extends ProducingSkillAction {
 	 * @return
 	 */
 	private boolean check() {
-		if(getPlayer().getInventory().contains(refillable.getNeeded())) {
-			  return true;
-		} else {
-			getPlayer().message("You need an empty "+new Item(refillable.getNeeded()).getDefinition().getName()+" to do this.");
-			return false;
+		for (int object : refillable.getObjects()) {
+			if (object == gameObject.getId()) {
+				if (getPlayer().getInventory().contains(refillable.getNeeded())) {
+					return true;
+				} else {
+					getPlayer().message("You need to use an empty " + new Item(refillable.getNeeded()).getDefinition().getName() + " on a water source.");
+					return false;
+				}
+			}
 		}
+		return false;
 	}
 
 
-	public RefillableAction(Player player, Refillable refillable) {
-		super(player, Optional.of(player.getPosition()));
+	public RefillableAction(Player player, Refillable refillable, GameObject object) {
+		super(player, Optional.of(object.getGlobalPos()));
 		this.refillable = refillable;
+		this.gameObject = object;
 	}
 
 	@Override

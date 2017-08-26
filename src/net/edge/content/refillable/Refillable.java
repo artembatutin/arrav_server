@@ -21,12 +21,6 @@ public enum Refillable {
 		this.objects = objects;
 	}
 	
-	public static Optional<Refillable> forId(int id, int object) {
-		Predicate<Refillable> item = (Refillable r) -> r.getNeeded() == id;
-		Predicate<Refillable> entity = (Refillable e) -> Arrays.stream(e.getObjects()).anyMatch(i -> i == object);
-		return Arrays.stream(values()).filter(item).filter(entity).findFirst();
-	}
-	
 	public int getNeeded() {
 		return needed;
 	}
