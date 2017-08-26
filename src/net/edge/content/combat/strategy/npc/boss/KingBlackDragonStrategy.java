@@ -10,20 +10,20 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.combat.strategy.npc.MultiStrategy;
 import net.edge.content.combat.strategy.npc.NpcMeleeStrategy;
 import net.edge.content.combat.strategy.npc.impl.DragonfireStrategy;
-import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 
 /** @author Michael | Chex */
 public class KingBlackDragonStrategy extends MultiStrategy {
+    private static final CrushMelee CRUSH = new CrushMelee();
     private static final Melee MELEE = new Melee();
     private static final Dragonfire DRAGONFIRE = new Dragonfire();
     private static final Poison POISON = new Poison();
     private static final Freeze FREEZE = new Freeze();
     private static final Shock SHOCK = new Shock();
 
-    private static final CombatStrategy<Mob>[] FULL_STRATEGIES = createStrategyArray(MELEE, DRAGONFIRE, POISON, FREEZE, SHOCK);
+    private static final CombatStrategy<Mob>[] FULL_STRATEGIES = createStrategyArray(CRUSH, MELEE, DRAGONFIRE, POISON, FREEZE, SHOCK);
     private static final CombatStrategy<Mob>[] NON_MELEE = createStrategyArray(DRAGONFIRE, POISON, FREEZE, SHOCK);
 
     public KingBlackDragonStrategy() {
@@ -47,7 +47,7 @@ public class KingBlackDragonStrategy extends MultiStrategy {
     @Override
     public void finish(Mob attacker, Actor defender) {
         currentStrategy.finish(attacker, defender);
-        if (MELEE.withinDistance(attacker, defender)) {
+        if (CRUSH.withinDistance(attacker, defender)) {
             currentStrategy = randomStrategy(FULL_STRATEGIES);
         } else {
             currentStrategy = randomStrategy(NON_MELEE);
@@ -59,10 +59,8 @@ public class KingBlackDragonStrategy extends MultiStrategy {
         return attacker.getDefinition().getAttackDelay();
     }
 
-    private static final class Melee extends NpcMeleeStrategy {
+    private static final class CrushMelee extends NpcMeleeStrategy {
         private static final Animation CRUSH = new Animation(80, Animation.AnimationPriority.HIGH);
-        private static final Animation STAB = new Animation(91, Animation.AnimationPriority.HIGH);
-        private static final Animation[] ANIMS = { CRUSH, STAB };
 
         @Override
         public int getAttackDistance(Mob attacker, FightType fightType) {
@@ -71,7 +69,7 @@ public class KingBlackDragonStrategy extends MultiStrategy {
 
         @Override
         public Animation getAttackAnimation(Mob attacker, Actor defender) {
-            return RandomUtils.random(ANIMS);
+            return CRUSH;
         }
 
         @Override
@@ -80,6 +78,18 @@ public class KingBlackDragonStrategy extends MultiStrategy {
         }
     }
 
+    private static final class Melee extends NpcMeleeStrategy {
+
+        @Override
+        public int getAttackDistance(Mob attacker, FightType fightType) {
+            return 1;
+        }
+
+        @Override
+        public CombatHit[] getHits(Mob attacker, Actor defender) {
+            return new CombatHit[]{nextMeleeHit(attacker, defender)};
+        }
+    }
 
     private static final class Dragonfire extends DragonfireStrategy {
 
