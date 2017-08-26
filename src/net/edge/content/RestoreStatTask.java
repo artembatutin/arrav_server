@@ -27,7 +27,7 @@ public final class RestoreStatTask extends Task {
 	 * Creates a new {@link RestoreStatTask}.
 	 */
 	public RestoreStatTask() {
-		super(5, false);
+		super(10, false);
 	}
 	
 	@Override
