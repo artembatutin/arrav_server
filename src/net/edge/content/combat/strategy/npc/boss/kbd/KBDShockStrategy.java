@@ -4,13 +4,11 @@ import net.edge.content.combat.CombatProjectileDefinition;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.hit.CombatHit;
-import net.edge.content.combat.strategy.npc.NpcMagicStrategy;
-import net.edge.world.Animation;
+import net.edge.content.combat.strategy.npc.impl.DragonfireStrategy;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 
-public class KBDShockStrategy extends NpcMagicStrategy {
-    private static final Animation ANIMATION = new Animation(81, Animation.AnimationPriority.HIGH);
+public class KBDShockStrategy extends DragonfireStrategy {
 
     KBDShockStrategy() {
         super(CombatProjectileDefinition.getDefinition("KBD shock"));
@@ -19,11 +17,6 @@ public class KBDShockStrategy extends NpcMagicStrategy {
     @Override
     public int getAttackDistance(Mob attacker, FightType fightType) {
         return 10;
-    }
-
-    @Override
-    public Animation getAttackAnimation(Mob attacker, Actor defender) {
-        return ANIMATION;
     }
 
     @Override

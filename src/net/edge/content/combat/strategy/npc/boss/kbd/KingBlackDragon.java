@@ -11,7 +11,7 @@ import net.edge.world.entity.actor.mob.Mob;
 /** @author Michael | Chex */
 public class KingBlackDragon extends MultiStrategy {
     private static final KBDMeleeStrategy MELEE = new KBDMeleeStrategy();
-    private static final KBDDragonFireStrategy DRAGONFIRE = new KBDDragonFireStrategy();
+    private static final KBDDragonfireStrategy DRAGONFIRE = new KBDDragonfireStrategy();
     private static final KBDPoisonStrategy POISON = new KBDPoisonStrategy();
     private static final KBDFreezeStrategy FREEZE = new KBDFreezeStrategy();
     private static final KBDShockStrategy SHOCK = new KBDShockStrategy();

@@ -4584,6 +4584,11 @@
   },
   {
     "name": "KBD fire",
+    "animation": {
+      "id": 81,
+      "delay": 0,
+      "priority": "HIGH"
+    },
     "projectile": {
       "id": 393,
       "size": 1,
@@ -4597,6 +4602,11 @@
   {
     "name": "KBD poison",
     "magic-effect": "KBD_POISON",
+    "animation": {
+      "id": 81,
+      "delay": 0,
+      "priority": "HIGH"
+    },
     "projectile": {
       "id": 394,
       "size": 1,
@@ -4610,6 +4620,11 @@
   {
     "name": "KBD freeze",
     "magic-effect": "KBD_FREEZE",
+    "animation": {
+      "id": 81,
+      "delay": 0,
+      "priority": "HIGH"
+    },
     "projectile": {
       "id": 395,
       "size": 1,
@@ -4623,6 +4638,11 @@
   {
     "name": "KBD shock",
     "magic-effect": "KBD_SHOCK",
+    "animation": {
+      "id": 81,
+      "delay": 0,
+      "priority": "HIGH"
+    },
     "projectile": {
       "id": 396,
       "size": 1,
@@ -4636,7 +4656,7 @@
   {
     "name": "Dragonfire",
     "animation": {
-      "id": 12248,
+      "id": 12256,
       "delay": 0,
       "priority": "HIGH"
     },

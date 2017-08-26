@@ -4,13 +4,11 @@ import net.edge.content.combat.CombatProjectileDefinition;
 import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.hit.CombatHit;
-import net.edge.content.combat.strategy.npc.NpcMagicStrategy;
-import net.edge.world.Animation;
+import net.edge.content.combat.strategy.npc.impl.DragonfireStrategy;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 
-public class KBDPoisonStrategy extends NpcMagicStrategy {
-    private static final Animation ANIMATION = new Animation(81, Animation.AnimationPriority.HIGH);
+public class KBDPoisonStrategy extends DragonfireStrategy {
 
     KBDPoisonStrategy() {
         super(CombatProjectileDefinition.getDefinition("KBD poison"));
@@ -19,11 +17,6 @@ public class KBDPoisonStrategy extends NpcMagicStrategy {
     @Override
     public int getAttackDistance(Mob attacker, FightType fightType) {
         return 10;
-    }
-
-    @Override
-    public Animation getAttackAnimation(Mob attacker, Actor defender) {
-        return ANIMATION;
     }
 
     @Override
