@@ -50,8 +50,14 @@ public class Combat<T extends Actor> {
 
     public void attack(Actor defender) {
         this.defender = defender;
-        attacker.getMovementQueue().follow(defender);
-        attacker.setFollowing(true);
+
+        if (strategy == null || !strategy.withinDistance(attacker, defender)) {
+            attacker.getMovementQueue().follow(defender);
+            attacker.setFollowing(true);
+            return;
+        }
+
+        attacker.faceEntity(defender);
     }
 
     public void tick() {
@@ -63,7 +69,6 @@ public class Combat<T extends Actor> {
             } else {
                 if (defender == null || strategy == null) continue;
                 if (strategy.getCombatType().ordinal() != index) continue;
-                attacker.faceEntity(defender);
                 submitStrategy(defender, strategy);
             }
         }
@@ -283,6 +288,7 @@ public class Combat<T extends Actor> {
 
     public void reset() {
         defender = null;
+        attacker.faceEntity(null);
         attacker.getMovementQueue().reset();
     }
 

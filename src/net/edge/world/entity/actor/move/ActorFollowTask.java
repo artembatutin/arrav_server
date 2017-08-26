@@ -1,6 +1,5 @@
 package net.edge.world.entity.actor.move;
 
-import net.edge.content.combat.CombatUtil;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.task.Task;
 import net.edge.world.World;
@@ -17,111 +16,106 @@ import java.util.Optional;
 
 /**
  * The {@link Task} implementation that handles the entire following process.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 class ActorFollowTask extends Task {
-	
-	/**
-	 * The character this process is being executed for.
-	 */
-	private final Actor character;
-	
-	/**
-	 * The character being followed in this process.
-	 */
-	private final Actor leader;
-	
-	/**
-	 * The current destination of the path.
-	 */
-	private Position destination;
-	
-	/**
-	 * Creates a new {@link ActorFollowTask}.
-	 * @param character the character this process is being executed for.
-	 * @param leader    the character being followed in this process.
-	 */
-	ActorFollowTask(Actor character, Actor leader) {
-		super(1, true);
-		this.character = character;
-		this.leader = leader;
-	}
-	
-	@Override
-	public void execute() {
-		//First checks.
-		if(character.getState() != EntityState.ACTIVE || leader.getState() != EntityState.ACTIVE || !character.isFollowing() || character.isDead() || leader.isDead()) {//Death and away check.
-			character.faceEntity(null);
-			character.setFollowing(false);
-			character.setFollowEntity(null);
-			this.cancel();
-			return;
-		}
-		
-		//Familiar calling back.
-		if(character.isMob()) {
-			Mob mob = character.toMob();
-			if(mob.isFamiliar() || mob.isPet()) {
-				if(!character.getPosition().withinDistance(leader.getPosition(), 15)) {
-					if(leader.isPlayer()) {
-						if(mob.isFamiliar()) {
-							Summoning.callFamiliar(leader.toPlayer());
-						} else if(mob.isPet()) {
-							Summoning.callPet(leader.toPlayer());
-						}
-					}
-				}
-			}
-		}
-		
-		//Entity facing.
-		character.faceEntity(leader);
-		
-		//Movement locks.
-		if(character.getMovementQueue().isLockMovement() || character.isFrozen() || character.isStunned()) {//Requirement check.
-			if(character.isPlayer()) {
-				Player player = character.toPlayer();
-				if(player.isFrozen())
-					player.message("You're currently frozen and you cannot move.");
-				if(player.isStunned())
-					player.message("You're currently stunned and you cannot move.");
-			}
-			this.cancel();
-			return;
-		}
-		
-		Boundary boundary = new Boundary(leader.getPosition(), leader.size());
-		
-		//Randomized walk away from leader's tile.
-		if(boundary.inside(character.getPosition(), character.size())) {
-			//Only moving when movement is done.
-			if(character.getMovementQueue().isMovementDone()) {
-				character.getMovementQueue().reset();
-				//outside of the leader's boundary but still nearby
-				TraversalMap.traversablesNextToBoundary(
-						leader.getPosition(),
-						leader.size(),
-						character.size(),
-						new Boundary(character.getPosition(), character.size()),
-						p -> character.getMovementQueue().walk(p));
-			}
-			return;
-		}
-		
-		//Combat distance check.
-		if(character.getCombat().isAttacking()) {
-			if(character.isPlayer()) {
-				if(CombatUtil.checkAttackDistance(character)) {
-					return;
-				}
-			}
-		}
-		
-		//Resets if character next to the player.
-		if(boundary.within(character.getPosition(), character.size(), 1)) {
-			character.getMovementQueue().reset();
-			//Combat diagonal fighting.
-			/*if(character.getCombat().isAttacking()) {
+
+    /**
+     * The character this process is being executed for.
+     */
+    private final Actor character;
+
+    /**
+     * The character being followed in this process.
+     */
+    private final Actor leader;
+
+    /**
+     * The current destination of the path.
+     */
+    private Position destination;
+
+    /**
+     * Creates a new {@link ActorFollowTask}.
+     *
+     * @param character the character this process is being executed for.
+     * @param leader    the character being followed in this process.
+     */
+    ActorFollowTask(Actor character, Actor leader) {
+        super(1, true);
+        this.character = character;
+        this.leader = leader;
+    }
+
+    @Override
+    public void execute() {
+        //First checks.
+        if (character.getState() != EntityState.ACTIVE || leader.getState() != EntityState.ACTIVE || !character.isFollowing() || character.isDead() || leader.isDead()) {//Death and away check.
+            if (!character.getCombat().isAttacking(character.getFollowEntity())) {
+                character.faceEntity(null);
+            }
+            character.setFollowing(false);
+            character.setFollowEntity(null);
+            this.cancel();
+            return;
+        }
+
+        //Familiar calling back.
+        if (character.isMob()) {
+            Mob mob = character.toMob();
+            if (mob.isFamiliar() || mob.isPet()) {
+                if (!character.getPosition().withinDistance(leader.getPosition(), 15)) {
+                    if (leader.isPlayer()) {
+                        if (mob.isFamiliar()) {
+                            Summoning.callFamiliar(leader.toPlayer());
+                        } else if (mob.isPet()) {
+                            Summoning.callPet(leader.toPlayer());
+                        }
+                    }
+                }
+            }
+        }
+
+        //Entity facing.
+        character.faceEntity(leader);
+
+        //Movement locks.
+        if (character.getMovementQueue().isLockMovement() || character.isFrozen() || character.isStunned()) {//Requirement check.
+            if (character.isPlayer()) {
+                Player player = character.toPlayer();
+                if (player.isFrozen())
+                    player.message("You're currently frozen and you cannot move.");
+                if (player.isStunned())
+                    player.message("You're currently stunned and you cannot move.");
+            }
+            this.cancel();
+            return;
+        }
+
+        Boundary boundary = new Boundary(leader.getPosition(), leader.size());
+
+        //Randomized walk away from leader's tile.
+        if (boundary.inside(character.getPosition(), character.size())) {
+            //Only moving when movement is done.
+            if (character.getMovementQueue().isMovementDone()) {
+                character.getMovementQueue().reset();
+                //outside of the leader's boundary but still nearby
+                TraversalMap.traversablesNextToBoundary(
+                        leader.getPosition(),
+                        leader.size(),
+                        character.size(),
+                        new Boundary(character.getPosition(), character.size()),
+                        p -> character.getMovementQueue().walk(p));
+            }
+            return;
+        }
+
+        //Resets if character next to the player.
+        if (boundary.within(character.getPosition(), character.size(), 1)) {
+            character.getMovementQueue().reset();
+            //Combat diagonal fighting.
+            /*if(character.getCombat().isAttacking()) {
 				Direction facing = Direction.fromDeltas(Position.delta(character.getPosition(), leader.getPosition()));
 				if(facing.isDiagonal()) {//Moving player if diagonal fighting
 					Position pos = TraversalMap.getRandomNearby(character.getPosition(), leader.getPosition(), character.size());
@@ -131,41 +125,41 @@ class ActorFollowTask extends Task {
 				return;
 			}
 			return;*/
-		}
-		
-		//returns if path calculated is next to the leader.
-		if(destination != null && boundary.within(destination, leader.size(), character.size())) {
-			return;
-		}
-		
-		//Setting new path depending on the follower's type.
-		Path path = character.isPlayer() || (character.isMob() && character.toMob().isSmart()) ? character.getAStarPathFinder().find(leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
-		if(path != null && path.isPossible()) {
-			//removing the points overlapping the leader's boundaries. //TODO: fix or remove.
-			//while(boundary.inside(path.poll(), leader.size()));
-			character.getMovementQueue().walk(path.getMoves());
-			destination = path.getDestination();
-		} else {
-			character.getMovementQueue().reset();
-			destination = null;
-		}
-	}
-	
-	@Override
-	public void onCancel() {
-		destination = null;
-		character.setFollowing(false);
-		character.setFollowEntity(null);
-		character.getMovementQueue().setFollowTask(Optional.empty());
-	}
-	
-	public void setDestination(Position destination) {
-		this.destination = destination;
-	}
-	
-	@Override
-	public void onException(Exception e) {
-		onCancel();
-	}
-	
+        }
+
+        //returns if path calculated is next to the leader.
+        if (destination != null && boundary.within(destination, leader.size(), character.size())) {
+            return;
+        }
+
+        //Setting new path depending on the follower's type.
+        Path path = character.isPlayer() || (character.isMob() && character.toMob().isSmart()) ? character.getAStarPathFinder().find(leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
+        if (path != null && path.isPossible()) {
+            //removing the points overlapping the leader's boundaries. //TODO: fix or remove.
+            //while(boundary.inside(path.poll(), leader.size()));
+            character.getMovementQueue().walk(path.getMoves());
+            destination = path.getDestination();
+        } else {
+            character.getMovementQueue().reset();
+            destination = null;
+        }
+    }
+
+    @Override
+    public void onCancel() {
+        destination = null;
+        character.setFollowing(false);
+        character.setFollowEntity(null);
+        character.getMovementQueue().setFollowTask(Optional.empty());
+    }
+
+    public void setDestination(Position destination) {
+        this.destination = destination;
+    }
+
+    @Override
+    public void onException(Exception e) {
+        onCancel();
+    }
+
 }

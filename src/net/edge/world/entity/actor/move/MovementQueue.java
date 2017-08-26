@@ -304,9 +304,11 @@ public final class MovementQueue {
 			return;
 		}
 		if(character.isFollowing() && !leader.same(character.getFollowEntity())) {
-			character.faceEntity(null);
+			if (!character.getCombat().isAttacking(character.getFollowEntity())) {
+				character.faceEntity(null);
+			}
 			character.setFollowing(false);
-			character.setFollowEntity(null);
+				character.setFollowEntity(null);
 		}
 		if(!character.isFollowing()) {
 			followTask.ifPresent(Task::cancel);

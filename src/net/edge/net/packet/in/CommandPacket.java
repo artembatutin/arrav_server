@@ -19,6 +19,9 @@ import net.edge.world.entity.actor.player.assets.Spellbook;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import org.omg.PortableInterceptor.ACTIVE;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * The message that is sent from the client when the player chats anything
  * beginning with '::'.
@@ -40,14 +43,7 @@ public final class CommandPacket implements IncomingPacket {
 				TabInterface.MAGIC.sendInterface(player, Spellbook.ANCIENT.getId());
 				return;
 			} else if (parts[0].equalsIgnoreCase("test2")) {
-//				CombatProjectileDefinition.createLoader().load();
-
-				for (MobDefinition def : MobDefinition.DEFINITIONS) {
-					if (def.getName().toLowerCase().contains("dragon")) {
-						System.out.println(def.getId() + " " +  def.getName());
-					}
-				}
-
+				CombatProjectileDefinition.createLoader().load();
 				return;
 			} else if (parts[0].equalsIgnoreCase("test")) {
 

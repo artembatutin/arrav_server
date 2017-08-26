@@ -1,23 +1,20 @@
 package net.edge.content.combat;
 
+import com.google.common.collect.ImmutableSet;
 import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectType;
 import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.HitIcon;
 import net.edge.content.combat.hit.Hitsplat;
-import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Projectile;
-import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.move.MovementQueue;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.AntifireDetails;
-import net.edge.world.locale.Boundary;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -66,7 +63,7 @@ public final class CombatUtil {
             case SHORTBOW:
                 return 7;
             default:
-                throw new IllegalArgumentException("Invalid weapon interface type!");
+                throw new IllegalArgumentException("Invalid weapon interface type! -- " + weapon);
         }
     }
 
@@ -161,7 +158,6 @@ public final class CombatUtil {
      * @param hit    the hit being processed in the combat.
      * @return the generated hit, will most likely return a different result if
      * called on two different occasions even with the same arguments.
-     * @throws IllegalArgumentException if the combat type is invalid.
      */
     public static Hit calculateSoaking(Actor victim, CombatType type, Hit hit) {
         if (hit.getHitIcon() == HitIcon.NONE && victim.isPlayer()) {
@@ -178,75 +174,8 @@ public final class CombatUtil {
         return hit;
     }
 
-    /**
-     * Determines if the character within {@code builder} is close enough to
-     * it's victim to attack.
-     *
-     * @return {@code true} if the character is close enough
-     */
-    public static boolean checkAttackDistance(Actor attacker) {
-        Actor defender = attacker.getCombat().getLastDefender();
-        CombatStrategy strategy = attacker.getCombat().getStrategy();
-        if (strategy == null || defender == null) {
-            return false;
-        }
-        int distance = strategy.getAttackDistance(attacker, attacker.getCombat().getFightType());
-        MovementQueue movement = attacker.getMovementQueue();
-        MovementQueue otherMovement = defender.getMovementQueue();
 
-        if (!movement.isMovementDone() && !otherMovement.isMovementDone() && !movement.isLockMovement() && !attacker.isFrozen()) {
-            distance += 1;
-
-            // XXX: Might have to change this back to 1 or even remove it, not
-            // sure what it's like on actual runescape. Are you allowed to
-            // attack when the character is trying to run away from you?
-            if (movement.isRunning()) {
-                distance += 2;
-            }
-        }
-
-        if (strategy.getCombatType() == CombatType.MELEE) {//Melee clipping.
-            if (!World.getSimplePathChecker().checkLine(attacker.getPosition(), defender.getPosition(), attacker.size())) {
-                if (!attacker.isFollowing()) {
-                    attacker.getMovementQueue().follow(defender);
-                    attacker.setFollowing(true);
-                }
-                return false;
-            }
-        } else {//Projectile clipping.
-            if (attacker.getAttr().get("master_archery").getBoolean())
-                return true;
-            if (!World.getSimplePathChecker().checkProjectile(attacker.getPosition(), defender.getPosition())) {
-                if (!attacker.isFollowing()) {
-                    attacker.getMovementQueue().follow(defender);
-                    attacker.setFollowing(true);
-                }
-                return false;
-            }
-        }
-
-        if (distance == 1 || distance == 2) {
-            if (!attacker.isFollowing()) {
-                attacker.getMovementQueue().follow(defender);
-                attacker.setFollowing(true);
-            }
-        } else {
-            if (new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance)) {
-                attacker.getMovementQueue().reset();
-                attacker.setFollowing(false);
-                System.out.println(attacker.isMob() + " mob reset #3");
-                return true;
-            } else {
-                attacker.getMovementQueue().follow(defender);
-                attacker.setFollowing(true);
-                return false;
-            }
-        }
-
-        return new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance);
-    }
-
-    public static Animation getBlockAnimation(Actor actor) {
+    static Animation getBlockAnimation(Actor actor) {
         if (actor.isPlayer()) {
             int animation = 404;
             Player player = actor.toPlayer();
@@ -288,9 +217,20 @@ public final class CombatUtil {
             }
         }
 
-        int damage = RandomUtils.inclusive(minimumHit, max);
+        int damage = max < minimumHit ? 0 : RandomUtils.inclusive(minimumHit, max);
         Hit hit = new Hit(damage, Hitsplat.NORMAL, HitIcon.NONE, true);
         return new CombatHit(hit, hitDelay, hitsplatDelay);
     }
+
+    private static final ImmutableSet<Integer> CHROMATIC_DRAGONS = ImmutableSet.of(
+        /* Green */ 941, 4677, 4678, 4679, 4680, 10604, 10605, 10606, 10607, 10608, 10609,
+        /* Red */ 53, 4669, 4670, 4671, 4672, 10815, 10816, 10817, 10818, 10819, 10820,
+        /* Blue */ 55, 4681, 4682, 4683, 4684, 5178,
+        /* Black */ 54, 4673, 4674, 4675, 4676, 10219, 10220, 10221, 10222, 10223, 10224
+    );
+
+    private static final ImmutableSet<Integer> METALIC_DRAGONS = ImmutableSet.of(
+        1590, 1591, 1592, 3590, 5363, 8424, 10776, 10777, 10778, 10779, 10780, 10781
+    );
 
 }

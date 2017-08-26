@@ -7,6 +7,7 @@ import net.edge.content.combat.strategy.npc.boss.BossStrategy;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 
+/** @author Michael | Chex */
 public class KingBlackDragon extends BossStrategy {
     private static final KBDMeleeStrategy MELEE = new KBDMeleeStrategy();
     private static final KBDDragonFireStrategy DRAGONFIRE = new KBDDragonFireStrategy();

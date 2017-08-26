@@ -83,7 +83,9 @@ public final class CombatProjectileDefinition {
         return new JsonLoader("./data/def/combat/projectile_definitions.json") {
             @Override
             protected void initialize(int size) {
-                DEFINITIONS = new HashMap<>(size);
+                if (DEFINITIONS == null || DEFINITIONS.size() != size) {
+                    DEFINITIONS = new HashMap<>(size);
+                }
             }
 
             @Override
