@@ -4658,12 +4658,12 @@
     "animation": {
       "id": 12256,
       "delay": 0,
-      "priority": "HIGH",
+      "priority": "HIGH"
     },
     "start": {
       "id": 1,
       "delay": 0,
-      "height": 110,
+      "height": 110
     }
   },
   {
@@ -4671,7 +4671,7 @@
     "animation": {
       "id": 12256,
       "delay": 0,
-      "priority": "HIGH",
+      "priority": "HIGH"
     },
     "projectile": {
       "id": 393,
