@@ -68,7 +68,6 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 * @throws Exception If any exceptions occur while decoding this portion of the protocol.
 	 */
 	private void decodeHandshake(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-		System.out.println(in.readableBytes() + " read");
 		if(in.readableBytes() >= 14) {
 			int build = in.readUnsignedShort();
 			if(build != GameConstants.CLIENT_BUILD) {
@@ -78,16 +77,17 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			//mac address
 			int macId = in.readInt();
 			String mac = String.valueOf(macId);
+			ctx.channel().attr(NetworkConstants.USR_MAC).set(mac);
 			if(HostManager.contains(mac, HostListType.BANNED_MAC)) {
 				write(ctx, LoginCode.ACCOUNT_DISABLED);
 				return;
 			}
 			//username hash
 			long usernameHash = in.readLong();
-			System.out.println("long is " + usernameHash);
 			ctx.channel().attr(NetworkConstants.USR_HASH).set(usernameHash);
 			if (World.get().getPlayer(usernameHash).isPresent()) {
 				write(ctx, LoginCode.ACCOUNT_ONLINE);
+				return;
 			}
 			ByteBuf buf = ctx.alloc().buffer(17);
 			buf.writeLong(0);
@@ -110,7 +110,6 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			rsaBlockSize = in.readUnsignedByte();
 			if(rsaBlockSize == 0) {
 				write(ctx, LoginCode.COULD_NOT_COMPLETE_LOGIN);
-				return;
 			}
 		}
 	}
@@ -144,7 +143,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 				String password = PacketUtils.getCString(rsaBuffer).toLowerCase();
 				long usernameHash = ctx.channel().attr(NetworkConstants.USR_HASH).get();
 				String username = TextUtils.hashToName(usernameHash).toLowerCase().trim();
-				out.add(new LoginRequest(username, usernameHash, password, encryptor, decryptor));
+				String macAddress = ctx.channel().attr(NetworkConstants.USR_MAC).get();
+				out.add(new LoginRequest(usernameHash, username, password, macAddress, encryptor, decryptor));
 			} finally {
 				if (rsaBuffer.isReadable()) {
 					rsaBuffer.release();

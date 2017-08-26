@@ -19,7 +19,7 @@ public abstract class Session {
 	private final Channel channel;
 	
 	/**
-	 * The address that the connection was received from.
+	 * The ip address that the connection was received from.
 	 */
 	private final String hostAddress;
 	

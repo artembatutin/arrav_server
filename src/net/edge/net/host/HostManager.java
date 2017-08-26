@@ -34,7 +34,9 @@ public final class HostManager {
 	 * @return {@code true} if the two players are connected from same network, {@code false} otherwise.
 	 */
 	public static boolean same(Player player, Player other) {
-		return player.getSession().getHost().equals(other.getSession().getHost());
+		return !(player.getSession() == null || other.getSession() == null) && (
+				player.getSession().getHost().equals(other.getSession().getHost()) ||
+				player.getSession().getHost().equals(other.getSession().getMacAddress()));
 	}
 
 	/**

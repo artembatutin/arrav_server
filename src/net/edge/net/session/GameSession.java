@@ -25,13 +25,13 @@ public final class GameSession extends Session {
 	/**
 	 * The cap limit of outgoing packets per session.
 	 */
-	public static int UPDATE_LIMIT = 200; // 200? damn boy, testen maar
-
+	public static int UPDATE_LIMIT = 200;
+	
 	/**
 	 * The queue of {@link IncomingMsg}s.
 	 */
 	private final AbstractQueue<IncomingMsg> incoming = new MpscLinkedAtomicQueue<>();
-
+	
 	/**
 	 * The queue of {@link OutgoingPacket}s.
 	 */
@@ -43,19 +43,26 @@ public final class GameSession extends Session {
 	private final Player player;
 	
 	/**
+	 * The mac address the connection was received from.
+	 */
+	private final String macAddress;
+	
+	/**
 	 * The message encryptor.
 	 */
 	private final IsaacRandom encryptor;
-
+	
 	/**
 	 * Creates a new {@link GameSession}.
 	 * @param channel   The channel for this session.
+	 * @param macAddress The mac address.
 	 * @param encryptor The message encryptor.
 	 * @param decryptor The message decryptor.
 	 */
-	GameSession(Player player, Channel channel, IsaacRandom encryptor, IsaacRandom decryptor) {
+	GameSession(Player player, Channel channel, String macAddress, IsaacRandom encryptor, IsaacRandom decryptor) {
 		super(channel);
 		this.player = player;
+		this.macAddress = macAddress;
 		this.encryptor = encryptor;
 		getChannel().pipeline().replace("login-decoder", "game-decoder", new GameDecoder(decryptor, this));
 	}
@@ -69,7 +76,6 @@ public final class GameSession extends Session {
 					handle(packet);//item equipping
 					return;
 				}
-
 				incoming.offer(packet);
 			}
 		}
@@ -77,11 +83,9 @@ public final class GameSession extends Session {
 	
 	@Override
 	public void terminate() {
-		if(!isTerminating()) { // heh waarom lol
-			System.out.println("Game session terminating " + player);
-			if(player.getState() == EntityState.ACTIVE) {
-				World.get().queueLogout(player);
-			}
+		System.out.println("Game session terminating " + player);
+		if(player.getState() != EntityState.AWAITING_REMOVAL && player.getState() != EntityState.INACTIVE) {
+			World.get().queueLogout(player);
 		}
 	}
 	
@@ -96,7 +100,7 @@ public final class GameSession extends Session {
 	public void enqueue(OutgoingPacket pkt) {
 		outgoing.offer(pkt);
 	}
-
+	
 	/**
 	 * Handling an incoming packet/message.
 	 * @param packet incoming message.
@@ -108,42 +112,44 @@ public final class GameSession extends Session {
 			packet.getBuffer().release();
 		}
 	}
-
+	
+	/**
+	 * Polling all incoming packets.
+	 */
 	public void pollIncomingPackets() {
-		if (!incoming.isEmpty()) {
+		if(!incoming.isEmpty()) {
 			int count = 0;
-			while (!incoming.isEmpty() && count < 20) {
+			while(!incoming.isEmpty() && count < 20) {
 				IncomingMsg msg = incoming.poll();
-
 				handle(msg);
-
 				count++;
 			}
 		}
 	}
-
+	
+	/**
+	 * Polling all outgoing packets.
+	 */
 	public void pollOutgoingPackets() {
-		if (!outgoing.isEmpty()) {
+		if(!outgoing.isEmpty()) {
 			int count = 0;
-
-			while (!outgoing.isEmpty() && count < UPDATE_LIMIT) {
+			while(!outgoing.isEmpty() && count < UPDATE_LIMIT) {
 				OutgoingPacket pkt = outgoing.poll();
-				if (getChannel().isWritable()) {
+				if(getChannel().isWritable()) {
 					write(pkt);
 				} else {
 					outgoing.offer(pkt);
 				}
-
 				count++;
 			}
 		}
 	}
-
+	
 	/**
 	 * Writes the given {@link OutgoingPacket} to the stream.
 	 */
 	public void write(OutgoingPacket packet) {
-		if (getChannel().isActive() && getChannel().isRegistered()) {
+		if(getChannel().isActive() && getChannel().isRegistered()) {
 			ByteBuf temp = packet.write(player, new GameBuffer(Unpooled.buffer(256), encryptor));
 			getChannel().write(temp);
 		}
@@ -166,5 +172,13 @@ public final class GameSession extends Session {
 	public ByteBufAllocator alloc() {
 		return getChannel().alloc();
 	}
-
+	
+	/**
+	 * Gets the player's mac address.
+	 * @return mac address of this session.
+	 */
+	public String getMacAddress() {
+		return macAddress;
+	}
+	
 }

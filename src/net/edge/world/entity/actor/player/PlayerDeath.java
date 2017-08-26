@@ -146,7 +146,6 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		}
 
 		killer.ifPresent(k -> {
-			KILLER.inc(k);
 			if(HostManager.same(getActor(), k)) {
 				k.message("You don't receive any points because you and " + getActor().getFormatUsername() + " are connected from the same network.");
 				return;
@@ -155,6 +154,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				k.message("You don't receive any points because you have killed " + getActor().getFormatUsername() + " twice in a row.");
 				return;
 			}
+			KILLER.inc(k);
 			
 			//deaths
 			PlayerScoreboardStatistic characterStatistic = ScoreboardManager.get().getPlayerScoreboard().putIfAbsent(getActor().getFormatUsername(), new PlayerScoreboardStatistic(getActor().getFormatUsername()));

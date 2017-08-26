@@ -8,7 +8,6 @@ import net.edge.net.NetworkConstants;
 import net.edge.net.codec.login.LoginRequest;
 import net.edge.net.codec.login.LoginCode;
 import net.edge.net.codec.login.LoginResponse;
-import net.edge.GameConstants;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.player.Player;
@@ -97,7 +96,7 @@ public final class LoginSession extends Session {
 		future.awaitUninterruptibly();
 		
 		final JsonObject reader = serial.getReader();
-		GameSession session = new GameSession(player, channel, request.getEncryptor(), request.getDecryptor());
+		GameSession session = new GameSession(player, channel, request.getMacAddress(), request.getEncryptor(), request.getDecryptor());
 		channel.attr(NetworkConstants.SESSION_KEY).set(session);
 		player.setSession(session);
 		World.get().run(() -> {

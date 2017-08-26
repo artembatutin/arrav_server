@@ -58,6 +58,12 @@ public final class NetworkConstants {
 	 * instance from the attribute map of a {@link io.netty.channel.Channel}.
 	 */
 	public static final AttributeKey<Long> USR_HASH = AttributeKey.valueOf("session.HASH");
+	
+	/**
+	 * The {@link AttributeKey} value that is used to retrieve the session's mac address
+	 * instance from the attribute map of a {@link io.netty.channel.Channel}.
+	 */
+	public static final AttributeKey<String> USR_MAC = AttributeKey.valueOf("session.MAC");
 
 	/**
 	 * The private RSA modulus value.
