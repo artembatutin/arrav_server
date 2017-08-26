@@ -125,6 +125,8 @@ public class Combat<T extends Actor> {
         }
 
         if (!strategy.withinDistance(attacker, defender)) {
+            attacker.getMovementQueue().follow(defender);
+            attacker.setFollowing(true);
             return false;
         }
 
