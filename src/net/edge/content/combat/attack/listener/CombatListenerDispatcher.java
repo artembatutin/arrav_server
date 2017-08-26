@@ -84,7 +84,7 @@ public final class CombatListenerDispatcher {
 
         public final CombatListener<Player> listener;
 
-        public CombatListenerSet(int[] set, CombatListener<Player> listener) {
+        CombatListenerSet(int[] set, CombatListener<Player> listener) {
             this.set = set;
             this.listener = listener;
         }

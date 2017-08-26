@@ -193,7 +193,6 @@ public final class Application {
 		});
 		//NPC decoding.
 		launch.execute(() -> {
-			CombatProjectileDefinition.createLoader().load();
 			new MobDefinitionLoader().load();
 			new MobNodeLoader().load();
 			new ItemCacheLoader().load();
@@ -221,6 +220,7 @@ public final class Application {
 	}
 	
 	private void prepare() {
+		CombatProjectileDefinition.createLoader().load();
 		CombatListenerDispatcher.load();
 		CommandDispatcher.load();
 		loadEvents();

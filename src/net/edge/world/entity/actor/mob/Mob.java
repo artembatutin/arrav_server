@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.CombatProjectileDefinition;
-import net.edge.content.combat.CombatUtil;
+import net.edge.content.combat.CombatType;
 import net.edge.content.combat.attack.listener.CombatListener;
 import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
 import net.edge.content.combat.hit.Hit;
@@ -14,7 +14,6 @@ import net.edge.content.combat.strategy.npc.NpcMagicStrategy;
 import net.edge.content.combat.strategy.npc.NpcMeleeStrategy;
 import net.edge.content.combat.strategy.npc.NpcRangedStrategy;
 import net.edge.content.combat.strategy.npc.boss.KingBlackDragonStrategy;
-import net.edge.content.combat.strategy.npc.impl.DragonStrategy;
 import net.edge.content.skill.Skills;
 import net.edge.task.Task;
 import net.edge.world.World;
@@ -71,29 +70,26 @@ public abstract class Mob extends Actor {
 		}
 
 		MobDefinition.CombatAttackData data = mob.getDefinition().getCombatAttackData().get();
-		MobDefinition.CombatAttackData.StrategyType type = data.type;
+		CombatType type = data.type;
 		switch (type) {
 			case RANGED: {
 				CombatProjectileDefinition definition = data.getDefinition();
+				if (definition == null) {
+					throw new AssertionError("Could not find ranged projectile for Mob[id=" + mob.id + ", name=" + mob.getDefinition().getName() + "]");
+				}
 				return Optional.of(new NpcRangedStrategy(definition));
 			}
 			case MAGIC: {
 				CombatProjectileDefinition definition = data.getDefinition();
+				if (definition == null) {
+					throw new AssertionError("Could not find magic projectile for Mob[id=" + mob.id + ", name=" + mob.getDefinition().getName() + "]");
+				}
 				return Optional.of(new NpcMagicStrategy(definition));
 			}
-			case MULTI:
-				return Optional.of(loadMultiStrategy(mob));
 			case MELEE:
 				return Optional.of(NpcMeleeStrategy.INSTANCE);
 		}
 		return Optional.empty();
-	}
-
-	private static CombatStrategy<Mob> loadMultiStrategy(Mob mob) {
-		if (CombatUtil.isChromaticDragon(mob) || CombatUtil.isMetalicDragon(mob)) {
-			return new DragonStrategy(CombatUtil.isChromaticDragon(mob));
-		}
-		throw new AssertionError("Could not find multi-strategy for Mob[id=" + mob.id + ", name=" + mob.getDefinition().getName() + "]");
 	}
 
 	/**

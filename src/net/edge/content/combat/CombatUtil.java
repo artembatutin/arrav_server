@@ -7,6 +7,7 @@ import net.edge.content.combat.hit.CombatHit;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.HitIcon;
 import net.edge.content.combat.hit.Hitsplat;
+import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.net.packet.out.SendMessage;
@@ -249,23 +250,13 @@ public final class CombatUtil {
         return new CombatHit(hit, hitDelay, hitsplatDelay);
     }
 
-    private static final ImmutableSet<Integer> CHROMATIC_DRAGONS = ImmutableSet.of(
-        /* Green */ 941, 4677, 4678, 4679, 4680, 10604, 10605, 10606, 10607, 10608, 10609,
-        /* Red */ 53, 4669, 4670, 4671, 4672, 10815, 10816, 10817, 10818, 10819, 10820,
-        /* Blue */ 55, 4681, 4682, 4683, 4684, 5178,
-        /* Black */ 54, 4673, 4674, 4675, 4676, 10219, 10220, 10221, 10222, 10223, 10224
-    );
-
-    private static final ImmutableSet<Integer> METALIC_DRAGONS = ImmutableSet.of(
-        1590, 1591, 1592, 3590, 5363, 8424, 10776, 10777, 10778, 10779, 10780, 10781
-    );
-
-    public static boolean isChromaticDragon(Mob mob) {
-        return CHROMATIC_DRAGONS.contains(mob.getId());
+    public static CombatStrategy<Mob> randomStrategy(CombatStrategy<Mob>[] strategies) {
+        return RandomUtils.random(strategies);
     }
 
-    public static boolean isMetalicDragon(Mob mob) {
-        return METALIC_DRAGONS.contains(mob.getId());
+    @SafeVarargs
+    public static CombatStrategy<Mob>[] createStrategyArray(CombatStrategy<Mob>... strategies) {
+        return strategies;
     }
 
 }

@@ -47,7 +47,7 @@ public class KingBlackDragonStrategy extends MultiStrategy {
     @Override
     public void finish(Mob attacker, Actor defender) {
         currentStrategy.finish(attacker, defender);
-        if (CRUSH.withinDistance(attacker, defender)) {
+        if (MELEE.withinDistance(attacker, defender)) {
             currentStrategy = randomStrategy(FULL_STRATEGIES);
         } else {
             currentStrategy = randomStrategy(NON_MELEE);
@@ -60,7 +60,7 @@ public class KingBlackDragonStrategy extends MultiStrategy {
     }
 
     private static final class CrushMelee extends NpcMeleeStrategy {
-        private static final Animation CRUSH = new Animation(80, Animation.AnimationPriority.HIGH);
+        private static final Animation ANIMATION = new Animation(80, Animation.AnimationPriority.HIGH);
 
         @Override
         public int getAttackDistance(Mob attacker, FightType fightType) {
@@ -69,7 +69,7 @@ public class KingBlackDragonStrategy extends MultiStrategy {
 
         @Override
         public Animation getAttackAnimation(Mob attacker, Actor defender) {
-            return CRUSH;
+            return ANIMATION;
         }
 
         @Override

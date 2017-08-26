@@ -1,6 +1,6 @@
 package net.edge.content.combat.content.lunars.impl.spells;
 
-import net.edge.content.combat.content.VengenceListener;
+import net.edge.content.combat.attack.listener.other.VengenceListener;
 import net.edge.content.combat.content.MagicRune;
 import net.edge.content.combat.content.RequiredRune;
 import net.edge.content.combat.content.lunars.impl.LunarCombatSpell;

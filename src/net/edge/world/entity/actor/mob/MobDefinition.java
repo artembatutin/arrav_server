@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.edge.content.combat.CombatProjectileDefinition;
+import net.edge.content.combat.CombatType;
 import net.edge.util.json.JsonSaver;
 
 import java.io.BufferedReader;
@@ -519,24 +520,17 @@ public final class MobDefinition {
 
 	public static final class CombatAttackData {
 
-		public final StrategyType type;
+		public final CombatType type;
 
 		public final String key;
 
-		public CombatAttackData(StrategyType type, String key) {
+		public CombatAttackData(CombatType type, String key) {
 			this.type = type;
 			this.key = key;
 		}
 
 		public CombatProjectileDefinition getDefinition() {
 			return CombatProjectileDefinition.getDefinition(key);
-		}
-
-		public enum StrategyType {
-			MELEE,
-			RANGED,
-			MAGIC,
-			MULTI
 		}
 	}
 
