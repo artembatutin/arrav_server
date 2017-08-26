@@ -14,8 +14,6 @@ public abstract class CombatStrategy<T extends Actor> implements CombatListener<
 
     public abstract boolean withinDistance(T attacker, Actor defender);
 
-    public abstract boolean canAttack(T attacker, Actor defender);
-
     public abstract int getAttackDelay(T attacker, Actor defender, FightType fightType);
 
     public abstract int getAttackDistance(T attacker, FightType fightType);
@@ -23,6 +21,9 @@ public abstract class CombatStrategy<T extends Actor> implements CombatListener<
     public abstract CombatHit[] getHits(T attacker, Actor defender);
 
     public abstract Animation getAttackAnimation(T attacker, Actor defender);
+
+    @Override
+    public abstract boolean canAttack(T attacker, Actor defender);
 
     @Override
     public void start(T attacker, Actor defender, Hit[] hits) {

@@ -21,11 +21,12 @@ import static net.edge.content.combat.CombatUtil.randomStrategy;
     /* Black */ 54, 4673, 4674, 4675, 4676, 10219, 10220, 10221, 10222, 10223, 10224
 })
 public class ChromaticDragon extends SimplifiedListener<Mob> {
+    private static DragonfireStrategy DRAGONFIRE;
     private static CombatStrategy<Mob>[] STRATEGIES;
 
     static {
         try {
-            DragonfireStrategy DRAGONFIRE = new DragonfireStrategy(getDefinition("Chromatic dragonfire"));
+            DRAGONFIRE = new DragonfireStrategy(getDefinition("Chromatic dragonfire"));
             STRATEGIES = createStrategyArray(NpcMeleeStrategy.INSTANCE, DRAGONFIRE);
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,8 +34,20 @@ public class ChromaticDragon extends SimplifiedListener<Mob> {
     }
 
     @Override
-    public void start(Mob attacker, Actor defender, Hit[] hits) {
-        attacker.getCombat().setStrategy(randomStrategy(STRATEGIES));
+    public boolean canAttack(Mob attacker, Actor defender) {
+        if (!NpcMeleeStrategy.INSTANCE.withinDistance(attacker, defender)) {
+            attacker.getCombat().setStrategy(DRAGONFIRE);
+        }
+        return attacker.getCombat().getStrategy().canAttack(attacker, defender);
+    }
+
+    @Override
+    public void finish(Mob attacker, Actor defender) {
+        if (!NpcMeleeStrategy.INSTANCE.withinDistance(attacker, defender)) {
+            attacker.getCombat().setStrategy(DRAGONFIRE);
+        } else {
+            attacker.getCombat().setStrategy(randomStrategy(STRATEGIES));
+        }
     }
 
 }

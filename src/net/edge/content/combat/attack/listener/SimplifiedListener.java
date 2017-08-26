@@ -7,6 +7,11 @@ import net.edge.world.entity.actor.Actor;
 public class SimplifiedListener<T extends Actor> implements CombatListener<T> {
 
     @Override
+    public boolean canAttack(T attacker, Actor defender) {
+        return true;
+    }
+
+    @Override
     public void start(T attacker, Actor defender, Hit[] hits) { }
 
     @Override

@@ -16,8 +16,17 @@ import java.util.Optional;
 public interface CombatListener<T extends Actor> {
 
     /**
+     * Checks if the attacker can attack the defender.
+     *
+     * @param attacker the attacking actor
+     * @param defender the defending actor
+     */
+    boolean canAttack(T attacker, Actor defender);
+
+    /**
      * Called when the strategy starts.
-     *  @param attacker the attacking actor
+     *
+     * @param attacker the attacking actor
      * @param defender the defending actor
      * @param hits
      */

@@ -10,7 +10,6 @@ import net.edge.content.combat.strategy.CombatStrategy;
 import net.edge.task.Task;
 import net.edge.util.Stopwatch;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -120,17 +119,13 @@ public class Combat<T extends Actor> {
     }
 
     public boolean submitStrategy(Actor defender, CombatStrategy<? super T> strategy) {
-        if (!CombatUtil.canAttack(attacker, defender)) {
+        if (!canAttack(defender)) {
             return false;
         }
 
         if (!strategy.withinDistance(attacker, defender)) {
             attacker.getMovementQueue().follow(defender);
             attacker.setFollowing(true);
-            return false;
-        }
-
-        if (!strategy.canAttack(attacker, defender)) {
             return false;
         }
 
@@ -183,6 +178,24 @@ public class Combat<T extends Actor> {
                 combatDelays[idx] = delay;
             }
         }
+    }
+
+    private boolean canAttack(Actor defender) {
+        if (!CombatUtil.canAttack(attacker, defender)) {
+            return false;
+        }
+
+        if (!strategy.canAttack(attacker, defender)) {
+            return false;
+        }
+
+        for (CombatListener<? super T> listener : listeners) {
+            if (!listener.canAttack(attacker, defender)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void start(Actor defender, CombatStrategy<? super T> strategy, Hit... hits) {
