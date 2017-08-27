@@ -150,7 +150,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				k.message("You don't receive any points because you and " + getActor().getFormatUsername() + " are connected from the same network.");
 				return;
 			}
-			if(getActor().getLastKiller().equalsIgnoreCase(k.getFormatUsername())) {
+			if(getActor().lastKiller != null && getActor().lastKiller.equalsIgnoreCase(k.getFormatUsername())) {
 				k.message("You don't receive any points because you have killed " + getActor().getFormatUsername() + " twice in a row.");
 				return;
 			}
@@ -253,7 +253,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		ObjectList<Item> keep = new ObjectArrayList<>();
 		ObjectList<Item> drop = new ObjectArrayList<>();
 		killer.ifPresent(p -> {
-            if(!getActor().getLastKiller().equalsIgnoreCase(p.getFormatUsername())) {
+            if(getActor().lastKiller != null && !getActor().lastKiller.equalsIgnoreCase(p.getFormatUsername())) {
 	            if(!HostManager.same(player, p)) {
 		            Rights right = p.getRights();
             	    int baseAmount = RandomUtils.inclusive(10, 50) * (GameConstants.DOUBLE_BLOOD_MONEY_EVENT ? 2 : 1);
@@ -261,7 +261,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 					drop.add(new Item(19000, amount));
 				}
             }
-            getActor().setLastKiller(player.getFormatUsername());
+            getActor().lastKiller = player.getFormatUsername();
         });
 		for(Item i : player.getEquipment().getItems()) {
 			if(i == null)

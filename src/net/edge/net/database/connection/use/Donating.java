@@ -65,27 +65,26 @@ public class Donating extends ConnectionUse {
 	public void append(Connection con) throws SQLException {
 		boolean received = false;
 		PreparedStatement st = con.prepareStatement("SELECT * FROM purchase_history WHERE LOWER(username) = ? and claimed = 0 and payment_status = 'Completed'");
-		st.setString(1, player.getCredentials().getUsername().toLowerCase());
+		st.setString(1, player.credentials.username.toLowerCase());
 		ResultSet rs = st.executeQuery();
 		while(rs.next()) {
 			int id = rs.getInt("id");
 			int product = rs.getInt("tokens");
 			player.getBank().add(0, new Item(7478, TOKENS[product]));
 			player.message("We added " + TOKENS[product] + " edge tokens to your bank, thank you for donating!");
-			player.increaseTotalDonated(TOKENS[product]);
-			
+			player.totalDonated += TOKENS[product];
 			if(!player.getRights().isStaff()) {
 				switch(player.getRights()) {
 					case PLAYER:
-						if(player.getTotalDonated(true) > 25) {
+						if(player.getTotalDonated(true) >= 20) {
 							player.setRights(Rights.DONATOR);
-							player.message("You have donated over 25 dollars, you have received the reg. donator rank.");
+							player.message("You have donated over 20 dollars, you have received the reg. donator rank.");
 						}
 						break;
 					case DONATOR:
-						if(player.getTotalDonated(true) > 75) {
+						if(player.getTotalDonated(true) >= 50) {
 							player.setRights(Rights.SUPER_DONATOR);
-							player.message("You have donated over 75 dollars, you have received the sup. donator rank.");
+							player.message("You have donated over 50 dollars, you have received the sup. donator rank.");
 						}
 						break;
 					case SUPER_DONATOR:

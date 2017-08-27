@@ -25,7 +25,7 @@ public final class CombatSkullEffect extends CombatEffect {
 				return false;
 			}
 			player.getSkullTimer().set(3000);
-			player.setSkullIcon(Player.WHITE_SKULL);
+			player.skullIcon = Player.WHITE_SKULL;
 			player.getFlags().flag(UpdateFlag.APPEARANCE);
 			return true;
 		}
@@ -37,7 +37,7 @@ public final class CombatSkullEffect extends CombatEffect {
 		if(c.isPlayer()) {
 			Player player = (Player) c;
 			if(player.getSkullTimer().get() <= 0) {
-				player.setSkullIcon(-1);
+				player.skullIcon = -1;
 				player.getFlags().flag(UpdateFlag.APPEARANCE);
 				return true;
 			}
@@ -59,7 +59,7 @@ public final class CombatSkullEffect extends CombatEffect {
 		if(c.isPlayer()) {
 			Player player = (Player) c;
 			if(player.getSkullTimer().get() > 0) {
-				player.setSkullIcon(Player.WHITE_SKULL);
+				player.skullIcon = Player.WHITE_SKULL;
 				return true;
 			}
 			//if(FightCavesHandler.isChampion(player))

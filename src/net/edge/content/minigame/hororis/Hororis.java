@@ -18,7 +18,6 @@ import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.GroundItemPolicy;
 import net.edge.world.entity.item.GroundItemStatic;
 import net.edge.world.entity.item.Item;
-import net.edge.world.entity.region.Region;
 import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
@@ -83,7 +82,7 @@ public class Hororis extends Minigame {
 	@Override
 	public boolean onFirstClickNpc(Player player, Mob mob) {
 		if(mob.getId() == 9181 || mob.getId() == 9182 || mob.getId() == 9183) {
-			if(!player.xpLock) {
+			if(!player.lockedXP) {
 				player.getSkills()[Skills.PRAYER].increaseExperience(300);
 			}
 			World.get().getMobs().remove(mob);
@@ -126,7 +125,7 @@ public class Hororis extends Minigame {
 		for(Player p : players) {
 			p.out(new SendFade(20, 100, 160));
 			p.task(2, pl -> pl.move(new Position(3367, 3513)));
-			if(!p.xpLock) {
+			if(!p.lockedXP) {
 				p.getSkills()[Skills.PRAYER].increaseExperience(400);
 			}
 			p.getAttr().get("ignoredAggressionLevel").set(false);

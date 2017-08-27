@@ -3,6 +3,7 @@ package net.edge.world;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.edge.Application;
+import net.edge.content.PlayerPanel;
 import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.GameConstants;
 import net.edge.GamePulseHandler;
@@ -216,14 +217,15 @@ public final class World {
 				if(player == null) {
 					break;
 				}
-				if(playerByNames.containsKey(player.getCredentials().getUsernameHash())) {
+				if(playerByNames.containsKey(player.credentials.usernameHash)) {
 					player.getSession().getChannel().close();
 				} else if(players.add(player)) {
-					playerByNames.put(player.getCredentials().getUsernameHash(), player);
-				} else if(player.isHuman()) {
+					playerByNames.put(player.credentials.usernameHash, player);
+				} else {
 					player.getSession().getChannel().close();
 				}
 			}
+			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + players.size());
 		}
 	}
 	
@@ -299,6 +301,7 @@ public final class World {
 					logouts.offer(player);
 				}
 			}
+			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + players.size());
 		}
 	}
 	
@@ -425,7 +428,7 @@ public final class World {
 			player.getMobs().clear();
 			if(response) {
 				System.out.println(player + " logged out.");
-				playerByNames.remove(player.getCredentials().getUsernameHash());
+				playerByNames.remove(player.credentials.usernameHash);
 			}
 			return response;
 		} catch(Exception e) {

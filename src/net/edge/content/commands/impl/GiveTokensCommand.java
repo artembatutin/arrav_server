@@ -16,7 +16,7 @@ public final class GiveTokensCommand implements Command {
 		if(p == null)
 			return;
 		int amount = Integer.parseInt(cmd[2]);
-		p.increaseTotalDonated(amount);
+		p.totalDonated += amount;
 		p.getBank().deposit(new Item(7478, amount));
 		p.message("You have been given " + amount + " edge tokens, they are in your bank.");
 		player.message("You've increased " + amount + " for " + p.getFormatUsername() + ". Total points = " + p.getTotalDonated(false));

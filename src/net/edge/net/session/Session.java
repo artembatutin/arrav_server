@@ -29,11 +29,6 @@ public abstract class Session {
 	private boolean active = true;
 	
 	/**
-	 * Condition if this session is terminating.
-	 */
-	private boolean terminating = false;
-	
-	/**
 	 * Creates a new {@link Session}.
 	 * @param channel The {@link Channel} to send and receive messages through.
 	 */
@@ -89,20 +84,5 @@ public abstract class Session {
 	 */
 	public void setActive(boolean active) {
 		this.active = active;
-	}
-	
-	/**
-	 * @return Terminating connection condition.
-	 */
-	public boolean isTerminating() {
-		return terminating;
-	}
-	
-	/**
-	 * Setting the terminating condition.
-	 * @param terminating flag.
-	 */
-	public void setTerminating(boolean terminating) {
-		this.terminating = terminating;
 	}
 }

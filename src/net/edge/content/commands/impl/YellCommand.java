@@ -18,7 +18,7 @@ public final class YellCommand implements Command {
 			player.message("Regular players can't yell or shout worldwide.");
 			return;
 		}
-		if(player.isMuted() || HostManager.contains(player.getCredentials().getUsername(), HostListType.MUTED_IP)) {
+		if(player.muted || player.ipMuted) {
 			player.message("You cannot yell while being muted.");
 			return;
 		}

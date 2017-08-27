@@ -89,7 +89,6 @@ import net.edge.world.locale.loc.Location;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.logging.Logger;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -112,19 +111,9 @@ public final class Player extends Actor {
 	public static final int RED_SKULL = 1;
 	
 	/**
-	 * The logger that will print important information.
-	 */
-	private static Logger logger = LoggerUtils.getLogger(Player.class);
-	
-	/**
 	 * The player credentials on login.
 	 */
-	private final PlayerCredentials credentials;
-	
-	/**
-	 * Experience lock.
-	 */
-	public boolean xpLock;
+	public final PlayerCredentials credentials;
 	
 	/**
 	 * Determines if this player is playing in iron man mode.
@@ -135,34 +124,64 @@ public final class Player extends Actor {
 	private int ironMan;
 	
 	/**
-	 * The total amount of times this player has voted.
+	 * The wilderness level this player is in.
 	 */
-	private int totalVotes;
-
-	/**
-	 * The total amount of tokens the player has donated for.
-	 */
-	private int totalDonated;
-
-	/**
-	 * Player's voting points.
-	 */
-	private int votePoints;
+	private int wildernessLevel;
 	
 	/**
-	 * The aggression tick timer to not check npc aggression each tick.
+	 * The weight of the player.
 	 */
-	private int aggressionTick;
-
+	public double weight, runEnergy = 100D;
+	
 	/**
-	 * If the player logged in for the first time.
+	 * The identifier for the icons above the player's head.
 	 */
-	public boolean firstLogin = false;
+	public int headIcon = -1, skullIcon = -1;
+	
+	/**
+	 * Counted flags
+	 */
+	public int votePoints, totalVotes, totalDonated, aggressionTick;
+	
+	/**
+	 * Condition flags.
+	 */
+	private boolean specialActivated, updateRegion;
+	
+	/**
+	 * Player flag states.
+	 */
+	public boolean venged, banned, muted, ipMuted, autocasting, screenFocus, firstLogin, lockedXP;
+	
+	/**
+	 * The flag of a walkable interface context.
+	 */
+	public boolean wildernessWidget, multicombatWidget, duelingWidget, godwarsWidget;
 	
 	/**
 	 * The last username that killed this player.
 	 */
-	private String lastKiller = "[NOBODY]";
+	String lastKiller = null;
+	
+	/**
+	 * The godwars killcount that can be increased by this player.
+	 */
+	private int[] godwarsKillcount = new int[4];
+	
+	/**
+	 * The cached achievement progress.
+	 */
+	public Object2IntArrayMap<Achievement> achievements = new Object2IntArrayMap<Achievement>(Achievement.VALUES.size()) { {
+			for(final Achievement achievement : Achievement.VALUES) {
+				put(achievement, 0);
+			}
+		}
+	};
+	
+	/**
+	 * The cached player's farming patches progress.
+	 */
+	public Object2ObjectArrayMap<PatchType, Patch> patches = new Object2ObjectArrayMap<>(PatchType.VALUES.size());
 	
 	/**
 	 * Uniquely spawned mob/npcs for this player.
@@ -220,63 +239,6 @@ public final class Player extends Actor {
 	private final DialogueBuilder dialogueChain = new DialogueBuilder(this);
 	
 	/**
-	 * The cached achievement progress.
-	 */
-	private Object2IntArrayMap<Achievement> playerAchievements = new Object2IntArrayMap<Achievement>(Achievement.VALUES.size()) {
-		{
-			for(final Achievement achievement : Achievement.VALUES) {
-				put(achievement, 0);
-			}
-		}
-	};
-	
-	/**
-	 * The cached player's farming patches progress.
-	 */
-	private Object2ObjectArrayMap<PatchType, Patch> playerPatches = new Object2ObjectArrayMap<>(PatchType.VALUES.size());
-	
-	/**
-	 * The I/O manager that manages I/O operations for this player.
-	 */
-	private GameSession session;
-	
-	/**
-	 * The godwars killcount that can be increased by this player.
-	 */
-	private int[] godwarsKillcount = new int[4];
-	
-	/**
-	 * The overload effect for this player.
-	 */
-	private OverloadEffectTask overloadEffect;
-	
-	/**
-	 * The array of skills that can be trained by this player.
-	 */
-	private final Skill[] skills = new Skill[25];
-	
-	/**
-	 * Gets the weight of this player.
-	 * @return player's weight.
-	 */
-	public double getWeight() {
-		return weight;
-	}
-	
-	/**
-	 * Sets a new value for {@link #weight}.
-	 * @param weight the new value to set.
-	 */
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
-	
-	/**
-	 * The weight of the player.
-	 */
-	private double weight;
-	
-	/**
 	 * The array of booleans determining which prayers are active.
 	 */
 	private final EnumSet<Prayer> prayerActive = EnumSet.noneOf(Prayer.class);
@@ -295,58 +257,6 @@ public final class Player extends Actor {
 	 * Represents the class that holds functionality regarding completing agility obstacle laps.
 	 */
 	private final AgilityCourseBonus agility_bonus = new AgilityCourseBonus();
-	
-	/**
-	 * The collection of stopwatches used for various timing operations.
-	 */
-	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), eatingTimer = new Stopwatch()
-			.reset(), potionTimer = new Stopwatch().reset(), specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch()
-			.reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
-	
-	/**
-	 * The collection of counters used for various counting operations.
-	 */
-	private final MutableNumber poisonImmunity = new MutableNumber(), teleblockTimer = new MutableNumber(), skullTimer = new MutableNumber(), specialPercentage = new MutableNumber(100);
-	
-	/**
-	 * Holds an optional wrapped inside the Antifire details.
-	 */
-	private Optional<AntifireDetails> antifireDetails = Optional.empty();
-	
-	/**
-	 * The running energy double.
-	 */
-	private double runEnergy = 100D;
-	
-	/**
-	 * The enter input listener which will execute code when a player submits an input.
-	 */
-	private Optional<Function<String, ActionListener>> enterInputListener = Optional.empty();
-	
-	/**
-	 * The container of appearance values for this player.
-	 */
-	private final PlayerAppearance appearance = new PlayerAppearance();
-	
-	/**
-	 * The venged flag of this player.
-	 */
-	private boolean venged;
-	
-	/**
-	 * The banning flag of this player.
-	 */
-	private boolean banned;
-	
-	/**
-	 * The muted flag of this player.
-	 */
-	private boolean muted;
-	
-	/**
-	 * The amount of authority this player has over others.
-	 */
-	private Rights rights = Rights.PLAYER;
 	
 	/**
 	 * The total amount of npcs this player has killed.
@@ -379,6 +289,78 @@ public final class Player extends Actor {
 	private final MutableNumber highestKillstreak = new MutableNumber();
 	
 	/**
+	 * The container of appearance values for this player.
+	 */
+	private final PlayerAppearance appearance = new PlayerAppearance();
+	
+	/**
+	 * The ranged details for this player.
+	 */
+	private final CombatRangedDetails rangedDetails = new CombatRangedDetails(this);
+	
+	/**
+	 * The flag that determines if this player is disabled.
+	 */
+	private final ActivityManager activityManager = new ActivityManager(this);
+	
+	/**
+	 * The container class which holds functions of values which should be modified.
+	 */
+	private final MinigameContainer minigameContainer = new MinigameContainer();
+	
+	/**
+	 * A map of interfaces texts.
+	 */
+	public final Int2ObjectArrayMap<String> interfaceTexts = new Int2ObjectArrayMap<>();
+	
+	/**
+	 * The pet that this player has spawned.
+	 */
+	private final PetManager petManager = new PetManager(this);
+	
+	/**
+	 * The array of skills that can be trained by this player.
+	 */
+	private final Skill[] skills = new Skill[25];
+	
+	/**
+	 * The I/O manager that manages I/O operations for this player.
+	 */
+	private GameSession session;
+	
+	/**
+	 * The overload effect for this player.
+	 */
+	private OverloadEffectTask overloadEffect;
+	
+	/**
+	 * The collection of stopwatches used for various timing operations.
+	 */
+	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), eatingTimer = new Stopwatch()
+			.reset(), potionTimer = new Stopwatch().reset(), specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch()
+			.reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
+	
+	/**
+	 * The collection of counters used for various counting operations.
+	 */
+	private final MutableNumber poisonImmunity = new MutableNumber(), teleblockTimer = new MutableNumber(), skullTimer = new MutableNumber(), specialPercentage = new MutableNumber(100);
+	
+	/**
+	 * Holds an optional wrapped inside the Antifire details.
+	 */
+	private Optional<AntifireDetails> antifireDetails = Optional.empty();
+	
+	/**
+	 * The enter input listener which will execute code when a player submits an input.
+	 */
+	private Optional<Function<String, ActionListener>> enterInputListener = Optional.empty();
+	
+	/**
+	 * The amount of authority this player has over others.
+	 */
+	private Rights rights = Rights.PLAYER;
+	
+	/**
 	 * The amount of pest points the player has.
 	 */
 	private int pestPoints;
@@ -404,11 +386,6 @@ public final class Player extends Actor {
 	private CombatSpell castSpell;
 	
 	/**
-	 * The flag that determines if the player is autocasting.
-	 */
-	private boolean autocast;
-	
-	/**
 	 * The combat spell currently being autocasted.
 	 */
 	private CombatSpell autocastSpell;
@@ -419,29 +396,9 @@ public final class Player extends Actor {
 	private CombatSpecial combatSpecial;
 	
 	/**
-	 * The condition if the player's screen is on focus.
-	 */
-	private boolean focused;
-	
-	/**
-	 * The ranged details for this player.
-	 */
-	private final CombatRangedDetails rangedDetails = new CombatRangedDetails(this);
-	
-	/**
 	 * The current viewing orb that this player has openShop.
 	 */
 	private ViewingOrb viewingOrb;
-	
-	/**
-	 * The flag that determines if this player is disabled.
-	 */
-	private final ActivityManager activityManager = new ActivityManager(this);
-	
-	/**
-	 * The flag that determines if the special bar has been activated.
-	 */
-	private boolean specialActivated;
 	
 	/**
 	 * The current skill action that is going on for this player.
@@ -479,19 +436,9 @@ public final class Player extends Actor {
 	private Task prayerDrain = null;
 	
 	/**
-	 * The wilderness level this player is in.
-	 */
-	private int wildernessLevel;
-	
-	/**
 	 * The weapon interface this player currently has.
 	 */
 	private WeaponInterface weapon = WeaponInterface.UNARMED;
-	
-	/**
-	 * The pet that this player has spawned.
-	 */
-	private final PetManager petManager = new PetManager(this);
 	
 	/**
 	 * The familiar this player has spawned.
@@ -504,49 +451,9 @@ public final class Player extends Actor {
 	private OptionDialogue.OptionType option;
 	
 	/**
-	 * The identifier for the head icon of this player.
-	 */
-	private int headIcon = -1;
-	
-	/**
-	 * The identifier for the skull icon of this player.
-	 */
-	private int skullIcon = -1;
-	
-	/**
-	 * The flag that determines if a wilderness interface is present.
-	 */
-	private boolean wildernessInterface;
-	
-	/**
-	 * The flag that determines if a multicombat interface is present.
-	 */
-	private boolean multicombatInterface;
-	
-	/**
-	 * The flag that determines if a duel context is present.
-	 */
-	private boolean duelingContext;
-	
-	/**
-	 * The flag that determines if a godwars context is present.
-	 */
-	private boolean godwarsInterface;
-	
-	/**
 	 * The current minigame this player is in.
 	 */
 	private Optional<Minigame> minigame = Optional.empty();
-	
-	/**
-	 * The container class which holds functions of values which should be modified.
-	 */
-	private final MinigameContainer minigameContainer = new MinigameContainer();
-	
-	/**
-	 * A map of interfaces texts.
-	 */
-	public final Int2ObjectArrayMap<String> interfaceTexts = new Int2ObjectArrayMap<>();
 	
 	/**
 	 * The array of chat text packed into bytes.
@@ -613,11 +520,6 @@ public final class Player extends Actor {
 	private int runIndex = 0x338;
 	
 	/**
-	 * If the region has been updated this sequence.
-	 */
-	private boolean updateRegion;
-	
-	/**
 	 * The result of his search in the market.
 	 */
 	private MarketShop marketShop;
@@ -628,11 +530,6 @@ public final class Player extends Actor {
 	private House house = new House(this);
 	
 	/**
-	 * Flag determining if the player is a human.
-	 */
-	private final boolean human;
-	
-	/**
 	 * The saved {@link Multicannon} instance.
 	 */
 	public Optional<Multicannon> cannon = Optional.empty();
@@ -640,14 +537,9 @@ public final class Player extends Actor {
 	/**
 	 * Creates a new {@link Player}.
 	 */
-	public Player(PlayerCredentials credentials, boolean human) {
+	public Player(PlayerCredentials credentials) {
 		super(GameConstants.STARTING_POSITION, EntityType.PLAYER);
 		this.credentials = credentials;
-		this.human = human;
-	}
-
-	public PlayerCredentials getCredentials() {
-		return credentials;
 	}
 
 	public void sendDefaultSidebars() {
@@ -710,7 +602,9 @@ public final class Player extends Actor {
 				World.get().submit(new CombatEffectTask(this, $it));
 		});
 		ExchangeSessionManager.get().resetRequests(this);
-		message(GameConstants.WELCOME_MESSAGE);
+		message("@blu@Welcome to Edgeville!");
+		message("@blu@Edgeville isn't in an advertising phase now, please report bugs with ::bug desc.");
+		message("@blu@Next event: Dharok Event 2nd September");
 		if(UpdateCommand.inProgess == 1) {
 			message("@red@There is currently an update schedule in progress. You'll be kicked off soon.");
 		}
@@ -733,10 +627,10 @@ public final class Player extends Actor {
 		}
 		MinigameHandler.executeVoid(this, m -> m.onLogin(this));
 		PlayerPanel.refreshAll(this);
-		if(!clan.isPresent() && isHuman()) {
+		if(!clan.isPresent()) {
 			ClanManager.get().clearOnLogin(this);
 		}
-		if(attr.get("introduction_stage").getInt() != 3 && isHuman()) {
+		if(attr.get("introduction_stage").getInt() != 3) {
 			new IntroductionCutscene(this).prerequisites();
 		}
 		if(FirepitManager.get().getFirepit().isActive()) {
@@ -761,20 +655,19 @@ public final class Player extends Actor {
 	public boolean equals(Object obj) {
 		if(obj instanceof Player) {
 			Player other = (Player) obj;
-			return getSlot() == other.getSlot() && credentials.getUsernameHash() == other.credentials.getUsernameHash();
+			return getSlot() == other.getSlot() && credentials.usernameHash == other.credentials.usernameHash;
 		}
 		return false;
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(getSlot(), credentials.getUsernameHash());
+		return Objects.hash(getSlot(), credentials.usernameHash);
 	}
 	
 	@Override
 	public String toString() {
-		return getCredentials().getUsername() == null ? session.toString() : "PLAYER[username= " + getCredentials().getUsername() + ", host= " + session
-				.getHost() + ", rights= " + rights + "]";
+		return credentials.username == null ? session.toString() : "PLAYER[username= " + credentials.username + ", host= " + session.getHost() + ", rights= " + rights + "]";
 	}
 	
 	@Override
@@ -789,12 +682,12 @@ public final class Player extends Actor {
 	
 	@Override
 	public boolean inMulti() {
-		return multicombatInterface;
+		return multicombatWidget;
 	}
 	
 	@Override
 	public boolean inWilderness() {
-		return wildernessInterface;
+		return wildernessWidget;
 	}
 	
 	@Override
@@ -851,9 +744,8 @@ public final class Player extends Actor {
 	
 	@Override
 	public void postUpdate() {
-		if(isHuman()) {
+		if(getSession() != null)
 			getSession().flushQueue();
-		}
 		super.postUpdate();
 		cachedUpdateBlock = null;
 	}
@@ -1033,8 +925,7 @@ public final class Player extends Actor {
 	 * Saves the character file for this player.
 	 */
 	private void save() {
-		if(isHuman())
-			new PlayerSerialization(this).serialize();
+		new PlayerSerialization(this).serialize();
 	}
 	
 	/**
@@ -1068,57 +959,57 @@ public final class Player extends Actor {
 	 */
 	public void sendInterfaces() {
 		if(Location.inDuelArena(this)) {
-			if(!duelingContext) {
+			if(!duelingWidget) {
 				out(new SendContextMenu(2, false, "Challenge"));
-				duelingContext = true;
+				duelingWidget = true;
 			}
-		} else if(duelingContext && !minigame.isPresent()) {
+		} else if(duelingWidget && !minigame.isPresent()) {
 			out(new SendContextMenu(2, false, "null"));
-			duelingContext = false;
+			duelingWidget = false;
 		}
 		if(Location.inGodwars(this)) {
-			if(!godwarsInterface) {
+			if(!godwarsWidget) {
 				GodwarsFaction.refreshInterface(this);
 				out(new SendWalkable(16210));
-				godwarsInterface = true;
+				godwarsWidget = true;
 			}
-		} else if(godwarsInterface) {
+		} else if(godwarsWidget) {
 			out(new SendWalkable(-1));
-			godwarsInterface = false;
+			godwarsWidget = false;
 		}
 		if(Location.inWilderness(this)) {
 			int calculateY = this.getPosition().getY() > 6400 ? super.getPosition().getY() - 6400 : super.getPosition().getY();
 			wildernessLevel = (((calculateY - 3520) / 8) + 1);
-			if(!wildernessInterface) {
+			if(!wildernessWidget) {
 				out(new SendWalkable(197));
 				out(new SendContextMenu(2, true, "Attack"));
-				wildernessInterface = true;
+				wildernessWidget = true;
 				WildernessActivity.enter(this);
 			}
 			text(199, "@yel@Level: " + wildernessLevel);
 		} else if(Location.inFunPvP(this)) {
-			if(!wildernessInterface) {
+			if(!wildernessWidget) {
 				out(new SendWalkable(197));
 				out(new SendContextMenu(2, true, "Attack"));
-				wildernessInterface = true;
+				wildernessWidget = true;
 				WildernessActivity.enter(this);
 			}
 			text(199, "@yel@Fun PvP");
-		} else if(wildernessInterface) {
+		} else if(wildernessWidget) {
 			out(new SendContextMenu(2, false, "null"));
 			out(new SendWalkable(-1));
-			wildernessInterface = false;
+			wildernessWidget = false;
 			wildernessLevel = 0;
 			WildernessActivity.leave(this);
 		}
 		if(Location.inMultiCombat(this)) {
-			if(!multicombatInterface) {
+			if(!multicombatWidget) {
 				out(new SendMultiIcon(false));
-				multicombatInterface = true;
+				multicombatWidget = true;
 			}
 		} else {
 			out(new SendMultiIcon(true));
-			multicombatInterface = false;
+			multicombatWidget = false;
 		}
 	}
 	
@@ -1140,7 +1031,7 @@ public final class Player extends Actor {
 	 * @return the formatted username.
 	 */
 	public String getFormatUsername() {
-		return TextUtils.capitalize(getCredentials().getUsername());
+		return credentials.formattedUsername;
 	}
 	
 	/**
@@ -1175,14 +1066,6 @@ public final class Player extends Actor {
 		if(update)
 			PlayerPanel.IRON.refresh(this, "@or3@ - Iron man: @yel@" + (value == 0 ? "@red@no" : "@gre@yes"));
 	}
-	
-	/**
-	 * Gets the total amount of times this player has voted.
-	 * @return total amount of votes.
-	 */
-	public int getTotalVotes() {
-		return totalVotes;
-	}
 
 	/**
 	 * Gets the total amount of donations for the player.
@@ -1191,51 +1074,6 @@ public final class Player extends Actor {
 	 */
 	public int getTotalDonated(boolean dollars) {
 		return dollars ? totalDonated / 100 : totalDonated;
-	}
-
-	public void setTotalDonated(int amount) {
-		this.totalDonated = amount;
-	}
-
-	/**
-	 * Increases the total donate for this player.
-	 * @param tokens	the amount of tokens to increase with.
-	 */
-	public void increaseTotalDonated(int tokens) {
-		this.totalDonated += tokens;
-	}
-
-	/**
-	 * Sets the total amount of times this player has voted.
-	 * @param vote the amount to set.
-	 */
-	public void setTotalVotes(int vote) {
-		this.totalVotes += vote;
-		PlayerPanel.TOTAL_VOTES.refresh(this, "@or2@ - Total votes: @yel@" + this.getTotalVotes());
-	}
-	
-	/**
-	 * Gets the amount of vote points this player has.
-	 * @return votes
-	 */
-	public int getVotePoints() {
-		return votePoints;
-	}
-	
-	/**
-	 * Sets the vote point amount for this player.
-	 */
-	public void setVotePoints(int vote) {
-		this.votePoints += vote;
-		PlayerPanel.VOTE.refresh(this, "@or3@ - Vote points: @yel@" + this.getVotePoints() + " points", true);
-	}
-	
-	public String getLastKiller() {
-		return lastKiller;
-	}
-	
-	public void setLastKiller(String lastKiller) {
-		this.lastKiller = lastKiller;
 	}
 	
 	/**
@@ -1306,7 +1144,7 @@ public final class Player extends Actor {
 	 * @param packet packet to be queued.
 	 */
 	public void out(OutgoingPacket packet) {
-		if(packet.onSent(this) && human)
+		if(packet.onSent(this))
 			getSession().enqueue(packet);
 	}
 	
@@ -1315,8 +1153,7 @@ public final class Player extends Actor {
 	 * @param packet packet to be written.
 	 */
 	public void write(OutgoingPacket packet) {
-		if(human)
-			getSession().write(packet);
+		getSession().write(packet);
 	}
 	
 	/**
@@ -1608,67 +1445,11 @@ public final class Player extends Actor {
 	}
 	
 	/**
-	 * Gets the run energy percentage counter value.
-	 * @return the run energy percentage counter.
-	 */
-	public double getRunEnergy() {
-		return runEnergy;
-	}
-	
-	/**
 	 * Gets the special percentage counter value.
 	 * @return the special percentage counter.
 	 */
 	public MutableNumber getSpecialPercentage() {
 		return specialPercentage;
-	}
-	
-	/**
-	 * Returns the flag if the player has been muted.
-	 * @return {@code true} if the player has been muted, {@code false} otherwise.
-	 */
-	public boolean isMuted() {
-		return muted;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#muted}.
-	 * @param muted the new value to set.
-	 */
-	public void setMuted(boolean muted) {
-		this.muted = muted;
-	}
-	
-	/**
-	 * Returns the flag if the player is venged.
-	 * @return {@code true} if the player is venged, {@code false} otherwise.
-	 */
-	public boolean isVenged() {
-		return venged;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#venged}.
-	 * @param venged the new value to set.
-	 */
-	public void setVenged(boolean venged) {
-		this.venged = venged;
-	}
-	
-	/**
-	 * Returns the flag if the player has been banned.
-	 * @return {@code true} if the player has been banned, {@code false} otherwise.
-	 */
-	public boolean isBanned() {
-		return banned;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#banned}.
-	 * @param banned the new value to set.
-	 */
-	public void setBanned(boolean banned) {
-		this.banned = banned;
 	}
 	
 	/**
@@ -1708,22 +1489,6 @@ public final class Player extends Actor {
 	 */
 	public void setCastSpell(CombatSpell castSpell) {
 		this.castSpell = castSpell;
-	}
-	
-	/**
-	 * Determines if the player is autocasting.
-	 * @return {@code true} if they are autocasting, {@code false} otherwise.
-	 */
-	public boolean isAutocast() {
-		return autocast;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#autocast}.
-	 * @param autocast the new value to set.
-	 */
-	public void setAutocast(boolean autocast) {
-		this.autocast = autocast;
 	}
 	
 	/**
@@ -1951,38 +1716,6 @@ public final class Player extends Actor {
 	}
 	
 	/**
-	 * Gets the identifier for the head icon of this player.
-	 * @return the head icon.
-	 */
-	public int getHeadIcon() {
-		return headIcon;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#headIcon}.
-	 * @param headIcon the new value to set.
-	 */
-	public void setHeadIcon(int headIcon) {
-		this.headIcon = headIcon;
-	}
-	
-	/**
-	 * Gets the identifier for the skull icon of this player.
-	 * @return the skull icon.
-	 */
-	public int getSkullIcon() {
-		return skullIcon;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#skullIcon}.
-	 * @param skullIcon the new value to set.
-	 */
-	public void setSkullIcon(int skullIcon) {
-		this.skullIcon = skullIcon;
-	}
-	
-	/**
 	 * @return the minigame the player is in, {@link Optional#empty()} otherwise.
 	 */
 	public Optional<Minigame> getMinigame() {
@@ -2104,14 +1837,6 @@ public final class Player extends Actor {
 	 */
 	public void setCachedUpdateBlock(GameBuffer cachedUpdateBlock) {
 		this.cachedUpdateBlock = cachedUpdateBlock;
-	}
-	
-	/**
-	 * Getting the {@Link #human} flag.
-	 * @return human flag.
-	 */
-	public boolean isHuman() {
-		return human;
 	}
 	
 	/**
@@ -2242,22 +1967,6 @@ public final class Player extends Actor {
 	}
 	
 	/**
-	 * Gets the achievements for the player.
-	 * @return the map containing the player achievements.
-	 */
-	public Object2IntArrayMap<Achievement> getAchievements() {
-		return playerAchievements;
-	}
-	
-	/**
-	 * Gets the farming patches for the player.
-	 * @return the map containing the player patches.
-	 */
-	public Object2ObjectArrayMap<PatchType, Patch>  getPatches() {
-		return playerPatches;
-	}
-	
-	/**
 	 * Determines if the region has been updated this sequence.
 	 * @return {@code true} if the region has been updated, {@code false}
 	 * otherwise.
@@ -2304,22 +2013,6 @@ public final class Player extends Actor {
 	 */
 	public ActivityManager getActivityManager() {
 		return activityManager;
-	}
-	
-	/**
-	 * Determines if the player's window is on focus.
-	 * @return {@code true} if the player's window is on focus, {@code false} otherwise.
-	 */
-	public boolean isFocused() {
-		return focused;
-	}
-	
-	/**
-	 * Sets the value for {@link Player#focused}.
-	 * @param focused the new value to set.
-	 */
-	public void setFocused(boolean focused) {
-		this.focused = focused;
 	}
 	
 	/**
@@ -2495,18 +2188,6 @@ public final class Player extends Actor {
 	 */
 	public ObjectList<Mob> getMobs() {
 		return mobs;
-	}
-	
-	public int processAgressiveTick() {
-		aggressionTick++;
-		if(aggressionTick == 5) {
-			aggressionTick = 0;
-		}
-		return aggressionTick;
-	}
-	
-	public void setAggressionTick(int aggressionTick) {
-		this.aggressionTick = aggressionTick;
 	}
 
 

@@ -3,6 +3,7 @@ package net.edge.world.entity.actor.player;
 import com.google.gson.*;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
+import net.edge.content.PlayerPanel;
 import net.edge.content.achievements.Achievement;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.combat.weapon.FightType;
@@ -21,6 +22,8 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarContainer;
+import net.edge.net.host.HostListType;
+import net.edge.net.host.HostManager;
 import net.edge.world.locale.Position;
 import net.edge.net.codec.login.LoginCode;
 import net.edge.util.json.GsonUtils;
@@ -73,7 +76,7 @@ public final class PlayerSerialization {
 	 */
 	public PlayerSerialization(Player player) {
 		this.player = player;
-		this.cf = Paths.get("./data/players/" + player.getCredentials().getUsername() + ".json").toFile();
+		this.cf = Paths.get("./data/players/" + player.credentials.username + ".json").toFile();
 	}
 	
 	/**
@@ -95,8 +98,8 @@ public final class PlayerSerialization {
 				for(Token token : TOKENS) {
 					obj.add(token.getName(), gson.toJsonTree(token.toJson(player)));
 				}
-				obj.add("achievements", gson.toJsonTree(player.getAchievements(), Map.class));
-				obj.add("patches", gson.toJsonTree(player.getPatches(), Map.class));
+				obj.add("achievements", gson.toJsonTree(player.achievements, Map.class));
+				obj.add("patches", gson.toJsonTree(player.patches, Map.class));
 				obj.add("quests", gson.toJsonTree(player.getQuestManager().getStartedQuests(), Map.class));
 				Object2ObjectArrayMap<String, Object> attributes = new Object2ObjectArrayMap<>();
 				for(Map.Entry<String, AttributeValue<?>> it : player.getAttr()) {
@@ -126,7 +129,7 @@ public final class PlayerSerialization {
 	public SerializeResponse loginCheck(String password) {
 		SerializeResponse response = new SerializeResponse(LoginCode.NORMAL);
 		try {
-			File file = Paths.get("./data/players/" + player.getCredentials().getUsername() + ".json").toFile();
+			File file = Paths.get("./data/players/" + player.credentials.username + ".json").toFile();
 			if(!file.exists()) {
 				return response;
 			}
@@ -199,13 +202,13 @@ public final class PlayerSerialization {
 			if(reader.has("achievements")) {
 				JsonObject attr = reader.get("achievements").getAsJsonObject();
 				for(Map.Entry<String, JsonElement> it : attr.entrySet()) {
-					player.getAchievements().put(Achievement.valueOf(it.getKey()), it.getValue().getAsInt());
+					player.achievements.put(Achievement.valueOf(it.getKey()), it.getValue().getAsInt());
 				}
 			}
 			if(reader.has("patches")) {
 				JsonObject attr = reader.get("patches").getAsJsonObject();
 				for(Map.Entry<String, JsonElement> it : attr.entrySet()) {
-					player.getPatches().put(PatchType.valueOf(it.getKey()), gson.fromJson(it.getValue(), Patch.class));
+					player.patches.put(PatchType.valueOf(it.getKey()), gson.fromJson(it.getValue(), Patch.class));
 				}
 			}
 		} catch(Exception e) {
@@ -229,42 +232,45 @@ public final class PlayerSerialization {
 	private static final Token[] TOKENS = {new Token("username") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getCredentials().getUsername();
+			return p.credentials.usernameHash;
 		}
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getCredentials().setUsername(n.getAsString());
+			p.credentials.setUsername(n.getAsString());
 		}
 	}, new Token("password") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getCredentials().getPassword();
+			return p.credentials.password;
 		}
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getCredentials().setPassword(n.getAsString());
+			p.credentials.password = n.getAsString();
 		}
 	}, new Token("banned") {
 		@Override
 		public Object toJson(Player p) {
-			return p.isBanned();
+			return p.banned;
 		}
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setBanned(n.getAsBoolean());
+			p.banned = n.getAsBoolean();
 		}
 	}, new Token("muted") {
 		@Override
 		public Object toJson(Player p) {
-			return p.isMuted();
+			return p.muted;
 		}
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setMuted(n.getAsBoolean());
+			p.muted = n.getAsBoolean();
+			if(HostManager.contains(p.credentials.username, HostListType.MUTED_IP)) {
+				p.ipMuted = true;
+			}
 		}
 	}, new Token("position") {
 		@Override
@@ -289,12 +295,12 @@ public final class PlayerSerialization {
 	}, new Token("xp-lock") {
 		@Override
 		public Object toJson(Player p) {
-			return p.xpLock;
+			return p.lockedXP;
 		}
 
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.xpLock = n.getAsBoolean();
+			p.lockedXP = n.getAsBoolean();
 		}
 	}, new Token("ironman") {
 		@Override
@@ -314,28 +320,29 @@ public final class PlayerSerialization {
 
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setTotalDonated(n.getAsInt());
+			p.totalDonated += n.getAsInt();
 		}
 	}, new Token("totalVotes") {
 
 		@Override
 		public Object toJson(Player p) {
-			return p.getTotalVotes();
+			return p.totalVotes;
 		}
 
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setTotalVotes(n.getAsInt());
+			p.totalVotes += n.getAsInt();
+			PlayerPanel.TOTAL_VOTES.refresh(p, "@or2@ - Total votes: @yel@" + p.totalVotes);
 		}
 	}, new Token("vote") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getVotePoints();
+			return p.votePoints;
 		}
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setVotePoints(n.getAsInt());
+			p.votePoints += n.getAsInt();
 		}
 	}, new Token("clan") {
 		@Override
@@ -382,12 +389,12 @@ public final class PlayerSerialization {
 	}, new Token("last-killer") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getLastKiller();
+			return p.lastKiller;
 		}
 
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setLastKiller(n.getAsString());
+			p.lastKiller = n.getAsString();
 		}
 	},new Token("fight-type") {
 		@Override
@@ -442,7 +449,7 @@ public final class PlayerSerialization {
 	}, new Token("run-energy") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getRunEnergy();
+			return p.runEnergy;
 		}
 		
 		@Override
@@ -482,12 +489,12 @@ public final class PlayerSerialization {
 	}, new Token("vengeance") {
 		@Override
 		public Object toJson(Player p) {
-			return p.isVenged();
+			return p.venged;
 		}
 		
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setVenged(n.getAsBoolean());
+			p.venged = n.getAsBoolean();
 		}
 	}, new Token("skills") {
 		@Override

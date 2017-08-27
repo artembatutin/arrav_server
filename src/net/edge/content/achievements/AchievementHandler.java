@@ -19,9 +19,9 @@ public class AchievementHandler {
 	 * @param increase    The amount to increase the achievement.
 	 */
 	public static void activate(Player player, Achievement achievement, int increase) {
-		final int prev = player.getAchievements().computeIfAbsent(achievement, a -> 0);
+		final int prev = player.achievements.computeIfAbsent(achievement, a -> 0);
 		final int curr = prev + increase;
-		player.getAchievements().put(achievement, curr);
+		player.achievements.put(achievement, curr);
 		boolean updated = false;
 		int dif = 0;
 		for(int i : achievement.getAmount()) {
@@ -51,7 +51,7 @@ public class AchievementHandler {
 	 */
 	public static void update(Player player, Achievement achievement) {
 		int tier = getTier(player, achievement);
-		final int prev = player.getAchievements().computeIfAbsent(achievement, a -> 0);
+		final int prev = player.achievements.computeIfAbsent(achievement, a -> 0);
 		player.text(26000 + achievement.ordinal(), tier + (completed(player, achievement) ? "@str@" : "") + achievement.getName());
 		player.text(26100 + achievement.ordinal(), String.format(achievement.getTask(), achievement.getAmount()[tier]) + " - " + prev + " / " + achievement.getAmount()[tier]);
 	}
@@ -63,7 +63,7 @@ public class AchievementHandler {
 	 * @return the tier level achieved.
 	 */
 	public static int getTier(Player player, Achievement achievement) {
-		final int prev = player.getAchievements().computeIfAbsent(achievement, a -> 0);
+		final int prev = player.achievements.computeIfAbsent(achievement, a -> 0);
 		int tier = 0;
 		for(int i : achievement.getAmount()) {
 			if(prev < i) {
@@ -83,9 +83,9 @@ public class AchievementHandler {
 	 * @param achievement The achievement for checking.
 	 */
 	public static boolean completed(Player player, Achievement achievement) {
-		if(!player.getAchievements().containsKey(achievement))
-			player.getAchievements().put(achievement, 0);
-		return player.getAchievements().getInt(achievement) >= achievement.getAmount()[achievement.getAmount().length - 1];
+		if(!player.achievements.containsKey(achievement))
+			player.achievements.put(achievement, 0);
+		return player.achievements.getInt(achievement) >= achievement.getAmount()[achievement.getAmount().length - 1];
 	}
 	
 	/**

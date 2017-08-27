@@ -75,9 +75,9 @@ public enum PlayerPanel {
 	EXP_LOCK() {
 		@Override
 		public void onClick(Player player) {
-			player.xpLock = !player.xpLock;
-			player.message("Your experience is now : " + (player.xpLock ? "Locked" : "Unlocked"));
-			this.refresh(player, "@or3@ - Experience Lock: @yel@" + (player.xpLock ? "@gre@yes" : "@red@no"));
+			player.lockedXP = !player.lockedXP;
+			player.message("Your experience is now : " + (player.lockedXP ? "Locked" : "Unlocked"));
+			this.refresh(player, "@or3@ - Experience Lock: @yel@" + (player.lockedXP ? "@gre@yes" : "@red@no"));
 		}
 	},
 	NPC_TOOL() {
@@ -110,7 +110,7 @@ public enum PlayerPanel {
 							Iterator<Player> it = World.get().getPlayers().iterator();
 							while((p = it.next()) != null) {
 								if(p.getRights().isStaff())
-									p.message(player.getFormatUsername() + " is requesting assistance. Do ::assist " + player.getCredentials().getUsername() + " to help him.");
+									p.message(player.getFormatUsername() + " is requesting assistance. Do ::assist " + player.credentials.username + " to help him.");
 							}
 						}
 						player.message("A staff member should contact you shortly.");
@@ -133,7 +133,7 @@ public enum PlayerPanel {
 				if(t == OptionDialogue.OptionType.FIRST_OPTION) {
 					player.closeWidget();
 					player.out(new SendEnterName("Your new password to set:", s -> () -> {
-						player.getCredentials().setPassword(s);
+						player.credentials.password = s;
 						player.message("You have successfully changed your password. Log out to save it.");
 						PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.passwordCheck(s));
 					}));
@@ -167,7 +167,7 @@ public enum PlayerPanel {
 	TOTAL_VOTES() {
 		@Override
 		public void onClick(Player player) {
-			player.message("You have voted " + player.getTotalVotes() + "x for Edgeville.");
+			player.message("You have voted " + player.totalVotes + "x for Edgeville.");
 		}
 	},
 	
@@ -212,16 +212,13 @@ public enum PlayerPanel {
 	 * @param player the player logging in.
 	 */
 	public static void refreshAll(Player player) {
-		if(!player.isHuman()) {
-			return;
-		}
 		player.out(new SendClearText(16026, 100));
 		PlayerPanel.QUICKIES.refresh(player, "@or1@Quickies @or3@[clickable]@or1@:");
 		PlayerPanel.COMMUNITY.refresh(player, "@or3@ - Forums");
 		PlayerPanel.DISCORD.refresh(player, "@or3@ - Discord");
-		PlayerPanel.VOTE.refresh(player, "@or3@ - Vote points: @yel@" + player.getVotePoints() + " points", true);
+		PlayerPanel.VOTE.refresh(player, "@or3@ - Vote points: @yel@" + player.votePoints + " points", true);
 		PlayerPanel.STORE.refresh(player, "@or3@ - Store");
-		PlayerPanel.EXP_LOCK.refresh(player, "@or3@ - Experience Lock: @yel@" + (player.xpLock ? "@gre@yes" : "@red@no"));
+		PlayerPanel.EXP_LOCK.refresh(player, "@or3@ - Experience Lock: @yel@" + (player.lockedXP ? "@gre@yes" : "@red@no"));
 		PlayerPanel.NPC_TOOL.refresh(player, "@or3@ - Monster Database");
 		
 		PlayerPanel.SERVER_STATISTICS.refresh(player, "@or1@Server Information:");
@@ -231,15 +228,15 @@ public enum PlayerPanel {
 		PlayerPanel.PLAYER_STATISTICS.refresh(player, "@or1@Player Information:");
 		
 		PlayerPanel.EMPTY.refresh(player, "");
-		PlayerPanel.USERNAME.refresh(player, "@or2@ - Username: @yel@" + TextUtils.capitalize(player.getCredentials().getUsername()));
-		PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.capitalize(TextUtils.passwordCheck(player.getCredentials().getPassword())));
+		PlayerPanel.USERNAME.refresh(player, "@or2@ - Username: @yel@" + player.credentials.formattedUsername);
+		PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.capitalize(TextUtils.passwordCheck(player.credentials.password)));
 		PlayerPanel.RANK.refresh(player, "@or2@ - Rank: @yel@" + TextUtils.capitalize(player.getRights().toString()));
 		PlayerPanel.IRON.refresh(player, "@or3@ - Iron man: @yel@" + (player.isIronMan() ? "@gre@yes" : "@red@no"), true);
 		PlayerPanel.SLAYER_POINTS.refresh(player, "@or2@ - Slayer points: @yel@" + player.getSlayerPoints(), true);
 		PlayerPanel.SLAYER_TASK.refresh(player, "@or2@ - Slayer task: @yel@" + (player.getSlayer().isPresent() ? (player.getSlayer().get().toString()) : "none"));
 		PlayerPanel.SLAYER_COUNT.refresh(player, "@or2@ - Completed tasks: @yel@" + player.getAttr().get("slayer_tasks").getInt());
 		PlayerPanel.PEST_POINTS.refresh(player, "@or2@ - Pest points: @yel@" + player.getPest());
-		PlayerPanel.TOTAL_VOTES.refresh(player, "@or2@ - Total votes: @yel@" + player.getTotalVotes());
+		PlayerPanel.TOTAL_VOTES.refresh(player, "@or2@ - Total votes: @yel@" + player.totalVotes);
 		
 		PlayerPanel.MONSTER_HEADER.refresh(player, "@or1@Killing Statistics:");
 		PlayerPanel.HIGHEST_KILLSTREAK.refresh(player, "@or2@ - Highest Killstreak: @yel@" + player.getHighestKillstreak().get());

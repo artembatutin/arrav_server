@@ -42,8 +42,8 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 		GameBuffer buf = new GameBuffer(player.getSession().alloc().buffer(32));
 		try {
 			buf.put(appearance.getGender());
-			buf.put(other.getHeadIcon());
-			buf.put(other.getSkullIcon());
+			buf.put(other.headIcon);
+			buf.put(other.skullIcon);
 			if(other.getPlayerNpc() == -1) {
 				if(other.getEquipment().getId(Equipment.HEAD_SLOT) > 1) {
 					buf.putShort(0x8000 + other.getEquipment().getId(Equipment.HEAD_SLOT));
@@ -138,7 +138,7 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 			buf.putShort(other.getTurn90CCWIndex());
 			buf.putShort(other.getRunIndex() != 0x338 ? other.getRunIndex() : other.getWeaponAnimation().getRunning());
 			
-			buf.putLong(other.getCredentials().getUsernameHash());
+			buf.putLong(other.credentials.usernameHash);
 			buf.put(other.determineCombatLevel() < 3 ? 3 : other.determineCombatLevel());
 			buf.put(other.isIronMan() ? 1 : 0);
 			msg.put(buf.getBuffer().writerIndex(), ByteTransform.C);

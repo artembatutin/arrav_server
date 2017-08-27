@@ -23,7 +23,7 @@ public final class ClanChatPacket implements IncomingPacket {
 			return;
 		}
 		if(player.getClan().isPresent()) {
-			if(player.isMuted()) {
+			if(player.muted || player.ipMuted) {
 				player.message("You are muted and unable to talk!");
 				return;
 			}

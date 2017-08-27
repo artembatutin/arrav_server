@@ -162,7 +162,7 @@ public final class CombatHitTask extends Task {
 	private void handleSpellEffects() {
 		/* VENGEANCE */
 		combat.getVictim().ifPlayer(player -> {
-			if(!player.isVenged()) {
+			if(!player.venged) {
 				return;
 			}
 
@@ -171,7 +171,7 @@ public final class CombatHitTask extends Task {
 			combat.getCharacter().damage(new Hit(amount));
 			combat.getCharacter().getCombat().getDamageCache().add(player, amount);
 			player.forceChat("Taste Vengeance!");
-			player.setVenged(false);
+			player.venged = false;
 		});
 	}
 
@@ -233,7 +233,7 @@ public final class CombatHitTask extends Task {
 				Player victim = (Player) combat.getVictim();
 
 				if(CombatUtil.isFullTorags(combat.getCharacter())) {
-					victim.setRunEnergy(RandomUtils.inclusive(1, (int) victim.getRunEnergy()));
+					victim.setRunEnergy(RandomUtils.inclusive(1, (int) victim.runEnergy));
 					victim.graphic(new Graphic(399));
 				} else if(CombatUtil.isFullAhrims(combat.getCharacter()) && victim.getSkills()[Skills.STRENGTH].getLevel() >= victim.getSkills()[Skills.STRENGTH].getRealLevel()) {
 					victim.getSkills()[Skills.STRENGTH].decreaseLevel(RandomUtils.inclusive(1, 10));

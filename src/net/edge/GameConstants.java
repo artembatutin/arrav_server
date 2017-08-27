@@ -15,7 +15,7 @@ public final class GameConstants {
 	/**
 	 * The public client build number for the login authentication.
 	 */
-	public static final int CLIENT_BUILD = 33;
+	public static final int CLIENT_BUILD = 34;
 	
 	/**
 	 * The experience multiplier for the game.
@@ -28,10 +28,18 @@ public final class GameConstants {
 	public static boolean DOUBLE_BLOOD_MONEY_EVENT = false;
 
 	/**
-	 * Disabling game functions in case of emergency
+	 * Disabling trade functions in case of emergency
 	 */
 	public static boolean TRADE_DISABLED = false;
+	
+	/**
+	 * Disabling duel functions in case of emergency
+	 */
 	public static boolean DUEL_DISABLED = false;
+	
+	/**
+	 * Disabling drop functions in case of emergency
+	 */
 	public static boolean DROP_DISABLED = false;
 	
 	/**
@@ -90,11 +98,6 @@ public final class GameConstants {
 	 * The items that are not allowed to be bought by shops.
 	 */
 	public static final int[] INVALID_SHOP_ITEMS = {995, 15246, 4067, 2996, 6529, 19000, 7478};
-	
-	/**
-	 * The message that will be sent on every login.
-	 */
-	public static final String WELCOME_MESSAGE = "@blu@Welcome to Edgeville";
 	
 	/**
 	 * The items received when a player logs in for the first time in regular mode.

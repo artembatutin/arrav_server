@@ -39,7 +39,7 @@ public final class IntroductionCutscene extends Cutscene {
 	 */
 	public IntroductionCutscene(Player player) {
 		this.player = player;
-		this.player.firstLogin = !HostManager.contains(player.getCredentials().getUsername(), HostListType.STARTER_RECEIVED);
+		this.player.firstLogin = !HostManager.contains(player.credentials.username, HostListType.STARTER_RECEIVED);
 	}
 
 	@Override

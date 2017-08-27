@@ -13,7 +13,7 @@ public final class FocusChangePacket implements IncomingPacket {
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		boolean focused = payload.get(false) == 1;
-		player.setFocused(focused);
+		player.screenFocus = focused;
 	}
 	
 }

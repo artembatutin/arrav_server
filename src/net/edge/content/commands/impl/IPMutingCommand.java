@@ -18,6 +18,7 @@ public final class IPMutingCommand implements Command {
 			player.message("Successfully IP muted " + muted.getFormatUsername() + ".");
 			muted.message("@red@You have been IP-muted by " + player.getFormatUsername() + ".");
 			HostManager.add(muted, HostListType.MUTED_IP);
+			muted.ipMuted = true;
 		} else {
 			player.message("Can't find " + cmd[1].replaceAll("_", " ") + ".");
 		}

@@ -75,9 +75,9 @@ public abstract class Spell {
 	 * @param player the player to reset.
 	 */
 	private final void resetPlayerSpell(Player player) {
-		if(player.getCombat().isAttacking() || player.getCombat().isBeingAttacked() && player.isAutocast()) {
+		if(player.getCombat().isAttacking() || player.getCombat().isBeingAttacked() && player.autocasting) {
 			player.setAutocastSpell(null);
-			player.setAutocast(false);
+			player.autocasting = false;
 			player.out(new SendConfig(108, 0));
 			player.setCastSpell(null);
 		}

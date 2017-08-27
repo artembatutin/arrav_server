@@ -17,6 +17,7 @@ public final class IPUnMutingCommand implements Command {
 		if(HostManager.remove(cmd[1], HostListType.MUTED_IP)) {
 			player.message("Successfully IP unmuted " + cmd[1] + ".");
 			if(muted != null) {
+				muted.ipMuted = false;
 				muted.message("You have been IP unmuted by " + player.getFormatUsername() + ".");
 			}
 		} else {

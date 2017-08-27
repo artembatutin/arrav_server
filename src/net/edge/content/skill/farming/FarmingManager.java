@@ -12,7 +12,7 @@ import net.edge.world.entity.actor.player.Player;
 public final class FarmingManager {
 	
 	public static void login(Player player) {
-		for(Patch patch : player.getPatches().values()) {
+		for(Patch patch : player.patches.values()) {
 			if(patch.getSeedType() == null && patch.getSeedTypeName() != null) {
 				patch.setSeedType(patch.getSeedClass().getInstance(patch.getSeedTypeName()));
 			}
@@ -29,9 +29,9 @@ public final class FarmingManager {
 			case VARROCK_CASTLE_TREE_PATCH:
 			case HOME_EAST_TREE_PATCH:
 			case HOME_WEST_TREE_PATCH:
-				final Patch varrockTree = player.getPatches().get(PatchType.VARROCK_CASTLE_TREE_PATCH);
-				final Patch faladorTree = player.getPatches().get(PatchType.HOME_EAST_TREE_PATCH);
-				final Patch taverleyTree = player.getPatches().get(PatchType.HOME_WEST_TREE_PATCH);
+				final Patch varrockTree = player.patches.get(PatchType.VARROCK_CASTLE_TREE_PATCH);
+				final Patch faladorTree = player.patches.get(PatchType.HOME_EAST_TREE_PATCH);
+				final Patch taverleyTree = player.patches.get(PatchType.HOME_WEST_TREE_PATCH);
 				value = ((0 << 24)) + (getPatchValue(varrockTree) << 16) + (getPatchValue(faladorTree) << 8) + (getPatchValue(taverleyTree));
 				player.out(new SendConfig(patchType.getConfigId(), value));
 				break;
@@ -39,10 +39,10 @@ public final class FarmingManager {
 			case CATHERBY_SOUTH_ALLOTMENT:
 			case FALADOR_NORTH_WEST_ALLOTMENT:
 			case FALADOR_SOUTH_EAST_ALLOTMENT:
-				final Patch catherbyN = player.getPatches().get(PatchType.CATHERBY_NORTH_ALLOTMENT);
-				final Patch catherbyS = player.getPatches().get(PatchType.CATHERBY_SOUTH_ALLOTMENT);
-				final Patch faladorNW = player.getPatches().get(PatchType.FALADOR_NORTH_WEST_ALLOTMENT);
-				final Patch faladorSE = player.getPatches().get(PatchType.FALADOR_SOUTH_EAST_ALLOTMENT);
+				final Patch catherbyN = player.patches.get(PatchType.CATHERBY_NORTH_ALLOTMENT);
+				final Patch catherbyS = player.patches.get(PatchType.CATHERBY_SOUTH_ALLOTMENT);
+				final Patch faladorNW = player.patches.get(PatchType.FALADOR_NORTH_WEST_ALLOTMENT);
+				final Patch faladorSE = player.patches.get(PatchType.FALADOR_SOUTH_EAST_ALLOTMENT);
 				value = ((getPatchValue(catherbyS) << 24)) + (getPatchValue(catherbyN) << 16) + (getPatchValue(faladorSE) << 8) + (getPatchValue(faladorNW));
 				player.out(new SendConfig(patchType.getConfigId(), value));
 				break;
@@ -50,10 +50,10 @@ public final class FarmingManager {
 			case ARDOUGNE_SOUTH_ALLOTMENT:
 			case CANIFIS_NORTH_WEST_ALLOTMENT:
 			case CANIFIS_SOUTH_EAST_ALLOTMENT:
-				final Patch ardougneN = player.getPatches().get(PatchType.ARDOUGNE_NORTH_ALLOTMENT);
-				final Patch ardougneS = player.getPatches().get(PatchType.ARDOUGNE_SOUTH_ALLOTMENT);
-				final Patch canafisNW = player.getPatches().get(PatchType.CANIFIS_NORTH_WEST_ALLOTMENT);
-				final Patch canafisSE = player.getPatches().get(PatchType.CANIFIS_SOUTH_EAST_ALLOTMENT);
+				final Patch ardougneN = player.patches.get(PatchType.ARDOUGNE_NORTH_ALLOTMENT);
+				final Patch ardougneS = player.patches.get(PatchType.ARDOUGNE_SOUTH_ALLOTMENT);
+				final Patch canafisNW = player.patches.get(PatchType.CANIFIS_NORTH_WEST_ALLOTMENT);
+				final Patch canafisSE = player.patches.get(PatchType.CANIFIS_SOUTH_EAST_ALLOTMENT);
 				value = ((getPatchValue(canafisSE) << 24)) + (getPatchValue(canafisNW) << 16) + (getPatchValue(ardougneS) << 8) + (getPatchValue(ardougneN));
 				player.out(new SendConfig(patchType.getConfigId(), value));
 				break;
@@ -61,10 +61,10 @@ public final class FarmingManager {
 			case CATHERBY_FLOWER_PATCH:
 			case ARDOUGNE_FLOWER_PATCH:
 			case CANIFIS_FLOWER_PATCH:
-				final Patch faladorFlower = player.getPatches().get(PatchType.FALADOR_FLOWER_PATCH);
-				final Patch catherbyFlower = player.getPatches().get(PatchType.CATHERBY_FLOWER_PATCH);
-				final Patch ardougneFlower = player.getPatches().get(PatchType.ARDOUGNE_FLOWER_PATCH);
-				final Patch canifisFlower = player.getPatches().get(PatchType.CANIFIS_FLOWER_PATCH);
+				final Patch faladorFlower = player.patches.get(PatchType.FALADOR_FLOWER_PATCH);
+				final Patch catherbyFlower = player.patches.get(PatchType.CATHERBY_FLOWER_PATCH);
+				final Patch ardougneFlower = player.patches.get(PatchType.ARDOUGNE_FLOWER_PATCH);
+				final Patch canifisFlower = player.patches.get(PatchType.CANIFIS_FLOWER_PATCH);
 				value = ((getPatchValue(canifisFlower) << 24)) + (getPatchValue(ardougneFlower) << 16) + (getPatchValue(catherbyFlower) << 8) + (getPatchValue(faladorFlower));
 				player.out(new SendConfig(patchType.getConfigId(), value));
 				break;
@@ -72,10 +72,10 @@ public final class FarmingManager {
 			case CATHERBY_HERB_PATCH: //2812, 3463
 			case ARDOUGNE_HERB_PATCH: //2669, 3375
 			case CANIFIS_HERB_PATCH: //3600, 3525
-				final Patch faladorHerb = player.getPatches().get(PatchType.FALADOR_HERB_PATCH);
-				final Patch catherbyHerb = player.getPatches().get(PatchType.CATHERBY_HERB_PATCH);
-				final Patch ardougneHerb = player.getPatches().get(PatchType.ARDOUGNE_HERB_PATCH);
-				final Patch canifisHerb = player.getPatches().get(PatchType.CANIFIS_HERB_PATCH);
+				final Patch faladorHerb = player.patches.get(PatchType.FALADOR_HERB_PATCH);
+				final Patch catherbyHerb = player.patches.get(PatchType.CATHERBY_HERB_PATCH);
+				final Patch ardougneHerb = player.patches.get(PatchType.ARDOUGNE_HERB_PATCH);
+				final Patch canifisHerb = player.patches.get(PatchType.CANIFIS_HERB_PATCH);
 				value = ((getPatchValue(canifisHerb) << 24)) + (getPatchValue(ardougneHerb) << 16) + (getPatchValue(catherbyHerb) << 8) + (getPatchValue(faladorHerb));
 				player.out(new SendConfig(patchType.getConfigId(), value));
 				break;
@@ -83,15 +83,15 @@ public final class FarmingManager {
 			case RIMMINGTON_BUSH_PATCH:
 			case ARDOUGNE_BUSH_PATCH:
 			case ETCETERIA_BUSH_PATCH:
-				final Patch varrockBush = player.getPatches().get(PatchType.VARROCK_BUSH_PATCH);
-				final Patch rimmingtonBush = player.getPatches().get(PatchType.RIMMINGTON_BUSH_PATCH);
-				final Patch ardougneBush = player.getPatches().get(PatchType.ARDOUGNE_BUSH_PATCH);
-				final Patch etceteriaBush = player.getPatches().get(PatchType.ETCETERIA_BUSH_PATCH);
+				final Patch varrockBush = player.patches.get(PatchType.VARROCK_BUSH_PATCH);
+				final Patch rimmingtonBush = player.patches.get(PatchType.RIMMINGTON_BUSH_PATCH);
+				final Patch ardougneBush = player.patches.get(PatchType.ARDOUGNE_BUSH_PATCH);
+				final Patch etceteriaBush = player.patches.get(PatchType.ETCETERIA_BUSH_PATCH);
 				value = ((getPatchValue(ardougneBush) << 24)) + (getPatchValue(etceteriaBush) << 16) + (getPatchValue(rimmingtonBush) << 8) + (getPatchValue(varrockBush));
 				player.out(new SendConfig(patchType.getConfigId(), value));
 				break;
 			case CANAFIS_MUSHROOM_PATCH:
-				final Patch canafisMushroom = player.getPatches().get(PatchType.CANAFIS_MUSHROOM_PATCH);
+				final Patch canafisMushroom = player.patches.get(PatchType.CANAFIS_MUSHROOM_PATCH);
 				value = (getPatchValue(canafisMushroom) << 8);
 				player.out(new SendConfig(patchType.getConfigId(), value));
 				break;

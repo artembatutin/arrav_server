@@ -75,7 +75,7 @@ public final class MagicStrategy implements Strategy {
 	}
 	
 	private CombatSpell get(Player player) {
-		if(player.isAutocast() && player.getCastSpell() != null && player.getAutocastSpell() != null || !player.isAutocast() && player.getAutocastSpell() == null) {
+		if(player.autocasting && player.getCastSpell() != null && player.getAutocastSpell() != null || !player.autocasting && player.getAutocastSpell() == null) {
 			return player.getCastSpell();
 		}
 		if(player.getAutocastSpell() != null)

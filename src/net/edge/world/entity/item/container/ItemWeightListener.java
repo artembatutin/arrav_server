@@ -42,17 +42,17 @@ public final class ItemWeightListener implements ItemContainerListener {
 	private void updateWeight(Item oldItem, Item newItem) {
 		double subtract = applyWeight(oldItem);
 		double add = applyWeight(newItem);
-		double currentWeight = player.getWeight();
+		double currentWeight = player.weight;
 		currentWeight -= subtract;
 		currentWeight += add;
-		player.setWeight(currentWeight);
+		player.weight = currentWeight;
 	}
 	
 	/**
 	 * Updates the weight value for all items in {@code container}.
 	 */
 	private void updateAllWeight() {
-		player.setWeight(0.0);
+		player.weight = 0.0;
 		for(Item item : player.getInventory().getItems()) {
 			if(item == null)
 				continue;
@@ -80,7 +80,7 @@ public final class ItemWeightListener implements ItemContainerListener {
 	 * Queues an weight update message.
 	 */
 	private void queueWeight() {
-		double weight = player.getWeight();
+		double weight = player.weight;
 		player.text(19154, (int) weight + " kg");
 	}
 }

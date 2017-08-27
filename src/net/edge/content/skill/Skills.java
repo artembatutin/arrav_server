@@ -189,7 +189,7 @@ public final class Skills {
 		amount *= (player.getSkills()[skill].getRealLevel() == 99 && combatLevel ? 0.2 : 1);
 		Rights right = player.getRights();
 		amount *= right.equals(Rights.EXTREME_DONATOR) ? 1.10 : right.equals(Rights.SUPER_DONATOR) ? 1.05 : right.equals(Rights.DONATOR) ? 1.025 : 1;
-		if(!player.xpLock)
+		if(!player.lockedXP)
 			player.getSkills()[skill].increaseExperience(amount);
 		if(oldLevel < 99) {
 			int newLevel = player.getSkills()[skill].getLevelForExperience();

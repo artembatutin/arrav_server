@@ -42,12 +42,12 @@ public enum CombatSpecial {
 				//Gathering the oponent's running energy.
 				final Player victimPlayer = target.toPlayer();
 				double energy = 0;
-				if(victimPlayer.getRunEnergy() != 0)
-					energy = victimPlayer.getRunEnergy() / 4;
+				if(victimPlayer.runEnergy != 0)
+					energy = victimPlayer.runEnergy / 4;
 				
 				//Decreasing oponent's energy and increasing the attacker's energy.
-				victimPlayer.setRunEnergy(victimPlayer.getRunEnergy() - energy);
-				player.setRunEnergy(player.getRunEnergy() + energy);
+				victimPlayer.setRunEnergy(victimPlayer.runEnergy - energy);
+				player.setRunEnergy(player.runEnergy + energy);
 			}
 			return new CombatHit(player, target, 1, CombatType.MELEE, false);
 		}
@@ -109,7 +109,7 @@ public enum CombatSpecial {
 							counter -= removeFromSkill;
 							SkillData data = SkillData.forId(s);
 							String skill = data.toString();
-							player.message("You've drained " + victim.getCredentials().getUsername() + "'s " + skill + " level by " + removeFromSkill + ".");
+							player.message("You've drained " + victim.credentials.formattedUsername + "'s " + skill + " level by " + removeFromSkill + ".");
 							victim.message("Your " + skill + " level has been drained.");
 						}
 					}

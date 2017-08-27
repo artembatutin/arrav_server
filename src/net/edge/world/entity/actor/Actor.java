@@ -1147,21 +1147,5 @@ public abstract class Actor extends Entity {
 	public void setViewingDistance(int viewingDistance) {
 		this.viewingDistance = viewingDistance;
 	}
-	
-	/**
-	 * Gets the aggression tick timer.
-	 * @return aggression tick timer.
-	 */
-	public int processAgressiveTick() {
-		return aggressionTick;
-	}
-	
-	/**
-	 * Sets a new aggression tick timer.
-	 * @param aggressionTick new value to set.
-	 */
-	public void setAggressionTick(int aggressionTick) {
-		this.aggressionTick = aggressionTick;
-	}
 
 }
