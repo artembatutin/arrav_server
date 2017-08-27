@@ -232,7 +232,7 @@ public final class PlayerSerialization {
 	private static final Token[] TOKENS = {new Token("username") {
 		@Override
 		public Object toJson(Player p) {
-			return p.credentials.usernameHash;
+			return p.credentials.username;
 		}
 		
 		@Override

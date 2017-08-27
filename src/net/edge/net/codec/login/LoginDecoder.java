@@ -142,7 +142,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 				IsaacRandom encryptor = new IsaacRandom(isaacSeed);
 				String password = PacketUtils.getCString(rsaBuffer).toLowerCase();
 				long usernameHash = ctx.channel().attr(NetworkConstants.USR_HASH).get();
-				String username = TextUtils.hashToName(usernameHash).toLowerCase().trim();
+				String username = TextUtils.hashToName(usernameHash).replaceAll("_", " ").toLowerCase().trim();
 				String macAddress = ctx.channel().attr(NetworkConstants.USR_MAC).get();
 				out.add(new LoginRequest(usernameHash, username, password, macAddress, encryptor, decryptor));
 			} finally {

@@ -56,7 +56,7 @@ public final class ExchangeSessionManager {
 			return false;
 		}
 		
-		if(!player.getRights().equal(Rights.ADMINISTRATOR) && requested.getRights().equal(Rights.ADMINISTRATOR)) {
+		if(player.getRights().less(Rights.SENIOR_MODERATOR) && requested.getRights().less(Rights.SENIOR_MODERATOR)) {
 			if(HostManager.same(player, requested)) {
 				player.message("You can't trade over the same network.");
 				return false;
