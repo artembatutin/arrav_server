@@ -13,6 +13,12 @@
   },
   {
     "opcodes": [
+      232
+    ],
+    "class": "net.edge.net.packet.in.OperateEquipmentPacket"
+  },
+  {
+    "opcodes": [
       237
     ],
     "class": "net.edge.net.packet.in.MagicOnItemPacket"
