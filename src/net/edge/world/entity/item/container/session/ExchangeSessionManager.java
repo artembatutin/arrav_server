@@ -262,8 +262,7 @@ public final class ExchangeSessionManager {
 			for(ExchangeSession session : SESSIONS) {
 				if(session == null)
 					continue;
-				if(session.getStage() == ExchangeSession.REQUEST && session.getType() == type && session.getPlayers().contains(requested) && session.getPlayers().contains(requester) && session.getAttachment()
-						.equals(requested))
+				if(session.getStage() == ExchangeSession.REQUEST && session.getType() == type && session.getPlayers().contains(requested) && session.getPlayers().contains(requester) && session.getAttachment().equals(requested))
 					return Optional.of(session);
 			}
 		}

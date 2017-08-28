@@ -78,8 +78,7 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 				}
 				if(other.getEquipment().getId(Equipment.CHEST_SLOT) > 1) {
 					if(!other.getEquipment().get(Equipment.CHEST_SLOT).getDefinition().isPlatebody()) {
-						buf.putShort(appearance.getArms() == 0 ? 0x100 + NEW_HALF_BODY_APPEARANCES.get(appearance.getChest()) : 0x100 + appearance
-								.getArms());
+						buf.putShort(appearance.getArms() == 0 ? 0x100 + NEW_HALF_BODY_APPEARANCES.get(appearance.getChest()) : 0x100 + appearance.getArms());
 					} else {
 						buf.put(0);
 					}
@@ -91,10 +90,7 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 				} else {
 					buf.putShort(0x100 + appearance.getLegs());
 				}
-				if(other.getEquipment().getId(Equipment.HEAD_SLOT) > 1 && (other.getEquipment()
-						.get(Equipment.HEAD_SLOT)
-						.getDefinition()
-						.isFullHelm() || other.getEquipment().get(Equipment.HEAD_SLOT).getDefinition().isFullMask())) {
+				if(other.getEquipment().getId(Equipment.HEAD_SLOT) > 1 && (other.getEquipment().get(Equipment.HEAD_SLOT).getDefinition().isFullHelm() || other.getEquipment().get(Equipment.HEAD_SLOT).getDefinition().isFullMask())) {
 					buf.put(0);
 				} else {
 					buf.putShort(0x100 + appearance.getHead());
@@ -110,10 +106,7 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 					buf.putShort(0x100 + appearance.getFeet());
 				}
 				if(appearance.isMale()) {
-					if(other.getEquipment().getId(Equipment.HEAD_SLOT) > 1 && other.getEquipment()
-							.get(Equipment.HEAD_SLOT)
-							.getDefinition()
-							.isFullMask()) {
+					if(other.getEquipment().getId(Equipment.HEAD_SLOT) > 1 && other.getEquipment().get(Equipment.HEAD_SLOT).getDefinition().isFullMask()) {
 						buf.put(0);
 					} else {
 						buf.putShort(0x100 + appearance.getBeard());

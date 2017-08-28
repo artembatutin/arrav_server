@@ -36,9 +36,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 	private static final Graphic SPLASH = new Graphic(85);
 
 	/**
-	 * Constructs a new {@code SpellStrategy} from a {@link
-	 * MagicSpells}.
-	 *
+	 * Constructs a new {@code SpellStrategy} from a {@link MagicSpells}.
 	 * @param spell the magic spell spell to be used.
 	 */
 	public PlayerMagicStrategy(MagicSpells spell) {
@@ -47,11 +45,10 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 
 	@Override
 	public boolean canAttack(Player attacker, Actor defender) {
-		if(attacker.getRights() == Rights.ADMINISTRATOR || spell.canCast(attacker, defender)) {
+		if(attacker.getRights().equals(Rights.ADMINISTRATOR) || spell.canCast(attacker, defender)) {
 			return true;
 		}
-
-		attacker.out(new SendMessage("You need some runes to cast this spell."));
+		attacker.message("You need some runes to cast this spell.");
 		attacker.getCombat().reset();
 		return false;
 	}
@@ -70,9 +67,8 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 				Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit, extra);
 				spell.getEffect().filter(filter).ifPresent(execute);
 			}
-
 			Collections.addAll(extra, hits);
-			addCombatExperience(attacker, spell.getBaseExperience(), extra.toArray(new Hit[0]));
+			addCombatExperience(attacker, spell.getBaseExperience(), extra.toArray(hits));
 
 			if(!attacker.isAutocast()) {
 				WeaponInterface.setStrategy(attacker);

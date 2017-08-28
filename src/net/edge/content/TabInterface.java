@@ -54,11 +54,11 @@ public enum TabInterface {
 	 * @param id     The id of the interface to send.
 	 */
 	public void sendInterface(Player player, int id) {
-//		if(this == ATTACK) {
-//			player.write(new SendTab(id, this));
-//		} else {
+		//		if(this == ATTACK) {
+		//			player.write(new SendTab(id, this));
+		//		} else {
 		player.out(new SendTab(id, this));
-//		}
+		//		}
 	}
 
 	public int getNew() {

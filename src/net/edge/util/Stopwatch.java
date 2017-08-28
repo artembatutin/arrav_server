@@ -170,8 +170,7 @@ public final class Stopwatch {
 	 * @author lare96 <http://github.com/lare96>
 	 */
 	private enum State {
-		RUNNING,
-		STOPPED
+		RUNNING, STOPPED
 	}
 
 	/**

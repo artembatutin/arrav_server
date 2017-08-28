@@ -12,10 +12,8 @@ import net.edge.net.packet.out.SendMessage;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public enum MagicEffects {
@@ -33,34 +31,34 @@ public enum MagicEffects {
 	STUN((attacker, defender, hit, extra) -> lowerSkill(defender, Skills.ATTACK, 10)),
 
 	SMOKE_RUSH((attacker, defender, hit, extra) -> poison(attacker, defender, hit, PoisonType.DEFAULT_MAGIC)),
-	SMOKE_BURST((attacker, defender, hit, extra) -> getSurrounding(attacker, defender).forEach(actor -> smokeBurst(attacker, defender, actor, hit, extra))),
+	SMOKE_BURST((attacker, defender, hit, extra) -> CombatUtil.getSurrounding(attacker, defender, 1, a -> smokeBurst(attacker, defender, a, hit, extra))),
 	SMOKE_BLITZ((attacker, defender, hit, extra) -> poison(attacker, defender, hit, PoisonType.SUPER_MAGIC)),
-	SMOKE_BARRAGE((attacker, defender, hit, extra) -> getSurrounding(attacker, defender).forEach(actor -> smokeBarrage(attacker, defender, actor, hit, extra))),
+	SMOKE_BARRAGE((attacker, defender, hit, extra) -> CombatUtil.getSurrounding(attacker, defender, 1, a -> smokeBarrage(attacker, defender, a, hit, extra))),
 
 	SHADOW_RUSH((attacker, defender, hit, extra) -> lowerSkill(defender, Skills.ATTACK, 10)),
-	SHADOW_BURST((attacker, defender, hit, extra) -> getSurrounding(attacker, defender).forEach(actor -> shadowBurst(attacker, defender, actor, extra))),
+	SHADOW_BURST((attacker, defender, hit, extra) -> CombatUtil.getSurrounding(attacker, defender, 1, a -> shadowBurst(attacker, defender, a, extra))),
 	SHADOW_BLITZ((attacker, defender, hit, extra) -> lowerSkill(defender, Skills.ATTACK, 15)),
-	SHADOW_BARRAGE((attacker, defender, hit, extra) -> getSurrounding(attacker, defender).forEach(actor -> shadowBarrage(attacker, defender, actor, extra))),
+	SHADOW_BARRAGE((attacker, defender, hit, extra) -> CombatUtil.getSurrounding(attacker, defender, 1, a -> shadowBarrage(attacker, defender, a, extra))),
 
 	BLOOD_RUSH((attacker, defender, hit, extra) -> heal(attacker, hit)),
-	BLOOD_BURST((attacker, defender, hit, extra) -> getSurrounding(attacker, defender).forEach(actor -> bloodBurst(attacker, defender, actor, hit, extra))),
+	BLOOD_BURST((attacker, defender, hit, extra) -> CombatUtil.getSurrounding(attacker, defender, 1, a -> bloodBurst(attacker, defender, a, hit, extra))),
 	BLOOD_BLITZ((attacker, defender, hit, extra) -> heal(attacker, hit)),
-	BLOOD_BARRAGE((attacker, defender, hit, extra) -> getSurrounding(attacker, defender).forEach(actor -> bloodBarrage(attacker, defender, actor, hit, extra))),
+	BLOOD_BARRAGE((attacker, defender, hit, extra) -> CombatUtil.getSurrounding(attacker, defender, 1, a -> bloodBarrage(attacker, defender, a, hit, extra))),
 
 	ICE_RUSH((attacker, defender, hit, extra) -> freeze(defender, 5)),
-	ICE_BURST((attacker, defender, hit, extra) -> getSurrounding(attacker, defender).forEach(actor -> iceBurst(attacker, defender, actor, extra))),
+	ICE_BURST((attacker, defender, hit, extra) -> CombatUtil.getSurrounding(attacker, defender, 1, a -> iceBurst(attacker, defender, a, extra))),
 	ICE_BLITZ((attacker, defender, hit, extra) -> freeze(defender, 15)),
-	ICE_BARRAGE((attacker, defender, hit, extra) -> getSurrounding(attacker, defender).forEach(actor -> iceBarrage(attacker, defender, actor, extra))),
+	ICE_BARRAGE((attacker, defender, hit, extra) -> CombatUtil.getSurrounding(attacker, defender, 1, a -> iceBarrage(attacker, defender, a, extra))),
 
 	KBD_FREEZE((attacker, defender, hit, extra) -> freeze(defender, 5)),
 	KBD_POISON((attacker, defender, hit, extra) -> poison(attacker, defender, hit, PoisonType.DEFAULT_NPC)),
 	KBD_SHOCK((attacker, defender, hit, extra) -> kbdShock(defender)),
 
 	AHRIM_BLAST((attacker, defender, hit, extra) -> {
-//        if (hit.isAccurate() && Math.random() < 0.20) {
-//            defender.skills.get(Skills.STRENGTH).removeLevel(5);
-//            defender.skills.refresh(Skills.STRENGTH);
-//        }
+		//        if (hit.isAccurate() && Math.random() < 0.20) {
+		//            defender.skills.get(Skills.STRENGTH).removeLevel(5);
+		//            defender.skills.refresh(Skills.STRENGTH);
+		//        }
 	});
 
 	private final CombatEffect effect;
@@ -81,35 +79,6 @@ public enum MagicEffects {
 
 	public CombatEffect getEffect() {
 		return effect;
-	}
-
-	private static List<Actor> getSurrounding(Actor attacker, Actor defender) {
-		List<Actor> actors = new LinkedList<>();
-		actors.add(defender);
-
-		if(!attacker.inMulti() || !defender.inMulti())
-			return actors;
-
-		for(Mob other : defender.getLocalMobs()) {
-			if(other == null) continue;
-			if(!other.getPosition().withinDistance(defender.getPosition(), 1)) continue;
-			if(other.same(attacker) || other.same(defender)) continue;
-			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
-			if(!other.getDefinition().isAttackable()) continue;
-			if(!other.inMulti()) continue;
-			actors.add(other);
-		}
-
-		for(Player other : defender.getLocalPlayers()) {
-			if(other == null) continue;
-			if(!other.getPosition().withinDistance(defender.getPosition(), 1)) continue;
-			if(other.same(attacker) || other.same(defender)) continue;
-			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
-			if(!other.inMulti() || (attacker.isPlayer() && !other.inWilderness())) continue;
-			actors.add(other);
-		}
-
-		return actors;
 	}
 
 	private static void kbdShock(Actor defender) {
@@ -264,7 +233,8 @@ public enum MagicEffects {
 			int hitsplatDelay = CombatUtil.getHitsplatDelay(CombatType.MAGIC);
 			CombatHit hit = new CombatHit(FormulaFactory.nextMagicHit(attacker, actor, max), hitDelay, hitsplatDelay);
 			attacker.getCombat().submitHits(actor, hit);
-			if(extra != null) extra.add(hit);
+			if(extra != null)
+				extra.add(hit);
 			return hit;
 		}
 		return null;

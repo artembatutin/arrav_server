@@ -17,33 +17,7 @@ import static net.edge.content.skill.construction.room.RoomData.*;
  */
 public final class ConstructionPacket implements IncomingPacket {
 
-	private static final RoomData[] DATA = {
-			GARDEN,
-			PARLOUR,
-			KITCHEN,
-			DINING_ROOM,
-			WORKSHOP,
-			BEDROOM,
-			SKILL_ROOM,
-			QUEST_HALL_DOWN,
-			SKILL_HALL_DOWN,
-			GAMES_ROOM,
-			COMBAT_ROOM,
-			QUEST_ROOM,
-			MENAGERY,
-			STUDY,
-			CUSTOME_ROOM,
-			CHAPEL,
-			PORTAL_ROOM,
-			FORMAL_GARDEN,
-			THRONE_ROOM,
-			OUBLIETTE,
-			PIT,
-			DUNGEON_STAIR_ROOM,
-			CORRIDOR,
-			JUNCTION,
-			TREASURE_ROOM,
-	};
+	private static final RoomData[] DATA = {GARDEN, PARLOUR, KITCHEN, DINING_ROOM, WORKSHOP, BEDROOM, SKILL_ROOM, QUEST_HALL_DOWN, SKILL_HALL_DOWN, GAMES_ROOM, COMBAT_ROOM, QUEST_ROOM, MENAGERY, STUDY, CUSTOME_ROOM, CHAPEL, PORTAL_ROOM, FORMAL_GARDEN, THRONE_ROOM, OUBLIETTE, PIT, DUNGEON_STAIR_ROOM, CORRIDOR, JUNCTION, TREASURE_ROOM,};
 
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {

@@ -11,7 +11,7 @@ public class BorkPortal extends ActionInitializer {
 		ObjectAction open = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-//				player.teleport(new Position(3085, 3508, 0), BOSS_PORTAL); TODO: add teleports
+				//				player.teleport(new Position(3085, 3508, 0), BOSS_PORTAL); TODO: add teleports
 				return true;
 			}
 		};

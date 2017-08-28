@@ -296,10 +296,7 @@ public abstract class Trap {
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum TrapState {
-		PENDING,
-		CATCHING,
-		CAUGHT,
-		FALLEN
+		PENDING, CATCHING, CAUGHT, FALLEN
 	}
 
 }

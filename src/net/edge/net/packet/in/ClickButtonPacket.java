@@ -799,15 +799,15 @@ public final class ClickButtonPacket implements IncomingPacket {
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6003:
-//				player.setAutocastSpell(MagicSpell.IBAN_BLAST);
-//				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-//				player.out(new SendConfig(108, 3));
+				//				player.setAutocastSpell(MagicSpell.IBAN_BLAST);
+				//				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
+				//				player.out(new SendConfig(108, 3));
 				player.out(new SendMessage("NEED IBAN BLAST")); // TODO: Iban blast
 				break;
 			case 47005:
-//				player.setAutocastSpell(MagicSpell.MAGIC_DART);
-//				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-//				player.out(new SendConfig(108, 3));
+				//				player.setAutocastSpell(MagicSpell.MAGIC_DART);
+				//				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
+				//				player.out(new SendConfig(108, 3));
 				player.out(new SendMessage("NEED MAGIC DART")); // TODO: Magic dart
 				break;
 			case 4166:

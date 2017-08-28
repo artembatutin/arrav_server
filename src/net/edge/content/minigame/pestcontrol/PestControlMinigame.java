@@ -39,13 +39,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	/**
 	 * The strings that the knight yells out.
 	 */
-	private static final String[] YELLS = {
-			"We must not fail!",
-			"Take down the portals",
-			"The Void Knights will not fall!",
-			"Hail the Void Knights!",
-			"We are beating these scums!"
-	};
+	private static final String[] YELLS = {"We must not fail!", "Take down the portals", "The Void Knights will not fall!", "Hail the Void Knights!", "We are beating these scums!"};
 
 	/**
 	 * The middle void knight.
@@ -74,12 +68,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	PestControlMinigame(String minigame, MinigameSafety safety) {
 		super(minigame, safety);
 		voidKnight = new VoidKnight();
-		portals = new PestPortal[]{
-				new PestPortal(6142, new Position(2628, 2591), new Position(2632, 2594), 21111, voidKnight),
-				new PestPortal(6145, new Position(2645, 2569), new Position(2647, 2573), 21114, voidKnight),
-				new PestPortal(6144, new Position(2669, 2570), new Position(2671, 2574), 21113, voidKnight),
-				new PestPortal(6143, new Position(2680, 2588), new Position(2679, 2589), 21112, voidKnight)
-		};
+		portals = new PestPortal[]{new PestPortal(6142, new Position(2628, 2591), new Position(2632, 2594), 21111, voidKnight), new PestPortal(6145, new Position(2645, 2569), new Position(2647, 2573), 21114, voidKnight), new PestPortal(6144, new Position(2669, 2570), new Position(2671, 2574), 21113, voidKnight), new PestPortal(6143, new Position(2680, 2588), new Position(2679, 2589), 21112, voidKnight)};
 	}
 
 	@Override
@@ -143,38 +132,36 @@ public final class PestControlMinigame extends SequencedMinigame {
 	@Override
 	public boolean canTeleport(Player player, Position position) {
 		//ladders.
-		return position.same(new Position(2645, 2601)) || position.same(new Position(2643, 2601)) || position.same(new Position(2668, 2601)) || position
-				.same(new Position(2670, 2601)) || position.same(new Position(2647, 2585)) || position.same(new Position(2647, 2587)) || position
-				.same(new Position(2666, 2585)) || position.same(new Position(2666, 2587));
+		return position.same(new Position(2645, 2601)) || position.same(new Position(2643, 2601)) || position.same(new Position(2668, 2601)) || position.same(new Position(2670, 2601)) || position.same(new Position(2647, 2585)) || position.same(new Position(2647, 2587)) || position.same(new Position(2666, 2585)) || position.same(new Position(2666, 2587));
 	}
 
 	@Override
 	public boolean onFirstClickObject(Player player, GameObject object) {
 		Position pos = object.getGlobalPos();
 		//west north ladder.
-//		if(object.getId() == 14296 && pos.getX() == 2644) {
-//			player.teleport(new Position(player.getPosition().getX() <= 2643 ? 2645 : 2643, 2601), LADDER); FIXME: FIX TELEPORTS
-//			player.getAttr().get("master_archery").set(player.getPosition().getX() <= 2643);
-//			return false;
-//		}
-//		//east north ladder.
-//		if(object.getId() == 14296 && pos.getX() == 2669) {
-//			player.teleport(new Position(player.getPosition().getX() >= 2670 ? 2668 : 2670, 2601), LADDER);
-//			player.getAttr().get("master_archery").set(player.getPosition().getX() < 2670);
-//			return false;
-//		}
-//		//west south ladder
-//		if(object.getId() == 14296 && pos.getX() == 2647) {
-//			player.teleport(new Position(2647, player.getPosition().getY() <= 2585 ? 2587 : 2585), LADDER);
-//			player.getAttr().get("master_archery").set(!(player.getPosition().getY() <= 2585));
-//			return false;
-//		}
-//		//east south ladder
-//		if(object.getId() == 14296 && pos.getX() == 2666) {
-//			player.teleport(new Position(2666, player.getPosition().getY() <= 2585 ? 2587 : 2585), LADDER);
-//			player.getAttr().get("master_archery").set(!(player.getPosition().getY() <= 2585));
-//			return false;
-//		}
+		//		if(object.getId() == 14296 && pos.getX() == 2644) {
+		//			player.teleport(new Position(player.getPosition().getX() <= 2643 ? 2645 : 2643, 2601), LADDER); FIXME: FIX TELEPORTS
+		//			player.getAttr().get("master_archery").set(player.getPosition().getX() <= 2643);
+		//			return false;
+		//		}
+		//		//east north ladder.
+		//		if(object.getId() == 14296 && pos.getX() == 2669) {
+		//			player.teleport(new Position(player.getPosition().getX() >= 2670 ? 2668 : 2670, 2601), LADDER);
+		//			player.getAttr().get("master_archery").set(player.getPosition().getX() < 2670);
+		//			return false;
+		//		}
+		//		//west south ladder
+		//		if(object.getId() == 14296 && pos.getX() == 2647) {
+		//			player.teleport(new Position(2647, player.getPosition().getY() <= 2585 ? 2587 : 2585), LADDER);
+		//			player.getAttr().get("master_archery").set(!(player.getPosition().getY() <= 2585));
+		//			return false;
+		//		}
+		//		//east south ladder
+		//		if(object.getId() == 14296 && pos.getX() == 2666) {
+		//			player.teleport(new Position(2666, player.getPosition().getY() <= 2585 ? 2587 : 2585), LADDER);
+		//			player.getAttr().get("master_archery").set(!(player.getPosition().getY() <= 2585));
+		//			return false;
+		//		}
 		for(PestGate gate : gates) {
 			if(gate.clicked(object.getGlobalPos())) {
 				gate.click(player);

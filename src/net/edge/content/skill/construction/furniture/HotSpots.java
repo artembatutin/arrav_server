@@ -553,18 +553,16 @@ public enum HotSpots {
 				if(!player.getHouse().get().isBuilding())
 					return true;
 				if(RoomManipulation.roomExists(player)) {
-					player.getDialogueBuilder().append(
-							new OptionDialogue(t -> {
-								if(t.equals(FIRST_OPTION)) {
-									RoomManipulation.rotateRoom(0, player);
-								} else if(t.equals(SECOND_OPTION)) {
-									RoomManipulation.rotateRoom(1, player);
-								} else if(t.equals(THIRD_OPTION)) {
-									RoomManipulation.deleteRoom(player, player.getPosition().getZ());
-								}
-								player.closeWidget();
-							}, "Rotate clockwise", "Rotate counter-clockwise", "Remove")
-					);
+					player.getDialogueBuilder().append(new OptionDialogue(t -> {
+						if(t.equals(FIRST_OPTION)) {
+							RoomManipulation.rotateRoom(0, player);
+						} else if(t.equals(SECOND_OPTION)) {
+							RoomManipulation.rotateRoom(1, player);
+						} else if(t.equals(THIRD_OPTION)) {
+							RoomManipulation.deleteRoom(player, player.getPosition().getZ());
+						}
+						player.closeWidget();
+					}, "Rotate clockwise", "Rotate counter-clockwise", "Remove"));
 				} else
 					player.widget(-14);
 				return true;

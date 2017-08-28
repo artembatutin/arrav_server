@@ -7,6 +7,5 @@ package net.edge.world.entity.item;
  * @author lare96 <http://github.com/lare96>
  */
 public enum GroundItemPolicy {
-	TIMEOUT,
-	RESPAWN
+	TIMEOUT, RESPAWN
 }

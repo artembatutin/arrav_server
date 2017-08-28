@@ -110,11 +110,7 @@ public class House {
 			int[] converted_1 = Construction.getConvertedCoords(4, 2, myTiles, r);
 			int[] converted_2 = Construction.getConvertedCoords(3, 5, myTiles, r);
 			int[] converted_3 = Construction.getConvertedCoords(4, 5, myTiles, r);
-			if(r.getFurniture() != null && (owner.getPosition().getX() == converted[0] && owner.getPosition()
-					.getY() == converted[1] || owner.getPosition().getX() == converted_1[0] && owner.getPosition()
-					.getY() == converted_1[1] || owner.getPosition().getX() == converted_2[0] && owner.getPosition()
-					.getY() == converted_2[1] || owner.getPosition().getX() == converted_3[0] && owner.getPosition()
-					.getY() == converted_3[1])) {
+			if(r.getFurniture() != null && (owner.getPosition().getX() == converted[0] && owner.getPosition().getY() == converted[1] || owner.getPosition().getX() == converted_1[0] && owner.getPosition().getY() == converted_1[1] || owner.getPosition().getX() == converted_2[0] && owner.getPosition().getY() == converted_2[1] || owner.getPosition().getX() == converted_3[0] && owner.getPosition().getY() == converted_3[1])) {
 				for(RoomFurniture f : r.getFurniture()) {
 					if(f == null)
 						continue;

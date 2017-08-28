@@ -11,6 +11,7 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 
 public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
+
 	public static final NpcMeleeStrategy INSTANCE = new NpcMeleeStrategy();
 
 	protected NpcMeleeStrategy() {

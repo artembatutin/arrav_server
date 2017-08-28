@@ -1,5 +1,6 @@
 package net.edge.content.combat.content;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.ItemContainer;
@@ -58,7 +59,8 @@ public enum MagicRune {
 
 		for(RequiredRune rune : runes) {
 			int remaining = amounts.get(rune.getRune());
-			if(remaining <= 0) continue;
+			if(remaining <= 0)
+				continue;
 
 			if(weapon != null && rune.getStaffs() != null) {
 				for(int id : rune.getStaffs()) {
@@ -74,21 +76,25 @@ public enum MagicRune {
 						int slot = inventory.computeIndexForId(id);
 						if(slot != -1) {
 							int amount = inventory.get(slot).getAmount();
-							if(amount > remaining) amount = remaining;
+							if(amount > remaining)
+								amount = remaining;
 							inventory.remove(new Item(id, amount), slot, false);
 
 							for(MagicRune combo : combos(id)) {
-								if(amounts.containsKey(combo)) amounts.put(combo, amounts.get(combo) - amount);
+								if(amounts.containsKey(combo))
+									amounts.put(combo, amounts.get(combo) - amount);
 							}
 
-							if(remaining - amount <= 0) break;
+							if(remaining - amount <= 0)
+								break;
 						}
 					}
 				} else {
 					int slot = inventory.computeIndexForId(rune.getMainId());
 					if(slot != -1) {
 						int amount = inventory.get(slot).getAmount();
-						if(amount > remaining) amount = remaining;
+						if(amount > remaining)
+							amount = remaining;
 						inventory.remove(new Item(rune.getMainId(), amount), slot, false);
 						amounts.replace(rune.getRune(), remaining - amount);
 					}
@@ -97,7 +103,8 @@ public enum MagicRune {
 		}
 
 		for(RequiredRune rune : runes) {
-			if(amounts.get(rune.getRune()) > 0) return false;
+			if(amounts.get(rune.getRune()) > 0)
+				return false;
 		}
 
 		return true;
@@ -106,9 +113,11 @@ public enum MagicRune {
 	private static MagicRune[] combos(int id) {
 		Set<MagicRune> runes = new HashSet<>();
 		for(MagicRune rune : values()) {
-			if(rune.combos == null) continue;
+			if(rune.combos == null)
+				continue;
 			for(int combo : rune.combos) {
-				if(combo == id) runes.add(rune);
+				if(combo == id)
+					runes.add(rune);
 			}
 		}
 		return runes.toArray(new MagicRune[0]);
@@ -116,13 +125,14 @@ public enum MagicRune {
 
 	public static void remove(Player player, RequiredRune[] runes) {
 		Item weapon = player.getEquipment().get(Equipment.WEAPON_SLOT);
-		Map<MagicRune, Integer> amounts = new HashMap<>();
+		Object2ObjectArrayMap<MagicRune, Integer> amounts = new Object2ObjectArrayMap<>();
 
 		for(RequiredRune rune : runes) {
 			int remaining = rune.getAmount();
 			if(weapon != null && rune.getStaffs() != null) {
 				for(int id : rune.getStaffs()) {
-					if(weapon.getId() == id) remaining = 0;
+					if(weapon.getId() == id)
+						remaining = 0;
 				}
 			}
 			amounts.put(rune.getRune(), remaining);
@@ -136,21 +146,25 @@ public enum MagicRune {
 						int slot = player.getInventory().computeIndexForId(id);
 						if(slot != -1) {
 							int amount = player.getInventory().get(slot).getAmount();
-							if(amount > remaining) amount = remaining;
+							if(amount > remaining)
+								amount = remaining;
 							player.getInventory().remove(new Item(id, amount), slot, false);
 
 							for(MagicRune combo : combos(id)) {
-								if(amounts.containsKey(combo)) amounts.put(combo, amounts.get(combo) - amount);
+								if(amounts.containsKey(combo))
+									amounts.put(combo, amounts.get(combo) - amount);
 							}
 
-							if(remaining - amount <= 0) break;
+							if(remaining - amount <= 0)
+								break;
 						}
 					}
 				} else {
 					int slot = player.getInventory().computeIndexForId(rune.getMainId());
 					if(slot != -1) {
 						int amount = player.getInventory().get(slot).getAmount();
-						if(amount > remaining) amount = remaining;
+						if(amount > remaining)
+							amount = remaining;
 						player.getInventory().remove(new Item(rune.getMainId(), amount), slot, false);
 						amounts.replace(rune.getRune(), remaining - amount);
 					}

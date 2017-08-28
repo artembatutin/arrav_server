@@ -12,8 +12,9 @@ public class AgilityStairs extends ActionInitializer {
 		ObjectAction l = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				if(object.getGlobalPos().same(new Position(2532, 3545, 1))) ;
-//						player.teleport(new Position(2532, 3546, 0), LADDER); TODO: add teleports
+				if(object.getGlobalPos().same(new Position(2532, 3545, 1)))
+					;
+				//						player.teleport(new Position(2532, 3546, 0), LADDER); TODO: add teleports
 				return true;
 			}
 		};

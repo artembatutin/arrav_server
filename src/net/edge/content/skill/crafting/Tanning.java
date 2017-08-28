@@ -113,8 +113,7 @@ public final class Tanning extends ProducingSkillAction {
 		}
 
 		if(!TanningData.getByItem(item.getId()).isPresent()) {
-			player.message("You can't use " + TextUtils.appendIndefiniteArticle(item.getDefinition().getName()) + " on " + mob
-					.getDefinition().getName());
+			player.message("You can't use " + TextUtils.appendIndefiniteArticle(item.getDefinition().getName()) + " on " + mob.getDefinition().getName());
 			return false;
 		}
 

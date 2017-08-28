@@ -98,14 +98,12 @@ public class Constants {
 
 	public static int getXOffsetForObjectId(int objectId, HotSpots hs, int rotation) {
 		ObjectDefinition objectDef = ObjectDefinition.DEFINITIONS[objectId];
-		return getRotatedLandscapeChunkX(rotation, objectDef.getSizeY(), hs.getXOffset(), hs.getYOffset(), objectDef.getSizeX(), hs
-				.getRotation(0));
+		return getRotatedLandscapeChunkX(rotation, objectDef.getSizeY(), hs.getXOffset(), hs.getYOffset(), objectDef.getSizeX(), hs.getRotation(0));
 	}
 
 	public static int getYOffsetForObjectId(int objectId, HotSpots hs, int rotation) {
 		ObjectDefinition objectDef = ObjectDefinition.DEFINITIONS[objectId];
-		return getRotatedLandscapeChunkY(hs.getYOffset(), objectDef.getSizeY(), rotation, objectDef.getSizeX(), hs.getXOffset(), hs
-				.getRotation(0));
+		return getRotatedLandscapeChunkY(hs.getYOffset(), objectDef.getSizeY(), rotation, objectDef.getSizeX(), hs.getXOffset(), hs.getRotation(0));
 	}
 
 	public static int getRotatedLandscapeChunkX(int rotation, int objectSizeY, int x, int y, int objectSizeX, int objectRot) {

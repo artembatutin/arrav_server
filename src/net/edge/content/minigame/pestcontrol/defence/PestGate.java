@@ -14,10 +14,7 @@ public class PestGate {
 	/**
 	 * The door states.
 	 */
-	private final static int[][] STATES = {
-			{14233, 14237, 14241},
-			{14235, 14239, 14244},
-	};
+	private final static int[][] STATES = {{14233, 14237, 14241}, {14235, 14239, 14244},};
 
 	/**
 	 * The door instance.

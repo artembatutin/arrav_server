@@ -16,15 +16,13 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
 
 	public static final PlayerMeleeStrategy INSTANCE = new PlayerMeleeStrategy();
 
-	protected PlayerMeleeStrategy() {
-	}
+	protected PlayerMeleeStrategy() { }
 
 	@Override
 	public void start(Player attacker, Actor defender, Hit[] hits) {
 		if(attacker.isSpecialActivated()) {
 			attacker.getCombatSpecial().drain(attacker);
 		}
-
 		attacker.animation(getAttackAnimation(attacker, defender));
 		addCombatExperience(attacker, hits);
 	}
@@ -50,7 +48,8 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
 
 	@Override
 	public int getAttackDistance(Player attacker, FightType fightType) {
-		if(attacker.getWeapon() == WeaponInterface.HALBERD) return 2;
+		if(attacker.getWeapon() == WeaponInterface.HALBERD)
+			return 2;
 		return 1;
 	}
 
@@ -58,7 +57,6 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
 	public Animation getAttackAnimation(Player attacker, Actor defender) {
 		FightType fightType = attacker.getCombat().getFightType();
 		int animation;
-
 		if(attacker.getWeaponAnimation() != null && !attacker.getCombat().getFightType().isAnimationPrioritized()) {
 			animation = attacker.getWeaponAnimation().getAttacking()[fightType.getStyle().ordinal()];
 		} else {

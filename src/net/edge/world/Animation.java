@@ -128,9 +128,7 @@ public final class Animation {
 	 * @author lare96 <http://github.com/lare96>
 	 */
 	public enum AnimationPriority {
-		LOW(0),
-		NORMAL(1),
-		HIGH(2);
+		LOW(0), NORMAL(1), HIGH(2);
 
 		/**
 		 * The value of this priority. A higher value indicates a greater priority.

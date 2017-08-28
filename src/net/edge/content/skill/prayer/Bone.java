@@ -6,7 +6,8 @@ import java.util.Optional;
 
 public enum Bone {
 	BONES(526, 7.5),
-	BAT_BONES(530, 2.9),//buyable in jatix store.
+	BAT_BONES(530, 2.9),
+	//buyable in jatix store.
 	MONKEY_BONES(3179, 10),
 	WOLF_BONES(2859, 14.5),
 	BIG_BONES(532, 19),

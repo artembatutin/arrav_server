@@ -19,25 +19,7 @@ public enum VoteRewards {
 	DRAGON_PICK(0.2, 15259, 20786),
 	FOOD(0.8, new Item(384, 75), new Item(390, 50), new Item(396, 50), new Item(15271, 25));
 
-	private static Item[] OTHERS = {
-			new Item(6466, 8000),
-			new Item(454, 30),
-			new Item(537, 30),
-			new Item(961, 30),
-			new Item(8779, 20),
-			new Item(8781, 20),
-			new Item(8783, 20),
-			new Item(2358, 20),
-			new Item(961, 20),
-			new Item(1754, 20),
-			new Item(1752, 20),
-			new Item(1750, 20),
-			new Item(1748, 20),
-			new Item(2284, 20),
-			new Item(2286, 20),
-			new Item(2288, 20),
-			new Item(1890, 20),
-	};
+	private static Item[] OTHERS = {new Item(6466, 8000), new Item(454, 30), new Item(537, 30), new Item(961, 30), new Item(8779, 20), new Item(8781, 20), new Item(8783, 20), new Item(2358, 20), new Item(961, 20), new Item(1754, 20), new Item(1752, 20), new Item(1750, 20), new Item(1748, 20), new Item(2284, 20), new Item(2286, 20), new Item(2288, 20), new Item(1890, 20),};
 
 	private static final ImmutableSet<VoteRewards> REWARDS = ImmutableSet.copyOf(values());
 

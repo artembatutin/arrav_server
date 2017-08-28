@@ -196,7 +196,7 @@ public final class RFDMinigame extends SequencedMinigame {
 		player.setMinigame(Optional.empty());
 		player.setInstance(0);
 		InstanceManager.get().open(instance);
-//		player.teleport(GameConstants.STARTING_POSITION); TODO: add teleports
+		//		player.teleport(GameConstants.STARTING_POSITION); TODO: add teleports
 		this.destruct();
 	}
 }

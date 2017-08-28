@@ -21,6 +21,7 @@ import net.edge.world.entity.actor.player.assets.AntifireDetails;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * A collection of utility methods and constants related to combat.
@@ -69,15 +70,50 @@ public final class CombatUtil {
 		}
 	}
 
+	public static void getSurrounding(Actor attacker, Actor defender, int distance, Consumer<Actor> action) {
+		action.accept(defender);
+		if(!attacker.inMulti() || !defender.inMulti())
+			return;
+		for(Mob other : defender.getLocalMobs()) {
+			if(other == null)
+				continue;
+			if(!other.getPosition().withinDistance(defender.getPosition(), distance))
+				continue;
+			if(other.same(attacker) || other.same(defender))
+				continue;
+			if(other.getCurrentHealth() <= 0 || other.isDead())
+				continue;
+			if(!other.getDefinition().isAttackable())
+				continue;
+			action.accept(other);
+		}
+		for(Player other : defender.getLocalPlayers()) {
+			if(other == null)
+				continue;
+			if(!other.getPosition().withinDistance(defender.getPosition(), distance))
+				continue;
+			if(other.same(attacker) || other.same(defender))
+				continue;
+			if(other.getCurrentHealth() <= 0 || other.isDead())
+				continue;
+			if(!other.inMulti() || (attacker.isPlayer() && !other.inWilderness()))
+				continue;
+			action.accept(other);
+		}
+	}
+
 	public static <A extends Actor> List<A> actorsWithinDistance(Actor player, Set<A> actors, int radius) {
 		List<A> collected = new LinkedList<>();
 
 		for(A other : actors) {
-			if(other == null) continue;
+			if(other == null)
+				continue;
 			if(!other.getPosition().withinDistance(player.getPosition(), radius))
 				continue;
-			if(other.same(player)) continue;
-			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
+			if(other.same(player))
+				continue;
+			if(other.getCurrentHealth() <= 0 || other.isDead())
+				continue;
 			collected.add(other);
 		}
 		return collected;
@@ -169,7 +205,7 @@ public final class CombatUtil {
 			if(hit.getDamage() - reducedDamage > 200 && victim.getCurrentHealth() > 200) {
 				if(reducedDamage > 0) {
 					hit.setDamage(hit.getDamage() - reducedDamage);
-//					hit.setSoak(reducedDamage); // TODO: Integrate soaking
+					//					hit.setSoak(reducedDamage); // TODO: Integrate soaking
 				}
 			}
 		}

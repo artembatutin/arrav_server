@@ -41,8 +41,7 @@ public class ItemEconomyReplace extends ItemController {
 
 	@Override
 	public String getDesc() {
-		return "[ replacing item " + item + " " + ItemDefinition.get(item).getName() + " with " + replace + " " +
-				ItemDefinition.get(item).getName() + " - " + LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + " ]";
+		return "[ replacing item " + item + " " + ItemDefinition.get(item).getName() + " with " + replace + " " + ItemDefinition.get(item).getName() + " - " + LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + " ]";
 	}
 
 }

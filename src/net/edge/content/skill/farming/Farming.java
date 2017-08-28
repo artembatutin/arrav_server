@@ -114,8 +114,7 @@ public final class Farming extends HarvestingSkillAction {
 						FarmingManager.updatePatch(getPlayer(), patch.getPatchType());
 					}
 				}
-				if(patch.getSeedType().getSeedClass() == SeedClass.BUSHES
-						|| patch.getSeedType().getSeedClass() == SeedClass.MUSHROOMS) {
+				if(patch.getSeedType().getSeedClass() == SeedClass.BUSHES || patch.getSeedType().getSeedClass() == SeedClass.MUSHROOMS) {
 					FarmingManager.updatePatch(getPlayer(), patch.getPatchType());
 				}
 

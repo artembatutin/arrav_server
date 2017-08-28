@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Listens for item listeners or some shit lol
+ * Listens for item listeners.
  *
  * @author Michael | Chex
  */

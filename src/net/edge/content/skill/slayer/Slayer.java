@@ -113,15 +113,14 @@ public final class Slayer {
 					return true;
 				SlayerMaster master = player.getSlayer().isPresent() ? player.getSlayer().get().getMaster() : SlayerMaster.SPRIA;
 				player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "Ughh, what do you want?"), new OptionDialogue(t -> {
-							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-								player.getDialogueBuilder().go(3);
-							} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-								player.getDialogueBuilder().advance();
-							} else {
-								player.getDialogueBuilder().last();
-							}
-						}, "Can I get a new task?", "How many kills are left?", "Nevermind"), new PlayerDialogue("How many kills are left?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."} : new String[]{"You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."}).attach(() -> player.closeWidget()), new PlayerDialogue("Can I get a new task?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You already are assigned to a slayer task..."} : new String[]{"Come speak to me or another slayer master ", "in order to get assigned to a task."}).attach(() -> player.closeWidget()), new PlayerDialogue("Nevermind").attach(() -> player.closeWidget())
-				);
+					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+						player.getDialogueBuilder().go(3);
+					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
+						player.getDialogueBuilder().advance();
+					} else {
+						player.getDialogueBuilder().last();
+					}
+				}, "Can I get a new task?", "How many kills are left?", "Nevermind"), new PlayerDialogue("How many kills are left?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."} : new String[]{"You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."}).attach(() -> player.closeWidget()), new PlayerDialogue("Can I get a new task?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You already are assigned to a slayer task..."} : new String[]{"Come speak to me or another slayer master ", "in order to get assigned to a task."}).attach(() -> player.closeWidget()), new PlayerDialogue("Nevermind").attach(() -> player.closeWidget()));
 				return true;
 			}
 		};

@@ -19,6 +19,6 @@ public final class GamblingZoneCommand implements Command {
 	 */
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-//        player.teleport(new Position(2442, 3089)); TODO: add teleport
+		//        player.teleport(new Position(2442, 3089)); TODO: add teleport
 	}
 }

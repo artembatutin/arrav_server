@@ -53,63 +53,58 @@ public final class Magpie extends Familiar {
 		}
 	}
 
-	private static final Conversation[] CONVERSATION = new Conversation[]{
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+	private static final Conversation[] CONVERSATION = new Conversation[]{new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(6824, "There's nowt gannin on here..."));
-					app.chain(new PlayerDialogue("Err...sure? Maybe?"));
-					app.chain(new PlayerDialogue("It seems upset, but what is it saying?"));
-					return app;
-				}
-			},
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(6824, "There's nowt gannin on here..."));
+			app.chain(new PlayerDialogue("Err...sure? Maybe?"));
+			app.chain(new PlayerDialogue("It seems upset, but what is it saying?"));
+			return app;
+		}
+	}, new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(6824, "Howway, let's gaan see what's happenin' in toon."));
-					app.chain(new PlayerDialogue("What? I can't understand what you're saying."));
-					return app;
-				}
-			},
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(6824, "Howway, let's gaan see what's happenin' in toon."));
+			app.chain(new PlayerDialogue("What? I can't understand what you're saying."));
+			return app;
+		}
+	}, new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(6824, "Are we gaan oot soon? I'm up fer a good walk me."));
-					app.chain(new PlayerDialogue("That...that was just noise. What does that mean?"));
-					return app;
-				}
-			},
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(6824, "Are we gaan oot soon? I'm up fer a good walk me."));
+			app.chain(new PlayerDialogue("That...that was just noise. What does that mean?"));
+			return app;
+		}
+	}, new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(6824, "Ye' been plowdin' i' the claarts aall day."));
-					app.chain(new PlayerDialogue("What? That made no sense."));
-					return app;
-				}
-			}
-	};
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(6824, "Ye' been plowdin' i' the claarts aall day."));
+			app.chain(new PlayerDialogue("What? That made no sense."));
+			return app;
+		}
+	}};
 }

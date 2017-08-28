@@ -67,8 +67,7 @@ public final class HideWorking extends ProducingSkillAction {
 	 * @return {@code true} if the skill action was started, {@code false} otherwise.
 	 */
 	public static boolean create(Player player, int buttonId) {
-		HideData data = HideData.getDefinitionByButton(player.getAttr().get("crafting_hide").getInt(), buttonId)
-				.orElse(null);
+		HideData data = HideData.getDefinitionByButton(player.getAttr().get("crafting_hide").getInt(), buttonId).orElse(null);
 
 		if(data == null || !player.getAttr().get("crafting_hides").getBoolean()) {
 			return false;
@@ -207,9 +206,7 @@ public final class HideWorking extends ProducingSkillAction {
 
 	private boolean checkCrafting() {
 		if(!player.getSkills()[skill().getId()].reqLevel(data.requirement)) {
-			player.message("You need a crafting level of " + data.requirement + " to register " + TextUtils.appendIndefiniteArticle(data.product
-					.getDefinition()
-					.getName()));
+			player.message("You need a crafting level of " + data.requirement + " to register " + TextUtils.appendIndefiniteArticle(data.product.getDefinition().getName()));
 			return false;
 		}
 		return true;
@@ -401,19 +398,10 @@ public final class HideWorking extends ProducingSkillAction {
 		}
 
 		public static Optional<HideData> getDefinition(int itemUsed, int usedOn) {
-			return VALUES.stream()
-					.filter($it -> $it.required.getId() == itemUsed || $it.required.getId() == usedOn)
-					.filter($it -> NEEDLE.getId() == itemUsed || NEEDLE.getId() == usedOn)
-					.findAny();
+			return VALUES.stream().filter($it -> $it.required.getId() == itemUsed || $it.required.getId() == usedOn).filter($it -> NEEDLE.getId() == itemUsed || NEEDLE.getId() == usedOn).findAny();
 		}
 	}
 
-	private static final Int2ObjectArrayMap<HideData[]> GROUP = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, HideData[]>builder()
-			.put(6289, new HideData[]{HideData.SNAKESKIN_BODY, HideData.SNAKESKIN_CHAPS, HideData.SNAKESKIN_VAMBRACES, HideData.SNAKESKIN_BANDANA, HideData.SNAKESKIN_BOOTS})
-			.put(1745, new HideData[]{HideData.GREEN_DHIDE_BODY, HideData.GREEN_DHIDE_CHAPS, HideData.GREEN_DHIDE_VAMBRACES})
-			.put(2505, new HideData[]{HideData.BLUE_DHIDE_BODY, HideData.BLUE_DHIDE_CHAPS, HideData.BLUE_DHIDE_VAMBRACES})
-			.put(2507, new HideData[]{HideData.RED_DHIDE_BODY, HideData.RED_DHIDE_CHAPS, HideData.RED_DHIDE_VAMBRACES})
-			.put(2509, new HideData[]{HideData.BLACK_DHIDE_BODY, HideData.BLACK_DHIDE_CHAPS, HideData.BLACK_DHIDE_VAMBRACES})
-			.build());
+	private static final Int2ObjectArrayMap<HideData[]> GROUP = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, HideData[]>builder().put(6289, new HideData[]{HideData.SNAKESKIN_BODY, HideData.SNAKESKIN_CHAPS, HideData.SNAKESKIN_VAMBRACES, HideData.SNAKESKIN_BANDANA, HideData.SNAKESKIN_BOOTS}).put(1745, new HideData[]{HideData.GREEN_DHIDE_BODY, HideData.GREEN_DHIDE_CHAPS, HideData.GREEN_DHIDE_VAMBRACES}).put(2505, new HideData[]{HideData.BLUE_DHIDE_BODY, HideData.BLUE_DHIDE_CHAPS, HideData.BLUE_DHIDE_VAMBRACES}).put(2507, new HideData[]{HideData.RED_DHIDE_BODY, HideData.RED_DHIDE_CHAPS, HideData.RED_DHIDE_VAMBRACES}).put(2509, new HideData[]{HideData.BLACK_DHIDE_BODY, HideData.BLACK_DHIDE_CHAPS, HideData.BLACK_DHIDE_VAMBRACES}).build());
 
 }

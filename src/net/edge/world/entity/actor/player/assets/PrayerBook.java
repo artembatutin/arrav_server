@@ -9,8 +9,7 @@ import net.edge.world.entity.actor.player.Player;
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum PrayerBook {
-	NORMAL(5608),
-	CURSES(21356);
+	NORMAL(5608), CURSES(21356);
 
 	/**
 	 * The identifier for this prayer interface.

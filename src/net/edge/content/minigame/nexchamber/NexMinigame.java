@@ -27,7 +27,7 @@ public class NexMinigame extends Minigame {
 	 */
 	public static NexMinigame game;
 
-//	private final Nex nex;
+	//	private final Nex nex;
 
 	private static final ObjectList<Player> players = new ObjectArrayList<>();
 
@@ -68,10 +68,10 @@ public class NexMinigame extends Minigame {
 		if(other.isPlayer())
 			return false;
 		Mob m = other.toMob();
-//		if(nex.minionStage != m.getId() - 13450 && m.getId() != 13447) {
-//			player.message("The avatar is not weak enough to damage this minion.");
-//			return false;
-//		}
+		//		if(nex.minionStage != m.getId() - 13450 && m.getId() != 13447) {
+		//			player.message("The avatar is not weak enough to damage this minion.");
+		//			return false;
+		//		}
 		return true;
 	}
 

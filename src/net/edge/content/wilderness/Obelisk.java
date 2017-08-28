@@ -118,7 +118,7 @@ public enum Obelisk {
 			int y = dest.boundary.getSwY();
 			reg.getPlayers().forEach(p -> {
 				if(data.boundary.inLocation(p.getPosition())) {
-//					p.teleport(new Position(x + RandomUtils.inclusive(1, 3), y + RandomUtils.inclusive(1, 3)), OBELISK); TODO: add teleports
+					//					p.teleport(new Position(x + RandomUtils.inclusive(1, 3), y + RandomUtils.inclusive(1, 3)), OBELISK); TODO: add teleports
 					p.message("Ancient magic teleports you somewhere in the wilderness...");
 				}
 			});

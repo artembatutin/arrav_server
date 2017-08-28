@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Listens for npc listeners or some shit lol
+ * Listens for npc listeners.
  *
  * @author Michael | Chex
  */

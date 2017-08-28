@@ -79,6 +79,7 @@ public final class Application {
 	private final static Logger LOGGER = LoggerUtils.getLogger(Application.class);
 
 	static {
+		//System.out.println("Lines in project: " + Utility.linesInProject(new File("./src/")));
 		try {
 			Thread.currentThread().setName("EdgevilleInitializationThread");
 		} catch(Exception e) {
@@ -163,11 +164,11 @@ public final class Application {
 	 * @throws Exception If any exceptions are thrown while binding.
 	 */
 	private void bind() throws Exception {
-//		if we run server on a unix machine, then we can use a native implementation instead of nio
-//		if (Epoll.isAvailable()) {
-//			EventLoopGroup loopGroup = new EpollEventLoopGroup();
-//			bootstrap.channel(EpollServerSocketChannel.class);
-//		}
+		//		if we run server on a unix machine, then we can use a native implementation instead of nio
+		//		if (Epoll.isAvailable()) {
+		//			EventLoopGroup loopGroup = new EpollEventLoopGroup();
+		//			bootstrap.channel(EpollServerSocketChannel.class);
+		//		}
 		LOGGER.info("Binding Edgeville on port " + NetworkConstants.PORT_ONLINE + ".");
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		EventLoopGroup loopGroup = new NioEventLoopGroup();

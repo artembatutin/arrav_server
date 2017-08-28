@@ -32,16 +32,8 @@ public enum RangedEffects {
 			hit.setDamage((int) (baseHit * 1.10));
 			defender.graphic(new Graphic(749, 0, 20));
 		}
-	}),
-	PEARL_BOLTS(new CombatEffect() {
-		final ImmutableSet<Integer> affectedMobs = ImmutableSet.of(
-				941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363,
-				110, 1633, 1634, 1635, 1636, 1019, 2591, 2592, 2593,
-				2594, 2595, 2596, 2597, 2598, 2599, 2600, 2601, 2602,
-				2603, 2604, 2605, 2606, 2607, 2608, 2609, 2610, 2611,
-				2612, 2613, 2614, 2615, 2616, 2627, 2628, 2629, 2630,
-				2631, 2631, 2734, 2735, 2736, 2737, 2738, 2739, 2740,
-				2741, 2742, 2743, 2744, 2745, 2746);
+	}), PEARL_BOLTS(new CombatEffect() {
+		final ImmutableSet<Integer> affectedMobs = ImmutableSet.of(941, 55, 54, 53, 50, 5362, 1590, 1591, 1592, 5363, 110, 1633, 1634, 1635, 1636, 1019, 2591, 2592, 2593, 2594, 2595, 2596, 2597, 2598, 2599, 2600, 2601, 2602, 2603, 2604, 2605, 2606, 2607, 2608, 2609, 2610, 2611, 2612, 2613, 2614, 2615, 2616, 2627, 2628, 2629, 2630, 2631, 2631, 2734, 2735, 2736, 2737, 2738, 2739, 2740, 2741, 2742, 2743, 2744, 2745, 2746);
 
 		@Override
 		public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
@@ -67,8 +59,7 @@ public enum RangedEffects {
 			hit.setDamage((int) ((baseHit * 1.075) * (multiply ? 1.20 : 1.0)));
 			defender.graphic(new Graphic(750, 0, 20));
 		}
-	}),
-	JADE_BOLTS(new CombatEffect() {
+	}), JADE_BOLTS(new CombatEffect() {
 		@Override
 		public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
 			return hit.isAccurate() && hit.getDamage() > 0 && RandomUtils.inclusive(100) <= 10;
@@ -79,11 +70,11 @@ public enum RangedEffects {
 			defender.stun(1_200);
 			defender.graphic(new Graphic(755, 0, 20));
 		}
-	}),
-	TOPAZ_BOLTS(new CombatEffect() {
+	}), TOPAZ_BOLTS(new CombatEffect() {
 		@Override
 		public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
-			if(!defender.isPlayer()) return false;
+			if(!defender.isPlayer())
+				return false;
 			return hit.isAccurate() && hit.getDamage() > 0 && RandomUtils.inclusive(100) <= 10;
 		}
 
@@ -92,11 +83,11 @@ public enum RangedEffects {
 			defender.toPlayer().getSkills()[Skills.MAGIC].decreaseLevel(1);
 			defender.graphic(new Graphic(757, 0, 20));
 		}
-	}),
-	SAPPHIRE_BOLTS(new CombatEffect() {
+	}), SAPPHIRE_BOLTS(new CombatEffect() {
 		@Override
 		public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
-			if(!defender.isPlayer()) return false;
+			if(!defender.isPlayer())
+				return false;
 			return hit.isAccurate() && hit.getDamage() > 0 && RandomUtils.inclusive(100) <= 10;
 		}
 
@@ -108,11 +99,11 @@ public enum RangedEffects {
 			attacker.toPlayer().getSkills()[Skills.PRAYER].increaseLevel(percentage, attacker.toPlayer().getSkills()[Skills.PRAYER].getRealLevel());
 			defender.graphic(new Graphic(759, 100, 20));
 		}
-	}),
-	EMERALD_BOLTS(new CombatEffect() {
+	}), EMERALD_BOLTS(new CombatEffect() {
 		@Override
 		public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
-			if(defender.isPoisoned()) return false;
+			if(defender.isPoisoned())
+				return false;
 			return hit.isAccurate() && hit.getDamage() > 0 && RandomUtils.inclusive(100) <= 10;
 		}
 
@@ -120,11 +111,11 @@ public enum RangedEffects {
 		public void execute(Actor attacker, Actor defender, Hit hit, List<Hit> hits) {
 			defender.poison(PoisonType.SUPER_RANGED);
 		}
-	}),
-	RUBY_BOLTS(new CombatEffect() {
+	}), RUBY_BOLTS(new CombatEffect() {
 		@Override
 		public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
-			if((int) (attacker.getCurrentHealth() * 0.20) <= 0) return false;
+			if((int) (attacker.getCurrentHealth() * 0.20) <= 0)
+				return false;
 			return hit.isAccurate() && hit.getDamage() > 0 && RandomUtils.inclusive(100) <= 10;
 		}
 
@@ -137,11 +128,11 @@ public enum RangedEffects {
 
 			defender.graphic(new Graphic(754, 0, 20));
 		}
-	}),
-	DIAMOND_BOLTS(new CombatEffect() {
+	}), DIAMOND_BOLTS(new CombatEffect() {
 		@Override
 		public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
-			if((int) (attacker.getCurrentHealth() * 0.20) <= 0) return false;
+			if((int) (attacker.getCurrentHealth() * 0.20) <= 0)
+				return false;
 			return hit.isAccurate() && hit.getDamage() > 0 && RandomUtils.inclusive(100) <= 10;
 		}
 
@@ -150,8 +141,7 @@ public enum RangedEffects {
 			hit.setDamage(hit.getDamage() + RandomUtils.inclusive(5, 14));
 			defender.graphic(new Graphic(758, 0, 20));
 		}
-	}),
-	DRAGON_BOLTS(new CombatEffect() {
+	}), DRAGON_BOLTS(new CombatEffect() {
 		@Override
 		public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
 			if(defender.isPlayer() && defender.toPlayer().getEquipment().containsAny(1540, 11283)) {
@@ -171,8 +161,7 @@ public enum RangedEffects {
 			hit.setDamage((int) (baseHit * 1.14));
 			defender.graphic(new Graphic(756, 0, 20));
 		}
-	}),
-	ONYX_BOLTS(new CombatEffect() {
+	}), ONYX_BOLTS(new CombatEffect() {
 		@Override
 		public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
 			return hit.isAccurate() && hit.getDamage() > 0 && RandomUtils.inclusive(100) <= 10;
@@ -186,8 +175,7 @@ public enum RangedEffects {
 			attacker.healEntity(damage / 4);
 			defender.graphic(new Graphic(756, 0, 20));
 		}
-	}),
-	CHINCHOMPA(new CombatEffect() {
+	}), CHINCHOMPA(new CombatEffect() {
 		@Override
 		public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
 			return hit.isAccurate() && hit.getDamage() > 0 && RandomUtils.inclusive(100) <= 10;
@@ -196,13 +184,12 @@ public enum RangedEffects {
 		@Override
 		public void execute(Actor attacker, Actor defender, Hit hit, List<Hit> hits) {
 			int baseHit = hit.getDamage();
-			getSurrounding(attacker, defender).forEach(actor -> {
-				actor.graphic(new Graphic(2739, 80, 58));
-				hitEvent(attacker, defender, actor, RandomUtils.inclusive(baseHit - 5, baseHit + 5), hits);
+			CombatUtil.getSurrounding(attacker, defender, 1, a -> {
+				a.graphic(new Graphic(2739, 80, 58));
+				hitEvent(attacker, defender, a, RandomUtils.inclusive(baseHit - 5, baseHit + 5), hits);
 			});
 		}
-	}),
-	RED_CHINCHOMPA(new CombatEffect() {
+	}), RED_CHINCHOMPA(new CombatEffect() {
 		@Override
 		public boolean canEffect(Actor attacker, Actor defender, Hit hit) {
 			return hit.isAccurate() && hit.getDamage() > 0 && RandomUtils.inclusive(100) <= 10;
@@ -210,9 +197,9 @@ public enum RangedEffects {
 
 		@Override
 		public void execute(Actor attacker, Actor defender, Hit hit, List<Hit> hits) {
-			getSurrounding(attacker, defender).forEach(actor -> {
-				actor.graphic(new Graphic(2739, 80, 58));
-				hitEvent(attacker, defender, actor, hit.getDamage(), hits);
+			CombatUtil.getSurrounding(attacker, defender, 1, a -> {
+				a.graphic(new Graphic(2739, 80, 58));
+				hitEvent(attacker, defender, a, hit.getDamage(), hits);
 			});
 		}
 	}),;
@@ -225,38 +212,6 @@ public enum RangedEffects {
 
 	public CombatEffect getEffect() {
 		return effect;
-	}
-
-	private static List<Actor> getSurrounding(Actor attacker, Actor defender) {
-		List<Actor> actors = new LinkedList<>();
-		actors.add(defender);
-
-		if(!attacker.inMulti() || !defender.inMulti())
-			return actors;
-
-		for(Mob other : defender.getLocalMobs()) {
-			if(other == null) continue;
-			if(!other.getPosition().withinDistance(defender.getPosition(), 1))
-				continue;
-			if(other.same(attacker) || other.same(defender)) continue;
-			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
-			if(!other.getDefinition().isAttackable()) continue;
-			if(!other.inMulti()) continue;
-			actors.add(other);
-		}
-
-		for(Player other : defender.getLocalPlayers()) {
-			if(other == null) continue;
-			if(!other.getPosition().withinDistance(defender.getPosition(), 1))
-				continue;
-			if(other.same(attacker) || other.same(defender)) continue;
-			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
-			if(!other.inMulti() || (attacker.isPlayer() && !other.inWilderness()))
-				continue;
-			actors.add(other);
-		}
-
-		return actors;
 	}
 
 	private static CombatHit hitEvent(Actor attacker, Actor defender, Actor actor, int damage, List<Hit> extra) {

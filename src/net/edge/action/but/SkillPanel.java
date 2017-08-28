@@ -14,7 +14,7 @@ public class SkillPanel extends ActionInitializer {
 		ButtonAction e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3366, 3509), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL); TODO: add teleports
+				//				player.teleport(new Position(3366, 3509), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL); TODO: add teleports
 				return true;
 			}
 		};
@@ -22,7 +22,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3093, 3479, 1), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(3093, 3479, 1), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -30,7 +30,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3147, 3451), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(3147, 3451), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -38,7 +38,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2605, 4774), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(2605, 4774), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -46,7 +46,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2605, 3412), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(2605, 3412), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -54,7 +54,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3039, 4834), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(3039, 4834), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -62,7 +62,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3002, 9799), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(3002, 9799), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -70,7 +70,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2998, 9829), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(2998, 9829), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -78,7 +78,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2998, 9826), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(2998, 9826), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -86,7 +86,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2610, 3095), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(2610, 3095), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -94,7 +94,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3350, 3334), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(3350, 3334), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -102,7 +102,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2898, 3430), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(2898, 3430), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -110,7 +110,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2807, 3464), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(2807, 3464), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -118,7 +118,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3077, 3518), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(3077, 3518), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -142,7 +142,7 @@ public class SkillPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2375, 3618), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+				//				player.teleport(new Position(2375, 3618), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};

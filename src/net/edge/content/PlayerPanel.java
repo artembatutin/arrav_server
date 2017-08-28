@@ -151,7 +151,7 @@ public enum PlayerPanel {
 				player.getDialogueBuilder().append(new StatementDialogue("You want to quit the iron man mode?"), new OptionDialogue(t -> {
 					if(t == OptionDialogue.OptionType.FIRST_OPTION) {
 						player.setIron(0, true);
-//						player.teleport(GameConstants.STARTING_POSITION); TODO: add teleports
+						//						player.teleport(GameConstants.STARTING_POSITION); TODO: add teleports
 					}
 					player.closeWidget();
 				}, "Yes, want to be a regular player.", "No, I want to keep the iron man mode."));

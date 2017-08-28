@@ -40,9 +40,7 @@ import java.util.function.Supplier;
  */
 public abstract class Mob extends Actor {
 
-	private static final ImmutableMap<Integer, Supplier<CombatStrategy<Mob>>> STRATEGIES = ImmutableMap.of(
-			50, KingBlackDragonStrategy::new
-	);
+	private static final ImmutableMap<Integer, Supplier<CombatStrategy<Mob>>> STRATEGIES = ImmutableMap.of(50, KingBlackDragonStrategy::new);
 
 	/**
 	 * Gets a certain npc by the specified {@code id} and supplies it's position.

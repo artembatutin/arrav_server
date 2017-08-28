@@ -6,7 +6,5 @@ package net.edge.content;
  * @author lare96 <http://github.com/lare96>
  */
 public enum TradeStage {
-	OFFER,
-	FIRST_ACCEPT,
-	FINAL_ACCEPT
+	OFFER, FIRST_ACCEPT, FINAL_ACCEPT
 }

@@ -86,7 +86,7 @@ public final class Runecrafting extends ProducingSkillAction {
 			ItemAction action = new ItemAction() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
-//					player.teleport(a.getPosition(), TRAINING_PORTAL); // TODO: add teleporting
+					//					player.teleport(a.getPosition(), TRAINING_PORTAL); // TODO: add teleporting
 					return true;
 				}
 			};

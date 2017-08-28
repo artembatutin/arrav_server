@@ -19,8 +19,7 @@ import static net.edge.content.combat.CombatUtil.randomStrategy;
     /* Green */ 941, 4677, 4678, 4679, 4680, 10604, 10605, 10606, 10607, 10608, 10609,
     /* Red */ 53, 4669, 4670, 4671, 4672, 10815, 10816, 10817, 10818, 10819, 10820,
     /* Blue */ 55, 4681, 4682, 4683, 4684, 5178,
-    /* Black */ 54, 4673, 4674, 4675, 4676, 10219, 10220, 10221, 10222, 10223, 10224
-})
+    /* Black */ 54, 4673, 4674, 4675, 4676, 10219, 10220, 10221, 10222, 10223, 10224})
 public class ChromaticDragon extends SimplifiedListener<Mob> {
 	private static DragonfireStrategy DRAGONFIRE;
 	private static CombatStrategy<Mob>[] STRATEGIES;

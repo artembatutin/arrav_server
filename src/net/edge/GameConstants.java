@@ -125,11 +125,7 @@ public final class GameConstants {
 	/**
 	 * Strings that are classified as bad.
 	 */
-	public static final String[] BAD_STRINGS = {
-			"fag", "f4g", "faggot", "nigger", "fuck", "bitch", "whore", "slut",
-			"gay", "lesbian", "scape", ".net", ".org", "vagina", "dick",
-			"cock", "penis", "hoe", "soulsplit", "ikov", "retard", "cunt"
-	};
+	public static final String[] BAD_STRINGS = {"fag", "f4g", "faggot", "nigger", "fuck", "bitch", "whore", "slut", "gay", "lesbian", "scape", ".net", ".org", "vagina", "dick", "cock", "penis", "hoe", "soulsplit", "ikov", "retard", "cunt"};
 
 	/**
 	 * The default constructor.

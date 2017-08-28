@@ -66,10 +66,10 @@ public abstract class ObjectAction extends Action {
 		Woodcutting.action();
 		Mining.action();
 		Runecrafting.action();
-//		GnomeStrongholdAgility.action();
+		//		GnomeStrongholdAgility.action();
 		NexMinigame.action();
 		GnomeAgility.action();
-//		BarbarianOutpostAgility.action();
+		//		BarbarianOutpostAgility.action();
 		BarbAgility.action();
 		WildernessAgility.action();
 		Shortcuts.action();

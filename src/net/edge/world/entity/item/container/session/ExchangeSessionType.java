@@ -7,6 +7,5 @@ package net.edge.world.entity.item.container.session;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum ExchangeSessionType {
-	TRADE,
-	DUEL
+	TRADE, DUEL
 }

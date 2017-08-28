@@ -14,6 +14,7 @@ import net.edge.world.locale.Boundary;
  * @author Michael | Chex
  */
 public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> {
+
 	private static final int BASE_EXPERIENCE_MULTIPLIER = 4;
 
 	@Override
@@ -49,22 +50,21 @@ public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> 
 
 	protected static void addCombatExperience(Player player, Hit... hits) {
 		int exp = 0;
-
 		for(Hit hit : hits) {
 			exp += hit.getDamage();
 		}
 
-		exp /= 10;
+		exp = Math.round(exp / 10F);
 		exp *= BASE_EXPERIENCE_MULTIPLIER;
-
 		Skills.experience(player, exp / 3, Skills.HITPOINTS);
 		switch(player.getCombat().getFightType().getStyle()) {
 			default:
 				Skills.experience(player, exp, Skills.RANGED);
 				break;
 			case DEFENSIVE:
-				Skills.experience(player, exp / 2, Skills.DEFENCE);
-				Skills.experience(player, exp / 2, Skills.RANGED);
+				exp /= 2;
+				Skills.experience(player, exp, Skills.DEFENCE);
+				Skills.experience(player, exp, Skills.RANGED);
 				break;
 		}
 	}

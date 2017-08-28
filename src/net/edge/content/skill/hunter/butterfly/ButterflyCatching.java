@@ -181,20 +181,17 @@ public final class ButterflyCatching extends ProducingSkillAction {
 	private boolean checkHunter() {
 		if(barehanded) {
 			if(!player.getSkills()[skill().getId()].reqLevel(data.barehandRequirement.getRequirement())) {
-				player.message("You need a hunter level of " + data.barehandRequirement.getRequirement() + " to catch a " + mob
-						.getDefinition().getName() + " barehanded.");
+				player.message("You need a hunter level of " + data.barehandRequirement.getRequirement() + " to catch a " + mob.getDefinition().getName() + " barehanded.");
 				return false;
 			}
 
 			if(!player.getSkills()[Skills.AGILITY].reqLevel(data.agilityRequirement.getRequirement())) {
-				player.message("You need an agility level of " + data.agilityRequirement.getRequirement() + " to catch a " + mob
-						.getDefinition().getName() + " barehanded.");
+				player.message("You need an agility level of " + data.agilityRequirement.getRequirement() + " to catch a " + mob.getDefinition().getName() + " barehanded.");
 				return false;
 			}
 		} else {
 			if(!player.getSkills()[skill().getId()].reqLevel(data.regularRequirement.getRequirement())) {
-				player.message("You need an agility level of " + data.regularRequirement.getRequirement() + " to catch a " + mob
-						.getDefinition().getName() + " with a butterfly org.");
+				player.message("You need an agility level of " + data.regularRequirement.getRequirement() + " to catch a " + mob.getDefinition().getName() + " with a butterfly org.");
 				return false;
 			}
 

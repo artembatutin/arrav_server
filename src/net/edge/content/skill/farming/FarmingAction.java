@@ -35,11 +35,7 @@ public class FarmingAction {
 					farming.patch = player.patches.get(patchType);
 					if(farming.patch != null && farming.patch.getSeedType() != null) {
 						boolean fullyGrown = farming.patch.isFullyGrown();
-						final String stateMessage = farming.patch.getGrowthState() != GrowthState.WATERED ? farming.patch.getSeedType() != null && (farming.patch
-								.getSeedType()
-								.getSeedClass() == SeedClass.BUSHES || farming.patch.getSeedType()
-								.getSeedClass() == SeedClass.TREES || farming.patch.getSeedType()
-								.getSeedClass() == SeedClass.MUSHROOMS || farming.patch.getSeedType() == FlowerSeed.WHITE_LILY) ? "The crops are looking healthy." : "The crops are looking healthy; should probably water them to keep it that way!" : "The crops are looking healthy and watered!";
+						final String stateMessage = farming.patch.getGrowthState() != GrowthState.WATERED ? farming.patch.getSeedType() != null && (farming.patch.getSeedType().getSeedClass() == SeedClass.BUSHES || farming.patch.getSeedType().getSeedClass() == SeedClass.TREES || farming.patch.getSeedType().getSeedClass() == SeedClass.MUSHROOMS || farming.patch.getSeedType() == FlowerSeed.WHITE_LILY) ? "The crops are looking healthy." : "The crops are looking healthy; should probably water them to keep it that way!" : "The crops are looking healthy and watered!";
 						if(farming.patch.getSeedType().getSeedClass() == SeedClass.TREES) {
 							if(option == 1) {
 								if(!farming.patch.hasAttribute(PatchAttribute.CHECKED_HEALTH)) {
@@ -337,8 +333,7 @@ public class FarmingAction {
 							player.message("This potion can only be used on diseased crops.");
 							return true;
 						}
-						if(patch.getSeedType().getSeedClass() == SeedClass.TREES || patch.getSeedType()
-								.getSeedClass() == SeedClass.BUSHES) {
+						if(patch.getSeedType().getSeedClass() == SeedClass.TREES || patch.getSeedType().getSeedClass() == SeedClass.BUSHES) {
 							player.message("This potion cannot be used on this crop. You need a pair of secateurs.");
 							return true;
 						}
@@ -351,8 +346,7 @@ public class FarmingAction {
 					} else if(item.getId() == FarmingConstants.SECATEURS_ITEM_ID || item.getId() == FarmingConstants.MAGIC_SECATEURS) {
 						if(patch == null || patch.getSeedType() == null)
 							return true;
-						if(patch.getSeedType().getSeedClass() != SeedClass.TREES && patch.getSeedType()
-								.getSeedClass() != SeedClass.BUSHES)
+						if(patch.getSeedType().getSeedClass() != SeedClass.TREES && patch.getSeedType().getSeedClass() != SeedClass.BUSHES)
 							return true;
 						if(patch.getGrowthState() != GrowthState.DISEASED) {
 							String name = patch.getSeedType().getSeedClass() == SeedClass.TREES ? "tree" : "bush";
@@ -390,12 +384,10 @@ public class FarmingAction {
 						} else if(!player.getInventory().contains(seedType.getSeed())) {
 							player.message("You need " + seedType.getSeed().getAmount() + " " + seedType.getSeed().getName().toLowerCase() + (seedType.getSeed().getAmount() != 1 ? "s" : "") + " to plant this crop.");
 							return true;
-						} else if(seedType.getSeedClass() != SeedClass.TREES && !player.getInventory()
-								.contains(FarmingConstants.SEED_DIBBER_ITEM_ID)) {
+						} else if(seedType.getSeedClass() != SeedClass.TREES && !player.getInventory().contains(FarmingConstants.SEED_DIBBER_ITEM_ID)) {
 							player.message("You need a seed dibber to plant these seeds.");
 							return true;
-						} else if(seedType.getSeedClass() == SeedClass.TREES && !player.getInventory()
-								.contains(FarmingConstants.TROWEL_ITEM_ID)) {
+						} else if(seedType.getSeedClass() == SeedClass.TREES && !player.getInventory().contains(FarmingConstants.TROWEL_ITEM_ID)) {
 							player.message("You need a seed trowel to plant this seedling.");
 							return true;
 						} else if(seedType.getLevelRequirement() > player.getSkills()[Skills.FARMING].getRealLevel()) {
@@ -484,8 +476,7 @@ public class FarmingAction {
 		}
 	}
 
-	private static final int[][] ITEM_ON_ITEM_SAPLING = {
-			{5313, 5371}, //willow
+	private static final int[][] ITEM_ON_ITEM_SAPLING = {{5313, 5371}, //willow
 			{5314, 5372}, //maple
 			{5315, 5373}, //yew
 			{5316, 5374}, //magic

@@ -57,7 +57,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			return;
 		}
 
-		MagicSpells spell = MagicSpells.forId(spellId);
+		MagicSpells spell = MagicSpells.get(spellId);
 		if(spell == null || index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !checkAttack(player, victim)) {
 			return;
 		}

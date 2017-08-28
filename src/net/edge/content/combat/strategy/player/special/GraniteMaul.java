@@ -11,6 +11,7 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 
 public class GraniteMaul extends PlayerMeleeStrategy {
+
 	private static final Animation ANIMATION = new Animation(1667, Animation.AnimationPriority.HIGH);
 	private static final Graphic GRAPHIC = new Graphic(340);
 

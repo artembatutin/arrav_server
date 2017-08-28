@@ -65,9 +65,9 @@ public enum BirdData {
 	}
 
 	public static void action() {
-//		for(BirdData data : BirdData.values()) {
-//			Mob.CUSTOM_MOBS.put(data.getNpcId(), s -> new Bird(data.getNpcId(), s, data)); TODO: birds hehe
-//		}
+		//		for(BirdData data : BirdData.values()) {
+		//			Mob.CUSTOM_MOBS.put(data.getNpcId(), s -> new Bird(data.getNpcId(), s, data)); TODO: birds hehe
+		//		}
 	}
 
 }

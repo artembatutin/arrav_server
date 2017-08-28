@@ -173,8 +173,6 @@ public final class GameDecoder extends ByteToMessageDecoder {
 	 * An enumerated type whose elements represent all of the possible states of this {@code MessageDecoder}.
 	 */
 	private enum State {
-		OPCODE,
-		SIZE,
-		PAYLOAD
+		OPCODE, SIZE, PAYLOAD
 	}
 }

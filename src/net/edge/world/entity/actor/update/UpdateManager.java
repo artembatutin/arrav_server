@@ -8,30 +8,9 @@ import net.edge.world.entity.actor.player.Player;
 
 public final class UpdateManager {
 
-	private static final PlayerUpdateBlock[] PLAYER_BLOCKS = {
-			new PlayerForceMovementUpdateBlock(),
-			new PlayerGraphicUpdateBlock(),
-			new PlayerAnimationUpdateBlock(),
-			new PlayerForceChatUpdateBlock(),
-			new PlayerChatUpdateBlock(),
-			new PlayerFaceEntityUpdateBlock(),
-			new PlayerAppearanceUpdateBlock(),
-			new PlayerPositionUpdateBlock(),
-			new PlayerPrimaryHitUpdateBlock(),
-			new PlayerSecondaryHitUpdateBlock()
-	};
+	private static final PlayerUpdateBlock[] PLAYER_BLOCKS = {new PlayerForceMovementUpdateBlock(), new PlayerGraphicUpdateBlock(), new PlayerAnimationUpdateBlock(), new PlayerForceChatUpdateBlock(), new PlayerChatUpdateBlock(), new PlayerFaceEntityUpdateBlock(), new PlayerAppearanceUpdateBlock(), new PlayerPositionUpdateBlock(), new PlayerPrimaryHitUpdateBlock(), new PlayerSecondaryHitUpdateBlock()};
 
-	private static final MobUpdateBlock[] NPC_BLOCKS = {
-			new MobForceMovementUpdateBlock(),
-			new MobGraphicUpdateBlock(),
-			new MobAnimationUpdateBlock(),
-			new MobForceChatUpdateBlock(),
-			new MobTransformUpdateBlock(),
-			new MobFaceEntityUpdateBlock(),
-			new MobFacePositionUpdateBlock(),
-			new MobPrimaryHitUpdateBlock(),
-			new MobSecondaryHitUpdateBlock(),
-	};
+	private static final MobUpdateBlock[] NPC_BLOCKS = {new MobForceMovementUpdateBlock(), new MobGraphicUpdateBlock(), new MobAnimationUpdateBlock(), new MobForceChatUpdateBlock(), new MobTransformUpdateBlock(), new MobFaceEntityUpdateBlock(), new MobFacePositionUpdateBlock(), new MobPrimaryHitUpdateBlock(), new MobSecondaryHitUpdateBlock(),};
 
 	public static void prepare(Player other) {
 		if(other.getLocalPlayers().size() == 0) {

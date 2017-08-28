@@ -9,25 +9,23 @@ import net.edge.content.skill.Skills;
  * @author lare96 <http://github.com/lare96>
  */
 public enum FightStyle {
+
 	ACCURATE(3, 0, 0) {
 		@Override
 		public int[] skills(CombatType type) {
 			return type == CombatType.RANGED ? new int[]{Skills.RANGED} : new int[]{Skills.ATTACK};
 		}
-	},
-	AGGRESSIVE(0, 3, 0) {
+	}, AGGRESSIVE(0, 3, 0) {
 		@Override
 		public int[] skills(CombatType type) {
 			return type == CombatType.RANGED ? new int[]{Skills.RANGED} : new int[]{Skills.STRENGTH};
 		}
-	},
-	DEFENSIVE(0, 0, 3) {
+	}, DEFENSIVE(0, 0, 3) {
 		@Override
 		public int[] skills(CombatType type) {
 			return type == CombatType.RANGED ? new int[]{Skills.RANGED, Skills.DEFENCE} : new int[]{Skills.DEFENCE};
 		}
-	},
-	CONTROLLED(1, 1, 1) {
+	}, CONTROLLED(1, 1, 1) {
 		@Override
 		public int[] skills(CombatType type) {
 			return new int[]{Skills.ATTACK, Skills.STRENGTH, Skills.DEFENCE};

@@ -22,18 +22,7 @@ public class Donating extends ConnectionUse {
 	/**
 	 * Amount of tokens receivable.
 	 */
-	private static final int[] TOKENS = {
-			500,
-			1050,
-			2100,
-			3150,
-			4200,
-			5250,
-			7350,
-			10500,
-			15750,
-			21000
-	};
+	private static final int[] TOKENS = {500, 1050, 2100, 3150, 4200, 5250, 7350, 10500, 15750, 21000};
 
 	/**
 	 * The logger to log the donating errors just in-case we will need them later.

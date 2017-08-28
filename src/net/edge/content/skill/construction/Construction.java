@@ -211,8 +211,7 @@ public class Construction {
 		if(s.getHotSpotId() == 72) {
 			if(s.getXOffset() == 0) {
 				for(Portal portal : house.get().getPortals()) {
-					if(portal.getRoomX() == myTiles[0] - 1 && portal.getRoomY() == myTiles[1] - 1 && portal.getRoomZ() == height && portal
-							.getId() == 0) {
+					if(portal.getRoomX() == myTiles[0] - 1 && portal.getRoomY() == myTiles[1] - 1 && portal.getRoomZ() == height && portal.getId() == 0) {
 						if(Portals.forType(portal.getType()).getObjects() != null)
 							portalId = Portals.forType(portal.getType()).getObjects()[f.getId() - 13636];
 
@@ -221,8 +220,7 @@ public class Construction {
 			}
 			if(s.getXOffset() == 3) {
 				for(Portal portal : house.get().getPortals()) {
-					if(portal.getRoomX() == myTiles[0] - 1 && portal.getRoomY() == myTiles[1] - 1 && portal.getRoomZ() == height && portal
-							.getId() == 1) {
+					if(portal.getRoomX() == myTiles[0] - 1 && portal.getRoomY() == myTiles[1] - 1 && portal.getRoomZ() == height && portal.getId() == 1) {
 						if(Portals.forType(portal.getType()).getObjects() != null)
 							portalId = Portals.forType(portal.getType()).getObjects()[f.getId() - 13636];
 
@@ -232,8 +230,7 @@ public class Construction {
 			}
 			if(s.getXOffset() == 7) {
 				for(Portal portal : house.get().getPortals()) {
-					if(portal.getRoomX() == myTiles[0] - 1 && portal.getRoomY() == myTiles[1] - 1 && portal.getRoomZ() == height && portal
-							.getId() == 2) {
+					if(portal.getRoomX() == myTiles[0] - 1 && portal.getRoomY() == myTiles[1] - 1 && portal.getRoomZ() == height && portal.getId() == 2) {
 						if(Portals.forType(portal.getType()).getObjects() != null)
 							portalId = Portals.forType(portal.getType()).getObjects()[f.getId() - 13636];
 
@@ -247,25 +244,17 @@ public class Construction {
 			int offsetX = Constants.BASE_X + (myTiles[0] * 8);
 			int offsetY = Constants.BASE_Y + (myTiles[1] * 8);
 			if(s.getObjectId() == 15329 || s.getObjectId() == 15328) {
-				SendObject.construction(p, actualX, actualY, s.getObjectId() == 15328 ? (placeBack ? 15328 : f.getId()) : (placeBack ? 15329 : f
-						.getId() + 1), s.getRotation(roomRot), 0, height);
-				offsetX += Constants.getXOffsetForObjectId(f.getId(), s.getXOffset() + (s.getObjectId() == 15329 ? 1 : -1), s
-						.getYOffset(), roomRot, s.getRotation(0));
-				offsetY += Constants.getYOffsetForObjectId(f.getId(), s.getXOffset() + (s.getObjectId() == 15329 ? 1 : -1), s
-						.getYOffset(), roomRot, s.getRotation(0));
-				SendObject.construction(p, offsetX, offsetY, s.getObjectId() == 15329 ? (placeBack ? 15328 : f.getId()) : (placeBack ? 15329 : f
-						.getId() + 1), s.getRotation(roomRot), 0, height);
+				SendObject.construction(p, actualX, actualY, s.getObjectId() == 15328 ? (placeBack ? 15328 : f.getId()) : (placeBack ? 15329 : f.getId() + 1), s.getRotation(roomRot), 0, height);
+				offsetX += Constants.getXOffsetForObjectId(f.getId(), s.getXOffset() + (s.getObjectId() == 15329 ? 1 : -1), s.getYOffset(), roomRot, s.getRotation(0));
+				offsetY += Constants.getYOffsetForObjectId(f.getId(), s.getXOffset() + (s.getObjectId() == 15329 ? 1 : -1), s.getYOffset(), roomRot, s.getRotation(0));
+				SendObject.construction(p, offsetX, offsetY, s.getObjectId() == 15329 ? (placeBack ? 15328 : f.getId()) : (placeBack ? 15329 : f.getId() + 1), s.getRotation(roomRot), 0, height);
 
 			}
 			if(s.getObjectId() == 15326 || s.getObjectId() == 15327) {
-				SendObject.construction(p, actualX, actualY, s.getObjectId() == 15327 ? (placeBack ? 15327 : f.getId() + 1) : (placeBack ? 15326 : f
-						.getId()), s.getRotation(roomRot), 0, height);
-				offsetX += Constants.getXOffsetForObjectId(f.getId(), s.getXOffset() + (s.getObjectId() == 15326 ? 1 : -1), s
-						.getYOffset(), roomRot, s.getRotation(0));
-				offsetY += Constants.getYOffsetForObjectId(f.getId(), s.getXOffset() + (s.getObjectId() == 15326 ? 1 : -1), s
-						.getYOffset(), roomRot, s.getRotation(0));
-				SendObject.construction(p, offsetX, offsetY, s.getObjectId() == 15326 ? (placeBack ? 15327 : f.getId() + 1) : (placeBack ? 15326 : f
-						.getId()), s.getRotation(roomRot), 0, height);
+				SendObject.construction(p, actualX, actualY, s.getObjectId() == 15327 ? (placeBack ? 15327 : f.getId() + 1) : (placeBack ? 15326 : f.getId()), s.getRotation(roomRot), 0, height);
+				offsetX += Constants.getXOffsetForObjectId(f.getId(), s.getXOffset() + (s.getObjectId() == 15326 ? 1 : -1), s.getYOffset(), roomRot, s.getRotation(0));
+				offsetY += Constants.getYOffsetForObjectId(f.getId(), s.getXOffset() + (s.getObjectId() == 15326 ? 1 : -1), s.getYOffset(), roomRot, s.getRotation(0));
+				SendObject.construction(p, offsetX, offsetY, s.getObjectId() == 15326 ? (placeBack ? 15327 : f.getId() + 1) : (placeBack ? 15326 : f.getId()), s.getRotation(roomRot), 0, height);
 
 			}
 		} else if(s.getHotSpotId() == 85) {
@@ -481,12 +470,8 @@ public class Construction {
 		} else if(s.getCarpetDim() != null) {
 			for(int x = 0; x < s.getCarpetDim().getWidth() + 1; x++) {
 				for(int y = 0; y < s.getCarpetDim().getHeight() + 1; y++) {
-					boolean isEdge = (x == 0 && y == 0 || x == 0 && y == s.getCarpetDim()
-							.getHeight() || y == 0 && x == s.getCarpetDim().getWidth() || x == s.getCarpetDim()
-							.getWidth() && y == s.getCarpetDim().getHeight());
-					boolean isWall = ((x == 0 || x == s.getCarpetDim().getWidth()) && (y != 0 && y != s.getCarpetDim()
-							.getHeight()) || (y == 0 || y == s.getCarpetDim()
-							.getHeight()) && (x != 0 && x != s.getCarpetDim().getWidth()));
+					boolean isEdge = (x == 0 && y == 0 || x == 0 && y == s.getCarpetDim().getHeight() || y == 0 && x == s.getCarpetDim().getWidth() || x == s.getCarpetDim().getWidth() && y == s.getCarpetDim().getHeight());
+					boolean isWall = ((x == 0 || x == s.getCarpetDim().getWidth()) && (y != 0 && y != s.getCarpetDim().getHeight()) || (y == 0 || y == s.getCarpetDim().getHeight()) && (x != 0 && x != s.getCarpetDim().getWidth()));
 					int rot = 0;
 					if(x == 0 && y == s.getCarpetDim().getHeight() && isEdge)
 						rot = 0;
@@ -506,19 +491,14 @@ public class Construction {
 						rot = 1;
 					int offsetX = Constants.BASE_X + (myTiles[0] * 8);
 					int offsetY = Constants.BASE_Y + (myTiles[1] * 8);
-					offsetX += Constants.getXOffsetForObjectId(f.getId(), s.getXOffset() + x - 1, s.getYOffset() + y - 1, roomRot, s
-							.getRotation(roomRot));
-					offsetY += Constants.getYOffsetForObjectId(f.getId(), s.getXOffset() + x - 1, s.getYOffset() + y - 1, roomRot, s
-							.getRotation(roomRot));
+					offsetX += Constants.getXOffsetForObjectId(f.getId(), s.getXOffset() + x - 1, s.getYOffset() + y - 1, roomRot, s.getRotation(roomRot));
+					offsetY += Constants.getYOffsetForObjectId(f.getId(), s.getXOffset() + x - 1, s.getYOffset() + y - 1, roomRot, s.getRotation(roomRot));
 					if(isEdge)
-						SendObject.construction(p, offsetX, offsetY, placeBack ? s.getObjectId() + 2 : f.getId(), HotSpots
-								.getRotation_2(rot, roomRot), 22, height);
+						SendObject.construction(p, offsetX, offsetY, placeBack ? s.getObjectId() + 2 : f.getId(), HotSpots.getRotation_2(rot, roomRot), 22, height);
 					else if(isWall)
-						SendObject.construction(p, offsetX, offsetY, placeBack ? s.getObjectId() + 1 : f.getId() + 1, HotSpots
-								.getRotation_2(rot, roomRot), s.getObjectType(), height);
+						SendObject.construction(p, offsetX, offsetY, placeBack ? s.getObjectId() + 1 : f.getId() + 1, HotSpots.getRotation_2(rot, roomRot), s.getObjectType(), height);
 					else
-						SendObject.construction(p, offsetX, offsetY, placeBack ? s.getObjectId() : f.getId() + 2, HotSpots
-								.getRotation_2(rot, roomRot), s.getObjectType(), height);
+						SendObject.construction(p, offsetX, offsetY, placeBack ? s.getObjectId() : f.getId() + 2, HotSpots.getRotation_2(rot, roomRot), s.getObjectType(), height);
 				}
 			}
 		} else if(s.isMutiple()) {

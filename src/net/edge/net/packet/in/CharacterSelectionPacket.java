@@ -20,8 +20,7 @@ public final class CharacterSelectionPacket implements IncomingPacket {
 	/**
 	 * The valid colors for the character selection message.
 	 */
-	private static final int[][] VALID_COLORS = {
-			{0, 11}, // hair color
+	private static final int[][] VALID_COLORS = {{0, 11}, // hair color
 			{0, 15}, // torso color
 			{0, 15}, // legs color
 			{0, 5}, // feet color

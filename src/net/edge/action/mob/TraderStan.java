@@ -9,42 +9,18 @@ public class TraderStan extends ActionInitializer {
 
 	@Override
 	public void init() {
-		String[] chats = {
-				"Come here come here I have a shiny scimitar for you!",
-				"Discounted prices, come look!",
-				"Only for you, only today! Exceptional offer.",
-				"Don't be shy, I won't bite!",
-				"This sword was King Arthur's! I swear.",
-				"I buy all kinds of nice things.",
-				"Search any item you want, I think I have it.",
-				"All offers are welcome here.",
-				"That would be few coins sir.",
-				"Ladies and gentlemens, gather around.",
-				"Wait let me note it down on my papirus.",
-				"Yes that's an antifier shield on the wall.",
-				"My mom actually did fit in that rune suite.",
-				"Please be quite don't disturb the owner Sir Prysin",
-				"My exchange level is 99",
-				"I love coins, I very do.",
-				"Look at my market! please...",
-				"I'm the wealthiest person in Edgeville.",
-				"I'm rich, very rich. Making Edgeville great again.",
-				"Who you think rebuild Edgeville with all the money?",
-				"My parents once told me to have financial eased friends.",
-				"May the gold be with you.",
-				"I aint gonna say I had a small loan of a million dollars from my Dad."
-		};
-//		Mob.CUSTOM_MOBS.put(4650, s -> new DefaultMob(4650, s) {
-//			private int timer = 0;
-//			@Override
-//			public void update() {
-//				timer++;
-//				if(timer >= 200) {
-//					forceChat(RandomUtils.random(chats));
-//					timer = 0;
-//				}
-//			}
-//		});
+		String[] chats = {"Come here come here I have a shiny scimitar for you!", "Discounted prices, come look!", "Only for you, only today! Exceptional offer.", "Don't be shy, I won't bite!", "This sword was King Arthur's! I swear.", "I buy all kinds of nice things.", "Search any item you want, I think I have it.", "All offers are welcome here.", "That would be few coins sir.", "Ladies and gentlemens, gather around.", "Wait let me note it down on my papirus.", "Yes that's an antifier shield on the wall.", "My mom actually did fit in that rune suite.", "Please be quite don't disturb the owner Sir Prysin", "My exchange level is 99", "I love coins, I very do.", "Look at my market! please...", "I'm the wealthiest person in Edgeville.", "I'm rich, very rich. Making Edgeville great again.", "Who you think rebuild Edgeville with all the money?", "My parents once told me to have financial eased friends.", "May the gold be with you.", "I aint gonna say I had a small loan of a million dollars from my Dad."};
+		//		Mob.CUSTOM_MOBS.put(4650, s -> new DefaultMob(4650, s) {
+		//			private int timer = 0;
+		//			@Override
+		//			public void update() {
+		//				timer++;
+		//				if(timer >= 200) {
+		//					forceChat(RandomUtils.random(chats));
+		//					timer = 0;
+		//				}
+		//			}
+		//		});
 		MobAction e = new MobAction() {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {

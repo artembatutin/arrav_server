@@ -14,6 +14,7 @@ import net.edge.world.entity.actor.mob.Mob;
 import java.util.Optional;
 
 public abstract class MultiStrategy extends CombatStrategy<Mob> {
+
 	protected CombatStrategy<Mob> currentStrategy;
 
 	@Override

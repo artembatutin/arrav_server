@@ -85,16 +85,7 @@ public class Door {
 						direction = WEST;
 					}
 				} else {
-					GameObject[] adjacants = {
-							reg.getObject(STRAIGHT_WALL, pos.move(-1, 1)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(0, 1)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(1, 1)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(-1, 0)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(1, 0)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(-1, -1)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(0, -1)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(1, -1)).orElse(null)
-					};
+					GameObject[] adjacants = {reg.getObject(STRAIGHT_WALL, pos.move(-1, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(0, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(-1, 0)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, 0)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(-1, -1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(0, -1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, -1)).orElse(null)};
 					for(GameObject ad : adjacants) {
 						if(ad == null)
 							continue;
@@ -131,16 +122,7 @@ public class Door {
 						direction2 = EAST;
 					}
 				} else {
-					GameObject[] adjacants = {
-							reg.getObject(STRAIGHT_WALL, pos.move(-1, 1)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(0, 1)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(1, 1)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(-1, 0)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(1, 0)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(-1, -1)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(0, -1)).orElse(null),
-							reg.getObject(STRAIGHT_WALL, pos.move(1, -1)).orElse(null)
-					};
+					GameObject[] adjacants = {reg.getObject(STRAIGHT_WALL, pos.move(-1, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(0, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(-1, 0)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, 0)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(-1, -1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(0, -1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, -1)).orElse(null)};
 					for(GameObject ad : adjacants) {
 						if(ad == null)
 							continue;

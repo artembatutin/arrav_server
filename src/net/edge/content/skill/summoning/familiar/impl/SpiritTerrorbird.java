@@ -53,84 +53,78 @@ public final class SpiritTerrorbird extends Familiar {
 		}
 	}
 
-	private static final Conversation[] CONVERSATION = new Conversation[]{
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+	private static final Conversation[] CONVERSATION = new Conversation[]{new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(6794, "This is a fun little walk."));
-					app.chain(new PlayerDialogue("Why do I get the feeling you'll change your tune when I start", "loading you up with items?"));
-					return app;
-				}
-			},
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(6794, "This is a fun little walk."));
+			app.chain(new PlayerDialogue("Why do I get the feeling you'll change your tune when I start", "loading you up with items?"));
+			return app;
+		}
+	}, new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(6794, "I can keep this up for hours."));
-					app.chain(new PlayerDialogue("I'm glad, as we still have plenty of time to go."));
-					return app;
-				}
-			},
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(6794, "I can keep this up for hours."));
+			app.chain(new PlayerDialogue("I'm glad, as we still have plenty of time to go."));
+			return app;
+		}
+	}, new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(6794, "Are we going to visit a bank soon?"));
-					app.chain(new PlayerDialogue("I'm not sure, you still have plenty of room for more stuff."));
-					app.chain(new NpcDialogue(6794, "Just don't leave it too long, okay?"));
-					return app;
-				}
-			},
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(6794, "Are we going to visit a bank soon?"));
+			app.chain(new PlayerDialogue("I'm not sure, you still have plenty of room for more stuff."));
+			app.chain(new NpcDialogue(6794, "Just don't leave it too long, okay?"));
+			return app;
+		}
+	}, new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(6794, "Can we go to a bank now?"));
-					app.chain(new PlayerDialogue("Just give me a little longer, okay?"));
-					app.chain(new NpcDialogue(6794, "That's what you said last time!"));
-					app.chain(new PlayerDialogue("Did I?"));
-					app.chain(new NpcDialogue(6794, "Yes!"));
-					app.chain(new PlayerDialogue("Well, I mean it this time, promise."));
-					return app;
-				}
-			},
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(6794, "Can we go to a bank now?"));
+			app.chain(new PlayerDialogue("Just give me a little longer, okay?"));
+			app.chain(new NpcDialogue(6794, "That's what you said last time!"));
+			app.chain(new PlayerDialogue("Did I?"));
+			app.chain(new NpcDialogue(6794, "Yes!"));
+			app.chain(new PlayerDialogue("Well, I mean it this time, promise."));
+			return app;
+		}
+	}, new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(6794, "So..heavy..."));
-					app.chain(new PlayerDialogue("I knew you'd change your tune once you started carrying things."));
-					app.chain(new NpcDialogue(6794, "Can we go bank this stuff now?"));
-					app.chain(new PlayerDialogue("Sure. You do look like you're about to collapse."));
-					return app;
-				}
-			}
-	};
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(6794, "So..heavy..."));
+			app.chain(new PlayerDialogue("I knew you'd change your tune once you started carrying things."));
+			app.chain(new NpcDialogue(6794, "Can we go bank this stuff now?"));
+			app.chain(new PlayerDialogue("Sure. You do look like you're about to collapse."));
+			return app;
+		}
+	}};
 
 }

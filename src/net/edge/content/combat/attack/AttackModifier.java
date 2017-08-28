@@ -1,6 +1,7 @@
 package net.edge.content.combat.attack;
 
 public final class AttackModifier {
+
 	private double accuracy;
 	private double aggressive;
 	private double defensive;

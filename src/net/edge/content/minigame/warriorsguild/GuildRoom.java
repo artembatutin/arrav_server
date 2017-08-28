@@ -62,11 +62,6 @@ public abstract class GuildRoom extends Minigame {
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum GuildRoomType {
-		CYCLOPS_ROOM,
-		ANIMATION_ROOM,
-		DUMMY_ROOM,
-		CATAPULT_ROOM,
-		SHOT_PUT_ROOM,
-		JIMMYS_CHALLENGE;
+		CYCLOPS_ROOM, ANIMATION_ROOM, DUMMY_ROOM, CATAPULT_ROOM, SHOT_PUT_ROOM, JIMMYS_CHALLENGE;
 	}
 }

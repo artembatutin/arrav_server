@@ -8,6 +8,7 @@ import net.edge.world.entity.item.Item;
 import java.util.Optional;
 
 /**
+ * Represents a combat spell.
  * Created by mmaks on 8/24/2017.
  */
 public abstract class MagicSpell {

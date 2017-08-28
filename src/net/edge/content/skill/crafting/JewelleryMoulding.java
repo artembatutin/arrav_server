@@ -229,9 +229,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 
 	private boolean checkCrafting() {
 		if(!player.getSkills()[skill().getId()].reqLevel(data.requirement)) {
-			player.message("You need a crafting level of " + data.requirement + " to craft " + TextUtils.appendIndefiniteArticle(data.product
-					.getDefinition()
-					.getName()) + ".");
+			player.message("You need a crafting level of " + data.requirement + " to craft " + TextUtils.appendIndefiniteArticle(data.product.getDefinition().getName()) + ".");
 			return false;
 		}
 
@@ -334,10 +332,6 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 		return Optional.empty();
 	}
 
-	private static final Int2ObjectArrayMap<JewelleryData[]> GROUP = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, JewelleryData[]>builder()
-			.put(RING_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_RING, JewelleryData.SAPPHIRE_RING, JewelleryData.EMERALD_RING, JewelleryData.RUBY_RING, JewelleryData.DIAMOND_RING, JewelleryData.DRAGONSTONE_RING, JewelleryData.ONYX_RING})
-			.put(NECKLACE_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_NECKLACE, JewelleryData.SAPPHIRE_NECKLACE, JewelleryData.EMERALD_NECKLACE, JewelleryData.RUBY_NECKLACE, JewelleryData.DIAMOND_NECKLACE, JewelleryData.DRAGON_NECKLACE, JewelleryData.ONYX_NECKLACE})
-			.put(AMULET_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_AMULET, JewelleryData.SAPPHIRE_AMULET, JewelleryData.EMERALD_AMULET, JewelleryData.RUBY_AMULET, JewelleryData.DIAMOND_AMULET, JewelleryData.DRAGONSTONE_AMULET, JewelleryData.ONYX_AMULET})
-			.build());
+	private static final Int2ObjectArrayMap<JewelleryData[]> GROUP = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, JewelleryData[]>builder().put(RING_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_RING, JewelleryData.SAPPHIRE_RING, JewelleryData.EMERALD_RING, JewelleryData.RUBY_RING, JewelleryData.DIAMOND_RING, JewelleryData.DRAGONSTONE_RING, JewelleryData.ONYX_RING}).put(NECKLACE_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_NECKLACE, JewelleryData.SAPPHIRE_NECKLACE, JewelleryData.EMERALD_NECKLACE, JewelleryData.RUBY_NECKLACE, JewelleryData.DIAMOND_NECKLACE, JewelleryData.DRAGON_NECKLACE, JewelleryData.ONYX_NECKLACE}).put(AMULET_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_AMULET, JewelleryData.SAPPHIRE_AMULET, JewelleryData.EMERALD_AMULET, JewelleryData.RUBY_AMULET, JewelleryData.DIAMOND_AMULET, JewelleryData.DRAGONSTONE_AMULET, JewelleryData.ONYX_AMULET}).build());
 
 }

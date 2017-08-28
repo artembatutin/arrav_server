@@ -68,8 +68,10 @@ public class Combat<T extends Actor> {
 			if(combatDelays[index] > 0) {
 				combatDelays[index]--;
 			} else {
-				if(defender == null || strategy == null) continue;
-				if(strategy.getCombatType().ordinal() != index) continue;
+				if(defender == null || strategy == null)
+					continue;
+				if(strategy.getCombatType().ordinal() != index)
+					continue;
 				submitStrategy(defender, strategy);
 			}
 		}

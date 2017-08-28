@@ -1,5 +1,6 @@
 package net.edge.content.combat.attack;//package combat.attack;
 
+import net.edge.GameConstants;
 import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.hit.Hit;
@@ -42,7 +43,8 @@ public final class FormulaFactory {
 				if(verdict > defender.getCurrentHealth()) {
 					verdict = defender.getCurrentHealth();
 				}
-			} else verdict = 0;
+			} else
+				verdict = 0;
 
 			return new Hit(verdict, hitsplat, HitIcon.MELEE, true);
 		}
@@ -67,7 +69,8 @@ public final class FormulaFactory {
 				if(verdict > defender.getCurrentHealth()) {
 					verdict = defender.getCurrentHealth();
 				}
-			} else verdict = 0;
+			} else
+				verdict = 0;
 
 			return new Hit(verdict, hitsplat, HitIcon.MELEE, true);
 		}
@@ -94,7 +97,8 @@ public final class FormulaFactory {
 				if(verdict > defender.getCurrentHealth()) {
 					verdict = defender.getCurrentHealth();
 				}
-			} else verdict = 0;
+			} else
+				verdict = 0;
 
 			return new Hit(verdict, hitsplat, HitIcon.RANGED, true);
 		}
@@ -119,7 +123,8 @@ public final class FormulaFactory {
 				if(verdict > defender.getCurrentHealth()) {
 					verdict = defender.getCurrentHealth();
 				}
-			} else verdict = 0;
+			} else
+				verdict = 0;
 
 			return new Hit(verdict, hitsplat, HitIcon.RANGED, true);
 		}
@@ -144,7 +149,8 @@ public final class FormulaFactory {
 				if(verdict > defender.getCurrentHealth()) {
 					verdict = defender.getCurrentHealth();
 				}
-			} else verdict = 0;
+			} else
+				verdict = 0;
 
 			return new Hit(verdict, hitsplat, HitIcon.MAGIC, true);
 		}
@@ -175,9 +181,8 @@ public final class FormulaFactory {
 			chance = 1 - ((defenceRoll + 1) / (attackRoll * 2));
 		}
 
-//        System.out.println(((int) (chance * 10000) / 100.0) + "% accuracy | attack roll: " + attackRoll + " -- defence roll: " + defenceRoll);
-//        System.out.println();
-
+		//System.out.println(((int) (chance * 10000) / 100.0) + "% accuracy | attack roll: " + attackRoll + " -- defence roll: " + defenceRoll);
+		//System.out.println();
 		return random(chance * 100) > random(100 - chance * 100);
 	}
 
@@ -190,14 +195,12 @@ public final class FormulaFactory {
 	 */
 	private static int getEffectiveAccuracy(Actor actor, CombatType type) {
 		double modifier = actor.getCombat().getAccuracyModifier();
-		switch(type) {
-			default:
-			case MELEE:
-				return getEffectiveAttack(actor, modifier);
-			case RANGED:
-				return getEffectiveRanged(actor, modifier);
-			case MAGIC:
-				return getEffectiveMagic(actor, modifier);
+		if(type == CombatType.RANGED) {
+			return getEffectiveRanged(actor, modifier);
+		} else if(type == CombatType.MAGIC) {
+			return getEffectiveMagic(actor, modifier);
+		} else {
+			return getEffectiveAttack(actor, modifier);
 		}
 	}
 
@@ -210,14 +213,12 @@ public final class FormulaFactory {
 	 */
 	private static int getEffectiveStrength(Actor actor, CombatType type) {
 		double modifier = actor.getCombat().getAggressiveModifier();
-		switch(type) {
-			default:
-			case MELEE:
-				return getEffectiveStrength(actor, modifier);
-			case RANGED:
-				return getEffectiveRanged(actor, modifier);
-			case MAGIC:
-				return getEffectiveMagic(actor, modifier);
+		if(type == CombatType.RANGED) {
+			return getEffectiveRanged(actor, modifier);
+		} else if(type == CombatType.MAGIC) {
+			return getEffectiveMagic(actor, modifier);
+		} else {
+			return getEffectiveStrength(actor, modifier);
 		}
 	}
 
@@ -230,11 +231,10 @@ public final class FormulaFactory {
 	 */
 	private static int getEffectiveDefence(Actor actor, CombatType type) {
 		double modifier = actor.getCombat().getDefensiveModifier();
-		switch(type) {
-			case MAGIC:
-				return (int) (getEffectiveMagic(actor, modifier) * 0.70 + getEffectiveDefence(actor, modifier) * 0.30);
-			default:
-				return getEffectiveDefence(actor, modifier);
+		if(type == CombatType.MAGIC) {
+			return (int) (getEffectiveMagic(actor, modifier) * 0.70 + getEffectiveDefence(actor, modifier) * 0.30);
+		} else {
+			return getEffectiveDefence(actor, modifier);
 		}
 	}
 
@@ -331,11 +331,11 @@ public final class FormulaFactory {
 	 * @return the max hit
 	 */
 	private static int maxHit(double level, double bonus) {
-		double damage = 1 + 1 / 3.0;
+		float damage = 1 + 1 / 3.0F;
 		damage += level / 10.0;
 		damage += bonus / 80.0;
 		damage += level * bonus / 640.0;
-		return (int) (damage * 10);
+		return Math.round(damage * 10);
 	}
 
 	/**
@@ -359,16 +359,12 @@ public final class FormulaFactory {
 			}
 
 			int bonus = 0;
-			switch(type) {
-				case RANGED:
-					bonus = actor.toMob().getDefinition().getCombat().getAttackRanged();
-					break;
-				case MAGIC:
-					bonus = actor.toMob().getDefinition().getCombat().getAttackMagic();
-					break;
-				case MELEE:
-					bonus = actor.toMob().getDefinition().getCombat().getAttackMelee();
-					break;
+			if(type == CombatType.RANGED) {
+				bonus = actor.toMob().getDefinition().getCombat().getAttackRanged();
+			} else if(type == CombatType.MAGIC) {
+				bonus = actor.toMob().getDefinition().getCombat().getAttackMagic();
+			} else if(type == CombatType.MELEE) {
+				bonus = actor.toMob().getDefinition().getCombat().getAttackMelee();
 			}
 			return roll(level, bonus, fightType.getStyle().getAccuracyIncrease());
 		}
@@ -384,27 +380,18 @@ public final class FormulaFactory {
 		}
 
 		int bonus = 0;
-		switch(type) {
-			case MELEE:
-				switch(fightType.getBonus()) {
-					case CombatConstants.DEFENCE_STAB:
-						bonus = actor.toMob().getDefinition().getCombat().getDefenceStab();
-						break;
-					case CombatConstants.DEFENCE_CRUSH:
-						bonus = actor.toMob().getDefinition().getCombat().getDefenceCrush();
-						break;
-					case CombatConstants.DEFENCE_SLASH:
-						bonus = actor.toMob().getDefinition().getCombat().getDefenceSlash();
-						break;
-				}
-				break;
-			case MAGIC:
-				bonus = actor.toMob().getDefinition().getCombat().getDefenceMagic();
-				break;
-			case RANGED:
-				bonus = actor.toMob().getDefinition().getCombat().getDefenceRanged();
-				break;
-
+		if(type == CombatType.RANGED) {
+			bonus = actor.toMob().getDefinition().getCombat().getDefenceRanged();
+		} else if(type == CombatType.MAGIC) {
+			bonus = actor.toMob().getDefinition().getCombat().getDefenceMagic();
+		} else if(type == CombatType.MELEE) {
+			if(fightType.getBonus() == CombatConstants.DEFENCE_STAB) {
+				bonus = actor.toMob().getDefinition().getCombat().getDefenceStab();
+			} else if(fightType.getBonus() == CombatConstants.DEFENCE_CRUSH) {
+				bonus = actor.toMob().getDefinition().getCombat().getDefenceCrush();
+			} else if(fightType.getBonus() == CombatConstants.DEFENCE_SLASH) {
+				bonus = actor.toMob().getDefinition().getCombat().getDefenceSlash();
+			}
 		}
 		return roll(level, bonus, fightType.getStyle().getDefensiveIncrease());
 	}
@@ -433,7 +420,8 @@ public final class FormulaFactory {
 	 * @return a pseudo-random number
 	 */
 	private static int random(double max) {
-		if(1 > max) return 0;
+		if(max <= 0)
+			return 0;
 		return (int) (RANDOM.nextDouble() * (max + 1));
 	}
 

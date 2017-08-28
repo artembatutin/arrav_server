@@ -8,6 +8,7 @@ import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.basic.RangedStrategy;
 import net.edge.content.combat.weapon.RangedAmmunition;
 import net.edge.content.combat.weapon.RangedWeaponDefinition;
+import net.edge.content.combat.weapon.RangedWeaponType;
 import net.edge.content.item.Requirement;
 import net.edge.net.packet.out.SendMessage;
 import net.edge.world.Animation;
@@ -25,6 +26,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class PlayerRangedStrategy extends RangedStrategy<Player> {
+
 	private final RangedWeaponDefinition rangedDefinition;
 	private CombatProjectileDefinition projectileDefinition;
 	private Item ammunition;
@@ -57,9 +59,9 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 					}
 				}
 			}
-
 			attacker.out(new SendMessage(getInvalidAmmunitionMessage(rangedDefinition.getType())));
-		} else attacker.out(new SendMessage(getNoAmmunitionMessage(rangedDefinition.getType())));
+		} else
+			attacker.out(new SendMessage(getNoAmmunitionMessage(rangedDefinition.getType())));
 		attacker.getCombat().reset();
 		return false;
 	}
@@ -129,7 +131,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 	public CombatHit[] getHits(Player attacker, Actor defender) {
 		Item arrows = attacker.getEquipment().get(Equipment.ARROWS_SLOT);
 
-		if(rangedDefinition.getType() == RangedWeaponDefinition.AttackType.THROWN && arrows != null) {
+		if(rangedDefinition.getType() == RangedWeaponType.THROWN && arrows != null) {
 			int bonus = arrows.getDefinition().getBonus()[CombatConstants.BONUS_RANGED_STRENGTH];
 			attacker.appendBonus(Equipment.ARROWS_SLOT, -bonus);
 			CombatHit hit = nextRangedHit(attacker, defender);
@@ -145,7 +147,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 		return CombatType.RANGED;
 	}
 
-	private void removeAmmunition(Player attacker, Actor defender, RangedWeaponDefinition.AttackType type) {
+	private void removeAmmunition(Player attacker, Actor defender, RangedWeaponType type) {
 		Item next = attacker.getEquipment().get(type.getSlot());
 
 		next.decrementAmount();
@@ -160,31 +162,31 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 		}
 	}
 
-	private static String getInvalidAmmunitionMessage(RangedWeaponDefinition.AttackType type) {
-		if(type == RangedWeaponDefinition.AttackType.SHOT) {
+	private static String getInvalidAmmunitionMessage(RangedWeaponType type) {
+		if(type == RangedWeaponType.SHOT) {
 			return "You can't use these arrows with this bow.";
 		}
-		if(type == RangedWeaponDefinition.AttackType.THROWN) {
+		if(type == RangedWeaponType.THROWN) {
 			return "That's weird, you broke my fucking code dick";
 		}
 		return null;
 	}
 
-	private static String getNoAmmunitionMessage(RangedWeaponDefinition.AttackType type) {
-		if(type == RangedWeaponDefinition.AttackType.SHOT) {
+	private static String getNoAmmunitionMessage(RangedWeaponType type) {
+		if(type == RangedWeaponType.SHOT) {
 			return "You need some arrows to use this bow!";
 		}
-		if(type == RangedWeaponDefinition.AttackType.THROWN) {
+		if(type == RangedWeaponType.THROWN) {
 			return "That's weird, you broke my fucking code dick";
 		}
 		return null;
 	}
 
-	private static String getLastFiredMessage(RangedWeaponDefinition.AttackType type) {
-		if(type == RangedWeaponDefinition.AttackType.SHOT) {
+	private static String getLastFiredMessage(RangedWeaponType type) {
+		if(type == RangedWeaponType.SHOT) {
 			return "You shot your last arrow!";
 		}
-		if(type == RangedWeaponDefinition.AttackType.THROWN) {
+		if(type == RangedWeaponType.THROWN) {
 			return "You threw your last shot!";
 		}
 		return null;

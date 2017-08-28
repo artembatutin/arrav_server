@@ -35,8 +35,7 @@ public enum Spellbook {
 				}
 			}.attach(player));
 		}
-	},
-	ANCIENT(12855) {
+	}, ANCIENT(12855) {
 		@Override
 		public void execute(Player player, Position position) {
 			player.animation(new Animation(1979));
@@ -58,8 +57,7 @@ public enum Spellbook {
 				}
 			}.attach(player));
 		}
-	},
-	LUNAR(29999) {
+	}, LUNAR(29999) {
 		@Override
 		public void execute(Player player, Position position) {//TODO replace this to correct lunar home teleport
 			player.animation(new Animation(714));

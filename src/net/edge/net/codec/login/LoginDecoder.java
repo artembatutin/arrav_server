@@ -171,8 +171,6 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 * An enumerated type whose elements represent the various stages of the login protocol.
 	 */
 	private enum State {
-		HANDSHAKE,
-		LOGIN_TYPE,
-		RSA_BLOCK
+		HANDSHAKE, LOGIN_TYPE, RSA_BLOCK
 	}
 }

@@ -21,8 +21,7 @@ public final class AntifireDetails {
 	}
 
 	public enum AntifireType {
-		REGULAR(450),
-		SUPER(900);
+		REGULAR(450), SUPER(900);
 
 		final int reduction;
 

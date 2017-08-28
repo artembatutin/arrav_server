@@ -13,7 +13,7 @@ public class BossPanel extends ActionInitializer {
 		ButtonAction e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3535, 5186), DefaultTeleportSpell.TeleportType.BOSS_PORTAL); TODO: add teleports
+				//				player.teleport(new Position(3535, 5186), DefaultTeleportSpell.TeleportType.BOSS_PORTAL); TODO: add teleports
 				return true;
 			}
 		};
@@ -22,7 +22,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3366, 3512), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(3366, 3512), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -31,7 +31,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2343, 3687), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(2343, 3687), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -40,7 +40,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3114, 5528), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(3114, 5528), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -49,7 +49,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2601, 5706), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(2601, 5706), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -58,7 +58,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(1752, 5237), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(1752, 5237), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -67,7 +67,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2272, 4682), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(2272, 4682), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -76,7 +76,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3260, 3923), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(3260, 3923), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -85,7 +85,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3508, 9493), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(3508, 9493), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -94,7 +94,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3197, 3873), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(3197, 3873), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -103,7 +103,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3360, 5854), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(3360, 5854), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -112,7 +112,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2439, 5170), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(2439, 5170), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -121,7 +121,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2968, 4387, 2), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(2968, 4387, 2), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -130,7 +130,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2903, 5205), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(2903, 5205), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -139,7 +139,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(2871, 5318, 2), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(2871, 5318, 2), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -148,7 +148,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(1910, 4371), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
+				//				player.teleport(new Position(1910, 4371), DefaultTeleportSpell.TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};

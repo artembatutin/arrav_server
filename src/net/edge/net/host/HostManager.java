@@ -14,12 +14,7 @@ public final class HostManager {
 	/**
 	 * The synchronized set of banned hosts.
 	 */
-	private static final HostList[] lists = {
-			new HostList(HostListType.BANNED_MAC),
-			new HostList(HostListType.BANNED_IP),
-			new HostList(HostListType.MUTED_IP),
-			new HostList(HostListType.STARTER_RECEIVED),
-	};
+	private static final HostList[] lists = {new HostList(HostListType.BANNED_MAC), new HostList(HostListType.BANNED_IP), new HostList(HostListType.MUTED_IP), new HostList(HostListType.STARTER_RECEIVED),};
 
 	/**
 	 * The default constructor.
@@ -38,9 +33,7 @@ public final class HostManager {
 	 * @return {@code true} if the two players are connected from same network, {@code false} otherwise.
 	 */
 	public static boolean same(Player player, Player other) {
-		return !(player.getSession() == null || other.getSession() == null) && (
-				player.getSession().getHost().equals(other.getSession().getHost()) ||
-						player.getSession().getHost().equals(other.getSession().getMacAddress()));
+		return !(player.getSession() == null || other.getSession() == null) && (player.getSession().getHost().equals(other.getSession().getHost()) || player.getSession().getHost().equals(other.getSession().getMacAddress()));
 	}
 
 	/**

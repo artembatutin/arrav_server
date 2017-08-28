@@ -6,10 +6,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
 /**
- * The container class that represents one equipment animation that is used with
- * weapons.
- *
- * @author lare96 <http://github.com/lare96>
+ * The container class that represents one equipment animation that is used with weapons.
  */
 public final class WeaponAnimation {
 

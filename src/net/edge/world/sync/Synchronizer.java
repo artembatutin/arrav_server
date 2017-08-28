@@ -23,7 +23,8 @@ public class Synchronizer {
 	public void preUpdate(ActorList<Player> players, ActorList<Mob> mobs) {
 		//long time = System.currentTimeMillis();
 		for(Player p : players) {
-			if(p == null) continue;
+			if(p == null)
+				continue;
 			try {
 				p.preUpdate();
 			} catch(Exception e) {
@@ -32,7 +33,8 @@ public class Synchronizer {
 		}
 
 		for(Mob m : mobs) {
-			if(m == null) continue;
+			if(m == null)
+				continue;
 			try {
 				m.preUpdate();
 			} catch(Exception e) {
@@ -40,47 +42,47 @@ public class Synchronizer {
 			}
 		}
 
-//		int pCount = players.size();
-//		phaser.bulkRegister(pCount);
-//		for(Player player : players) {
-//			if(player == null)
-//				continue;
-//			pCount--;
-//			executor.submit(() -> {
-//				try {
-//					player.preUpdate();
-//				} finally {
-//					phaser.arriveAndDeregister();
-//				}
-//			});
-//		}
-//		while(pCount > 0) {
-//			pCount--;
-//			phaser.arriveAndDeregister();
-//		}
-//		phaser.arriveAndAwaitAdvance();
+		//		int pCount = players.size();
+		//		phaser.bulkRegister(pCount);
+		//		for(Player player : players) {
+		//			if(player == null)
+		//				continue;
+		//			pCount--;
+		//			executor.submit(() -> {
+		//				try {
+		//					player.preUpdate();
+		//				} finally {
+		//					phaser.arriveAndDeregister();
+		//				}
+		//			});
+		//		}
+		//		while(pCount > 0) {
+		//			pCount--;
+		//			phaser.arriveAndDeregister();
+		//		}
+		//		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-PLAYER]: " + (System.currentTimeMillis() - time));
 
 		//time = System.currentTimeMillis();
-//		int mCount = mobs.size();
-//		phaser.bulkRegister(mCount);
-//		for(Mob mob : mobs) {
-//			if(mob == null)
-//				continue;
-//			mCount--;
-//			executor.submit(() -> {
-//				try {
-//					mob.preUpdate();
-//				} finally {
-//					phaser.arriveAndDeregister();
-//				}
-//			});
-//		}
-//		while(mCount > 0) {
-//			mCount--;
-//			phaser.arriveAndDeregister();
-//		}
-//		phaser.arriveAndAwaitAdvance();
+		//		int mCount = mobs.size();
+		//		phaser.bulkRegister(mCount);
+		//		for(Mob mob : mobs) {
+		//			if(mob == null)
+		//				continue;
+		//			mCount--;
+		//			executor.submit(() -> {
+		//				try {
+		//					mob.preUpdate();
+		//				} finally {
+		//					phaser.arriveAndDeregister();
+		//				}
+		//			});
+		//		}
+		//		while(mCount > 0) {
+		//			mCount--;
+		//			phaser.arriveAndDeregister();
+		//		}
+		//		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-NPC]: " + (System.currentTimeMillis() - time));
 	}
 

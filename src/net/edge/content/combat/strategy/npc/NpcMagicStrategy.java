@@ -17,6 +17,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class NpcMagicStrategy extends MagicStrategy<Mob> {
+
 	private final CombatProjectileDefinition projectileDefinition;
 
 	/**

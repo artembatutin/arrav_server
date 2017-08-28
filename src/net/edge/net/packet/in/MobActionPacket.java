@@ -89,7 +89,7 @@ public final class MobActionPacket implements IncomingPacket {
 		int index = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int spellId = payload.getShort(true, ByteTransform.A);
 		Mob mob = World.get().getMobs().get(index - 1);
-		MagicSpells spell = MagicSpells.forId(spellId);
+		MagicSpells spell = MagicSpells.get(spellId);
 		if(mob == null || spell == null || !checkAttack(player, mob)) {
 			return;
 		}

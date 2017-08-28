@@ -18,8 +18,9 @@ import net.edge.world.entity.actor.mob.Mob;
  * @author Michael | Chex
  */
 public class KingBlackDragonStrategy extends MultiStrategy {
-	private static final CrushMelee CRUSH = new CrushMelee();
+
 	private static final Melee MELEE = new Melee();
+	private static final CrushMelee CRUSH = new CrushMelee();
 	private static final Dragonfire DRAGONFIRE = new Dragonfire();
 	private static final Poison POISON = new Poison();
 	private static final Freeze FREEZE = new Freeze();

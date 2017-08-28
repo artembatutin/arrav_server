@@ -101,12 +101,7 @@ class ActorFollowTask extends Task {
 			if(character.getMovementQueue().isMovementDone()) {
 				character.getMovementQueue().reset();
 				//outside of the leader's boundary but still nearby
-				TraversalMap.traversablesNextToBoundary(
-						leader.getPosition(),
-						leader.size(),
-						character.size(),
-						new Boundary(character.getPosition(), character.size()),
-						p -> character.getMovementQueue().walk(p));
+				TraversalMap.traversablesNextToBoundary(leader.getPosition(), leader.size(), character.size(), new Boundary(character.getPosition(), character.size()), p -> character.getMovementQueue().walk(p));
 			}
 			return;
 		}
@@ -115,7 +110,7 @@ class ActorFollowTask extends Task {
 		if(boundary.within(character.getPosition(), character.size(), 1)) {
 			character.getMovementQueue().reset();
 			//Combat diagonal fighting.
-	        /*if(character.getCombat().isAttacking()) {
+		    /*if(character.getCombat().isAttacking()) {
 				Direction facing = Direction.fromDeltas(Position.delta(character.getPosition(), leader.getPosition()));
 				if(facing.isDiagonal()) {//Moving player if diagonal fighting
 					Position pos = TraversalMap.getRandomNearby(character.getPosition(), leader.getPosition(), character.size());

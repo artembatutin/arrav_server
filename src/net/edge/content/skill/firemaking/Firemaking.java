@@ -101,8 +101,7 @@ public final class Firemaking extends DestructionSkillAction {
 		Region reg = getPlayer().getRegion().orElse(null);
 		if(reg == null)
 			return false;
-		if(!familiar && reg.getObjects(p).hasInteractive() || !TraversalMap.isTraversable(p, Direction.WEST, getPlayer().size()) && !TraversalMap
-				.isTraversable(p, Direction.EAST, getPlayer().size()) || Location.isAtHome(getPlayer())) {
+		if(!familiar && reg.getObjects(p).hasInteractive() || !TraversalMap.isTraversable(p, Direction.WEST, getPlayer().size()) && !TraversalMap.isTraversable(p, Direction.EAST, getPlayer().size()) || Location.isAtHome(getPlayer())) {
 			getPlayer().message("You can't start a fire here.");
 			return false;
 		}

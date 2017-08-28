@@ -6,9 +6,7 @@ package net.edge.content.skill.slayer;
  * @author <a href="http://www.rune-server.org/members/Stand+Up/">Stan</a>
  */
 public enum SlayerMaster {
-	TURAEL(8461, 1),
-	SPRIA(8462, 1),
-	MAZCHNA(8464, 20);
+	TURAEL(8461, 1), SPRIA(8462, 1), MAZCHNA(8464, 20);
 
 	/**
 	 * The identifier for this slayer master id.

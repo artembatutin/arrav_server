@@ -60,7 +60,6 @@ public final class WeaponFactory {
 			case WHIP:
 				whip(player);
 				break;
-
 			case JAVELIN:
 				javelin(player);
 				break;
@@ -90,7 +89,6 @@ public final class WeaponFactory {
 				salamander(player);
 				break;
 		}
-
 		player.out(new SendConfig(43, getAttackStyleConfig(player)));
 	}
 
@@ -195,46 +193,37 @@ public final class WeaponFactory {
 
 	private static WeaponAttackStyle getAttackStyle(WeaponInterface type) {
 		switch(type.getId()) {
-
 			case 328:
 			case 425:
 			case 5855:
 			case 6103:
 				return WeaponAttackStyle.ACCURATE_AGGRESSIVE_DEFENSIVE;
-
 			case 12290:
 				return WeaponAttackStyle.ACCURATE_CONTROLLED_DEFENSIVE;
-
 			case 776:
 			case 1698:
 			case 2276:
 			case 4705:
 			case 5570:
 				return WeaponAttackStyle.ACCURATE_AGGRESSIVE_AGGRESSIVE_DEFENSIVE;
-
 			case 2423:
 			case 3796:
 			case 7762:
 				return WeaponAttackStyle.ACCURATE_AGGRESSIVE_CONTROLLED_DEFENSIVE;
-
 			case 4679:
 				return WeaponAttackStyle.CONTROLLED_CONTROLLED_CONTROLLED_DEFENSIVE;
-
 			case 8460:
 				return WeaponAttackStyle.CONTROLLED_AGGRESSIVE_DEFENSIVE;
-
 			case 1764:
 			case 4446:
 			case 24055:
 				return WeaponAttackStyle.ACCURATE_RAPID_LONGRANGE;
-
 		}
 		return WeaponAttackStyle.ACCURATE_AGGRESSIVE_DEFENSIVE;
 	}
 
 	private static int getAttackStyleConfig(Player player) {
 		FightStyle fightStyle = player.getCombat().getFightType().getStyle();
-
 		switch(getAttackStyle(player.getWeapon())) {
 			case ACCURATE_AGGRESSIVE_DEFENSIVE:
 				switch(fightStyle) {

@@ -147,20 +147,16 @@ public class HouseController {
 		/**
 		 * In his house.
 		 */
-		HOME,
-		/**
+		HOME, /**
 		 * In his house in dungeon.
 		 */
-		HOME_DUNGEON,
-		/**
+		HOME_DUNGEON, /**
 		 * Visiting a friend's house.
 		 */
-		VISITING,
-		/**
+		VISITING, /**
 		 * Visting a friend's house dungeon.
 		 */
-		VISTING_DUNGEON,
-		/**
+		VISTING_DUNGEON, /**
 		 * Away in the world, not in a house.
 		 */
 		AWAY

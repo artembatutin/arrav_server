@@ -25,7 +25,7 @@ public class AbyssalRift extends ActionInitializer {
 			l = new ObjectAction() {
 				@Override
 				public boolean click(Player player, GameObject object, int click) {
-//					player.teleport(pos[ii], TRAINING_PORTAL); TODO: add teleports
+					//					player.teleport(pos[ii], TRAINING_PORTAL); TODO: add teleports
 					return true;
 				}
 			};

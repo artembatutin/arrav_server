@@ -60,12 +60,10 @@ public final class PlankMake extends LunarButtonSpell {
 		return Optional.of(new Graphic(1063, 100));
 	}
 
-	private static final Int2IntArrayMap PLANKS = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
-			.put(1511, 960)//regular plank
+	private static final Int2IntArrayMap PLANKS = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder().put(1511, 960)//regular plank
 			.put(1521, 8778)//oak plank
 			.put(6333, 8780)//teak plank
 			.put(6332, 8782)//mahogany plank
-			.build()
-	);
+			.build());
 
 }

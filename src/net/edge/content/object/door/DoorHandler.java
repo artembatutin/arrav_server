@@ -66,7 +66,7 @@ public class DoorHandler {
 
 		if(object.getId() == 34811 && object.getGlobalPos().same(new Position(3104, 3498))) {
 			if(player.isIronMan()) {
-//				player.teleport(new Position(player.getPosition().getX() >= 3104 ? 3103 : 3104, 3498), DOOR); FIXME: add teleports
+				//				player.teleport(new Position(player.getPosition().getX() >= 3104 ? 3103 : 3104, 3498), DOOR); FIXME: add teleports
 				if(player.getPosition().getX() >= 3104)
 					player.getLocalMobs().stream().filter(n -> n.getId() == 6184).findFirst().ifPresent(e -> e.forceChat("Welcome to the iron man house " + (player.isIronMaxed() ? "captain" : "soldier") + " " + player.getFormatUsername() + "."));
 			} else

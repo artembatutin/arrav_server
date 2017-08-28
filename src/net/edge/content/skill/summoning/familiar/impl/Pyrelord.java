@@ -84,76 +84,71 @@ public final class Pyrelord extends Familiar {
 		return true;
 	}
 
-	private static final Conversation[] CONVERSATION = new Conversation[]{
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+	private static final Conversation[] CONVERSATION = new Conversation[]{new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(7177, "What are we doing here?"));
-					app.chain(new PlayerDialogue("Whatever I feel like doing."));
-					app.chain(new NpcDialogue(7177, "I was summoned by a greater demon once you know."));
-					app.chain(new NpcDialogue(7177, "He said we'd see the world..."));
-					app.chain(new PlayerDialogue("What happened?"));
-					app.chain(new NpcDialogue(7177, "He was slain; it was hilarious!"));
-					return app;
-				}
-			},
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(7177, "What are we doing here?"));
+			app.chain(new PlayerDialogue("Whatever I feel like doing."));
+			app.chain(new NpcDialogue(7177, "I was summoned by a greater demon once you know."));
+			app.chain(new NpcDialogue(7177, "He said we'd see the world..."));
+			app.chain(new PlayerDialogue("What happened?"));
+			app.chain(new NpcDialogue(7177, "He was slain; it was hilarious!"));
+			return app;
+		}
+	}, new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(7177, "I used to be feared across five planes..."));
-					app.chain(new PlayerDialogue("Oh dear, now you're going to be sad all day!"));
-					app.chain(new NpcDialogue(7177, "At least I won't be the only one."));
-					return app;
-				}
-			},
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(7177, "I used to be feared across five planes..."));
+			app.chain(new PlayerDialogue("Oh dear, now you're going to be sad all day!"));
+			app.chain(new NpcDialogue(7177, "At least I won't be the only one."));
+			return app;
+		}
+	}, new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(7177, "I could teach you to smite your enemies with flames."));
-					app.chain(new PlayerDialogue("You're not the only one; we have runes to do that."));
-					app.chain(new NpcDialogue(7177, "Runes? Oh, that's so cute!"));
-					app.chain(new PlayerDialogue("Cute?"));
-					app.chain(new NpcDialogue(7177, "Well, not cute so much as tragic. I could teach you to do it without runes."));
-					app.chain(new PlayerDialogue("Really?"));
-					app.chain(new NpcDialogue(7177, "No."));
-					return app;
-				}
-			},
-			new Conversation() {
-				@Override
-				public void send(Player player, int index) {
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(7177, "I could teach you to smite your enemies with flames."));
+			app.chain(new PlayerDialogue("You're not the only one; we have runes to do that."));
+			app.chain(new NpcDialogue(7177, "Runes? Oh, that's so cute!"));
+			app.chain(new PlayerDialogue("Cute?"));
+			app.chain(new NpcDialogue(7177, "Well, not cute so much as tragic. I could teach you to do it without runes."));
+			app.chain(new PlayerDialogue("Really?"));
+			app.chain(new NpcDialogue(7177, "No."));
+			return app;
+		}
+	}, new Conversation() {
+		@Override
+		public void send(Player player, int index) {
 
-				}
+		}
 
-				@Override
-				public DialogueAppender dialogues(Player player) {
-					DialogueAppender app = new DialogueAppender(player);
-					app.chain(new NpcDialogue(7177, "Have you never been on fire?"));
-					app.chain(new PlayerDialogue("You say that like it's a bad thing."));
-					app.chain(new NpcDialogue(7177, "Isn't it? It gives me the heebie-jeebies!"));
-					app.chain(new PlayerDialogue("You're afraid of something?"));
-					app.chain(new NpcDialogue(7177, "Yes: I'm afraid of being you."));
-					app.chain(new PlayerDialogue("I don't think he likes me..."));
-					return app;
-				}
-			}
-	};
+		@Override
+		public DialogueAppender dialogues(Player player) {
+			DialogueAppender app = new DialogueAppender(player);
+			app.chain(new NpcDialogue(7177, "Have you never been on fire?"));
+			app.chain(new PlayerDialogue("You say that like it's a bad thing."));
+			app.chain(new NpcDialogue(7177, "Isn't it? It gives me the heebie-jeebies!"));
+			app.chain(new PlayerDialogue("You're afraid of something?"));
+			app.chain(new NpcDialogue(7177, "Yes: I'm afraid of being you."));
+			app.chain(new PlayerDialogue("I don't think he likes me..."));
+			return app;
+		}
+	}};
 }

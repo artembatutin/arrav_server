@@ -17,7 +17,7 @@ public class Spellbook extends ActionInitializer {
 		ButtonAction e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-//				player.teleport(new Position(3085, 3508)); TODO: add teleports
+				//				player.teleport(new Position(3085, 3508)); TODO: add teleports
 				return true;
 			}
 		};

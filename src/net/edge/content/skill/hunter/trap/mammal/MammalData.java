@@ -54,9 +54,9 @@ public enum MammalData {
 	}
 
 	public static void action() {
-//		for(MammalData data : MammalData.values()) {
-//			Mob.CUSTOM_MOBS.put(data.npcId, s -> new Mammal(data.npcId, s, data)); TODO: mammals lol
-//		}
+		//		for(MammalData data : MammalData.values()) {
+		//			Mob.CUSTOM_MOBS.put(data.npcId, s -> new Mammal(data.npcId, s, data)); TODO: mammals lol
+		//		}
 	}
 
 }

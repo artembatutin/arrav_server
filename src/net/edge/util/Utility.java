@@ -3,7 +3,10 @@ package net.edge.util;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -80,5 +83,31 @@ public final class Utility {
 		File file = new File(directory);
 		String[] directories = file.list((current, name) -> new File(current, name).isDirectory());
 		return new ObjectArrayList<>(directories);
+	}
+
+	private static int lines = 0;
+
+	public static int linesInProject(File file) {
+		for(final File fileEntry : file.listFiles()) {
+			if(!fileEntry.isDirectory()) {
+				try {
+					lines += countLines(fileEntry);
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				linesInProject(fileEntry);
+			}
+		}
+		return lines;
+	}
+
+	private static int countLines(File file) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		int lines = 0;
+		while(reader.readLine() != null)
+			lines++;
+		reader.close();
+		return lines;
 	}
 }

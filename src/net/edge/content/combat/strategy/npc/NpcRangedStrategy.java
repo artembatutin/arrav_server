@@ -36,7 +36,6 @@ public class NpcRangedStrategy extends RangedStrategy<Mob> {
 		Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
 		Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit, null);
 		projectileDefinition.getEffect().filter(filter).ifPresent(execute);
-
 		CombatPoisonEffect.getPoisonType(attacker.getId()).ifPresent(p -> {
 			if(attacker.getDefinition().poisonous()) {
 				defender.poison(p);

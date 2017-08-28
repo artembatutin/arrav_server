@@ -179,11 +179,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 
 		//pack rewards
 		button = 144189;
-		ItemCache[] packs = {
-				HIGH_HERBS,
-				MED_MINERALS,
-				HERB_SEEDS
-		};
+		ItemCache[] packs = {HIGH_HERBS, MED_MINERALS, HERB_SEEDS};
 		for(int i = 0; i < 3; i++) {
 			int index = i;
 			ButtonAction attack = new ButtonAction() {

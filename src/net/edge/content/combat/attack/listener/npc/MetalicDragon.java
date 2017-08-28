@@ -19,11 +19,9 @@ import static net.edge.content.combat.CombatUtil.randomStrategy;
 /**
  * @author Michael | Chex
  */
-@NpcCombatListenerSignature(npcs = {
-		1590, 1591, 1592, 3590, 5363, 8424,
-		10776, 10777, 10778, 10779, 10780, 10781
-})
+@NpcCombatListenerSignature(npcs = {1590, 1591, 1592, 3590, 5363, 8424, 10776, 10777, 10778, 10779, 10780, 10781})
 public class MetalicDragon extends SimplifiedListener<Mob> {
+
 	private static Dragonfire DRAGONFIRE;
 	private static CombatStrategy<Mob>[] STRATEGIES;
 

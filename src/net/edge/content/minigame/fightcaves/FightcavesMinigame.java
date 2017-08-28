@@ -41,36 +41,12 @@ public final class FightcavesMinigame extends SequencedMinigame {
 	/**
 	 * The wave enumeration.
 	 */
-	private static final int[][] WAVES = {
-			{TZ_KIH, TZ_KEK},
-			{TOK_XIL, TZ_KIH},
-			{TOK_XIL, TZ_KEK, TZ_KIH, TZ_KIH},
-			{YT_MEJKOT, TZ_KIH},
-			{YT_MEJKOT, TZ_KEK, TZ_KIH, TZ_KIH},
-			{YT_MEJKOT, TOK_XIL, TZ_KIH, TZ_KIH},
-			{YT_MEJKOT, TOK_XIL, TZ_KEK, TZ_KEK},
-			{KET_ZEK, TZ_KIH},
-			{KET_ZEK, TZ_KEK, TZ_KIH, TZ_KIH},
-			{KET_ZEK, TOK_XIL, TZ_KIH, TZ_KIH},
-			{KET_ZEK, TOK_XIL, TZ_KEK, TZ_KEK},
-			{KET_ZEK, YT_MEJKOT, TZ_KIH, TZ_KIH},
-			{KET_ZEK, YT_MEJKOT, TOK_XIL, TZ_KIH},
-			{KET_ZEK, KET_ZEK}
-	};
+	private static final int[][] WAVES = {{TZ_KIH, TZ_KEK}, {TOK_XIL, TZ_KIH}, {TOK_XIL, TZ_KEK, TZ_KIH, TZ_KIH}, {YT_MEJKOT, TZ_KIH}, {YT_MEJKOT, TZ_KEK, TZ_KIH, TZ_KIH}, {YT_MEJKOT, TOK_XIL, TZ_KIH, TZ_KIH}, {YT_MEJKOT, TOK_XIL, TZ_KEK, TZ_KEK}, {KET_ZEK, TZ_KIH}, {KET_ZEK, TZ_KEK, TZ_KIH, TZ_KIH}, {KET_ZEK, TOK_XIL, TZ_KIH, TZ_KIH}, {KET_ZEK, TOK_XIL, TZ_KEK, TZ_KEK}, {KET_ZEK, YT_MEJKOT, TZ_KIH, TZ_KIH}, {KET_ZEK, YT_MEJKOT, TOK_XIL, TZ_KIH}, {KET_ZEK, KET_ZEK}};
 
 	/**
 	 * Wave spawns enumeration.
 	 */
-	private final static Position[] SPAWNS = {
-			new Position(2403, 5094),
-			new Position(2390, 5096),
-			new Position(2392, 5077),
-			new Position(2408, 5080),
-			new Position(2413, 5108),
-			new Position(2381, 5106),
-			new Position(2379, 5072),
-			new Position(2420, 5082)
-	};
+	private final static Position[] SPAWNS = {new Position(2403, 5094), new Position(2390, 5096), new Position(2392, 5077), new Position(2408, 5080), new Position(2413, 5108), new Position(2381, 5106), new Position(2379, 5072), new Position(2420, 5082)};
 
 	/**
 	 * The current timer.
@@ -113,18 +89,16 @@ public final class FightcavesMinigame extends SequencedMinigame {
 		ObjectAction e = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				player.getDialogueBuilder().append(
-						new OptionDialogue(t -> {
-							if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-								player.getAttr().get("fight_caves_advanced").set(false);
-								new FightcavesMinigame().onEnter(player);
-							} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-								player.getAttr().get("fight_caves_advanced").set(true);
-								new FightcavesMinigame().onEnter(player);
-							}
-							player.closeWidget();
-						}, "Fire cape", "TokHaar-kal cape (two jads)", "I'll wait here")
-				);
+				player.getDialogueBuilder().append(new OptionDialogue(t -> {
+					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+						player.getAttr().get("fight_caves_advanced").set(false);
+						new FightcavesMinigame().onEnter(player);
+					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
+						player.getAttr().get("fight_caves_advanced").set(true);
+						new FightcavesMinigame().onEnter(player);
+					}
+					player.closeWidget();
+				}, "Fire cape", "TokHaar-kal cape (two jads)", "I'll wait here"));
 				return true;
 			}
 		};

@@ -118,6 +118,9 @@ public enum FightType {
 	 */
 	private final int child;
 
+	/**
+	 * The type of bonus this type attributes to.
+	 */
 	private final int bonus;
 
 	/**
@@ -164,7 +167,6 @@ public enum FightType {
 
 	/**
 	 * Determines the corresponding bonus for this fight type.
-	 *
 	 * @return the corresponding.
 	 */
 	public final int getCorrespondingBonus() {
@@ -186,7 +188,6 @@ public enum FightType {
 
 	/**
 	 * Determines if this animation is prioritized.
-	 *
 	 * @return {@code true} if it is, {@code false} otherwise.
 	 */
 	public final boolean isAnimationPrioritized() {

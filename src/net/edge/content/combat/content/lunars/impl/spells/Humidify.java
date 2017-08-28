@@ -58,15 +58,13 @@ public final class Humidify extends LunarButtonSpell {
 		return Optional.of(new Graphic(1061));
 	}
 
-	private static final Int2IntArrayMap VIALS = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
-			.put(1925, 1929)//bucket of water
+	private static final Int2IntArrayMap VIALS = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder().put(1925, 1929)//bucket of water
 			.put(1935, 1937)//jug of water
 			.put(229, 227)//vial of water
 			.put(5331, 5340)//watering can
 			.put(1831, 1823)//waterskin
 			.put(1923, 1921)//bowl of water
 			.put(434, 1761)//clay
-			.build()
-	);
+			.build());
 
 }

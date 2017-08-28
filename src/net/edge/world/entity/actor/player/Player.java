@@ -334,18 +334,12 @@ public final class Player extends Actor {
 	 */
 	private OverloadEffectTask overloadEffect;
 
-	public final ImmutableMap<String, Stopwatch> consumeDelay = ImmutableMap.of(
-			"SPECIAL", new Stopwatch().reset(),
-			"FOOD", new Stopwatch().reset(),
-			"DRINKS", new Stopwatch().reset()
-	);
+	public final ImmutableMap<String, Stopwatch> consumeDelay = ImmutableMap.of("SPECIAL", new Stopwatch().reset(), "FOOD", new Stopwatch().reset(), "DRINKS", new Stopwatch().reset());
 
 	/**
 	 * The collection of stopwatches used for various timing operations.
 	 */
-	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(),
-			specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch()
-			.reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
+	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch().reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
 
 	/**
 	 * The collection of counters used for various counting operations.
@@ -914,7 +908,7 @@ public final class Player extends Actor {
 		}
 		if(Location.inGodwars(this)) {
 			if(!godwarsWidget) {
-//				GodwarsFaction.refreshInterface(this); TODO: Godwars interface
+				//				GodwarsFaction.refreshInterface(this); TODO: Godwars interface
 				out(new SendWalkable(16210));
 				godwarsWidget = true;
 			}
@@ -2105,8 +2099,7 @@ public final class Player extends Actor {
 	 */
 	public void setSlayer(Optional<Slayer> slayer) {
 		this.slayer = slayer;
-		PlayerPanel.SLAYER_TASK.refresh(this, "@or2@ - Slayer task: @yel@" + (slayer.isPresent() ? (slayer.get()
-				.getAmount() + " " + slayer.get().toString()) : "none"));
+		PlayerPanel.SLAYER_TASK.refresh(this, "@or2@ - Slayer task: @yel@" + (slayer.isPresent() ? (slayer.get().getAmount() + " " + slayer.get().toString()) : "none"));
 	}
 
 	/**

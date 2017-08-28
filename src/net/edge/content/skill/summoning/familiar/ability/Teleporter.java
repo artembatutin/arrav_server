@@ -51,7 +51,7 @@ public final class Teleporter extends FamiliarAbility {
 		if(policy.isPresent()) {
 			return false;
 		}
-//		player.teleport(destination); FIXME: add teleports
+		//		player.teleport(destination); FIXME: add teleports
 		player.message("Your familiar teleports you away...");
 		return true;
 	}
@@ -76,7 +76,7 @@ public final class Teleporter extends FamiliarAbility {
 			return false;
 		}
 
-//		player.teleport(destination, teleportType); FIXME: add teleports
+		//		player.teleport(destination, teleportType); FIXME: add teleports
 		player.message("Your familiar teleports you safely away...");
 		return true;
 	}

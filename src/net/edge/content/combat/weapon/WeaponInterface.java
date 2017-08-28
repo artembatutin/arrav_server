@@ -182,13 +182,11 @@ public enum WeaponInterface {
 
 		if(weapon != null && weapon.isRanged()) {
 			RangedWeaponDefinition def = CombatRangedBowLoader.DEFINITIONS.get(item.getId());
-
 			if(def != null) {
 				player.getCombat().setStrategy(new PlayerRangedStrategy(def));
 				return;
 			}
 		}
-
 		player.getCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
 	}
 
@@ -254,15 +252,6 @@ public enum WeaponInterface {
 	 */
 	public final int getId() {
 		return id;
-	}
-
-	/**
-	 * Gets the identification of the line the weapon name will be displayed on.
-	 *
-	 * @return the identification of the name line.
-	 */
-	public final int getNameLine() {
-		return nameLine;
 	}
 
 	/**

@@ -192,15 +192,7 @@ public final class Enchanting extends ProducingSkillAction {
 		},
 		LEVEL_2_ENCHANT(1165, 27, 37, new Item[]{}, new Item[]{new Item(556, 3), new Item(564, 1)}, new Animation(719), new Graphic(114, 75)) {
 
-			private final Int2IntArrayMap EMERALD = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
-					.put(1639, 2552)
-					.put(1658, 5521)
-					.put(11076, 11079)
-					.put(1677, 1729)
-					.put(6041, 6040)
-					.put(13155, 13156)
-					.build()
-			);
+			private final Int2IntArrayMap EMERALD = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder().put(1639, 2552).put(1658, 5521).put(11076, 11079).put(1677, 1729).put(6041, 6040).put(13155, 13156).build());
 
 			@Override
 			public boolean canCast(Player player, Item item) {
@@ -238,12 +230,7 @@ public final class Enchanting extends ProducingSkillAction {
 		},
 		LEVEL_3_ENCHANT(1176, 49, 59, new Item[]{}, new Item[]{new Item(554, 5), new Item(564)}, new Animation(720), new Graphic(115, 75)) {
 
-			private final Int2IntArrayMap RUBY = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
-					.put(1641, 2568)
-					.put(11085, 11088)
-					.put(1679, 11194)
-					.build()
-			);
+			private final Int2IntArrayMap RUBY = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder().put(1641, 2568).put(11085, 11088).put(1679, 11194).build());
 
 			@Override
 			public boolean canCast(Player player, Item item) {
@@ -280,13 +267,7 @@ public final class Enchanting extends ProducingSkillAction {
 		},
 		LEVEL_4_ENCHANT(1180, 57, 67, new Item[]{}, new Item[]{new Item(557, 10), new Item(564)}, new Animation(720), new Graphic(115, 75)) {
 
-			private final Int2IntArrayMap DIAMOND = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
-					.put(1643, 2570)
-					.put(1662, 11090)
-					.put(11092, 11095)
-					.put(1681, 1731)
-					.build()
-			);
+			private final Int2IntArrayMap DIAMOND = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder().put(1643, 2570).put(1662, 11090).put(11092, 11095).put(1681, 1731).build());
 
 			@Override
 			public boolean canCast(Player player, Item item) {
@@ -305,13 +286,7 @@ public final class Enchanting extends ProducingSkillAction {
 		},
 		LEVEL_5_ENCHANT(1187, 68, 78, new Item[]{}, new Item[]{new Item(557, 15), new Item(555, 15), new Item(564)}, new Animation(721), new Graphic(116, 75)) {
 
-			private final Int2IntArrayMap DRAGONSTONE = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
-					.put(1645, 2572)
-					.put(1664, 11105)
-					.put(11115, 11118)
-					.put(1683, 1704)
-					.build()
-			);
+			private final Int2IntArrayMap DRAGONSTONE = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder().put(1645, 2572).put(1664, 11105).put(11115, 11118).put(1683, 1704).build());
 
 			@Override
 			public boolean canCast(Player player, Item item) {
@@ -330,13 +305,7 @@ public final class Enchanting extends ProducingSkillAction {
 		},
 		LEVEL_6_ENCHANT(6003, 87, 97, new Item[]{}, new Item[]{new Item(557, 15), new Item(554, 15), new Item(564)}, new Animation(721), new Graphic(452, 75)) {
 
-			private final Int2IntArrayMap ONYX = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
-					.put(6575, 6583)
-					.put(6577, 11128)
-					.put(11130, 11133)
-					.put(6581, 6585)
-					.build()
-			);
+			private final Int2IntArrayMap ONYX = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder().put(6575, 6583).put(6577, 11128).put(11130, 11133).put(6581, 6585).build());
 
 			@Override
 			public boolean canCast(Player player, Item item) {

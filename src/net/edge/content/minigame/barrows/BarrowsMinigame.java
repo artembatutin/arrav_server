@@ -209,9 +209,9 @@ public final class BarrowsMinigame extends Minigame {
 					player.message("You open the chest and it's... empty?");
 				else {
 					player.message("You grabbed one thing from the chest and a magical force teleported you.");
-//					teleport.attach(() -> player.getInventory().addOrDrop(loot)); FIXME: teleport attachments
+					//					teleport.attach(() -> player.getInventory().addOrDrop(loot)); FIXME: teleport attachments
 				}
-//				DefaultTeleportSpell.teleport(player, teleport); TODO: add telepors
+				//				DefaultTeleportSpell.teleport(player, teleport); TODO: add telepors
 				player.getMinigameContainer().getBarrowsContainer().getKilledBrothers().clear();
 
 				return true;

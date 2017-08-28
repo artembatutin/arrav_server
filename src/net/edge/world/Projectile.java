@@ -19,36 +19,12 @@ public final class Projectile {
 	/**
 	 * Magic combat projectile delays.
 	 */
-	public static final int[] MAGIC_DELAYS = {
-			2,
-			2,
-			3,
-			3,
-			3,
-			4,
-			4,
-			4,
-			5,
-			5,
-			5
-	};
+	public static final int[] MAGIC_DELAYS = {2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5};
 
 	/**
 	 * Ranged combat projectile delays.
 	 */
-	public static final int[] RANGED_DELAYS = {
-			2,
-			2,
-			2,
-			3,
-			3,
-			3,
-			3,
-			3,
-			3,
-			4,
-			4
-	};
+	public static final int[] RANGED_DELAYS = {2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4};
 
 	/**
 	 * The starting position of the projectile.

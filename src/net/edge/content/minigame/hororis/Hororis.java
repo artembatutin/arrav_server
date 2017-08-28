@@ -33,7 +33,7 @@ import static net.edge.content.achievements.Achievement.HORRORIFIC;
  */
 public class Hororis extends Minigame {
 
-//	private final SkeletalHorror horror;
+	//	private final SkeletalHorror horror;
 
 	/**
 	 * Skeleton minions.
@@ -114,11 +114,11 @@ public class Hororis extends Minigame {
 			World.get().getMobs().remove(m);
 		}
 		minions.clear();
-//		horror.getRegion().ifPresent(reg -> {
-//			for(GroundItem b : bones) {
-//				reg.unregister(b);
-//			}
-//		});
+		//		horror.getRegion().ifPresent(reg -> {
+		//			for(GroundItem b : bones) {
+		//				reg.unregister(b);
+		//			}
+		//		});
 		bones.clear();
 		for(Player p : players) {
 			p.out(new SendFade(20, 100, 160));
@@ -154,7 +154,7 @@ public class Hororis extends Minigame {
 					p.damage(new Hit(RandomUtils.inclusive(20, 100), Hitsplat.DISEASE, HitIcon.MAGIC));
 				}
 			}
-//			horror.getRegion().ifPresent(r -> r.register(item));
+			//			horror.getRegion().ifPresent(r -> r.register(item));
 			bones.add(item);
 		}
 	}

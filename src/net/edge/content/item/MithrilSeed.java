@@ -31,16 +31,7 @@ public final class MithrilSeed {
 	/**
 	 * The id's that represent flower objects with their item ids.
 	 */
-	private static final Int2IntArrayMap FLOWER_OBJECT_IDS = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder()
-			.put(2980, 2460)
-			.put(2981, 2462)
-			.put(2982, 2464)
-			.put(2983, 2466)
-			.put(2984, 2468)
-			.put(2985, 2470)
-			.put(2986, 2472)
-			.put(2987, 2474)
-			.put(2988, 2476).build());
+	private static final Int2IntArrayMap FLOWER_OBJECT_IDS = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder().put(2980, 2460).put(2981, 2462).put(2982, 2464).put(2983, 2466).put(2984, 2468).put(2985, 2470).put(2986, 2472).put(2987, 2474).put(2988, 2476).build());
 
 	public static void action() {
 		for(int objectId : FLOWER_OBJECT_IDS.keySet()) {

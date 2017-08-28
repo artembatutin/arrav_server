@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 public final class CombatProjectileDefinition {
+
 	private final String name;
 	private int maxHit;
 	private CombatEffect effect;
