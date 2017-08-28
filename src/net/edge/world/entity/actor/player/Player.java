@@ -1,5 +1,6 @@
 package net.edge.world.entity.actor.player;
 
+import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
@@ -9,19 +10,23 @@ import net.edge.Application;
 import net.edge.GameConstants;
 import net.edge.content.PlayerPanel;
 import net.edge.content.TabInterface;
+import net.edge.content.combat.content.MagicSpells;
+import net.edge.content.object.cannon.Multicannon;
 import net.edge.content.object.ViewingOrb;
 import net.edge.content.achievements.Achievement;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.clanchat.ClanMember;
-import net.edge.content.combat.Combat;
-import net.edge.content.combat.attack.FightType;
-import net.edge.content.combat.content.MagicSpells;
+import net.edge.content.combat.CombatType;
+import net.edge.content.combat.CombatUtil;
 import net.edge.content.combat.effect.CombatEffect;
 import net.edge.content.combat.effect.CombatEffectTask;
-import net.edge.content.combat.hit.Hit;
-import net.edge.content.combat.hit.Hitsplat;
-import net.edge.content.combat.strategy.player.PlayerMeleeStrategy;
-import net.edge.content.combat.strategy.player.special.CombatSpecial;
+import net.edge.content.combat.effect.CombatPoisonEffect;
+import net.edge.content.combat.magic.CombatSpell;
+import net.edge.content.combat.magic.CombatWeaken;
+import net.edge.content.combat.ranged.CombatRangedDetails;
+import net.edge.content.combat.special.CombatSpecial;
+import net.edge.content.combat.strategy.Strategy;
+import net.edge.content.combat.weapon.FightType;
 import net.edge.content.combat.weapon.WeaponAnimation;
 import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.commands.impl.UpdateCommand;
@@ -42,6 +47,7 @@ import net.edge.content.object.pit.FirepitManager;
 import net.edge.content.object.star.ShootingStarManager;
 import net.edge.content.quest.QuestManager;
 import net.edge.content.scene.impl.IntroductionCutscene;
+import net.edge.content.object.star.ShootingStarManager;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.SkillActionTask;
@@ -51,11 +57,13 @@ import net.edge.content.skill.construction.House;
 import net.edge.content.skill.farming.FarmingManager;
 import net.edge.content.skill.farming.patch.Patch;
 import net.edge.content.skill.farming.patch.PatchType;
+import net.edge.content.object.pit.FirepitManager;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.content.skill.summoning.familiar.Familiar;
+import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.content.wilderness.WildernessActivity;
 import net.edge.net.codec.GameBuffer;
@@ -65,12 +73,14 @@ import net.edge.net.session.GameSession;
 import net.edge.task.Task;
 import net.edge.util.*;
 import net.edge.world.Graphic;
+import net.edge.world.Hit;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobAggression;
+import net.edge.world.entity.actor.mob.impl.gwd.GodwarsFaction;
 import net.edge.world.entity.actor.player.assets.*;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.actor.update.UpdateFlag;
@@ -323,33 +333,39 @@ public final class Player extends Actor {
 	 */
 	private OverloadEffectTask overloadEffect;
 
+	public final ImmutableMap<String, Stopwatch> consumeDelay = ImmutableMap.of(
+			"SPECIAL", new Stopwatch().reset(),
+			"FOOD", new Stopwatch().reset(),
+			"DRINKS", new Stopwatch().reset()
+	);
+
 	/**
 	 * The collection of stopwatches used for various timing operations.
 	 */
-	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), eatingTimer = new Stopwatch()
-			.reset(), potionTimer = new Stopwatch().reset(), specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch()
+	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(),
+			specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch()
 			.reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
-
+	
 	/**
 	 * The collection of counters used for various counting operations.
 	 */
 	private final MutableNumber poisonImmunity = new MutableNumber(), teleblockTimer = new MutableNumber(), skullTimer = new MutableNumber(), specialPercentage = new MutableNumber(100);
-
+	
 	/**
 	 * Holds an optional wrapped inside the Antifire details.
 	 */
 	private Optional<AntifireDetails> antifireDetails = Optional.empty();
-
+	
 	/**
 	 * The enter input listener which will execute code when a player submits an input.
 	 */
 	private Optional<Function<String, ActionListener>> enterInputListener = Optional.empty();
-
+	
 	/**
 	 * The amount of authority this player has over others.
 	 */
 	private Rights rights = Rights.PLAYER;
-
+	
 	/**
 	 * The amount of pest points the player has.
 	 */
@@ -369,11 +385,6 @@ public final class Player extends Actor {
 	 * A list containing all the blocked slayer tasks of the player.
 	 */
 	private String[] blockedTasks = new String[5];
-	
-	/**
-	 * The combat special that has been activated.
-	 */
-	private CombatSpecial combatSpecial;
 
 	/**
 	 * The spell that has been selected to auto-cast.
@@ -701,7 +712,6 @@ public final class Player extends Actor {
 		getMovementQueue().sequence();
 		MobAggression.sequence(this);
 		restoreRunEnergy();
-
 		int deltaX = getPosition().getX() - getLastRegion().getRegionX() * 8;
 		int deltaY = getPosition().getY() - getLastRegion().getRegionY() * 8;
 		if(deltaX < 16 || deltaX >= 88 || deltaY < 16 || deltaY > 88 || isNeedsRegionUpdate() || getTeleportStage() == -1) {
@@ -757,7 +767,36 @@ public final class Player extends Actor {
 		}
 		return hit;
 	}
-
+	
+	@Override
+	public Strategy determineStrategy() {
+		if(specialActivated && castSpell == null) {
+			if(combatSpecial.getCombat() == CombatType.MELEE) {
+				return CombatUtil.newDefaultMeleeStrategy();
+			} else if(combatSpecial.getCombat() == CombatType.RANGED) {
+				return CombatUtil.newDefaultRangedStrategy();
+			} else if(combatSpecial.getCombat() == CombatType.MAGIC) {
+				return CombatUtil.newDefaultMagicStrategy();
+			}
+		}
+		if(castSpell != null || autocastSpell != null) {
+			return CombatUtil.newDefaultMagicStrategy();
+		}
+		if(weapon == WeaponInterface.SHORTBOW || weapon == WeaponInterface.COMPOSITE_BOW || weapon == WeaponInterface.LONGBOW || weapon == WeaponInterface.CROSSBOW || weapon == WeaponInterface.DART || weapon == WeaponInterface.JAVELIN || weapon == WeaponInterface.THROWNAXE || weapon == WeaponInterface.KNIFE || weapon == WeaponInterface.CHINCHOMPA || weapon == WeaponInterface.SALAMANDER) {
+			return CombatUtil.newDefaultRangedStrategy();
+		}
+		return CombatUtil.newDefaultMeleeStrategy();
+	}
+	
+	@Override
+	public void onSuccessfulHit(Actor victim, CombatType type) {
+		if(type == CombatType.MELEE || weapon == WeaponInterface.DART || weapon == WeaponInterface.KNIFE || weapon == WeaponInterface.THROWNAXE || weapon == WeaponInterface.JAVELIN) {
+			victim.poison(CombatPoisonEffect.getPoisonType(equipment.get(Equipment.WEAPON_SLOT)).orElse(null));
+		} else if(type == CombatType.RANGED) {
+			victim.poison(CombatPoisonEffect.getPoisonType(equipment.get(Equipment.ARROWS_SLOT)).orElse(null));
+		}
+	}
+	
 	@Override
 	public int getAttackDelay() {
 		int speed = weapon.getSpeed();
@@ -1261,23 +1300,7 @@ public final class Player extends Actor {
 	public Stopwatch getWebSlashingTimer() {
 		return slashTimer;
 	}
-	
-	/**
-	 * Gets the eating stopwatch timer.
-	 * @return the eating timer.
-	 */
-	public Stopwatch getEatingTimer() {
-		return eatingTimer;
-	}
-	
-	/**
-	 * Gets the potion stopwatch timer.
-	 * @return the potion timer.
-	 */
-	public Stopwatch getPotionTimer() {
-		return potionTimer;
-	}
-	
+
 	/**
 	 * Gets the special attack restore timer.
 	 * @return the special attack restore timer.

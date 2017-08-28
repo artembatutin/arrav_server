@@ -21,7 +21,12 @@ public final class GameConstants {
 	 * The experience multiplier for the game.
 	 */
 	public static double EXPERIENCE_MULTIPLIER = 1;
-	
+
+	/**
+	 * Retrieves the delay before consuming another consumable type.
+	 */
+	public static int CONSUME_DELAY = 1800;
+
 	/**
 	 * Determines if the double blood money event is active.
 	 */

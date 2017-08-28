@@ -2,6 +2,7 @@ package net.edge.content.item;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.GameConstants;
 import net.edge.action.impl.ItemAction;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.minigame.MinigameHandler;
@@ -116,107 +117,102 @@ public enum FoodConsumable {
 	},
 	REDBERRY_PIE(12, 2325, 2333) {
 		@Override
-		public long getDelay() {
-			return 600;
+		public boolean special() {
+			return true;
 		}
 	},
 	MEAT_PIE(25, 2327, 2331) {
 		@Override
-		public long getDelay() {
-			return 600;
+		public boolean special() {
+			return true;
 		}
 	},
 	APPLE_PIE(37, 2323, 2335) {
 		@Override
-		public long getDelay() {
-			return 600;
+		public boolean special() {
+			return true;
 		}
 	},
 	GARDEN_PIE(42, 7178, 7180) {
 		@Override
 		public void onEffect(Player player) {
 			super.onEffect(player);
-			
+
 			Skill skill = player.getSkills()[Skills.FARMING];
-			
+
 			if(skill.getLevel() >= (skill.getRealLevel() + 3)) {
 				return;
 			}
-			
+
 			skill.increaseLevel(3);
 			Skills.refresh(player, Skills.FARMING);
 		}
-		
+
 		@Override
-		public long getDelay() {
-			return 600;
+		public boolean special() {
+			return true;
 		}
 	},
 	FISH_PIE(58, 7188, 7190) {
 		@Override
 		public void onEffect(Player player) {
 			super.onEffect(player);
-			
+
 			Skill skill = player.getSkills()[Skills.FISHING];
-			
+
 			if(skill.getLevel() >= (skill.getRealLevel() + 3)) {
 				return;
 			}
-			
+
 			skill.increaseLevel(3);
 			Skills.refresh(player, Skills.FISHING);
-		}
-		
-		@Override
-		public long getDelay() {
-			return 600;
 		}
 	},
 	ADMIRAL_PIE(87, 7198, 7200) {
 		@Override
 		public void onEffect(Player player) {
 			super.onEffect(player);
-			
+
 			Skill skill = player.getSkills()[Skills.FISHING];
-			
+
 			if(skill.getLevel() >= (skill.getRealLevel() + 5)) {
 				return;
 			}
-			
+
 			skill.increaseLevel(5);
 			Skills.refresh(player, Skills.FISHING);
 		}
-		
+
 		@Override
-		public long getDelay() {
-			return 600;
+		public boolean special() {
+			return true;
 		}
 	},
 	WILD_PIE(10, 7208, 7210) {
 		@Override
 		public void onEffect(Player player) {
 			super.onEffect(player);
-			
+
 			Skill[] skill = new Skill[]{player.getSkills()[Skills.RANGED], player.getSkills()[Skills.SLAYER]};
-			
+
 			if(skill[0].getLevel() >= (skill[0].getRealLevel() + 4)) {
 				return;
 			}
-			
+
 			skill[0].increaseLevel(4);
 			Skills.refresh(player, Skills.RANGED);
-			
+
 			if(skill[1].getLevel() >= (skill[1].getRealLevel() + 5)) {
 				return;
 			}
-			
+
 			skill[1].increaseLevel(5);
 			Skills.refresh(player, Skills.SLAYER);
 		}
-		
+
 		@Override
-		public long getDelay() {
-			return 600;
+		public boolean special() {
+			return true;
 		}
 	},
 	SUMMER_PIE(11, 7218, 7220) {
@@ -231,16 +227,16 @@ public enum FoodConsumable {
 			skill.increaseLevel(5);
 			Skills.refresh(player, Skills.AGILITY);
 		}
-		
+
 		@Override
-		public long getDelay() {
-			return 600;
+		public boolean special() {
+			return true;
 		}
 	},
 	KARAMBWAN(180, 3144) {
 		@Override
-		public long getDelay() {
-			return 600;
+		public boolean special() {
+			return true;
 		}
 	},
 	KEBAB(-1, 1971) {
@@ -286,23 +282,23 @@ public enum FoodConsumable {
 			}
 		}
 	};
-	
+
 	/**
 	 * Caches our enum values.
 	 */
 	private static final ImmutableSet<FoodConsumable> VALUES = Sets.immutableEnumSet(EnumSet.allOf(FoodConsumable.class));
-	
-	
+
+
 	/**
 	 * The amount of hit points this food heals.
 	 */
 	private final int healAmount;
-	
+
 	/**
 	 * The identifiers which represent this food type.
 	 */
 	private final int[] ids;
-	
+
 	/**
 	 * Creates a new {@link FoodConsumable}.
 	 * @param healAmount the amount of hit points this food heals.
@@ -312,27 +308,34 @@ public enum FoodConsumable {
 		this.ids = ids;
 		this.healAmount = healAmount;
 	}
-	
+
 	@Override
 	public final String toString() {
 		return name().toLowerCase().replace("_", " ");
 	}
-	
+
 	public static void action() {
 		for(FoodConsumable food : FoodConsumable.values()) {
 			ItemAction e = new ItemAction() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
-					if(container != Inventory.INVENTORY_DISPLAY_ID)
+					if(container != Inventory.INVENTORY_DISPLAY_ID) {
 						return true;
-					if(player.isDead() || !player.getEatingTimer().elapsed(food.getDelay()))
+					}
+					if(player.isDead()) {
 						return false;
-					
+					}
+					if(!player.consumeDelay.get("SPECIAL").elapsed(GameConstants.CONSUME_DELAY)) {
+						return false;
+					}
+					if(!player.consumeDelay.get(food.special() ? "SPECIAL" : "FOOD").elapsed(GameConstants.CONSUME_DELAY)) {
+						return false;
+					}
 					if(!MinigameHandler.execute(player, m -> m.canEat(player, food))) {
 						return false;
 					}
 					player.animation(new Animation(829));
-					player.getEatingTimer().reset();
+					player.consumeDelay.get(food.special() ? "SPECIAL" : "FOOD").reset();
 					player.getInventory().remove(item, slot);
 					Optional<Item> replacement = Optional.empty();
 					int length = food.getIds().length;
@@ -352,7 +355,7 @@ public enum FoodConsumable {
 				e.register(f);
 		}
 	}
-	
+
 	/**
 	 * The method executed after the player has successfully consumed this food.
 	 * This method may be overridden to provide a different functionality for
@@ -362,7 +365,7 @@ public enum FoodConsumable {
 	public void onEffect(Player player) {
 		player.getSkills()[Skills.HITPOINTS].increaseLevel(getHealAmount(player), maximumCap(player));
 	}
-	
+
 	/**
 	 * Retrieves the food consumable element for {@code id}.
 	 * @param id the id that the food consumable is attached to.
@@ -379,17 +382,7 @@ public enum FoodConsumable {
 		}
 		return Optional.empty();
 	}
-	
-	/**
-	 * Retrieves the delay before consuming another food type. This method may
-	 * be overridden to provide a different functionality for foods that have a
-	 * different delay.
-	 * @return the delay before consuming another food type.
-	 */
-	public long getDelay() {
-		return 600 * 2;
-	}
-	
+
 	/**
 	 * The max cap to heal hitpoints upon to.
 	 * @param player player eating.
@@ -398,7 +391,7 @@ public enum FoodConsumable {
 	public int maximumCap(Player player) {
 		return player.getMaximumHealth();
 	}
-	
+
 	/**
 	 * Retrieves the chatbox message printed when a food is consumed. This
 	 * method may be overridden to provide a different functionality for foods
@@ -408,7 +401,7 @@ public enum FoodConsumable {
 	public String getMessage() {
 		return (ids.length > 1 ? "You eat a slice of the " : "You eat the ") + toString() + ".";
 	}
-	
+
 	/**
 	 * Gets the amount of hit points this food heals.
 	 * @return the amount this food heals.
@@ -416,12 +409,21 @@ public enum FoodConsumable {
 	public int getHealAmount(Player player) {
 		return healAmount;
 	}
-	
+
 	/**
 	 * Gets the identifiers which represent this food type.
 	 * @return the identifiers for this food.
 	 */
 	public final int[] getIds() {
 		return ids;
+	}
+
+	/**
+	 * Determines if this food is a special food type which can be used
+	 * as combo food.
+	 * @return {@code true} if this food is combo, {@code false} otherwise.
+	 */
+	public boolean special() {
+		return false;
 	}
 }
