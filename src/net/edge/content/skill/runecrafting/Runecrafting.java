@@ -21,7 +21,6 @@ import static net.edge.content.achievements.Achievement.RUNE_CRAFTER;
 
 /**
  * Holds functionality for the runecrafting skill.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Runecrafting extends ProducingSkillAction {
@@ -63,7 +62,6 @@ public final class Runecrafting extends ProducingSkillAction {
 
 	/**
 	 * Constructs a new {@link Runecrafting}
-	 *
 	 * @param player {@link #player}.
 	 * @param object the object the {@code player} is interacting with.
 	 */
@@ -195,7 +193,6 @@ public final class Runecrafting extends ProducingSkillAction {
 
 	/**
 	 * gets the essence id the player is using, we check for pure essence first
-	 *
 	 * @param player The player checking for essence
 	 * @return The id of the essence
 	 */

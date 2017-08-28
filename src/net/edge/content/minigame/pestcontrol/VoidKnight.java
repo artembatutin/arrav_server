@@ -1,18 +1,18 @@
 package net.edge.content.minigame.pestcontrol;
 
-import net.edge.content.combat.hit.Hit;
-import net.edge.content.combat.hit.Hitsplat;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
+import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.mob.DefaultMob;
 import net.edge.world.entity.actor.mob.MobDeath;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 
 public class VoidKnight extends DefaultMob {
-
+	
 	private PestControlMinigame game;
-
+	
 	public VoidKnight() {
 		super(RandomUtils.random(3782, 3784, 3785), new Position(2656, 2592));
 		setOriginalRandomWalk(false);
@@ -20,7 +20,7 @@ public class VoidKnight extends DefaultMob {
 		setCurrentHealth(2000);
 		setRespawn(false);
 	}
-
+	
 	@Override
 	public Hit decrementHealth(Hit hit) {
 		if(hit.getDamage() > getCurrentHealth()) {
@@ -40,7 +40,7 @@ public class VoidKnight extends DefaultMob {
 		}
 		return hit;
 	}
-
+	
 	@Override
 	public void appendDeath() {
 		setDead(true);
@@ -49,12 +49,12 @@ public class VoidKnight extends DefaultMob {
 		if(game != null)
 			game.end(false);
 	}
-
+	
 	public void setGame(PestControlMinigame game) {
 		this.game = game;
 		for(Player p : game.getPlayers()) {
 			p.text(21115, "" + getCurrentHealth() / 10);
 		}
 	}
-
+	
 }

@@ -1,11 +1,11 @@
 package net.edge.content.minigame.pestcontrol;
 
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.content.combat.hit.Hit;
-import net.edge.content.combat.hit.Hitsplat;
 import net.edge.content.minigame.pestcontrol.pest.*;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
+import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.mob.DefaultMob;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobDeath;

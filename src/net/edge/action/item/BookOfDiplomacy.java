@@ -1,5 +1,6 @@
 package net.edge.action.item;
 
+import net.edge.GameConstants;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ItemAction;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -23,7 +24,7 @@ public class BookOfDiplomacy extends ActionInitializer {
 				player.getDialogueBuilder().append(new StatementDialogue("You want to quit the iron man mode?"), new OptionDialogue(t -> {
 					if(t == OptionDialogue.OptionType.FIRST_OPTION) {
 						player.setIron(0, true);
-						//                        player.teleport(GameConstants.STARTING_POSITION); TODO: add teleport
+						player.teleport(GameConstants.STARTING_POSITION);
 					}
 					player.closeWidget();
 				}, "Yes, want to be a regular player.", "No, I want to keep the iron man mode."));

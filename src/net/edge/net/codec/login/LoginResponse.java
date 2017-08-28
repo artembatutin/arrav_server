@@ -6,7 +6,6 @@ import net.edge.world.entity.actor.player.assets.Rights;
 /**
  * An immutable message that is written through a channel and forwarded to the {@link LoginEncoder} where it is encoded and
  * sent to the client.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class LoginResponse {
@@ -28,7 +27,6 @@ public final class LoginResponse {
 
 	/**
 	 * Creates a new {@link LoginResponse}.
-	 *
 	 * @param response The actual login response.
 	 * @param rights   The {@link Player}s authority level.
 	 * @param iron     The iron man flag condition.
@@ -42,7 +40,6 @@ public final class LoginResponse {
 	/**
 	 * Creates a new {@link LoginResponse} with an authority level of {@code PLAYER} and a {@code flagged} value of
 	 * {@code false}.
-	 *
 	 * @param response The actual login response.
 	 */
 	public LoginResponse(LoginCode response) {
@@ -65,7 +62,6 @@ public final class LoginResponse {
 
 	/**
 	 * If the player is iron man.
-	 *
 	 * @return iron man.
 	 */
 	public boolean isIron() {

@@ -1,9 +1,5 @@
 package net.edge.net.packet.in;
 
-import net.edge.content.combat.CombatUtil;
-import net.edge.content.combat.content.MagicSpells;
-import net.edge.content.combat.content.lunars.LunarSpells;
-import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.net.codec.ByteOrder;
@@ -11,6 +7,10 @@ import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
+import net.edge.world.entity.actor.combat.CombatUtil;
+import net.edge.world.entity.actor.combat.content.MagicSpells;
+import net.edge.world.entity.actor.combat.content.lunars.LunarSpells;
+import net.edge.world.entity.actor.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.container.session.ExchangeSession;
@@ -22,11 +22,10 @@ import java.util.Optional;
 
 /**
  * The message sent from the client when a player attacks another player.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class AttackPlayerPacket implements IncomingPacket {
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ATTACK_PLAYER))
@@ -41,10 +40,9 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.ATTACK_PLAYER);
 	}
-
+	
 	/**
 	 * Attempts to attack a player with a magic spell.
-	 *
 	 * @param player  the player to attempt to attack.
 	 * @param payload the payloadfer for reading the sent data.
 	 */
@@ -52,24 +50,23 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		int index = payload.getShort(true, ByteTransform.A);
 		int spellId = payload.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
-
+		
 		if(LunarSpells.castCombatSpells(player, victim, spellId)) {
 			return;
 		}
-
+		
 		MagicSpells spell = MagicSpells.get(spellId);
 		if(spell == null || index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !checkAttack(player, victim)) {
 			return;
 		}
-
+		
 		player.getCombat().setStrategy(new PlayerMagicStrategy(spell));
 		player.getCombat().attack(victim);
 	}
-
+	
 	/**
 	 * Attempts to attack a player with any other form of combat such as melee
 	 * or ranged.
-	 *
 	 * @param player  the player to attempt to attack.
 	 * @param payload the payloadfer for reading the sent data.
 	 */
@@ -80,11 +77,10 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			return;
 		player.getCombat().attack(victim);
 	}
-
+	
 	/**
 	 * Determines if an attack can be made by the {@code attacker} on
 	 * {@code victim}.
-	 *
 	 * @param attacker the player that is trying to attack.
 	 * @param victim   the player that is being targeted.
 	 * @return {@code true} if an attack can be made, {@code false} otherwise.

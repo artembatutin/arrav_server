@@ -7,11 +7,11 @@ import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 public final class UpdateManager {
-
+	
 	private static final PlayerUpdateBlock[] PLAYER_BLOCKS = {new PlayerForceMovementUpdateBlock(), new PlayerGraphicUpdateBlock(), new PlayerAnimationUpdateBlock(), new PlayerForceChatUpdateBlock(), new PlayerChatUpdateBlock(), new PlayerFaceEntityUpdateBlock(), new PlayerAppearanceUpdateBlock(), new PlayerPositionUpdateBlock(), new PlayerPrimaryHitUpdateBlock(), new PlayerSecondaryHitUpdateBlock()};
-
+	
 	private static final MobUpdateBlock[] NPC_BLOCKS = {new MobForceMovementUpdateBlock(), new MobGraphicUpdateBlock(), new MobAnimationUpdateBlock(), new MobForceChatUpdateBlock(), new MobTransformUpdateBlock(), new MobFaceEntityUpdateBlock(), new MobFacePositionUpdateBlock(), new MobPrimaryHitUpdateBlock(), new MobSecondaryHitUpdateBlock(),};
-
+	
 	public static void prepare(Player other) {
 		if(other.getLocalPlayers().size() == 0) {
 			return;
@@ -48,14 +48,14 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
 			mask |= 0x200;
 		}
-
+		
 		if(mask >= 0x100) {
 			mask |= 0x40;
 			encodedBlock.putShort(mask, ByteOrder.LITTLE);
 		} else {
 			encodedBlock.put(mask);
 		}
-
+		
 		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
 			PLAYER_BLOCKS[1].write(null, other, encodedBlock);
 		}
@@ -85,7 +85,7 @@ public final class UpdateManager {
 		}
 		other.setCachedUpdateBlock(encodedBlock);
 	}
-
+	
 	public static void encode(Player player, Player other, GameBuffer msg, UpdateState state) {
 		if(other.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
@@ -127,14 +127,14 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
 			mask |= 0x200;
 		}
-
+		
 		if(mask >= 0x100) {
 			mask |= 0x40;
 			encodedBlock.putShort(mask, ByteOrder.LITTLE);
 		} else {
 			encodedBlock.put(mask);
 		}
-
+		
 		if(other.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
 			PLAYER_BLOCKS[0].write(player, other, encodedBlock);
 			cacheBlocks = false;
@@ -166,20 +166,20 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
 			PLAYER_BLOCKS[9].write(player, other, encodedBlock);
 		}
-
+		
 		msg.putBytes(encodedBlock);
 		if(cacheBlocks) {
 			//other.setCachedUpdateBlock(encodedBlock);
 		}
 	}
-
+	
 	public static void encode(Player player, Mob mob, GameBuffer msg, UpdateState state) {
 		if(mob.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
 		}
 		GameBuffer encodedBlock = new GameBuffer(player.getSession().alloc().buffer(64));
 		int mask = 0;
-
+		
 		if(mob.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
 			mask |= 0x400;
 		}
@@ -207,14 +207,14 @@ public final class UpdateManager {
 		if(mob.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
 			mask |= 0x20;
 		}
-
+		
 		if(mask >= 0x100) {
 			mask |= 0x40;
 			encodedBlock.putShort(mask, ByteOrder.LITTLE);
 		} else {
 			encodedBlock.put(mask);
 		}
-
+		
 		if(mob.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
 			NPC_BLOCKS[0].write(player, mob, encodedBlock);
 		}
@@ -245,5 +245,5 @@ public final class UpdateManager {
 		msg.putBytes(encodedBlock);
 		encodedBlock.release();
 	}
-
+	
 }

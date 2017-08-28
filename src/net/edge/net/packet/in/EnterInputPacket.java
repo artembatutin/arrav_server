@@ -9,15 +9,15 @@ import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import java.util.Optional;
 
 public final class EnterInputPacket implements IncomingPacket {
-
+	
 	public static final int ENTER_AMOUNT_OPCODE = 208, ENTER_SYNTAX_OPCODE = 60;
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ENTER_INPUT)) {
 			return;
 		}
-
+		
 		switch(opcode) {
 			case ENTER_AMOUNT_OPCODE:
 				enterAmount(player, payload);
@@ -28,10 +28,9 @@ public final class EnterInputPacket implements IncomingPacket {
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.ENTER_INPUT);
 	}
-
+	
 	/**
 	 * The enter amount packet which deals with numerical values.
-	 *
 	 * @param player  the player this packet is sent for.
 	 * @param payload the payload chained to this packet.
 	 */
@@ -43,10 +42,9 @@ public final class EnterInputPacket implements IncomingPacket {
 		player.getEnterInputListener().ifPresent(t -> t.apply(Integer.toString(amount)).execute());
 		player.setEnterInputListener(Optional.empty());
 	}
-
+	
 	/**
 	 * The enter syntax packet which deals with alphabetical values.
-	 *
 	 * @param player  the player this packet is sent for.
 	 * @param payload the payload chained to this packet.
 	 */

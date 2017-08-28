@@ -9,13 +9,13 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendPaletteMap implements OutgoingPacket {
-
+	
 	private final Palette palette;
-
+	
 	public SendPaletteMap(Palette palette) {
 		this.palette = palette;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(241, PacketType.VARIABLE_SHORT);

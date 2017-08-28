@@ -12,27 +12,25 @@ import java.util.Optional;
 
 /**
  * Represents procession for identifying of grimy herbs.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Herb extends ProducingSkillAction {
-
+	
 	/**
 	 * The {@link GrimyHerb} holding all the data required for processing
 	 * the identification for herbs.
 	 */
 	private final GrimyHerb definition;
-
+	
 	/**
 	 * Constructs a new {@link Herb}.
-	 *
 	 * @param player {@link #getPlayer()}.
 	 */
 	private Herb(Player player, GrimyHerb herb) {
 		super(player, Optional.of(player.getPosition()));
 		definition = herb;
 	}
-
+	
 	public static void action() {
 		for(GrimyHerb h : GrimyHerb.values()) {
 			ItemAction e = new ItemAction() {
@@ -48,53 +46,53 @@ public final class Herb extends ProducingSkillAction {
 			e.register(h.grimy.getId());
 		}
 	}
-
+	
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success)
 			t.cancel();
 	}
-
+	
 	@Override
 	public Optional<Item[]> removeItem() {
 		return Optional.of(new Item[]{definition.grimy});
 	}
-
+	
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(new Item[]{definition.clean});
 	}
-
+	
 	@Override
 	public int delay() {
 		return 0;
 	}
-
+	
 	@Override
 	public boolean instant() {
 		return true;
 	}
-
+	
 	@Override
 	public boolean init() {
 		return canProduce();
 	}
-
+	
 	@Override
 	public boolean canExecute() {
 		return canProduce();
 	}
-
+	
 	@Override
 	public double experience() {
 		return definition.experience;
 	}
-
+	
 	@Override
 	public SkillData skill() {
 		return SkillData.HERBLORE;
 	}
-
+	
 	private boolean canProduce() {
 		if(!getPlayer().getSkills()[skill().getId()].reqLevel(definition.level)) {
 			getPlayer().message("You need a herblore level of " + definition.level + " to clean this herb.");
@@ -102,10 +100,9 @@ public final class Herb extends ProducingSkillAction {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * The data required for processing the identifying of grimy herbs.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum GrimyHerb {
@@ -125,30 +122,29 @@ public final class Herb extends ProducingSkillAction {
 		LANTADYME(67, 2485, 2481, 13.1),
 		DWARFWEED(70, 217, 267, 13.8),
 		TORSTOL(75, 219, 269, 15);
-
+		
 		/**
 		 * The required level for creating this potion.
 		 */
 		private final int level;
-
+		
 		/**
 		 * The identification for this grimy item.
 		 */
 		private final Item grimy;
-
+		
 		/**
 		 * The identification for this clean grimy item.
 		 */
 		private final Item clean;
-
+		
 		/**
 		 * The identifier which identifies the amount of experience given for this potion.
 		 */
 		private final double experience;
-
+		
 		/**
 		 * Constructs a new {@link GrimyHerb} enum.
-		 *
 		 * @param level      {@link #level}.
 		 * @param grimy      {@link #grimy}.
 		 * @param clean      {@link #clean}.

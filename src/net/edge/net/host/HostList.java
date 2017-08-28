@@ -10,33 +10,30 @@ import java.util.Set;
 
 /**
  * Punished list defining all punishments for a certain {@link HostListType}.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class HostList {
-
+	
 	/**
 	 * The type of the host list.
 	 */
 	private final HostListType type;
-
+	
 	/**
 	 * The synchronized set of blocked host strings.
 	 */
 	private final Set<String> BLOCKED = Sets.newConcurrentHashSet();
-
+	
 	/**
 	 * Creates a {@link HostList}.
-	 *
 	 * @param type host list type.
 	 */
 	HostList(HostListType type) {
 		this.type = type;
 	}
-
+	
 	/**
 	 * Condition if {@code text} is contained in his list.
-	 *
 	 * @return full string.
 	 */
 	public boolean contains(String text) {
@@ -46,14 +43,14 @@ public class HostList {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Adds a blocked entry with a username.
 	 */
 	public void add(Player player) {
 		BLOCKED.add(player.getSession().getHost() + "-" + player.credentials.username);
 	}
-
+	
 	/**
 	 * Removes a blocked entry by the text.
 	 */
@@ -67,7 +64,7 @@ public class HostList {
 		}
 		return found != null && BLOCKED.remove(found);
 	}
-
+	
 	/**
 	 * Saves the blocked entries.
 	 */
@@ -81,7 +78,7 @@ public class HostList {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * Loads all of the blocked entries.
 	 */
@@ -94,5 +91,5 @@ public class HostList {
 			e.printStackTrace();
 		}
 	}
-
+	
 }

@@ -9,7 +9,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"emptybank"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR}, syntax = "Empties your bank, ::emptybank")
 public final class EmptyBankCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		player.getDialogueBuilder().append(new StatementDialogue("Are you sure you want to empty your bank?"), new OptionDialogue(t -> {
@@ -24,5 +24,5 @@ public final class EmptyBankCommand implements Command {
 			}
 		}, "Yes", "No", "What was the question again?", "Nevermind"));
 	}
-
+	
 }

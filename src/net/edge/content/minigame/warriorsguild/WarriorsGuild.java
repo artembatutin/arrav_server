@@ -11,16 +11,15 @@ import net.edge.world.object.GameObject;
 /**
  * The class which is responsible for executing minigame rooms of
  * the warriors guild.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class WarriorsGuild {
-
+	
 	/**
 	 * Represents the item for a warrior guild token.
 	 */
 	public static final Item WARRIOR_GUILD_TOKEN = new Item(8851);
-
+	
 	public static void action() {
 		ObjectAction c = new ObjectAction() {
 			@Override
@@ -38,5 +37,5 @@ public final class WarriorsGuild {
 		a.registerFirst(15641);
 		a.registerFirst(15644);
 	}
-
+	
 }

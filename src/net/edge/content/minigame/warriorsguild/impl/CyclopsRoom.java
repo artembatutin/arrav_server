@@ -2,7 +2,6 @@ package net.edge.content.minigame.warriorsguild.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.content.combat.CombatType;
 import net.edge.content.dialogue.Conversation;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
@@ -19,6 +18,7 @@ import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
@@ -32,45 +32,44 @@ import java.util.Optional;
 
 /**
  * The class which represents functionality for the cyclops room.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class CyclopsRoom extends GuildRoom {
-
+	
 	/**
 	 * Represents the location of the cyclops room.
 	 */
 	public static final SquareLocation LOCATION = new SquareLocation(2837, 3533, 2877, 3557, 2);
-
+	
 	/**
 	 * The flag which determines if the player has entered the room.
 	 */
 	private Optional<CyclopsRoomTask> entered = Optional.empty();
-
+	
 	/**
 	 * Constructs a new {@link CyclopsRoom}.
 	 */
 	public CyclopsRoom() {
 		super("CYCLOPS_ROOM", GuildRoomType.CYCLOPS_ROOM);
 	}
-
+	
 	public static boolean enter(Player player, GameObject object) {
 		player.move(new Position(2840, 3539, 2));
 		return true;
 	}
-
+	
 	private void updateInterface(Player player) {
 		Defender defender = Defender.getNext(player);
 		player.out(new SendInterfaceItem(34002, defender.item.getId()));
 		player.text(34001, "@or1@" + defender.toString());
 		player.out(new SendWalkable(34000));
 	}
-
+	
 	@Override
 	public boolean canHit(Player player, Actor other, CombatType type) {
 		return entered.isPresent() && other.isMob();
 	}
-
+	
 	@Override
 	public boolean onFirstClickObject(Player player, GameObject object) {
 		switch(object.getId()) {
@@ -96,18 +95,18 @@ public final class CyclopsRoom extends GuildRoom {
 				return false;
 		}
 	}
-
+	
 	@Override
 	public boolean onFirstClickNpc(Player player, Mob mob) {
 		player.getDialogueBuilder().send(new KamfreenaConversation());
 		return false;
 	}
-
+	
 	@Override
 	public void onLogin(Player player) {
 
 	}
-
+	
 	@Override
 	public void onLogout(Player player) {
 		if(entered.isPresent()) {
@@ -116,7 +115,7 @@ public final class CyclopsRoom extends GuildRoom {
 			player.move(new Position(2844, 3540));
 		}
 	}
-
+	
 	@Override
 	public void onTeleportBefore(Player player, Position position) {
 		if(entered.isPresent()) {
@@ -124,17 +123,17 @@ public final class CyclopsRoom extends GuildRoom {
 			player.setMinigame(Optional.empty());
 		}
 	}
-
+	
 	@Override
 	public boolean canPickup(Player player, GroundItem node) {
 		return true;
 	}
-
+	
 	@Override
 	public void onPickup(Player player, Item item) {
 		updateInterface(player);
 	}
-
+	
 	@Override
 	public void onEnter(Player player) {
 		if(!entered.isPresent()) {
@@ -145,7 +144,7 @@ public final class CyclopsRoom extends GuildRoom {
 			updateInterface(player);
 		}
 	}
-
+	
 	@Override
 	public void onKill(Player player, Actor other) {
 		Defender defender = Defender.getNext(player);
@@ -157,31 +156,30 @@ public final class CyclopsRoom extends GuildRoom {
 			player.message("Keep killing! Better luck on the next kill.");
 		}
 	}
-
+	
 	@Override
 	public boolean contains(Player player) {
 		return LOCATION.inLocation(player.getPosition());
 	}
-
+	
 	@Override
 	public Optional<Minigame> copy() {
 		return Optional.of(new CyclopsRoom());
 	}
-
+	
 	/**
 	 * The conversation a player can have with kamfreena.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public static final class KamfreenaConversation implements Conversation {
-
+		
 		@Override
 		public void send(Player player, int index) {
 
 		}
-
+		
 		private static final NpcDialogue[] RANDOM_MESSAGES = new NpcDialogue[]{new NpcDialogue(4289, Expression.HEAD_SWAYS_TALKS_FAST, "When you aim for perfection, you discover", "it's a moving target."), new NpcDialogue(4289, Expression.HEAD_SWAYS_TALKS_FAST, "Patience and persistence can bring down the", "tallest tree."), new NpcDialogue(4289, Expression.HEAD_SWAYS_TALKS_FAST, "Be master of mind rather than mastered by mind."), new NpcDialogue(4289, Expression.HEAD_SWAYS_TALKS_FAST, "A reflection on a pool of water does not", "reveal its depth."), new NpcDialogue(4289, Expression.HEAD_SWAYS_TALKS_FAST, "Life isn't fair, that doesn't mean ", "you can't win.")};
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender ap = new DialogueAppender(player);
@@ -206,27 +204,25 @@ public final class CyclopsRoom extends GuildRoom {
 			return ap;
 		}
 	}
-
+	
 	/**
 	 * The task that runs for players whom are in the cyclops room.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class CyclopsRoomTask extends Task {
-
+		
 		/**
 		 * The player this task is running for.
 		 */
 		private final Player player;
-
+		
 		/**
 		 * The instance of the room this task is dependent of.
 		 */
 		private final CyclopsRoom room;
-
+		
 		/**
 		 * Constructs a new {@link CyclopsRoomTask}.
-		 *
 		 * @param room   {@link #room}.
 		 * @param player {@link #player}.
 		 */
@@ -235,7 +231,7 @@ public final class CyclopsRoom extends GuildRoom {
 			this.room = room;
 			this.player = player;
 		}
-
+		
 		@Override
 		protected void onSequence() {
 			if(!room.entered.isPresent()) {
@@ -244,41 +240,40 @@ public final class CyclopsRoom extends GuildRoom {
 				return;
 			}
 		}
-
+		
 		@Override
 		protected void execute() {
 			if(!player.getInventory().contains(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), 25))) {
 				player.move(new Position(2846, RandomUtils.nextBoolean() ? 3541 : 3540, 2));
 				player.getDialogueBuilder().append(new NpcDialogue(4289, Expression.CALM, "Your time is up..."));
-
+				
 				if(player.getCombat().isAttacking()) {
 					player.getCombat().reset();
 				}
-
+				
 				if(player.getCombat().getDefender() != null) {
 					player.getCombat().getDefender().getCombat().reset();
 				}
-
+				
 				this.cancel();
 				return;
 			}
 			player.message("25 of your tokens crumble away...");
 			player.getInventory().remove(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), 25));
 		}
-
+		
 		@Override
 		protected void onCancel() {
 			if(room.entered.isPresent()) {
 				room.entered = Optional.empty();
 			}
 		}
-
+		
 	}
-
+	
 	/**
 	 * The enumerated type whose elements represent a set of constants used to
 	 * calculate the defenders that will be dropped next.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum Defender {
@@ -290,34 +285,32 @@ public final class CyclopsRoom extends GuildRoom {
 		ADAMANT_DEFENDER(5, 8849),
 		RUNE_DEFENDER(6, 8850),
 		DRAGON_DEFENDER(7, 20072);
-
+		
 		/**
 		 * Caches our enum values.
 		 */
 		private static final ImmutableSet<Defender> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Defender.class));
-
+		
 		/**
 		 * The item for this defender.
 		 */
 		private final Item item;
-
+		
 		/**
 		 * Constructs a new {@link Defender}.
-		 *
 		 * @param id {@link #item}.
 		 */
 		Defender(int index, int id) {
 			this.item = new Item(id);
 		}
-
+		
 		@Override
 		public String toString() {
 			return TextUtils.capitalize(this.name().replaceAll("_", " ").replaceAll("DEFENDER", "def.").toLowerCase());
 		}
-
+		
 		/**
 		 * Gets the next defender that will be dropped for the specified {@code player}.
-		 *
 		 * @param player the player to calculate the defender for.
 		 * @return the next {@link Defender} that should be obtained by the player.
 		 */
@@ -329,6 +322,6 @@ public final class CyclopsRoom extends GuildRoom {
 			}
 			return BRONZE_DEFENDER;
 		}
-
+		
 	}
 }

@@ -7,13 +7,13 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendMessage implements OutgoingPacket {
-
+	
 	private final String message;
-
+	
 	public SendMessage(String message) {
 		this.message = message;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(253, PacketType.VARIABLE_BYTE);

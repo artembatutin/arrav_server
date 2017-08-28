@@ -21,24 +21,24 @@ import static net.edge.content.minigame.Minigame.MinigameSafety.SAFE;
 import static net.edge.world.entity.item.ItemCache.*;
 
 public final class PestControlWaitingLobby extends MinigameLobby {
-
+	
 	/**
 	 * The pest control lobby.
 	 */
 	public static final PestControlWaitingLobby PEST_LOBBY = new PestControlWaitingLobby();
-
+	
 	/**
 	 * Condition if the pest control game is currently on.
 	 */
 	boolean pestGameOn = false;
-
+	
 	private int count;
 	private int timer;
-
+	
 	public PestControlWaitingLobby() {
 		super(540); // 5 minutes
 	}
-
+	
 	@Override
 	public void onCountdown(int current, Task t) {
 		timer = current;
@@ -48,7 +48,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			}
 		}
 	}
-
+	
 	@Override
 	public void onEnter(Player player) {
 		count++;
@@ -59,7 +59,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		updateCounts();
 		player.move(new Position(2661, 2639));
 	}
-
+	
 	@Override
 	public void onLeave(Player player) {
 		if(!getPlayers().contains(player))
@@ -70,7 +70,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		updateCounts();
 		player.move(new Position(2657, 2639));
 	}
-
+	
 	@Override
 	public void onStart() {
 		PestControlMinigame game = new PestControlMinigame("Pest control", SAFE);
@@ -81,7 +81,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		getPlayers().clear();
 		count = 0;
 	}
-
+	
 	@Override
 	public boolean canEnter(Player player) {
 		if(player.getFamiliar().isPresent()) {
@@ -98,33 +98,33 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public boolean canStart() {
 		//if enough players are in the room.
 		return getPlayers().size() >= 5 && !pestGameOn;
 	}
-
+	
 	@Override
 	public int restartTimer() {
 		return 540;
 	}
-
+	
 	@Override
 	public void onDestruct() {
-
+	
 	}
-
+	
 	public int seconds() {
 		return (timer * 600) / 1000;
 	}
-
+	
 	public void updateCounts() {
 		for(Player p : getPlayers()) {
 			p.text(21121, "@gre@Players Ready: " + count);
 		}
 	}
-
+	
 	public static void event() {
 		//boat entering/exiting.
 		ObjectAction plank = new ObjectAction() {
@@ -143,7 +143,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			}
 		};
 		ladder.registerFirst(14314);
-
+		
 		//accessing shop.
 		MobAction shop = new MobAction() {
 			@Override
@@ -155,7 +155,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 		};
 		shop.registerFirst(3786);
 		shop.registerSecond(3786);
-
+		
 		//skill rewards
 		int[] skills = {Skills.ATTACK, Skills.DEFENCE, Skills.MAGIC, Skills.PRAYER, Skills.STRENGTH, Skills.RANGED, Skills.HITPOINTS};
 		int button = 144150;
@@ -176,7 +176,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			}
 			button += 3;
 		}
-
+		
 		//pack rewards
 		button = 144189;
 		ItemCache[] packs = {HIGH_HERBS, MED_MINERALS, HERB_SEEDS};
@@ -200,7 +200,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			attack.register(button);
 			button += 3;
 		}
-
+		
 		//void rewards
 		final int[] items = {8841, 8840, 11663, 11665, 8839, 8842, 11664};
 		final int[] costs = {250, 250, 200, 200, 200, 250, 150, 200};
@@ -224,5 +224,5 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 			button += 3;
 		}
 	}
-
+	
 }

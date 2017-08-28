@@ -3,7 +3,7 @@ package net.edge.action.obj;
 import net.edge.action.ActionInitializer;
 
 public class WeaponRack extends ActionInitializer {
-
+	
 	@Override
 	public void init() {
 		/*ObjectAction l = new ObjectAction() {

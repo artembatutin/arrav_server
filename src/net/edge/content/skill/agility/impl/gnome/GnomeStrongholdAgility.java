@@ -21,7 +21,6 @@ import static net.edge.content.achievements.Achievement.TOO_FAST;
 
 /**
  * Holds functionality for passing obstacles for the GnomeStronghold Agility course.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class GnomeStrongholdAgility extends AgilityCourse {
@@ -33,7 +32,6 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 
 	/**
 	 * Constructs a new {@link GnomeStrongholdAgility} course.
-	 *
 	 * @param player   {@link #getPlayer()}.
 	 * @param object   {@link #getObject()}.
 	 * @param obstacle the obstacle this player is trying to cross.
@@ -120,7 +118,8 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		/**
 		 * Advanced course
 		 */
-		ADVANCED_TREE_BRANCH_UP(new int[]{85531}, ObstacleType.TREE_BRANCH_UP_ADVANCED, player1 -> new Climbable(new Position(player1.getPosition().getX(), 3420, 2), new Position(2472, 3419, 3), ObstacleType.TREE_BRANCH_UP_ADVANCED.getAnimation(), 2, 85, 25)),
+		ADVANCED_TREE_BRANCH_UP(new int[]{85531}, ObstacleType.TREE_BRANCH_UP_ADVANCED, player1 -> new Climbable(new Position(player1.getPosition()
+				.getX(), 3420, 2), new Position(2472, 3419, 3), ObstacleType.TREE_BRANCH_UP_ADVANCED.getAnimation(), 2, 85, 25)),
 		RUN_ACROSS_SIGNPOST(new int[]{85584}, ObstacleType.RUN_ACROSS_SIGNPOST, player1 -> new Movable(new Position(2476, 3418, 3), new Position(2484, 3418, 3), ObstacleType.RUN_ACROSS_SIGNPOST.getAnimation(), 105, 6, 60, 25)),
 		POLE_SWING(new int[]{85532}, ObstacleType.POLE_SWING, PoleSwing::new),
 		JUMP_OVER_BARRIER(new int[]{85542}, ObstacleType.JUMP_OVER_BARRIER, player1 -> new JumpOverBarrier());
@@ -147,7 +146,6 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
-		 *
 		 * @param objectIds      {@link #objectIds}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
@@ -162,7 +160,6 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
-		 *
 		 * @param objectIds      {@link #objectIds}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
@@ -177,7 +174,6 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
-		 *
 		 * @param objectIds      {@link #objectIds}.
 		 * @param type           {@link #message}.
 		 * @param obstacleAction {@link #obstacleAction}.

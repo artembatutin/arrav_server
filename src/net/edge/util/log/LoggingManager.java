@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 
 /**
  * The class which manages the i/o of all the logs.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class LoggingManager {
@@ -32,7 +31,6 @@ public final class LoggingManager {
 
 	/**
 	 * Writes the log information to the {@code LOG_DATA} tool.mapviewer and to the logs.txt file.
-	 *
 	 * @param log the log to submit.
 	 */
 	public void write(Log log) {

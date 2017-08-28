@@ -1,9 +1,6 @@
 package net.edge.content.skill.thieving.impl;
 
 import net.edge.action.impl.MobAction;
-import net.edge.content.combat.hit.Hit;
-import net.edge.content.combat.hit.HitIcon;
-import net.edge.content.combat.hit.Hitsplat;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.thieving.Thieving;
 import net.edge.task.Task;
@@ -11,6 +8,9 @@ import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.combat.hit.HitIcon;
+import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -19,7 +19,6 @@ import java.util.Optional;
 
 /**
  * Represents functionality for pickpocketing from various npcs.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Pickpocketing extends Thieving {
@@ -61,7 +60,6 @@ public final class Pickpocketing extends Thieving {
 
 	/**
 	 * Constructs a new {@link Pickpocketing}.
-	 *
 	 * @param player {@link #getPlayer()}.
 	 * @param data   the definition of this theft.
 	 * @param mob    the mob this player is stealing from.
@@ -95,7 +93,6 @@ public final class Pickpocketing extends Thieving {
 
 	/**
 	 * The lower the return value, the lower the failure rate
-	 *
 	 * @return an integer to determine how often you will fail.
 	 */
 	private double failureRate() {

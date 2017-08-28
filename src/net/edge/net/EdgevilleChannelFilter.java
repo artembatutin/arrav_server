@@ -27,24 +27,23 @@ import java.net.InetSocketAddress;
  * allowed to be made in order to provide security from socket flooder attacks.
  * <strong>One {@code EdgevilleChannelFilter} instance must be shared across all pipelines in order to ensure that every channel
  * is using the same multiset.</strong>
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author lare96 <http://github.org/lare96>
  */
 @Sharable
 public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<InetSocketAddress> {
-
+	
 	/**
 	 * An {@link AttributeKey} used to access an {@link Attribute} describing which {@link LoginCode} should be sent for
 	 * rejected channels.
 	 */
 	private static final AttributeKey<LoginCode> RESPONSE_KEY = AttributeKey.valueOf("channel.RESPONSE_KEY");
-
+	
 	/**
 	 * A concurrent {@link Multiset} containing active connections.
 	 */
 	private final Multiset<String> connections = ConcurrentHashMultiset.create();
-
+	
 	@Override
 	protected boolean accept(ChannelHandlerContext ctx, InetSocketAddress remoteAddress) throws Exception {
 		String address = address(remoteAddress);
@@ -67,7 +66,7 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 		}
 		return true;
 	}
-
+	
 	@Override
 	protected void channelAccepted(ChannelHandlerContext ctx, InetSocketAddress remoteAddress) {
 		String address = address(remoteAddress);
@@ -76,7 +75,7 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 		System.out.println(address);
 		connections.add(address);
 	}
-
+	
 	@Override
 	protected ChannelFuture channelRejected(ChannelHandlerContext ctx, InetSocketAddress remoteAddress) {
 		Channel channel = ctx.channel();
@@ -86,7 +85,7 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 		channel.write(initialMessage, channel.voidPromise());
 		return channel.writeAndFlush(message).addListener(ChannelFutureListener.CLOSE); // Write response message.
 	}
-
+	
 	/**
 	 * Retrieves the host address name from the {@link InetSocketAddress}.
 	 */
@@ -94,7 +93,7 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 		InetAddress inet = remoteAddress.getAddress();
 		return inet.getHostAddress();
 	}
-
+	
 	/**
 	 * Sets the {@code RESPONSE_KEY} attribute to {@code response}.
 	 */

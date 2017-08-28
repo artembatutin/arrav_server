@@ -10,24 +10,22 @@ import net.edge.world.entity.actor.mob.MobDefinition;
 
 /**
  * The dialogue chain entry that sends the player a dialogue from an NPC.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class NpcDialogue extends Dialogue {
-
+	
 	/**
 	 * The identifier for the NPC sending this dialogue.
 	 */
 	private final int npc;
-
+	
 	/**
 	 * The expression that this NPC will display.
 	 */
 	private final Expression expression;
-
+	
 	/**
 	 * Creates a new {@link NpcDialogue}.
-	 *
 	 * @param npc        the identifier for the NPC sending this dialogue.
 	 * @param expression the expression that this NPC will display.
 	 * @param text       the text that will be displayed on the dialogue.
@@ -37,17 +35,16 @@ public final class NpcDialogue extends Dialogue {
 		this.npc = npc;
 		this.expression = expression;
 	}
-
+	
 	/**
 	 * Creates a new {@link NpcDialogue} with the default expression.
-	 *
 	 * @param npc  the identifier for the NPC sending this dialogue.
 	 * @param text the text that will be displayed on the dialogue.
 	 */
 	public NpcDialogue(int npc, String... text) {
 		this(npc, Expression.CALM, text);
 	}
-
+	
 	@Override
 	public void accept(DialogueBuilder dialogue) {
 		switch(getText().length) {
@@ -89,7 +86,7 @@ public final class NpcDialogue extends Dialogue {
 				throw new IllegalArgumentException("Illegal npc dialogue " + "length: " + getText().length);
 		}
 	}
-
+	
 	@Override
 	public DialogueType type() {
 		return DialogueType.NPC_DIALOGUE;

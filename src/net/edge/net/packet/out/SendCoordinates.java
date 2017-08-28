@@ -8,13 +8,13 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 
 public final class SendCoordinates implements OutgoingPacket {
-
+	
 	private final Position position;
-
+	
 	public SendCoordinates(Position position) {
 		this.position = position;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(85);

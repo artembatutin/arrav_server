@@ -9,7 +9,6 @@ import java.util.Optional;
 
 /**
  * The class which represents a trade log.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ContainerLog extends LogDetails {

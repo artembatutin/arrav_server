@@ -10,31 +10,29 @@ import java.util.logging.Logger;
 
 /**
  * A class which parses {@link RegionDefinition}s
- *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class MapDefinitionDecoder implements Runnable {
-
+	
 	/**
 	 * The logger that will print important information.
 	 */
 	private final static Logger LOGGER = LoggerUtils.getLogger(MapDefinitionDecoder.class);
-
+	
 	/**
 	 * The IndexedFileSystem.
 	 */
 	private final FileSystem fs;
-
+	
 	/**
 	 * Creates the {@link MapDefinitionDecoder}.
-	 *
 	 * @param fs The {@link FileSystem}.
 	 */
 	public MapDefinitionDecoder(FileSystem fs) {
 		this.fs = fs;
 	}
-
+	
 	@Override
 	public void run() {
 		LOGGER.info("Loading region definitions.");
@@ -50,5 +48,5 @@ public final class MapDefinitionDecoder implements Runnable {
 		}
 		LOGGER.info("Loaded " + count + " region definitions.");
 	}
-
+	
 }

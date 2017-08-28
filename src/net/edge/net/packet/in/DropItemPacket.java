@@ -15,11 +15,10 @@ import net.edge.world.entity.item.ItemDefinition;
 
 /**
  * The message sent from the client when the player drops an item.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class DropItemPacket implements IncomingPacket {
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(GameConstants.DROP_DISABLED) {
@@ -29,7 +28,7 @@ public final class DropItemPacket implements IncomingPacket {
 		if(player.getActivityManager().contains(ActivityType.DROP_ITEM)) {
 			return;
 		}
-
+		
 		int id = payload.getShort(false, ByteTransform.A);
 		payload.get(false);
 		payload.get(false);

@@ -12,18 +12,17 @@ import java.util.Objects;
 /**
  * The {@link JsonLoader} implementation that loads all equipment level
  * requirements.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class EquipmentRequirementLoader extends JsonLoader {
-
+	
 	/**
 	 * Creates a new {@link EquipmentRequirementLoader}.
 	 */
 	public EquipmentRequirementLoader() {
 		super("./data/def/combat/level_requirements.json");
 	}
-
+	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		int[] ids = Objects.requireNonNull(builder.fromJson(reader.get("id"), int[].class));

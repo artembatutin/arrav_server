@@ -7,13 +7,13 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendLink implements OutgoingPacket {
-
+	
 	private final String link;
-
+	
 	public SendLink(String link) {
 		this.link = link;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(100, PacketType.VARIABLE_BYTE);

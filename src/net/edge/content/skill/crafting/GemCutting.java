@@ -17,24 +17,22 @@ import static net.edge.content.achievements.Achievement.PRICELESS_GEM;
 
 /**
  * Holds functionality for cutting gems.
- *
  * @author <a href="http://www.rune-server.org/members/Golang/">Jay</a>
  */
 public final class GemCutting extends ProducingSkillAction {
-
+	
 	/**
 	 * The definition we're currently creating items for.
 	 */
 	private final GemCraftingData data;
-
+	
 	/**
 	 * Determines if the underlying skill action is a fletching skill.
 	 */
 	private final boolean fletching;
-
+	
 	/**
 	 * Constructs a new {@link GemCutting}.
-	 *
 	 * @param player    {@link #getPlayer()}.
 	 * @param data      {@link #data}.
 	 * @param fletching {@link #fletching}.
@@ -44,10 +42,9 @@ public final class GemCutting extends ProducingSkillAction {
 		this.data = data;
 		this.fletching = data.fletching;
 	}
-
+	
 	/**
 	 * Attempts to cut the gem for the specified {@code player}.
-	 *
 	 * @param player {@link #getPlayer()}.
 	 * @param item   the item used.
 	 * @param item2  the item used on.
@@ -55,20 +52,20 @@ public final class GemCutting extends ProducingSkillAction {
 	 */
 	public static boolean cut(Player player, Item item, Item item2) {
 		Optional<GemCraftingData> data = GemCraftingData.getDefinition(item.getId(), item2.getId());
-
+		
 		if(!data.isPresent()) {
 			return false;
 		}
-
+		
 		GemCutting action = new GemCutting(player, data.get());
 		action.start();
 		return true;
 	}
-
+	
 	@Override
 	public void onStop() {
 	}
-
+	
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success) {
@@ -76,52 +73,52 @@ public final class GemCutting extends ProducingSkillAction {
 			PRICELESS_GEM.inc(player);
 		}
 	}
-
+	
 	@Override
 	public boolean canExecute() {
 		return checkCrafting();
 	}
-
+	
 	@Override
 	public boolean init() {
 		return checkCrafting();
 	}
-
+	
 	@Override
 	public Optional<Item[]> removeItem() {
 		return Optional.of(new Item[]{data.gem});
 	}
-
+	
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(new Item[]{data.produce});
 	}
-
+	
 	@Override
 	public double experience() {
 		return data.experience;
 	}
-
+	
 	@Override
 	public int delay() {
 		return 3;
 	}
-
+	
 	@Override
 	public boolean instant() {
 		return true;
 	}
-
+	
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.of(data.animation);
 	}
-
+	
 	@Override
 	public SkillData skill() {
 		return fletching ? SkillData.FLETCHING : SkillData.CRAFTING;
 	}
-
+	
 	private boolean checkCrafting() {
 		if(!player.getSkills()[skill().getId()].reqLevel(data.requirement)) {
 			player.message("You need a " + skill().toString() + " level of " + data.requirement + " to continue this action.");
@@ -129,11 +126,10 @@ public final class GemCutting extends ProducingSkillAction {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * The enumerated type whose elements represent the data for gem
 	 * cutting.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/Golang/">Jay</a>
 	 */
 	private enum GemCraftingData {
@@ -159,45 +155,44 @@ public final class GemCutting extends ProducingSkillAction {
 		ONYX_BOLT_TIPS(new Item(ItemIdentifiers.ONYX), new Item(ItemIdentifiers.ONYX_BOLT_TIPS, 24), 73, 9.4, 6702, true),
 		KEBBIT_BOLT(new Item(ItemIdentifiers.KEBBIT_SPIKE), new Item(ItemIdentifiers.KEBBIT_BOLTS, 6), 32, 5.8, 6702, true),
 		LONG_KEBBIT_BOLT(new Item(ItemIdentifiers.LONG_KEBBIT_SPIKE), new Item(ItemIdentifiers.LONG_KEBBIT_BOLTS, 6), 83, 7.89, 6702, true),;
-
+		
 		/**
 		 * Caches our enum values.
 		 */
 		private static final ImmutableSet<GemCraftingData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(GemCraftingData.class));
-
+		
 		/**
 		 * The item required to register the produced form of.
 		 */
 		private final Item gem;
-
+		
 		/**
 		 * The produced item.
 		 */
 		private final Item produce;
-
+		
 		/**
 		 * The requirement for cutting this gem.
 		 */
 		private final int requirement;
-
+		
 		/**
 		 * The experience gained upon cutting this gem.
 		 */
 		private final double experience;
-
+		
 		/**
 		 * The animation for cutting this gem.
 		 */
 		private final Animation animation;
-
+		
 		/**
 		 * Determines if this is a fletching skill action.
 		 */
 		private final boolean fletching;
-
+		
 		/**
 		 * Constructs a new {@link GemCraftingData}.
-		 *
 		 * @param gem         {@link #gem}.
 		 * @param produce     {@link #produce}.
 		 * @param requirement {@link #requirement}.
@@ -213,10 +208,9 @@ public final class GemCutting extends ProducingSkillAction {
 			this.animation = new Animation(animationId);
 			this.fletching = fletching;
 		}
-
+		
 		/**
 		 * Constructs a new {@link GemCraftingData}.
-		 *
 		 * @param gem         {@link #gem}.
 		 * @param produce     {@link #produce}.
 		 * @param requirement {@link #requirement}.
@@ -231,7 +225,7 @@ public final class GemCutting extends ProducingSkillAction {
 			this.animation = new Animation(animationId);
 			this.fletching = false;
 		}
-
+		
 		public static Optional<GemCraftingData> getDefinition(int itemUsed, int usedOn) {
 			return VALUES.stream().filter($it -> $it.gem.getId() == itemUsed || $it.gem.getId() == usedOn).filter($it -> ItemIdentifiers.CHISEL == itemUsed || ItemIdentifiers.CHISEL == usedOn).findAny();
 		}

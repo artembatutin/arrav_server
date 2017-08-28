@@ -16,11 +16,10 @@ import static net.edge.content.skill.construction.furniture.Furniture.OAK_STAIRC
 
 /**
  * Handles room manipulations.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class RoomManipulation {
-
+	
 	public static void createRoom(RoomData data, Player p, int toHeight) {
 		House house = p.getHouse();
 		if(!p.getInventory().contains(new Item(995, data.getCost()))) {
@@ -113,10 +112,10 @@ public class RoomManipulation {
 			}
 			room.addFurniture(pf);
 		}
-
+		
 		Room room = new Room(data, rotation, 0);
 		PaletteTile tile = new PaletteTile(room.getX(), room.getY(), room.getZ(), room.getRotation());
-
+		
 		int xOff = 0, yOff = 0;
 		if(direction == LEFT) {
 			xOff = -1;
@@ -147,7 +146,7 @@ public class RoomManipulation {
 		house.createPalette();
 		house.refresh();
 	}
-
+	
 	public static void rotateRoom(int wise, Player p) {
 		House house = p.getHouse();
 		int[] myTiles = getMyChunk(p);
@@ -193,7 +192,7 @@ public class RoomManipulation {
 		house.createPalette();
 		house.refresh();
 	}
-
+	
 	public static void deleteRoom(Player p, int toHeight) {
 		House house = p.getHouse();
 		int[] myTiles = getMyChunk(p);
@@ -209,7 +208,7 @@ public class RoomManipulation {
 			direction = RIGHT;
 		if(yOnTile == 7)
 			direction = UP;
-
+		
 		Room room = new Room(house.get().isDungeon() ? RoomData.DUNGEON_EMPTY : RoomData.EMPTY, 0, 0);
 		PaletteTile tile = new PaletteTile(room.getX(), room.getY(), room.getZ(), room.getRotation());
 		int xOff = 0, yOff = 0;
@@ -268,7 +267,7 @@ public class RoomManipulation {
 		house.createPalette();
 		house.refresh();
 	}
-
+	
 	public static boolean roomExists(Player p) {
 		House house = p.getHouse();
 		int[] myTiles = getMyChunk(p);
@@ -304,5 +303,5 @@ public class RoomManipulation {
 			return false;
 		return true;
 	}
-
+	
 }

@@ -6,7 +6,7 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendEnergy implements OutgoingPacket {
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(110);

@@ -9,7 +9,6 @@ import net.edge.world.entity.actor.update.UpdateFlag;
 
 /**
  * The message sent from the client when the player speaks.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ChatPacket implements IncomingPacket {

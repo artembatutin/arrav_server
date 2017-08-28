@@ -8,7 +8,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"pinstance"}, rights = {Rights.ADMINISTRATOR}, syntax = "Set a player to an instance, ::pinstance player id")
 public final class SetPlayerInstanceCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player p = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
@@ -17,5 +17,5 @@ public final class SetPlayerInstanceCommand implements Command {
 		int instance = Integer.parseInt(cmd[2]);
 		p.setInstance(instance);
 	}
-
+	
 }

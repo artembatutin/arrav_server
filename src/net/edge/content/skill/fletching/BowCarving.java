@@ -19,48 +19,45 @@ import java.util.Optional;
 
 /**
  * Holds functionality for carving bows.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class BowCarving extends ProducingSkillAction {
-
+	
 	/**
 	 * The definition of this log.
 	 */
 	private final Log definition;
-
+	
 	/**
 	 * Determines if we're cutting dependant of the beaver familiar.
 	 */
 	private final boolean beaver;
-
+	
 	/**
 	 * The current array the player selected.
 	 */
 	private ProduciblePolicy current;
-
+	
 	/**
 	 * The amount of times this task has to run.
 	 */
 	private int counter;
-
+	
 	/**
 	 * Constructs a new {@link BowCarving} skill action.
-	 *
 	 * @param player     {@link #getPlayer()}.
 	 * @param definition {@link #definition}.
 	 * @param beaver     {@link #beaver}.
 	 */
 	public BowCarving(Player player, Log definition, boolean beaver) {
 		super(player, Optional.empty());
-
+		
 		this.definition = definition;
 		this.beaver = beaver;
 	}
-
+	
 	/**
 	 * Fletches all the possible items a player can fletch.
-	 *
 	 * @param player   the player we're fletching items for.
 	 * @param buttonId the button id pressed.
 	 * @return <true> if this action started, <false> otherwise.
@@ -70,11 +67,11 @@ public final class BowCarving extends ProducingSkillAction {
 			return false;
 		}
 		Optional<ProduciblePolicy> pol = Log.getProducibles((BowCarving) player.getAttr().get("fletching_bowcarving").get(), buttonId);
-
+		
 		if(!pol.isPresent()) {
 			return false;
 		}
-
+		
 		player.closeWidget();
 		if(Log.getAmount(buttonId) == 28) {
 			BowCarving fletch = (BowCarving) player.getAttr().get("fletching_bowcarving").get();
@@ -85,10 +82,9 @@ public final class BowCarving extends ProducingSkillAction {
 		fletch(player, pol.get(), Log.getAmount(buttonId));
 		return true;
 	}
-
+	
 	/**
 	 * Attempts to start fletching for the {@code player}.
-	 *
 	 * @param player     {@link #getPlayer()}.
 	 * @param producable {@link #current}.
 	 * @param amount     the amount to register.
@@ -100,10 +96,9 @@ public final class BowCarving extends ProducingSkillAction {
 		player.getAttr().get("fletching_bowcarving").set(fletch);
 		fletch.start();
 	}
-
+	
 	/**
 	 * Opens the interface for the player.
-	 *
 	 * @param player     the player we're opening this interface for.
 	 * @param firstItem  the item this player used on the {@code secondItem}.
 	 * @param secondItem the secondItem that was used by the {@code firstItem}.
@@ -111,11 +106,11 @@ public final class BowCarving extends ProducingSkillAction {
 	 */
 	public static boolean openInterface(Player player, Item firstItem, Item secondItem, boolean beaver) {
 		Optional<Log> log = Log.getLog(firstItem.getId(), secondItem.getId());
-
+		
 		if(!log.isPresent()) {
 			return false;
 		}
-
+		
 		if(firstItem.getId() == log.get().log.getId() && secondItem.getId() == 946 || firstItem.getId() == 946 && secondItem.getId() == log.get().log.getId() || beaver) {
 			BowCarving fletching = new BowCarving(player, log.get(), beaver);
 			player.getAttr().get("fletching_bowcarving").set(fletching);
@@ -152,13 +147,13 @@ public final class BowCarving extends ProducingSkillAction {
 		}
 		return false;
 	}
-
+	
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			if(beaver) {
 				Familiar familiar = player.getFamiliar().orElse(null);
-
+				
 				if(familiar != null) {
 					player.faceEntity(familiar);
 					player.animation(new Animation(827));
@@ -174,52 +169,52 @@ public final class BowCarving extends ProducingSkillAction {
 			}
 		}
 	}
-
+	
 	@Override
 	public Optional<Item[]> removeItem() {
 		return Optional.of(new Item[]{definition.log});
 	}
-
+	
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(new Item[]{current.producible});
 	}
-
+	
 	@Override
 	public int delay() {
 		return beaver ? 6 : 3;
 	}
-
+	
 	@Override
 	public boolean instant() {
 		return true;
 	}
-
+	
 	@Override
 	public boolean init() {
 		return checkFletching();
 	}
-
+	
 	@Override
 	public boolean canExecute() {
 		return checkFletching();
 	}
-
+	
 	@Override
 	public double experience() {
 		return current.experience;
 	}
-
+	
 	@Override
 	public SkillData skill() {
 		return SkillData.FLETCHING;
 	}
-
+	
 	@Override
 	public void onStop() {
 		player.getAttr().get("fletching_bows").set(false);
 	}
-
+	
 	public boolean checkFletching() {
 		if(!player.getSkills()[Skills.FLETCHING].reqLevel(current.requirement)) {
 			player.message("You need a fletching level of " + current.requirement + " to fletch this.");
@@ -227,39 +222,38 @@ public final class BowCarving extends ProducingSkillAction {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * @return the current
 	 */
 	public ProduciblePolicy getCurrent() {
 		return current;
 	}
-
+	
 	/**
 	 * @param current the current to set
 	 */
 	public void setCurrent(ProduciblePolicy current) {
 		this.current = current;
 	}
-
+	
 	/**
 	 * Defines the first button types for the menu of 3 options.
 	 */
 	private static final ButtonConfiguration[] FIRST_THREE_MENU = new ButtonConfiguration[]{new ButtonConfiguration(34185, 1), new ButtonConfiguration(34184, 5), new ButtonConfiguration(34183, 10), new ButtonConfiguration(34182, 28)};
-
+	
 	/**
 	 * Defines the second button types for the menu of 3 options.
 	 */
 	private static final ButtonConfiguration[] SECOND_THREE_MENU = new ButtonConfiguration[]{new ButtonConfiguration(34189, 1), new ButtonConfiguration(34188, 5), new ButtonConfiguration(34187, 10), new ButtonConfiguration(34186, 28)};
-
+	
 	/**
 	 * Defines the third button types for the menu of 3 options.
 	 */
 	private static final ButtonConfiguration[] THIRD_THREE_MENU = new ButtonConfiguration[]{new ButtonConfiguration(34193, 1), new ButtonConfiguration(34192, 5), new ButtonConfiguration(34191, 10), new ButtonConfiguration(34190, 28)};
-
+	
 	/**
 	 * The enumerated type whose elements represent the data required for fletching.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum Log {
@@ -269,25 +263,24 @@ public final class BowCarving extends ProducingSkillAction {
 		MAPLE(1517, new ProduciblePolicy(64, 50, 50, FIRST_THREE_MENU), new ProduciblePolicy(62, 55, 58.3, SECOND_THREE_MENU), new ProduciblePolicy(9448, 54, 32, THIRD_THREE_MENU)),
 		YEW(1515, new ProduciblePolicy(68, 65, 67.5, FIRST_THREE_MENU), new ProduciblePolicy(66, 70, 75, SECOND_THREE_MENU), new ProduciblePolicy(9452, 69, 50, THIRD_THREE_MENU)),
 		MAGIC(1513, new ProduciblePolicy(72, 80, 83.3, new ButtonConfiguration(34170, 1), new ButtonConfiguration(34169, 5), new ButtonConfiguration(34168, 10), new ButtonConfiguration(34167, 28)), new ProduciblePolicy(70, 85, 91.5, new ButtonConfiguration(34174, 1), new ButtonConfiguration(34173, 5), new ButtonConfiguration(34172, 10), new ButtonConfiguration(34171, 28)));
-
+		
 		/**
 		 * Caches our enum values.
 		 */
 		private static final ImmutableSet<Log> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Log.class));
-
+		
 		/**
 		 * The identification for this log.
 		 */
 		private final Item log;
-
+		
 		/**
 		 * The producible items for this log.
 		 */
 		private final ProduciblePolicy[] producibles;
-
+		
 		/**
 		 * Constructs a new {@link Log} enumerator.
-		 *
 		 * @param logId       {@link #log}.
 		 * @param producibles {@link #producibles}.
 		 */
@@ -295,20 +288,18 @@ public final class BowCarving extends ProducingSkillAction {
 			this.log = new Item(logId);
 			this.producibles = producibles;
 		}
-
+		
 		/**
 		 * Gets the definition for this log by checking if the log
 		 * item identifier matched with the {@code id}.
-		 *
 		 * @return a {@link Log} wrapped in an Optional, {@link Optional#empty()} otherwise.
 		 */
 		public static Optional<Log> getLog(int firstId, int secondId) {
 			return VALUES.stream().filter(def -> def.log.getId() == firstId || def.log.getId() == secondId).findAny();
 		}
-
+		
 		/**
 		 * Gets the definition for what item we should produce.
-		 *
 		 * @param button the button the player clicked.
 		 * @return a producible policy wrapped in an optional, {@link Optional#empty()} otherwise.
 		 */
@@ -324,10 +315,9 @@ public final class BowCarving extends ProducingSkillAction {
 			}
 			return Optional.empty();
 		}
-
+		
 		/**
 		 * Gets the amount to produce chained to this button.
-		 *
 		 * @param button the button to check the amount for.
 		 * @return the amount to produce.
 		 */
@@ -344,38 +334,36 @@ public final class BowCarving extends ProducingSkillAction {
 			return 1;
 		}
 	}
-
+	
 	/**
 	 * Represents the producible items this log can make if the player
 	 * has the respective requirement.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static class ProduciblePolicy {
-
+		
 		/**
 		 * The identification for this bow.
 		 */
 		private final Item producible;
-
+		
 		/**
 		 * The requirement required for fletching this bow.
 		 */
 		private final int requirement;
-
+		
 		/**
 		 * The experience gained for this bow.
 		 */
 		private final double experience;
-
+		
 		/**
 		 * The button configuration for this bow.
 		 */
 		private final ButtonConfiguration[] button;
-
+		
 		/**
 		 * Constructs a new {@link ProduciblePolicy}.
-		 *
 		 * @param producible  {@link #producible}.
 		 * @param requirement {@link #requirement}.
 		 * @param experience  {@link #experience}.
@@ -387,10 +375,9 @@ public final class BowCarving extends ProducingSkillAction {
 			this.experience = experience * 1.70;
 			this.button = button;
 		}
-
+		
 		/**
 		 * Constructs a new {@link ProduciblePolicy}.
-		 *
 		 * @param producibleId {@link #producible}.
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
@@ -400,27 +387,25 @@ public final class BowCarving extends ProducingSkillAction {
 			this(new Item(producibleId), requirement, experience, button);
 		}
 	}
-
+	
 	/**
 	 * Represents a button configuration, basically chains the amount to produce to the button.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static class ButtonConfiguration {
-
+		
 		/**
 		 * The button identification.
 		 */
 		private final int buttonId;
-
+		
 		/**
 		 * The amount chained to this button.
 		 */
 		private final int amount;
-
+		
 		/**
 		 * Constructs a new {@link ButtonConfiguration}.
-		 *
 		 * @param buttonId {@link #buttonId}.
 		 * @param amount   {@link #amount}.
 		 */

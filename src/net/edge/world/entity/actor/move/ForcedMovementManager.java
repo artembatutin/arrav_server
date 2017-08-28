@@ -9,34 +9,31 @@ import net.edge.world.entity.actor.update.UpdateFlag;
 
 /**
  * Holds functionality for the 0x400 mask.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ForcedMovementManager {
-
+	
 	/**
 	 * The movement to manage.
 	 */
 	private final ForcedMovement movement;
-
+	
 	/**
 	 * The backing task running for this movement.
 	 */
 	private final Task t;
-
+	
 	/**
 	 * Constructs a new {@link ForcedMovement} manager.
-	 *
 	 * @param movement the forced movement.
 	 */
 	private ForcedMovementManager(ForcedMovement movement) {
 		this.movement = movement;
 		this.t = new ForcedMovementTask(movement);
 	}
-
+	
 	/**
 	 * Checks if this forced movement can be submitted.
-	 *
 	 * @param character the player attempting to utilize the forced movement.
 	 * @return <true> if the player can, <false> otherwise.
 	 */
@@ -49,13 +46,12 @@ public final class ForcedMovementManager {
 			player.message("You can't do this while teleporting.");
 			return false;
 		}
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * Submits the forced movement to the world.
-	 *
 	 * @param character the character doing the forced movement.
 	 * @param movement  the movement to submit.
 	 */
@@ -66,10 +62,9 @@ public final class ForcedMovementManager {
 			World.get().submit(manager.t);
 		}
 	}
-
+	
 	/**
 	 * Submits the forced movement to the world.
-	 *
 	 * @param character         the character doing the forced movement.
 	 * @param movement          the movement to submit.
 	 * @param skipPrerequisites flag to skip  prerequisites.
@@ -81,37 +76,34 @@ public final class ForcedMovementManager {
 			World.get().submit(manager.t);
 		}
 	}
-
+	
 	/**
 	 * The backing task running for this task.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class ForcedMovementTask extends Task {
-
+		
 		/**
 		 * The forced movement this task is running for.
 		 */
 		private final ForcedMovement movement;
-
+		
 		/**
 		 * Constructs a new {@link ForcedMovementTask}.
-		 *
 		 * @param movement {@link #movement}.
 		 */
 		ForcedMovementTask(ForcedMovement movement) {
 			super(1, false);
 			this.movement = movement;
 		}
-
+		
 		/**
 		 * The timer which moves the players to the destination when it hits zero.
 		 */
 		private int timer;
-
+		
 		/**
 		 * Calculates the time to move the player to the destination.
-		 *
 		 * @return the time.
 		 */
 		private int calculateTimer() {
@@ -121,7 +113,7 @@ public final class ForcedMovementManager {
 			secondSpeed = (int) Math.ceil(movement.getFirst().getDistance(movement.getSecond()) / (secondSpeed * 0.1));
 			return movement.getTimer().isPresent() ? movement.getTimer().getAsInt() : 1 + firstSpeed + secondSpeed;
 		}
-
+		
 		@Override
 		public void onSubmit() {
 			if(movement.getCharacter().isPlayer()) {
@@ -137,7 +129,7 @@ public final class ForcedMovementManager {
 			movement.getCharacter().getFlags().flag(UpdateFlag.FORCE_MOVEMENT);
 			movement.getCharacter().getMovementQueue().setLockMovement(true);
 		}
-
+		
 		@Override
 		public void execute() {
 			if(timer == 0) {
@@ -154,9 +146,9 @@ public final class ForcedMovementManager {
 				this.cancel();
 			}
 			timer -= 1;
-
+			
 		}
-
+		
 		@Override
 		public void onCancel() {
 			if(movement != null) {

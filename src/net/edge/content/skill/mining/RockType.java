@@ -2,7 +2,6 @@ package net.edge.content.skill.mining;
 
 /**
  * The enumerated type which elements ore color types.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 enum RockType {
@@ -25,23 +24,23 @@ enum RockType {
 	TYPE18(52588, 52589, 52590),
 	TYPE19(73062, 73064, 73063),
 	TYPE20(74450, 74450, 74451);
-
+	
 	private final int big, crushed, small;
-
+	
 	RockType(int big, int crushed, int small) {
 		this.big = big;
 		this.crushed = crushed;
 		this.small = small;
 	}
-
+	
 	public int getBig() {
 		return big;
 	}
-
+	
 	public int getCrushed() {
 		return crushed;
 	}
-
+	
 	public int getSmall() {
 		return small;
 	}

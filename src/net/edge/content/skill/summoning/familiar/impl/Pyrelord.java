@@ -22,29 +22,27 @@ import java.util.Optional;
  * @since 24-7-2017.
  */
 public final class Pyrelord extends Familiar {
-
+	
 	private final Fighter ability = new Fighter();
-
+	
 	/**
 	 * Constructs a new {@link Familiar}.
 	 */
 	public Pyrelord() {
 		super(SummoningData.PYRELORD);
 	}
-
+	
 	/**
 	 * The ability type chained to this familiar.
-	 *
 	 * @return the familiar ability type.
 	 */
 	@Override
 	public FamiliarAbility getAbilityType() {
 		return ability;
 	}
-
+	
 	/**
 	 * The passive ability chained to this familiar.
-	 *
 	 * @return the passive ability instance wrapped in an
 	 * optional if theres a value present, {@link Optional#empty()} otherwise.
 	 */
@@ -52,20 +50,18 @@ public final class Pyrelord extends Familiar {
 	public Optional<PassiveAbility> getPassiveAbility() {
 		return Optional.empty();
 	}
-
+	
 	/**
 	 * Checks if this familiar is combatic or not.
-	 *
 	 * @return <true> if this familiar is combatic, <false> otherwise.
 	 */
 	@Override
 	public boolean isCombatic() {
 		return true;
 	}
-
+	
 	/**
 	 * Attempts to interact with this familiar
-	 *
 	 * @param player the player whom is interacting with the familiar.
 	 * @param mob    the mob this player is interacting with.
 	 * @param id     the action id being interacted with.
@@ -76,20 +72,20 @@ public final class Pyrelord extends Familiar {
 			player.getDialogueBuilder().send(RandomUtils.random(CONVERSATION));
 		}
 	}
-
+	
 	@Override
 	public boolean itemOnNpc(Player player, Mob mob, Item item) {
 		player.facePosition(mob.getPosition());
 		Firemaking.execute(player, item, item, true);
 		return true;
 	}
-
+	
 	private static final Conversation[] CONVERSATION = new Conversation[]{new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);
@@ -104,9 +100,9 @@ public final class Pyrelord extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);
@@ -118,9 +114,9 @@ public final class Pyrelord extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);
@@ -136,9 +132,9 @@ public final class Pyrelord extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);

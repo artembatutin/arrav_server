@@ -8,7 +8,6 @@ import static net.edge.content.skill.mining.RockType.*;
 /**
  * The enumerated type which elements represents the data required for the
  * process of mining rocks.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  * @author Artem Batutin <artembatutin@gmail.com>
  */
@@ -26,71 +25,70 @@ enum RockData {
 	MITHRIL(new TransformableObject[]{new TransformableObject(2102, 450), new TransformableObject(2103, 451), big(47787, TYPE1), small(47788, TYPE1), crushed(47789, TYPE1), big(44105, TYPE2), crushed(44106, TYPE2), big(63281, TYPE2), small(63282, TYPE2), crushed(63283, TYPE2), big(56856, TYPE3), small(56857, TYPE3), crushed(56858, TYPE3), big(73173, TYPE4), big(71239, TYPE6), big(53945, TYPE8), small(53946, TYPE8), crushed(535947, TYPE8), big(74441, TYPE9), small(74442, TYPE9), crushed(74443, TYPE9), small(53949, TYPE10), crushed(53950, TYPE10), big(61015, TYPE15), small(61016, TYPE15), crushed(61017, TYPE15), big(67371, TYPE16), small(67372, TYPE16), crushed(67373, TYPE16)}, 447, 55, 80.0, 300, 6, 4, 0.05),
 	ADAMANTITE(new TransformableObject[]{new TransformableObject(2105, 11552), new TransformableObject(2104, 450), new TransformableObject(2105, 451), big(47785, TYPE1), crushed(47786, TYPE1), big(44107, TYPE2), crushed(44108, TYPE2), big(63278, TYPE2), small(63279, TYPE2), crushed(63280, TYPE2), big(56865, TYPE3), small(56866, TYPE3), crushed(56867, TYPE3), big(73176, TYPE4), small(73177, TYPE4), big(71236, TYPE6), crushed(71238, TYPE6), big(53942, TYPE8), crushed(53944, TYPE8), big(74438, TYPE9), small(74439, TYPE9), crushed(74440, TYPE9), big(61021, TYPE15), small(61022, TYPE15), crushed(61023, TYPE15)}, 449, 70, 95.0, 600, 8, 8, 0.03),
 	RUNITE(new TransformableObject[]{new TransformableObject(2106, 450), new TransformableObject(2107, 451), big(56862, TYPE3), small(56863, TYPE3), big(87072, TYPE6), small(87073, TYPE6), big(79211, TYPE7), big(75081, TYPE9), small(75082, TYPE9)}, 451, 85, 125.0, 900, 12, 16, 0.01);
-
+	
 	/**
 	 * Creating a new styled big rock depending on it's type.
 	 */
 	public static TransformableObject big(int rock, RockType type) {
 		return new TransformableObject(rock, type.getBig());
 	}
-
+	
 	/**
 	 * Creating a new styled crushed rock depending on it's type.
 	 */
 	public static TransformableObject crushed(int rock, RockType type) {
 		return new TransformableObject(rock, type.getCrushed());
 	}
-
+	
 	/**
 	 * Creating a new styled small rock depending on it's type.
 	 */
 	public static TransformableObject small(int rock, RockType type) {
 		return new TransformableObject(rock, type.getSmall());
 	}
-
+	
 	/**
 	 * The regular and empty rock identification for this rock.
 	 */
 	private final TransformableObject[] object;
-
+	
 	/**
 	 * The item this rock produces.
 	 */
 	private final Item item;
-
+	
 	/**
 	 * The requirement required to mine this rock.
 	 */
 	private final int requirement;
-
+	
 	/**
 	 * The experience gained for mining this rock.
 	 */
 	private final double experience;
-
+	
 	/**
 	 * The respawn identification for this rock.
 	 */
 	private final int respawnTime;
-
+	
 	/**
 	 * The prospect delay when prospecting for this rock.
 	 */
 	private final int prospectdelay;
-
+	
 	/**
 	 * The amount of ores this rock can produce.
 	 */
 	private final int oreCount;
-
+	
 	/**
 	 * The success rate for mining this rock.
 	 */
 	private final double success;
-
+	
 	/**
 	 * Constructs a new {@link RockData}.
-	 *
 	 * @param object        {@link #object}.
 	 * @param item          {@link #item}.
 	 * @param requirement   {@link #requirement}.
@@ -110,66 +108,66 @@ enum RockData {
 		this.oreCount = oreCount;
 		this.success = success;
 	}
-
+	
 	/**
 	 * @return {@link #object}.
 	 */
 	public TransformableObject[] getObject() {
 		return object;
 	}
-
+	
 	/**
 	 * @return {@link #item}.
 	 */
 	public Item getItem() {
 		return item;
 	}
-
+	
 	/**
 	 * @return {@link #requirement}.
 	 */
 	public int getRequirement() {
 		return requirement;
 	}
-
+	
 	/**
 	 * @return {@link #experience}.
 	 */
 	public double getExperience() {
 		return experience;
 	}
-
+	
 	/**
 	 * @return {@link #respawnTime}.
 	 */
 	public int getRespawnTime() {
 		return respawnTime;
 	}
-
+	
 	/**
 	 * @return {@link #prospectdelay}.
 	 */
 	public int prospectDelay() {
 		return prospectdelay;
 	}
-
+	
 	/**
 	 * @return {@link #oreCount}.
 	 */
 	public int getOreCount() {
 		return oreCount;
 	}
-
+	
 	/**
 	 * @return {@link #success}.
 	 */
 	public double getSuccess() {
 		return success;
 	}
-
+	
 	@Override
 	public final String toString() {
 		return name().toLowerCase();
 	}
-
+	
 }

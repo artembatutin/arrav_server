@@ -13,15 +13,14 @@ import java.util.stream.IntStream;
 
 /**
  * The {@link JsonLoader} implementation that loads all slayer keys.
- *
  * @author <a href="http://www.rune-server.org/members/Stand+Up/">Stan</a>
  */
 public final class SlayerDefinitionLoader extends JsonLoader {
-
+	
 	public SlayerDefinitionLoader() {
 		super("./data/def/slayer/slayer.json");
 	}
-
+	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		SlayerMaster[] masters = Objects.requireNonNull(builder.fromJson(reader.get("masters").getAsJsonArray(), SlayerMaster[].class));
@@ -31,5 +30,5 @@ public final class SlayerDefinitionLoader extends JsonLoader {
 		}
 		Arrays.stream(masters).forEach(master -> Slayer.SLAYER_KEYS.put(master, tasks));
 	}
-
+	
 }

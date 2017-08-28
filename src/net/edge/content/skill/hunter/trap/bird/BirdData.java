@@ -5,7 +5,6 @@ import net.edge.world.entity.item.Item;
 /**
  * The enumerated type whose elements represent a set of constants
  * used for bird snaring.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum BirdData {
@@ -42,7 +41,6 @@ public enum BirdData {
 
 	/**
 	 * Constructs a new {@link BirdData}.
-	 *
 	 * @param npcId       {@link #npcId}.
 	 * @param objectId    {@link #objectId}
 	 * @param requirement {@link #requirement}.

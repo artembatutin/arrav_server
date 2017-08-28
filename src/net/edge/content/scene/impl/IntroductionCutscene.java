@@ -23,33 +23,31 @@ import java.util.Optional;
 
 /**
  * The introduction cutscene for the player when he logs into the game for the first time.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class IntroductionCutscene extends Cutscene {
-
+	
 	/**
 	 * The player this introduction is for.
 	 */
 	private final Player player;
-
+	
 	/**
 	 * Constructs a new {@link IntroductionCutscene}.
-	 *
 	 * @param player {@link #player}.
 	 */
 	public IntroductionCutscene(Player player) {
 		this.player = player;
 		this.player.firstLogin = !HostManager.contains(player.getSession().getHost(), HostListType.STARTER_RECEIVED);
 	}
-
+	
 	@Override
 	public void onSubmit() {
 		player.move(new Position(3088, 3509));
 		player.widget(3559);
 	}
-
+	
 	@Override
 	public void execute(Task t) {
 		player.setPosition(new Position(3088, 3509));
@@ -113,12 +111,12 @@ public final class IntroductionCutscene extends Cutscene {
 		} else
 			player.move(new Position(3088, 3509));
 	}
-
+	
 	@Override
 	public void onCancel() {
-
+	
 	}
-
+	
 	private Dialogue complete() {
 		return new StatementDialogue("You're on your own now. Goodluck!").attach(() -> {
 			player.setInstance(0);
@@ -133,9 +131,9 @@ public final class IntroductionCutscene extends Cutscene {
 			player.move(new Position(3088, 3509));
 			player.widget(-5);
 		});
-
+		
 	}
-
+	
 	public void prerequisites() {
 		player.resetSidebars();
 		player.getActivityManager().setAllExcept(ActivityType.CLICK_BUTTON, ActivityType.LOG_OUT, ActivityType.CHARACTER_SELECTION, ActivityType.DIALOGUE_INTERACTION, ActivityType.FACE_POSITION);
@@ -158,5 +156,5 @@ public final class IntroductionCutscene extends Cutscene {
 			player.widget(-5);
 		}
 	}
-
+	
 }

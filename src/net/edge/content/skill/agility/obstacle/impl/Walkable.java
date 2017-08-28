@@ -11,14 +11,12 @@ import net.edge.world.locale.Position;
 /**
  * The forced walkable obstacle action which will walk a player starting from the start position
  * to the destination with it's respective animation by setting them to the players animation indexes.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public class Walkable extends ObstacleActivity {
-
+	
 	/**
 	 * Constructs a new {@link Walkable} Obstacle Activity.
-	 *
 	 * @param start       {@link #getStart()}.
 	 * @param destination {@link #getDestination()}.
 	 * @param animation   {@link #getAnimation()}.
@@ -28,12 +26,12 @@ public class Walkable extends ObstacleActivity {
 	public Walkable(Position start, Position destination, Animation animation, int requirement, double experience) {
 		super(start, destination, animation, requirement, experience);
 	}
-
+	
 	@Override
 	public boolean canExecute(Player player) {
 		return true;
 	}
-
+	
 	@Override
 	public void onSubmit(Player player) {
 		int animation = getAnimation().getId();
@@ -67,12 +65,12 @@ public class Walkable extends ObstacleActivity {
 			player.getMovementQueue().walk(getStart());
 		}*/
 	}
-
+	
 	@Override
 	public void execute(Player player, Task t) {
 
 	}
-
+	
 	@Override
 	public void onCancel(Player player) {
 		int animation = -1;

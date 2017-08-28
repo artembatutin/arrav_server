@@ -15,14 +15,12 @@ import java.util.stream.IntStream;
 
 /**
  * Holds functionality for the pole swing obstacle.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class PoleSwing extends ObstacleActivity {
 
 	/**
 	 * Constructs a new {@link Movable} Obstacle Activity.
-	 *
 	 * @param player the player who's attempting the pole swing..
 	 */
 	public PoleSwing(Player player) {

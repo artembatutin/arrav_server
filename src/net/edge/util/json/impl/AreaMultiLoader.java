@@ -10,15 +10,14 @@ import net.edge.world.locale.loc.SquareLocation;
 
 /**
  * The {@link JsonLoader} implementation that loads all multi area instances.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class AreaMultiLoader extends JsonLoader {
-
+	
 	public AreaMultiLoader() {
 		super("./data/def/areas_multi.json");
 	}
-
+	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		boolean square = reader.has("square");

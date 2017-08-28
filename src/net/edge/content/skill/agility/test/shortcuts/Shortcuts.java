@@ -22,7 +22,6 @@ public final class Shortcuts extends Agility {
 
 	/**
 	 * Constructs a new {@link Shortcuts}.
-	 *
 	 * @param player     {@link #player}.
 	 * @param object     {@link #object}.
 	 * @param crossing   {@link #crossing}.
@@ -63,7 +62,6 @@ public final class Shortcuts extends Agility {
 
 	/**
 	 * The experience given from this skill action.
-	 *
 	 * @return the experience given.
 	 */
 	@Override

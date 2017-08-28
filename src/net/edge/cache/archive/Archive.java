@@ -19,7 +19,6 @@ import static net.edge.cache.Cache.INDEX_SIZE;
  * An archive contains varied amounts of {@link ArchiveSector}s which contain
  * compressed file system data.
  * </p>
- *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Archive {
@@ -32,7 +31,6 @@ public final class Archive {
 	/**
 	 * Constructs a new {@link Archive} with the specified {@link Int2ObjectArrayMap} of
 	 * {@link ArchiveSector}s.
-	 *
 	 * @param sectors The {@link Int2ObjectArrayMap} of sectors within this archive.
 	 */
 	private Archive(Int2ObjectArrayMap<ArchiveSector> sectors) {
@@ -41,7 +39,6 @@ public final class Archive {
 
 	/**
 	 * Decodes the data within this {@link Archive}.
-	 *
 	 * @param data The encoded data within this archive.
 	 * @return Returns an {@link Archive} with the decoded data, never
 	 * {@code null}.
@@ -84,7 +81,6 @@ public final class Archive {
 
 	/**
 	 * Retrieves an {@link Optional<ArchiveSector>} for the specified hash.
-	 *
 	 * @param hash The archive sectors hash.
 	 * @return The optional container.
 	 */
@@ -94,7 +90,6 @@ public final class Archive {
 
 	/**
 	 * Retrieves an {@link Optional<ArchiveSector>} for the specified name.
-	 *
 	 * @param name The archive sectors name.
 	 * @return The optional container.
 	 */
@@ -106,7 +101,6 @@ public final class Archive {
 	/**
 	 * Returns the data within the {@link ArchiveSector} for the specified
 	 * {@code String} name.
-	 *
 	 * @param name The name of the {@link ArchiveSector}.
 	 * @return The data within the {@link ArchiveSector} or nothing, this method
 	 * fails-fast if no {@link ArchiveSector} exists for the specified

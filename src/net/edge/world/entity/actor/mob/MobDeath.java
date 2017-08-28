@@ -20,25 +20,23 @@ import static net.edge.content.achievements.Achievement.*;
 /**
  * The {@link ActorDeath} implementation that is dedicated to managing the
  * death process for all {@link Mob}s.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class MobDeath extends ActorDeath<Mob> {
-
+	
 	/**
 	 * Creates a new {@link MobDeath}.
-	 *
 	 * @param mob the NPC who has died and needs the death process.
 	 */
 	public MobDeath(Mob mob) {
 		super(mob);
 	}
-
+	
 	/**
 	 * An array of npcs which don't drop any items.
 	 */
 	private static final List<Integer> NON_DROPPABLES = Arrays.asList(2025, 2026, 2027, 2028, 2029, 2030);
-
+	
 	@Override
 	public void preDeath() {
 		if(getActor().getCombat().getDefender() != null) {
@@ -46,7 +44,7 @@ public final class MobDeath extends ActorDeath<Mob> {
 		}
 		getActor().animation(new Animation(getActor().getDefinition().getDeathAnimation(), Animation.AnimationPriority.HIGH));
 	}
-
+	
 	@Override
 	public void death() {
 		Optional<Player> killer = getActor().getCombat().getDamageCache().getPlayerKiller();
@@ -71,7 +69,7 @@ public final class MobDeath extends ActorDeath<Mob> {
 		});
 		World.get().getMobs().remove(getActor());
 	}
-
+	
 	@Override
 	public void postDeath() {
 		try {

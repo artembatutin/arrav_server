@@ -8,16 +8,16 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
 public final class SendItemOnInterfaceSlot implements OutgoingPacket {
-
+	
 	private final Item item;
 	private final int id, slot;
-
+	
 	public SendItemOnInterfaceSlot(int id, Item item, int slot) {
 		this.id = id;
 		this.slot = slot;
 		this.item = item;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(34, PacketType.VARIABLE_SHORT);

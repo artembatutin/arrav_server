@@ -45,7 +45,6 @@ public enum BirdNest {
 
 	/**
 	 * Constructs a new {@link BirdNest} enum.
-	 *
 	 * @param nest   {@link #nest}.
 	 * @param rarity {@link #rarity}.
 	 * @param reward {@link #reward}.
@@ -58,7 +57,6 @@ public enum BirdNest {
 
 	/**
 	 * Drops a {@link BirdNest} for the specified {@code player}.
-	 *
 	 * @param player the player we're dropping the bird nest for.
 	 * @return <true> if the bird nest was dropped, false otherwise.
 	 */

@@ -8,7 +8,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"marketadd"}, rights = {Rights.ADMINISTRATOR}, syntax = "Makes an item searchable in the market, ::marketadd itemId")
 public final class MarketAddCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		int id = Integer.parseInt(cmd[1]);
@@ -20,5 +20,5 @@ public final class MarketAddCommand implements Command {
 		item.setSearchable(true);
 		player.message("Added to the market.");
 	}
-
+	
 }

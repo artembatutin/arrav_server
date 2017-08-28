@@ -2,17 +2,16 @@ package net.edge.content.skill.construction;
 
 /**
  * Represents a player's {@link Construction} house dungeon.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class HouseDungeon {
-
+	
 	private House house;
-
+	
 	public House getHouse() {
 		return house;
 	}
-
+	
 	public void setHouse(House house) {
 		this.house = house;
 	}
@@ -90,5 +89,5 @@ public class HouseDungeon {
 				ticks++;
 			}
 		});*/
-
+	
 }

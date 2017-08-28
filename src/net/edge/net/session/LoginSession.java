@@ -16,25 +16,23 @@ import net.edge.world.entity.actor.player.PlayerSerialization;
 
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during login.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class LoginSession extends Session {
-
+	
 	/**
 	 * Created player instance.
 	 */
 	private Player player;
-
+	
 	/**
 	 * Creates a new {@link LoginSession}.
-	 *
 	 * @param channel The {@link Channel} for this session.
 	 */
 	public LoginSession(Channel channel) {
 		super(channel);
 	}
-
+	
 	@Override
 	public void handleUpstreamMessage(Object msg) throws Exception {
 		if(msg instanceof LoginRequest) {
@@ -42,7 +40,7 @@ public final class LoginSession extends Session {
 			handleRequest(request);
 		}
 	}
-
+	
 	@Override
 	public void terminate() {
 		if(player != null) {
@@ -51,15 +49,14 @@ public final class LoginSession extends Session {
 			}
 		}
 	}
-
+	
 	@Override
 	public Player getPlayer() {
 		return player;
 	}
-
+	
 	/**
 	 * Handles a {@link LoginRequest}.
-	 *
 	 * @param request The message containing the credentials.
 	 * @throws Exception If any errors occur while handling credentials.
 	 */
@@ -67,37 +64,37 @@ public final class LoginSession extends Session {
 		player = new Player(new PlayerCredentials(request.getUsername(), request.getPassword()));
 		LoginCode response = LoginCode.NORMAL;
 		Channel channel = getChannel();
-
+		
 		// Validate the username and password, change login response if needed
 		// for invalid credentials or the world being full.
 		boolean invalidCredentials = !request.getUsername().matches("^[a-zA-Z0-9_ ]{1,12}$") || request.getPassword().isEmpty() || request.getPassword().length() > 20;
 		response = invalidCredentials ? LoginCode.INVALID_CREDENTIALS : World.get().getPlayers().remaining() == 0 ? LoginCode.WORLD_FULL : response;
-
+		
 		// Validating login before deserialization.
 		if(response == LoginCode.NORMAL) {
 			player.credentials.setUsername(request.getUsername());
 			player.credentials.password = request.getPassword();
 		}
-
+		
 		// Validating player login possibility.
 		if(response == LoginCode.NORMAL && World.get().getPlayer(request.getUsernameHash()).isPresent()) {
 			response = LoginCode.ACCOUNT_ONLINE;
 		}
-
+		
 		// Deserialization
 		PlayerSerialization.SerializeResponse serial = null;
 		if(response == LoginCode.NORMAL) {
 			serial = new PlayerSerialization(player).loginCheck(request.getPassword());
 			response = serial.getResponse();
 		}
-
+		
 		ChannelFuture future = channel.writeAndFlush(new LoginResponse(response, player.getRights(), player.isIronMan()));
 		if(response != LoginCode.NORMAL) {
 			future.addListener(ChannelFutureListener.CLOSE);
 			return;
 		}
 		future.awaitUninterruptibly();
-
+		
 		final JsonObject reader = serial.getReader();
 		GameSession session = new GameSession(player, channel, request.getMacAddress(), request.getEncryptor(), request.getDecryptor());
 		channel.attr(NetworkConstants.SESSION_KEY).set(session);
@@ -107,5 +104,5 @@ public final class LoginSession extends Session {
 			World.get().queueLogin(player);
 		});
 	}
-
+	
 }

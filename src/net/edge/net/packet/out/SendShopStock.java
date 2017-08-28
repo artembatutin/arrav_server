@@ -10,13 +10,13 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendShopStock implements OutgoingPacket {
-
+	
 	private final MarketItem item;
-
+	
 	public SendShopStock(MarketItem item) {
 		this.item = item;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(55, PacketType.VARIABLE_SHORT);

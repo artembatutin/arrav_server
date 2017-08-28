@@ -8,7 +8,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"mute"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.MODERATOR, Rights.HELPER}, syntax = "Mutes a player, ::mute username")
 public final class MutingCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player muted = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);

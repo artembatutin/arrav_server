@@ -14,21 +14,20 @@ import net.edge.world.entity.item.Item;
 /**
  * Action handling item action clicks.
  * Can be both interface and action wise.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public abstract class ItemAction extends Action {
-
+	
 	public abstract boolean click(Player player, Item item, int container, int slot, int click);
-
+	
 	public void register(int item) {
 		ItemActionPacket.ITEM_ACTION.register(item, this);
 	}
-
+	
 	public void registerEquip(int item) {
 		ItemInterfacePacket.EQUIP.register(item, this);
 	}
-
+	
 	public static void init() {
 		PrayerBoneBury.action();
 		FoodConsumable.action();
@@ -40,5 +39,5 @@ public abstract class ItemAction extends Action {
 		SummoningData.action();
 		ExperienceLamp.handleItem();
 	}
-
+	
 }

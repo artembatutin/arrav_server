@@ -13,10 +13,9 @@ import net.edge.world.entity.item.Item;
  * @since 26-8-2017.
  */
 public class OperateEquipmentPacket implements IncomingPacket {
-
+	
 	/**
 	 * Handles the message designated to {@code opcode}.
-	 *
 	 * @param player  the player this message is being handled for.
 	 * @param opcode  the opcode of this message.
 	 * @param size    the size of this message.
@@ -27,12 +26,12 @@ public class OperateEquipmentPacket implements IncomingPacket {
 		int option = payload.getShort(ByteTransform.A);
 		int slot = payload.getShort(ByteTransform.A);
 		Item item = player.getEquipment().get(slot);
-
+		
 		System.out.println("slot = " + slot + " option = " + option);
 		if(item == null || Item.valid(item)) {
 			return;
 		}
-
+		
 		switch(item.getId()) {
 			case 2552:
 			case 2554:

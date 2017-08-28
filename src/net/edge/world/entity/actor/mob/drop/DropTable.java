@@ -23,21 +23,20 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * A container that holds the unique and common drop tables.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class DropTable {
-
+	
 	/**
 	 * The drop list that consists of common drops.
 	 */
 	private final ObjectList<Drop> common;
-
+	
 	/**
 	 * The drop list that consists of rare drops.
 	 */
 	private final ObjectList<Drop> rare;
-
+	
 	/**
 	 * Creates a new {@link DropTable}.
 	 */
@@ -45,7 +44,7 @@ public final class DropTable {
 		this.common = new ObjectArrayList<>(common);
 		this.rare = new ObjectArrayList<>(rare);
 	}
-
+	
 	/**
 	 * Creates a new {@link DropTable}.
 	 */
@@ -53,7 +52,7 @@ public final class DropTable {
 		this.common = common;
 		this.rare = rare;
 	}
-
+	
 	/**
 	 * Creates a new {@link DropTable}.
 	 */
@@ -61,13 +60,12 @@ public final class DropTable {
 		this.common = new ObjectArrayList<>();
 		this.rare = new ObjectArrayList<>();
 	}
-
+	
 	/**
 	 * Performs the necessary calculations on all of the tables in this
 	 * container to determine an array of items to drop. Please note that this
 	 * is not a static implementation meaning that calling this multiple times
 	 * will return a different array of items.
-	 *
 	 * @param player the player that these calculations are being performed for.
 	 * @param victim the npc that was killed.
 	 * @return the array of items that were calculated.
@@ -120,7 +118,7 @@ public final class DropTable {
 		}
 		return items;
 	}
-
+	
 	/**
 	 * Sorting the drop table by chance tiers.
 	 */
@@ -128,10 +126,9 @@ public final class DropTable {
 		common.sort(Comparator.comparingInt(o -> o.getChance().ordinal()));
 		rare.sort(Comparator.comparingInt(o -> o.getChance().ordinal()));
 	}
-
+	
 	/**
 	 * Looks to find if this drop has a specific drop.
-	 *
 	 * @param drop the drop seeking for.
 	 * @return if found, true otherwise false.
 	 */
@@ -162,13 +159,13 @@ public final class DropTable {
 		}
 		return false;
 	}
-
+	
 	public ObjectList<Drop> getCommon() {
 		return common;
 	}
-
+	
 	public ObjectList<Drop> getRare() {
 		return rare;
 	}
-
+	
 }

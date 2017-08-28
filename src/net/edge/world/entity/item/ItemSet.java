@@ -4,7 +4,6 @@ import net.edge.util.rand.RandomUtils;
 
 /**
  * Defines a set of items.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ItemSet {
@@ -16,7 +15,6 @@ public final class ItemSet {
 
 	/**
 	 * Constructs a new {@link ItemSet}.
-	 *
 	 * @param set {@link #set}.
 	 */
 	public ItemSet(Item... set) {
@@ -25,7 +23,6 @@ public final class ItemSet {
 
 	/**
 	 * Constructs a new {@link ItemSet} with an int array.
-	 *
 	 * @param set {@link #set}.
 	 */
 	public ItemSet(int... set) {
@@ -34,7 +31,6 @@ public final class ItemSet {
 
 	/**
 	 * Gets a random item from the item set.
-	 *
 	 * @return an item from the item set.
 	 */
 	public Item getRandom() {

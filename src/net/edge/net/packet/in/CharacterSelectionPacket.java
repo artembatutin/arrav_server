@@ -12,11 +12,10 @@ import static net.edge.content.achievements.Achievement.CHANGE_APPEARANCE;
 /**
  * The message sent from the client when the character clicks "accept" on the
  * character selection interface.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class CharacterSelectionPacket implements IncomingPacket {
-
+	
 	/**
 	 * The valid colors for the character selection message.
 	 */
@@ -26,7 +25,7 @@ public final class CharacterSelectionPacket implements IncomingPacket {
 			{0, 5}, // feet color
 			{0, 7} // skin color
 	};
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityType.CHARACTER_SELECTION))
@@ -57,5 +56,5 @@ public final class CharacterSelectionPacket implements IncomingPacket {
 		player.getActivityManager().execute(ActivityType.CHARACTER_SELECTION);
 		CHANGE_APPEARANCE.inc(player);
 	}
-
+	
 }

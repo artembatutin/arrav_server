@@ -1,23 +1,22 @@
 package net.edge.world.entity.actor.update;
 
-import net.edge.content.combat.hit.Hit;
 import net.edge.net.codec.GameBuffer;
+import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.player.Player;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the secondary {@link Hit} update block.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class PlayerSecondaryHitUpdateBlock extends PlayerUpdateBlock {
-
+	
 	/**
 	 * Creates a new {@link PlayerSecondaryHitUpdateBlock}.
 	 */
 	public PlayerSecondaryHitUpdateBlock() {
 		super(0x200, UpdateFlag.SECONDARY_HIT);
 	}
-
+	
 	@Override
 	public int write(Player player, Player other, GameBuffer msg) {
 		Hit hit = other.getSecondaryHit();

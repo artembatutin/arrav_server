@@ -64,11 +64,10 @@ import java.util.*;
  * queue.connect(2, () -&gt; System.out.println(&quot;#2: executed 2 ticks after #1&quot;));
  * queue.start();
  * </pre>
- *
  * @author lare96 <http://github.org/lare96>
  */
 public final class LinkedTaskSequence extends Task {
-
+	
 	/**
 	 * The queue that contains a cache of the connected links. This cache is
 	 * maintained in order to ensure that the original connection of links is
@@ -77,35 +76,34 @@ public final class LinkedTaskSequence extends Task {
 	 * to the main queue until the next sequence or replay.
 	 */
 	private final Queue<LinkedTask> linkCache = new ArrayDeque<>();
-
+	
 	/**
 	 * The main queue that is actually modified when this sequence is ran. If
 	 * links are added to the cache when this sequence is running, they will not
 	 * be added to this queue until the next sequence or replay.
 	 */
 	private final Queue<LinkedTask> linkQueue = new ArrayDeque<>();
-
+	
 	/**
 	 * The flag that determines if this sequence should replay; as in, if this
 	 * connection should keep on being executed once it completes.
 	 */
 	private final boolean replay;
-
+	
 	/**
 	 * The counter that determines when each individual link will be ran.
 	 */
 	private int tickCounter = -1;
-
+	
 	/**
 	 * Creates a new {@link LinkedTaskSequence}.
-	 *
 	 * @param replay determines if this sequence should replay.
 	 */
 	public LinkedTaskSequence(boolean replay) {
 		super(1, false);
 		this.replay = replay;
 	}
-
+	
 	/**
 	 * Creates a new {@link LinkedTaskSequence} that does not replay upon
 	 * completion.
@@ -113,7 +111,7 @@ public final class LinkedTaskSequence extends Task {
 	public LinkedTaskSequence() {
 		this(false);
 	}
-
+	
 	@Override
 	public void onSubmit() {
 		Preconditions.checkState(linkCache.size() > 0, "linkCache.size() == 0");
@@ -121,22 +119,22 @@ public final class LinkedTaskSequence extends Task {
 		tickCounter = 0;
 		linkQueue.addAll(linkCache);
 	}
-
+	
 	@Override
 	public void onSequence() {
 		if(linkQueue.peek() == null && replay)
 			linkQueue.addAll(linkCache);
 	}
-
+	
 	@Override
 	public void execute() {
 		LinkedTask link = linkQueue.peek();
-
+		
 		if(link == null) {
 			this.cancel();
 			return;
 		}
-
+		
 		if(++tickCounter == link.getDelay()) {
 			try {
 				link.execute();
@@ -146,14 +144,14 @@ public final class LinkedTaskSequence extends Task {
 			}
 		}
 	}
-
+	
 	@Override
 	public void onCancel() {
 		if(linkQueue.size() > 0)
 			linkQueue.clear();
 		tickCounter = -1;
 	}
-
+	
 	/**
 	 * Starts this sequence by submitting itself as a task. The equivalent to:
 	 * <p>
@@ -161,27 +159,24 @@ public final class LinkedTaskSequence extends Task {
 	 * {@code World.get().submit(this);}
 	 * <p>
 	 * This is just an easier alternative.
-	 *
 	 * @return an instance of itself, for chaining.
 	 */
 	public LinkedTaskSequence start() {
 		World.get().submit(this);
 		return this;
 	}
-
+	
 	/**
 	 * Clears all of the links in the backing link cache.
-	 *
 	 * @return an instance of itself, for chaining.
 	 */
 	public LinkedTaskSequence clear() {
 		linkCache.clear();
 		return this;
 	}
-
+	
 	/**
 	 * Connects {@code link} to this sequence.
-	 *
 	 * @param link the link to connect, cannot be {@code null}.
 	 * @return an instance of itself, for chaining.
 	 */
@@ -189,7 +184,7 @@ public final class LinkedTaskSequence extends Task {
 		linkCache.add(Objects.requireNonNull(link));
 		return this;
 	}
-
+	
 	/**
 	 * Connects a link to this sequence. The difference between this function
 	 * and {@code connect(LinkedTask)} is that this function is designed for
@@ -212,7 +207,6 @@ public final class LinkedTaskSequence extends Task {
 	 * <pre>
 	 * connect(2, () -&gt; System.out.println(&quot;very small link&quot;));
 	 * </pre>
-	 *
 	 * @param task the link to connect, cannot be {@code null}.
 	 * @return an instance of itself, for chaining.
 	 */
@@ -225,10 +219,9 @@ public final class LinkedTaskSequence extends Task {
 		});
 		return this;
 	}
-
+	
 	/**
 	 * Connects a series of links to this sequence.
-	 *
 	 * @param links the links to connect.
 	 * @return an instance of itself, for chaining.
 	 */
@@ -236,10 +229,9 @@ public final class LinkedTaskSequence extends Task {
 		links.forEach(this::connect);
 		return this;
 	}
-
+	
 	/**
 	 * Connects a series of links to this sequence.
-	 *
 	 * @param links the links to connect.
 	 * @return an instance of itself, for chaining.
 	 */

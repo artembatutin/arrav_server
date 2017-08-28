@@ -1,15 +1,15 @@
 package net.edge.content.object.cannon;
 
-import net.edge.content.combat.CombatType;
-import net.edge.content.combat.hit.Hit;
-import net.edge.content.combat.hit.HitIcon;
-import net.edge.content.combat.hit.Hitsplat;
 import net.edge.net.packet.out.SendObjectAnimation;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Direction;
 import net.edge.world.Projectile;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.combat.CombatType;
+import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.combat.hit.HitIcon;
+import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
@@ -17,21 +17,20 @@ import net.edge.world.entity.item.Item;
 
 /**
  * A {@link Task} handling the {@link Multicannon} shooting.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class MulticannonTask extends Task {
-
+	
 	/**
 	 * The cannon shooting.
 	 */
 	private final Multicannon cannon;
-
+	
 	MulticannonTask(Multicannon cannon) {
 		super(1, false);
 		this.cannon = cannon;
 	}
-
+	
 	@Override
 	protected void execute() {
 		if(cannon.isDisabled()) {
@@ -87,12 +86,12 @@ public class MulticannonTask extends Task {
 					cannon.facing = null;
 					break;
 			}
-
+			
 			rotate(cannon);
 			fire();
 		}
 	}
-
+	
 	/**
 	 * Rotate the cannon and change the object animation based on the direction
 	 * we are facing.
@@ -127,7 +126,7 @@ public class MulticannonTask extends Task {
 				break;
 		}
 	}
-
+	
 	private void fire() {
 		Actor victim = getVictim();
 		if(victim == null)
@@ -147,7 +146,7 @@ public class MulticannonTask extends Task {
 			}
 		}.submit();*/
 	}
-
+	
 	private Actor getVictim() {
 		int myX = cannon.getGlobalPos().getX();
 		int myY = cannon.getGlobalPos().getY();
@@ -171,15 +170,15 @@ public class MulticannonTask extends Task {
 		}
 		return null;
 	}
-
+	
 	private boolean check(Actor a, int myX, int myY) {
 		int theirX = a.getPosition().getX();
 		int theirY = a.getPosition().getY();
-
+		
 		if(cannon.facing == null) {
 			cannon.facing = Direction.NORTH;
 		}
-
+		
 		switch(cannon.facing) {
 			case NORTH:
 				if(theirY > myY && theirX >= myX - 1 && theirX <= myX + 1)
@@ -216,7 +215,7 @@ public class MulticannonTask extends Task {
 		}
 		return false;
 	}
-
+	
 	@Override
 	protected void onCancel() {
 		cannon.firing = false;

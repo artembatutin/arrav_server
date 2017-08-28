@@ -17,48 +17,47 @@ import java.util.Optional;
 
 /**
  * Represents the Spirit terrorbird familiar.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class SpiritTerrorbird extends Familiar {
-
+	
 	/**
 	 * Constructs a new {@link SpiritTerrorbird}.
 	 */
 	public SpiritTerrorbird() {
 		super(SummoningData.SPIRIT_TERRORBIRD);
 	}
-
+	
 	private final BeastOfBurden ability = new BeastOfBurden(12);
-
+	
 	@Override
 	public FamiliarAbility getAbilityType() {
 		return ability;
 	}
-
+	
 	@Override
 	public Optional<PassiveAbility> getPassiveAbility() {
 		return Optional.empty();
 	}
-
+	
 	@Override
 	public boolean isCombatic() {
 		return false;
 	}
-
+	
 	@Override
 	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
 			player.getDialogueBuilder().send(RandomUtils.random(CONVERSATION));
 		}
 	}
-
+	
 	private static final Conversation[] CONVERSATION = new Conversation[]{new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);
@@ -69,9 +68,9 @@ public final class SpiritTerrorbird extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);
@@ -82,9 +81,9 @@ public final class SpiritTerrorbird extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);
@@ -96,9 +95,9 @@ public final class SpiritTerrorbird extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);
@@ -113,9 +112,9 @@ public final class SpiritTerrorbird extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-
+		
 		}
-
+		
 		@Override
 		public DialogueAppender dialogues(Player player) {
 			DialogueAppender app = new DialogueAppender(player);
@@ -126,5 +125,5 @@ public final class SpiritTerrorbird extends Familiar {
 			return app;
 		}
 	}};
-
+	
 }

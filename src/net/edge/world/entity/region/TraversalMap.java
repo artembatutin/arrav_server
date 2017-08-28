@@ -19,20 +19,18 @@ import static net.edge.world.object.ObjectType.*;
 
 /**
  * Contains traversal data for a set of regions.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class TraversalMap {
-
+	
 	private TraversalMap() {
 		//lock
 	}
-
+	
 	/**
 	 * Marks a {@link GameObject} with the specified attributes on the
 	 * specified {@link Position} to the {@code TraversalMap}.
-	 *
 	 * @param object The game object.
 	 * @param add    The condition if the object is added.
 	 * @param list   the condition if the region object list will be affected.
@@ -43,7 +41,7 @@ public final class TraversalMap {
 		}
 		ObjectDefinition def = ObjectDefinition.DEFINITIONS[object.getId()];
 		Position position = new Position(object.getX(), object.getY(), object.getZ());
-
+		
 		//Sets the sizes.
 		final int sizeX;
 		final int sizeY;
@@ -54,7 +52,7 @@ public final class TraversalMap {
 			sizeX = def.getSizeX();
 			sizeY = def.getSizeY();
 		}
-
+		
 		if(def.isSolid()) {
 			if(object.getObjectType() == GROUND_PROP) {
 				if(def.hasActions() || def.isDecoration()) {
@@ -82,12 +80,11 @@ public final class TraversalMap {
 		} else if(list) {
 			reg.removeObj(object);
 		}
-
+		
 	}
-
+	
 	/**
 	 * Informs the region of an existing wall.
-	 *
 	 * @param orientation  The orientation of the wall.
 	 * @param height       The walls height.
 	 * @param x            The walls x coordinate.
@@ -131,7 +128,7 @@ public final class TraversalMap {
 					}
 				}
 				break;
-
+			
 			case ENTIRE_WALL:
 				if(orientation == ObjectDirection.WEST) {
 					set(reg, height, x, y, TraversalConstants.WALL_WEST | TraversalConstants.WALL_NORTH);
@@ -174,7 +171,7 @@ public final class TraversalMap {
 					}
 				}
 				break;
-
+			
 			case DIAGONAL_CORNER_WALL:
 			case WALL_CORNER:
 				if(orientation == ObjectDirection.WEST) {
@@ -214,10 +211,9 @@ public final class TraversalMap {
 				break;
 		}
 	}
-
+	
 	/**
 	 * Informs the region of an existing wall being removed.
-	 *
 	 * @param orientation  The orientation of the wall.
 	 * @param height       The walls height.
 	 * @param x            The walls x coordinate.
@@ -261,7 +257,7 @@ public final class TraversalMap {
 					}
 				}
 				break;
-
+			
 			case ENTIRE_WALL:
 				if(orientation == ObjectDirection.WEST) {
 					unset(reg, height, x, y, TraversalConstants.WALL_WEST | TraversalConstants.WALL_NORTH);
@@ -304,7 +300,7 @@ public final class TraversalMap {
 					}
 				}
 				break;
-
+			
 			case DIAGONAL_CORNER_WALL:
 			case WALL_CORNER:
 				if(orientation == ObjectDirection.WEST) {
@@ -344,11 +340,10 @@ public final class TraversalMap {
 				break;
 		}
 	}
-
+	
 	/**
 	 * Marks the specified set of coordinates blocked, unable to be passed
 	 * through.
-	 *
 	 * @param height     The height.
 	 * @param x          The x coordinate.
 	 * @param y          The y coordinate.
@@ -358,12 +353,12 @@ public final class TraversalMap {
 	public static void mark(Region region, int height, int x, int y, boolean block, boolean projectile) {
 		int localX = x & 0x3F;
 		int localY = y & 0x3F;
-
+		
 		if(region == null)
 			region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6)).orElse(null);
 		if(region == null)
 			return;
-
+		
 		int modifiedHeight = height;
 		if(region.getTile(1, localX, localY).isActive(TraversalConstants.BRIDGE)) {
 			modifiedHeight = height - 1;
@@ -380,10 +375,9 @@ public final class TraversalMap {
 				region.getTile(modifiedHeight, x & 0x3F, y & 0x3F).unset(TraversalConstants.IMPENETRABLE_BLOCKED);
 		}
 	}
-
+	
 	/**
 	 * Marks the specified coordinates occupied by some object.
-	 *
 	 * @param height       The height.
 	 * @param x            The x coordinate.
 	 * @param y            The y coordinate.
@@ -406,10 +400,9 @@ public final class TraversalMap {
 			}
 		}
 	}
-
+	
 	/**
 	 * Marks the specified coordinates a bridge.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -417,10 +410,9 @@ public final class TraversalMap {
 	public static void markBridge(Region region, int height, int x, int y) {
 		set(region, height, x, y, TraversalConstants.BRIDGE);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed north.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -438,10 +430,9 @@ public final class TraversalMap {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed north.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -451,10 +442,9 @@ public final class TraversalMap {
 	private static boolean isTraversableNorth(int height, int x, int y) {
 		return isTraversableNorth(height, x, y, false);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed north.
-	 *
 	 * @param height       The height.
 	 * @param x            The x coordinate.
 	 * @param y            The y coordinate.
@@ -468,10 +458,9 @@ public final class TraversalMap {
 		}
 		return isInactive(height, x, y + 1, TraversalConstants.WALL_SOUTH | TraversalConstants.BLOCKED);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed south.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -489,10 +478,9 @@ public final class TraversalMap {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed south.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -502,10 +490,9 @@ public final class TraversalMap {
 	private static boolean isTraversableSouth(int height, int x, int y) {
 		return isTraversableSouth(height, x, y, false);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed south.
-	 *
 	 * @param height       The height.
 	 * @param x            The x coordinate.
 	 * @param y            The y coordinate.
@@ -519,10 +506,9 @@ public final class TraversalMap {
 		}
 		return isInactive(height, x, y - 1, TraversalConstants.WALL_NORTH | TraversalConstants.BLOCKED);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed east.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -540,10 +526,9 @@ public final class TraversalMap {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed east.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -553,10 +538,9 @@ public final class TraversalMap {
 	private static boolean isTraversableEast(int height, int x, int y) {
 		return isTraversableEast(height, x, y, false);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed east.
-	 *
 	 * @param height       The height.
 	 * @param x            The x coordinate.
 	 * @param y            The y coordinate.
@@ -570,10 +554,9 @@ public final class TraversalMap {
 		}
 		return isInactive(height, x + 1, y, TraversalConstants.WALL_WEST | TraversalConstants.BLOCKED);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed west.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -591,10 +574,9 @@ public final class TraversalMap {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed west.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -604,10 +586,9 @@ public final class TraversalMap {
 	private static boolean isTraversableWest(int height, int x, int y) {
 		return isTraversableWest(height, x, y, false);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed west.
-	 *
 	 * @param height       The height.
 	 * @param x            The x coordinate.
 	 * @param y            The y coordinate.
@@ -621,10 +602,9 @@ public final class TraversalMap {
 		}
 		return isInactive(height, x - 1, y, TraversalConstants.WALL_EAST | TraversalConstants.BLOCKED);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed north east.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -642,10 +622,9 @@ public final class TraversalMap {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed north east.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -655,10 +634,9 @@ public final class TraversalMap {
 	private static boolean isTraversableNorthEast(int height, int x, int y) {
 		return isTraversableNorthEast(height, x, y, false);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed north east.
-	 *
 	 * @param height       The height.
 	 * @param x            The x coordinate.
 	 * @param y            The y coordinate.
@@ -672,10 +650,9 @@ public final class TraversalMap {
 		}
 		return isInactive(height, x + 1, y + 1, TraversalConstants.WALL_WEST | TraversalConstants.WALL_SOUTH | TraversalConstants.WALL_SOUTH_WEST | TraversalConstants.BLOCKED) && isInactive(height, x + 1, y, TraversalConstants.WALL_WEST | TraversalConstants.BLOCKED) && isInactive(height, x, y + 1, TraversalConstants.WALL_SOUTH | TraversalConstants.BLOCKED);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed north west.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -693,10 +670,9 @@ public final class TraversalMap {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed north west.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -706,10 +682,9 @@ public final class TraversalMap {
 	private static boolean isTraversableNorthWest(int height, int x, int y) {
 		return isTraversableNorthWest(height, x, y, false);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed north west.
-	 *
 	 * @param height       The height.
 	 * @param x            The x coordinate.
 	 * @param y            The y coordinate.
@@ -723,10 +698,9 @@ public final class TraversalMap {
 		}
 		return isInactive(height, x - 1, y + 1, TraversalConstants.WALL_EAST | TraversalConstants.WALL_SOUTH | TraversalConstants.WALL_SOUTH_EAST | TraversalConstants.BLOCKED) && isInactive(height, x - 1, y, TraversalConstants.WALL_EAST | TraversalConstants.BLOCKED) && isInactive(height, x, y + 1, TraversalConstants.WALL_SOUTH | TraversalConstants.BLOCKED);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed south east.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -744,10 +718,9 @@ public final class TraversalMap {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed south east.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -757,10 +730,9 @@ public final class TraversalMap {
 	private static boolean isTraversableSouthEast(int height, int x, int y) {
 		return isTraversableSouthEast(height, x, y, false);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed south east.
-	 *
 	 * @param height       The height.
 	 * @param x            The x coordinate.
 	 * @param y            The y coordinate.
@@ -774,10 +746,9 @@ public final class TraversalMap {
 		}
 		return isInactive(height, x + 1, y - 1, TraversalConstants.WALL_WEST | TraversalConstants.WALL_NORTH | TraversalConstants.WALL_NORTH_WEST | TraversalConstants.BLOCKED) && isInactive(height, x + 1, y, TraversalConstants.WALL_WEST | TraversalConstants.BLOCKED) && isInactive(height, x, y - 1, TraversalConstants.WALL_NORTH | TraversalConstants.BLOCKED);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed south west.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -795,10 +766,9 @@ public final class TraversalMap {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed south west.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -808,10 +778,9 @@ public final class TraversalMap {
 	private static boolean isTraversableSouthWest(int height, int x, int y) {
 		return isTraversableSouthWest(height, x, y, false);
 	}
-
+	
 	/**
 	 * Tests if the specified position can be traversed south west.
-	 *
 	 * @param height       The height.
 	 * @param x            The x coordinate.
 	 * @param y            The y coordinate.
@@ -825,10 +794,9 @@ public final class TraversalMap {
 		}
 		return isInactive(height, x - 1, y - 1, TraversalConstants.WALL_EAST | TraversalConstants.WALL_NORTH | TraversalConstants.WALL_NORTH_EAST | TraversalConstants.BLOCKED) && isInactive(height, x - 1, y, TraversalConstants.WALL_EAST | TraversalConstants.BLOCKED) && isInactive(height, x, y - 1, TraversalConstants.WALL_NORTH | TraversalConstants.BLOCKED);
 	}
-
+	
 	/**
 	 * Sets a flag on the specified position.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -841,11 +809,10 @@ public final class TraversalMap {
 			return;
 		region.getTile(height, x & 0x3F, y & 0x3F).set(flag);
 	}
-
+	
 	/**
 	 * Checks whether or not the specified flag is not active on the specified
 	 * position.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -856,30 +823,29 @@ public final class TraversalMap {
 	private static boolean isInactive(int height, int x, int y, int flag) {
 		int localX = x & 0x3F;
 		int localY = y & 0x3F;
-
+		
 		Region region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6)).orElse(null);
 		if(region == null) {
 			return false;
 		}
-
+		
 		RegionTile tile = region.getTile(height, localX, localY);
 		if(tile == null) {
 			return false;
 		}
-
+		
 		int modifiedHeight = height;
 		if(tile.isActive(TraversalConstants.BRIDGE)) {
 			modifiedHeight = height + 1;
 		}
-
+		
 		tile = region.getTile(modifiedHeight, localX, localY);
 		return tile != null && tile.isInactive(flag);
-
+		
 	}
-
+	
 	/**
 	 * Unsets the specified flag from the specified position.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -892,11 +858,10 @@ public final class TraversalMap {
 			return;
 		region.getTile(height, x & 0x3F, y & 0x3F).unset(flag);
 	}
-
+	
 	/**
 	 * Tests whether or not a specified position is traversable in the specified
 	 * direction.
-	 *
 	 * @param from      The position.
 	 * @param direction The direction to traverse.
 	 * @param size      The size of the entity attempting to traverse.
@@ -906,11 +871,10 @@ public final class TraversalMap {
 	public static boolean isTraversable(Position from, Direction direction, int size) {
 		return isTraversable(from, null, direction, size);
 	}
-
+	
 	/**
 	 * Tests whether or not a specified position is traversable in the specified
 	 * direction.
-	 *
 	 * @param from      The position.
 	 * @param boundary  The boundary of this check.
 	 * @param direction The direction to traverse.
@@ -942,11 +906,10 @@ public final class TraversalMap {
 				throw new IllegalArgumentException("direction: " + direction + " is not valid");
 		}
 	}
-
+	
 	/**
 	 * Tests whether or not a specified position is traversable in the specified
 	 * direction.
-	 *
 	 * @param from         The position.
 	 * @param direction    The direction to traverse.
 	 * @param impenetrable The condition if impenetrability must be checked.
@@ -977,11 +940,10 @@ public final class TraversalMap {
 				throw new IllegalArgumentException("direction: " + direction + " is not valid");
 		}
 	}
-
+	
 	/**
 	 * Returns a {@link ObjectList} of positions that are traversable from the
 	 * specified position.
-	 *
 	 * @param from The position moving from.
 	 * @param size The size of the mob attempting to traverse.
 	 * @return A {@link ObjectList} of positions.
@@ -1006,11 +968,10 @@ public final class TraversalMap {
 			positions.add(new Position(from.getX() - 1, from.getY() - 1, from.getZ()));
 		return positions;
 	}
-
+	
 	/**
 	 * Returns a {@link ObjectList} of positions that are traversable from the
 	 * specified position.
-	 *
 	 * @param from    The position moving from.
 	 * @param exclude the position to exclude
 	 * @param size    The size of the mob attempting to traverse.
@@ -1062,10 +1023,9 @@ public final class TraversalMap {
 			return null;
 		return RandomUtils.random(positions);
 	}
-
+	
 	/**
 	 * Returns a {@link Optional} {@link Position} of a random traversable tile.
-	 *
 	 * @param from       The position moving from.
 	 * @param size       The size of the mob attempting to traverse.
 	 * @param exceptions The exceptions of traversable positions.
@@ -1088,12 +1048,11 @@ public final class TraversalMap {
 			return Optional.empty();
 		return Optional.of(RandomUtils.random(pos));
 	}
-
+	
 	/**
 	 * Returns a {@link ObjectList} of positions that are traversable from the
 	 * specified position depending on a direction.
 	 * Used for NPC movements as they are based on a straight line.
-	 *
 	 * @param from The position.
 	 * @param size The size of the mob attempting to traverse.
 	 * @return A {@link ObjectList} of positions.
@@ -1110,11 +1069,10 @@ public final class TraversalMap {
 			positions.add(new Position(from.getX() - 1, from.getY(), from.getZ()));
 		return positions;
 	}
-
+	
 	/**
 	 * Returns a {@link ObjectList} of position that are settable from the
 	 * specified position depending on the leader's and follower's entity sizes.
-	 *
 	 * @param from         the position.
 	 * @param leaderSize   the leader's entity size.
 	 * @param followerSize the follower's entity size.
@@ -1160,11 +1118,10 @@ public final class TraversalMap {
 		}
 		return positions;
 	}
-
+	
 	/**
 	 * Returns a {@link ObjectList} of position that are settable leader the
 	 * specified position depending on the leader's and follower's entity sizes.
-	 *
 	 * @param leader       the position.
 	 * @param leaderSize   the leader's entity size.
 	 * @param followerSize the follower's entity size.
@@ -1212,5 +1169,5 @@ public final class TraversalMap {
 			}
 		}
 	}
-
+	
 }

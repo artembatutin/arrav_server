@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 /**
  * An interface for asynchronously pooling database {@link Connection}s.
- *
  * @author Whis
  */
 public interface ConnectionPool {
@@ -15,15 +14,14 @@ public interface ConnectionPool {
 	 * Attempts to obtain a {@link Connection} from the pool.
 	 */
 	ListenableFuture<Connection> obtainConnection() throws Exception;
-
+	
 	/**
 	 * Terminates this pool.
 	 */
 	ListenableFuture<?> terminate() throws Exception;
-
+	
 	/**
 	 * Gets the main connection.
-	 *
 	 * @return database connection.
 	 */
 	Connection getConnection() throws SQLException;

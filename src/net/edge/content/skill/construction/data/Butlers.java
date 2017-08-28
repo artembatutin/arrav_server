@@ -4,7 +4,6 @@ import net.edge.content.skill.construction.Construction;
 
 /**
  * Enumeration of {@link Construction} butlers.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum Butlers {

@@ -14,11 +14,11 @@ import net.edge.world.locale.Position;
  * @since 10-8-2017.
  */
 public final class PoleSwing extends Obstacle {
-
+	
 	public PoleSwing(Position end) {
 		super(new Position[]{new Position(2485, 3418, 3), new Position(2486, 3418, 3), new Position(2487, 3418, 3)}, end, 11784, 85, 25, 0);
 	}
-
+	
 	@Override
 	public void initialize(Player player) {
 		final ForcedMovement[] movements = new ForcedMovement[]{new ForcedMovement(player), // walk
@@ -26,7 +26,7 @@ public final class PoleSwing extends Obstacle {
 				new ForcedMovement(player), // swing
 				new ForcedMovement(player), // swing new pole + end
 		};
-
+		
 		LinkedTaskSequence seq = new LinkedTaskSequence();
 		seq.connect(1, () -> {
 			movements[0].setFirst(player.getPosition());

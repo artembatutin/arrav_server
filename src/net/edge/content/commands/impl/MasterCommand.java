@@ -8,12 +8,12 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"master"}, rights = {Rights.ADMINISTRATOR}, syntax = "Sets all maxed skills, ::master")
 public final class MasterCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		for(int i = 0; i < player.getSkills().length; i++) {
 			Skills.experience(player, (Integer.MAX_VALUE - player.getSkills()[i].getExperience()), i);
 		}
 	}
-
+	
 }

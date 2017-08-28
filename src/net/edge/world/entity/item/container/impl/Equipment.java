@@ -1,14 +1,14 @@
 package net.edge.world.entity.item.container.impl;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.content.combat.CombatConstants;
-import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
-import net.edge.content.combat.weapon.WeaponAnimation;
-import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.item.Requirement;
 import net.edge.content.item.Skillcape;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.net.packet.out.SendConfig;
+import net.edge.world.entity.actor.combat.CombatConstants;
+import net.edge.world.entity.actor.combat.attack.listener.CombatListenerDispatcher;
+import net.edge.world.entity.actor.combat.weapon.WeaponAnimation;
+import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.ShieldAnimation;
 import net.edge.world.entity.actor.update.UpdateFlag;
@@ -24,28 +24,27 @@ import static net.edge.world.entity.item.container.impl.EquipmentType.WEAPON;
 
 /**
  * The container that manages the equipment for a player.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class Equipment extends ItemContainer {
-
+	
 	/**
 	 * An {@link ItemContainerAdapter} implementation that listens for changes to equipment.
 	 */
 	private final class EquipmentListener extends ItemContainerAdapter {
-
+		
 		/**
 		 * Creates a new {@link EquipmentListener}.
 		 */
 		EquipmentListener() {
 			super(player);
 		}
-
+		
 		@Override
 		public String getCapacityExceededMsg() {
 			throw new IllegalStateException(EXCEPTION_MESSAGE);
 		}
-
+		
 		@Override
 		public void singleUpdate(ItemContainer container, Item oldItem, Item newItem, int slot, boolean update) {
 			if(update)
@@ -53,108 +52,107 @@ public final class Equipment extends ItemContainer {
 			updateBonus(oldItem, newItem);
 			writeBonuses();
 		}
-
+		
 		@Override
 		public void bulkUpdate(ItemContainer container) {
 			updateItems(container);
 			updateAllBonuses();
 			writeBonuses();
 		}
-
+		
 		@Override
 		public int widget() {
 			return EQUIPMENT_DISPLAY_ID;
 		}
 	}
-
+	
 	/**
 	 * The size of all equipment instances.
 	 */
 	private static final int SIZE = 14;
-
+	
 	/**
 	 * The equipment item display widget identifier.
 	 */
 	public static final int EQUIPMENT_DISPLAY_ID = 1688;
-
+	
 	/**
 	 * The error message printed when certain functions from the superclass are utilized.
 	 */
 	private static final String EXCEPTION_MESSAGE = "Please use { equipment.set(index, Item) } instead";
-
+	
 	/**
 	 * The head identification equipment slot.
 	 */
 	public static final int HEAD_SLOT = 0;
-
+	
 	/**
 	 * The cape identification equipment slot.
 	 */
 	public static final int CAPE_SLOT = 1;
-
+	
 	/**
 	 * The amulet identification equipment slot.
 	 */
 	public static final int AMULET_SLOT = 2;
-
+	
 	/**
 	 * The weapon identification equipment slot.
 	 */
 	public static final int WEAPON_SLOT = 3;
-
+	
 	/**
 	 * The chest identification equipment slot.
 	 */
 	public static final int CHEST_SLOT = 4;
-
+	
 	/**
 	 * The shield identification equipment slot.
 	 */
 	public static final int SHIELD_SLOT = 5;
-
+	
 	/**
 	 * The legs identification equipment slot.
 	 */
 	public static final int LEGS_SLOT = 7;
-
+	
 	/**
 	 * The hands identification equipment slot.
 	 */
 	public static final int HANDS_SLOT = 9;
-
+	
 	/**
 	 * The feet identification equipment slot.
 	 */
 	public static final int FEET_SLOT = 10;
-
+	
 	/**
 	 * The ring identification equipment slot.
 	 */
 	public static final int RING_SLOT = 12;
-
+	
 	/**
 	 * The arrows identification equipment slot.
 	 */
 	public static final int ARROWS_SLOT = 13;
-
+	
 	/**
 	 * An {@link ImmutableSet} containing equipment indexes that don't require appearance updates.
 	 */
 	private static final ImmutableSet<Integer> NO_APPEARANCE = ImmutableSet.of(RING_SLOT, ARROWS_SLOT);
-
+	
 	/**
 	 * The player who's equipment is being managed.
 	 */
 	private final Player player;
-
+	
 	/**
 	 * The array of attack and defence bonus values.
 	 */
 	private final int[] bonuses = new int[18];
-
+	
 	/**
 	 * Creates a new {@link Equipment}.
-	 *
 	 * @param player the player who's equipment is being managed.
 	 */
 	public Equipment(Player player) {
@@ -163,20 +161,19 @@ public final class Equipment extends ItemContainer {
 		addListener(new EquipmentListener());
 		addListener(new ItemWeightListener(player));
 	}
-
+	
 	@Override
 	public int add(Item item, int preferredIndex, boolean refresh) {
 		return -1;
 	}
-
+	
 	@Override
 	public int remove(Item item, int preferredIndex, boolean refresh) {
 		return -1;
 	}
-
+	
 	/**
 	 * Equips an {@link Item} from the underlying player's {@link Inventory}.
-	 *
 	 * @param inventoryIndex The {@code Inventory} index to equip the {@code Item} from.
 	 * @return {@code true} if the item was equipped, {@code false} otherwise.
 	 */
@@ -207,7 +204,7 @@ public final class Equipment extends ItemContainer {
 			}
 			unequipSecondary = weaponTwoHanded && getItems()[WEAPON_SLOT] != null ? Optional.of(getItems()[WEAPON_SLOT]) : Optional.empty();
 		}
-
+		
 		//Stacking arrows if exist.
 		if(getItems()[type.getSlot()] != null) {
 			if(def.isStackable() && getItems()[type.getSlot()].getId() == equipItem.getId()) {
@@ -218,7 +215,7 @@ public final class Equipment extends ItemContainer {
 			}
 		} else
 			unequipPrimary = Optional.empty();
-
+		
 		//Just a check, had to put it in final.
 		Item finalEquipItem = equipItem;
 		if(!MinigameHandler.execute(player, m -> m.canEquip(player, finalEquipItem, finalEquipItem.getDefinition().getEquipmentType()))) {
@@ -228,17 +225,17 @@ public final class Equipment extends ItemContainer {
 			player.message("You don't have enough inventory space for this.");
 			return false;
 		}
-
+		
 		inventory.set(inventoryIndex, null, true);
 		unequipPrimary.ifPresent(i -> this.unequip(i.getDefinition().getEquipmentType().getSlot(), player.getInventory(), true, inventoryIndex));
 		unequipSecondary.ifPresent(i -> this.unequip(i.getDefinition().getEquipmentType().getSlot(), player.getInventory(), true, -1));
 		set(type.getSlot(), equipItem, true);
 		appearanceForIndex(type.getSlot());
-
+		
 		if(type == EquipmentType.SHIELD) {
 			ShieldAnimation.execute(player, equipItem);
 		}
-
+		
 		if(type == WEAPON && def.isWeapon()) {
 			WeaponInterface.execute(player, equipItem);
 			WeaponAnimation.execute(player, equipItem);
@@ -248,29 +245,27 @@ public final class Equipment extends ItemContainer {
 			player.out(new SendConfig(301, 0));
 			player.setSpecialActivated(false);
 		}
-
+		
 		CombatListenerDispatcher.CombatListenerSet listenerSet = CombatListenerDispatcher.ITEM_LISTENERS.get(equipItem.getId());
-
+		
 		if(listenerSet != null && player.getEquipment().containsAll(listenerSet.set)) {
 			System.out.println("added listener");
 			player.getCombat().addListener(listenerSet.listener);
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Unequips an {@link Item} from the underlying player's {@code Equipment}.
-	 *
 	 * @param equipmentIndex The {@code Equipment} index to unequip the {@code Item} from.
 	 * @return {@code true} if the item was unequipped, {@code false} otherwise.
 	 */
 	public boolean unequip(int equipmentIndex) {
 		return unequip(equipmentIndex, player.getInventory(), true, -1);
 	}
-
+	
 	/**
 	 * Unequips an {@link Item} from the underlying player's {@code Equipment}.
-	 *
 	 * @param equipmentIndex The {@code Equipment} index to unequip the {@code Item} from.
 	 * @param container      The container to which we are putting the items on.
 	 * @param refresh        the condition if the container must be refreshed instantly.
@@ -302,7 +297,7 @@ public final class Equipment extends ItemContainer {
 				player.setSpecialActivated(false);
 			}
 			CombatListenerDispatcher.CombatListenerSet listenerSet = CombatListenerDispatcher.ITEM_LISTENERS.get(unequip.getId());
-
+			
 			if(listenerSet != null && !player.getEquipment().containsAll(listenerSet.set)) {
 				System.out.println("removed listener");
 				player.getCombat().removeListener(listenerSet.listener);
@@ -311,7 +306,7 @@ public final class Equipment extends ItemContainer {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Flags the {@code APPEARANCE} update block, only if the equipment piece on {@code equipmentIndex} requires an
 	 * appearance update.
@@ -321,7 +316,7 @@ public final class Equipment extends ItemContainer {
 			player.getFlags().flag(UpdateFlag.APPEARANCE);
 		}
 	}
-
+	
 	/**
 	 * Updates the bonuses array for single equipment index.
 	 */
@@ -352,7 +347,7 @@ public final class Equipment extends ItemContainer {
 			}
 		}
 	}
-
+	
 	/**
 	 * Updates the bonuses array for all of the equipment indexes.
 	 */
@@ -363,7 +358,7 @@ public final class Equipment extends ItemContainer {
 			updateBonus(null, item);
 		}
 	}
-
+	
 	/**
 	 * Writes a specific the bonus value on the equipment interface.
 	 */
@@ -373,12 +368,12 @@ public final class Equipment extends ItemContainer {
 			player.text(CombatConstants.BONUS_IDS[i], CombatConstants.BONUS_NAMES[i] + ": " + (bonuses[i] >= 0 ? "+" : "") + bonuses[CombatConstants.BONUS[i]] + (percentage ? "%" : i == 14 ? ".0" : ""));
 		}
 	}
-
+	
 	/**
 	 * @return The bonuses of all the equipment in this container.
 	 */
 	public int[] getBonuses() {
 		return bonuses;
 	}
-
+	
 }

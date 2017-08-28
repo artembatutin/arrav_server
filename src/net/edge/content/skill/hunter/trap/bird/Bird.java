@@ -12,7 +12,6 @@ public class Bird extends DefaultMob {
 
 	/**
 	 * Creates a new {@link Mob}.
-	 *
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */

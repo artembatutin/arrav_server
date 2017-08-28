@@ -11,54 +11,50 @@ import java.util.Optional;
 
 /**
  * The class which manages all the exchange sessions on the world.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ExchangeSessionManager {
-
+	
 	/**
 	 * This world's {@link ExchangeSessionManager} used to handle container sessions.
 	 */
 	private static final ExchangeSessionManager EXCHANGE_SESSION_MANAGER = new ExchangeSessionManager();
-
+	
 	/**
 	 * The collection of sessions.
 	 */
 	private static final ObjectList<ExchangeSession> SESSIONS = new ObjectArrayList<>();
-
+	
 	/**
 	 * Adds a session to the collection.
-	 *
 	 * @param session the session to add.
 	 */
 	public void add(ExchangeSession session) {
 		SESSIONS.add(session);
 	}
-
+	
 	/**
 	 * Removes a session from the collection.
-	 *
 	 * @param session the session to remove.
 	 */
 	public void remove(ExchangeSession session) {
 		SESSIONS.remove(session);
 	}
-
+	
 	/**
 	 * Attempts to start an exchange session.
-	 *
 	 * @param session the exchange session to start.
 	 * @return <true> if the request was successfull, <false> otherwise.
 	 */
 	public boolean request(ExchangeSession session) {
 		Player player = session.getPlayers().get(0);
 		Player requested = session.getOther(player);
-
+		
 		if(requested == null) {
 			player.message("Couldn't request the session.");
 			return false;
 		}
-
+		
 		if(player.getRights().less(Rights.SENIOR_MODERATOR) && requested.getRights().less(Rights.SENIOR_MODERATOR)) {
 			if(HostManager.same(player, requested)) {
 				player.message("You can't trade over the same network.");
@@ -79,7 +75,7 @@ public final class ExchangeSessionManager {
 				}
 			}
 		}
-
+		
 		if(inAnySession(player)) {
 			session.getPlayers().forEach(this::reset);
 			return false;
@@ -107,10 +103,9 @@ public final class ExchangeSessionManager {
 		session.onRequest(player, requested);
 		return true;
 	}
-
+	
 	/**
 	 * Clicks a button on the interface and executes any function it requires.
-	 *
 	 * @param player the player clicking the button.
 	 * @param button the button being clicked.
 	 * @return <true> if the function was executed, <false> otherwise.
@@ -129,10 +124,9 @@ public final class ExchangeSessionManager {
 		session.get().onClickButton(player, button);
 		return true;
 	}
-
+	
 	/**
 	 * Determines if the player is a session which matches the {@code type}.
-	 *
 	 * @param player the player we're checking for.
 	 * @return <true> if the player is, <false> otherwise.
 	 */
@@ -146,10 +140,9 @@ public final class ExchangeSessionManager {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Determines if the player is <b>any</b> session.
-	 *
 	 * @param player the player we're checking for.
 	 * @return <true> if the player is, <false> otherwise.
 	 */
@@ -163,10 +156,9 @@ public final class ExchangeSessionManager {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Checks if this session has any inconsistancies.
-	 *
 	 * @param player the player to check for.
 	 * @return <true> if it does, <false> otherwise.
 	 */
@@ -192,10 +184,9 @@ public final class ExchangeSessionManager {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Resets the requests the player has retrieved.
-	 *
 	 * @param player the player to reset this for.
 	 */
 	public void resetRequests(Player player) {
@@ -209,10 +200,9 @@ public final class ExchangeSessionManager {
 			SESSIONS.removeAll(delete);
 		}
 	}
-
+	
 	/**
 	 * Resets all the session for the player dependant on the {@code type}.
-	 *
 	 * @param player the player to reset the session for.
 	 */
 	public void reset(Player player, ExchangeSessionType type) {
@@ -233,10 +223,9 @@ public final class ExchangeSessionManager {
 			}
 		}
 	}
-
+	
 	/**
 	 * Resets all the sessions the player is in regardless of the session state.
-	 *
 	 * @param player the player to reset the session for.
 	 */
 	public boolean reset(Player player) {
@@ -247,10 +236,9 @@ public final class ExchangeSessionManager {
 		reset(player, session.get().getType());
 		return true;
 	}
-
+	
 	/**
 	 * Checks if the session is still available.
-	 *
 	 * @param requester the player who requested.
 	 * @param requested the player who's being requested.
 	 * @param type      the session type we're checking availability for.
@@ -268,10 +256,9 @@ public final class ExchangeSessionManager {
 		}
 		return Optional.empty();
 	}
-
+	
 	/**
 	 * Checks if the player is in any exchange session.
-	 *
 	 * @param player the player to check for.
 	 * @return an exchange session wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
@@ -286,10 +273,9 @@ public final class ExchangeSessionManager {
 		}
 		return Optional.empty();
 	}
-
+	
 	/**
 	 * Checks if the player is in the {@code type}.
-	 *
 	 * @param player the player to check for.
 	 * @return an exchange session wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
@@ -304,11 +290,10 @@ public final class ExchangeSessionManager {
 		}
 		return Optional.empty();
 	}
-
+	
 	/**
 	 * Finalizes the exchange session procedure for the specified {@code player}
 	 * in a session.
-	 *
 	 * @param player the player to finalize for.
 	 * @param type   the type of finalization we're appending.
 	 */
@@ -321,22 +306,21 @@ public final class ExchangeSessionManager {
 			}
 		}
 	}
-
+	
 	/**
 	 * Determines if the {@code session} matches any of the sessions in the collection.
-	 *
 	 * @param session the session to check for.
 	 * @return <true> if the session is, <false> otherwise.
 	 */
 	public boolean contains(ExchangeSession session) {
 		return SESSIONS.contains(session);
 	}
-
+	
 	/**
 	 * Returns this world's {@link ExchangeSessionManager}.
 	 */
 	public static ExchangeSessionManager get() {
 		return EXCHANGE_SESSION_MANAGER;
 	}
-
+	
 }

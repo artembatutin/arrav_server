@@ -5,7 +5,6 @@ import java.util.Optional;
 
 /**
  * The group of an object, which indicates its general class (e.g. if it's a wall, or a floor decoration).
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author Major
  * @author Scu11
@@ -39,7 +38,6 @@ public enum ObjectGroup {
 
 	/**
 	 * Attempts to find the ObjectGroup with the specified integer value.
-	 *
 	 * @param value The integer value of the ObjectGroup.
 	 * @return The {@link Optional} possibly containing the ObjectGroup, if found.
 	 */
@@ -54,7 +52,6 @@ public enum ObjectGroup {
 
 	/**
 	 * Creates the ObjectGroup.
-	 *
 	 * @param value The integer value of the group. Must be unique.
 	 */
 	ObjectGroup(int value) {
@@ -63,7 +60,6 @@ public enum ObjectGroup {
 
 	/**
 	 * Gets the value of this ObjectGroup.
-	 *
 	 * @return The value.
 	 */
 	public int getValue() {

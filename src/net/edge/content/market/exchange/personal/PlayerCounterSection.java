@@ -22,7 +22,6 @@ public abstract class PlayerCounterSection {
 
 	/**
 	 * Updating an item in this section.
-	 *
 	 * @param player the hosted player.
 	 * @param item   the item being updated.
 	 */
@@ -30,7 +29,6 @@ public abstract class PlayerCounterSection {
 
 	/**
 	 * Removing an item in this section.
-	 *
 	 * @param player the hosted player.
 	 * @param item   the item being removed.
 	 */
@@ -38,7 +36,6 @@ public abstract class PlayerCounterSection {
 
 	/**
 	 * Gets the array of all items.
-	 *
 	 * @return exchange item array.
 	 */
 	public ExchangeItem[] getItems() {
@@ -47,7 +44,6 @@ public abstract class PlayerCounterSection {
 
 	/**
 	 * Gets the item container.
-	 *
 	 * @return item container.
 	 */
 	public ItemContainer getContainer() {
@@ -56,7 +52,6 @@ public abstract class PlayerCounterSection {
 
 	/**
 	 * Gets the condition if the item is already in the section.
-	 *
 	 * @param item the item searching for.
 	 * @return -1 if the item isn't in, otherwise returns the index.
 	 */
@@ -72,7 +67,6 @@ public abstract class PlayerCounterSection {
 
 	/**
 	 * Updates the item container with the new item.
-	 *
 	 * @param i    the index in which it locates.
 	 * @param item the item being updated.
 	 */

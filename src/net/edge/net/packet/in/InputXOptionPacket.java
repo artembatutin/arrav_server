@@ -14,17 +14,17 @@ import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.entity.item.container.session.ExchangeSessionType;
 
 public final class InputXOptionPacket implements IncomingPacket {
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		int slot = payload.getShort(ByteOrder.LITTLE);
 		int interfaceId = payload.getShort(ByteTransform.A);
 		int itemId = payload.getShort(ByteOrder.LITTLE);
-
+		
 		if(slot < 0 || interfaceId < 0 || itemId < 0 || itemId > ItemDefinition.DEFINITIONS.length) {
 			return;
 		}
-
+		
 		player.getAttr().get("enter_x_item_tab").set(interfaceId);
 		player.getAttr().get("enter_x_item_slot").set(slot);
 		if(interfaceId >= 0 && interfaceId <= 9) {
@@ -43,7 +43,8 @@ public final class InputXOptionPacket implements IncomingPacket {
 				if(player.getMarketShop() == null)
 					return;
 				player.getAttr().get("shop_item").set(player.getInventory().get(slot).getId());
-				player.out(new SendEnterAmount("How many you would like to sell?", t -> () -> player.getMarketShop().sell(player, new Item(player.getAttr().get("shop_item").getInt(), Integer.parseInt(t)), player.getAttr().get("enter_x_item_slot").getInt())));
+				player.out(new SendEnterAmount("How many you would like to sell?", t -> () -> player.getMarketShop()
+						.sell(player, new Item(player.getAttr().get("shop_item").getInt(), Integer.parseInt(t)), player.getAttr().get("enter_x_item_slot").getInt())));
 				break;
 			case 5064://Inventory -> bank or bob
 				if(player.getAttr().get("banking").getBoolean() || player.getAttr().get("bob").getBoolean()) {
@@ -110,5 +111,5 @@ public final class InputXOptionPacket implements IncomingPacket {
 				break;
 		}
 	}
-
+	
 }

@@ -13,14 +13,14 @@ import java.util.Objects;
  * The {@link JsonLoader} implementation that loads all shops.
  */
 public final class ShopLoader extends JsonLoader {
-
+	
 	/**
 	 * Creates a new {@link ShopLoader}.
 	 */
 	public ShopLoader() {
 		super("./data/def/item/market_shops.json");
 	}
-
+	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		int id = Objects.requireNonNull(reader.get("id").getAsInt());

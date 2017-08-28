@@ -2,8 +2,6 @@ package net.edge.content.minigame.pestcontrol;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.content.combat.hit.Hit;
-import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
@@ -18,6 +16,8 @@ import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.combat.strategy.player.special.CombatSpecial;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.GroundItem;
@@ -30,22 +30,22 @@ import java.util.Optional;
 import static net.edge.content.achievements.Achievement.PEST_CONTROLLER;
 
 public final class PestControlMinigame extends SequencedMinigame {
-
+	
 	/**
 	 * All the pest gates, there is 3 of them.
 	 */
 	private static ObjectList<PestGate> gates = new ObjectArrayList<>();
-
+	
 	/**
 	 * The strings that the knight yells out.
 	 */
 	private static final String[] YELLS = {"We must not fail!", "Take down the portals", "The Void Knights will not fall!", "Hail the Void Knights!", "We are beating these scums!"};
-
+	
 	/**
 	 * The middle void knight.
 	 */
 	private final VoidKnight voidKnight;
-
+	
 	/**
 	 * All of the portals.
 	 * 0 purple
@@ -54,23 +54,23 @@ public final class PestControlMinigame extends SequencedMinigame {
 	 * 3 gray
 	 */
 	private final PestPortal[] portals;
-
+	
 	/**
 	 * The pests in the minigame.
 	 */
 	private ObjectList<Pest> pests = new ObjectArrayList<>();
-
+	
 	/**
 	 * 10 is 1 minute. so 20 minutes. 10 calls per 1 minute meaning each 6 seconds.
 	 */
 	private int time = 200;
-
+	
 	PestControlMinigame(String minigame, MinigameSafety safety) {
 		super(minigame, safety);
 		voidKnight = new VoidKnight();
 		portals = new PestPortal[]{new PestPortal(6142, new Position(2628, 2591), new Position(2632, 2594), 21111, voidKnight), new PestPortal(6145, new Position(2645, 2569), new Position(2647, 2573), 21114, voidKnight), new PestPortal(6144, new Position(2669, 2570), new Position(2671, 2574), 21113, voidKnight), new PestPortal(6143, new Position(2680, 2588), new Position(2679, 2589), 21112, voidKnight)};
 	}
-
+	
 	@Override
 	public void onSequence() {
 		if(time == 200)
@@ -84,22 +84,22 @@ public final class PestControlMinigame extends SequencedMinigame {
 			pest.sequence(voidKnight);
 		}
 	}
-
+	
 	@Override
 	public void enter(Player player) {
-
+	
 	}
-
+	
 	@Override
 	public int delay() {
 		return 10;//6 seconds.
 	}
-
+	
 	@Override
 	public void login(Player player) {
 		logout(player);
 	}
-
+	
 	@Override
 	public void logout(Player player) {
 		player.move(new Position(2657, 2638 + RandomUtils.inclusive(5)));
@@ -118,23 +118,24 @@ public final class PestControlMinigame extends SequencedMinigame {
 		player.getCombat().reset();
 		player.getInventory().remove(new Item(1511, 28));//removing logs.
 	}
-
+	
 	@Override
 	public boolean contains(Player player) {
 		return getPlayers().contains(player);
 	}
-
+	
 	@Override
 	public void onTeleportBefore(Player player, Position position) {
 		//nothing.
 	}
-
+	
 	@Override
 	public boolean canTeleport(Player player, Position position) {
 		//ladders.
-		return position.same(new Position(2645, 2601)) || position.same(new Position(2643, 2601)) || position.same(new Position(2668, 2601)) || position.same(new Position(2670, 2601)) || position.same(new Position(2647, 2585)) || position.same(new Position(2647, 2587)) || position.same(new Position(2666, 2585)) || position.same(new Position(2666, 2587));
+		return position.same(new Position(2645, 2601)) || position.same(new Position(2643, 2601)) || position.same(new Position(2668, 2601)) || position.same(new Position(2670, 2601)) || position.same(new Position(2647, 2585)) || position.same(new Position(2647, 2587)) || position
+				.same(new Position(2666, 2585)) || position.same(new Position(2666, 2587));
 	}
-
+	
 	@Override
 	public boolean onFirstClickObject(Player player, GameObject object) {
 		Position pos = object.getGlobalPos();
@@ -176,7 +177,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public boolean onThirdClickObject(Player player, GameObject object) {
 		for(PestGate gate : gates) {
@@ -193,7 +194,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 		}
 		return false;
 	}
-
+	
 	@Override
 	public boolean aggression() {
 		for(Pest pest : pests) {
@@ -218,33 +219,33 @@ public final class PestControlMinigame extends SequencedMinigame {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public boolean canPickup(Player player, GroundItem node) {
 		return true;
 	}
-
+	
 	@Override
 	public boolean canPot(Player player, PotionConsumable potion) {
 		return true;
 	}
-
+	
 	@Override
 	public boolean canEat(Player player, FoodConsumable food) {
 		return true;
 	}
-
+	
 	@Override
 	public Position deathPosition(Player player) {
 		return new Position(2656 + RandomUtils.inclusive(3), 2609 + RandomUtils.inclusive(4));
 	}
-
+	
 	@Override
 	public void postDeath(Player player) {
 		player.getMovementQueue().reset();
 		player.out(new SendWalkable((21100)));
 	}
-
+	
 	@Override
 	public void onInflictDamage(Player player, Actor other, Hit[] inflicted) {
 		int add = 0;
@@ -256,7 +257,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 			player.text(21116, "" + player.getAttr().get("participation").getInt());
 		}
 	}
-
+	
 	void end(boolean won) {
 		for(Player p : getPlayers()) {
 			logout(p);
@@ -285,7 +286,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 		PestControlWaitingLobby.PEST_LOBBY.pestGameOn = false;
 		destruct();
 	}
-
+	
 	boolean portalsAlive() {
 		for(PestPortal portal : portals) {
 			if(portal.getCurrentHealth() > 0)
@@ -293,7 +294,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 		}
 		return false;
 	}
-
+	
 	private void start() {
 		voidKnight.setGame(this);
 		World.get().getMobs().add(voidKnight);
@@ -306,14 +307,14 @@ public final class PestControlMinigame extends SequencedMinigame {
 			portal.spawn(pests);
 		}
 	}
-
+	
 	private void spawn(Player p) {
 		p.move(new Position(2656 + RandomUtils.inclusive(3), 2609 + RandomUtils.inclusive(4)));
 		p.text(21116, "" + p.getAttr().get("participation").getInt());
 		p.out(new SendWalkable((21100)));
 		p.getMovementQueue().reset();
 	}
-
+	
 	private void time(int time) {
 		this.time = time;
 		for(Player p : getPlayers()) {
@@ -327,7 +328,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 			voidKnight.forceChat(RandomUtils.random(YELLS));
 		}
 	}
-
+	
 	public static PestGate getNearestGate(Position position) {
 		double distance = 0;
 		PestGate selected = null;
@@ -340,5 +341,5 @@ public final class PestControlMinigame extends SequencedMinigame {
 		}
 		return selected;
 	}
-
+	
 }

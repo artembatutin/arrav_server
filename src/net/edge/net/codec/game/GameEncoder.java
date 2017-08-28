@@ -9,7 +9,6 @@ import net.edge.world.entity.actor.player.Player;
 
 /**
  * A {@link MessageToByteEncoder} which encodes in-game packets.
- *
  * @author Artem Batutin
  */
 public final class GameEncoder extends MessageToByteEncoder<OutgoingPacket> {

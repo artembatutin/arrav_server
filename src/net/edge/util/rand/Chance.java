@@ -2,7 +2,6 @@ package net.edge.util.rand;
 
 /**
  * The enumerated type whose elements represent the chance rates.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public enum Chance {

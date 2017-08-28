@@ -11,7 +11,6 @@ import java.util.Optional;
 
 /**
  * The dialogue chain entry that gives the player an item.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class GiveItemDialogue extends Dialogue {
@@ -28,7 +27,6 @@ public final class GiveItemDialogue extends Dialogue {
 
 	/**
 	 * Creates a new {@link GiveItemDialogue}.
-	 *
 	 * @param item the item to give to the player during this chain.
 	 * @param text the text to display when the item is given.
 	 */

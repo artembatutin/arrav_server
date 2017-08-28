@@ -9,7 +9,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"votes"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR}, syntax = "Use this command as ::votes player amount")
 public final class GiveVoteCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player vote = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
@@ -21,5 +21,5 @@ public final class GiveVoteCommand implements Command {
 		player.message("You gave " + amount + " vote points to " + vote.getFormatUsername());
 		vote.message("You received " + amount + " vote points from " + player.getFormatUsername());
 	}
-
+	
 }

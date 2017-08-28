@@ -24,13 +24,12 @@ import net.edge.world.entity.item.Item;
 
 /**
  * The message sent from the client when a player uses an item on another item.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ItemOnItemPacket implements IncomingPacket {
-
+	
 	public static final ActionContainer<ItemOnItemAction> ACTIONS = new ActionContainer<>();
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ON_ITEM))

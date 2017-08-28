@@ -8,14 +8,14 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendClearText implements OutgoingPacket {
-
+	
 	private final int start, count;
-
+	
 	public SendClearText(int start, int count) {
 		this.start = start;
 		this.count = count;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		for(int i = start; i < start + count; i++) {

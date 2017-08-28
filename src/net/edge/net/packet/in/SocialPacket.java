@@ -8,16 +8,15 @@ import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 /**
  * The message sent from the client when a player adds, removes, or sends someone
  * a message.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class SocialPacket implements IncomingPacket {
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.PRIVATE_MESSAGE))
 			return;
-
+		
 		switch(opcode) {
 			case 188:
 				addFriend(player, payload);
@@ -37,10 +36,9 @@ public final class SocialPacket implements IncomingPacket {
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.PRIVATE_MESSAGE);
 	}
-
+	
 	/**
 	 * Handles the adding of a new friend.
-	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payloadfer used for reading sent data.
 	 */
@@ -50,10 +48,9 @@ public final class SocialPacket implements IncomingPacket {
 			return;
 		player.getPrivateMessage().addFriend(name);
 	}
-
+	
 	/**
 	 * Handles the removing of an existing friend.
-	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payloadfer used for reading sent data.
 	 */
@@ -63,10 +60,9 @@ public final class SocialPacket implements IncomingPacket {
 			return;
 		player.getPrivateMessage().removeFriend(name);
 	}
-
+	
 	/**
 	 * Handles the adding of a new ignore.
-	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payloadfer used for reading sent data.
 	 */
@@ -76,10 +72,9 @@ public final class SocialPacket implements IncomingPacket {
 			return;
 		player.getPrivateMessage().addIgnore(name);
 	}
-
+	
 	/**
 	 * Handles the removing of an existing ignore.
-	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payloadfer used for reading sent data.
 	 */
@@ -89,10 +84,9 @@ public final class SocialPacket implements IncomingPacket {
 			return;
 		player.getPrivateMessage().removeIgnore(name);
 	}
-
+	
 	/**
 	 * Handles the sending of a private message.
-	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payloadfer used for reading sent data.
 	 */

@@ -7,11 +7,10 @@ import net.edge.world.entity.item.ItemIdentifiers;
 
 /**
  * Armour sets box opening.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum ArmourSet {
-
+	
 	BRONZE_LG(11814, 1155, 1117, 1075, 1189),
 	BRONZE_SK(11816, 1155, 1117, 1087, 1189),
 	IRON_LG(11818, 1153, 1115, 1067, 1191),
@@ -130,10 +129,10 @@ public enum ArmourSet {
 	SPINED(11944, 6131, 6133, 6135, 6143, 6149),
 	SKELETAL(11946, 6137, 6139, 6141, 6147, 6153),
 	DWARF_CANNON(11967, 6, 8, 10, 12);
-
+	
 	private Item box;
 	private Item[] items;
-
+	
 	ArmourSet(int box, int... items) {
 		this.box = new Item(box);
 		this.items = new Item[items.length];
@@ -141,7 +140,7 @@ public enum ArmourSet {
 			this.items[i] = new Item(items[i]);
 		}
 	}
-
+	
 	public static void action() {
 		for(ArmourSet set : values()) {
 			ItemOnItemAction a = new ItemOnItemAction() {
@@ -167,5 +166,5 @@ public enum ArmourSet {
 			a.register(set.box.getId());
 		}
 	}
-
+	
 }

@@ -64,7 +64,7 @@ public class MysteryBox extends ActionInitializer {
 			new Drop(20147, 1, 1, Chance.FUCKING_RARE), new Drop(20151, 1, 1, Chance.FUCKING_RARE), new Drop(20155, 1, 1, Chance.FUCKING_RARE),
 			//virtus
 			new Drop(20159, 1, 1, Chance.FUCKING_RARE), new Drop(20163, 1, 1, Chance.FUCKING_RARE), new Drop(20167, 1, 1, Chance.FUCKING_RARE),};
-
+	
 	@Override
 	public void init() {
 		ItemAction e = new ItemAction() {

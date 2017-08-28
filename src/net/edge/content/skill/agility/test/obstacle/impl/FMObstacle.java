@@ -14,41 +14,41 @@ import java.util.OptionalInt;
  * @since 10-8-2017.
  */
 public class FMObstacle extends Obstacle {
-
+	
 	/**
 	 * The speed for this forced movement mask.
 	 */
 	private final int speed;
-
+	
 	/**
 	 * The timer for this forced movement mask.
 	 */
 	private final OptionalInt timer;
-
+	
 	public FMObstacle(int speed, OptionalInt timer, Position[] start, Position end, Animation animation, int requirement, double experience) {
 		super(start, end, animation, requirement, experience, 0);
 		this.speed = speed;
 		this.timer = timer;
 	}
-
+	
 	public FMObstacle(int speed, OptionalInt timer, Position start, Position end, Animation animation, int requirement, double experience) {
 		super(new Position[]{start}, end, animation, requirement, experience, 0);
 		this.speed = speed;
 		this.timer = timer;
 	}
-
+	
 	public FMObstacle(int speed, OptionalInt timer, Position start, Position end, int animationId, int requirement, double experience) {
 		super(new Position[]{start}, end, new Animation(animationId), requirement, experience, 0);
 		this.speed = speed;
 		this.timer = timer;
 	}
-
+	
 	public FMObstacle(int speed, OptionalInt timer, Position start[], Position end, int animationId, int requirement, double experience) {
 		super(start, end, new Animation(animationId), requirement, experience, 0);
 		this.speed = speed;
 		this.timer = timer;
 	}
-
+	
 	public void start(Player player) {
 		ForcedMovement movement = new ForcedMovement(player);
 		movement.setFirst(player.getPosition());
@@ -59,10 +59,10 @@ public class FMObstacle extends Obstacle {
 		timer.ifPresent(movement::setTimer);
 		ForcedMovementManager.submit(player, movement);
 	}
-
+	
 	@Override
 	public void initialize(Player player) {
 		start(player);
 	}
-
+	
 }

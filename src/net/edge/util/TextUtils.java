@@ -6,33 +6,30 @@ import java.util.stream.IntStream;
 
 /**
  * The static-utility class that contains text utility functions.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class TextUtils {
-
+	
 	/**
 	 * The array of characters used for unpacking text.
 	 */
 	public static final char CHARACTER_TABLE[] = {' ', 'e', 't', 'a', 'o', 'i', 'h', 'n', 's', 'r', 'd', 'l', 'u', 'm', 'w', 'c', 'y', 'f', 'g', 'p', 'b', 'v', 'k', 'x', 'j', 'q', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', '!', '?', '.', ',', ':', ';', '(', ')', '-', '&', '*', '\\', '\'', '@', '#', '+', '=', '\243', '$', '%', '"', '[', ']'};
-
+	
 	/**
 	 * The array of valid characters.
 	 */
 	public static final char VALID_CHARACTERS[] = {'_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', ':', ';', '.', '>', '<', ',', '"', '[', ']', '|', '?', '/', '`'};
-
+	
 	/**
 	 * The default constructor.
-	 *
 	 * @throws UnsupportedOperationException if this class is instantiated.
 	 */
 	private TextUtils() {
 		throw new UnsupportedOperationException("This class cannot be " + "instantiated!");
 	}
-
+	
 	/**
 	 * Determines the indefinite article of {@code thing}.
-	 *
 	 * @param thing the thing to determine for.
 	 * @return the indefinite article.
 	 */
@@ -41,10 +38,9 @@ public final class TextUtils {
 		boolean vowel = first == 'a' || first == 'e' || first == 'i' || first == 'o' || first == 'u';
 		return vowel ? "an" : "a";
 	}
-
+	
 	/**
 	 * Determines the plural check of {@code thing}.
-	 *
 	 * @param thing the thing to determine for.
 	 * @return the plural check.
 	 */
@@ -52,51 +48,46 @@ public final class TextUtils {
 		boolean needsPlural = !thing.endsWith("s") && !thing.endsWith(")");
 		return needsPlural ? "s" : "";
 	}
-
+	
 	/**
 	 * Appends the determined plural check to {@code thing}.
-	 *
 	 * @param thing the thing to append.
 	 * @return the {@code thing} after the plural check has been appended.
 	 */
 	public static String appendPluralCheck(String thing) {
 		return thing.concat(determinePluralCheck(thing));
 	}
-
+	
 	/**
 	 * Appends the determined indefinite article to {@code thing}.
-	 *
 	 * @param thing the thing to append.
 	 * @return the {@code thing} after the indefinite article has been appended.
 	 */
 	public static String appendIndefiniteArticle(String thing) {
 		return determineIndefiniteArticle(thing).concat(" " + thing);
 	}
-
+	
 	/**
 	 * Appends the determined indefinite article to {@code thing}.
-	 *
 	 * @param thing the thing to append.
 	 * @return the {@code thing} after the indefinite article has been appended.
 	 */
 	public static String appendIndefiniteArticleNoVowel(String thing) {
 		return " " + thing;
 	}
-
+	
 	/**
 	 * Capitalizes the first character of {@code str}. Any leading or trailing
 	 * whitespace in the string should be trimmed before using this method.
-	 *
 	 * @param str the string to capitalize.
 	 * @return the capitalized string.
 	 */
 	public static String capitalize(String str) {
 		return str.substring(0, 1).toUpperCase().concat(str.substring(1, str.length()));
 	}
-
+	
 	/**
 	 * Formats {@code price} into K, million, or its default value.
-	 *
 	 * @param price the price to format.
 	 * @return the newly formatted price.
 	 */
@@ -108,10 +99,9 @@ public final class TextUtils {
 		}
 		return Integer.toString(price);
 	}
-
+	
 	/**
 	 * Checks the complexity of the password
-	 *
 	 * @param pass the password string to check.
 	 * @return the complexity of the password in a string.
 	 */
@@ -137,10 +127,9 @@ public final class TextUtils {
 			}
 		}
 	}
-
+	
 	/**
 	 * Converts a {@code long} hash into a string value.
-	 *
 	 * @param l the long to convert.
 	 * @return the converted string.
 	 */
@@ -154,10 +143,9 @@ public final class TextUtils {
 		}
 		return new String(ac, 12 - i, i);
 	}
-
+	
 	/**
 	 * Converts a string to a {@code long} hash value.
-	 *
 	 * @param s the string to convert.
 	 * @return the long hash value.
 	 */
@@ -177,19 +165,18 @@ public final class TextUtils {
 			l /= 37L;
 		return l;
 	}
-
+	
 	/**
 	 * Hashes a {@code String} using Jagex's algorithm, this method should be
 	 * used to convert actual names to hashed names to lookup files within the
 	 * {@link FileSystem}.
-	 *
 	 * @param string The string to hash.
 	 * @return The hashed string.
 	 */
 	public static int hash(String string) {
 		return _hash(string.toUpperCase());
 	}
-
+	
 	/**
 	 * Hashes a {@code String} using Jagex's algorithm, this method should be
 	 * used to convert actual names to hashed names to lookup files within the
@@ -202,7 +189,6 @@ public final class TextUtils {
 	 * {@link #hash(String) <i>hashing method</i>}. The scope of this method has
 	 * been marked as {@code private} to prevent confusion.
 	 * </p>
-	 *
 	 * @param string The string to hash.
 	 * @return The hashed string.
 	 * @deprecated This method should only be used internally as it does not

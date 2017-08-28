@@ -16,7 +16,7 @@ import net.edge.world.locale.area.AreaManager;
 
 @CommandSignature(alias = {"reload"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::reload")
 public final class ReloadCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		switch(cmd[1].toLowerCase()) {
@@ -50,7 +50,7 @@ public final class ReloadCommand implements Command {
 			default:
 				World.get().getTask().submit(new Task(3, false) {
 					boolean removed;
-
+					
 					@Override
 					protected void execute() {
 						if(!removed) {

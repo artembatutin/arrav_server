@@ -26,10 +26,9 @@ import java.util.function.Function;
  * @since 4-8-2017.
  */
 public final class BarbAgility extends Agility {
-
+	
 	/**
 	 * Constructs a new {@link Agility}.
-	 *
 	 * @param player   {@link #player}.
 	 * @param object   {@link #object}.
 	 * @param crossing {@link #crossing}.
@@ -37,20 +36,20 @@ public final class BarbAgility extends Agility {
 	private BarbAgility(Player player, GameObject object, Obstacle crossing) {
 		super(player, object, crossing);
 	}
-
+	
 	public static void action() {
 		for(Obstacles obstacleFunction : Obstacles.values()) {
 			ObjectAction action = new ObjectAction() {
-
+				
 				@Override
 				public boolean click(Player player, GameObject object, int click) {
 					Obstacle obstacle = obstacleFunction.obstacles.apply(player);
-
+					
 					if(!obstacle.findProperPosition(player)) {
 						new BarbAgility(player, object, obstacle).start();
 						return true;
 					}
-
+					
 					Position walk = null;
 					Position[] targets = obstacle.start;
 					if(targets.length == 0) {
@@ -72,7 +71,7 @@ public final class BarbAgility extends Agility {
 							new BarbAgility(player, object, obstacleFunction.obstacles.apply(player)).start();
 						}
 					});
-
+					
 					return true;
 				}
 			};
@@ -82,19 +81,19 @@ public final class BarbAgility extends Agility {
 			}
 		}
 	}
-
+	
 	@Override
 	public double experience() {
 		return 39;
 	}
-
+	
 	public enum Obstacles {
 		ROPE_SWING(43526, p -> new FMObstacle(90, OptionalInt.of(3), new Position[]{new Position(2551, 3554), new Position(2552, 3554)}, new Position(p.getPosition().getX(), 3549), 751, 35, 22) {
 			@Override
 			public boolean findProperPosition(Player player) {
 				return false;
 			}
-
+			
 			@Override
 			public boolean crossable(Player player) {
 				if(player.getPosition().same(new Position(2552, 3554, 0)) || player.getPosition().same(new Position(2551, 3554, 0))) {
@@ -103,7 +102,7 @@ public final class BarbAgility extends Agility {
 				player.message("You must be standing infront one of the ropes.");
 				return false;
 			}
-
+			
 			@Override
 			public void initialize(Player player) {
 				super.initialize(player);
@@ -128,7 +127,7 @@ public final class BarbAgility extends Agility {
 					if(player.getPosition().same(new Position(2536, 3553, 0)) || player.getPosition().same(new Position(2541, 3553, 0))) {
 						return true;
 					}
-
+					
 					player.message("You can't cross this obstacle from this side.");
 					return false;
 				}
@@ -157,10 +156,10 @@ public final class BarbAgility extends Agility {
 			@Override
 			public void initialize(Player player) {
 				player.facePosition(new Position(2536, 3546));
-
+				
 				super.initialize(player);
 			}
-
+			
 			@Override
 			public void onStop(Player player) {
 				player.animation(new Animation(11794));
@@ -171,7 +170,7 @@ public final class BarbAgility extends Agility {
 			public void initialize(Player player) {
 				player.facePosition(new Position(player.getPosition().getX(), player.getPosition().getY() + 1));
 				player.out(new SendObjectAnimation(new Position(2532, 3544, 3), 11819, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
-
+				
 				super.initialize(player);
 			}
 		}),
@@ -200,7 +199,7 @@ public final class BarbAgility extends Agility {
 						new ForcedMovement(player), // second slide
 						new ForcedMovement(player), // jump down
 				};
-
+				
 				LinkedTaskSequence seq = new LinkedTaskSequence();
 				seq.connect(2, () -> {
 					player.animation(new Animation(2588, 20));
@@ -230,16 +229,16 @@ public final class BarbAgility extends Agility {
 				seq.start();
 			}
 		});
-
+		
 		public final int[] ids;
-
+		
 		Function<Player, Obstacle> obstacles;
-
+		
 		Obstacles(int[] ids, Function<Player, Obstacle> obstacles) {
 			this.obstacles = obstacles;
 			this.ids = ids;
 		}
-
+		
 		Obstacles(int id, Function<Player, Obstacle> obstacles) {
 			this.obstacles = obstacles;
 			this.ids = new int[]{id};

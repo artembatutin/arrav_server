@@ -13,7 +13,6 @@ import net.edge.world.object.ObjectType;
 
 /**
  * Represents a single trap on the world.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public abstract class Trap {
@@ -45,7 +44,6 @@ public abstract class Trap {
 
 	/**
 	 * Constructs a new {@link Trap}.
-	 *
 	 * @param player {@link #player}.
 	 * @param type   {@link #type}.
 	 */
@@ -66,7 +64,6 @@ public abstract class Trap {
 	/**
 	 * Attempts to trap the specified {@code mob} by checking the prerequisites and initiating the
 	 * abstract {@link #onCatch} method.
-	 *
 	 * @param mob the mob to trap.
 	 */
 	protected void trap(Mob mob) {
@@ -83,7 +80,6 @@ public abstract class Trap {
 
 	/**
 	 * Determines fi the player has equiped any set that boosts the success formula.
-	 *
 	 * @return the amount of items the player is wearing.
 	 */
 	public boolean hasLarupiaSetEquipped() {
@@ -92,7 +88,6 @@ public abstract class Trap {
 
 	/**
 	 * Calculates the chance for the bird to be lured <b>or</b> trapped.
-	 *
 	 * @param mob the mob being caught.
 	 * @return the double value which defines the chance.
 	 */
@@ -128,7 +123,6 @@ public abstract class Trap {
 
 	/**
 	 * Determines if the trap can catch.
-	 *
 	 * @param mob the mob to check.
 	 * @return {@code true} if the player can, {@code false} otherwise.
 	 */
@@ -146,14 +140,12 @@ public abstract class Trap {
 
 	/**
 	 * The functionality that should be handled when the trap has catched.
-	 *
 	 * @param mob the mob that was catched.
 	 */
 	public abstract void onCatch(Mob mob);
 
 	/**
 	 * The functionality that should be handled every 600ms.
-	 *
 	 * @param t the task this method is dependant of.
 	 */
 	public abstract void onSequence(Task t);
@@ -166,14 +158,12 @@ public abstract class Trap {
 
 	/**
 	 * The experience gained for catching this npc.
-	 *
 	 * @return a numerical value defining the amount of experience gained.
 	 */
 	public abstract double experience();
 
 	/**
 	 * Determines if the trap can be claimed.
-	 *
 	 * @param object the object that was interacted with.
 	 * @return {@code true} if the trap can, {@code false} otherwise.
 	 */
@@ -216,7 +206,6 @@ public abstract class Trap {
 
 	/**
 	 * Sets the object id.
-	 *
 	 * @param id the id to set.
 	 */
 	public void updateObject(int id) {
@@ -243,7 +232,6 @@ public abstract class Trap {
 	/**
 	 * The enumerated type whose elements represent a set of constants
 	 * used to define the type of a trap.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum TrapType {
@@ -264,7 +252,6 @@ public abstract class Trap {
 
 		/**
 		 * Constructs a new {@link TrapType}.
-		 *
 		 * @param objectId {@link #objectId}.
 		 * @param itemId   {@link #itemId}.
 		 */
@@ -292,11 +279,13 @@ public abstract class Trap {
 	/**
 	 * The enumerated type whose elements represent a set of constants
 	 * used to define the state of a trap.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum TrapState {
-		PENDING, CATCHING, CAUGHT, FALLEN
+		PENDING,
+		CATCHING,
+		CAUGHT,
+		FALLEN
 	}
 
 }

@@ -17,22 +17,21 @@ import java.util.Optional;
 
 /**
  * The class which manages clans on the world.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class ClanManager {
-
+	
 	/**
 	 * The clan manager for the world.
 	 */
 	private static final ClanManager CLAN_MANAGER = new ClanManager();
-
+	
 	/**
 	 * The collection of clans on this world.
 	 */
 	private static final Object2ObjectArrayMap<String, ClanChat> GLOBAL_CLANS = new Object2ObjectArrayMap<>();
-
+	
 	public void clearOnLogin(Player player) {
 		player.text(50139, "Talking in: ");
 		player.text(50140, "Owner: ");
@@ -41,10 +40,9 @@ public final class ClanManager {
 		player.out(new SendClearText(50144, 100));
 		player.out(new SendClanBanned(new ObjectArrayList<>()));
 	}
-
+	
 	/**
 	 * Attempts to register a clan chat for the specified {@code player}.
-	 *
 	 * @param player the player attempting to register a clan.
 	 * @param name   the name of the clan to be created.
 	 */
@@ -61,10 +59,9 @@ public final class ClanManager {
 		clan.add(player, ClanChatRank.OWNER);
 		GLOBAL_CLANS.put(player.credentials.username, clan);
 	}
-
+	
 	/**
 	 * Attempts to join a clan chat for the specified {@code player}.
-	 *
 	 * @param player the player attempting to join.
 	 * @param name   the name of the clan to join.
 	 */
@@ -89,12 +86,11 @@ public final class ClanManager {
 		if(!chat.add(player, chat.getRank(player.credentials.username))) {
 			player.message("This clan is currently full.");
 		}
-
+		
 	}
-
+	
 	/**
 	 * Attempts to exit from the clan chat for the specified {@code player}.
-	 *
 	 * @param player the player attempting to exit.
 	 */
 	public void exit(Player player) {
@@ -105,10 +101,9 @@ public final class ClanManager {
 			clearOnLogin(player);
 		}
 	}
-
+	
 	/**
 	 * Attempts to exit from the clan chat for the specified {@code player}.
-	 *
 	 * @param player the player attempting to exit.
 	 */
 	public void delete(Player player) {
@@ -129,10 +124,9 @@ public final class ClanManager {
 			clearOnLogin(player);
 		}
 	}
-
+	
 	/**
 	 * Attempts to rename the clan chat.
-	 *
 	 * @param player owenr
 	 */
 	public void rename(Player player) {
@@ -148,10 +142,9 @@ public final class ClanManager {
 			}));
 		}
 	}
-
+	
 	/**
 	 * Attempts to get the clan from the specified {@code name}
-	 *
 	 * @param name the name to return the clan chat from.
 	 * @return the clan chat wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
@@ -159,19 +152,17 @@ public final class ClanManager {
 		ClanChat clan = GLOBAL_CLANS.get(name);
 		return Optional.ofNullable(clan);
 	}
-
+	
 	/**
 	 * Gets all of the {@link #GLOBAL_CLANS} in the world.
-	 *
 	 * @return the clan chat wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
 	public Object2ObjectArrayMap<String, ClanChat> getClans() {
 		return GLOBAL_CLANS;
 	}
-
+	
 	/**
 	 * Updates the clan chat for the specified {@code members}
-	 *
 	 * @param update  the clan update to update the interface for.
 	 * @param members the members to update the interface for.
 	 */
@@ -184,19 +175,19 @@ public final class ClanManager {
 			update(update, member);
 		}
 	}
-
+	
 	public void update(ClanChatUpdate update, ClanChat clan, ClanMember member) {
 		update.update(clan, member);
 	}
-
+	
 	public void update(ClanChatUpdate update, ClanMember member) {
 		update.update(member);
 	}
-
+	
 	public void update(ClanChatUpdate update, ClanChat clan) {
 		update.update(clan);
 	}
-
+	
 	/**
 	 * Saves all the {@link #GLOBAL_CLANS}.
 	 */
@@ -233,12 +224,12 @@ public final class ClanManager {
 		}
 		json.publish("./data/def/clans.json");
 	}
-
+	
 	/**
 	 * Returns the clan chat manager.
 	 */
 	public static ClanManager get() {
 		return CLAN_MANAGER;
 	}
-
+	
 }

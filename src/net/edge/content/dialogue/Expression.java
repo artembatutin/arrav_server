@@ -3,7 +3,6 @@ package net.edge.content.dialogue;
 /**
  * The enumerated type whose elements represent the expressions a character can
  * take on.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public enum Expression {
@@ -33,24 +32,22 @@ public enum Expression {
 	//
 	REFUSING(9811),
 	INTERROGATING(9820);
-
+	
 	/**
 	 * The identification for this expression.
 	 */
 	private final int expression;
-
+	
 	/**
 	 * Creates a new {@link Expression}.
-	 *
 	 * @param expression the identification for this expression.
 	 */
 	Expression(int expression) {
 		this.expression = expression;
 	}
-
+	
 	/**
 	 * Gets the identification for this expression.
-	 *
 	 * @return the expression.
 	 */
 	public final int getExpression() {

@@ -9,7 +9,6 @@ import java.util.Optional;
 
 /**
  * The class which represents a duel log.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class DuelLog extends LogDetails {
@@ -36,7 +35,6 @@ public final class DuelLog extends LogDetails {
 
 	/**
 	 * Constructs a new {@link DuelLog}.
-	 *
 	 * @param player  {@link #getUsername()}.
 	 * @param other   {@link #otherUsername}.
 	 * @param wonDuel {@link #wonDuel}.

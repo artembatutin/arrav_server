@@ -16,7 +16,6 @@ public class Synchronizer {
 
 	/**
 	 * The pre-update of preparing players and mobs.
-	 *
 	 * @param players players list.
 	 * @param mobs    the mobs list.
 	 */
@@ -88,7 +87,6 @@ public class Synchronizer {
 
 	/**
 	 * The main tick update for players.
-	 *
 	 * @param players players list.
 	 */
 	public void update(ActorList<Player> players) {
@@ -117,7 +115,6 @@ public class Synchronizer {
 
 	/**
 	 * The post-update process of resetting players and mobs.
-	 *
 	 * @param players players list.
 	 * @param mobs    mobs list.
 	 */

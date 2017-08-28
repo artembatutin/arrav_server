@@ -37,7 +37,6 @@ public abstract class Agility extends SkillAction {
 
 	/**
 	 * Constructs a new {@link SkillAction}.
-	 *
 	 * @param player   {@link #player}.
 	 * @param object   {@link #object}.
 	 * @param crossing {@link #crossing}.
@@ -56,7 +55,6 @@ public abstract class Agility extends SkillAction {
 
 	/**
 	 * The delay intervals of this skill action in ticks.
-	 *
 	 * @return the delay intervals.
 	 */
 	@Override
@@ -66,7 +64,6 @@ public abstract class Agility extends SkillAction {
 
 	/**
 	 * The priority determines if this skill can be overriden by another skill.
-	 *
 	 * @return <true> if the skill can be overriden by other skills, <false> otherwise.
 	 */
 	@Override
@@ -76,7 +73,6 @@ public abstract class Agility extends SkillAction {
 
 	/**
 	 * The skill that this skill action is for.
-	 *
 	 * @return the skill data.
 	 */
 	@Override
@@ -116,7 +112,6 @@ public abstract class Agility extends SkillAction {
 
 	/**
 	 * The method executed when the delay has elapsed.
-	 *
 	 * @param t the task executing this skill action.
 	 */
 	@Override

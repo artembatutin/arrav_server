@@ -10,7 +10,6 @@ import net.edge.world.entity.actor.player.assets.Rights;
 /**
  * The enumerated type whose elements represent the update states
  * a clan can be in.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum ClanChatUpdate {
@@ -37,7 +36,8 @@ public enum ClanChatUpdate {
 				player.text(50144 + pos, rank + m.getRank().toIcon(player, m.getPlayer()) + m.getPlayer().getFormatUsername());
 			}
 		}
-	}, NAME_MODIFICATION() {
+	},
+	NAME_MODIFICATION() {
 		@Override
 		public void update(ClanChat clan) {
 			for(int pos = 0; pos < clan.getMembers().length; pos++) {
@@ -50,7 +50,8 @@ public enum ClanChatUpdate {
 				m.getPlayer().out(new SendClanMessage("The clan name has been changed.", clan.getName(), clan.getName(), Rights.PLAYER));
 			}
 		}
-	}, MEMBER_LIST_MODIFICATION() {
+	},
+	MEMBER_LIST_MODIFICATION() {
 		@Override
 		public void update(ClanChat clan, ClanMember member) {
 			boolean quit = clan.getMembers()[member.getPos()] == null;
@@ -66,7 +67,8 @@ public enum ClanChatUpdate {
 				}
 			}
 		}
-	}, BAN_MODIFICATION() {
+	},
+	BAN_MODIFICATION() {
 		@Override
 		public void update(ClanChat clan) {
 			for(int pos = 0; pos < clan.getMembers().length; pos++) {
@@ -78,12 +80,13 @@ public enum ClanChatUpdate {
 				}
 			}
 		}
-
+		
 		@Override
 		public void update(ClanMember member) {
 			member.getPlayer().out(new SendClanBanned(member.getClan().getBanned()));
 		}
-	}, SETTING_MODIFICATION() {
+	},
+	SETTING_MODIFICATION() {
 		@Override
 		public void update(ClanMember member) {
 			ClanChatSettings settings = member.getClan().getSettings();
@@ -91,29 +94,31 @@ public enum ClanChatUpdate {
 			member.getPlayer().text(50315, settings.getMute().toPerm());
 			member.getPlayer().text(50318, settings.getBan().toPerm());
 		}
-	}, LOOT_SHARE_MODIFICATION() {
+	},
+	LOOT_SHARE_MODIFICATION() {
 		@Override
 		public void update(ClanMember member) {
 			// TODO Auto-generated method stub
-
+			
 		}
-	}, COIN_SHARE_MODIFICATION() {
+	},
+	COIN_SHARE_MODIFICATION() {
 		@Override
 		public void update(ClanMember member) {
 			// TODO Auto-generated method stub
-
+			
 		}
 	};
-
+	
 	public void update(ClanChat clan, ClanMember member) {
-
+	
 	}
-
+	
 	public void update(ClanMember member) {
-
+	
 	}
-
+	
 	public void update(ClanChat clan) {
-
+	
 	}
 }

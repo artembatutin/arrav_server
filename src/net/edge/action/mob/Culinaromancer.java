@@ -24,7 +24,7 @@ public class Culinaromancer extends ActionInitializer {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {
 				DialogueAppender ap = new DialogueAppender(player);
-
+				
 				ap.chain(new NpcDialogue(3400, Expression.MAD, "Ergh... What do you want?"));
 				ap.chain(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {

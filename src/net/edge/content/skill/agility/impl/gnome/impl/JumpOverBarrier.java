@@ -10,7 +10,6 @@ import net.edge.world.locale.Position;
 
 /**
  * Holds functionality for the jump over barrier obstacle.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class JumpOverBarrier extends ObstacleActivity {

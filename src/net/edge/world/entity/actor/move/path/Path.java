@@ -6,7 +6,6 @@ import java.util.Deque;
 
 /**
  * Represents a single path in the path finding system.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class Path {
@@ -18,7 +17,6 @@ public class Path {
 
 	/**
 	 * Creates a new {@code Path}.
-	 *
 	 * @param moves All of the path moves.
 	 */
 	public Path(Deque<Position> moves) {
@@ -27,7 +25,6 @@ public class Path {
 
 	/**
 	 * Gets the starting location of the path.
-	 *
 	 * @return the starting position.
 	 */
 	public Position getOrigin() {
@@ -36,7 +33,6 @@ public class Path {
 
 	/**
 	 * Gets the ending location of the path.
-	 *
 	 * @return the ending position.
 	 */
 	public Position getDestination() {
@@ -45,7 +41,6 @@ public class Path {
 
 	/**
 	 * Gets the condition if the path is possible.
-	 *
 	 * @return the condition if the path is possible to be done.
 	 */
 	public boolean isPossible() {
@@ -54,7 +49,6 @@ public class Path {
 
 	/**
 	 * Gets all moves of the {@code Path}.
-	 *
 	 * @return the deque containing the coordinates.
 	 */
 	public Deque<Position> getMoves() {
@@ -63,7 +57,6 @@ public class Path {
 
 	/**
 	 * Removing one of the last(but first in the queue) walking points.
-	 *
 	 * @return true if removed, false otherwise.
 	 */
 	public Position poll() {

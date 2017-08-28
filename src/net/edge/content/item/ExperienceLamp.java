@@ -15,10 +15,10 @@ import net.edge.world.entity.item.Item;
  * https://github.com/ophionB | https://www.rune-server.ee/members/ophion/
  */
 public class ExperienceLamp extends ActionInitializer {
-
+	
 	private int skill;
 	private static final int INTERFACE = 2808;
-
+	
 	@Override
 	public void init() {
 		ButtonAction e = new ButtonAction() {
@@ -211,15 +211,15 @@ public class ExperienceLamp extends ActionInitializer {
 		};
 		e.register(11014);
 	}
-
+	
 	public int getSkill() {
 		return skill;
 	}
-
+	
 	public void setSkill(int skillId) {
 		this.skill = skillId;
 	}
-
+	
 	public static void handleItem() {
 		ItemAction e = new ItemAction() {
 			@Override
@@ -230,5 +230,5 @@ public class ExperienceLamp extends ActionInitializer {
 		};
 		e.register(4447);
 	}
-
+	
 }

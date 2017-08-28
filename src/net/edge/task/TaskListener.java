@@ -7,19 +7,17 @@ package net.edge.task;
  * executing the assignment accordingly. These event listeners can also be
  * configured to check for the occurrence at certain rates (which of course, can
  * be dynamically changed).
- *
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class TaskListener extends Task {
-
+	
 	/**
 	 * Determines if the listener should shutdown after execution.
 	 */
 	private final boolean shutdown;
-
+	
 	/**
 	 * Create a new {@link TaskListener}.
-	 *
 	 * @param shutdown if the listener should shutdown after execution.
 	 * @param rate     the rate in which the listener will listen.
 	 */
@@ -27,7 +25,7 @@ public abstract class TaskListener extends Task {
 		super(rate, true);
 		this.shutdown = shutdown;
 	}
-
+	
 	/**
 	 * Create a new {@link TaskListener} that will listen at a rate of
 	 * {@code 1} and will shutdown after execution.
@@ -35,22 +33,21 @@ public abstract class TaskListener extends Task {
 	public TaskListener() {
 		this(true, 1);
 	}
-
+	
 	/**
 	 * The listener will execute {@code run()} when invocation of this method
 	 * returns {@code false}.
-	 *
 	 * @return {@code true} if the code can be executed, {@code false} if the
 	 * listener should keep listening.
 	 */
 	public abstract boolean canRun();
-
+	
 	/**
 	 * The code that will be executed when {@code canExecute()} returns
 	 * {@code true}.
 	 */
 	public abstract void run();
-
+	
 	@Override
 	public final void execute() {
 		if(canRun()) {

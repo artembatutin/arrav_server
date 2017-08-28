@@ -15,35 +15,34 @@ import java.util.Optional;
 
 /**
  * Represents the Evil turnip familiar.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class EvilTurnip extends Familiar {
-
+	
 	/**
 	 * Constructs a new {@link EvilTurnip}.
 	 */
 	public EvilTurnip() {
 		super(SummoningData.EVIL_TURNIP);
 	}
-
+	
 	private final ForagerPassiveAbility ability = new ForagerPassiveAbility(12138, 12136);
-
+	
 	@Override
 	public FamiliarAbility getAbilityType() {
 		return ability;
 	}
-
+	
 	@Override
 	public Optional<PassiveAbility> getPassiveAbility() {
 		return Optional.empty();
 	}
-
+	
 	@Override
 	public boolean isCombatic() {
 		return true;
 	}
-
+	
 	@Override
 	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
@@ -52,7 +51,7 @@ public final class EvilTurnip extends Familiar {
 			Summoning.openBeastOfBurden(player, mob);
 		}
 	}
-
+	
 	private final String[] RANDOM_DIALOGUE = new String[]{"My roots feel hurty. I thinking it be someone I eated.", "Hur hur hur...", "When we gonna fighting things, boss?"};
-
+	
 }

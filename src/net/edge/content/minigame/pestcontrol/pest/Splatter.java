@@ -1,32 +1,31 @@
 package net.edge.content.minigame.pestcontrol.pest;
 
-import net.edge.content.combat.hit.Hit;
-import net.edge.content.combat.hit.HitIcon;
-import net.edge.content.combat.hit.Hitsplat;
 import net.edge.content.minigame.pestcontrol.PestControlMinigame;
 import net.edge.content.minigame.pestcontrol.defence.PestGate;
 import net.edge.world.World;
+import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.combat.hit.HitIcon;
+import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobDeath;
 import net.edge.world.locale.Position;
 
 public class Splatter extends Pest {
-
+	
 	/**
 	 * The nearest gate.
 	 */
 	private PestGate gate;
-
+	
 	/**
 	 * Creates a new {@link Mob}.
-	 *
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
 	public Splatter(int id, Position position) {
 		super(id, position);
 	}
-
+	
 	@Override
 	public void sequence(Mob knight) {
 		//when dead, explode and cause damage around, no damage on portals.
@@ -34,12 +33,12 @@ public class Splatter extends Pest {
 			gate = PestControlMinigame.getNearestGate(getPosition());
 		}
 	}
-
+	
 	@Override
 	public boolean aggressive() {
 		return true;
 	}
-
+	
 	@Override
 	public void setPosition(Position position) {
 		//Updating the region if the entity entered another one.
@@ -52,7 +51,7 @@ public class Splatter extends Pest {
 			damage(new Hit(getCurrentHealth(), Hitsplat.NORMAL, HitIcon.NONE));
 		}
 	}
-
+	
 	@Override
 	public void appendDeath() {
 		setDead(true);
@@ -75,5 +74,5 @@ public class Splatter extends Pest {
 			});
 		});
 	}
-
+	
 }

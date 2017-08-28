@@ -8,11 +8,10 @@ import net.edge.world.entity.actor.player.Player;
 
 /**
  * The message sent from the client when a player uses an item on another item.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ItemOnItemNodePacket implements IncomingPacket {
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		final int itemX = payload.getShort(true, ByteOrder.LITTLE);

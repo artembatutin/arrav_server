@@ -17,15 +17,13 @@ import java.util.Arrays;
 
 /**
  * The trade session class that represents a trade session between 2 players.
- *
  * @author lare96 <http://github.com/lare96>
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class TradeSession extends ExchangeSession {
-
+	
 	/**
 	 * Creates a new {@link TradeSession}.
-	 *
 	 * @param player the player that controls this trade session.
 	 * @param other  the player that was invited to this trade session.
 	 * @param stage  the stage of this trade session.
@@ -33,11 +31,11 @@ public final class TradeSession extends ExchangeSession {
 	public TradeSession(Player player, Player other, int stage) {
 		super(Arrays.asList(player, other), stage, ExchangeSessionType.TRADE);
 	}
-
+	
 	@Override
 	public void onRequest(Player player, Player requested) {
 		TradeSession session = (TradeSession) ExchangeSessionManager.get().isAvailable(player, requested, ExchangeSessionType.TRADE).orElse(null);
-
+		
 		if(session != null) {
 			session.setStage(OFFER_ITEMS);
 			session.updateMainComponents();
@@ -51,7 +49,7 @@ public final class TradeSession extends ExchangeSession {
 			ExchangeSessionManager.get().add(session);
 		}
 	}
-
+	
 	@Override
 	public void onClickButton(Player player, int button) {
 		switch(button) {
@@ -63,21 +61,19 @@ public final class TradeSession extends ExchangeSession {
 				break;
 		}
 	}
-
+	
 	/**
 	 * Determines and returns the trade display name for {@code player}.
-	 *
 	 * @param player the player to determine this display name for.
 	 * @return the trade display name.
 	 */
 	private String name(Player player) {
 		return player.getFormatUsername();
 	}
-
+	
 	/**
 	 * Determines and returns the text for {@code items} that will be displayed
 	 * on the confirm trade screen.
-	 *
 	 * @param items the array of items to display.
 	 * @return the confirm text for the array of items.
 	 */
@@ -90,24 +86,25 @@ public final class TradeSession extends ExchangeSession {
 				continue;
 			}
 			int amount = this.getExchangeSession().get(player).computeAmountForId(item.getId());
-			tradeAmount = item.getDefinition().isStackable() ? amount >= 1000 && amount < 1000000 ? "@cya@" + (amount / 1000) + "K @whi@" + "(" + amount + ")" : amount >= 1000000 ? "@gre@" + (amount / 1000000) + " " + "million @whi@(" + amount + ")" : "" + amount : "(x" + amount + ")";
+			tradeAmount = item.getDefinition()
+					.isStackable() ? amount >= 1000 && amount < 1000000 ? "@cya@" + (amount / 1000) + "K @whi@" + "(" + amount + ")" : amount >= 1000000 ? "@gre@" + (amount / 1000000) + " " + "million @whi@(" + amount + ")" : "" + amount : "(x" + amount + ")";
 			tradeItems = count == 0 ? item.getDefinition().getName() : tradeItems + "\\n" + item.getDefinition().getName();
 			tradeItems = tradeItems + (item.getDefinition().isStackable() ? " x " : " ") + tradeAmount;
 			count++;
 		}
 		return tradeItems;
 	}
-
+	
 	@Override
 	public boolean canAddItem(Player player, Item item, int slot) {
 		return true;
 	}
-
+	
 	@Override
 	public boolean canRemoveItem(Player player, Item item) {
 		return true;
 	}
-
+	
 	@Override
 	public void accept(Player player, int stage) {
 		Player other = this.getOther(player);
@@ -117,13 +114,13 @@ public final class TradeSession extends ExchangeSession {
 					player.message("You don't have enough free slots for this many items.");
 					break;
 				}
-
+				
 				if(!other.getInventory().hasCapacityFor(getExchangeSession().get(player).getItems())) {
 					String username = other.getFormatUsername();
 					player.message(username + " doesn't have enough free slots for this many items");
 					break;
 				}
-
+				
 				if(hasAttachment() && getAttachment() != player) {
 					this.setAttachment(null);
 					setStage(CONFIRM_DECISION);
@@ -156,7 +153,7 @@ public final class TradeSession extends ExchangeSession {
 				break;
 		}
 	}
-
+	
 	@Override
 	public void updateMainComponents() {
 		if(getStage() == OFFER_ITEMS) {
@@ -174,7 +171,7 @@ public final class TradeSession extends ExchangeSession {
 		} else if(getStage() == CONFIRM_DECISION) {
 			this.getPlayers().forEach(player -> {
 				Player recipient = getOther(player);
-
+				
 				player.out(new SendContainer(3214, player.getInventory()));
 				player.text(3557, getItemNames(player, this.getExchangeSession().get(player).getItems()));
 				player.text(3558, getItemNames(recipient, this.getExchangeSession().get(recipient).getItems()));
@@ -182,7 +179,7 @@ public final class TradeSession extends ExchangeSession {
 			});
 		}
 	}
-
+	
 	@Override
 	public void updateOfferComponents() {
 		for(Player player : this.getExchangeSession().keySet()) {
@@ -195,12 +192,12 @@ public final class TradeSession extends ExchangeSession {
 			player.text(3417, "Trading with: " + name(recipient) + " " + "who has @gre@" + remaining + " free slots");
 		}
 	}
-
+	
 	@Override
 	public void onReset() {
 		this.getPlayers().forEach(p -> {
 			p.closeWidget();
 		});
 	}
-
+	
 }

@@ -15,35 +15,34 @@ import java.util.Optional;
 
 /**
  * Represents the Bull ant familiar.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class BullAnt extends Familiar {
-
+	
 	/**
 	 * Constructs a new {@link BullAnt}.
 	 */
 	public BullAnt() {
 		super(SummoningData.BULL_ANT);
 	}
-
+	
 	private final BeastOfBurden ability = new BeastOfBurden(9);
-
+	
 	@Override
 	public FamiliarAbility getAbilityType() {
 		return ability;
 	}
-
+	
 	@Override
 	public Optional<PassiveAbility> getPassiveAbility() {
 		return Optional.empty();
 	}
-
+	
 	@Override
 	public boolean isCombatic() {
 		return true;
 	}
-
+	
 	@Override
 	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
@@ -52,6 +51,6 @@ public final class BullAnt extends Familiar {
 			Summoning.openBeastOfBurden(player, mob);
 		}
 	}
-
+	
 	private final String[] RANDOM_DIALOGUE = new String[]{"All right you worthless biped, fall in!", "What's the matter, Private? Not enjoying the run?"};
 }

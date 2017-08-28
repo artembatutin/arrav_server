@@ -40,7 +40,9 @@ public class Ignatius extends ActionInitializer {
 				ap.chain(new NpcDialogue(4946, "Aha, if you think you have any ideas to improve the concept", "feel free to make a suggestion on the forums!"));
 				ap.chain(new PlayerDialogue("Will do!").attachAfter(() -> player.closeWidget()));
 				ap.chain(new PlayerDialogue(active ? "Howlong till the event ends?" : "Howmany logs does the fire pit have?"));
-				String[] messages = active ? new String[]{"The event is active for another:", Utility.convertTime(FirepitManager.get().getFirepit().getTime())} : new String[]{"Fire pit: " + FirepitManager.get().getFirepit().getElements() + "/1000 logs.", "The minimum log that's sacrificable: " + FirepitManager.get().getFirepit().getLogRequirement()};
+				String[] messages = active ? new String[]{"The event is active for another:", Utility.convertTime(FirepitManager.get().getFirepit().getTime())} : new String[]{"Fire pit: " + FirepitManager.get()
+						.getFirepit()
+						.getElements() + "/1000 logs.", "The minimum log that's sacrificable: " + FirepitManager.get().getFirepit().getLogRequirement()};
 				ap.chain(new StatementDialogue(messages).attachAfter(() -> player.closeWidget()));
 				ap.chain(new PlayerDialogue("Do you sell anything?"));
 				ap.chain(new NpcDialogue(4946, "Sadly, I don't have anything for sale, I used all my logs", "to get 99 firemaking years ago..."));

@@ -72,6 +72,6 @@ public class ToggleCommand implements Command {
 				}
 				break;
 		}
-
+		
 	}
 }

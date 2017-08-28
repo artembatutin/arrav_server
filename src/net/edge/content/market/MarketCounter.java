@@ -11,20 +11,19 @@ import net.edge.world.entity.actor.player.Player;
  * Controls all the Avarrockian market.
  */
 public class MarketCounter {
-
+	
 	/**
 	 * All cached world shop.
 	 */
 	private static final Int2ObjectArrayMap<MarketShop> SHOPS = new Int2ObjectArrayMap<>();
-
+	
 	/**
 	 * All cached player counters.
 	 */
 	private static final Object2ObjectOpenHashMap<String, PlayerCounter> COUNTERS = new Object2ObjectOpenHashMap<>();
-
+	
 	/**
 	 * Gets the player specific counter.
-	 *
 	 * @param player the player specific counter.
 	 * @return the player counter, creates if not cached.
 	 */
@@ -35,7 +34,7 @@ public class MarketCounter {
 		}
 		return COUNTERS.get(player.credentials.username);
 	}
-
+	
 	/**
 	 * Serializes the shops.
 	 */
@@ -46,7 +45,7 @@ public class MarketCounter {
 			if(s == null) {
 				continue;
 			}
-
+			
 			item_values_saver.current().addProperty("id", id);
 			item_values_saver.current().addProperty("name", s.getTitle());
 			item_values_saver.current().addProperty("iron", s.ironAccess);
@@ -56,11 +55,11 @@ public class MarketCounter {
 		}
 		item_values_saver.publish("./data/def/item/market_shops2.json");
 	}
-
+	
 	public static Int2ObjectArrayMap<MarketShop> getShops() {
 		return SHOPS;
 	}
-
+	
 	public static Object2ObjectOpenHashMap<String, PlayerCounter> getCounters() {
 		return COUNTERS;
 	}

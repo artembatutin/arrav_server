@@ -19,14 +19,12 @@ import static net.edge.content.achievements.Achievement.FEATHERING;
 
 /**
  * The bird snare implementation of the {@link Trap} class which represents a single bird snare.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class BirdSnare extends Trap {
 
 	/**
 	 * Constructs a new {@link BirdSnare}.
-	 *
 	 * @param player {@link #getPlayer()}.
 	 */
 	public BirdSnare(Player player) {
@@ -50,7 +48,6 @@ public final class BirdSnare extends Trap {
 
 	/**
 	 * Kills the specified {@code mob}.
-	 *
 	 * @param mob the mob to kill.
 	 */
 	private void kill(Bird mob) {

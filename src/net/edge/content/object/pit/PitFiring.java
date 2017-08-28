@@ -15,7 +15,6 @@ import java.util.OptionalInt;
 
 /**
  * Represents the skill action of firing the fire pit.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class PitFiring extends SkillAction {
@@ -32,7 +31,6 @@ public final class PitFiring extends SkillAction {
 
 	/**
 	 * Constructs a new {@link PitFiring}.
-	 *
 	 * @param player {@link #getPlayer()}.
 	 * @param pit    {@link #pit}.
 	 */

@@ -18,35 +18,33 @@ import java.util.Optional;
 
 /**
  * The node implementation that represents an item on the ground.
- *
  * @author lare96 <http://github.com/lare96>
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class GroundItem extends Entity {
-
+	
 	/**
 	 * The item concealed within this node.
 	 */
 	private final Item item;
-
+	
 	/**
 	 * The counter that contains the amount of ticks this node has.
 	 */
 	private final MutableNumber counter = new MutableNumber();
-
+	
 	/**
 	 * The item state of this node.
 	 */
 	private GroundItemState state = GroundItemState.SEEN_BY_OWNER;
-
+	
 	/**
 	 * The player attached to this node.
 	 */
 	private Player player;
-
+	
 	/**
 	 * Creates new {@link GroundItem}.
-	 *
 	 * @param item     the item concealed within this node.
 	 * @param position the position this node is on.
 	 * @param player   the player attached to this node.
@@ -56,12 +54,12 @@ public class GroundItem extends Entity {
 		this.item = item.copy();
 		this.player = player;
 	}
-
+	
 	@Override
 	public void register() {
 		player.out(new SendItemNode(this));
 	}
-
+	
 	@Override
 	public void dispose() {
 		ObjectList<Region> surrounding = World.getRegions().getAllSurroundingRegions(getPosition().getRegion());
@@ -78,10 +76,9 @@ public class GroundItem extends Entity {
 			}
 		}
 	}
-
+	
 	/**
 	 * The method executed on every sequence by the item node manager.
-	 *
 	 * @throws IllegalStateException if the item node is in an incorrect state.
 	 */
 	public void onSequence() {
@@ -112,10 +109,9 @@ public class GroundItem extends Entity {
 				throw new IllegalStateException("Invalid item node state!");
 		}
 	}
-
+	
 	/**
 	 * The method executed when {@code player} attempts to pickup this item.
-	 *
 	 * @param player the player attempting to pickup this item.
 	 */
 	public void onPickup(Player player) {
@@ -125,68 +121,61 @@ public class GroundItem extends Entity {
 			}
 		}
 	}
-
+	
 	/**
 	 * Gets the item state of this node.
-	 *
 	 * @return the item state.
 	 */
 	public final GroundItemState getItemState() {
 		return state;
 	}
-
+	
 	/**
 	 * Sets the value for {@link GroundItem#state}.
-	 *
 	 * @param state the new value to set.
 	 */
 	public final void setState(GroundItemState state) {
 		this.state = state;
 	}
-
+	
 	/**
 	 * Gets the player attached to this node.
-	 *
 	 * @return the player attached.
 	 */
 	public final Player getPlayer() {
 		return player;
 	}
-
+	
 	/**
 	 * Sets the value for {@link GroundItem#player}.
-	 *
 	 * @param player the new value to set.
 	 */
 	public final void setPlayer(Player player) {
 		this.player = player;
 	}
-
+	
 	/**
 	 * Gets the item concealed within this node.
-	 *
 	 * @return the item concealed.
 	 */
 	public final Item getItem() {
 		return item;
 	}
-
+	
 	/**
 	 * Gets the counter that contains the amount of ticks this node has.
-	 *
 	 * @return the counter that contains the ticks.
 	 */
 	public final MutableNumber getCounter() {
 		return counter;
 	}
-
+	
 	/**
 	 * Gets the region on which the item is standing.
-	 *
 	 * @return the region of this item.
 	 */
 	public Optional<Region> getRegion() {
 		return World.getRegions().getRegion(getPosition());
 	}
-
+	
 }

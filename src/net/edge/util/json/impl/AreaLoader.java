@@ -17,25 +17,24 @@ import java.util.Objects;
 
 /**
  * The {@link JsonLoader} implementation that loads all area instances.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class AreaLoader extends JsonLoader {
-
+	
 	public AreaLoader() {
 		super("./data/def/areas.json");
 	}
-
+	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		String name = Objects.requireNonNull(reader.get("name").getAsString());
 		JsonArray location = reader.get("location").getAsJsonArray();
 		ObjectList<Area.AreaLocation> locations = new ObjectArrayList<>();
-
+		
 		boolean multi;
 		boolean teleport;
 		boolean summon;
-
+		
 		for(JsonElement element : location) {
 			multi = element.getAsJsonObject().has("multi") && element.getAsJsonObject().get("multi").getAsBoolean();
 			teleport = !element.getAsJsonObject().has("teleport") || element.getAsJsonObject().get("teleport").getAsBoolean();

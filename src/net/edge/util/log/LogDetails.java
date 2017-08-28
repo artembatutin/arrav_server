@@ -4,7 +4,6 @@ import java.util.Optional;
 
 /**
  * The class which represents details for a single log.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public abstract class LogDetails {
@@ -26,7 +25,6 @@ public abstract class LogDetails {
 
 	/**
 	 * Constructs a new {@link LogDetails}.
-	 *
 	 * @param username    {@link #username}.
 	 * @param catagory    {@link #catagory}.
 	 * @param information {@link #information}.
@@ -41,7 +39,6 @@ public abstract class LogDetails {
 	 * Constructs a new {@link LogDetails}.
 	 * <p>Only use this constructor if you're going to supply the catagory information
 	 * by using LogDetails#formatInformation</p>
-	 *
 	 * @param catagory {@link #catagory}.
 	 */
 	public LogDetails(String username, String catagory) {
@@ -51,7 +48,6 @@ public abstract class LogDetails {
 	/**
 	 * The method which can be overriden to format more detailed information about
 	 * the log.
-	 *
 	 * @return an optional empty on default.
 	 */
 	public Optional<String> formatInformation() {

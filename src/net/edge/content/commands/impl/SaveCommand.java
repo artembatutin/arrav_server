@@ -23,7 +23,7 @@ import java.util.Iterator;
 
 @CommandSignature(alias = {"save"}, rights = {Rights.ADMINISTRATOR}, syntax = "Saves, ::save type")
 public final class SaveCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		switch(cmd[1].toLowerCase()) {

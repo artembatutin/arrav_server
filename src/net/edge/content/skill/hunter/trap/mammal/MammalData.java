@@ -5,7 +5,6 @@ import net.edge.world.entity.item.Item;
 /**
  * The enumerated type whose elements represent a set of constants
  * used for box trapping.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum MammalData {
@@ -17,30 +16,29 @@ public enum MammalData {
 	CARNIVOROUS_CHINCHOMPA(5080, 63, 165, 10034),
 	PAWYA(7012, 66, 200, 12535),
 	GRENWALL(7010, 77, 215, 12539);
-
+	
 	/**
 	 * The npc id for this box trap.
 	 */
 	final int npcId;
-
+	
 	/**
 	 * The requirement for this box trap.
 	 */
 	final int requirement;
-
+	
 	/**
 	 * The experience gained for this box trap.
 	 */
 	final double experience;
-
+	
 	/**
 	 * The reward obtained for this box trap.
 	 */
 	final Item[] reward;
-
+	
 	/**
 	 * Constructs a new {@link MammalData}.
-	 *
 	 * @param npcId       {@link #npcId}.
 	 * @param requirement {@link #requirement}.
 	 * @param experience  {@link #experience}.
@@ -52,11 +50,11 @@ public enum MammalData {
 		this.experience = experience;
 		this.reward = Item.convert(reward);
 	}
-
+	
 	public static void action() {
 		//		for(MammalData data : MammalData.values()) {
 		//			Mob.CUSTOM_MOBS.put(data.npcId, s -> new Mammal(data.npcId, s, data)); TODO: mammals lol
 		//		}
 	}
-
+	
 }

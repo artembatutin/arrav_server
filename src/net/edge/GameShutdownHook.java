@@ -25,21 +25,20 @@ import java.util.concurrent.TimeUnit;
 /**
  * The shut down hook which executes any last modifications before the
  * server is shut down.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class GameShutdownHook extends Thread {
-
+	
 	/**
 	 * The {@link ExecutorService} that will execute exit tasks.
 	 */
 	private final ListeningExecutorService exit;
-
+	
 	GameShutdownHook() {
 		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleShutdown").build());
 		exit = MoreExecutors.listeningDecorator(delegateService);
 	}
-
+	
 	@Override
 	public void run() {
 		try {
@@ -55,7 +54,7 @@ public final class GameShutdownHook extends Thread {
 				HostManager.serialize(HostListType.BANNED_IP);
 				HostManager.serialize(HostListType.MUTED_IP);
 				HostManager.serialize(HostListType.STARTER_RECEIVED);
-
+				
 			});
 			exit.submit(() -> {
 				ClanManager.get().save();
@@ -87,7 +86,7 @@ public final class GameShutdownHook extends Thread {
 				} catch(Exception ignored) {
 				}
 			});
-
+			
 			exit.shutdown();
 			exit.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
 			TimeUnit.SECONDS.sleep(10);
@@ -97,5 +96,5 @@ public final class GameShutdownHook extends Thread {
 			e.printStackTrace();
 		}
 	}
-
+	
 }

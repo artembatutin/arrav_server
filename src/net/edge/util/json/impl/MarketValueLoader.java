@@ -8,18 +8,17 @@ import net.edge.world.entity.item.ItemDefinition;
 
 /**
  * The {@link JsonLoader} implementation that loads all market values.
- *
  * @author Artem Batutin<artembatutin@gmail.com>
  */
 public final class MarketValueLoader extends JsonLoader {
-
+	
 	/**
 	 * Creates a new {@link MarketValueLoader}.
 	 */
 	public MarketValueLoader() {
 		super("./data/def/item/market_values.json");
 	}
-
+	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		String name = reader.get("name").getAsString();

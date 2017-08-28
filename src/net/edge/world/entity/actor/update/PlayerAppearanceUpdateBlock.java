@@ -9,18 +9,17 @@ import net.edge.world.entity.item.container.impl.Equipment;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the updating of the appearance of {@link Player}s.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
-
+	
 	/**
 	 * Creates a new {@link PlayerAppearanceUpdateBlock}.
 	 */
 	PlayerAppearanceUpdateBlock() {
 		super(0x10, UpdateFlag.APPEARANCE);
 	}
-
+	
 	private final ImmutableMap<Integer, Integer> NEW_HALF_BODY_APPEARANCES = ImmutableMap.<Integer, Integer>builder().
 			put(443, 614).
 			put(444, 599).
@@ -36,7 +35,7 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 			put(454, 605).
 			put(455, 606).
 			put(456, 619).build();
-
+	
 	@Override
 	public int write(Player player, Player other, GameBuffer msg) {
 		PlayerAppearance appearance = other.getAppearance();
@@ -123,7 +122,7 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 			buf.put(appearance.getLegColor());
 			buf.put(appearance.getFeetColor());
 			buf.put(appearance.getSkinColor());
-
+			
 			buf.putShort(other.getStandIndex() != 0x328 ? other.getStandIndex() : other.getWeaponAnimation().getStanding());
 			buf.putShort(other.getTurnIndex());
 			buf.putShort(other.getWalkIndex() != 0x333 ? other.getWalkIndex() : other.getWeaponAnimation().getWalking());
@@ -131,7 +130,7 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 			buf.putShort(other.getTurn90CWIndex());
 			buf.putShort(other.getTurn90CCWIndex());
 			buf.putShort(other.getRunIndex() != 0x338 ? other.getRunIndex() : other.getWeaponAnimation().getRunning());
-
+			
 			buf.putLong(other.credentials.usernameHash);
 			buf.put(other.determineCombatLevel() < 3 ? 3 : other.determineCombatLevel());
 			buf.put(other.isIronMan() ? 1 : 0);
@@ -144,5 +143,5 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 		}
 		return -1;
 	}
-
+	
 }

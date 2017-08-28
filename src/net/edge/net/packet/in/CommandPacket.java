@@ -1,16 +1,16 @@
 package net.edge.net.packet.in;
 
 import net.edge.content.TabInterface;
-import net.edge.content.combat.CombatProjectileDefinition;
-import net.edge.content.combat.hit.CombatHit;
-import net.edge.content.combat.hit.Hit;
-import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.task.Task;
+import net.edge.util.json.impl.CombatProjectileLoader;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
+import net.edge.world.entity.actor.combat.hit.CombatHit;
+import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.combat.strategy.player.special.CombatSpecial;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -20,7 +20,6 @@ import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 /**
  * The message that is sent from the client when the player chats anything
  * beginning with '::'.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class CommandPacket implements IncomingPacket {
@@ -39,7 +38,7 @@ public final class CommandPacket implements IncomingPacket {
 				TabInterface.MAGIC.sendInterface(player, Spellbook.ANCIENT.getId());
 				return;
 			} else if(parts[0].equalsIgnoreCase("test2")) {
-				CombatProjectileDefinition.createLoader().load();
+				new CombatProjectileLoader().load();
 				return;
 			} else if(parts[0].equalsIgnoreCase("test")) {
 				new Task(1, false) {

@@ -20,11 +20,10 @@ import java.util.Optional;
 
 /**
  * The message sent from the client when a player clicks an object.
- *
  * @author Artem Batutin <artembatutin@gmail.com
  */
 public final class ObjectActionPacket implements IncomingPacket {
-
+	
 	/*
 	 * All of the object events.
 	 */
@@ -34,7 +33,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 	public static final ActionContainer<ObjectAction> FOURTH = new ActionContainer<>();
 	public static final ActionContainer<ObjectAction> FIFTH = new ActionContainer<>();
 	public static final ActionContainer<ObjectAction> CONSTRUCTION = new ActionContainer<>();
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.OBJECT_ACTION))
@@ -61,10 +60,9 @@ public final class ObjectActionPacket implements IncomingPacket {
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.OBJECT_ACTION);
 	}
-
+	
 	/**
 	 * Handles object click for the {@code player}.
-	 *
 	 * @param action  the action number.
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
@@ -74,7 +72,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 		int objectId = payload.getMedium();
 		int objectX = payload.getShort(false);
 		int objectY = payload.getShort(false);
-
+		
 		//Validating data.
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(objectId < 0 || objectX < 0 || objectY < 0)
@@ -150,7 +148,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 			}
 		});
 	}
-
+	
 	/**
 	 * Tries to handle the {@link ObjectAction} action.
 	 */
@@ -162,10 +160,9 @@ public final class ObjectActionPacket implements IncomingPacket {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Handles the spell on object for the {@code player}.
-	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
@@ -196,5 +193,5 @@ public final class ObjectActionPacket implements IncomingPacket {
 			}
 		});
 	}
-
+	
 }

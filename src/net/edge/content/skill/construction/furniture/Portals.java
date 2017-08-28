@@ -28,14 +28,14 @@ public enum Portals {
 	YANILLE(6, new Position(Constants.YANILLE.getX(), Constants.YANILLE.getY()), 58, new Item[]{new Item(563, 200), new Item(557, 200)}, new int[]{13620, 13627, 13634}),
 	KHARYLL(7, new Position(Constants.KHARYRLL_X, Constants.KHARYRLL_Y), 66, new Item[]{new Item(563, 200), new Item(565, 100)}, new int[]{13621, 13628, 13635}),
 	EMPTY(-1, null, -1, null, null);
-
+	
 	public static final ImmutableSet<Portals> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Portals.class));
-
+	
 	private Position destination;
 	private Item[] requiredItems;
 	private int[] objects;
 	private int magicLevel, type;
-
+	
 	Portals(int id, Position destination, int magicLevel, Item[] requiredItems, int[] objects) {
 		this.type = id;
 		this.destination = destination;
@@ -43,18 +43,18 @@ public enum Portals {
 		this.objects = objects;
 		this.magicLevel = magicLevel;
 	}
-
+	
 	public Position getDestination() {
 		return destination;
 	}
-
+	
 	public static Portals forType(int type) {
 		for(Portals p : VALUES)
 			if(p.type == type)
 				return p;
 		return null;
 	}
-
+	
 	public static Portals forObjectId(int objectId) {
 		for(Portals p : VALUES) {
 			for(int i : p.objects)
@@ -63,11 +63,11 @@ public enum Portals {
 		}
 		return null;
 	}
-
+	
 	public int[] getObjects() {
 		return objects;
 	}
-
+	
 	public boolean canBuild(Player p) {
 		if(requiredItems == null) {
 			boolean found = false;
@@ -106,7 +106,7 @@ public enum Portals {
 		build(p);
 		return true;
 	}
-
+	
 	public void build(Player p) {
 		/*House house = p.getHouse();
 		p.getInventory().removeAll(requiredItems);
@@ -133,7 +133,7 @@ public enum Portals {
 		//Construction.placeAllFurniture(p, myTiles[0]-1, myTiles[1]-1, p.inConstructionDungeon() ? 4 : p.getPosition().getZ());
 		p.closeWidget();
 	}
-
+	
 	public static Position findNearestPortal(House house) {
 		for(int x = 0; x < house.get().getRooms()[0].length; x++) {
 			for(int y = 0; y < house.get().getRooms()[0][x].length; y++) {

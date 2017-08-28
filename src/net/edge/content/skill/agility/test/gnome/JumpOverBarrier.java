@@ -12,28 +12,28 @@ import net.edge.world.locale.Position;
  * @since 10-8-2017.
  */
 public final class JumpOverBarrier extends Obstacle {
-
+	
 	/**
 	 * The place the player jumps to.
 	 */
 	private final Position prestop;
-
+	
 	public JumpOverBarrier(Position start) {
 		super(new Position[]{start}, new Position(2485, 3436, 0), 2923, 85, 25, 3);
 		this.prestop = new Position(2485, 3434, 3);
 	}
-
+	
 	@Override
 	public void initialize(Player player) {
 		LinkedTaskSequence seq = new LinkedTaskSequence();
-
+		
 		seq.connect(1, () -> {
 			ForcedMovement movement = new ForcedMovement(player);
 			movement.setSecond(prestop);
 			movement.setAnimation(animation);
 			movement.submit();
 		});
-
+		
 		seq.connect(3, () -> {
 			player.move(end);
 			player.setTeleportStage(10);
@@ -42,5 +42,5 @@ public final class JumpOverBarrier extends Obstacle {
 		});
 		seq.start();
 	}
-
+	
 }

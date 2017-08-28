@@ -19,7 +19,6 @@ import java.util.Optional;
 
 /**
  * The enumerated type managing consumable food types.
- *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author lare96 <http://github.com/lare96>
  */
@@ -111,7 +110,7 @@ public enum FoodConsumable {
 				return (int) (hp * 2.5);
 			}
 		}
-
+		
 		@Override
 		public int maximumCap(Player player) {
 			return (int) (player.getMaximumHealth() * 1.10);
@@ -139,17 +138,17 @@ public enum FoodConsumable {
 		@Override
 		public void onEffect(Player player) {
 			super.onEffect(player);
-
+			
 			Skill skill = player.getSkills()[Skills.FARMING];
-
+			
 			if(skill.getLevel() >= (skill.getRealLevel() + 3)) {
 				return;
 			}
-
+			
 			skill.increaseLevel(3);
 			Skills.refresh(player, Skills.FARMING);
 		}
-
+		
 		@Override
 		public boolean special() {
 			return true;
@@ -159,13 +158,13 @@ public enum FoodConsumable {
 		@Override
 		public void onEffect(Player player) {
 			super.onEffect(player);
-
+			
 			Skill skill = player.getSkills()[Skills.FISHING];
-
+			
 			if(skill.getLevel() >= (skill.getRealLevel() + 3)) {
 				return;
 			}
-
+			
 			skill.increaseLevel(3);
 			Skills.refresh(player, Skills.FISHING);
 		}
@@ -174,17 +173,17 @@ public enum FoodConsumable {
 		@Override
 		public void onEffect(Player player) {
 			super.onEffect(player);
-
+			
 			Skill skill = player.getSkills()[Skills.FISHING];
-
+			
 			if(skill.getLevel() >= (skill.getRealLevel() + 5)) {
 				return;
 			}
-
+			
 			skill.increaseLevel(5);
 			Skills.refresh(player, Skills.FISHING);
 		}
-
+		
 		@Override
 		public boolean special() {
 			return true;
@@ -194,24 +193,24 @@ public enum FoodConsumable {
 		@Override
 		public void onEffect(Player player) {
 			super.onEffect(player);
-
+			
 			Skill[] skill = new Skill[]{player.getSkills()[Skills.RANGED], player.getSkills()[Skills.SLAYER]};
-
+			
 			if(skill[0].getLevel() >= (skill[0].getRealLevel() + 4)) {
 				return;
 			}
-
+			
 			skill[0].increaseLevel(4);
 			Skills.refresh(player, Skills.RANGED);
-
+			
 			if(skill[1].getLevel() >= (skill[1].getRealLevel() + 5)) {
 				return;
 			}
-
+			
 			skill[1].increaseLevel(5);
 			Skills.refresh(player, Skills.SLAYER);
 		}
-
+		
 		@Override
 		public boolean special() {
 			return true;
@@ -229,7 +228,7 @@ public enum FoodConsumable {
 			skill.increaseLevel(5);
 			Skills.refresh(player, Skills.AGILITY);
 		}
-
+		
 		@Override
 		public boolean special() {
 			return true;
@@ -284,25 +283,24 @@ public enum FoodConsumable {
 			}
 		}
 	};
-
+	
 	/**
 	 * Caches our enum values.
 	 */
 	private static final ImmutableSet<FoodConsumable> VALUES = Sets.immutableEnumSet(EnumSet.allOf(FoodConsumable.class));
-
+	
 	/**
 	 * The amount of hit points this food heals.
 	 */
 	private final int healAmount;
-
+	
 	/**
 	 * The identifiers which represent this food type.
 	 */
 	private final int[] ids;
-
+	
 	/**
 	 * Creates a new {@link FoodConsumable}.
-	 *
 	 * @param healAmount the amount of hit points this food heals.
 	 * @param ids        the identifiers which represent this food type.
 	 */
@@ -310,12 +308,12 @@ public enum FoodConsumable {
 		this.ids = ids;
 		this.healAmount = healAmount;
 	}
-
+	
 	@Override
 	public final String toString() {
 		return name().toLowerCase().replace("_", " ");
 	}
-
+	
 	public static void action() {
 		for(FoodConsumable food : FoodConsumable.values()) {
 			ItemAction e = new ItemAction() {
@@ -357,21 +355,19 @@ public enum FoodConsumable {
 				e.register(f);
 		}
 	}
-
+	
 	/**
 	 * The method executed after the player has successfully consumed this food.
 	 * This method may be overridden to provide a different functionality for
 	 * such foods as kebabs.
-	 *
 	 * @param player the player that has consumed the food.
 	 */
 	public void onEffect(Player player) {
 		player.getSkills()[Skills.HITPOINTS].increaseLevel(getHealAmount(player), maximumCap(player));
 	}
-
+	
 	/**
 	 * Retrieves the food consumable element for {@code id}.
-	 *
 	 * @param id the id that the food consumable is attached to.
 	 * @return the food consumable wrapped in an optional, or an empty optional
 	 * if no food consumable was found.
@@ -386,50 +382,45 @@ public enum FoodConsumable {
 		}
 		return Optional.empty();
 	}
-
+	
 	/**
 	 * The max cap to heal hitpoints upon to.
-	 *
 	 * @param player player eating.
 	 * @return hitpoints max cap.
 	 */
 	public int maximumCap(Player player) {
 		return player.getMaximumHealth();
 	}
-
+	
 	/**
 	 * Retrieves the chatbox message printed when a food is consumed. This
 	 * method may be overridden to provide a different functionality for foods
 	 * which have a different chatbox message.
-	 *
 	 * @return the chatbox message printed when a food is consumed.
 	 */
 	public String getMessage() {
 		return (ids.length > 1 ? "You eat a slice of the " : "You eat the ") + toString() + ".";
 	}
-
+	
 	/**
 	 * Gets the amount of hit points this food heals.
-	 *
 	 * @return the amount this food heals.
 	 */
 	public int getHealAmount(Player player) {
 		return healAmount;
 	}
-
+	
 	/**
 	 * Gets the identifiers which represent this food type.
-	 *
 	 * @return the identifiers for this food.
 	 */
 	public final int[] getIds() {
 		return ids;
 	}
-
+	
 	/**
 	 * Determines if this food is a special food type which can be used
 	 * as combo food.
-	 *
 	 * @return {@code true} if this food is combo, {@code false} otherwise.
 	 */
 	public boolean special() {

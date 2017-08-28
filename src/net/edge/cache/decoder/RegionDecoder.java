@@ -26,41 +26,39 @@ import java.util.logging.Logger;
 /**
  * A class which parses static object definitions, which include tool.mapviewer tiles and
  * landscapes.
- *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class RegionDecoder implements Runnable {
-
+	
 	/**
 	 * The logger that will print important information.
 	 */
 	private final static Logger LOGGER = LoggerUtils.getLogger(RegionDecoder.class);
-
+	
 	/**
 	 * The FileSystem.
 	 */
 	private final FileSystem fs;
-
+	
 	/**
 	 * Amount of regions correctly decoded.
 	 */
 	private int decoded;
-
+	
 	/**
 	 * Amount of regions incorrectly decoded.
 	 */
 	private int errors;
-
+	
 	/**
 	 * Creates the {@link ObjectDefinitionDecoder}.
-	 *
 	 * @param fs The {@link FileSystem}.
 	 */
 	public RegionDecoder(FileSystem fs) {
 		this.fs = fs;
 	}
-
+	
 	@Override
 	public void run() {
 		LOGGER.info("Loading regional map data.");
@@ -68,7 +66,7 @@ public final class RegionDecoder implements Runnable {
 		maps.forEach((i, d) -> load(d));
 		LOGGER.info("Loaded " + decoded + " regions, skipped " + errors + " maps.");
 	}
-
+	
 	public void load(RegionDefinition def) {
 		final int hash = def.getHash();
 		final int x = (hash >> 8 & 0xFF) * 64;
@@ -80,7 +78,7 @@ public final class RegionDecoder implements Runnable {
 				ByteBuffer terrainData = fs.getFile(FileSystem.MAP_INDEX, def.getTerrainFile());
 				ByteBuffer terrainBuffer = ByteBuffer.wrap(CompressionUtil.gunzip(terrainData.array()));
 				parseTerrain(r, terrainBuffer, x, y, downHeights);
-
+				
 				ByteBuffer gameObjectData = fs.getFile(FileSystem.MAP_INDEX, def.getObjectFile());
 				ByteBuffer gameObjectBuffer = ByteBuffer.wrap(CompressionUtil.gunzip(gameObjectData.array()));
 				ObjectList<StaticObject> objects = parseGameObject(r, gameObjectBuffer, x, y, downHeights, isNew);
@@ -97,10 +95,9 @@ public final class RegionDecoder implements Runnable {
 			}
 		});
 	}
-
+	
 	/**
 	 * Parses a {@link GameObject} on the specified coordinates.
-	 *
 	 * @param gameObjectBuffer The uncompressed game object data buffer.
 	 * @param x                The x coordinate this object is on.
 	 * @param y                The y coordinate this object is on.
@@ -138,10 +135,9 @@ public final class RegionDecoder implements Runnable {
 		}
 		return objs;
 	}
-
+	
 	/**
 	 * Loads all of the tool.mapviewer indexes entries and decodes each.
-	 *
 	 * @param mapBuffer The uncompressed tool.mapviewer entry data buffer.
 	 * @param x         The x coordinate of this tool.mapviewer entry.
 	 * @param y         The y coordinate of this tool.mapviewer entry.
@@ -176,10 +172,9 @@ public final class RegionDecoder implements Runnable {
 			}
 		}
 	}
-
+	
 	/**
 	 * Decodes the terrains {@link Position}.
-	 *
 	 * @param flags    The flags for the specified position.
 	 * @param position The decoded position.
 	 */
@@ -194,5 +189,5 @@ public final class RegionDecoder implements Runnable {
 			TraversalMap.markBridge(region, position.getZ(), position.getX(), position.getY() - 1);
 		}
 	}
-
+	
 }

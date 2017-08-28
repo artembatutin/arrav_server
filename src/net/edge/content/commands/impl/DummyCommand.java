@@ -10,7 +10,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"dummy"}, rights = {Rights.ADMINISTRATOR}, syntax = "Spawns a dummy mob, ::dummy id")
 public final class DummyCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		int npcId = Integer.parseInt(cmd[1]);
@@ -20,5 +20,5 @@ public final class DummyCommand implements Command {
 		mob.getMovementQueue().setLockMovement(true);
 		World.get().getMobs().add(mob);
 	}
-
+	
 }

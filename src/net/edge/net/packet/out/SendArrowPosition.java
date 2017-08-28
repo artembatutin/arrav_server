@@ -7,13 +7,12 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 
 public final class SendArrowPosition implements OutgoingPacket {
-
+	
 	private final Position position;
 	private final int direction;
-
+	
 	/**
 	 * The message that sends a hint arrow on a position.
-	 *
 	 * @param position  the position to send the arrow on.
 	 * @param direction the direction on the position to send the arrow on. The
 	 *                  possible directions to put the arrow on are as follows:
@@ -35,7 +34,7 @@ public final class SendArrowPosition implements OutgoingPacket {
 		this.position = position;
 		this.direction = direction;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(254);

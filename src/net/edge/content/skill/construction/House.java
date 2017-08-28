@@ -15,54 +15,52 @@ import static net.edge.content.skill.construction.HouseController.State.*;
 
 /**
  * Represents a {@link Construction} player's house.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class House {
-
+	
 	/**
 	 * The instance of this house.
 	 */
 	private int instance;
-
+	
 	/**
 	 * The owner of this {@link House}.
 	 */
 	private Player owner;
-
+	
 	/**
 	 * The servant serving this house.
 	 */
 	private Servant servant;
-
+	
 	/**
 	 * The two {@link Palette} used to display the map.
 	 */
 	private Palette palette, secondaryPalette;
-
+	
 	/**
 	 * The dungeon of this house.
 	 */
 	private HouseDungeon dungeon;
-
+	
 	/**
 	 * The player visitors, and owner that are in the house.
 	 */
 	private final ObjectList<Player> visitors = new ObjectArrayList<>();
-
+	
 	/**
 	 * The active mobs in this house.
 	 */
 	private final ObjectList<Mob> mobs = new ObjectArrayList<>();
-
+	
 	/**
 	 * The house controller of the {@link #owner}.
 	 */
 	private final HouseController controller = new HouseController();
-
+	
 	/**
 	 * Creates the {@link House} for this {@link #owner}.
-	 *
 	 * @param owner the owner of this house.
 	 */
 	public House(Player owner) {
@@ -70,11 +68,11 @@ public class House {
 		dungeon = new HouseDungeon();
 		dungeon.setHouse(this);
 	}
-
+	
 	public Servant getServant() {
 		return servant;
 	}
-
+	
 	public void process() {
 		House house = owner.getHouse();
 		int[] myTiles = Construction.getMyChunk(owner);
@@ -104,13 +102,14 @@ public class House {
 				}
 			}
 		}
-
+		
 		if(r.data().getId() == Constants.CORRIDOR) {
 			int[] converted = Construction.getConvertedCoords(3, 2, myTiles, r);
 			int[] converted_1 = Construction.getConvertedCoords(4, 2, myTiles, r);
 			int[] converted_2 = Construction.getConvertedCoords(3, 5, myTiles, r);
 			int[] converted_3 = Construction.getConvertedCoords(4, 5, myTiles, r);
-			if(r.getFurniture() != null && (owner.getPosition().getX() == converted[0] && owner.getPosition().getY() == converted[1] || owner.getPosition().getX() == converted_1[0] && owner.getPosition().getY() == converted_1[1] || owner.getPosition().getX() == converted_2[0] && owner.getPosition().getY() == converted_2[1] || owner.getPosition().getX() == converted_3[0] && owner.getPosition().getY() == converted_3[1])) {
+			if(r.getFurniture() != null && (owner.getPosition().getX() == converted[0] && owner.getPosition().getY() == converted[1] || owner.getPosition().getX() == converted_1[0] && owner.getPosition()
+					.getY() == converted_1[1] || owner.getPosition().getX() == converted_2[0] && owner.getPosition().getY() == converted_2[1] || owner.getPosition().getX() == converted_3[0] && owner.getPosition().getY() == converted_3[1])) {
 				for(RoomFurniture f : r.getFurniture()) {
 					if(f == null)
 						continue;
@@ -130,13 +129,13 @@ public class House {
 			}
 		}
 	}
-
+	
 	public void refresh() {
 		for(Player player : visitors) {
 			Construction.enterHouse(player, this.owner, controller.isBuilding());
 		}
 	}
-
+	
 	public void addPlayer(Player visitor) {
 		if(instance == 0)
 			instance = InstanceManager.get().closeNext();
@@ -157,7 +156,7 @@ public class House {
 			visitor.getHouse().get().setState(VISITING);
 		visitor.getHouse().get().setActive(this);
 	}
-
+	
 	public void removePlayer(Player player) {
 		player.setInstance(0);
 		visitors.remove(player);
@@ -171,7 +170,7 @@ public class House {
 			}
 		}
 	}
-
+	
 	public void addNpc(Mob mob) {
 		if(instance == 0)
 			instance = InstanceManager.get().closeNext();
@@ -180,28 +179,28 @@ public class House {
 		mob.setInstance(instance);
 		mobs.add(mob);
 	}
-
+	
 	public void removeNpc(Mob mob) {
 		mob.setInstance(0);
 		mobs.remove(mob);
 	}
-
+	
 	public HouseDungeon getDungeon() {
 		return dungeon;
 	}
-
+	
 	public void setDungeon(HouseDungeon dungeon) {
 		this.dungeon = dungeon;
 	}
-
+	
 	public void setPalette(Palette palette) {
 		this.palette = palette;
 	}
-
+	
 	public Palette getPalette() {
 		return this.palette;
 	}
-
+	
 	public void createPalette() {
 		palette = new Palette();
 		for(int z = 0; z < 4; z++) {
@@ -218,19 +217,19 @@ public class House {
 			}
 		}
 	}
-
+	
 	public void setSecondaryPalette(Palette secondaryPalette) {
 		this.secondaryPalette = secondaryPalette;
 	}
-
+	
 	public Palette getSecondaryPalette() {
 		return this.secondaryPalette;
 	}
-
+	
 	public HouseController get() {
 		return controller;
 	}
-
+	
 	public boolean isOwnerHome() {
 		return owner.getHouse().get().getState() == HOME || owner.getHouse().get().getState() == HOME_DUNGEON;
 	}

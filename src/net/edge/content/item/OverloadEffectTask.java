@@ -1,12 +1,12 @@
 package net.edge.content.item;
 
-import net.edge.content.combat.hit.Hit;
-import net.edge.content.combat.hit.HitIcon;
-import net.edge.content.combat.hit.Hitsplat;
 import net.edge.content.skill.Skills;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.world.Animation;
+import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.combat.hit.HitIcon;
+import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.player.Player;
 
 import java.util.stream.IntStream;
@@ -16,12 +16,12 @@ import java.util.stream.IntStream;
  * @since 9-6-2017.
  */
 public final class OverloadEffectTask extends Task {
-
+	
 	/**
 	 * The player this effect is for.
 	 */
 	private final Player player;
-
+	
 	/**
 	 * Creates a new {@link Task}.
 	 */
@@ -29,15 +29,15 @@ public final class OverloadEffectTask extends Task {
 		super(25, false);
 		this.player = player;
 	}
-
+	
 	/**
 	 * The task cycles 40 times which makes up for 6 minutes.
 	 * <p>The task is ran every 25 ticks (15 seconds)</p>
 	 */
 	private int cycle = 10;
-
+	
 	private int damageCycle;
-
+	
 	@Override
 	protected void onSubmit() {
 		LinkedTaskSequence seq = new LinkedTaskSequence(true);
@@ -53,7 +53,7 @@ public final class OverloadEffectTask extends Task {
 		seq.start();
 		updateSkills();
 	}
-
+	
 	/**
 	 * A function executed when the {@code counter} reaches the {@code delay}.
 	 */
@@ -67,20 +67,20 @@ public final class OverloadEffectTask extends Task {
 		updateSkills();
 		cycle--;
 	}
-
+	
 	@Override
 	public void onCancel() {
 		restoreSkills();
 		player.resetOverloadEffect(false);
 	}
-
+	
 	/**
 	 * Applies the overload effect for the player.
 	 */
 	private void updateSkills() {
 		PotionConsumable.onOverloadEffect(player);
 	}
-
+	
 	/**
 	 * Removes the overload effect and restores the skills back to their real state.
 	 */

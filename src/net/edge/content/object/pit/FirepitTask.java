@@ -8,7 +8,6 @@ import java.util.Optional;
 
 /**
  * Represents the task ran when a fire pit is active.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class FirepitTask extends Task {
@@ -20,7 +19,6 @@ public final class FirepitTask extends Task {
 
 	/**
 	 * Constructs a new {@link FirepitTask}.
-	 *
 	 * @param object {@link #object}.
 	 */
 	public FirepitTask(FirepitObject object) {

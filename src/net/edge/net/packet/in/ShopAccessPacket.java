@@ -8,11 +8,10 @@ import net.edge.world.locale.Position;
 
 /**
  * The message sent from the client which depends on the Mob Information panel integration.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class ShopAccessPacket implements IncomingPacket {
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(opcode == 20) {//shop opening

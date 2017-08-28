@@ -10,7 +10,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"ipmute"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "IP mute, ::ipmute username")
 public final class IPMutingCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player muted = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
@@ -23,5 +23,5 @@ public final class IPMutingCommand implements Command {
 			player.message("Can't find " + cmd[1].replaceAll("_", " ") + ".");
 		}
 	}
-
+	
 }

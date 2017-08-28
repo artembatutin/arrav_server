@@ -18,25 +18,23 @@ import java.util.List;
 /**
  * The static-utility class that manages all of the {@link DropTable}s
  * including the process of dropping the items when an {@link Mob} is killed.
- *
  * @author lare96 <http://github.org/lare96>
  */
 public final class DropManager {
-
+	
 	/**
 	 * The {@link HashMap} that consists of the drops for {@link Mob}s.
 	 */
 	private final static Int2ObjectOpenHashMap<DropTable> TABLES = new Int2ObjectOpenHashMap<>();
-
+	
 	/**
 	 * Mob sharing the same table drop redirects.
 	 */
 	public final static Int2IntArrayMap REDIRECTS = new Int2IntArrayMap();
-
+	
 	/**
 	 * Drops the items in {@code victim}s drop table for {@code killer}. If the
 	 * killer doesn't exist, the items are dropped for everyone to see.
-	 *
 	 * @param killer the killer, may or may not exist.
 	 * @param victim the victim that was killed.
 	 */
@@ -59,15 +57,15 @@ public final class DropManager {
 			}
 		});
 	}
-
+	
 	public static Int2ObjectOpenHashMap<DropTable> getTables() {
 		return TABLES;
 	}
-
+	
 	public static Int2IntArrayMap getRedirects() {
 		return REDIRECTS;
 	}
-
+	
 	/**
 	 * Serializes the drops.
 	 */
@@ -94,5 +92,5 @@ public final class DropManager {
 		}
 		drops_saver.publish("./data/def/mob/mob_drops2.json");
 	}
-
+	
 }

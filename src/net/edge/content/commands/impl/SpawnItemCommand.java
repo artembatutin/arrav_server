@@ -8,7 +8,7 @@ import net.edge.world.entity.item.Item;
 
 @CommandSignature(alias = {"pickup", "item", "spawn"}, rights = {Rights.ADMINISTRATOR}, syntax = "Spawns a new item, ::item id am")
 public final class SpawnItemCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		int id = Integer.parseInt(cmd[1]);
@@ -18,5 +18,5 @@ public final class SpawnItemCommand implements Command {
 		}
 		player.getInventory().add(new Item(id, amount));
 	}
-
+	
 }

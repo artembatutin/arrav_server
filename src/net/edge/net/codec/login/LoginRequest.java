@@ -4,7 +4,6 @@ import net.edge.net.codec.crypto.IsaacRandom;
 
 /**
  * The implementation that contains data used for the final portion of the login protocol.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class LoginRequest {
@@ -41,7 +40,6 @@ public final class LoginRequest {
 
 	/**
 	 * Creates a new {@link LoginRequest}.
-	 *
 	 * @param usernameHash the username hash.
 	 * @param username     the username of the player.
 	 * @param password     the password of the player.
@@ -67,7 +65,6 @@ public final class LoginRequest {
 
 	/**
 	 * Gets the username of the player.
-	 *
 	 * @return the username.
 	 */
 	public String getUsername() {
@@ -76,7 +73,6 @@ public final class LoginRequest {
 
 	/**
 	 * Gets the password of the player.
-	 *
 	 * @return the password.
 	 */
 	public String getPassword() {
@@ -85,7 +81,6 @@ public final class LoginRequest {
 
 	/**
 	 * Gets the mac address of the player.
-	 *
 	 * @return the mac address.
 	 */
 	public String getMacAddress() {
@@ -94,7 +89,6 @@ public final class LoginRequest {
 
 	/**
 	 * Gets the encryptor for encrypting messages.
-	 *
 	 * @return the encryptor.
 	 */
 	public IsaacRandom getEncryptor() {
@@ -103,7 +97,6 @@ public final class LoginRequest {
 
 	/**
 	 * Gets the decryptor for decrypting messages.
-	 *
 	 * @return the decryptor.
 	 */
 	public IsaacRandom getDecryptor() {

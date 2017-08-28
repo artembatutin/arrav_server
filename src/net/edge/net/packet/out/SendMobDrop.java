@@ -10,20 +10,20 @@ import net.edge.world.entity.actor.mob.drop.DropTable;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendMobDrop implements OutgoingPacket {
-
+	
 	private final int id;
 	private final DropTable table;
-
+	
 	public SendMobDrop(int id, DropTable table) {
 		this.id = id;
 		this.table = table;
 	}
-
+	
 	@Override
 	public boolean onSent(Player player) {
 		return id >= 0;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(121, PacketType.VARIABLE_SHORT);

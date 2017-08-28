@@ -10,7 +10,7 @@ import net.edge.net.packet.out.SendConfig;
 import net.edge.world.entity.actor.player.Player;
 
 public final class FarmingManager {
-
+	
 	public static void login(Player player) {
 		for(Patch patch : player.patches.values()) {
 			if(patch.getSeedType() == null && patch.getSeedTypeName() != null) {
@@ -22,7 +22,7 @@ public final class FarmingManager {
 			}
 		}
 	}
-
+	
 	public static void updatePatch(Player player, PatchType patchType) {
 		int value;
 		switch(patchType) {
@@ -97,7 +97,7 @@ public final class FarmingManager {
 				break;
 		}
 	}
-
+	
 	public static int getPatchValue(Patch patch) {
 		if(patch == null)
 			return 0;

@@ -2,11 +2,10 @@ package net.edge.world.entity.item.container.impl;
 
 /**
  * An enumeration of equipment types.
- *
  * @author Artem Batutin<artembatutin@gmail.com>
  */
 public enum EquipmentType {
-
+	
 	AMULET(Equipment.AMULET_SLOT),
 	ARROWS(Equipment.ARROWS_SLOT),
 	BODY(Equipment.CHEST_SLOT),
@@ -21,24 +20,22 @@ public enum EquipmentType {
 	RING(Equipment.RING_SLOT),
 	SHIELD(Equipment.SHIELD_SLOT),
 	WEAPON(Equipment.WEAPON_SLOT);
-
+	
 	/**
 	 * The slot of the equipment type.
 	 */
 	private final int slot;
-
+	
 	/**
 	 * Constructs a single {@link EquipmentType}.
-	 *
 	 * @param slot the slot of the equipment type.
 	 */
 	EquipmentType(int slot) {
 		this.slot = slot;
 	}
-
+	
 	/**
 	 * Gets the equipment slot.
-	 *
 	 * @return equipment slot.
 	 */
 	public int getSlot() {

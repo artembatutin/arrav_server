@@ -10,11 +10,10 @@ import static net.edge.content.skill.summoning.SummoningData.VALUES;
 
 /**
  * This message sent from the client when the player clicks a summoning creation button.
- *
  * @author Artem Batutin<artembatutin@gmail.com>
  */
 public final class SummoningCreationPacket implements IncomingPacket {
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		int click = payload.get();
@@ -24,5 +23,5 @@ public final class SummoningCreationPacket implements IncomingPacket {
 		PouchCreation creation = new PouchCreation(player, data);
 		creation.start();
 	}
-
+	
 }

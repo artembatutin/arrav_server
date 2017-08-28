@@ -19,29 +19,27 @@ import java.util.Optional;
  * <p>
  * The skills that may use this type skill action include, but are not limited
  * to {@code PRAYER}.
- *
  * @author lare96 <http://github.com/lare96>
  * @see SkillAction
  * @see HarvestingSkillAction
  * @see ProducingSkillAction
  */
 public abstract class DestructionSkillAction extends SkillAction {
-
+	
 	/**
 	 * Creates a new {@link DestructionSkillAction}.
-	 *
 	 * @param player   the player this skill action is for.
 	 * @param position the position the player should face.
 	 */
 	public DestructionSkillAction(Player player, Optional<Position> position) {
 		super(player, position);
 	}
-
+	
 	@Override
 	public Optional<ActivityManager.ActivityType[]> onDisable() {
 		return Optional.of(new ActivityManager.ActivityType[]{ActivityManager.ActivityType.WALKING, ActivityManager.ActivityType.TELEPORT});
 	}
-
+	
 	@Override
 	public boolean canRun(Task t) {
 		String name = ItemDefinition.DEFINITIONS[destructItem().getId()].getName();
@@ -51,7 +49,7 @@ public abstract class DestructionSkillAction extends SkillAction {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public final void execute(Task t) {
 		if(getPlayer().getInventory().remove(destructItem()) >= 0) {
@@ -62,24 +60,22 @@ public abstract class DestructionSkillAction extends SkillAction {
 		onDestruct(t, false);
 		t.cancel();
 	}
-
+	
 	/**
 	 * The method executed upon destruction of the item.
-	 *
 	 * @param t       the task executing this method.
 	 * @param success determines if the destruction was successful or not.
 	 */
 	public void onDestruct(Task t, boolean success) {
-
+	
 	}
-
+	
 	/**
 	 * The item that will be removed upon destruction.
-	 *
 	 * @return the item that will be removed.
 	 */
 	public abstract Item destructItem();
-
+	
 	@Override
 	public boolean isPrioritized() {
 		return false;

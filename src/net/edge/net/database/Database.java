@@ -12,7 +12,6 @@ import java.util.concurrent.Executors;
 
 /**
  * The manager class that is responsible for SQL connections.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Database {
@@ -36,7 +35,6 @@ public final class Database {
 
 	/**
 	 * Gets the {@link ConnectionPool}
-	 *
 	 * @return pooling instance.
 	 */
 	public ConnectionPool getPool() {
@@ -45,7 +43,6 @@ public final class Database {
 
 	/**
 	 * Gets the {@link Connection}.
-	 *
 	 * @return Sql connection instance.
 	 * @throws SQLException database exception.
 	 */

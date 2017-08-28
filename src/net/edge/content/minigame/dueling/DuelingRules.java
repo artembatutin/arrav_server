@@ -12,7 +12,6 @@ import java.util.Optional;
 /**
  * The enumerated type whose elements represent the dueling rules for a
  * duel session.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum DuelingRules {
@@ -134,7 +133,7 @@ public enum DuelingRules {
 		}
 	},
 	NO_SPECIAL_ATTACKS(148012, "You can not use special attacks."),
-
+	
 	HELM(148038, Equipment.HEAD_SLOT, "You can not wear items on your head."),
 	AMULET(148028, Equipment.AMULET_SLOT, "You can not wear items on your neck."),
 	TORSO(148029, Equipment.CHEST_SLOT, "You can not wear items on your chest."),
@@ -168,37 +167,36 @@ public enum DuelingRules {
 	SHIELD(148035, Equipment.SHIELD_SLOT, "You can not wear items on your offhand(Includes 2h weapons)"),
 	GLOVES(148036, Equipment.HANDS_SLOT, "You can not wear items on your hands."),
 	RING(148037, Equipment.RING_SLOT, "You can not wear items on your fingers.");
-
+	
 	/**
 	 * Caches our enum values.
 	 */
 	public static final ImmutableSet<DuelingRules> VALUES = Sets.immutableEnumSet(EnumSet.allOf(DuelingRules.class));
-
+	
 	/**
 	 * The button identification of this rule.
 	 */
 	private final int buttonId;
-
+	
 	/**
 	 * The slot of this equipment.
 	 */
 	public final int slot;
-
+	
 	/**
 	 * The message displayed on the interface if this rule is enabled.
 	 */
 	private final String interfaceMessage;
-
+	
 	/**
 	 * The rule condition chained to this rule.
 	 */
 	public boolean meets(Player player, DuelSession duel) {
 		return true;
 	}
-
+	
 	/**
 	 * Constructs a new {@link DuelingRules}.
-	 *
 	 * @param buttonId         {@link #buttonId}.
 	 * @param interfaceMessage {@link #interfaceMessage}.
 	 */
@@ -207,10 +205,9 @@ public enum DuelingRules {
 		this.interfaceMessage = interfaceMessage;
 		this.slot = -1;
 	}
-
+	
 	/**
 	 * Constructs a new {@link DuelingRules}.
-	 *
 	 * @param buttonId         {@link #buttonId}.
 	 * @param slot             {@link #slot}.
 	 * @param interfaceMessage {@link #interfaceMessage}.
@@ -220,24 +217,23 @@ public enum DuelingRules {
 		this.interfaceMessage = interfaceMessage;
 		this.slot = slot;
 	}
-
+	
 	/**
 	 * Searches for a match.
-	 *
 	 * @param buttonId the button id to check a match for.
 	 * @return a {@link DuelingRules} enumerator wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
 	public static Optional<DuelingRules> getRules(int buttonId) {
 		return VALUES.stream().filter(def -> def.buttonId == buttonId).findFirst();
 	}
-
+	
 	/**
 	 * @return the slot
 	 */
 	public int getSlot() {
 		return slot;
 	}
-
+	
 	/**
 	 * @return the interfaceMessage
 	 */

@@ -11,109 +11,107 @@ import java.util.stream.Collectors;
 
 /**
  * The container that represents an item definition.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ItemDefinition {
-
+	
 	/**
 	 * The array that contains all of the item definitions.
 	 */
 	public static final ItemDefinition[] DEFINITIONS = new ItemDefinition[22322];
-
+	
 	/**
 	 * The identifier for the item.
 	 */
 	private final int id;
-
+	
 	/**
 	 * The proper name of the item.
 	 */
 	private final String name;
-
+	
 	/**
 	 * The equipment slot of this item.
 	 */
 	private final EquipmentType equipmentType;
-
+	
 	/**
 	 * The flag that determines if the item is a weapon.
 	 */
 	private final boolean weapon;
-
+	
 	/**
 	 * The flag that determines if the item is noted.
 	 */
 	private final boolean noted;
-
+	
 	/**
 	 * The note transform id of this item.
 	 */
 	private final int noteId;
-
+	
 	/**
 	 * The flag that determines if the item is lended.
 	 */
 	private final boolean lended;
-
+	
 	/**
 	 * The lend transform id of this item.
 	 */
 	private final int lendId;
-
+	
 	/**
 	 * The flag that determines if the item is stackable.
 	 */
 	private final boolean stackable;
-
+	
 	/**
 	 * The low alch value of this item.
 	 */
 	private final int lowAlchValue;
-
+	
 	/**
 	 * The high alch value of this item.
 	 */
 	private final int highAlchValue;
-
+	
 	/**
 	 * The weight value of this item.
 	 */
 	public final double weight;
-
+	
 	/**
 	 * The flag that determines if this item is two-handed.
 	 */
 	private final boolean twoHanded;
-
+	
 	/**
 	 * The flag that determines if this item is tradeable.
 	 */
 	private final boolean tradable;
-
+	
 	/**
 	 * The flag that determines if this item is alchable.
 	 */
 	private final boolean alchable;
-
+	
 	/**
 	 * The array of bonuses for this item.
 	 */
 	private final int[] bonus;
-
+	
 	/**
 	 * The array of inventory actions for this item.
 	 */
 	private final String[] inventoryActions;
-
+	
 	/**
 	 * The array of ground actions for this item.
 	 */
 	private final String[] groundActions;
-
+	
 	/**
 	 * Creates a new {@link ItemDefinition}.
-	 *
 	 * @param id               the identifier for the item.
 	 * @param name             the proper name of the item.
 	 * @param equipmentType    the equipment type of this item.
@@ -152,7 +150,7 @@ public final class ItemDefinition {
 		this.groundActions = groundActions;
 		prayerBonus();
 	}
-
+	
 	/**
 	 * The method that erases the prayer bonus from ranged weapons.
 	 */
@@ -163,223 +161,204 @@ public final class ItemDefinition {
 			}
 		}
 	}
-
+	
 	public static ItemDefinition get(int id) {
 		return DEFINITIONS[id];
 	}
-
+	
 	public static List<ItemDefinition> collect(String name) {
 		return Arrays.stream(DEFINITIONS).filter(Objects::nonNull).filter($it -> $it.getName().contains(name)).collect(Collectors.toList());
 	}
-
+	
 	/**
 	 * Gets the identifier for the item.
-	 *
 	 * @return the identifier.
 	 */
 	public int getId() {
 		return id;
 	}
-
+	
 	/**
 	 * Gets the proper name of the item.
-	 *
 	 * @return the proper name.
 	 */
 	public String getName() {
 		return name;
 	}
-
+	
 	/**
 	 * Gets the equipment type of this item.
-	 *
 	 * @return the equipment type.
 	 */
 	public EquipmentType getEquipmentType() {
 		return equipmentType;
 	}
-
+	
 	/**
 	 * @return the lendId
 	 */
 	public int getNoted() {
 		return noteId;
 	}
-
+	
 	/**
 	 * Determines if the item is noted or not.
-	 *
 	 * @return {@code true} if the item is noted, {@code false} otherwise.
 	 */
 	public boolean isNoted() {
 		return noted;
 	}
-
+	
 	/**
 	 * Determines if the item is noteable or not.
-	 *
 	 * @return {@code true} if the item is noteable, {@code false} otherwise.
 	 */
 	public boolean isNoteable() {
 		return noteId != -1;
 	}
-
+	
 	/**
 	 * @return the lended
 	 */
 	public boolean isLended() {
 		return lended;
 	}
-
+	
 	/**
 	 * @return the lendId
 	 */
 	public int getLend() {
 		return lendId;
 	}
-
+	
 	/**
 	 * Determines if the item is stackable or not.
-	 *
 	 * @return {@code true} if the item is stackable, {@code false} otherwise.
 	 */
 	public boolean isStackable() {
 		return stackable;
 	}
-
+	
 	/**
 	 * Determines if the item is alchable or not.
-	 *
 	 * @return {@code true} if the item is alchable, {@code false} otherwise.
 	 */
 	public boolean isAlchable() {
 		return alchable;
 	}
-
+	
 	/**
 	 * Gets the low alch value of this item.
-	 *
 	 * @return the low alch value.
 	 */
 	public int getLowAlchValue() {
 		return this.isNoted() ? get(this.getNoted()).lowAlchValue : this.lowAlchValue;
 	}
-
+	
 	/**
 	 * Gets the high alch value of this item.
-	 *
 	 * @return the high alch value.
 	 */
 	public int getHighAlchValue() {
 		return this.isNoted() ? get(this.getNoted()).highAlchValue : this.highAlchValue;
 	}
-
+	
 	/**
 	 * Gets the weight value of this item.
-	 *
 	 * @return the weight value.
 	 */
 	public double getWeight() {
 		return weight;
 	}
-
+	
 	/**
 	 * Gets the array of bonuses for this item.
-	 *
 	 * @return the array of bonuses.
 	 */
 	public int[] getBonus() {
 		return bonus;
 	}
-
+	
 	/**
 	 * Determines if this item is two-handed or not.
-	 *
 	 * @return {@code true} if this item is two-handed, {@code false} otherwise.
 	 */
 	public boolean isTwoHanded() {
 		return twoHanded;
 	}
-
+	
 	/**
 	 * Determines if this item is a weapon or not.
-	 *
 	 * @return {@code true} if this item is a weapon, {@code false}
 	 * otherwise.
 	 */
 	public boolean isWeapon() {
 		return weapon;
 	}
-
+	
 	/**
 	 * Determines if this item is a full plate body or not.
-	 *
 	 * @return {@code true} if this item is a full plate body, {@code false}
 	 * otherwise.
 	 */
 	public boolean isPlatebody() {
 		return equipmentType == EquipmentType.PLATEBODY;
 	}
-
+	
 	/**
 	 * Determines if this item is a full helm or not.
 	 * <p>If it is, this method will remove the players hair, but keep his beard.</p>
-	 *
 	 * @return {@code true} if this item is a full helm, {@code false}
 	 * otherwise.
 	 */
 	public boolean isFullHelm() {
 		return equipmentType == EquipmentType.FULL_HELMET;
 	}
-
+	
 	/**
 	 * Determines if this item is a full mask or not.
 	 * <p>If it is, this method will remove the players hair and beard.</p>
-	 *
 	 * @return {@code true} if this item is a full mask, {@code false}
 	 * otherwise.
 	 */
 	public boolean isFullMask() {
 		return equipmentType == EquipmentType.FULL_MASK;
 	}
-
+	
 	/**
 	 * Determines if this item is a hat or not.
 	 * <p>If it is, this method will remove nothing.</p>
-	 *
 	 * @return {@code true} if this item is a hat, {@code false}
 	 * otherwise.
 	 */
 	public boolean isHat() {
 		return equipmentType == EquipmentType.HAT;
 	}
-
+	
 	/**
 	 * Determines if this item is tradable.
-	 *
 	 * @return {@code true} if this item is tradable, {@code false} otherwise.
 	 */
 	public boolean isTradable() {
 		return tradable;
 	}
-
+	
 	/**
 	 * @return the inventoryActions
 	 */
 	public String[] getInventoryActions() {
 		return inventoryActions;
 	}
-
+	
 	/**
 	 * @return the groundActions
 	 */
 	public String[] getGroundActions() {
 		return groundActions;
 	}
-
+	
 	/**
 	 * Checks if this item is destroyable.
-	 *
 	 * @return destroyable flag.
 	 */
 	public boolean destroyable() {
@@ -391,7 +370,7 @@ public final class ItemDefinition {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Saves the item definitions.
 	 */
@@ -423,7 +402,7 @@ public final class ItemDefinition {
 		}
 		item_def_saver.publish("./data/def/item/item_definitions2.json");
 	}
-
+	
 	public static void dumpDrops() {
 		/*try {
 			int totald = 0;
@@ -655,5 +634,5 @@ public final class ItemDefinition {
 			ex.printStackTrace();
 		}*/
 	}
-
+	
 }

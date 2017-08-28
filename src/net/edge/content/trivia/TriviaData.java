@@ -58,7 +58,6 @@ public enum TriviaData {
 
 	/**
 	 * Constructs a new {@link TriviaData}.
-	 *
 	 * @param question {@link #question}.
 	 * @param answers  {@link #answers}.
 	 */
@@ -69,7 +68,6 @@ public enum TriviaData {
 
 	/**
 	 * Gets a random question.
-	 *
 	 * @return a random question.
 	 */
 	public static TriviaData random() {

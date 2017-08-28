@@ -12,7 +12,6 @@ import java.util.Optional;
 
 /**
  * The enumerated type whose elements represent data for the skills.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public enum SkillData {
@@ -41,30 +40,29 @@ public enum SkillData {
 	CONSTRUCTION(Skills.CONSTRUCTION, 7267, 105243),
 	SUMMONING(Skills.SUMMONING, 6970, 105245),
 	DUNGEONEERING(Skills.DUNGEONEERING, 10267, 105246);
-
+	
 	/**
 	 * Caches our enum values.
 	 */
 	public static final ImmutableSet<SkillData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(SkillData.class));
-
+	
 	/**
 	 * The identification for this skill in the skills array.
 	 */
 	private final int id;
-
+	
 	/**
 	 * The chatbox interface displayed on level up.
 	 */
 	private final int chatbox;
-
+	
 	/**
 	 * The skill interface button click.
 	 */
 	private final int button;
-
+	
 	/**
 	 * Creates a new {@link SkillData}.
-	 *
 	 * @param id      the identification for this skill in the skills array.
 	 * @param chatbox the chatbox interface displayed on level up.
 	 * @param button  the skill interface button identifier.
@@ -74,41 +72,38 @@ public enum SkillData {
 		this.chatbox = chatbox;
 		this.button = button;
 	}
-
+	
 	/**
 	 * Gets the Skill value which id matches {@code id}.
-	 *
 	 * @param id the id of the skill to fetch Skill instance for.
 	 * @return the Skill instance.
 	 */
 	public static SkillData forId(int id) {
 		return VALUES.stream().filter(skill -> skill.getId() == id).findAny().get();
 	}
-
+	
 	/**
 	 * Gets the Skill value which button matches {@code id}.
-	 *
 	 * @param button the button of the skill to fetch Skill instance for.
 	 * @return the Skill instance.
 	 */
 	public static Optional<SkillData> forButton(int button) {
 		return VALUES.stream().filter(skill -> skill.getButton() == button).findAny();
 	}
-
+	
 	/**
 	 * Sends the input box for the goal levels.
-	 *
 	 * @param player the player to send for.
 	 * @param button the button id clicked.
 	 * @return <true> if the box was sent, <false> otherwise.
 	 */
 	public static boolean sendEnterGoalLevel(Player player, int button) {
 		SkillData data = forButton(button).orElse(null);
-
+		
 		if(data == null) {
 			return false;
 		}
-
+		
 		player.getAttr().get("goalSettingSkill").set(data.getId());
 		player.out(new SendEnterAmount("What level you would like to accomplish?", t -> () -> {
 			int skill = data.id;
@@ -122,33 +117,30 @@ public enum SkillData {
 		}));
 		return true;
 	}
-
+	
 	@Override
 	public final String toString() {
 		return TextUtils.capitalize(name().toLowerCase().replaceAll("_", " "));
 	}
-
+	
 	/**
 	 * Gets the identification for this skill in the skills array.
-	 *
 	 * @return the identification for this skill.
 	 */
 	public final int getId() {
 		return id;
 	}
-
+	
 	/**
 	 * Gets the chatbox interface displayed on level up.
-	 *
 	 * @return the chatbox interface.
 	 */
 	public final int getChatbox() {
 		return chatbox;
 	}
-
+	
 	/**
 	 * Gets the skill interface button identifier of this skill.
-	 *
 	 * @return the button identifier.
 	 */
 	public final int getButton() {

@@ -4,50 +4,44 @@ import net.edge.util.TextUtils;
 import net.edge.world.entity.item.Item;
 
 public interface SmithingTable {
-
+	
 	/**
 	 * The item identification for the bar used to forge the table
 	 * of items.
-	 *
 	 * @return the item object.
 	 */
 	Item getBar();
-
+	
 	/**
 	 * The level requirement for smithing this bar.
-	 *
 	 * @return the numerical value.
 	 */
 	int getLevelRequirement();
-
+	
 	/**
 	 * The experience gained upon smithing this bar.
-	 *
 	 * @return the numerical value.
 	 */
 	double getExperience();
-
+	
 	/**
 	 * The bars required for smithing this bar.
-	 *
 	 * @return the numerical value.
 	 */
 	int getBarsRequired();
-
+	
 	/**
 	 * The produced item for smithing this bar.
-	 *
 	 * @return the item object.
 	 */
 	Item getProduced();
-
+	
 	/**
 	 * The name of the producable item.
-	 *
 	 * @return the alphabetic value.
 	 */
 	String getName();
-
+	
 	/**
 	 * The table for the bronze items.
 	 */
@@ -78,35 +72,34 @@ public interface SmithingTable {
 		BOOTS(4, 12.5, 2, new Item(4119)),
 		//WIRE(4, 12.5, 1, new Item(1794)),
 		ARROWTIPS(5, 12.5, 1, new Item(39, 15));
-
+		
 		/**
 		 * The requirement required to smith this item.
 		 */
 		private final int requirement;
-
+		
 		/**
 		 * The experience gained for smithing this item.
 		 */
 		private final double experience;
-
+		
 		/**
 		 * The bars required for smithing this item.
 		 */
 		private final int barsRequired;
-
+		
 		/**
 		 * The produced item for smithing this bar.
 		 */
 		private final Item produced;
-
+		
 		/**
 		 * The name of this producable item.
 		 */
 		private final String name;
-
+		
 		/**
 		 * Constructs a new {@link BronzeTable}.
-		 *
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
@@ -120,10 +113,9 @@ public interface SmithingTable {
 			this.produced = produced;
 			this.name = name;
 		}
-
+		
 		/**
 		 * Constructs a new {@link BronzeTable}.
-		 *
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
@@ -136,38 +128,38 @@ public interface SmithingTable {
 			this.produced = produced;
 			this.name = TextUtils.capitalize(toString().replaceAll("_", " "));
 		}
-
+		
 		@Override
 		public Item getBar() {
 			return new Item(2349);
 		}
-
+		
 		@Override
 		public int getLevelRequirement() {
 			return requirement;
 		}
-
+		
 		@Override
 		public double getExperience() {
 			return experience;
 		}
-
+		
 		@Override
 		public int getBarsRequired() {
 			return barsRequired;
 		}
-
+		
 		@Override
 		public Item getProduced() {
 			return produced;
 		}
-
+		
 		@Override
 		public String getName() {
 			return name;
 		}
 	}
-
+	
 	/**
 	 * The table for the iron items.
 	 */
@@ -198,35 +190,34 @@ public interface SmithingTable {
 		LIMBS(23, 50, 1, new Item(9423)),
 		CANNON_SHOTS(60, 50, 3, new Item(15243, 10)),
 		/*ARROWTIPS(20, 25, 1, new Item(40, 15))*/;
-
+		
 		/**
 		 * The requirement required to smith this item.
 		 */
 		private final int requirement;
-
+		
 		/**
 		 * The experience gained for smithing this item.
 		 */
 		private final double experience;
-
+		
 		/**
 		 * The bars required for smithing this item.
 		 */
 		private final int barsRequired;
-
+		
 		/**
 		 * The produced item for smithing this bar.
 		 */
 		private final Item produced;
-
+		
 		/**
 		 * The name of this producable item.
 		 */
 		private final String name;
-
+		
 		/**
 		 * Constructs a new {@link IronTable}.
-		 *
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
@@ -240,10 +231,9 @@ public interface SmithingTable {
 			this.produced = produced;
 			this.name = name;
 		}
-
+		
 		/**
 		 * Constructs a new {@link IronTable}.
-		 *
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
@@ -256,38 +246,38 @@ public interface SmithingTable {
 			this.produced = produced;
 			this.name = TextUtils.capitalize(toString().replaceAll("_", " "));
 		}
-
+		
 		@Override
 		public Item getBar() {
 			return new Item(2351);
 		}
-
+		
 		@Override
 		public int getLevelRequirement() {
 			return requirement;
 		}
-
+		
 		@Override
 		public double getExperience() {
 			return experience;
 		}
-
+		
 		@Override
 		public int getBarsRequired() {
 			return barsRequired;
 		}
-
+		
 		@Override
 		public Item getProduced() {
 			return produced;
 		}
-
+		
 		@Override
 		public String getName() {
 			return name;
 		}
 	}
-
+	
 	/**
 	 * The table for the steel items.
 	 */
@@ -317,35 +307,34 @@ public interface SmithingTable {
 		STUDS(36, 50, 1, new Item(2370)),
 		LIMBS(36, 50, 1, new Item(9425)),
 		ARROWTIPS(35, 50, 1, new Item(41, 15));
-
+		
 		/**
 		 * The requirement required to smith this item.
 		 */
 		private final int requirement;
-
+		
 		/**
 		 * The experience gained for smithing this item.
 		 */
 		private final double experience;
-
+		
 		/**
 		 * The bars required for smithing this item.
 		 */
 		private final int barsRequired;
-
+		
 		/**
 		 * The produced item for smithing this bar.
 		 */
 		private final Item produced;
-
+		
 		/**
 		 * The name of this producable item.
 		 */
 		private final String name;
-
+		
 		/**
 		 * Constructs a new {@link SteelTable}.
-		 *
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
@@ -359,10 +348,9 @@ public interface SmithingTable {
 			this.produced = produced;
 			this.name = name;
 		}
-
+		
 		/**
 		 * Constructs a new {@link SteelTable}.
-		 *
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
@@ -375,38 +363,38 @@ public interface SmithingTable {
 			this.produced = produced;
 			this.name = TextUtils.capitalize(toString().replaceAll("_", " "));
 		}
-
+		
 		@Override
 		public Item getBar() {
 			return new Item(2353);
 		}
-
+		
 		@Override
 		public int getLevelRequirement() {
 			return requirement;
 		}
-
+		
 		@Override
 		public double getExperience() {
 			return experience;
 		}
-
+		
 		@Override
 		public int getBarsRequired() {
 			return barsRequired;
 		}
-
+		
 		@Override
 		public Item getProduced() {
 			return produced;
 		}
-
+		
 		@Override
 		public String getName() {
 			return name;
 		}
 	}
-
+	
 	/**
 	 * The table for the mithril items.
 	 */
@@ -436,35 +424,34 @@ public interface SmithingTable {
 		MITH_GRAPPLE(59, 60, 1, new Item(9416)),
 		LIMBS(56, 70, 1, new Item(9427)),
 		ARROWTIPS(55, 70, 1, new Item(42, 15));
-
+		
 		/**
 		 * The requirement required to smith this item.
 		 */
 		private final int requirement;
-
+		
 		/**
 		 * The experience gained for smithing this item.
 		 */
 		private final double experience;
-
+		
 		/**
 		 * The bars required for smithing this item.
 		 */
 		private final int barsRequired;
-
+		
 		/**
 		 * The produced item for smithing this bar.
 		 */
 		private final Item produced;
-
+		
 		/**
 		 * The name of this producable item.
 		 */
 		private final String name;
-
+		
 		/**
 		 * Constructs a new {@link MithrilTable}.
-		 *
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
@@ -478,10 +465,9 @@ public interface SmithingTable {
 			this.produced = produced;
 			this.name = name;
 		}
-
+		
 		/**
 		 * Constructs a new {@link MithrilTable}.
-		 *
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
@@ -494,38 +480,38 @@ public interface SmithingTable {
 			this.produced = produced;
 			this.name = TextUtils.capitalize(toString().replaceAll("_", " "));
 		}
-
+		
 		@Override
 		public Item getBar() {
 			return new Item(2359);
 		}
-
+		
 		@Override
 		public int getLevelRequirement() {
 			return requirement;
 		}
-
+		
 		@Override
 		public double getExperience() {
 			return experience;
 		}
-
+		
 		@Override
 		public int getBarsRequired() {
 			return barsRequired;
 		}
-
+		
 		@Override
 		public Item getProduced() {
 			return produced;
 		}
-
+		
 		@Override
 		public String getName() {
 			return name;
 		}
 	}
-
+	
 	/**
 	 * The table for the adamant items.
 	 */
@@ -555,35 +541,34 @@ public interface SmithingTable {
 		BOOTS(77, 105, 2, new Item(4129)),
 		LIMBS(76, 90, 1, new Item(9429)),
 		ARROWTIPS(75, 100, 1, new Item(43, 15));
-
+		
 		/**
 		 * The requirement required to smith this item.
 		 */
 		private final int requirement;
-
+		
 		/**
 		 * The experience gained for smithing this item.
 		 */
 		private final double experience;
-
+		
 		/**
 		 * The bars required for smithing this item.
 		 */
 		private final int barsRequired;
-
+		
 		/**
 		 * The produced item for smithing this bar.
 		 */
 		private final Item produced;
-
+		
 		/**
 		 * The name of this producable item.
 		 */
 		private final String name;
-
+		
 		/**
 		 * Constructs a new {@link AdamantTable}.
-		 *
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
@@ -597,10 +582,9 @@ public interface SmithingTable {
 			this.produced = produced;
 			this.name = name;
 		}
-
+		
 		/**
 		 * Constructs a new {@link AdamantTable}.
-		 *
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
@@ -613,38 +597,38 @@ public interface SmithingTable {
 			this.produced = produced;
 			this.name = TextUtils.capitalize(toString().replaceAll("_", " "));
 		}
-
+		
 		@Override
 		public Item getBar() {
 			return new Item(2361);
 		}
-
+		
 		@Override
 		public int getLevelRequirement() {
 			return requirement;
 		}
-
+		
 		@Override
 		public double getExperience() {
 			return experience;
 		}
-
+		
 		@Override
 		public int getBarsRequired() {
 			return barsRequired;
 		}
-
+		
 		@Override
 		public Item getProduced() {
 			return produced;
 		}
-
+		
 		@Override
 		public String getName() {
 			return name;
 		}
 	}
-
+	
 	/**
 	 * The table for the rune items.
 	 */
@@ -674,35 +658,34 @@ public interface SmithingTable {
 		BOOTS(92, 140, 2, new Item(4131)),
 		LIMBS(91, 120, 1, new Item(9431)),
 		ARROWTIPS(90, 140, 1, new Item(44, 15));
-
+		
 		/**
 		 * The requirement required to smith this item.
 		 */
 		private final int requirement;
-
+		
 		/**
 		 * The experience gained for smithing this item.
 		 */
 		private final double experience;
-
+		
 		/**
 		 * The bars required for smithing this item.
 		 */
 		private final int barsRequired;
-
+		
 		/**
 		 * The produced item for smithing this bar.
 		 */
 		private final Item produced;
-
+		
 		/**
 		 * The name of this producable item.
 		 */
 		private final String name;
-
+		
 		/**
 		 * Constructs a new {@link RuniteTable}.
-		 *
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
@@ -716,10 +699,9 @@ public interface SmithingTable {
 			this.produced = produced;
 			this.name = name;
 		}
-
+		
 		/**
 		 * Constructs a new {@link RuniteTable}.
-		 *
 		 * @param requirement  {@link #requirement}.
 		 * @param experience   {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
@@ -732,32 +714,32 @@ public interface SmithingTable {
 			this.produced = produced;
 			this.name = TextUtils.capitalize(toString().replaceAll("_", " "));
 		}
-
+		
 		@Override
 		public Item getBar() {
 			return new Item(2363);
 		}
-
+		
 		@Override
 		public int getLevelRequirement() {
 			return requirement;
 		}
-
+		
 		@Override
 		public double getExperience() {
 			return experience;
 		}
-
+		
 		@Override
 		public int getBarsRequired() {
 			return barsRequired;
 		}
-
+		
 		@Override
 		public Item getProduced() {
 			return produced;
 		}
-
+		
 		@Override
 		public String getName() {
 			return name;

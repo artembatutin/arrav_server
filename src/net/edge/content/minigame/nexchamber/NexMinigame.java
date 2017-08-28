@@ -3,11 +3,11 @@ package net.edge.content.minigame.nexchamber;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.action.impl.ObjectAction;
-import net.edge.content.combat.CombatType;
 import net.edge.content.minigame.Minigame;
 import net.edge.net.packet.out.SendFade;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
@@ -17,7 +17,6 @@ import java.util.Optional;
 
 /**
  * The nex chamber acting as a {@link Minigame}.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class NexMinigame extends Minigame {
@@ -122,7 +121,6 @@ public class NexMinigame extends Minigame {
 
 	/**
 	 * Gets a random spot in the nex chamber, excluding the four black empty spots.
-	 *
 	 * @return random spot, to handle the smoke hits mostly.
 	 */
 	private Position getRandom() {

@@ -16,8 +16,6 @@ import net.edge.cache.decoder.ObjectDefinitionDecoder;
 import net.edge.cache.decoder.RegionDecoder;
 import net.edge.content.PlayerPanel;
 import net.edge.content.RestoreStatTask;
-import net.edge.content.combat.CombatProjectileDefinition;
-import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.object.pit.FirepitManager;
 import net.edge.content.object.star.ShootingStarManager;
@@ -33,6 +31,7 @@ import net.edge.util.Utility;
 import net.edge.util.json.impl.*;
 import net.edge.world.World;
 import net.edge.world.entity.actor.attribute.AttributeKey;
+import net.edge.world.entity.actor.combat.attack.listener.CombatListenerDispatcher;
 import net.edge.world.locale.InstanceManager;
 
 import java.time.DayOfWeek;
@@ -47,37 +46,36 @@ import java.util.stream.Collectors;
 
 /**
  * The main class that will register and bind the server effectively.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author lare96 <http://github.com/lare96>
  */
 public final class Application {
-
+	
 	/**
 	 * The flag that determines if debugging messages should be printed or not.
 	 */
 	public static boolean DEBUG = true;
-
+	
 	/**
 	 * The flag that determines if the server is starting up.
 	 */
 	public static boolean STARTING = true;
-
+	
 	/**
 	 * The status that determines if the server is being updated.
 	 */
 	public static double UPDATING = 0;
-
+	
 	/**
 	 * The {@link ExecutorService} that will execute startup tasks.
 	 */
 	private final ListeningExecutorService launch;
-
+	
 	/**
 	 * The LOGGER that will print important information.
 	 */
 	private final static Logger LOGGER = LoggerUtils.getLogger(Application.class);
-
+	
 	static {
 		//System.out.println("Lines in project: " + Utility.linesInProject(new File("./src/")));
 		try {
@@ -86,10 +84,9 @@ public final class Application {
 			throw new ExceptionInInitializerError(e);
 		}
 	}
-
+	
 	/**
 	 * Invoked when this program is started, initializes the {@link Application}.
-	 *
 	 * @param args The runtime arguments, none of which are parsed.
 	 */
 	public static void main(String[] args) {
@@ -106,7 +103,7 @@ public final class Application {
 			System.exit(0);
 		}
 	}
-
+	
 	/**
 	 * A package-private constructor to discourage external instantiation.
 	 */
@@ -114,10 +111,9 @@ public final class Application {
 		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleInitialization").build());
 		launch = MoreExecutors.listeningDecorator(delegateService);
 	}
-
+	
 	/**
 	 * Initializing all of the individual modules.
-	 *
 	 * @throws Exception If any exceptions are thrown during initialization.
 	 */
 	public void init() throws Exception {
@@ -157,10 +153,9 @@ public final class Application {
 			System.exit(1);
 		}
 	}
-
+	
 	/**
 	 * Initializes the Netty implementation. Will block indefinitely until the {@link ServerBootstrap} is bound.
-	 *
 	 * @throws Exception If any exceptions are thrown while binding.
 	 */
 	private void bind() throws Exception {
@@ -177,12 +172,11 @@ public final class Application {
 		bootstrap.channel(NioServerSocketChannel.class);
 		bootstrap.childHandler(new EdgevilleChannelInitializer());
 		bootstrap.bind(NetworkConstants.PORT_ONLINE).syncUninterruptibly();
-
+		
 	}
-
+	
 	/**
 	 * Initializes all miscellaneous startup tasks asynchronously.
-	 *
 	 * @throws Exception If any exceptions are thrown while initializing startup tasks.
 	 */
 	private void initTasks() throws Exception {
@@ -227,9 +221,9 @@ public final class Application {
 		launch.execute(() -> HostManager.deserialize(HostListType.MUTED_IP));
 		launch.execute(() -> HostManager.deserialize(HostListType.STARTER_RECEIVED));
 	}
-
+	
 	private void prepare() {
-		CombatProjectileDefinition.createLoader().load();
+		new CombatProjectileLoader().load();
 		CombatListenerDispatcher.load();
 		CommandDispatcher.load();
 		loadEvents();
@@ -240,7 +234,7 @@ public final class Application {
 		MobAction.init();
 		ObjectAction.init();
 	}
-
+	
 	public static void loadEvents() {
 		for(String directory : Utility.getSubDirectories(ActionInitializer.class)) {
 			try {
@@ -251,5 +245,5 @@ public final class Application {
 			}
 		}
 	}
-
+	
 }

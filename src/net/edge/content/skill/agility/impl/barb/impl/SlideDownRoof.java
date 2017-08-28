@@ -12,11 +12,11 @@ import net.edge.world.locale.Position;
 import java.util.stream.IntStream;
 
 public final class SlideDownRoof extends ObstacleActivity {
-
+	
 	public SlideDownRoof(Player player) {
 		super(new Position(2539, player.getPosition().getY(), 2), new Position(2543, player.getPosition().getY(), 0), ObstacleType.SLIDE_ROOF.getAnimation(), 90, 615);
 	}
-
+	
 	@Override
 	public boolean canExecute(Player player) {
 		if(!IntStream.rangeClosed(3552, 3554).anyMatch(i -> player.getPosition().getY() == i)) {
@@ -25,14 +25,14 @@ public final class SlideDownRoof extends ObstacleActivity {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public void onSubmit(Player player) {
 		final ForcedMovement[] movements = new ForcedMovement[]{new ForcedMovement(player), // first slide
 				new ForcedMovement(player), // second slide
 				new ForcedMovement(player), // jump down
 		};
-
+		
 		LinkedTaskSequence seq = new LinkedTaskSequence();
 		seq.connect(2, () -> {
 			player.animation(new Animation(2588, 20));
@@ -61,5 +61,5 @@ public final class SlideDownRoof extends ObstacleActivity {
 		});
 		seq.start();
 	}
-
+	
 }

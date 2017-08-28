@@ -30,7 +30,6 @@ public class ExchangeItem {
 
 	/**
 	 * Creates a new {@link ExchangeItem}.
-	 *
 	 * @param id           the identification of this item.
 	 * @param amount       the quantity of this item.
 	 * @param desiredPrice the desired price, being sold or bought.

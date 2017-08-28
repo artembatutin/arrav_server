@@ -2,12 +2,12 @@ package net.edge.action.obj;
 
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ObjectAction;
-import net.edge.content.combat.weapon.WeaponInterface;
 import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendFade;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.move.ForcedMovement;
 import net.edge.world.entity.actor.move.ForcedMovementDirection;
 import net.edge.world.entity.actor.move.ForcedMovementManager;
@@ -49,7 +49,7 @@ public class GodWars extends ActionInitializer {
 			}
 		};
 		l.registerFirst(26439);
-
+		
 		//graple
 		l = new ObjectAction() {
 			@Override

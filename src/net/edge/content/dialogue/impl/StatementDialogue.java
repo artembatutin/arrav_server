@@ -6,20 +6,18 @@ import net.edge.content.dialogue.DialogueType;
 
 /**
  * The dialogue chain entry which sends the player a statement dialogue.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class StatementDialogue extends Dialogue {
-
+	
 	/**
 	 * Constructs a new {@link StatementDialogue}.
-	 *
 	 * @param text the text that will be displayed on the dialogue.
 	 */
 	public StatementDialogue(String... text) {
 		super(text);
 	}
-
+	
 	@Override
 	public void accept(DialogueBuilder dialogue) {
 		switch(getText().length) {
@@ -47,7 +45,7 @@ public final class StatementDialogue extends Dialogue {
 				break;
 		}
 	}
-
+	
 	@Override
 	public DialogueType type() {
 		return DialogueType.STATEMENT_DIALOGUE;

@@ -10,7 +10,6 @@ import java.util.Optional;
 
 /**
  * Holds functionality for the healer familiar ability.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Healer extends FamiliarAbility {
@@ -27,7 +26,6 @@ public final class Healer extends FamiliarAbility {
 
 	/**
 	 * Constructs a new {@link Healer}.
-	 *
 	 * @param ticks  {@link #ticks}.
 	 * @param amount {@link #amount}.
 	 */
@@ -56,7 +54,6 @@ public final class Healer extends FamiliarAbility {
 	 * Any visualisation the player shows each time the player
 	 * gets healed should be handled here. <b> the method should be overriden
 	 * to provide functionality</b>
-	 *
 	 * @return the visualisation wrapped in an optional.
 	 */
 	public Optional<Visualize> getPlayerVisualisation() {
@@ -67,7 +64,6 @@ public final class Healer extends FamiliarAbility {
 	 * Any visualisation the npc shows each time the player
 	 * gets healed should be handled here. <b> the method should be overriden
 	 * to provide functionality</b>
-	 *
 	 * @return the visualisation wrapped in an optional.
 	 */
 	public Optional<Visualize> getNpcVisualisation() {
@@ -76,7 +72,6 @@ public final class Healer extends FamiliarAbility {
 
 	/**
 	 * The task chained to this ability.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class HealerTask extends Task {
@@ -93,7 +88,6 @@ public final class Healer extends FamiliarAbility {
 
 		/**
 		 * Constructs a new {@link HealerTask}.
-		 *
 		 * @param player {@link #player}.
 		 * @param healer {@link #healer}.
 		 */

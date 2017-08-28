@@ -9,17 +9,16 @@ import net.edge.world.locale.Position;
 import java.util.Optional;
 
 public class Shifter extends Pest {
-
+	
 	/**
 	 * Creates a new {@link Mob}.
-	 *
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
 	public Shifter(int id, Position position) {
 		super(id, position);
 	}
-
+	
 	@Override
 	public void sequence(Mob knight) {
 		//teleporting towards the knight.
@@ -33,7 +32,7 @@ public class Shifter extends Pest {
 			graphic(new Graphic(308, 100));
 			getCombat().reset();
 		}
-
+		
 		if(!getCombat().isAttacking()) {
 			if(getCombat().getLastAttacker().isPlayer())
 				getCombat().attack(getCombat().getLastAttacker());
@@ -41,10 +40,10 @@ public class Shifter extends Pest {
 				getCombat().attack(knight);
 		}
 	}
-
+	
 	@Override
 	public boolean aggressive() {
 		return true;
 	}
-
+	
 }

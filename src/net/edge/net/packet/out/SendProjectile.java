@@ -7,10 +7,10 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 
 public final class SendProjectile implements OutgoingPacket {
-
+	
 	private final Position position, offset;
 	private final int speed, gfxMoving, startHeight, endHeight, lockon, time;
-
+	
 	public SendProjectile(Position position, Position offset, int speed, int gfxMoving, int startHeight, int endHeight, int lockon, int time) {
 		this.position = position;
 		this.offset = offset;
@@ -21,7 +21,7 @@ public final class SendProjectile implements OutgoingPacket {
 		this.lockon = lockon;
 		this.time = time;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		new SendCoordinates(position).write(player, msg);

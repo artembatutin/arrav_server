@@ -13,23 +13,22 @@ import net.edge.world.locale.Position;
 
 /**
  * An implementation of a {@link Task} that handles randomized {@link Mob} movements.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class MobMovementTask extends Task {
-
+	
 	/**
 	 * The Queue of Mobs.
 	 */
 	private final ObjectList<Mob> mobs = new ObjectArrayList<>();
-
+	
 	/**
 	 * Creates a new {@link MobMovementTask}.
 	 */
 	public MobMovementTask() {
 		super(2, false);
 	}
-
+	
 	@Override
 	protected void execute() {
 		int size = mobs.size();
@@ -67,11 +66,11 @@ public class MobMovementTask extends Task {
 			}
 		}
 	}
-
+	
 	private int randomSteps(int size) {
 		return RandomUtils.inclusive(0, size);
 	}
-
+	
 	ObjectList<Mob> getMobs() {
 		return mobs;
 	}

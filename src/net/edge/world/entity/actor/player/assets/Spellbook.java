@@ -10,7 +10,6 @@ import net.edge.world.locale.Position;
 
 /**
  * The enumerated type whose elements represent a spellbook type.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public enum Spellbook {
@@ -35,7 +34,8 @@ public enum Spellbook {
 				}
 			}.attach(player));
 		}
-	}, ANCIENT(12855) {
+	},
+	ANCIENT(12855) {
 		@Override
 		public void execute(Player player, Position position) {
 			player.animation(new Animation(1979));
@@ -57,7 +57,8 @@ public enum Spellbook {
 				}
 			}.attach(player));
 		}
-	}, LUNAR(29999) {
+	},
+	LUNAR(29999) {
 		@Override
 		public void execute(Player player, Position position) {//TODO replace this to correct lunar home teleport
 			player.animation(new Animation(714));
@@ -79,47 +80,43 @@ public enum Spellbook {
 			}.attach(player));
 		}
 	};
-
+	
 	/**
 	 * The identifier for this spellbook interface.
 	 */
 	private final int id;
-
+	
 	/**
 	 * Creates a new {@link Spellbook}.
-	 *
 	 * @param id the identifier for this spellbook interface.
 	 */
 	Spellbook(int id) {
 		this.id = id;
 	}
-
+	
 	@Override
 	public final String toString() {
 		return name().toLowerCase().replaceAll("_", " ");
 	}
-
+	
 	/**
 	 * The method executed when {@code player} teleports to {@code position}
 	 * while converted to this spellbook type.
-	 *
 	 * @param player   the player that is teleporting.
 	 * @param position the position the player is teleporting to.
 	 */
 	public abstract void execute(Player player, Position position);
-
+	
 	/**
 	 * Gets the identifier for this spellbook interface.
-	 *
 	 * @return the identifier for the interface.
 	 */
 	public final int getId() {
 		return id;
 	}
-
+	
 	/**
 	 * Attempts to convert the spellbook for {@code player} to {@code book}.
-	 *
 	 * @param player the player to convert the spellbook for.
 	 * @param book   the type of spellbook to convert to.
 	 */

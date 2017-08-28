@@ -24,20 +24,19 @@ import java.util.Optional;
 
 /**
  * The message sent from the client when a player uses an item on an object.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class ItemOnObjectPacket implements IncomingPacket {
-
+	
 	public static final ActionContainer<ItemOnObjectAction> OBJECTS = new ActionContainer<>();
 	public static final ActionContainer<ItemOnObjectAction> ITEMS = new ActionContainer<>();
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ON_OBJECT)) {
 			return;
 		}
-
+		
 		int container = payload.getShort(false);
 		int objectId = payload.getMedium();
 		int objectY = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
@@ -61,11 +60,11 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 		Optional<GameObject> o = reg.getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
-
+		
 		final GameObject object = o.get();
 		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[ItemOnObject message] objectId = " + object.toString() + ", itemId = " + item.getId());
-
+		
 		player.facePosition(position);
 		player.getMovementListener().append(() -> {
 			if(new Boundary(position, object.getDefinition().getSize()).within(player.getPosition(), player.size(), 1)) {

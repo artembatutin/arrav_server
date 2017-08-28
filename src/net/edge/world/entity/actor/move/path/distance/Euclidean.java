@@ -5,7 +5,6 @@ import net.edge.world.locale.Position;
 /**
  * Since Euclidean distance is shorter than Manhattan or diagonal distance, you will still get shortest paths,
  * but the pathfinder will take longer to run.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class Euclidean implements Distance {

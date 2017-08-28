@@ -34,90 +34,88 @@ import static net.edge.world.entity.EntityState.INACTIVE;
 /**
  * A location on the tool.mapviewer that is {@code 64x64} in size. Used primarily for caching various types of {@link Entity}s and
  * {@link RegionTile}s. There is a reason that the {@link Entity}s are not being cached together.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class Region extends Entity {
-
+	
 	/**
 	 * The {@link Logger} instance to log our global changes.
 	 */
 	private static final Logger LOGGER = LoggerUtils.getLogger(Region.class);
-
+	
 	/**
 	 * A {@link ObjectList} of all active {@link Region}s in the world.
 	 */
 	private static final ObjectList<Region> ACTIVE_REGIONS = new ObjectArrayList<>();
-
+	
 	/**
 	 * The size of a region.
 	 */
 	private static final int REGION_SIZE = 64;
-
+	
 	/**
 	 * The maximum level a floor can be.
 	 */
 	private static final int MAXIMUM_HEIGHT_LEVEL = 4;
-
+	
 	/**
 	 * A {@link ObjectList} of {@link GroundItem}s in this {@code Region}.
 	 */
 	private final ObjectList<GroundItem> items = new ObjectArrayList<>();
-
+	
 	/**
 	 * A {@link Set} of active {@link Player}s in this {@code Region}.
 	 */
 	private final Set<Player> players = Sets.newConcurrentHashSet();
-
+	
 	/**
 	 * A {@link Set} of active {@link Mob}s in this {@code Region}.
 	 */
 	private final Set<Mob> mobs = Sets.newConcurrentHashSet();
-
+	
 	/**
 	 * A {@link Int2ObjectOpenHashMap} of active {@link GameObject}s in this {@code Region}.
 	 */
 	private final Int2ObjectOpenHashMap<RegionTiledObjects> staticObjects = new Int2ObjectOpenHashMap<>();
-
+	
 	/**
 	 * A {@link ObjectList} of removed {@link GameObject}s in this {@code Region}.
 	 */
 	private final ObjectList<GameObject> removeObjects = new ObjectArrayList<>();
-
+	
 	/**
 	 * A list of all surrounding regions.
 	 */
 	private ObjectList<Region> surroundingRegions = null;
-
+	
 	/**
 	 * The Id of this {@link Region}.
 	 */
 	private final int regionId;
-
+	
 	/**
 	 * An task for regional item sequencing.
 	 */
 	private Optional<Task> itemTask = Optional.empty();
-
+	
 	/**
 	 * The tiles within the region(regional clipping).
 	 */
 	private RegionTile[][] tiles;
-
+	
 	/**
 	 * A saved region manager instance.
 	 */
 	private RegionManager manager;
-
+	
 	/**
 	 * A simple integer acting as a clean up timer for this region.
 	 * We randomize it so all regions clean at their own pace.
 	 */
 	private int cleanup = RandomUtils.inclusive(0, 400);
-
+	
 	/**
 	 * Creates a new {@link Region}.
-	 *
 	 * @param regionId The id of this region.
 	 */
 	Region(int regionId, RegionManager manager) {
@@ -125,7 +123,7 @@ public final class Region extends Entity {
 		this.regionId = regionId;
 		this.manager = manager;
 	}
-
+	
 	/**
 	 * Cleaning up all empty-from-players regions.
 	 */
@@ -147,7 +145,7 @@ public final class Region extends Entity {
 			}
 		}
 	}
-
+	
 	@Override
 	public void register() {
 		ACTIVE_REGIONS.add(this);
@@ -157,7 +155,7 @@ public final class Region extends Entity {
 		}
 		LOGGER.info("Loaded Region: [" + regionId + "] on the fly.");
 	}
-
+	
 	@Override
 	public void dispose() {
 		//deactivating all mobs.
@@ -166,10 +164,9 @@ public final class Region extends Entity {
 		}
 		LOGGER.info("Disposed Region: [" + regionId + "] on the fly.");
 	}
-
+	
 	/**
 	 * The method that updates all items in the region for {@code player}.
-	 *
 	 * @param player the player to update items for.
 	 */
 	public void onEnter(Player player) {
@@ -190,10 +187,9 @@ public final class Region extends Entity {
 			}
 		}
 	}
-
+	
 	/**
 	 * Adds an {@link Actor} to the backing queue.
-	 *
 	 * @param e The entity to add.
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
@@ -206,10 +202,9 @@ public final class Region extends Entity {
 			return mobs.add(e.toMob());
 		}
 	}
-
+	
 	/**
 	 * Removes an {@link Actor} from the backing queue.
-	 *
 	 * @param e The entity to remove.
 	 */
 	public <T extends Actor> boolean remove(T e) {
@@ -219,39 +214,35 @@ public final class Region extends Entity {
 			return mobs.remove(e.toMob());
 		}
 	}
-
+	
 	/**
 	 * Retrieves and returns an {@link Set} of {@link Player}s.
-	 *
 	 * @return all the players inside the region.
 	 */
 	public Set<Player> getPlayers() {
 		return players;
 	}
-
+	
 	/**
 	 * Retrieves and returns an {@link Set} of {@link Mob}s.
-	 *
 	 * @return all the mobs inside the region.
 	 */
 	public Set<Mob> getMobs() {
 		return mobs;
 	}
-
+	
 	/**
 	 * The method that attempts to register {@code item} and does not stack by
 	 * default.
-	 *
 	 * @param item the item to attempt to register.
 	 * @return {@code true} if the item was registered, {@code false} otherwise.
 	 */
 	public boolean register(GroundItem item) {
 		return register(item, false);
 	}
-
+	
 	/**
 	 * The method that attempts to register {@code item}.
-	 *
 	 * @param item  the item to attempt to register.
 	 * @param stack if the item should stack upon registration.
 	 * @return {@code true} if the item was registered, {@code false} otherwise.
@@ -296,10 +287,9 @@ public final class Region extends Entity {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * The method that attempts to unregister {@code item}.
-	 *
 	 * @param item the item to attempt to unregister.
 	 * @return {@code true} if the item was unregistered, {@code false}
 	 * otherwise.
@@ -313,19 +303,17 @@ public final class Region extends Entity {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Gets the item node list.
-	 *
 	 * @return item nodes.
 	 */
 	public ObjectList<GroundItem> getItems() {
 		return items;
 	}
-
+	
 	/**
 	 * The method that retrieves the item with {@code id} on {@code position}.
-	 *
 	 * @param id       the identifier to retrieve the item with.
 	 * @param position the position to retrieve the item on.
 	 * @return the item instance wrapped in an optional, or an empty optional if
@@ -341,48 +329,43 @@ public final class Region extends Entity {
 		}
 		return Optional.empty();
 	}
-
+	
 	/**
 	 * Adds an {@link GameObject} to the backing set.
-	 *
 	 * @param o The object to add.
 	 */
 	public void addObj(GameObject o) {
 		getObjectsFrompacked(o.getLocalPos()).add(o);
 	}
-
+	
 	/**
 	 * Removes an {@link GameObject} from the backing set.
-	 *
 	 * @param o The object to remove.
 	 */
 	public void removeObj(GameObject o) {
 		getObjectsFrompacked(o.getLocalPos()).remove(o);
 	}
-
+	
 	/**
 	 * Gets the a set of {@link GameObject} on the specified {@link Position}.
-	 *
 	 * @param position The position.
 	 * @return A {@link RegionTiledObjects} of {@link GameObject}s on the specified position.
 	 */
 	public RegionTiledObjects getObjects(Position position) {
 		return staticObjects.computeIfAbsent(position.toLocalPacked(), key -> new RegionTiledObjects());
 	}
-
+	
 	/**
 	 * Gets the a set of {@link GameObject} on the packed coordinates.
-	 *
 	 * @param packed The packed position.
 	 * @return A {@link RegionTiledObjects} of {@link GameObject}s on the specified position.
 	 */
 	public RegionTiledObjects getObjectsFrompacked(int packed) {
 		return staticObjects.computeIfAbsent(packed, key -> new RegionTiledObjects());
 	}
-
+	
 	/**
 	 * Gets the an {@link Optional} of {@link GameObject}s on the specified {@link Position} with the specified {@code id}.
-	 *
 	 * @param id       The id of the object to seek for.
 	 * @param position The position.
 	 * @return A {@link Optional} of {@link GameObject} on the specified position.
@@ -390,10 +373,9 @@ public final class Region extends Entity {
 	public Optional<GameObject> getObject(int id, Position position) {
 		return getObject(id, position.toLocalPacked());
 	}
-
+	
 	/**
 	 * Gets the an {@link Optional} of {@link GameObject}s on the specified {@link Position} with the specified {@code type}.
-	 *
 	 * @param type     The type of the object to seek for.
 	 * @param position The position.
 	 * @return A {@link Optional} of {@link GameObject} on the specified position.
@@ -405,10 +387,9 @@ public final class Region extends Entity {
 			return Optional.of(o);
 		return Optional.empty();
 	}
-
+	
 	/**
 	 * Gets the an {@link Optional} of {@link GameObject}s with the specified {@code id} and {@code packed} coordinates.
-	 *
 	 * @param id     The id of the object to seek for.
 	 * @param packed The packed position.
 	 * @return A {@link Optional} of {@link GameObject}.
@@ -420,37 +401,33 @@ public final class Region extends Entity {
 			return Optional.of(o);
 		return Optional.empty();
 	}
-
+	
 	/**
 	 * Sends an action to interactive objects with the specified {@code id}.
-	 *
 	 * @param id The id of the object to seek for.
 	 */
 	public void interactAction(int id, Consumer<GameObject> action) {
 		staticObjects.forEach((l, c) -> c.interactiveAction(id, action));
 	}
-
+	
 	/**
 	 * Gets the a List of dynamic {@link GameObject} of interactive from all {@link Position}s of the region where staticObjects are applied.
-	 *
 	 * @return A {@link ObjectList}.
 	 */
 	public void dynamicAction(Consumer<GameObject> action) {
 		staticObjects.forEach((l, c) -> c.dynamicAction(action));
 	}
-
+	
 	/**
 	 * Setting a new {@link #itemTask}.
-	 *
 	 * @param itemTask item task to set.
 	 */
 	public void setItemTask(Optional<Task> itemTask) {
 		this.itemTask = itemTask;
 	}
-
+	
 	/**
 	 * Determines if there any player around this region.
-	 *
 	 * @return {@code true} if there is a player around regionally, {@code false} otherwise.
 	 */
 	boolean playersAround() {
@@ -465,11 +442,10 @@ public final class Region extends Entity {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Gets a single tile in this region from the specified height, x and y
 	 * coordinates.
-	 *
 	 * @param height The height.
 	 * @param x      The x coordinate.
 	 * @param y      The y coordinate.
@@ -484,28 +460,25 @@ public final class Region extends Entity {
 		}
 		return tiles[height][x + y * REGION_SIZE];
 	}
-
+	
 	/**
 	 * Gets the id of this region.
-	 *
 	 * @return region id.
 	 */
 	public int getRegionId() {
 		return regionId;
 	}
-
+	
 	/**
 	 * Gets the a {@link ObjectList} of {@link GameObject}s that are removed by the server during game time.
-	 *
 	 * @return A {@link ObjectList of {@link GameObject }s that are removed.
 	 */
 	public ObjectList<GameObject> getRemovedObjects() {
 		return removeObjects;
 	}
-
+	
 	/**
 	 * Gets the surrounding regions.
-	 *
 	 * @return surrounding regions.
 	 */
 	public ObjectList<Region> getSurroundingRegions() {
@@ -524,17 +497,17 @@ public final class Region extends Entity {
 		}
 		return surroundingRegions;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(getRegionId());
 	}
-
+	
 	@Override
 	public String toString() {
 		return "REGION[id= " + getRegionId() + "]";
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Region) {
@@ -543,5 +516,5 @@ public final class Region extends Entity {
 		}
 		return false;
 	}
-
+	
 }

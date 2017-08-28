@@ -18,17 +18,17 @@ import java.util.logging.Logger;
  * Handles the claim donate process for a specific player.
  */
 public class Donating extends ConnectionUse {
-
+	
 	/**
 	 * Amount of tokens receivable.
 	 */
 	private static final int[] TOKENS = {500, 1050, 2100, 3150, 4200, 5250, 7350, 10500, 15750, 21000};
-
+	
 	/**
 	 * The logger to log the donating errors just in-case we will need them later.
 	 */
 	private static final Logger logger = Logger.getLogger(Donating.class.getName());
-
+	
 	static {
 		try {
 			FileHandler fn = new FileHandler("./data/logs/donate.log");
@@ -37,22 +37,21 @@ public class Donating extends ConnectionUse {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * The player attempting to claim.
 	 */
 	private final Player player;
-
+	
 	/**
 	 * Constructs a new pool usage.
-	 *
 	 * @param pool the pool being used.
 	 */
 	public Donating(Player player, ConnectionPool pool) {
 		super(pool);
 		this.player = player;
 	}
-
+	
 	@Override
 	public void append(Connection con) throws SQLException {
 		boolean received = false;
@@ -102,7 +101,7 @@ public class Donating extends ConnectionUse {
 			player.message("We could not find any donation under your name");
 		}
 	}
-
+	
 	@Override
 	public void onError() {
 		player.message("An error happened when tried to claim.");

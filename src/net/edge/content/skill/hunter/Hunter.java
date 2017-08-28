@@ -24,7 +24,6 @@ import java.util.Optional;
 
 /**
  * The class which holds static functionality for the hunter skill.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Hunter {
@@ -36,7 +35,6 @@ public final class Hunter {
 
 	/**
 	 * Retrieves the maximum amount of traps a player can lay.
-	 *
 	 * @param player the player to lay a trap down for.
 	 * @return a numerical value determining the amount a player can lay.
 	 */
@@ -47,7 +45,6 @@ public final class Hunter {
 
 	/**
 	 * Attempts to abandon the specified {@code trap} for the player.
-	 *
 	 * @param trap   the trap that was abandoned.
 	 * @param logout if the abandon was due to the player logging out.
 	 */
@@ -79,7 +76,6 @@ public final class Hunter {
 
 	/**
 	 * Attempts to lay down the specified {@code trap} for the specified {@code player}.
-	 *
 	 * @param player the player to lay the trap for.
 	 * @param trap   the trap to lay down for the player.
 	 * @return {@code true} if the trap was laid, {@code false} otherwise.
@@ -192,7 +188,6 @@ public final class Hunter {
 
 	/**
 	 * Gets a trap for the specified global object given.
-	 *
 	 * @param player the player to return a trap for.
 	 * @param object the object to compare.
 	 * @return a trap wrapped in an optional, {@link Optional#empty()} otherwise.

@@ -1,33 +1,32 @@
 package net.edge.content;
 
-import net.edge.content.combat.strategy.player.special.CombatSpecial;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
+import net.edge.world.entity.actor.combat.strategy.player.special.CombatSpecial;
 import net.edge.world.entity.actor.player.Player;
 
 /**
  * The class that handles the restoration of weakened skills.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class RestoreStatTask extends Task {
-
+	
 	/**
 	 * The amount running amount to exclude the other restores.
 	 */
 	private int run = 0;
-
+	
 	/**
 	 * Creates a new {@link RestoreStatTask}.
 	 */
 	public RestoreStatTask() {
 		super(10, false);
 	}
-
+	
 	@Override
 	public void execute() {
 		if(World.get().getPlayers().isEmpty())
@@ -66,7 +65,7 @@ public final class RestoreStatTask extends Task {
 				int realLevel = player.getSkills()[i].getRealLevel();
 				if(player.getSkills()[i].getLevel() < realLevel && i != Skills.PRAYER && i != Skills.SUMMONING) {
 					player.getSkills()[i].increaseLevel(1);
-
+					
 					if(Prayer.isActivated(player, Prayer.RAPID_RESTORE)) {
 						if(player.getSkills()[i].getLevel() < realLevel) {
 							player.getSkills()[i].increaseLevel(1);
@@ -90,7 +89,7 @@ public final class RestoreStatTask extends Task {
 		if(run == 7)
 			run = 0;
 	}
-
+	
 	@Override
 	public void onCancel() {
 		World.get().submit(new RestoreStatTask());

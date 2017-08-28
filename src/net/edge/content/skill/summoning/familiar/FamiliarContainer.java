@@ -11,19 +11,17 @@ import net.edge.world.locale.Position;
 /**
  * Holds functionality for abilities which can hold items such as
  * Beast of burden or the forager ability.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public abstract class FamiliarContainer extends FamiliarAbility {
-
+	
 	/**
 	 * The container which holds all the respectable items.
 	 */
 	private ItemContainer container;
-
+	
 	/**
 	 * Constructs a new {@link FamiliarContainer}.
-	 *
 	 * @param type the ability type of this familiar.
 	 * @param size the size of this container.
 	 */
@@ -31,45 +29,40 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 		super(type);
 		container = new ItemContainer(size, ItemContainer.StackPolicy.STANDARD);
 	}
-
+	
 	/**
 	 * Items that are restricted from storing in the container should be added here.
 	 */
 	private static final ImmutableList<Item> RESTRICTED_ITEMS = ImmutableList.of(new Item(995), new Item(11694));
-
+	
 	/**
 	 * Any functionality to check for if this item can be stored.
-	 *
 	 * @return <true> if the item could be stored, <false> otherwise.
 	 */
 	public abstract boolean canStore(Player player, Item item);
-
+	
 	/**
 	 * Attempts to utilise any extra functionality when this item
 	 * is stored to the container.
-	 *
 	 * @param player the player to utilise extra functionality for.
 	 */
 	public abstract void onStore(Player player);
-
+	
 	/**
 	 * Any functionality to check for if this item can be withdrawed.
-	 *
 	 * @return <true> if the item could be withdrawed, <false> otherwise.
 	 */
 	public abstract boolean canWithdraw(Player player, Item item);
-
+	
 	/**
 	 * Attempts to utilise any extra functionality when this item
 	 * is withdrawed from the container.
-	 *
 	 * @param player the player to utilise extra functionality for.
 	 */
 	public abstract void onWithdraw(Player player);
-
+	
 	/**
 	 * Attempts to store the item with the specified {@code amount} in the container.
-	 *
 	 * @param player the player we're storing this item for.
 	 * @param slot   the slot we're storing from.
 	 */
@@ -103,13 +96,13 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 			player.message("Your familiar's inventory is currently full.");
 			return;
 		}
-
+		
 		if(item.getAmount() > player.getInventory().computeAmountForId(item.getId()) && !item.getDefinition().isStackable()) {
 			item.setAmount(player.getInventory().computeAmountForId(item.getId()));
 		} else if(item.getAmount() > player.getInventory().get(slot).getAmount() && item.getDefinition().isStackable()) {
 			item.setAmount(player.getInventory().get(slot).getAmount());
 		}
-
+		
 		int remain = this.getContainer().remaining();
 		if(item.getAmount() > remain) {
 			item.setAmount(remain);
@@ -123,10 +116,9 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 			this.onStore(player);
 		}
 	}
-
+	
 	/**
 	 * Attempts to store the item with the specified {@code amount} in the container.
-	 *
 	 * @param player the player we're withdrawing this item for.
 	 * @param item   the item we are withdrawing.
 	 */
@@ -155,10 +147,9 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Attempts to drop all the items in the container.
-	 *
 	 * @param position the position on which we are dropping the items.
 	 */
 	final void dropAll(Position position) {
@@ -168,21 +159,21 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 		});
 		container.clear();
 	}
-
+	
 	@Override
 	public boolean isHoldableContainer() {
 		return true;
 	}
-
+	
 	/**
 	 * @return {@link #container}.
 	 */
 	public final ItemContainer getContainer() {
 		return container;
 	}
-
+	
 	public void setContainer(ItemContainer container) {
 		this.container = container;
 	}
-
+	
 }

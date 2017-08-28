@@ -14,13 +14,11 @@ import static net.edge.world.Direction.*;
 /**
  * Represents a simple path finder which determines a straight path to the first blocked tile or it's destination.
  * Mostly used by {@link Mob} following and movement.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class SimplePathFinder extends PathFinder {
 	/**
 	 * A default method to find a path for the specified {@link Actor}.
-	 *
 	 * @param character   The character to find the path for.
 	 * @param destination The destination of the path.
 	 * @return A {@link Deque} of {@link Position steps} to the specified destination.
@@ -28,10 +26,9 @@ public final class SimplePathFinder extends PathFinder {
 	public Path find(Actor character, Position destination) {
 		return find(character.getPosition(), destination, character.size());
 	}
-
+	
 	/**
 	 * A default method to find a path for the specified position.
-	 *
 	 * @param origin      The original start position.
 	 * @param destination The destination of the path.
 	 * @param size        The entity's size.
@@ -42,10 +39,9 @@ public final class SimplePathFinder extends PathFinder {
 		Deque<Position> positions = new ArrayDeque<>(approximation);
 		return new Path(addWalks(origin, destination, size, positions));
 	}
-
+	
 	/**
 	 * Performs the path finding calculations to find the path using the A* algorithm.
-	 *
 	 * @param origin      The path finder's start position.
 	 * @param destination The path finder's destination.
 	 * @param size        The entity's size.
@@ -54,7 +50,7 @@ public final class SimplePathFinder extends PathFinder {
 	 */
 	private Deque<Position> addWalks(Position origin, Position destination, int size, Deque<Position> positions) {
 		Position current = origin;
-
+		
 		while(!current.same(destination)) {
 			Node node = new Node(current, Position.delta(destination, current));
 			int x = node.getPosition().getX(), y = node.getPosition().getY();
@@ -62,7 +58,7 @@ public final class SimplePathFinder extends PathFinder {
 			int height = node.getPosition().getZ();
 			boolean move = false;//Prioritizing diagonals.
 			boolean exit = true;//Exiting flag.
-
+			
 			if(dx > 0 && dy > 0) {
 				while((dx-- > 0 && dy-- > 0)) {
 					if(traversable(current, size, SOUTH_WEST)) {
@@ -108,7 +104,7 @@ public final class SimplePathFinder extends PathFinder {
 					}
 				}
 			}
-
+			
 			if(dy > 0 && !move) {
 				while(dy-- > 0) {
 					if(traversable(current, size, SOUTH)) {
@@ -151,33 +147,32 @@ public final class SimplePathFinder extends PathFinder {
 					}
 				}
 			}
-
+			
 			if(exit) {
 				break;
 			}
-
+			
 		}
 		return positions;
 	}
-
+	
 	/**
 	 * Represents a node used by this simple algorithm.
 	 */
 	private static final class Node {
-
+		
 		/**
 		 * The current node position.
 		 */
 		private Position position;
-
+		
 		/**
 		 * The established delta position.
 		 */
 		private Position delta;
-
+		
 		/**
 		 * Constructs {@code Entity}.
-		 *
 		 * @param position The current position.
 		 * @param delta    The delta position to move.
 		 */
@@ -185,25 +180,23 @@ public final class SimplePathFinder extends PathFinder {
 			this.position = position;
 			this.delta = delta;
 		}
-
+		
 		/**
 		 * Gets the current node's position.
-		 *
 		 * @return node's position.
 		 */
 		public Position getPosition() {
 			return position;
 		}
-
+		
 		/**
 		 * Gets the delta position.
-		 *
 		 * @return delta position.
 		 */
 		public Position getDelta() {
 			return delta;
 		}
-
+		
 	}
-
+	
 }

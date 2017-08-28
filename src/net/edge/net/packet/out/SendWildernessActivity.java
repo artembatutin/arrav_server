@@ -9,13 +9,13 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendWildernessActivity implements OutgoingPacket {
-
+	
 	private final ObjectList<Player> pkers;
-
+	
 	public SendWildernessActivity(ObjectList<Player> pkers) {
 		this.pkers = pkers;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(150, PacketType.VARIABLE_SHORT);

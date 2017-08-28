@@ -19,29 +19,27 @@ import java.util.Optional;
 
 /**
  * Represents the process for creating fires.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Firemaking extends DestructionSkillAction {
-
+	
 	/**
 	 * Determines if this firemaking action is being executed because of a familiar.
 	 */
 	private final boolean familiar;
-
+	
 	/**
 	 * The definition of the {@link LogType} we're handling.
 	 */
 	private final LogType log;
-
+	
 	/**
 	 * The definition of the {@link FireLighter} we're handling.
 	 */
 	private final FireLighter lighter;
-
+	
 	/**
 	 * Constructs a new {@link Firemaking} skill action.
-	 *
 	 * @param player     the player we're starting this action for.
 	 * @param firstItem  the first item this player used.
 	 * @param secondItem the second item the first item was used on.
@@ -52,15 +50,15 @@ public final class Firemaking extends DestructionSkillAction {
 		log = LogType.getDefinition(firstItem.getId(), secondItem.getId()).orElse(null);
 		this.familiar = familiar;
 	}
-
+	
 	public static boolean execute(Player player, Item firstItem, Item secondItem, boolean familiar) {
 		Firemaking firemaking = new Firemaking(player, firstItem, secondItem, familiar);
-
+		
 		if(familiar) {
 			firemaking.start();
 			return true;
 		}
-
+		
 		if(firemaking.log == null || firemaking.lighter == null) {
 			return false;
 		}
@@ -70,7 +68,7 @@ public final class Firemaking extends DestructionSkillAction {
 		}
 		return false;
 	}
-
+	
 	@Override
 	public void onDestruct(Task t, boolean success) {
 		if(success) {
@@ -88,13 +86,13 @@ public final class Firemaking extends DestructionSkillAction {
 				} else if(TraversalMap.isTraversable(p, Direction.EAST, getPlayer().size())) {
 					getPlayer().getMovementQueue().walk(Direction.EAST.getX(), Direction.EAST.getY());
 				}
-
+				
 				getPlayer().facePosition(p);
 			}
 		}
 		t.cancel();
 	}
-
+	
 	@Override
 	public boolean init() {
 		Position p = getPlayer().getPosition();
@@ -107,42 +105,42 @@ public final class Firemaking extends DestructionSkillAction {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public Item destructItem() {
 		return log.getLog();
 	}
-
+	
 	@Override
 	public int delay() {
 		return RandomUtils.inclusive(2, 6);
 	}
-
+	
 	@Override
 	public boolean instant() {
 		return false;
 	}
-
+	
 	@Override
 	public boolean canExecute() {
 		return checkFiremaking();
 	}
-
+	
 	@Override
 	public double experience() {
 		return log.getExperience();
 	}
-
+	
 	@Override
 	public SkillData skill() {
 		return SkillData.FIREMAKING;
 	}
-
+	
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.of(new Animation(733));
 	}
-
+	
 	private boolean checkFiremaking() {
 		if(Location.isAtHome(getPlayer())) {
 			getPlayer().message("You cannot light fire here.");
@@ -158,14 +156,14 @@ public final class Firemaking extends DestructionSkillAction {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * @return {@link #log}
 	 */
 	LogType getLogType() {
 		return log;
 	}
-
+	
 	/**
 	 * @return {@link #lighter}.
 	 */

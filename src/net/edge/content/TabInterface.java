@@ -5,7 +5,6 @@ import net.edge.world.entity.actor.player.Player;
 
 /**
  * An enumeration of tab interfaces.
- *
  * @author Artem Batutin<artembatutin@gmail.com>
  */
 public enum TabInterface {
@@ -25,20 +24,19 @@ public enum TabInterface {
 	SETTING(12, 11),
 	EMOTE(13, 12),
 	MUSIC(14, 13);
-
+	
 	/**
 	 * The id of the new based game-frames.
 	 */
 	private final int newId;
-
+	
 	/**
 	 * The id of the old based game-frames.
 	 */
 	private final int oldId;
-
+	
 	/**
 	 * Constructs a new {@link TabInterface}.
-	 *
 	 * @param newId The identifier of the newer type game-frames.
 	 * @param oldId The identifier of the older type game-frames.
 	 */
@@ -46,10 +44,9 @@ public enum TabInterface {
 		this.newId = newId;
 		this.oldId = oldId;
 	}
-
+	
 	/**
 	 * Sends the interface to the selected tab.
-	 *
 	 * @param player The player used in the context.
 	 * @param id     The id of the interface to send.
 	 */
@@ -60,11 +57,11 @@ public enum TabInterface {
 		player.out(new SendTab(id, this));
 		//		}
 	}
-
+	
 	public int getNew() {
 		return newId;
 	}
-
+	
 	public int getOld() {
 		return oldId;
 	}

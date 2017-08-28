@@ -29,19 +29,17 @@ import static net.edge.content.achievements.Achievement.TOO_FAST;
 
 /**
  * Holds functionality for passing obstacles for the BarbarianOutpost Agility course.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class BarbarianOutpostAgility extends AgilityCourse {
-
+	
 	/**
 	 * The definition for this obstacle course.
 	 */
 	private final BarbarianAgilityData obstacle;
-
+	
 	/**
 	 * Constructs a new {@link BarbarianOutpostAgility} course.
-	 *
 	 * @param player   {@link #getPlayer()}.
 	 * @param object   {@link #getObject()}.
 	 * @param obstacle the obstacle this player is trying to cross.
@@ -50,7 +48,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 		super(player, object, AgilityCourseType.BARBARIAN_AGILITY);
 		this.obstacle = obstacle;
 	}
-
+	
 	public static void action() {
 		for(BarbarianAgilityData data : BarbarianAgilityData.values()) {
 			ObjectAction perform = new ObjectAction() {
@@ -67,7 +65,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			}
 		}
 	}
-
+	
 	@Override
 	public void onSuccess() {
 		player.getAgilityBonus().addBarbarianObstacle(obstacle);
@@ -78,27 +76,27 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			TOO_FAST.inc(player);
 		}
 	}
-
+	
 	@Override
 	public ObstacleAction obstacleAction() {
 		return obstacle.obstacleAction;
 	}
-
+	
 	@Override
 	public String message() {
 		return obstacle.message;
 	}
-
+	
 	@Override
 	public Optional<String> crossedMessage() {
 		return obstacle.crossedMessage;
 	}
-
+	
 	@Override
 	public double experience() {
 		return obstacle.obstacleAction.activity(getPlayer()).getExperience();
 	}
-
+	
 	public enum BarbarianAgilityData {
 		ROPE_SWING(new int[]{43526}, ObstacleType.ROPE_SWING, player1 -> new Movable(new Position(player1.getPosition().getX(), 3554, 0), new Position(player1.getPosition().getX(), 3549, 0), ObstacleType.ROPE_SWING.getAnimation(), 90, 3, 35, 22) {
 			@Override
@@ -110,16 +108,16 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 				//player1.message("You must be standing infront one of the ropes.");
 				return false;
 			}
-
+			
 			@Override
 			public void prerequisites(Player player1) {
 				player1.out(new SendObjectAnimation(new Position(player1.getPosition().getX(), 3550), 497, ObjectType.GENERAL_PROP, ObjectDirection.WEST));
 			}
 		}),
 		LOG_BALANCE(new int[]{43595}, ObstacleType.LOG_BALANCE, player1 -> new Walkable(new Position(2551, 3546, 0), new Position(2541, 3546, 0), ObstacleType.LOG_BALANCE.getAnimation(), 35, 13.7)),
-
+		
 		OBSTACLE_NET_UP(new int[]{20211}, ObstacleType.NETTING, player1 -> new Climbable(new Position(2539, player1.getPosition().getY(), 0), new Position(2537, player1.getPosition().getY(), 1), ObstacleType.NETTING.getAnimation(), 2, 35, 8.2)),
-
+		
 		BALANCING_LEDGE(new int[]{2302}, ObstacleType.LEDGE, player1 -> new Walkable(new Position(2536, 3547, 1), new Position(2532, 3547, 1), ObstacleType.LEDGE.getAnimation(), 35, 22)),
 		CRUMBLING_WALL(new int[]{1948}, ObstacleType.CRUMBLING_WALL, player1 -> {
 			Position start = player1.getPosition().same(new Position(2536, 3553, 0)) ? new Position(2536, 3553, 0) : new Position(2541, 3553, 0);
@@ -131,12 +129,12 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 						return true;
 					}
 					executeForcedMovementAction(player1, player1.getPosition(), getDestination(), 20, 20, getAnimation());
-
+					
 					//player1.message("You can't cross this obstacle from this side.");
 					if(player1.getPosition().same(new Position(2536, 3553, 0)) || player1.getPosition().same(new Position(2541, 3553, 0))) {
 						return true;
 					}
-
+					
 					return false;
 				}
 			};
@@ -172,12 +170,12 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 				player1.facePosition(new Position(2536, 3546));
 				return true;
 			}
-
+			
 			@Override
 			public void onSubmit(Player player1) {
 				player1.animation(getAnimation());
 			}
-
+			
 			@Override
 			public void execute(Player player1, Task t) {
 				player1.move(getDestination());
@@ -200,30 +198,29 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			}
 		}),
 		SLIDE_DOWN_ROOF(new int[]{43532}, ObstacleType.JUMP_GAP, SlideDownRoof::new);
-
+		
 		/**
 		 * The object identification for this object.
 		 */
 		private final int[] objectId;
-
+		
 		/**
 		 * The message sent to this player when he attempts to cross the obstacle.
 		 */
 		private final String message;
-
+		
 		/**
 		 * The message sent to this player when he successfully crossed the obstacle.
 		 */
 		private final Optional<String> crossedMessage;
-
+		
 		/**
 		 * The agility policy linked to this obstacle action.
 		 */
 		private final ObstacleAction obstacleAction;
-
+		
 		/**
 		 * Constructs a new {@link BarbarianAgilityData}.
-		 *
 		 * @param objectId       {@link #objectId}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
@@ -235,10 +232,9 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			this.crossedMessage = crossedMessage;
 			this.obstacleAction = obstacleAction;
 		}
-
+		
 		/**
 		 * Constructs a new {@link BarbarianAgilityData}.
-		 *
 		 * @param objectId       {@link #objectId}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
@@ -250,10 +246,9 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			this.crossedMessage = Optional.ofNullable(crossedMessage);
 			this.obstacleAction = obstacleAction;
 		}
-
+		
 		/**
 		 * Constructs a new {@link BarbarianAgilityData}.
-		 *
 		 * @param objectId       {@link #objectId}.
 		 * @param type           {@link #message} and {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
@@ -264,7 +259,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			this.crossedMessage = type.getCrossedMessage();
 			this.obstacleAction = obstacleAction;
 		}
-
+		
 		/**
 		 * Objects of this course.
 		 */

@@ -26,7 +26,6 @@ public class PlayerCounter {
 
 	/**
 	 * Creates a new {@link PlayerCounter}.
-	 *
 	 * @param player the player hosting the counter.
 	 */
 	public PlayerCounter(Player player) {
@@ -35,7 +34,6 @@ public class PlayerCounter {
 
 	/**
 	 * Updating an item.
-	 *
 	 * @param item item to be updated.
 	 */
 	public void update(ExchangeItem item) {
@@ -54,7 +52,6 @@ public class PlayerCounter {
 
 	/**
 	 * Removing an item
-	 *
 	 * @param item item to be removed.
 	 */
 	public void remove(ExchangeItem item) {

@@ -3,39 +3,47 @@ package net.edge.content.skill.farming.seed;
 import net.edge.content.skill.farming.seed.impl.*;
 
 public enum SeedClass {
-
+	
 	ALLOTMENT {
 		@Override
 		public SeedType getInstance(String name) {
 			return AllotmentSeed.valueOf(name);
 		}
-	}, FLOWERS {
+	},
+	FLOWERS {
 		@Override
 		public SeedType getInstance(String name) {
 			return FlowerSeed.valueOf(name);
 		}
-	}, BUSHES {
+	},
+	BUSHES {
 		@Override
 		public SeedType getInstance(String name) {
 			return BushSeed.valueOf(name);
 		}
-	}, TREES {
+	},
+	TREES {
 		@Override
 		public SeedType getInstance(String name) {
 			return TreeSeed.valueOf(name);
 		}
-	}, HERBS {
+	},
+	HERBS {
 		@Override
 		public SeedType getInstance(String name) {
 			return HerbSeed.valueOf(name);
 		}
-	}, MUSHROOMS {
+	},
+	MUSHROOMS {
 		@Override
 		public SeedType getInstance(String name) {
 			return MushroomSeed.valueOf(name);
 		}
-	}, FRUIT_TREES, HOPS, SPECIAL_PLANTS,;
-
+	},
+	FRUIT_TREES,
+	HOPS,
+	SPECIAL_PLANTS,;
+	
 	public SeedType getInstance(String name) {
 		return null;
 	}

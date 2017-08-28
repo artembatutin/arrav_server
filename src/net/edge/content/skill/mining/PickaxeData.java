@@ -13,7 +13,6 @@ import java.util.Optional;
 /**
  * The enumerated type which elements represents a Pickaxe which can mine
  * a {@link RockData}.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum PickaxeData {
@@ -26,50 +25,49 @@ public enum PickaxeData {
 	INFERNO_ADZE(13661, 10222, 41, 0.55),
 	DRAGON(15259, 12188, 61, 0.6),
 	DRAGONG(20786, 12188, 61, 0.6);
-
+	
 	/**
 	 * Caches our enum values.
 	 */
 	private static final ImmutableSet<PickaxeData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(PickaxeData.class));
-
+	
 	/**
 	 * Represents the identifier for the broken pickaxe handle.
 	 */
 	public static final Item PICKAXE_HANDLE = new Item(466);
-
+	
 	/**
 	 * The identifier for this pickaxe.
 	 */
 	private final Item item;
-
+	
 	/**
 	 * The identifier for the pickaxe head.
 	 */
 	private final Item head;
-
+	
 	/**
 	 * The identifier for the broken pickaxe.
 	 */
 	private final Item broken;
-
+	
 	/**
 	 * The animation for this pickaxe.
 	 */
 	private final Animation animation;
-
+	
 	/**
 	 * The requirement for this pickaxe.
 	 */
 	private final int requirement;
-
+	
 	/**
 	 * The delay for this pickaxe.
 	 */
 	private final double speed;
-
+	
 	/**
 	 * Constructs a new {@link PickaxeData} enumerator.
-	 *
 	 * @param item        {@link #item}.
 	 * @param head        {@link #head}.
 	 * @param broken      {@link #broken}.
@@ -85,10 +83,9 @@ public enum PickaxeData {
 		this.requirement = requirement;
 		this.speed = speed;
 	}
-
+	
 	/**
 	 * Constructs a new {@link PickaxeData} enumerator.
-	 *
 	 * @param item        {@link #item}.
 	 * @param animation   {@link #animation}.
 	 * @param requirement {@link #requirement}.
@@ -102,52 +99,51 @@ public enum PickaxeData {
 		this.requirement = requirement;
 		this.speed = speed;
 	}
-
+	
 	/**
 	 * @return {@link #item}.
 	 */
 	public Item getItem() {
 		return item;
 	}
-
+	
 	/**
 	 * @return {@link #head}.
 	 */
 	public Item getHead() {
 		return head;
 	}
-
+	
 	/**
 	 * @return {@link #broken}.
 	 */
 	public Item getBrokenPickaxe() {
 		return broken;
 	}
-
+	
 	/**
 	 * @return {@link #animation}.
 	 */
 	public Animation getAnimation() {
 		return animation;
 	}
-
+	
 	/**
 	 * @return {@link #requirement}.
 	 */
 	public int getRequirement() {
 		return requirement;
 	}
-
+	
 	/**
 	 * @return {@link #speed}.
 	 */
 	public double getSpeed() {
 		return speed;
 	}
-
+	
 	/**
 	 * Gets the definition for this hatchet.
-	 *
 	 * @param identifier the identifier to check for.
 	 * @return an optional holding the {@link Hatchet} value found,
 	 * {@link Optional#empty} otherwise.

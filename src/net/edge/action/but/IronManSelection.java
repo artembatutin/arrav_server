@@ -9,7 +9,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
 public class IronManSelection extends ActionInitializer {
-
+	
 	@Override
 	public void init() {
 		ButtonAction e = new ButtonAction() {
@@ -43,7 +43,7 @@ public class IronManSelection extends ActionInitializer {
 		};
 		e.register(200);
 		e.register(201);
-
+		
 	}
-
+	
 }

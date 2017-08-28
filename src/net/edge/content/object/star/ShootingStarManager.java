@@ -11,26 +11,25 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * The manager class for the shooting star event objects.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ShootingStarManager {
-
+	
 	/**
 	 * The shooting star event for the world.
 	 */
 	private static final ShootingStarManager SHOOTING_STAR_MANAGER = new ShootingStarManager();
-
+	
 	/**
 	 * Represents the shooting star object.
 	 */
 	private ShootingStar star;
-
+	
 	/**
 	 * The stopwatch which will spawn a shooting star every 30 minutes.
 	 */
 	final Stopwatch stopwatch = new Stopwatch();
-
+	
 	/**
 	 * The process method which is invoked every minute on start-up.
 	 */
@@ -48,7 +47,7 @@ public final class ShootingStarManager {
 		}
 		spawn();
 	}
-
+	
 	/**
 	 * Attempts to spawn the shooting star.
 	 */
@@ -61,28 +60,25 @@ public final class ShootingStarManager {
 			World.get().message(star.locationData.message, true);
 		}
 	}
-
+	
 	/**
 	 * Generates a shooting star on a random location.
-	 *
 	 * @return a shooting star on a random location.
 	 */
 	private ShootingStar generateStar() {
 		return new ShootingStar(RandomUtils.random(StarLocationData.VALUES.asList()));
 	}
-
+	
 	/**
 	 * Gets the shooting star.
-	 *
 	 * @return the shooting star.
 	 */
 	public ShootingStar getShootingStar() {
 		return star;
 	}
-
+	
 	/**
 	 * Attempts to mine the shooting star.
-	 *
 	 * @param player   the player attempting to mine.
 	 * @param objectId the object id clicked to mine.
 	 * @return {@code true} if the object was mined, {@code false} otherwise.
@@ -90,7 +86,7 @@ public final class ShootingStarManager {
 	public boolean mine(Player player, int objectId) {
 		return star != null && star.mine(player, objectId);
 	}
-
+	
 	/**
 	 * Returns the shooting star event manager.
 	 */

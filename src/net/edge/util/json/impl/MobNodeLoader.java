@@ -13,18 +13,17 @@ import java.util.Objects;
 
 /**
  * The {@link JsonLoader} implementation that loads all npc nodes.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class MobNodeLoader extends JsonLoader {
-
+	
 	/**
 	 * Creates a new {@link MobNodeLoader}.
 	 */
 	public MobNodeLoader() {
 		super("./data/def/mob/mob_nodes.json");
 	}
-
+	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		int id = reader.get("id").getAsInt();
@@ -48,5 +47,5 @@ public final class MobNodeLoader extends JsonLoader {
 		if(!World.get().getMobs().add(mob))
 			throw new IllegalStateException(mob.toString() + " could not be added to the world!");
 	}
-
+	
 }

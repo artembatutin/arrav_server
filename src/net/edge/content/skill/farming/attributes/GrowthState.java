@@ -2,7 +2,10 @@ package net.edge.content.skill.farming.attributes;
 
 public enum GrowthState {
 
-	GROWING(0x00), WATERED(0x01), DISEASED(0x02), DEAD(0x03);
+	GROWING(0x00),
+	WATERED(0x01),
+	DISEASED(0x02),
+	DEAD(0x03);
 
 	GrowthState(int shift) {
 		this.shift = shift;

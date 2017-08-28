@@ -18,11 +18,10 @@ import java.util.Optional;
 
 /**
  * The message sent from the client when a player attempts to pick up an item.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class PickupItemPacket implements IncomingPacket {
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.PICKUP_ITEM))

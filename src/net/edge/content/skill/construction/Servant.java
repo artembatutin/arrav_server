@@ -6,18 +6,17 @@ import net.edge.world.locale.Position;
 
 /**
  * Represents a {@link House} servant.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class Servant extends DefaultMob {
-
+	
 	private boolean fetching, greetVisitors;
 	private Item[] inventory;
-
+	
 	public Servant(int npcId, Position position) {
 		super(npcId, position);
 	}
-
+	
 	public Servant(int npcId, Position position, int inventorySize) {
 		super(npcId, position);
 		inventory = new Item[inventorySize];
@@ -70,25 +69,25 @@ public class Servant extends DefaultMob {
 		p.getInventory().addOrBank(inventory);
 		inventory = new Item[inventory.length];
 	}*/
-
+	
 	public Item[] getInventory() {
 		return inventory;
 	}
-
+	
 	public boolean isFetching() {
 		return fetching;
 	}
-
+	
 	public void setFetching(boolean fetching) {
 		this.fetching = fetching;
 	}
-
+	
 	public boolean isGreetVisitors() {
 		return greetVisitors;
 	}
-
+	
 	public void setGreetVisitors(boolean greetVisitors) {
 		this.greetVisitors = greetVisitors;
 	}
-
+	
 }

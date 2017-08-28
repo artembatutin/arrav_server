@@ -6,16 +6,14 @@ import net.edge.world.entity.item.Item;
 
 /**
  * Handles the achievements.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class AchievementHandler {
-
+	
 	/**
 	 * Activates the achievement for the individual player. Increments the
 	 * completed amount for the player. If the player has completed the
 	 * achievement, they will receive their reward.
-	 *
 	 * @param player      The player activating the achievement.
 	 * @param achievement The achievement for activation.
 	 * @param increase    The amount to increase the achievement.
@@ -45,10 +43,9 @@ public class AchievementHandler {
 			player.text(26100 + achievement.ordinal(), String.format(achievement.getTask(), achievement.getAmount()[tier]) + " - " + prev + " / " + achievement.getAmount()[tier]);
 		}
 	}
-
+	
 	/**
 	 * Updates the text on the panel.
-	 *
 	 * @param player      the player updating for.
 	 * @param achievement the achievement.
 	 */
@@ -58,10 +55,9 @@ public class AchievementHandler {
 		player.text(26000 + achievement.ordinal(), tier + (completed(player, achievement) ? "@str@" : "") + achievement.getName());
 		player.text(26100 + achievement.ordinal(), String.format(achievement.getTask(), achievement.getAmount()[tier]) + " - " + prev + " / " + achievement.getAmount()[tier]);
 	}
-
+	
 	/**
 	 * Gets the tier level achieved.
-	 *
 	 * @param player      player checking for.
 	 * @param achievement the achievement.
 	 * @return the tier level achieved.
@@ -80,10 +76,9 @@ public class AchievementHandler {
 		}
 		return tier;
 	}
-
+	
 	/**
 	 * Checks if the reward is completed.
-	 *
 	 * @param player      The player checking the achievement.
 	 * @param achievement The achievement for checking.
 	 */
@@ -92,10 +87,9 @@ public class AchievementHandler {
 			player.achievements.put(achievement, 0);
 		return player.achievements.getInt(achievement) >= achievement.getAmount()[achievement.getAmount().length - 1];
 	}
-
+	
 	/**
 	 * Gets the total amount of achievements completed.
-	 *
 	 * @param player The player checking how many completed.
 	 * @return The amount of achievements completed.
 	 */
@@ -107,10 +101,9 @@ public class AchievementHandler {
 		}
 		return count;
 	}
-
+	
 	/**
 	 * Checks if a player has completed all the available achievements.
-	 *
 	 * @param player The player checking if they have completed all the available
 	 *               achievements.
 	 * @return If the player has completed all the available acheievements.

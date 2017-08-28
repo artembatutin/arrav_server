@@ -15,13 +15,13 @@ import net.edge.world.object.ObjectType;
 import java.util.Optional;
 
 public final class SendObject implements OutgoingPacket {
-
+	
 	private final GameObject object;
-
+	
 	public SendObject(GameObject object) {
 		this.object = object;
 	}
-
+	
 	public static void construction(Player player, int objectX, int objectY, int objectId, int face, int objectType, int height) {
 		Optional<ObjectDirection> dir = ObjectDirection.valueOf(face);
 		Optional<ObjectType> type = ObjectType.valueOf(objectType);
@@ -37,7 +37,7 @@ public final class SendObject implements OutgoingPacket {
 		}
 		player.out(new SendObject(new DynamicObject(objectId, new Position(objectX, objectY, height), dir.get(), type.get(), false, 0, player.getInstance())));
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		new SendCoordinates(object.getGlobalPos()).write(player, msg);

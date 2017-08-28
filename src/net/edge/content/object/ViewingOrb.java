@@ -10,49 +10,47 @@ import net.edge.world.locale.Position;
 /**
  * The container class that handles the opening, closing, and navigation of
  * viewing orbs.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ViewingOrb {
-
+	
 	/**
 	 * The player that is viewing the orb.
 	 */
 	private final Player player;
-
+	
 	/**
 	 * The starting position of the player viewing the orb.
 	 */
 	private final Position start;
-
+	
 	/**
 	 * The centre position corresponding to the viewing orb.
 	 */
 	private final Position centre;
-
+	
 	/**
 	 * The north-west position corresponding to the viewing orb.
 	 */
 	private final Position northWest;
-
+	
 	/**
 	 * The north-east position corresponding to the viewing orb.
 	 */
 	private final Position northEast;
-
+	
 	/**
 	 * The south-west position corresponding to the viewing orb.
 	 */
 	private final Position southWest;
-
+	
 	/**
 	 * The south-east position corresponding to the viewing orb.
 	 */
 	private final Position southEast;
-
+	
 	/**
 	 * Creates a new {@link ViewingOrb}.
-	 *
 	 * @param player    the player that is viewing the orb.
 	 * @param centre    the centre position corresponding to the viewing orb.
 	 * @param northWest the north-west position corresponding to the viewing orb.
@@ -69,7 +67,7 @@ public final class ViewingOrb {
 		this.southWest = southWest;
 		this.southEast = southEast;
 	}
-
+	
 	/**
 	 * Opens the viewing orb navigation interface in the sidebar.
 	 */
@@ -92,7 +90,7 @@ public final class ViewingOrb {
 		player.getFlags().flag(UpdateFlag.APPEARANCE);
 		move("Centre", 15239, centre);
 	}
-
+	
 	/**
 	 * Closes the viewing orb navigation interface in the sidebar and teleports
 	 * the player back to the starting position.
@@ -107,11 +105,10 @@ public final class ViewingOrb {
 		player.out(new SendMinimapState(0));
 		player.move(start);
 	}
-
+	
 	/**
 	 * Moves the player to {@code position} and updates the navigation interface
 	 * with the position that the player is being moved to.
-	 *
 	 * @param positionName   the name of the position being moved to.
 	 * @param positionLineId the interface string id of the position being moved to.
 	 * @param position       the position being moved to.
@@ -127,55 +124,49 @@ public final class ViewingOrb {
 		player.text(positionLineId, "@whi@" + positionName);
 		player.move(position);
 	}
-
+	
 	/**
 	 * Gets the starting position of the player viewing the orb.
-	 *
 	 * @return the starting position.
 	 */
 	public Position getStart() {
 		return start;
 	}
-
+	
 	/**
 	 * Gets the centre position corresponding to the viewing orb.
-	 *
 	 * @return the centre position.
 	 */
 	public Position getCentre() {
 		return centre;
 	}
-
+	
 	/**
 	 * Gets the north-west position corresponding to the viewing orb.
-	 *
 	 * @return the north-west position.
 	 */
 	public Position getNorthWest() {
 		return northWest;
 	}
-
+	
 	/**
 	 * Gets the north-east position corresponding to the viewing orb.
-	 *
 	 * @return the north-east position.
 	 */
 	public Position getNorthEast() {
 		return northEast;
 	}
-
+	
 	/**
 	 * Gets the south-west position corresponding to the viewing orb.
-	 *
 	 * @return the south-west position.
 	 */
 	public Position getSouthWest() {
 		return southWest;
 	}
-
+	
 	/**
 	 * Gets the south-east position corresponding to the viewing orb.
-	 *
 	 * @return the south-east position.
 	 */
 	public Position getSouthEast() {

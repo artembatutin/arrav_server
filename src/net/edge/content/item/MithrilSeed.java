@@ -21,18 +21,26 @@ import static net.edge.content.achievements.Achievement.POKER_FLOWER;
 
 /**
  * The class which is responsible for mithril seeds.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  * @author Artem Batutin <artembatutin@gmail.com>
  * @since 27-6-2017.
  */
 public final class MithrilSeed {
-
+	
 	/**
 	 * The id's that represent flower objects with their item ids.
 	 */
-	private static final Int2IntArrayMap FLOWER_OBJECT_IDS = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder().put(2980, 2460).put(2981, 2462).put(2982, 2464).put(2983, 2466).put(2984, 2468).put(2985, 2470).put(2986, 2472).put(2987, 2474).put(2988, 2476).build());
-
+	private static final Int2IntArrayMap FLOWER_OBJECT_IDS = new Int2IntArrayMap(ImmutableMap.<Integer, Integer>builder().put(2980, 2460)
+			.put(2981, 2462)
+			.put(2982, 2464)
+			.put(2983, 2466)
+			.put(2984, 2468)
+			.put(2985, 2470)
+			.put(2986, 2472)
+			.put(2987, 2474)
+			.put(2988, 2476)
+			.build());
+	
 	public static void action() {
 		for(int objectId : FLOWER_OBJECT_IDS.keySet()) {
 			ObjectAction objEvent = new ObjectAction() {
@@ -47,17 +55,17 @@ public final class MithrilSeed {
 						return true;
 					}
 					int itemId = FLOWER_OBJECT_IDS.get(objectId);
-
+					
 					player.animation(new Animation(827, Animation.AnimationPriority.HIGH));
 					player.getInventory().add(new Item(itemId));
 					object.remove();
 					return true;
 				}
 			};
-
+			
 			objEvent.registerFirst(objectId);
 		}
-
+		
 		ItemAction itemEvent = new net.edge.action.impl.ItemAction() {
 			@Override
 			public boolean click(Player player, Item item, int container, int slot, int click) {
@@ -89,7 +97,7 @@ public final class MithrilSeed {
 		};
 		itemEvent.register(299);//mithril seed item id.
 	}
-
+	
 	private static DynamicObject getRandomFlowerObject(Player player) {
 		int[] flowers = FLOWER_OBJECT_IDS.keySet().toIntArray();
 		int flower = RandomUtils.random(flowers);

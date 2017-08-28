@@ -74,7 +74,7 @@ public class Fish extends ActionInitializer {
 			}
 		};
 		e.registerFirst(322);
-
+		
 		e = new MobAction() {
 			@Override
 			public boolean click(Player player, Mob mob, int click) {

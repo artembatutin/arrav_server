@@ -26,39 +26,37 @@ import static net.edge.content.market.currency.Currency.COINS;
 
 /**
  * Represents a single market shop.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class MarketShop {
-
+	
 	/**
 	 * Id of this shop.
 	 */
 	private final int id;
-
+	
 	/**
 	 * The title of the shop.
 	 */
 	private final String title;
-
+	
 	/**
 	 * The currency of this shop.
 	 */
 	private final Currency currency;
-
+	
 	/**
 	 * Flag if the iron man access this shop.
 	 */
 	protected final boolean ironAccess;
-
+	
 	/**
 	 * The result of our search.
 	 */
 	private IntArrayList items;
-
+	
 	/**
 	 * Creates a {@link MarketShop} out of saved shops.
-	 *
 	 * @param title the tile of this shop.
 	 * @param items items in this shop.
 	 */
@@ -69,10 +67,9 @@ public class MarketShop {
 		this.ironAccess = ironAccess;
 		this.items = new IntArrayList(items);
 	}
-
+	
 	/**
 	 * Creates a {@link MarketShop} based on a search.
-	 *
 	 * @param player the player making the search.
 	 * @param search the search input.
 	 */
@@ -86,7 +83,7 @@ public class MarketShop {
 		items = MarketItem.search(player, search);
 		openShop(player);
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -94,7 +91,7 @@ public class MarketShop {
 		result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj)
@@ -111,7 +108,7 @@ public class MarketShop {
 			return false;
 		return true;
 	}
-
+	
 	/**
 	 * Opens the shop.
 	 */
@@ -141,10 +138,9 @@ public class MarketShop {
 			}
 		}
 	}
-
+	
 	/**
 	 * Sends the determined selling value of {@code item} to {@code player}.
-	 *
 	 * @param player the player to send the value to.
 	 * @param item   the item to send the value of.
 	 */
@@ -161,10 +157,9 @@ public class MarketShop {
 		String formatPrice = TextUtils.formatPrice((int) Math.floor(determinePrice(player, item) / 2));
 		player.message(itemName + ": shop will buy for " + formatPrice + " " + getCurrency() + ".");
 	}
-
+	
 	/**
 	 * Sends the determined purchase value of {@code item} to {@code player}.
-	 *
 	 * @param player the player to send the value to.
 	 * @param item   the item to send the value of.
 	 */
@@ -198,10 +193,9 @@ public class MarketShop {
 		}
 		player.message(item.getDefinition().getName() + ": " + "shop will sell for " + TextUtils.formatPrice(determinePrice(player, item)) + " " + getCurrency() + ".");
 	}
-
+	
 	/**
 	 * The method that allows {@code player} to purchase {@code item}.
-	 *
 	 * @param player the player who will purchase this item.
 	 * @param item   the item that will be purchased.
 	 * @return {@code true} if the player purchased the item, {@code false}
@@ -239,7 +233,7 @@ public class MarketShop {
 		int spacesFill = player.getInventory().slotCount(false, false, item);
 		int spacesEmpty = tangible ? player.getInventory().slotCount(false, true, new Item(currencyId, item.getAmount() * value)) : 0;
 		boolean hasSpace = player.getInventory().remaining() - spacesEmpty >= spacesFill;
-
+		
 		if(!hasSpace) {
 			item.setAmount(player.getInventory().remaining());
 			if(item.getAmount() == 0) {
@@ -255,10 +249,9 @@ public class MarketShop {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * The method that allows {@code player} to sell {@code item}.
-	 *
 	 * @param player the player who will sell this item.
 	 * @param item   the item that will be sold.
 	 * @return {@code true} if the player sold the item, {@code false}
@@ -313,7 +306,7 @@ public class MarketShop {
 		player.out(new SendContainer(3823, player.getInventory()));
 		return true;
 	}
-
+	
 	public static void clearFromShop(Player player) {
 		if(player.getMarketShop() != null) {
 			if(player.getMarketShop().getItems() != null) {
@@ -327,7 +320,7 @@ public class MarketShop {
 			player.setMarketShop(null);
 		}
 	}
-
+	
 	public boolean canSell(Player player, int item) {
 		if(getCurrency() != COINS)
 			return false;
@@ -341,10 +334,9 @@ public class MarketShop {
 		MarketItem marketItem = MarketItem.get(item);
 		return marketItem != null && marketItem.isSearchable();
 	}
-
+	
 	/**
 	 * Determines the price of {@code item} based on the currency.
-	 *
 	 * @param player the player to check for the flag if price is calculated for the merchant.
 	 * @param item   the item to determine the price of.
 	 * @return the price of the item based on the currency.
@@ -352,19 +344,19 @@ public class MarketShop {
 	private int determinePrice(Player player, Item item) {
 		return item.getValue().getPrice();
 	}
-
+	
 	public IntArrayList getItems() {
 		return items;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
-
+	
 	public String getTitle() {
 		return title;
 	}
-
+	
 	public Currency getCurrency() {
 		return currency;
 	}

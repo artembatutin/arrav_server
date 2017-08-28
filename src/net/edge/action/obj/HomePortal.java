@@ -8,6 +8,8 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
+import static net.edge.content.teleport.TeleportType.LADDER;
+
 public class HomePortal extends ActionInitializer {
 	@Override
 	public void init() {
@@ -30,7 +32,7 @@ public class HomePortal extends ActionInitializer {
 			}
 		};
 		portal.registerFirst(28139);
-
+		
 		//Home staires
 		ObjectAction staires = new ObjectAction() {
 			@Override
@@ -45,13 +47,13 @@ public class HomePortal extends ActionInitializer {
 							return true;
 						}
 					}
-					//					player.teleport(new Position(3081, 3510, 1), LADDER); TODO: add teleports
+					player.teleport(new Position(3081, 3510, 1), LADDER);
 				}
 				return true;
 			}
 		};
 		staires.registerFirst(2711);
-
+		
 		//Bossing hub staires
 		ObjectAction hub = new ObjectAction() {
 			@Override
@@ -69,6 +71,6 @@ public class HomePortal extends ActionInitializer {
 			}
 		};
 		hub.registerFirst(2522);
-
+		
 	}
 }

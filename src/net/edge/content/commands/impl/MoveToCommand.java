@@ -8,7 +8,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"moveto"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Moves to a player, ::moveto username")
 public final class MoveToCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player p = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
@@ -19,5 +19,5 @@ public final class MoveToCommand implements Command {
 		player.move(p.getPosition());
 		player.message("You moved to " + p.getFormatUsername() + "'s position.");
 	}
-
+	
 }

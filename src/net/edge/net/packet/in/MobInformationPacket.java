@@ -19,13 +19,12 @@ import static net.edge.content.achievements.Achievement.DROP_A_SUG;
 
 /**
  * The message sent from the client which depends on the Mob Information panel integration.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class MobInformationPacket implements IncomingPacket {
-
+	
 	public static final ObjectList<SuggestedDrop> SUGGESTED = new ObjectArrayList<>();
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(opcode == 19) {

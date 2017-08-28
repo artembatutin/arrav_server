@@ -9,40 +9,38 @@ import java.util.Optional;
 
 /**
  * Represents a single clan chat member in a {@link ClanChat}.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class ClanMember {
-
+	
 	/**
 	 * The player which represents the member.
 	 */
 	private final Player player;
-
+	
 	/**
 	 * The clanchat this member is in.
 	 */
 	private final ClanChat clan;
-
+	
 	/**
 	 * The rank this member has in the clanchat.
 	 */
 	private ClanChatRank rank;
-
+	
 	/**
 	 * The condition if the player is muted in the clan chat.
 	 */
 	private boolean muted;
-
+	
 	/**
 	 * The cursor position of this member in the list.
 	 */
 	private int pos;
-
+	
 	/**
 	 * Constructs a new {@link ClanMember}.
-	 *
 	 * @param player {@link #player}.
 	 * @param clan   {@link #clan}.
 	 * @param rank   {@link #rank}.
@@ -52,10 +50,9 @@ public final class ClanMember {
 		this.clan = clan;
 		this.rank = rank;
 	}
-
+	
 	/**
 	 * Tries to mute a clan member.
-	 *
 	 * @param index the clan member index to be muted.
 	 */
 	public void mute(int index) {
@@ -78,10 +75,9 @@ public final class ClanMember {
 			m.getPlayer().text(50144 + index, mute + member.getRank().toIcon(m.getPlayer(), member.getPlayer()) + member.getPlayer().getFormatUsername());
 		}
 	}
-
+	
 	/**
 	 * Tries to mute a clan member.
-	 *
 	 * @param index the clan member index to be muted.
 	 */
 	public void unmute(int index) {
@@ -100,10 +96,9 @@ public final class ClanMember {
 			m.getPlayer().text(50144 + index, mute + member.getRank().toIcon(m.getPlayer(), member.getPlayer()) + member.getPlayer().getFormatUsername());
 		}
 	}
-
+	
 	/**
 	 * Tries to ban a player from the clan.
-	 *
 	 * @param index the clan member index to be banned.
 	 */
 	public void ban(int index) {
@@ -129,10 +124,9 @@ public final class ClanMember {
 		ClanManager.get().update(ClanChatUpdate.BAN_MODIFICATION, clan);
 		member.sendMessage("You got banned from the clan.");
 	}
-
+	
 	/**
 	 * Tries to unban a player from the clan.
-	 *
 	 * @param index the clan member index to be banned.
 	 */
 	public void unban(int index) {
@@ -144,10 +138,9 @@ public final class ClanMember {
 		clan.getBanned().remove(member);
 		ClanManager.get().update(ClanChatUpdate.BAN_MODIFICATION, clan);
 	}
-
+	
 	/**
 	 * Tries to send a message to the clan chat.
-	 *
 	 * @param message the inputted message to be sent.
 	 * @return the saved {@link ClanChatRank}, if none {@link ClanChatRank#MEMBER}.
 	 */
@@ -170,14 +163,13 @@ public final class ClanMember {
 			member.getPlayer().out(new SendClanMessage(author, message, clanName, rank));
 		}
 	}
-
+	
 	public void message(String message) {
 		message(message, player.getFormatUsername());
 	}
-
+	
 	/**
 	 * Updates the rank of this clan member.
-	 *
 	 * @param interfaceId the interface id to get the member to promote.
 	 * @param action      the right click action set.
 	 */
@@ -214,31 +206,30 @@ public final class ClanMember {
 			}
 		}
 	}
-
+	
 	/**
 	 * @return the player
 	 */
 	public Player getPlayer() {
 		return player;
 	}
-
+	
 	/**
 	 * @return the clan
 	 */
 	public ClanChat getClan() {
 		return clan;
 	}
-
+	
 	/**
 	 * @return the rank
 	 */
 	public ClanChatRank getRank() {
 		return rank;
 	}
-
+	
 	/**
 	 * Sets the new rank of the member.
-	 *
 	 * @param rank the new rank to set.
 	 */
 	public void setRank(ClanChatRank rank) {
@@ -254,36 +245,34 @@ public final class ClanMember {
 			clan.getRanked().put(player.credentials.username, rank);
 		}
 	}
-
+	
 	/**
 	 * @return the muted
 	 */
 	public boolean isMuted() {
 		return muted;
 	}
-
+	
 	/**
 	 * Sets the new mute flag of the member.
-	 *
 	 * @param muted the mute flag to set.
 	 */
 	public void setMute(boolean muted) {
 		this.muted = muted;
 	}
-
+	
 	/**
 	 * Sends a clan simple message.
-	 *
 	 * @param text the text to send.
 	 */
 	public void sendMessage(String text) {
 		player.out(new SendClanMessage("", text, clan.getName(), Rights.PLAYER));
 	}
-
+	
 	public int getPos() {
 		return pos;
 	}
-
+	
 	public void setPos(int pos) {
 		this.pos = pos;
 	}

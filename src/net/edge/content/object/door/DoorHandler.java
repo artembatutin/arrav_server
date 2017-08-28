@@ -9,16 +9,15 @@ import net.edge.world.object.ObjectDefinition;
 
 /**
  * Handles the interaction of the doors in the world.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class DoorHandler {
-
+	
 	/**
 	 * The list of doors
 	 */
 	private static Object2ObjectArrayMap<Position, Door> doors = new Object2ObjectArrayMap<>();
-
+	
 	/**
 	 * The door appender event.
 	 */
@@ -43,7 +42,7 @@ public class DoorHandler {
 				if(sec != null) {
 					doors.put(sec, door);
 				}
-
+				
 			} else {
 				object.getRegion().ifPresent(r -> {
 					Door door = new Door(object, r);
@@ -58,12 +57,12 @@ public class DoorHandler {
 			return true;
 		}
 	};
-
+	
 	/**
 	 * All exceptions to door opening.
 	 */
 	private static boolean exception(Player player, GameObject object) {
-
+		
 		if(object.getId() == 34811 && object.getGlobalPos().same(new Position(3104, 3498))) {
 			if(player.isIronMan()) {
 				//				player.teleport(new Position(player.getPosition().getX() >= 3104 ? 3103 : 3104, 3498), DOOR); FIXME: add teleports
@@ -73,7 +72,7 @@ public class DoorHandler {
 				player.getLocalMobs().stream().filter(n -> n.getId() == 6184).findFirst().ifPresent(e -> e.forceChat("Only iron man members can enter, sir."));
 			return true;
 		}
-
+		
 		switch(object.getId()) {
 			case 68429://armadyl gwd door
 				return object.getGlobalPos().same(new Position(2839, 5296, 2)) || object.getGlobalPos().same(new Position(2839, 5295, 2));
@@ -93,10 +92,10 @@ public class DoorHandler {
 				return false;
 		}
 	}
-
+	
 	public static boolean isDoor(ObjectDefinition def) {
 		String name = def.getName().toLowerCase();
 		return (name.contains("door") && !name.contains("trap") && !name.contains("way")) || name.contains("gate");
 	}
-
+	
 }

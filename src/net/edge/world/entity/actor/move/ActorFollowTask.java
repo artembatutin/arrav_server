@@ -16,29 +16,27 @@ import java.util.Optional;
 
 /**
  * The {@link Task} implementation that handles the entire following process.
- *
  * @author lare96 <http://github.com/lare96>
  */
 class ActorFollowTask extends Task {
-
+	
 	/**
 	 * The character this process is being executed for.
 	 */
 	private final Actor character;
-
+	
 	/**
 	 * The character being followed in this process.
 	 */
 	private final Actor leader;
-
+	
 	/**
 	 * The current destination of the path.
 	 */
 	private Position destination;
-
+	
 	/**
 	 * Creates a new {@link ActorFollowTask}.
-	 *
 	 * @param character the character this process is being executed for.
 	 * @param leader    the character being followed in this process.
 	 */
@@ -47,7 +45,7 @@ class ActorFollowTask extends Task {
 		this.character = character;
 		this.leader = leader;
 	}
-
+	
 	@Override
 	public void execute() {
 		//First checks.
@@ -60,7 +58,7 @@ class ActorFollowTask extends Task {
 			this.cancel();
 			return;
 		}
-
+		
 		//Familiar calling back.
 		if(character.isMob()) {
 			Mob mob = character.toMob();
@@ -76,10 +74,10 @@ class ActorFollowTask extends Task {
 				}
 			}
 		}
-
+		
 		//Entity facing.
 		character.faceEntity(leader);
-
+		
 		//Movement locks.
 		if(character.getMovementQueue().isLockMovement() || character.isFrozen() || character.isStunned()) {//Requirement check.
 			if(character.isPlayer()) {
@@ -92,9 +90,9 @@ class ActorFollowTask extends Task {
 			this.cancel();
 			return;
 		}
-
+		
 		Boundary boundary = new Boundary(leader.getPosition(), leader.size());
-
+		
 		//Randomized walk away from leader's tile.
 		if(boundary.inside(character.getPosition(), character.size())) {
 			//Only moving when movement is done.
@@ -105,12 +103,12 @@ class ActorFollowTask extends Task {
 			}
 			return;
 		}
-
+		
 		//Resets if character next to the player.
 		if(boundary.within(character.getPosition(), character.size(), 1)) {
 			character.getMovementQueue().reset();
 			//Combat diagonal fighting.
-		    /*if(character.getCombat().isAttacking()) {
+			/*if(character.getCombat().isAttacking()) {
 				Direction facing = Direction.fromDeltas(Position.delta(character.getPosition(), leader.getPosition()));
 				if(facing.isDiagonal()) {//Moving player if diagonal fighting
 					Position pos = TraversalMap.getRandomNearby(character.getPosition(), leader.getPosition(), character.size());
@@ -121,12 +119,12 @@ class ActorFollowTask extends Task {
 			}
 			return;*/
 		}
-
+		
 		//returns if path calculated is next to the leader.
 		if(destination != null && boundary.within(destination, leader.size(), character.size())) {
 			return;
 		}
-
+		
 		//Setting new path depending on the follower's type.
 		Path path = character.isPlayer() || (character.isMob() && character.toMob().isSmart()) ? character.getAStarPathFinder().find(leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
 		if(path != null && path.isPossible()) {
@@ -139,7 +137,7 @@ class ActorFollowTask extends Task {
 			destination = null;
 		}
 	}
-
+	
 	@Override
 	public void onCancel() {
 		destination = null;
@@ -147,14 +145,14 @@ class ActorFollowTask extends Task {
 		character.setFollowEntity(null);
 		character.getMovementQueue().setFollowTask(Optional.empty());
 	}
-
+	
 	public void setDestination(Position destination) {
 		this.destination = destination;
 	}
-
+	
 	@Override
 	public void onException(Exception e) {
 		onCancel();
 	}
-
+	
 }

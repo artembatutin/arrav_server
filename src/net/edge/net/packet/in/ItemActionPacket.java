@@ -16,18 +16,17 @@ import net.edge.world.entity.item.ItemDefinition;
 
 /**
  * The message sent from the client when the player clicks an item.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ItemActionPacket implements IncomingPacket {
-
+	
 	public static final ActionContainer<ItemAction> ITEM_ACTION = new ActionContainer<>();
-
+	
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ACTION))
 			return;
-
+		
 		switch(opcode) {
 			case 122:
 				firstClick(player, payload);
@@ -40,10 +39,9 @@ public final class ItemActionPacket implements IncomingPacket {
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.ITEM_ACTION);
 	}
-
+	
 	/**
 	 * Handles the first slot of an item action.
-	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
@@ -66,10 +64,9 @@ public final class ItemActionPacket implements IncomingPacket {
 		switch(id) {
 		}
 	}
-
+	
 	/**
 	 * Handles the third slot of an item action.
-	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
@@ -92,24 +89,23 @@ public final class ItemActionPacket implements IncomingPacket {
 			case 5509:
 				Runecrafting.empty(player, PouchType.SMALL);
 				break;
-
+			
 			case 5510:
 				Runecrafting.empty(player, PouchType.MEDIUM);
 				break;
-
+			
 			case 5512:
 				Runecrafting.empty(player, PouchType.LARGE);
 				break;
-
+			
 			case 5514:
 				Runecrafting.empty(player, PouchType.GIANT);
 				break;
 		}
 	}
-
+	
 	/**
 	 * Handles the third slot of an item action.
-	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
@@ -135,15 +131,15 @@ public final class ItemActionPacket implements IncomingPacket {
 			case 5509:
 				Runecrafting.examine(player, PouchType.SMALL);
 				break;
-
+			
 			case 5510:
 				Runecrafting.examine(player, PouchType.MEDIUM);
 				break;
-
+			
 			case 5512:
 				Runecrafting.examine(player, PouchType.LARGE);
 				break;
-
+			
 			case 5514:
 				Runecrafting.examine(player, PouchType.GIANT);
 				break;

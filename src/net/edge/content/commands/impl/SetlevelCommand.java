@@ -9,7 +9,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"setlevel"}, rights = {Rights.ADMINISTRATOR}, syntax = "Sets a new level, ::setlevel skill level")
 public final class SetlevelCommand implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		String skill = cmd[1].toUpperCase();
@@ -26,5 +26,5 @@ public final class SetlevelCommand implements Command {
 		Skills.refresh(player, skillId);
 		player.message("You've successfully set " + skill + " to level " + level + ".");
 	}
-
+	
 }

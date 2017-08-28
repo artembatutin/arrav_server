@@ -11,54 +11,52 @@ import net.edge.world.entity.item.ItemDefinition;
 
 /**
  * The container that represents an item definition.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class MarketItem {
-
+	
 	/**
 	 * The array that contains all of the item values.
 	 */
 	public static final MarketItem[] VALUES = new MarketItem[22322];
-
+	
 	/**
 	 * The identification of this item.
 	 */
 	private final int id;
-
+	
 	/**
 	 * The value of this item.
 	 */
 	private final int value;
-
+	
 	/**
 	 * The price of this item.
 	 */
 	private int price;
-
+	
 	/**
 	 * The stock of this item.
 	 */
 	private int stock;
-
+	
 	/**
 	 * Condition if this item is on unlimited stock as an unlimitedStock item.
 	 */
 	private boolean unlimitedStock;
-
+	
 	/**
 	 * Condition if this item can be bought of the counter.
 	 */
 	private boolean searchable;
-
+	
 	/**
 	 * Players viewing this item in a shop.
 	 */
 	private final ObjectList<Player> viewers;
-
+	
 	/**
 	 * Creating the {@link MarketItem}.
-	 *
 	 * @param id             the id of this item.
 	 * @param value          the value of this item.
 	 * @param price          the price of this item.
@@ -75,10 +73,9 @@ public class MarketItem {
 		this.searchable = searchable;
 		viewers = new ObjectArrayList<>();
 	}
-
+	
 	/**
 	 * Gets the item value
-	 *
 	 * @param id the id searching for.
 	 * @return the value instance of the item.
 	 */
@@ -87,10 +84,9 @@ public class MarketItem {
 			return VALUES[0];
 		return VALUES[id];
 	}
-
+	
 	/**
 	 * Gets the requested item values.
-	 *
 	 * @param search the searching name.
 	 * @return requested items based on name.
 	 */
@@ -135,7 +131,7 @@ public class MarketItem {
 			player.message("Found " + count + " items under the name: " + search);
 		return out;
 	}
-
+	
 	void updateStock() {
 		for(Player p : viewers) {
 			if(p == null)
@@ -143,7 +139,7 @@ public class MarketItem {
 			p.out(new SendShopStock(this));
 		}
 	}
-
+	
 	private void updatePrice() {
 		for(Player p : viewers) {
 			if(p == null)
@@ -151,7 +147,7 @@ public class MarketItem {
 			p.out(new SendShopPrice(this));
 		}
 	}
-
+	
 	/**
 	 * Serializes the market items.
 	 */
@@ -175,7 +171,7 @@ public class MarketItem {
 	
 	
 	/* setters and getters */
-
+	
 	public static boolean valid(int id) {
 		if(id < 0 || id > VALUES.length)
 			return false;
@@ -191,74 +187,74 @@ public class MarketItem {
 			return false;
 		return true;
 	}
-
+	
 	public String getName() {
 		ItemDefinition def = ItemDefinition.get(getId());
 		return def == null ? "" : def.getName();
 	}
-
+	
 	public int getId() {
 		return id;
 	}
-
+	
 	public int getValue() {
 		return value;
 	}
-
+	
 	public int getPrice() {
 		return price;
 	}
-
+	
 	public void setPrice(int price) {
 		this.price = price;
 		updatePrice();
 	}
-
+	
 	public void increasePrice(double amount) {
 		this.price += price * amount;
 		updatePrice();
 	}
-
+	
 	public void decreasePrice(double amount) {
 		this.price -= price * amount;
 		updatePrice();
 	}
-
+	
 	public int getStock() {
 		return stock;
 	}
-
+	
 	public void setStock(int stock) {
 		this.stock = stock;
 		updateStock();
 	}
-
+	
 	public void increaseStock(int amount) {
 		this.stock += amount;
 		updateStock();
 	}
-
+	
 	public void decreaseStock(int amount) {
 		this.stock -= amount;
 		updateStock();
 	}
-
+	
 	public boolean isUnlimitedStock() {
 		return unlimitedStock;
 	}
-
+	
 	public boolean isSearchable() {
 		return searchable;
 	}
-
+	
 	public void setSearchable(boolean searchable) {
 		this.searchable = searchable;
 	}
-
+	
 	public ObjectList<Player> getViewers() {
 		return viewers;
 	}
-
+	
 	public void toggleUnlimited() {
 		unlimitedStock = !unlimitedStock;
 	}

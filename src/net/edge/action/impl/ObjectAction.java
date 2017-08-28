@@ -27,37 +27,36 @@ import net.edge.world.object.GameObject;
 
 /**
  * Action handling object action clicks.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public abstract class ObjectAction extends Action {
-
+	
 	public abstract boolean click(Player player, GameObject object, int click);
-
+	
 	public void registerFirst(int object) {
 		ObjectActionPacket.FIRST.register(object, this);
 	}
-
+	
 	public void registerSecond(int object) {
 		ObjectActionPacket.SECOND.register(object, this);
 	}
-
+	
 	public void registerThird(int object) {
 		ObjectActionPacket.THIRD.register(object, this);
 	}
-
+	
 	public void registerFourth(int object) {
 		ObjectActionPacket.FOURTH.register(object, this);
 	}
-
+	
 	public void registerFifth(int object) {
 		ObjectActionPacket.FIFTH.register(object, this);
 	}
-
+	
 	public void registerCons(int object) {
 		ObjectActionPacket.CONSTRUCTION.register(object, this);
 	}
-
+	
 	public static void init() {
 		WebSlashing.action();
 		WarriorsGuild.action();
@@ -82,5 +81,5 @@ public abstract class ObjectAction extends Action {
 		MammalData.action();
 		Hunter.action();
 	}
-
+	
 }

@@ -6,7 +6,6 @@ import java.util.Optional;
 
 /**
  * The enum whose elements represent the defined Obstacle definition types.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum ObstacleType {
@@ -55,7 +54,6 @@ public enum ObstacleType {
 
 	/**
 	 * Constructs a new {@link ObstacleType}.
-	 *
 	 * @param animation {@link #animation}.
 	 * @param prior     {@link #prior}.
 	 * @param following {@link #following}.

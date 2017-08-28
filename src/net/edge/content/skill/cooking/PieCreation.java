@@ -13,7 +13,6 @@ import java.util.Optional;
 
 /**
  * Holds functionality for creating unbaked pies.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class PieCreation extends ProducingSkillAction {
@@ -30,7 +29,6 @@ public final class PieCreation extends ProducingSkillAction {
 
 	/**
 	 * Constructs a new {@link PieCreation}.
-	 *
 	 * @param player {@link #getPlayer()}.
 	 * @param data   {@link #data}.
 	 */
@@ -41,7 +39,6 @@ public final class PieCreation extends ProducingSkillAction {
 
 	/**
 	 * Attempts to register a pie.
-	 *
 	 * @param player the player to register this for.
 	 * @param used   the item used.
 	 * @param usedOn the item used on.
@@ -109,7 +106,6 @@ public final class PieCreation extends ProducingSkillAction {
 	/**
 	 * The enumerated type whose elements represent a set of constants used to
 	 * register unbaked pies with.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private enum PieData {
@@ -163,7 +159,6 @@ public final class PieCreation extends ProducingSkillAction {
 
 		/**
 		 * Constructs a new {@link PieData}.
-		 *
 		 * @param ingredient {@link #ingredient}.
 		 * @param shell      {@link #shell}.
 		 * @param produced   {@link #produced}.
@@ -176,7 +171,6 @@ public final class PieCreation extends ProducingSkillAction {
 
 		/**
 		 * Gets the definition for this pie data.
-		 *
 		 * @param ingredient the ingredient to check for.
 		 * @return an optional holding the {@link PieData} value found,
 		 * {@link Optional#empty} otherwise.

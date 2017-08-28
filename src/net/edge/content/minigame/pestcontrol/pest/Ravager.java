@@ -11,15 +11,14 @@ import net.edge.world.locale.Position;
 import java.util.Optional;
 
 public class Ravager extends Pest {
-
+	
 	/**
 	 * The nearest gate attacking.
 	 */
 	private PestGate gate;
-
+	
 	/**
 	 * Creates a new {@link Mob}.
-	 *
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
@@ -27,7 +26,7 @@ public class Ravager extends Pest {
 		super(id, position);
 		setAutoRetaliate(false);
 	}
-
+	
 	@Override
 	public void sequence(Mob knight) {
 		//attacking gates and barricades first. ignoring player attacks
@@ -47,12 +46,12 @@ public class Ravager extends Pest {
 			}
 		}
 	}
-
+	
 	@Override
 	public boolean aggressive() {
 		return false;
 	}
-
+	
 	private void attackGate() {
 		if(gate != null && !gate.destroyed() && getPosition().withinDistance(gate.getPos(), 1)) {
 			animation(new Animation(getDefinition().getAttackAnimation()));
@@ -60,5 +59,5 @@ public class Ravager extends Pest {
 			gate.damage();
 		}
 	}
-
+	
 }

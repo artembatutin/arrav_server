@@ -20,26 +20,25 @@ import java.util.Optional;
 import static net.edge.content.achievements.Achievement.FARMER;
 
 public final class Farming extends HarvestingSkillAction {
-
+	
 	public Patch patch;
-
+	
 	public int amountToHarvest;
-
+	
 	/**
 	 * Creates a new {@link HarvestingSkillAction}.
-	 *
 	 * @param player   the player this skill action is for.
 	 * @param position the position the player should face.
 	 */
 	public Farming(Player player, Optional<Position> position) {
 		super(player, position);
 	}
-
+	
 	@Override
 	public boolean instant() {
 		return false;
 	}
-
+	
 	@Override
 	public boolean init() {
 		if(patch.getSeedType() != null) {
@@ -49,19 +48,19 @@ public final class Farming extends HarvestingSkillAction {
 					return false;
 				}
 			}
-
+			
 			if(patch.getSeedType().getLevelRequirement() > getPlayer().getSkills()[Skills.FARMING].getRealLevel()) {
 				getPlayer().message("You need a farming level of " + patch.getSeedType().getLevelRequirement() + " to plant this crop.");
 				return false;
 			}
-
+			
 			if(patch.getHarvestedItem().getAmount() >= patch.getProduct().getAmount()) {
 				stop();
 				getPlayer().animation(null);
 				getPlayer().message("This crop does not have anything else to harvest at the time.");
 				return false;
 			}
-
+			
 			int wep = getPlayer().getEquipment().getItems()[Equipment.WEAPON_SLOT] != null ? getPlayer().getEquipment().getItems()[Equipment.WEAPON_SLOT].getId() : 1;
 			final boolean hasMagicSecateurs = wep == FarmingConstants.MAGIC_SECATEURS || getPlayer().getInventory().contains(FarmingConstants.MAGIC_SECATEURS);
 			if(hasMagicSecateurs && !patch.hasAttribute(PatchAttribute.MAGIC_SECATEURS)) {
@@ -94,7 +93,7 @@ public final class Farming extends HarvestingSkillAction {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public void onHarvest(Task t, Item[] items, boolean success) {
 		if(success) {
@@ -117,7 +116,7 @@ public final class Farming extends HarvestingSkillAction {
 				if(patch.getSeedType().getSeedClass() == SeedClass.BUSHES || patch.getSeedType().getSeedClass() == SeedClass.MUSHROOMS) {
 					FarmingManager.updatePatch(getPlayer(), patch.getPatchType());
 				}
-
+				
 			} else {
 				patch.setWeedStage(patch.getWeedStage() + 1);
 				if(patch.getWeedStage() >= FarmingConstants.WEED_CONFIG.length - 1) {
@@ -128,49 +127,49 @@ public final class Farming extends HarvestingSkillAction {
 			}
 		}
 	}
-
+	
 	@Override
 	public int delay() {
 		return 2;
 	}
-
+	
 	@Override
 	public Optional<Animation> animation() {
 		return Optional.of(patch.getSeedType() == null ? FarmingConstants.RAKE_ANIMATION : patch.getSeedType().getAnimation());
 	}
-
+	
 	@Override
 	public boolean canExecute() {
 		return true;
 	}
-
+	
 	@Override
 	public double experience() {
 		return patch.getSeedType() == null ? 3 : patch.getSeedType().getExperience()[2];
 	}
-
+	
 	@Override
 	public SkillData skill() {
 		return SkillData.FARMING;
 	}
-
+	
 	@Override
 	public double successFactor() {
 		return 1;
 	}
-
+	
 	@Override
 	public Optional<Item[]> removeItems() {
 		return Optional.empty();
 	}
-
+	
 	@Override
 	public Item[] harvestItems() {
 		if(patch.getSeedType() == null)
 			return new Item[]{new Item(FarmingConstants.WEED_ITEM_ID)};
 		return new Item[]{new Item(patch.getProduct().getId(), amountToHarvest)};
 	}
-
+	
 	public int getHarvestAmount() {
 		return patch.getSeedType() == null ? (FarmingConstants.WEED_CONFIG.length - 1) - patch.getWeedStage() : patch.getProduct().getAmount() - patch.getHarvestedItem().getAmount();
 	}

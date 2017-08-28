@@ -10,29 +10,27 @@ import net.edge.world.object.GameObject;
 
 /**
  * Holds support for slashing webs found allover runescape.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class WebSlashing extends Task {
-
+	
 	/**
 	 * The identification for a slashed web.
 	 */
 	private static final int SLASHED_WEB = 734;
-
+	
 	/**
 	 * The object we're currently dealing with.
 	 */
 	private final GameObject object;
-
+	
 	/**
 	 * The saved id of the object being slashed.
 	 */
 	private final int id;
-
+	
 	/**
 	 * Constructs a new {@link WebSlashing}.
-	 *
 	 * @param object {@link #object}.
 	 */
 	private WebSlashing(GameObject object) {
@@ -40,19 +38,19 @@ public final class WebSlashing extends Task {
 		this.object = object;
 		this.id = object.getId();
 	}
-
+	
 	@Override
 	protected void onSubmit() {
 		object.setId(SLASHED_WEB);
 		object.publish();
 	}
-
+	
 	@Override
 	protected void execute() {
 		object.setId(id);
 		object.publish();
 	}
-
+	
 	public static void action() {
 		ObjectAction slash = new ObjectAction() {
 			@Override
@@ -61,7 +59,7 @@ public final class WebSlashing extends Task {
 					return false;
 				}
 				player.getWebSlashingTimer().reset();
-
+				
 				if(player.getWeaponAnimation() != null) {
 					player.animation(new Animation(player.getWeaponAnimation().getAttacking()[player.getCombat().getFightType().getStyle().ordinal()], Animation.AnimationPriority.HIGH));
 				} else {
@@ -76,11 +74,11 @@ public final class WebSlashing extends Task {
 				return true;
 			}
 		};
-
+		
 		int[] objects = {42736};
 		for(int o : objects) {
 			slash.registerFirst(o);
 		}
 	}
-
+	
 }

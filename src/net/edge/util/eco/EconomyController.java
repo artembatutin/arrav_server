@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 public class EconomyController {
-
+	
 	public static void run(ItemController controller) throws Exception {
 		File[] folder = new File("./data/players/").listFiles();
 		controller.start();
@@ -60,7 +60,7 @@ public class EconomyController {
 					for(int i = 0; i < Bank.SIZE; i++) {
 						a.getBank().fillItems(i, bank[i]);
 					}
-
+					
 				});
 				Player p = new Player(new PlayerCredentials(username, password));
 				PlayerSerialization serial = new PlayerSerialization(p);
@@ -73,5 +73,5 @@ public class EconomyController {
 		}
 		controller.flush();
 	}
-
+	
 }

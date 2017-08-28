@@ -7,11 +7,10 @@ import static net.edge.content.skill.construction.furniture.HotSpots.*;
 
 /**
  * Enumeration of all possible rooms.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum RoomData {
-
+	
 	EMPTY(1864, 5056, Constants.EMPTY, 1, 0, new boolean[]{true, true, true, true}, new HotSpots[]{}),
 	BUILDABLE(1864, 5056, Constants.BUILDABLE, 1, 0, new boolean[]{true, true, true, true}, new HotSpots[]{}),
 	GARDEN(1856, 5064, Constants.GARDEN, 1, 1000, new boolean[]{true, true, true, true}, new HotSpots[]{CENTREPIECE, TREE_1, TREE_2, SMALL_PLANT_1, SMALL_PLANT_2, BIG_PLANT_1, BIG_PLANT_2}),
@@ -41,11 +40,11 @@ public enum RoomData {
 	JUNCTION(1856, 5080, Constants.JUNCTION, 70, 7500, new boolean[]{true, true, true, true}, new HotSpots[]{JUNCTION_TRAP_1, JUNCTION_TRAP_2, JUNCTION_TRAP_3, JUNCTION_TRAP_4, JUNCTION_LIGHT_1, JUNCTION_LIGHT_2, JUNCTION_LIGHT_3, JUNCTION_LIGHT_4, JUNCTION_DECORATION_1, JUNCTION_DECORATION_2, JUNCTION_GUARD}),
 	ROOF(1888, 5064, Constants.ROOF, 0, 0, new boolean[]{true, true, true, true}, new HotSpots[]{}),
 	DUNGEON_EMPTY(1880, 5056, Constants.DUNGEON_EMPTY, 0, 0, new boolean[]{true, true, true, true}, new HotSpots[]{});
-
+	
 	private HotSpots[] spots;
 	private int x, y, cost, levelToBuild, id;
 	private boolean[] doors;
-
+	
 	RoomData(int x, int y, int id, int levelToBuild, int cost, boolean[] doors, HotSpots[] spots) {
 		this.x = x;
 		this.y = y;
@@ -55,31 +54,31 @@ public enum RoomData {
 		this.doors = doors;
 		this.spots = spots;
 	}
-
+	
 	public boolean[] getDoors() {
 		return doors;
 	}
-
+	
 	public int getX() {
 		return x;
 	}
-
+	
 	public int getY() {
 		return y;
 	}
-
+	
 	public int getCost() {
 		return cost;
 	}
-
+	
 	public int getLevelToBuild() {
 		return levelToBuild;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
-
+	
 	public static int getFirstElegibleRotation(RoomData rd, int from) {
 		for(int rot = 0; rot < 4; rot++) {
 			boolean[] door = rd.getRotatedDoors(rot);
@@ -94,7 +93,7 @@ public enum RoomData {
 		}
 		return -1;
 	}
-
+	
 	public static int getNextEligibleRotationClockWise(RoomData rd, int from, int currentRot) {
 		for(int rot = currentRot + 1; rot < currentRot + 4; rot++) {
 			int rawt = (rot > 3 ? (rot - 4) : rot);
@@ -110,7 +109,7 @@ public enum RoomData {
 		}
 		return currentRot;
 	}
-
+	
 	public static int getNextEligibleRotationCounterClockWise(RoomData rd, int from, int currentRot) {
 		for(int rot = currentRot - 1; rot > currentRot - 4; rot--) {
 			int rawt = (rot < 0 ? (rot + 4) : rot);
@@ -126,7 +125,7 @@ public enum RoomData {
 		}
 		return -1;
 	}
-
+	
 	public boolean[] getRotatedDoors(int rotation) {
 		if(rotation == 0)
 			return doors;
@@ -168,11 +167,11 @@ public enum RoomData {
 		}
 		return null;
 	}
-
+	
 	public HotSpots[] getSpots() {
 		return spots;
 	}
-
+	
 	public HotSpots getSpot(int object) {
 		for(HotSpots hs : spots) {
 			if(hs.getObjectId() == object)
@@ -180,7 +179,7 @@ public enum RoomData {
 		}
 		return null;
 	}
-
+	
 	public HotSpots getSpot(int xOffset, int yOffset) {
 		for(HotSpots hs : spots) {
 			if(hs.getYOffset() == yOffset && hs.getXOffset() == xOffset && (!hs.isMutiple() || hs.getRoomType() == getId()))

@@ -25,7 +25,6 @@ import java.util.stream.IntStream;
 
 /**
  * Holds functionality for the exchange session of the dueling minigame.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class DuelSession extends ExchangeSession {
@@ -42,7 +41,6 @@ public final class DuelSession extends ExchangeSession {
 
 	/**
 	 * Constructs a new {@link DuelSession}.
-	 *
 	 * @param player the player that controls this duel session.
 	 * @param other  the player that was invited to this duel session.
 	 * @param stage  the stage of this duel session.
@@ -104,7 +102,6 @@ public final class DuelSession extends ExchangeSession {
 	/**
 	 * Attempts to toggle a rule for the specified {@code player} and the specified {@code session}
 	 * the player is in.
-	 *
 	 * @param player   the player whom is toggling the rule.
 	 * @param session  the session the rule is being toggled for.
 	 * @param buttonId the button identification to check for.
@@ -296,7 +293,6 @@ public final class DuelSession extends ExchangeSession {
 	/**
 	 * Determines and returns the text for {@code items} that will be displayed
 	 * on the confirm trade screen.
-	 *
 	 * @param items the array of items to display.
 	 * @return the confirm text for the array of items.
 	 */
@@ -309,7 +305,8 @@ public final class DuelSession extends ExchangeSession {
 				continue;
 			}
 			int amount = this.getExchangeSession().get(player).computeAmountForId(item.getId());
-			tradeAmount = item.getDefinition().isStackable() ? amount >= 1000 && amount < 1000000 ? "@cya@" + (amount / 1000) + "K @whi@" + "(" + amount + ")" : amount >= 1000000 ? "@gre@" + (amount / 1000000) + " " + "million @whi@(" + amount + ")" : "" + amount : "(x" + amount + ")";
+			tradeAmount = item.getDefinition()
+					.isStackable() ? amount >= 1000 && amount < 1000000 ? "@cya@" + (amount / 1000) + "K @whi@" + "(" + amount + ")" : amount >= 1000000 ? "@gre@" + (amount / 1000000) + " " + "million @whi@(" + amount + ")" : "" + amount : "(x" + amount + ")";
 			tradeItems = count == 0 ? item.getDefinition().getName() : tradeItems + "\\n" + item.getDefinition().getName();
 			tradeItems = tradeItems + (item.getDefinition().isStackable() ? " x " : " ") + tradeAmount;
 			count++;
@@ -342,7 +339,6 @@ public final class DuelSession extends ExchangeSession {
 
 	/**
 	 * Gets the amount of inventory items to unequip.
-	 *
 	 * @return the numerical value for the amount of items to unequip.
 	 */
 	private Item[] getEquipmentCount(Player player) {
@@ -360,7 +356,6 @@ public final class DuelSession extends ExchangeSession {
 
 	/**
 	 * Determines and returns the duel display name for {@code player}.
-	 *
 	 * @param player the player to determine this display name for.
 	 * @return the duel display name.
 	 */

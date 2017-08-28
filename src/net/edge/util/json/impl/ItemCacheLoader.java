@@ -10,18 +10,17 @@ import java.util.Objects;
 
 /**
  * The {@link JsonLoader} implementation that loads all cached {@link Drop}s.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ItemCacheLoader extends JsonLoader {
-
+	
 	/**
 	 * Creates a new {@link ItemCacheLoader}.
 	 */
 	public ItemCacheLoader() {
 		super("./data/def/item/item_cache.json");
 	}
-
+	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		ItemCache table = Objects.requireNonNull(builder.fromJson(reader.get("table"), ItemCache.class));

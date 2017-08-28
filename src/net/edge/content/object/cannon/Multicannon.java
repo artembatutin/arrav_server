@@ -22,31 +22,30 @@ import java.util.Optional;
 
 /**
  * Dwarf multicannon handler
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class Multicannon extends DynamicObject {
-
+	
 	/**
 	 * The player who placed the cannon.
 	 */
 	protected final Player player;
-
+	
 	/**
 	 * The facing direction of the cannon.
 	 */
 	Direction facing;
-
+	
 	/**
 	 * The state if the cannon is firing.
 	 */
 	boolean firing;
-
+	
 	private Multicannon(Player player) {
 		super(7, player.getPosition(), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, player.getInstance());
 		this.player = player;
 	}
-
+	
 	/**
 	 * Picking the cannon.
 	 */
@@ -72,7 +71,7 @@ public class Multicannon extends DynamicObject {
 		firing = false;
 		remove();
 	}
-
+	
 	/**
 	 * Attempting to fire with the cannon.
 	 */
@@ -86,7 +85,7 @@ public class Multicannon extends DynamicObject {
 			new MulticannonTask(this).submit();
 		}
 	}
-
+	
 	/**
 	 * Initializes all of the cannon manipulation actions.
 	 */
@@ -115,7 +114,7 @@ public class Multicannon extends DynamicObject {
 				if(reg == null)
 					return true;
 				player.getMovementQueue().reset();
-
+				
 				//clip & location
 				boolean clip = true;
 				for(int x = 0; x < 3; x++) {
@@ -136,7 +135,7 @@ public class Multicannon extends DynamicObject {
 					player.message("You can't set the cannon here.");
 					return true;
 				}
-
+				
 				//base
 				Multicannon cannon = new Multicannon(player);
 				player.cannon = Optional.of(cannon);
@@ -144,7 +143,7 @@ public class Multicannon extends DynamicObject {
 				player.facePosition(player.getPosition().move(1, 1));
 				inv.remove(new Item(6));
 				cannon.publish();
-
+				
 				//stand setup
 				(new Task(5) {
 					@Override
@@ -159,7 +158,7 @@ public class Multicannon extends DynamicObject {
 						player.animation(new Animation(827));
 						inv.remove(new Item(8));
 						cannon.publish();
-
+						
 						//barrel setup
 						(new Task(5) {
 							@Override
@@ -175,7 +174,7 @@ public class Multicannon extends DynamicObject {
 								player.animation(new Animation(827));
 								inv.remove(new Item(10));
 								cannon.publish();
-
+								
 								//furnace setup
 								(new Task(5) {
 									@Override
@@ -202,7 +201,7 @@ public class Multicannon extends DynamicObject {
 			}
 		};
 		setup.register(6);
-
+		
 		//fire action
 		ObjectAction fire = new ObjectAction() {
 			@Override
@@ -217,7 +216,7 @@ public class Multicannon extends DynamicObject {
 			}
 		};
 		fire.registerFirst(6);
-
+		
 		//pickup action
 		ObjectAction pickup = new ObjectAction() {
 			@Override
@@ -232,7 +231,7 @@ public class Multicannon extends DynamicObject {
 			}
 		};
 		pickup.registerSecond(6);
-
+		
 		//filling cannon balls
 		ItemOnObjectAction fill = new ItemOnObjectAction() {
 			@Override
@@ -258,14 +257,14 @@ public class Multicannon extends DynamicObject {
 		fill.registerObj(6);
 		fill.registerItem(2);
 	}
-
+	
 	/**
 	 * Determines if the player manipulating is the owner of the cannon.
 	 */
 	private boolean validate(Player player, GameObject object) {
 		return this.player.same(player) && hashCode() == object.hashCode();
 	}
-
+	
 	public synchronized void publish() {
 		getRegion().ifPresent(r -> {
 			r.addObj(this);
@@ -274,7 +273,7 @@ public class Multicannon extends DynamicObject {
 		player.cannon = Optional.of(this);
 		setDisabled(false);
 	}
-
+	
 	@Override
 	public synchronized void remove() {
 		getRegion().ifPresent(r -> {

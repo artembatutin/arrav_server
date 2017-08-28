@@ -17,7 +17,6 @@ import java.util.Optional;
 
 /**
  * Represents the Magpie familiar.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Magpie extends Familiar {

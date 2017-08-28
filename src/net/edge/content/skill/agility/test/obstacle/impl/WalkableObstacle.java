@@ -11,19 +11,19 @@ import net.edge.world.locale.Position;
  * @since 7-8-2017.
  */
 public class WalkableObstacle extends Obstacle {
-
+	
 	public WalkableObstacle(Position[] start, Position end, Animation animation, int requirement, double experience) {
 		super(start, end, animation, requirement, experience, 0);
 	}
-
+	
 	public WalkableObstacle(Position start, Position end, Animation animation, int requirement, double experience) {
 		super(new Position[]{start}, end, animation, requirement, experience, 0);
 	}
-
+	
 	public WalkableObstacle(Position start, Position end, int animationId, int requirement, double experience) {
 		super(new Position[]{start}, end, new Animation(animationId), requirement, experience, 0);
 	}
-
+	
 	@Override
 	public void initialize(Player player) {
 		int animation = this.animation.getId();
@@ -37,7 +37,7 @@ public class WalkableObstacle extends Obstacle {
 		player.getFlags().flag(UpdateFlag.APPEARANCE);
 		player.getMovementQueue().walk(travelback() && player.getPosition().same(end) ? start[0] : end);
 	}
-
+	
 	@Override
 	public void onStop(Player player) {
 		int animation = -1;

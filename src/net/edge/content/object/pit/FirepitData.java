@@ -10,7 +10,6 @@ import java.util.Optional;
 /**
  * The enumerated type whose elements represent a set of constants used
  * for the fire pits.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum FirepitData {
@@ -43,7 +42,6 @@ public enum FirepitData {
 
 	/**
 	 * Constructs a new {@link FirepitData}.
-	 *
 	 * @param objectId {@link #objectId}.
 	 * @param log      {@link #log}.
 	 * @param count    {@link #count}.

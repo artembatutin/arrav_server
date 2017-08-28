@@ -15,21 +15,20 @@ import net.edge.world.object.GameObject;
 
 /**
  * Action handling item on object actions.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public abstract class ItemOnObjectAction extends Action {
-
+	
 	public abstract boolean click(Player player, GameObject object, Item item, int container, int slot);
-
+	
 	public void registerObj(int object) {
 		ItemOnObjectPacket.OBJECTS.register(object, this);
 	}
-
+	
 	public void registerItem(int item) {
 		ItemOnObjectPacket.ITEMS.register(item, this);
 	}
-
+	
 	public static void init() {
 		FarmingAction.action();
 		Cooking.action();
@@ -39,5 +38,5 @@ public abstract class ItemOnObjectAction extends Action {
 		Spinning.action();
 		RefillableAction.action();
 	}
-
+	
 }

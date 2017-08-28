@@ -13,18 +13,17 @@ import java.util.Objects;
 
 /**
  * The {@link JsonLoader} implementation that loads all item nodes.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ItemNodeLoader extends JsonLoader {
-
+	
 	/**
 	 * Creates a new {@link ItemNodeLoader}.
 	 */
 	public ItemNodeLoader() {
 		super("./data/def/item/item_nodes.json");
 	}
-
+	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		int id = reader.get("id").getAsInt();

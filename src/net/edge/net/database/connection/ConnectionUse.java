@@ -9,25 +9,23 @@ import java.sql.SQLException;
 
 /**
  * An abstracted class which handles the connection pool usages.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public abstract class ConnectionUse {
-
+	
 	/**
 	 * The connection pool used in the context.
 	 */
 	private final ConnectionPool pool;
-
+	
 	/**
 	 * Constructs a new pool usage.
-	 *
 	 * @param pool the pool being used.
 	 */
 	public ConnectionUse(ConnectionPool pool) {
 		this.pool = pool;
 	}
-
+	
 	/**
 	 * Submits the usage.
 	 */
@@ -40,7 +38,7 @@ public abstract class ConnectionUse {
 				public void onFailure(Throwable arg0) {
 					onError();
 				}
-
+				
 				@Override
 				public void onSuccess(Connection arg0) {
 					try {
@@ -62,14 +60,13 @@ public abstract class ConnectionUse {
 			onError();
 		}
 	}
-
+	
 	/**
 	 * Appending the connection.
-	 *
 	 * @param con the connection being used.
 	 */
 	public abstract void append(Connection con) throws SQLException;
-
+	
 	/**
 	 * Process handled on an error.
 	 */

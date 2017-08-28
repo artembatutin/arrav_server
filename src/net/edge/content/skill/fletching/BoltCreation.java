@@ -14,29 +14,26 @@ import java.util.Optional;
 
 /**
  * Holds functionality for creating bolts.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class BoltCreation extends ProducingSkillAction {
-
+	
 	/**
 	 * The data this skill action is dependent of.
 	 */
 	private final BoltData data;
-
+	
 	/**
 	 * Constructs a new {@link BoltCreation}.
-	 *
 	 * @param player {@link #getPlayer()}.
 	 */
 	public BoltCreation(Player player, BoltData data) {
 		super(player, Optional.empty());
 		this.data = data;
 	}
-
+	
 	/**
 	 * Attempts to start this skill action.
-	 *
 	 * @param player the player attempting to start the skill action.
 	 * @param used   the item used on the usedOn.
 	 * @param usedOn the item that was used by the used.
@@ -44,76 +41,76 @@ public final class BoltCreation extends ProducingSkillAction {
 	 */
 	public static boolean fletch(Player player, Item used, Item usedOn) {
 		BoltData data = BoltData.getDefinition(used.getId(), usedOn.getId()).orElse(null);
-
+		
 		if(data == null) {
 			return false;
 		}
-
+		
 		BoltCreation fletching = new BoltCreation(player, data);
 		fletching.start();
 		return true;
 	}
-
+	
 	@Override
 	public Optional<Item[]> removeItem() {
 		return Optional.of(new Item[]{new Item(data.unfinished.getId(), 15), new Item(data.required.getId(), 15)});
 	}
-
+	
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(new Item[]{new Item(data.product.getId(), 15)});
 	}
-
+	
 	@Override
 	public int delay() {
 		return 3;
 	}
-
+	
 	@Override
 	public boolean instant() {
 		return true;
 	}
-
+	
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success)
 			player.animation(new Animation(6702));
 	}
-
+	
 	@Override
 	public boolean init() {
 		if(!checkFletching()) {
 			return false;
 		}
-
+		
 		if(player.getInventory().computeAmountForId(data.unfinished.getId()) < 15 || player.getInventory().computeAmountForId(data.required.getId()) < 15) {
 			player.message("You must have atleast 15 of each item to fletch this bolt.");
 			return false;
 		}
-
+		
 		return true;
 	}
-
+	
 	@Override
 	public boolean canExecute() {
 		return checkFletching();
 	}
-
+	
 	@Override
 	public double experience() {
 		return data.experience;
 	}
-
+	
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.of(new Animation(6702));
 	}
-
+	
 	@Override
 	public SkillData skill() {
 		return SkillData.FLETCHING;
 	}
-
+	
 	private boolean checkFletching() {
 		if(!player.getSkills()[skill().getId()].reqLevel(data.requirement)) {
 			player.message("You need a " + skill().toString() + " level of " + data.requirement + " to continue this action.");
@@ -121,11 +118,10 @@ public final class BoltCreation extends ProducingSkillAction {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * The enumerated type whose elements represent the constants used to
 	 * register bolts with.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/Golang/">Jay</a>
 	 */
 	private enum BoltData {
@@ -153,40 +149,39 @@ public final class BoltCreation extends ProducingSkillAction {
 		BASILISKBANE_BOLTS(21848, 314, 21670, 80, 100),
 		DRAGONBANE_BOLTS(21843, 314, 21660, 80, 100),
 		WALLASALKIBANE_BOLTS(21853, 314, 21665, 80, 100);
-
+		
 		/**
 		 * Caches our enum values.
 		 */
 		private static final ImmutableSet<BoltData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(BoltData.class));
-
+		
 		/**
 		 * The unfinished bolt.
 		 */
 		private final Item unfinished;
-
+		
 		/**
 		 * The required item.
 		 */
 		private final Item required;
-
+		
 		/**
 		 * The finished product.
 		 */
 		private final Item product;
-
+		
 		/**
 		 * The requirement required.
 		 */
 		private final int requirement;
-
+		
 		/**
 		 * The experience gained.
 		 */
 		private final double experience;
-
+		
 		/**
 		 * Constructs a new {@link BoltData}.
-		 *
 		 * @param unfinished  {@link #unfinished}.
 		 * @param required    {@link #required}.
 		 * @param product     {@link #product}.
@@ -200,7 +195,7 @@ public final class BoltCreation extends ProducingSkillAction {
 			this.requirement = requirement;
 			this.experience = experience * 1.70;
 		}
-
+		
 		public static Optional<BoltData> getDefinition(int itemUsed, int usedOn) {
 			return VALUES.stream().filter($it -> $it.unfinished.getId() == itemUsed || $it.unfinished.getId() == usedOn).filter($it -> $it.required.getId() == itemUsed || $it.required.getId() == usedOn).findAny();
 		}

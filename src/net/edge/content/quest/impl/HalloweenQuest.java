@@ -9,34 +9,33 @@ import java.time.LocalDate;
 /**
  * The class which is responsible for the tasks to complete for the halloween
  * event.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class HalloweenQuest extends Quest {
-
+	
 	/**
 	 * Constructs a new {@link HalloweenQuest}.
 	 */
 	public HalloweenQuest() {
 		super("Halloween Fright Nights.", "When black cats prowl and pumpkins gleam, ....", new QuestTask[]{new QuestTask("speak_to_the_reaper") {
-
+			
 			@Override
 			public String description(Player player) {
 				return "Speak to the reaper.";
 			}
 		}});
 	}
-
+	
 	/**
 	 * Represents the date that halloween takes place.
 	 */
 	private static final LocalDate HALLOWEEN_DATE = LocalDate.of(LocalDate.now().getYear(), 10, 31);
-
+	
 	@Override
 	public void onStart(Player player) {
 		//player.teleport(new Position());
 	}
-
+	
 	@Override
 	public boolean canStart(Player player) {
 		if(this.isCompleted()) {
@@ -50,7 +49,7 @@ public final class HalloweenQuest extends Quest {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public boolean canFinish(Player player) {
 		return true;

@@ -2,11 +2,12 @@ package net.edge.action.but;
 
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ButtonAction;
+import net.edge.content.teleport.TeleportType;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 
 public class PvPPanel extends ActionInitializer {
-
+	
 	@Override
 	public void init() {
 		//Bosses 420+
@@ -22,12 +23,12 @@ public class PvPPanel extends ActionInitializer {
 			ButtonAction e = new ButtonAction() {
 				@Override
 				public boolean click(Player player, int button) {
-					//					player.teleport(teleports[index], DefaultTeleportSpell.TeleportType.PVP_PORTAL); TODO: add teleports
+					player.teleport(teleports[index], TeleportType.PVP_PORTAL);
 					return true;
 				}
 			};
 			e.register(1164 + i);
 		}
 	}
-
+	
 }

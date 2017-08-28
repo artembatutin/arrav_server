@@ -48,7 +48,6 @@ public final class TriviaEntry {
 
 	/**
 	 * The trivia question that should be send to the player on login.
-	 *
 	 * @param player the player to send the question to.
 	 */
 	public void onLogin(Player player) {
@@ -58,7 +57,6 @@ public final class TriviaEntry {
 
 	/**
 	 * Attempts to answer the current trivia question.
-	 *
 	 * @param player the player attempting to answer.
 	 * @param answer the answer that the player has submit.
 	 */
@@ -93,7 +91,6 @@ public final class TriviaEntry {
 
 	/**
 	 * The functionality that occurs when a player successfully answers a trivia question.
-	 *
 	 * @param player the player whom answered the trivia question.
 	 * @param answer the answer that was correct.
 	 */

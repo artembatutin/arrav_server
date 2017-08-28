@@ -13,29 +13,28 @@ import net.edge.world.entity.actor.player.Player;
 
 /**
  * Action handling npc action clicks.
- *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public abstract class MobAction extends Action {
-
+	
 	public abstract boolean click(Player player, Mob mob, int click);
-
+	
 	public void registerFirst(int npc) {
 		MobActionPacket.FIRST.register(npc, this);
 	}
-
+	
 	public void registerSecond(int npc) {
 		MobActionPacket.SECOND.register(npc, this);
 	}
-
+	
 	public void registerThird(int npc) {
 		MobActionPacket.THIRD.register(npc, this);
 	}
-
+	
 	public void registerFourth(int npc) {
 		MobActionPacket.FOURTH.register(npc, this);
 	}
-
+	
 	public static void init() {
 		ScoreboardManager.action();
 		ButterflyCatching.action();
@@ -44,5 +43,5 @@ public abstract class MobAction extends Action {
 		Pickpocketing.action();
 		Skillcape.action();
 	}
-
+	
 }

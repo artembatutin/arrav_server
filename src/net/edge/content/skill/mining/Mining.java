@@ -52,7 +52,6 @@ public final class Mining extends HarvestingSkillAction {
 
 	/**
 	 * Constructs a new {@link Mining}.
-	 *
 	 * @param player {@link #player}.
 	 * @param rock   the mining rock.
 	 * @param object the rock object.

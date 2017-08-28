@@ -49,50 +49,50 @@ public enum Catchable {
 	SHARK(383, 76, 0.1, 110),
 	MANTAS(389, 81, 0.1, 140),
 	ROCKTAIL(15270, 90, 0.1, 185);
-
+	
 	private static final ImmutableSet<Catchable> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Catchable.class));
-
+	
 	private final int id;
 	private final int level;
 	private final double chance;
 	private final double experience;
-
+	
 	Catchable(int id, int level, double chance, double experience) {
 		this.id = id;
 		this.level = level;
 		this.chance = chance;
 		this.experience = experience * 1.40;//increased a bit.
 	}
-
+	
 	@Override
 	public final String toString() {
 		return name().toLowerCase().replaceAll("_", " ");
 	}
-
+	
 	public boolean catchable(Player player) {
 		return true;
 	}
-
+	
 	protected static Optional<Catchable> getCatchable(int id) {
 		return VALUES.stream().filter(def -> def.id == id).findAny();
 	}
-
+	
 	public static ImmutableSet<Catchable> getValues() {
 		return VALUES;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
-
+	
 	public int getLevel() {
 		return level;
 	}
-
+	
 	public double getChance() {
 		return chance;
 	}
-
+	
 	public double getExperience() {
 		return experience;
 	}

@@ -7,37 +7,35 @@ import java.util.Optional;
 
 /**
  * An {@link ItemContainerListener} implementation that will update the weight value of a {@link Player}.
- *
  * @author lare96 <http://github.org/lare96>
  */
 public final class ItemWeightListener implements ItemContainerListener {
-
+	
 	/**
 	 * The {@link Player} to listen for.
 	 */
 	private final Player player;
-
+	
 	/**
 	 * Creates a new {@link ItemWeightListener}.
-	 *
 	 * @param player The {@link Player} to listen for.
 	 */
 	public ItemWeightListener(Player player) {
 		this.player = player;
 	}
-
+	
 	@Override
 	public void singleUpdate(ItemContainer container, Item oldItem, Item newItem, int slot, boolean update) {
 		updateWeight(oldItem, newItem);
 		queueWeight();
 	}
-
+	
 	@Override
 	public void bulkUpdate(ItemContainer container) {
 		updateAllWeight();
 		queueWeight();
 	}
-
+	
 	/**
 	 * Updates the weight value for a single set of items.
 	 */
@@ -49,7 +47,7 @@ public final class ItemWeightListener implements ItemContainerListener {
 		currentWeight += add;
 		player.weight = currentWeight;
 	}
-
+	
 	/**
 	 * Updates the weight value for all items in {@code container}.
 	 */
@@ -66,7 +64,7 @@ public final class ItemWeightListener implements ItemContainerListener {
 			updateWeight(null, item);
 		}
 	}
-
+	
 	/**
 	 * Converts an {@link Optional} into a {@code double} describing its weight value.
 	 */
@@ -77,7 +75,7 @@ public final class ItemWeightListener implements ItemContainerListener {
 			return 0.0;
 		return item.getDefinition().getWeight();
 	}
-
+	
 	/**
 	 * Queues an weight update message.
 	 */

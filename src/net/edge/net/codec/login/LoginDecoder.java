@@ -22,7 +22,6 @@ import java.util.Random;
 
 /**
  * A {@link ByteToMessageDecoder} implementation that decodes the entire login protocol in states.
- *
  * @author lare96 <http://github.org/lare96>
  */
 public final class LoginDecoder extends ByteToMessageDecoder {
@@ -61,7 +60,6 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 	/**
 	 * Decodes the handshake portion of the login protocol.
-	 *
 	 * @param ctx The channel handler context.
 	 * @param in  The data that is being decoded.
 	 * @param out The list of decoded messages.
@@ -99,7 +97,6 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 	/**
 	 * Decodes the portion of the login protocol where the RSA block size and mac address are determined.
-	 *
 	 * @param ctx The channel handler context.
 	 * @param in  The data that is being decoded.
 	 * @param out The list of decoded messages.
@@ -117,7 +114,6 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 	/**
 	 * Decodes the RSA portion of the login protocol.
-	 *
 	 * @param ctx The channel handler context.
 	 * @param in  The data that is being decoded.
 	 * @param out The list of decoded messages.
@@ -171,6 +167,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 * An enumerated type whose elements represent the various stages of the login protocol.
 	 */
 	private enum State {
-		HANDSHAKE, LOGIN_TYPE, RSA_BLOCK
+		HANDSHAKE,
+		LOGIN_TYPE,
+		RSA_BLOCK
 	}
 }

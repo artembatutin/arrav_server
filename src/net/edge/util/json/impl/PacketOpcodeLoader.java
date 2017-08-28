@@ -11,18 +11,17 @@ import java.util.Objects;
 
 /**
  * The {@link JsonLoader} implementation that loads all incoming messages.
- *
  * @author lare96 <http://github.com/lare96>
  */
 public final class PacketOpcodeLoader extends JsonLoader {
-
+	
 	/**
 	 * Creates a new {@link PacketOpcodeLoader}.
 	 */
 	public PacketOpcodeLoader() {
 		super("data/def/packet/packet_opcodes.json");
 	}
-
+	
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		int[] opcodes = builder.fromJson(reader.get("opcodes").getAsJsonArray(), int[].class);
@@ -32,11 +31,10 @@ public final class PacketOpcodeLoader extends JsonLoader {
 			throw new IllegalStateException("Invalid message opcode!");
 		execute(opcodes, name);
 	}
-
+	
 	/**
 	 * Executes the loading of the message within {@code name} for
 	 * {@code opcodes}.
-	 *
 	 * @param opcodes the opcodes of the message.
 	 * @param name    the name and path to the class.
 	 * @throws IllegalStateException if the class isn't implementing {@link IncomingPacket}.

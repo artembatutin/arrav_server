@@ -2,7 +2,6 @@ package net.edge.net.codec.login;
 
 /**
  * The enumerated type whose elements represent the login response types.
- *
  * @author Artem Batutin
  */
 public enum LoginCode {
@@ -31,7 +30,6 @@ public enum LoginCode {
 
 	/**
 	 * Creates a new {@link LoginCode}.
-	 *
 	 * @param code the response code that the protocol recognizes.
 	 */
 	LoginCode(int code) {
@@ -40,7 +38,6 @@ public enum LoginCode {
 
 	/**
 	 * Gets the response code that the protocol recognizes.
-	 *
 	 * @return the response code.
 	 */
 	public final int getCode() {

@@ -7,14 +7,14 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendConfig implements OutgoingPacket {
-
+	
 	private final int id, state;
-
+	
 	public SendConfig(int id, int state) {
 		this.id = id;
 		this.state = state;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		if(state < Byte.MIN_VALUE || state > Byte.MAX_VALUE) {

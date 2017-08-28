@@ -9,14 +9,14 @@ import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendLogout implements OutgoingPacket {
-
+	
 	@Override
 	public boolean onSent(Player player) {
 		if(player.getState() != EntityState.AWAITING_REMOVAL && player.getState() != EntityState.INACTIVE)
 			World.get().queueLogout(player);
 		return true;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(109, PacketType.VARIABLE_SHORT);

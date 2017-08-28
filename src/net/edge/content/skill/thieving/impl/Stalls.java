@@ -1,14 +1,14 @@
 package net.edge.content.skill.thieving.impl;
 
 import net.edge.action.impl.ObjectAction;
-import net.edge.content.combat.hit.Hit;
-import net.edge.content.combat.hit.HitIcon;
-import net.edge.content.combat.hit.Hitsplat;
 import net.edge.content.skill.thieving.Thieving;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
+import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.combat.hit.HitIcon;
+import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -21,7 +21,6 @@ import static net.edge.content.achievements.Achievement.REAL_ROBERY;
 
 /**
  * Represents functionality for stealing from a stall.
- *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Stalls extends Thieving {
@@ -43,7 +42,6 @@ public final class Stalls extends Thieving {
 
 	/**
 	 * Constructs a new {@link Stalls}.
-	 *
 	 * @param player {@link #getPlayer()}.
 	 * @param stall  the stall this player is stealing from.
 	 * @param object the object this player is interacting with.
@@ -169,7 +167,6 @@ public final class Stalls extends Thieving {
 
 	/**
 	 * The enumerated type whose elements represent the data for stealing from a stall.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private enum StallData {
@@ -224,7 +221,6 @@ public final class Stalls extends Thieving {
 
 		/**
 		 * Constructs a new {@link StallData} enumerator.
-		 *
 		 * @param objectId     {@link #objectId}.
 		 * @param emptyStallId {@link #emptyStallId}.
 		 * @param requirement  {@link #requirement}.
@@ -245,7 +241,6 @@ public final class Stalls extends Thieving {
 
 	/**
 	 * The class which submits respawning tasks for stalls.
-	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static class StallTask extends Task {
@@ -267,7 +262,6 @@ public final class Stalls extends Thieving {
 
 		/**
 		 * Constructs a new {@link StallTask}.
-		 *
 		 * @param stall  the stall being used.
 		 * @param object the stall's object node.
 		 */

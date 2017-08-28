@@ -8,7 +8,7 @@ import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.world.entity.actor.player.Player;
 
 public class ShopEditing extends ActionInitializer {
-
+	
 	@Override
 	public void init() {
 		ButtonAction e = new ButtonAction() {
@@ -27,7 +27,7 @@ public class ShopEditing extends ActionInitializer {
 			}
 		};
 		e.register(124);
-
+		
 	}
-
+	
 }

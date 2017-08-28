@@ -6,6 +6,8 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
+import static net.edge.content.teleport.TeleportType.LADDER;
+
 public class AgilityStairs extends ActionInitializer {
 	@Override
 	public void init() {
@@ -13,12 +15,11 @@ public class AgilityStairs extends ActionInitializer {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
 				if(object.getGlobalPos().same(new Position(2532, 3545, 1)))
-					;
-				//						player.teleport(new Position(2532, 3546, 0), LADDER); TODO: add teleports
+					player.teleport(new Position(2532, 3546, 0), LADDER);
 				return true;
 			}
 		};
 		l.registerFirst(3205);
-
+		
 	}
 }

@@ -11,15 +11,15 @@ import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.ItemContainer;
 
 public final class SendContainer implements OutgoingPacket {
-
+	
 	private final int id;
 	private final ItemContainer container;
-
+	
 	public SendContainer(int id, ItemContainer container) {
 		this.id = id;
 		this.container = container;
 	}
-
+	
 	@Override
 	public boolean onSent(Player player) {
 		if(id == -1)
@@ -30,7 +30,7 @@ public final class SendContainer implements OutgoingPacket {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(53, PacketType.VARIABLE_SHORT);

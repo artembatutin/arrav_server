@@ -8,10 +8,10 @@ import tool.mapviewer.MapTool;
 
 @CommandSignature(alias = {"mapviewer"}, rights = {Rights.ADMINISTRATOR}, syntax = "Opens a map viewer teleportation, mapviewer")
 public final class MapViewer implements Command {
-
+	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		MapTool.start();
 	}
-
+	
 }
