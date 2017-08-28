@@ -444,6 +444,7 @@ public abstract class Minigame {
 	 * hitpoints, special attack amount and more.
 	 */
 	public final void restore(Player player) {
+		player.resetOverloadEffect(true);
 		player.closeWidget();
 		player.getCombat().reset();
 		player.getCombat().getDamageCache().clear();

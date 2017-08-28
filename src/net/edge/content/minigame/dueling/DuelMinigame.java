@@ -152,13 +152,6 @@ public final class DuelMinigame extends Minigame {
 				player.message("You do not have enough free space to un-equip the disabled items.");
 			}
 		});
-
-		if(getRules().contains(DuelingRules.NO_DRINKS)) {
-			for (int i = 0; i < player.getSkills().length; i++) {
-				player.resetOverloadEffect(true);
-				player.getSkills()[i].setLevel(player.getSkills()[i].getRealLevel(), false);
-			}
-		}
 		
 		if(getRules().contains(DuelingRules.OBSTACLES)) {
 			player.move(OBSTACLES_ARENA.random());
