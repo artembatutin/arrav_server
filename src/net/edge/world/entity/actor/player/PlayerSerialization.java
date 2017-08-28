@@ -502,12 +502,12 @@ public final class PlayerSerialization {
 	}, new Token("ringOfRecoil") {
 		@Override
 		public Object toJson(Player p) {
-			return p.getRingOfRecoil();
+			return p.ringOfRecoil;
 		}
 
 		@Override
 		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setRingOfRecoil(n.getAsInt());
+			p.ringOfRecoil = n.getAsInt();
 		}
 	}, new Token("skills") {
 		@Override

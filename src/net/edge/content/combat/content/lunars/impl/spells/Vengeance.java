@@ -26,7 +26,7 @@ public final class Vengeance extends LunarButtonSpell {
 	@Override
 	public void effect(Actor caster, Optional<Actor> victim) {
 		super.effect(caster, victim);
-		caster.toPlayer().setVenged(true);
+		caster.toPlayer().venged = true;
 		caster.toPlayer().getCombat().addListener(VengenceListener.INSTANCE);
 	}
 	
@@ -35,7 +35,7 @@ public final class Vengeance extends LunarButtonSpell {
 		if(!super.canCast(caster, victim)) {
 			return false;
 		}
-		if(caster.toPlayer().isVenged()) {
+		if(caster.toPlayer().venged) {
 			caster.toPlayer().message("You have already casted this spell...");
 			return false;
 		}

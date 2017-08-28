@@ -21,9 +21,7 @@ public class VengenceListener extends SimplifiedListener<Player> {
         if (hit.getDamage() < 2) {
             return;
         }
-
         defender.forceChat("Taste vengeance!");
-
         Hit recoil = new Hit((int) (hit.getDamage() * 0.75), HitIcon.DEFLECT);
         attacker.damage(recoil);
         attacker.getCombat().getDamageCache().add(defender, recoil.getDamage());
@@ -32,7 +30,7 @@ public class VengenceListener extends SimplifiedListener<Player> {
     @Override
     public void finish(Player attacker, Actor defender) {
         attacker.getCombat().removeListener(this);
-        attacker.setVenged(false);
+        attacker.venged = false;
     }
 
 }

@@ -41,7 +41,7 @@ public class BandosGodsword extends PlayerMeleeStrategy {
                 damage -= removeFromSkill;
                 SkillData data = SkillData.forId(s);
                 String skill = data.toString();
-                attacker.message("You've drained " + victim.getCredentials().getUsername() + "'s " + skill + " level by " + removeFromSkill + ".");
+                attacker.message("You've drained " + victim.credentials.formattedUsername + "'s " + skill + " level by " + removeFromSkill + ".");
                 victim.message("Your " + skill + " level has been drained.");
             }
         }

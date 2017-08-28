@@ -40,8 +40,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import static net.edge.net.session.GameSession.UPDATE_LIMIT;
-import static net.edge.world.entity.EntityState.*;
-import static net.edge.net.session.GameSession.outLimit;
 import static net.edge.world.entity.EntityState.AWAITING_REMOVAL;
 import static net.edge.world.entity.EntityState.IDLE;
 
@@ -520,7 +518,7 @@ public final class World {
 	private static final SimplePathChecker SIMPLE_PATH_CHECKER = new SimplePathChecker();
 	
 	/**
-	 * This world's {@link LoggingManatger} used to log player actions.
+	 * This world's {@link LoggingManager} used to log player actions.
 	 */
 	private static final LoggingManager LOG_MANAGER = new LoggingManager();
 	
