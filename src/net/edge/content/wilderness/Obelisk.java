@@ -16,8 +16,6 @@ import java.util.EnumSet;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.OBELISK;
-
 /**
  * Handles the wilderness obelisks.
  */
@@ -120,7 +118,7 @@ public enum Obelisk {
 			int y = dest.boundary.getSwY();
 			reg.getPlayers().forEach(p -> {
 				if(data.boundary.inLocation(p.getPosition())) {
-					p.teleport(new Position(x + RandomUtils.inclusive(1, 3), y + RandomUtils.inclusive(1, 3)), OBELISK);
+//					p.teleport(new Position(x + RandomUtils.inclusive(1, 3), y + RandomUtils.inclusive(1, 3)), OBELISK); TODO: add teleports
 					p.message("Ancient magic teleports you somewhere in the wilderness...");
 				}
 			});

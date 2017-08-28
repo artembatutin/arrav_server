@@ -3,14 +3,14 @@ package net.edge.world.entity.actor.move;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendEnergy;
 import net.edge.task.Task;
-import net.edge.world.locale.Position;
+import net.edge.world.Direction;
 import net.edge.world.World;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.Direction;
 import net.edge.world.entity.actor.move.path.Path;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.locale.Position;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -304,9 +304,11 @@ public final class MovementQueue {
 			return;
 		}
 		if(character.isFollowing() && !leader.same(character.getFollowEntity())) {
-			character.faceEntity(null);
+			if (!character.getCombat().isAttacking(character.getFollowEntity())) {
+				character.faceEntity(null);
+			}
 			character.setFollowing(false);
-			character.setFollowEntity(null);
+				character.setFollowEntity(null);
 		}
 		if(!character.isFollowing()) {
 			followTask.ifPresent(Task::cancel);
@@ -315,7 +317,7 @@ public final class MovementQueue {
 			character.setFollowing(true);
 			character.setFollowEntity(leader);
 			followTask = Optional.of(new ActorFollowTask(character, leader));
-			followTask.get().submit();
+			followTask.ifPresent(Task::submit);
 		}
 	}
 	

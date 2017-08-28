@@ -11,7 +11,6 @@ import java.util.Collections;
  * Some sort of temporary effect applied to a {@link Actor} during
  * combat. Combat effects include but are not limited to; being poisoned,
  * skulled, and teleblocked.
- * @param <T> the type of character that this effect is designated for.
  * @author lare96 <http://github.org/lare96>
  */
 public abstract class CombatEffect {

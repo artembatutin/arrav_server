@@ -3,14 +3,15 @@ package net.edge.content.minigame.pestcontrol;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.minigame.pestcontrol.pest.*;
 
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.Hit;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobDeath;
-import net.edge.world.entity.actor.mob.impl.DefaultMob;
+import net.edge.world.entity.actor.mob.DefaultMob;
 import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
@@ -84,8 +85,8 @@ public class PestPortal extends DefaultMob {
 	public Hit decrementHealth(Hit hit) {
 		if(hit.getDamage() > getCurrentHealth()) {
 			hit.setDamage(getCurrentHealth());
-			if(hit.getType() == Hit.HitType.CRITICAL) {
-				hit.setType(Hit.HitType.NORMAL);
+			if(hit.getHitsplat() == Hitsplat.CRITICAL) {
+				hit.set(Hitsplat.NORMAL);
 			}
 		}
 		setCurrentHealth(getCurrentHealth() - hit.getDamage());

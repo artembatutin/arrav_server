@@ -1,12 +1,14 @@
 package net.edge.content.skill.thieving.impl;
 
 import net.edge.action.impl.ObjectAction;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.HitIcon;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.thieving.Thieving;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
-import net.edge.world.Hit;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -120,7 +122,7 @@ public final class Stalls extends Thieving {
 			if(guard.isPresent()) {
 				guard.get().forceChat("Get your hands off there!");
 				guard.get().faceEntity(player);
-				player.damage(new Hit(10, Hit.HitType.DISEASE, Hit.HitIcon.NONE));
+				player.damage(new Hit(10, Hitsplat.DISEASE, HitIcon.NONE));
 			}
 		} else {
 			REAL_ROBERY.inc(player);

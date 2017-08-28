@@ -12,13 +12,13 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import net.edge.content.skill.summoning.SummoningData;
+import net.edge.world.entity.actor.mob.Follower;
 import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.Graphic;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobDeath;
-import net.edge.world.entity.actor.mob.impl.Follower;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 

@@ -30,17 +30,18 @@ public final class MovementQueuePacket implements IncomingPacket {
 		if(!MinigameHandler.execute(player, m -> m.canWalk(player))) {
 			return;
 		}
+
 		player.faceEntity(null);
 		
 		if(opcode == 248) {
 			player.setFollowing(false);
-			player.getCombat().cooldown(false);
+			player.getCombat().reset();
 			size -= 14;
 		}
 		
 		if(opcode == 164) {
 			player.setFollowing(false);
-			player.getCombat().cooldown(false);
+			player.getCombat().reset();
 		} else if(opcode == 98) {
 			
 		}
@@ -53,6 +54,8 @@ public final class MovementQueuePacket implements IncomingPacket {
 		if(player.getDialogueBuilder() != null && !player.getMovementQueue().isLockMovement())
 			player.getDialogueBuilder().interrupt();
 
+		player.getCombat().reset();
+		
 		player.closeWidget();
 		if(player.getMarketShop() != null) {
 			MarketShop.clearFromShop(player);

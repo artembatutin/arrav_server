@@ -1,9 +1,9 @@
 package net.edge.net.packet.in;
 
-import net.edge.content.combat.magic.lunars.LunarSpells;
+import net.edge.content.combat.content.lunars.LunarSpells;
 import net.edge.content.skill.magic.Enchanting;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.util.Stopwatch;
 import net.edge.world.entity.actor.player.Player;
@@ -53,7 +53,7 @@ public final class MagicOnItemPacket implements IncomingPacket {
 		if(Enchanting.cast(player, item, interfaceId, spellId, slot)) {
 			return;
 		}
-		
+
 		if(LunarSpells.castItemSpells(player, item, spellId, interfaceId)) {
 			return;
 		}

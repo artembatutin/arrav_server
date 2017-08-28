@@ -349,7 +349,7 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public int remove(Item item, int preferredIndex, boolean refresh) {
 		checkArgument(preferredIndex >= -1, "invalid index identifier");
-		
+
 		ItemDefinition def = item.getDefinition();
 		if(def == null) {
 			items[preferredIndex] = null;
@@ -538,9 +538,13 @@ public class ItemContainer implements Iterable<Item> {
 	 * @return The identifier wrapped in an optional.
 	 */
 	public final int computeIdForIndex(int index) {
-		return retrieve(index).map(Item::getId).orElse(-1);
+		return computeOptionalIdForIndex(index).orElse(-1);
 	}
-	
+
+	public final Optional<Integer> computeOptionalIdForIndex(int index) {
+		return retrieve(index).map(Item::getId);
+	}
+
 	/**
 	 * Replaces the first occurrence of the {@link Item} having the identifier {@code oldId} with {@code newId}.
 	 * @param oldId   The old identifier to replace.
@@ -932,7 +936,9 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public final void updateBulk() {
 		if(firingEvents) {
-			listeners.forEach(evt -> evt.bulkUpdate(this));
+			listeners.forEach(evt -> {
+				evt.bulkUpdate(this);
+			});
 		}
 	}
 	
@@ -941,7 +947,9 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public final void updateSingle(Item oldItem, Item newItem, int index, boolean refresh) {
 		if(firingEvents && !test) {
-			listeners.forEach(evt -> evt.singleUpdate(this, oldItem, newItem, index, refresh));
+			listeners.forEach(evt -> {
+				evt.singleUpdate(this, oldItem, newItem, index, refresh);
+			});
 		}
 	}
 	

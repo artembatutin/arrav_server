@@ -9,8 +9,10 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
 /**
- * An adapter for {@link ItemContainerListener} that updates {@link Item}s on a widget whenever items change, and sends the
- * underlying {@link Player} a message when the container is full.
+ * An adapter for {@link ItemContainerListener} that updates {@link Item}s on a
+ * widget whenever items change, and sends the underlying {@link Player} a
+ * message when the container is full.
+ *
  * @author lare96 <http://github.org/lare96>
  */
 public abstract class ItemContainerAdapter implements ItemContainerListener {
@@ -34,24 +36,24 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 			updateItem(container, newItem, slot);
 		World.getLoggingManager().write(Log.create(new ContainerLog(player, container, oldItem, newItem, slot)));
 	}
-	
+
 	@Override
 	public void bulkUpdate(ItemContainer container) {
 		updateItems(container);
 	}
-	
+
 	@Override
 	public void capacityExceeded(ItemContainer container) {
 		player.message(getCapacityExceededMsg());
 	}
-	
+
 	/**
 	 * Updates many items on a widget.
 	 */
 	protected void updateItems(ItemContainer container) {
 		player.out(new SendContainer(widget(), container));
 	}
-	
+
 	/**
 	 * Updates a single item on a widget.
 	 */

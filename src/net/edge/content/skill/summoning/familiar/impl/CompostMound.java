@@ -1,5 +1,8 @@
 package net.edge.content.skill.summoning.familiar.impl;
 
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.HitIcon;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.util.rand.RandomUtils;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.skill.summoning.Summoning;
@@ -8,7 +11,6 @@ import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
 import net.edge.content.skill.summoning.SummoningData;
-import net.edge.world.Hit;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -59,7 +61,7 @@ public final class CompostMound extends Familiar {
 		if(item.getId() != 1925) {
 			return false;
 		}
-		mob.damage(new Hit(2));
+		mob.damage(new Hit(2, Hitsplat.NORMAL, HitIcon.NONE));
 		player.getInventory().remove(new Item(1925));
 		player.getInventory().add(new Item(6032));
 		return true;

@@ -1,9 +1,12 @@
 package net.edge.world.sync;
 
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.ActorList;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
@@ -14,8 +17,6 @@ public class Synchronizer {
 	
 	private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 	
-	public int errorPreMob, errorPrePlayer, errorPlayer;
-	
 	/**
 	 * The pre-update of preparing players and mobs.
 	 * @param players players list.
@@ -23,54 +24,65 @@ public class Synchronizer {
 	 */
 	public void preUpdate(ActorList<Player> players, ActorList<Mob> mobs) {
 		//long time = System.currentTimeMillis();
-		int pCount = players.size();
-		phaser.bulkRegister(pCount);
-		for(Player player : players) {
-			if(player == null)
-				continue;
-			pCount--;
-			executor.submit(() -> {
-				try {
-					player.preUpdate();
-				} catch(Exception e) {
-					e.printStackTrace();
-				} finally {
-					phaser.arriveAndDeregister();
-				}
-			});
+		for(Player p : players) {
+			if(p == null) continue;
+			try {
+				p.preUpdate();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
-		while(pCount > 0) {
-			pCount--;
-			errorPreMob++;
-			phaser.arriveAndDeregister();
+
+		for(Mob m : mobs) {
+			if(m == null) continue;
+			try {
+				m.preUpdate();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
-		phaser.arriveAndAwaitAdvance();
+
+//		int pCount = players.size();
+//		phaser.bulkRegister(pCount);
+//		for(Player player : players) {
+//			if(player == null)
+//				continue;
+//			pCount--;
+//			executor.submit(() -> {
+//				try {
+//					player.preUpdate();
+//				} finally {
+//					phaser.arriveAndDeregister();
+//				}
+//			});
+//		}
+//		while(pCount > 0) {
+//			pCount--;
+//			phaser.arriveAndDeregister();
+//		}
+//		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-PLAYER]: " + (System.currentTimeMillis() - time));
-		
-		
+
 		//time = System.currentTimeMillis();
-		int mCount = mobs.size();
-		phaser.bulkRegister(mCount);
-		for(Mob mob : mobs) {
-			if(mob == null)
-				continue;
-			mCount--;
-			executor.submit(() -> {
-				try {
-					mob.preUpdate();
-				} catch(Exception e) {
-					e.printStackTrace();
-				} finally {
-					phaser.arriveAndDeregister();
-				}
-			});
-		}
-		while(mCount > 0) {
-			mCount--;
-			errorPrePlayer++;
-			phaser.arriveAndDeregister();
-		}
-		phaser.arriveAndAwaitAdvance();
+//		int mCount = mobs.size();
+//		phaser.bulkRegister(mCount);
+//		for(Mob mob : mobs) {
+//			if(mob == null)
+//				continue;
+//			mCount--;
+//			executor.submit(() -> {
+//				try {
+//					mob.preUpdate();
+//				} finally {
+//					phaser.arriveAndDeregister();
+//				}
+//			});
+//		}
+//		while(mCount > 0) {
+//			mCount--;
+//			phaser.arriveAndDeregister();
+//		}
+//		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-NPC]: " + (System.currentTimeMillis() - time));
 	}
 	
@@ -89,8 +101,6 @@ public class Synchronizer {
 			executor.submit(() -> {
 				try {
 					player.update();
-				} catch(Exception e) {
-					e.printStackTrace();
 				} finally {
 					phaser.arriveAndDeregister();
 				}
@@ -98,7 +108,6 @@ public class Synchronizer {
 		}
 		while(pCount > 0) {
 			pCount--;
-			errorPlayer++;
 			phaser.arriveAndDeregister();
 		}
 		phaser.arriveAndAwaitAdvance();
@@ -115,11 +124,7 @@ public class Synchronizer {
 		for(Player player : players) {
 			if(player == null)
 				continue;
-			try {
-				player.postUpdate();
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
+			player.postUpdate();
 		}
 		//System.out.println("[POST-PLAYER]: " + (System.currentTimeMillis() - time));
 		
@@ -128,11 +133,7 @@ public class Synchronizer {
 		for(Mob mob : mobs) {
 			if(mob == null)
 				continue;
-			try {
-				mob.postUpdate();
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
+			mob.postUpdate();
 		}
 		//System.out.println("[POST-NPC]: " + (System.currentTimeMillis() - time));
 	}

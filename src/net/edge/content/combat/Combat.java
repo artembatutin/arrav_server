@@ -1,456 +1,441 @@
 package net.edge.content.combat;
 
-import net.edge.Application;
-import net.edge.task.TaskListener;
-import net.edge.content.combat.strategy.Strategy;
-import net.edge.world.World;
+import net.edge.content.combat.attack.AttackModifier;
+import net.edge.content.combat.attack.FightType;
+import net.edge.content.combat.attack.listener.CombatListener;
+import net.edge.content.combat.hit.CombatHit;
+import net.edge.content.combat.hit.CombatTaskData;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.task.Task;
+import net.edge.util.Stopwatch;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.MobAggression;
-import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.actor.player.assets.Rights;
-import net.edge.world.locale.Boundary;
 
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Controls and gives access to the main parts of the combat process such as
- * starting and ending combat sessions.
- * @author lare96 <http://github.com/lare96>
- */
-public final class Combat {
-	
-	/**
-	 * The combat type this character is attacking with.
-	 */
-	private CombatType combatType;
-	
-	/**
-	 * The character in control of this combat builder.
-	 */
-	private final Actor character;
-	
-	/**
-	 * The current character that the controller is attacking.
-	 */
-	private Actor currentVictim;
-	
-	/**
-	 * The last character that attacked the controller.
-	 */
-	private Actor aggressor;
-	
-	/**
-	 * The task that handles the entire combat process.
-	 */
-	private CombatTask combatTask;
-	
-	/**
-	 * The combat strategy this character attacking with.
-	 */
-	private Strategy strategy;
-	
-	/**
-	 * The task that handles the pre-combat process.
-	 */
-	private CombatDistanceListener distanceTask;
-	
-	/**
-	 * The cache of damage dealt to this controller during combat.
-	 */
-	private final CombatDamage damageCache = new CombatDamage();
-	
-	/**
-	 * The timer that controls how long this character must wait to attack.
-	 */
-	private int attackTimer;
-	
-	/**
-	 * The cooldown timer used when the character breaks the combat session.
-	 */
-	private int cooldown;
-	
-	/**
-	 * Creates a new {@link Combat}.
-	 * @param character the character in control of this combat builder.
-	 */
-	public Combat(Actor character) {
-		this.character = character;
-	}
-	
-	/**
-	 * Prompts the controller to attack {@code target}. If the controller is
-	 * already attacking the target this method has no effect.
-	 * @param target the character that this controller will be prompted to attack.
-	 */
-	public void attack(Actor target) {
-		if(character.same(target)) {
-			character.getMovementQueue().reset();
-			//return;
-		}
-		if(character.isPlayer() && target.isMob() && character.toPlayer().getRights().equals(Rights.ADMINISTRATOR) && Application.DEBUG) {
-			character.toPlayer().message("[DEBUG NPC ID] Mob = " + target.toMob().getId() + ", position = " + target.toMob().getPosition().toString());
-		}
-		if(target.same(currentVictim)) {
-			determineStrategy();
-			if(new Boundary(character.getPosition(), character.size()).within(currentVictim.getPosition(), currentVictim.size(), strategy.attackDistance(character))) {
-				character.getMovementQueue().reset();
-			}
-		}
-		if(character.isPlayer() && target.isMob()) {
-			Mob mob = target.toMob();
-			Player player = (Player) character;
-			if(mob.getOwner() != -1 && !mob.isOwner(player)) {
-				player.message("I should mind my own business...");
-				character.getMovementQueue().reset();
-				return;
-			}
-		}
-		
-		character.getMovementQueue().follow(target);
-		if(combatTask != null && combatTask.isRunning()) {
-			currentVictim = target;
-			if(character.isPlayer()) {
-				Player player = (Player) character;
-				if(player.autocasting || player.getCastSpell() == null || attackTimer < 1) {
-					cooldown = 0;
-				}
-			}
-			return;
-		}
-		if(distanceTask != null && distanceTask.isRunning())
-			distanceTask.cancel();
-		distanceTask = new CombatDistanceListener(this, target);
-		World.get().submit(distanceTask);
-	}
-	
-	/**
-	 * Instantly executes the combat task regardless of its state. Should really
-	 * only be used for instant special attacks.
-	 */
-	public void instant() {
-		combatTask.execute();
-	}
-	
-	/**
-	 * Resets this builder by discarding various values associated with the
-	 * combat process.
-	 */
-	public void reset() {
-		if(distanceTask != null)
-			distanceTask.cancel();
-		if(combatTask != null)
-			combatTask.cancel();
-		if(currentVictim != null) {
-			Actor ag = currentVictim.getCombat().getAggressor();
-			if(ag != null && ag.same(character))
-				ag.getCombat().setAggressor(null);
-		}
-		aggressor = null;
-		currentVictim = null;
-		combatTask = null;
-		combatType = null;
-		strategy = null;
-		cooldown = 0;
-		attackTimer = 0;
-		character.faceEntity(null);
-		character.setFollowing(false);
-		if(character.isMob() && !character.isDead()) {
-			character.getMovementQueue().smartWalk(character.toMob().getOriginalPosition());
-		}
-		
-	}
-	
-	/**
-	 * Resets the attack timer to it's original value based on the combat
-	 * strategy.
-	 */
-	public void resetAttackTimer() {
-		if(strategy == null)
-			return;
-		attackTimer = strategy.attackDelay(character);
-	}
-	
-	/**
-	 * Sets the attack timer to a value of {@code 0}.
-	 */
-	void clearAttackTimer() {
-		attackTimer = 0;
-	}
+public class Combat<T extends Actor> {
+    private final T attacker;
+    private Actor defender;
 
-	public void setAttackTimer(int attackTimer) {
-		this.attackTimer = attackTimer;
-	}
+    private Actor lastAttacker;
+    private Actor lastDefender;
 
-	/**
-	 * Starts the cooldown sequence for this controller.
-	 * @param resetAttack if the attack timer should be reset.
-	 */
-	public void cooldown(boolean resetAttack) {
-		if(strategy == null)
-			return;
-		cooldown = 10;
-		character.setFollowing(false);
-		if(resetAttack) {
-			attackTimer = strategy.attackDelay(character);
-		}
-	}
+    private final Stopwatch lastAttacked = new Stopwatch();
+    private final Stopwatch lastBlocked = new Stopwatch();
 
-	/**
-	 * Starts the cooldown sequence for this controller.
-	 * @param resetAttack if the attack timer should be reset.
-	 */
-	public void cooldownTimer(boolean resetAttack, int cool) {
-		if(strategy == null)
-			return;
-		cooldown = cool;
-		character.setFollowing(false);
-		if(resetAttack) {
-			attackTimer = strategy.attackDelay(character);
-		}
-	}
-	
-	/**
-	 * Calculates and sets the combat strategy.
-	 */
-	public void determineStrategy() {
-		this.strategy = character.determineStrategy();
-	}
-	
-	/**
-	 * Resets the combat strategy.
-	 */
-	public void resetStrategy() {
-		this.strategy = null;
-	}
-	
-	/**
-	 * Determines if this character is attacking another character.
-	 * @return {@code true} if this character is attacking another character,
-	 * {@code false} otherwise.
-	 */
-	public boolean isAttacking() {
-		return currentVictim != null;
-	}
-	
-	/**
-	 * Determines if this character is being attacked by another character.
-	 * @return {@code true} if this character is being attacked by another
-	 * character, {@code false} otherwise.
-	 */
-	public boolean isBeingAttacked() {
-		return aggressor != null || pjingCheck();
-	}
-	
-	/**
-	 * Normally used for the game RuneScape, Pjing mean when in a PKing zone (Player Killing zone) and
-	 * someone just died and the person who killed the guy is low on health, a "PJer" comes and kill the
-	 * person because he's on low health and the PJer is normally full health.
-	 * @return pjing check condition.
-	 */
-	public boolean pjingCheck() {
-		return !character.getLastCombat().elapsed(5, TimeUnit.SECONDS) && character.inWilderness();
-	}
-	
-	/**
-	 * Determines if this character is being attacked by or attacking another
-	 * character.
-	 * @return {@code true} if this player is in combat, {@code false}
-	 * otherwise.
-	 */
-	public boolean inCombat() {
-		return isAttacking() || isBeingAttacked();
-	}
-	
-	/**
-	 * Determines if this combat builder is in cooldown mode.
-	 * @return {@code true} if this combat builder is in cooldown mode,
-	 * {@code false} otherwise.
-	 */
-	public boolean isCooldown() {
-		return cooldown > 0;
-	}
-	
-	/**
-	 * Gets the cooldown timer used when the character breaks the combat
-	 * session.
-	 * @return the cooldown timer.
-	 */
-	public int getCooldown() {
-		return cooldown;
-	}
-	
-	/**
-	 * Decrements the cooldown timer used when the character breaks the combat
-	 * session.
-	 */
-	public void decrementCooldown() {
-		cooldown--;
-	}
-	
-	/**
-	 * Gets the timer that controls how long this character must wait to attack.
-	 * @return the timer determines when the controller attacks.
-	 */
-	public int getAttackTimer() {
-		return attackTimer;
-	}
-	
-	/**
-	 * Decrements the timer that controls how long this character must wait to
-	 * attack.
-	 */
-	public void decrementAttackTimer() {
-		attackTimer--;
-	}
-	
-	/**
-	 * Gets the character in control of this combat builder.
-	 * @return the character in control.
-	 */
-	public Actor getCharacter() {
-		return character;
-	}
-	
-	/**
-	 * Gets the current character that the controller is attacking.
-	 * @return the character the controller is attacking
-	 */
-	public Actor getVictim() {
-		return currentVictim;
-	}
-	
-	/**
-	 * Gets the last character that attacked the controller.
-	 * @return the last character that attacked.
-	 */
-	public Actor getAggressor() {
-		return aggressor;
-	}
-	
-	/**
-	 * Sets the value for {@link Combat#aggressor}.
-	 * @param aggressor the new value to set.
-	 */
-	void setAggressor(Actor aggressor) {
-		this.aggressor = aggressor;
-	}
-	
-	/**
-	 * Gets the combat strategy this character attacking with.
-	 * @return the combat strategy.
-	 */
-	public Strategy getStrategy() {
-		return strategy;
-	}
-	
-	/**
-	 * Gets the combat type this character is attacking with.
-	 * @return the combat type.
-	 */
-	public CombatType getCombatType() {
-		if(combatType == null) {
-			return CombatType.NONE;
-		}
-		return combatType;
-	}
-	
-	/**
-	 * Sets the combat type this character is attacking with.
-	 * @param type the type to set.
-	 */
-	public void setCombatType(CombatType type) {
-		this.combatType = type;
-	}
-	
-	/**
-	 * Gets the task that handles the entire combat process.
-	 * @return the task for the combat process.
-	 */
-	public CombatTask getCombatTask() {
-		return combatTask;
-	}
-	
-	/**
-	 * Gets the cache of damage dealt to this controller during combat.
-	 * @return the cache of damage.
-	 */
-	public CombatDamage getDamageCache() {
-		return damageCache;
-	}
-	
-	/**
-	 * An {@link TaskListener} implementation that is used to listen for the
-	 * controller to become in proper range of the victim.
-	 * @author lare96 <http://github.com/lare96>
-	 */
-	private static final class CombatDistanceListener extends TaskListener {
-		
-		/**
-		 * The combat builder owned by the controller.
-		 */
-		private final Combat builder;
-		
-		/**
-		 * The victim that will be listened for.
-		 */
-		private final Actor victim;
-		
-		/**
-		 * Create a new {@link CombatDistanceListener}.
-		 * @param builder the combat builder owned by the controller.
-		 * @param victim  the victim that will be listened for.
-		 */
-		CombatDistanceListener(Combat builder, Actor victim) {
-			super.attach(builder.getCharacter().isPlayer() ? builder.getCharacter().toPlayer() : builder.getCharacter().toMob());
-			this.builder = builder;
-			this.victim = victim;
-		}
-		
-		@Override
-		public boolean canRun() {
-			builder.determineStrategy();
-			builder.attackTimer = 0;
-			builder.cooldown = 0;
-			if(!builder.character.getPosition().withinDistance(victim.getPosition(), builder.character.getViewingDistance())) {
-				builder.reset();
-				this.cancel();
-				if(builder.character.isMob()) {
-					Mob mob = builder.character.toMob();
-					MobAggression.retreat(mob);
-				}
-				return false;
-			}
-			
-			if(!builder.getCharacter().inMulti() && victim.getCombat().isBeingAttacked() && victim.getCombat().getAggressor() != null && !victim.getCombat().getAggressor().same(builder.getCharacter())) {
-				if(builder.getCharacter().isPlayer()) {
-					Player player = builder.getCharacter().toPlayer();
-					player.message("They are already under attack!");
-					player.getMovementQueue().reset();
-				}
-				builder.reset();
-				this.cancel();
-				return false;
-			}
-			boolean in = new Boundary(builder.character.getPosition(), builder.character.size()).within(victim.getPosition(), victim.size(), builder.strategy.attackDistance(builder.getCharacter()));
-			if(!in && builder.getCharacter().getMovementQueue().isMovementDone()) {
-				builder.getCharacter().getMovementQueue().reset();
-				builder.getCharacter().getMovementQueue().follow(victim);
-			} else if(!in && builder.getCharacter().getMovementQueue().isMovementDone()) {
-				builder.getCharacter().getMovementQueue().reset();
-			}
-			return in;
-		}
-		
-		@Override
-		public void run() {
-			builder.getCharacter().getMovementQueue().reset();
-			builder.currentVictim = victim;
-			
-			if(builder.combatTask == null || !builder.combatTask.isRunning()) {
-				builder.combatTask = new CombatTask(builder);
-				World.get().submit(builder.combatTask);
-			}
-		}
-	}
+    private FightType type;
+
+    private CombatStrategy<? super T> strategy;
+    private final AttackModifier attackModifier = new AttackModifier();
+    private final List<CombatListener<? super T>> listeners = new LinkedList<>();
+    private final Deque<CombatListener<? super T>> pendingAddition = new LinkedList<>();
+    private final Deque<CombatListener<? super T>> pendingRemoval = new LinkedList<>();
+
+    /** The cache of damage dealt to this controller during combat. */
+    private final CombatDamage damageCache = new CombatDamage();
+    private final Deque<CombatTaskData<T>> combatQueue = new LinkedList<>();
+    private final Deque<Hit> damageQueue = new LinkedList<>();
+
+    private final int[] hitsplatDelays = new int[4];
+    private final int[] combatDelays = new int[3];
+
+    public Combat(T attacker) {
+        this.attacker = attacker;
+        type = FightType.UNARMED_PUNCH;
+    }
+
+    public void attack(Actor defender) {
+        this.defender = defender;
+
+        if (strategy == null || !strategy.withinDistance(attacker, defender)) {
+            attacker.getMovementQueue().follow(defender);
+            attacker.setFollowing(true);
+            return;
+        }
+
+        attacker.faceEntity(defender);
+    }
+
+    public void tick() {
+        updateListeners();
+
+        for (int index = 0; index < combatDelays.length; index++) {
+            if (combatDelays[index] > 0) {
+                combatDelays[index]--;
+            } else {
+                if (defender == null || strategy == null) continue;
+                if (strategy.getCombatType().ordinal() != index) continue;
+                submitStrategy(defender, strategy);
+            }
+        }
+
+        while (!combatQueue.isEmpty()) {
+            CombatTaskData<T> data = combatQueue.poll();
+            hitTask(data).submit();
+        }
+
+        for (int index = 0, sent = 0; index < hitsplatDelays.length; index++) {
+            if (hitsplatDelays[index] > 0) {
+                hitsplatDelays[index]--;
+            } else if (sent < 2 && sendNextHitsplat()) {
+                hitsplatDelays[index] = 2;
+                sent++;
+            }
+        }
+    }
+
+    private boolean sendNextHitsplat() {
+        if (damageQueue.isEmpty()) {
+            return false;
+        }
+
+        if (attacker.isDead() || attacker.isNeedsPlacement() || attacker.isTeleporting()) {
+            damageQueue.clear();
+            return false;
+        }
+
+        Hit hit = damageQueue.poll();
+        attacker.writeDamage(hit);
+        return true;
+    }
+
+    private void updateListeners() {
+        CombatListener<? super T> next;
+
+        next = pendingAddition.poll();
+        while (next != null) {
+            listeners.add(next);
+            next = pendingAddition.poll();
+        }
+
+        next = pendingRemoval.poll();
+        while (next != null) {
+            listeners.remove(next);
+            next = pendingRemoval.poll();
+        }
+    }
+
+    public boolean submitStrategy(Actor defender, CombatStrategy<? super T> strategy) {
+        if (!canAttack(defender)) {
+            return false;
+        }
+
+        if (!strategy.withinDistance(attacker, defender)) {
+            attacker.getMovementQueue().follow(defender);
+            attacker.setFollowing(true);
+            return false;
+        }
+
+        strategy.getModifier(attacker).ifPresent(this::addModifier);
+        listeners.forEach(attack -> attack.getModifier(attacker).ifPresent(this::addModifier));
+
+        submitHits(defender, strategy, strategy.getHits(attacker, defender));
+
+        int delayIndex = strategy.getCombatType().ordinal();
+        setDelay(delayIndex, strategy.getAttackDelay(attacker, defender, type));
+        return true;
+    }
+
+    private void submitHits(Actor defender, CombatStrategy<? super T> strategy, CombatHit... hits) {
+        boolean first = true;
+        for (CombatHit hit : hits) {
+            CombatTaskData<T> data = new CombatTaskData<>(attacker, defender, hit, strategy, first);
+
+            if (data.isFirstHit()) {
+                start(defender, strategy, hits);
+            }
+
+            attack(defender, hit, strategy);
+            combatQueue.add(data);
+            first = false;
+        }
+    }
+
+    public void submitHits(Actor defender, CombatHit... hits) {
+        submitHits(defender, strategy, hits);
+    }
+
+    public void queueDamage(Hit hit) {
+        if (damageQueue.size() >= 8) {
+            return;
+        }
+
+        if (hit.getDamage() < 0) {
+            damageQueue.addFirst(hit);
+        } else {
+            damageQueue.addLast(hit);
+        }
+    }
+
+    private void setDelay(int index, int delay) {
+        for (int idx = 0; idx < combatDelays.length; idx++) {
+            if (idx != index) {
+                combatDelays[idx] += 2;
+            } else if (combatDelays[idx] < delay) {
+                combatDelays[idx] = delay;
+            }
+        }
+    }
+
+    private boolean canAttack(Actor defender) {
+        if (!CombatUtil.canAttack(attacker, defender)) {
+            return false;
+        }
+
+        if (!strategy.canAttack(attacker, defender)) {
+            return false;
+        }
+
+        for (CombatListener<? super T> listener : listeners) {
+            if (!listener.canAttack(attacker, defender)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void start(Actor defender, CombatStrategy<? super T> strategy, Hit... hits) {
+        if (!CombatUtil.canAttack(attacker, defender)) {
+            combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            defender.getCombat().damageQueue.clear();
+            reset();
+            return;
+        }
+
+        strategy.start(attacker, defender, hits);
+        listeners.forEach(listener -> listener.start(attacker, defender, hits));
+    }
+
+    private void attack(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
+        if (!CombatUtil.canAttack(attacker, defender)) {
+            combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            defender.getCombat().damageQueue.clear();
+            reset();
+            return;
+        }
+
+        lastDefender = defender;
+        lastAttacked.reset();
+
+        strategy.attack(attacker, defender, hit);
+        listeners.forEach(listener -> listener.attack(attacker, defender, hit));
+    }
+
+    private void hit(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
+        if (!CombatUtil.canAttack(attacker, defender)) {
+            combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            defender.getCombat().damageQueue.clear();
+            reset();
+            return;
+        }
+
+        if (defender.getCombat().getDefender() == null && defender.isAutoRetaliate()) {
+            defender.getCombat().attack(attacker);
+        }
+
+        defender.getCombat().block(attacker, hit, strategy.getCombatType());
+        if (strategy.getCombatType() != CombatType.MAGIC || defender.isMob()) {
+            defender.animation(CombatUtil.getBlockAnimation(defender));
+        }
+
+        strategy.hit(attacker, defender, hit);
+        listeners.forEach(listener -> listener.hit(attacker, defender, hit));
+    }
+
+    private void hitsplat(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
+        if (!CombatUtil.canAttack(attacker, defender)) {
+            combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
+            defender.getCombat().damageQueue.clear();
+            reset();
+            return;
+        }
+
+        strategy.hitsplat(attacker, defender, hit);
+        listeners.forEach(listener -> listener.hitsplat(attacker, defender, hit));
+
+        if (strategy.getCombatType() != CombatType.MAGIC || hit.isAccurate()) {
+            defender.getCombat().queueDamage(hit);
+            defender.getCombat().damageCache.add(attacker, hit.getDamage());
+
+            if (defender.getCurrentHealth() <= 0) {
+                defender.getCombat().onDeath(attacker, hit);
+            }
+        }
+    }
+
+    public void block(Actor attacker, Hit hit, CombatType combatType) {
+        T defender = this.attacker;
+        lastBlocked.reset();
+        lastAttacker = attacker;
+        listeners.forEach(attack -> attack.block(attacker, defender, hit, combatType));
+    }
+
+    private void onDeath(Actor attacker, Hit hit) {
+        T defender = this.attacker;
+        listeners.forEach(attack -> attack.onDeath(attacker, defender, hit));
+        defender.getMovementQueue().reset();
+        attacker.getCombat().reset();
+        reset();
+    }
+
+    private void finish(Actor defender, CombatStrategy<? super T> strategy) {
+
+        // special case for some listeners
+        // for example, vengeance needs to be active until all hits
+        // are recoiled instead of just one hit
+        if (defender == null && strategy == null) {
+            listeners.forEach(attack -> attack.finish(attacker, null));
+            return;
+        }
+
+        strategy.finish(attacker, defender);
+        strategy.getModifier(attacker).ifPresent(attacker.getCombat()::removeModifier);
+
+        listeners.forEach(attack -> {
+            attack.finish(attacker, defender);
+            attack.getModifier(attacker).ifPresent(attacker.getCombat()::removeModifier);
+        });
+    }
+
+    public void reset() {
+        defender = null;
+        attacker.faceEntity(null);
+        attacker.getMovementQueue().reset();
+    }
+
+    public void addModifier(AttackModifier modifier) {
+        attackModifier.add(modifier);
+    }
+
+    public void removeModifier(AttackModifier modifier) {
+        attackModifier.remove(modifier);
+    }
+
+    public void addListener(CombatListener<? super T> attack) {
+        if (listeners.contains(attack) || pendingAddition.contains(attack)) {
+            return;
+        }
+
+        pendingAddition.add(attack);
+    }
+
+    public void removeListener(CombatListener<? super T> attack) {
+        if (!listeners.contains(attack) || pendingRemoval.contains(attack)) {
+            return;
+        }
+
+        pendingRemoval.add(attack);
+    }
+
+    public boolean inCombat() {
+        return isAttacking() || isUnderAttack();
+    }
+
+    public boolean isAttacking() {
+        return lastDefender != null && !stopwatchElapsed(lastAttacked, CombatConstants.COMBAT_TIMER);
+    }
+
+    public boolean isUnderAttack() {
+        return lastAttacker != null && !stopwatchElapsed(lastBlocked, CombatConstants.COMBAT_TIMER);
+    }
+
+    public boolean isAttacking(Actor defender) {
+        return defender != null && lastDefender == defender && !stopwatchElapsed(lastAttacked, CombatConstants.COMBAT_TIMER);
+    }
+
+    public boolean isUnderAttackBy(Actor attacker) {
+        return attacker != null && lastAttacker == attacker && !stopwatchElapsed(lastBlocked, CombatConstants.COMBAT_TIMER);
+    }
+
+    public double getAccuracyModifier() {
+        return attackModifier.getAccuracy();
+    }
+
+    public double getAggressiveModifier() {
+        return attackModifier.getAggressive();
+    }
+
+    public double getDefensiveModifier() {
+        return attackModifier.getDefensive();
+    }
+
+    public double getDamageModifier() {
+        return attackModifier.getDamage();
+    }
+
+    public FightType getFightType() {
+        return type;
+    }
+
+    public void setFightType(FightType type) {
+        this.type = type;
+    }
+
+    public CombatStrategy<? super T> getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(CombatStrategy<? super T> next) {
+        strategy = next;
+    }
+
+    public Actor getDefender() {
+        return defender;
+    }
+
+    public CombatDamage getDamageCache() {
+        return damageCache;
+    }
+
+    public Actor getLastAttacker() {
+        return lastAttacker;
+    }
+
+    public Actor getLastDefender() {
+        return lastDefender;
+    }
+
+    private Task hitTask(CombatTaskData<T> data) {
+        return new Task(data.getHitDelay(), data.getHitDelay() == 0) {
+            @Override
+            protected void execute() {
+                hit(data.getDefender(), data.getHit(), data.getStrategy());
+                hitsplatTask(data).submit();
+                cancel();
+            }
+        };
+    }
+
+    private Task hitsplatTask(CombatTaskData<T> data) {
+        return new Task(data.getHitsplatDelay(), data.getHitsplatDelay() == 0) {
+            @Override
+            protected void execute() {
+                hitsplat(data.getDefender(), data.getHit(), data.getStrategy());
+
+                if (data.isFirstHit()) {
+                    finish(data.getDefender(), data.getStrategy());
+                    data.getDefender().getCombat().finish(null, null);
+                }
+
+                cancel();
+            }
+        };
+    }
+
+    public boolean hasPassed(int delay) {
+        return stopwatchElapsed(lastAttacked, delay) && stopwatchElapsed(lastBlocked, delay);
+    }
+
+    private static boolean stopwatchElapsed(Stopwatch stopwatch, int seconds) {
+        return stopwatch.elapsed(seconds, TimeUnit.SECONDS);
+    }
+
+    public long elapsedTime() {
+        long elapsed = lastAttacked.elapsedTime();
+        return lastBlocked.elapsedTime() > elapsed ? elapsed : lastBlocked.elapsedTime();
+    }
 }

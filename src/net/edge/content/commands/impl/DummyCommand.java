@@ -4,7 +4,7 @@ import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.impl.DefaultMob;
+import net.edge.world.entity.actor.mob.DefaultMob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 

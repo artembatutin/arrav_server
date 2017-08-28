@@ -1,9 +1,9 @@
 package net.edge.content.minigame.pestcontrol.pest;
 
+import net.edge.world.entity.actor.mob.DefaultMob;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.impl.DefaultMob;
 
 public abstract class Pest extends DefaultMob {
 	

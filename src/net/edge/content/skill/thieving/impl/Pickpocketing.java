@@ -1,8 +1,9 @@
 package net.edge.content.skill.thieving.impl;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import net.edge.action.impl.MobAction;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.HitIcon;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.content.skill.Skills;
@@ -10,12 +11,10 @@ import net.edge.content.skill.thieving.Thieving;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.Hit;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
-import java.util.EnumSet;
 import java.util.Optional;
 
 /**
@@ -158,7 +157,7 @@ public final class Pickpocketing extends Thieving {
 			else
 				mob.animation(NPC_ANIMATION);
 			int hit = RandomUtils.inclusive(1, definition.damage);
-			getPlayer().damage(new Hit(hit));
+			getPlayer().damage(new Hit(hit, Hitsplat.NORMAL, HitIcon.NONE));
 			getPlayer().animation(STUN_ANIMATION);
 			getPlayer().graphic(STUN_GRAPHIC);
 			getPlayer().stun(definition.seconds);

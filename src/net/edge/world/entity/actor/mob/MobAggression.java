@@ -60,7 +60,7 @@ public final class MobAggression {
 	 */
 	private static boolean validate(Mob mob, Player player) {
 		boolean wilderness = player.inWilderness();
-		boolean retreats = mob.getDefinition().retreats() || (player.getCombat().isBeingAttacked() && player.getCombat().getVictim() != mob);
+		boolean retreats = mob.getDefinition().retreats() || (player.getCombat().isUnderAttack() && !player.getCombat().isAttacking(mob));
 		boolean tolerance = !(wilderness || mob.getDefinition().getCombatLevel() > 126) && player.getTolerance().elapsed(GameConstants.TOLERANCE_SECONDS, TimeUnit.SECONDS);
 		if(mob.getAttr().get("isRetreating").getBoolean()) {
 			if(mob.getPosition().withinDistance(mob.getOriginalPosition(), 1)) {
@@ -68,7 +68,7 @@ public final class MobAggression {
 			}
 			return false;
 		}
-		if(!player.isVisible()) {
+		if(!player.isVisible() || player.getCombat().isUnderAttack() && !player.inMulti()) {
 			return false;
 		}
 		if(!AGGRESSIVE.contains(mob.getId()) && !wilderness || mob.getCombat().inCombat())
@@ -87,7 +87,7 @@ public final class MobAggression {
 		}
 		if(player.determineCombatLevel() > (mob.getDefinition().getCombatLevel() * 2) && !wilderness && !player.getAttr().get("ignoredAggressionLevel").getBoolean())
 			return false;
-		return !mob.getCombat().isAttacking() && !mob.getCombat().isBeingAttacked() && !tolerance;
+		return !mob.getCombat().isAttacking() && !mob.getCombat().isUnderAttack() && !tolerance;
 	}
 	
 	public static void retreat(Mob mob) {

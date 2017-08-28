@@ -3,6 +3,8 @@ package net.edge.world.entity.actor.mob;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import net.edge.content.combat.CombatProjectileDefinition;
+import net.edge.content.combat.CombatType;
 import net.edge.util.json.JsonSaver;
 
 import java.io.BufferedReader;
@@ -10,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * The container that represents an Mob definition.
@@ -58,15 +62,25 @@ public final class MobDefinition {
 	private MobDefinitionCombat combat;
 
 	/**
+	 * The combat attack data.
+	 */
+	private CombatAttackData attackData;
+
+	/**
 	 * Creates a new {@link MobDefinition}.
 	 */
-	public MobDefinition(int id, String name, String description, int size, boolean attackable, MobDefinitionCombat combat) {
+	public MobDefinition(int id, String name, String description, int size, boolean attackable, MobDefinitionCombat combat, CombatAttackData attackData) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.size = size;
 		this.attackable = attackable;
 		this.combat = combat;
+		this.attackData = attackData;
+	}
+	
+	public static Optional<MobDefinition> fromSlayerKey(String key) {
+		return Arrays.stream(DEFINITIONS).filter($it -> $it.getSlayerKey().equalsIgnoreCase(key)).findAny();
 	}
 	
 	/**
@@ -262,7 +276,11 @@ public final class MobDefinition {
 	public MobDefinitionCombat getCombat() {
 		return combat == null ? NON_COMBAT : combat;
 	}
-	
+
+	public Optional<CombatAttackData> getCombatAttackData() {
+		return Optional.ofNullable(attackData);
+	}
+
 	/**
 	 * Dumps all the definitions to a new json file.
 	 */
@@ -499,4 +517,21 @@ public final class MobDefinition {
 	public int getStrengthLevel() {
 		return combat.strengthLevel;
 	}
+
+	public static final class CombatAttackData {
+
+		public final CombatType type;
+
+		public final String key;
+
+		public CombatAttackData(CombatType type, String key) {
+			this.type = type;
+			this.key = key;
+		}
+
+		public CombatProjectileDefinition getDefinition() {
+			return CombatProjectileDefinition.getDefinition(key);
+		}
+	}
+
 }

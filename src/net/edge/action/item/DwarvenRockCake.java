@@ -2,11 +2,10 @@ package net.edge.action.item;
 
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ItemAction;
-import net.edge.content.combat.formula.MeleeFormula;
-import net.edge.content.skill.Skills;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.HitIcon;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.world.Animation;
-import net.edge.world.Graphic;
-import net.edge.world.Hit;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Inventory;
@@ -22,7 +21,7 @@ public class DwarvenRockCake extends ActionInitializer {
 				if(player.getCurrentHealth() <= 10)
 					return true;
 				player.animation(new Animation(829));
-				Hit hit = new Hit(10, Hit.HitType.NORMAL, Hit.HitIcon.NONE);
+				Hit hit = new Hit(10, Hitsplat.NORMAL, HitIcon.NONE);
 				player.damage(hit);
 				return true;
 			}

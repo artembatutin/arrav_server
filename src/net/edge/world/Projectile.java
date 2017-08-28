@@ -29,7 +29,7 @@ public final class Projectile {
 			4,
 			5,
 			5,
-			15
+			5
 	};
 	
 	/**
@@ -100,11 +100,6 @@ public final class Projectile {
 	private final int instance;
 
 	/**
-	 * The time to travel in ticks.
-	 */
-	private final int travelTime;
-	
-	/**
 	 * Creates a new {@link Projectile}.
 	 * @param start        the starting position of the projectile.
 	 * @param end          the ending position of the projectile.
@@ -129,13 +124,6 @@ public final class Projectile {
 		this.endHeight = endHeight;
 		this.curve = curve;
 		this.instance = instance;
-		int distance = (int) start.getDistance(end);
-		if(type != null && type.equals(CombatType.MAGIC)) {
-			this.travelTime = MAGIC_DELAYS[distance > 10 ? 10 : distance];
-		} else {
-			this.travelTime = RANGED_DELAYS[distance > 10 ? 10 : distance];
-		}
-		//this.travelTime = (int) ((delay + speed + start.getDistance(end) * 5) * .02857);
 	}
 	
 	/**
@@ -268,13 +256,5 @@ public final class Projectile {
 	 */
 	public int getInstance() {
 		return instance;
-	}
-
-	/**
-	 * Gets the travel time of this projectile depending on it's configuration.
-	 * @return the travel time in ticks.
-	 */
-	public int getTravelTime() {
-		return travelTime;
 	}
 }

@@ -61,9 +61,9 @@ public final class WebSlashing extends Task {
 				player.getWebSlashingTimer().reset();
 				
 				if(player.getWeaponAnimation() != null) {
-					player.animation(new Animation(player.getWeaponAnimation().getAttacking()[player.getFightType().getStyle().ordinal()], Animation.AnimationPriority.HIGH));
+					player.animation(new Animation(player.getWeaponAnimation().getAttacking()[player.getCombat().getFightType().getStyle().ordinal()], Animation.AnimationPriority.HIGH));
 				} else {
-					player.animation(new Animation(player.getFightType().getAnimation(), Animation.AnimationPriority.HIGH));
+					player.animation(new Animation(player.getCombat().getFightType().getAnimation(), Animation.AnimationPriority.HIGH));
 				}
 				if(RandomUtils.inclusive(3) > 1) {
 					player.message("You failed to slash through the web.");

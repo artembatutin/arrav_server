@@ -31,12 +31,12 @@ public final class GameConstants {
 	 * Disabling trade functions in case of emergency
 	 */
 	public static boolean TRADE_DISABLED = false;
-	
+
 	/**
 	 * Disabling duel functions in case of emergency
 	 */
 	public static boolean DUEL_DISABLED = false;
-	
+
 	/**
 	 * Disabling drop functions in case of emergency
 	 */
@@ -82,7 +82,7 @@ public final class GameConstants {
 	 * The attempted looped of randomized rare mob drops.
 	 */
 	public static final int DROP_RARE_ATTEMPTS = 5;
-	
+
 	/**
 	 * The time in seconds that has to be spent in a region before {@link Mob}s
 	 * stop acting aggressive towards a specific {@link Player}.
@@ -98,7 +98,7 @@ public final class GameConstants {
 	 * The items that are not allowed to be bought by shops.
 	 */
 	public static final int[] INVALID_SHOP_ITEMS = {995, 15246, 4067, 2996, 6529, 19000, 7478};
-	
+
 	/**
 	 * The items received when a player logs in for the first time in regular mode.
 	 */

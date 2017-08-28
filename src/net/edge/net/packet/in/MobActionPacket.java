@@ -3,9 +3,10 @@ package net.edge.net.packet.in;
 import net.edge.Application;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.MobAction;
-import net.edge.content.combat.magic.CombatSpells;
 import net.edge.content.item.pets.Pet;
 import net.edge.content.minigame.MinigameHandler;
+import net.edge.content.combat.content.MagicSpells;
+import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.net.codec.ByteOrder;
@@ -20,8 +21,6 @@ import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
-
-import java.util.Optional;
 
 /**
  * The message sent from the client when a player attacks or clicks on an NPC.
@@ -87,11 +86,12 @@ public final class MobActionPacket implements IncomingPacket {
 		int index = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int spellId = payload.getShort(true, ByteTransform.A);
 		Mob mob = World.get().getMobs().get(index - 1);
-		Optional<CombatSpells> spell = CombatSpells.getSpell(spellId);
-		if(mob == null || !spell.isPresent() || !checkAttack(player, mob))
+		MagicSpells spell = MagicSpells.forId(spellId);
+		if(mob == null || spell == null || !checkAttack(player, mob)) {
 			return;
-		player.setCastSpell(spell.get().getSpell());
+		}
 		player.getTolerance().reset();
+		player.getCombat().setStrategy(new PlayerMagicStrategy(spell));
 		player.getCombat().attack(mob);
 	}
 	
@@ -230,7 +230,7 @@ public final class MobActionPacket implements IncomingPacket {
 	private boolean checkAttack(Player player, Mob mob) {
 		if(!MobDefinition.DEFINITIONS[mob.getId()].isAttackable())
 			return false;
-		if(!player.inMulti() && player.getCombat().isBeingAttacked() && !mob.same(player.getCombat().getAggressor())) {
+		if(!player.inMulti() && player.getCombat().isUnderAttack() && !player.getCombat().isUnderAttackBy(mob)) {
 			player.message("You are already under attack!");
 			return false;
 		}

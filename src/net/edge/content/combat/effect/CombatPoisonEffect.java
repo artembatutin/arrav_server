@@ -1,9 +1,11 @@
 package net.edge.content.combat.effect;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.HitIcon;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.Hit;
 import net.edge.world.PoisonType;
 import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.entity.actor.player.Player;
@@ -43,7 +45,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 			if(player.getPoisonImmunity().get() > 0 || t.isDead())
 				return false;
 			player.out(new SendConfig(174, 1));
-			player.message("You have been poisoned!");
+			player.message("You have been poisoned!");//u dont have tosend message
 		}
 		t.getPoisonDamage().set(t.getPoisonType().getDamage());
 		return true;
@@ -57,18 +59,22 @@ public final class CombatPoisonEffect extends CombatEffect {
 	@Override
 	public void process(Actor t) {
 		amount--;
-		t.damage(new Hit(t.getPoisonDamage().get(), Hit.HitType.POISON, Hit.HitIcon.NONE));
+		t.damage(new Hit(t.getPoisonDamage().get() * 10, Hitsplat.POISON, HitIcon.NONE));
 		if(amount == 0) {
 			amount = 4;
-			t.getPoisonDamage().decrementAndGet();
+			int val = t.getPoisonDamage().decrementAndGet();
+
+			if(val < 1) {
+				t.getPoisonDamage().set(0);//clear poison.
+			}
 		}
 	}
-	
+
 	@Override
 	public boolean onLogin(Actor t) {
 		return t.isPoisoned();
 	}
-	
+
 	/**
 	 * Gets the {@link PoisonType} for {@code item} wrapped in an optional. If a
 	 * poison type doesn't exist for the item then an empty optional is

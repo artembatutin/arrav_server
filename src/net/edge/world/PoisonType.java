@@ -7,15 +7,25 @@ package net.edge.world;
 public enum PoisonType {
 	
 	/**
+	 * The default poison type for magic spells.
+	 */
+	DEFAULT_MAGIC(2),
+
+	/**
 	 * The default poison type for ranged ammunition.
 	 */
 	DEFAULT_RANGED(2),
-	
+
 	/**
 	 * The stronger poison type for ranged ammunition.
 	 */
 	STRONG_RANGED(3),
-	
+
+	/**
+	 * The strongest poison type for magic spells.
+	 */
+	SUPER_MAGIC(4),
+
 	/**
 	 * The strongest poison type for ranged ammunition.
 	 */

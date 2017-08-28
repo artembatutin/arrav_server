@@ -1,8 +1,8 @@
 package net.edge.content.skill.hunter.trap.bird;
 
+import net.edge.world.entity.actor.mob.DefaultMob;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobType;
-import net.edge.world.entity.actor.mob.impl.DefaultMob;
 import net.edge.world.locale.Position;
 
 public class Bird extends DefaultMob {

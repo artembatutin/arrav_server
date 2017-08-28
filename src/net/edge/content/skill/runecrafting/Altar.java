@@ -1,12 +1,6 @@
 package net.edge.content.skill.runecrafting;
 
-import net.edge.action.impl.ItemAction;
-import net.edge.content.teleport.impl.DefaultTeleportSpell;
-import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.item.Item;
 import net.edge.world.locale.Position;
-
-import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.TRAINING_PORTAL;
 
 /**
  * The enumerated type which elements represents an altar which can produce

@@ -7,6 +7,8 @@ import net.edge.content.PlayerPanel;
 import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.GameConstants;
 import net.edge.GamePulseHandler;
+import net.edge.content.combat.Combat;
+import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
 import net.edge.net.packet.out.SendYell;
@@ -19,10 +21,11 @@ import net.edge.util.ThreadUtil;
 import net.edge.util.log.LoggingManager;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.ActorList;
+import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.actor.mob.MobAggression;
+import net.edge.world.entity.actor.mob.MobMovementTask;
 import net.edge.world.entity.actor.move.path.SimplePathChecker;
 import net.edge.world.entity.actor.move.path.impl.SimplePathFinder;
-import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.MobMovementTask;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.GroundItem;
@@ -31,10 +34,16 @@ import net.edge.world.entity.region.RegionManager;
 import net.edge.world.sync.Synchronizer;
 
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static net.edge.net.session.GameSession.UPDATE_LIMIT;
 import static net.edge.world.entity.EntityState.*;
+import static net.edge.net.session.GameSession.outLimit;
+import static net.edge.world.entity.EntityState.AWAITING_REMOVAL;
+import static net.edge.world.entity.EntityState.IDLE;
 
 /**
  * The static utility class that contains functions to manage and process game characters.
@@ -360,15 +369,17 @@ public final class World {
 			return character.toPlayer().getLocalMobs().iterator();
 		return mobs.iterator();
 	}
-	
+
 	/**
-	 * Gets every single actor in the player and npc character lists.
+	 * Creates a set of every single actor in the player and npc character
+	 * lists, with {@link Mob} actors first and {@link Player} actors second.
+	 *
 	 * @return a set containing every single character.
 	 */
 	public Set<Actor> getActors() {
 		Set<Actor> actors = new HashSet<>();
-		players.forEach(actors::add);
 		mobs.forEach(actors::add);
+		players.forEach(actors::add);
 		return actors;
 	}
 	
@@ -418,7 +429,7 @@ public final class World {
 		try {
 			// If the player x-logged, don't log the player out. Keep the
 			// player queued until they are out of combat to prevent x-logging.
-			if(player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombat().isBeingAttacked() && UpdateCommand.inProgess != 2) {
+			if(player.getLogoutTimer().elapsed(GameConstants.LOGOUT_SECONDS, TimeUnit.SECONDS) && player.getCombat().isUnderAttack() && UpdateCommand.inProgess != 2) {
 				return false;
 			}
 			boolean response = players.remove(player);
@@ -484,14 +495,6 @@ public final class World {
 	public ActorList<Mob> getMobs() {
 		return mobs;
 	}
-	
-	/**
-	 * Gets the server synchronizer.
-	 * @return
-	 */
-	public Synchronizer getSync() {
-		return sync;
-	}
 
 
 	/* CONSTANTS DECLARATIONS */
@@ -517,7 +520,7 @@ public final class World {
 	private static final SimplePathChecker SIMPLE_PATH_CHECKER = new SimplePathChecker();
 	
 	/**
-	 * This world's {@link LoggingManager} used to log player actions.
+	 * This world's {@link LoggingManatger} used to log player actions.
 	 */
 	private static final LoggingManager LOG_MANAGER = new LoggingManager();
 	
@@ -539,7 +542,7 @@ public final class World {
 	
 	/* ASSETS GATHERS METHODS. */
 	
-	
+
 	/**
 	 * Returns this world's {@link LoggingManager}.
 	 */

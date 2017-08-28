@@ -2,12 +2,13 @@ package net.edge.content.minigame.pestcontrol.pest;
 
 import net.edge.content.minigame.pestcontrol.PestControlMinigame;
 import net.edge.content.minigame.pestcontrol.defence.PestGate;
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.HitIcon;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.world.locale.Position;
-import net.edge.world.Hit;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobDeath;
-import net.edge.world.entity.region.Region;
 
 public class Splatter extends Pest {
 	
@@ -47,7 +48,7 @@ public class Splatter extends Pest {
 		super.setPosition(position);
 		if(gate != null && gate.getPos().withinDistance(getPosition(), 1)) {
 			//exploding near gates.
-			damage(new Hit(getCurrentHealth(), Hit.HitType.NORMAL, Hit.HitIcon.NONE));
+			damage(new Hit(getCurrentHealth(), Hitsplat.NORMAL, HitIcon.NONE));
 		}
 	}
 	
@@ -59,7 +60,7 @@ public class Splatter extends Pest {
 			//hitting players.
 			reg.getPlayers().forEach(p -> {
 				if(p.getPosition().withinDistance(getPosition(), 1)) {
-					p.damage(new Hit(p.getMaximumHealth() / 5, Hit.HitType.NORMAL, Hit.HitIcon.NONE));
+					p.damage(new Hit(p.getMaximumHealth() / 5, Hitsplat.NORMAL, HitIcon.NONE));
 				}
 			});
 			//hitting npcs.
@@ -67,7 +68,7 @@ public class Splatter extends Pest {
 				int id = n.getId();
 				if(id < 6142 || id > 6145) {//ignoring portals.
 					if(n.getPosition().withinDistance(getPosition(), 1)) {
-						n.damage(new Hit(n.getMaxHealth() / 3, Hit.HitType.NORMAL, Hit.HitIcon.NONE));
+						n.damage(new Hit(n.getMaxHealth() / 3, Hitsplat.NORMAL, HitIcon.NONE));
 					}
 				}
 			});

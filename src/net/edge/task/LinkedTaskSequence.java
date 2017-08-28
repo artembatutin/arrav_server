@@ -94,7 +94,7 @@ public final class LinkedTaskSequence extends Task {
 	 * The counter that determines when each individual link will be ran.
 	 */
 	private int tickCounter = -1;
-	
+
 	/**
 	 * Creates a new {@link LinkedTaskSequence}.
 	 * @param replay determines if this sequence should replay.
@@ -134,7 +134,7 @@ public final class LinkedTaskSequence extends Task {
 			this.cancel();
 			return;
 		}
-		
+
 		if(++tickCounter == link.getDelay()) {
 			try {
 				link.execute();
@@ -207,7 +207,7 @@ public final class LinkedTaskSequence extends Task {
 	 * <pre>
 	 * connect(2, () -&gt; System.out.println(&quot;very small link&quot;));
 	 * </pre>
-	 * @param link the link to connect, cannot be {@code null}.
+	 * @param task the link to connect, cannot be {@code null}.
 	 * @return an instance of itself, for chaining.
 	 */
 	public LinkedTaskSequence connect(int delay, Runnable task) {

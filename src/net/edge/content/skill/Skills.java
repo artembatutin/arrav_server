@@ -162,7 +162,7 @@ public final class Skills {
 	/**
 	 * The experience multiplier that combat related skills experience will be calculated with.
 	 */
-	private static final int COMBAT_EXPERIENCE_MULTIPLER = 1000;
+	private static final int COMBAT_EXPERIENCE_MULTIPLER = 1;
 	
 	/**
 	 * The default constructor.
@@ -183,10 +183,9 @@ public final class Skills {
 		if(amount <= 0)
 			return;
 		int oldLevel = player.getSkills()[skill].getRealLevel();
-		boolean combatLevel = skill == ATTACK || skill == DEFENCE || skill == HITPOINTS || skill == STRENGTH || skill == RANGED || skill == MAGIC;
-		amount *= skill == PRAYER ? PRAYER_EXPERIENCE_MULTIPLIER : combatLevel ? COMBAT_EXPERIENCE_MULTIPLER : SKILL_EXPERIENCE_MULTIPLIER;
+		if (skill > 6)
+			amount *= skill == PRAYER ? PRAYER_EXPERIENCE_MULTIPLIER : SKILL_EXPERIENCE_MULTIPLIER;
 		amount *= GameConstants.EXPERIENCE_MULTIPLIER;
-		amount *= (player.getSkills()[skill].getRealLevel() == 99 && combatLevel ? 0.2 : 1);
 		Rights right = player.getRights();
 		amount *= right.equals(Rights.EXTREME_DONATOR) ? 1.10 : right.equals(Rights.SUPER_DONATOR) ? 1.05 : right.equals(Rights.DONATOR) ? 1.025 : 1;
 		if(!player.lockedXP)

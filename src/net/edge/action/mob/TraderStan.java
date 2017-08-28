@@ -4,7 +4,6 @@ import net.edge.action.ActionInitializer;
 import net.edge.action.impl.MobAction;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.impl.DefaultMob;
 import net.edge.world.entity.actor.player.Player;
 
 public class TraderStan extends ActionInitializer {
@@ -36,17 +35,17 @@ public class TraderStan extends ActionInitializer {
 				"May the gold be with you.",
 				"I aint gonna say I had a small loan of a million dollars from my Dad."
 		};
-		Mob.CUSTOM_MOBS.put(4650, s -> new DefaultMob(4650, s) {
-			private int timer = 0;
-			@Override
-			public void update() {
-				timer++;
-				if(timer >= 200) {
-					forceChat(RandomUtils.random(chats));
-					timer = 0;
-				}
-			}
-		});
+//		Mob.CUSTOM_MOBS.put(4650, s -> new DefaultMob(4650, s) {
+//			private int timer = 0;
+//			@Override
+//			public void update() {
+//				timer++;
+//				if(timer >= 200) {
+//					forceChat(RandomUtils.random(chats));
+//					timer = 0;
+//				}
+//			}
+//		});
 		MobAction e = new MobAction() {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {

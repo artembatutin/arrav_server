@@ -1,13 +1,13 @@
 package net.edge.content.item;
 
+import net.edge.content.combat.hit.Hit;
+import net.edge.content.combat.hit.HitIcon;
+import net.edge.content.combat.hit.Hitsplat;
 import net.edge.content.skill.Skills;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
 import net.edge.world.Animation;
-import net.edge.world.Hit;
-import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.locale.area.AreaManager;
 
 import java.util.stream.IntStream;
 
@@ -46,7 +46,7 @@ public final class OverloadEffectTask extends Task {
                 seq.cancel();
                 return;
             }
-            player.damage(new Hit(100));
+            player.damage(new Hit(100, Hitsplat.NORMAL, HitIcon.NONE));
             player.animation(new Animation(3170, Animation.AnimationPriority.HIGH));
             damageCycle++;
         });

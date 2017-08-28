@@ -1,10 +1,9 @@
 package net.edge.content.minigame.pestcontrol.pest;
 
-import net.edge.content.combat.CombatType;
-import net.edge.world.entity.region.TraversalMap;
-import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
 
 import java.util.Optional;
 
@@ -18,13 +17,12 @@ public class Torcher extends Pest {
 	public Torcher(int id, Position position) {
 		super(id, position);
 		getAttr().get("master_archery").set(true);
-		getCombat().setCombatType(CombatType.MAGIC);
 	}
 	
 	@Override
 	public void sequence(Mob knight) {
-		if(getCombat().getAggressor() != null && getCombat().getAggressor().isPlayer()) {
-			getCombat().attack(getCombat().getAggressor());
+		if(getCombat().getLastAttacker() != null && getCombat().getLastAttacker().isPlayer()) {
+			getCombat().attack(getCombat().getLastAttacker());
 		} else if(!getPosition().withinDistance(knight.getPosition(), 15) && !getCombat().isAttacking()) {
 			Position delta = Position.delta(getPosition(), knight.getPosition());
 			int x = RandomUtils.inclusive(delta.getX() < 0 ? -delta.getX() : delta.getX());

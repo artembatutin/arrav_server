@@ -2,8 +2,6 @@ package net.edge.content.commands.impl;
 
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
-import net.edge.content.teleport.impl.DefaultTeleportSpell;
-import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
@@ -18,7 +16,7 @@ public final class TeleportCommand implements Command {
 		if(cmd.length > 3) {
 			z = Integer.parseInt(cmd[3]);
 		}
-		DefaultTeleportSpell.startTeleport(player, new Position(x, y, z));
+//		DefaultTeleportSpell.startTeleport(player, new Position(x, y, z)); TODO: add teleports
 	}
 	
 }

@@ -16,8 +16,8 @@ import net.edge.cache.decoder.ObjectDefinitionDecoder;
 import net.edge.cache.decoder.RegionDecoder;
 import net.edge.content.PlayerPanel;
 import net.edge.content.RestoreStatTask;
-import net.edge.content.combat.CombatConstants;
-import net.edge.content.combat.strategy.Strategy;
+import net.edge.content.combat.CombatProjectileDefinition;
+import net.edge.content.combat.attack.listener.CombatListenerDispatcher;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.object.pit.FirepitManager;
 import net.edge.content.object.star.ShootingStarManager;
@@ -26,6 +26,8 @@ import net.edge.content.trivia.TriviaTask;
 import net.edge.net.EdgevilleChannelInitializer;
 import net.edge.net.host.HostListType;
 import net.edge.net.NetworkConstants;
+import net.edge.net.host.HostManager;
+import net.edge.net.host.HostListType;
 import net.edge.net.host.HostManager;
 import net.edge.task.Task;
 import net.edge.util.LoggerUtils;
@@ -212,24 +214,10 @@ public final class Application {
 		launch.execute(new ShieldAnimationLoader());
 		launch.execute(new WeaponAnimationLoader());
 		launch.execute(new WeaponInterfaceLoader());
-		launch.execute(new CombatRangedBowLoader());
 		launch.execute(new EquipmentRequirementLoader());
+		launch.execute(new CombatRangedBowLoader());
 		launch.execute(new IndividualScoreboardRewardsLoader());
 		launch.execute(() -> new SlayerDefinitionLoader().load());
-		launch.execute(() -> {//Adding combat strategies.
-			for(String directory : Utility.getSubDirectories(Strategy.class)) {
-				try {
-					List<Strategy> s = Utility.getClassesInDirectory(Strategy.class.getPackage().getName() + "." + directory).stream().map(clazz -> (Strategy) clazz).collect(Collectors.toList());
-					s.forEach(c -> {
-						for(int n : c.getMobs()) {
-							CombatConstants.DEFAULT_STRATEGIES.put(n, c);
-						}
-					});
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 		launch.execute(() -> HostManager.deserialize(HostListType.BANNED_MAC));
 		launch.execute(() -> HostManager.deserialize(HostListType.BANNED_IP));
 		launch.execute(() -> HostManager.deserialize(HostListType.MUTED_IP));
@@ -237,6 +225,8 @@ public final class Application {
 	}
 	
 	private void prepare() {
+		CombatProjectileDefinition.createLoader().load();
+		CombatListenerDispatcher.load();
 		CommandDispatcher.load();
 		loadEvents();
 		ButtonAction.init();

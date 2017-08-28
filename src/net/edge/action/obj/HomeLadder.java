@@ -2,11 +2,8 @@ package net.edge.action.obj;
 
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ObjectAction;
-import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.object.GameObject;
-
-import static net.edge.content.teleport.impl.DefaultTeleportSpell.TeleportType.LADDER;
 
 public class HomeLadder extends ActionInitializer {
 	@Override
@@ -15,8 +12,8 @@ public class HomeLadder extends ActionInitializer {
 		ObjectAction l = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				if(player.isIronMan())
-					player.teleport(new Position(3099, 3497, 1), LADDER);
+				if(player.isIronMan());
+	//				player.teleport(new Position(3099, 3497, 1), LADDER); TODO: add teleports
 				return true;
 			}
 		};
@@ -24,7 +21,7 @@ public class HomeLadder extends ActionInitializer {
 		l = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				player.teleport(new Position(3102, 3497, 0), LADDER);
+//				player.teleport(new Position(3102, 3497, 0), LADDER);
 				return true;
 			}
 		};
@@ -34,7 +31,7 @@ public class HomeLadder extends ActionInitializer {
 		l = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				player.teleport(new Position(3091, 3478, 1), LADDER);
+//				player.teleport(new Position(3091, 3478, 1), LADDER);
 				return true;
 			}
 		};
@@ -42,7 +39,7 @@ public class HomeLadder extends ActionInitializer {
 		l = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				player.teleport(new Position(3091, 3480, 0), LADDER);
+//				player.teleport(new Position(3091, 3480, 0), LADDER);
 				return true;
 			}
 		};
@@ -52,7 +49,7 @@ public class HomeLadder extends ActionInitializer {
 		l = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				player.teleport(new Position(3084, 3510, 0), LADDER);
+//				player.teleport(new Position(3084, 3510, 0), LADDER);
 				return true;
 			}
 		};
@@ -62,7 +59,7 @@ public class HomeLadder extends ActionInitializer {
 		l = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				player.teleport(new Position(2995, 9826, 0), LADDER);
+//				player.teleport(new Position(2995, 9826, 0), LADDER);
 				return true;
 			}
 		};

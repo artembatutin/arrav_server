@@ -2,7 +2,7 @@ package net.edge.world.entity.actor.attribute;
 
 import com.google.common.base.MoreObjects;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import net.edge.content.combat.weapon.FightType;
+import net.edge.content.combat.attack.FightType;
 import net.edge.content.minigame.rfd.RFDData;
 import net.edge.content.skill.cooking.CookingData;
 import net.edge.content.skill.crafting.Spinning.SpinningData;

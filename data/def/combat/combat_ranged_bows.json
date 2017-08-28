@@ -1,7 +1,7 @@
 [
   {
     "item": 10148,
-    "type": "SALAMANDER",
+    "type": "SHOT",
     "delay": 5,
     "ammunitions": [
       "HARRALANDER_TAR"
@@ -9,7 +9,7 @@
   },
   {
     "item": 10147,
-    "type": "SALAMANDER",
+    "type": "SHOT",
     "delay": 5,
     "ammunitions": [
       "TARROMIN_TAR"
@@ -17,7 +17,7 @@
   },
   {
     "item": 10146,
-    "type": "SALAMANDER",
+    "type": "SHOT",
     "delay": 5,
     "ammunitions": [
       "MARRENTIL_TAR"
@@ -25,7 +25,7 @@
   },
   {
     "item": 10149,
-    "type": "SALAMANDER",
+    "type": "SHOT",
     "delay": 5,
     "ammunitions": [
       "GUAM_TAR"
@@ -33,7 +33,7 @@
   },
   {
     "item": 15241,
-    "type": "HAND_CANNON",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "HAND_CANNON_SHOT"
@@ -41,7 +41,7 @@
   },
   {
     "item": 6724,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 5,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -63,7 +63,7 @@
   },
   {
     "item": 9705,
-    "type": "SHORTBOW",
+    "type": "SHOT",
     "delay": 4,
     "ammunitions": [
       "TRAINING_ARROWS"
@@ -71,7 +71,7 @@
   },
   {
     "item": 841,
-    "type": "SHORTBOW",
+    "type": "SHOT",
     "delay": 4,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -80,7 +80,7 @@
   },
   {
     "item": 839,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -89,7 +89,7 @@
   },
   {
     "item": 843,
-    "type": "SHORTBOW",
+    "type": "SHOT",
     "delay": 4,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -99,7 +99,7 @@
   },
   {
     "item": 845,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -109,7 +109,7 @@
   },
   {
     "item": 847,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -124,7 +124,7 @@
   },
   {
     "item": 10280,
-    "type": "COMPOSITE_BOW",
+    "type": "SHOT",
     "delay": 5,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -139,7 +139,7 @@
   },
   {
     "item": 10282,
-    "type": "COMPOSITE_BOW",
+    "type": "SHOT",
     "delay": 5,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -157,7 +157,7 @@
   },
   {
     "item": 10284,
-    "type": "COMPOSITE_BOW",
+    "type": "SHOT",
     "delay": 5,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -179,7 +179,7 @@
   },
   {
     "item": 849,
-    "type": "SHORTBOW",
+    "type": "SHOT",
     "delay": 4,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -194,7 +194,7 @@
   },
   {
     "item": 853,
-    "type": "SHORTBOW",
+    "type": "SHOT",
     "delay": 4,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -210,7 +210,7 @@
   },
   {
     "item": 851,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -226,7 +226,7 @@
   },
   {
     "item": 857,
-    "type": "SHORTBOW",
+    "type": "SHOT",
     "delay": 4,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -244,7 +244,7 @@
   },
   {
     "item": 855,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -262,7 +262,7 @@
   },
   {
     "item": 861,
-    "type": "SHORTBOW",
+    "type": "SHOT",
     "delay": 4,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -284,7 +284,7 @@
   },
   {
     "item": 859,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -306,7 +306,7 @@
   },
   {
     "item": 10280,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 5,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -321,7 +321,7 @@
   },
   {
     "item": 10282,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 5,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -338,7 +338,7 @@
   },
   {
     "item": 10284,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 5,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -356,7 +356,7 @@
   },
   {
     "item": 11235,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 8,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -378,7 +378,7 @@
   },
   {
     "item": 13405,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 8,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -400,7 +400,7 @@
   },
   {
     "item": 15701,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 8,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -419,7 +419,7 @@
   },
   {
     "item": 15702,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 8,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -438,7 +438,7 @@
   },
   {
     "item": 15703,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 8,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -457,7 +457,7 @@
   },
   {
     "item": 15704,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 8,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -476,7 +476,7 @@
   },
   {
     "item": 19143,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -497,7 +497,7 @@
   },
   {
     "item": 19146,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -518,7 +518,7 @@
   },
   {
     "item": 19149,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_ARROW",
@@ -539,7 +539,7 @@
   },
   {
     "item": 2883,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 7,
     "ammunitions": [
       "OGRE_ARROW"
@@ -547,7 +547,7 @@
   },
   {
     "item": 4827,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 7,
     "ammunitions": [
       "OGRE_ARROW",
@@ -562,7 +562,7 @@
   },
   {
     "item": 4828,
-    "type": "LONGBOW",
+    "type": "SHOT",
     "delay": 7,
     "ammunitions": [
       "OGRE_ARROW",
@@ -577,7 +577,7 @@
   },
   {
     "item": 4734,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 3,
     "ammunitions": [
       "BOLT_RACK"
@@ -585,7 +585,7 @@
   },
   {
     "item": 10156,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 4,
     "ammunitions": [
       "KEBBIT_BOLT",
@@ -594,7 +594,7 @@
   },
   {
     "item": 8880,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 5,
     "ammunitions": [
       "BONE_BOLT"
@@ -602,20 +602,18 @@
   },
   {
     "item": 837,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
       "BLURITE_BOLTS",
       "IRON_BOLTS",
-      "OPAL_BOLTS",
-      "JADE_BOLTS",
       "PEARL_BOLTS"
     ]
   },
   {
     "item": 9174,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
@@ -624,7 +622,7 @@
   },
   {
     "item": 11165,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
@@ -633,7 +631,7 @@
   },
   {
     "item": 11166,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
@@ -642,7 +640,7 @@
   },
   {
     "item": 11167,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
@@ -651,7 +649,7 @@
   },
   {
     "item": 11168,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
@@ -660,32 +658,29 @@
   },
   {
     "item": 9176,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
       "BLURITE_BOLTS",
-      "OPAL_BOLTS",
       "JADE_BOLTS"
     ]
   },
   {
     "item": 9177,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
       "BLURITE_BOLTS",
       "SILVER_BOLTS",
       "IRON_BOLTS",
-      "OPAL_BOLTS",
-      "JADE_BOLTS",
       "PEARL_BOLTS"
     ]
   },
   {
     "item": 9179,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
@@ -693,15 +688,12 @@
       "SILVER_BOLTS",
       "IRON_BOLTS",
       "STEEL_BOLTS",
-      "OPAL_BOLTS",
-      "JADE_BOLTS",
-      "PEARL_BOLTS",
       "TOPAZ_BOLTS"
     ]
   },
   {
     "item": 9181,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
@@ -710,11 +702,6 @@
       "IRON_BOLTS",
       "STEEL_BOLTS",
       "MITHRIL_BOLTS",
-      "OPAL_BOLTS",
-      "JADE_BOLTS",
-      "PEARL_BOLTS",
-      "TOPAZ_BOLTS",
-      "SAPPHIRE_BOLTS",
       "EMERALD_BOLTS",
       "ABYSSALBANE_BOLT",
       "BASILISKBANE_BOLT",
@@ -724,7 +711,7 @@
   },
   {
     "item": 9183,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
@@ -734,13 +721,6 @@
       "STEEL_BOLTS",
       "MITHRIL_BOLTS",
       "ADAMANT_BOLTS",
-      "OPAL_BOLTS",
-      "JADE_BOLTS",
-      "PEARL_BOLTS",
-      "TOPAZ_BOLTS",
-      "SAPPHIRE_BOLTS",
-      "RUBY_BOLTS",
-      "DIAMOND_BOLTS",
       "ABYSSALBANE_BOLT",
       "BASILISKBANE_BOLT",
       "DRAGONBANE_BOLT",
@@ -749,7 +729,7 @@
   },
   {
     "item": 9185,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
@@ -761,15 +741,7 @@
       "BROAD_TIPPED_BOLTS",
       "ADAMANT_BOLTS",
       "RUNITE_BOLTS",
-      "OPAL_BOLTS",
-      "JADE_BOLTS",
-      "PEARL_BOLTS",
-      "TOPAZ_BOLTS",
-      "SAPPHIRE_BOLTS",
-      "RUBY_BOLTS",
-      "DIAMOND_BOLTS",
       "DRAGON_BOLTS",
-      "ONYX_BOLTS",
       "ABYSSALBANE_BOLT",
       "BASILISKBANE_BOLT",
       "DRAGONBANE_BOLT",
@@ -778,7 +750,7 @@
   },
   {
     "item": 18357,
-    "type": "CROSSBOW",
+    "type": "SHOT",
     "delay": 6,
     "ammunitions": [
       "BRONZE_BOLTS",
@@ -790,15 +762,7 @@
       "BROAD_TIPPED_BOLTS",
       "ADAMANT_BOLTS",
       "RUNITE_BOLTS",
-      "OPAL_BOLTS",
-      "JADE_BOLTS",
-      "PEARL_BOLTS",
-      "TOPAZ_BOLTS",
-      "SAPPHIRE_BOLTS",
-      "RUBY_BOLTS",
-      "DIAMOND_BOLTS",
       "DRAGON_BOLTS",
-      "ONYX_BOLTS",
       "ABYSSALBANE_BOLT",
       "BASILISKBANE_BOLT",
       "DRAGONBANE_BOLT",
@@ -807,7 +771,7 @@
   },
   {
     "item": 20171,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "ZARYTE_ARROW"
     ],
@@ -815,7 +779,7 @@
   },
   {
     "item": 20172,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "ZARYTE_ARROW"
     ],
@@ -823,7 +787,7 @@
   },
   {
     "item": 20173,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "ZARYTE_ARROW"
     ],
@@ -831,7 +795,7 @@
   },
   {
     "item": 4212,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "CRYSTAL_ARROW"
     ],
@@ -839,7 +803,7 @@
   },
   {
     "item": 4213,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "CRYSTAL_ARROW"
     ],
@@ -847,7 +811,7 @@
   },
   {
     "item": 4214,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "CRYSTAL_ARROW"
     ],
@@ -855,7 +819,7 @@
   },
   {
     "item": 4215,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "CRYSTAL_ARROW"
     ],
@@ -863,7 +827,7 @@
   },
   {
     "item": 4216,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "CRYSTAL_ARROW"
     ],
@@ -871,7 +835,7 @@
   },
   {
     "item": 4217,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "CRYSTAL_ARROW"
     ],
@@ -879,7 +843,7 @@
   },
   {
     "item": 4218,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "CRYSTAL_ARROW"
     ],
@@ -887,7 +851,7 @@
   },
   {
     "item": 4219,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "CRYSTAL_ARROW"
     ],
@@ -895,7 +859,7 @@
   },
   {
     "item": 4220,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "CRYSTAL_ARROW"
     ],
@@ -903,7 +867,7 @@
   },
   {
     "item": 4221,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "CRYSTAL_ARROW"
     ],
@@ -911,7 +875,7 @@
   },
   {
     "item": 4222,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "CRYSTAL_ARROW"
     ],
@@ -919,7 +883,7 @@
   },
   {
     "item": 4223,
-    "type": "SPECIAL_BOW",
+    "type": "SHOT",
     "ammunitions": [
       "CRYSTAL_ARROW"
     ],
@@ -927,7 +891,7 @@
   },
   {
     "item": 10033,
-    "type": "CHINCHOMPA",
+    "type": "THROWN",
     "ammunitions": [
       "CHINCHOMPA"
     ],
@@ -935,7 +899,7 @@
   },
   {
     "item": 10034,
-    "type": "CHINCHOMPA",
+    "type": "THROWN",
     "ammunitions": [
       "RED_CHINCHOMPA"
     ],
@@ -948,7 +912,7 @@
       5654,
       5661
     ],
-    "type": "KNIFE",
+    "type": "THROWN",
     "ammunitions": [
       "BRONZE_KNIFE"
     ],
@@ -961,7 +925,7 @@
       5655,
       5662
     ],
-    "type": "KNIFE",
+    "type": "THROWN",
     "ammunitions": [
       "IRON_KNIFE"
     ],
@@ -974,7 +938,7 @@
       5656,
       5663
     ],
-    "type": "KNIFE",
+    "type": "THROWN",
     "ammunitions": [
       "STEEL_KNIFE"
     ],
@@ -987,7 +951,7 @@
       5658,
       5665
     ],
-    "type": "KNIFE",
+    "type": "THROWN",
     "ammunitions": [
       "BLACK_KNIFE"
     ],
@@ -1000,7 +964,7 @@
       5657,
       5664
     ],
-    "type": "KNIFE",
+    "type": "THROWN",
     "ammunitions": [
       "MITHRIL_KNIFE"
     ],
@@ -1013,7 +977,7 @@
       5659,
       5666
     ],
-    "type": "KNIFE",
+    "type": "THROWN",
     "ammunitions": [
       "ADAMANT_KNIFE"
     ],
@@ -1026,7 +990,7 @@
       5660,
       5667
     ],
-    "type": "KNIFE",
+    "type": "THROWN",
     "ammunitions": [
       "RUNE_KNIFE"
     ],
@@ -1039,7 +1003,7 @@
       5628,
       5635
     ],
-    "type": "DART",
+    "type": "THROWN",
     "ammunitions": [
       "BRONZE_DART"
     ],
@@ -1052,7 +1016,7 @@
       5629,
       5636
     ],
-    "type": "DART",
+    "type": "THROWN",
     "ammunitions": [
       "IRON_DART"
     ],
@@ -1065,7 +1029,7 @@
       5630,
       5637
     ],
-    "type": "DART",
+    "type": "THROWN",
     "ammunitions": [
       "STEEL_DART"
     ],
@@ -1078,7 +1042,7 @@
       5632,
       5639
     ],
-    "type": "DART",
+    "type": "THROWN",
     "ammunitions": [
       "MITHRIL_DART"
     ],
@@ -1091,7 +1055,7 @@
       5633,
       5640
     ],
-    "type": "DART",
+    "type": "THROWN",
     "ammunitions": [
       "ADAMANT_DART"
     ],
@@ -1104,7 +1068,7 @@
       5634,
       5641
     ],
-    "type": "DART",
+    "type": "THROWN",
     "ammunitions": [
       "RUNE_DART"
     ],
@@ -1117,7 +1081,7 @@
       5631,
       5638
     ],
-    "type": "DART",
+    "type": "THROWN",
     "ammunitions": [
       "BLACK_DART"
     ],
@@ -1130,7 +1094,7 @@
       5642,
       5648
     ],
-    "type": "JAVELIN",
+    "type": "THROWN",
     "ammunitions": [
       "BRONZE_JAVELIN"
     ],
@@ -1143,7 +1107,7 @@
       5643,
       5649
     ],
-    "type": "JAVELIN",
+    "type": "THROWN",
     "ammunitions": [
       "IRON_JAVELIN"
     ],
@@ -1156,7 +1120,7 @@
       5644,
       5650
     ],
-    "type": "JAVELIN",
+    "type": "THROWN",
     "ammunitions": [
       "STEEL_JAVELIN"
     ],
@@ -1169,7 +1133,7 @@
       5645,
       5651
     ],
-    "type": "JAVELIN",
+    "type": "THROWN",
     "ammunitions": [
       "MITHRIL_JAVELIN"
     ],
@@ -1182,7 +1146,7 @@
       5646,
       5652
     ],
-    "type": "JAVELIN",
+    "type": "THROWN",
     "ammunitions": [
       "ADAMANT_JAVELIN"
     ],
@@ -1195,7 +1159,7 @@
       5647,
       5653
     ],
-    "type": "JAVELIN",
+    "type": "THROWN",
     "ammunitions": [
       "RUNE_JAVELIN"
     ],
@@ -1208,7 +1172,7 @@
       13881,
       13882
     ],
-    "type": "JAVELIN",
+    "type": "THROWN",
     "ammunitions": [
       "MORRIGAN_JAVELIN"
     ],
@@ -1216,7 +1180,7 @@
   },
   {
     "item": 800,
-    "type": "THROWNAXE",
+    "type": "THROWN",
     "ammunitions": [
       "BRONZE_THROWNAXE"
     ],
@@ -1224,7 +1188,7 @@
   },
   {
     "item": 801,
-    "type": "THROWNAXE",
+    "type": "THROWN",
     "ammunitions": [
       "IRON_THROWNAXE"
     ],
@@ -1232,7 +1196,7 @@
   },
   {
     "item": 802,
-    "type": "THROWNAXE",
+    "type": "THROWN",
     "ammunitions": [
       "STEEL_THROWNAXE"
     ],
@@ -1240,7 +1204,7 @@
   },
   {
     "item": 803,
-    "type": "THROWNAXE",
+    "type": "THROWN",
     "ammunitions": [
       "MITHRIL_THROWNAXE"
     ],
@@ -1248,7 +1212,7 @@
   },
   {
     "item": 804,
-    "type": "THROWNAXE",
+    "type": "THROWN",
     "ammunitions": [
       "ADAMANT_THROWNAXE"
     ],
@@ -1256,7 +1220,7 @@
   },
   {
     "item": 805,
-    "type": "THROWNAXE",
+    "type": "THROWN",
     "ammunitions": [
       "RUNE_THROWNAXE"
     ],
@@ -1264,7 +1228,7 @@
   },
   {
     "item": 13883,
-    "type": "THROWNAXE",
+    "type": "THROWN",
     "ammunitions": [
       "MORRIGAN_THROWNAXE"
     ],
@@ -1272,7 +1236,7 @@
   },
   {
     "item": 6522,
-    "type": "JAVELIN",
+    "type": "THROWN",
     "ammunitions": [
       "TOKTZ_XIL_UL"
     ],

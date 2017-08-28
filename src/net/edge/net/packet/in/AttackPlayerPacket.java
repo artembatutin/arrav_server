@@ -1,21 +1,22 @@
 package net.edge.net.packet.in;
 
 import net.edge.content.combat.CombatUtil;
-import net.edge.content.combat.magic.CombatSpells;
-import net.edge.content.combat.magic.lunars.LunarSpells;
-import net.edge.world.entity.item.container.session.ExchangeSession;
-import net.edge.world.entity.item.container.session.ExchangeSessionManager;
-import net.edge.world.entity.item.container.session.impl.DuelSession;
+import net.edge.content.combat.content.MagicSpells;
+import net.edge.content.combat.content.lunars.LunarSpells;
+import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.world.locale.loc.Location;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import net.edge.world.entity.item.container.session.ExchangeSession;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.item.container.session.impl.DuelSession;
+import net.edge.world.locale.loc.Location;
 
 import java.util.Optional;
 
@@ -49,16 +50,17 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		int index = payload.getShort(true, ByteTransform.A);
 		int spellId = payload.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
-		
-		Optional<CombatSpells> spell = CombatSpells.getSpell(spellId);
-		if(!spell.isPresent()) {
-			LunarSpells.castCombatSpells(player, victim, spellId);
+
+		if(LunarSpells.castCombatSpells(player, victim, spellId)) {
 			return;
 		}
-		if(index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !checkAttack(player, victim)) {
+
+		MagicSpells spell = MagicSpells.forId(spellId);
+		if(spell == null || index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !checkAttack(player, victim)) {
 			return;
 		}
-		player.setCastSpell(spell.get().getSpell());
+
+		player.getCombat().setStrategy(new PlayerMagicStrategy(spell));
 		player.getCombat().attack(victim);
 	}
 	
@@ -96,7 +98,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			attacker.message("You can't initiate combat with an iron man member.");
 			return false;
 		}
-		if(!attacker.inMulti() && attacker.getCombat().isBeingAttacked() && attacker.getCombat().getAggressor() != victim && attacker.getCombat().pjingCheck()) {
+		if(!attacker.inMulti() && attacker.getCombat().isUnderAttack() && !attacker.getCombat().isUnderAttackBy(victim)) {
 			attacker.message("You are already under attack!");
 			attacker.getMovementQueue().reset();
 			return false;
