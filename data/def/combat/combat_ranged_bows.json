@@ -1,1245 +1,1245 @@
 [
   {
-    "item": 10148,
-    "type": "SHOT",
-    "delay": 5,
-    "ammunitions": [
-      "HARRALANDER_TAR"
-    ]
-  },
-  {
-    "item": 10147,
-    "type": "SHOT",
-    "delay": 5,
-    "ammunitions": [
-      "TARROMIN_TAR"
-    ]
-  },
-  {
-    "item": 10146,
-    "type": "SHOT",
-    "delay": 5,
-    "ammunitions": [
-      "MARRENTIL_TAR"
-    ]
-  },
-  {
-    "item": 10149,
-    "type": "SHOT",
-    "delay": 5,
-    "ammunitions": [
-      "GUAM_TAR"
-    ]
-  },
-  {
-    "item": 15241,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "HAND_CANNON_SHOT"
-    ]
-  },
-  {
-    "item": 6724,
-    "type": "SHOT",
-    "delay": 5,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "ICE_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "SARADOMIN_ARROW",
-      "ZAMORAK_ARROW",
-      "GUTHIX_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 9705,
-    "type": "SHOT",
-    "delay": 4,
-    "ammunitions": [
-      "TRAINING_ARROWS"
-    ]
-  },
-  {
-    "item": 841,
-    "type": "SHOT",
-    "delay": 4,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW"
-    ]
-  },
-  {
-    "item": 839,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW"
-    ]
-  },
-  {
-    "item": 843,
-    "type": "SHOT",
-    "delay": 4,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW"
-    ]
-  },
-  {
-    "item": 845,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW"
-    ]
-  },
-  {
-    "item": 847,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 10280,
-    "type": "SHOT",
-    "delay": 5,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 10282,
-    "type": "SHOT",
-    "delay": 5,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "ICE_ARROW",
-      "MITHRIL_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 10284,
-    "type": "SHOT",
-    "delay": 5,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "ICE_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "SARADOMIN_ARROW",
-      "GUTHIX_ARROW",
-      "ZAMORAK_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 849,
-    "type": "SHOT",
-    "delay": 4,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 853,
-    "type": "SHOT",
-    "delay": 4,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "ADAMANT_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 851,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "ADAMANT_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 857,
-    "type": "SHOT",
-    "delay": 4,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "ICE_ARROW",
-      "MITHRIL_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 855,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "ICE_ARROW",
-      "MITHRIL_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 861,
-    "type": "SHOT",
-    "delay": 4,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "ICE_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "SARADOMIN_ARROW",
-      "GUTHIX_ARROW",
-      "ZAMORAK_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 859,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "ICE_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "SARADOMIN_ARROW",
-      "GUTHIX_ARROW",
-      "ZAMORAK_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 10280,
-    "type": "SHOT",
-    "delay": 5,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 10282,
-    "type": "SHOT",
-    "delay": 5,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 10284,
-    "type": "SHOT",
-    "delay": 5,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 11235,
-    "type": "SHOT",
-    "delay": 8,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "DRAGON_ARROW",
-      "SARADOMIN_ARROW",
-      "GUTHIX_ARROW",
-      "ZAMORAK_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 13405,
-    "type": "SHOT",
-    "delay": 8,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "DRAGON_ARROW",
-      "SARADOMIN_ARROW",
-      "GUTHIX_ARROW",
-      "ZAMORAK_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 15701,
-    "type": "SHOT",
-    "delay": 8,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "DRAGON_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 15702,
-    "type": "SHOT",
-    "delay": 8,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "DRAGON_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 15703,
-    "type": "SHOT",
-    "delay": 8,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "DRAGON_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 15704,
-    "type": "SHOT",
-    "delay": 8,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "DRAGON_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 19143,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "SARADOMIN_ARROW",
-      "GUTHIX_ARROW",
-      "ZAMORAK_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 19146,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "SARADOMIN_ARROW",
-      "GUTHIX_ARROW",
-      "ZAMORAK_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 19149,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_ARROW",
-      "IRON_ARROW",
-      "STEEL_ARROW",
-      "MITHRIL_ARROW",
-      "BROAD_ARROW",
-      "ADAMANT_ARROW",
-      "RUNE_ARROW",
-      "SARADOMIN_ARROW",
-      "GUTHIX_ARROW",
-      "ZAMORAK_ARROW",
-      "ABYSSALBANE_ARROW",
-      "BASILISKBANE_ARROW",
-      "DRAGONBANE_ARROW",
-      "WALLASALKIBANE_ARROW"
-    ]
-  },
-  {
-    "item": 2883,
-    "type": "SHOT",
-    "delay": 7,
-    "ammunitions": [
-      "OGRE_ARROW"
-    ]
-  },
-  {
-    "item": 4827,
-    "type": "SHOT",
-    "delay": 7,
-    "ammunitions": [
-      "OGRE_ARROW",
-      "BRUTAL_BRONZE_ARROW",
-      "BRUTAL_IRON_ARROW",
-      "BRUTAL_STEEL_ARROW",
-      "BRUTAL_BLACK_ARROW",
-      "BRUTAL_MITHRIL_ARROW",
-      "BRUTAL_ADAMANT_ARROW",
-      "BRUTAL_RUNE_ARROW"
-    ]
-  },
-  {
-    "item": 4828,
-    "type": "SHOT",
-    "delay": 7,
-    "ammunitions": [
-      "OGRE_ARROW",
-      "BRUTAL_BRONZE_ARROW",
-      "BRUTAL_IRON_ARROW",
-      "BRUTAL_STEEL_ARROW",
-      "BRUTAL_BLACK_ARROW",
-      "BRUTAL_MITHRIL_ARROW",
-      "BRUTAL_ADAMANT_ARROW",
-      "BRUTAL_RUNE_ARROW"
-    ]
-  },
-  {
-    "item": 4734,
-    "type": "SHOT",
-    "delay": 3,
-    "ammunitions": [
-      "BOLT_RACK"
-    ]
-  },
-  {
-    "item": 10156,
-    "type": "SHOT",
-    "delay": 4,
-    "ammunitions": [
-      "KEBBIT_BOLT",
-      "LONG_KEBBIT_BOLT"
-    ]
-  },
-  {
-    "item": 8880,
-    "type": "SHOT",
-    "delay": 5,
-    "ammunitions": [
-      "BONE_BOLT"
-    ]
-  },
-  {
-    "item": 837,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "BLURITE_BOLTS",
-      "IRON_BOLTS",
-      "PEARL_BOLTS"
-    ]
-  },
-  {
-    "item": 9174,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "OPAL_BOLTS"
-    ]
-  },
-  {
-    "item": 11165,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "OPAL_BOLTS"
-    ]
-  },
-  {
-    "item": 11166,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "OPAL_BOLTS"
-    ]
-  },
-  {
-    "item": 11167,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "OPAL_BOLTS"
-    ]
-  },
-  {
-    "item": 11168,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "OPAL_BOLTS"
-    ]
-  },
-  {
-    "item": 9176,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "BLURITE_BOLTS",
-      "JADE_BOLTS"
-    ]
-  },
-  {
-    "item": 9177,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "BLURITE_BOLTS",
-      "SILVER_BOLTS",
-      "IRON_BOLTS",
-      "PEARL_BOLTS"
-    ]
-  },
-  {
-    "item": 9179,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "BLURITE_BOLTS",
-      "SILVER_BOLTS",
-      "IRON_BOLTS",
-      "STEEL_BOLTS",
-      "TOPAZ_BOLTS"
-    ]
-  },
-  {
-    "item": 9181,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "BLURITE_BOLTS",
-      "SILVER_BOLTS",
-      "IRON_BOLTS",
-      "STEEL_BOLTS",
-      "MITHRIL_BOLTS",
-      "EMERALD_BOLTS",
-      "ABYSSALBANE_BOLT",
-      "BASILISKBANE_BOLT",
-      "DRAGONBANE_BOLT",
-      "WALLASALKIBANE_BOLT"
-    ]
-  },
-  {
-    "item": 9183,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "BLURITE_BOLTS",
-      "SILVER_BOLTS",
-      "IRON_BOLTS",
-      "STEEL_BOLTS",
-      "MITHRIL_BOLTS",
-      "ADAMANT_BOLTS",
-      "ABYSSALBANE_BOLT",
-      "BASILISKBANE_BOLT",
-      "DRAGONBANE_BOLT",
-      "WALLASALKIBANE_BOLT"
-    ]
-  },
-  {
-    "item": 9185,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "BLURITE_BOLTS",
-      "SILVER_BOLTS",
-      "IRON_BOLTS",
-      "STEEL_BOLTS",
-      "MITHRIL_BOLTS",
-      "BROAD_TIPPED_BOLTS",
-      "ADAMANT_BOLTS",
-      "RUNITE_BOLTS",
-      "DRAGON_BOLTS",
-      "ABYSSALBANE_BOLT",
-      "BASILISKBANE_BOLT",
-      "DRAGONBANE_BOLT",
-      "WALLASALKIBANE_BOLT"
-    ]
-  },
-  {
-    "item": 18357,
-    "type": "SHOT",
-    "delay": 6,
-    "ammunitions": [
-      "BRONZE_BOLTS",
-      "BLURITE_BOLTS",
-      "SILVER_BOLTS",
-      "IRON_BOLTS",
-      "STEEL_BOLTS",
-      "MITHRIL_BOLTS",
-      "BROAD_TIPPED_BOLTS",
-      "ADAMANT_BOLTS",
-      "RUNITE_BOLTS",
-      "DRAGON_BOLTS",
-      "ABYSSALBANE_BOLT",
-      "BASILISKBANE_BOLT",
-      "DRAGONBANE_BOLT",
-      "WALLASALKIBANE_BOLT"
-    ]
-  },
-  {
-    "item": 20171,
-    "type": "SHOT",
-    "ammunitions": [
-      "ZARYTE_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 20172,
-    "type": "SHOT",
-    "ammunitions": [
-      "ZARYTE_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 20173,
-    "type": "SHOT",
-    "ammunitions": [
-      "ZARYTE_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 4212,
-    "type": "SHOT",
-    "ammunitions": [
-      "CRYSTAL_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 4213,
-    "type": "SHOT",
-    "ammunitions": [
-      "CRYSTAL_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 4214,
-    "type": "SHOT",
-    "ammunitions": [
-      "CRYSTAL_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 4215,
-    "type": "SHOT",
-    "ammunitions": [
-      "CRYSTAL_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 4216,
-    "type": "SHOT",
-    "ammunitions": [
-      "CRYSTAL_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 4217,
-    "type": "SHOT",
-    "ammunitions": [
-      "CRYSTAL_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 4218,
-    "type": "SHOT",
-    "ammunitions": [
-      "CRYSTAL_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 4219,
-    "type": "SHOT",
-    "ammunitions": [
-      "CRYSTAL_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 4220,
-    "type": "SHOT",
-    "ammunitions": [
-      "CRYSTAL_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 4221,
-    "type": "SHOT",
-    "ammunitions": [
-      "CRYSTAL_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 4222,
-    "type": "SHOT",
-    "ammunitions": [
-      "CRYSTAL_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 4223,
-    "type": "SHOT",
-    "ammunitions": [
-      "CRYSTAL_ARROW"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 10033,
-    "type": "THROWN",
-    "ammunitions": [
-      "CHINCHOMPA"
-    ],
-    "delay": 4
-  },
-  {
-    "item": 10034,
-    "type": "THROWN",
-    "ammunitions": [
-      "RED_CHINCHOMPA"
-    ],
-    "delay": 4
-  },
-  {
-    "item": [
-      864,
-      870,
-      5654,
-      5661
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "BRONZE_KNIFE"
-    ],
-    "delay": 2
-  },
-  {
-    "item": [
-      863,
-      871,
-      5655,
-      5662
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "IRON_KNIFE"
-    ],
-    "delay": 2
-  },
-  {
-    "item": [
-      865,
-      872,
-      5656,
-      5663
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "STEEL_KNIFE"
-    ],
-    "delay": 2
-  },
-  {
-    "item": [
-      869,
-      874,
-      5658,
-      5665
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "BLACK_KNIFE"
-    ],
-    "delay": 2
-  },
-  {
-    "item": [
-      866,
-      873,
-      5657,
-      5664
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "MITHRIL_KNIFE"
-    ],
-    "delay": 2
-  },
-  {
-    "item": [
-      867,
-      875,
-      5659,
-      5666
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "ADAMANT_KNIFE"
-    ],
-    "delay": 2
-  },
-  {
-    "item": [
-      868,
-      876,
-      5660,
-      5667
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "RUNE_KNIFE"
-    ],
-    "delay": 2
-  },
-  {
-    "item": [
-      806,
-      812,
-      5628,
-      5635
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "BRONZE_DART"
-    ],
-    "delay": 3
-  },
-  {
-    "item": [
-      807,
-      813,
-      5629,
-      5636
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "IRON_DART"
-    ],
-    "delay": 3
-  },
-  {
-    "item": [
-      808,
-      814,
-      5630,
-      5637
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "STEEL_DART"
-    ],
-    "delay": 3
-  },
-  {
-    "item": [
-      809,
-      815,
-      5632,
-      5639
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "MITHRIL_DART"
-    ],
-    "delay": 3
-  },
-  {
-    "item": [
-      810,
-      816,
-      5633,
-      5640
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "ADAMANT_DART"
-    ],
-    "delay": 3
-  },
-  {
-    "item": [
-      811,
-      817,
-      5634,
-      5641
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "RUNE_DART"
-    ],
-    "delay": 3
-  },
-  {
-    "item": [
-      3093,
-      3094,
-      5631,
-      5638
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "BLACK_DART"
-    ],
-    "delay": 3
-  },
-  {
-    "item": [
-      825,
-      831,
-      5642,
-      5648
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "BRONZE_JAVELIN"
-    ],
-    "delay": 5
-  },
-  {
-    "item": [
-      826,
-      832,
-      5643,
-      5649
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "IRON_JAVELIN"
-    ],
-    "delay": 5
-  },
-  {
-    "item": [
-      827,
-      833,
-      5644,
-      5650
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "STEEL_JAVELIN"
-    ],
-    "delay": 5
-  },
-  {
-    "item": [
-      828,
-      834,
-      5645,
-      5651
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "MITHRIL_JAVELIN"
-    ],
-    "delay": 5
-  },
-  {
-    "item": [
-      829,
-      835,
-      5646,
-      5652
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "ADAMANT_JAVELIN"
-    ],
-    "delay": 5
-  },
-  {
-    "item": [
-      830,
-      836,
-      5647,
-      5653
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "RUNE_JAVELIN"
-    ],
-    "delay": 5
-  },
-  {
-    "item": [
-      13879,
-      13880,
-      13881,
-      13882
-    ],
-    "type": "THROWN",
-    "ammunitions": [
-      "MORRIGAN_JAVELIN"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 800,
-    "type": "THROWN",
-    "ammunitions": [
-      "BRONZE_THROWNAXE"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 801,
-    "type": "THROWN",
-    "ammunitions": [
-      "IRON_THROWNAXE"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 802,
-    "type": "THROWN",
-    "ammunitions": [
-      "STEEL_THROWNAXE"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 803,
-    "type": "THROWN",
-    "ammunitions": [
-      "MITHRIL_THROWNAXE"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 804,
-    "type": "THROWN",
-    "ammunitions": [
-      "ADAMANT_THROWNAXE"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 805,
-    "type": "THROWN",
-    "ammunitions": [
-      "RUNE_THROWNAXE"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 13883,
-    "type": "THROWN",
-    "ammunitions": [
-      "MORRIGAN_THROWNAXE"
-    ],
-    "delay": 5
-  },
-  {
-    "item": 6522,
-    "type": "THROWN",
-    "ammunitions": [
-      "TOKTZ_XIL_UL"
-    ],
-    "delay": 4
+	"item": 10148,
+	"type": "SHOT",
+	"delay": 5,
+	"ammunitions": [
+	  "HARRALANDER_TAR"
+	]
+  },
+  {
+	"item": 10147,
+	"type": "SHOT",
+	"delay": 5,
+	"ammunitions": [
+	  "TARROMIN_TAR"
+	]
+  },
+  {
+	"item": 10146,
+	"type": "SHOT",
+	"delay": 5,
+	"ammunitions": [
+	  "MARRENTIL_TAR"
+	]
+  },
+  {
+	"item": 10149,
+	"type": "SHOT",
+	"delay": 5,
+	"ammunitions": [
+	  "GUAM_TAR"
+	]
+  },
+  {
+	"item": 15241,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "HAND_CANNON_SHOT"
+	]
+  },
+  {
+	"item": 6724,
+	"type": "SHOT",
+	"delay": 5,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "ICE_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "SARADOMIN_ARROW",
+	  "ZAMORAK_ARROW",
+	  "GUTHIX_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 9705,
+	"type": "SHOT",
+	"delay": 4,
+	"ammunitions": [
+	  "TRAINING_ARROWS"
+	]
+  },
+  {
+	"item": 841,
+	"type": "SHOT",
+	"delay": 4,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW"
+	]
+  },
+  {
+	"item": 839,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW"
+	]
+  },
+  {
+	"item": 843,
+	"type": "SHOT",
+	"delay": 4,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW"
+	]
+  },
+  {
+	"item": 845,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW"
+	]
+  },
+  {
+	"item": 847,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 10280,
+	"type": "SHOT",
+	"delay": 5,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 10282,
+	"type": "SHOT",
+	"delay": 5,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "ICE_ARROW",
+	  "MITHRIL_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 10284,
+	"type": "SHOT",
+	"delay": 5,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "ICE_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "SARADOMIN_ARROW",
+	  "GUTHIX_ARROW",
+	  "ZAMORAK_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 849,
+	"type": "SHOT",
+	"delay": 4,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 853,
+	"type": "SHOT",
+	"delay": 4,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "ADAMANT_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 851,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "ADAMANT_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 857,
+	"type": "SHOT",
+	"delay": 4,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "ICE_ARROW",
+	  "MITHRIL_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 855,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "ICE_ARROW",
+	  "MITHRIL_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 861,
+	"type": "SHOT",
+	"delay": 4,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "ICE_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "SARADOMIN_ARROW",
+	  "GUTHIX_ARROW",
+	  "ZAMORAK_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 859,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "ICE_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "SARADOMIN_ARROW",
+	  "GUTHIX_ARROW",
+	  "ZAMORAK_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 10280,
+	"type": "SHOT",
+	"delay": 5,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 10282,
+	"type": "SHOT",
+	"delay": 5,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 10284,
+	"type": "SHOT",
+	"delay": 5,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 11235,
+	"type": "SHOT",
+	"delay": 8,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "DRAGON_ARROW",
+	  "SARADOMIN_ARROW",
+	  "GUTHIX_ARROW",
+	  "ZAMORAK_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 13405,
+	"type": "SHOT",
+	"delay": 8,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "DRAGON_ARROW",
+	  "SARADOMIN_ARROW",
+	  "GUTHIX_ARROW",
+	  "ZAMORAK_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 15701,
+	"type": "SHOT",
+	"delay": 8,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "DRAGON_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 15702,
+	"type": "SHOT",
+	"delay": 8,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "DRAGON_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 15703,
+	"type": "SHOT",
+	"delay": 8,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "DRAGON_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 15704,
+	"type": "SHOT",
+	"delay": 8,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "DRAGON_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 19143,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "SARADOMIN_ARROW",
+	  "GUTHIX_ARROW",
+	  "ZAMORAK_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 19146,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "SARADOMIN_ARROW",
+	  "GUTHIX_ARROW",
+	  "ZAMORAK_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 19149,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_ARROW",
+	  "IRON_ARROW",
+	  "STEEL_ARROW",
+	  "MITHRIL_ARROW",
+	  "BROAD_ARROW",
+	  "ADAMANT_ARROW",
+	  "RUNE_ARROW",
+	  "SARADOMIN_ARROW",
+	  "GUTHIX_ARROW",
+	  "ZAMORAK_ARROW",
+	  "ABYSSALBANE_ARROW",
+	  "BASILISKBANE_ARROW",
+	  "DRAGONBANE_ARROW",
+	  "WALLASALKIBANE_ARROW"
+	]
+  },
+  {
+	"item": 2883,
+	"type": "SHOT",
+	"delay": 7,
+	"ammunitions": [
+	  "OGRE_ARROW"
+	]
+  },
+  {
+	"item": 4827,
+	"type": "SHOT",
+	"delay": 7,
+	"ammunitions": [
+	  "OGRE_ARROW",
+	  "BRUTAL_BRONZE_ARROW",
+	  "BRUTAL_IRON_ARROW",
+	  "BRUTAL_STEEL_ARROW",
+	  "BRUTAL_BLACK_ARROW",
+	  "BRUTAL_MITHRIL_ARROW",
+	  "BRUTAL_ADAMANT_ARROW",
+	  "BRUTAL_RUNE_ARROW"
+	]
+  },
+  {
+	"item": 4828,
+	"type": "SHOT",
+	"delay": 7,
+	"ammunitions": [
+	  "OGRE_ARROW",
+	  "BRUTAL_BRONZE_ARROW",
+	  "BRUTAL_IRON_ARROW",
+	  "BRUTAL_STEEL_ARROW",
+	  "BRUTAL_BLACK_ARROW",
+	  "BRUTAL_MITHRIL_ARROW",
+	  "BRUTAL_ADAMANT_ARROW",
+	  "BRUTAL_RUNE_ARROW"
+	]
+  },
+  {
+	"item": 4734,
+	"type": "SHOT",
+	"delay": 3,
+	"ammunitions": [
+	  "BOLT_RACK"
+	]
+  },
+  {
+	"item": 10156,
+	"type": "SHOT",
+	"delay": 4,
+	"ammunitions": [
+	  "KEBBIT_BOLT",
+	  "LONG_KEBBIT_BOLT"
+	]
+  },
+  {
+	"item": 8880,
+	"type": "SHOT",
+	"delay": 5,
+	"ammunitions": [
+	  "BONE_BOLT"
+	]
+  },
+  {
+	"item": 837,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "BLURITE_BOLTS",
+	  "IRON_BOLTS",
+	  "PEARL_BOLTS"
+	]
+  },
+  {
+	"item": 9174,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "OPAL_BOLTS"
+	]
+  },
+  {
+	"item": 11165,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "OPAL_BOLTS"
+	]
+  },
+  {
+	"item": 11166,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "OPAL_BOLTS"
+	]
+  },
+  {
+	"item": 11167,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "OPAL_BOLTS"
+	]
+  },
+  {
+	"item": 11168,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "OPAL_BOLTS"
+	]
+  },
+  {
+	"item": 9176,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "BLURITE_BOLTS",
+	  "JADE_BOLTS"
+	]
+  },
+  {
+	"item": 9177,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "BLURITE_BOLTS",
+	  "SILVER_BOLTS",
+	  "IRON_BOLTS",
+	  "PEARL_BOLTS"
+	]
+  },
+  {
+	"item": 9179,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "BLURITE_BOLTS",
+	  "SILVER_BOLTS",
+	  "IRON_BOLTS",
+	  "STEEL_BOLTS",
+	  "TOPAZ_BOLTS"
+	]
+  },
+  {
+	"item": 9181,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "BLURITE_BOLTS",
+	  "SILVER_BOLTS",
+	  "IRON_BOLTS",
+	  "STEEL_BOLTS",
+	  "MITHRIL_BOLTS",
+	  "EMERALD_BOLTS",
+	  "ABYSSALBANE_BOLT",
+	  "BASILISKBANE_BOLT",
+	  "DRAGONBANE_BOLT",
+	  "WALLASALKIBANE_BOLT"
+	]
+  },
+  {
+	"item": 9183,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "BLURITE_BOLTS",
+	  "SILVER_BOLTS",
+	  "IRON_BOLTS",
+	  "STEEL_BOLTS",
+	  "MITHRIL_BOLTS",
+	  "ADAMANT_BOLTS",
+	  "ABYSSALBANE_BOLT",
+	  "BASILISKBANE_BOLT",
+	  "DRAGONBANE_BOLT",
+	  "WALLASALKIBANE_BOLT"
+	]
+  },
+  {
+	"item": 9185,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "BLURITE_BOLTS",
+	  "SILVER_BOLTS",
+	  "IRON_BOLTS",
+	  "STEEL_BOLTS",
+	  "MITHRIL_BOLTS",
+	  "BROAD_TIPPED_BOLTS",
+	  "ADAMANT_BOLTS",
+	  "RUNITE_BOLTS",
+	  "DRAGON_BOLTS",
+	  "ABYSSALBANE_BOLT",
+	  "BASILISKBANE_BOLT",
+	  "DRAGONBANE_BOLT",
+	  "WALLASALKIBANE_BOLT"
+	]
+  },
+  {
+	"item": 18357,
+	"type": "SHOT",
+	"delay": 6,
+	"ammunitions": [
+	  "BRONZE_BOLTS",
+	  "BLURITE_BOLTS",
+	  "SILVER_BOLTS",
+	  "IRON_BOLTS",
+	  "STEEL_BOLTS",
+	  "MITHRIL_BOLTS",
+	  "BROAD_TIPPED_BOLTS",
+	  "ADAMANT_BOLTS",
+	  "RUNITE_BOLTS",
+	  "DRAGON_BOLTS",
+	  "ABYSSALBANE_BOLT",
+	  "BASILISKBANE_BOLT",
+	  "DRAGONBANE_BOLT",
+	  "WALLASALKIBANE_BOLT"
+	]
+  },
+  {
+	"item": 20171,
+	"type": "SHOT",
+	"ammunitions": [
+	  "ZARYTE_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 20172,
+	"type": "SHOT",
+	"ammunitions": [
+	  "ZARYTE_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 20173,
+	"type": "SHOT",
+	"ammunitions": [
+	  "ZARYTE_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 4212,
+	"type": "SHOT",
+	"ammunitions": [
+	  "CRYSTAL_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 4213,
+	"type": "SHOT",
+	"ammunitions": [
+	  "CRYSTAL_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 4214,
+	"type": "SHOT",
+	"ammunitions": [
+	  "CRYSTAL_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 4215,
+	"type": "SHOT",
+	"ammunitions": [
+	  "CRYSTAL_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 4216,
+	"type": "SHOT",
+	"ammunitions": [
+	  "CRYSTAL_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 4217,
+	"type": "SHOT",
+	"ammunitions": [
+	  "CRYSTAL_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 4218,
+	"type": "SHOT",
+	"ammunitions": [
+	  "CRYSTAL_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 4219,
+	"type": "SHOT",
+	"ammunitions": [
+	  "CRYSTAL_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 4220,
+	"type": "SHOT",
+	"ammunitions": [
+	  "CRYSTAL_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 4221,
+	"type": "SHOT",
+	"ammunitions": [
+	  "CRYSTAL_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 4222,
+	"type": "SHOT",
+	"ammunitions": [
+	  "CRYSTAL_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 4223,
+	"type": "SHOT",
+	"ammunitions": [
+	  "CRYSTAL_ARROW"
+	],
+	"delay": 5
+  },
+  {
+	"item": 10033,
+	"type": "THROWN",
+	"ammunitions": [
+	  "CHINCHOMPA"
+	],
+	"delay": 4
+  },
+  {
+	"item": 10034,
+	"type": "THROWN",
+	"ammunitions": [
+	  "RED_CHINCHOMPA"
+	],
+	"delay": 4
+  },
+  {
+	"item": [
+	  864,
+	  870,
+	  5654,
+	  5661
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "BRONZE_KNIFE"
+	],
+	"delay": 2
+  },
+  {
+	"item": [
+	  863,
+	  871,
+	  5655,
+	  5662
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "IRON_KNIFE"
+	],
+	"delay": 2
+  },
+  {
+	"item": [
+	  865,
+	  872,
+	  5656,
+	  5663
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "STEEL_KNIFE"
+	],
+	"delay": 2
+  },
+  {
+	"item": [
+	  869,
+	  874,
+	  5658,
+	  5665
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "BLACK_KNIFE"
+	],
+	"delay": 2
+  },
+  {
+	"item": [
+	  866,
+	  873,
+	  5657,
+	  5664
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "MITHRIL_KNIFE"
+	],
+	"delay": 2
+  },
+  {
+	"item": [
+	  867,
+	  875,
+	  5659,
+	  5666
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "ADAMANT_KNIFE"
+	],
+	"delay": 2
+  },
+  {
+	"item": [
+	  868,
+	  876,
+	  5660,
+	  5667
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "RUNE_KNIFE"
+	],
+	"delay": 2
+  },
+  {
+	"item": [
+	  806,
+	  812,
+	  5628,
+	  5635
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "BRONZE_DART"
+	],
+	"delay": 3
+  },
+  {
+	"item": [
+	  807,
+	  813,
+	  5629,
+	  5636
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "IRON_DART"
+	],
+	"delay": 3
+  },
+  {
+	"item": [
+	  808,
+	  814,
+	  5630,
+	  5637
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "STEEL_DART"
+	],
+	"delay": 3
+  },
+  {
+	"item": [
+	  809,
+	  815,
+	  5632,
+	  5639
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "MITHRIL_DART"
+	],
+	"delay": 3
+  },
+  {
+	"item": [
+	  810,
+	  816,
+	  5633,
+	  5640
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "ADAMANT_DART"
+	],
+	"delay": 3
+  },
+  {
+	"item": [
+	  811,
+	  817,
+	  5634,
+	  5641
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "RUNE_DART"
+	],
+	"delay": 3
+  },
+  {
+	"item": [
+	  3093,
+	  3094,
+	  5631,
+	  5638
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "BLACK_DART"
+	],
+	"delay": 3
+  },
+  {
+	"item": [
+	  825,
+	  831,
+	  5642,
+	  5648
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "BRONZE_JAVELIN"
+	],
+	"delay": 5
+  },
+  {
+	"item": [
+	  826,
+	  832,
+	  5643,
+	  5649
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "IRON_JAVELIN"
+	],
+	"delay": 5
+  },
+  {
+	"item": [
+	  827,
+	  833,
+	  5644,
+	  5650
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "STEEL_JAVELIN"
+	],
+	"delay": 5
+  },
+  {
+	"item": [
+	  828,
+	  834,
+	  5645,
+	  5651
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "MITHRIL_JAVELIN"
+	],
+	"delay": 5
+  },
+  {
+	"item": [
+	  829,
+	  835,
+	  5646,
+	  5652
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "ADAMANT_JAVELIN"
+	],
+	"delay": 5
+  },
+  {
+	"item": [
+	  830,
+	  836,
+	  5647,
+	  5653
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "RUNE_JAVELIN"
+	],
+	"delay": 5
+  },
+  {
+	"item": [
+	  13879,
+	  13880,
+	  13881,
+	  13882
+	],
+	"type": "THROWN",
+	"ammunitions": [
+	  "MORRIGAN_JAVELIN"
+	],
+	"delay": 5
+  },
+  {
+	"item": 800,
+	"type": "THROWN",
+	"ammunitions": [
+	  "BRONZE_THROWNAXE"
+	],
+	"delay": 5
+  },
+  {
+	"item": 801,
+	"type": "THROWN",
+	"ammunitions": [
+	  "IRON_THROWNAXE"
+	],
+	"delay": 5
+  },
+  {
+	"item": 802,
+	"type": "THROWN",
+	"ammunitions": [
+	  "STEEL_THROWNAXE"
+	],
+	"delay": 5
+  },
+  {
+	"item": 803,
+	"type": "THROWN",
+	"ammunitions": [
+	  "MITHRIL_THROWNAXE"
+	],
+	"delay": 5
+  },
+  {
+	"item": 804,
+	"type": "THROWN",
+	"ammunitions": [
+	  "ADAMANT_THROWNAXE"
+	],
+	"delay": 5
+  },
+  {
+	"item": 805,
+	"type": "THROWN",
+	"ammunitions": [
+	  "RUNE_THROWNAXE"
+	],
+	"delay": 5
+  },
+  {
+	"item": 13883,
+	"type": "THROWN",
+	"ammunitions": [
+	  "MORRIGAN_THROWNAXE"
+	],
+	"delay": 5
+  },
+  {
+	"item": 6522,
+	"type": "THROWN",
+	"ammunitions": [
+	  "TOKTZ_XIL_UL"
+	],
+	"delay": 4
   }
 ]

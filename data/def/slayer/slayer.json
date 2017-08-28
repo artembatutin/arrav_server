@@ -1,570 +1,570 @@
 [
   {
-    "masters": [
-      "SPRIA",
-      "TURAEL"
-    ],
-    "tasks": [
-      {
-        "key": "ROCK CRABS",
-        "difficulty": "EASY",
-        "amount": [
-          25,
-          50
-        ]
-      },
-      {
-        "key": "DOGS",
-        "difficulty": "EASY",
-        "amount": [
-          25,
-          50
-        ]
-      },
-      {
-        "key": "MOSS GIANTS",
-        "difficulty": "EASY",
-        "amount": [
-          25,
-          50
-        ]
-      },
-      {
-        "key": "SKELETONS",
-        "difficulty": "EASY",
-        "amount": [
-          25,
-          50
-        ]
-      },
-      {
-        "key": "BLUE DRAGONS",
-        "difficulty": "MODERATE",
-        "amount": [
-          25,
-          50
-        ],
-        "requirement": 90
-      },
-      {
-        "key": "LESSER DEMONS",
-        "difficulty": "EASY",
-        "amount": [
-          25,
-          50
-        ],
-        "requirement": 70
-      },
-      {
-        "key": "DWARVES",
-        "difficulty": "EASY",
-        "amount": [
-          25,
-          50
-        ],
-        "requirement": 10
-      },
-      {
-        "key": "CRAWLING HANDS",
-        "difficulty": "EASY",
-        "amount": [
-          25,
-          50
-        ],
-        "requirement": 10
-      },
-      {
-        "key": "BATS",
-        "difficulty": "EASY",
-        "amount": [
-          25,
-          50
-        ]
-      },
-      {
-        "key": "COWS",
-        "difficulty": "EASY",
-        "amount": [
-          25,
-          50
-        ]
-      },
-      {
-        "key": "GOBLINS",
-        "difficulty": "EASY",
-        "amount": [
-          25,
-          50
-        ]
-      },
-      {
-        "key": "FIRE GIANTS",
-        "difficulty": "EASY",
-        "amount": [
-          25,
-          50
-        ],
-        "requirement": 60
-      },
-      {
-        "key": "GREATER DEMONS",
-        "difficulty": "MODERATE",
-        "amount": [
-          30,
-          50
-        ],
-        "requirement": 95
-      },
-      {
-        "key": "HELLHOUNDS",
-        "difficulty": "MODERATE",
-        "amount": [
-          30,
-          50
-        ],
-        "requirement": 80
-      },
-      {
-        "key": "BLACK DEMONS",
-        "difficulty": "HARD",
-        "amount": [
-          40,
-          50
-        ],
-        "requirement": 80
-      },
-      {
-        "key": "BRONZE DRAGONS",
-        "difficulty": "MODERATE",
-        "amount": [
-          30,
-          50
-        ],
-        "requirement": 75
-      },
-      {
-        "key": "IRON DRAGONS",
-        "difficulty": "MODERATE",
-        "amount": [
-          40,
-          50
-        ],
-        "requirement": 80
-      },
-      {
-        "key": "STEEL DRAGONS",
-        "difficulty": "HARD",
-        "amount": [
-          40,
-          50
-        ],
-        "requirement": 90
-      },
-      {
-        "key": "BLACK DRAGONS",
-        "difficulty": "HARD",
-        "amount": [
-          40,
-          50
-        ],
-        "requirement": 95
-      },
-      {
-        "key": "JELLIES",
-        "difficulty": "MODERATE",
-        "amount": [
-          30,
-          50
-        ],
-        "requirement": 60
-      },
-      {
-        "key": "JELLIES",
-        "difficulty": "MODERATE",
-        "amount": [
-          30,
-          50
-        ],
-        "requirement": 60
-      },
-      {
-        "key": "AQUANITES",
-        "difficulty": "HARD",
-        "amount": [
-          20,
-          40
-        ],
-        "requirement": 80
-      },
-      {
-        "key": "SPIDERS",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          30
-        ],
-        "requirement": 20
-      },
-      {
-        "key": "DUST DEVILS",
-        "difficulty": "MODERATE",
-        "amount": [
-          10,
-          30
-        ],
-        "requirement": 75
-      },
-      {
-        "key": "WEREWOLVES",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          20
-        ],
-        "requirement": 20
-      },
-      {
-        "key": "CAVE BUGS",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          40
-        ],
-        "requirement": 0
-      },
-      {
-        "key": "BLOODVELD",
-        "difficulty": "MODERATE",
-        "amount": [
-          10,
-          40
-        ],
-        "requirement": 70
-      },
-      {
-        "key": "BIRDS",
-        "difficulty": "EAST",
-        "amount": [
-          10,
-          20
-        ],
-        "requirement": 0
-      },
-      {
-        "key": "ICE GIANTS",
-        "difficulty": "MODERATE",
-        "amount": [
-          10,
-          30
-        ],
-        "requirement": 50
-      },
-      {
-        "key": "SPIRITUAL WARRIORS",
-        "difficulty": "HARD",
-        "amount": [
-          10,
-          30
-        ],
-        "requirement": 90
-      },
-      {
-        "key": "ZOMBIES",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          30
-        ],
-        "requirement": 45
-      },
-      {
-        "key": "PYREFIENDS",
-        "difficulty": "MODERATE",
-        "amount": [
-          20,
-          30
-        ],
-        "requirement": 50
-      },
-      {
-        "key": "INFERNAL MAGES",
-        "difficulty": "MODERATE",
-        "amount": [
-          15,
-          25
-        ],
-        "requirement": 60
-      },
-      {
-        "key": "ICE WARRIORS",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          20
-        ],
-        "requirement": 50
-      },
-      {
-        "key": "KALPHITE",
-        "difficulty": "MODERATE",
-        "amount": [
-          10,
-          30
-        ],
-        "requirement": 70
-      },
-      {
-        "key": "WATERFIENDS",
-        "difficulty": "MODERATE",
-        "amount": [
-          10,
-          25
-        ],
-        "requirement": 70
-      },
-      {
-        "key": "BASILISK",
-        "difficulty": "MODERATE",
-        "amount": [
-          10,
-          20
-        ],
-        "requirement": 60
-      },
-      {
-        "key": "EARTH WARRIORS",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          20
-        ],
-        "requirement": 30
-      },
-      {
-        "key": "HOBGOBLINS",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          20
-        ],
-        "requirement": 30
-      },
-      {
-        "key": "WOLVES",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          20
-        ],
-        "requirement": 0
-      },
-      {
-        "key": "TUROTHS",
-        "difficulty": "MODERATE",
-        "amount": [
-          10,
-          40
-        ],
-        "requirement": 60
-      },
-      {
-        "key": "TUROTHS",
-        "difficulty": "MODERATE",
-        "amount": [
-          10,
-          40
-        ],
-        "requirement": 60
-      },
-      {
-        "key": "SPIRITUAL RANGERS",
-        "difficulty": "HARD",
-        "amount": [
-          15,
-          35
-        ],
-        "requirement": 90
-      },
-      {
-        "key": "TROLLS",
-        "difficulty": "EASY",
-        "amount": [
-          15,
-          25
-        ],
-        "requirement": 50
-      },
-      {
-        "key": "BEARS",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          20
-        ],
-        "requirement": 0
-      },
-      {
-        "key": "MONKEYS",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          20
-        ],
-        "requirement": 0
-      },
-      {
-        "key": "RED DRAGONS",
-        "difficulty": "HARD",
-        "amount": [
-          10,
-          30
-        ],
-        "requirement": 90
-      },
-      {
-        "key": "ROCKSLUGS",
-        "difficulty": "MODERATE",
-        "amount": [
-          10,
-          20
-        ],
-        "requirement": 30
-      },
-      {
-        "key": "GREEN DRAGONS",
-        "difficulty": "MODERATE",
-        "amount": [
-          10,
-          30
-        ],
-        "requirement": 50
-      },
-      {
-        "key": "DAGANNOTHS",
-        "difficulty": "MODERATE",
-        "amount": [
-          15,
-          30
-        ],
-        "requirement": 60
-      },
-      {
-        "key": "ABYSSAL DEMONS",
-        "difficulty": "HARD",
-        "amount": [
-          20,
-          40
-        ],
-        "requirement": 100
-      },
-      {
-        "key": "HILL GIANTS",
-        "difficulty": "EASY",
-        "amount": [
-          20,
-          30
-        ],
-        "requirement": 25
-      },
-      {
-        "key": "ELVES",
-        "difficulty": "EASY",
-        "amount": [
-          20,
-          30
-        ],
-        "requirement": 30
-      },
-      {
-        "key": "SPIRITUAL MAGES",
-        "difficulty": "HARD",
-        "amount": [
-          30,
-          40
-        ],
-        "requirement": 90
-      },
-      {
-        "key": "CYCLOPES",
-        "difficulty": "moderate",
-        "amount": [
-          15,
-          25
-        ],
-        "requirement": 40
-      },
-      {
-        "key": "SCORPIONS",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          20
-        ],
-        "requirement": 10
-      },
-      {
-        "key": "RATS",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          30
-        ],
-        "requirement": 15
-      },
-      {
-        "key": "GHOSTS",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          30
-        ],
-        "requirement": 20
-      },
-      {
-        "key": "MITHRIL DRAGONS",
-        "difficulty": "HARD",
-        "amount": [
-          40,
-          50
-        ],
-        "requirement": 90
-      },
-      {
-        "key": "CAVE CRAWLERS",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          25
-        ],
-        "requirement": 10
-      },
-      {
-        "key": "BANSHEES",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          25
-        ],
-        "requirement": 15
-      },
-      {
-        "key": "CAVE SLIMES",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          25
-        ],
-        "requirement": 17
-      },
-      {
-        "key": "COCKATRICES",
-        "difficulty": "EASY",
-        "amount": [
-          10,
-          25
-        ],
-        "requirement": 25
-      }
-    ]
+	"masters": [
+	  "SPRIA",
+	  "TURAEL"
+	],
+	"tasks": [
+	  {
+		"key": "ROCK CRABS",
+		"difficulty": "EASY",
+		"amount": [
+		  25,
+		  50
+		]
+	  },
+	  {
+		"key": "DOGS",
+		"difficulty": "EASY",
+		"amount": [
+		  25,
+		  50
+		]
+	  },
+	  {
+		"key": "MOSS GIANTS",
+		"difficulty": "EASY",
+		"amount": [
+		  25,
+		  50
+		]
+	  },
+	  {
+		"key": "SKELETONS",
+		"difficulty": "EASY",
+		"amount": [
+		  25,
+		  50
+		]
+	  },
+	  {
+		"key": "BLUE DRAGONS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  25,
+		  50
+		],
+		"requirement": 90
+	  },
+	  {
+		"key": "LESSER DEMONS",
+		"difficulty": "EASY",
+		"amount": [
+		  25,
+		  50
+		],
+		"requirement": 70
+	  },
+	  {
+		"key": "DWARVES",
+		"difficulty": "EASY",
+		"amount": [
+		  25,
+		  50
+		],
+		"requirement": 10
+	  },
+	  {
+		"key": "CRAWLING HANDS",
+		"difficulty": "EASY",
+		"amount": [
+		  25,
+		  50
+		],
+		"requirement": 10
+	  },
+	  {
+		"key": "BATS",
+		"difficulty": "EASY",
+		"amount": [
+		  25,
+		  50
+		]
+	  },
+	  {
+		"key": "COWS",
+		"difficulty": "EASY",
+		"amount": [
+		  25,
+		  50
+		]
+	  },
+	  {
+		"key": "GOBLINS",
+		"difficulty": "EASY",
+		"amount": [
+		  25,
+		  50
+		]
+	  },
+	  {
+		"key": "FIRE GIANTS",
+		"difficulty": "EASY",
+		"amount": [
+		  25,
+		  50
+		],
+		"requirement": 60
+	  },
+	  {
+		"key": "GREATER DEMONS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  30,
+		  50
+		],
+		"requirement": 95
+	  },
+	  {
+		"key": "HELLHOUNDS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  30,
+		  50
+		],
+		"requirement": 80
+	  },
+	  {
+		"key": "BLACK DEMONS",
+		"difficulty": "HARD",
+		"amount": [
+		  40,
+		  50
+		],
+		"requirement": 80
+	  },
+	  {
+		"key": "BRONZE DRAGONS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  30,
+		  50
+		],
+		"requirement": 75
+	  },
+	  {
+		"key": "IRON DRAGONS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  40,
+		  50
+		],
+		"requirement": 80
+	  },
+	  {
+		"key": "STEEL DRAGONS",
+		"difficulty": "HARD",
+		"amount": [
+		  40,
+		  50
+		],
+		"requirement": 90
+	  },
+	  {
+		"key": "BLACK DRAGONS",
+		"difficulty": "HARD",
+		"amount": [
+		  40,
+		  50
+		],
+		"requirement": 95
+	  },
+	  {
+		"key": "JELLIES",
+		"difficulty": "MODERATE",
+		"amount": [
+		  30,
+		  50
+		],
+		"requirement": 60
+	  },
+	  {
+		"key": "JELLIES",
+		"difficulty": "MODERATE",
+		"amount": [
+		  30,
+		  50
+		],
+		"requirement": 60
+	  },
+	  {
+		"key": "AQUANITES",
+		"difficulty": "HARD",
+		"amount": [
+		  20,
+		  40
+		],
+		"requirement": 80
+	  },
+	  {
+		"key": "SPIDERS",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  30
+		],
+		"requirement": 20
+	  },
+	  {
+		"key": "DUST DEVILS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  10,
+		  30
+		],
+		"requirement": 75
+	  },
+	  {
+		"key": "WEREWOLVES",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  20
+		],
+		"requirement": 20
+	  },
+	  {
+		"key": "CAVE BUGS",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  40
+		],
+		"requirement": 0
+	  },
+	  {
+		"key": "BLOODVELD",
+		"difficulty": "MODERATE",
+		"amount": [
+		  10,
+		  40
+		],
+		"requirement": 70
+	  },
+	  {
+		"key": "BIRDS",
+		"difficulty": "EAST",
+		"amount": [
+		  10,
+		  20
+		],
+		"requirement": 0
+	  },
+	  {
+		"key": "ICE GIANTS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  10,
+		  30
+		],
+		"requirement": 50
+	  },
+	  {
+		"key": "SPIRITUAL WARRIORS",
+		"difficulty": "HARD",
+		"amount": [
+		  10,
+		  30
+		],
+		"requirement": 90
+	  },
+	  {
+		"key": "ZOMBIES",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  30
+		],
+		"requirement": 45
+	  },
+	  {
+		"key": "PYREFIENDS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  20,
+		  30
+		],
+		"requirement": 50
+	  },
+	  {
+		"key": "INFERNAL MAGES",
+		"difficulty": "MODERATE",
+		"amount": [
+		  15,
+		  25
+		],
+		"requirement": 60
+	  },
+	  {
+		"key": "ICE WARRIORS",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  20
+		],
+		"requirement": 50
+	  },
+	  {
+		"key": "KALPHITE",
+		"difficulty": "MODERATE",
+		"amount": [
+		  10,
+		  30
+		],
+		"requirement": 70
+	  },
+	  {
+		"key": "WATERFIENDS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  10,
+		  25
+		],
+		"requirement": 70
+	  },
+	  {
+		"key": "BASILISK",
+		"difficulty": "MODERATE",
+		"amount": [
+		  10,
+		  20
+		],
+		"requirement": 60
+	  },
+	  {
+		"key": "EARTH WARRIORS",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  20
+		],
+		"requirement": 30
+	  },
+	  {
+		"key": "HOBGOBLINS",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  20
+		],
+		"requirement": 30
+	  },
+	  {
+		"key": "WOLVES",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  20
+		],
+		"requirement": 0
+	  },
+	  {
+		"key": "TUROTHS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  10,
+		  40
+		],
+		"requirement": 60
+	  },
+	  {
+		"key": "TUROTHS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  10,
+		  40
+		],
+		"requirement": 60
+	  },
+	  {
+		"key": "SPIRITUAL RANGERS",
+		"difficulty": "HARD",
+		"amount": [
+		  15,
+		  35
+		],
+		"requirement": 90
+	  },
+	  {
+		"key": "TROLLS",
+		"difficulty": "EASY",
+		"amount": [
+		  15,
+		  25
+		],
+		"requirement": 50
+	  },
+	  {
+		"key": "BEARS",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  20
+		],
+		"requirement": 0
+	  },
+	  {
+		"key": "MONKEYS",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  20
+		],
+		"requirement": 0
+	  },
+	  {
+		"key": "RED DRAGONS",
+		"difficulty": "HARD",
+		"amount": [
+		  10,
+		  30
+		],
+		"requirement": 90
+	  },
+	  {
+		"key": "ROCKSLUGS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  10,
+		  20
+		],
+		"requirement": 30
+	  },
+	  {
+		"key": "GREEN DRAGONS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  10,
+		  30
+		],
+		"requirement": 50
+	  },
+	  {
+		"key": "DAGANNOTHS",
+		"difficulty": "MODERATE",
+		"amount": [
+		  15,
+		  30
+		],
+		"requirement": 60
+	  },
+	  {
+		"key": "ABYSSAL DEMONS",
+		"difficulty": "HARD",
+		"amount": [
+		  20,
+		  40
+		],
+		"requirement": 100
+	  },
+	  {
+		"key": "HILL GIANTS",
+		"difficulty": "EASY",
+		"amount": [
+		  20,
+		  30
+		],
+		"requirement": 25
+	  },
+	  {
+		"key": "ELVES",
+		"difficulty": "EASY",
+		"amount": [
+		  20,
+		  30
+		],
+		"requirement": 30
+	  },
+	  {
+		"key": "SPIRITUAL MAGES",
+		"difficulty": "HARD",
+		"amount": [
+		  30,
+		  40
+		],
+		"requirement": 90
+	  },
+	  {
+		"key": "CYCLOPES",
+		"difficulty": "moderate",
+		"amount": [
+		  15,
+		  25
+		],
+		"requirement": 40
+	  },
+	  {
+		"key": "SCORPIONS",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  20
+		],
+		"requirement": 10
+	  },
+	  {
+		"key": "RATS",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  30
+		],
+		"requirement": 15
+	  },
+	  {
+		"key": "GHOSTS",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  30
+		],
+		"requirement": 20
+	  },
+	  {
+		"key": "MITHRIL DRAGONS",
+		"difficulty": "HARD",
+		"amount": [
+		  40,
+		  50
+		],
+		"requirement": 90
+	  },
+	  {
+		"key": "CAVE CRAWLERS",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  25
+		],
+		"requirement": 10
+	  },
+	  {
+		"key": "BANSHEES",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  25
+		],
+		"requirement": 15
+	  },
+	  {
+		"key": "CAVE SLIMES",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  25
+		],
+		"requirement": 17
+	  },
+	  {
+		"key": "COCKATRICES",
+		"difficulty": "EASY",
+		"amount": [
+		  10,
+		  25
+		],
+		"requirement": 25
+	  }
+	]
   }
 ]

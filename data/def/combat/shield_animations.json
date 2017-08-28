@@ -1,22 +1,22 @@
 [
   {
-    "names": [
-      "wand",
-      "staff",
-      "book"
-    ],
-    "block": 13406
+	"names": [
+	  "wand",
+	  "staff",
+	  "book"
+	],
+	"block": 13406
   },
   {
-    "names": [
-      "defender"
-    ],
-    "block": 4177
+	"names": [
+	  "defender"
+	],
+	"block": 4177
   },
   {
-    "names": [
-      "shield"
-    ],
-    "block": 1156
+	"names": [
+	  "shield"
+	],
+	"block": 1156
   }
 ]
