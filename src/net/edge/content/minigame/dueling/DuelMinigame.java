@@ -148,9 +148,11 @@ public final class DuelMinigame extends Minigame {
 		rules.forEach(e -> {
 			if(e.getSlot() != -1 && player.getInventory().computeFreeIndex() != -1) {
 				player.getEquipment().unequip(e.getSlot());
-			} else {
+			} /*else {
+				player.getEquipment().unequip(e.getSlot(), player.getBank().container(0), true, -1);
 				player.message("You do not have enough free space to un-equip the disabled items.");
-			}
+				player.message("So they were moved to your bank instead.");
+			} SHOULD NEVER REACH THIS STATE, CHECK BEFORE THE DUEL IF ITS POSSIBLE */
 		});
 		
 		if(getRules().contains(DuelingRules.OBSTACLES)) {
