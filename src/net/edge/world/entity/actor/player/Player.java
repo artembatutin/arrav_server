@@ -1,5 +1,6 @@
 package net.edge.world.entity.actor.player;
 
+import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
@@ -332,12 +333,18 @@ public final class Player extends Actor {
 	 * The overload effect for this player.
 	 */
 	private OverloadEffectTask overloadEffect;
-	
+
+	public final ImmutableMap<String, Stopwatch> consumeDelay = ImmutableMap.of(
+			"SPECIAL", new Stopwatch().reset(),
+			"FOOD", new Stopwatch().reset(),
+			"DRINKS", new Stopwatch().reset()
+	);
+
 	/**
 	 * The collection of stopwatches used for various timing operations.
 	 */
-	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), eatingTimer = new Stopwatch()
-			.reset(), potionTimer = new Stopwatch().reset(), specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch()
+	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(),
+			specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch()
 			.reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
 	
 	/**
@@ -1333,22 +1340,6 @@ public final class Player extends Actor {
 	 */
 	public Stopwatch getWebSlashingTimer() {
 		return slashTimer;
-	}
-	
-	/**
-	 * Gets the eating stopwatch timer.
-	 * @return the eating timer.
-	 */
-	public Stopwatch getEatingTimer() {
-		return eatingTimer;
-	}
-	
-	/**
-	 * Gets the potion stopwatch timer.
-	 * @return the potion timer.
-	 */
-	public Stopwatch getPotionTimer() {
-		return potionTimer;
 	}
 	
 	/**

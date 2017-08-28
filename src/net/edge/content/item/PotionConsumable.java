@@ -2,6 +2,7 @@ package net.edge.content.item;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.GameConstants;
 import net.edge.action.impl.ItemAction;
 import net.edge.content.combat.CombatUtil;
 import net.edge.net.packet.out.SendConfig;
@@ -485,7 +486,7 @@ public enum PotionConsumable {
 				public boolean click(Player player, Item item, int container, int slot, int click) {
 					if(container != Inventory.INVENTORY_DISPLAY_ID)
 						return true;
-					if(player.isDead() || !player.getPotionTimer().elapsed(1200))
+					if(player.isDead() || !player.consumeDelay.get("DRINKS").elapsed(GameConstants.CONSUME_DELAY))
 						return false;
 					if(!MinigameHandler.execute(player, m -> m.canPot(player, potion))) {
 						return false;
@@ -494,7 +495,7 @@ public enum PotionConsumable {
 						return false;
 					}
 					player.animation(new Animation(829));
-					player.getPotionTimer().reset();
+					player.consumeDelay.get("DRINKS").reset();
 					boolean removed = player.getInventory().remove(item, slot) == 1;
 					if(removed) {
 						int length = potion.getIds().length;
