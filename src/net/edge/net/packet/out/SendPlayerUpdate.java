@@ -5,25 +5,24 @@ import io.netty.buffer.ByteBufAllocator;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
-import net.edge.world.locale.Position;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.World;
-import net.edge.world.entity.EntityState;
 import net.edge.world.Direction;
+import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.update.UpdateManager;
 import net.edge.world.entity.actor.update.UpdateState;
 import net.edge.world.entity.region.Region;
-import net.edge.world.entity.region.RegionManager;
+import net.edge.world.locale.Position;
 
 import java.util.Iterator;
 
 /**
  * An implementation that sends an update message containing the underlying {@link Player} and other {@code Player}s surrounding them.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class SendPlayerUpdate implements OutgoingPacket {
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		ByteBufAllocator alloc = player.getSession().alloc();
@@ -33,7 +32,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 			msg.startBitAccess();
 			handleMovement(player, msg);
 			UpdateManager.encode(player, player, blockMsg, UpdateState.UPDATE_SELF);
-			
+
 			msg.putBits(8, player.getLocalPlayers().size());
 			Iterator<Player> $it = player.getLocalPlayers().iterator();
 			while($it.hasNext()) {
@@ -47,7 +46,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 					$it.remove();
 				}
 			}
-			
+
 			int added = 0;
 			player.getRegion().ifPresent(r -> {
 				processPlayers(r, player, blockMsg, msg, added);
@@ -58,7 +57,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 					}
 				}
 			});
-			
+
 			if(blockMsg.getBuffer().writerIndex() > 0) {
 				msg.putBits(11, 2047);
 				msg.endBitAccess();
@@ -74,7 +73,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 		msg.endVarSize();
 		return msg.getBuffer();
 	}
-	
+
 	/**
 	 * Processing the addition of player from a region.
 	 */
@@ -101,9 +100,10 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds {@code addPlayer} in the view of {@code player}.
+	 *
 	 * @param msg       The main update message.
 	 * @param player    The {@link Player} this update message is being sent for.
 	 * @param addPlayer The {@code Player} being added.
@@ -117,9 +117,10 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 		msg.putBits(5, deltaY);
 		msg.putBits(5, deltaX);
 	}
-	
+
 	/**
 	 * Handles running, walking, and teleportation movement for {@code player}.
+	 *
 	 * @param player The {@link Player} to handle running and walking for.
 	 * @param msg    The main update message.
 	 */
@@ -136,7 +137,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 			msg.putBits(7, position.getLocalX(player.getLastRegion()));
 			return;
 		}
-		
+
 		Direction walkingDirection = player.getPrimaryDirection();
 		Direction runningDirection = player.getSecondaryDirection();
 		if(walkingDirection != Direction.NONE) {

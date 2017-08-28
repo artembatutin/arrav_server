@@ -8,14 +8,14 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendInterfaceColor implements OutgoingPacket {
-	
+
 	private final int id, color;
-	
+
 	public SendInterfaceColor(int id, int color) {
 		this.id = id;
 		this.color = color;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(122);

@@ -18,7 +18,7 @@ public class Casket extends ActionInitializer {
 					return true;
 				Rights right = player.getRights();
 				player.getInventory().remove(item, slot);
-				switch (right) {
+				switch(right) {
 					case PLAYER:
 					case IRON_MAN:
 					case DESIGNER:

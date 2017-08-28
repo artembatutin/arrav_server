@@ -1,32 +1,33 @@
 package net.edge.content.skill.summoning.familiar;
 
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.content.TabInterface;
+import net.edge.content.dialogue.Expression;
+import net.edge.content.skill.Skills;
+import net.edge.content.skill.summoning.SummoningData;
+import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
+import net.edge.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import net.edge.net.packet.out.SendInterfaceAnimation;
 import net.edge.net.packet.out.SendInterfaceNpcModel;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.TabInterface;
-import net.edge.content.dialogue.Expression;
-import net.edge.content.skill.Skills;
-import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
-import net.edge.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
-import net.edge.content.skill.summoning.SummoningData;
-import net.edge.world.entity.actor.mob.Follower;
-import net.edge.world.entity.region.TraversalMap;
-import net.edge.world.locale.Position;
 import net.edge.world.Graphic;
 import net.edge.world.World;
+import net.edge.world.entity.actor.mob.Follower;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobDeath;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
 
 import java.util.Optional;
 
 /**
  * The familiar represents a npc which will follow the players and has various
  * abilities the player can use in order to ease up the game for him.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public abstract class Familiar extends Follower {
@@ -43,6 +44,7 @@ public abstract class Familiar extends Follower {
 
 	/**
 	 * Constructs a new {@link Familiar}.
+	 *
 	 * @param data the summoning data.
 	 */
 	public Familiar(SummoningData data) {
@@ -63,6 +65,7 @@ public abstract class Familiar extends Follower {
 
 	/**
 	 * Checks if this player has the requirements to summon this npc.
+	 *
 	 * @param player the player to check for.
 	 * @return <true> if the player can summon this familiar, <false> otherwise.
 	 */
@@ -80,6 +83,7 @@ public abstract class Familiar extends Follower {
 
 	/**
 	 * Activates the passive abilities which are non combatant linked to this familiar.
+	 *
 	 * @param player the player this ability is for.
 	 */
 	private void activatePassiveAbilities(Player player) {
@@ -95,6 +99,7 @@ public abstract class Familiar extends Follower {
 
 	/**
 	 * Attempts to summon this familiar dependant on the {@code login} flag.
+	 *
 	 * @param player the player to summon this familiar for.
 	 * @param login  whether we're summoning dependant on login.
 	 */
@@ -139,6 +144,7 @@ public abstract class Familiar extends Follower {
 
 	/**
 	 * Sets the interface and the variables that have to be set on the interface.
+	 *
 	 * @param player the player we're setting this for.
 	 */
 	public void setInterface(Player player) {
@@ -163,6 +169,7 @@ public abstract class Familiar extends Follower {
 
 	/**
 	 * Attempts to dismiss this familiar dependant on the {@code logout} flag.
+	 *
 	 * @param player the player to dismiss this familiar for.
 	 * @param logout whether we're dismissing dependant on log out.
 	 */
@@ -219,6 +226,7 @@ public abstract class Familiar extends Follower {
 	/**
 	 * The method which should be overriden if this familiar has an
 	 * ability where an item can be used on it.
+	 *
 	 * @param player the player whom is using an item on the mob.
 	 * @param mob    the mob whom's being interacted by a player.
 	 * @param item   the item being used on the mob.
@@ -230,12 +238,14 @@ public abstract class Familiar extends Follower {
 
 	/**
 	 * The ability type chained to this familiar.
+	 *
 	 * @return the familiar ability type.
 	 */
 	public abstract FamiliarAbility getAbilityType();
 
 	/**
 	 * The passive ability chained to this familiar.
+	 *
 	 * @return the passive ability instance wrapped in an
 	 * optional if theres a value present, {@link Optional#empty()} otherwise.
 	 */
@@ -243,6 +253,7 @@ public abstract class Familiar extends Follower {
 
 	/**
 	 * Checks if this familiar is combatic or not.
+	 *
 	 * @return <true> if this familiar is combatic, <false> otherwise.
 	 */
 	public abstract boolean isCombatic();
@@ -257,6 +268,7 @@ public abstract class Familiar extends Follower {
 
 	/**
 	 * Attempts to interact with this familiar
+	 *
 	 * @param player the player whom is interacting with the familiar.
 	 * @param mob    the mob this player is interacting with.
 	 * @param id     the action id being interacted with.
@@ -272,6 +284,7 @@ public abstract class Familiar extends Follower {
 
 	/**
 	 * Gets the duration of this familiar in minutes.
+	 *
 	 * @return duration of this familiar.
 	 */
 	public int getDuration() {
@@ -280,6 +293,7 @@ public abstract class Familiar extends Follower {
 
 	/**
 	 * Sets the new {@link #duration}.
+	 *
 	 * @param duration new value to set.
 	 */
 	public void setDuration(int duration) {
@@ -289,6 +303,7 @@ public abstract class Familiar extends Follower {
 	/**
 	 * Holds functionality for the amount of time this familiar has left
 	 * to live.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class FamiliarSpawnTask extends Task {
@@ -310,6 +325,7 @@ public abstract class Familiar extends Follower {
 
 		/**
 		 * Constructs a new {@link FamiliarSpawnTask}.
+		 *
 		 * @param player   the player this familiar belongs too.
 		 * @param familiar the familiar this task is active for.
 		 */

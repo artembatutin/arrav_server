@@ -2,6 +2,7 @@ package net.edge.net.host;
 
 /**
  * An enumeration of possible host list types.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum HostListType {

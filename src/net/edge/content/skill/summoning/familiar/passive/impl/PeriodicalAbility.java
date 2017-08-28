@@ -1,7 +1,7 @@
 package net.edge.content.skill.summoning.familiar.passive.impl;
 
-import net.edge.task.Task;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 
@@ -12,6 +12,7 @@ import java.util.function.Consumer;
  * The periodical ability which executes functionality every period, an example
  * of where this should be utilized is the bunyip familiar.
  * Which heals the player every 15 ticks, aslong as the familiar is summoned.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public class PeriodicalAbility implements PassiveAbility {
@@ -28,6 +29,7 @@ public class PeriodicalAbility implements PassiveAbility {
 
 	/**
 	 * Constructs a new {@link PeriodicalAbility}.
+	 *
 	 * @param ticks  {@link #ticks}.
 	 * @param action {@link #action}.
 	 */
@@ -43,6 +45,7 @@ public class PeriodicalAbility implements PassiveAbility {
 
 	/**
 	 * Checks if this player can perform the ability.
+	 *
 	 * @param player the player we're checking.
 	 * @return <true> if the player can, <false> otherwise.
 	 */
@@ -76,6 +79,7 @@ public class PeriodicalAbility implements PassiveAbility {
 
 	/**
 	 * The task this {@link PeriodicalAbility} is independant of.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class PeriodicalAbilityTask extends Task {
@@ -92,6 +96,7 @@ public class PeriodicalAbility implements PassiveAbility {
 
 		/**
 		 * Constructs a new {@link PeriodicalAbilityTask}.
+		 *
 		 * @param ability {@link #ability}.
 		 * @param player  {@link #player}.
 		 */

@@ -4,19 +4,20 @@ import net.edge.net.packet.out.SendContainer;
 import net.edge.net.packet.out.SendInventoryInterface;
 import net.edge.util.log.Log;
 import net.edge.util.log.impl.TradeLog;
-import net.edge.world.entity.item.container.session.ExchangeSession;
-import net.edge.world.entity.item.container.session.ExchangeSessionActionType;
-import net.edge.world.entity.item.container.session.ExchangeSessionManager;
-import net.edge.world.entity.item.container.session.ExchangeSessionType;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.session.ExchangeSession;
+import net.edge.world.entity.item.container.session.ExchangeSessionActionType;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.item.container.session.ExchangeSessionType;
 
 import java.util.Arrays;
 
 /**
  * The trade session class that represents a trade session between 2 players.
+ *
  * @author lare96 <http://github.com/lare96>
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
@@ -24,6 +25,7 @@ public final class TradeSession extends ExchangeSession {
 
 	/**
 	 * Creates a new {@link TradeSession}.
+	 *
 	 * @param player the player that controls this trade session.
 	 * @param other  the player that was invited to this trade session.
 	 * @param stage  the stage of this trade session.
@@ -64,6 +66,7 @@ public final class TradeSession extends ExchangeSession {
 
 	/**
 	 * Determines and returns the trade display name for {@code player}.
+	 *
 	 * @param player the player to determine this display name for.
 	 * @return the trade display name.
 	 */
@@ -74,6 +77,7 @@ public final class TradeSession extends ExchangeSession {
 	/**
 	 * Determines and returns the text for {@code items} that will be displayed
 	 * on the confirm trade screen.
+	 *
 	 * @param items the array of items to display.
 	 * @return the confirm text for the array of items.
 	 */

@@ -1,24 +1,25 @@
 package net.edge.content.skill.firemaking;
 
-import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.DestructionSkillAction;
-import net.edge.world.entity.region.Region;
-import net.edge.world.entity.region.TraversalMap;
-import net.edge.world.locale.loc.Location;
-import net.edge.world.locale.Position;
+import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.region.Region;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
+import net.edge.world.locale.loc.Location;
 
 import java.util.Optional;
 
 /**
  * Represents the process for creating fires.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Firemaking extends DestructionSkillAction {
@@ -40,6 +41,7 @@ public final class Firemaking extends DestructionSkillAction {
 
 	/**
 	 * Constructs a new {@link Firemaking} skill action.
+	 *
 	 * @param player     the player we're starting this action for.
 	 * @param firstItem  the first item this player used.
 	 * @param secondItem the second item the first item was used on.
@@ -73,7 +75,7 @@ public final class Firemaking extends DestructionSkillAction {
 	public void onDestruct(Task t, boolean success) {
 		if(success) {
 			getPlayer().animation(null);
-			if (!familiar) {
+			if(!familiar) {
 				World.get().submit(new FiremakingTask(this));
 			}
 			if(!familiar && lighter != null && lighter != FireLighter.TINDERBOX) {
@@ -81,9 +83,9 @@ public final class Firemaking extends DestructionSkillAction {
 			}
 			if(!familiar) {
 				Position p = getPlayer().getPosition();
-				if (TraversalMap.isTraversable(p, Direction.WEST, getPlayer().size())) {
+				if(TraversalMap.isTraversable(p, Direction.WEST, getPlayer().size())) {
 					getPlayer().getMovementQueue().walk(Direction.WEST.getX(), Direction.WEST.getY());
-				} else if (TraversalMap.isTraversable(p, Direction.EAST, getPlayer().size())) {
+				} else if(TraversalMap.isTraversable(p, Direction.EAST, getPlayer().size())) {
 					getPlayer().getMovementQueue().walk(Direction.EAST.getX(), Direction.EAST.getY());
 				}
 

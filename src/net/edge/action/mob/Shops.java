@@ -1,8 +1,8 @@
 package net.edge.action.mob;
 
-import net.edge.content.market.MarketCounter;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.MobAction;
+import net.edge.content.market.MarketCounter;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
@@ -35,20 +35,19 @@ public class Shops extends ActionInitializer {
 		SMITHING_THURGO(604, 19, 1),
 		SLAYER_SHOP(8462, 2, 4),
 		FARMING_SHOP(3299, 29, 1),
-		SUMMONING_SHOP(6970, 31, 1),
-		;
-		
+		SUMMONING_SHOP(6970, 31, 1),;
+
 		private final int owner, shop;
 		private final boolean first, second, third, fourth;
-		
+
 		Shop(int owner, int shop, int action) {
 			this(owner, shop, action == 1, action == 2, action == 3, action == 4);
 		}
-		
+
 		Shop(int owner, int shop, boolean first, boolean second) {
 			this(owner, shop, first, second, false, false);
 		}
-		
+
 		Shop(int owner, int shop, boolean first, boolean second, boolean third, boolean fourth) {
 			this.owner = owner;
 			this.shop = shop;
@@ -58,7 +57,7 @@ public class Shops extends ActionInitializer {
 			this.fourth = fourth;
 		}
 	}
-	
+
 	@Override
 	public void init() {
 		for(Shop s : Shop.values()) {

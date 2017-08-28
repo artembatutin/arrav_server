@@ -10,6 +10,7 @@ import java.util.Optional;
 /**
  * The enumerated type whose elements represent all of the different currencies
  * that can be used with shops.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public enum Currency {
@@ -31,6 +32,7 @@ public enum Currency {
 
 	/**
 	 * Creates a new {@link Currency}.
+	 *
 	 * @param currency the currency that is represented by this element.
 	 */
 	Currency(GeneralCurrency currency) {
@@ -44,6 +46,7 @@ public enum Currency {
 
 	/**
 	 * Gets the currency that is represented by this element.
+	 *
 	 * @return the currency that is represented.
 	 */
 	public final GeneralCurrency getCurrency() {

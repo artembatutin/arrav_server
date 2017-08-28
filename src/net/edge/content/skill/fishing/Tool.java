@@ -2,9 +2,9 @@ package net.edge.content.skill.fishing;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.util.rand.RandomUtils;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
@@ -25,7 +25,7 @@ public enum Tool {
 				amount = slots;
 			return calculate(player, amount).toArray(new Item[amount]);
 		}
-		
+
 		@Override
 		public Catchable catchable() {
 			return Catchable.MACKEREL;
@@ -51,14 +51,14 @@ public enum Tool {
 	},
 	SHARK_HARPOON(311, 76, -1, 0.15, 618, new Catchable[]{Catchable.SHARK, Catchable.MANTAS}),
 	LOBSTER_POT(301, 40, -1, 0.25, 619, new Catchable[]{Catchable.LOBSTER});
-	
+
 	final int id;
 	final int level;
 	final int needed;
 	final double success;
 	final int animation;
 	final Catchable[] catchables;
-	
+
 	Tool(int id, int level, int needed, double success, int animation, Catchable[] catchables) {
 		this.id = id;
 		this.level = level;
@@ -67,16 +67,16 @@ public enum Tool {
 		this.animation = animation;
 		this.catchables = catchables;
 	}
-	
+
 	@Override
 	public String toString() {
 		return name().toLowerCase().replaceAll("_", " ");
 	}
-	
+
 	public Catchable catchable() {
 		return catchables[0];
 	}
-	
+
 	ObjectList<Item> calculate(Player player, int cap) {
 		ObjectList<Item> success = new ObjectArrayList<>();
 		Skill skill = player.getSkills()[Skills.FISHING];
@@ -95,7 +95,7 @@ public enum Tool {
 		}
 		return success;
 	}
-	
+
 	public Item[] onCatch(Player player) {
 		return calculate(player, 1).toArray(new Item[1]);
 	}

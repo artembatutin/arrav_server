@@ -3,19 +3,18 @@ package net.edge.content.skill.slayer;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.MobAction;
-import net.edge.util.TextUtils;
-import net.edge.util.rand.RandomUtils;
 import net.edge.content.PlayerPanel;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.impl.*;
+import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.market.currency.Currency;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
+import net.edge.util.TextUtils;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.Item;
@@ -27,60 +26,61 @@ import static net.edge.content.achievements.Achievement.SLAYER_MASTER;
 
 /**
  * Holds functionality for the Slayer skill.
+ *
  * @author <a href="http://www.rune-server.org/members/Stand+Up/">Stan</a>
  */
 public final class Slayer {
-	
+
 	/**
 	 * A map containing all the slayer masters with the possible tasks they can give.
 	 */
 	public static final ObjectList<SlayerBoss> SLAYER_BOSSES = new ObjectArrayList<>();
-	
+
 	/**
 	 * A map containing all the slayer masters with the possible tasks they can give.
 	 */
 	public static final Object2ObjectArrayMap<SlayerMaster, SlayerKeyPolicy[]> SLAYER_KEYS = new Object2ObjectArrayMap<>();
-	
+
 	/**
 	 * A map which contains each slayer key by the position of the npcs.
 	 */
 	public static final Object2ObjectArrayMap<String, SlayerLocationPolicy> SLAYER_LOCATIONS = new Object2ObjectArrayMap<>();
-	
+
 	/**
 	 * A map which contains each slayer key by the level required slayer.
 	 */
 	public static final Object2ObjectArrayMap<String, Integer> SLAYER_LEVELS = new Object2ObjectArrayMap<>();
-	
+
 	/**
 	 * The slayer master this player is on.
 	 */
 	private final SlayerMaster master;
-	
+
 	/**
 	 * The slayer key policy this player has.
 	 */
 	private final String key;
-	
+
 	/**
 	 * The slayer key policy this player has.
 	 */
 	private final SlayerDifficulty difficulty;
-	
+
 	/**
 	 * Rewards for this slayer task.
 	 */
 	//private final Item[] rewards;
-	
+
 	/**
 	 * The amount of points received at the end of the task.
 	 */
 	public final int points;
-	
+
 	/**
 	 * The amount of times this player has to kill the task.
 	 */
 	private int amount;
-	
+
 	/**
 	 * Constructs a new {@link Slayer}.
 	 */
@@ -92,9 +92,10 @@ public final class Slayer {
 		//this.rewards = policy.getRewards();
 		this.points = (int) (amount * 0.4 * ((difficulty.getValue() + 1) * 2.4));
 	}
-	
+
 	/**
 	 * Opens the slayer panel for a particular player.
+	 *
 	 * @param player the player interacting with the panel.
 	 */
 	public static void openPanel(Player player) {
@@ -103,7 +104,7 @@ public final class Slayer {
 		player.text(253, player.getSlayer().isPresent() ? (TextUtils.capitalize(player.getSlayer().get().getKey().toLowerCase() + " x " + player.getSlayer().get().getAmount())) : "none");
 		updateBlocked(player);
 	}
-	
+
 	public static void actionItem() {
 		ItemAction activate = new ItemAction() {
 			@Override
@@ -139,7 +140,7 @@ public final class Slayer {
 		};
 		killsLeft.registerEquip(4155);
 	}
-	
+
 	public static void actionMob() {
 		for(SlayerMaster master : SlayerMaster.values()) {
 			MobAction e = new MobAction() {
@@ -149,7 +150,7 @@ public final class Slayer {
 						player.message("You need a slayer level of " + master.getRequirement() + " to access " + TextUtils.capitalize(master.toString().toLowerCase()) + ".");
 						return false;
 					}
-					
+
 					player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "'Ello, and what are you after, then?"), new OptionDialogue(t -> {
 						if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 							Optional<Slayer> task = getTask(player, master);
@@ -175,9 +176,10 @@ public final class Slayer {
 			e.registerFirst(master.getNpcId());
 		}
 	}
-	
+
 	/**
 	 * Checks if the specified {@code player} can attack the {@code mob}.
+	 *
 	 * @param player the player to check for.
 	 * @param mob    the mob being attacked.
 	 * @return <true> if the player can, <false> otherwise.
@@ -189,10 +191,11 @@ public final class Slayer {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Decrements the remaining slayer task by 1 if the specified {@code mob}
 	 * was assigned as a task.
+	 *
 	 * @param player the player to decrement this for.
 	 * @param mob    the mob to check for.
 	 * @return <true> if the remaining slayer task was decremented, <false> otherwise.
@@ -201,14 +204,14 @@ public final class Slayer {
 		if(!player.getSlayer().isPresent()) {
 			return false;
 		}
-		
+
 		Slayer slayer = player.getSlayer().get();
 		if(mob.getDefinition().getSlayerKey() != null && !slayer.getKey().equals(mob.getDefinition().getSlayerKey())) {
 			return false;
 		}
-		
+
 		slayer.amount--;
-		
+
 		if(slayer.amount < 1) {
 			player.message("You have completed your slayer task.");
 			player.message("To get another slayer task go talk to a slayer master.");
@@ -224,13 +227,13 @@ public final class Slayer {
 		} else {
 			PlayerPanel.SLAYER_TASK.refresh(player, "@or2@ - Slayer task: @yel@" + (player.getSlayer().isPresent() ? (player.getSlayer().get().getAmount() + " " + player.getSlayer().get().toString()) : "none"));
 		}
-		
+
 		String npc_indefinite_article = TextUtils.appendIndefiniteArticle(mob.getDefinition().getName().toLowerCase());
 		player.message("You have defeated " + npc_indefinite_article + ", only " + slayer.amount + " more to go.");
 		Skills.experience(player, slayer.getDifficulty().getValue() * (50 + RandomUtils.inclusive(1, 25)), Skills.SLAYER);
 		return true;
 	}
-	
+
 	public static boolean clickButton(Player player, int button) {
 		SlayerMaster master = player.getSlayer().isPresent() ? player.getSlayer().get().getMaster() : SlayerMaster.SPRIA;
 		if(button >= 113 && button <= 117) {
@@ -252,9 +255,10 @@ public final class Slayer {
 				return false;
 		}
 	}
-	
+
 	/**
 	 * Blocks a slayer task.
+	 *
 	 * @param player the player doing slayer.
 	 * @param master the master associated to the task.
 	 */
@@ -276,9 +280,10 @@ public final class Slayer {
 			player.message("You do not have enough slayer points to do this.");
 		}
 	}
-	
+
 	/**
 	 * Skips a slayer task.
+	 *
 	 * @param player the player doing slayer.
 	 * @param master the master associated to the task.
 	 */
@@ -287,7 +292,7 @@ public final class Slayer {
 			player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "You don't have a slayer assignment."));
 			return;
 		}
-		
+
 		if(Currency.SLAYER_POINTS.getCurrency().currencyAmount(player) >= 30) {
 			Currency.SLAYER_POINTS.getCurrency().takeCurrency(player, 30);
 			player.setSlayer(Optional.empty());
@@ -296,7 +301,7 @@ public final class Slayer {
 			player.message("You do not have enough slayer points to do this.");
 		}
 	}
-	
+
 	public static int getOpen(Player player) {
 		for(int i = 0; i < 5; i++) {
 			if(player.getBlockedTasks()[i] == null) {
@@ -305,7 +310,7 @@ public final class Slayer {
 		}
 		return -1;
 	}
-	
+
 	private static void updateBlocked(Player player) {
 		//Blocked tasks.
 		for(int i = 0; i < 5; i++) {
@@ -316,9 +321,10 @@ public final class Slayer {
 				player.text(254 + i, TextUtils.capitalize(blocked.toLowerCase()));
 		}
 	}
-	
+
 	/**
 	 * The teleport to task function.
+	 *
 	 * @param player the player doing slayer.
 	 * @param master the master associated to the task.
 	 */
@@ -332,9 +338,9 @@ public final class Slayer {
 			app.start();
 			return;
 		}
-		
+
 		SlayerLocationPolicy location = SLAYER_LOCATIONS.get(player.getSlayer().get().getKey());
-		
+
 		if(location == null) {
 			app.chain(new NpcDialogue(master.getNpcId(), "This location currently doesn't exist, please report", "it on the forums."));
 			app.start();
@@ -361,14 +367,15 @@ public final class Slayer {
 		app.chain(new PlayerDialogue("Nah, i'll stay here").attachAfter(() -> player.closeWidget()));
 
 		Dialogue dialogue = location.getPrice() == 0 ? new StatementDialogue("You teleport to your task for free.").attach(() -> player.move(RandomUtils.random(location.getPositions()))) : new RequestItemDialogue(new Item(995, price), "You handed " + price + " coins over to be \\nteleported to your assignment.", Optional.of(() -> player.move(RandomUtils.random(location.getPositions())))).attachAfter(() -> player.closeWidget());
-		
+
 		app.chain(dialogue);
 
 		app.start();
 	}
-	
+
 	/**
 	 * Decrements the players remaining slayer task by the specified {@code amount}.
+	 *
 	 * @param player the player to decrement this for.
 	 * @param amount the amount to decrement.
 	 * @return <true> if the remaining slayer task was decremented, <false> otherwise.
@@ -377,16 +384,17 @@ public final class Slayer {
 		if(!player.getSlayer().isPresent()) {
 			return false;
 		}
-		
+
 		Slayer slayer = player.getSlayer().get();
-		
+
 		slayer.amount = slayer.amount - amount < 1 ? 0 : slayer.amount - amount;
 		return true;
 	}
-	
+
 	/**
 	 * Gets and assigns a task for the specified {@code player} from the specified
 	 * {@code master} with the specified {@code difficulty}.
+	 *
 	 * @param player the player this task is for.
 	 * @param master the master this task is from.
 	 */
@@ -395,7 +403,7 @@ public final class Slayer {
 		int combat = player.determineCombatLevel();
 		ObjectArrayList<String> blocked = ObjectArrayList.wrap(player.getBlockedTasks());
 		ObjectArrayList<SlayerKeyPolicy> tasks = new ObjectArrayList<>();
-		
+
 		int count = 0;
 		for(SlayerKeyPolicy task : SLAYER_KEYS.get(master)) {
 			if(skill.getRealLevel() < SLAYER_LEVELS.getOrDefault(task.getKey(), 99))
@@ -411,49 +419,49 @@ public final class Slayer {
 		if(tasks.isEmpty()) {
 			return Optional.empty();
 		}
-		
+
 		SlayerKeyPolicy policy = RandomUtils.random(tasks);
 		return Optional.of(new Slayer(master, policy));
 	}
-	
+
 	/**
 	 * @return the master
 	 */
 	public SlayerMaster getMaster() {
 		return master;
 	}
-	
+
 	/**
 	 * @return the key
 	 */
 	public String getKey() {
 		return key;
 	}
-	
+
 	/**
 	 * @return the difficulty
 	 */
 	public SlayerDifficulty getDifficulty() {
 		return difficulty;
 	}
-	
+
 	/**
 	 * @return the amount
 	 */
 	public int getAmount() {
 		return amount;
 	}
-	
+
 	/**
 	 * @param amount the amount to set
 	 */
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	
+
 	@Override
 	public String toString() {
 		return TextUtils.capitalize(key.toLowerCase());
 	}
-	
+
 }

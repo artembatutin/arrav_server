@@ -10,18 +10,18 @@ import net.edge.world.entity.actor.mob.Mob;
 
 public class DragonfireStrategy extends NpcMagicStrategy {
 
-    public DragonfireStrategy(CombatProjectileDefinition projectileDefinition) {
-        super(projectileDefinition);
-    }
+	public DragonfireStrategy(CombatProjectileDefinition projectileDefinition) {
+		super(projectileDefinition);
+	}
 
-    @Override
-    public int getAttackDistance(Mob attacker, FightType fightType) {
-        return 1;
-    }
+	@Override
+	public int getAttackDistance(Mob attacker, FightType fightType) {
+		return 1;
+	}
 
-    @Override
-    public CombatHit[] getHits(Mob attacker, Actor defender) {
-        return new CombatHit[]{CombatUtil.generateDragonfire(attacker, defender, 600, true)};
-    }
+	@Override
+	public CombatHit[] getHits(Mob attacker, Actor defender) {
+		return new CombatHit[]{CombatUtil.generateDragonfire(attacker, defender, 600, true)};
+	}
 
 }

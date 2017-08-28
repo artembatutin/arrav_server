@@ -6,13 +6,13 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendMultiIcon implements OutgoingPacket {
-	
+
 	private final boolean hide;
-	
+
 	public SendMultiIcon(boolean hide) {
 		this.hide = hide;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(61);

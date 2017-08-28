@@ -5,7 +5,7 @@ import net.edge.action.impl.ButtonAction;
 import net.edge.world.entity.actor.player.Player;
 
 public class BossPanel extends ActionInitializer {
-	
+
 	@Override
 	public void init() {
 		//Bosses 50-67
@@ -155,5 +155,5 @@ public class BossPanel extends ActionInitializer {
 		e.register(65);
 
 	}
-	
+
 }

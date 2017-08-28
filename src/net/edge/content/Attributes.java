@@ -1,7 +1,7 @@
 package net.edge.content;
 
-import net.edge.net.packet.in.ItemInterfacePacket;
 import net.edge.content.skill.summoning.Summoning;
+import net.edge.net.packet.in.ItemInterfacePacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.ItemDefinition;
@@ -9,13 +9,15 @@ import net.edge.world.entity.item.ItemDefinition;
 /**
  * The attributes class which holds functionality for actions done
  * while the attribute is active.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Attributes {
-	
+
 	/**
 	 * The first slot action from the {@link ItemInterfacePacket} packet, any attribute
 	 * action should be utilised here.
+	 *
 	 * @param player      the player we're utilizing this action for.
 	 * @param interfaceId the interface id of this interface.
 	 * @param slot        the item slot.
@@ -42,10 +44,11 @@ public final class Attributes {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * The second slot action from the {@link ItemInterfacePacket} packet, any attribute
 	 * action should be utilised here.
+	 *
 	 * @param player      the player we're utilizing this action for.
 	 * @param interfaceId the interface id of this interface.
 	 * @param slot        the item slot.
@@ -72,10 +75,11 @@ public final class Attributes {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * The third slot action from the {@link ItemInterfacePacket} packet, any attribute
 	 * action should be utilised here.
+	 *
 	 * @param player      the player we're utilizing this action for.
 	 * @param interfaceId the interface id of this interface.
 	 * @param slot        the item slot.
@@ -102,10 +106,11 @@ public final class Attributes {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * The fourth slot action from the {@link ItemInterfacePacket} packet, any attribute
 	 * action should be utilised here.
+	 *
 	 * @param player      the player we're utilizing this action for.
 	 * @param interfaceId the interface id of this interface.
 	 * @param itemId      the item id.
@@ -144,5 +149,5 @@ public final class Attributes {
 		}
 		return false;
 	}
-	
+
 }

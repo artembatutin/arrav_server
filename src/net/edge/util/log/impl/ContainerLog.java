@@ -9,22 +9,23 @@ import java.util.Optional;
 
 /**
  * The class which represents a trade log.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ContainerLog extends LogDetails {
-	
+
 	/**
 	 * The store title.
 	 */
 	private final ItemContainer container;
-	
+
 	private final Item oldItem, newItem;
-	
+
 	/**
 	 * The item that the user bought.
 	 */
 	private final int slot;
-	
+
 	/**
 	 * Constructs a new {@link ContainerLog}.
 	 */
@@ -35,7 +36,7 @@ public final class ContainerLog extends LogDetails {
 		this.newItem = newItem;
 		this.slot = slot;
 	}
-	
+
 	@Override
 	public Optional<String> formatInformation() {
 		StringBuilder builder = new StringBuilder();

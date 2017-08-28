@@ -10,53 +10,55 @@ import net.edge.world.entity.actor.move.MovementQueue;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Boundary;
 
-/** @author Michael | Chex */
+/**
+ * @author Michael | Chex
+ */
 public abstract class MagicStrategy<T extends Actor> extends CombatStrategy<T> {
 
-    private static final int BASE_EXPERIENCE_MULTIPLIER = 2;
+	private static final int BASE_EXPERIENCE_MULTIPLIER = 2;
 
-    @Override
-    public boolean withinDistance(T attacker, Actor defender) {
-        FightType fightType = attacker.getCombat().getFightType();
-        MovementQueue movement = attacker.getMovementQueue();
-        MovementQueue otherMovement = defender.getMovementQueue();
-        int distance = getAttackDistance(attacker, fightType);
-        if (!movement.isMovementDone() && !otherMovement.isMovementDone() && !movement.isLockMovement() && !attacker.isFrozen()) {
-            distance += 1;
-            if (movement.isRunning()) {
-                distance += 2;
-            }
-        }
-        if (new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance)) {
-            if (!World.getSimplePathChecker().checkProjectile(attacker.getPosition(), defender.getPosition())) {
-                return false;
-            }
-            attacker.getMovementQueue().reset();
-            attacker.setFollowing(false);
-            attacker.faceEntity(defender);
-            return true;
-        }
-        return false;
-    }
+	@Override
+	public boolean withinDistance(T attacker, Actor defender) {
+		FightType fightType = attacker.getCombat().getFightType();
+		MovementQueue movement = attacker.getMovementQueue();
+		MovementQueue otherMovement = defender.getMovementQueue();
+		int distance = getAttackDistance(attacker, fightType);
+		if(!movement.isMovementDone() && !otherMovement.isMovementDone() && !movement.isLockMovement() && !attacker.isFrozen()) {
+			distance += 1;
+			if(movement.isRunning()) {
+				distance += 2;
+			}
+		}
+		if(new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance)) {
+			if(!World.getSimplePathChecker().checkProjectile(attacker.getPosition(), defender.getPosition())) {
+				return false;
+			}
+			attacker.getMovementQueue().reset();
+			attacker.setFollowing(false);
+			attacker.faceEntity(defender);
+			return true;
+		}
+		return false;
+	}
 
-    @Override
-    public boolean canAttack(T attacker, Actor defender) {
-        return true;
-    }
+	@Override
+	public boolean canAttack(T attacker, Actor defender) {
+		return true;
+	}
 
-    protected static void addCombatExperience(Player player, double base, Hit... hits) {
-        float exp = 0;
+	protected static void addCombatExperience(Player player, double base, Hit... hits) {
+		float exp = 0;
 
-        for (Hit hit : hits) {
-            exp += hit.getDamage();
-        }
+		for(Hit hit : hits) {
+			exp += hit.getDamage();
+		}
 
-        exp /= 10;
-        exp *= BASE_EXPERIENCE_MULTIPLIER;
-        exp += base;
+		exp /= 10;
+		exp *= BASE_EXPERIENCE_MULTIPLIER;
+		exp += base;
 
-        Skills.experience(player, exp, Skills.MAGIC);
-        Skills.experience(player, exp / 3, Skills.HITPOINTS);
-    }
+		Skills.experience(player, exp, Skills.MAGIC);
+		Skills.experience(player, exp / 3, Skills.HITPOINTS);
+	}
 
 }

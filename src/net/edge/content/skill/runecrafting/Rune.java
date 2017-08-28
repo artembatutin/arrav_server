@@ -9,6 +9,7 @@ import java.util.Optional;
 /**
  * The enumerated type which elements represents a rune which an {@link Altar}
  * can produce.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum Rune {
@@ -38,6 +39,7 @@ public enum Rune {
 
 	/**
 	 * Constructs a new {@link Rune} enumerator.
+	 *
 	 * @param item       {@link #item}.
 	 * @param multiplier {@link #multiplier}.
 	 */
@@ -48,6 +50,7 @@ public enum Rune {
 
 	/**
 	 * Constructs a new {@link Rune} enumerator.
+	 *
 	 * @param item {@link #item}.
 	 */
 	Rune(int item) {
@@ -72,6 +75,7 @@ public enum Rune {
 	/**
 	 * Gets the best multiplier for this player, if none was found it returns
 	 * a standard multiplier.
+	 *
 	 * @param player {@link the player we're getting this multiplier for.
 	 * @return the best multiplier, otherwise a standard one.
 	 */

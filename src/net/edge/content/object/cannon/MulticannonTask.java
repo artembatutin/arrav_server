@@ -17,6 +17,7 @@ import net.edge.world.entity.item.Item;
 
 /**
  * A {@link Task} handling the {@link Multicannon} shooting.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class MulticannonTask extends Task {
@@ -54,13 +55,13 @@ public class MulticannonTask extends Task {
 			cannon.player.message("Your cannon has run out of ammo!");
 			cancel();
 		} else {
-			if (cannon.facing == null) {
+			if(cannon.facing == null) {
 				cannon.facing = Direction.NORTH;
 				rotate(cannon);
 				fire();
 				return;
 			}
-			switch (cannon.facing) {
+			switch(cannon.facing) {
 				case NORTH: // north
 					cannon.facing = Direction.NORTH_EAST;
 					break;
@@ -98,7 +99,7 @@ public class MulticannonTask extends Task {
 	 */
 	private void rotate(Multicannon cannon) {
 		Player p = cannon.player;
-		switch (cannon.facing) {
+		switch(cannon.facing) {
 			case NORTH: // north
 				p.out(new SendObjectAnimation(cannon.getGlobalPos(), 516, cannon.getObjectType(), -1));
 				break;
@@ -175,41 +176,41 @@ public class MulticannonTask extends Task {
 		int theirX = a.getPosition().getX();
 		int theirY = a.getPosition().getY();
 
-		if (cannon.facing == null) {
+		if(cannon.facing == null) {
 			cannon.facing = Direction.NORTH;
 		}
 
-		switch (cannon.facing) {
+		switch(cannon.facing) {
 			case NORTH:
-				if (theirY > myY && theirX >= myX - 1 && theirX <= myX + 1)
+				if(theirY > myY && theirX >= myX - 1 && theirX <= myX + 1)
 					return true;
 				break;
 			case NORTH_EAST:
-				if (theirX >= myX + 1 && theirY >= myY + 1)
+				if(theirX >= myX + 1 && theirY >= myY + 1)
 					return true;
 				break;
 			case EAST:
-				if (theirX > myX && theirY >= myY - 1 && theirY <= myY + 1)
+				if(theirX > myX && theirY >= myY - 1 && theirY <= myY + 1)
 					return true;
 				break;
 			case SOUTH_EAST:
-				if (theirY <= myY - 1 && theirX >= myX + 1)
+				if(theirY <= myY - 1 && theirX >= myX + 1)
 					return true;
 				break;
 			case SOUTH:
-				if (theirY < myY && theirX >= myX - 1 && theirX <= myX + 1)
+				if(theirY < myY && theirX >= myX - 1 && theirX <= myX + 1)
 					return true;
 				break;
 			case SOUTH_WEST:
-				if (theirX <= myX - 1 && theirY <= myY - 1)
+				if(theirX <= myX - 1 && theirY <= myY - 1)
 					return true;
 				break;
 			case WEST:
-				if (theirX < myX && theirY >= myY - 1 && theirY <= myY + 1)
+				if(theirX < myX && theirY >= myY - 1 && theirY <= myY + 1)
 					return true;
 				break;
 			case NORTH_WEST:
-				if (theirX <= myX - 1 && theirY >= myY + 1)
+				if(theirX <= myX - 1 && theirY >= myY + 1)
 					return true;
 				break;
 		}

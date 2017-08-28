@@ -1,15 +1,15 @@
 package net.edge.content.skill.summoning.familiar.impl;
 
-import net.edge.util.rand.RandomUtils;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.skill.summoning.Summoning;
+import net.edge.content.skill.summoning.SummoningData;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
-import net.edge.content.skill.summoning.SummoningData;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
@@ -17,17 +17,18 @@ import java.util.Optional;
 
 /**
  * Represents the Macaw familiar.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Macaw extends Familiar {
-	
+
 	/**
 	 * Constructs a new {@link Macaw}.
 	 */
 	public Macaw() {
 		super(SummoningData.MACAW);
 	}
-	
+
 	private final ForagerPassiveAbility ability = new ForagerPassiveAbility(199, 201, 203, 205) {
 		@Override
 		public boolean canForage(Player player) {
@@ -37,22 +38,22 @@ public final class Macaw extends Familiar {
 			return true;
 		}
 	};
-	
+
 	@Override
 	public FamiliarAbility getAbilityType() {
 		return ability;
 	}
-	
+
 	@Override
 	public Optional<PassiveAbility> getPassiveAbility() {
 		return Optional.empty();
 	}
-	
+
 	@Override
 	public boolean isCombatic() {
 		return false;
 	}
-	
+
 	@Override
 	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
@@ -71,7 +72,7 @@ public final class Macaw extends Familiar {
 			Summoning.openBeastOfBurden(player, mob);
 		}
 	}
-	
+
 	private final String[] RANDOM_DIALOGUE = new String[]{"Awk! Gimme the rum! Gimme the rum!", "Awk! I'm a pirate! Awk! Yo, ho ho!"};
-	
+
 }

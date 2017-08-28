@@ -7,15 +7,15 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendItemModelInterface implements OutgoingPacket {
-	
+
 	private final int id, zoom, model;
-	
+
 	public SendItemModelInterface(int id, int zoom, int model) {
 		this.id = id;
 		this.zoom = zoom;
 		this.model = model;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(246);

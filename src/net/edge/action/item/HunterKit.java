@@ -1,10 +1,10 @@
 package net.edge.action.item;
 
+import net.edge.action.ActionInitializer;
+import net.edge.action.impl.ItemAction;
 import net.edge.content.skill.hunter.Hunter;
 import net.edge.content.skill.hunter.trap.bird.BirdSnare;
 import net.edge.content.skill.hunter.trap.mammal.BoxTrap;
-import net.edge.action.ActionInitializer;
-import net.edge.action.impl.ItemAction;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Inventory;

@@ -2,16 +2,16 @@ package net.edge.content.skill.runecrafting;
 
 import net.edge.action.impl.ItemAction;
 import net.edge.action.impl.ObjectAction;
+import net.edge.content.skill.SkillData;
+import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.content.skill.runecrafting.pouch.Pouch;
 import net.edge.content.skill.runecrafting.pouch.PouchType;
 import net.edge.task.Task;
-import net.edge.world.entity.item.container.impl.Inventory;
-import net.edge.content.skill.SkillData;
-import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Inventory;
 import net.edge.world.object.GameObject;
 
 import java.util.*;
@@ -21,6 +21,7 @@ import static net.edge.content.achievements.Achievement.RUNE_CRAFTER;
 
 /**
  * Holds functionality for the runecrafting skill.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Runecrafting extends ProducingSkillAction {
@@ -62,6 +63,7 @@ public final class Runecrafting extends ProducingSkillAction {
 
 	/**
 	 * Constructs a new {@link Runecrafting}
+	 *
 	 * @param player {@link #player}.
 	 * @param object the object the {@code player} is interacting with.
 	 */
@@ -69,7 +71,7 @@ public final class Runecrafting extends ProducingSkillAction {
 		super(player, Optional.of(object.getGlobalPos()));
 		this.altar = altar;
 	}
-	
+
 	public static void action() {
 		for(Altar a : Altar.values()) {
 			ObjectAction rc = new ObjectAction() {
@@ -117,13 +119,13 @@ public final class Runecrafting extends ProducingSkillAction {
 	public Optional<Item[]> removeItem() {
 		List<Item> remove = new ArrayList<>();
 		Inventory inventory = player.getInventory();
-		
+
 		if(altar.isDiverse() && !inventory.containsAny(PURE_ESSENCE.getId(), RUNE_ESSENCE.getId())) {
 			return Optional.of(new Item[]{PURE_ESSENCE, RUNE_ESSENCE});
 		} else if(!altar.isDiverse() && !inventory.contains(PURE_ESSENCE)) {
 			return Optional.of(new Item[]{PURE_ESSENCE});
 		}
-		
+
 		if(altar.isDiverse()) {
 			int pure = inventory.computeAmountForId(PURE_ESSENCE.getId());
 			int rune = inventory.computeAmountForId(RUNE_ESSENCE.getId());
@@ -194,14 +196,13 @@ public final class Runecrafting extends ProducingSkillAction {
 	/**
 	 * gets the essence id the player is using, we check for pure essence first
 	 *
-	 * @param player
-	 *            The player checking for essence
+	 * @param player The player checking for essence
 	 * @return The id of the essence
 	 */
 	private static int getEssenceId(Player player) {
-		if (player.getInventory().contains(PURE_ESSENCE)) {
+		if(player.getInventory().contains(PURE_ESSENCE)) {
 			return PURE_ESSENCE.getId();
-		} else if (player.getInventory().contains(RUNE_ESSENCE)) {
+		} else if(player.getInventory().contains(RUNE_ESSENCE)) {
 			return RUNE_ESSENCE.getId();
 		} else {
 			return -1;
@@ -231,7 +232,6 @@ public final class Runecrafting extends ProducingSkillAction {
 			amount -= originalPouch.get().getAmount();
 		}
 
-
 		Pouch pouch = new Pouch(getEssenceId(player), originalPouch.isPresent() ? originalPouch.get().getAmount() + amount : amount);
 
 		pouches.put(type, pouch);
@@ -242,7 +242,6 @@ public final class Runecrafting extends ProducingSkillAction {
 
 	}
 
-
 	public static void examine(Player player, PouchType type) {
 
 		Optional<Pouch> pouch = Optional.ofNullable(pouches.get(type));
@@ -252,7 +251,7 @@ public final class Runecrafting extends ProducingSkillAction {
 			return;
 		}
 
-		player.message("This pouch contains " + pouch.get().getAmount() +(pouch.get().getId() == PURE_ESSENCE.getId() ? " pure" : " rune")+ " essence.");
+		player.message("This pouch contains " + pouch.get().getAmount() + (pouch.get().getId() == PURE_ESSENCE.getId() ? " pure" : " rune") + " essence.");
 
 	}
 

@@ -9,6 +9,7 @@ import net.edge.world.entity.actor.update.UpdateFlag;
 
 /**
  * Holds functionality for the 0x400 mask.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ForcedMovementManager {
@@ -25,6 +26,7 @@ public final class ForcedMovementManager {
 
 	/**
 	 * Constructs a new {@link ForcedMovement} manager.
+	 *
 	 * @param movement the forced movement.
 	 */
 	private ForcedMovementManager(ForcedMovement movement) {
@@ -34,6 +36,7 @@ public final class ForcedMovementManager {
 
 	/**
 	 * Checks if this forced movement can be submitted.
+	 *
 	 * @param character the player attempting to utilize the forced movement.
 	 * @return <true> if the player can, <false> otherwise.
 	 */
@@ -52,6 +55,7 @@ public final class ForcedMovementManager {
 
 	/**
 	 * Submits the forced movement to the world.
+	 *
 	 * @param character the character doing the forced movement.
 	 * @param movement  the movement to submit.
 	 */
@@ -65,6 +69,7 @@ public final class ForcedMovementManager {
 
 	/**
 	 * Submits the forced movement to the world.
+	 *
 	 * @param character         the character doing the forced movement.
 	 * @param movement          the movement to submit.
 	 * @param skipPrerequisites flag to skip  prerequisites.
@@ -79,6 +84,7 @@ public final class ForcedMovementManager {
 
 	/**
 	 * The backing task running for this task.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class ForcedMovementTask extends Task {
@@ -90,6 +96,7 @@ public final class ForcedMovementManager {
 
 		/**
 		 * Constructs a new {@link ForcedMovementTask}.
+		 *
 		 * @param movement {@link #movement}.
 		 */
 		ForcedMovementTask(ForcedMovement movement) {
@@ -104,6 +111,7 @@ public final class ForcedMovementManager {
 
 		/**
 		 * Calculates the time to move the player to the destination.
+		 *
 		 * @return the time.
 		 */
 		private int calculateTimer() {

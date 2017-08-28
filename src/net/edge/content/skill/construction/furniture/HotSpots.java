@@ -1,23 +1,22 @@
 package net.edge.content.skill.construction.furniture;
 
+import net.edge.action.impl.ObjectAction;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.skill.construction.Construction;
 import net.edge.content.skill.construction.data.Constants;
 import net.edge.content.skill.construction.room.RoomManipulation;
-import net.edge.action.impl.ObjectAction;
 import net.edge.net.packet.out.SendObjectsConstruction;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.object.GameObject;
 
 import java.awt.*;
 
-import static net.edge.content.dialogue.impl.OptionDialogue.OptionType.FIRST_OPTION;
-import static net.edge.content.dialogue.impl.OptionDialogue.OptionType.SECOND_OPTION;
-import static net.edge.content.dialogue.impl.OptionDialogue.OptionType.THIRD_OPTION;
+import static net.edge.content.dialogue.impl.OptionDialogue.OptionType.*;
 import static net.edge.content.skill.construction.furniture.Furniture.*;
 
 /**
  * Enumeration of all of the {@link Construction} hotspots.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum HotSpots {
@@ -51,7 +50,7 @@ public enum HotSpots {
 	PARLOUR_CURTAIN_6(10, 15419, 7, 2, 2, Constants.PARLOUR, 5, true, new Furniture[]{TORN_CURTAINS, CURTAINS, OPULENT_CURTAINS}),
 	PARLOUR_CURTAIN_7(10, 15419, 5, 0, 3, Constants.PARLOUR, 5, true, new Furniture[]{TORN_CURTAINS, CURTAINS, OPULENT_CURTAINS}),
 	PARLOUR_CURTAIN_8(10, 15419, 2, 0, 3, Constants.PARLOUR, 5, true, new Furniture[]{TORN_CURTAINS, CURTAINS, OPULENT_CURTAINS}),
-	
+
 	/**
 	 * Kitchen
 	 */
@@ -64,7 +63,7 @@ public enum HotSpots {
 	KITCHEN_SHELF_1(17, 15400, 1, 7, 1, Constants.KITCHEN, 5, new Furniture[]{WOODEN_SHELVES_1, WOODEN_SHELVES_2, WOODEN_SHELVES_3, OAK_SHELVES_1, OAK_SHELVES_2, TEAK_SHELVES_1, TEAK_SHELVES_2}),
 	KITCHEN_SHELF_2(17, 15400, 6, 7, 1, Constants.KITCHEN, 5, new Furniture[]{WOODEN_SHELVES_1, WOODEN_SHELVES_2, WOODEN_SHELVES_3, OAK_SHELVES_1, OAK_SHELVES_2, TEAK_SHELVES_1, TEAK_SHELVES_2}),
 	KITCHEN_SHELF_3(17, 15399, 7, 6, 2, Constants.KITCHEN, 5, new Furniture[]{WOODEN_SHELVES_1, WOODEN_SHELVES_2, WOODEN_SHELVES_3, OAK_SHELVES_1, OAK_SHELVES_2, TEAK_SHELVES_1, TEAK_SHELVES_2}),
-	
+
 	/**
 	 * Dining room
 	 */
@@ -87,7 +86,7 @@ public enum HotSpots {
 	DINING_SEATING_7(20, 15299, 4, 5, 0, Constants.DINING_ROOM, true, new Furniture[]{WOODEN_BENCH, OAK_BENCH, CARVED_OAK_BENCH, TEAK_DINING_BENCH, CARVED_TEAK_DINING_BENCH, MAHOGANY_BENCH, GILDED_BENCH}),
 	DINING_SEATING_8(20, 15299, 5, 5, 0, Constants.DINING_ROOM, true, new Furniture[]{WOODEN_BENCH, OAK_BENCH, CARVED_OAK_BENCH, TEAK_DINING_BENCH, CARVED_TEAK_DINING_BENCH, MAHOGANY_BENCH, GILDED_BENCH}),
 	DINING_TABLE(21, 15298, 2, 3, 0, Constants.DINING_ROOM, new Furniture[]{WOOD_DINING_TABLE, OAK_TABLE, CARVED_OAK_TABLE, TEAK_DINING_TABLE, CARVED_TEAK_TABLE, MAHOGANY_TABLE, OPULENT_TABLE}),
-	
+
 	/**
 	 * Workshop
 	 */
@@ -100,14 +99,14 @@ public enum HotSpots {
 	WORKSHOP_WORKBENCH(24, 15439, 3, 4, 0, Constants.WORKSHOP, new Furniture[]{WOODEN_WORKBENCH, OAK_WORKBENCH, STEEL_FRAMED_BENCH, BENCH_WITH_VICE, BENCH_WITH_A_LATHE}),
 	WORKSHOP_REPAIR_STANCE(25, 15448, 7, 3, 1, Constants.WORKSHOP, new Furniture[]{REAPIR_BENCH, WHETSTONE, ARMOUR_STAND}),
 	WORKSHOP_HERALDY(26, 15450, 7, 6, 1, Constants.WORKSHOP, new Furniture[]{PLUMING_STAND, SHIELD_EASEL, BANNER_EASEL}),
-	
+
 	/**
 	 * Bedroom
 	 */
 	BEDROOM_RUG_1(7, 15266, 2, 2, 0, Constants.BEDROOM, 22, new Dimension(5, 3), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
 	BEDROOM_RUG_2(7, 15265, 2, 2, 0, Constants.BEDROOM, 22, new Dimension(5, 3), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
 	BEDROOM_RUG_3(7, 15264, 2, 2, 0, Constants.BEDROOM, 22, new Dimension(5, 3), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
-	
+
 	BEDROOM_CURTAIN_1(10, 15263, 0, 2, 0, Constants.BEDROOM, 5, true, new Furniture[]{TORN_CURTAINS, CURTAINS, OPULENT_CURTAINS}),
 	BEDROOM_CURTAIN_2(10, 15263, 0, 5, 0, Constants.BEDROOM, 5, true, new Furniture[]{TORN_CURTAINS, CURTAINS, OPULENT_CURTAINS}),
 	BEDROOM_CURTAIN_3(10, 15263, 2, 7, 1, Constants.BEDROOM, 5, true, new Furniture[]{TORN_CURTAINS, CURTAINS, OPULENT_CURTAINS}),
@@ -121,7 +120,7 @@ public enum HotSpots {
 	BEDROOM_BED(28, 15260, 3, 6, 0, Constants.BEDROOM, new Furniture[]{WOODEN_BED, OAK_BED, LARGE_OAK_BED, TEAK_BED, LARGE_TEAK_BED, FOUR_POSTER, GILDED_FOUR_POSTER}),
 	BEDROOM_WARDROBE(29, 15261, 6, 7, 0, Constants.BEDROOM, new Furniture[]{SHOE_BOX, OAK_DRAWERS, OAK_WARDROBE, TEAK_DRAWERS, TEAK_WARDROBE, MAHOGANY_WARDROBE, GILDED_WARDROBE}),
 	BEDROOM_CLOCK(30, 15268, 7, 0, 1, Constants.BEDROOM, 11, new Furniture[]{OAK_CLOCK, TEAK_CLOCK, GILDED_CLOCK}),
-	
+
 	/**
 	 * Skill hall
 	 */
@@ -135,7 +134,7 @@ public enum HotSpots {
 	SKILL_HALL_ARMOUR_2(35, 34255, 2, 3, 0, Constants.SKILL_ROOM, new Furniture[]{BASIC_DECORATIVE_ARMOUR_STAND, DETAILED_DECORATIVE_ARMOUR_STAND, INTRICATE_DECORATIVE_ARMOUR_STAND, PROFOUND_DECORATIVE_ARMOUR_STAND}),
 	SKILL_HALL_STAIRS(36, 15380, 3, 3, 0, Constants.SKILL_ROOM, new Furniture[]{OAK_STAIRCASE, TEAK_STAIRCASE, SPIRAL_STAIRCASE, MARBLE_STAIRCASE, MARBLE_SPIRAL}),
 	SKILL_HALL_STAIRS_1(37, 15381, 3, 3, 0, Constants.SKILL_ROOM, new Furniture[]{OAK_STAIRCASE_1, TEAK_STAIRCASE_1, SPIRAL_STAIRCASE_1, MARBLE_STAIRCASE_1, MARBLE_SPIRAL_1}),
-	
+
 	SKILL_HALL_RUG_1_DOWN(7, 15379, 2, 2, 0, Constants.SKILL_HALL_DOWN, 22, new Dimension(5, 5), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
 	SKILL_HALL_RUG_2_DOWN(7, 15378, 2, 2, 0, Constants.SKILL_HALL_DOWN, 22, new Dimension(5, 5), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
 	SKILL_HALL_RUG_3_DOWN(7, 15377, 2, 2, 0, Constants.SKILL_HALL_DOWN, 22, new Dimension(5, 5), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
@@ -146,7 +145,7 @@ public enum HotSpots {
 	SKILL_HALL_ARMOUR_2_DOWN(35, 34255, 2, 3, 0, Constants.SKILL_HALL_DOWN, new Furniture[]{BASIC_DECORATIVE_ARMOUR_STAND, DETAILED_DECORATIVE_ARMOUR_STAND, INTRICATE_DECORATIVE_ARMOUR_STAND, PROFOUND_DECORATIVE_ARMOUR_STAND}),
 	SKILL_HALL_STAIRS_DOWN(36, 15380, 3, 3, 0, Constants.SKILL_HALL_DOWN, new Furniture[]{OAK_STAIRCASE, TEAK_STAIRCASE, SPIRAL_STAIRCASE, MARBLE_STAIRCASE, MARBLE_SPIRAL}),
 	SKILL_HALL_STAIRS_1_DOWN(37, 15381, 3, 3, 0, Constants.SKILL_HALL_DOWN, new Furniture[]{OAK_STAIRCASE_1, TEAK_STAIRCASE_1, SPIRAL_STAIRCASE_1, MARBLE_STAIRCASE_1, MARBLE_SPIRAL_1}),
-	
+
 	/**
 	 * Games room
 	 */
@@ -155,14 +154,14 @@ public enum HotSpots {
 	ELEMENTAL_BALANCE(40, 15345, 5, 4, 0, Constants.GAMES_ROOM, new Furniture[]{ELEMENTAL_BALANCE_1, ELEMENTAL_BALANCE_2, ELEMENTAL_BALANCE_3}),
 	PRIZE_CHEST(41, 15343, 3, 7, 0, Constants.GAMES_ROOM, new Furniture[]{OAK_PRIZED_CHEST, TEAK_PRIZED_CHEST, MAHOGANY_PRIZED_CHEST}),
 	GAME_SPACE(42, 15342, 6, 0, 1, Constants.GAMES_ROOM, new Furniture[]{JESTER, TREASURE_HUNT, HANGMAN}),
-	
+
 	/**
 	 * Combat room
 	 */
 	STORAGE_RACK(43, 15296, 3, 7, 0, Constants.COMBAT_ROOM, new Furniture[]{GLOVE_RACK, WEAPONS_RACK, EXTRA_WEAPONS_RACK}),
 	COMBAT_WALL_DEC_1(19, 15297, 1, 7, 1, Constants.COMBAT_ROOM, 5, new Furniture[]{OAK_DECORATION, TEAK_DECORATION, GILDED_DECORATION}),
 	COMBAT_WALL_DEC_2(19, 15297, 6, 7, 1, Constants.COMBAT_ROOM, 5, new Furniture[]{OAK_DECORATION, TEAK_DECORATION, GILDED_DECORATION}),
-	
+
 	COMBAT_RING_1(44, 15294, 1, 1, 0, Constants.COMBAT_ROOM, new Furniture[]{BOXING_RING, FENCING_RING, COMBAT_RING, RANGING_PEDESTALS, BALANCE_BEAM}),
 	COMBAT_RING_3(44, 15293, 1, 1, 0, Constants.COMBAT_ROOM, new Furniture[]{BOXING_RING, FENCING_RING, COMBAT_RING, RANGING_PEDESTALS, BALANCE_BEAM}),
 	COMBAT_RING_4(44, 15292, 1, 1, 0, Constants.COMBAT_ROOM, new Furniture[]{BOXING_RING, FENCING_RING, COMBAT_RING, RANGING_PEDESTALS, BALANCE_BEAM}),
@@ -191,7 +190,7 @@ public enum HotSpots {
 	QUEST_HALL_RUG_1(7, 15389, 2, 2, 0, Constants.QUEST_ROOM, 22, new Dimension(5, 5), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
 	QUEST_HALL_RUG_2(7, 15388, 2, 2, 0, Constants.QUEST_ROOM, 22, new Dimension(5, 5), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
 	QUEST_HALL_RUG_3(7, 15387, 2, 2, 0, Constants.QUEST_ROOM, 22, new Dimension(5, 5), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
-	
+
 	QUEST_HALL_BOOKCASE_DOWN(8, 15397, 0, 1, 0, Constants.QUEST_HALL_DOWN, new Furniture[]{WOODEN_BOOKCASE, OAK_BOOKCASE, MAHOGANY_BOOKCASE}),
 	QUEST_HALL_MAP_DOWN(45, 15396, 7, 1, 2, Constants.QUEST_HALL_DOWN, 5, new Furniture[]{SMALL_MAP, MEDIUM_MAP, LARGE_MAP}),
 	QUEST_HALL_SWORD_DOWN(46, 15395, 7, 6, 2, Constants.QUEST_HALL_DOWN, 5, new Furniture[]{SILVERLIGHT, EXCALIBUR, DARKLIGHT}),
@@ -202,7 +201,7 @@ public enum HotSpots {
 	QUEST_HALL_RUG_1_DOWN(7, 15389, 2, 2, 0, Constants.QUEST_HALL_DOWN, 22, new Dimension(5, 5), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
 	QUEST_HALL_RUG_2_DOWN(7, 15388, 2, 2, 0, Constants.QUEST_HALL_DOWN, 22, new Dimension(5, 5), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
 	QUEST_HALL_RUG_3_DOWN(7, 15387, 2, 2, 0, Constants.QUEST_HALL_DOWN, 22, new Dimension(5, 5), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
-	
+
 	/**
 	 * Menagerie
 	 */
@@ -210,7 +209,7 @@ public enum HotSpots {
 	MENAGERIE_PET_FEEDER(51, 44910, 5, 1, 3, Constants.MENAGERY, new Furniture[]{OAK_PET_FEEDER, TEAK_PET_FEEDER, MAHOGANY_PET_FEEDER}),
 	MENAGERIE_OBELISK(52, 44911, 5, 5, 3, Constants.MENAGERY, new Furniture[]{MINI_OBELISK}),
 	HABITAT_SPACE(53, 44908, 0, 0, 0, Constants.MENAGERY, new Furniture[]{GARDEN_HABITAT, JUNGLEN_HABITAT, DESERT_HABITAT, POLAR_HABITAT, VOLCANIC_HABITAT}),
-	
+
 	/**
 	 * Study
 	 */
@@ -225,7 +224,7 @@ public enum HotSpots {
 	STUDY_BOOKCASE_1(8, 15425, 3, 7, 1, Constants.STUDY, new Furniture[]{WOODEN_BOOKCASE, OAK_BOOKCASE, MAHOGANY_BOOKCASE}),
 	STUDY_BOOKCASE_2(8, 15425, 4, 7, 1, Constants.STUDY, new Furniture[]{WOODEN_BOOKCASE, OAK_BOOKCASE, MAHOGANY_BOOKCASE}),
 	STUDY_TELESCOPE(59, 15424, 5, 7, 2, Constants.STUDY, new Furniture[]{WOODEN_TELESCOPE, TEAK_TELESCOPE, MAHOGANY_TELESCOPE}),
-	
+
 	/**
 	 * Costume room
 	 */
@@ -235,7 +234,7 @@ public enum HotSpots {
 	ARMOUR_CASE(63, 18815, 2, 7, 1, Constants.COSTUME_ROOM, new Furniture[]{OAK_ARMOR_CASE, TEAK_ARMOR_CASE, MOHOGANY_ARMOR_CASE}),
 	MAGIC_WARDROBE(64, 18811, 3, 7, 1, Constants.COSTUME_ROOM, new Furniture[]{OAK_MAGIC_WARDROBE, CARVED_OAK_MAGIC_WARDROBE, TEAK_MAGIC_WARDROBE, CARVED_TEAK_MAGIC_WARDROBE, MAHOGANY_MAGIC_WARDROBE, GILDED_MAGIC_WARDROBE, MARBLE_MAGIC_WARDROBE}),
 	CAPE_RACK(65, 18810, 6, 6, 1, Constants.COSTUME_ROOM, new Furniture[]{OAK_CAPE_RACK, TEAK_CAPE_RACK, MAHOGANY_CAPE_RACK, GILDED_CAPE_RACK, MARBLE_CAPE_RACK, MAGIC_CAPE_RACK}),
-	
+
 	/**
 	 * Chapel
 	 */
@@ -252,11 +251,11 @@ public enum HotSpots {
 	CHAPEL_WINDOW_3(71, 13733, 5, 7, 1, Constants.CHAPEL, 0, true, new Furniture[]{SHUTTERED_WINDOW, DECORATIVE_WINDOW, STAINED_GLASS}),
 	CHAPEL_WINDOW_4(71, 13733, 7, 5, 2, Constants.CHAPEL, 0, true, new Furniture[]{SHUTTERED_WINDOW, DECORATIVE_WINDOW, STAINED_GLASS}),
 	CHAPEL_WINDOW_5(71, 13733, 7, 2, 2, Constants.CHAPEL, 0, true, new Furniture[]{SHUTTERED_WINDOW, DECORATIVE_WINDOW, STAINED_GLASS}),
-	
+
 	CHAPEL_RUG_1(7, 15270, 4, 1, 0, Constants.CHAPEL, 22, new Dimension(1, 4), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
 	CHAPEL_RUG_2(7, 15274, 4, 1, 0, Constants.CHAPEL, 22, new Dimension(1, 4), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
 	CHAPEL_RUG_3(7, 15273, 4, 1, 0, Constants.CHAPEL, 22, new Dimension(1, 4), new Furniture[]{BROWN_RUG, RUG, OPULENT_RUG}),
-	
+
 	/**
 	 * Portal room
 	 */
@@ -264,7 +263,7 @@ public enum HotSpots {
 	PORTAL_2(72, 15407, 3, 7, 2, Constants.PORTAL_ROOM, new Furniture[]{TEAK_PORTAL, MAHOGANY_PORTAL, MARBLE_PORTAL}),
 	PORTAL_3(72, 15408, 7, 3, 3, Constants.PORTAL_ROOM, new Furniture[]{TEAK_PORTAL, MAHOGANY_PORTAL, MARBLE_PORTAL}),
 	PORTAL_CENTREPIECE(73, 15409, 3, 3, 0, Constants.PORTAL_ROOM, new Furniture[]{TELEPORT_FOCUS, GREATER_FOCUS, SCYING_POOL}),
-	
+
 	/**
 	 * Formal garden
 	 */
@@ -348,7 +347,7 @@ public enum HotSpots {
 	CORRIDOR_DOOR_2(92, 15328, 4, 1, 3, Constants.CORRIDOR, 0, new Furniture[]{OAK_DOOR, STEEL_PLATED_DOOR, MARBLE_DOOR}),
 	CORRIDOR_DOOR_3(92, 15326, 3, 6, 1, Constants.CORRIDOR, 0, new Furniture[]{OAK_DOOR, STEEL_PLATED_DOOR, MARBLE_DOOR}),
 	CORRIDOR_DOOR_4(92, 15327, 4, 6, 1, Constants.CORRIDOR, 0, new Furniture[]{OAK_DOOR, STEEL_PLATED_DOOR, MARBLE_DOOR}),
-	
+
 	/**
 	 * junction
 	 */
@@ -397,7 +396,7 @@ public enum HotSpots {
 	PIT_LIGHT_8(90, 15330, 5, 1, 3, Constants.PIT, 4, true, new Furniture[]{CANDLE, TORCH, SKULL_TORCH}),
 	PIT_DECORATION_1(89, 15331, 1, 6, 1, Constants.PIT, 4, true, new Furniture[]{DECORATIVE_BLOOD, DECORATIVE_PIPE, HANGING_SKELETON}),
 	PIT_DECORATION_2(89, 15331, 6, 1, 3, Constants.PIT, 4, true, new Furniture[]{DECORATIVE_BLOOD, DECORATIVE_PIPE, HANGING_SKELETON}),
-	
+
 	PIT_DOOR_1(92, 36675, 3, 1, 3, Constants.PIT, 0, new Furniture[]{OAK_DOOR, STEEL_PLATED_DOOR, MARBLE_DOOR}),
 	PIT_DOOR_2(92, 36672, 4, 1, 3, Constants.PIT, 0, new Furniture[]{OAK_DOOR, STEEL_PLATED_DOOR, MARBLE_DOOR}),
 	PIT_DOOR_3(92, 36672, 3, 6, 1, Constants.PIT, 0, new Furniture[]{OAK_DOOR, STEEL_PLATED_DOOR, MARBLE_DOOR}),
@@ -424,7 +423,7 @@ public enum HotSpots {
 	private int hotSpotId, objectId, xOffset, yOffset, standardRotation, objectType, roomType;
 	private boolean mutiple;
 	private Dimension carpetDim;
-	
+
 	HotSpots(int hotSpotId, int objectId, int xOffset, int yOffset, int standardRotation, int roomType, Furniture[] furnitures) {
 		this.hotSpotId = hotSpotId;
 		this.objectId = objectId;
@@ -436,29 +435,29 @@ public enum HotSpots {
 		setObjectType(10);
 		setMutiple(false);
 		setRoomType(roomType);
-		
+
 	}
-	
+
 	HotSpots(int hotSpotId, int objectId, int xOffset, int yOffset, int standardRotation, int roomType, int objectType, Furniture[] furnitures) {
 		this(hotSpotId, objectId, xOffset, yOffset, standardRotation, roomType, furnitures);
 		this.setObjectType(objectType);
 	}
-	
+
 	HotSpots(int hotSpotId, int objectId, int xOffset, int yOffset, int standardRotation, int roomType, int objectType, boolean mutiple, Furniture[] furnitures) {
 		this(hotSpotId, objectId, xOffset, yOffset, standardRotation, roomType, objectType, furnitures);
 		this.setMutiple(mutiple);
 	}
-	
+
 	HotSpots(int hotSpotId, int objectId, int xOffset, int yOffset, int standardRotation, int roomType, boolean mutiple, Furniture[] furnitures) {
 		this(hotSpotId, objectId, xOffset, yOffset, standardRotation, roomType, furnitures);
 		this.setMutiple(mutiple);
 	}
-	
+
 	HotSpots(int hotSpotId, int objectId, int xOffset, int yOffset, int standardRotation, int roomType, int objectType, Dimension carpetDim, Furniture[] furnitures) {
 		this(hotSpotId, objectId, xOffset, yOffset, standardRotation, roomType, objectType, furnitures);
 		this.setCarpetDim(carpetDim);
 	}
-	
+
 	public int getRotation(int roomRot) {
 		if(roomRot == 0)
 			return standardRotation;
@@ -470,7 +469,7 @@ public enum HotSpots {
 			return (standardRotation == 1 ? 0 : standardRotation + 3);
 		return standardRotation;
 	}
-	
+
 	public static int getRotation_2(int rot, int roomRot) {
 		if(roomRot == 0)
 			return rot;
@@ -482,55 +481,55 @@ public enum HotSpots {
 			return (rot == 1 ? 0 : rot + 3);
 		return rot;
 	}
-	
+
 	public int getHotSpotId() {
 		return hotSpotId;
 	}
-	
+
 	public int getObjectId() {
 		return objectId;
 	}
-	
+
 	public int getXOffset() {
 		return xOffset;
 	}
-	
+
 	public int getYOffset() {
 		return yOffset;
 	}
-	
+
 	public int getObjectType() {
 		return objectType;
 	}
-	
+
 	public void setObjectType(int objectType) {
 		this.objectType = objectType;
 	}
-	
+
 	public Dimension getCarpetDim() {
 		return carpetDim;
 	}
-	
+
 	public void setCarpetDim(Dimension carpetDim) {
 		this.carpetDim = carpetDim;
 	}
-	
+
 	public boolean isMutiple() {
 		return mutiple;
 	}
-	
+
 	public void setMutiple(boolean mutiple) {
 		this.mutiple = mutiple;
 	}
-	
+
 	public int getRoomType() {
 		return roomType;
 	}
-	
+
 	public void setRoomType(int roomType) {
 		this.roomType = roomType;
 	}
-	
+
 	public static void action() {
 		for(HotSpots spot : values()) {
 			ObjectAction e = new ObjectAction() {
@@ -578,7 +577,7 @@ public enum HotSpots {
 		roomCreation.registerCons(15308);
 		roomCreation.registerCons(15307);
 	}
-	
+
 	public Furniture[] getFurnitures() {
 		return furnitures;
 	}

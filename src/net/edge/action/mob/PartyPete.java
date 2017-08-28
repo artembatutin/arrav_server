@@ -1,12 +1,12 @@
 package net.edge.action.mob;
 
+import net.edge.action.ActionInitializer;
+import net.edge.action.impl.MobAction;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.PlayerDialogue;
 import net.edge.content.market.MarketCounter;
-import net.edge.action.ActionInitializer;
-import net.edge.action.impl.MobAction;
 import net.edge.net.database.connection.use.Donating;
 import net.edge.net.packet.out.SendLink;
 import net.edge.world.World;

@@ -7,14 +7,14 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendInventoryInterface implements OutgoingPacket {
-	
+
 	private final int open, overlay;
-	
+
 	public SendInventoryInterface(int open, int overlay) {
 		this.open = open;
 		this.overlay = overlay;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(248);

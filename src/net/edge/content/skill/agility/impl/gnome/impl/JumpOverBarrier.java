@@ -1,15 +1,16 @@
 package net.edge.content.skill.agility.impl.gnome.impl;
 
-import net.edge.task.LinkedTaskSequence;
 import net.edge.content.skill.agility.obstacle.ObstacleActivity;
 import net.edge.content.skill.agility.obstacle.ObstacleType;
-import net.edge.world.locale.Position;
+import net.edge.task.LinkedTaskSequence;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.move.ForcedMovement;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.Position;
 
 /**
  * Holds functionality for the jump over barrier obstacle.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class JumpOverBarrier extends ObstacleActivity {

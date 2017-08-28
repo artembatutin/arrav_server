@@ -4,11 +4,11 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.GameConstants;
 import net.edge.action.impl.ItemAction;
-import net.edge.util.rand.RandomUtils;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -19,6 +19,7 @@ import java.util.Optional;
 
 /**
  * The enumerated type managing consumable food types.
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author lare96 <http://github.com/lare96>
  */
@@ -110,6 +111,7 @@ public enum FoodConsumable {
 				return (int) (hp * 2.5);
 			}
 		}
+
 		@Override
 		public int maximumCap(Player player) {
 			return (int) (player.getMaximumHealth() * 1.10);
@@ -288,7 +290,6 @@ public enum FoodConsumable {
 	 */
 	private static final ImmutableSet<FoodConsumable> VALUES = Sets.immutableEnumSet(EnumSet.allOf(FoodConsumable.class));
 
-
 	/**
 	 * The amount of hit points this food heals.
 	 */
@@ -301,6 +302,7 @@ public enum FoodConsumable {
 
 	/**
 	 * Creates a new {@link FoodConsumable}.
+	 *
 	 * @param healAmount the amount of hit points this food heals.
 	 * @param ids        the identifiers which represent this food type.
 	 */
@@ -360,6 +362,7 @@ public enum FoodConsumable {
 	 * The method executed after the player has successfully consumed this food.
 	 * This method may be overridden to provide a different functionality for
 	 * such foods as kebabs.
+	 *
 	 * @param player the player that has consumed the food.
 	 */
 	public void onEffect(Player player) {
@@ -368,6 +371,7 @@ public enum FoodConsumable {
 
 	/**
 	 * Retrieves the food consumable element for {@code id}.
+	 *
 	 * @param id the id that the food consumable is attached to.
 	 * @return the food consumable wrapped in an optional, or an empty optional
 	 * if no food consumable was found.
@@ -385,6 +389,7 @@ public enum FoodConsumable {
 
 	/**
 	 * The max cap to heal hitpoints upon to.
+	 *
 	 * @param player player eating.
 	 * @return hitpoints max cap.
 	 */
@@ -396,6 +401,7 @@ public enum FoodConsumable {
 	 * Retrieves the chatbox message printed when a food is consumed. This
 	 * method may be overridden to provide a different functionality for foods
 	 * which have a different chatbox message.
+	 *
 	 * @return the chatbox message printed when a food is consumed.
 	 */
 	public String getMessage() {
@@ -404,6 +410,7 @@ public enum FoodConsumable {
 
 	/**
 	 * Gets the amount of hit points this food heals.
+	 *
 	 * @return the amount this food heals.
 	 */
 	public int getHealAmount(Player player) {
@@ -412,6 +419,7 @@ public enum FoodConsumable {
 
 	/**
 	 * Gets the identifiers which represent this food type.
+	 *
 	 * @return the identifiers for this food.
 	 */
 	public final int[] getIds() {
@@ -421,6 +429,7 @@ public enum FoodConsumable {
 	/**
 	 * Determines if this food is a special food type which can be used
 	 * as combo food.
+	 *
 	 * @return {@code true} if this food is combo, {@code false} otherwise.
 	 */
 	public boolean special() {

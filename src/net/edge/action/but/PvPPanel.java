@@ -6,7 +6,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 
 public class PvPPanel extends ActionInitializer {
-	
+
 	@Override
 	public void init() {
 		//Bosses 420+
@@ -30,5 +30,5 @@ public class PvPPanel extends ActionInitializer {
 			e.register(1164 + i);
 		}
 	}
-	
+
 }

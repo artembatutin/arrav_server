@@ -1,9 +1,7 @@
 package net.edge.net.packet.in;
 
-import net.edge.net.host.HostListType;
-import net.edge.net.host.HostManager;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
@@ -11,10 +9,11 @@ import net.edge.world.entity.actor.update.UpdateFlag;
 
 /**
  * The message sent from the client when the player speaks.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ChatPacket implements IncomingPacket {
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityType.CHAT_MESSAGE))

@@ -2,51 +2,48 @@ package net.edge.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectIterator;
-import it.unimi.dsi.fastutil.objects.ObjectList;
-import it.unimi.dsi.fastutil.objects.ObjectListIterator;
-import net.edge.content.skill.prayer.Bone;
 import net.edge.util.json.JsonLoader;
-import net.edge.util.rand.RandomUtils;
-import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.entity.actor.mob.drop.Drop;
 import net.edge.world.entity.actor.mob.drop.DropManager;
-import net.edge.world.entity.item.ItemCache;
 import net.edge.world.entity.actor.mob.drop.DropTable;
-import net.edge.world.entity.item.ItemDefinition;
 
-import java.io.*;
-import java.util.*;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * The {@link JsonLoader} implementation that loads all npc drops.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class MobDropTableLoader extends JsonLoader {
-	
+
 	/**
 	 * Creates a new {@link MobDropTableLoader}.
 	 */
 	public MobDropTableLoader() {
 		super("./data/def/mob/mob_drops.json");
 	}
-	
+
 	/**
 	 * A constant defined to write a new set of npc ids for the client.
 	 */
 	private final boolean OUTPUT = false;
-	
+
 	/**
 	 * A set of written ids.
 	 */
 	private Set<Integer> written = new HashSet<>();
-	
+
 	/**
 	 * The writer to write our ids.
 	 */
 	private DataOutputStream out;
-	
+
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		int[] array = builder.fromJson(reader.get("ids"), int[].class);
@@ -59,7 +56,7 @@ public final class MobDropTableLoader extends JsonLoader {
 				DropManager.REDIRECTS.put(array[i], first);
 			DropManager.getTables().put(array[i], new DropTable(common, rare));
 		}
-		
+
 		if(OUTPUT && out != null) {
 			for(int i : array) {
 				if(!written.contains(i) && i <= 14377 && i > 0) {
@@ -71,9 +68,9 @@ public final class MobDropTableLoader extends JsonLoader {
 				}
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public void start() {
 		if(OUTPUT) {
@@ -85,7 +82,7 @@ public final class MobDropTableLoader extends JsonLoader {
 			}
 		}
 	}
-	
+
 	@Override
 	public void end() {
 		if(out != null) {

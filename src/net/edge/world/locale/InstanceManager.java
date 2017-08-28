@@ -9,23 +9,25 @@ import java.util.stream.IntStream;
 
 /**
  * The instance manager for this world.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class InstanceManager {
-	
+
 	/**
 	 * The instance manager for the world.
 	 */
 	private static final InstanceManager INSTANCE_MANAGER = new InstanceManager();
-	
+
 	/**
 	 * The array of instances that exist on the world.
 	 */
 	private static final boolean[] INSTANCES = new boolean[1000];
-	
+
 	/**
 	 * Gets the next opened instance.
+	 *
 	 * @return the next opened instance.
 	 */
 	public int getOpenInstance() {
@@ -35,10 +37,11 @@ public final class InstanceManager {
 		}
 		return openSlots.getAsInt();
 	}
-	
+
 	/**
 	 * Isolates a single {@link Entity} in a specific {@code instance}.
-	 * @param entity     the entity to be isolated.
+	 *
+	 * @param entity   the entity to be isolated.
 	 * @param instance the selected instance.
 	 */
 	public void isolate(Entity entity, int instance) {
@@ -47,9 +50,10 @@ public final class InstanceManager {
 			INSTANCES[instance] = true;
 		}
 	}
-	
+
 	/**
 	 * Isolates a single {@link Entity}
+	 *
 	 * @param entity the single entity to isolate.
 	 */
 	public void isolate(Entity entity) {
@@ -58,41 +62,45 @@ public final class InstanceManager {
 		}
 		isolate(entity, getOpenInstance());
 	}
-	
+
 	/**
 	 * Isolates a list of entities.
+	 *
 	 * @param entities the entities to isolate.
 	 */
 	public void isolate(List<Entity> entities) {
 		int instance = getOpenInstance();
 		entities.forEach(i -> isolate(i, instance));
 	}
-	
+
 	/**
 	 * Isolates an array of entities.
+	 *
 	 * @param entities the entities to isolate.
 	 */
 	public void isolate(Entity... entities) {
 		int instance = getOpenInstance();
 		Arrays.asList(entities).forEach(i -> isolate(i, instance));
 	}
-	
+
 	/**
 	 * Opens a single instance number from the array.
+	 *
 	 * @param instance the instance to open.
 	 */
 	public void open(int instance) {
 		INSTANCES[instance] = false;
 	}
-	
+
 	/**
 	 * Closes a single instance number from the array.
+	 *
 	 * @param instance the instance to close.
 	 */
 	public void close(int instance) {
 		INSTANCES[instance] = true;
 	}
-	
+
 	/**
 	 * Closes the next opened instance from the array.
 	 */
@@ -101,12 +109,12 @@ public final class InstanceManager {
 		INSTANCES[i] = true;
 		return i;
 	}
-	
+
 	/**
 	 * Returns the instance manager.
 	 */
 	public static InstanceManager get() {
 		return INSTANCE_MANAGER;
 	}
-	
+
 }

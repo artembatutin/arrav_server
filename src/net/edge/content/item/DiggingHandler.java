@@ -8,22 +8,24 @@ import java.util.function.Consumer;
 
 /**
  * Holds functionality which will execute after the player attempts to dig.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class DiggingHandler extends Task {
-	
+
 	/**
 	 * The player whom is digging.
 	 */
 	private final Player player;
-	
+
 	/**
 	 * The destination after digging.
 	 */
 	private final Consumer<Player> action;
-	
+
 	/**
 	 * Constructs a new {@link DiggingHandler}.
+	 *
 	 * @param player {@link #player}.
 	 * @param action {@link #action}.
 	 */
@@ -32,21 +34,21 @@ public final class DiggingHandler extends Task {
 		this.player = player;
 		this.action = action;
 	}
-	
+
 	@Override
 	public void onSubmit() {
 		player.animation(new Animation(831));
 	}
-	
+
 	@Override
 	public void execute() {
 		cancel();
 		player.animation(null);
 	}
-	
+
 	@Override
 	public void onCancel() {
 		action.accept(player);
 	}
-	
+
 }

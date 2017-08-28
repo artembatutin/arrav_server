@@ -7,10 +7,10 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendScore implements OutgoingPacket {
-	
+
 	private final String title;
 	private final int index, kills, deaths, killstreak;
-	
+
 	public SendScore(int index, String title, int kills, int deaths, int killstreak) {
 		this.index = index;
 		this.title = title;
@@ -18,7 +18,7 @@ public final class SendScore implements OutgoingPacket {
 		this.deaths = deaths;
 		this.killstreak = killstreak;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(30, PacketType.VARIABLE_BYTE);

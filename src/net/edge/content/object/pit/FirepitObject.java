@@ -1,9 +1,9 @@
 package net.edge.content.object.pit;
 
-import net.edge.util.TextUtils;
 import net.edge.content.skill.firemaking.LogType;
-import net.edge.world.locale.Position;
+import net.edge.util.TextUtils;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.Position;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectType;
@@ -12,6 +12,7 @@ import java.util.Optional;
 
 /**
  * Represents a single fire pit object.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class FirepitObject extends DynamicObject {
@@ -38,7 +39,7 @@ public final class FirepitObject extends DynamicObject {
 	public boolean isActive() {
 		return active.isPresent();
 	}
-	
+
 	public Optional<FirepitTask> getTask() {
 		return active;
 	}
@@ -46,7 +47,7 @@ public final class FirepitObject extends DynamicObject {
 	public int getTime() {
 		return (FirepitManager.EVENT_TIME_IN_TICKS - active.get().getCounter()) * 600;
 	}
-	
+
 	public void setActive(Optional<FirepitTask> active) {
 		this.active = active;
 	}
@@ -67,9 +68,10 @@ public final class FirepitObject extends DynamicObject {
 			this.publish();
 		}
 	}
-	
+
 	/**
 	 * Gets the log requirement into a string.
+	 *
 	 * @return the string which identifies the log requirement.
 	 */
 	public String getLogRequirement() {
@@ -80,6 +82,7 @@ public final class FirepitObject extends DynamicObject {
 
 	/**
 	 * Determines if the specified {@code log} can be added to the fire pit.
+	 *
 	 * @param player the player attempting to add the log.
 	 * @param log    the log that was added.
 	 * @return {@code true} if the log is permissible, {@code false} otherwise.
@@ -91,7 +94,7 @@ public final class FirepitObject extends DynamicObject {
 			player.message("You can only add logs to this fire pit.");
 			return false;
 		}
-		
+
 		if(this.data.log == null) {
 			player.message("Let the pit burn. Don't add any logs yet.");
 			return false;

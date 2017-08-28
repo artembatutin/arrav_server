@@ -1,5 +1,7 @@
 package net.edge.action.mob;
 
+import net.edge.action.ActionInitializer;
+import net.edge.action.impl.MobAction;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -9,8 +11,6 @@ import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.minigame.rfd.RFDData;
 import net.edge.content.minigame.rfd.RFDMinigame;
-import net.edge.action.ActionInitializer;
-import net.edge.action.impl.MobAction;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -24,7 +24,7 @@ public class Culinaromancer extends ActionInitializer {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {
 				DialogueAppender ap = new DialogueAppender(player);
-				
+
 				ap.chain(new NpcDialogue(3400, Expression.MAD, "Ergh... What do you want?"));
 				ap.chain(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {

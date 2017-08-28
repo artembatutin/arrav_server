@@ -1,7 +1,7 @@
 package net.edge.cache.decoder;
 
-import net.edge.cache.archive.Archive;
 import net.edge.cache.FileSystem;
+import net.edge.cache.archive.Archive;
 import net.edge.util.ByteBufferUtil;
 import net.edge.util.LoggerUtils;
 import net.edge.world.object.ObjectDefinition;
@@ -11,38 +11,40 @@ import java.util.logging.Logger;
 
 /**
  * A class which parses object definitions.
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class ObjectDefinitionDecoder implements Runnable {
-	
+
 	/**
 	 * The logger to log process output.
 	 */
 	private final static Logger LOGGER = LoggerUtils.getLogger(ObjectDefinitionDecoder.class);
-	
+
 	/**
 	 * The IndexedFileSystem.
 	 */
 	private final FileSystem fs;
-	
+
 	/**
 	 * Creates the {@link ObjectDefinitionDecoder}.
+	 *
 	 * @param fs The {@link FileSystem}.
 	 */
 	public ObjectDefinitionDecoder(FileSystem fs) {
 		this.fs = fs;
 	}
-	
+
 	@Override
 	public void run() {
 		LOGGER.info("Loading object definitions.");
 		Archive archive = fs.getArchive(FileSystem.CONFIG_ARCHIVE);
 		ByteBuffer buf = archive.getData("loc.dat");
 		ByteBuffer idx = archive.getData("loc.idx");
-		
+
 		int count = idx.getInt();
-		
+
 		int pos = 4;
 		int loaded = 0;
 		for(int i = 0; i < count; i++) {
@@ -53,10 +55,11 @@ public final class ObjectDefinitionDecoder implements Runnable {
 		}
 		LOGGER.info("Loaded " + loaded + " object definitions.");
 	}
-	
+
 	/**
 	 * Parses a single game object definition by reading object info from a
 	 * buffer.
+	 *
 	 * @param id     The id of the object.
 	 * @param buffer The buffer.
 	 */
@@ -81,7 +84,7 @@ public final class ObjectDefinitionDecoder implements Runnable {
 				break;
 			}
 			int code = buffer.get() & 0xFF;
-			
+
 			if(code == 0) {
 				pass = false;
 				break;
@@ -188,19 +191,19 @@ public final class ObjectDefinitionDecoder implements Runnable {
 				if(actions != null)
 					hasActions = true;
 			}
-			
+
 			if(unwalkableSolid) {
 				solid = false;
 				walkable = false;
 			}
 		}
-		
+
 		if(id == 85532)//swing pole
 			sizeX = 6;
 		if(id == 85584)//gnome billboard
 			sizeY = 5;
-		
+
 		ObjectDefinition.DEFINITIONS[id] = new ObjectDefinition(id, name, description, sizeX, sizeY, actions, hasActions, solid, walkable, wall, decoration);
-		
+
 	}
 }

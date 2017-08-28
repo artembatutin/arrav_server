@@ -2,9 +2,9 @@ package net.edge.content.commands.impl;
 
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
-import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.locale.Position;
 
 @CommandSignature(alias = {"move"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Moves to a position, ::move x y z")
 public final class MoveCommand implements Command {

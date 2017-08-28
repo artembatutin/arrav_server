@@ -7,13 +7,13 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendForceTab implements OutgoingPacket {
-	
+
 	private final TabInterface tab;
-	
+
 	public SendForceTab(TabInterface tab) {
 		this.tab = tab;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(106);

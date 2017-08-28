@@ -25,7 +25,7 @@ import net.edge.world.object.GameObject;
 import java.util.Optional;
 
 public class FarmingAction {
-	
+
 	public static void action() {
 		for(PatchType patchType : PatchType.values()) {
 			ObjectAction obj = new ObjectAction() {
@@ -54,7 +54,7 @@ public class FarmingAction {
 									player.message("The tree must first grow at least one log before chopping it down.");
 									return true;
 								}
-								
+
 								int treeId = -1;
 								Tree tree = null;
 								if(farming.patch.getSeedType() == TreeSeed.WILLOW) {
@@ -93,7 +93,7 @@ public class FarmingAction {
 									player.message("You need to use " + cure + " on this crop to cure it.");
 									return true;
 								}
-								
+
 								String message = !fullyGrown ? "This tree is still growing..." : farming.patch.getHarvestedItem().getAmount() < farming.patch.getProduct().getAmount() ? "This tree seems sturdy enough to chop down." : "This tree has recently been chopped down.";
 								player.message(message);
 								return true;
@@ -107,7 +107,7 @@ public class FarmingAction {
 								return true;
 							}
 						}
-						
+
 						if(option == 4) {
 							//guide
 							if(fullyGrown) {
@@ -131,7 +131,7 @@ public class FarmingAction {
 								player.message("The crops are diseased; you need a plant cure potion.");
 								return true;
 							}
-							
+
 							final int experience = farming.patch.getSeedType().getExperience()[1];
 							if(experience <= 0) {
 								player.message(stateMessage);
@@ -150,7 +150,7 @@ public class FarmingAction {
 							}
 							return true;
 						}
-						
+
 						if(farming.patch.getGrowthState() == GrowthState.DISEASED) {
 							if(player.getInventory().contains(6036)) {
 								player.animation(new Animation(2288));
@@ -185,7 +185,7 @@ public class FarmingAction {
 						if(farming.patch == null)
 							farming.patch = new Patch(patchType, null, null, 0);
 					}
-					
+
 					if(farming.amountToHarvest == 0) {
 						farming.amountToHarvest = farming.getHarvestAmount();
 					}
@@ -231,7 +231,7 @@ public class FarmingAction {
 							return true;
 						}
 						player.animation(FarmingConstants.POUR_WATER_ANIMATION);
-						
+
 						(new Task(4, false) {
 							@Override
 							protected void execute() {
@@ -364,7 +364,7 @@ public class FarmingAction {
 						FarmingManager.updatePatch(player, patchType);
 						return true;
 					}
-					
+
 					SeedType seedType = null;
 					for(SeedType validSeed : patchType.getValidSeeds()) {
 						if(validSeed.getSeed().getId() == item.getId()) {
@@ -372,7 +372,7 @@ public class FarmingAction {
 							break;
 						}
 					}
-					
+
 					if(seedType != null) {
 						if(patch == null) {
 							player.message("You must first rake this patch before planting anything!");
@@ -402,7 +402,7 @@ public class FarmingAction {
 							player.message("You need a farming level of " + seedType.getLevelRequirement() + " to plant this crop.");
 							return false;
 						}
-						
+
 						player.animation(FarmingConstants.SEED_DIBBER_ANIMATION);
 						final SeedType finalSeedType = seedType;
 						(new Task(2, false) {
@@ -465,7 +465,7 @@ public class FarmingAction {
 					player.message("You need a gardening trowel to do this.");
 					return true;
 				}
-				
+
 				useWateringCan(player, wateringCan, wateringCan.getId() == FarmingConstants.MAGIC_WATERING_CAN_ITEM_ID);
 				player.getInventory().remove(itemOn);
 				player.getInventory().remove(itemUsed.setAmount(1));
@@ -475,7 +475,7 @@ public class FarmingAction {
 		};
 		a.register(5356);
 	}
-	
+
 	private static void useWateringCan(Player player, Item item, boolean magicWateringCan) {
 		if(!magicWateringCan) {
 			int nextId = item.getId() == 5333 ? 5331 : item.getId() - 1;
@@ -483,7 +483,7 @@ public class FarmingAction {
 			player.getInventory().add(new Item(nextId));
 		}
 	}
-	
+
 	private static final int[][] ITEM_ON_ITEM_SAPLING = {
 			{5313, 5371}, //willow
 			{5314, 5372}, //maple

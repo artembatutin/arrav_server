@@ -8,14 +8,14 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendInterfaceNpcModel implements OutgoingPacket {
-	
+
 	private final int id, model;
-	
+
 	public SendInterfaceNpcModel(int id, int model) {
 		this.id = id;
 		this.model = model;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(75);

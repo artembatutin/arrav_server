@@ -13,28 +13,30 @@ import static net.edge.world.entity.actor.player.assets.Rights.PLAYER;
 
 /**
  * The class that contains functions for managing private messaging lists.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class PrivateMessage {
-	
+
 	/**
 	 * The player this private messaging list belongs to.
 	 */
 	private final Player player;
-	
+
 	/**
 	 * The last message identifier concealed within a counter.
 	 */
 	private final MutableNumber lastMessage = new MutableNumber(1);
-	
+
 	/**
 	 * Creates a new {@link PrivateMessage}.
+	 *
 	 * @param player the player this private messaging list belongs to.
 	 */
 	public PrivateMessage(Player player) {
 		this.player = player;
 	}
-	
+
 	/**
 	 * Updates the friend list for {@code player} with the online status of all
 	 * their friends.
@@ -46,10 +48,11 @@ public final class PrivateMessage {
 			player.out(new SendPrivateFriendUpdate(name, World.get().getPlayer(name).isPresent()));
 		}
 	}
-	
+
 	/**
 	 * Updates {@code player} friends lists with with whether they are online or
 	 * offline.
+	 *
 	 * @param online the status to update the other players friends lists with.
 	 */
 	public void updateOtherList(boolean online) {
@@ -60,9 +63,10 @@ public final class PrivateMessage {
 				p.out(new SendPrivateFriendUpdate(player.credentials.usernameHash, online));
 		}
 	}
-	
+
 	/**
 	 * Attempts to add {@code name} to the friends list.
+	 *
 	 * @param name the name of the new friend to add.
 	 */
 	public void addFriend(long name) {
@@ -76,9 +80,10 @@ public final class PrivateMessage {
 			player.message("They are already on your friends" + " list!");
 		}
 	}
-	
+
 	/**
 	 * Attempts to add {@code name} to the friends list.
+	 *
 	 * @param name the name of the new ignore to add.
 	 */
 	public void addIgnore(long name) {
@@ -89,9 +94,10 @@ public final class PrivateMessage {
 		if(!player.getIgnores().add(name))
 			player.message("They are already on your ignores" + " list!");
 	}
-	
+
 	/**
 	 * Attempts to remove {@code name} from the friends list.
+	 *
 	 * @param name the name of the existing friend to remove.
 	 */
 	public void removeFriend(long name) {
@@ -99,9 +105,10 @@ public final class PrivateMessage {
 			player.message("They are not on your friends " + "list.");
 		}
 	}
-	
+
 	/**
 	 * Attempts to remove {@code name} from the ignores list.
+	 *
 	 * @param name the name of the existing ignore to remove.
 	 */
 	public void removeIgnore(long name) {
@@ -109,9 +116,10 @@ public final class PrivateMessage {
 			player.message("They are not on your ignores " + "list.");
 		}
 	}
-	
+
 	/**
 	 * Attempts to send {@code message} to the player with {@code name}.
+	 *
 	 * @param name    the player with this name to send the message to.
 	 * @param message the message to send to the player.
 	 * @param size    the size of the message to send.
@@ -121,9 +129,10 @@ public final class PrivateMessage {
 		long hash = player.credentials.usernameHash;
 		World.get().getPlayer(name).ifPresent(p -> p.out(new SendPrivateMessage(hash, rights, message, size)));
 	}
-	
+
 	/**
 	 * Gets the last message identifier concealed within a counter.
+	 *
 	 * @return the last message identifier.
 	 */
 	public MutableNumber getLastMessage() {

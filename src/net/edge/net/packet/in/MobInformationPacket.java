@@ -7,7 +7,10 @@ import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendMobDrop;
 import net.edge.util.rand.Chance;
 import net.edge.world.entity.actor.mob.MobDefinition;
-import net.edge.world.entity.actor.mob.drop.*;
+import net.edge.world.entity.actor.mob.drop.Drop;
+import net.edge.world.entity.actor.mob.drop.DropManager;
+import net.edge.world.entity.actor.mob.drop.DropTable;
+import net.edge.world.entity.actor.mob.drop.SuggestedDrop;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.item.ItemDefinition;
@@ -16,12 +19,13 @@ import static net.edge.content.achievements.Achievement.DROP_A_SUG;
 
 /**
  * The message sent from the client which depends on the Mob Information panel integration.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class MobInformationPacket implements IncomingPacket {
-	
+
 	public static final ObjectList<SuggestedDrop> SUGGESTED = new ObjectArrayList<>();
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(opcode == 19) {

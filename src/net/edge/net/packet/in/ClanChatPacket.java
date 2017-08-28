@@ -9,10 +9,11 @@ import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 /**
  * The message that is sent from the client when the player chats anything
  * beginning with '/'.
+ *
  * @author Artem batutin <artembatutin@gmail.com>
  */
 public final class ClanChatPacket implements IncomingPacket {
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.CHAT_MESSAGE))

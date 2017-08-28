@@ -5,17 +5,16 @@ import net.edge.content.combat.content.RequiredRune;
 import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
 import net.edge.content.skill.crafting.AmuletStringing;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
 /**
  * Holds support for the string jewellery spell.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class StringJewellery extends LunarButtonSpell {
-	
+
 	/**
 	 * The amulet data this spell is dependent of.
 	 */
@@ -33,7 +32,7 @@ public final class StringJewellery extends LunarButtonSpell {
 		super.effect(caster, victim);
 		AmuletStringing.create(caster.toPlayer(), data, true);
 	}
-	
+
 	@Override
 	public boolean canCast(Actor caster, Optional<Actor> victim) {
 		if(!super.canCast(caster, victim)) {
@@ -41,7 +40,7 @@ public final class StringJewellery extends LunarButtonSpell {
 		}
 
 		AmuletStringing.AmuletData data = AmuletStringing.AmuletData.getDefinition(caster.toPlayer()).orElse(null);
-		
+
 		if(data == null) {
 			caster.toPlayer().message("You don't have any unstrung amulets...");
 			return false;

@@ -12,6 +12,7 @@ import java.util.Optional;
 
 /**
  * Holds functionality for the vengeance spell.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Vengeance extends LunarButtonSpell {
@@ -29,7 +30,7 @@ public final class Vengeance extends LunarButtonSpell {
 		caster.toPlayer().venged = true;
 		caster.toPlayer().getCombat().addListener(VengenceListener.INSTANCE);
 	}
-	
+
 	@Override
 	public boolean canCast(Actor caster, Optional<Actor> victim) {
 		if(!super.canCast(caster, victim)) {
@@ -41,17 +42,17 @@ public final class Vengeance extends LunarButtonSpell {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public int delay() {
 		return 30_000;
 	}
-	
+
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.of(new Animation(4410));
 	}
-	
+
 	@Override
 	public Optional<Graphic> startGraphic() {
 		return Optional.of(new Graphic(726, 100));

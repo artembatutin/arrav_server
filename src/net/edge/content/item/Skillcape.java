@@ -3,8 +3,6 @@ package net.edge.content.item;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.edge.action.impl.MobAction;
-import net.edge.world.entity.actor.mob.Mob;
-import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.GiveItemDialogue;
 import net.edge.content.dialogue.impl.NpcDialogue;
@@ -13,14 +11,17 @@ import net.edge.content.dialogue.impl.PlayerDialogue;
 import net.edge.content.skill.Skills;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Equipment;
 
 import java.util.EnumSet;
 import java.util.Optional;
 
 /**
  * An enumeration of skill cape emotes.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum Skillcape {
@@ -51,7 +52,7 @@ public enum Skillcape {
 	VETERAN_CAPE(20763, 20764, 352, 1446, -1, -1);
 
 	private static final ImmutableSet<Skillcape> VALUES = Sets.immutableEnumSet(EnumSet.allOf(Skillcape.class));
-	
+
 	/**
 	 * The item identification for this skillcape.
 	 */
@@ -66,26 +67,27 @@ public enum Skillcape {
 	 * The animation id of the emote.
 	 */
 	private final int animation;
-	
+
 	/**
 	 * The graphic id of the emote.
 	 */
 	private final int graphic;
-	
+
 	/**
 	 * The skill id the cape is representing.
 	 */
 	private final int skill;
-	
+
 	/**
 	 * The skill master for this skill.
 	 */
 	private final int master;
-	
+
 	/**
 	 * Constructs a new {@link Skillcape}.
+	 *
 	 * @param item      {@link #item}.
-	 * @param hood		{@link #hood}.
+	 * @param hood      {@link #hood}.
 	 * @param animation {@link #animation}.
 	 * @param graphic   {@link #graphic}.
 	 * @param skill     {@link #skill}.
@@ -102,26 +104,28 @@ public enum Skillcape {
 
 	/**
 	 * Verifies if the player can wear the skill cape.
+	 *
 	 * @param player The player wearing a new item.
 	 * @param item   The item the player is trying to wear.
 	 * @return {@code false} if the player hasn't met the criteria, {@code true} otherwise.
 	 */
 	public static boolean verifySkillCape(Player player, Item item) {
 		Skillcape c = getSkillcape(item.getId());
-		
+
 		if(c == null) {
 			return true;
 		}
-		
+
 		if(c.getSkill() != -1 && player.getSkills()[c.getSkill()].getRealLevel() != 99) {
 			player.dialogue(new NpcDialogue(c.getMaster(), Expression.CONFUSED, "You haven't mastered this skill yet."));
 			return false;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Handles the skill cape emote.
+	 *
 	 * @param player The player clicking the button.
 	 * @param button The button clicked.
 	 * @return {@code true} if the emote was handled, {@code false} otherwise.
@@ -130,18 +134,18 @@ public enum Skillcape {
 		if(button != 74108) {
 			return false;
 		}
-		
+
 		Skillcape cape = getSkillcape(player.getEquipment().get(Equipment.CAPE_SLOT).getId());
-		
+
 		if(cape == null) {
 			return false;
 		}
-		
+
 		player.animation(new Animation(cape.getAnimation()));
 		player.graphic(new Graphic(cape.getGraphic()));
 		return true;
 	}
-	
+
 	public static void action() {
 		for(Skillcape c : Skillcape.values()) {
 			MobAction e = new MobAction() {
@@ -166,7 +170,7 @@ public enum Skillcape {
 							} else {
 								player.getDialogueBuilder().append(new PlayerDialogue(Expression.SAD, "I don't have enough coins for this skill cape."));
 							}
-							
+
 						} else if(t == OptionDialogue.OptionType.SECOND_OPTION) {
 							player.closeWidget();
 						}
@@ -177,22 +181,21 @@ public enum Skillcape {
 			e.registerSecond(c.getMaster());
 		}
 	}
-	
-	
-	
+
 	/**
 	 * Attempts to reward the player by giving him the skillcape.
+	 *
 	 * @param player the player to give the skillcape to.
 	 * @param item   the item id.
 	 * @return {@code true} if the player got into the dialogue stage, {@code false} otherwise.
 	 */
 	public static boolean buy(Player player, int item) {
 		Skillcape c = getSkillcape(item);
-		
+
 		if(c == null) {
 			return false;
 		}
-		
+
 		if(c.getSkill() != -1 && player.getSkills()[c.getSkill()].getRealLevel() != 99) {
 			player.dialogue(new NpcDialogue(c.getMaster(), Expression.CONFUSED, "You haven't mastered this skill yet."));
 			return true;
@@ -202,29 +205,30 @@ public enum Skillcape {
 
 	/**
 	 * Gets the skillcape by the specified {@code item}.
-	 * @param item	the item to grab the skillcape from.
+	 *
+	 * @param item the item to grab the skillcape from.
 	 * @return {@code Skillcape} matching the specified item.
 	 */
 	private static Skillcape getSkillcape(int item) {
 		return VALUES.stream().filter(c -> c.item == item || c.item + 1 == item || c.hood == item).findAny().orElse(null);
 	}
-	
+
 	public int getItem() {
 		return item;
 	}
-	
+
 	public int getAnimation() {
 		return animation;
 	}
-	
+
 	public int getGraphic() {
 		return graphic;
 	}
-	
+
 	public int getSkill() {
 		return skill;
 	}
-	
+
 	public int getMaster() {
 		return master;
 	}

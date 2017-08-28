@@ -30,7 +30,7 @@ public class HomePortal extends ActionInitializer {
 			}
 		};
 		portal.registerFirst(28139);
-		
+
 		//Home staires
 		ObjectAction staires = new ObjectAction() {
 			@Override
@@ -51,7 +51,7 @@ public class HomePortal extends ActionInitializer {
 			}
 		};
 		staires.registerFirst(2711);
-		
+
 		//Bossing hub staires
 		ObjectAction hub = new ObjectAction() {
 			@Override
@@ -69,6 +69,6 @@ public class HomePortal extends ActionInitializer {
 			}
 		};
 		hub.registerFirst(2522);
-		
+
 	}
 }

@@ -5,6 +5,7 @@ import net.edge.world.entity.item.Item;
 /**
  * The enumerated type whose elements represent a set of constants
  * used for bird snaring.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum BirdData {
@@ -13,34 +14,35 @@ public enum BirdData {
 	COPPER_LONGTAIL(5076, 19186, 9, 51, 526, 10091, 9978),
 	CERULEAN_TWITCH(5074, 19182, 11, 74.5, 526, 10089, 9978),
 	TROPICAL_WAGTAIL(5072, 19178, 19, 95, 526, 10087, 9978);
-	
+
 	/**
 	 * The npc id for this bird.
 	 */
 	final int npcId;
-	
+
 	/**
 	 * The object id for the catched bird.
 	 */
 	public final int objectId;
-	
+
 	/**
 	 * The requirement for this bird.
 	 */
 	final int requirement;
-	
+
 	/**
 	 * The experience gained for this bird.
 	 */
 	final double experience;
-	
+
 	/**
 	 * The reward obtained for this bird.
 	 */
 	final Item[] reward;
-	
+
 	/**
 	 * Constructs a new {@link BirdData}.
+	 *
 	 * @param npcId       {@link #npcId}.
 	 * @param objectId    {@link #objectId}
 	 * @param requirement {@link #requirement}.
@@ -54,18 +56,18 @@ public enum BirdData {
 		this.experience = experience;
 		this.reward = Item.convert(reward);
 	}
-	
+
 	/**
 	 * @return the npc id.
 	 */
 	public int getNpcId() {
 		return npcId;
 	}
-	
+
 	public static void action() {
 //		for(BirdData data : BirdData.values()) {
 //			Mob.CUSTOM_MOBS.put(data.getNpcId(), s -> new Bird(data.getNpcId(), s, data)); TODO: birds hehe
 //		}
 	}
-	
+
 }

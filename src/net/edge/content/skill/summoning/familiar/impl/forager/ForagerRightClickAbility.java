@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 
 /**
  * Holds functionality for the passve forager ability.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public class ForagerRightClickAbility extends Forager {
@@ -19,6 +20,7 @@ public class ForagerRightClickAbility extends Forager {
 
 	/**
 	 * Constructs a new {@link ForagerPassiveAbility}.
+	 *
 	 * @param action       {@link #action}.
 	 * @param collectables the collectables this forager can hold.
 	 */

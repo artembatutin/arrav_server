@@ -4,33 +4,36 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.content.market.MarketItem;
-import net.edge.task.Task;
-import net.edge.util.TextUtils;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
+import net.edge.task.Task;
+import net.edge.util.TextUtils;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.Optional;
 
 import static net.edge.content.achievements.Achievement.POTION_MAKER;
 
 /**
  * Represents the procession for creating unfinished potions.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class FinishedPotion extends ProducingSkillAction {
-	
+
 	/**
 	 * The {@link FinishedPotion} holding all the data required for processing
 	 * the creation of {@link UnfinishedPotion}'s.
 	 */
 	private final FinishedPotionData definition;
-	
+
 	/**
 	 * Constructs a new {@link UnfinishedPotion}.
+	 *
 	 * @param player     {@link #getPlayer()}.
 	 * @param firstItem  the first item that was used on the second item.
 	 * @param secondItem the second item that was used on by the first item.
@@ -39,14 +42,15 @@ public final class FinishedPotion extends ProducingSkillAction {
 		super(player, Optional.of(player.getPosition()));
 		definition = FinishedPotionData.getDefinition(firstItem.getId(), secondItem.getId()).orElse(null);
 	}
-	
+
 	/**
 	 * Represents the unfinished potion animation identification.
 	 */
 	private static final Animation ANIMATION = new Animation(363);
-	
+
 	/**
 	 * Produces finished potions if the player has the requirements required.
+	 *
 	 * @param player     {@link #getPlayer()};
 	 * @param firstItem  the first item that was used on the second item.
 	 * @param secondItem the second item that was used on by the first item.
@@ -60,7 +64,7 @@ public final class FinishedPotion extends ProducingSkillAction {
 		potion.start();
 		return true;
 	}
-	
+
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success) {
@@ -68,7 +72,7 @@ public final class FinishedPotion extends ProducingSkillAction {
 			POTION_MAKER.inc(player);
 		}
 	}
-	
+
 	@Override
 	public Optional<Item[]> removeItem() {
 		ObjectList<Item> items = new ObjectArrayList<>();
@@ -76,22 +80,22 @@ public final class FinishedPotion extends ProducingSkillAction {
 		items.addAll(Arrays.asList(definition.requiredItem));
 		return Optional.of(items.toArray(new Item[items.size()]));
 	}
-	
+
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(definition.equals(FinishedPotionData.OVERLOAD) ? new Item[]{definition.finishedPotion, new Item(229, 4)} : new Item[]{definition.finishedPotion});
 	}
-	
+
 	@Override
 	public int delay() {
 		return 3;
 	}
-	
+
 	@Override
 	public boolean instant() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean init() {
 		if(!canProduce()) {
@@ -99,7 +103,7 @@ public final class FinishedPotion extends ProducingSkillAction {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean canExecute() {
 		if(!canProduce()) {
@@ -107,17 +111,17 @@ public final class FinishedPotion extends ProducingSkillAction {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public double experience() {
 		return definition.experience;
 	}
-	
+
 	@Override
 	public SkillData skill() {
 		return SkillData.HERBLORE;
 	}
-	
+
 	public boolean canProduce() {
 		if(!getPlayer().getSkills()[skill().getId()].reqLevel(definition.level)) {
 			getPlayer().message("You need a herblore level of " + definition.level + " to register " + TextUtils.appendIndefiniteArticle(definition.toString()) + " potion.");
@@ -125,9 +129,10 @@ public final class FinishedPotion extends ProducingSkillAction {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * The data required for processing the creation of finished potions.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private enum FinishedPotionData {
@@ -169,39 +174,40 @@ public final class FinishedPotion extends ProducingSkillAction {
 		SUPER_PRAYER(15329, 139, 4255, 94, 270),
 		PRAYER_RENEWAL(21632, 21628, 21622, 94, 190),
 		OVERLOAD(15332, 269, new int[]{15309, 15313, 15317, 15321, 15325}, 96, 1000);
-		
+
 		/**
 		 * Caches our enum values.
 		 */
 		private static final ImmutableSet<FinishedPotionData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(FinishedPotionData.class));
-		
+
 		/**
 		 * The identification for this finished potion.
 		 */
 		private final Item finishedPotion;
-		
+
 		/**
 		 * The identification for this unfinished potion.
 		 */
 		private final Item unfinishedPotion;
-		
+
 		/**
 		 * The identification for this required item.
 		 */
 		private final Item[] requiredItem;
-		
+
 		/**
 		 * The required level for creating this potion.
 		 */
 		private final int level;
-		
+
 		/**
 		 * The identifier which identifies the amount of experience given for this potion.
 		 */
 		private final double experience;
-		
+
 		/**
 		 * Constructs a new {@link FinishedPotionData} enum.
+		 *
 		 * @param finishedPotion   {@link #finishedPotion}.
 		 * @param unfinishedPotion {@link #unfinishedPotion}.
 		 * @param requiredItem     {@link #requiredItem}.
@@ -215,9 +221,10 @@ public final class FinishedPotion extends ProducingSkillAction {
 			this.level = level;
 			this.experience = experience;
 		}
-		
+
 		/**
 		 * Constructs a new {@link FinishedPotionData} enum.
+		 *
 		 * @param finishedPotion   {@link #finishedPotion}.
 		 * @param unfinishedPotion {@link #unfinishedPotion}.
 		 * @param requiredItem     {@link #requiredItem}.
@@ -231,14 +238,15 @@ public final class FinishedPotion extends ProducingSkillAction {
 			this.level = level;
 			this.experience = experience;
 		}
-		
+
 		@Override
 		public final String toString() {
 			return name().toLowerCase().replaceAll("_", " ");
 		}
-		
+
 		/**
 		 * Gets the definition for this finished potion.
+		 *
 		 * @return an optional holding the {@link FinishedPotionData} value found,
 		 * {@link Optional#empty} otherwise.
 		 */

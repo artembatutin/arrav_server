@@ -7,57 +7,57 @@ package net.edge.content.combat.hit;
  */
 public enum HitIcon {
 
-    /**
-     * Represents no hit icon at all.
-     */
-    NONE(255),
+	/**
+	 * Represents no hit icon at all.
+	 */
+	NONE(255),
 
-    /**
-     * Represents the melee sword hit icon.
-     */
-    MELEE(0),
+	/**
+	 * Represents the melee sword hit icon.
+	 */
+	MELEE(0),
 
-    /**
-     * Represents the magic hat hit icon.
-     */
-    MAGIC(1),
+	/**
+	 * Represents the magic hat hit icon.
+	 */
+	MAGIC(1),
 
-    /**
-     * Represents the ranged bow hit icon.
-     */
-    RANGED(2),
+	/**
+	 * Represents the ranged bow hit icon.
+	 */
+	RANGED(2),
 
-    /**
-     * Represents the leech hit icon.
-     */
-    DEFLECT(3),
+	/**
+	 * Represents the leech hit icon.
+	 */
+	DEFLECT(3),
 
-    /**
-     * Represents the canon hit icon.
-     */
-    CANON(4);
+	/**
+	 * Represents the canon hit icon.
+	 */
+	CANON(4);
 
-    /**
-     * The identification for this hit type.
-     */
-    private final int id;
+	/**
+	 * The identification for this hit type.
+	 */
+	private final int id;
 
-    /**
-     * Create a new {@link HitIcon}.
-     *
-     * @param id the identification for this hit type.
-     */
-    HitIcon(int id) {
-        this.id = id;
-    }
+	/**
+	 * Create a new {@link HitIcon}.
+	 *
+	 * @param id the identification for this hit type.
+	 */
+	HitIcon(int id) {
+		this.id = id;
+	}
 
-    /**
-     * Gets the identification for this hit type.
-     *
-     * @return the identification for this hit type.
-     */
-    public final int getId() {
-        return id;
-    }
+	/**
+	 * Gets the identification for this hit type.
+	 *
+	 * @return the identification for this hit type.
+	 */
+	public final int getId() {
+		return id;
+	}
 
 }

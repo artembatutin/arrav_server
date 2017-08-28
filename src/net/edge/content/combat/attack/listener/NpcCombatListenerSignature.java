@@ -14,10 +14,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NpcCombatListenerSignature {
 
-    /**
-     * The NPC ids to attach this listener to.
-     * @return the npc ids
-     */
-    int[] npcs();
+	/**
+	 * The NPC ids to attach this listener to.
+	 *
+	 * @return the npc ids
+	 */
+	int[] npcs();
 
 }

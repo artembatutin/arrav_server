@@ -4,31 +4,32 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
-import net.edge.world.locale.Boundary;
-import net.edge.world.locale.Position;
 import net.edge.world.Direction;
 import net.edge.world.World;
 import net.edge.world.entity.actor.move.path.Path;
 import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
 
 /**
  * An implementation of a {@link Task} that handles randomized {@link Mob} movements.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class MobMovementTask extends Task {
-	
+
 	/**
 	 * The Queue of Mobs.
 	 */
 	private final ObjectList<Mob> mobs = new ObjectArrayList<>();
-	
+
 	/**
 	 * Creates a new {@link MobMovementTask}.
 	 */
 	public MobMovementTask() {
 		super(2, false);
 	}
-	
+
 	@Override
 	protected void execute() {
 		int size = mobs.size();
@@ -66,11 +67,11 @@ public class MobMovementTask extends Task {
 			}
 		}
 	}
-	
+
 	private int randomSteps(int size) {
 		return RandomUtils.inclusive(0, size);
 	}
-	
+
 	ObjectList<Mob> getMobs() {
 		return mobs;
 	}

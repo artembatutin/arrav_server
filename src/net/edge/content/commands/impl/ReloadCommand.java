@@ -1,14 +1,14 @@
 package net.edge.content.commands.impl;
 
 import net.edge.Application;
+import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandDispatcher;
+import net.edge.content.commands.CommandSignature;
+import net.edge.content.market.MarketCounter;
 import net.edge.net.host.HostListType;
 import net.edge.net.host.HostManager;
 import net.edge.task.Task;
 import net.edge.util.json.impl.*;
-import net.edge.content.commands.Command;
-import net.edge.content.commands.CommandSignature;
-import net.edge.content.market.MarketCounter;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -16,7 +16,7 @@ import net.edge.world.locale.area.AreaManager;
 
 @CommandSignature(alias = {"reload"}, rights = {Rights.ADMINISTRATOR}, syntax = "Use this command as just ::reload")
 public final class ReloadCommand implements Command {
-	
+
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		switch(cmd[1].toLowerCase()) {
@@ -50,6 +50,7 @@ public final class ReloadCommand implements Command {
 			default:
 				World.get().getTask().submit(new Task(3, false) {
 					boolean removed;
+
 					@Override
 					protected void execute() {
 						if(!removed) {

@@ -8,9 +8,10 @@ import net.edge.world.locale.Position;
 import java.util.Optional;
 
 public class Defiler extends Pest {
-	
+
 	/**
 	 * Creates a new {@link Mob}.
+	 *
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
@@ -18,7 +19,7 @@ public class Defiler extends Pest {
 		super(id, position);
 		getAttr().get("master_archery").set(true);
 	}
-	
+
 	@Override
 	public void sequence(Mob knight) {
 		if(getCombat().getLastAttacker() != null && getCombat().getLastAttacker().isPlayer()) {
@@ -32,12 +33,12 @@ public class Defiler extends Pest {
 			destination.ifPresent(d -> getMovementQueue().smartWalk(d));
 		}
 	}
-	
+
 	@Override
 	public boolean aggressive() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean ranged() {
 		return true;

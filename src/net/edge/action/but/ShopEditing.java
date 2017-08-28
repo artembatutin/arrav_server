@@ -1,14 +1,14 @@
 package net.edge.action.but;
 
-import net.edge.content.market.MarketCounter;
-import net.edge.content.market.MarketShop;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ButtonAction;
+import net.edge.content.market.MarketCounter;
+import net.edge.content.market.MarketShop;
 import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.world.entity.actor.player.Player;
 
 public class ShopEditing extends ActionInitializer {
-	
+
 	@Override
 	public void init() {
 		ButtonAction e = new ButtonAction() {
@@ -29,5 +29,5 @@ public class ShopEditing extends ActionInitializer {
 		e.register(124);
 
 	}
-	
+
 }

@@ -10,22 +10,24 @@ import java.util.Optional;
 
 /**
  * The class which represents a drop log.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class MobDropLog extends LogDetails {
-	
+
 	/**
 	 * The npc whom dropped this item for this drop log.
 	 */
 	private final MobDefinition npc;
-	
+
 	/**
 	 * The item dropped for this drop log.
 	 */
 	private final Item item;
-	
+
 	/**
 	 * Constructs a new {@link MobDropLog}.
+	 *
 	 * @param npc  {@link #npc}.
 	 * @param item {@link #item}.
 	 */
@@ -34,7 +36,7 @@ public final class MobDropLog extends LogDetails {
 		this.npc = npc;
 		this.item = item;
 	}
-	
+
 	@Override
 	public Optional<String> formatInformation() {
 		StringBuilder builder = new StringBuilder();

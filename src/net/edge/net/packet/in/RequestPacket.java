@@ -1,30 +1,31 @@
 package net.edge.net.packet.in;
 
 import net.edge.GameConstants;
+import net.edge.content.minigame.MinigameHandler;
+import net.edge.net.codec.ByteOrder;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
+import net.edge.world.World;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.container.session.ExchangeSession;
 import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 import net.edge.world.entity.item.container.session.impl.DuelSession;
 import net.edge.world.entity.item.container.session.impl.TradeSession;
-import net.edge.content.minigame.MinigameHandler;
-import net.edge.net.codec.IncomingMsg;
-import net.edge.net.codec.ByteOrder;
-import net.edge.world.World;
-import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 
 /**
  * The message sent from the client when a player sends some sort of request to
  * another player.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class RequestPacket implements IncomingPacket {
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.REQUEST_MESSAGE))
 			return;
-		
+
 		switch(opcode) {
 			case 139:
 				tradeRequest(player, payload);
@@ -35,9 +36,10 @@ public final class RequestPacket implements IncomingPacket {
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.REQUEST_MESSAGE);
 	}
-	
+
 	/**
 	 * Handles a trade request for {@code player}.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payloadfer for reading the sent data.
 	 */
@@ -53,9 +55,10 @@ public final class RequestPacket implements IncomingPacket {
 			return;
 		ExchangeSessionManager.get().request(new TradeSession(player, other, ExchangeSession.REQUEST));
 	}
-	
+
 	/**
 	 * Handles a duel request for {@code player}.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
@@ -69,9 +72,10 @@ public final class RequestPacket implements IncomingPacket {
 			return;
 		ExchangeSessionManager.get().request(new DuelSession(player, other, ExchangeSession.REQUEST));
 	}
-	
+
 	/**
 	 * Determines if {@code player} can be a valid request to {@code other}.
+	 *
 	 * @param player the player making the request.
 	 * @param other  the player being requested.
 	 * @return {@code true} if the player can make a request, {@code false}

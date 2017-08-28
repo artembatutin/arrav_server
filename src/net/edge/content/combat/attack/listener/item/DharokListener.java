@@ -19,17 +19,17 @@ import java.util.Optional;
 @NpcCombatListenerSignature(npcs = {2026})
 public class DharokListener extends SimplifiedListener<Actor> {
 
-    @Override
-    public Optional<AttackModifier> getModifier(Actor attacker) {
-        int maxHealth;
-        if (attacker.isMob()) {
-            maxHealth = attacker.toMob().getDefinition().getHitpoints();
-        } else {
-            maxHealth = attacker.toPlayer().getSkills()[Skills.HITPOINTS].getRealLevel();
-        }
-        int health = attacker.getCurrentHealth() > maxHealth ? 0 : maxHealth - attacker.getCurrentHealth();
-        AttackModifier modifier = new AttackModifier().damage(health * 0.001);
-        return Optional.of(modifier);
-    }
+	@Override
+	public Optional<AttackModifier> getModifier(Actor attacker) {
+		int maxHealth;
+		if(attacker.isMob()) {
+			maxHealth = attacker.toMob().getDefinition().getHitpoints();
+		} else {
+			maxHealth = attacker.toPlayer().getSkills()[Skills.HITPOINTS].getRealLevel();
+		}
+		int health = attacker.getCurrentHealth() > maxHealth ? 0 : maxHealth - attacker.getCurrentHealth();
+		AttackModifier modifier = new AttackModifier().damage(health * 0.001);
+		return Optional.of(modifier);
+	}
 
 }

@@ -7,13 +7,13 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendArrowEntity implements OutgoingPacket {
-	
+
 	private final Actor entity;
-	
+
 	public SendArrowEntity(Actor entity) {
 		this.entity = entity;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(248);
@@ -22,5 +22,5 @@ public final class SendArrowEntity implements OutgoingPacket {
 		msg.put(0);
 		return msg.getBuffer();
 	}
-	
+
 }

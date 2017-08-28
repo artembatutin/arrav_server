@@ -128,11 +128,11 @@ public class SkillPanel extends ActionInitializer {
 			public boolean click(Player player, int button) {
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-		//				player.teleport(new Position(2475, 3439), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+						//				player.teleport(new Position(2475, 3439), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-		//				player.teleport(new Position(2551, 3556), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+						//				player.teleport(new Position(2551, 3556), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-		//				player.teleport(new Position(2998, 3915), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
+						//				player.teleport(new Position(2998, 3915), DefaultTeleportSpell.TeleportType.TRAINING_PORTAL);
 					}
 				}, "Gnome", "Barbarian", "@red@Wilderness"));
 				return true;

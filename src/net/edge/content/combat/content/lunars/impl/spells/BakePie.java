@@ -8,14 +8,12 @@ import net.edge.content.skill.cooking.CookingData;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
-import java.util.Optional;
-
 /**
  * Holds functionality for the bake pie spell.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class BakePie extends LunarItemSpell {
-
 
 	private CookingData data;
 

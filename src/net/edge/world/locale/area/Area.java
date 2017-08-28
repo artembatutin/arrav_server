@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Represents a single area.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Area {
@@ -23,6 +24,7 @@ public final class Area {
 
 	/**
 	 * Constructs a new {@link Area}.
+	 *
 	 * @param name     {@link #name}.
 	 * @param location {@link #location}.
 	 */
@@ -33,6 +35,7 @@ public final class Area {
 
 	/**
 	 * The class which represents a location inside an area with a set of attributes.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public static final class AreaLocation {
@@ -54,6 +57,7 @@ public final class Area {
 
 		/**
 		 * Constructs a new {@link AreaLocation}.
+		 *
 		 * @param location {@link #location}.
 		 * @param teleport {@link #teleport}.
 		 * @param summon   {@link #summon}.

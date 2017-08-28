@@ -8,13 +8,13 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.object.GameObject;
 
 public final class SendObjectRemoval implements OutgoingPacket {
-	
+
 	private final GameObject object;
-	
+
 	public SendObjectRemoval(GameObject object) {
 		this.object = object;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		new SendCoordinates(object.getGlobalPos()).write(player, msg);

@@ -1,5 +1,6 @@
 package net.edge.content.skill.agility.impl;
 
+import net.edge.action.impl.ObjectAction;
 import net.edge.content.skill.agility.AgilityCourse;
 import net.edge.content.skill.agility.AgilityCourseType;
 import net.edge.content.skill.agility.obstacle.ObstacleAction;
@@ -7,26 +8,27 @@ import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Steppable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
-import net.edge.action.impl.ObjectAction;
-import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
 /**
  * Holds functionality for passing
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Shortcuts extends AgilityCourse {
-	
+
 	/**
 	 * The shortcut this player is crossing.
 	 */
 	private final ShortcutsData definition;
-	
+
 	/**
 	 * Constructs a new {@link Shortcuts}.
+	 *
 	 * @param player     {@link #getPlayer()}.
 	 * @param object     {@link #getObject()}.
 	 * @param definition {@link #definition}.
@@ -35,7 +37,7 @@ public final class Shortcuts extends AgilityCourse {
 		super(player, object, AgilityCourseType.SHORTCUTS);
 		this.definition = definition;
 	}
-	
+
 	public static void action() {
 		for(ShortcutsData data : ShortcutsData.values()) {
 			ObjectAction perform = new ObjectAction() {
@@ -53,27 +55,27 @@ public final class Shortcuts extends AgilityCourse {
 			}
 		}
 	}
-	
+
 	@Override
 	public ObstacleAction obstacleAction() {
 		return definition.obstacleAction;
 	}
-	
+
 	@Override
 	public String message() {
 		return definition.message;
 	}
-	
+
 	@Override
 	public Optional<String> crossedMessage() {
 		return definition.crossedMessage;
 	}
-	
+
 	@Override
 	public double experience() {
 		return definition.obstacleAction.activity(player).getExperience();
 	}
-	
+
 	private enum ShortcutsData {
 		TAVERLY_STRANGE_FLOOR(new int[]{51297}, ObstacleType.STRANGE_FLOOR, player -> new Movable(new Position(2880, 9813), new Position(2878, 9813), ObstacleType.STRANGE_FLOOR.getAnimation(), 50, 80, 0) {
 			@Override
@@ -107,30 +109,31 @@ public final class Shortcuts extends AgilityCourse {
 		}),
 		BRIMHAVEN_OBSTACLE_ROCKS(new int[]{5111}, ObstacleType.STEPPING_STONE, player -> new Steppable(new Position(2647, 9557), new Position[]{new Position(2647, 9558), new Position(2647, 9559), new Position(2647, 9560), new Position(2648, 9560), new Position(2649, 9560), new Position(2649, 9561)}, new Position(2649, 9562), ObstacleType.STEPPING_STONE.getAnimation(), 30, 0)),
 		BRIMHAVEN_OBSTACLE_ROCKS_OTHERWAY(new int[]{5110}, ObstacleType.STEPPING_STONE, player -> new Steppable(new Position(2649, 9562), new Position[]{new Position(2649, 9561), new Position(2649, 9560), new Position(2648, 9560), new Position(2647, 9560), new Position(2647, 9559), new Position(2647, 9558)}, new Position(2647, 9557), ObstacleType.STEPPING_STONE.getAnimation(), 30, 0));
-		
+
 		/**
 		 * The object identification for this object.
 		 */
 		private final int[] objectIds;
-		
+
 		/**
 		 * The message sent to this player when he attempts to cross the obstacle.
 		 */
 		private final String message;
-		
+
 		/**
 		 * The message sent to this player when he successfully crossed the obstacle.
 		 */
 		private final Optional<String> crossedMessage;
-		
+
 		/**
 		 * The agility policy linked to this obstacle action.
 		 */
 		private final ObstacleAction obstacleAction;
-		
+
 		/**
 		 * Constructs a new {@link ShortcutsData}.
-		 * @param objectIds       {@link #objectIds}.
+		 *
+		 * @param objectIds      {@link #objectIds}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
@@ -141,10 +144,11 @@ public final class Shortcuts extends AgilityCourse {
 			this.crossedMessage = crossedMessage;
 			this.obstacleAction = obstacleAction;
 		}
-		
+
 		/**
 		 * Constructs a new {@link ShortcutsData}.
-		 * @param objectIds       {@link #objectIds}.
+		 *
+		 * @param objectIds      {@link #objectIds}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
@@ -155,10 +159,11 @@ public final class Shortcuts extends AgilityCourse {
 			this.crossedMessage = Optional.ofNullable(crossedMessage);
 			this.obstacleAction = obstacleAction;
 		}
-		
+
 		/**
 		 * Constructs a new {@link ShortcutsData}.
-		 * @param objectIds       {@link #objectIds}.
+		 *
+		 * @param objectIds      {@link #objectIds}.
 		 * @param type           {@link #message}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
@@ -168,7 +173,7 @@ public final class Shortcuts extends AgilityCourse {
 			this.crossedMessage = type.getCrossedMessage();
 			this.obstacleAction = obstacleAction;
 		}
-		
+
 		/**
 		 * Gets the objects of this shortcut.
 		 */

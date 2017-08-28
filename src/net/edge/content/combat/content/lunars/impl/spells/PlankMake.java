@@ -5,15 +5,16 @@ import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import net.edge.content.combat.content.MagicRune;
 import net.edge.content.combat.content.RequiredRune;
 import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
-import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
 /**
  * Holds functionality for the plank make spell.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class PlankMake extends LunarButtonSpell {
@@ -36,7 +37,7 @@ public final class PlankMake extends LunarButtonSpell {
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean canCast(Actor caster, Optional<Actor> victim) {
 		if(!super.canCast(caster, victim)) {
@@ -48,12 +49,12 @@ public final class PlankMake extends LunarButtonSpell {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.of(new Animation(6298));
 	}
-	
+
 	@Override
 	public Optional<Graphic> startGraphic() {
 		return Optional.of(new Graphic(1063, 100));
@@ -66,5 +67,5 @@ public final class PlankMake extends LunarButtonSpell {
 			.put(6332, 8782)//mahogany plank
 			.build()
 	);
-	
+
 }

@@ -1,15 +1,15 @@
 package net.edge.content.combat.content.lunars.impl;
 
-
 import net.edge.content.combat.content.RequiredRune;
 import net.edge.content.combat.content.lunars.LunarSpell;
 
 /**
  * Holds support for Lunar Spells which are casted when a button is clicked.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public abstract class LunarButtonSpell extends LunarSpell {
-	
+
 	/**
 	 * The button id for this spell.
 	 */

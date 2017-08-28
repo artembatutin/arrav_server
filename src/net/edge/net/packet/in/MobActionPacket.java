@@ -3,10 +3,10 @@ package net.edge.net.packet.in;
 import net.edge.Application;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.MobAction;
-import net.edge.content.item.pets.Pet;
-import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.combat.content.MagicSpells;
 import net.edge.content.combat.strategy.player.PlayerMagicStrategy;
+import net.edge.content.item.pets.Pet;
+import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.net.codec.ByteOrder;
@@ -24,10 +24,11 @@ import net.edge.world.locale.Position;
 
 /**
  * The message sent from the client when a player attacks or clicks on an NPC.
+ *
  * @author Artem Batutin <artembatutin@gmail.com
  */
 public final class MobActionPacket implements IncomingPacket {
-	
+
 	/*
 	 * All of the npc events.
 	 */
@@ -35,7 +36,7 @@ public final class MobActionPacket implements IncomingPacket {
 	public static final ActionContainer<MobAction> SECOND = new ActionContainer<>();
 	public static final ActionContainer<MobAction> THIRD = new ActionContainer<>();
 	public static final ActionContainer<MobAction> FOURTH = new ActionContainer<>();
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.NPC_ACTION))
@@ -62,9 +63,10 @@ public final class MobActionPacket implements IncomingPacket {
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.NPC_ACTION);
 	}
-	
+
 	/**
 	 * Handles the melee and ranged attacks on an NPC.
+	 *
 	 * @param player  the player this will be handled for.
 	 * @param payload the payload that will read the sent data.
 	 */
@@ -76,9 +78,10 @@ public final class MobActionPacket implements IncomingPacket {
 		player.getTolerance().reset();
 		player.getCombat().attack(mob);
 	}
-	
+
 	/**
 	 * Handles the magic attacks on an NPC.
+	 *
 	 * @param player  the player this will be handled for.
 	 * @param payload the payload that will read the sent data.
 	 */
@@ -94,9 +97,10 @@ public final class MobActionPacket implements IncomingPacket {
 		player.getCombat().setStrategy(new PlayerMagicStrategy(spell));
 		player.getCombat().attack(mob);
 	}
-	
+
 	/**
 	 * Handles the first click NPC slot.
+	 *
 	 * @param player  the player this will be handled for.
 	 * @param payload the payload that will read the sent data.
 	 */
@@ -131,9 +135,10 @@ public final class MobActionPacket implements IncomingPacket {
 		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[NPC1]:" + mob.toString());
 	}
-	
+
 	/**
 	 * Handles the second click NPC slot.
+	 *
 	 * @param player  the player this will be handled for.
 	 * @param payload the payload that will read the sent data.
 	 */
@@ -162,9 +167,10 @@ public final class MobActionPacket implements IncomingPacket {
 		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[NPC2]:" + mob.toString());
 	}
-	
+
 	/**
 	 * Handles the third click NPC slot.
+	 *
 	 * @param player  the player this will be handled for.
 	 * @param payload the payload that will read the sent data.
 	 */
@@ -190,9 +196,10 @@ public final class MobActionPacket implements IncomingPacket {
 		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[NPC3]:" + mob.toString());
 	}
-	
+
 	/**
 	 * Handles the fourth click NPC slot.
+	 *
 	 * @param player  the player this will be handled for.
 	 * @param payload the payload that will read the sent data.
 	 */
@@ -206,7 +213,7 @@ public final class MobActionPacket implements IncomingPacket {
 			if(new Boundary(position, mob.size()).within(player.getPosition(), player.size(), 1)) {
 				player.facePosition(mob.getPosition());
 				mob.facePosition(player.getPosition());
-				
+
 				if(Summoning.interact(player, mob, 4)) {
 					return;
 				}
@@ -219,9 +226,10 @@ public final class MobActionPacket implements IncomingPacket {
 		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[NPC4]:" + mob.toString());
 	}
-	
+
 	/**
 	 * Determines if {@code player} can make an attack on {@code mob}.
+	 *
 	 * @param player the player attempting to make an attack.
 	 * @param mob    the mob being attacked.
 	 * @return {@code true} if the player can make an attack, {@code false}

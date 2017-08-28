@@ -9,7 +9,6 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.object.GameObject;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 public final class RefillableAction extends ProducingSkillAction {
@@ -33,24 +32,22 @@ public final class RefillableAction extends ProducingSkillAction {
 			ItemOnObjectAction a = new ItemOnObjectAction() {
 				@Override
 				public boolean click(Player player, GameObject object, Item item, int container, int slot) {
-						RefillableAction refillableAction = new RefillableAction(player, refillable, object);
-						refillableAction.start();
-						return true;
+					RefillableAction refillableAction = new RefillableAction(player, refillable, object);
+					refillableAction.start();
+					return true;
 				}
 			};
 			a.registerItem(refillable.getNeeded());
 		}
 	}
 
-
 	/**
 	 * Checks if able to execute action.
-	 * @return
 	 */
 	private boolean check() {
-		for (int object : refillable.getObjects()) {
-			if (object == gameObject.getId()) {
-				if (getPlayer().getInventory().contains(refillable.getNeeded())) {
+		for(int object : refillable.getObjects()) {
+			if(object == gameObject.getId()) {
+				if(getPlayer().getInventory().contains(refillable.getNeeded())) {
 					return true;
 				} else {
 					getPlayer().message("You need to use an empty " + new Item(refillable.getNeeded()).getDefinition().getName() + " on a water source.");
@@ -60,7 +57,6 @@ public final class RefillableAction extends ProducingSkillAction {
 		}
 		return false;
 	}
-
 
 	public RefillableAction(Player player, Refillable refillable, GameObject object) {
 		super(player, Optional.of(object.getGlobalPos()));
@@ -114,6 +110,5 @@ public final class RefillableAction extends ProducingSkillAction {
 			getPlayer().animation(ANIMATION);
 		}
 	}
-
 
 }

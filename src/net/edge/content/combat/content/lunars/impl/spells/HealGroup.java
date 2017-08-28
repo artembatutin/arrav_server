@@ -5,9 +5,9 @@ import net.edge.content.combat.content.MagicRune;
 import net.edge.content.combat.content.RequiredRune;
 import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
 import net.edge.content.combat.hit.Hit;
-import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.Optional;
 
 /**
  * Holds functionality for the heal group spell.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class HealGroup extends LunarButtonSpell {
@@ -42,18 +43,18 @@ public final class HealGroup extends LunarButtonSpell {
 			}
 
 			int victimMaxHealth = target.getMaximumHealth() * 10;
-			
+
 			if(transfer + target.getCurrentHealth() > victimMaxHealth) {
 				transfer = victimMaxHealth - transfer;
 			}
-			
+
 			target.healEntity(transfer);
 			target.graphic(new Graphic(745, 90));
-			
+
 			target.message("You have been healed by " + name + ".");
 		}
 	}
-	
+
 	@Override
 	public boolean canCast(Actor caster, Optional<Actor> victim) {
 		if(!super.canCast(caster, victim)) {
@@ -63,14 +64,14 @@ public final class HealGroup extends LunarButtonSpell {
 			caster.toPlayer().message("Your hitpoints are too low to cast this spell.");
 			return false;
 		}
-		
+
 		local_players = CombatUtil.actorsWithinDistance(caster, caster.getLocalPlayers(), 1);
-		
+
 		if(local_players.isEmpty()) {
 			caster.toPlayer().message("There are no players within your radius to cast this spell for.");
 			return false;
 		}
-		
+
 		for(Player target : local_players) {
 			if(target.getCurrentHealth() >= (target.getMaximumHealth()) || !target.getAttr().get("accept_aid").getBoolean()) {
 				continue;
@@ -82,12 +83,10 @@ public final class HealGroup extends LunarButtonSpell {
 		caster.toPlayer().message("There are no players within your radius which are below full health.");
 		return false;
 	}
-	
+
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.of(new Animation(4409));
 	}
-	
 
-	
 }

@@ -10,13 +10,13 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
 public final class SendObjectsConstruction implements OutgoingPacket {
-	
+
 	private final HotSpots spot;
-	
+
 	public SendObjectsConstruction(HotSpots spot) {
 		this.spot = spot;
 	}
-	
+
 	@Override
 	public boolean onSent(Player player) {
 		Furniture[] panel = spot.getFurnitures();
@@ -25,7 +25,7 @@ public final class SendObjectsConstruction implements OutgoingPacket {
 		player.getHouse().get().getPlan().setPanel(panel);
 		return true;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		Furniture[] panel = spot.getFurnitures();

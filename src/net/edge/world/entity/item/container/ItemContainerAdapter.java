@@ -16,20 +16,21 @@ import net.edge.world.entity.item.Item;
  * @author lare96 <http://github.org/lare96>
  */
 public abstract class ItemContainerAdapter implements ItemContainerListener {
-	
+
 	/**
 	 * The {@link Player} instance.
 	 */
 	private final Player player;
-	
+
 	/**
 	 * Creates a new {@link ItemContainerAdapter}.
+	 *
 	 * @param player The {@link Player} instance.
 	 */
 	public ItemContainerAdapter(Player player) {
 		this.player = player;
 	}
-	
+
 	@Override
 	public void singleUpdate(ItemContainer container, Item oldItem, Item newItem, int slot, boolean update) {
 		if(update)
@@ -60,12 +61,12 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	protected void updateItem(ItemContainer container, Item item, int slot) {
 		player.out(new SendItemOnInterfaceSlot(widget(), item, slot));
 	}
-	
+
 	/**
 	 * @return The id number of the widget this adapter is assigned to
 	 */
 	public abstract int widget();
-	
+
 	/**
 	 * @return The message sent when the {@link ItemContainer} exceeds its capacity.
 	 */

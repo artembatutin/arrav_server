@@ -1,33 +1,34 @@
 package net.edge.content.minigame.pestcontrol.pest;
 
-import net.edge.content.minigame.pestcontrol.PestPortal;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.HitIcon;
 import net.edge.content.combat.hit.Hitsplat;
-import net.edge.world.locale.Position;
+import net.edge.content.minigame.pestcontrol.PestPortal;
 import net.edge.task.Task;
 import net.edge.world.Animation;
 import net.edge.world.PoisonType;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.locale.Position;
 
 public class Spinner extends Pest {
-	
+
 	/**
 	 * The portal protecting.
 	 */
 	private final PestPortal portal;
-	
+
 	/**
 	 * Creates a new {@link Mob}.
-	 * @param id       the identification for this NPC.
-	 * @param portal   the portal to defend.
+	 *
+	 * @param id     the identification for this NPC.
+	 * @param portal the portal to defend.
 	 */
 	public Spinner(int id, PestPortal portal, Position spawn) {
 		super(id, spawn);
 		this.portal = portal;
 	}
-	
+
 	@Override
 	public void sequence(Mob knight) {
 		//heal portals and explode when portal is down.
@@ -52,10 +53,10 @@ public class Spinner extends Pest {
 			});
 		}
 	}
-	
+
 	@Override
 	public boolean aggressive() {
 		return true;
 	}
-	
+
 }

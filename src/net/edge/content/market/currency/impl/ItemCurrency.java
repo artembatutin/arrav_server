@@ -10,6 +10,7 @@ import java.util.Optional;
 /**
  * The currency that provides basic functionality for all tangible currencies.
  * It is recommended that this be used rather than {@link GeneralCurrency}.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ItemCurrency implements GeneralCurrency {
@@ -23,9 +24,10 @@ public final class ItemCurrency implements GeneralCurrency {
 	 * An optional format string that should be displayed on the shop interface.
 	 */
 	private final Optional<String> format;
-	
+
 	/**
 	 * Creates a new {@link ItemCurrency}.
+	 *
 	 * @param id     {@link #id}.
 	 * @param format {@link #format}.
 	 */
@@ -33,9 +35,10 @@ public final class ItemCurrency implements GeneralCurrency {
 		this.id = id;
 		this.format = format;
 	}
-	
+
 	/**
 	 * Creates a new {@link ItemCurrency}.
+	 *
 	 * @param id the item identification for this currency.
 	 */
 	public ItemCurrency(int id) {
@@ -78,6 +81,7 @@ public final class ItemCurrency implements GeneralCurrency {
 
 	/**
 	 * Gets the item identification for this currency.
+	 *
 	 * @return the item identification.
 	 */
 	public int getId() {

@@ -1,6 +1,7 @@
 package net.edge.content.skill.construction.room;
 
-import net.edge.content.skill.construction.*;
+import net.edge.content.skill.construction.Construction;
+import net.edge.content.skill.construction.House;
 import net.edge.content.skill.construction.Palette.PaletteTile;
 import net.edge.content.skill.construction.data.Constants;
 import net.edge.content.skill.construction.furniture.Furniture;
@@ -9,18 +10,17 @@ import net.edge.net.packet.out.SendRemoveObjects;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
-import static net.edge.content.skill.construction.Construction.getMyChunk;
-import static net.edge.content.skill.construction.Construction.getXTilesOnTile;
-import static net.edge.content.skill.construction.Construction.getYTilesOnTile;
+import static net.edge.content.skill.construction.Construction.*;
 import static net.edge.content.skill.construction.furniture.Furniture.OAK_LADDER;
 import static net.edge.content.skill.construction.furniture.Furniture.OAK_STAIRCASE;
 
 /**
  * Handles room manipulations.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class RoomManipulation {
-	
+
 	public static void createRoom(RoomData data, Player p, int toHeight) {
 		House house = p.getHouse();
 		if(!p.getInventory().contains(new Item(995, data.getCost()))) {
@@ -113,10 +113,10 @@ public class RoomManipulation {
 			}
 			room.addFurniture(pf);
 		}
-		
+
 		Room room = new Room(data, rotation, 0);
 		PaletteTile tile = new PaletteTile(room.getX(), room.getY(), room.getZ(), room.getRotation());
-		
+
 		int xOff = 0, yOff = 0;
 		if(direction == LEFT) {
 			xOff = -1;
@@ -132,7 +132,7 @@ public class RoomManipulation {
 		}
 		if(toHeight == 1) {
 			Room r = house.get().getRooms()[0][(myTiles[0] - 1) + xOff][(myTiles[1] - 1) + yOff];
-			if(r.data().getId() == Constants.EMPTY || r.data().getId() == Constants.BUILDABLE ||r.data().getId() == Constants.GARDEN || r.data().getId() == Constants.FORMAL_GARDEN) {
+			if(r.data().getId() == Constants.EMPTY || r.data().getId() == Constants.BUILDABLE || r.data().getId() == Constants.GARDEN || r.data().getId() == Constants.FORMAL_GARDEN) {
 				p.message("You need a foundation to build there");
 				return;
 			}
@@ -147,7 +147,7 @@ public class RoomManipulation {
 		house.createPalette();
 		house.refresh();
 	}
-	
+
 	public static void rotateRoom(int wise, Player p) {
 		House house = p.getHouse();
 		int[] myTiles = getMyChunk(p);
@@ -193,7 +193,7 @@ public class RoomManipulation {
 		house.createPalette();
 		house.refresh();
 	}
-	
+
 	public static void deleteRoom(Player p, int toHeight) {
 		House house = p.getHouse();
 		int[] myTiles = getMyChunk(p);
@@ -209,7 +209,7 @@ public class RoomManipulation {
 			direction = RIGHT;
 		if(yOnTile == 7)
 			direction = UP;
-		
+
 		Room room = new Room(house.get().isDungeon() ? RoomData.DUNGEON_EMPTY : RoomData.EMPTY, 0, 0);
 		PaletteTile tile = new PaletteTile(room.getX(), room.getY(), room.getZ(), room.getRotation());
 		int xOff = 0, yOff = 0;
@@ -227,7 +227,7 @@ public class RoomManipulation {
 		}
 		int chunkX = (myTiles[0] - 1) + xOff;
 		int chunkY = (myTiles[1] - 1) + yOff;
-		Room r = house.get().getRooms()[house.get().isDungeon()? 4 : toHeight][chunkX][chunkY];
+		Room r = house.get().getRooms()[house.get().isDungeon() ? 4 : toHeight][chunkX][chunkY];
 		if(r.data().getId() == Constants.GARDEN || r.data().getId() == Constants.FORMAL_GARDEN) {
 			int gardenAmt = 0;
 			for(int z = 0; z < house.get().getRooms().length; z++) {
@@ -268,7 +268,7 @@ public class RoomManipulation {
 		house.createPalette();
 		house.refresh();
 	}
-	
+
 	public static boolean roomExists(Player p) {
 		House house = p.getHouse();
 		int[] myTiles = getMyChunk(p);
@@ -276,33 +276,33 @@ public class RoomManipulation {
 		int yOnTile = getYTilesOnTile(myTiles, p);
 		int direction = 0;
 		final int LEFT = 0, DOWN = 1, RIGHT = 2, UP = 3;
-		if (xOnTile == 0)
+		if(xOnTile == 0)
 			direction = LEFT;
-		if (yOnTile == 0)
+		if(yOnTile == 0)
 			direction = DOWN;
-		if (xOnTile == 7)
+		if(xOnTile == 7)
 			direction = RIGHT;
-		if (yOnTile == 7)
+		if(yOnTile == 7)
 			direction = UP;
 		int xOff = 0, yOff = 0;
-		if (direction == LEFT) {
+		if(direction == LEFT) {
 			xOff = -1;
 		}
-		if (direction == DOWN) {
+		if(direction == DOWN) {
 			yOff = -1;
 		}
-		if (direction == RIGHT) {
+		if(direction == RIGHT) {
 			xOff = 1;
 		}
-		if (direction == UP) {
+		if(direction == UP) {
 			yOff = 1;
 		}
 		Room room = house.get().getRooms()[house.get().isDungeon() ? 4 : p.getPosition().getZ()][myTiles[0] - 1 + xOff][myTiles[1] - 1 + yOff];
-		if (room == null)
+		if(room == null)
 			return false;
 		if(room.data().getId() == Constants.BUILDABLE || room.data().getId() == Constants.EMPTY || room.data().getId() == Constants.DUNGEON_EMPTY)
 			return false;
 		return true;
 	}
-	
+
 }

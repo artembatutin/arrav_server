@@ -1,28 +1,29 @@
 package net.edge.content.scene.impl;
 
-import net.edge.content.clanchat.ClanManager;
-import net.edge.net.host.HostListType;
-import net.edge.net.host.HostManager;
-import net.edge.net.packet.out.*;
-import net.edge.task.Task;
 import net.edge.content.TabInterface;
+import net.edge.content.clanchat.ClanManager;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.impl.GiveItemDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue.OptionType;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.scene.Cutscene;
-import net.edge.world.locale.Position;
+import net.edge.net.host.HostListType;
+import net.edge.net.host.HostManager;
+import net.edge.net.packet.out.*;
+import net.edge.task.Task;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
 import net.edge.world.entity.item.Item;
+import net.edge.world.locale.Position;
 
 import java.util.Optional;
 
 /**
  * The introduction cutscene for the player when he logs into the game for the first time.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
@@ -35,6 +36,7 @@ public final class IntroductionCutscene extends Cutscene {
 
 	/**
 	 * Constructs a new {@link IntroductionCutscene}.
+	 *
 	 * @param player {@link #player}.
 	 */
 	public IntroductionCutscene(Player player) {
@@ -62,14 +64,14 @@ public final class IntroductionCutscene extends Cutscene {
 					player.animation(new Animation(863));
 				}), new StatementDialogue("This is the famous @red@Market place.", "You can search any type of item you want here.").attach(() -> {
 					player.out(new SendCameraAngle(new Position(3081, 3508), 240, 4, 10));
-				}),	new GiveItemDialogue(new Item(995, 200000), "There some coins to get you started...", Optional.empty()).attach(() -> {
+				}), new GiveItemDialogue(new Item(995, 200000), "There some coins to get you started...", Optional.empty()).attach(() -> {
 				}), new StatementDialogue("This is the @red@Scoreboard.", "It tracks the top 20 players with the highest killstreak.", "Dying will reset your killstreak.").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3087, 3516), 340, 4, 10));
 					player.out(new SendCameraAngle(new Position(3089, 3514), 300, 6, 10));
 				}), new StatementDialogue("Those @red@3@bla@ with the highest streak at the @red@end of the week@bla@", "will gain a reward.", " Those @red@3@bla@ with the most recent @red@on-going@bla@ streaks", "will also gain rewards!").attach(() -> {
 					TabInterface.QUEST.sendInterface(player, 638);
 					player.out(new SendForceTab(TabInterface.QUEST));
-				}),	new GiveItemDialogue(new Item(19000, 200), "Each player kill will give you blood money.", Optional.empty()).attach(() -> {
+				}), new GiveItemDialogue(new Item(19000, 200), "Each player kill will give you blood money.", Optional.empty()).attach(() -> {
 				}), new StatementDialogue("You can view your player killing statistics by", "clicking the quest tab which is just next to your skill tab.").attach(() -> {
 				}), new StatementDialogue("This shiny portal allows you to", "get anywhere: @red@skills, minigames, bosses.").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3087, 3514), 340, 2, 10));
@@ -81,7 +83,7 @@ public final class IntroductionCutscene extends Cutscene {
 					player.out(new SendCameraAngle(new Position(3083, 3497), 250, 2, 5));
 				}), new StatementDialogue("This is @red@Party Pete", "He changes edge tokens into precious goods.").attach(() -> {
 					player.out(new SendCameraAngle(new Position(3089, 3502), 250, 4, 10));
-				}),	new GiveItemDialogue(new Item(7478, 20), "You can get edge tokens by donating on our website.", Optional.empty()).attach(() -> {
+				}), new GiveItemDialogue(new Item(7478, 20), "You can get edge tokens by donating on our website.", Optional.empty()).attach(() -> {
 				}), new StatementDialogue("As you may noticed, this is the @red@Garden.", "You can plant trees here!").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3087, 3502), 1800, 2, 10));
 					player.out(new SendCameraAngle(new Position(3087, 3496), 2000, 2, 10));
@@ -114,7 +116,7 @@ public final class IntroductionCutscene extends Cutscene {
 
 	@Override
 	public void onCancel() {
-	
+
 	}
 
 	private Dialogue complete() {
@@ -131,9 +133,9 @@ public final class IntroductionCutscene extends Cutscene {
 			player.move(new Position(3088, 3509));
 			player.widget(-5);
 		});
-		
+
 	}
-	
+
 	public void prerequisites() {
 		player.resetSidebars();
 		player.getActivityManager().setAllExcept(ActivityType.CLICK_BUTTON, ActivityType.LOG_OUT, ActivityType.CHARACTER_SELECTION, ActivityType.DIALOGUE_INTERACTION, ActivityType.FACE_POSITION);

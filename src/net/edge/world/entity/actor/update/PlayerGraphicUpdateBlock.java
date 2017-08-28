@@ -1,12 +1,13 @@
 package net.edge.world.entity.actor.update;
 
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.ByteOrder;
+import net.edge.net.codec.GameBuffer;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.player.Player;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the {@link Graphic} update block.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class PlayerGraphicUpdateBlock extends PlayerUpdateBlock {

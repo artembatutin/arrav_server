@@ -24,9 +24,7 @@ import net.edge.content.object.star.ShootingStarManager;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.net.EdgevilleChannelInitializer;
-import net.edge.net.host.HostListType;
 import net.edge.net.NetworkConstants;
-import net.edge.net.host.HostManager;
 import net.edge.net.host.HostListType;
 import net.edge.net.host.HostManager;
 import net.edge.task.Task;
@@ -49,36 +47,37 @@ import java.util.stream.Collectors;
 
 /**
  * The main class that will register and bind the server effectively.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author lare96 <http://github.com/lare96>
  */
 public final class Application {
-	
+
 	/**
 	 * The flag that determines if debugging messages should be printed or not.
 	 */
 	public static boolean DEBUG = true;
-	
+
 	/**
 	 * The flag that determines if the server is starting up.
 	 */
 	public static boolean STARTING = true;
-	
+
 	/**
 	 * The status that determines if the server is being updated.
 	 */
 	public static double UPDATING = 0;
-	
+
 	/**
 	 * The {@link ExecutorService} that will execute startup tasks.
 	 */
 	private final ListeningExecutorService launch;
-	
+
 	/**
 	 * The LOGGER that will print important information.
 	 */
 	private final static Logger LOGGER = LoggerUtils.getLogger(Application.class);
-	
+
 	static {
 		try {
 			Thread.currentThread().setName("EdgevilleInitializationThread");
@@ -86,9 +85,10 @@ public final class Application {
 			throw new ExceptionInInitializerError(e);
 		}
 	}
-	
+
 	/**
 	 * Invoked when this program is started, initializes the {@link Application}.
+	 *
 	 * @param args The runtime arguments, none of which are parsed.
 	 */
 	public static void main(String[] args) {
@@ -105,7 +105,7 @@ public final class Application {
 			System.exit(0);
 		}
 	}
-	
+
 	/**
 	 * A package-private constructor to discourage external instantiation.
 	 */
@@ -113,9 +113,10 @@ public final class Application {
 		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleInitialization").build());
 		launch = MoreExecutors.listeningDecorator(delegateService);
 	}
-	
+
 	/**
 	 * Initializing all of the individual modules.
+	 *
 	 * @throws Exception If any exceptions are thrown during initialization.
 	 */
 	public void init() throws Exception {
@@ -155,9 +156,10 @@ public final class Application {
 			System.exit(1);
 		}
 	}
-	
+
 	/**
 	 * Initializes the Netty implementation. Will block indefinitely until the {@link ServerBootstrap} is bound.
+	 *
 	 * @throws Exception If any exceptions are thrown while binding.
 	 */
 	private void bind() throws Exception {
@@ -174,11 +176,12 @@ public final class Application {
 		bootstrap.channel(NioServerSocketChannel.class);
 		bootstrap.childHandler(new EdgevilleChannelInitializer());
 		bootstrap.bind(NetworkConstants.PORT_ONLINE).syncUninterruptibly();
-		
+
 	}
-	
+
 	/**
 	 * Initializes all miscellaneous startup tasks asynchronously.
+	 *
 	 * @throws Exception If any exceptions are thrown while initializing startup tasks.
 	 */
 	private void initTasks() throws Exception {
@@ -223,7 +226,7 @@ public final class Application {
 		launch.execute(() -> HostManager.deserialize(HostListType.MUTED_IP));
 		launch.execute(() -> HostManager.deserialize(HostListType.STARTER_RECEIVED));
 	}
-	
+
 	private void prepare() {
 		CombatProjectileDefinition.createLoader().load();
 		CombatListenerDispatcher.load();
@@ -236,7 +239,7 @@ public final class Application {
 		MobAction.init();
 		ObjectAction.init();
 	}
-	
+
 	public static void loadEvents() {
 		for(String directory : Utility.getSubDirectories(ActionInitializer.class)) {
 			try {

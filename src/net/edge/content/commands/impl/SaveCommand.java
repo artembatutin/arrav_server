@@ -1,14 +1,14 @@
 package net.edge.content.commands.impl;
 
 import net.edge.content.clanchat.ClanManager;
+import net.edge.content.commands.Command;
+import net.edge.content.commands.CommandSignature;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.market.MarketItem;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.net.host.HostListType;
 import net.edge.net.host.HostManager;
 import net.edge.net.packet.in.MobInformationPacket;
-import net.edge.content.commands.Command;
-import net.edge.content.commands.CommandSignature;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.drop.Drop;
 import net.edge.world.entity.actor.mob.drop.DropManager;
@@ -23,7 +23,7 @@ import java.util.Iterator;
 
 @CommandSignature(alias = {"save"}, rights = {Rights.ADMINISTRATOR}, syntax = "Saves, ::save type")
 public final class SaveCommand implements Command {
-	
+
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		switch(cmd[1].toLowerCase()) {

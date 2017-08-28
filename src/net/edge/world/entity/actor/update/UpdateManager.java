@@ -1,13 +1,13 @@
 package net.edge.world.entity.actor.update;
 
 import io.netty.buffer.Unpooled;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.ByteOrder;
+import net.edge.net.codec.GameBuffer;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 public final class UpdateManager {
-	
+
 	private static final PlayerUpdateBlock[] PLAYER_BLOCKS = {
 			new PlayerForceMovementUpdateBlock(),
 			new PlayerGraphicUpdateBlock(),
@@ -20,7 +20,7 @@ public final class UpdateManager {
 			new PlayerPrimaryHitUpdateBlock(),
 			new PlayerSecondaryHitUpdateBlock()
 	};
-	
+
 	private static final MobUpdateBlock[] NPC_BLOCKS = {
 			new MobForceMovementUpdateBlock(),
 			new MobGraphicUpdateBlock(),
@@ -32,7 +32,7 @@ public final class UpdateManager {
 			new MobPrimaryHitUpdateBlock(),
 			new MobSecondaryHitUpdateBlock(),
 	};
-	
+
 	public static void prepare(Player other) {
 		if(other.getLocalPlayers().size() == 0) {
 			return;
@@ -48,7 +48,7 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
 			mask |= 0x100;
 		}
-		if(other.getFlags().get(UpdateFlag.ANIMATION)){
+		if(other.getFlags().get(UpdateFlag.ANIMATION)) {
 			mask |= 8;
 		}
 		if(other.getFlags().get(UpdateFlag.FORCE_CHAT)) {
@@ -69,18 +69,18 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
 			mask |= 0x200;
 		}
-		
+
 		if(mask >= 0x100) {
 			mask |= 0x40;
 			encodedBlock.putShort(mask, ByteOrder.LITTLE);
 		} else {
 			encodedBlock.put(mask);
 		}
-		
+
 		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
 			PLAYER_BLOCKS[1].write(null, other, encodedBlock);
 		}
-		if(other.getFlags().get(UpdateFlag.ANIMATION)){
+		if(other.getFlags().get(UpdateFlag.ANIMATION)) {
 			PLAYER_BLOCKS[2].write(null, other, encodedBlock);
 		}
 		if(other.getFlags().get(UpdateFlag.FORCE_CHAT)) {
@@ -106,7 +106,7 @@ public final class UpdateManager {
 		}
 		other.setCachedUpdateBlock(encodedBlock);
 	}
-	
+
 	public static void encode(Player player, Player other, GameBuffer msg, UpdateState state) {
 		if(other.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
@@ -124,7 +124,7 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
 			mask |= 0x100;
 		}
-		if(other.getFlags().get(UpdateFlag.ANIMATION)){
+		if(other.getFlags().get(UpdateFlag.ANIMATION)) {
 			mask |= 8;
 		}
 		if(other.getFlags().get(UpdateFlag.FORCE_CHAT)) {
@@ -136,7 +136,7 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.FACE_ENTITY)) {
 			mask |= 1;
 		}
-		if(other.getFlags().get(UpdateFlag.APPEARANCE) || state ==UpdateState.ADD_LOCAL) {
+		if(other.getFlags().get(UpdateFlag.APPEARANCE) || state == UpdateState.ADD_LOCAL) {
 			mask |= 0x10;
 		}
 		if(other.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
@@ -148,14 +148,14 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
 			mask |= 0x200;
 		}
-		
+
 		if(mask >= 0x100) {
 			mask |= 0x40;
 			encodedBlock.putShort(mask, ByteOrder.LITTLE);
 		} else {
 			encodedBlock.put(mask);
 		}
-		
+
 		if(other.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
 			PLAYER_BLOCKS[0].write(player, other, encodedBlock);
 			cacheBlocks = false;
@@ -163,7 +163,7 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
 			PLAYER_BLOCKS[1].write(player, other, encodedBlock);
 		}
-		if(other.getFlags().get(UpdateFlag.ANIMATION)){
+		if(other.getFlags().get(UpdateFlag.ANIMATION)) {
 			PLAYER_BLOCKS[2].write(player, other, encodedBlock);
 		}
 		if(other.getFlags().get(UpdateFlag.FORCE_CHAT)) {
@@ -175,7 +175,7 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.FACE_ENTITY)) {
 			PLAYER_BLOCKS[5].write(player, other, encodedBlock);
 		}
-		if(other.getFlags().get(UpdateFlag.APPEARANCE) || state ==UpdateState.ADD_LOCAL) {
+		if(other.getFlags().get(UpdateFlag.APPEARANCE) || state == UpdateState.ADD_LOCAL) {
 			PLAYER_BLOCKS[6].write(player, other, encodedBlock);
 		}
 		if(other.getFlags().get(UpdateFlag.FACE_COORDINATE)) {
@@ -187,28 +187,27 @@ public final class UpdateManager {
 		if(other.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
 			PLAYER_BLOCKS[9].write(player, other, encodedBlock);
 		}
-		
+
 		msg.putBytes(encodedBlock);
 		if(cacheBlocks) {
 			//other.setCachedUpdateBlock(encodedBlock);
 		}
 	}
-	
-	
+
 	public static void encode(Player player, Mob mob, GameBuffer msg, UpdateState state) {
 		if(mob.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
 		}
 		GameBuffer encodedBlock = new GameBuffer(player.getSession().alloc().buffer(64));
 		int mask = 0;
-		
+
 		if(mob.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
 			mask |= 0x400;
 		}
 		if(mob.getFlags().get(UpdateFlag.GRAPHIC)) {
 			mask |= 0x100;
 		}
-		if(mob.getFlags().get(UpdateFlag.ANIMATION)){
+		if(mob.getFlags().get(UpdateFlag.ANIMATION)) {
 			mask |= 8;
 		}
 		if(mob.getFlags().get(UpdateFlag.FORCE_CHAT)) {
@@ -229,21 +228,21 @@ public final class UpdateManager {
 		if(mob.getFlags().get(UpdateFlag.SECONDARY_HIT)) {
 			mask |= 0x20;
 		}
-		
+
 		if(mask >= 0x100) {
 			mask |= 0x40;
 			encodedBlock.putShort(mask, ByteOrder.LITTLE);
 		} else {
 			encodedBlock.put(mask);
 		}
-		
+
 		if(mob.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
 			NPC_BLOCKS[0].write(player, mob, encodedBlock);
 		}
 		if(mob.getFlags().get(UpdateFlag.GRAPHIC)) {
 			NPC_BLOCKS[1].write(player, mob, encodedBlock);
 		}
-		if(mob.getFlags().get(UpdateFlag.ANIMATION)){
+		if(mob.getFlags().get(UpdateFlag.ANIMATION)) {
 			NPC_BLOCKS[2].write(player, mob, encodedBlock);
 		}
 		if(mob.getFlags().get(UpdateFlag.FORCE_CHAT)) {
@@ -267,5 +266,5 @@ public final class UpdateManager {
 		msg.putBytes(encodedBlock);
 		encodedBlock.release();
 	}
-	
+
 }

@@ -8,7 +8,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"rank"}, rights = {Rights.ADMINISTRATOR}, syntax = "Sets an user rank, ::rank playername rank")
 public final class RankCommand implements Command {
-	
+
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player p = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
@@ -20,5 +20,5 @@ public final class RankCommand implements Command {
 		player.message("You've successfully set " + p.getFormatUsername() + " to " + rights.name() + ".");
 		p.message("You have been ranked by " + player.getFormatUsername() + " to " + rights.name() + ".");
 	}
-	
+
 }

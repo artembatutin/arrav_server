@@ -24,6 +24,7 @@ import static net.edge.world.entity.item.container.impl.EquipmentType.WEAPON;
 
 /**
  * The container that manages the equipment for a player.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class Equipment extends ItemContainer {
@@ -153,6 +154,7 @@ public final class Equipment extends ItemContainer {
 
 	/**
 	 * Creates a new {@link Equipment}.
+	 *
 	 * @param player the player who's equipment is being managed.
 	 */
 	public Equipment(Player player) {
@@ -174,6 +176,7 @@ public final class Equipment extends ItemContainer {
 
 	/**
 	 * Equips an {@link Item} from the underlying player's {@link Inventory}.
+	 *
 	 * @param inventoryIndex The {@code Inventory} index to equip the {@code Item} from.
 	 * @return {@code true} if the item was equipped, {@code false} otherwise.
 	 */
@@ -232,11 +235,11 @@ public final class Equipment extends ItemContainer {
 		set(type.getSlot(), equipItem, true);
 		appearanceForIndex(type.getSlot());
 
-		if (type == EquipmentType.SHIELD) {
+		if(type == EquipmentType.SHIELD) {
 			ShieldAnimation.execute(player, equipItem);
 		}
 
-		if (type == WEAPON && def.isWeapon()) {
+		if(type == WEAPON && def.isWeapon()) {
 			WeaponInterface.execute(player, equipItem);
 			WeaponAnimation.execute(player, equipItem);
 			player.getCombat().reset();
@@ -257,6 +260,7 @@ public final class Equipment extends ItemContainer {
 
 	/**
 	 * Unequips an {@link Item} from the underlying player's {@code Equipment}.
+	 *
 	 * @param equipmentIndex The {@code Equipment} index to unequip the {@code Item} from.
 	 * @return {@code true} if the item was unequipped, {@code false} otherwise.
 	 */
@@ -266,10 +270,11 @@ public final class Equipment extends ItemContainer {
 
 	/**
 	 * Unequips an {@link Item} from the underlying player's {@code Equipment}.
+	 *
 	 * @param equipmentIndex The {@code Equipment} index to unequip the {@code Item} from.
 	 * @param container      The container to which we are putting the items on.
 	 * @param refresh        the condition if the container must be refreshed instantly.
-	 * @param preferredSlot   The slot id that may be preferred.
+	 * @param preferredSlot  The slot id that may be preferred.
 	 * @return {@code true} if the item was unequipped, {@code false} otherwise.
 	 */
 	public boolean unequip(int equipmentIndex, ItemContainer container, boolean refresh, int preferredSlot) {

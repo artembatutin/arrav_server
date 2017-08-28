@@ -6,6 +6,7 @@ import net.edge.world.entity.actor.player.Player;
 /**
  * The slayer currency based on the {@link Player#slayerPoints} value.
  * It is recommended that this be used rather than {@link GeneralCurrency}.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class PestCurrency implements GeneralCurrency {
@@ -38,7 +39,7 @@ public final class PestCurrency implements GeneralCurrency {
 	public boolean canRecieveCurrency(Player player) {
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "points";

@@ -19,6 +19,7 @@ import java.util.AbstractQueue;
 
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during gameplay.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class GameSession extends Session {
@@ -26,38 +27,39 @@ public final class GameSession extends Session {
 	 * The cap limit of outgoing packets per session.
 	 */
 	public static int UPDATE_LIMIT = 200;
-	
+
 	/**
 	 * The queue of {@link IncomingMsg}s.
 	 */
 	private final AbstractQueue<IncomingMsg> incoming = new MpscLinkedAtomicQueue<>();
-	
+
 	/**
 	 * The queue of {@link OutgoingPacket}s.
 	 */
 	private final AbstractQueue<OutgoingPacket> outgoing = new MpscLinkedAtomicQueue<>();
-	
+
 	/**
 	 * The player assigned to this {@code GameSession}.
 	 */
 	private final Player player;
-	
+
 	/**
 	 * The mac address the connection was received from.
 	 */
 	private final String macAddress;
-	
+
 	/**
 	 * The message encryptor.
 	 */
 	private final IsaacRandom encryptor;
-	
+
 	/**
 	 * Creates a new {@link GameSession}.
-	 * @param channel   The channel for this session.
+	 *
+	 * @param channel    The channel for this session.
 	 * @param macAddress The mac address.
-	 * @param encryptor The message encryptor.
-	 * @param decryptor The message decryptor.
+	 * @param encryptor  The message encryptor.
+	 * @param decryptor  The message decryptor.
 	 */
 	GameSession(Player player, Channel channel, String macAddress, IsaacRandom encryptor, IsaacRandom decryptor) {
 		super(channel);
@@ -66,7 +68,7 @@ public final class GameSession extends Session {
 		this.encryptor = encryptor;
 		getChannel().pipeline().replace("login-decoder", "game-decoder", new GameDecoder(decryptor, this));
 	}
-	
+
 	@Override
 	public void handleUpstreamMessage(Object msg) {
 		if(msg instanceof IncomingMsg) {
@@ -80,7 +82,7 @@ public final class GameSession extends Session {
 			}
 		}
 	}
-	
+
 	@Override
 	public void terminate() {
 		System.out.println("Game session terminating " + player);
@@ -88,21 +90,22 @@ public final class GameSession extends Session {
 			World.get().queueLogout(player);
 		}
 	}
-	
+
 	@Override
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	/**
 	 * Enqueues the given {@link OutgoingPacket} for transport.
 	 */
 	public void enqueue(OutgoingPacket pkt) {
 		outgoing.offer(pkt);
 	}
-	
+
 	/**
 	 * Handling an incoming packet/message.
+	 *
 	 * @param packet incoming message.
 	 */
 	public void handle(IncomingMsg packet) {
@@ -112,7 +115,7 @@ public final class GameSession extends Session {
 			packet.getBuffer().release();
 		}
 	}
-	
+
 	/**
 	 * Polling all incoming packets.
 	 */
@@ -126,7 +129,7 @@ public final class GameSession extends Session {
 			}
 		}
 	}
-	
+
 	/**
 	 * Polling all outgoing packets.
 	 */
@@ -144,7 +147,7 @@ public final class GameSession extends Session {
 			}
 		}
 	}
-	
+
 	/**
 	 * Writes the given {@link OutgoingPacket} to the stream.
 	 */
@@ -154,7 +157,7 @@ public final class GameSession extends Session {
 			getChannel().write(temp);
 		}
 	}
-	
+
 	/**
 	 * Flushes all pending {@link IncomingMsg}s within the channel's queue. Repeated calls to this method are relatively
 	 * expensive, which is why messages should be queued up with {@code queue(MessageWriter)} and flushed once at the end of
@@ -164,21 +167,23 @@ public final class GameSession extends Session {
 		if(isActive())
 			getChannel().flush();
 	}
-	
+
 	/**
 	 * Getting a {@link ByteBufAllocator} to allocate buffers.
+	 *
 	 * @return allocator.
 	 */
 	public ByteBufAllocator alloc() {
 		return getChannel().alloc();
 	}
-	
+
 	/**
 	 * Gets the player's mac address.
+	 *
 	 * @return mac address of this session.
 	 */
 	public String getMacAddress() {
 		return macAddress;
 	}
-	
+
 }

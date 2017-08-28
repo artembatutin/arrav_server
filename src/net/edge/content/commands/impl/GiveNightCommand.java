@@ -8,7 +8,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"ironman"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR}, syntax = "Gives iron man, ::ironman username")
 public final class GiveNightCommand implements Command {
-	
+
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player night = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
@@ -17,5 +17,5 @@ public final class GiveNightCommand implements Command {
 		night.setIron(1, true);
 		night.message(player.getFormatUsername() + " set you to nightmare mode.");
 	}
-	
+
 }

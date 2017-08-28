@@ -1,10 +1,8 @@
 package net.edge.content.commands.impl;
 
-import net.edge.net.host.HostListType;
-import net.edge.net.host.HostManager;
-import net.edge.util.TextUtils;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
+import net.edge.util.TextUtils;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;

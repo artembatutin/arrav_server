@@ -22,10 +22,11 @@ import java.util.Optional;
 
 /**
  * The message sent from the client when a player attacks another player.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class AttackPlayerPacket implements IncomingPacket {
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ATTACK_PLAYER))
@@ -40,9 +41,10 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.ATTACK_PLAYER);
 	}
-	
+
 	/**
 	 * Attempts to attack a player with a magic spell.
+	 *
 	 * @param player  the player to attempt to attack.
 	 * @param payload the payloadfer for reading the sent data.
 	 */
@@ -63,10 +65,11 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		player.getCombat().setStrategy(new PlayerMagicStrategy(spell));
 		player.getCombat().attack(victim);
 	}
-	
+
 	/**
 	 * Attempts to attack a player with any other form of combat such as melee
 	 * or ranged.
+	 *
 	 * @param player  the player to attempt to attack.
 	 * @param payload the payloadfer for reading the sent data.
 	 */
@@ -77,10 +80,11 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			return;
 		player.getCombat().attack(victim);
 	}
-	
+
 	/**
 	 * Determines if an attack can be made by the {@code attacker} on
 	 * {@code victim}.
+	 *
 	 * @param attacker the player that is trying to attack.
 	 * @param victim   the player that is being targeted.
 	 * @return {@code true} if an attack can be made, {@code false} otherwise.

@@ -2,8 +2,8 @@ package net.edge.content.minigame.barrows;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.world.locale.loc.CircleLocation;
 import net.edge.world.locale.Position;
+import net.edge.world.locale.loc.CircleLocation;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -11,6 +11,7 @@ import java.util.Optional;
 /**
  * The enumerated type whose elements represent the data required for the
  * barrows brothers.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum BarrowsData {
@@ -20,44 +21,45 @@ public enum BarrowsData {
 	KARIL(2028, 6822, 6705, new CircleLocation(3566, 3276, 0, 5), new Position(3549, 9680, 3), new Position(3546, 9684, 3)),
 	TORAG(2029, 6772, 6706, new CircleLocation(3554, 3283, 0, 5), new Position(3572, 9687, 3), new Position(3568, 9683, 3)),
 	VERAC(2030, 6823, 6707, new CircleLocation(3557, 3297, 0, 5), new Position(3575, 9705, 3), new Position(3578, 9706, 3));
-	
+
 	/**
 	 * Caches our enum values.
 	 */
 	static final ImmutableSet<BarrowsData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(BarrowsData.class));
-	
+
 	/**
 	 * The npc identification of this brother.
 	 */
 	private final int npcId;
-	
+
 	/**
 	 * The sarcophagus identification of this brother.
 	 */
 	private final int sarcophagusId;
-	
+
 	/**
 	 * The stair id of this cave.
 	 */
 	private final int stairId;
-	
+
 	/**
 	 * The circle location of the spot to dig.
 	 */
 	private final CircleLocation location;
-	
+
 	/**
 	 * The spawn position of this barrow brother.
 	 */
 	private final Position spawn;
-	
+
 	/**
 	 * The cave positions to move the player to upon digging.
 	 */
 	private final Position cave;
-	
+
 	/**
 	 * Constructs a new {@link BarrowsData} enumerator.
+	 *
 	 * @param npcId         {@link #npcId}.
 	 * @param sarcophagusId {@link #sarcophagusId}.
 	 * @param stairId       {@link #stairId}.
@@ -72,55 +74,57 @@ public enum BarrowsData {
 		this.spawn = spawn;
 		this.cave = cave;
 	}
-	
+
 	/**
 	 * @return the npcId
 	 */
 	public int getNpcId() {
 		return npcId;
 	}
-	
+
 	/**
 	 * @return the sarcophagusId
 	 */
 	public int getSarcophagusId() {
 		return sarcophagusId;
 	}
-	
+
 	/**
 	 * @return the stairId
 	 */
 	public int getStairId() {
 		return stairId;
 	}
-	
+
 	/**
 	 * @return the spawn
 	 */
 	public Position getSpawn() {
 		return spawn;
 	}
-	
+
 	/**
 	 * @return the location
 	 */
 	public CircleLocation getLocation() {
 		return location;
 	}
-	
+
 	/**
 	 * Attempts to find the barrows data dependent on the spot the player digs
 	 * at.
+	 *
 	 * @param position the position to check for.
 	 * @return the barrows data wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
 	protected static Optional<BarrowsData> getDefinitionForLocation(Position position) {
 		return VALUES.stream().filter(def -> def.location.inLocation(position)).findFirst();
 	}
-	
+
 	/**
 	 * Attempts to find the barrows data dependent on the cave the player is
 	 * in at.
+	 *
 	 * @param position the position to check for.
 	 * @return the barrows data wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */

@@ -10,6 +10,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 /**
  * The enumerated type whose elements represent the update states
  * a clan can be in.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum ClanChatUpdate {
@@ -80,7 +81,7 @@ public enum ClanChatUpdate {
 				}
 			}
 		}
-		
+
 		@Override
 		public void update(ClanMember member) {
 			member.getPlayer().out(new SendClanBanned(member.getClan().getBanned()));
@@ -99,26 +100,26 @@ public enum ClanChatUpdate {
 		@Override
 		public void update(ClanMember member) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	},
 	COIN_SHARE_MODIFICATION() {
 		@Override
 		public void update(ClanMember member) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	};
-	
+
 	public void update(ClanChat clan, ClanMember member) {
-	
+
 	}
-	
+
 	public void update(ClanMember member) {
-		
+
 	}
-	
+
 	public void update(ClanChat clan) {
-		
+
 	}
 }

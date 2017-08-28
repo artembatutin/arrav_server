@@ -2,11 +2,11 @@ package net.edge.action.mob;
 
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.MobAction;
-import net.edge.world.entity.region.TraversalMap;
-import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
 
 public class StrayDog extends ActionInitializer {
 	@Override

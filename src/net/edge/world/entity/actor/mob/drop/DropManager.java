@@ -5,24 +5,24 @@ import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.content.skill.Skills;
-import net.edge.content.skill.prayer.Bone;
 import net.edge.util.json.JsonSaver;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.item.Item;
 import net.edge.world.locale.Position;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * The static-utility class that manages all of the {@link DropTable}s
  * including the process of dropping the items when an {@link Mob} is killed.
+ *
  * @author lare96 <http://github.org/lare96>
  */
 public final class DropManager {
-	
+
 	/**
 	 * The {@link HashMap} that consists of the drops for {@link Mob}s.
 	 */
@@ -36,6 +36,7 @@ public final class DropManager {
 	/**
 	 * Drops the items in {@code victim}s drop table for {@code killer}. If the
 	 * killer doesn't exist, the items are dropped for everyone to see.
+	 *
 	 * @param killer the killer, may or may not exist.
 	 * @param victim the victim that was killed.
 	 */
@@ -62,7 +63,7 @@ public final class DropManager {
 	public static Int2ObjectOpenHashMap<DropTable> getTables() {
 		return TABLES;
 	}
-	
+
 	public static Int2IntArrayMap getRedirects() {
 		return REDIRECTS;
 	}

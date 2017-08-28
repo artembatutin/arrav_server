@@ -1,39 +1,41 @@
 package net.edge.content.dialogue.impl;
 
-import net.edge.net.packet.out.SendItemModelInterface;
-import net.edge.util.ActionListener;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.DialogueBuilder;
 import net.edge.content.dialogue.DialogueType;
+import net.edge.net.packet.out.SendItemModelInterface;
+import net.edge.util.ActionListener;
 import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
 /**
  * The dialogue chain entry that request the player an item.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class RequestItemDialogue extends Dialogue {
-	
+
 	/**
 	 * The item to remove to the player during this chain.
 	 */
 	private final Item item;
-	
+
 	/**
 	 * The optional reward that's given to the player.
 	 */
 	private final Optional<Item> reward;
-	
+
 	/**
 	 * The action to execute when the requested item is given.
 	 */
 	private final Optional<ActionListener> action;
 
 	private final boolean displayReward;
-	
+
 	/**
 	 * Creates a new {@link RequestItemDialogue}.
+	 *
 	 * @param item the item to remove to the player during this chain.
 	 * @param text the text to display when the item is removed.
 	 */
@@ -44,19 +46,19 @@ public final class RequestItemDialogue extends Dialogue {
 		this.action = action;
 		this.displayReward = displayReward;
 	}
-	
+
 	public RequestItemDialogue(Item item, Item reward, String text, Optional<ActionListener> action) {
 		this(item, Optional.of(reward), text, action, false);
 	}
-	
+
 	public RequestItemDialogue(Item item, int reward, String text, Optional<ActionListener> action) {
 		this(item, new Item(reward), text, action);
 	}
-	
+
 	public RequestItemDialogue(Item item, String text, Optional<ActionListener> action) {
 		this(item, Optional.empty(), text, action, false);
 	}
-	
+
 	@Override
 	public void accept(DialogueBuilder dialogue) {
 		if(dialogue.getPlayer().getInventory().contains(item)) {
@@ -73,7 +75,7 @@ public final class RequestItemDialogue extends Dialogue {
 			dialogue.getPlayer().chatWidget(356);
 		}
 	}
-	
+
 	@Override
 	public DialogueType type() {
 		return DialogueType.REQUEST_ITEM_DIALOGUE;

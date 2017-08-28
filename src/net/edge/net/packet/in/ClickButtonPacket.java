@@ -45,17 +45,18 @@ import java.util.concurrent.TimeUnit;
 /**
  * The message sent from the client when the player clicks some sort of button or
  * module.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ClickButtonPacket implements IncomingPacket {
-	
+
 	public static final ActionContainer<ButtonAction> BUTTONS = new ActionContainer<>();
-	
+
 	/**
 	 * The flag that determines if this message should be read properly.
 	 */
 	private static final boolean PROPER_READ = false;
-	
+
 	private static int hexToInt(byte[] data) {
 		int value = 0;
 		int n = 1000;
@@ -68,14 +69,14 @@ public final class ClickButtonPacket implements IncomingPacket {
 		}
 		return value;
 	}
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		int button = PROPER_READ ? payload.getShort() : hexToInt(payload.getBytes(2));
 		if(Application.DEBUG && player.getRights().equals(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}
-		
+
 		if(button != 9154 && button != 200 && button != 201 && player.getActivityManager().contains(ActivityManager.ActivityType.CLICK_BUTTON)) {
 			return;
 		}
@@ -162,7 +163,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 			case 55095:
 				Item item = player.getInventory().get(player.getAttr().get("destroy_item_slot").getInt());
 				player.getInventory().remove(item);
-				
+
 				player.getAttr().get("destroy_item_slot").set(-1);
 				player.closeWidget();
 				break;
@@ -187,7 +188,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 				else
 					player.out(new SendEnterName("Enter the name of the chat you wish to join.", s -> () -> ClanManager.get().join(player, s)));
 				break;
-			
+
 			case 59135:
 				if(player.getViewingOrb() != null)
 					player.getViewingOrb().move("Centre", 15239, player.getViewingOrb().getCentre());
@@ -868,14 +869,14 @@ public final class ClickButtonPacket implements IncomingPacket {
 							player.message("You can only autocast ancient magics with this staff.");
 							break;
 						}
-						
+
 						TabInterface.ATTACK.sendInterface(player, 1689);
 					} else {
 						if(!player.getSpellbook().equals(Spellbook.NORMAL)) {
 							player.message("You can only autocast standard magics with this staff.");
 							break;
 						}
-						
+
 						TabInterface.ATTACK.sendInterface(player, 1829);
 					}
 				}
@@ -918,7 +919,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 				if(player.getCombatSpecial() == null) {
 					break;
 				}
-				
+
 				if(!MinigameHandler.execute(player, m -> m.canUseSpecialAttacks(player, player.getCombatSpecial()))) {
 					break;
 				}
@@ -928,7 +929,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 					player.setSpecialActivated(false);
 					WeaponInterface.setStrategy(player);
 				} else {
-					if (player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
+					if(player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
 						player.message("You do not have enough special energy left!");
 						break;
 					}

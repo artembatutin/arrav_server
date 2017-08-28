@@ -7,32 +7,34 @@ import java.util.Optional;
 import java.util.Set;
 
 public final class PetManager {
-	
+
 	/**
 	 * The player instance for this pet manager.
 	 */
 	private final Player player;
-	
+
 	/**
 	 * The current pet spawned.
 	 */
 	private Pet pet;
-	
+
 	/**
 	 * The set of all pets progressions.
 	 */
 	private Set<PetProgress> pets = new HashSet<>();
-	
+
 	/**
 	 * Constructs a new {@link PetManager}.
+	 *
 	 * @param player the player this pet manager is for.
 	 */
 	public PetManager(Player player) {
 		this.player = player;
 	}
-	
+
 	/**
 	 * Sets the new spawned pet.
+	 *
 	 * @param pet the pet instance spawned.
 	 */
 	public Pet put(Pet pet) {
@@ -48,7 +50,7 @@ public final class PetManager {
 		this.pet = pet;
 		return pet;
 	}
-	
+
 	/**
 	 * The player's pet has reaching the growing stage.
 	 */
@@ -65,30 +67,31 @@ public final class PetManager {
 			player.message("Your pet has gone bigger!");
 		}
 	}
-	
+
 	/**
 	 * Resets the current pet the player has spawned.
 	 */
 	public void reset() {
 		this.pet = null;
 	}
-	
+
 	/**
 	 * @return the player
 	 */
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	/**
 	 * @return the pets
 	 */
 	public Set<PetProgress> getProgress() {
 		return pets;
 	}
-	
+
 	/**
 	 * Gets the pet the player currently has summoned.
+	 *
 	 * @return the pet the player currently has summoned or {@link Optional#empty()}.
 	 */
 	public Optional<Pet> getPet() {

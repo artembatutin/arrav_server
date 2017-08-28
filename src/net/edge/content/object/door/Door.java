@@ -1,8 +1,8 @@
 package net.edge.content.object.door;
 
-import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.region.Region;
+import net.edge.world.locale.Position;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
@@ -19,17 +19,17 @@ import static net.edge.world.object.ObjectType.STRAIGHT_WALL;
 public class Door {
 
 	private boolean isAppend = false;
-	
+
 	private final DynamicObject appended;
 	private final DynamicObject appendedSecond;
-	
+
 	private final GameObject original;
 	private final GameObject originalSecond;
 
 	public Door(GameObject object, Region reg) {
 		boolean closed = object.getDefinition().hasAction("open");
 		original = object.copy();
-		
+
 		Position pos = original.getGlobalPos();
 		//getting second door if found.
 		if(original.getObjectType() == STRAIGHT_WALL) {
@@ -57,7 +57,7 @@ public class Door {
 		} else {
 			originalSecond = null;
 		}
-		
+
 		//finding appended door
 		int xAdjustment = 0;
 		int yAdjustment = 0;
@@ -67,7 +67,7 @@ public class Door {
 		ObjectDirection direction2 = originalSecond != null ? originalSecond.getDirection() : null;
 		GameObject first = null;
 		GameObject second = null;
-		
+
 		if(original.getObjectType() == STRAIGHT_WALL) {
 			if(originalSecond == null) {
 				if(closed) {
@@ -116,14 +116,14 @@ public class Door {
 					first = (original.getDirection() == WEST || original.getDirection() == EAST) ? pos.getX() < pos2.getX() ? original : originalSecond : pos.getY() < pos2.getY() ? original : originalSecond;
 				second = original.getId() == first.getId() && original.getGlobalPos().same(first.getGlobalPos()) ? originalSecond : original;
 				pos = first.getGlobalPos();
-				
+
 				if(closed) {
 					if(first.getDirection() == WEST || first.getDirection() == EAST) {
 						xAdjustment = first.getDirection() == EAST ? 1 : -1;
 						xAdjustment2 = xAdjustment;
 						direction = SOUTH;
 						direction2 = NORTH;
-						
+
 					} else if(first.getDirection() == NORTH || first.getDirection() == SOUTH) {
 						yAdjustment = first.getDirection() == NORTH ? 1 : -1;
 						yAdjustment2 = yAdjustment;
@@ -211,14 +211,14 @@ public class Door {
 				appendedSecond.delete();
 				appendedSecond.remove();
 			}
-			
+
 			original.restore();
 			original.publish();
 			if(originalSecond != null) {
 				originalSecond.restore();
 				originalSecond.publish();
 			}
-			
+
 		} else {
 			original.delete();
 			original.remove();
@@ -226,7 +226,7 @@ public class Door {
 				originalSecond.delete();
 				originalSecond.remove();
 			}
-			
+
 			appended.restore();
 			appended.publish();
 			if(appendedSecond != null) {
@@ -234,38 +234,38 @@ public class Door {
 				appendedSecond.publish();
 			}
 		}
-		
+
 		isAppend = !isAppend;
 	}
-	
+
 	public Position getCurrentOne() {
 		return isAppend ? appended.getGlobalPos() : original.getGlobalPos();
 	}
-	
+
 	public Position getCurrentSecond() {
 		return isAppend ? appendedSecond == null ? null : appendedSecond.getGlobalPos() : originalSecond == null ? null : originalSecond.getGlobalPos();
 	}
-	
+
 	public void setAppendId(int id) {
 		appended.restore();
 		appended.setId(id);
 	}
-	
+
 	public void setAppendedSecondId(int id) {
 		appendedSecond.restore();
 		appendedSecond.setId(id);
 	}
-	
+
 	public void setOriginalId(int id) {
 		original.restore();
 		original.setId(id);
 	}
-	
+
 	public void setOriginalSecondId(int id) {
 		originalSecond.restore();
 		originalSecond.setId(id);
 	}
-	
+
 	public void publish() {
 		if(isAppend) {
 			appended.publish();
@@ -277,7 +277,7 @@ public class Door {
 				originalSecond.publish();
 		}
 	}
-	
+
 	public boolean isAppend() {
 		return isAppend;
 	}

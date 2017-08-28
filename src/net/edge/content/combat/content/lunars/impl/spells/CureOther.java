@@ -4,15 +4,16 @@ import net.edge.content.combat.content.MagicRune;
 import net.edge.content.combat.content.RequiredRune;
 import net.edge.content.combat.content.lunars.impl.LunarCombatSpell;
 import net.edge.net.packet.out.SendConfig;
-import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 
 /**
  * Holds functionality for the cure other lunar spell.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class CureOther extends LunarCombatSpell {
@@ -63,7 +64,5 @@ public final class CureOther extends LunarCombatSpell {
 	public Optional<Animation> startAnimation() {
 		return Optional.of(new Animation(4411));
 	}
-
-
 
 }

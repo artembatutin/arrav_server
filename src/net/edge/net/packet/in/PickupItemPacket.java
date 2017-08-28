@@ -2,26 +2,27 @@ package net.edge.net.packet.in;
 
 import net.edge.content.market.MarketItem;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.util.log.impl.DropItemLog;
-import net.edge.world.locale.Position;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
+import net.edge.util.log.impl.DropItemLog;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
-import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.item.Item;
 import net.edge.world.entity.region.Region;
+import net.edge.world.locale.Position;
 
 import java.util.Optional;
 
 /**
  * The message sent from the client when a player attempts to pick up an item.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class PickupItemPacket implements IncomingPacket {
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.PICKUP_ITEM))

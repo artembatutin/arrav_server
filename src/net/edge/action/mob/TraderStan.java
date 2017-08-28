@@ -2,12 +2,11 @@ package net.edge.action.mob;
 
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.MobAction;
-import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 public class TraderStan extends ActionInitializer {
-	
+
 	@Override
 	public void init() {
 		String[] chats = {

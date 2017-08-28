@@ -2,10 +2,10 @@ package net.edge.action.obj;
 
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ObjectAction;
-import net.edge.world.locale.Position;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
 public class Dragannoth extends ActionInitializer {

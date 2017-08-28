@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 
 /**
  * The utility class that provides functions for parsing {@code .json} files.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class JsonLoader implements Runnable {
@@ -18,6 +19,7 @@ public abstract class JsonLoader implements Runnable {
 
 	/**
 	 * Creates a new {@link JsonLoader}.
+	 *
 	 * @param path the path to the {@code .json} file being parsed.
 	 */
 	public JsonLoader(String path) {
@@ -39,6 +41,7 @@ public abstract class JsonLoader implements Runnable {
 
 	/**
 	 * A dynamic method that allows the user to read and modify the parsed data.
+	 *
 	 * @param reader  the reader for retrieving the parsed data.
 	 * @param builder the builder for retrieving the parsed data.
 	 */
@@ -47,6 +50,7 @@ public abstract class JsonLoader implements Runnable {
 	/**
 	 * Loads the parsed data. How the data is loaded is defined by
 	 * {@link JsonLoader#load(JsonObject, Gson)}.
+	 *
 	 * @return the loader instance, for chaining.
 	 */
 	public final JsonLoader load() {

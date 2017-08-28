@@ -12,7 +12,7 @@ public enum CookingData {
 	BREAD(2307, 1, 2309, 12, 2311, 30),
 	PITTA_BREAD(1863, 58, 1865, 69, 1867, 40),
 	PLAIN_PIZZA(2287, 35, 2289, 68, 2305, 100),
-	
+
 	REDBERRY_PIE(2321, 10, 2325, 21, BURNT_PIE.getId(), 70),
 	MEAT_PIE(2319, 20, 2327, 31, BURNT_PIE.getId(), 110),
 	MUD_PIE(7168, 29, 7170, 40, BURNT_PIE.getId(), 120),
@@ -22,7 +22,7 @@ public enum CookingData {
 	ADMIRAL_PIE(7196, 70, 7198, 81, BURNT_PIE.getId(), 210),
 	WILD_PIE(7206, 85, 7208, 96, BURNT_PIE.getId(), 240),
 	SUMMER_PIE(7216, 95, 7218, 99, BURNT_PIE.getId(), 260),
-	
+
 	CHICKEN(2138, 1, 2140, 31, 2144, 15),
 	SHRIMP(317, 1, 315, 34, 323, 20),
 	SARDINE(327, 1, 325, 38, 369, 20),
@@ -44,7 +44,7 @@ public enum CookingData {
 	SHARK(383, 80, 385, 94, 387, 130),
 	MANTA_RAY(389, 91, 391, 100, 393, 140),
 	ROCKTAIL(15270, 93, 15272, 100, 15274, 160);
-	
+
 	static final ImmutableSet<CookingData> VALUES = ImmutableSet.copyOf(values());
 	private final int rawId;
 	private final int level;
@@ -52,7 +52,7 @@ public enum CookingData {
 	private final int masterLevel;
 	private final int burntId;
 	private final double experience;
-	
+
 	CookingData(int rawId, int level, int cookedId, int masterLevel, int burntId, double experience) {
 		this.rawId = rawId;
 		this.level = level;
@@ -61,46 +61,46 @@ public enum CookingData {
 		this.burntId = burntId;
 		this.experience = experience;
 	}
-	
+
 	public static ImmutableSet<CookingData> getValues() {
 		return VALUES;
 	}
-	
+
 	public int getRawId() {
 		return rawId;
 	}
-	
+
 	public int getLevel() {
 		return level;
 	}
-	
+
 	public int getCookedId() {
 		return cookedId;
 	}
-	
+
 	public int getMasterLevel() {
 		return masterLevel;
 	}
-	
+
 	public int getBurntId() {
 		return burntId;
 	}
-	
+
 	public double getExperience() {
 		return experience;
 	}
-	
+
 	@Override
 	public final String toString() {
 		return name().toLowerCase().replaceAll("_", " ");
 	}
-	
+
 	public void openInterface(Player player) {
 		player.chatWidget(1743);
 		player.out(new SendItemModelInterface(13716, 190, rawId));
 		player.text(13717, "\\n\\n\\n\\n\\n" + ItemDefinition.DEFINITIONS[rawId].getName());
 	}
-	
+
 	public static CookingData forItem(Item item) {
 		for(CookingData data : VALUES) {
 			if(data.getRawId() == item.getId())

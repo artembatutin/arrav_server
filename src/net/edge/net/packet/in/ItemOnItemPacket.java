@@ -2,8 +2,8 @@ package net.edge.net.packet.in;
 
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ItemOnItemAction;
-import net.edge.content.item.PotionDecanting;
 import net.edge.content.item.ItemCombine;
+import net.edge.content.item.PotionDecanting;
 import net.edge.content.skill.cooking.DoughCreation;
 import net.edge.content.skill.cooking.PieCreation;
 import net.edge.content.skill.cooking.PizzaTopping;
@@ -15,8 +15,8 @@ import net.edge.content.skill.herblore.FinishedPotion;
 import net.edge.content.skill.herblore.Grinding;
 import net.edge.content.skill.herblore.TarCreation;
 import net.edge.content.skill.herblore.UnfinishedPotion;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -24,12 +24,13 @@ import net.edge.world.entity.item.Item;
 
 /**
  * The message sent from the client when a player uses an item on another item.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ItemOnItemPacket implements IncomingPacket {
-	
+
 	public static final ActionContainer<ItemOnItemAction> ACTIONS = new ActionContainer<>();
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ON_ITEM))

@@ -2,11 +2,8 @@ package net.edge.action.item;
 
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ItemAction;
-import net.edge.content.skill.Skills;
 import net.edge.content.skill.runecrafting.Runecrafting;
 import net.edge.content.skill.runecrafting.pouch.PouchType;
-import net.edge.world.Animation;
-import net.edge.world.Graphic;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Inventory;

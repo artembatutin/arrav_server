@@ -5,6 +5,7 @@ import net.edge.world.entity.actor.player.Player;
 
 /**
  * The combat effect applied when a player needs to be teleblocked.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class CombatTeleblockEffect extends CombatEffect {

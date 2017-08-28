@@ -8,7 +8,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"kick"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR, Rights.HELPER}, syntax = "Kick a player, ::kick username")
 public final class KickCommand implements Command {
-	
+
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player kick = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
@@ -19,5 +19,5 @@ public final class KickCommand implements Command {
 			player.message("Can't find " + cmd[1].replaceAll("_", " ") + ".");
 		}
 	}
-	
+
 }

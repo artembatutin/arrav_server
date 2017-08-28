@@ -1,5 +1,6 @@
 package net.edge.content.skill.agility.impl.gnome;
 
+import net.edge.action.impl.ObjectAction;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.agility.AgilityCourse;
 import net.edge.content.skill.agility.AgilityCourseType;
@@ -10,9 +11,8 @@ import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Climbable;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
-import net.edge.action.impl.ObjectAction;
-import net.edge.world.locale.Position;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
 import java.util.Optional;
@@ -21,17 +21,19 @@ import static net.edge.content.achievements.Achievement.TOO_FAST;
 
 /**
  * Holds functionality for passing obstacles for the GnomeStronghold Agility course.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class GnomeStrongholdAgility extends AgilityCourse {
-	
+
 	/**
 	 * The definition for this obstacle course.
 	 */
 	private final GnomeAgilityData obstacle;
-	
+
 	/**
 	 * Constructs a new {@link GnomeStrongholdAgility} course.
+	 *
 	 * @param player   {@link #getPlayer()}.
 	 * @param object   {@link #getObject()}.
 	 * @param obstacle the obstacle this player is trying to cross.
@@ -40,7 +42,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		super(player, object, AgilityCourseType.GNOME_AGILITY);
 		this.obstacle = obstacle;
 	}
-	
+
 	public static void action() {
 		for(GnomeAgilityData data : GnomeAgilityData.values()) {
 			ObjectAction perform = new ObjectAction() {
@@ -57,7 +59,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onSuccess() {
 		player.getAgilityBonus().addGnomeObstacle(obstacle);
@@ -68,27 +70,27 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 			TOO_FAST.inc(player);
 		}
 	}
-	
+
 	@Override
 	public ObstacleAction obstacleAction() {
 		return obstacle.obstacleAction;
 	}
-	
+
 	@Override
 	public double experience() {
 		return obstacle.obstacleAction.activity(getPlayer()).getExperience();
 	}
-	
+
 	@Override
 	public String message() {
 		return obstacle.message;
 	}
-	
+
 	@Override
 	public Optional<String> crossedMessage() {
 		return obstacle.crossedMessage;
 	}
-	
+
 	public enum GnomeAgilityData {
 		LOG_BALANCE(new int[]{2295}, ObstacleType.LOG_BALANCE, player1 -> new Walkable(new Position(2474, 3436), new Position(2474, 3429), ObstacleType.LOG_BALANCE.getAnimation(), 1, 7)),
 		OBSTACLE_NET_UP(new int[]{2285}, ObstacleType.NETTING, player1 -> new Climbable(new Position(player1.getPosition().getX(), 3426, 0), new Position(player1.getPosition().getX(), 3424, 1), ObstacleType.NETTING.getAnimation(), 2, 1, 7.5)),
@@ -122,29 +124,30 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		RUN_ACROSS_SIGNPOST(new int[]{85584}, ObstacleType.RUN_ACROSS_SIGNPOST, player1 -> new Movable(new Position(2476, 3418, 3), new Position(2484, 3418, 3), ObstacleType.RUN_ACROSS_SIGNPOST.getAnimation(), 105, 6, 60, 25)),
 		POLE_SWING(new int[]{85532}, ObstacleType.POLE_SWING, PoleSwing::new),
 		JUMP_OVER_BARRIER(new int[]{85542}, ObstacleType.JUMP_OVER_BARRIER, player1 -> new JumpOverBarrier());
-		
+
 		/**
 		 * The object identifications for this Obstacle.
 		 */
 		private final int[] objectIds;
-		
+
 		/**
 		 * The message sent when attempting to cross this obstacle.
 		 */
 		private final String message;
-		
+
 		/**
 		 * The message sent when successfully crossing this obstacle.
 		 */
 		private final Optional<String> crossedMessage;
-		
+
 		/**
 		 * The policy chained to this Obstacle.
 		 */
 		private final ObstacleAction obstacleAction;
-		
+
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
+		 *
 		 * @param objectIds      {@link #objectIds}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
@@ -156,9 +159,10 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 			this.crossedMessage = crossedMessage;
 			this.obstacleAction = obstacleAction;
 		}
-		
+
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
+		 *
 		 * @param objectIds      {@link #objectIds}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
@@ -170,11 +174,12 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 			this.crossedMessage = Optional.ofNullable(crossedMessage);
 			this.obstacleAction = obstacleAction;
 		}
-		
+
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
+		 *
 		 * @param objectIds      {@link #objectIds}.
-		 * @param type        {@link #message}.
+		 * @param type           {@link #message}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
 		GnomeAgilityData(int[] objectIds, ObstacleType type, ObstacleAction obstacleAction) {
@@ -183,7 +188,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 			this.crossedMessage = type.getCrossedMessage();
 			this.obstacleAction = obstacleAction;
 		}
-		
+
 		/**
 		 * Objects in this course.
 		 */

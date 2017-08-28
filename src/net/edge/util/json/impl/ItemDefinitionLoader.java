@@ -3,25 +3,26 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.world.entity.item.container.impl.EquipmentType;
 import net.edge.world.entity.item.ItemDefinition;
+import net.edge.world.entity.item.container.impl.EquipmentType;
 
 import java.util.Objects;
 
 /**
  * The {@link JsonLoader} implementation that loads all item definitions.
+ *
  * @author lare96 <http://github.com/lare96>
  * @author Artem Batutin<artembatutin@gmail.com>
  */
 public final class ItemDefinitionLoader extends JsonLoader {
-	
+
 	/**
 	 * Creates a new {@link ItemDefinitionLoader}.
 	 */
 	public ItemDefinitionLoader() {
 		super("./data/def/item/item_definitions.json");
 	}
-	
+
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		int index = reader.get("id").getAsInt();
@@ -50,5 +51,5 @@ public final class ItemDefinitionLoader extends JsonLoader {
 			bonus = builder.fromJson(reader.get("bonus").getAsJsonArray(), int[].class);
 		ItemDefinition.DEFINITIONS[index] = new ItemDefinition(index, name, equipmentType, tradeable, weapon, twoHanded, stackable, alchable, noted, noteId, lended, lendId, lowAlchValue, highAlchValue, weight, bonus, inventoryActions, groundActions);
 	}
-	
+
 }

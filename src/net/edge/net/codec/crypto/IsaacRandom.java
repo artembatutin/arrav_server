@@ -15,62 +15,64 @@ package net.edge.net.codec.crypto;
  * ------------------------------------------------------------------------------
  * </pre>
  * <p> This class has been changed to be more conformant to Java and javadoc conventions. </p>
+ *
  * @author Bob Jenkins
  */
 public final class IsaacRandom {
-	
+
 	/**
 	 * The golden ratio.
 	 */
 	private static final int GOLDEN_RATIO = 0x9e3779b9;
-	
+
 	/**
 	 * The log of the size of the result and state arrays.
 	 */
 	private static final int LOG_SIZE = Long.BYTES;
-	
+
 	/**
 	 * The size of the result and states arrays.
 	 */
 	private static final int SIZE = 1 << LOG_SIZE;
-	
+
 	/**
 	 * A mask for pseudo-random lookup.
 	 */
 	private static int MASK = SIZE - 1 << 2;
-	
+
 	/**
 	 * The results given to the user.
 	 */
 	private final int[] results = new int[SIZE];
-	
+
 	/**
 	 * The internal state.
 	 */
 	private final int[] state = new int[SIZE];
-	
+
 	/**
 	 * The count through the results in the results array.
 	 */
 	private int count = SIZE;
-	
+
 	/**
 	 * The accumulator.
 	 */
 	private int accumulator;
-	
+
 	/**
 	 * The last result.
 	 */
 	private int last;
-	
+
 	/**
 	 * The counter.
 	 */
 	private int counter;
-	
+
 	/**
 	 * Creates the random number generator with the specified seed.
+	 *
 	 * @param seed The seed.
 	 */
 	public IsaacRandom(int[] seed) {
@@ -78,13 +80,13 @@ public final class IsaacRandom {
 		System.arraycopy(seed, 0, results, 0, length);
 		init();
 	}
-	
+
 	/**
 	 * Generates 256 results.
 	 */
 	private void isaac() {
 		int i, j, x, y;
-		
+
 		last += ++counter;
 		for(i = 0, j = SIZE / 2; i < SIZE / 2; ) {
 			x = state[i];
@@ -92,45 +94,45 @@ public final class IsaacRandom {
 			accumulator += state[j++];
 			state[i] = y = state[(x & MASK) >> 2] + accumulator + last;
 			results[i++] = last = state[(y >> LOG_SIZE & MASK) >> 2] + x;
-			
+
 			x = state[i];
 			accumulator ^= accumulator >>> 6;
 			accumulator += state[j++];
 			state[i] = y = state[(x & MASK) >> 2] + accumulator + last;
 			results[i++] = last = state[(y >> LOG_SIZE & MASK) >> 2] + x;
-			
+
 			x = state[i];
 			accumulator ^= accumulator << 2;
 			accumulator += state[j++];
 			state[i] = y = state[(x & MASK) >> 2] + accumulator + last;
 			results[i++] = last = state[(y >> LOG_SIZE & MASK) >> 2] + x;
-			
+
 			x = state[i];
 			accumulator ^= accumulator >>> 16;
 			accumulator += state[j++];
 			state[i] = y = state[(x & MASK) >> 2] + accumulator + last;
 			results[i++] = last = state[(y >> LOG_SIZE & MASK) >> 2] + x;
 		}
-		
+
 		for(j = 0; j < SIZE / 2; ) {
 			x = state[i];
 			accumulator ^= accumulator << 13;
 			accumulator += state[j++];
 			state[i] = y = state[(x & MASK) >> 2] + accumulator + last;
 			results[i++] = last = state[(y >> LOG_SIZE & MASK) >> 2] + x;
-			
+
 			x = state[i];
 			accumulator ^= accumulator >>> 6;
 			accumulator += state[j++];
 			state[i] = y = state[(x & MASK) >> 2] + accumulator + last;
 			results[i++] = last = state[(y >> LOG_SIZE & MASK) >> 2] + x;
-			
+
 			x = state[i];
 			accumulator ^= accumulator << 2;
 			accumulator += state[j++];
 			state[i] = y = state[(x & MASK) >> 2] + accumulator + last;
 			results[i++] = last = state[(y >> LOG_SIZE & MASK) >> 2] + x;
-			
+
 			x = state[i];
 			accumulator ^= accumulator >>> 16;
 			accumulator += state[j++];
@@ -138,7 +140,7 @@ public final class IsaacRandom {
 			results[i++] = last = state[(y >> LOG_SIZE & MASK) >> 2] + x;
 		}
 	}
-	
+
 	/**
 	 * Initializes this random number generator.
 	 */
@@ -146,7 +148,7 @@ public final class IsaacRandom {
 		int i;
 		int a, b, c, d, e, f, g, h;
 		a = b = c = d = e = f = g = h = GOLDEN_RATIO;
-		
+
 		for(i = 0; i < 4; ++i) {
 			a ^= b << 11;
 			d += a;
@@ -173,7 +175,7 @@ public final class IsaacRandom {
 			c += h;
 			a += b;
 		}
-		
+
 		for(i = 0; i < SIZE; i += 8) { /* fill in mem[] with messy stuff */
 			a += results[i];
 			b += results[i + 1];
@@ -183,7 +185,7 @@ public final class IsaacRandom {
 			f += results[i + 5];
 			g += results[i + 6];
 			h += results[i + 7];
-			
+
 			a ^= b << 11;
 			d += a;
 			b += c;
@@ -217,7 +219,7 @@ public final class IsaacRandom {
 			state[i + 6] = g;
 			state[i + 7] = h;
 		}
-		
+
 		for(i = 0; i < SIZE; i += 8) {
 			a += state[i];
 			b += state[i + 1];
@@ -260,12 +262,13 @@ public final class IsaacRandom {
 			state[i + 6] = g;
 			state[i + 7] = h;
 		}
-		
+
 		isaac();
 	}
-	
+
 	/**
 	 * Gets the next random value.
+	 *
 	 * @return The next random value.
 	 */
 	public int nextInt() {
@@ -275,5 +278,5 @@ public final class IsaacRandom {
 		}
 		return results[count];
 	}
-	
+
 }

@@ -6,10 +6,11 @@ import net.edge.world.entity.actor.player.Player;
 
 /**
  * An enumeration of emotes.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum Emote {
-	
+
 	YES(168, 855, -1),
 	NO(169, 856, -1),
 	BOW(164, 858, -1),
@@ -51,30 +52,31 @@ public enum Emote {
 	SNOW_MAN(89048, 7531, -1),
 	AIR_GUITAR(89049, 2414, 1537),
 	SAFETY_FIRST(89050, 8770, 1553);
-	
+
 	/**
 	 * The initialization button id of the emote.
 	 */
 	private final int button;
-	
+
 	/**
 	 * The animation id of the emote.
 	 */
 	private final int animation;
-	
+
 	/**
 	 * The graphic id of the emote.
 	 */
 	private final int graphic;
-	
+
 	Emote(int button, int animation, int graphic) {
 		this.button = button;
 		this.animation = animation;
 		this.graphic = graphic;
 	}
-	
+
 	/**
 	 * Handles the emotes on each button click.
+	 *
 	 * @param player The playing clicking the button.
 	 * @param button The button id.
 	 * @return {@code true} if emote is handled, {@code false} otherwise.
@@ -91,5 +93,5 @@ public enum Emote {
 		}
 		return false;
 	}
-	
+
 }

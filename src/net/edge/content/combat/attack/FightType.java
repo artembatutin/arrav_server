@@ -4,6 +4,7 @@ import net.edge.content.combat.CombatConstants;
 
 /**
  * The enumerated type whose elements represent the fighting types.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public enum FightType {
@@ -93,7 +94,7 @@ public enum FightType {
 	SCORCH(5247, 43, 0, CombatConstants.ATTACK_SLASH, FightStyle.ACCURATE),
 	FLARE(5247, 43, 2, CombatConstants.ATTACK_RANGED, FightStyle.ACCURATE),
 	BLAZE(5247, 43, 3, CombatConstants.ATTACK_MAGIC, FightStyle.ACCURATE);
-	
+
 	/**
 	 * Determines if the animation of this constant is prioritized over the
 	 * cached set of weapon animations.
@@ -101,31 +102,32 @@ public enum FightType {
 	 * (smash and slash which is both aggressive) but they don't use the same attack animation.</p>
 	 */
 	private final boolean animationPrioritized;
-	
+
 	/**
 	 * The animation executed when this type is active.
 	 */
 	private final int animation;
-	
+
 	/**
 	 * The parent config identification.
 	 */
 	private final int parent;
-	
+
 	/**
 	 * The child config identification.
 	 */
 	private final int child;
-	
+
 	private final int bonus;
-	
+
 	/**
 	 * The style active when this type is active.
 	 */
 	private final FightStyle style;
-	
+
 	/**
 	 * Creates a new {@link FightType}.
+	 *
 	 * @param animationPrioritized {@link #animationPrioritized}.
 	 * @param animation            the animation executed when this type is active.
 	 * @param parent               the parent config identification.
@@ -141,9 +143,10 @@ public enum FightType {
 		this.bonus = bonus;
 		this.style = style;
 	}
-	
+
 	/**
 	 * Creates a new {@link FightType}.
+	 *
 	 * @param animation the animation executed when this type is active.
 	 * @param parent    the parent config identification.
 	 * @param child     the child config identification.
@@ -158,9 +161,10 @@ public enum FightType {
 		this.bonus = bonus;
 		this.style = style;
 	}
-	
+
 	/**
 	 * Determines the corresponding bonus for this fight type.
+	 *
 	 * @return the corresponding.
 	 */
 	public final int getCorrespondingBonus() {
@@ -179,51 +183,58 @@ public enum FightType {
 				return CombatConstants.DEFENCE_CRUSH;
 		}
 	}
-	
+
 	/**
 	 * Determines if this animation is prioritized.
+	 *
 	 * @return {@code true} if it is, {@code false} otherwise.
 	 */
 	public final boolean isAnimationPrioritized() {
 		return animationPrioritized;
 	}
-	
+
 	/**
 	 * Gets the animation executed when this type is active.
+	 *
 	 * @return the animation executed.
 	 */
 	public final int getAnimation() {
 		return animation;
 	}
-	
+
 	/**
 	 * Gets the parent config identification.
+	 *
 	 * @return the parent config.
 	 */
 	public final int getParent() {
 		return parent;
 	}
-	
+
 	/**
 	 * Gets the child config identification.
+	 *
 	 * @return the child config.
 	 */
 	public final int getChild() {
 		return child;
 	}
-	
+
 	/**
 	 * The type of bonus this type will apply.
-	 */ /**
+	 */
+	/**
 	 * Gets the type of bonus this type will apply
+	 *
 	 * @return the bonus type.
 	 */
 	public final int getBonus() {
 		return bonus;
 	}
-	
+
 	/**
 	 * Gets the style active when this type is active.
+	 *
 	 * @return the fighting style.
 	 */
 	public final FightStyle getStyle() {

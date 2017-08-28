@@ -1,8 +1,8 @@
 package net.edge.action.mob;
 
-import net.edge.content.skill.crafting.Tanning;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.MobAction;
+import net.edge.content.skill.crafting.Tanning;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 

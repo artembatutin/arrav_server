@@ -4,26 +4,27 @@ import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.world.locale.Position;
 import net.edge.world.Direction;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
+import net.edge.world.locale.Position;
 
 import java.util.Objects;
 
 /**
  * The {@link JsonLoader} implementation that loads all npc nodes.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class MobNodeLoader extends JsonLoader {
-	
+
 	/**
 	 * Creates a new {@link MobNodeLoader}.
 	 */
 	public MobNodeLoader() {
 		super("./data/def/mob/mob_nodes.json");
 	}
-	
+
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		int id = reader.get("id").getAsInt();

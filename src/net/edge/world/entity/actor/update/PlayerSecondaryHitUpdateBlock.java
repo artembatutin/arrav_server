@@ -6,6 +6,7 @@ import net.edge.world.entity.actor.player.Player;
 
 /**
  * An {@link PlayerUpdateBlock} implementation that handles the secondary {@link Hit} update block.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class PlayerSecondaryHitUpdateBlock extends PlayerUpdateBlock {

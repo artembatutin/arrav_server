@@ -13,35 +13,37 @@ import java.util.function.Consumer;
 
 /**
  * The dialogue chain entry that sends the player an option dialogue.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class OptionDialogue extends Dialogue {
-	
+
 	/**
 	 * Retrieves the option listener for this option dialogue entry.
 	 */
 	private final Consumer<OptionType> optionListener;
-	
+
 	/**
 	 * Creates a new {@link OptionDialogue}.
+	 *
 	 * @param options the different options that will be displayed.
 	 */
 	public OptionDialogue(Consumer<OptionType> optionListener, String... options) {
 		super(options);
 		this.optionListener = optionListener;
 	}
-	
+
 	@Override
 	public void accept(DialogueBuilder dialogue) {
 		send(dialogue.getPlayer());
 		dialogue.appendOptionListener(getOptionListener());
 	}
-	
+
 	@Override
 	public DialogueType type() {
 		return DialogueType.OPTION_DIALOGUE;
 	}
-	
+
 	public void send(Player player) {
 		switch(getText().length) {
 			case 2:
@@ -74,10 +76,11 @@ public final class OptionDialogue extends Dialogue {
 				throw new IllegalArgumentException("Illegal dialogue option length: " + getText().length);
 		}
 	}
-	
+
 	/**
 	 * The enumerated type whose elements represent the option types for option
 	 * dialogue listeners.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum OptionType {
@@ -86,25 +89,26 @@ public final class OptionDialogue extends Dialogue {
 		THIRD_OPTION(9169, 32019, 32031),
 		FOURTH_OPTION(32020, 32032),
 		FIFTH_OPTION(32033);
-		
+
 		/**
 		 * Caches our enum values.
 		 */
 		private static final ImmutableSet<OptionType> VALUES = Sets.immutableEnumSet(EnumSet.allOf(OptionType.class));
-		
+
 		/**
 		 * The buttons which identify this option.
 		 */
 		private final int[] buttons;
-		
+
 		/**
 		 * Constructs a new {@link OptionType}.
+		 *
 		 * @param buttons {@link #buttons}.
 		 */
 		OptionType(int... buttons) {
 			this.buttons = buttons;
 		}
-		
+
 		public static Optional<OptionType> getOptions(int buttonId) {
 			for(OptionType type : VALUES) {
 				for(int button : type.buttons) {
@@ -115,7 +119,7 @@ public final class OptionDialogue extends Dialogue {
 			}
 			return Optional.empty();
 		}
-		
+
 		/**
 		 * Convenient check method.
 		 */
@@ -123,7 +127,7 @@ public final class OptionDialogue extends Dialogue {
 			return this == type;
 		}
 	}
-	
+
 	/**
 	 * @return {@link #optionListener}.
 	 */

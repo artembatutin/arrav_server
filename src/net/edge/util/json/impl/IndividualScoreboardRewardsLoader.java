@@ -5,10 +5,10 @@ import com.google.gson.JsonObject;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.util.MutableNumber;
 import net.edge.util.json.JsonLoader;
-import net.edge.world.World;
 
 /**
  * The {@link JsonLoader} implementation that loads all individual scoreboard rewards.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class IndividualScoreboardRewardsLoader extends JsonLoader {

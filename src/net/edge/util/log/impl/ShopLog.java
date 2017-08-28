@@ -3,33 +3,34 @@ package net.edge.util.log.impl;
 import net.edge.util.log.LogDetails;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
-import net.edge.world.entity.item.container.ItemContainer;
 
 import java.util.Optional;
 
 /**
  * The class which represents a trade log.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class ShopLog extends LogDetails {
-	
+
 	/**
 	 * The store title.
 	 */
 	private final String store;
-	
+
 	/**
 	 * The item that the user sold.
 	 */
 	private final Item sold;
-	
+
 	/**
 	 * The item that the user bought.
 	 */
 	private final Item bought;
-	
+
 	/**
 	 * Constructs a new {@link ShopLog}.
+	 *
 	 * @param player {@link #getUsername()}.
 	 * @param sold   {@link #sold}.
 	 * @param bought {@link #bought}.
@@ -40,7 +41,7 @@ public final class ShopLog extends LogDetails {
 		this.sold = sold;
 		this.bought = bought;
 	}
-	
+
 	@Override
 	public Optional<String> formatInformation() {
 		StringBuilder builder = new StringBuilder();

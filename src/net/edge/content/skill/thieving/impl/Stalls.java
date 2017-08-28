@@ -4,9 +4,9 @@ import net.edge.action.impl.ObjectAction;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.HitIcon;
 import net.edge.content.combat.hit.Hitsplat;
+import net.edge.content.skill.thieving.Thieving;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
-import net.edge.content.skill.thieving.Thieving;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.mob.Mob;
@@ -21,27 +21,29 @@ import static net.edge.content.achievements.Achievement.REAL_ROBERY;
 
 /**
  * Represents functionality for stealing from a stall.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Stalls extends Thieving {
-	
+
 	/**
 	 * The definition for this stall.
 	 */
 	private final StallData stall;
-	
+
 	/**
 	 * The object node this player is interacting with.
 	 */
 	private final DynamicObject object;
-	
+
 	/**
 	 * The possible loot stealing the stall.
 	 */
 	private final Item loot;
-	
+
 	/**
 	 * Constructs a new {@link Stalls}.
+	 *
 	 * @param player {@link #getPlayer()}.
 	 * @param stall  the stall this player is stealing from.
 	 * @param object the object this player is interacting with.
@@ -52,7 +54,7 @@ public final class Stalls extends Thieving {
 		this.object = object;
 		this.loot = RandomUtils.random(stall.loot);
 	}
-	
+
 	public static void action() {
 		for(StallData data : StallData.values()) {
 			ObjectAction steal = new ObjectAction() {
@@ -71,27 +73,27 @@ public final class Stalls extends Thieving {
 			}
 		}
 	}
-	
+
 	/**
 	 * The animation when stealing from stalls
 	 */
 	private static final Animation ANIMATION = new Animation(832);
-	
+
 	/**
 	 * Object ids of empty stalls
 	 */
 	private static final int[] EMPTY_STALLS = new int[]{634, 620};
-	
+
 	@Override
 	public int requirement() {
 		return stall.requirement;
 	}
-	
+
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.of(ANIMATION);
 	}
-	
+
 	@Override
 	public boolean canInit() {
 //		if(object.isDisabled()) {
@@ -107,14 +109,14 @@ public final class Stalls extends Thieving {
 			player.message("You don't have enough inventory space for the loot.");
 			return false;
 		}
-		
+
 		if(!player.getSkills()[skill().getId()].getDelay().elapsed(1800)) {
 			return false;
 		}
 		player.getSkills()[skill().getId()].getDelay().reset();
 		return true;
 	}
-	
+
 	@Override
 	public void onSubmit() {
 		if(stall.requirement > 40 && RandomUtils.inclusive(200) < 10) {
@@ -128,45 +130,46 @@ public final class Stalls extends Thieving {
 			REAL_ROBERY.inc(player);
 		}
 	}
-	
+
 	@Override
 	public void onExecute(Task t) {
 		t.cancel();
 	}
-	
+
 	@Override
 	public void onStop(boolean success) {
 //		if(success)
 //			World.get().submit(new StallTask(this, object));
 	}
-	
+
 	@Override
 	public Item loot() {
 		return loot;
 	}
-	
+
 	@Override
 	public int delay() {
 		return 1;
 	}
-	
+
 	@Override
 	public boolean instant() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean canExecute() {
 		return !object.isDisabled();
 	}
-	
+
 	@Override
 	public double experience() {
 		return stall.experience;
 	}
-	
+
 	/**
 	 * The enumerated type whose elements represent the data for stealing from a stall.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private enum StallData {
@@ -187,41 +190,41 @@ public final class Stalls extends Thieving {
 		SILVER(new int[]{2565}, EMPTY_STALLS[0], 50, new Item[]{new Item(995, 15000)}, 54, 20),
 		CUSTOMS_EVIDENCE_FILES(new int[]{-1}, -1, 63, new Item[]{new Item(995, 17500)}, 75, 20),
 		SPICE(new int[]{2564}, EMPTY_STALLS[0], 65, new Item[]{new Item(995, 20000)}, 81, 40),
-		GEM(new int[]{2562}, EMPTY_STALLS[0], 75, new Item[]{new Item(995, 35000)}, 160, 80)*/
-		;
-		
+		GEM(new int[]{2562}, EMPTY_STALLS[0], 75, new Item[]{new Item(995, 35000)}, 160, 80)*/;
+
 		/**
 		 * The object identification for this stall.
 		 */
 		private final int[] objectId;
-		
+
 		/**
 		 * The object identification for an empty stall.
 		 */
 		private final int emptyStallId;
-		
+
 		/**
 		 * The required level to steal from this stall.
 		 */
 		private final int requirement;
-		
+
 		/**
 		 * The loot you get from stealing for this stall.
 		 */
 		private final Item[] loot;
-		
+
 		/**
 		 * The experience gained for stealing from this stall.
 		 */
 		private final double experience;
-		
+
 		/**
 		 * The time it takes for the stall to respawn.
 		 */
 		private final int respawnTime;
-		
+
 		/**
 		 * Constructs a new {@link StallData} enumerator.
+		 *
 		 * @param objectId     {@link #objectId}.
 		 * @param emptyStallId {@link #emptyStallId}.
 		 * @param requirement  {@link #requirement}.
@@ -237,32 +240,34 @@ public final class Stalls extends Thieving {
 			this.experience = experience;
 			this.respawnTime = respawnTime;
 		}
-		
+
 	}
-	
+
 	/**
 	 * The class which submits respawning tasks for stalls.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static class StallTask extends Task {
-		
+
 		/**
 		 * The stall we're submitting this task for.
 		 */
 		private final Stalls stall;
-		
+
 		/**
 		 * The main stall object.
 		 */
 		private final DynamicObject object;
-		
+
 		/**
 		 * The saved stall id.
 		 */
 		private final int id;
-		
+
 		/**
 		 * Constructs a new {@link StallTask}.
+		 *
 		 * @param stall  the stall being used.
 		 * @param object the stall's object node.
 		 */
@@ -272,14 +277,14 @@ public final class Stalls extends Thieving {
 			this.object = object;
 			this.id = object.getId();
 		}
-		
+
 		@Override
 		public void onSubmit() {
 			object.setDisabled(true);
 			object.setId(stall.stall.emptyStallId);
 			object.publish();
 		}
-		
+
 		@Override
 		public void execute() {
 			object.setDisabled(false);
@@ -287,6 +292,6 @@ public final class Stalls extends Thieving {
 			stall.object.publish();
 			this.cancel();
 		}
-		
+
 	}
 }

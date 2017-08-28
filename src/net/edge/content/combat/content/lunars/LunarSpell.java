@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Holds basic support for Lunar Spells.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public abstract class LunarSpell extends MagicSpell {
@@ -70,6 +71,7 @@ public abstract class LunarSpell extends MagicSpell {
 
 	/**
 	 * The animation that should be played when the spell is casted.
+	 *
 	 * @return an optional containing the animation, {@link Optional#empty()} otherwise.
 	 */
 	public Optional<Animation> startAnimation() {
@@ -78,6 +80,7 @@ public abstract class LunarSpell extends MagicSpell {
 
 	/**
 	 * The graphic that should be played when the spell is casted.
+	 *
 	 * @return an optional containing the graphic, {@link Optional#empty()} otherwise.
 	 */
 	public Optional<Graphic> startGraphic() {
@@ -86,12 +89,11 @@ public abstract class LunarSpell extends MagicSpell {
 
 	/**
 	 * The delay in <b>milliseconds<b/> before this spell can be used again.
+	 *
 	 * @return a numerical value determining the delay.
 	 */
 	public int delay() {
 		return 1800;
 	}
-
-
 
 }

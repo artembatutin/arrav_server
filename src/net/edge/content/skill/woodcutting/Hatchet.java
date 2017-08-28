@@ -12,6 +12,7 @@ import java.util.Optional;
 /**
  * The enumerated type which elements represents a hatchet which can cut
  * a {@link Tree}.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum Hatchet {
@@ -52,6 +53,7 @@ public enum Hatchet {
 
 	/**
 	 * Constructs a new {@link Hatchet} enumerator.
+	 *
 	 * @param item        {@link #item}.
 	 * @param requirement {@link #requirement}.
 	 * @param animation   {@link #animation}.
@@ -94,6 +96,7 @@ public enum Hatchet {
 
 	/**
 	 * Gets the definition for this hatchet.
+	 *
 	 * @param player Player using the hatchet.
 	 * @return an optional holding the {@link Hatchet} value found,
 	 * {@link Optional#empty} otherwise.

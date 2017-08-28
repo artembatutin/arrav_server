@@ -5,9 +5,9 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.content.skill.construction.Construction;
 import net.edge.content.skill.construction.House;
-import net.edge.content.skill.construction.room.RoomFurniture;
 import net.edge.content.skill.construction.data.Constants;
 import net.edge.content.skill.construction.room.Room;
+import net.edge.content.skill.construction.room.RoomFurniture;
 import net.edge.task.Task;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
@@ -18,22 +18,24 @@ import java.util.Optional;
 
 /**
  * Represents the process for building {@link Furniture}.
+ *
  * @author Artem Batutin <artembatutin@gmail.com></artembatutin@gmail.com>
  */
 public final class ConstructFurniture extends ProducingSkillAction {
-	
+
 	private final ConstructionPlan plan;
-	
+
 	/**
 	 * Constructs a new {@link ConstructFurniture} skill action.
-	 * @param player     the player we're starting this action for.
-	 * @param plan the furniture planned to be built.
+	 *
+	 * @param player the player we're starting this action for.
+	 * @param plan   the furniture planned to be built.
 	 */
 	public ConstructFurniture(Player player, ConstructionPlan plan) {
 		super(player, Optional.empty());
 		this.plan = plan;
 	}
-	
+
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success) {
@@ -75,24 +77,24 @@ public final class ConstructFurniture extends ProducingSkillAction {
 			house.get().setPlan(new ConstructionPlan());//clearing plan.
 		}
 	}
-	
+
 	@Override
 	public boolean init() {
 		player.animation(new Animation(3684));
 		player.closeWidget();
 		return true;
 	}
-	
+
 	@Override
 	public int delay() {
 		return 2;
 	}
-	
+
 	@Override
 	public boolean instant() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean canExecute() {
 		if(player.getSkills()[Skills.CONSTRUCTION].getRealLevel() < plan.getSelected().getLevel()) {
@@ -101,29 +103,29 @@ public final class ConstructFurniture extends ProducingSkillAction {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public double experience() {
 		return plan.getSelected().getXP();
 	}
-	
+
 	@Override
 	public SkillData skill() {
 		return SkillData.CONSTRUCTION;
 	}
-	
+
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.empty();
 	}
-	
+
 	@Override
 	public Optional<Item[]> removeItem() {
 		if(getPlayer().getRights() == Rights.ADMINISTRATOR)
 			return Optional.empty();
 		return Optional.of(plan.getSelected().getRequiredItems());
 	}
-	
+
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.empty();

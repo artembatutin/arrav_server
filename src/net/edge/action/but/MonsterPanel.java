@@ -5,7 +5,7 @@ import net.edge.action.impl.ButtonAction;
 import net.edge.world.entity.actor.player.Player;
 
 public class MonsterPanel extends ActionInitializer {
-	
+
 	@Override
 	public void init() {
 		//Monsters 70-100
@@ -91,5 +91,5 @@ public class MonsterPanel extends ActionInitializer {
 		e.register(79);
 
 	}
-	
+
 }

@@ -15,12 +15,12 @@ import java.util.Iterator;
 
 @CommandSignature(alias = {"update"}, rights = {Rights.ADMINISTRATOR}, syntax = "Updates the server, ::update seconds")
 public final class UpdateCommand implements Command {
-	
+
 	/**
 	 * The updating count in progress flag.
 	 */
 	public static int inProgess = 0;
-	
+
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		inProgess = 1;
@@ -60,5 +60,5 @@ public final class UpdateCommand implements Command {
 			}
 		});
 	}
-	
+
 }

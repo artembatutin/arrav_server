@@ -8,6 +8,7 @@ import java.util.Optional;
 
 /**
  * The enumerated type whose elements represent the data for fire lighters..
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum FireLighter {
@@ -18,24 +19,25 @@ public enum FireLighter {
 	WHITE_FIRELIGHTER(10327, 20000),
 	PURPLE_FIRELIGHTER(10326, 20001),
 	BLUE_FIRELIGHTER(7331, 11406);
-	
+
 	/**
 	 * Caches our enum values.
 	 */
 	public static final ImmutableSet<FireLighter> VALUES = Sets.immutableEnumSet(EnumSet.allOf(FireLighter.class));
-	
+
 	/**
 	 * The identification for this fire lighter.
 	 */
 	private final int item;
-	
+
 	/**
 	 * The identification for this object id.
 	 */
 	private final int objectId;
-	
+
 	/**
 	 * Constructs a new {@link FireLighter}.
+	 *
 	 * @param itemId   {@link #item}.
 	 * @param objectId {@link #objectId}.
 	 */
@@ -43,7 +45,7 @@ public enum FireLighter {
 		this.item = itemId;
 		this.objectId = objectId;
 	}
-	
+
 	public static Optional<FireLighter> getDefinition(int id) {
 		for(FireLighter light : VALUES) {
 			if(light.getItem() == id) {
@@ -52,9 +54,10 @@ public enum FireLighter {
 		}
 		return Optional.empty();
 	}
-	
+
 	/**
 	 * Gets the definition for this fire lighter.
+	 *
 	 * @param id       the identifier to check for matches.
 	 * @param secondId the second identifier to check for matches.
 	 * @return an Optional with the found value, {@link Optional#empty} otherwise.
@@ -67,14 +70,14 @@ public enum FireLighter {
 		}
 		return Optional.empty();
 	}
-	
+
 	/**
 	 * @return {@link #item}.
 	 */
 	public int getItem() {
 		return item;
 	}
-	
+
 	/**
 	 * @return {@link #objectId}.
 	 */

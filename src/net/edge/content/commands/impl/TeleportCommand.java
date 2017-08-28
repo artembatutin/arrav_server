@@ -7,7 +7,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"tele", "teleport"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Teleports to a coordinate, ::tele x y z")
 public final class TeleportCommand implements Command {
-	
+
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		int x = Integer.parseInt(cmd[1]);
@@ -18,5 +18,5 @@ public final class TeleportCommand implements Command {
 		}
 //		DefaultTeleportSpell.startTeleport(player, new Position(x, y, z)); TODO: add teleports
 	}
-	
+
 }

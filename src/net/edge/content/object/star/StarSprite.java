@@ -1,14 +1,14 @@
 package net.edge.content.object.star;
 
-import net.edge.content.market.MarketCounter;
 import net.edge.action.impl.MobAction;
-import net.edge.net.packet.out.SendEnterAmount;
-import net.edge.task.Task;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.PlayerDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
+import net.edge.content.market.MarketCounter;
+import net.edge.net.packet.out.SendEnterAmount;
+import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
@@ -16,6 +16,7 @@ import net.edge.world.entity.item.Item;
 
 /**
  * The class which represents a single star sprite npc.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class StarSprite extends Mob {
@@ -27,6 +28,7 @@ public final class StarSprite extends Mob {
 
 	/**
 	 * Constructs a new {@link StarSprite}.
+	 *
 	 * @param star {@link #star}.
 	 */
 	public StarSprite(ShootingStar star) {
@@ -58,7 +60,7 @@ public final class StarSprite extends Mob {
 					ap.chain(new PlayerDialogue(Expression.CONFUSED, "Ehh? This is where you say, \"Thank you for saving me", "oh noble warrior, do you want a reward in return?\""));
 
 					boolean stardust = player.getInventory().contains(new Item(StarMining.STARDUST.getId(), EXCHANGE_FOR_BLOOD_COINS));
-					String[] message = stardust ? new String[]{"Eh, I see you have stardust on you, perhaps you", "would want to trade it for blood coins?"} : player.getInventory().contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of " + EXCHANGE_FOR_BLOOD_COINS +  " stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
+					String[] message = stardust ? new String[]{"Eh, I see you have stardust on you, perhaps you", "would want to trade it for blood coins?"} : player.getInventory().contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of " + EXCHANGE_FOR_BLOOD_COINS + " stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
 
 					ap.chain(new NpcDialogue(8091, message).attachAfter(() -> {
 						if(!stardust) {
@@ -107,7 +109,7 @@ public final class StarSprite extends Mob {
 			int selectedAmount = Integer.parseInt(s);
 
 			if(selectedAmount < EXCHANGE_FOR_BLOOD_COINS) {
-				player.getDialogueBuilder().append(new NpcDialogue(8091, "I only accept a minimum of " + EXCHANGE_FOR_BLOOD_COINS +  " stardust per blood coin."));
+				player.getDialogueBuilder().append(new NpcDialogue(8091, "I only accept a minimum of " + EXCHANGE_FOR_BLOOD_COINS + " stardust per blood coin."));
 				return;
 			}
 			if(!player.getInventory().contains(new Item(StarMining.STARDUST.getId(), selectedAmount))) {
@@ -150,6 +152,7 @@ public final class StarSprite extends Mob {
 
 	/**
 	 * Represents the task that is ran when the star sprite is summoned.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class StarSpriteLifeTask extends Task {
@@ -161,6 +164,7 @@ public final class StarSprite extends Mob {
 
 		/**
 		 * Constructs a new {@link StarSprite}.
+		 *
 		 * @param sprite {@link #sprite}.
 		 */
 		public StarSpriteLifeTask(StarSprite sprite) {

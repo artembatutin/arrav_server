@@ -9,16 +9,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ItemEconomyReplace extends ItemController {
-	
+
 	private final int item, replace;
-	
+
 	private int amount;
-	
+
 	public ItemEconomyReplace(int item, int replace) {
 		this.item = item;
 		this.replace = replace;
 	}
-	
+
 	@Override
 	public Item change(Item item) throws IOException {
 		if(item.getId() == this.item) {
@@ -27,22 +27,22 @@ public class ItemEconomyReplace extends ItemController {
 		}
 		return item;
 	}
-	
+
 	@Override
 	public void newPlayer() throws IOException {
 		out().write(amount + " amount replaced");
 		amount = 0;
 	}
-	
+
 	@Override
 	public String getName() {
 		return "replace" + item;
 	}
-	
+
 	@Override
 	public String getDesc() {
 		return "[ replacing item " + item + " " + ItemDefinition.get(item).getName() + " with " + replace + " " +
 				ItemDefinition.get(item).getName() + " - " + LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + " ]";
 	}
-	
+
 }

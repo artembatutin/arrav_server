@@ -10,6 +10,7 @@ import java.util.Set;
 
 /**
  * Punished list defining all punishments for a certain {@link HostListType}.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class HostList {
@@ -26,6 +27,7 @@ public class HostList {
 
 	/**
 	 * Creates a {@link HostList}.
+	 *
 	 * @param type host list type.
 	 */
 	HostList(HostListType type) {
@@ -34,6 +36,7 @@ public class HostList {
 
 	/**
 	 * Condition if {@code text} is contained in his list.
+	 *
 	 * @return full string.
 	 */
 	public boolean contains(String text) {
@@ -48,7 +51,7 @@ public class HostList {
 	 * Adds a blocked entry with a username.
 	 */
 	public void add(Player player) {
-		BLOCKED.add(player.getSession().getHost()+"-"+player.credentials.username);
+		BLOCKED.add(player.getSession().getHost() + "-" + player.credentials.username);
 	}
 
 	/**

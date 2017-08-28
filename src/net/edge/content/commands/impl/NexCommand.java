@@ -5,7 +5,6 @@ import net.edge.content.commands.CommandSignature;
 import net.edge.content.minigame.nexchamber.NexMinigame;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
-import net.edge.world.locale.Position;
 
 @CommandSignature(alias = {"nex"}, rights = {Rights.ADMINISTRATOR}, syntax = "Nex testing command ::nex")
 public final class NexCommand implements Command {

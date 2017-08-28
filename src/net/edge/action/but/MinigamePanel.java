@@ -5,7 +5,7 @@ import net.edge.action.impl.ButtonAction;
 import net.edge.world.entity.actor.player.Player;
 
 public class MinigamePanel extends ActionInitializer {
-	
+
 	@Override
 	public void init() {
 		//Minigames 30-47
@@ -63,7 +63,7 @@ public class MinigamePanel extends ActionInitializer {
 			}
 		};
 		e.register(40);
-		
+
 	}
-	
+
 }

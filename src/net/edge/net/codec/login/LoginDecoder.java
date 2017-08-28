@@ -20,10 +20,9 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 
-import static com.google.common.base.Preconditions.checkState;
-
 /**
  * A {@link ByteToMessageDecoder} implementation that decodes the entire login protocol in states.
+ *
  * @author lare96 <http://github.org/lare96>
  */
 public final class LoginDecoder extends ByteToMessageDecoder {
@@ -62,6 +61,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 	/**
 	 * Decodes the handshake portion of the login protocol.
+	 *
 	 * @param ctx The channel handler context.
 	 * @param in  The data that is being decoded.
 	 * @param out The list of decoded messages.
@@ -85,7 +85,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 			//username hash
 			long usernameHash = in.readLong();
 			ctx.channel().attr(NetworkConstants.USR_HASH).set(usernameHash);
-			if (World.get().getPlayer(usernameHash).isPresent()) {
+			if(World.get().getPlayer(usernameHash).isPresent()) {
 				write(ctx, LoginCode.ACCOUNT_ONLINE);
 				return;
 			}
@@ -99,6 +99,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 	/**
 	 * Decodes the portion of the login protocol where the RSA block size and mac address are determined.
+	 *
 	 * @param ctx The channel handler context.
 	 * @param in  The data that is being decoded.
 	 * @param out The list of decoded messages.
@@ -116,6 +117,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 	/**
 	 * Decodes the RSA portion of the login protocol.
+	 *
 	 * @param ctx The channel handler context.
 	 * @param in  The data that is being decoded.
 	 * @param out The list of decoded messages.
@@ -136,7 +138,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 				long serverHalf = rsaBuffer.readLong();
 				int[] isaacSeed = {(int) (clientHalf >> 32), (int) clientHalf, (int) (serverHalf >> 32), (int) serverHalf};
 				IsaacRandom decryptor = new IsaacRandom(isaacSeed);
-				for (int i = 0; i < isaacSeed.length; i++) {
+				for(int i = 0; i < isaacSeed.length; i++) {
 					isaacSeed[i] += 50;
 				}
 				IsaacRandom encryptor = new IsaacRandom(isaacSeed);
@@ -146,7 +148,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 				String macAddress = ctx.channel().attr(NetworkConstants.USR_MAC).get();
 				out.add(new LoginRequest(usernameHash, username, password, macAddress, encryptor, decryptor));
 			} finally {
-				if (rsaBuffer.isReadable()) {
+				if(rsaBuffer.isReadable()) {
 					rsaBuffer.release();
 				}
 			}

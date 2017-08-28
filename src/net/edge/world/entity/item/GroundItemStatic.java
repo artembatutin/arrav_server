@@ -1,32 +1,34 @@
 package net.edge.world.entity.item;
 
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.world.entity.region.Region;
-import net.edge.world.locale.Position;
 import net.edge.net.packet.out.SendItemNode;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.region.Region;
+import net.edge.world.locale.Position;
 
 /**
  * The node implementation that represents an item everyone can see by default
  * on the ground.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class GroundItemStatic extends GroundItem {
-	
+
 	/**
 	 * The current item policy of this node.
 	 */
 	private final GroundItemPolicy policy;
-	
+
 	/**
 	 * The flag that determines if this item node is awaiting respawn.
 	 */
 	private boolean needsRespawn;
-	
+
 	/**
 	 * Creates a new {@link GroundItemStatic}.
+	 *
 	 * @param item     the item concealed within this node.
 	 * @param position the position this node is on.
 	 * @param policy   the current item policy of this node.
@@ -36,16 +38,17 @@ public final class GroundItemStatic extends GroundItem {
 		super.setState(GroundItemState.SEEN_BY_EVERYONE);
 		this.policy = policy;
 	}
-	
+
 	/**
 	 * Creates a new {@link GroundItemStatic} with the default policy.
+	 *
 	 * @param item     the item concealed within this node.
 	 * @param position the position this node is on.
 	 */
 	public GroundItemStatic(Item item, Position position) {
 		this(item, position, GroundItemPolicy.TIMEOUT);
 	}
-	
+
 	@Override
 	public void register() {
 		ObjectList<Region> surrounding = World.getRegions().getAllSurroundingRegions(getPosition().getRegion());
@@ -61,7 +64,7 @@ public final class GroundItemStatic extends GroundItem {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onSequence() {
 		if(policy == null)
@@ -79,7 +82,7 @@ public final class GroundItemStatic extends GroundItem {
 				break;
 		}
 	}
-	
+
 	@Override
 	public void onPickup(Player player) {
 		if(player.getInventory().add(super.getItem()) != -1) {

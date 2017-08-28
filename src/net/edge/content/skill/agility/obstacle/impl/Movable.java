@@ -1,33 +1,35 @@
 package net.edge.content.skill.agility.obstacle.impl;
 
 import net.edge.content.skill.agility.obstacle.ObstacleActivity;
-import net.edge.world.locale.Position;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.move.ForcedMovement;
 import net.edge.world.entity.actor.move.ForcedMovementManager;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.Position;
 
 import java.util.OptionalInt;
 
 /**
  * The forced movement obstacle action which will walk a player starting from the start position
  * to the destination with it's respective {@link ForcedMovement} mask.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public class Movable extends ObstacleActivity {
-	
+
 	/**
 	 * The speed for this forced movement mask.
 	 */
 	private final int speed;
-	
+
 	/**
 	 * The timer for this forced movement mask.
 	 */
 	private OptionalInt timer = OptionalInt.empty();
-	
+
 	/**
 	 * Constructs a new {@link Movable} Obstacle Activity.
+	 *
 	 * @param start       {@link #getStart()}.
 	 * @param destination {@link #getDestination().
 	 * @param animation   {@link #getAnimation()}.
@@ -38,13 +40,14 @@ public class Movable extends ObstacleActivity {
 	 */
 	public Movable(Position start, Position destination, Animation animation, int speed, OptionalInt timer, int requirement, double experience) {
 		super(start, destination, animation, requirement, experience);
-		
+
 		this.speed = speed;
 		this.timer = timer;
 	}
-	
+
 	/**
 	 * Constructs a new {@link Movable} Obstacle Activity.
+	 *
 	 * @param start       {@link #getStart()}.
 	 * @param destination {@link #getDestination().
 	 * @param animation   {@link #getAnimation()}.
@@ -56,11 +59,11 @@ public class Movable extends ObstacleActivity {
 	public Movable(Position start, Position destination, Animation animation, int speed, int timer, int requirement, double experience) {
 		this(start, destination, animation, speed, OptionalInt.of(timer), requirement, experience);
 	}
-	
+
 	public Movable(Position start, Position destination, Animation animation, int speed, int requirement, double experience) {
 		this(start, destination, animation, speed, OptionalInt.empty(), requirement, experience);
 	}
-	
+
 	@Override
 	public boolean canExecute(Player player) {
 		if(!(travelBack() && player.getPosition().same(getDestination())) && !player.getPosition().same(getStart())) {
@@ -69,7 +72,7 @@ public class Movable extends ObstacleActivity {
 		}
 		return true;
 	}
-	
+
 	public void start(Player player) {
 		ForcedMovement movement = new ForcedMovement(player);
 		if(player.getPosition().same(getStart())) {
@@ -85,21 +88,22 @@ public class Movable extends ObstacleActivity {
 		timer.ifPresent(movement::setTimer);
 		ForcedMovementManager.submit(player, movement);
 	}
-	
+
 	/**
 	 * Any functionality that should be executed before the actual task is submitted.
+	 *
 	 * @param player the player we need to execute this functionality for.
 	 */
 	public void prerequisites(Player player) {
-		
+
 	}
-	
+
 	@Override
 	public void onSubmit(Player player) {
 		prerequisites(player);
 		start(player);
 	}
-	
+
 	/**
 	 * @return the speed
 	 */

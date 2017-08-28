@@ -5,9 +5,9 @@ import net.edge.action.ActionContainer;
 import net.edge.action.impl.ItemAction;
 import net.edge.content.skill.runecrafting.Runecrafting;
 import net.edge.content.skill.runecrafting.pouch.PouchType;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -16,17 +16,18 @@ import net.edge.world.entity.item.ItemDefinition;
 
 /**
  * The message sent from the client when the player clicks an item.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ItemActionPacket implements IncomingPacket {
-	
+
 	public static final ActionContainer<ItemAction> ITEM_ACTION = new ActionContainer<>();
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ACTION))
 			return;
-		
+
 		switch(opcode) {
 			case 122:
 				firstClick(player, payload);
@@ -39,9 +40,10 @@ public final class ItemActionPacket implements IncomingPacket {
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.ITEM_ACTION);
 	}
-	
+
 	/**
 	 * Handles the first slot of an item action.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
@@ -50,7 +52,7 @@ public final class ItemActionPacket implements IncomingPacket {
 		int slot = payload.getShort(false, ByteTransform.A);
 		int id = payload.getShort(false, ByteOrder.LITTLE);
 		if(Application.DEBUG) {
-			player.message("Item action: First click, ID: "+id);
+			player.message("Item action: First click, ID: " + id);
 		}
 		if(slot < 0 || container < 0 || id < 0 || id > ItemDefinition.DEFINITIONS.length)
 			return;
@@ -67,6 +69,7 @@ public final class ItemActionPacket implements IncomingPacket {
 
 	/**
 	 * Handles the third slot of an item action.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
@@ -75,7 +78,7 @@ public final class ItemActionPacket implements IncomingPacket {
 		int slot = payload.getShort(true, ByteOrder.LITTLE);
 		int id = payload.getShort(true, ByteTransform.A);
 		if(Application.DEBUG) {
-			player.message("Item action: second click, ID: "+id);
+			player.message("Item action: second click, ID: " + id);
 		}
 		if(slot < 0 || container < 0 || id < 0 || id > ItemDefinition.DEFINITIONS.length) {
 			return;
@@ -103,9 +106,10 @@ public final class ItemActionPacket implements IncomingPacket {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Handles the third slot of an item action.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
@@ -114,7 +118,7 @@ public final class ItemActionPacket implements IncomingPacket {
 		int slot = payload.getShort(true, ByteOrder.LITTLE);
 		int id = payload.getShort(true, ByteTransform.A);
 		if(Application.DEBUG) {
-			player.message("Item action: third click, ID: "+id);
+			player.message("Item action: third click, ID: " + id);
 		}
 		if(slot < 0 || container < 0 || id < 0 || id > ItemDefinition.DEFINITIONS.length) {
 			return;

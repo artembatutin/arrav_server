@@ -9,10 +9,11 @@ import net.edge.world.entity.actor.player.Player;
 
 /**
  * The message that is sent from the client when the player searches an item in the market.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class MarketPacket implements IncomingPacket {
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		String search = TextUtils.hashToName(payload.getLong());

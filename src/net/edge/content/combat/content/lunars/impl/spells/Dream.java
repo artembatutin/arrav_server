@@ -5,16 +5,17 @@ import net.edge.content.combat.content.RequiredRune;
 import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
-import net.edge.world.World;
-import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.World;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 
 /**
  * Holds functionality for the dream spell.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Dream extends LunarButtonSpell {
@@ -54,6 +55,7 @@ public final class Dream extends LunarButtonSpell {
 	/**
 	 * The dream task responsible for playing the animations and resetting the dream spell
 	 * if the player is no longer dreaming.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class DreamTask extends Task {
@@ -65,6 +67,7 @@ public final class Dream extends LunarButtonSpell {
 
 		/**
 		 * Constructs a new {@link DreamTask}.
+		 *
 		 * @param player {@link #player}.
 		 */
 		public DreamTask(Player player) {

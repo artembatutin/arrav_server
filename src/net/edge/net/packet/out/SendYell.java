@@ -8,16 +8,16 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
 public final class SendYell implements OutgoingPacket {
-	
+
 	private final String author, message;
 	private final Rights rank;
-	
+
 	public SendYell(String author, String message, Rights rank) {
 		this.author = author;
 		this.message = message;
 		this.rank = rank;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(210, PacketType.VARIABLE_BYTE);

@@ -1,9 +1,9 @@
 package net.edge.content.skill.prayer;
 
 import net.edge.action.impl.ItemAction;
-import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.impl.DestructionSkillAction;
+import net.edge.task.Task;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -14,16 +14,16 @@ import java.util.Optional;
 import static net.edge.content.achievements.Achievement.BURY_BONES;
 
 public final class PrayerBoneBury extends DestructionSkillAction {
-	
+
 	private final Bone bone;
 	private final int itemId;
-	
+
 	public PrayerBoneBury(Player player, int itemId, Bone bone) {
 		super(player, Optional.empty());
 		this.bone = bone;
 		this.itemId = itemId;
 	}
-	
+
 	public static void action() {
 		for(Bone b : Bone.values()) {
 			ItemAction e = new ItemAction() {
@@ -44,17 +44,17 @@ public final class PrayerBoneBury extends DestructionSkillAction {
 			e.register(b.getId());
 		}
 	}
-	
+
 	@Override
 	public boolean canExecute() {
 		return true;
 	}
-	
+
 	@Override
 	public Item destructItem() {
 		return new Item(itemId);
 	}
-	
+
 	@Override
 	public void onDestruct(Task t, boolean success) {
 		if(success) {
@@ -65,27 +65,27 @@ public final class PrayerBoneBury extends DestructionSkillAction {
 		}
 		t.cancel();
 	}
-	
+
 	@Override
 	public int delay() {
 		return 0;
 	}
-	
+
 	@Override
 	public boolean instant() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean init() {
 		return getPlayer().getBuryTimer().elapsed(1200);
 	}
-	
+
 	@Override
 	public double experience() {
 		return bone.getExperience();
 	}
-	
+
 	@Override
 	public SkillData skill() {
 		return SkillData.PRAYER;

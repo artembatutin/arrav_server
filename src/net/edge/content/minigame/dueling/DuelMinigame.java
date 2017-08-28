@@ -3,6 +3,12 @@ package net.edge.content.minigame.dueling;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.content.combat.CombatType;
+import net.edge.content.combat.strategy.player.special.CombatSpecial;
+import net.edge.content.dialogue.impl.OptionDialogue;
+import net.edge.content.item.FoodConsumable;
+import net.edge.content.item.PotionConsumable;
+import net.edge.content.minigame.Minigame;
+import net.edge.content.skill.prayer.Prayer;
 import net.edge.net.packet.out.SendContainer;
 import net.edge.net.packet.out.SendContextMenu;
 import net.edge.task.LinkedTaskSequence;
@@ -10,22 +16,16 @@ import net.edge.util.TextUtils;
 import net.edge.util.log.Log;
 import net.edge.util.log.impl.DuelLog;
 import net.edge.util.rand.RandomUtils;
-import net.edge.content.combat.strategy.player.special.CombatSpecial;
+import net.edge.world.World;
+import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.EquipmentType;
 import net.edge.world.entity.item.container.session.impl.DuelSession;
-import net.edge.content.dialogue.impl.OptionDialogue;
-import net.edge.content.item.FoodConsumable;
-import net.edge.content.item.PotionConsumable;
-import net.edge.content.minigame.Minigame;
-import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 import net.edge.world.locale.loc.SquareLocation;
-import net.edge.world.World;
-import net.edge.world.entity.EntityType;
-import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.item.Item;
 import net.edge.world.object.GameObject;
 
 import java.util.EnumSet;
@@ -33,28 +33,30 @@ import java.util.Optional;
 
 /**
  * Holds functionality for the fighting session of the dueling minigame.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class DuelMinigame extends Minigame {
-	
+
 	/**
 	 * The session to manage the fight for.
 	 */
 	private final DuelSession session;
-	
+
 	private final EnumSet<DuelingRules> rules;
 	/**
 	 * The flag which determines if the fight started.
 	 */
 	private boolean started = false;
-	
+
 	/**
 	 * The flag which determines if the player can claim the items yet.
 	 */
 	private boolean claim = false;
-	
+
 	/**
 	 * Constructs a new {@link DuelMinigame}.
+	 *
 	 * @param session {@link #session}.
 	 */
 	public DuelMinigame(DuelSession session) {
@@ -62,29 +64,30 @@ public final class DuelMinigame extends Minigame {
 		this.session = session;
 		this.rules = session.getRules().clone();
 	}
-	
+
 	/**
 	 * The square location for the obstacles dueling arena.
 	 */
 	private static final SquareLocation OBSTACLES_ARENA_CHECK = new SquareLocation(3367, 3246, 3384, 3256, 0);
-	
+
 	/**
 	 * The square location for the default dueling arena.
 	 */
 	private static final SquareLocation DEFAULT_ARENA_CHECK = new SquareLocation(3336, 3246, 3354, 3256, 0);
-	
+
 	/**
 	 * The square location for the obstacles dueling arena.
 	 */
 	private static final SquareLocation OBSTACLES_ARENA = new SquareLocation(3367, 3246, 3384, 3256, 0);
-	
+
 	/**
 	 * The square location for the default dueling arena.
 	 */
 	private static final SquareLocation DEFAULT_ARENA = new SquareLocation(3336, 3246, 3354, 3256, 0);
-	
+
 	/**
 	 * Applies the staked items to the winner and clears the minigame session.
+	 *
 	 * @param loser  the loser who lost the duel.
 	 * @param winner the winner who won the duel.
 	 * @param logout whether the duel was won through the opponent logging out.
@@ -94,15 +97,15 @@ public final class DuelMinigame extends Minigame {
 		loser.move(deathPosition(loser));
 		loser.setMinigame(Optional.empty());
 		this.restore(loser);
-		
+
 		if(!logout) {
 			loser.message("You have been defeated by " + winner.getFormatUsername() + ".");
 		}
-		
+
 		winner.out(new SendContextMenu(2, false, "Challenge"));
 		winner.move(deathPosition(winner));
 		winner.message("You have successfully defeated " + loser.getFormatUsername() + " to win the duel.");
-		
+
 		this.restore(winner);
 
 		if(session.getExchangeSession().get(loser).isEmpty()) {
@@ -112,30 +115,30 @@ public final class DuelMinigame extends Minigame {
 
 		World.getLoggingManager().write(Log.create(new DuelLog(loser, winner, false, session.getExchangeSession().get(loser), session.getExchangeSession().get(winner))));
 		World.getLoggingManager().write(Log.create(new DuelLog(winner, loser, true, session.getExchangeSession().get(loser), session.getExchangeSession().get(winner))));
-		
+
 		winner.text(6840, loser.getFormatUsername());
 		winner.text(6839, Integer.toString(loser.determineCombatLevel()));
-		
+
 		winner.out(new SendContainer(6822, session.getExchangeSession().get(loser)));
 		winner.widget(6733);
 		claim = true;
 	}
-	
+
 	@Override
 	public void onLogin(Player player) {
 		//nothing occurs on login.
 	}
-	
+
 	@Override
 	public void onLogout(Player player) {
 		if(!claim) {
 			applyWin(player, session.getOther(player), true);
 			return;
 		}
-		
+
 		onInterfaceClick(player);
 	}
-	
+
 	@Override
 	public void onEnter(Player player) {
 
@@ -151,14 +154,14 @@ public final class DuelMinigame extends Minigame {
 				player.message("So they were moved to your bank instead.");
 			} SHOULD NEVER REACH THIS STATE, CHECK BEFORE THE DUEL IF ITS POSSIBLE */
 		});
-		
+
 		if(getRules().contains(DuelingRules.OBSTACLES)) {
 			player.move(OBSTACLES_ARENA.random());
 			other.move(OBSTACLES_ARENA.random());
 			startCountdown();
 			return;
 		}
-		
+
 		if(getRules().contains(DuelingRules.NO_MOVEMENT)) {
 			player.move(DEFAULT_ARENA_CHECK.random());
 			ObjectList<Position> pos = TraversalMap.getSurroundedTraversableTiles(player.getPosition(), player.size(), other.size());
@@ -169,13 +172,13 @@ public final class DuelMinigame extends Minigame {
 			startCountdown();
 			return;
 		}
-		
+
 		player.move(DEFAULT_ARENA.random());
 		other.move(DEFAULT_ARENA.random());
-		
+
 		startCountdown();
 	}
-	
+
 	/**
 	 * Starts the countdown for the dueling timer.
 	 */
@@ -193,19 +196,19 @@ public final class DuelMinigame extends Minigame {
 			seq.start();
 		});
 	}
-	
+
 	@Override
 	public void onKill(Player player, Actor victim) {
 		applyWin(victim.toPlayer(), player, false);
 	}
-	
+
 	@Override
 	public void onInterfaceClick(Player player) {
 		if(!claim) {
 			return;
 		}
 		claim = false;
-		
+
 		ObjectList<Item> items = new ObjectArrayList<>();
 		session.getPlayers().forEach(p -> {
 			session.getExchangeSession().get(p).forEach(items::add);
@@ -219,12 +222,12 @@ public final class DuelMinigame extends Minigame {
 	public boolean canLogout(Player player) {
 		return true;
 	}
-	
+
 	@Override
 	public boolean contains(Player player) {
 		return claim || OBSTACLES_ARENA_CHECK.inLocation(player.getPosition()) || DEFAULT_ARENA_CHECK.inLocation(player.getPosition());
 	}
-	
+
 	@Override
 	public Position deathPosition(Player player) {
 		return new Position(3361 + RandomUtils.inclusive(11), 3264 + RandomUtils.inclusive(3), 0);
@@ -232,9 +235,8 @@ public final class DuelMinigame extends Minigame {
 
 	@Override
 	public boolean canEquip(Player player, Item item, EquipmentType type) {
-		player.message("type: "+type);
+		player.message("type: " + type);
 		//private final List<DuelingRules> selected_equipment_rules = getRules().stream().filter(DuelingRules.EQUIPMENT_RULES::contains).collect(Collectors.toList());
-
 
 		boolean canEquip = rules.stream().anyMatch(r -> r.getSlot() != -1 && r.getSlot() != type.getSlot());
 
@@ -243,15 +245,17 @@ public final class DuelMinigame extends Minigame {
 
 		return canEquip;
 	}
+
 	@Override
 	public boolean canTrade(Player player, Player other) {
 		return false;
 	}
+
 	@Override
 	public boolean canTeleport(Player player, Position position) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean canEat(Player player, FoodConsumable food) {
 		if(getRules().contains(DuelingRules.NO_FOOD)) {
@@ -269,7 +273,7 @@ public final class DuelMinigame extends Minigame {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean canPray(Player player, Prayer prayer) {
 		if(getRules().contains(DuelingRules.NO_PRAYER)) {
@@ -278,7 +282,7 @@ public final class DuelMinigame extends Minigame {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean onFirstClickObject(Player player, GameObject object) {
 		if(object.getId() == 3203) {
@@ -295,7 +299,7 @@ public final class DuelMinigame extends Minigame {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean canHit(Player player, Actor victim, CombatType type) {
 		if(victim.getType().equals(EntityType.NPC)) {
@@ -345,7 +349,7 @@ public final class DuelMinigame extends Minigame {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean canUseSpecialAttacks(Player player, CombatSpecial special) {
 		if(getRules().contains(DuelingRules.NO_SPECIAL_ATTACKS)) {
@@ -354,7 +358,7 @@ public final class DuelMinigame extends Minigame {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean canWalk(Player player) {
 		if(getRules().contains(DuelingRules.NO_MOVEMENT)) {

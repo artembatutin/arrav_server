@@ -2,11 +2,10 @@ package net.edge.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import net.edge.util.json.JsonLoader;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.slayer.SlayerKeyPolicy;
 import net.edge.content.skill.slayer.SlayerMaster;
-import net.edge.world.entity.actor.mob.MobDefinition;
+import net.edge.util.json.JsonLoader;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -14,14 +13,15 @@ import java.util.stream.IntStream;
 
 /**
  * The {@link JsonLoader} implementation that loads all slayer keys.
+ *
  * @author <a href="http://www.rune-server.org/members/Stand+Up/">Stan</a>
  */
 public final class SlayerDefinitionLoader extends JsonLoader {
-	
+
 	public SlayerDefinitionLoader() {
 		super("./data/def/slayer/slayer.json");
 	}
-	
+
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		SlayerMaster[] masters = Objects.requireNonNull(builder.fromJson(reader.get("masters").getAsJsonArray(), SlayerMaster[].class));
@@ -31,5 +31,5 @@ public final class SlayerDefinitionLoader extends JsonLoader {
 		}
 		Arrays.stream(masters).forEach(master -> Slayer.SLAYER_KEYS.put(master, tasks));
 	}
-	
+
 }

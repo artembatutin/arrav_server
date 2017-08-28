@@ -1,8 +1,8 @@
 package net.edge.action.item;
 
-import net.edge.content.skill.Skills;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ItemAction;
+import net.edge.content.skill.Skills;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.player.Player;

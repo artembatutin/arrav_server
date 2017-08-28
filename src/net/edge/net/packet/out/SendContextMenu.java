@@ -8,17 +8,17 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendContextMenu implements OutgoingPacket {
-	
+
 	private final int slot;
 	private final boolean top;
 	private final String option;
-	
+
 	public SendContextMenu(int slot, boolean top, String option) {
 		this.slot = slot;
 		this.top = top;
 		this.option = option;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(104, PacketType.VARIABLE_BYTE);

@@ -1,15 +1,15 @@
 package net.edge.action.but;
 
+import net.edge.GameConstants;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ButtonAction;
-import net.edge.GameConstants;
 import net.edge.net.host.HostListType;
 import net.edge.net.host.HostManager;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
 public class IronManSelection extends ActionInitializer {
-	
+
 	@Override
 	public void init() {
 		ButtonAction e = new ButtonAction() {
@@ -45,5 +45,5 @@ public class IronManSelection extends ActionInitializer {
 		e.register(201);
 
 	}
-	
+
 }

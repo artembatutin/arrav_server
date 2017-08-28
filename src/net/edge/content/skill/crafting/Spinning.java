@@ -2,42 +2,40 @@ package net.edge.content.skill.crafting;
 
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2IntArrayMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.action.impl.ItemOnObjectAction;
+import net.edge.content.skill.SkillData;
+import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
-import net.edge.content.skill.SkillData;
-import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.object.GameObject;
 
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Holds functionality for spinning items.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Spinning extends ProducingSkillAction {
-	
+
 	/**
 	 * The data this skill action is dependent of.
 	 */
 	private final SpinningData data;
-	
+
 	/**
 	 * The amount of times this task should run for.
 	 */
 	private int amount;
-	
+
 	/**
 	 * Constructs a new {@link Spinning}.
+	 *
 	 * @param player {@link #getPlayer()}.
 	 * @param data   {@link #data}.
 	 * @param amount {@link #amount}.
@@ -47,9 +45,10 @@ public final class Spinning extends ProducingSkillAction {
 		this.data = data;
 		this.amount = amount;
 	}
-	
+
 	/**
 	 * Attempts to register a certain amount of spinning products.
+	 *
 	 * @param player   the player creating the spinning products.
 	 * @param buttonId the button the player interacted with.
 	 * @return {@code true} if the player created any products, {@code false} otherwise.
@@ -69,9 +68,10 @@ public final class Spinning extends ProducingSkillAction {
 		create(player, (SpinningData) player.getAttr().get("crafting_spinning").get(), amount);
 		return true;
 	}
-	
+
 	/**
 	 * Starts the skill action.
+	 *
 	 * @param player the player to start the skill action for.
 	 * @param data   the data this skill action is dependent of.
 	 * @param amount the amount of times this task should run.
@@ -80,7 +80,7 @@ public final class Spinning extends ProducingSkillAction {
 		Spinning crafting = new Spinning(player, data, amount);
 		crafting.start();
 	}
-	
+
 	public static void action() {
 		for(SpinningData data : SpinningData.values()) {
 			ItemOnObjectAction a = new ItemOnObjectAction() {
@@ -101,68 +101,68 @@ public final class Spinning extends ProducingSkillAction {
 			a.registerItem(data.item.getId());
 		}
 	}
-	
+
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			amount--;
-			
+
 			if(amount <= 0)
 				t.cancel();
 		}
 	}
-	
+
 	@Override
 	public Optional<Animation> animation() {
 		return Optional.of(new Animation(883));
 	}
-	
+
 	@Override
 	public Optional<Item[]> removeItem() {
 		return Optional.of(new Item[]{data.item});
 	}
-	
+
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(new Item[]{data.produced});
 	}
-	
+
 	@Override
 	public int delay() {
 		return 5;
 	}
-	
+
 	@Override
 	public boolean instant() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean init() {
 		player.closeWidget();
 		return checkCrafting();
 	}
-	
+
 	@Override
 	public boolean canExecute() {
 		return checkCrafting();
 	}
-	
+
 	@Override
 	public double experience() {
 		return data.experience;
 	}
-	
+
 	@Override
 	public SkillData skill() {
 		return SkillData.CRAFTING;
 	}
-	
+
 	@Override
 	public void onStop() {
 		player.getAttr().get("crafting_spin").set(false);
 	}
-	
+
 	private boolean checkCrafting() {
 		if(!player.getSkills()[skill().getId()].reqLevel(data.requirement)) {
 			player.message("You need a crafting level of " + data.requirement + " to spin " + TextUtils.appendIndefiniteArticle(data.produced.getDefinition().getName()));
@@ -170,7 +170,7 @@ public final class Spinning extends ProducingSkillAction {
 		}
 		return true;
 	}
-	
+
 	public enum SpinningData {
 		WOOL(1737, 1759, 1, 2.5),
 		FLAX(1779, 1777, 1, 15),
@@ -181,24 +181,25 @@ public final class Spinning extends ProducingSkillAction {
 		 * The item required to spin.
 		 */
 		private final Item item;
-		
+
 		/**
 		 * The item produced from spinning.
 		 */
 		private final Item produced;
-		
+
 		/**
 		 * The requirement to spin.
 		 */
 		private final int requirement;
-		
+
 		/**
 		 * The experience gained from spinning.
 		 */
 		private final double experience;
-		
+
 		/**
 		 * Constructs a new {@link SpinningData}.
+		 *
 		 * @param item        {@link #item}.
 		 * @param produced    {@link #produced}.
 		 * @param requirement {@link #requirement}.
@@ -211,6 +212,6 @@ public final class Spinning extends ProducingSkillAction {
 			this.experience = experience;
 		}
 	}
-	
+
 	private static final Int2IntArrayMap BUTTON_FOR_AMOUNT = new Int2IntArrayMap(ImmutableMap.of(10239, 1, 10238, 5, 6212, -1, 6211, -2));
 }

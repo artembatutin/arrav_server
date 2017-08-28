@@ -1,14 +1,14 @@
 package net.edge.content.skill.magic;
 
 import com.google.common.collect.ImmutableMap;
-import net.edge.task.Task;
-import net.edge.world.entity.item.container.impl.Inventory;
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
+import net.edge.task.Task;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Inventory;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -19,26 +19,29 @@ import static net.edge.content.achievements.Achievement.ENCHANTER;
 
 /**
  * The class which is responsible for enchanting crossbow bolts.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class EnchantCrossbowBolts extends ProducingSkillAction {
-	
+
 	/**
 	 * The data this skill action is dependent of.
 	 */
 	private final BoltData data;
-	
+
 	/**
 	 * Constructs a new {@link EnchantCrossbowBolts}.
+	 *
 	 * @param player {@link #getPlayer()}.
 	 */
 	public EnchantCrossbowBolts(Player player, BoltData data) {
 		super(player, Optional.empty());
 		this.data = data;
 	}
-	
+
 	/**
 	 * Attempts to enchant our bolts.
+	 *
 	 * @param player   {@link #getPlayer()}.
 	 * @param buttonId the button clicked.
 	 * @return {@code true} if any of our bolts are enchanted, {@code false} otherwise.
@@ -52,9 +55,10 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 		magic.start();
 		return true;
 	}
-	
+
 	/**
 	 * Attempts to open the enchant crossbow bolts interface.
+	 *
 	 * @param player   {@link #getPlayer()}.
 	 * @param buttonId the button the player clicked.
 	 * @return {@code true} if the interface was opened, {@code false} otherwise.
@@ -68,7 +72,7 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 			player.message("You need a magic level of 4 to cast this spell.");
 			return false;
 		}
-		
+
 		Inventory inventory = player.getInventory();
 		player.text(49009, "@gre@Magic 4");
 		player.text(49012, (inventory.contains(new Item(564, 10)) ? "@gre@" : "@red@") + "10x");
@@ -106,55 +110,55 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 		player.widget(49000);
 		return true;
 	}
-	
+
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			ENCHANTER.inc(player, data.produced.getAmount());
 		}
 	}
-	
+
 	@Override
 	public Optional<Item[]> removeItem() {
 		return Optional.of(data.required);
 	}
-	
+
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(new Item[]{data.produced});
 	}
-	
+
 	@Override
 	public int delay() {
 		return 3;
 	}
-	
+
 	@Override
 	public boolean instant() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean init() {
 		player.closeWidget();
 		return checkMagic();
 	}
-	
+
 	@Override
 	public boolean canExecute() {
 		return checkMagic();
 	}
-	
+
 	@Override
 	public double experience() {
 		return data.experience;
 	}
-	
+
 	@Override
 	public SkillData skill() {
 		return SkillData.MAGIC;
 	}
-	
+
 	private boolean checkMagic() {
 		if(!player.getSkills()[skill().getId()].reqLevel(data.level)) {
 			player.message("You need a magic level of " + data.level + " to cast this spell.");
@@ -162,10 +166,11 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * The enumerated type whose elements represent a set of constants used to
 	 * define the bolts that can be enchanted.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private enum BoltData {
@@ -179,39 +184,40 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 		DIAMOND(191167, new Item[]{new Item(564, 10), new Item(563, 20), new Item(557, 100), new Item(9340, 10)}, 9243, 57, 67),
 		DRAGONSTONE(191175, new Item[]{new Item(564, 10), new Item(566, 10), new Item(557, 150), new Item(9341, 10)}, 9244, 68, 78),
 		ONYX(191183, new Item[]{new Item(564, 10), new Item(554, 200), new Item(560, 10), new Item(9342, 10)}, 9245, 87, 97);
-		
+
 		/**
 		 * Caches our enum values.
 		 */
 		private static final ImmutableMap<Integer, BoltData> VALUES = ImmutableMap.copyOf(Stream.of(values()).collect(Collectors.toMap(t -> t.buttonId, Function.identity())));
-		
+
 		/**
 		 * The button identification for this bolt.
 		 */
 		private final int buttonId;
-		
+
 		/**
 		 * The items required.
 		 */
 		private final Item[] required;
-		
+
 		/**
 		 * The item produced.
 		 */
 		private final Item produced;
-		
+
 		/**
 		 * The level required to cast this spell.
 		 */
 		private final int level;
-		
+
 		/**
 		 * The experience gained upon casting this spell.
 		 */
 		private final double experience;
-		
+
 		/**
 		 * Constructs a new {@link BoltData}.
+		 *
 		 * @param buttonId   {@link #buttonId}
 		 * @param required   {@link #required}.
 		 * @param produced   {@link #produced}.

@@ -3,7 +3,6 @@ package net.edge.action.obj;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ObjectAction;
 import net.edge.content.scoreboard.ScoreboardManager;
-import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.object.GameObject;
 

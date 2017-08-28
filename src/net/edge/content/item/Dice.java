@@ -1,11 +1,11 @@
 package net.edge.content.item;
 
 import net.edge.action.impl.ItemAction;
-import net.edge.task.LinkedTaskSequence;
-import net.edge.util.rand.RandomUtils;
 import net.edge.content.clanchat.ClanChatRank;
 import net.edge.content.clanchat.ClanMember;
 import net.edge.content.dialogue.impl.OptionDialogue;
+import net.edge.task.LinkedTaskSequence;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.player.Player;
@@ -15,14 +15,16 @@ import net.edge.world.entity.item.container.impl.Inventory;
 
 /**
  * The class which is responsible for dicing actions.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Dice {
-	
+
 	/**
 	 * Attempts to roll the dice.
+	 *
 	 * @param player   the player rolling the dice.
-	 * @param data   the dice data.
+	 * @param data     the dice data.
 	 * @param clanchat determines if this roll is in the clan chat.
 	 * @return {@code true} if the dice was rolled, {@code false} otherwise.
 	 */
@@ -43,32 +45,32 @@ public final class Dice {
 				player.message("You have to be in a clan chat to do this.");
 				return true;
 			}
-			
+
 			ClanMember member = player.getClan().get();
-			
+
 			if(!member.getRank().greater(ClanChatRank.CORPORAL)) {
 				player.message("You must be corporal+ in a clan chat to do this.");
 				return true;
 			}
-			
+
 			player.animation(new Animation(11900, Animation.AnimationPriority.HIGH));
 			player.graphic(data.graphic);
-			
+
 			LinkedTaskSequence seq = new LinkedTaskSequence();
 			seq.connect(1, () -> member.message(data.clanChatformat(), "[Dice: " + player.getFormatUsername() + "]"));
 			seq.start();
 			return true;
 		}
-		
+
 		player.animation(new Animation(11900, Animation.AnimationPriority.HIGH));
 		player.graphic(data.graphic);
-		
+
 		LinkedTaskSequence seq = new LinkedTaskSequence();
 		seq.connect(1, () -> player.message(data.privateChatFormat(player.getFormatUsername())));
 		seq.start();
 		return true;
 	}
-	
+
 	public static void action() {
 		for(DiceData data : DiceData.values()) {
 			if(data.equals(DiceData.DICE_BAG)) {
@@ -119,7 +121,7 @@ public final class Dice {
 									break;
 							}
 						}, "Die (4 sides)", "Die (6 sides)", "Die (8 sides)", "Die (10 sides)", "@red@Next page"),
-						
+
 						new OptionDialogue(t -> {
 							if(!t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 								player.getInventory().remove(DiceData.DICE_BAG.item);
@@ -143,17 +145,18 @@ public final class Dice {
 									break;
 							}
 						}, "@red@Previous page", "Die (12 sides)", "Die (20 sides)", "Dice (2, 6)", "Dice (up to 100)")
-				
+
 				);
 				return true;
 			}
 		};
 		bag.register(DiceData.DICE_BAG.item.getId());
 	}
-	
+
 	/**
 	 * The enumerated type whose elements represent a set of constants used to define
 	 * the data of dices with.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private enum DiceData {
@@ -166,29 +169,30 @@ public final class Dice {
 		DIE_20_SIDED(15096, 2068, 20, "20-sided die"),
 		DICE_2_6_SIDED(15088, 2074, 26, "2-, 6-sided dice"),
 		DICE_100(15098, 2075, 100, "percentile dice");
-		
+
 		/**
 		 * The item this dice represents.
 		 */
 		private final Item item;
-		
+
 		/**
 		 * The graphic played when this dice is rolled.
 		 */
 		private final Graphic graphic;
-		
+
 		/**
 		 * The amount to roll.
 		 */
 		private final int amount;
-		
+
 		/**
 		 * The format name of this dice.
 		 */
 		private final String format;
-		
+
 		/**
 		 * Constructs a new {@link DiceData}.
+		 *
 		 * @param itemId  {@link #item}.
 		 * @param graphic {@link #graphic}.
 		 * @param amount  {@link #amount}.
@@ -200,11 +204,11 @@ public final class Dice {
 			this.amount = amount;
 			this.format = format;
 		}
-		
+
 		public final String clanChatformat() {
 			return this.amount == 26 ? "just rolled a " + RandomUtils.inclusive(1, 6) + " and " + RandomUtils.inclusive(1, 6) + " on the " + this.format + "." : "just rolled a " + RandomUtils.inclusive(1, this.amount) + " on the " + this.format + ".";
 		}
-		
+
 		public final String privateChatFormat(String username) {
 			return this.amount == 26 ? "You rolled a @red@" + RandomUtils.inclusive(1, 6) + "@bla@ and @red@" + RandomUtils.inclusive(1, 6) + "@bla@ on the " + this.format + "." : "You rolled a @red@" + RandomUtils.inclusive(1, this.amount) + "@bla@ on the " + this.format + ".";
 		}

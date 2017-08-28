@@ -2,10 +2,10 @@ package net.edge.content.skill.herblore;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import net.edge.content.skill.action.SkillAction;
-import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
+import net.edge.content.skill.action.SkillAction;
 import net.edge.content.skill.action.impl.ProducingSkillAction;
+import net.edge.task.Task;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -15,26 +15,27 @@ import java.util.Optional;
 
 /**
  * Represents the procession for grinding items.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Grinding extends ProducingSkillAction {
-	
+
 	/**
 	 * The {@link GrindingData} holding all the data required for processing
 	 * the creation of grindable items.
 	 */
 	private final GrindingData definition;
-	
+
 	/**
 	 * Represents the identifier for the pestle and mortar.
 	 */
 	private static final Item PESTLE_MORTAR = new Item(233);
-	
+
 	/**
 	 * Represents the animation for tar creation.
 	 */
 	private static final Animation ANIMATION = new Animation(364);
-	
+
 	/**
 	 * Constructs a new {@link Grinding}.
 	 */
@@ -43,9 +44,10 @@ public final class Grinding extends ProducingSkillAction {
 		Item item = firstItem.getId() == PESTLE_MORTAR.getId() ? secondItem : firstItem;
 		this.definition = GrindingData.getDefinition(item.getId()).orElse(null);
 	}
-	
+
 	/**
 	 * Produces guam tars if the player has the requirements required.
+	 *
 	 * @param player     {@link #getPlayer()};
 	 * @param firstItem  the first item that was used on the second item.
 	 * @param secondItem the second item that was used on by the first item.
@@ -62,61 +64,61 @@ public final class Grinding extends ProducingSkillAction {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			getPlayer().animation(ANIMATION);
 		}
 	}
-	
+
 	@Override
 	public Optional<Item[]> removeItem() {
 		return Optional.of(new Item[]{definition.item});
 	}
-	
+
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(new Item[]{definition.product});
 	}
-	
+
 	@Override
 	public int delay() {
 		return 4;
 	}
-	
+
 	@Override
 	public boolean instant() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean init() {
 		return checkGrinding();
 	}
-	
+
 	@Override
 	public boolean canExecute() {
 		return checkGrinding();
 	}
-	
+
 	@Override
 	public void onSkillAction(SkillAction other) {
 		if(other instanceof Grinding) {
 			this.stop();
 		}
 	}
-	
+
 	@Override
 	public double experience() {
 		return definition.experience;
 	}
-	
+
 	@Override
 	public SkillData skill() {
 		return SkillData.HERBLORE;
 	}
-	
+
 	private boolean checkGrinding() {
 		if(definition == null) {
 			return false;
@@ -127,9 +129,10 @@ public final class Grinding extends ProducingSkillAction {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * The data required for processing the creation of grindable items.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private enum GrindingData {
@@ -155,29 +158,30 @@ public final class Grinding extends ProducingSkillAction {
 		DRIED_THISTLE(3263, 3264, 240),
 		GARLIC(1550, 4698, 255),
 		BLACK_MUSHROOM(4620, 4622, 280);
-		
+
 		/**
 		 * Caches our enum values.
 		 */
 		private static final ImmutableSet<GrindingData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(GrindingData.class));
-		
+
 		/**
 		 * The identification for the producible item.
 		 */
 		private final Item item;
-		
+
 		/**
 		 * The identification for the final product.
 		 */
 		private final Item product;
-		
+
 		/**
 		 * The experience identification for the final product.
 		 */
 		private final double experience;
-		
+
 		/**
 		 * Constructs a new {@link GrindingData} enumerator.
+		 *
 		 * @param item       {@link #item}.
 		 * @param product    {@link #product}.
 		 * @param experience {@link #experience}.
@@ -187,14 +191,15 @@ public final class Grinding extends ProducingSkillAction {
 			this.product = new Item(product);
 			this.experience = experience;
 		}
-		
+
 		@Override
 		public final String toString() {
 			return name().toLowerCase().replaceAll("_", " ");
 		}
-		
+
 		/**
 		 * Gets the definition for this guam tar.
+		 *
 		 * @param identifier the identifier to check for.
 		 * @return an optional holding the {@link GuamTar} value found,
 		 * {@link Optional#empty} otherwise.

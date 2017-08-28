@@ -5,8 +5,8 @@ import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.HitIcon;
 import net.edge.content.combat.hit.Hitsplat;
 import net.edge.net.packet.out.SendConfig;
-import net.edge.world.entity.actor.Actor;
 import net.edge.world.PoisonType;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -15,27 +15,28 @@ import java.util.Optional;
 
 /**
  * The combat effect applied when a character needs to be poisoned.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class CombatPoisonEffect extends CombatEffect {
-	
+
 	/**
 	 * The collection of weapons mapped to their respective poison types.
 	 */
 	public static final Int2ObjectArrayMap<PoisonType> TYPES = new Int2ObjectArrayMap<>();
-	
+
 	/**
 	 * The amount of times this player has been hit.
 	 */
 	private int amount;
-	
+
 	/**
 	 * Creates a new {@link CombatPoisonEffect}.
 	 */
 	CombatPoisonEffect() {
 		super(30);
 	}
-	
+
 	@Override
 	public boolean apply(Actor t) {
 		if(t.isPoisoned() || t.getPoisonType() == null)
@@ -50,12 +51,12 @@ public final class CombatPoisonEffect extends CombatEffect {
 		t.getPoisonDamage().set(t.getPoisonType().getDamage());
 		return true;
 	}
-	
+
 	@Override
 	public boolean removeOn(Actor t) {
 		return !t.isPoisoned() || t.isDead();
 	}
-	
+
 	@Override
 	public void process(Actor t) {
 		amount--;
@@ -79,6 +80,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 	 * Gets the {@link PoisonType} for {@code item} wrapped in an optional. If a
 	 * poison type doesn't exist for the item then an empty optional is
 	 * returned.
+	 *
 	 * @param item the item to get the poison type for.
 	 * @return the poison type for this item wrapped in an optional, or an empty
 	 * optional if no poison type exists.
@@ -88,10 +90,11 @@ public final class CombatPoisonEffect extends CombatEffect {
 			return Optional.empty();
 		return Optional.ofNullable(TYPES.get(item.getId()));
 	}
-	
+
 	/**
 	 * Gets the {@link PoisonType} for {@code npc} wrapped in an optional. If a
 	 * poison type doesn't exist for the NPC then an empty optional is returned.
+	 *
 	 * @param npc the NPC to get the poison type for.
 	 * @return the poison type for this NPC wrapped in an optional, or an empty
 	 * optional if no poison type exists.

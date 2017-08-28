@@ -6,6 +6,7 @@ import net.edge.world.entity.actor.player.Player;
 
 /**
  * Holds all the achievements
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum Achievement {
@@ -55,9 +56,8 @@ public enum Achievement {
 	PRICELESS_GEM("Cut %s gems", 20, 50, 500, 1000),
 	GOLD_AND_RIGNS("Create %s jewellery", 20, 50, 100, 500),
 	QUALITY_HIDES("Carve %s hide items", 20, 50, 500, 500),
-	POTTERY("Create %s pottery items", 20, 50, 500, 5000),
-	;
-	
+	POTTERY("Create %s pottery items", 20, 50, 500, 5000),;
+
 	//COMPLETE_TUTORIAL("Complete the tutorial", 1),//TODO
 	//SETUP_PRELOADING_GEAR("Setup your first gear preset", 1),//TODO
 	//BOSS_DESTROYER("Kill 1,000 of any boss", 1000),//TODO
@@ -67,29 +67,30 @@ public enum Achievement {
 	//AGS_MAX("Hit an 82 with an Armadyl godwsword", 82),//TODO
 	//BALLISTA_MAX("Hit an 80 with a Heavy ballista", 80),//TODO
 	//MAULED("Kill 75 players with a Granite maul", 75),//TODO
-	
+
 	/**
 	 * Caches our enum values.
 	 */
 	public static final ImmutableSet<Achievement> VALUES = ImmutableSet.copyOf(values());
-	
+
 	/**
 	 * The amount required to complete the achievement.
 	 */
 	private final int[] amount;
-	
+
 	/**
 	 * The achievement task string.
 	 */
 	private final String task;
-	
+
 	/**
 	 * The name of this achievement
 	 */
 	private final String name;
-	
+
 	/**
 	 * Constructs a new <code>Achievement<code>.
+	 *
 	 * @param amount The amount required to complete the achievement.
 	 * @param task   The achievement task string.
 	 */
@@ -98,44 +99,47 @@ public enum Achievement {
 		this.task = task;
 		this.name = TextUtils.capitalize(name().toLowerCase().replaceAll("_", " "));
 	}
-	
+
 	/**
 	 * Gets the amount required to complete the achievement.
+	 *
 	 * @return Achievement amount.
 	 */
 	public int[] getAmount() {
 		return amount;
 	}
-	
+
 	/**
 	 * Gets the achievement task.
+	 *
 	 * @return Achievement task.
 	 */
 	public String getTask() {
 		return task;
 	}
-	
+
 	/**
 	 * Gets the achievement name.
+	 *
 	 * @return Achievement name.
 	 */
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * Gets the total amount of achievements.
+	 *
 	 * @return Achievement total.
 	 */
 	public static int getTotal() {
 		return values().length;
 	}
-	
+
 	public void inc(Player p) {
 		AchievementHandler.activate(p, this, 1);
 	}
-	
-	
+
 	public void inc(Player p, int am) {
 		AchievementHandler.activate(p, this, am);
 	}

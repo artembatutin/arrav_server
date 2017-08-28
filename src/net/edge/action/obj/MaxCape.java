@@ -1,5 +1,7 @@
 package net.edge.action.obj;
 
+import net.edge.action.ActionInitializer;
+import net.edge.action.impl.ObjectAction;
 import net.edge.content.dialogue.Dialogue;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.OptionDialogue;
@@ -8,8 +10,6 @@ import net.edge.content.dialogue.impl.RequestItemDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.skill.Skills;
-import net.edge.action.ActionInitializer;
-import net.edge.action.impl.ObjectAction;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.object.GameObject;

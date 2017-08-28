@@ -14,19 +14,21 @@ import java.util.concurrent.TimeUnit;
 /**
  * A cache of players who have inflicted damage on another player in a combat
  * session.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class CombatDamage {
-	
+
 	/**
 	 * The damages of players who have inflicted damage.
 	 */
 	private final Object2ObjectOpenHashMap<Actor, DamageCounter> attackers = new Object2ObjectOpenHashMap<>();
-	
+
 	/**
 	 * Registers damage in the backing collection for {@code character}. This
 	 * method has no effect if the character isn't a {@code PLAYER} or if
 	 * {@code amount} is below {@code 0}.
+	 *
 	 * @param character the character to register damage for.
 	 * @param amount    the amount of damage to register.
 	 */
@@ -37,10 +39,11 @@ public final class CombatDamage {
 				counter.incrementAmount(amount);
 		}
 	}
-	
+
 	/**
 	 * Determines which player in the backing collection has inflicted the most
 	 * damage.
+	 *
 	 * @return the player who has inflicted the most damage, or an empty
 	 * optional if there are no entries.
 	 */
@@ -50,7 +53,7 @@ public final class CombatDamage {
 		for(Entry<Actor, DamageCounter> entry : attackers.entrySet()) {
 			DamageCounter counter = entry.getValue();
 			Actor entity = entry.getKey();
-			
+
 			if(!entity.isMob() || entity.isDead() || entity.getState() != EntityState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
 				continue;
 			if(counter.getAmount() > amount) {
@@ -60,10 +63,11 @@ public final class CombatDamage {
 		}
 		return Optional.ofNullable(killer);
 	}
-	
+
 	/**
 	 * Determines which player in the backing collection has inflicted the most
 	 * damage.
+	 *
 	 * @return the player who has inflicted the most damage, or an empty
 	 * optional if there are no entries.
 	 */
@@ -73,7 +77,7 @@ public final class CombatDamage {
 		for(Entry<Actor, DamageCounter> entry : attackers.entrySet()) {
 			DamageCounter counter = entry.getValue();
 			Actor entity = entry.getKey();
-			
+
 			if(!entity.isPlayer() || entity.isDead() || entity.getState() != EntityState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
 				continue;
 			if(counter.getAmount() > amount) {
@@ -83,10 +87,11 @@ public final class CombatDamage {
 		}
 		return Optional.ofNullable(killer);
 	}
-	
+
 	/**
 	 * Determines which entity in the backing collection has inflicted the most
 	 * damage.
+	 *
 	 * @return the player who has inflicted the most damage, or an empty
 	 * optional if there are no entries.
 	 */
@@ -96,7 +101,7 @@ public final class CombatDamage {
 		for(Entry<Actor, DamageCounter> entry : attackers.entrySet()) {
 			DamageCounter counter = entry.getValue();
 			Actor entity = entry.getKey();
-			
+
 			if(entity.isDead() || entity.getState() != EntityState.ACTIVE || counter.isTimeout() || !entity.getPosition().withinDistance(entity.getPosition(), 25))
 				continue;
 			if(counter.getAmount() > amount) {
@@ -106,49 +111,53 @@ public final class CombatDamage {
 		}
 		return Optional.ofNullable(killer);
 	}
-	
+
 	/**
 	 * Clears all data from the backing collection.
 	 */
 	public void clear() {
 		attackers.clear();
 	}
-	
+
 	/**
 	 * A counter that will track the amount of damage dealt and whether that
 	 * damaged has timed out or not.
+	 *
 	 * @author lare96 <http://github.com/lare96>
 	 */
 	private static final class DamageCounter {
-		
+
 		/**
 		 * The amount of damage within this counter.
 		 */
 		private int amount;
-		
+
 		/**
 		 * The stopwatch that will determine when a timeout occurs.
 		 */
 		private final Stopwatch stopwatch = new Stopwatch().reset();
-		
+
 		/**
 		 * Creates a new {@link DamageCounter}.
+		 *
 		 * @param amount the amount of damage within this counter.
 		 */
 		public DamageCounter(int amount) {
 			this.amount = amount;
 		}
-		
+
 		/**
 		 * Gets the amount of damage within this counter.
+		 *
 		 * @return the amount of damage.
 		 */
 		public int getAmount() {
 			return amount;
 		}
-		
+
 		/**
 		 * Increments the amount of damage within this counter.
+		 *
 		 * @param amount the amount to increment by.
 		 */
 		public void incrementAmount(int amount) {
@@ -158,9 +167,10 @@ public final class CombatDamage {
 			this.amount += amount;
 			this.stopwatch.reset();
 		}
-		
+
 		/**
 		 * Determines if this counter has timed out or not.
+		 *
 		 * @return {@code true} if this counter has timed out, {@code false}
 		 * otherwise.
 		 */

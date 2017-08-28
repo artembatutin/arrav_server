@@ -14,6 +14,7 @@ import java.util.Optional;
 
 /**
  * Holds functionality for executing lunar spells.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class LunarSpells {
@@ -35,6 +36,7 @@ public final class LunarSpells {
 
 	/**
 	 * Gets the item spells.
+	 *
 	 * @param spellId     the spell id casted.
 	 * @param interfaceId the interface id the spell casts on.
 	 * @return an optional containing the spell, {@link Optional#empty()} otherwise.
@@ -45,6 +47,7 @@ public final class LunarSpells {
 
 	/**
 	 * Gets the button spells.
+	 *
 	 * @param buttonId the button id casted.
 	 * @return an optional containing the spell, {@link Optional#empty()} otherwise.
 	 */
@@ -54,6 +57,7 @@ public final class LunarSpells {
 
 	/**
 	 * Gets the combat spells.
+	 *
 	 * @param spellId the spell id casted.
 	 * @return an optional containing the spell, {@link Optional#empty()} otherwise.
 	 */
@@ -63,6 +67,7 @@ public final class LunarSpells {
 
 	/**
 	 * Attempts to cast the spellbook swap spell.
+	 *
 	 * @param player the player casting this spell.
 	 */
 	public static void castSpellbookSwap(Player player) {
@@ -74,6 +79,7 @@ public final class LunarSpells {
 
 	/**
 	 * Attempts to cast the button spells.
+	 *
 	 * @param player   the player casting the spell.
 	 * @param buttonId the button id of the spell.
 	 * @return {@code true} if the spell was casted, {@code false} otherwise.
@@ -95,6 +101,7 @@ public final class LunarSpells {
 
 	/**
 	 * Attempts to cast the item spells.
+	 *
 	 * @param player      the player casting the spell.
 	 * @param item        the item the spell was casted on.
 	 * @param spellId     the spell id of the spell.
@@ -122,6 +129,7 @@ public final class LunarSpells {
 
 	/**
 	 * Attempts to cast the combat spells.
+	 *
 	 * @param player  the player casting the spell.
 	 * @param other   the other entity getting casted at.
 	 * @param spellId the spell identification.

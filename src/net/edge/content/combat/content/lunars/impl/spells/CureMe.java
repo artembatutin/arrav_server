@@ -4,14 +4,15 @@ import net.edge.content.combat.content.MagicRune;
 import net.edge.content.combat.content.RequiredRune;
 import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
 import net.edge.net.packet.out.SendConfig;
-import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.entity.actor.Actor;
 
 import java.util.Optional;
 
 /**
  * Holds functionality for the cure me spell.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class CureMe extends LunarButtonSpell {

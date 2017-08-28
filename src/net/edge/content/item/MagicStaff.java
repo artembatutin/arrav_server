@@ -2,9 +2,9 @@ package net.edge.content.item;
 
 import com.google.common.collect.Sets;
 import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Equipment;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -12,6 +12,7 @@ import java.util.Set;
 
 /**
  * The enumerated type whose elements represent the different types of staves.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public enum MagicStaff {
@@ -21,24 +22,25 @@ public enum MagicStaff {
 	FIRE(new int[]{1387, 1393, 1401}, new int[]{554}),
 	MUD(new int[]{6562, 6563}, new int[]{555, 557}),
 	LAVA(new int[]{3053, 3054}, new int[]{554, 557});
-	
+
 	/**
 	 * Caches our enum values.
 	 */
 	private static final Set<MagicStaff> VALUES = Sets.immutableEnumSet(EnumSet.allOf(MagicStaff.class));
-	
+
 	/**
 	 * The current identifiers for this staff type.
 	 */
 	private final int[] ids;
-	
+
 	/**
 	 * The runes that this staff type can replace.
 	 */
 	private final int[] runes;
-	
+
 	/**
 	 * Creates a new {@link MagicStaff}.
+	 *
 	 * @param ids   the current identifiers for this staff type.
 	 * @param runes the runes that this staff type can replace.
 	 */
@@ -46,10 +48,11 @@ public enum MagicStaff {
 		this.ids = ids;
 		this.runes = runes;
 	}
-	
+
 	/**
 	 * Suppresses items in {@code required} if any of the items match the runes
 	 * that are represented by the staff {@code player} is wielding.
+	 *
 	 * @param player   the player to suppress runes for.
 	 * @param required the array of runes to suppress.
 	 * @return the new array of items with suppressed runes removed.
@@ -77,7 +80,7 @@ public enum MagicStaff {
 		}
 		return required;
 	}
-	
+
 	private static Optional<MagicStaff> getStaff(int weapon) {
 		for(MagicStaff staff : VALUES) {
 			for(int item : staff.getIds()) {
@@ -88,17 +91,19 @@ public enum MagicStaff {
 		}
 		return Optional.empty();
 	}
-	
+
 	/**
 	 * Gets the current identifiers for this staff type.
+	 *
 	 * @return the identifiers for this staff.
 	 */
 	public final int[] getIds() {
 		return ids;
 	}
-	
+
 	/**
 	 * Gets the runes that this staff type can replace.
+	 *
 	 * @return the runes this staff replaces.
 	 */
 	public final int[] getRunes() {

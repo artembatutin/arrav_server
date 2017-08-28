@@ -4,6 +4,7 @@ import net.edge.world.entity.actor.Actor;
 
 /**
  * An enumerated type that holds all of the values representing update flags for {@link Actor}s.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum UpdateFlag {
@@ -18,13 +19,13 @@ public enum UpdateFlag {
 	SECONDARY_HIT(8),
 	TRANSFORM(9),
 	FORCE_MOVEMENT(10);
-	
+
 	private final int index;
-	
+
 	UpdateFlag(int index) {
 		this.index = index;
 	}
-	
+
 	public int getIndex() {
 		return index;
 	}

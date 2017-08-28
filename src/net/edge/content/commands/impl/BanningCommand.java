@@ -8,7 +8,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"ban"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "Bans a player, use ::ban username")
 public final class BanningCommand implements Command {
-	
+
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player ban = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
@@ -18,5 +18,5 @@ public final class BanningCommand implements Command {
 			World.get().queueLogout(ban);
 		}
 	}
-	
+
 }

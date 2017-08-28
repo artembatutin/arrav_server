@@ -10,20 +10,21 @@ import net.edge.net.session.LoginSession;
 
 /**
  * The {@link ChannelInitializer} implementation that will initialize {@link SocketChannel}s before they are registered.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class EdgevilleChannelInitializer extends ChannelInitializer<SocketChannel> {
-	
+
 	/**
 	 * Handles upstream messages from Netty.
 	 */
 	private static final ChannelHandler HANDLER = new EdgevilleUpstreamHandler();
-	
+
 	/**
 	 * Filters channels based on the amount of active connections they have.
 	 */
 	private static final ChannelHandler FILTER = new EdgevilleChannelFilter();
-	
+
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ch.attr(NetworkConstants.SESSION_KEY).setIfAbsent(new LoginSession(ch));

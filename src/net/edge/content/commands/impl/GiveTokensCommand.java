@@ -9,7 +9,7 @@ import net.edge.world.entity.item.Item;
 
 @CommandSignature(alias = {"tokens"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR}, syntax = "Give edge tokens, ::tokens username amount")
 public final class GiveTokensCommand implements Command {
-	
+
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player p = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
@@ -21,5 +21,5 @@ public final class GiveTokensCommand implements Command {
 		p.message("You have been given " + amount + " edge tokens, they are in your bank.");
 		player.message("You've increased " + amount + " for " + p.getFormatUsername() + ". Total points = " + p.getTotalDonated(false));
 	}
-	
+
 }

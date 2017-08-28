@@ -1,13 +1,13 @@
 package net.edge.action.mob;
 
+import net.edge.action.ActionInitializer;
+import net.edge.action.impl.MobAction;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.PlayerDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.market.MarketCounter;
 import net.edge.content.skill.Skills;
-import net.edge.action.ActionInitializer;
-import net.edge.action.impl.MobAction;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
@@ -22,9 +22,9 @@ public class IronmanCaptain extends ActionInitializer {
 					DialogueAppender night = new DialogueAppender(player);
 					night.chain(new NpcDialogue(3705, "Evening " + player.getFormatUsername() + ", what do you want?"));
 					night.chain(new OptionDialogue(t -> {
-						if (t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+						if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 							night.getBuilder().skip();
-						} else if (t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
+						} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
 							night.getBuilder().advance();
 						} else {
 							night.getBuilder().last();
@@ -38,7 +38,7 @@ public class IronmanCaptain extends ActionInitializer {
 					night.chain(new NpcDialogue(3705, "I am the Night's watch captain, it is thanks to me", "that the nightmare mode is available for players like you.", "Oh and I also sell interesting items in my shop..."));
 					night.chain(new NpcDialogue(3705, "Would you perhaps want to take a look?"));
 					night.chain(new OptionDialogue(t -> {
-						if (t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
+						if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 							night.getBuilder().skip();
 						} else {
 							night.getBuilder().advance();

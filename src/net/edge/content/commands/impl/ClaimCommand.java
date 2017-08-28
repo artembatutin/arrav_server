@@ -1,8 +1,8 @@
 package net.edge.content.commands.impl;
 
-import net.edge.net.database.connection.use.Donating;
 import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
+import net.edge.net.database.connection.use.Donating;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;

@@ -8,15 +8,15 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendTab implements OutgoingPacket {
-	
+
 	private final int id;
 	private final TabInterface tab;
-	
+
 	public SendTab(int id, TabInterface tab) {
 		this.id = id;
 		this.tab = tab;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(71);

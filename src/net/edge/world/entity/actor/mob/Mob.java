@@ -34,17 +34,19 @@ import java.util.function.Supplier;
 /**
  * The character implementation that represents a node that is operated by the server.
  * This type of node functions solely through the server executing functions.
+ *
  * @author Artem batutin <artembatutin@gmail.com>
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class Mob extends Actor {
 
 	private static final ImmutableMap<Integer, Supplier<CombatStrategy<Mob>>> STRATEGIES = ImmutableMap.of(
-		50, KingBlackDragonStrategy::new
+			50, KingBlackDragonStrategy::new
 	);
 
 	/**
 	 * Gets a certain npc by the specified {@code id} and supplies it's position.
+	 *
 	 * @param id  the id to get the npc by.
 	 * @param pos the position to supply this npc to.
 	 * @return the npc.
@@ -53,7 +55,7 @@ public abstract class Mob extends Actor {
 		Mob mob = new DefaultMob(id, pos);
 		Combat<Mob> combat = mob.getCombat();
 		CombatListener<Mob> listener = CombatListenerDispatcher.NPC_LISTENERS.get(id);
-		if (listener != null) {
+		if(listener != null) {
 			combat.addListener(listener);
 		}
 		combat.setStrategy(STRATEGIES.getOrDefault(id, () -> loadStrategy(mob).orElse(NpcMeleeStrategy.INSTANCE)).get());
@@ -66,17 +68,17 @@ public abstract class Mob extends Actor {
 		}
 		MobDefinition.CombatAttackData data = mob.getDefinition().getCombatAttackData().get();
 		CombatType type = data.type;
-		switch (type) {
+		switch(type) {
 			case RANGED: {
 				CombatProjectileDefinition definition = data.getDefinition();
-				if (definition == null) {
+				if(definition == null) {
 					throw new AssertionError("Could not find ranged projectile for Mob[id=" + mob.id + ", name=" + mob.getDefinition().getName() + "]");
 				}
 				return Optional.of(new NpcRangedStrategy(definition));
 			}
 			case MAGIC: {
 				CombatProjectileDefinition definition = data.getDefinition();
-				if (definition == null) {
+				if(definition == null) {
 					throw new AssertionError("Could not find magic projectile for Mob[id=" + mob.id + ", name=" + mob.getDefinition().getName() + "]");
 				}
 				return Optional.of(new NpcMagicStrategy(definition));
@@ -149,6 +151,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Creates a new {@link Mob}.
+	 *
 	 * @param id       the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
@@ -164,6 +167,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Creates the particular {@link Mob instance}.
+	 *
 	 * @return new {@link Mob} instance.
 	 */
 	public abstract Mob create();
@@ -189,7 +193,7 @@ public abstract class Mob extends Actor {
 
 	@Override
 	public void preUpdate() {
-		if (active()) {
+		if(active()) {
 			update();
 			getMovementQueue().sequence();
 			getCombat().tick();
@@ -264,6 +268,7 @@ public abstract class Mob extends Actor {
 	/**
 	 * Activates the {@code TRANSFORM} update mask for this non-player
 	 * character.
+	 *
 	 * @param id the new npc to transform this npc into.
 	 */
 	public void transform(int id) {
@@ -281,6 +286,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Gets the identification of this NPC.
+	 *
 	 * @return the identification.
 	 */
 	public int getId() {
@@ -289,6 +295,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Gets the {@link MobType} of this npc.
+	 *
 	 * @return type.
 	 */
 	public MobType getMobType() {
@@ -297,6 +304,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Gets the maximum health of this NPC.
+	 *
 	 * @return the maximum health.
 	 */
 	public int getMaxHealth() {
@@ -305,6 +313,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Sets the value for {@link Mob#currentHealth}.
+	 *
 	 * @param currentHealth the new value to set.
 	 */
 	public void setCurrentHealth(int currentHealth) {
@@ -332,6 +341,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Gets the special amount for this NPC.
+	 *
 	 * @return the special amount.
 	 */
 	public OptionalInt getSpecial() {
@@ -340,6 +350,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Sets the value for {@link Mob#special}.
+	 *
 	 * @param special the new value to set.
 	 */
 	public void setSpecial(int special) {
@@ -355,6 +366,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Gets the original position that this NPC was created on.
+	 *
 	 * @return the original position.
 	 */
 	public Position getOriginalPosition() {
@@ -363,6 +375,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Gets the movement coordinator for this NPC.
+	 *
 	 * @return the movement coordinator.
 	 */
 	public MobMovementCoordinator getMovementCoordinator() {
@@ -371,6 +384,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Determines if this NPC was originally random walking.
+	 *
 	 * @return {@code true} if this NPC was originally walking, {@code false}
 	 * otherwise.
 	 */
@@ -380,6 +394,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Sets the value for {@link Mob#originalRandomWalk}.
+	 *
 	 * @param originalRandomWalk the new value to set.
 	 */
 	public void setOriginalRandomWalk(boolean originalRandomWalk) {
@@ -388,6 +403,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Determines if this NPC respawns.
+	 *
 	 * @return {@code true} if this NPC respawns, {@code false} otherwise.
 	 */
 	public boolean isRespawn() {
@@ -396,6 +412,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Sets the value for {@link Mob#respawn}.
+	 *
 	 * @param respawn the new value to set.
 	 */
 	public void setRespawn(boolean respawn) {
@@ -411,6 +428,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * The flag which identifies if this npc was spawned for the player by the username.
+	 *
 	 * @param spawnedFor the player to check for.
 	 * @return <true> if the npc was spawned for the player, <false> otherwise.
 	 */
@@ -420,6 +438,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Sets the player's slot this npc was spawned for.
+	 *
 	 * @param player the player we're spawning this npc for.
 	 */
 	public void setOwner(Player player) {
@@ -434,6 +453,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Sets the new value for {@link Mob#active}.
+	 *
 	 * @param active the new value to set.
 	 */
 	public void setActive(boolean active) {
@@ -447,6 +467,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Determines if the npc is a smart npc.
+	 *
 	 * @return {@code true} if the npc is smart, {@code false} otherwise.
 	 */
 	public boolean isSmart() {
@@ -455,6 +476,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Sets the new value for {@link Mob#smart}.
+	 *
 	 * @param smart the new value to set.
 	 */
 	public void setSmart(boolean smart) {
@@ -463,6 +485,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Gets the definition for this NPC.
+	 *
 	 * @return the definition.
 	 */
 	public MobDefinition getDefinition() {
@@ -471,6 +494,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Gets the transformation identifier.
+	 *
 	 * @return the transformation id.
 	 */
 	public OptionalInt getTransform() {
@@ -479,6 +503,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Determines if this npc is a familiar.
+	 *
 	 * @return <true> if the npc is a familiar, <false> otherwise.
 	 */
 	public boolean isFamiliar() {
@@ -487,6 +512,7 @@ public abstract class Mob extends Actor {
 
 	/**
 	 * Determines if this npc is a pet.
+	 *
 	 * @return <true> if the npc is a pet, <false> otherwise.
 	 */
 	public boolean isPet() {
@@ -521,21 +547,21 @@ public abstract class Mob extends Actor {
 
 	@Override
 	public int getBonus(int index) {
-		if (index == CombatConstants.DEFENCE_CRUSH) {
+		if(index == CombatConstants.DEFENCE_CRUSH) {
 			return getDefinition().getCombat().getDefenceCrush();
-		} else if (index == CombatConstants.DEFENCE_STAB) {
+		} else if(index == CombatConstants.DEFENCE_STAB) {
 			return getDefinition().getCombat().getDefenceCrush();
-		} else if (index == CombatConstants.DEFENCE_SLASH) {
+		} else if(index == CombatConstants.DEFENCE_SLASH) {
 			return getDefinition().getCombat().getDefenceSlash();
-		} else if (index == CombatConstants.DEFENCE_RANGED) {
+		} else if(index == CombatConstants.DEFENCE_RANGED) {
 			return getDefinition().getCombat().getDefenceRanged();
-		} else if (index == CombatConstants.DEFENCE_MAGIC) {
+		} else if(index == CombatConstants.DEFENCE_MAGIC) {
 			return getDefinition().getCombat().getDefenceMagic();
-		} else if (index == CombatConstants.ATTACK_CRUSH || index == CombatConstants.ATTACK_STAB || index == CombatConstants.ATTACK_SLASH) {
+		} else if(index == CombatConstants.ATTACK_CRUSH || index == CombatConstants.ATTACK_STAB || index == CombatConstants.ATTACK_SLASH) {
 			return getDefinition().getCombat().getAttackMelee();
-		} else if (index == CombatConstants.ATTACK_MAGIC) {
+		} else if(index == CombatConstants.ATTACK_MAGIC) {
 			return getDefinition().getCombat().getAttackMagic();
-		} else if (index == CombatConstants.ATTACK_RANGED) {
+		} else if(index == CombatConstants.ATTACK_RANGED) {
 			return getDefinition().getCombat().getAttackRanged();
 		} else
 			return 0;
@@ -547,15 +573,15 @@ public abstract class Mob extends Actor {
 
 	@Override
 	public int getSkillLevel(int skill) {
-		if (skill == Skills.ATTACK) {
+		if(skill == Skills.ATTACK) {
 			return getDefinition().getAttackLevel();
-		} else if (skill == Skills.STRENGTH) {
+		} else if(skill == Skills.STRENGTH) {
 			return getDefinition().getStrengthLevel();
-		} else if (skill == Skills.DEFENCE) {
+		} else if(skill == Skills.DEFENCE) {
 			return getDefinition().getDefenceLevel();
-		} else if (skill == Skills.RANGED) {
+		} else if(skill == Skills.RANGED) {
 			return getDefinition().getRangedLevel();
-		} else if (skill == Skills.MAGIC) {
+		} else if(skill == Skills.MAGIC) {
 			return getDefinition().getMagicLevel();
 		} else
 			return 0;

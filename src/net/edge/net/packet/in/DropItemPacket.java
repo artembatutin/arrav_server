@@ -1,27 +1,25 @@
 package net.edge.net.packet.in;
 
 import net.edge.GameConstants;
-import net.edge.content.market.MarketItem;
-import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.item.pets.Pet;
-import net.edge.net.codec.IncomingMsg;
+import net.edge.content.minigame.MinigameHandler;
 import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendItemOnInterfaceSlot;
-import net.edge.util.log.impl.DropItemLog;
-import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
+import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.ItemDefinition;
-import net.edge.world.entity.item.GroundItem;
 
 /**
  * The message sent from the client when the player drops an item.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class DropItemPacket implements IncomingPacket {
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(GameConstants.DROP_DISABLED) {
@@ -31,7 +29,7 @@ public final class DropItemPacket implements IncomingPacket {
 		if(player.getActivityManager().contains(ActivityType.DROP_ITEM)) {
 			return;
 		}
-		
+
 		int id = payload.getShort(false, ByteTransform.A);
 		payload.get(false);
 		payload.get(false);

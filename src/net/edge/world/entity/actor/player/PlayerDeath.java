@@ -3,38 +3,38 @@ package net.edge.world.entity.actor.player;
 import com.google.common.collect.Ordering;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.GameConstants;
+import net.edge.content.PlayerPanel;
 import net.edge.content.combat.CombatConstants;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.HitIcon;
 import net.edge.content.combat.hit.Hitsplat;
+import net.edge.content.combat.weapon.WeaponInterface;
+import net.edge.content.minigame.Minigame;
+import net.edge.content.minigame.MinigameHandler;
+import net.edge.content.scoreboard.PlayerScoreboardStatistic;
 import net.edge.content.scoreboard.ScoreboardManager;
+import net.edge.content.skill.Skill;
+import net.edge.content.skill.Skills;
+import net.edge.content.skill.prayer.Prayer;
 import net.edge.net.host.HostManager;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendGraphic;
 import net.edge.net.packet.out.SendWalkable;
 import net.edge.util.rand.RandomUtils;
-import net.edge.GameConstants;
-import net.edge.content.PlayerPanel;
-import net.edge.content.combat.weapon.WeaponInterface;
-import net.edge.world.entity.item.container.impl.Equipment;
-import net.edge.content.minigame.Minigame;
-import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.scoreboard.PlayerScoreboardStatistic;
-import net.edge.content.skill.Skill;
-import net.edge.content.skill.Skills;
-import net.edge.content.skill.prayer.Prayer;
-import net.edge.world.entity.item.container.session.ExchangeSessionManager;
-import net.edge.world.entity.region.Region;
-import net.edge.world.locale.loc.Location;
-import net.edge.world.locale.Position;
-import net.edge.world.entity.actor.ActorDeath;
-import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.ActorDeath;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.update.UpdateFlag;
-import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Equipment;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.region.Region;
+import net.edge.world.locale.Position;
+import net.edge.world.locale.loc.Location;
 
 import java.util.Iterator;
 import java.util.Optional;
@@ -45,23 +45,25 @@ import static net.edge.content.minigame.Minigame.MinigameSafety.SAFE;
 /**
  * The {@link ActorDeath} implementation that is dedicated to managing the
  * death process for all {@link Player}s.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class PlayerDeath extends ActorDeath<Player> {
-	
+
 	/**
 	 * Determines if the death message is send.
 	 */
 	private boolean deathMessage;
-	
+
 	/**
 	 * Creates a new {@link PlayerDeath}.
+	 *
 	 * @param player the player who has died and needs the death process.
 	 */
 	public PlayerDeath(Player player) {
 		super(player);
 	}
-	
+
 	@Override
 	public void preDeath() {
 		getActor().getActivityManager().disable();
@@ -116,13 +118,13 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				}
 			}
 		}
-		
+
 		if(Location.inFunPvP(getActor())) {
 			getActor().move(new Position(3086, 3508, 1));
 			setCounter(6);
 		}
 	}
-	
+
 	@Override
 	public void death() {
 		Optional<Player> killer = getActor().getCombat().getDamageCache().getPlayerKiller();
@@ -157,7 +159,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				return;
 			}
 			KILLER.inc(k);
-			
+
 			//deaths
 			PlayerScoreboardStatistic characterStatistic = ScoreboardManager.get().getPlayerScoreboard().putIfAbsent(getActor().getFormatUsername(), new PlayerScoreboardStatistic(getActor().getFormatUsername()));
 			if(characterStatistic == null) {
@@ -165,13 +167,13 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			}
 			PlayerPanel.PVP_DEATHS.refresh(getActor(), "@or2@ - Current Player deaths: @yel@" + characterStatistic.getDeaths().incrementAndGet());
 			PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(getActor(), "@or2@ - Total Player deaths: @yel@" + getActor().getDeathsByPlayer().incrementAndGet());
-			
+
 			//kills
 			PlayerScoreboardStatistic killerStatistic = ScoreboardManager.get().getPlayerScoreboard().putIfAbsent(k.getFormatUsername(), new PlayerScoreboardStatistic(k.getFormatUsername()));
 			if(killerStatistic == null) {
 				killerStatistic = new PlayerScoreboardStatistic(k.getFormatUsername());
 			}
-			
+
 			PlayerPanel.PVP_KILLS.refresh(k, "@or2@ - Current Players killed: @yel@" + killerStatistic.getKills().incrementAndGet());
 			PlayerPanel.TOTAL_PLAYER_KILLS.refresh(k, "@or2@ - Total Players killed: @yel@" + k.getPlayerKills().incrementAndGet());
 
@@ -180,9 +182,9 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				k.getHighestKillstreak().set(k.getCurrentKillstreak().get());
 				PlayerPanel.HIGHEST_KILLSTREAK.refresh(k, "@or2@ - Highest Killstreak: @yel@" + k.getHighestKillstreak());
 			}
-			
+
 			PlayerPanel.CURRENT_KILLSTREAK.refresh(k, "@or2@ - Current Killstreak: @yel@" + k.getCurrentKillstreak().get());
-			
+
 			if(killerStatistic.getCurrentKillstreak().incrementAndGet() > killerStatistic.getHighestKillstreak().get()) {
 				killerStatistic.getHighestKillstreak().set(killerStatistic.getCurrentKillstreak().get());
 				PlayerPanel.PVP_HIGHEST_KILLSTREAKS.refresh(k, "@or2@ - Highest Killstreak: @yel@" + killerStatistic.getHighestKillstreak().get());
@@ -191,7 +193,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 
 			k.message(RandomUtils.random(GameConstants.DEATH_MESSAGES).replaceAll("-victim-", getActor().getFormatUsername()).replaceAll("-killer-", k.getFormatUsername()));
 		});
-		
+
 		getActor().getCombat().getDamageCache().calculateProperKiller().ifPresent(e -> {
 			if(e.isMob()) {
 				getActor().getDeathsByNpc().incrementAndGet();
@@ -199,7 +201,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			}
 		});
 	}
-	
+
 	@Override
 	public void postDeath() {
 		getActor().closeWidget();
@@ -220,7 +222,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		}
 		getActor().out(new SendWalkable(-1));
 		Prayer.deactivateAll(getActor());
-		
+
 		Optional<Minigame> minigame = MinigameHandler.getMinigame(getActor());
 		if(!minigame.isPresent() || minigame.get().getSafety() != SAFE) {
 			if(getActor().isIronMan() && !getActor().isIronMaxed()) {
@@ -243,28 +245,29 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		getActor().getFlags().flag(UpdateFlag.APPEARANCE);
 		minigame.ifPresent(m -> m.postDeath(getActor()));
 	}
-	
+
 	/**
 	 * Calculates and drops all of the items from {@code player} for
 	 * {@code killer}.
-	 * @param player the player whose items are being dropped.
-	 * @param killer    the killer who the items are being dropped for.
-	 * @param dropAll   indicates no-items will be kept except the untradables.
+	 *
+	 * @param player  the player whose items are being dropped.
+	 * @param killer  the killer who the items are being dropped for.
+	 * @param dropAll indicates no-items will be kept except the untradables.
 	 */
 	private void dropItems(Player player, Optional<Player> killer, boolean dropAll) {
 		ObjectList<Item> keep = new ObjectArrayList<>();
 		ObjectList<Item> drop = new ObjectArrayList<>();
 		killer.ifPresent(p -> {
-            if(getActor().lastKiller != null && !getActor().lastKiller.equalsIgnoreCase(p.getFormatUsername())) {
-	            if(!HostManager.same(player, p)) {
-		            Rights right = p.getRights();
-            	    int baseAmount = RandomUtils.inclusive(10, 50) * (GameConstants.DOUBLE_BLOOD_MONEY_EVENT ? 2 : 1);
-            	    int amount = right.equals(Rights.EXTREME_DONATOR) ? ((int) (baseAmount * 1.30))  : right.equals(Rights.SUPER_DONATOR) ? ((int) (baseAmount * 1.20)) : right.equals(Rights.DONATOR) ? ((int) (baseAmount * 1.10)) : baseAmount;
+			if(getActor().lastKiller != null && !getActor().lastKiller.equalsIgnoreCase(p.getFormatUsername())) {
+				if(!HostManager.same(player, p)) {
+					Rights right = p.getRights();
+					int baseAmount = RandomUtils.inclusive(10, 50) * (GameConstants.DOUBLE_BLOOD_MONEY_EVENT ? 2 : 1);
+					int amount = right.equals(Rights.EXTREME_DONATOR) ? ((int) (baseAmount * 1.30)) : right.equals(Rights.SUPER_DONATOR) ? ((int) (baseAmount * 1.20)) : right.equals(Rights.DONATOR) ? ((int) (baseAmount * 1.10)) : baseAmount;
 					drop.add(new Item(19000, amount));
 				}
-            }
-            getActor().lastKiller = player.getFormatUsername();
-        });
+			}
+			getActor().lastKiller = player.getFormatUsername();
+		});
 		for(Item i : player.getEquipment().getItems()) {
 			if(i == null)
 				continue;

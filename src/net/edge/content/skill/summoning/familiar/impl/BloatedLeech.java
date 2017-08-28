@@ -8,19 +8,16 @@ import net.edge.content.skill.summoning.SummoningData;
 import net.edge.content.skill.summoning.familiar.Familiar;
 import net.edge.content.skill.summoning.familiar.FamiliarAbility;
 import net.edge.content.skill.summoning.familiar.ability.Fighter;
-import net.edge.content.skill.summoning.familiar.impl.forager.ForagerPassiveAbility;
 import net.edge.content.skill.summoning.familiar.passive.PassiveAbility;
-import net.edge.content.skill.summoning.familiar.passive.impl.PeriodicalAbility;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.item.GroundItemStatic;
-import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
 /**
  * Represents the Bloated leech familiar.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class BloatedLeech extends Familiar {
@@ -31,24 +28,24 @@ public final class BloatedLeech extends Familiar {
 	public BloatedLeech() {
 		super(SummoningData.BLOATED_LEECH);
 	}
-	
+
 	private final Fighter ability = new Fighter();
-	
+
 	@Override
 	public FamiliarAbility getAbilityType() {
 		return ability;
 	}
-	
+
 	@Override
 	public Optional<PassiveAbility> getPassiveAbility() {
 		return Optional.empty();
 	}
-	
+
 	@Override
 	public boolean isCombatic() {
 		return true;
 	}
-	
+
 	@Override
 	public void interact(Player player, Mob mob, int id) {
 		if(id == 1) {
@@ -56,7 +53,7 @@ public final class BloatedLeech extends Familiar {
 		}
 	}
 
-	private static final Conversation[] CONVERSATION = new Conversation[] {
+	private static final Conversation[] CONVERSATION = new Conversation[]{
 			new Conversation() {
 				@Override
 				public void send(Player player, int index) {
@@ -124,5 +121,5 @@ public final class BloatedLeech extends Familiar {
 				}
 			}
 	};
-	
+
 }

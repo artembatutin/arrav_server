@@ -1,34 +1,32 @@
 package net.edge.content.minigame.pestcontrol;
 
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.content.minigame.pestcontrol.pest.*;
-
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.hit.Hitsplat;
-import net.edge.world.entity.region.TraversalMap;
-import net.edge.world.locale.Position;
+import net.edge.content.minigame.pestcontrol.pest.*;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
+import net.edge.world.entity.actor.mob.DefaultMob;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobDeath;
-import net.edge.world.entity.actor.mob.DefaultMob;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.region.TraversalMap;
+import net.edge.world.locale.Position;
 
 import java.util.Optional;
 
 import static net.edge.content.minigame.pestcontrol.pest.PestType.*;
 
 public class PestPortal extends DefaultMob {
-	
-	
+
 	private final Mob knight;
-	
+
 	private final Position spawn;
-	
+
 	private final int widget;
-	
+
 	private PestControlMinigame game;
-	
+
 	public PestPortal(int id, Position position, Position spawn, int widget, Mob knight) {
 		super(id, position);
 		setOriginalRandomWalk(false);
@@ -39,11 +37,11 @@ public class PestPortal extends DefaultMob {
 		this.widget = widget;
 		this.knight = knight;
 	}
-	
+
 	public Position getSpawn() {
 		return spawn;
 	}
-	
+
 	public void spawn(ObjectList<Pest> pests) {
 		if(getCurrentHealth() == 0)
 			return;
@@ -80,7 +78,7 @@ public class PestPortal extends DefaultMob {
 			pests.add(pest);
 		}
 	}
-	
+
 	@Override
 	public Hit decrementHealth(Hit hit) {
 		if(hit.getDamage() > getCurrentHealth()) {
@@ -100,7 +98,7 @@ public class PestPortal extends DefaultMob {
 		}
 		return hit;
 	}
-	
+
 	@Override
 	public void appendDeath() {
 		setDead(true);
@@ -113,12 +111,12 @@ public class PestPortal extends DefaultMob {
 			}
 		}
 	}
-	
+
 	public void setGame(PestControlMinigame game) {
 		this.game = game;
 		for(Player p : game.getPlayers()) {
 			p.text(widget, "" + getCurrentHealth() / 10);
 		}
 	}
-	
+
 }

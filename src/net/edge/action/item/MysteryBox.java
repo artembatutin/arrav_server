@@ -11,7 +11,7 @@ import net.edge.world.entity.item.Item;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MysteryBox extends ActionInitializer {
-	public static final Drop[] ITEMS = new Drop[] {
+	public static final Drop[] ITEMS = new Drop[]{
 			//ahrims
 			new Drop(4708, 1, 1, Chance.COMMON),
 			new Drop(4710, 1, 1, Chance.COMMON),
@@ -127,7 +127,7 @@ public class MysteryBox extends ActionInitializer {
 			new Drop(20163, 1, 1, Chance.FUCKING_RARE),
 			new Drop(20167, 1, 1, Chance.FUCKING_RARE),
 	};
-	
+
 	@Override
 	public void init() {
 		ItemAction e = new ItemAction() {

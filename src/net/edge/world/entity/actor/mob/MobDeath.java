@@ -1,12 +1,12 @@
 package net.edge.world.entity.actor.mob;
 
-import net.edge.task.Task;
 import net.edge.content.PlayerPanel;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.slayer.Slayer;
+import net.edge.task.Task;
+import net.edge.world.Animation;
 import net.edge.world.World;
 import net.edge.world.entity.actor.ActorDeath;
-import net.edge.world.Animation;
 import net.edge.world.entity.actor.mob.drop.DropManager;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -15,19 +15,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static net.edge.content.achievements.Achievement.GRIZZLY_BEAR;
-import static net.edge.content.achievements.Achievement.KILL_A_MAN;
-import static net.edge.content.achievements.Achievement.NO_GUARD;
+import static net.edge.content.achievements.Achievement.*;
 
 /**
  * The {@link ActorDeath} implementation that is dedicated to managing the
  * death process for all {@link Mob}s.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class MobDeath extends ActorDeath<Mob> {
-	
+
 	/**
 	 * Creates a new {@link MobDeath}.
+	 *
 	 * @param mob the NPC who has died and needs the death process.
 	 */
 	public MobDeath(Mob mob) {
@@ -46,11 +46,11 @@ public final class MobDeath extends ActorDeath<Mob> {
 		}
 		getActor().animation(new Animation(getActor().getDefinition().getDeathAnimation(), Animation.AnimationPriority.HIGH));
 	}
-	
+
 	@Override
 	public void death() {
 		Optional<Player> killer = getActor().getCombat().getDamageCache().getPlayerKiller();
-		killer.ifPresent(k ->  {
+		killer.ifPresent(k -> {
 			Slayer.decrement(k, getActor());
 			MinigameHandler.getMinigame(k).ifPresent(m -> m.onKill(k, getActor()));
 			if(NON_DROPPABLES.stream().noneMatch(t -> t == getActor().getId())) {
@@ -71,7 +71,7 @@ public final class MobDeath extends ActorDeath<Mob> {
 		});
 		World.get().getMobs().remove(getActor());
 	}
-	
+
 	@Override
 	public void postDeath() {
 		try {

@@ -1,10 +1,10 @@
 package net.edge.content.object.pit;
 
-import net.edge.task.Task;
-import net.edge.util.rand.RandomUtils;
 import net.edge.GameConstants;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.SkillAction;
+import net.edge.task.Task;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
@@ -15,6 +15,7 @@ import java.util.OptionalInt;
 
 /**
  * Represents the skill action of firing the fire pit.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class PitFiring extends SkillAction {
@@ -23,7 +24,7 @@ public final class PitFiring extends SkillAction {
 	 * The fire pit object this skill action is dependent of.
 	 */
 	private final FirepitObject pit;
-	
+
 	/**
 	 * The burning task for the pit.
 	 */
@@ -31,6 +32,7 @@ public final class PitFiring extends SkillAction {
 
 	/**
 	 * Constructs a new {@link PitFiring}.
+	 *
 	 * @param player {@link #getPlayer()}.
 	 * @param pit    {@link #pit}.
 	 */
@@ -125,5 +127,5 @@ public final class PitFiring extends SkillAction {
 	public boolean isPrioritized() {
 		return false;
 	}
-	
+
 }

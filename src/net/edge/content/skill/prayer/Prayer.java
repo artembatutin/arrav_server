@@ -1,13 +1,13 @@
 package net.edge.content.skill.prayer;
 
 import com.google.common.collect.ImmutableList;
+import net.edge.content.TabInterface;
 import net.edge.content.combat.attack.AttackModifier;
+import net.edge.content.minigame.MinigameHandler;
+import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendForceTab;
 import net.edge.util.TextUtils;
-import net.edge.content.TabInterface;
-import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.skill.Skills;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.World;
@@ -22,6 +22,7 @@ import java.util.Optional;
  * The enumerated type whose elements represent the prayers that can be
  * activated and deactivated. This currently only has support for prayers
  * present in the {@code 317} protocol.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public enum Prayer {
@@ -189,7 +190,7 @@ public enum Prayer {
 			player.graphic(new Graphic(2213));
 			return true;
 		}
-		
+
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.empty();
@@ -224,7 +225,7 @@ public enum Prayer {
 		public Optional<Prayer[]> deactivate() {
 			return Optional.empty();
 		}
-		
+
 		@Override
 		public boolean onActivation(Player player) {
 			player.animation(new Animation(12589));
@@ -315,7 +316,7 @@ public enum Prayer {
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SAP_WARRIOR, SAP_RANGER, SAP_MAGE, SAP_SPIRIT, LEECH_ATTACK, LEECH_RANGED, LEECH_MAGIC, LEECH_DEFENCE, LEECH_STRENGTH, LEECH_ENERGY, LEECH_SPECIAL_ATTACK});
 		}
-		
+
 		@Override
 		public boolean onActivation(Player player) {
 			player.animation(new Animation(12565));
@@ -323,48 +324,48 @@ public enum Prayer {
 			return true;
 		}
 	};
-	
+
 	/**
 	 * The cached array that will contain mappings of all the elements to their
 	 * identifiers.
 	 */
 	public static final ImmutableList<Prayer> VALUES = ImmutableList.copyOf(values());
-	
+
 	/**
 	 * The type of this prayer.
 	 */
 	private final PrayerBook type;
-	
+
 	/**
 	 * The button identification for this prayer.
 	 */
 	private final int buttonId;
-	
+
 	/**
 	 * The amount of ticks it takes for prayer to be drained.
 	 */
 	private final double drainRate;
-	
+
 	/**
 	 * The head icon present when this prayer is activated.
 	 */
 	private final int headIcon;
-	
+
 	/**
 	 * The level required to use this prayer.
 	 */
 	private final int level;
-	
+
 	/**
 	 * The config to make the prayer button light up when activated.
 	 */
 	private final int config;
-	
+
 	/**
 	 * The button identification for quick prayer.
 	 */
 	private final int quickPrayer;
-	
+
 	/**
 	 * The checkmark identification for quick prayer.
 	 */
@@ -376,9 +377,10 @@ public enum Prayer {
 	 * is activated.
 	 */
 	public abstract Optional<Prayer[]> deactivate();
-	
+
 	/**
 	 * Creates a new {@link Prayer}.
+	 *
 	 * @param buttonId    the identification for this prayer.
 	 * @param drainRate   the amount of ticks it takes for prayer to be drained.
 	 * @param headIcon    the head icon present when this prayer is activated.
@@ -400,6 +402,7 @@ public enum Prayer {
 
 	/**
 	 * Creates a new {@link Prayer}.
+	 *
 	 * @param buttonId    the identification for this prayer.
 	 * @param drainRate   the amount of ticks it takes for prayer to be drained.
 	 * @param headIcon    the head icon present when this prayer is activated.
@@ -424,10 +427,11 @@ public enum Prayer {
 	public String toString() {
 		return TextUtils.capitalize(name().toLowerCase().replaceAll("_", " "));
 	}
-	
+
 	/**
 	 * Executed dynamically when this combat prayer is activated for
 	 * {@code player}.
+	 *
 	 * @param player the player that activated this prayer.
 	 * @return {@code true} if this prayer can activated, {@code false}
 	 * otherwise.
@@ -435,10 +439,11 @@ public enum Prayer {
 	public boolean onActivation(Player player) {
 		return true;
 	}
-	
+
 	/**
 	 * Executed dynamically when this combat prayer is deactivated for
 	 * {@code player}.
+	 *
 	 * @param player the player that deactivated this prayer.
 	 * @return {@code true} if this prayer can deactivated, {@code false}
 	 * otherwise.
@@ -446,45 +451,48 @@ public enum Prayer {
 	public boolean onDeactivation(Player player) {
 		return true;
 	}
-	
+
 	/**
 	 * Checks if the {@code prayer$buttonId} matches the identification.
+	 *
 	 * @param id The identification to check for.
 	 * @return Optional.present if the identification matched, optional.empty otherwise.
 	 */
 	public static Optional<Prayer> getCombatPrayer(int id) {
 		return VALUES.stream().filter(prayer -> prayer.buttonId == id).findAny();
 	}
-	
+
 	/**
 	 * Checks if the {@code prayer$quickPrayer} identification matches the identification.
+	 *
 	 * @param id The identification to check for.
 	 * @return Optional.present if the identification matched, optional.empty otherwise.
 	 */
 	public static Optional<Prayer> getQuickPrayer(int id) {
 		return VALUES.stream().filter(prayer -> prayer.quickPrayer == id).findAny();
 	}
-	
+
 	/**
 	 * Activates this combat prayer for {@code player}. If
 	 * {@code deactivateIfActivated} is flagged {@code true} then if this prayer
 	 * is already activated it will be deactivated instead.
+	 *
 	 * @param player                the player to activate this prayer for.
 	 * @param deactivateIfActivated if this prayer should be deactivated.
 	 * @return <true> if the prayer was activated, <false> otherwise.
 	 */
 	public static boolean activate(Player player, boolean deactivateIfActivated, int buttonId) {
 		Optional<Prayer> prayer = getCombatPrayer(buttonId);
-		
+
 		if(!prayer.isPresent()) {
 			return false;
 		}
-		
+
 		if(!MinigameHandler.execute(player, m -> m.canPray(player, prayer.get()))) {
 			player.out(new SendConfig(prayer.get().getConfig(), 0));
 			return false;
 		}
-		
+
 		if(Prayer.isActivated(player, prayer.get())) {
 			if(deactivateIfActivated) {
 				prayer.get().deactivate(player);
@@ -512,9 +520,9 @@ public enum Prayer {
 			Arrays.stream(prayer.get().deactivate().get()).forEach(it -> it.deactivate(player));
 		}
 		player.getPrayerActive().add(prayer.get());
-		if (prayer.get().modifier != null) {
-		    player.getCombat().addModifier(prayer.get().modifier);
-        }
+		if(prayer.get().modifier != null) {
+			player.getCombat().addModifier(prayer.get().modifier);
+		}
 		player.out(new SendConfig(prayer.get().getConfig(), 1));
 		if(prayer.get().getHeadIcon() != -1) {
 			player.headIcon = prayer.get().getHeadIcon();
@@ -522,9 +530,10 @@ public enum Prayer {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Activates the quick prayers for specified {@link Player}.
+	 *
 	 * @param player   The player we are activating the quick prayers for.
 	 * @param buttonId The button identifier to activate the prayer.
 	 */
@@ -556,7 +565,7 @@ public enum Prayer {
 					player.out(new SendConfig(p.getCheckmark(), 0));
 				}
 			});
-			
+
 			return true;
 		}
 		if(buttonId == 1005) {//confirm
@@ -567,35 +576,37 @@ public enum Prayer {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Toggles this combat prayer for {@code player}.
+	 *
 	 * @param player   the player to toggle this prayer for.
 	 * @param buttonId The button identification to check for.
 	 */
 	public static boolean toggleQuickPrayer(Player player, int buttonId) {
 		Optional<Prayer> prayer = getQuickPrayer(buttonId);
-		
+
 		if(!prayer.isPresent())
 			return false;
-		
+
 		Prayer pray = prayer.get();
-		
+
 		if(Prayer.isSelected(player, prayer.get())) {
 			pray.deselectQuickPrayer(player);
 			return true;
 		}
-		
+
 		if(prayer.get().deactivate().isPresent())
 			Arrays.stream(pray.deactivate().get()).forEach(it -> it.deselectQuickPrayer(player));
 		player.getSelectedQuickPrayers().add(prayer.get());
 		player.out(new SendConfig(prayer.get().getCheckmark(), 1));
 		return true;
 	}
-	
+
 	/**
 	 * Attempts to deselect this prayer for {@code player}. If this prayer is
 	 * already deselected then invoking this method does nothing.
+	 *
 	 * @param player the player to deselect this prayer for.
 	 */
 	public final void deselectQuickPrayer(Player player) {
@@ -604,10 +615,11 @@ public enum Prayer {
 		player.getSelectedQuickPrayers().remove(this);
 		player.out(new SendConfig(checkmark, 0));
 	}
-	
+
 	/**
 	 * Attempts to deactivate this prayer for {@code player}. If this prayer is
 	 * already deactivated then invoking this method does nothing.
+	 *
 	 * @param player the player to deactivate this prayer for.
 	 */
 	public final void deactivate(Player player) {
@@ -617,7 +629,7 @@ public enum Prayer {
 			return;
 		player.getPrayerActive().remove(this);
 		player.out(new SendConfig(config, 0));
-		if (modifier != null) {
+		if(modifier != null) {
 			player.getCombat().removeModifier(modifier);
 		}
 		if(headIcon != -1) {
@@ -629,18 +641,20 @@ public enum Prayer {
 			player.getAttr().get("quick_pray_on").set(false);
 		}
 	}
-	
+
 	/**
 	 * Deactivates activated combat prayers for {@code player}. Combat prayers
 	 * that are already deactivated will be ignored.
+	 *
 	 * @param player the player to deactivate prayers for.
 	 */
 	public static void deactivateAll(Player player) {
 		VALUES.forEach(it -> it.deactivate(player));
 	}
-	
+
 	/**
 	 * Determines if the {@code prayer} is activated for the {@code player}.
+	 *
 	 * @param player the player's prayers to check.
 	 * @param prayer the prayer to check is active.
 	 * @return {@code true} if the prayer is activated for the player,
@@ -649,9 +663,10 @@ public enum Prayer {
 	public static boolean isActivated(Player player, Prayer prayer) {
 		return player.getPrayerActive().contains(prayer);
 	}
-	
+
 	/**
 	 * Determines if any of the specified prayers are activated.
+	 *
 	 * @param player  the player's prayers to check.
 	 * @param prayers the prayers to check if active.
 	 * @return {@code true} if any of the prayers are active for the player,
@@ -660,9 +675,10 @@ public enum Prayer {
 	public static boolean isAnyActivated(Player player, Prayer[] prayers) {
 		return Arrays.stream(prayers).anyMatch(p -> isActivated(player, p));
 	}
-	
+
 	/**
 	 * Determines if the {@code prayer} is selected for the {@code player}.
+	 *
 	 * @param player the player's prayers to check.
 	 * @param prayer the prayer to check is selected.
 	 * @return <true> if the prayer is selected for the player, <false> otherwise.
@@ -670,62 +686,68 @@ public enum Prayer {
 	public static boolean isSelected(Player player, Prayer prayer) {
 		return player.getSelectedQuickPrayers().contains(prayer);
 	}
-	
+
 	/**
 	 * Gets the type of this prayer.
+	 *
 	 * @return the buttonId
 	 */
 	public PrayerBook getType() {
 		return type;
 	}
-	
+
 	/**
 	 * Gets the prayer button click toggle.
+	 *
 	 * @return the buttonId
 	 */
 	public int getButtonId() {
 		return buttonId;
 	}
-	
+
 	/**
 	 * Gets the amount of ticks it takes for prayer to be drained.
+	 *
 	 * @return the amount of ticks.
 	 */
 	public final double getDrainRate() {
 		return drainRate;
 	}
-	
+
 	/**
 	 * Gets the head icon present when this prayer is activated.
+	 *
 	 * @return the head icon.
 	 */
 	public final int getHeadIcon() {
 		return headIcon;
 	}
-	
+
 	/**
 	 * Gets the level required to use this prayer.
+	 *
 	 * @return the level required.
 	 */
 	public final int getLevel() {
 		return level;
 	}
-	
+
 	/**
 	 * Gets the config to make the prayer button light up when activated.
+	 *
 	 * @return the config for the prayer button.
 	 */
 	public final int getConfig() {
 		return config;
 	}
-	
+
 	/**
 	 * @return the quickPrayer
 	 */
 	public int getQuickPrayer() {
 		return quickPrayer;
 	}
-	
+
 	/**
 	 * @return the checkmark
 	 */

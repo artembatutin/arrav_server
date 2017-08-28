@@ -3,20 +3,20 @@ package net.edge.content.combat.content.lunars.impl.spells;
 import net.edge.content.combat.content.MagicRune;
 import net.edge.content.combat.content.RequiredRune;
 import net.edge.content.combat.content.lunars.impl.LunarButtonSpell;
-import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
 /**
  * Holds functionality for the hunter kit lunar spell.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class HunterKit extends LunarButtonSpell {
-	
+
 	/**
 	 * Constructs a new {@link HunterKit}.
 	 */
@@ -28,7 +28,7 @@ public final class HunterKit extends LunarButtonSpell {
 	 * A constant representing the hunter kit item.
 	 */
 	public static final Item HUNTER_KIT = new Item(11159);
-	
+
 	/**
 	 * The items received when opening the hunter kit.
 	 */
@@ -39,7 +39,7 @@ public final class HunterKit extends LunarButtonSpell {
 		super.effect(caster, victim);
 		caster.toPlayer().getInventory().add(HUNTER_KIT);
 	}
-	
+
 	@Override
 	public boolean canCast(Actor caster, Optional<Actor> victim) {
 		if(!super.canCast(caster, victim)) {
@@ -51,16 +51,15 @@ public final class HunterKit extends LunarButtonSpell {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.of(new Animation(6303));
 	}
-	
+
 	@Override
 	public Optional<Graphic> startGraphic() {
 		return Optional.of(new Graphic(1074, 100));
 	}
-	
 
 }

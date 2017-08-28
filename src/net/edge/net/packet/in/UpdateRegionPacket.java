@@ -12,11 +12,12 @@ import net.edge.world.entity.region.Region;
 /**
  * The message sent from the client when a player sends the load tool.mapviewer region
  * message.
+ *
  * @author Artem Batutin <artembatutin@gmail.com></artembatutin@gmail.com>
  * @author lare96 <http://github.com/lare96>
  */
 public final class UpdateRegionPacket implements IncomingPacket {
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.isUpdateRegion()) {

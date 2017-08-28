@@ -1,12 +1,12 @@
 package net.edge.action.mob;
 
+import net.edge.action.ActionInitializer;
+import net.edge.action.impl.MobAction;
 import net.edge.content.dialogue.impl.NpcDialogue;
 import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.dialogue.impl.PlayerDialogue;
 import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.dialogue.test.DialogueAppender;
-import net.edge.action.ActionInitializer;
-import net.edge.action.impl.MobAction;
 import net.edge.content.object.pit.FirepitManager;
 import net.edge.util.Utility;
 import net.edge.world.entity.actor.mob.Mob;

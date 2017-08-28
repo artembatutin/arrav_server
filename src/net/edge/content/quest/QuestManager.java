@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 /**
  * The manager class which is exclusive to each player.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class QuestManager {
@@ -25,6 +26,7 @@ public final class QuestManager {
 
 	/**
 	 * Constructs a new {@link QuestManager}.
+	 *
 	 * @param player {@link #player}.
 	 */
 	public QuestManager(Player player) {
@@ -33,6 +35,7 @@ public final class QuestManager {
 
 	/**
 	 * Determines if the specified {@code quests} has been started.
+	 *
 	 * @param quests the quests to determine this for.
 	 * @return {@code true} if the quest has been started, {@code false} otherwise.
 	 */
@@ -42,6 +45,7 @@ public final class QuestManager {
 
 	/**
 	 * Attempts to start the specified {@code quests}.
+	 *
 	 * @param quests the quests to start.
 	 */
 	public void start(Quests quests) {
@@ -56,14 +60,15 @@ public final class QuestManager {
 		quests.getQuest().setStarted(true);
 
 		quests.getQuest().onStart(player);
-		
+
 		quests.getPanel().refresh(player, "@or2@ - " + "@yel@" + Quests.HALLOWEEN.getQuest().getName());
-		
+
 		started_quests.put(quests, quests.getQuest());
 	}
 
 	/**
 	 * Determines if the player has completed the certain task.
+	 *
 	 * @param quests the quests to check the task from.
 	 * @param name   the name which identifies the task.
 	 * @return {@code true} if the player has completed the task, {@code false} otherwise.
@@ -74,6 +79,7 @@ public final class QuestManager {
 
 	/**
 	 * Attempts to complete a certain task.
+	 *
 	 * @param quests the quests to complete a task from.
 	 * @param name   the name of the task to complete.
 	 */
@@ -91,7 +97,7 @@ public final class QuestManager {
 				}
 			}
 		}
-		
+
 		if(Arrays.stream(started_quests.get(quests).getTasks()).allMatch(QuestTask::isCompleted)) {
 			complete(quests);
 		}
@@ -99,6 +105,7 @@ public final class QuestManager {
 
 	/**
 	 * Attempts to complete the specified {@code quests}.
+	 *
 	 * @param quests the quests to complete.
 	 */
 	public void complete(Quests quests) {
@@ -107,16 +114,17 @@ public final class QuestManager {
 		}
 
 		Quest quest = started_quests.get(quests);
-		
+
 		if(!quest.canFinish(player)) {
 			return;
 		}
-		
+
 		quest.setCompleted(true);
 	}
 
 	/**
 	 * Determines if the specified {@code quests} is completed.
+	 *
 	 * @param quests the quest to determine for completion.
 	 * @return {@code true} if the code is completed, {@code false} otherwise.
 	 */
@@ -145,6 +153,7 @@ public final class QuestManager {
 	/**
 	 * The enumerated type whose elements hold instances of each quest that
 	 * is available for a player.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum Quests {
@@ -154,7 +163,7 @@ public final class QuestManager {
 		 * The instance of the quest.
 		 */
 		private final Quest quest;
-		
+
 		/**
 		 * The panel that displays this quest.
 		 */
@@ -162,6 +171,7 @@ public final class QuestManager {
 
 		/**
 		 * Constructs a new {@link Quests}.
+		 *
 		 * @param quest {@link #quest}.
 		 * @param panel {@link #panel}.
 		 */
@@ -169,45 +179,46 @@ public final class QuestManager {
 			this.quest = quest;
 			this.panel = panel;
 		}
-		
+
 		/**
 		 * Attempts to open the quest interface for this specific {@link Quest}.
+		 *
 		 * @param player the player to open the quest interface for.
 		 */
 		public void open(Player player) {
 			player.text(8144, quest.getName());
-			
+
 			if(!player.getQuestManager().started(this)) {
 				player.text(8145, "@red@" + quest.getGuidance());
 				player.widget(8134);
 				return;
 			}
-			
+
 			Quest quest = player.getQuestManager().getStartedQuests().get(this);
-			
+
 			player.text(8145, "@gre@" + quest.getGuidance());
-			
+
 			for(int i = 0; i < quest.getTasks().length; i++) {
 				QuestTask current = quest.getTasks()[i];
-				
+
 				if(!current.isCompleted() && i != 0) {
 					break;
 				}
-				
+
 				String color = current.isCompleted() ? "@gre@" : "@red@";
 				player.text(8146 + i, color + current.description(player));
 			}
-			
+
 			player.widget(8134);
 		}
-		
+
 		/**
 		 * @return {@link #quest}.
 		 */
 		public Quest getQuest() {
 			return quest;
 		}
-		
+
 		/**
 		 * @return {@link #panel}.
 		 */

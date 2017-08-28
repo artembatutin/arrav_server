@@ -1,15 +1,14 @@
 package net.edge.action.obj;
 
-import net.edge.content.dialogue.impl.OptionDialogue;
-import net.edge.content.skill.Skills;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ObjectAction;
+import net.edge.content.dialogue.impl.OptionDialogue;
+import net.edge.content.skill.Skills;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.PrayerBook;
 import net.edge.world.entity.actor.player.assets.Spellbook;
 import net.edge.world.object.GameObject;
-
 
 public class HomeAltar extends ActionInitializer {
 	@Override
@@ -32,7 +31,7 @@ public class HomeAltar extends ActionInitializer {
 		};
 		pray.registerFirst(409);
 		pray.registerFirst(41979);
-		
+
 		//prayer/magic switcher
 		ObjectAction change = new ObjectAction() {
 			@Override
@@ -72,6 +71,6 @@ public class HomeAltar extends ActionInitializer {
 			}
 		};
 		change.registerFirst(6552);
-		
+
 	}
 }

@@ -6,8 +6,8 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.PacketType;
 import net.edge.net.packet.OutgoingPacket;
-import net.edge.world.entity.EntityState;
 import net.edge.world.Direction;
+import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.update.UpdateManager;
@@ -18,10 +18,11 @@ import java.util.Iterator;
 
 /**
  * An implementation that sends an update message containing the underlying {@link Player} and {@link Mob}s surrounding them.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class SendMobUpdate implements OutgoingPacket {
-	
+
 	public ByteBuf write(Player player, GameBuffer msg) {
 		ByteBufAllocator alloc = player.getSession().alloc();
 		msg.message(65, PacketType.VARIABLE_SHORT);
@@ -41,7 +42,7 @@ public final class SendMobUpdate implements OutgoingPacket {
 					$it.remove();
 				}
 			}
-			
+
 			int added = 0;
 			player.getRegion().ifPresent(r -> {
 				processMobs(r, player, blockMsg, msg, added);
@@ -52,7 +53,7 @@ public final class SendMobUpdate implements OutgoingPacket {
 					}
 				}
 			});
-			
+
 			if(blockMsg.getBuffer().writerIndex() > 0) {
 				msg.putBits(14, 16383);
 				msg.endBitAccess();
@@ -69,7 +70,7 @@ public final class SendMobUpdate implements OutgoingPacket {
 		msg.endVarSize();
 		return msg.getBuffer();
 	}
-	
+
 	/**
 	 * Processing the addition of npc from a region.
 	 */
@@ -96,9 +97,10 @@ public final class SendMobUpdate implements OutgoingPacket {
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds {@code addMob} in the view of {@code player}.
+	 *
 	 * @param msg    The main update message.
 	 * @param player The {@link Player} this update message is being sent for.
 	 * @param addMob The {@link Mob} being added.
@@ -115,9 +117,10 @@ public final class SendMobUpdate implements OutgoingPacket {
 		msg.putBits(16, addMob.getId());
 		msg.putBit(true);
 	}
-	
+
 	/**
 	 * Handles walking movement for {@code mob}.
+	 *
 	 * @param mob The {@link Player} to handle running and walking for.
 	 * @param msg The main update message.
 	 */

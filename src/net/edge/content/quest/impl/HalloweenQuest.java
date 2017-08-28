@@ -9,6 +9,7 @@ import java.time.LocalDate;
 /**
  * The class which is responsible for the tasks to complete for the halloween
  * event.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class HalloweenQuest extends Quest {
@@ -25,7 +26,7 @@ public final class HalloweenQuest extends Quest {
 			}
 		}});
 	}
-	
+
 	/**
 	 * Represents the date that halloween takes place.
 	 */
@@ -35,7 +36,7 @@ public final class HalloweenQuest extends Quest {
 	public void onStart(Player player) {
 		//player.teleport(new Position());
 	}
-	
+
 	@Override
 	public boolean canStart(Player player) {
 		if(this.isCompleted()) {

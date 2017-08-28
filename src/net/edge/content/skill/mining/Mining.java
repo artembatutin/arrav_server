@@ -1,11 +1,11 @@
 package net.edge.content.skill.mining;
 
-import net.edge.content.skill.Skills;
 import net.edge.action.impl.ObjectAction;
-import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
+import net.edge.content.skill.Skills;
 import net.edge.content.skill.action.TransformableObject;
 import net.edge.content.skill.action.impl.HarvestingSkillAction;
+import net.edge.task.Task;
 import net.edge.world.Animation;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
@@ -13,7 +13,6 @@ import net.edge.world.entity.item.Item;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.GameObject;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -53,6 +52,7 @@ public final class Mining extends HarvestingSkillAction {
 
 	/**
 	 * Constructs a new {@link Mining}.
+	 *
 	 * @param player {@link #player}.
 	 * @param rock   the mining rock.
 	 * @param object the rock object.
@@ -65,7 +65,7 @@ public final class Mining extends HarvestingSkillAction {
 		this.pickaxe = PickaxeData.getDefinition(player).orElse(null);
 		this.object = object.toDynamic();
 	}
-	
+
 	public static void action() {
 		for(RockData rock : RockData.values()) {
 			ObjectAction mine = new ObjectAction() {

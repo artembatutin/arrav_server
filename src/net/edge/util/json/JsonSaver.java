@@ -24,10 +24,11 @@ import java.io.FileWriter;
  * }
  * json.publish(&quot;./data/some_player_database.json&quot;);
  * </pre>
+ *
  * @author lare96 <http://github.org/lare96>
  */
 public final class JsonSaver {
-	
+
 	/**
 	 * A gson builder, allows us to turn {@code Object}s into {@code JSON}
 	 * format and vice-versa.
@@ -38,26 +39,27 @@ public final class JsonSaver {
 	 * An array that will hold all of our sub-tables.
 	 */
 	private final JsonArray array = new JsonArray();
-	
+
 	/**
 	 * The flag that determines if only one table can exist.
 	 */
 	private final boolean singletonTable;
-	
+
 	/**
 	 * A writer that acts as a sub-table, instantiated after each
 	 * {@code split()}.
 	 */
 	private JsonObject currentWriter = new JsonObject();
-	
+
 	/**
 	 * Creates a new {@link JsonSaver}.
+	 *
 	 * @param singletonTable determines if only one table can exist.
 	 */
 	public JsonSaver(boolean singletonTable) {
 		this.singletonTable = singletonTable;
 	}
-	
+
 	/**
 	 * Creates a new {@link JsonSaver} that can have an infinite amount of
 	 * tables.
@@ -65,7 +67,7 @@ public final class JsonSaver {
 	public JsonSaver() {
 		this(false);
 	}
-	
+
 	/**
 	 * <strong>Invocation of this function is expensive and should be cached or
 	 * avoided whenever possible.</strong> This function will call
@@ -86,12 +88,13 @@ public final class JsonSaver {
 		}
 		return serializer.toJson(array);
 	}
-	
+
 	/**
 	 * Adds the data within {@code currentWriter} to the internal
 	 * {@link JsonArray} then instantiates a new writer, effectively splitting
 	 * the data up into tables. If this instance is a {@code singletonTable},
 	 * throws an {@link IllegalStateException}.
+	 *
 	 * @throws IllegalStateException if this instance is only allowed one internal table.
 	 */
 	public void split() {
@@ -99,7 +102,7 @@ public final class JsonSaver {
 		array.add(currentWriter);
 		currentWriter = new JsonObject();
 	}
-	
+
 	/***
 	 * Gets the current {@link JsonObject} that is writing data.
 	 * @return the current writer.
@@ -107,29 +110,31 @@ public final class JsonSaver {
 	public JsonObject current() {
 		return currentWriter;
 	}
-	
+
 	public JsonArray createArray() {
 		return new JsonArray();
 	}
-	
+
 	/**
 	 * Gets the json array.
 	 */
 	public JsonArray getJsonArray() {
 		return array;
 	}
-	
+
 	/**
 	 * Gets the internal gson that allows for serialization.
+	 *
 	 * @return the internal gson.
 	 */
 	public Gson serializer() {
 		return serializer;
 	}
-	
+
 	/**
 	 * Publishes the contents of this {@link JsonSaver} to the file at
 	 * {@code path}.
+	 *
 	 * @param path the path to publish the contents.
 	 */
 	public void publish(String path) {

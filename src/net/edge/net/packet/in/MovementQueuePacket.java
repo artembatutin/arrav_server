@@ -15,10 +15,11 @@ import net.edge.world.locale.Position;
 /**
  * The message sent from the client when a player makes a yellow {@code X} click,
  * a red {@code X} click, or when they click the minimap.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class MovementQueuePacket implements IncomingPacket {
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.WALKING)) {
@@ -32,50 +33,50 @@ public final class MovementQueuePacket implements IncomingPacket {
 		}
 
 		player.faceEntity(null);
-		
+
 		if(opcode == 248) {
 			player.setFollowing(false);
 			player.getCombat().reset();
 			size -= 14;
 		}
-		
+
 		if(opcode == 164) {
 			player.setFollowing(false);
 			player.getCombat().reset();
 		} else if(opcode == 98) {
-			
+
 		}
-		
+
 		if(player.isFrozen()) {
 			player.message("You are frozen and unable to move!");
 			return;
 		}
-		
+
 		if(player.getDialogueBuilder() != null && !player.getMovementQueue().isLockMovement())
 			player.getDialogueBuilder().interrupt();
 
 		player.getCombat().reset();
-		
+
 		player.closeWidget();
 		if(player.getMarketShop() != null) {
 			MarketShop.clearFromShop(player);
 		}
-		
+
 		int steps = (size - 5) / 2;
 		int[][] path = new int[steps][2];
 		int firstStepX = payload.getShort(ByteTransform.A, ByteOrder.LITTLE);
-		
+
 		for(int i = 0; i < steps; i++) {
 			path[i][0] = payload.get();
 			path[i][1] = payload.get();
 		}
-		
+
 		if(player.getMovementQueue().check()) {
 			int firstStepY = payload.getShort(ByteOrder.LITTLE);
 			player.getMovementQueue().reset();
 			player.getMovementQueue().setRunPath(payload.get(ByteTransform.C) == 1);
 			player.getMovementQueue().addToPath(new Position(firstStepX, firstStepY));
-			
+
 			for(int i = 0; i < steps; i++) {
 				path[i][0] += firstStepX;
 				path[i][1] += firstStepY;
@@ -83,7 +84,7 @@ public final class MovementQueuePacket implements IncomingPacket {
 			}
 			player.getMovementQueue().finish();
 		}
-		
+
 		if(Application.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("DEBUG[walking= " + player.getPosition().getRegion() + "]");
 		}

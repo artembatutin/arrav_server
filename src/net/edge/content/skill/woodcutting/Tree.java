@@ -6,6 +6,7 @@ import net.edge.world.entity.item.Item;
 /**
  * The enumerated type which elements represents the data required for the
  * process of cutting logs.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum Tree {
@@ -61,6 +62,7 @@ public enum Tree {
 
 	/**
 	 * Constructs a new {@link Tree} enumerator.
+	 *
 	 * @param object      {@link #object}.
 	 * @param item        {@link #item}.
 	 * @param requirement {@link #requirement}.
@@ -136,5 +138,5 @@ public enum Tree {
 	public boolean isObstacle() {
 		return obstacle;
 	}
-	
+
 }

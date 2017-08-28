@@ -2,6 +2,7 @@ package net.edge.content.skill.runecrafting;
 
 /**
  * Acts as a multiplier for crafting runes.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class RunecraftingMultiplier {
@@ -18,6 +19,7 @@ public final class RunecraftingMultiplier {
 
 	/**
 	 * Constructs a new {@link RunecraftingMultiplier}.
+	 *
 	 * @param requirement {@link #requirement}.
 	 * @param multiply    {@link #multiply}.
 	 */

@@ -1,9 +1,6 @@
 package net.edge.content.skill.agility.impl.barb;
 
 import net.edge.action.impl.ObjectAction;
-import net.edge.net.packet.out.SendObjectAnimation;
-import net.edge.task.LinkedTaskSequence;
-import net.edge.task.Task;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.agility.AgilityCourse;
 import net.edge.content.skill.agility.AgilityCourseType;
@@ -14,11 +11,14 @@ import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Climbable;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
 import net.edge.content.skill.agility.obstacle.impl.Walkable;
-import net.edge.world.locale.Position;
+import net.edge.net.packet.out.SendObjectAnimation;
+import net.edge.task.LinkedTaskSequence;
+import net.edge.task.Task;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.move.ForcedMovement;
 import net.edge.world.entity.actor.move.ForcedMovementManager;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 import net.edge.world.object.ObjectDirection;
 import net.edge.world.object.ObjectType;
@@ -29,17 +29,19 @@ import static net.edge.content.achievements.Achievement.TOO_FAST;
 
 /**
  * Holds functionality for passing obstacles for the BarbarianOutpost Agility course.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class BarbarianOutpostAgility extends AgilityCourse {
-	
+
 	/**
 	 * The definition for this obstacle course.
 	 */
 	private final BarbarianAgilityData obstacle;
-	
+
 	/**
 	 * Constructs a new {@link BarbarianOutpostAgility} course.
+	 *
 	 * @param player   {@link #getPlayer()}.
 	 * @param object   {@link #getObject()}.
 	 * @param obstacle the obstacle this player is trying to cross.
@@ -48,7 +50,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 		super(player, object, AgilityCourseType.BARBARIAN_AGILITY);
 		this.obstacle = obstacle;
 	}
-	
+
 	public static void action() {
 		for(BarbarianAgilityData data : BarbarianAgilityData.values()) {
 			ObjectAction perform = new ObjectAction() {
@@ -65,7 +67,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onSuccess() {
 		player.getAgilityBonus().addBarbarianObstacle(obstacle);
@@ -76,27 +78,27 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			TOO_FAST.inc(player);
 		}
 	}
-	
+
 	@Override
 	public ObstacleAction obstacleAction() {
 		return obstacle.obstacleAction;
 	}
-	
+
 	@Override
 	public String message() {
 		return obstacle.message;
 	}
-	
+
 	@Override
 	public Optional<String> crossedMessage() {
 		return obstacle.crossedMessage;
 	}
-	
+
 	@Override
 	public double experience() {
 		return obstacle.obstacleAction.activity(getPlayer()).getExperience();
 	}
-	
+
 	public enum BarbarianAgilityData {
 		ROPE_SWING(new int[]{43526}, ObstacleType.ROPE_SWING, player1 -> new Movable(new Position(player1.getPosition().getX(), 3554, 0), new Position(player1.getPosition().getX(), 3549, 0), ObstacleType.ROPE_SWING.getAnimation(), 90, 3, 35, 22) {
 			@Override
@@ -170,12 +172,12 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 				player1.facePosition(new Position(2536, 3546));
 				return true;
 			}
-			
+
 			@Override
 			public void onSubmit(Player player1) {
 				player1.animation(getAnimation());
 			}
-			
+
 			@Override
 			public void execute(Player player1, Task t) {
 				player1.move(getDestination());
@@ -198,29 +200,30 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			}
 		}),
 		SLIDE_DOWN_ROOF(new int[]{43532}, ObstacleType.JUMP_GAP, SlideDownRoof::new);
-		
+
 		/**
 		 * The object identification for this object.
 		 */
 		private final int[] objectId;
-		
+
 		/**
 		 * The message sent to this player when he attempts to cross the obstacle.
 		 */
 		private final String message;
-		
+
 		/**
 		 * The message sent to this player when he successfully crossed the obstacle.
 		 */
 		private final Optional<String> crossedMessage;
-		
+
 		/**
 		 * The agility policy linked to this obstacle action.
 		 */
 		private final ObstacleAction obstacleAction;
-		
+
 		/**
 		 * Constructs a new {@link BarbarianAgilityData}.
+		 *
 		 * @param objectId       {@link #objectId}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
@@ -232,9 +235,10 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			this.crossedMessage = crossedMessage;
 			this.obstacleAction = obstacleAction;
 		}
-		
+
 		/**
 		 * Constructs a new {@link BarbarianAgilityData}.
+		 *
 		 * @param objectId       {@link #objectId}.
 		 * @param message        {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
@@ -246,9 +250,10 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			this.crossedMessage = Optional.ofNullable(crossedMessage);
 			this.obstacleAction = obstacleAction;
 		}
-		
+
 		/**
 		 * Constructs a new {@link BarbarianAgilityData}.
+		 *
 		 * @param objectId       {@link #objectId}.
 		 * @param type           {@link #message} and {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
@@ -259,7 +264,7 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 			this.crossedMessage = type.getCrossedMessage();
 			this.obstacleAction = obstacleAction;
 		}
-		
+
 		/**
 		 * Objects of this course.
 		 */

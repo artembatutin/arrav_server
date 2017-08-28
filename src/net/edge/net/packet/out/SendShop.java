@@ -11,15 +11,15 @@ import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
 public final class SendShop implements OutgoingPacket {
-	
+
 	private final int id;
 	private final IntArrayList items;
-	
+
 	public SendShop(int id, IntArrayList items) {
 		this.id = id;
 		this.items = items;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		msg.message(53, PacketType.VARIABLE_SHORT);

@@ -22,6 +22,7 @@ import java.util.Optional;
 
 /**
  * Dwarf multicannon handler
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class Multicannon extends DynamicObject {

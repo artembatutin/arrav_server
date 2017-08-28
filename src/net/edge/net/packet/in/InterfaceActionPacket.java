@@ -14,10 +14,11 @@ import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 /**
  * The message sent from the client when the player clicks some sort of button or
  * module.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class InterfaceActionPacket implements IncomingPacket {
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.INTERFACE_ACTION))
@@ -69,13 +70,13 @@ public final class InterfaceActionPacket implements IncomingPacket {
 			}
 		}
 		switch(interfaceId) {
-			
+
 			default:
 				if(player.getRights().greater(Rights.ADMINISTRATOR))
 					player.message("Interface: " + interfaceId + " - Action: " + action);
 				break;
 		}
-		
+
 		player.getActivityManager().execute(ActivityManager.ActivityType.INTERFACE_ACTION);
 	}
 }

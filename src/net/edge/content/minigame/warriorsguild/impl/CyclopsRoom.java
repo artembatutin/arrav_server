@@ -2,6 +2,7 @@ package net.edge.content.minigame.warriorsguild.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.edge.content.combat.CombatType;
 import net.edge.content.dialogue.Conversation;
 import net.edge.content.dialogue.Expression;
 import net.edge.content.dialogue.impl.NpcDialogue;
@@ -11,7 +12,6 @@ import net.edge.content.dialogue.test.DialogueAppender;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.warriorsguild.GuildRoom;
 import net.edge.content.minigame.warriorsguild.WarriorsGuild;
-import net.edge.content.combat.CombatType;
 import net.edge.net.packet.out.SendInterfaceItem;
 import net.edge.net.packet.out.SendWalkable;
 import net.edge.task.Task;
@@ -32,6 +32,7 @@ import java.util.Optional;
 
 /**
  * The class which represents functionality for the cyclops room.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class CyclopsRoom extends GuildRoom {
@@ -115,7 +116,7 @@ public final class CyclopsRoom extends GuildRoom {
 			player.move(new Position(2844, 3540));
 		}
 	}
-	
+
 	@Override
 	public void onTeleportBefore(Player player, Position position) {
 		if(entered.isPresent()) {
@@ -169,6 +170,7 @@ public final class CyclopsRoom extends GuildRoom {
 
 	/**
 	 * The conversation a player can have with kamfreena.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public static final class KamfreenaConversation implements Conversation {
@@ -207,6 +209,7 @@ public final class CyclopsRoom extends GuildRoom {
 
 	/**
 	 * The task that runs for players whom are in the cyclops room.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class CyclopsRoomTask extends Task {
@@ -223,6 +226,7 @@ public final class CyclopsRoom extends GuildRoom {
 
 		/**
 		 * Constructs a new {@link CyclopsRoomTask}.
+		 *
 		 * @param room   {@link #room}.
 		 * @param player {@link #player}.
 		 */
@@ -246,15 +250,15 @@ public final class CyclopsRoom extends GuildRoom {
 			if(!player.getInventory().contains(new Item(WarriorsGuild.WARRIOR_GUILD_TOKEN.getId(), 25))) {
 				player.move(new Position(2846, RandomUtils.nextBoolean() ? 3541 : 3540, 2));
 				player.getDialogueBuilder().append(new NpcDialogue(4289, Expression.CALM, "Your time is up..."));
-				
+
 				if(player.getCombat().isAttacking()) {
 					player.getCombat().reset();
 				}
-				
+
 				if(player.getCombat().getDefender() != null) {
 					player.getCombat().getDefender().getCombat().reset();
 				}
-				
+
 				this.cancel();
 				return;
 			}
@@ -274,6 +278,7 @@ public final class CyclopsRoom extends GuildRoom {
 	/**
 	 * The enumerated type whose elements represent a set of constants used to
 	 * calculate the defenders that will be dropped next.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum Defender {
@@ -298,7 +303,8 @@ public final class CyclopsRoom extends GuildRoom {
 
 		/**
 		 * Constructs a new {@link Defender}.
-		 * @param id    {@link #item}.
+		 *
+		 * @param id {@link #item}.
 		 */
 		Defender(int index, int id) {
 			this.item = new Item(id);
@@ -311,6 +317,7 @@ public final class CyclopsRoom extends GuildRoom {
 
 		/**
 		 * Gets the next defender that will be dropped for the specified {@code player}.
+		 *
 		 * @param player the player to calculate the defender for.
 		 * @return the next {@link Defender} that should be obtained by the player.
 		 */
@@ -322,6 +329,6 @@ public final class CyclopsRoom extends GuildRoom {
 			}
 			return BRONZE_DEFENDER;
 		}
-		
+
 	}
 }

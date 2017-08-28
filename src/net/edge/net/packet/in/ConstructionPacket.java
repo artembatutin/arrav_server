@@ -12,10 +12,11 @@ import static net.edge.content.skill.construction.room.RoomData.*;
 
 /**
  * This message sent from the client when the player clicks a construction panel button.
+ *
  * @author Artem Batutin<artembatutin@gmail.com>
  */
 public final class ConstructionPacket implements IncomingPacket {
-	
+
 	private static final RoomData[] DATA = {
 			GARDEN,
 			PARLOUR,
@@ -43,7 +44,7 @@ public final class ConstructionPacket implements IncomingPacket {
 			JUNCTION,
 			TREASURE_ROOM,
 	};
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		int click = payload.get();
@@ -60,5 +61,5 @@ public final class ConstructionPacket implements IncomingPacket {
 			RoomManipulation.createRoom(data, player, player.getPosition().getZ());
 		}
 	}
-	
+
 }

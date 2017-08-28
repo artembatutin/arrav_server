@@ -6,37 +6,38 @@ import net.edge.action.impl.ItemOnObjectAction;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.object.pit.FirepitManager;
 import net.edge.content.skill.smithing.Smithing;
-import net.edge.world.entity.region.Region;
-import net.edge.world.locale.Boundary;
-import net.edge.world.locale.Position;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.Item;
+import net.edge.world.entity.region.Region;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
 import java.util.Optional;
 
 /**
  * The message sent from the client when a player uses an item on an object.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class ItemOnObjectPacket implements IncomingPacket {
-	
+
 	public static final ActionContainer<ItemOnObjectAction> OBJECTS = new ActionContainer<>();
 	public static final ActionContainer<ItemOnObjectAction> ITEMS = new ActionContainer<>();
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ON_OBJECT)) {
 			return;
 		}
-		
+
 		int container = payload.getShort(false);
 		int objectId = payload.getMedium();
 		int objectY = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
@@ -46,7 +47,7 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 		Item item = player.getInventory().get(slot);
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(player.getRights().equal(Rights.ADMINISTRATOR) && Application.DEBUG) {
-			System.out.println("Item ID: "+itemId+" on Object id: "+objectId);
+			System.out.println("Item ID: " + itemId + " on Object id: " + objectId);
 		}
 		if(item == null || container != 3214 || objectId < 0 || objectY < 0 || slot < 0 || objectX < 0 || itemId < 0) {
 			return;
@@ -60,11 +61,11 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 		Optional<GameObject> o = reg.getObject(objectId, position.toLocalPacked());
 		if(!o.isPresent())
 			return;
-		
+
 		final GameObject object = o.get();
 		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
 			player.message("[ItemOnObject message] objectId = " + object.toString() + ", itemId = " + item.getId());
-		
+
 		player.facePosition(position);
 		player.getMovementListener().append(() -> {
 			if(new Boundary(position, object.getDefinition().getSize()).within(player.getPosition(), player.size(), 1)) {

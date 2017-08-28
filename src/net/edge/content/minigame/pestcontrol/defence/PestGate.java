@@ -2,15 +2,15 @@ package net.edge.content.minigame.pestcontrol.defence;
 
 import net.edge.content.object.door.Door;
 import net.edge.content.skill.Skills;
-import net.edge.world.locale.Position;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
 public class PestGate {
-	
+
 	/**
 	 * The door states.
 	 */
@@ -18,27 +18,27 @@ public class PestGate {
 			{14233, 14237, 14241},
 			{14235, 14239, 14244},
 	};
-	
+
 	/**
 	 * The door instance.
 	 */
 	private final Door door;
-	
+
 	/**
 	 * The damage of the door.
 	 */
 	private int damage = 0;
-	
+
 	/**
 	 * The two positions of the two gates.
 	 */
 	private Position[] positions;
-	
+
 	public PestGate(GameObject clicked) {
 		door = new Door(clicked, clicked.getRegion().get());
 		positions = new Position[]{door.getCurrentOne(), door.getCurrentSecond()};
 	}
-	
+
 	public void repair(Player player) {
 		if(!player.getInventory().containsAny(2347, 2949)) {
 			player.message("You need a hammer to repair the gates.");
@@ -63,7 +63,7 @@ public class PestGate {
 		player.getAttr().get("participation").set(player.getAttr().get("participation").getInt() + 25);
 		player.text(21116, "" + player.getAttr().get("participation").getInt());
 	}
-	
+
 	public void damage() {
 		//20% chance to brake stage.
 		if(RandomUtils.inclusive(5) == 1) {
@@ -81,7 +81,7 @@ public class PestGate {
 				door.publish();
 		}
 	}
-	
+
 	public void click(Player player) {
 		if(damage == 2) {
 			player.message("The gates are broken, fix them first.");
@@ -90,7 +90,7 @@ public class PestGate {
 		door.append(player);
 		positions = new Position[]{door.getCurrentOne(), door.getCurrentSecond()};
 	}
-	
+
 	public void reset() {
 		door.setAppendId(STATES[0][0]);
 		door.setAppendedSecondId(STATES[1][0]);
@@ -105,15 +105,15 @@ public class PestGate {
 		}
 		damage = 0;
 	}
-	
+
 	public boolean clicked(Position position) {
 		return position.same(positions[0]) || position.same(positions[1]);
 	}
-	
+
 	public Position getPos() {
 		return positions[0];
 	}
-	
+
 	public boolean destroyed() {
 		return damage == 2;
 	}

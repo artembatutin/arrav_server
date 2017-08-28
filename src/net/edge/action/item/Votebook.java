@@ -1,9 +1,9 @@
 package net.edge.action.item;
 
-import net.edge.content.PlayerPanel;
-import net.edge.content.VoteRewards;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ItemAction;
+import net.edge.content.PlayerPanel;
+import net.edge.content.VoteRewards;
 import net.edge.util.TextUtils;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;

@@ -9,11 +9,11 @@ import net.edge.world.entity.actor.player.Player;
  * @since 6-7-2017.
  */
 public interface OutgoingPacket {
-    
-    default boolean onSent(Player player) {
-        return true;
-    }
-    
-    ByteBuf write(Player player, GameBuffer msg);
-    
+
+	default boolean onSent(Player player) {
+		return true;
+	}
+
+	ByteBuf write(Player player, GameBuffer msg);
+
 }

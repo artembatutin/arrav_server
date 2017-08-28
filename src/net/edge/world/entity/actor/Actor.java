@@ -30,6 +30,7 @@ import java.util.function.Consumer;
 
 /**
  * The {@link Entity} implementation representing a node that is an entity. This includes {@link Player}s and {@link Mob}s.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class Actor extends Entity {
@@ -200,6 +201,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Creates a new {@link Actor}.
+	 *
 	 * @param position the position of this entity in the world.
 	 * @param type     the type of node that this entity is.
 	 */
@@ -233,6 +235,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Entity#position}.
+	 *
 	 * @param position the new value to set.
 	 */
 	@Override
@@ -282,18 +285,21 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Condition if the {@link Actor} is in multi combat area.
+	 *
 	 * @return multi area combat flag.
 	 */
 	public abstract boolean inMulti();
 
 	/**
 	 * Condition if the {@link Actor} is in wilderness area.
+	 *
 	 * @return wilderness area flag.
 	 */
 	public abstract boolean inWilderness();
 
 	/**
 	 * Condition if this {@link Actor} is active in the world.
+	 *
 	 * @return {@code true} if it is, false otherwise.
 	 */
 	public abstract boolean active();
@@ -310,30 +316,35 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets a set of local players.
+	 *
 	 * @return local players
 	 */
 	public abstract Set<Player> getLocalPlayers();
 
 	/**
 	 * Gets a set of local mobs.
+	 *
 	 * @return local mobs
 	 */
 	public abstract Set<Mob> getLocalMobs();
 
 	/**
 	 * Gets the attack speed for this entity.
+	 *
 	 * @return the attack speed.
 	 */
 	public abstract int getAttackDelay();
 
 	/**
 	 * Gets this entity's current health.
+	 *
 	 * @return this charater's health.
 	 */
 	public abstract int getCurrentHealth();
 
 	/**
 	 * Decrements this entity's health based on {@code hit}.
+	 *
 	 * @param hit the hit to decrement this entity's health by.
 	 * @return the modified hit after the health was decremented.
 	 */
@@ -341,12 +352,14 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Restores this entity's health level by {@code amount}.
+	 *
 	 * @param amount the amount to restore this health level by.
 	 */
 	public abstract void healEntity(int amount);
 
 	/**
 	 * Applies poison with an intensity of {@code type} to the entity.
+	 *
 	 * @param type the poison type to apply.
 	 */
 	public void poison(PoisonType type) {
@@ -356,6 +369,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Calculates and returns the size of this entity.
+	 *
 	 * @return the size of this entity.
 	 */
 	public final int size() {
@@ -366,6 +380,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the center position for this entity node.
+	 *
 	 * @return the center position for this entity node.
 	 */
 	public final Position getCenterPosition() {
@@ -377,6 +392,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Executes {@code animation} for this entity.
+	 *
 	 * @param animation the animation to execute, or {@code null} to reset the current
 	 *                  animation.
 	 */
@@ -391,6 +407,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Executes {@code graphic} for this entity.
+	 *
 	 * @param graphic the graphic to execute.
 	 */
 	public final void graphic(Graphic graphic) {
@@ -403,6 +420,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Executes {@code forcedText} for this entity.
+	 *
 	 * @param forcedText the forced text to execute.
 	 */
 	public final void forceChat(String forcedText) {
@@ -412,6 +430,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Prompts this entity to face {@code entity}.
+	 *
 	 * @param entity the entity to face, or {@code null} to reset the face.
 	 */
 	public final void faceEntity(Actor entity) {
@@ -421,6 +440,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Prompts this entity to face {@code position}.
+	 *
 	 * @param position the position to face.
 	 */
 	public final void facePosition(Position position) {
@@ -436,6 +456,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Attempts to view a direction.
+	 *
 	 * @param direction the direction to face.
 	 */
 	public final void faceDirection(Direction direction) {
@@ -445,10 +466,11 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Deals a series of hits to this entity.
+	 *
 	 * @param hits the hits to deal to this entity.
 	 */
 	public final void damage(Hit... hits) {
-		for (Hit hit : hits) {
+		for(Hit hit : hits) {
 			getCombat().queueDamage(hit);
 		}
 	}
@@ -456,13 +478,14 @@ public abstract class Actor extends Entity {
 	/**
 	 * Writes the {@code hit} to the {@code primary} and {@code secondary} hit
 	 * update variables.
+	 *
 	 * @param hit the hit to write
 	 */
 	public final void writeDamage(Hit hit) {
-		if (primaryHit == null) {
+		if(primaryHit == null) {
 			primaryHit = decrementHealth(hit);
 			getFlags().flag(UpdateFlag.PRIMARY_HIT);
-		} else if (secondaryHit == null) {
+		} else if(secondaryHit == null) {
 			secondaryHit = decrementHealth(hit);
 			getFlags().flag(UpdateFlag.SECONDARY_HIT);
 		}
@@ -470,6 +493,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Freezes this entity for the desired time in {@code SECONDS}.
+	 *
 	 * @param time the time to freeze this entity for.
 	 */
 	public final void freeze(long time) {
@@ -491,6 +515,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Stuns this entity for the desired time in {@code SECONDS}.
+	 *
 	 * @param time the time to stun this entity for.
 	 */
 	public final void stun(long time) {
@@ -533,6 +558,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Determines if this entity is poisoned.
+	 *
 	 * @return {@code true} if this entity is poisoned, {@code false}
 	 * otherwise.
 	 */
@@ -542,6 +568,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Determines if this entity is frozen.
+	 *
 	 * @return {@code true} if this entity is frozen, {@code false}
 	 * otherwise.
 	 */
@@ -551,6 +578,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Determines if this entity is frozen.
+	 *
 	 * @return {@code true} if this entity is frozen, {@code false}
 	 * otherwise.
 	 */
@@ -560,6 +588,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the slot this entity has been assigned to.
+	 *
 	 * @return the slot of this entity.
 	 */
 	public final int getSlot() {
@@ -568,6 +597,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Actor#slot}.
+	 *
 	 * @param slot the new value to set.
 	 */
 	public final void setSlot(int slot) {
@@ -576,6 +606,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the amount of poison damage this entity has.
+	 *
 	 * @return the amount of poison damage.
 	 */
 	public final MutableNumber getPoisonDamage() {
@@ -584,6 +615,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the primary direction this entity is facing.
+	 *
 	 * @return the primary direction.
 	 */
 	public final Direction getPrimaryDirection() {
@@ -592,6 +624,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Actor#primaryDirection}.
+	 *
 	 * @param primaryDirection the new value to set.
 	 */
 	public final void setPrimaryDirection(Direction primaryDirection) {
@@ -600,6 +633,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the secondary direction this entity is facing.
+	 *
 	 * @return the secondary direction.
 	 */
 	public final Direction getSecondaryDirection() {
@@ -608,6 +642,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Actor#secondaryDirection}.
+	 *
 	 * @param secondaryDirection the new value to set.
 	 */
 	public final void setSecondaryDirection(Direction secondaryDirection) {
@@ -616,6 +651,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the last direction this entity was facing.
+	 *
 	 * @return the last direction.
 	 */
 	public final Direction getLastDirection() {
@@ -624,6 +660,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Actor#lastDirection}.
+	 *
 	 * @param lastDirection the new value to set.
 	 */
 	public final void setLastDirection(Direction lastDirection) {
@@ -632,6 +669,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the entity's forced movement.
+	 *
 	 * @return entity's forced movement.
 	 */
 	public ForcedMovement getForcedMovement() {
@@ -640,6 +678,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Actor#forcedMovement}
+	 *
 	 * @param forcedMovement the new value to set.
 	 */
 	public void setForcedMovement(ForcedMovement forcedMovement) {
@@ -648,6 +687,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Determines if this entity needs region update.
+	 *
 	 * @return {@code true} if this entity needs region update, {@code false}
 	 * otherwise.
 	 */
@@ -657,6 +697,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Determines if this entity needs placement.
+	 *
 	 * @return {@code true} if this entity needs placement, {@code false}
 	 * otherwise.
 	 */
@@ -666,6 +707,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets a new value for {@link #needsPlacement}.
+	 *
 	 * @param needsPlacement new value to set.
 	 */
 	public final void setNeedsPlacement(boolean needsPlacement) {
@@ -674,6 +716,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets regional and placement updates on this {@link Actor}.
+	 *
 	 * @param needsPlacement this flag describes if the entity needs placement.
 	 * @param region         this flag descibes if the entity needs to have region map update.
 	 */
@@ -684,6 +727,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the last region this entity is in.
+	 *
 	 * @return the current region.
 	 */
 	public Position getLastRegion() {
@@ -692,6 +736,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the current teleport stage that this player is in.
+	 *
 	 * @return the teleport stage.
 	 */
 	public int getTeleportStage() {
@@ -700,6 +745,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Checks if the player is teleporting.
+	 *
 	 * @return <true> if the player is, <false> otherwise.
 	 */
 	public boolean isTeleporting() {
@@ -708,6 +754,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Player#teleportStage}.
+	 *
 	 * @param teleportStage the new value to set.
 	 */
 	public void setTeleportStage(int teleportStage) {
@@ -716,6 +763,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Actor#lastRegion}.
+	 *
 	 * @param lastRegion the new value to set.
 	 */
 	public void setLastRegion(Position lastRegion) {
@@ -724,6 +772,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Determines if this entity is auto-retaliating.
+	 *
 	 * @return {@code true} if this entity is auto-retaliating, {@code false}
 	 * otherwise.
 	 */
@@ -733,6 +782,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Actor#autoRetaliate}.
+	 *
 	 * @param autoRetaliate the new value to set.
 	 */
 	public void setAutoRetaliate(boolean autoRetaliate) {
@@ -741,6 +791,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Determines if this entity is following someone.
+	 *
 	 * @return {@code true} if this entity is following someone,
 	 * {@code false} otherwise.
 	 */
@@ -750,6 +801,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Actor#following}.
+	 *
 	 * @param following the new value to set.
 	 */
 	public final void setFollowing(boolean following) {
@@ -758,6 +810,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the entity that is currently being followed.
+	 *
 	 * @return the entity being followed.
 	 */
 	public final Actor getFollowEntity() {
@@ -766,6 +819,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Actor#followentity}.
+	 *
 	 * @param followentity the new value to set.
 	 */
 	public final void setFollowEntity(Actor followentity) {
@@ -774,6 +828,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Determines if this entity is dead or not.
+	 *
 	 * @return {@code true} if this entity is dead, {@code false} otherwise.
 	 */
 	public final boolean isDead() {
@@ -783,8 +838,10 @@ public abstract class Actor extends Entity {
 	public final AStarPathFinder getAStarPathFinder() {
 		return aStarPathFinder;
 	}
+
 	/**
 	 * Sets the value for {@link Actor#dead}.
+	 *
 	 * @param dead the new value to set.
 	 */
 	public void setDead(boolean dead) {
@@ -793,6 +850,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Determines if this entity is visible or not.
+	 *
 	 * @return {@code true} if this entity is visible, {@code false}
 	 * otherwise.
 	 */
@@ -802,6 +860,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Actor#visible}.
+	 *
 	 * @param visible the new value to set.
 	 */
 	public void setVisible(boolean visible) {
@@ -819,6 +878,7 @@ public abstract class Actor extends Entity {
 	/**
 	 * Gets the movement queue that will handle all movement processing for this
 	 * entity.
+	 *
 	 * @return the movement queue.
 	 */
 	public final MovementQueue getMovementQueue() {
@@ -828,6 +888,7 @@ public abstract class Actor extends Entity {
 	/**
 	 * Gets the movement queue listener that will allow for actions to be
 	 * appended to the end of the movement queue.
+	 *
 	 * @return the movement queue listener.
 	 */
 	public final MovementQueueListener getMovementListener() {
@@ -843,6 +904,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the animation update block value.
+	 *
 	 * @return the animation update block value.
 	 */
 	public final Animation getAnimation() {
@@ -851,6 +913,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the graphic update block value.
+	 *
 	 * @return the graphic update block value.
 	 */
 	public final Graphic getGraphic() {
@@ -859,6 +922,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the forced text update block value.
+	 *
 	 * @return the forced text update block value.
 	 */
 	public final String getForcedText() {
@@ -867,6 +931,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the face index update block value.
+	 *
 	 * @return the face index update block value.
 	 */
 	public final int getFaceIndex() {
@@ -875,6 +940,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the face position update block value.
+	 *
 	 * @return the face position update block value.
 	 */
 	public final Position getFacePosition() {
@@ -883,6 +949,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the primary hit update block value.
+	 *
 	 * @return the primary hit update block value.
 	 */
 	public final Hit getPrimaryHit() {
@@ -891,6 +958,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the secondary hit update block value.
+	 *
 	 * @return the secondary hit update block value.
 	 */
 	public final Hit getSecondaryHit() {
@@ -899,6 +967,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Checks if this actor can append any more hits for this update cycle.
+	 *
 	 * @return {@code true} if the actor can add more hits
 	 */
 	public boolean canAppendHit() {
@@ -907,6 +976,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the type of poison that was previously applied.
+	 *
 	 * @return the type of poison.
 	 */
 	public PoisonType getPoisonType() {
@@ -915,6 +985,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Sets the value for {@link Actor#poisonType}.
+	 *
 	 * @param poisonType the new value to set.
 	 */
 	public void setPoisonType(PoisonType poisonType) {
@@ -923,6 +994,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Determines if this entity is a {@link Player}.
+	 *
 	 * @return {@code true} if this entity is a {@link Player}, {@code false}
 	 * otherwise.
 	 */
@@ -932,6 +1004,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Executes the specified action if the underlying node is a player.
+	 *
 	 * @param action the action to execute.
 	 */
 	public final void ifPlayer(Consumer<Player> action) {
@@ -943,6 +1016,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Casts the {@link Actor} to a {@link Player}.
+	 *
 	 * @return an instance of this {@link Actor} as a {@link Player}.
 	 */
 	public final Player toPlayer() {
@@ -952,6 +1026,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Determines if this entity is a {@link Mob}.
+	 *
 	 * @return {@code true} if this entity is a {@link Mob}, {@code false}
 	 * otherwise.
 	 */
@@ -961,6 +1036,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Executes the specified action if the underlying node is a player.
+	 *
 	 * @param action the action to execute.
 	 */
 	public final void ifNpc(Consumer<Mob> action) {
@@ -971,6 +1047,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Casts the {@link Actor} to a {@link Mob}.
+	 *
 	 * @return an instance of this {@link Actor} as a {@link Mob}.
 	 */
 	public final Mob toMob() {
@@ -980,6 +1057,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Gets the viewing distance.
+	 *
 	 * @return viewing distance.
 	 */
 	public int getViewingDistance() {
@@ -988,6 +1066,7 @@ public abstract class Actor extends Entity {
 
 	/**
 	 * Viewing distance.
+	 *
 	 * @param viewingDistance viewing distance.
 	 */
 	public void setViewingDistance(int viewingDistance) {

@@ -3,7 +3,7 @@ package net.edge.content.skill.farming.seed;
 import net.edge.content.skill.farming.seed.impl.*;
 
 public enum SeedClass {
-	
+
 	ALLOTMENT {
 		@Override
 		public SeedType getInstance(String name) {
@@ -43,7 +43,7 @@ public enum SeedClass {
 	FRUIT_TREES,
 	HOPS,
 	SPECIAL_PLANTS,;
-	
+
 	public SeedType getInstance(String name) {
 		return null;
 	}

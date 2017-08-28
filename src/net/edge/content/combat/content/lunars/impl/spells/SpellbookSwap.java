@@ -3,25 +3,25 @@ package net.edge.content.combat.content.lunars.impl.spells;
 import net.edge.content.combat.content.MagicRune;
 import net.edge.content.combat.content.RequiredRune;
 import net.edge.content.combat.content.lunars.LunarSpell;
+import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.task.LinkedTaskSequence;
 import net.edge.task.Task;
-import net.edge.content.dialogue.impl.OptionDialogue;
-import net.edge.world.World;
-import net.edge.world.entity.actor.Actor;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
+import net.edge.world.World;
+import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Spellbook;
-import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
 
 /**
  * Holds functionality for the spellbook swap lunar spell.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class SpellbookSwap extends LunarSpell {
-	
+
 	/**
 	 * The option type the player selected;
 	 */
@@ -29,6 +29,7 @@ public final class SpellbookSwap extends LunarSpell {
 
 	/**
 	 * Constructs a new {@link SpellbookSwap}.
+	 *
 	 * @param type the type the player clicked.
 	 */
 	public SpellbookSwap(OptionDialogue.OptionType type) {
@@ -49,9 +50,9 @@ public final class SpellbookSwap extends LunarSpell {
 			caster.toPlayer().getActivityManager().enable();
 		});
 		seq.start();
-		
+
 	}
-	
+
 	@Override
 	public boolean canCast(Actor caster, Optional<Actor> victim) {
 		if(!super.canCast(caster, victim)) {
@@ -63,12 +64,12 @@ public final class SpellbookSwap extends LunarSpell {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public Optional<Animation> startAnimation() {
 		return Optional.of(new Animation(6299));
 	}
-	
+
 	@Override
 	public Optional<Graphic> startGraphic() {
 		return Optional.of(new Graphic(1062));
@@ -77,27 +78,29 @@ public final class SpellbookSwap extends LunarSpell {
 	/**
 	 * Holds functionality for the timers when the {@link LunarSpells#SPELLBOOK_SWAP}
 	 * is casted.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class SpellbookSwapTask extends Task {
-		
+
 		/**
 		 * The player whom has casted this spell.
 		 */
 		private final Player player;
-		
+
 		/**
 		 * The spellbook this player has selected.
 		 */
 		private final Spellbook spellbook;
-		
+
 		/**
 		 * The timer which counts howmany cycles this task has been running for.
 		 */
 		private int timer;
-		
+
 		/**
 		 * Constructs a new {@link SpellbookSwapTask}.
+		 *
 		 * @param player    {@link #player}.
 		 * @param spellbook {@link #spellbook}.
 		 */
@@ -107,7 +110,7 @@ public final class SpellbookSwap extends LunarSpell {
 			this.spellbook = spellbook;
 			this.attach(player);
 		}
-		
+
 		@Override
 		public void execute() {
 			if(!player.getAttr().get("lunar_spellbook_swap").getBoolean()) {
@@ -118,7 +121,7 @@ public final class SpellbookSwap extends LunarSpell {
 				this.cancel();
 			}
 		}
-		
+
 		@Override
 		public void onCancel() {
 			if(timer >= 200) {

@@ -1,29 +1,30 @@
 package net.edge.net.packet.in;
 
-import net.edge.content.Attributes;
-import net.edge.content.skill.runecrafting.Runecrafting;
-import net.edge.content.skill.runecrafting.pouch.PouchType;
-import net.edge.net.packet.IncomingPacket;
-import net.edge.world.entity.item.container.session.ExchangeSession;
-import net.edge.world.entity.item.container.session.ExchangeSessionManager;
-import net.edge.world.entity.item.container.session.ExchangeSessionType;
-import net.edge.content.skill.crafting.JewelleryMoulding;
-import net.edge.content.skill.smithing.Smithing;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ItemAction;
-import net.edge.net.codec.IncomingMsg;
+import net.edge.content.Attributes;
+import net.edge.content.skill.crafting.JewelleryMoulding;
+import net.edge.content.skill.runecrafting.Runecrafting;
+import net.edge.content.skill.runecrafting.pouch.PouchType;
+import net.edge.content.skill.smithing.Smithing;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
+import net.edge.net.codec.IncomingMsg;
+import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.ItemDefinition;
+import net.edge.world.entity.item.container.session.ExchangeSession;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.item.container.session.ExchangeSessionType;
 
 import java.util.Optional;
 
 /**
  * The message sent from the client when a player operates an item on an
  * interface.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class ItemInterfacePacket implements IncomingPacket {
@@ -66,6 +67,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 
 	/**
 	 * Handles the first item slot click on an interface.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
@@ -132,6 +134,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 
 	/**
 	 * Handles the second item slot click on an interface.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
@@ -188,6 +191,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 
 	/**
 	 * Handles the third item slot click on an interface.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
@@ -243,6 +247,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 
 	/**
 	 * Handles the fourth item slot click on an interface.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
@@ -293,6 +298,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 
 	/**
 	 * Handles the equipping of an item for {@code player}.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
@@ -333,6 +339,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 
 	/**
 	 * Handles the swapping of items on an interface for {@code player}.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */
@@ -365,6 +372,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 
 	/**
 	 * Handles the bank tab switching of items on the bank panel for the {@code player}.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload buffer for reading the sent data.
 	 */

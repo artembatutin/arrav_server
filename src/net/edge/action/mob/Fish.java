@@ -1,9 +1,9 @@
 package net.edge.action.mob;
 
-import net.edge.content.skill.fishing.Fishing;
-import net.edge.content.skill.fishing.Tool;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.MobAction;
+import net.edge.content.skill.fishing.Fishing;
+import net.edge.content.skill.fishing.Tool;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
@@ -74,7 +74,7 @@ public class Fish extends ActionInitializer {
 			}
 		};
 		e.registerFirst(322);
-		
+
 		e = new MobAction() {
 			@Override
 			public boolean click(Player player, Mob mob, int click) {

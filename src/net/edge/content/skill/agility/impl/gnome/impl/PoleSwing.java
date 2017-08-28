@@ -1,26 +1,28 @@
 package net.edge.content.skill.agility.impl.gnome.impl;
 
-import net.edge.task.LinkedTaskSequence;
 import net.edge.content.skill.agility.obstacle.ObstacleActivity;
 import net.edge.content.skill.agility.obstacle.ObstacleType;
 import net.edge.content.skill.agility.obstacle.impl.Movable;
-import net.edge.world.locale.Position;
+import net.edge.task.LinkedTaskSequence;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.move.ForcedMovement;
 import net.edge.world.entity.actor.move.ForcedMovementDirection;
 import net.edge.world.entity.actor.move.ForcedMovementManager;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.Position;
 
 import java.util.stream.IntStream;
 
 /**
  * Holds functionality for the pole swing obstacle.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class PoleSwing extends ObstacleActivity {
 
 	/**
 	 * Constructs a new {@link Movable} Obstacle Activity.
+	 *
 	 * @param player the player who's attempting the pole swing..
 	 */
 	public PoleSwing(Player player) {

@@ -3,8 +3,8 @@ package net.edge.content.minigame.nexchamber;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.action.impl.ObjectAction;
-import net.edge.content.minigame.Minigame;
 import net.edge.content.combat.CombatType;
+import net.edge.content.minigame.Minigame;
 import net.edge.net.packet.out.SendFade;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.Actor;
@@ -17,19 +17,20 @@ import java.util.Optional;
 
 /**
  * The nex chamber acting as a {@link Minigame}.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public class NexMinigame extends Minigame {
-	
+
 	/**
 	 * The saved static nex game.
 	 */
 	public static NexMinigame game;
-	
+
 //	private final Nex nex;
-	
+
 	private static final ObjectList<Player> players = new ObjectArrayList<>();
-	
+
 	public NexMinigame() {
 		super("Nex", MinigameSafety.DEFAULT, MinigameType.NORMAL);
 	}
@@ -45,7 +46,7 @@ public class NexMinigame extends Minigame {
 	public void onLogin(Player player) {
 		onLogout(player);
 	}
-	
+
 	@Override
 	public void onLogout(Player player) {
 		getPlayers().remove(player);
@@ -53,7 +54,7 @@ public class NexMinigame extends Minigame {
 		player.task(2, pl -> pl.move(new Position(2907, 5204)));
 		player.setMinigame(Optional.empty());
 	}
-	
+
 	@Override
 	public void onEnter(Player player) {
 		getPlayers().add(player);
@@ -61,7 +62,7 @@ public class NexMinigame extends Minigame {
 		player.task(2, pl -> pl.move(new Position(2911, 5204)));
 		player.setMinigame(this);
 	}
-	
+
 	@Override
 	public boolean canHit(Player player, Actor other, CombatType type) {
 		if(other.isPlayer())
@@ -73,7 +74,7 @@ public class NexMinigame extends Minigame {
 //		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean onFirstClickObject(Player player, GameObject object) {
 		if(object.getId() == 99228) {
@@ -82,17 +83,17 @@ public class NexMinigame extends Minigame {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean contains(Player player) {
 		return getPlayers().contains(player);
 	}
-	
+
 	@Override
 	public Position deathPosition(Player player) {
 		return new Position(2911, 5204);
 	}
-	
+
 	public static void action() {
 		ObjectAction enter = new ObjectAction() {
 			@Override
@@ -113,14 +114,15 @@ public class NexMinigame extends Minigame {
 		};
 		enter.registerFirst(99228);
 	}
-	
+
 	@Override
 	public boolean canLogout(Player player) {
 		return true;
 	}
-	
+
 	/**
 	 * Gets a random spot in the nex chamber, excluding the four black empty spots.
+	 *
 	 * @return random spot, to handle the smoke hits mostly.
 	 */
 	private Position getRandom() {
@@ -144,5 +146,5 @@ public class NexMinigame extends Minigame {
 		}
 		return p;
 	}
-	
+
 }

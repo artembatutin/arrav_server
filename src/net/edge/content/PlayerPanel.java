@@ -1,22 +1,21 @@
 package net.edge.content;
 
+import net.edge.action.impl.ButtonAction;
 import net.edge.content.achievements.Achievement;
 import net.edge.content.achievements.AchievementHandler;
 import net.edge.content.commands.impl.RedeemCommand;
+import net.edge.content.dialogue.impl.OptionDialogue;
+import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.market.MarketCounter;
+import net.edge.content.scoreboard.PlayerScoreboardStatistic;
 import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.wilderness.WildernessActivity;
-import net.edge.action.impl.ButtonAction;
-import net.edge.GameConstants;
 import net.edge.net.packet.out.SendClearText;
 import net.edge.net.packet.out.SendEnterName;
 import net.edge.net.packet.out.SendLink;
 import net.edge.net.packet.out.SendMobDrop;
 import net.edge.util.TextUtils;
 import net.edge.util.Utility;
-import net.edge.content.dialogue.impl.OptionDialogue;
-import net.edge.content.dialogue.impl.StatementDialogue;
-import net.edge.content.scoreboard.PlayerScoreboardStatistic;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 
@@ -25,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * The enumerated type whose elements represent functionality for the quest tab.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
@@ -52,7 +52,7 @@ public enum PlayerPanel {
 				} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
 					player.out(new SendEnterName("Auth code:", s -> () -> {
 						try {
-							new RedeemCommand().execute(player, new String[] {"", s}, "");
+							new RedeemCommand().execute(player, new String[]{"", s}, "");
 							player.closeWidget();
 						} catch(Exception e) {
 							e.printStackTrace();
@@ -63,7 +63,7 @@ public enum PlayerPanel {
 					MarketCounter.getShops().get(27).openShop(player);
 				}
 			}, "Vote", "Redeem", "Vote shop"));
-			
+
 		}
 	},
 	STORE() {
@@ -87,7 +87,7 @@ public enum PlayerPanel {
 		}
 	},
 	TOOL3,
-	
+
 	SERVER_STATISTICS,
 	UPTIME,
 	PLAYERS_ONLINE() {
@@ -121,9 +121,9 @@ public enum PlayerPanel {
 		}
 	},
 	PLAYERS_IN_WILD,
-	
+
 	EMPTY,
-	
+
 	PLAYER_STATISTICS,
 	USERNAME,
 	PASSWORD() {
@@ -170,7 +170,7 @@ public enum PlayerPanel {
 			player.message("You have voted " + player.totalVotes + "x for Edgeville.");
 		}
 	},
-	
+
 	EMPTY1,
 	MONSTER_HEADER,
 	HIGHEST_KILLSTREAK,
@@ -179,36 +179,38 @@ public enum PlayerPanel {
 	TOTAL_PLAYER_DEATHS,
 	TOTAL_NPC_KILLS,
 	TOTAL_NPC_DEATHS,
-	
+
 	EMPTY2,
 	PVP_SCOREBOARD_STATISTICS,
 	PVP_HIGHEST_KILLSTREAKS,
 	PVP_CURRENT_KILLSTREAKS,
 	PVP_KILLS,
 	PVP_DEATHS();
-	
+
 	/**
 	 * The button identification.
 	 */
 	private final int buttonId;
-	
+
 	/**
 	 * Constructs a new {@link PlayerPanel}.
 	 */
 	PlayerPanel() {
 		this.buttonId = 62154 + ordinal();
 	}
-	
+
 	/**
 	 * Gets the button id of the line.
+	 *
 	 * @return the button id.
 	 */
 	public int getButtonId() {
 		return buttonId;
 	}
-	
+
 	/**
 	 * Refreshes every tab for the specified {@code player}.
+	 *
 	 * @param player the player logging in.
 	 */
 	public static void refreshAll(Player player) {
@@ -220,13 +222,13 @@ public enum PlayerPanel {
 		PlayerPanel.STORE.refresh(player, "@or3@ - Store");
 		PlayerPanel.EXP_LOCK.refresh(player, "@or3@ - Experience Lock: @yel@" + (player.lockedXP ? "@gre@yes" : "@red@no"));
 		PlayerPanel.NPC_TOOL.refresh(player, "@or3@ - Monster Database");
-		
+
 		PlayerPanel.SERVER_STATISTICS.refresh(player, "@or1@Server Information:");
 		PlayerPanel.UPTIME.refresh(player, "@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
 		PlayerPanel.PLAYERS_IN_WILD.refresh(player, "@or2@ - Players in wild: @yel@" + WildernessActivity.getPlayers().size());
 		PlayerPanel.STAFF_ONLINE.refresh(player, "@or3@ - Staff online: @yel@" + World.get().getStaffCount(), true);
 		PlayerPanel.PLAYER_STATISTICS.refresh(player, "@or1@Player Information:");
-		
+
 		PlayerPanel.EMPTY.refresh(player, "");
 		PlayerPanel.USERNAME.refresh(player, "@or2@ - Username: @yel@" + player.credentials.formattedUsername);
 		PlayerPanel.PASSWORD.refresh(player, "@or3@ - Password: " + TextUtils.capitalize(TextUtils.passwordCheck(player.credentials.password)));
@@ -237,7 +239,7 @@ public enum PlayerPanel {
 		PlayerPanel.SLAYER_COUNT.refresh(player, "@or2@ - Completed tasks: @yel@" + player.getAttr().get("slayer_tasks").getInt());
 		PlayerPanel.PEST_POINTS.refresh(player, "@or2@ - Pest points: @yel@" + player.getPest());
 		PlayerPanel.TOTAL_VOTES.refresh(player, "@or2@ - Total votes: @yel@" + player.totalVotes);
-		
+
 		PlayerPanel.MONSTER_HEADER.refresh(player, "@or1@Killing Statistics:");
 		PlayerPanel.HIGHEST_KILLSTREAK.refresh(player, "@or2@ - Highest Killstreak: @yel@" + player.getHighestKillstreak().get());
 		PlayerPanel.CURRENT_KILLSTREAK.refresh(player, "@or2@ - Current Killstreak: @yel@" + player.getCurrentKillstreak().get());
@@ -245,7 +247,7 @@ public enum PlayerPanel {
 		PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(player, "@or2@ - Total Player deaths: @yel@" + player.getDeathsByPlayer().get());
 		PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Mobs killed: @yel@" + player.getNpcKills().get());
 		PlayerPanel.TOTAL_NPC_DEATHS.refresh(player, "@or2@ - Total Mob deaths: @yel@" + player.getDeathsByNpc().get());
-		
+
 		PlayerPanel.EMPTY2.refresh(player, "");
 		PlayerScoreboardStatistic s = ScoreboardManager.get().getPlayerScoreboard().get(player.getFormatUsername());
 		PlayerPanel.PVP_SCOREBOARD_STATISTICS.refresh(player, "@or1@Scoreboard Statistics:");
@@ -253,13 +255,13 @@ public enum PlayerPanel {
 		PlayerPanel.PVP_CURRENT_KILLSTREAKS.refresh(player, "@or2@ - Current Killstreak: @yel@" + (s == null ? 0 : s.getCurrentKillstreak()));
 		PlayerPanel.PVP_KILLS.refresh(player, "@or2@ - Players killed: @yel@" + (s == null ? 0 : s.getKills()));
 		PlayerPanel.PVP_DEATHS.refresh(player, "@or2@ - Player deaths: @yel@" + (s == null ? 0 : s.getDeaths()));
-		
+
 		//achievements
 		for(Achievement a : Achievement.VALUES) {
 			AchievementHandler.update(player, a);
 		}
 	}
-	
+
 	/**
 	 * Sets up event clicks.
 	 */
@@ -275,17 +277,19 @@ public enum PlayerPanel {
 			e.register(p.buttonId);
 		}
 	}
-	
+
 	/**
 	 * The action to be done on the click.
+	 *
 	 * @param player the player doing the click.
 	 */
 	public void onClick(Player player) {
 		//Empty
 	}
-	
+
 	/**
 	 * Refreshes the specified tab asset for all the players on the world.
+	 *
 	 * @param update the updated string for that tab.
 	 */
 	public void refreshAll(String update) {
@@ -297,19 +301,21 @@ public enum PlayerPanel {
 			}
 		}
 	}
-	
+
 	/**
 	 * Refreshes the tab asset for a specified player
-	 * @param player the player we're refreshing this {@code enumerator} for.
-	 * @param text   the new string to set.
+	 *
+	 * @param player    the player we're refreshing this {@code enumerator} for.
+	 * @param text      the new string to set.
 	 * @param skipCheck The condition if we should skip the check.
 	 */
 	public void refresh(Player player, String text, boolean skipCheck) {
 		player.text(16026 + ordinal(), text, skipCheck);
 	}
-	
+
 	/**
 	 * Refreshes the tab asset for a specified player
+	 *
 	 * @param player the player we're refreshing this {@code enumerator} for.
 	 * @param text   the new string to set.
 	 */

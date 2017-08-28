@@ -1,31 +1,30 @@
 package net.edge.net.packet.in;
 
-import net.edge.net.packet.IncomingPacket;
-import net.edge.net.packet.out.SendEnterAmount;
-import net.edge.world.entity.item.container.session.ExchangeSession;
-import net.edge.world.entity.item.container.session.ExchangeSessionManager;
-import net.edge.world.entity.item.container.session.ExchangeSessionType;
 import net.edge.content.skill.summoning.Summoning;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
-import net.edge.world.World;
+import net.edge.net.codec.IncomingMsg;
+import net.edge.net.packet.IncomingPacket;
+import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.ItemDefinition;
+import net.edge.world.entity.item.container.session.ExchangeSession;
+import net.edge.world.entity.item.container.session.ExchangeSessionManager;
+import net.edge.world.entity.item.container.session.ExchangeSessionType;
 
 public final class InputXOptionPacket implements IncomingPacket {
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		int slot = payload.getShort(ByteOrder.LITTLE);
 		int interfaceId = payload.getShort(ByteTransform.A);
 		int itemId = payload.getShort(ByteOrder.LITTLE);
-		
+
 		if(slot < 0 || interfaceId < 0 || itemId < 0 || itemId > ItemDefinition.DEFINITIONS.length) {
 			return;
 		}
-		
+
 		player.getAttr().get("enter_x_item_tab").set(interfaceId);
 		player.getAttr().get("enter_x_item_slot").set(slot);
 		if(interfaceId >= 0 && interfaceId <= 9) {
@@ -111,5 +110,5 @@ public final class InputXOptionPacket implements IncomingPacket {
 				break;
 		}
 	}
-	
+
 }

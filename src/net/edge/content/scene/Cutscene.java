@@ -7,6 +7,7 @@ import java.util.Optional;
 
 /**
  * Holds functionality for cutscenes.
+ *
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
@@ -24,6 +25,7 @@ public abstract class Cutscene {
 
 	/**
 	 * Constructs a new {@link Cutscene}.
+	 *
 	 * @param stage the stage this cutscene is at.
 	 */
 	public Cutscene(int stage) {
@@ -66,6 +68,7 @@ public abstract class Cutscene {
 
 	/**
 	 * Any functionality that should be executed while the task is running.
+	 *
 	 * @param t the backing task running for this cutscene.
 	 */
 	public abstract void execute(Task t);
@@ -91,6 +94,7 @@ public abstract class Cutscene {
 
 	/**
 	 * Holds functionality for the backing cutscene.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	private static final class CutsceneTask extends Task {
@@ -102,6 +106,7 @@ public abstract class Cutscene {
 
 		/**
 		 * Constructs a new {@link CutsceneTask}.
+		 *
 		 * @param scene {@link #scene}.
 		 */
 		public CutsceneTask(Cutscene scene) {

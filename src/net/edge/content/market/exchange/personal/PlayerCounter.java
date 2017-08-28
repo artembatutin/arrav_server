@@ -8,32 +8,34 @@ import net.edge.world.entity.actor.player.Player;
  * A counter acting as a shop and hosted by a {@link Player}.
  */
 public class PlayerCounter {
-	
+
 	/**
 	 * The player hosting this counter.
 	 */
 	private final Player player;
-	
+
 	/**
 	 * The demand section of this counter.
 	 */
 	private PlayerCounterSection demand = new DemandSection();
-	
+
 	/**
 	 * The demand section of this counter.
 	 */
 	private PlayerCounterSection offer = new DemandSection();
-	
+
 	/**
 	 * Creates a new {@link PlayerCounter}.
+	 *
 	 * @param player the player hosting the counter.
 	 */
 	public PlayerCounter(Player player) {
 		this.player = player;
 	}
-	
+
 	/**
 	 * Updating an item.
+	 *
 	 * @param item item to be updated.
 	 */
 	public void update(ExchangeItem item) {
@@ -49,9 +51,10 @@ public class PlayerCounter {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Removing an item
+	 *
 	 * @param item item to be removed.
 	 */
 	public void remove(ExchangeItem item) {
@@ -67,5 +70,5 @@ public class PlayerCounter {
 				break;
 		}
 	}
-	
+
 }

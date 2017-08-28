@@ -9,17 +9,19 @@ import net.edge.net.packet.out.SendInterfacePlayerModel;
 
 /**
  * The dialogue chain entry that sends the player a dialogue from a player.
+ *
  * @author lare96 <http://github.com/lare96>
  */
 public final class PlayerDialogue extends Dialogue {
-	
+
 	/**
 	 * The expression that this player will display.
 	 */
 	private final Expression expression;
-	
+
 	/**
 	 * Creates a new {@link PlayerDialogue}.
+	 *
 	 * @param expression the expression that this player will display.
 	 * @param text       the text that will be displayed on the dialogue.
 	 */
@@ -27,15 +29,16 @@ public final class PlayerDialogue extends Dialogue {
 		super(text);
 		this.expression = expression;
 	}
-	
+
 	/**
 	 * Creates a new {@link PlayerDialogue} with the default expression.
+	 *
 	 * @param text the text that will be displayed on the dialogue.
 	 */
 	public PlayerDialogue(String... text) {
 		this(Expression.CALM, text);
 	}
-	
+
 	@Override
 	public void accept(DialogueBuilder dialogue) {
 		dialogue.getPlayer().out(new SendInterfaceAnimation(250, expression.getExpression()));
@@ -78,7 +81,7 @@ public final class PlayerDialogue extends Dialogue {
 				throw new IllegalArgumentException("Illegal player dialogue " + "length: " + getText().length);
 		}
 	}
-	
+
 	@Override
 	public DialogueType type() {
 		return DialogueType.PLAYER_DIALOGUE;

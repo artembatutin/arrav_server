@@ -1,17 +1,17 @@
 package net.edge.content.skill.woodcutting;
 
 import net.edge.action.impl.ObjectAction;
-import net.edge.content.skill.farming.patch.Patch;
-import net.edge.task.Task;
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.action.TransformableObject;
 import net.edge.content.skill.action.impl.HarvestingSkillAction;
-import net.edge.world.locale.Position;
+import net.edge.content.skill.farming.patch.Patch;
+import net.edge.task.Task;
 import net.edge.world.Animation;
 import net.edge.world.Direction;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
+import net.edge.world.locale.Position;
 import net.edge.world.object.DynamicObject;
 import net.edge.world.object.GameObject;
 
@@ -21,35 +21,36 @@ import static net.edge.content.achievements.Achievement.LEAVES_AND_STUMPS;
 
 /**
  * Represents the procession for cutting logs.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Woodcutting extends HarvestingSkillAction {
-	
+
 	/**
 	 * The definition for the hatchet being used.
 	 */
 	private final Hatchet hatchet;
-	
+
 	/**
 	 * The definition for the tree being cut.
 	 */
 	private final Tree tree;
-	
+
 	/**
 	 * Tree patch if cutting farming tree.
 	 */
 	private final Patch patch;
-	
+
 	/**
 	 * The object we're interfering with.
 	 */
 	private final DynamicObject object;
-	
+
 	/**
 	 * The object's name.
 	 */
 	private final String objectName;
-	
+
 	/**
 	 * Constructs a new {@link Woodcutting} skill.
 	 */
@@ -61,11 +62,11 @@ public final class Woodcutting extends HarvestingSkillAction {
 		this.object = object.toDynamic();
 		this.patch = patch;
 	}
-	
+
 	public Woodcutting(Player player, Tree tree, GameObject object) {
 		this(player, tree, object, null);
 	}
-	
+
 	public static void action() {
 		for(Tree tree : Tree.values()) {
 			ObjectAction cut = new ObjectAction() {
@@ -81,17 +82,17 @@ public final class Woodcutting extends HarvestingSkillAction {
 			}
 		}
 	}
-	
+
 	@Override
 	public double successFactor() {
 		return tree.getSuccess() * hatchet.getSpeed();
 	}
-	
+
 	@Override
 	public Optional<Item[]> removeItems() {
 		return Optional.empty();
 	}
-	
+
 	@Override
 	public Item[] harvestItems() {
 		if(tree.getItem().getId() != -1)
@@ -99,12 +100,12 @@ public final class Woodcutting extends HarvestingSkillAction {
 		else
 			return new Item[]{};
 	}
-	
+
 	@Override
 	public boolean instant() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean init() {
 		if(!checkWoodcutting()) {
@@ -117,7 +118,7 @@ public final class Woodcutting extends HarvestingSkillAction {
 		getPlayer().animation(hatchet.getAnimation());
 		return true;
 	}
-	
+
 	@Override
 	public void onSequence(Task t) {
 		if(object.isDisabled()) {
@@ -125,7 +126,7 @@ public final class Woodcutting extends HarvestingSkillAction {
 			t.cancel();
 		}
 	}
-	
+
 	@Override
 	public void onHarvest(Task t, Item[] items, boolean success) {
 		if(!tree.isObstacle() && success) {
@@ -175,32 +176,32 @@ public final class Woodcutting extends HarvestingSkillAction {
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean canExecute() {
 		return !object.isDisabled() && checkWoodcutting();
 	}
-	
+
 	@Override
 	public void onStop() {
 		getPlayer().animation(null);
 	}
-	
+
 	@Override
 	public double experience() {
 		return fullLumberJack(getPlayer()) ? (tree.getExperience() * 1.05) : tree.getExperience();
 	}
-	
+
 	@Override
 	public Optional<Animation> animation() {
 		return Optional.of(hatchet.getAnimation());
 	}
-	
+
 	@Override
 	public SkillData skill() {
 		return SkillData.WOODCUTTING;
 	}
-	
+
 	private boolean checkWoodcutting() {
 		if(tree == null) {
 			return false;
@@ -221,12 +222,12 @@ public final class Woodcutting extends HarvestingSkillAction {
 			getPlayer().message("You do not have any space left in your inventory.");
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	private static boolean fullLumberJack(Player player) {
 		return player.getEquipment() != null && player.getEquipment().containsAll(10933, 10939, 10940, 10941);
 	}
-	
+
 }

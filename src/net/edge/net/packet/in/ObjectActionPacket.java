@@ -1,31 +1,30 @@
 package net.edge.net.packet.in;
 
 import net.edge.Application;
-import net.edge.content.minigame.MinigameHandler;
-import net.edge.content.object.star.ShootingStarManager;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ObjectAction;
-import net.edge.world.entity.region.Region;
-import net.edge.world.locale.Boundary;
-import net.edge.world.locale.Position;
+import net.edge.content.minigame.MinigameHandler;
+import net.edge.content.object.star.ShootingStarManager;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
+import net.edge.world.entity.region.Region;
+import net.edge.world.locale.Boundary;
+import net.edge.world.locale.Position;
 import net.edge.world.object.*;
 
 import java.util.Optional;
 
-
 /**
  * The message sent from the client when a player clicks an object.
+ *
  * @author Artem Batutin <artembatutin@gmail.com
  */
 public final class ObjectActionPacket implements IncomingPacket {
-	
-	
+
 	/*
 	 * All of the object events.
 	 */
@@ -35,7 +34,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 	public static final ActionContainer<ObjectAction> FOURTH = new ActionContainer<>();
 	public static final ActionContainer<ObjectAction> FIFTH = new ActionContainer<>();
 	public static final ActionContainer<ObjectAction> CONSTRUCTION = new ActionContainer<>();
-	
+
 	@Override
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.OBJECT_ACTION))
@@ -62,9 +61,10 @@ public final class ObjectActionPacket implements IncomingPacket {
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.OBJECT_ACTION);
 	}
-	
+
 	/**
 	 * Handles object click for the {@code player}.
+	 *
 	 * @param action  the action number.
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
@@ -74,7 +74,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 		int objectId = payload.getMedium();
 		int objectX = payload.getShort(false);
 		int objectY = payload.getShort(false);
-		
+
 		//Validating data.
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(objectId < 0 || objectX < 0 || objectY < 0)
@@ -83,7 +83,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 		//construction clicks.
 		if(player.getHouse().isOwnerHome()) {
 			ObjectAction e = CONSTRUCTION.get(objectId);
-			player.message(objectId+"");
+			player.message(objectId + "");
 			if(e != null) {
 				player.getHouse().get().getPlan().setObjectX(objectX);
 				player.getHouse().get().getPlan().setObjectY(objectY);
@@ -103,7 +103,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 			return;
 		final GameObject object = o.get();
 		if(player.getRights().equals(Rights.ADMINISTRATOR) && Application.DEBUG)
-			player.message("[OBJ"+action+"]:" + object.getId() + " - " + object.getGlobalPos().toString());
+			player.message("[OBJ" + action + "]:" + object.getId() + " - " + object.getGlobalPos().toString());
 		boolean distanceIgnore = (action == 1 && (objectId == 85584 || objectId == 85532 || objectId == 85534));
 		Boundary boundary = new Boundary(position, object.getDefinition().getSize());
 		player.getMovementListener().append(() -> {
@@ -150,7 +150,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 			}
 		});
 	}
-	
+
 	/**
 	 * Tries to handle the {@link ObjectAction} action.
 	 */
@@ -162,9 +162,10 @@ public final class ObjectActionPacket implements IncomingPacket {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Handles the spell on object for the {@code player}.
+	 *
 	 * @param player  the player to handle this for.
 	 * @param payload the payload for reading the sent data.
 	 */
@@ -195,5 +196,5 @@ public final class ObjectActionPacket implements IncomingPacket {
 			}
 		});
 	}
-	
+
 }

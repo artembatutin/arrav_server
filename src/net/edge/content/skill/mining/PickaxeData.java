@@ -13,6 +13,7 @@ import java.util.Optional;
 /**
  * The enumerated type which elements represents a Pickaxe which can mine
  * a {@link RockData}.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum PickaxeData {
@@ -68,6 +69,7 @@ public enum PickaxeData {
 
 	/**
 	 * Constructs a new {@link PickaxeData} enumerator.
+	 *
 	 * @param item        {@link #item}.
 	 * @param head        {@link #head}.
 	 * @param broken      {@link #broken}.
@@ -86,6 +88,7 @@ public enum PickaxeData {
 
 	/**
 	 * Constructs a new {@link PickaxeData} enumerator.
+	 *
 	 * @param item        {@link #item}.
 	 * @param animation   {@link #animation}.
 	 * @param requirement {@link #requirement}.
@@ -144,6 +147,7 @@ public enum PickaxeData {
 
 	/**
 	 * Gets the definition for this hatchet.
+	 *
 	 * @param identifier the identifier to check for.
 	 * @return an optional holding the {@link Hatchet} value found,
 	 * {@link Optional#empty} otherwise.

@@ -2,23 +2,24 @@ package net.edge.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import net.edge.util.json.JsonLoader;
 import net.edge.content.market.MarketItem;
+import net.edge.util.json.JsonLoader;
 import net.edge.world.entity.item.ItemDefinition;
 
 /**
  * The {@link JsonLoader} implementation that loads all market values.
+ *
  * @author Artem Batutin<artembatutin@gmail.com>
  */
 public final class MarketValueLoader extends JsonLoader {
-	
+
 	/**
 	 * Creates a new {@link MarketValueLoader}.
 	 */
 	public MarketValueLoader() {
 		super("./data/def/item/market_values.json");
 	}
-	
+
 	@Override
 	public void load(JsonObject reader, Gson builder) {
 		String name = reader.get("name").getAsString();

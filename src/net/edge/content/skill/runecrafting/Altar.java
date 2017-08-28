@@ -5,6 +5,7 @@ import net.edge.world.locale.Position;
 /**
  * The enumerated type which elements represents an altar which can produce
  * magic runes.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum Altar {
@@ -51,7 +52,7 @@ public enum Altar {
 	 * Determines if this altar can accept both runes.
 	 */
 	private final boolean diverse;
-	
+
 	/**
 	 * The talisman id.
 	 */
@@ -59,13 +60,14 @@ public enum Altar {
 
 	/**
 	 * Constructs an {@link Altar} enumerator.
+	 *
 	 * @param objectId    {@link #objectId}.
 	 * @param rune        {@link #rune}.
 	 * @param experience  {@link #experience}
 	 * @param requirement {@link #requirement}.
 	 * @param position    {@link #position}.
 	 * @param diverse     {@link #diverse}.
-	 * @param talisman     {@link #talisman}.
+	 * @param talisman    {@link #talisman}.
 	 */
 	Altar(int objectId, Rune rune, int requirement, double experience, Position position, boolean diverse, int talisman) {
 		this.objectId = objectId;
@@ -118,7 +120,7 @@ public enum Altar {
 	public boolean isDiverse() {
 		return diverse;
 	}
-	
+
 	/**
 	 * @return {@link #talisman}.
 	 */

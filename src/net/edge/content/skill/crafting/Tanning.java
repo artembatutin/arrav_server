@@ -4,12 +4,12 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.content.skill.SkillData;
+import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.net.packet.out.SendItemModelInterface;
 import net.edge.task.Task;
 import net.edge.util.TextUtils;
-import net.edge.content.skill.SkillData;
-import net.edge.content.skill.action.impl.ProducingSkillAction;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -22,27 +22,29 @@ import java.util.stream.Stream;
 
 /**
  * Holds functionality for tanning items.
+ *
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Tanning extends ProducingSkillAction {
-	
+
 	/**
 	 * The tanning data this skill action is dependent of.
 	 */
 	private final TanningData data;
-	
+
 	/**
 	 * Determines if were tanning by the lunar spell.
 	 */
 	private final boolean spell;
-	
+
 	/**
 	 * The amount of times this task should run for..
 	 */
 	private int amount;
-	
+
 	/**
 	 * Constructs a new {@link Tanning} skill action.
+	 *
 	 * @param player {@link #getPlayer()}.
 	 * @param data   {@link #data}.
 	 * @param amount {@link #amount}.
@@ -54,36 +56,38 @@ public final class Tanning extends ProducingSkillAction {
 		this.amount = amount;
 		this.spell = spell;
 	}
-	
+
 	/**
 	 * Attempts to register a certain amount of tanning products.
+	 *
 	 * @param player   the player creating the tanning products.
 	 * @param buttonId the button the player interacted with.
 	 * @return {@code true} if the player created any products, {@code false} otherwise.
 	 */
 	public static boolean create(Player player, int buttonId) {
 		TanningData data = VALUES.get(buttonId);
-		
+
 		if(data == null) {
 			return false;
 		}
-		
+
 		if(data.count == -1) {
 			player.out(new SendEnterAmount("How many would you like to tan?", s -> () -> Tanning.create(player, data, Integer.parseInt(s), false)));
 			return true;
 		}
-		
+
 		int amount = data.count;
 		if(data.count == -2) {
 			amount = player.getInventory().computeAmountForId(data.required.getId());
 		}
-		
+
 		create(player, data, amount, false);
 		return true;
 	}
-	
+
 	/**
 	 * Creates the item the player was tanning for.
+	 *
 	 * @param player {@link #getPlayer()}.
 	 * @param data   {@link #data}.
 	 * @param amount {@link #amount}.
@@ -94,9 +98,10 @@ public final class Tanning extends ProducingSkillAction {
 		Tanning crafting = new Tanning(player, data, amount, spell);
 		crafting.start();
 	}
-	
+
 	/**
 	 * Attempts to openShop the interface for the specified player.
+	 *
 	 * @param player the player to openShop the interface for.
 	 * @param item   the item being used on the mob.
 	 * @param mob    the mob that the item was used on.
@@ -106,21 +111,21 @@ public final class Tanning extends ProducingSkillAction {
 		if(mob.getId() != 805) {
 			return false;
 		}
-		
+
 		if(!TanningData.getByItem(item.getId()).isPresent()) {
 			player.message("You can't use " + TextUtils.appendIndefiniteArticle(item.getDefinition().getName()) + " on " + mob
 					.getDefinition().getName());
 			return false;
 		}
-		
+
 		openInterface(player);
 		return true;
 	}
-	
+
 	public static void openInterface(Player player) {
 		VALUES.forEach((b, t) -> {
 			if(t.nameFrame != -1) {
-			    String name = b == 57225 ? "Soft leather" : b == 57226 ? "Hard leather" : t.required.getDefinition().getName();
+				String name = b == 57225 ? "Soft leather" : b == 57226 ? "Hard leather" : t.required.getDefinition().getName();
 				player.text(t.nameFrame, "@or1@" + name);
 			}
 			if(t.priceFrame != -1) {
@@ -138,13 +143,13 @@ public final class Tanning extends ProducingSkillAction {
 	public void onProduce(Task t, boolean success) {
 		if(success) {
 			t.cancel();
-			
+
 			if(!spell) {
 				player.message("The crafting master tans your hides...");
 			}
 		}
 	}
-	
+
 	@Override
 	public Optional<Item[]> removeItem() {
 		int amount = player.getInventory().computeAmountForId(data.required.getId());
@@ -157,46 +162,47 @@ public final class Tanning extends ProducingSkillAction {
 		}
 		return Optional.of(spell ? new Item[]{new Item(data.required.getId(), this.amount)} : new Item[]{new Item(data.required.getId(), this.amount), data.cost});
 	}
-	
+
 	@Override
 	public Optional<Item[]> produceItem() {
 		return Optional.of(new Item[]{new Item(data.product.getId(), amount)});
 	}
-	
+
 	@Override
 	public int delay() {
 		return 0;
 	}
-	
+
 	@Override
 	public boolean instant() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean init() {
 		player.closeWidget();
 		return true;
 	}
-	
+
 	@Override
 	public boolean canExecute() {
 		return true;
 	}
-	
+
 	@Override
 	public double experience() {
 		return 0;
 	}
-	
+
 	@Override
 	public SkillData skill() {
 		return SkillData.CRAFTING;
 	}
-	
+
 	/**
 	 * The enumerated type whose elements represent a set of constants used to
 	 * define the data required to tan hides.
+	 *
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum TanningData {
@@ -204,89 +210,90 @@ public final class Tanning extends ProducingSkillAction {
 		SOFT_LEATHER5(57217, SOFT_LEATHER, 5),
 		SOFT_LEATHERX(57209, SOFT_LEATHER, -1),
 		SOFT_LEATHERALL(57201, SOFT_LEATHER, -2),
-		
+
 		HARD_LEATHER(57226, 3, 14778, 14786, 14770, 1739, 1743, 1),
 		HARD_LEATHER5(57218, HARD_LEATHER, 5),
 		HARD_LEATHERX(57210, HARD_LEATHER, -1),
 		HARD_LEATHERALL(57202, HARD_LEATHER, -2),
-		
+
 		SNAKESKIN(57227, 15, 14779, 14787, 14771, 6287, 6289, 1),
 		SNAKESKIN5(57219, SNAKESKIN, 5),
 		SNAKESKINX(57211, SNAKESKIN, -1),
 		SNAKESKINALL(57203, SNAKESKIN, -2),
-		
+
 		SWAMP_SNAKESKIN(57228, 20, 14780, 14788, 14772, 7801, 6289, 1),
 		SWAMP_SNAKESKIN5(57220, SWAMP_SNAKESKIN, 5),
 		SWAMP_SNAKESKINX(57212, SWAMP_SNAKESKIN, -1),
 		SWAMP_SNAKESKINALL(57204, SWAMP_SNAKESKIN, -2),
-		
+
 		GREEN_DRAGONHIDE(57229, 20, 14781, 14789, 14773, 1753, 1745, 1),
 		GREEN_DRAGONHIDE5(57221, GREEN_DRAGONHIDE, 5),
 		GREEN_DRAGONHIDEX(57213, GREEN_DRAGONHIDE, -1),
 		GREEN_DRAGONHIDEALL(57205, GREEN_DRAGONHIDE, -2),
-		
+
 		BLUE_DRAGONHIDE(57230, 20, 14782, 14790, 14774, 1751, 2505, 1),
 		BLUE_DRAGONHIDE5(57222, BLUE_DRAGONHIDE, 5),
 		BLUE_DRAGONHIDEX(57214, BLUE_DRAGONHIDE, -1),
 		BLUE_DRAGONHIDEALL(57206, BLUE_DRAGONHIDE, -2),
-		
+
 		RED_DRAGONHIDE(57231, 20, 14783, 14791, 14775, 1749, 2507, 1),
 		RED_DRAGONHIDE5(57223, RED_DRAGONHIDE, 5),
 		RED_DRAGONHIDEX(57215, RED_DRAGONHIDE, -1),
 		RED_DRAGONHIDEALL(57207, RED_DRAGONHIDE, -2),
-		
+
 		BLACK_DRAGONHIDE(57232, 20, 14784, 14792, 14776, 1747, 2509, 1),
 		BLACK_DRAGONHIDE5(57224, BLACK_DRAGONHIDE, 5),
 		BLACK_DRAGONHIDEX(57216, BLACK_DRAGONHIDE, -1),
 		BLACK_DRAGONHIDEALL(57208, BLACK_DRAGONHIDE, -2);
-		
+
 		/**
 		 * Caches our enum values.
 		 */
 		private static final ImmutableSet<TanningData> VALUES = Sets.immutableEnumSet(EnumSet.allOf(TanningData.class));
-		
+
 		/**
 		 * The button identification.
 		 */
 		private final int buttonId;
-		
+
 		/**
 		 * The price cost.
 		 */
 		private final Item cost;
-		
+
 		/**
 		 * The frame id where the name is drawed.
 		 */
 		private final int nameFrame;
-		
+
 		/**
 		 * The frame id where the price is drawed.
 		 */
 		private final int priceFrame;
-		
+
 		/**
 		 * The frame id where the item model is drawed.
 		 */
 		private final int modelFrame;
-		
+
 		/**
 		 * The required item.
 		 */
 		private final Item required;
-		
+
 		/**
 		 * The product produced.
 		 */
 		private final Item product;
-		
+
 		/**
 		 * The amount of times to register.
 		 */
 		private final int count;
-		
+
 		/**
 		 * Constructs a new {@link TanningData}.
+		 *
 		 * @param buttonId   {@link #buttonId}.
 		 * @param cost       {@link #cost}.
 		 * @param nameFrame  {@link #nameFrame}.
@@ -306,9 +313,10 @@ public final class Tanning extends ProducingSkillAction {
 			this.product = new Item(product);
 			this.count = count;
 		}
-		
+
 		/**
 		 * Constructs a new {@link TanningData}.
+		 *
 		 * @param buttonId {@link #buttonId}.
 		 * @param data     the tanning data to construct a new one from.
 		 * @param count    {@link #count}.
@@ -323,24 +331,24 @@ public final class Tanning extends ProducingSkillAction {
 			this.product = data.product;
 			this.count = count;
 		}
-		
+
 		public static Optional<TanningData> getByButton(int buttonId) {
 			return VALUES.stream().filter(d -> d.buttonId == buttonId).findAny();
 		}
-		
+
 		public static Optional<TanningData> getByItem(int item) {
 			return VALUES.stream().filter(d -> d.required.getId() == item).findAny();
 		}
-		
+
 		public static Optional<TanningData> getByPlayer(Player player) {
 			return VALUES.stream().filter(d -> player.getInventory().contains(d.required)).findAny();
 		}
-		
+
 	}
-	
+
 	/**
 	 * Caches our enum values.
 	 */
 	private static final Int2ObjectArrayMap<TanningData> VALUES = new Int2ObjectArrayMap<>(ImmutableMap.copyOf(Stream.of(TanningData.values()).collect(Collectors.toMap(t -> t.buttonId, Function.identity()))));
-	
+
 }

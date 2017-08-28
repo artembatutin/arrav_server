@@ -9,13 +9,13 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
 
 public final class SendItemNode implements OutgoingPacket {
-	
+
 	private final GroundItem item;
-	
+
 	public SendItemNode(GroundItem item) {
 		this.item = item;
 	}
-	
+
 	@Override
 	public ByteBuf write(Player player, GameBuffer msg) {
 		new SendCoordinates(item.getPosition()).write(player, msg);

@@ -1,7 +1,5 @@
 package net.edge.content.skill.runecrafting.pouch;
 
-import net.edge.world.entity.item.Item;
-
 public final class Pouch {
 
 	private int amount;
@@ -11,13 +9,13 @@ public final class Pouch {
 		this.id = id;
 		this.amount = amount;
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public int getAmount() {
 		return amount;
 	}
-	
-	
-	
+
 }

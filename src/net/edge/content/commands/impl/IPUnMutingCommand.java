@@ -10,7 +10,7 @@ import net.edge.world.entity.actor.player.assets.Rights;
 
 @CommandSignature(alias = {"ipunmute"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR}, syntax = "IP unmute, ::ipunmute username")
 public final class IPUnMutingCommand implements Command {
-	
+
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		Player muted = World.get().getPlayer(cmd[1].replaceAll("_", " ")).orElse(null);
@@ -24,5 +24,5 @@ public final class IPUnMutingCommand implements Command {
 			player.message("Couldn't find punished user.");
 		}
 	}
-	
+
 }

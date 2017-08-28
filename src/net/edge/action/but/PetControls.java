@@ -1,16 +1,16 @@
 package net.edge.action.but;
 
-import net.edge.content.item.pets.Pet;
 import net.edge.action.ActionInitializer;
 import net.edge.action.impl.ButtonAction;
+import net.edge.content.item.pets.Pet;
+import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
-import net.edge.world.entity.actor.player.Player;
 
 import java.util.Optional;
 
 public class PetControls extends ActionInitializer {
-	
+
 	@Override
 	public void init() {
 		ButtonAction e = new ButtonAction() {
@@ -31,7 +31,7 @@ public class PetControls extends ActionInitializer {
 			}
 		};
 		e.register(74078);
-		
+
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
@@ -43,5 +43,5 @@ public class PetControls extends ActionInitializer {
 		e.register(74081);
 
 	}
-	
+
 }
