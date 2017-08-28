@@ -61,7 +61,7 @@ public final class LoginSession extends Session {
 	 * @throws Exception If any errors occur while handling credentials.
 	 */
 	private void handleRequest(final LoginRequest request) throws Exception {
-		player = new Player(new PlayerCredentials(request.getUsername(), request.getPassword()), true);
+		player = new Player(new PlayerCredentials(request.getUsername(), request.getPassword()));
 		LoginCode response = LoginCode.NORMAL;
 		Channel channel = getChannel();
 		
@@ -72,8 +72,8 @@ public final class LoginSession extends Session {
 		
 		// Validating login before deserialization.
 		if(response == LoginCode.NORMAL) {
-			player.getCredentials().setUsername(request.getUsername());
-			player.getCredentials().setPassword(request.getPassword());
+			player.credentials.setUsername(request.getUsername());
+			player.credentials.password = request.getPassword();
 		}
 
 		// Validating player login possibility.

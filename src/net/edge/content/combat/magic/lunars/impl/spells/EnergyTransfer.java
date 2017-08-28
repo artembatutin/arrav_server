@@ -61,7 +61,7 @@ public final class EnergyTransfer extends LunarCombatSpell {
 			return false;
 		}
 		
-		if(target.getSpecialPercentage().get() == 100 && target.getRunEnergy() == 100) {
+		if(target.getSpecialPercentage().get() == 100 && target.runEnergy == 100) {
 			caster.message("This players run and special attack energy are fully replenished already.");
 			return false;
 		}

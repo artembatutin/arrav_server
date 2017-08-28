@@ -1,6 +1,5 @@
 package net.edge.content.skill.farming;
 
-import net.edge.GameConstants;
 import net.edge.action.impl.ItemOnItemAction;
 import net.edge.action.impl.ItemOnObjectAction;
 import net.edge.action.impl.ObjectAction;
@@ -11,7 +10,6 @@ import net.edge.content.skill.farming.patch.Patch;
 import net.edge.content.skill.farming.patch.PatchType;
 import net.edge.content.skill.farming.seed.SeedClass;
 import net.edge.content.skill.farming.seed.SeedType;
-import net.edge.content.skill.farming.seed.impl.AllotmentSeed;
 import net.edge.content.skill.farming.seed.impl.FlowerSeed;
 import net.edge.content.skill.farming.seed.impl.TreeSeed;
 import net.edge.content.skill.woodcutting.Tree;
@@ -22,7 +20,6 @@ import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Equipment;
-import net.edge.world.object.DynamicObject;
 import net.edge.world.object.GameObject;
 
 import java.util.Optional;
@@ -35,7 +32,7 @@ public class FarmingAction {
 				@Override
 				public boolean click(Player player, GameObject object, int option) {
 					final Farming farming = new Farming(player, Optional.of(object.getGlobalPos()));
-					farming.patch = player.getPatches().get(patchType);
+					farming.patch = player.patches.get(patchType);
 					if(farming.patch != null && farming.patch.getSeedType() != null) {
 						boolean fullyGrown = farming.patch.isFullyGrown();
 						final String stateMessage = farming.patch.getGrowthState() != GrowthState.WATERED ? farming.patch.getSeedType() != null && (farming.patch
@@ -48,7 +45,7 @@ public class FarmingAction {
 								if(!farming.patch.hasAttribute(PatchAttribute.CHECKED_HEALTH)) {
 									final int experience = farming.patch.getSeedType().getExperience()[1];
 									farming.patch.addAttribute(PatchAttribute.CHECKED_HEALTH);
-									if(!player.xpLock)
+									if(!player.lockedXP)
 										Skills.experience(player, experience, Skills.FARMING);
 									player.message("You check the tree's health and gain experience.");
 									FarmingManager.updatePatch(player, patchType);
@@ -145,7 +142,7 @@ public class FarmingAction {
 							}
 							if(!farming.patch.hasAttribute(PatchAttribute.CHECKED_HEALTH)) {
 								farming.patch.addAttribute(PatchAttribute.CHECKED_HEALTH);
-								if(!player.xpLock)
+								if(!player.lockedXP)
 									Skills.experience(player, experience, Skills.FARMING);
 								player.message("You check the crop's health and gain experience.");
 							} else {
@@ -193,7 +190,7 @@ public class FarmingAction {
 						farming.amountToHarvest = farming.getHarvestAmount();
 					}
 					farming.start();
-					player.getPatches().put(patchType, farming.patch);
+					player.patches.put(patchType, farming.patch);
 					return true;
 				}
 			};
@@ -204,7 +201,7 @@ public class FarmingAction {
 			ItemOnObjectAction item = new ItemOnObjectAction() {
 				@Override
 				public boolean click(Player player, GameObject object, Item item, int container, int slot) {
-					final Patch patch = player.getPatches().get(patchType);
+					final Patch patch = player.patches.get(patchType);
 					final boolean weedRemoved = patch != null && patch.getWeedStage() >= FarmingConstants.WEED_CONFIG.length - 1;
 					final boolean magicWateringCan = item.getId() == FarmingConstants.MAGIC_WATERING_CAN_ITEM_ID;
 					if(item.getId() >= 5333 && item.getId() <= 5340 || magicWateringCan) {
@@ -312,7 +309,7 @@ public class FarmingAction {
 						(new Task(3, false) {
 							@Override
 							protected void execute() {
-								player.getPatches().remove(patch.getPatchType());
+								player.patches.remove(patch.getPatchType());
 								patch.setWeedStage(0);
 								FarmingManager.updatePatch(player, patch.getPatchType());
 								player.message("You dig the crop from the patch.");
@@ -421,10 +418,10 @@ public class FarmingAction {
 								newPatch.setProduct(finalSeedType.getRewards()[0].copy().setAmount(finalSeedType.getHarvestAmount(patch)));
 								newPatch.setHarvestedItem(finalSeedType.getRewards()[0].copy().setAmount(0));
 								newPatch.setPlantConfigurations(player);
-								player.getPatches().put(patchType, newPatch);
+								player.patches.put(patchType, newPatch);
 								FarmingManager.updatePatch(player, patchType);
 								newPatch.submitGrowthTask(player);
-								if(!player.xpLock)
+								if(!player.lockedXP)
 									Skills.experience(player, finalSeedType.getExperience()[0], Skills.FARMING);
 								cancel();
 							}

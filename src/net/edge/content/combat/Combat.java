@@ -1,7 +1,6 @@
 package net.edge.content.combat;
 
 import net.edge.Application;
-import net.edge.content.combat.special.CombatSpecial;
 import net.edge.task.TaskListener;
 import net.edge.content.combat.strategy.Strategy;
 import net.edge.world.World;
@@ -113,7 +112,7 @@ public final class Combat {
 			currentVictim = target;
 			if(character.isPlayer()) {
 				Player player = (Player) character;
-				if(player.isAutocast() || player.getCastSpell() == null || attackTimer < 1) {
+				if(player.autocasting || player.getCastSpell() == null || attackTimer < 1) {
 					cooldown = 0;
 				}
 			}

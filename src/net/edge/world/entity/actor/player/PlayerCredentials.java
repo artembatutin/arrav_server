@@ -7,33 +7,23 @@ import net.edge.util.TextUtils;
  * @since 8-7-2017.
  */
 public final class PlayerCredentials {
-    private String username;
-
-    private String password;
+    
+    public String formattedUsername;
+    public long usernameHash;
+    public String username;
+    public String password;
 
     public PlayerCredentials(String username, String password) {
+        this.formattedUsername = TextUtils.capitalize(username);
+        this.usernameHash = TextUtils.nameToHash(username);
         this.username = username;
         this.password = password;
-    }
-
-    public long getUsernameHash() {
-        return TextUtils.nameToHash(username);
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+        this.formattedUsername = TextUtils.capitalize(username);
+        this.usernameHash = TextUtils.nameToHash(username);
     }
    
 }

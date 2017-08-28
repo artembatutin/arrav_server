@@ -243,7 +243,7 @@ public final class Equipment extends ItemContainer {
 			WeaponAnimation.execute(player, equipItem);
 			player.setCastSpell(null);
 			player.setAutocastSpell(null);
-			player.setAutocast(false);
+			player.autocasting = false;
 			player.out(new SendConfig(108, 0));
 			player.out(new SendConfig(301, 0));
 			player.setSpecialActivated(false);
@@ -291,7 +291,7 @@ public final class Equipment extends ItemContainer {
 				WeaponInterface.execute(player, null);
 				player.setCastSpell(null);
 				player.setAutocastSpell(null);
-				player.setAutocast(false);
+				player.autocasting = false;
 				player.out(new SendConfig(108, 0));
 				WeaponAnimation.execute(player, new Item(0));
 				player.out(new SendConfig(301, 0));

@@ -1,5 +1,6 @@
 package net.edge.content.market.currency.impl;
 
+import net.edge.content.PlayerPanel;
 import net.edge.content.market.currency.GeneralCurrency;
 import net.edge.world.entity.actor.player.Player;
 
@@ -12,19 +13,21 @@ public final class VoteCurrency implements GeneralCurrency {
 
 	@Override
 	public boolean takeCurrency(Player player, int amount) {
-		player.setVotePoints(-amount);
+		player.votePoints -= amount;
+		PlayerPanel.VOTE.refresh(player, "@or3@ - Vote points: @yel@" + player.votePoints + " points", true);
 		return true;
 	}
 
 	@Override
 	public void recieveCurrency(Player player, int amount) {
-		player.setVotePoints(amount);
+		player.votePoints += amount;
 		player.message("You received " + amount + " voting points!");
+		PlayerPanel.VOTE.refresh(player, "@or3@ - Vote points: @yel@" + player.votePoints + " points", true);
 	}
 
 	@Override
 	public int currencyAmount(Player player) {
-		return player.getVotePoints();
+		return player.votePoints;
 	}
 
 	@Override

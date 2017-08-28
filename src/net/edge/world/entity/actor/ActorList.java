@@ -208,9 +208,6 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 			e.printStackTrace();
 		}
 		size++;
-		//Updating player count.
-		if(actor.isPlayer())
-			PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
 		return true;
 	}
 	
@@ -225,7 +222,7 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 		}
 		if(actor.getSlot() == -1) {
 			System.out.println("Couldn't remove: " + actor.toString() + " because of slot.");
-			return false;
+			return true;
 		}
 		int index = actor.getSlot();
 		int normal = index - 1;
@@ -249,14 +246,12 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 				Player player = actor.toPlayer();
 				if(player.getRights() != Rights.ADMINISTRATOR)
 					new Hiscores(World.getScore(), player).submit();
-				PlayerPanel.PLAYERS_ONLINE.refreshAll("@or2@ - Players online: @yel@" + size);
 				if(player.getRights().isStaff()) {
 					World.get().setStaffCount(World.get().getStaffCount() - 1);
 					PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 				}
 				System.out.println("Closed channel " + player);
 				player.getSession().getChannel().close();
-				player.getSession().setTerminating(true);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

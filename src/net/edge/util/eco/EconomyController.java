@@ -62,7 +62,7 @@ public class EconomyController {
 					}
 					
 				});
-				Player p = new Player(new PlayerCredentials(username, password), false);
+				Player p = new Player(new PlayerCredentials(username, password));
 				PlayerSerialization serial = new PlayerSerialization(p);
 				PlayerSerialization.SerializeResponse resp = serial.loginCheck(password);
 				serial.deserialize(resp.getReader());

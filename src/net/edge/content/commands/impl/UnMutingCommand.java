@@ -15,7 +15,7 @@ public final class UnMutingCommand implements Command {
 		if(mute != null && mute != player) {
 			player.message("Successfully un-muted " + mute.getFormatUsername() + ".");
 			mute.message("@red@You have been un-muted by " + player.getFormatUsername() + ".");
-			mute.setMuted(false);
+			mute.muted = false;
 		} else {
 			player.message("Can't find " + cmd[1].replaceAll("_", " ") + ".");
 		}

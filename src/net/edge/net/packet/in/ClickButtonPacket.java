@@ -282,7 +282,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 				if(player.getMovementQueue().isRunning()) {
 					player.getMovementQueue().setRunning(false);
 				} else {
-					if(player.getRunEnergy() <= 0) {
+					if(player.runEnergy <= 0) {
 						break;
 					}
 					player.getMovementQueue().setRunning(true);
@@ -593,302 +593,302 @@ public final class ClickButtonPacket implements IncomingPacket {
 			case 51133:
 			case 50139:
 				player.setAutocastSpell(CombatSpells.SMOKE_RUSH.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51185:
 			case 50187:
 				player.setAutocastSpell(CombatSpells.SHADOW_RUSH.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51091:
 			case 50101:
 				player.setAutocastSpell(CombatSpells.BLOOD_RUSH.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 24018:
 			case 50061:
 				player.setAutocastSpell(CombatSpells.ICE_RUSH.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51159:
 			case 50163:
 				player.setAutocastSpell(CombatSpells.SMOKE_BURST.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51211:
 			case 50211:
 				player.setAutocastSpell(CombatSpells.SHADOW_BURST.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51111:
 			case 50119:
 				player.setAutocastSpell(CombatSpells.BLOOD_BURST.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51069:
 			case 50081:
 				player.setAutocastSpell(CombatSpells.ICE_BURST.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51146:
 			case 50151:
 				player.setAutocastSpell(CombatSpells.SMOKE_BLITZ.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51198:
 			case 50199:
 				player.setAutocastSpell(CombatSpells.SHADOW_BLITZ.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51102:
 			case 50111:
 				player.setAutocastSpell(CombatSpells.BLOOD_BLITZ.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51058:
 			case 50071:
 				player.setAutocastSpell(CombatSpells.ICE_BLITZ.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51172:
 			case 50175:
 				player.setAutocastSpell(CombatSpells.SMOKE_BARRAGE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51224:
 			case 50223:
 				player.setAutocastSpell(CombatSpells.SHADOW_BARRAGE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51122:
 			case 50129:
 				player.setAutocastSpell(CombatSpells.BLOOD_BARRAGE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 51080:
 			case 50091:
 				player.setAutocastSpell(CombatSpells.ICE_BARRAGE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7038:
 			case 4128:
 				player.setAutocastSpell(CombatSpells.WIND_STRIKE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7039:
 			case 4130:
 				player.setAutocastSpell(CombatSpells.WATER_STRIKE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7040:
 			case 4132:
 				player.setAutocastSpell(CombatSpells.EARTH_STRIKE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7041:
 			case 4134:
 				player.setAutocastSpell(CombatSpells.FIRE_STRIKE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7042:
 			case 4136:
 				player.setAutocastSpell(CombatSpells.WIND_BOLT.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7043:
 			case 4139:
 				player.setAutocastSpell(CombatSpells.WATER_BOLT.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7044:
 			case 4142:
 				player.setAutocastSpell(CombatSpells.EARTH_BOLT.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7045:
 			case 4145:
 				player.setAutocastSpell(CombatSpells.FIRE_BOLT.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7046:
 			case 4148:
 				player.setAutocastSpell(CombatSpells.WIND_BLAST.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7047:
 			case 4151:
 				player.setAutocastSpell(CombatSpells.WATER_BLAST.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7048:
 			case 4153:
 				player.setAutocastSpell(CombatSpells.EARTH_BLAST.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7049:
 			case 4157:
 				player.setAutocastSpell(CombatSpells.FIRE_BLAST.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7050:
 			case 4159:
 				player.setAutocastSpell(CombatSpells.WIND_WAVE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7051:
 			case 4161:
 				player.setAutocastSpell(CombatSpells.WATER_WAVE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7052:
 			case 4164:
 				player.setAutocastSpell(CombatSpells.EARTH_WAVE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 7053:
 			case 4165:
 				player.setAutocastSpell(CombatSpells.FIRE_WAVE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 4129:
 				player.setAutocastSpell(CombatSpells.CONFUSE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 4133:
 				player.setAutocastSpell(CombatSpells.WEAKEN.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 4137:
 				player.setAutocastSpell(CombatSpells.CURSE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6036:
 				player.setAutocastSpell(CombatSpells.BIND.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6003:
 				player.setAutocastSpell(CombatSpells.IBAN_BLAST.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 47005:
 				player.setAutocastSpell(CombatSpells.MAGIC_DART.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 4166:
 				player.setAutocastSpell(CombatSpells.SARADOMIN_STRIKE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 4167:
 				player.setAutocastSpell(CombatSpells.CLAWS_OF_GUTHIX.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 4168:
 				player.setAutocastSpell(CombatSpells.FLAMES_OF_ZAMORAK.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6006:
 				player.setAutocastSpell(CombatSpells.VULNERABILITY.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6007:
 				player.setAutocastSpell(CombatSpells.ENFEEBLE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6056:
 				player.setAutocastSpell(CombatSpells.ENTANGLE.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6026:
 				player.setAutocastSpell(CombatSpells.STUN.getSpell());
-				player.setAutocast(true);
+				player.autocasting = true;
 				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
 				player.out(new SendConfig(108, 3));
 				break;
@@ -903,18 +903,18 @@ public final class ClickButtonPacket implements IncomingPacket {
 			case 26010:
 				player.setCastSpell(null);
 				player.setAutocastSpell(null);
-				player.setAutocast(false);
+				player.autocasting = false;
 				player.out(new SendConfig(108, 0));
 				break;
 			case 1093:
 			case 1094:
 			case 1097:
-				if(player.isAutocast()) {
+				if(player.autocasting) {
 					player.setCastSpell(null);
 					player.setAutocastSpell(null);
-					player.setAutocast(false);
+					player.autocasting = false;
 					player.out(new SendConfig(108, 0));
-				} else if(!player.isAutocast()) {
+				} else if(!player.autocasting) {
 					Item staff = player.getEquipment().get(Equipment.WEAPON_SLOT);
 					if(staff != null && staff.getId() == 4675) {
 						if(!player.getSpellbook().equals(Spellbook.ANCIENT)) {
@@ -987,8 +987,8 @@ public final class ClickButtonPacket implements IncomingPacket {
 					player.setSpecialActivated(true);
 
 					if(player.getCombatSpecial().equals(CombatSpecial.GRANITE_MAUL) && player.getCombat().isAttacking() && !player.getCombat().getVictim().isDead() && !player.getCombat().isCooldown()) {
-						if(player.isAutocast()) {
-							player.setAutocast(false);
+						if(player.autocasting) {
+							player.autocasting = false;
 						}
 
 						player.getCombat().setAttackTimer(0);

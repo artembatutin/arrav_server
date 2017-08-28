@@ -81,15 +81,15 @@ public final class ClanChat {
 			members[pos] = member;
 			cursor = pos;
 			player.setClan(Optional.of(member));
-			if(muted.contains(player.getCredentials().getUsername())) {
+			if(muted.contains(player.credentials.username)) {
 				member.setMute(true);
 			}
 			if(rank.getValue() >= getLowest().getValue()) {
 				ClanManager.get().update(ClanChatUpdate.BAN_MODIFICATION, member);
 			}
 			if(rank != ClanChatRank.MEMBER) {
-				if(!ranks.containsKey(player.getCredentials().getUsername())) {
-					ranks.put(player.getCredentials().getUsername(), rank);
+				if(!ranks.containsKey(player.credentials.username)) {
+					ranks.put(player.credentials.username, rank);
 				}
 			}
 			ClanManager.get().update(ClanChatUpdate.JOINING, member);

@@ -25,13 +25,10 @@ public final class VengeanceOther extends LunarCombatSpell {
 	@Override
 	public void effect(Player caster, Actor victim) {
 		Player player = victim.toPlayer();
-		
 		caster.faceEntity(victim);
-		
 		player.message(caster.getFormatUsername() + " has casted vengeance on you... ");
-		
 		player.graphic(new Graphic(725, 100));
-		player.setVenged(true);
+		player.venged = true;
 	}
 	
 	@Override
@@ -49,7 +46,7 @@ public final class VengeanceOther extends LunarCombatSpell {
 			return false;
 		}
 		
-		if(player.isVenged()) {
+		if(player.venged) {
 			caster.message(player.getFormatUsername() + " already has a vengeance spell casted...");
 			return false;
 		}

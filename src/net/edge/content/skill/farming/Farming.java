@@ -108,7 +108,7 @@ public final class Farming extends HarvestingSkillAction {
 					if (patch.getSeedType().getSeedClass() == SeedClass.TREES) {
 						FarmingManager.updatePatch(getPlayer(), patch.getPatchType());
 					} else if (patch.getSeedType().getSeedClass() != SeedClass.BUSHES) {
-						getPlayer().getPatches().remove(patch.getPatchType());
+						getPlayer().patches.remove(patch.getPatchType());
 						patch.setWeedStage(0);
 						FarmingManager.updatePatch(getPlayer(), patch.getPatchType());
 					}

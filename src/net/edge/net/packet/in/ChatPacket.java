@@ -19,7 +19,7 @@ public final class ChatPacket implements IncomingPacket {
 	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
 		if(player.getActivityManager().contains(ActivityType.CHAT_MESSAGE))
 			return;
-		if(player.isMuted() || HostManager.contains(player.getCredentials().getUsername(), HostListType.MUTED_IP)) {
+		if(player.muted || player.ipMuted) {
 			player.message("You are currently muted.");
 			return;
 		}

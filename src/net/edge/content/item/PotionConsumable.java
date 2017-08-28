@@ -637,7 +637,7 @@ public enum PotionConsumable {
 	 */
 	private static void onEnergyEffect(Player player, boolean superPotion) {
 		int amount = superPotion ? 100 : 50;
-		player.setRunEnergy(player.getRunEnergy() + amount);
+		player.setRunEnergy(player.runEnergy + amount);
 		player.out(new SendEnergy());
 	}
 	

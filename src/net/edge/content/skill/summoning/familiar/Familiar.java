@@ -126,7 +126,7 @@ public abstract class Familiar extends Follower {
 			player.message("You summon " + TextUtils.appendIndefiniteArticle(this.getDefinition().getName()) + ".");
 		}
 		/* Adding experience for summoning. */
-		if(!login && !player.xpLock)
+		if(!login && !player.lockedXP)
 			player.getSkills()[Skills.SUMMONING].increaseExperience(data.getSummonExperience());
 		/* Get the specific ability type for this familiar. */
 		FamiliarAbility ability = this.getAbilityType();

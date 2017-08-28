@@ -157,7 +157,7 @@ public final class Patch {
 				default:
 					return;
 			}
-			final Patch otherPatch = player.getPatches().get(otherPatchType);
+			final Patch otherPatch = player.patches.get(otherPatchType);
 			if(otherPatch != null && otherPatch.getSeedType() != null) {
 				final int seedId = otherPatch.getSeedType().getSeed().getId();
 				boolean protectedPatch = false;
@@ -211,7 +211,7 @@ public final class Patch {
 			default:
 				return false;
 		}
-		final Patch otherPatch = player.getPatches().get(otherPatchType);
+		final Patch otherPatch = player.patches.get(otherPatchType);
 		if(otherPatch != null && otherPatch.getSeedType() != null) {
 			final int seedId = otherPatch.getSeedType().getSeed().getId();
 			if(seedId == FlowerSeed.WHITE_LILY.getSeed().getId()) {

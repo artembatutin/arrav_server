@@ -2,6 +2,7 @@ package net.edge.world.entity.item.container.session;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.net.host.HostManager;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -55,18 +56,23 @@ public final class ExchangeSessionManager {
 			return false;
 		}
 		
-		if(!(player.isIronMan() && requested.isIronMan())) {
-			if(player.isIronMan() && !player.isIronMaxed()) {
-				if(requested.isIronMan() && player.getRights().less(Rights.ADMINISTRATOR)) {
-					player.message("You cannot start an exchange session because you're an iron man member.");
-					return false;
-				}
+		if(player.getRights().less(Rights.SENIOR_MODERATOR) && requested.getRights().less(Rights.SENIOR_MODERATOR)) {
+			if(HostManager.same(player, requested)) {
+				player.message("You can't trade over the same network.");
+				return false;
 			}
-			
-			if(requested.isIronMan() && !requested.isIronMaxed()) {
-				if(!player.isIronMan() && player.getRights().less(Rights.ADMINISTRATOR)) {
-					player.message("This player is in iron man mode and can't start an exchange session.");
-					return false;
+			if(!(player.isIronMan() && requested.isIronMan())) {
+				if(player.isIronMan() && !player.isIronMaxed()) {
+					if(requested.isIronMan() && player.getRights().less(Rights.ADMINISTRATOR)) {
+						player.message("You cannot start an exchange session because you're an iron man member.");
+						return false;
+					}
+				}
+				if(requested.isIronMan() && !requested.isIronMaxed()) {
+					if(!player.isIronMan() && player.getRights().less(Rights.ADMINISTRATOR)) {
+						player.message("This player is in iron man mode and can't start an exchange session.");
+						return false;
+					}
 				}
 			}
 		}
@@ -126,7 +132,14 @@ public final class ExchangeSessionManager {
 	 * @return <true> if the player is, <false> otherwise.
 	 */
 	public boolean inSession(Player player, ExchangeSessionType type) {
-		return SESSIONS.stream().anyMatch(session -> session.getType() == type && session.getPlayers().contains(player) && session.getStage() > ExchangeSession.REQUEST);
+		if(!SESSIONS.isEmpty()) {
+			for(ExchangeSession session : SESSIONS) {
+				if(session.getType() == type && session.getPlayers().contains(player) && session.getStage() > ExchangeSession.REQUEST) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -135,7 +148,14 @@ public final class ExchangeSessionManager {
 	 * @return <true> if the player is, <false> otherwise.
 	 */
 	public boolean inAnySession(Player player) {
-		return SESSIONS.stream().anyMatch(session -> session.getPlayers().contains(player) && session.getStage() > ExchangeSession.REQUEST);
+		if(!SESSIONS.isEmpty()) {
+			for(ExchangeSession session : SESSIONS) {
+				if(session.getPlayers().contains(player) && session.getStage() > ExchangeSession.REQUEST) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -144,18 +164,23 @@ public final class ExchangeSessionManager {
 	 * @return <true> if it does, <false> otherwise.
 	 */
 	public boolean containsSessionInconsistancies(Player player) {
-		List<ExchangeSession> exchangeSession = SESSIONS.stream().
-				filter(session -> session.getStage() > ExchangeSession.REQUEST && session.getPlayers().contains(player)).collect(Collectors.toList());
-		if(exchangeSession.size() > 1) {
-			exchangeSession.forEach(session -> session.finalize(ExchangeSessionActionType.DISPOSE_ITEMS));
-			player.message("Trade declined and items lost, you existed in one or more trades.");
-			return true;
-		}
-		for(ExchangeSession session : SESSIONS) {
-			if(session.getPlayers().size() > ExchangeSession.PLAYER_LIMIT) {
-				session.finalize(ExchangeSessionActionType.DISPOSE_ITEMS);
-				player.message("Trace declined, items lost, more than two players in this trade.");
-				return true;
+		if(!SESSIONS.isEmpty()) {
+			ExchangeSession prev = null;
+			for(ExchangeSession session : SESSIONS) {
+				if(session.getPlayers().contains(player)) {
+					if(prev != null) {
+						prev.finalize(ExchangeSessionActionType.DISPOSE_ITEMS);
+						session.finalize(ExchangeSessionActionType.DISPOSE_ITEMS);
+						player.message("Trade declined and items lost, you existed in one or more trades.");
+						return true;
+					}
+					if(session.getPlayers().size() > ExchangeSession.PLAYER_LIMIT) {
+						session.finalize(ExchangeSessionActionType.DISPOSE_ITEMS);
+						player.message("Trace declined, items lost, more than two players in this trade.");
+						return true;
+					}
+					prev = session;
+				}
 			}
 		}
 		return false;
@@ -166,7 +191,15 @@ public final class ExchangeSessionManager {
 	 * @param player the player to reset this for.
 	 */
 	public void resetRequests(Player player) {
-		SESSIONS.removeAll(Arrays.asList(SESSIONS.stream().filter(session -> session.getPlayers().contains(player) && session.getStage() == ExchangeSession.REQUEST).toArray()));
+		ObjectList<ExchangeSession> delete = new ObjectArrayList<>();
+		for(ExchangeSession session : SESSIONS) {
+			if(session.getPlayers().contains(player) && session.getStage() == ExchangeSession.REQUEST) {
+				delete.add(session);
+			}
+		}
+		if(!delete.isEmpty()) {
+			SESSIONS.removeAll(delete);
+		}
 	}
 	
 	/**
@@ -174,21 +207,22 @@ public final class ExchangeSessionManager {
 	 * @param player the player to reset the session for.
 	 */
 	public void reset(Player player, ExchangeSessionType type) {
-		Optional<ExchangeSession> session = SESSIONS.stream().filter(sess -> sess.getType().equals(type)).filter(sess -> sess.getPlayers().contains(player)).findAny();
-		
-		if(!session.isPresent()) {
-			return;
+		if(!SESSIONS.isEmpty()) {
+			for(ExchangeSession session : SESSIONS) {
+				if(session.getType().equals(type) && session.getPlayers().contains(player)) {
+					session.getPlayers().forEach(p -> {
+						this.finalize(p, ExchangeSessionActionType.RESTORE_ITEMS);
+						this.resetRequests(p);
+						p.closeWidget();
+					});
+					Player other = session.getOther(player);
+					if(other != null)
+						other.message("The other player has declined the session.");
+					remove(session);
+					break;
+				}
+			}
 		}
-		
-		session.get().getPlayers().forEach(p -> {
-			this.finalize(p, ExchangeSessionActionType.RESTORE_ITEMS);
-			this.resetRequests(p);
-			p.closeWidget();
-		});
-		Player other = session.get().getOther(player);
-		if(other != null)
-			other.message("The other player has declined the session.");
-		remove(session.get());
 	}
 	
 	/**
@@ -197,11 +231,9 @@ public final class ExchangeSessionManager {
 	 */
 	public boolean reset(Player player) {
 		Optional<ExchangeSession> session = getExchangeSession(player);
-		
 		if(!session.isPresent()) {
 			return false;
 		}
-		
 		reset(player, session.get().getType());
 		return true;
 	}
@@ -215,11 +247,14 @@ public final class ExchangeSessionManager {
 	 * {@link Optional#empty()}. otherwise.
 	 */
 	public Optional<ExchangeSession> isAvailable(Player requester, Player requested, ExchangeSessionType type) {
-		for(ExchangeSession session : SESSIONS) {
-			if(session == null)
-				continue;
-			if(session.getStage() == ExchangeSession.REQUEST && session.getType() == type && session.getPlayers().contains(requested) && session.getPlayers().contains(requester) && session.getAttachment().equals(requested))
-				return Optional.of(session);
+		if(!SESSIONS.isEmpty()) {
+			for(ExchangeSession session : SESSIONS) {
+				if(session == null)
+					continue;
+				if(session.getStage() == ExchangeSession.REQUEST && session.getType() == type && session.getPlayers().contains(requested) && session.getPlayers().contains(requester) && session.getAttachment()
+						.equals(requested))
+					return Optional.of(session);
+			}
 		}
 		return Optional.empty();
 	}
@@ -230,11 +265,13 @@ public final class ExchangeSessionManager {
 	 * @return an exchange session wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
 	public Optional<ExchangeSession> getExchangeSession(Player player) {
-		for(ExchangeSession session : SESSIONS) {
-			if(session == null)
-				continue;
-			if(session.getPlayers().contains(player))
-				return Optional.of(session);
+		if(!SESSIONS.isEmpty()) {
+			for(ExchangeSession session : SESSIONS) {
+				if(session == null)
+					continue;
+				if(session.getPlayers().contains(player))
+					return Optional.of(session);
+			}
 		}
 		return Optional.empty();
 	}
@@ -245,11 +282,13 @@ public final class ExchangeSessionManager {
 	 * @return an exchange session wrapped in an optional, {@link Optional#empty()} otherwise.
 	 */
 	public Optional<ExchangeSession> getExchangeSession(Player player, ExchangeSessionType type) {
-		for(ExchangeSession session : SESSIONS) {
-			if(session == null)
-				continue;
-			if(session.getType() == type && session.getPlayers().contains(player))
-				return Optional.of(session);
+		if(!SESSIONS.isEmpty()) {
+			for(ExchangeSession session : SESSIONS) {
+				if(session == null)
+					continue;
+				if(session.getType() == type && session.getPlayers().contains(player))
+					return Optional.of(session);
+			}
 		}
 		return Optional.empty();
 	}
@@ -261,11 +300,13 @@ public final class ExchangeSessionManager {
 	 * @param type   the type of finalization we're appending.
 	 */
 	public void finalize(Player player, ExchangeSessionActionType type) {
-		Optional<ExchangeSession> session = SESSIONS.stream().filter(def -> def.getPlayers().contains(player)).findAny();
-		if(!session.isPresent()) {
-			return;
+		if(!SESSIONS.isEmpty()) {
+			for(ExchangeSession session : SESSIONS) {
+				if(session.getPlayers().contains(player)) {
+					session.finalize(type);
+				}
+			}
 		}
-		session.get().finalize(type);
 	}
 	
 	/**
