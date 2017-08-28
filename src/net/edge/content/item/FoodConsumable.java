@@ -387,7 +387,7 @@ public enum FoodConsumable {
 	 * @return the delay before consuming another food type.
 	 */
 	public long getDelay() {
-		return 600 * 3;
+		return 600 * 2;
 	}
 	
 	/**
