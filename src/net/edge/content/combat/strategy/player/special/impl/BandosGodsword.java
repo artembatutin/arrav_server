@@ -1,5 +1,6 @@
-package net.edge.content.combat.strategy.player.special;
+package net.edge.content.combat.strategy.player.special.impl;
 
+import net.edge.content.combat.attack.AttackModifier;
 import net.edge.content.combat.attack.FightType;
 import net.edge.content.combat.hit.Hit;
 import net.edge.content.combat.strategy.player.PlayerMeleeStrategy;
@@ -17,6 +18,7 @@ import net.edge.world.entity.actor.player.Player;
 public class BandosGodsword extends PlayerMeleeStrategy {
     private static final Animation ANIMATION = new Animation(11991, Animation.AnimationPriority.HIGH);
 	private static final Graphic GRAPHIC = new Graphic(2114);
+    private static final AttackModifier MODIFIER = new AttackModifier().accuracy(0.75).damage(0.21);
 
     @Override
     public void attack(Player attacker, Actor defender, Hit h) {

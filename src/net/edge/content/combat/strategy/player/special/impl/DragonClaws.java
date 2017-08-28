@@ -1,4 +1,4 @@
-package net.edge.content.combat.strategy.player.special;
+package net.edge.content.combat.strategy.player.special.impl;
 
 import net.edge.content.combat.CombatType;
 import net.edge.content.combat.CombatUtil;

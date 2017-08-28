@@ -2,6 +2,7 @@ package net.edge.content.combat.strategy.player.special;
 
 import net.edge.content.combat.Combat;
 import net.edge.content.combat.strategy.CombatStrategy;
+import net.edge.content.combat.strategy.player.special.impl.*;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendInterfaceLayer;
 import net.edge.net.packet.out.SendUpdateSpecial;
@@ -445,6 +446,7 @@ public enum CombatSpecial {
 //	},
     DRAGON_CLAWS(new int[]{14484, 14486}, 50, new DragonClaws()),
     DRAGON_DAGGER(new int[]{1215, 1231, 5680, 5698}, 25, new DragonDagger()),
+    DRAGON_SCIMITAR(new int[]{4587}, 55, new DragonScimitar()),
     BANDOS_GODSWORD(new int[]{11696}, 50, new BandosGodsword()),
     ARMADYL_GODSWORD(new int[]{11694, 13450}, 50, new ArmadylGodsword()),
     GRANITE_MAUL(new int[]{4153}, 50, new GraniteMaul()) {

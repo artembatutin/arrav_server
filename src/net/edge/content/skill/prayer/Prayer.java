@@ -17,6 +17,7 @@ import net.edge.world.entity.actor.update.UpdateFlag;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * The enumerated type whose elements represent the prayers that can be
@@ -659,6 +660,21 @@ public enum Prayer {
 	 */
 	public static boolean isAnyActivated(Player player, Prayer[] prayers) {
 		return Arrays.stream(prayers).anyMatch(p -> isActivated(player, p));
+	}
+
+	/**
+	 * Determines if any of the specified prayers are activated.
+	 * @param player  the player's prayers to check.
+	 * @param prayers the prayers to check if active.
+	 * @return {@code true} if any of the prayers are active for the player,
+	 * {@code false} otherwise.
+	 */
+	public static void forActivated(Player player, Prayer[] prayers, Consumer<Prayer> active) {
+		Arrays.stream(prayers).forEach(p -> {
+			if(isActivated(player, p)) {
+				active.accept(p);
+			}
+		});
 	}
 	
 	/**
