@@ -1,7 +1,10 @@
 package net.edge.world.entity.actor.combat.effect;
 
 import com.google.common.collect.ImmutableSet;
-import net.edge.world.entity.actor.combat.effect.potion.CombatAntifireEffect;
+import net.edge.world.entity.actor.combat.effect.impl.CombatAntifireEffect;
+import net.edge.world.entity.actor.combat.effect.impl.CombatPoisonEffect;
+import net.edge.world.entity.actor.combat.effect.impl.CombatSkullEffect;
+import net.edge.world.entity.actor.combat.effect.impl.CombatTeleblockEffect;
 import net.edge.world.entity.actor.player.assets.AntifireDetails.AntifireType;
 
 /**

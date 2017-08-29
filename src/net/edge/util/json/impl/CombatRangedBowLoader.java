@@ -6,9 +6,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.util.json.JsonLoader;
-import net.edge.world.entity.actor.combat.weapon.RangedAmmunition;
-import net.edge.world.entity.actor.combat.weapon.RangedWeaponDefinition;
-import net.edge.world.entity.actor.combat.weapon.RangedWeaponType;
+import net.edge.world.entity.actor.combat.ranged.RangedAmmunition;
+import net.edge.world.entity.actor.combat.ranged.RangedWeaponDefinition;
+import net.edge.world.entity.actor.combat.ranged.RangedWeaponType;
 import net.edge.world.entity.item.ItemDefinition;
 
 import java.util.*;

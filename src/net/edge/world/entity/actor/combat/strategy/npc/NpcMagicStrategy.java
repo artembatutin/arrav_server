@@ -3,10 +3,10 @@ package net.edge.world.entity.actor.combat.strategy.npc;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.CombatEffect;
+import net.edge.world.entity.actor.combat.CombatImpact;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.attack.FightType;
-import net.edge.world.entity.actor.combat.effect.CombatPoisonEffect;
+import net.edge.world.entity.actor.combat.effect.impl.CombatPoisonEffect;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.projectile.CombatProjectile;
@@ -39,8 +39,8 @@ public class NpcMagicStrategy extends MagicStrategy<Mob> {
 	
 	@Override
 	public void attack(Mob attacker, Actor defender, Hit hit) {
-		Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
-		Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit, null);
+		Predicate<CombatImpact> filter = effect -> effect.canAffect(attacker, defender, hit);
+		Consumer<CombatImpact> execute = effect -> effect.impact(attacker, defender, hit, null);
 		projectileDefinition.getEffect().filter(filter).ifPresent(execute);
 		
 		CombatPoisonEffect.getPoisonType(attacker.getId()).ifPresent(p -> {

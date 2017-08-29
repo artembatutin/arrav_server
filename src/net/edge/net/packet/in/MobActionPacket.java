@@ -12,7 +12,7 @@ import net.edge.net.codec.ByteTransform;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
-import net.edge.world.entity.actor.combat.content.MagicSpells;
+import net.edge.world.entity.actor.combat.magic.CombatSpell;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobDefinition;
@@ -86,7 +86,7 @@ public final class MobActionPacket implements IncomingPacket {
 		int index = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int spellId = payload.getShort(true, ByteTransform.A);
 		Mob mob = World.get().getMobs().get(index - 1);
-		MagicSpells spell = MagicSpells.get(spellId);
+		CombatSpell spell = CombatSpell.get(spellId);
 		if(mob == null || spell == null || !checkAttack(player, mob)) {
 			return;
 		}

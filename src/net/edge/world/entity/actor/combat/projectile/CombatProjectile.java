@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.CombatEffect;
+import net.edge.world.entity.actor.combat.CombatImpact;
 
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -15,7 +15,7 @@ public final class CombatProjectile {
 	
 	private final String name;
 	private final int maxHit;
-	private final CombatEffect effect;
+	private final CombatImpact effect;
 	private final Animation animation;
 	private final Graphic start;
 	private final Graphic end;
@@ -24,7 +24,7 @@ public final class CombatProjectile {
 	private final int hitDelay;
 	private final int hitsplatDelay;
 	
-	public CombatProjectile(String name, int maxHit, CombatEffect effect, Animation animation, Graphic start, Graphic end, ProjectileBuilder projectile, int hitDelay, int hitsplatDelay) {
+	public CombatProjectile(String name, int maxHit, CombatImpact effect, Animation animation, Graphic start, Graphic end, ProjectileBuilder projectile, int hitDelay, int hitsplatDelay) {
 		this.name = name;
 		this.maxHit = maxHit;
 		this.effect = effect;
@@ -54,7 +54,7 @@ public final class CombatProjectile {
 		return maxHit;
 	}
 	
-	public Optional<CombatEffect> getEffect() {
+	public Optional<CombatImpact> getEffect() {
 		return Optional.ofNullable(effect);
 	}
 	

@@ -5,6 +5,7 @@ import net.edge.content.TabInterface;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.util.json.impl.CombatRangedBowLoader;
 import net.edge.world.entity.actor.combat.attack.FightType;
+import net.edge.world.entity.actor.combat.ranged.RangedWeaponDefinition;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerRangedStrategy;

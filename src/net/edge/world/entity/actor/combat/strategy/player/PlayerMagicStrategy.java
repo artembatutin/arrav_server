@@ -3,12 +3,12 @@ package net.edge.world.entity.actor.combat.strategy.player;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.CombatEffect;
+import net.edge.world.entity.actor.combat.CombatImpact;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.attack.FightType;
-import net.edge.world.entity.actor.combat.content.MagicRune;
-import net.edge.world.entity.actor.combat.content.MagicSpells;
+import net.edge.world.entity.actor.combat.magic.MagicRune;
+import net.edge.world.entity.actor.combat.magic.CombatSpell;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.basic.MagicStrategy;
@@ -27,7 +27,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 	/**
 	 * The magic spell definition.
 	 */
-	private final MagicSpells spell;
+	private final CombatSpell spell;
 
 	/**
 	 * The spell splash graphic.
@@ -35,10 +35,10 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 	private static final Graphic SPLASH = new Graphic(85);
 
 	/**
-	 * Constructs a new {@code SpellStrategy} from a {@link MagicSpells}.
+	 * Constructs a new {@code SpellStrategy} from a {@link CombatSpell}.
 	 * @param spell the magic spell spell to be used.
 	 */
-	public PlayerMagicStrategy(MagicSpells spell) {
+	public PlayerMagicStrategy(CombatSpell spell) {
 		this.spell = spell;
 	}
 
@@ -62,8 +62,8 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 
 			List<Hit> extra = new LinkedList<>();
 			for(Hit hit : hits) {
-				Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
-				Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit, extra);
+				Predicate<CombatImpact> filter = effect -> effect.canAffect(attacker, defender, hit);
+				Consumer<CombatImpact> execute = effect -> effect.impact(attacker, defender, hit, extra);
 				spell.getEffect().filter(filter).ifPresent(execute);
 			}
 			Collections.addAll(extra, hits);
@@ -125,7 +125,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 		return CombatType.MAGIC;
 	}
 
-	public MagicSpells getSpell() {
+	public CombatSpell getSpell() {
 		return spell;
 	}
 }

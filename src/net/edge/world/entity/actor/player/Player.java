@@ -66,7 +66,7 @@ import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.Combat;
 import net.edge.world.entity.actor.combat.attack.FightType;
-import net.edge.world.entity.actor.combat.content.MagicSpells;
+import net.edge.world.entity.actor.combat.magic.CombatSpell;
 import net.edge.world.entity.actor.combat.effect.CombatEffect;
 import net.edge.world.entity.actor.combat.effect.CombatEffectTask;
 import net.edge.world.entity.actor.combat.hit.Hit;
@@ -390,7 +390,7 @@ public final class Player extends Actor {
 	/**
 	 * The spell that has been selected to auto-cast.
 	 */
-	private MagicSpells autocastSpell;
+	private CombatSpell autocastSpell;
 	
 	/**
 	 * The current viewing orb that this player has openShop.
@@ -597,7 +597,7 @@ public final class Player extends Actor {
 		});
 		ExchangeSessionManager.get().resetRequests(this);
 		message("@blu@Welcome to Edgeville!");
-		message("@blu@Edgeville isn't in an advertising phase now, please report bugs with ::bug desc.");
+		message("@blu@Edgeville is in beta, please report bugs with ::bug desc.");
 		message("@blu@Next event: Dharok Event 2nd September");
 		if(UpdateCommand.inProgess == 1) {
 			message("@red@There is currently an update schedule in progress. You'll be kicked off soon.");
@@ -1416,17 +1416,17 @@ public final class Player extends Actor {
 	
 	/**
 	 * Gets the auto-cast spell.
-	 * @return the {@link MagicSpells} to auto-cast
+	 * @return the {@link CombatSpell} to auto-cast
 	 */
-	public MagicSpells getAutocastSpell() {
+	public CombatSpell getAutocastSpell() {
 		return autocastSpell;
 	}
 	
 	/**
 	 * Sets the auto-cast spell.
-	 * @param autocastSpell the {@link MagicSpells} to auto-cast
+	 * @param autocastSpell the {@link CombatSpell} to auto-cast
 	 */
-	public void setAutocastSpell(MagicSpells autocastSpell) {
+	public void setAutocastSpell(CombatSpell autocastSpell) {
 		this.autocastSpell = autocastSpell;
 		WeaponInterface.setStrategy(this);
 		combat.reset();

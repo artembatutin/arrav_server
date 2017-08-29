@@ -6,9 +6,9 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.edge.util.json.JsonLoader;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
-import net.edge.world.entity.actor.combat.CombatEffect;
-import net.edge.world.entity.actor.combat.content.MagicEffects;
-import net.edge.world.entity.actor.combat.content.RangedEffects;
+import net.edge.world.entity.actor.combat.CombatImpact;
+import net.edge.world.entity.actor.combat.magic.MagicImpact;
+import net.edge.world.entity.actor.combat.ranged.RangedEffects;
 import net.edge.world.entity.actor.combat.projectile.CombatProjectile;
 import net.edge.world.entity.actor.combat.projectile.ProjectileBuilder;
 
@@ -52,10 +52,10 @@ public final class CombatProjectileLoader extends JsonLoader {
 			maxHit = reader.get("max-hit").getAsInt();
 		}
 		
-		CombatEffect effect = null;
+		CombatImpact effect = null;
 		if(reader.has("magic-effect")) {
 			String effectName = reader.get("magic-effect").getAsString();
-			effect = MagicEffects.valueOf(effectName).getEffect();
+			effect = MagicImpact.valueOf(effectName).getEffect();
 		} else if(reader.has("ranged-effect")) {
 			String effectName = reader.get("ranged-effect").getAsString();
 			effect = RangedEffects.valueOf(effectName).getEffect();

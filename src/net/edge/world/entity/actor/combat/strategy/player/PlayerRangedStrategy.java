@@ -5,18 +5,18 @@ import net.edge.net.packet.out.SendMessage;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatConstants;
-import net.edge.world.entity.actor.combat.CombatEffect;
+import net.edge.world.entity.actor.combat.CombatImpact;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.attack.FightType;
-import net.edge.world.entity.actor.combat.effect.CombatPoisonEffect;
+import net.edge.world.entity.actor.combat.effect.impl.CombatPoisonEffect;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.projectile.CombatProjectile;
 import net.edge.world.entity.actor.combat.strategy.basic.RangedStrategy;
-import net.edge.world.entity.actor.combat.weapon.RangedAmmunition;
-import net.edge.world.entity.actor.combat.weapon.RangedWeaponDefinition;
-import net.edge.world.entity.actor.combat.weapon.RangedWeaponType;
+import net.edge.world.entity.actor.combat.ranged.RangedAmmunition;
+import net.edge.world.entity.actor.combat.ranged.RangedWeaponDefinition;
+import net.edge.world.entity.actor.combat.ranged.RangedWeaponType;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
@@ -79,8 +79,8 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 		
 		List<Hit> extra = new LinkedList<>();
 		for(Hit hit : hits) {
-			Predicate<CombatEffect> filter = effect -> effect.canEffect(attacker, defender, hit);
-			Consumer<CombatEffect> execute = effect -> effect.execute(attacker, defender, hit, extra);
+			Predicate<CombatImpact> filter = effect -> effect.canAffect(attacker, defender, hit);
+			Consumer<CombatImpact> execute = effect -> effect.impact(attacker, defender, hit, extra);
 			projectileDefinition.getEffect().filter(filter).ifPresent(execute);
 		}
 		

@@ -7,7 +7,7 @@ import net.edge.world.entity.actor.combat.attack.AttackModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.attack.listener.CombatListener;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
-import net.edge.world.entity.actor.combat.hit.CombatTaskData;
+import net.edge.world.entity.actor.combat.hit.CombatData;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.CombatStrategy;
 
@@ -26,7 +26,6 @@ public class Combat<T extends Actor> {
 	
 	private final Stopwatch lastAttacked = new Stopwatch();
 	private final Stopwatch lastBlocked = new Stopwatch();
-	
 	private FightType type;
 	
 	private CombatStrategy<? super T> strategy;
@@ -35,11 +34,8 @@ public class Combat<T extends Actor> {
 	private final Deque<CombatListener<? super T>> pendingAddition = new LinkedList<>();
 	private final Deque<CombatListener<? super T>> pendingRemoval = new LinkedList<>();
 	
-	/**
-	 * The cache of damage dealt to this controller during combat.
-	 */
 	private final CombatDamage damageCache = new CombatDamage();
-	private final Deque<CombatTaskData<T>> combatQueue = new LinkedList<>();
+	private final Deque<CombatData<T>> combatQueue = new LinkedList<>();
 	private final Deque<Hit> damageQueue = new LinkedList<>();
 	
 	private final int[] hitsplatDelays = new int[4];
@@ -57,7 +53,6 @@ public class Combat<T extends Actor> {
 			attacker.setFollowing(true);
 			return;
 		}
-		
 		attacker.faceEntity(defender);
 	}
 	
@@ -77,7 +72,7 @@ public class Combat<T extends Actor> {
 		}
 		
 		while(!combatQueue.isEmpty()) {
-			CombatTaskData<T> data = combatQueue.poll();
+			CombatData<T> data = combatQueue.poll();
 			hitTask(data).submit();
 		}
 		
@@ -108,17 +103,19 @@ public class Combat<T extends Actor> {
 	
 	private void updateListeners() {
 		CombatListener<? super T> next;
-		
-		next = pendingAddition.poll();
-		while(next != null) {
-			listeners.add(next);
+		if(!pendingAddition.isEmpty()) {
 			next = pendingAddition.poll();
+			while(next != null) {
+				listeners.add(next);
+				next = pendingAddition.poll();
+			}
 		}
-		
-		next = pendingRemoval.poll();
-		while(next != null) {
-			listeners.remove(next);
+		if(!pendingRemoval.isEmpty()) {
 			next = pendingRemoval.poll();
+			while(next != null) {
+				listeners.remove(next);
+				next = pendingRemoval.poll();
+			}
 		}
 	}
 	
@@ -146,8 +143,7 @@ public class Combat<T extends Actor> {
 	private void submitHits(Actor defender, CombatStrategy<? super T> strategy, CombatHit... hits) {
 		boolean first = true;
 		for(CombatHit hit : hits) {
-			CombatTaskData<T> data = new CombatTaskData<>(attacker, defender, hit, strategy, first);
-			
+			CombatData<T> data = new CombatData<>(attacker, defender, hit, strategy, first);
 			if(data.isFirstHit()) {
 				start(defender, strategy, hits);
 			}
@@ -323,7 +319,6 @@ public class Combat<T extends Actor> {
 		if(listeners.contains(attack) || pendingAddition.contains(attack)) {
 			return;
 		}
-		
 		pendingAddition.add(attack);
 	}
 	
@@ -331,7 +326,6 @@ public class Combat<T extends Actor> {
 		if(!listeners.contains(attack) || pendingRemoval.contains(attack)) {
 			return;
 		}
-		
 		pendingRemoval.add(attack);
 	}
 	
@@ -348,11 +342,11 @@ public class Combat<T extends Actor> {
 	}
 	
 	public boolean isAttacking(Actor defender) {
-		return defender != null && lastDefender == defender && !stopwatchElapsed(lastAttacked, CombatConstants.COMBAT_TIMER);
+		return defender != null && lastDefender.same(defender) && !stopwatchElapsed(lastAttacked, CombatConstants.COMBAT_TIMER);
 	}
 	
 	public boolean isUnderAttackBy(Actor attacker) {
-		return attacker != null && lastAttacker == attacker && !stopwatchElapsed(lastBlocked, CombatConstants.COMBAT_TIMER);
+		return attacker != null && lastAttacker.same(attacker) && !stopwatchElapsed(lastBlocked, CombatConstants.COMBAT_TIMER);
 	}
 	
 	public double getAccuracyModifier() {
@@ -403,7 +397,7 @@ public class Combat<T extends Actor> {
 		return lastDefender;
 	}
 	
-	private Task hitTask(CombatTaskData<T> data) {
+	private Task hitTask(CombatData<T> data) {
 		return new Task(data.getHitDelay(), data.getHitDelay() == 0) {
 			@Override
 			protected void execute() {
@@ -414,7 +408,7 @@ public class Combat<T extends Actor> {
 		};
 	}
 	
-	private Task hitsplatTask(CombatTaskData<T> data) {
+	private Task hitsplatTask(CombatData<T> data) {
 		return new Task(data.getHitsplatDelay(), data.getHitsplatDelay() == 0) {
 			@Override
 			protected void execute() {

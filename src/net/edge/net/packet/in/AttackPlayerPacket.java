@@ -8,8 +8,8 @@ import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.combat.CombatUtil;
-import net.edge.world.entity.actor.combat.content.MagicSpells;
-import net.edge.world.entity.actor.combat.content.lunars.LunarSpells;
+import net.edge.world.entity.actor.combat.magic.CombatSpell;
+import net.edge.world.entity.actor.combat.magic.lunars.LunarSpells;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -55,7 +55,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			return;
 		}
 		
-		MagicSpells spell = MagicSpells.get(spellId);
+		CombatSpell spell = CombatSpell.get(spellId);
 		if(spell == null || index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !checkAttack(player, victim)) {
 			return;
 		}

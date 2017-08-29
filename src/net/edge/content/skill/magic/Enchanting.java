@@ -369,7 +369,7 @@ public final class Enchanting extends ProducingSkillAction {
 		 * @param animation   {@link #animation}.
 		 * @param graphic     {@link #graphic}.
 		 */
-		private EnchantingData(int spellId, int requirement, double experience, Item[] produced, Item[] removed, Optional<Animation> animation, Optional<Graphic> graphic) {
+		EnchantingData(int spellId, int requirement, double experience, Item[] produced, Item[] removed, Optional<Animation> animation, Optional<Graphic> graphic) {
 			this.spellId = spellId;
 			this.requirement = requirement;
 			this.experience = experience;
@@ -389,7 +389,7 @@ public final class Enchanting extends ProducingSkillAction {
 		 * @param animation   {@link #animation}.
 		 * @param graphic     {@link #graphic}.
 		 */
-		private EnchantingData(int spellId, int requirement, double experience, Item[] produced, Item[] removed, Animation animation, Graphic graphic) {
+		EnchantingData(int spellId, int requirement, double experience, Item[] produced, Item[] removed, Animation animation, Graphic graphic) {
 			this.spellId = spellId;
 			this.requirement = requirement;
 			this.experience = experience;
@@ -409,7 +409,7 @@ public final class Enchanting extends ProducingSkillAction {
 		 * @param animation   {@link #animation}.
 		 * @param graphic     {@link #graphic}.
 		 */
-		private EnchantingData(int spellId, int requirement, double experience, Item[] produced, Item[] removed, int animation, int graphic) {
+		EnchantingData(int spellId, int requirement, double experience, Item[] produced, Item[] removed, int animation, int graphic) {
 			this.spellId = spellId;
 			this.requirement = requirement;
 			this.experience = experience;
@@ -445,7 +445,11 @@ public final class Enchanting extends ProducingSkillAction {
 		 * @return an enumerator wrapped in an Optional, {@link Optional#empty()} otherwise.
 		 */
 		protected static Optional<EnchantingData> getDefinition(int id) {
-			return VALUES.stream().filter(def -> def.spellId == id).findAny();
+			for(EnchantingData data : VALUES) {
+				if(data.spellId == id)
+					return Optional.of(data);
+			}
+			return Optional.empty();
 		}
 	}
 }
