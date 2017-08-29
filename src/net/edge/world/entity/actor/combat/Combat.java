@@ -41,6 +41,7 @@ public class Combat<T extends Actor> {
 	
 	private final int[] hitsplatDelays = new int[4];
 	private final int[] combatDelays = new int[3];
+	private boolean within;
 	
 	public Combat(T attacker) {
 		this.attacker = attacker;
@@ -49,13 +50,18 @@ public class Combat<T extends Actor> {
 	
 	public void attack(Actor defender) {
 		this.defender = defender;
+		this.lastDefender = defender;
 		attacker.getMovementQueue().follow(defender);
-		attacker.setFollowing(true);
 	}
 	
 	public void tick() {
 		updateListeners();
-		
+		if(defender == null) {
+			return;
+		} else if(!defender.getPosition().withinDistance(attacker.getPosition(), 45)) {
+			reset();
+			return;
+		}
 		for(int index = 0; index < combatDelays.length; index++) {
 			if(combatDelays[index] > 0) {
 				combatDelays[index]--;
@@ -99,31 +105,22 @@ public class Combat<T extends Actor> {
 	}
 	
 	private void updateListeners() {
-		if (pendingAddition.isEmpty() && pendingRemoval.isEmpty()) {
-			return;
+		if(!pendingAddition.isEmpty()) {
+			for(Iterator<CombatListener<? super T>> iterator = pendingAddition.iterator(); iterator.hasNext(); ) {
+				listeners.add(iterator.next());
+				iterator.remove();
+			}
 		}
-
-		Iterator<CombatListener<? super T>> iterator;
-
-		for (iterator = pendingAddition.iterator(); iterator.hasNext();) {
-			listeners.add(iterator.next());
-			iterator.remove();
-		}
-
-		for (iterator = pendingRemoval.iterator(); iterator.hasNext();) {
-			listeners.remove(iterator.next());
-			iterator.remove();
+		if(!pendingRemoval.isEmpty()){
+			for(Iterator<CombatListener<? super T>> iterator = pendingRemoval.iterator(); iterator.hasNext(); ) {
+				listeners.remove(iterator.next());
+				iterator.remove();
+			}
 		}
 	}
 	
 	public boolean submitStrategy(Actor defender, CombatStrategy<? super T> strategy) {
 		if(!canAttack(defender)) {
-			return false;
-		}
-		
-		if(!strategy.withinDistance(attacker, defender)) {
-			attacker.getMovementQueue().follow(defender);
-			attacker.setFollowing(true);
 			return false;
 		}
 		
@@ -178,14 +175,15 @@ public class Combat<T extends Actor> {
 	}
 	
 	private boolean canAttack(Actor defender) {
+		if(!within) {
+			return false;
+		}
 		if(!CombatUtil.canAttack(attacker, defender)) {
 			return false;
 		}
-		
 		if(!strategy.canAttack(attacker, defender)) {
 			return false;
 		}
-		
 		for(CombatListener<? super T> listener : listeners) {
 			if(!listener.canAttack(attacker, defender)) {
 				return false;
@@ -296,9 +294,12 @@ public class Combat<T extends Actor> {
 	}
 	
 	public void reset() {
-		defender = null;
-		attacker.faceEntity(null);
-		attacker.getMovementQueue().reset();
+		if(defender != null) {
+			defender = null;
+			attacker.faceEntity(null);
+			attacker.setFollowing(false);
+			attacker.getMovementQueue().reset();
+		}
 	}
 	
 	public void addModifier(AttackModifier modifier) {
@@ -373,6 +374,15 @@ public class Combat<T extends Actor> {
 	
 	public void setStrategy(CombatStrategy<? super T> next) {
 		strategy = next;
+	}
+
+	public boolean checkWithin() {
+		within = strategy != null && defender != null && strategy.withinDistance(attacker, defender);
+		return within;
+	}
+
+	public boolean isWithin() {
+		return within;
 	}
 	
 	public Actor getDefender() {

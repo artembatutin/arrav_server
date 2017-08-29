@@ -30,20 +30,16 @@ public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> 
 
         if (!movement.isMovementDone() && !otherMovement.isMovementDone() && !movement.isLockMovement() && !attacker.isFrozen()) {
             distance += 1;
-
             if (movement.isRunning()) {
                 distance += 2;
             }
         }
-
         if (!new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance)) {
             return false;
         }
-
         if (!World.getSimplePathChecker().checkProjectile(attacker.getPosition(), defender.getPosition())) {
             return false;
         }
-
         return true;
     }
 

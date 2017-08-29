@@ -47,7 +47,6 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 		}
 		
 		Item ammo = attacker.getEquipment().get(rangedDefinition.getSlot());
-		
 		if(ammo != null) {
 			if(rangedDefinition.getAllowed() == null) {
 				attacker.getCombat().reset();

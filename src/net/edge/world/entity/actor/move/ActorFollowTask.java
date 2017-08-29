@@ -49,8 +49,9 @@ class ActorFollowTask extends Task {
 	@Override
 	public void execute() {
 		//First checks.
+		boolean combat = character.getCombat().getLastDefender().same(leader);
 		if(character.getState() != EntityState.ACTIVE || leader.getState() != EntityState.ACTIVE || !character.isFollowing() || character.isDead() || leader.isDead()) {//Death and away check.
-			if(!character.getCombat().isAttacking(character.getFollowEntity())) {
+			if(!combat) {
 				character.faceEntity(null);
 			}
 			character.setFollowing(false);
@@ -119,6 +120,16 @@ class ActorFollowTask extends Task {
 			}
 			return;*/
 		}
+
+		//combat within boundary
+		if(combat) {
+			if(character.getCombat().checkWithin()) {
+				character.getMovementQueue().within = true;
+				return;
+			} else {
+				character.getMovementQueue().within = false;
+			}
+		}
 		
 		//returns if path calculated is next to the leader.
 		if(destination != null && boundary.within(destination, leader.size(), character.size())) {
@@ -143,6 +154,7 @@ class ActorFollowTask extends Task {
 		destination = null;
 		character.setFollowing(false);
 		character.setFollowEntity(null);
+		character.getMovementQueue().within = false;
 		character.getMovementQueue().setFollowTask(Optional.empty());
 	}
 	

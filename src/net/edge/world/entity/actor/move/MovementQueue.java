@@ -52,6 +52,11 @@ public final class MovementQueue {
 	 * The flag that determines if movement is locked.
 	 */
 	private boolean lockMovement;
+
+	/**
+	 * Condition if the player is within the need boundary so he can stop moving towards it's destination.
+	 */
+	protected boolean within = false;
 	
 	/**
 	 * Creates a new {@link MovementQueue}.
@@ -67,15 +72,15 @@ public final class MovementQueue {
 	 * @throws Exception if any errors occur while sequencing movement.
 	 */
 	public void sequence() {
+		if(within)
+			return;
 		Point walkPoint;
 		Point runPoint = null;
 		
 		walkPoint = waypoints.poll();
-		
 		if(running) {
 			runPoint = waypoints.poll();
 		}
-		
 		runPath = runPoint != null;
 		
 		if(walkPoint != null && walkPoint.getDirection() != Direction.NONE) {
