@@ -6,12 +6,13 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.attack.AttackModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.attack.listener.CombatListener;
-import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.CombatData;
+import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.CombatStrategy;
 
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -48,12 +49,8 @@ public class Combat<T extends Actor> {
 	
 	public void attack(Actor defender) {
 		this.defender = defender;
-		if(strategy == null || !strategy.withinDistance(attacker, defender)) {
-			attacker.getMovementQueue().follow(defender);
-			attacker.setFollowing(true);
-			return;
-		}
-		attacker.faceEntity(defender);
+		attacker.getMovementQueue().follow(defender);
+		attacker.setFollowing(true);
 	}
 	
 	public void tick() {
@@ -102,20 +99,20 @@ public class Combat<T extends Actor> {
 	}
 	
 	private void updateListeners() {
-		CombatListener<? super T> next;
-		if(!pendingAddition.isEmpty()) {
-			next = pendingAddition.poll();
-			while(next != null) {
-				listeners.add(next);
-				next = pendingAddition.poll();
-			}
+		if (pendingAddition.isEmpty() && pendingRemoval.isEmpty()) {
+			return;
 		}
-		if(!pendingRemoval.isEmpty()) {
-			next = pendingRemoval.poll();
-			while(next != null) {
-				listeners.remove(next);
-				next = pendingRemoval.poll();
-			}
+
+		Iterator<CombatListener<? super T>> iterator;
+
+		for (iterator = pendingAddition.iterator(); iterator.hasNext();) {
+			listeners.add(iterator.next());
+			iterator.remove();
+		}
+
+		for (iterator = pendingRemoval.iterator(); iterator.hasNext();) {
+			listeners.remove(iterator.next());
+			iterator.remove();
 		}
 	}
 	
@@ -131,7 +128,7 @@ public class Combat<T extends Actor> {
 		}
 		
 		strategy.getModifier(attacker).ifPresent(this::addModifier);
-		listeners.forEach(attack -> attack.getModifier(attacker).ifPresent(this::addModifier));
+		listeners.forEach(listener -> listener.getModifier(attacker).ifPresent(this::addModifier));
 		
 		submitHits(defender, strategy, strategy.getHits(attacker, defender));
 		
@@ -232,11 +229,11 @@ public class Combat<T extends Actor> {
 			reset();
 			return;
 		}
-		
+
 		if(defender.getCombat().getDefender() == null && defender.isAutoRetaliate()) {
 			defender.getCombat().attack(attacker);
 		}
-		
+
 		defender.getCombat().block(attacker, hit, strategy.getCombatType());
 		if(strategy.getCombatType() != CombatType.MAGIC || defender.isMob()) {
 			defender.animation(CombatUtil.getBlockAnimation(defender));
@@ -253,11 +250,10 @@ public class Combat<T extends Actor> {
 			reset();
 			return;
 		}
-		
-		strategy.hitsplat(attacker, defender, hit);
+
 		listeners.forEach(listener -> listener.hitsplat(attacker, defender, hit));
-		
-		if(strategy.getCombatType() != CombatType.MAGIC || hit.isAccurate()) {
+
+		if (strategy.getCombatType() != CombatType.MAGIC || hit.isAccurate()) {
 			defender.getCombat().queueDamage(hit);
 			defender.getCombat().damageCache.add(attacker, hit.getDamage());
 			
@@ -267,38 +263,36 @@ public class Combat<T extends Actor> {
 		}
 	}
 	
-	public void block(Actor attacker, Hit hit, CombatType combatType) {
+//	private void onHitsplat(Actor attacker, Hit hit, CombatType combatType) {
+//		T defender = this.attacker;
+//		listeners.forEach(listener -> listener.onHitsplat(attacker, defender, hit, combatType));
+//	}
+
+	private void block(Actor attacker, Hit hit, CombatType combatType) {
 		T defender = this.attacker;
 		lastBlocked.reset();
 		lastAttacker = attacker;
-		listeners.forEach(attack -> attack.block(attacker, defender, hit, combatType));
+		listeners.forEach(listener -> listener.block(attacker, defender, hit, combatType));
 	}
-	
+
 	private void onDeath(Actor attacker, Hit hit) {
 		T defender = this.attacker;
-		listeners.forEach(attack -> attack.onDeath(attacker, defender, hit));
+		listeners.forEach(listener -> listener.onDeath(attacker, defender, hit));
 		defender.getMovementQueue().reset();
 		attacker.getCombat().reset();
 		reset();
 	}
 	
 	private void finish(Actor defender, CombatStrategy<? super T> strategy) {
-		
-		// special case for some listeners
-		// for example, vengeance needs to be active until all hits
-		// are recoiled instead of just one hit
-		if(defender == null && strategy == null) {
-			listeners.forEach(attack -> attack.finish(attacker, null));
-			return;
-		}
-		
 		strategy.finish(attacker, defender);
 		strategy.getModifier(attacker).ifPresent(attacker.getCombat()::removeModifier);
 		
-		listeners.forEach(attack -> {
-			attack.finish(attacker, defender);
-			attack.getModifier(attacker).ifPresent(attacker.getCombat()::removeModifier);
+		listeners.forEach(listener -> {
+			listener.finish(attacker, defender);
+			listener.getModifier(attacker).ifPresent(attacker.getCombat()::removeModifier);
 		});
+
+//		defender.getCombat().listeners.forEach(listener -> listener.finish(defender, attacker));
 	}
 	
 	public void reset() {
@@ -342,11 +336,11 @@ public class Combat<T extends Actor> {
 	}
 	
 	public boolean isAttacking(Actor defender) {
-		return defender != null && lastDefender.same(defender) && !stopwatchElapsed(lastAttacked, CombatConstants.COMBAT_TIMER);
+		return defender != null && defender.same(lastDefender) && !stopwatchElapsed(lastAttacked, CombatConstants.COMBAT_TIMER);
 	}
 	
 	public boolean isUnderAttackBy(Actor attacker) {
-		return attacker != null && lastAttacker.same(attacker) && !stopwatchElapsed(lastBlocked, CombatConstants.COMBAT_TIMER);
+		return attacker != null && attacker.same(lastAttacker) && !stopwatchElapsed(lastBlocked, CombatConstants.COMBAT_TIMER);
 	}
 	
 	public double getAccuracyModifier() {
@@ -413,12 +407,11 @@ public class Combat<T extends Actor> {
 			@Override
 			protected void execute() {
 				hitsplat(data.getDefender(), data.getHit(), data.getStrategy());
-				
+
 				if(data.isFirstHit()) {
 					finish(data.getDefender(), data.getStrategy());
-					data.getDefender().getCombat().finish(null, null);
 				}
-				
+
 				cancel();
 			}
 		};
@@ -437,4 +430,5 @@ public class Combat<T extends Actor> {
 		long blocked = lastBlocked.elapsedTime();
 		return blocked > attacked ? attacked : blocked;
 	}
+
 }

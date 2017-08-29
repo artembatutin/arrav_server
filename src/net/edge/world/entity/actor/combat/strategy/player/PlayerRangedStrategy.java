@@ -64,8 +64,9 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 				}
 			}
 			attacker.out(new SendMessage(getInvalidAmmunitionMessage(rangedDefinition.getType())));
-		} else
+		} else {
 			attacker.out(new SendMessage(getNoAmmunitionMessage(rangedDefinition.getType())));
+		}
 		attacker.getCombat().reset();
 		return false;
 	}

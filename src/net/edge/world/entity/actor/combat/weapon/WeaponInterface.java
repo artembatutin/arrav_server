@@ -185,7 +185,7 @@ public enum WeaponInterface {
 				return;
 			}
 		}
-		player.getCombat().setStrategy(PlayerMeleeStrategy.INSTANCE);
+		player.getCombat().setStrategy(PlayerMeleeStrategy.get());
 	}
 	
 	/**

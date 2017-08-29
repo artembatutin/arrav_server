@@ -54,7 +54,7 @@ public abstract class Mob extends Actor {
 		if(listener != null) {
 			combat.addListener(listener);
 		}
-		combat.setStrategy(STRATEGIES.getOrDefault(id, () -> loadStrategy(mob).orElse(NpcMeleeStrategy.INSTANCE)).get());
+		combat.setStrategy(STRATEGIES.getOrDefault(id, () -> loadStrategy(mob).orElse(NpcMeleeStrategy.get())).get());
 		return mob;
 	}
 	
@@ -80,7 +80,7 @@ public abstract class Mob extends Actor {
 				return Optional.of(new NpcMagicStrategy(definition));
 			}
 			case MELEE:
-				return Optional.of(NpcMeleeStrategy.INSTANCE);
+				return Optional.of(NpcMeleeStrategy.get());
 		}
 		return Optional.empty();
 	}

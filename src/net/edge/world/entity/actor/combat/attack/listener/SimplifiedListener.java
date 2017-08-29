@@ -12,31 +12,24 @@ public class SimplifiedListener<T extends Actor> implements CombatListener<T> {
 	}
 	
 	@Override
-	public void start(T attacker, Actor defender, Hit[] hits) {
-	}
+	public final void start(T attacker, Actor defender, Hit[] hits) { }
 	
 	@Override
-	public void attack(T attacker, Actor defender, Hit hit) {
-	}
+	public void attack(T attacker, Actor defender, Hit hit) { }
 	
 	@Override
-	public void hit(T attacker, Actor defender, Hit hit) {
-	}
+	public void hit(T attacker, Actor defender, Hit hit) { }
+
+	@Override
+	public void hitsplat(T attacker, Actor defender, Hit hit) { }
+
+	@Override
+	public void block(Actor attacker, T defender, Hit hit, CombatType combatType) { }
 	
 	@Override
-	public void hitsplat(T attacker, Actor defender, Hit hit) {
-	}
+	public void onDeath(Actor attacker, T defender, Hit hit) { }
 	
 	@Override
-	public void block(Actor attacker, T defender, Hit hit, CombatType combatType) {
-	}
-	
-	@Override
-	public void onDeath(Actor attacker, T defender, Hit hit) {
-	}
-	
-	@Override
-	public void finish(T attacker, Actor defender) {
-	}
+	public void finish(T attacker, Actor defender) { }
 	
 }

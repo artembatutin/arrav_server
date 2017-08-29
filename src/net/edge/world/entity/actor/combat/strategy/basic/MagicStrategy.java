@@ -19,26 +19,27 @@ public abstract class MagicStrategy<T extends Actor> extends CombatStrategy<T> {
 	
 	@Override
 	public boolean withinDistance(T attacker, Actor defender) {
-		FightType fightType = attacker.getCombat().getFightType();
 		MovementQueue movement = attacker.getMovementQueue();
 		MovementQueue otherMovement = defender.getMovementQueue();
+		FightType fightType = attacker.getCombat().getFightType();
 		int distance = getAttackDistance(attacker, fightType);
-		if(!movement.isMovementDone() && !otherMovement.isMovementDone() && !movement.isLockMovement() && !attacker.isFrozen()) {
+
+		if (!movement.isMovementDone() && !otherMovement.isMovementDone() && !movement.isLockMovement() && !attacker.isFrozen()) {
 			distance += 1;
-			if(movement.isRunning()) {
+			if (movement.isRunning()) {
 				distance += 2;
 			}
 		}
-		if(new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance)) {
-			if(!World.getSimplePathChecker().checkProjectile(attacker.getPosition(), defender.getPosition())) {
-				return false;
-			}
-			attacker.getMovementQueue().reset();
-			attacker.setFollowing(false);
-			attacker.faceEntity(defender);
-			return true;
+
+		if (!new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance)) {
+			return false;
 		}
-		return false;
+
+		if (!World.getSimplePathChecker().checkProjectile(attacker.getPosition(), defender.getPosition())) {
+			return false;
+		}
+
+		return true;
 	}
 	
 	@Override

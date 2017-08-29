@@ -152,10 +152,8 @@ public final class CombatUtil {
 	 * @throws IllegalArgumentException if the combat type is invalid
 	 */
 	public static int getHitDelay(Actor attacker, Actor defender, CombatType type) {
-		int delay = defender.isMob() ? 1 : 0;
-		
 		if(type.equals(CombatType.MELEE)) {
-			return delay;
+			return 1;
 		}
 		
 		int distance = (int) attacker.getPosition().getDistance(defender.getPosition());
@@ -168,7 +166,7 @@ public final class CombatUtil {
 			return Projectile.RANGED_DELAYS[distance > 10 ? 10 : distance];
 		}
 		
-		return delay;
+		return 1;
 	}
 	
 	/**
@@ -260,8 +258,8 @@ public final class CombatUtil {
 	
 	public static CombatHit generateDragonfire(Mob attacker, Actor defender, int max, boolean prayer) {
 		int damage;
-		int hitDelay = CombatUtil.getHitDelay(attacker, defender, CombatType.MAGIC);
-		int hitsplatDelay = CombatUtil.getHitsplatDelay(CombatType.MAGIC);
+		int hitDelay = getHitDelay(attacker, defender, CombatType.MAGIC);
+		int hitsplatDelay = getHitsplatDelay(CombatType.MAGIC);
 		
 		if(defender.isPlayer()) {
 			Player player = defender.toPlayer();
@@ -271,21 +269,16 @@ public final class CombatUtil {
 			
 			if(shield && potion) {
 				max = 0;
-				player.out(new SendMessage("Your potion and shield fully protects you from the heat of the dragon's breath."));
 			} else if(potion) {
 				AntifireDetails.AntifireType type = player.getAntifireDetails().get().getType();
 				max -= type.getReduction();
 				if(max <= 0) {
 					max = 0;
-					player.out(new SendMessage("Your potion fully protects you from the heat of the dragon's breath."));
-				} else {
-					player.out(new SendMessage("Your potion slightly protects you from the heat of the dragon's breath."));
 				}
 			} else if(shield) {
 				max -= 500;
 			} else if(prayer) {
 				max -= 450;
-				player.out(new SendMessage("Your prayers resist some of the dragonfire."));
 			}
 			
 			damage = max == 0 ? 0 : RandomUtils.inclusive(max);

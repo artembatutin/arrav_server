@@ -21,21 +21,22 @@ public class Synchronizer {
 	 */
 	public void preUpdate(ActorList<Player> players, ActorList<Mob> mobs) {
 		//long time = System.currentTimeMillis();
-		for(Player p : players) {
-			if(p == null)
+		for(Mob m : mobs) {
+			if(m == null) {
 				continue;
+			}
 			try {
-				p.preUpdate();
+				m.preUpdate();
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 
-		for(Mob m : mobs) {
-			if(m == null)
+		for(Player p : players) {
+			if(p == null)
 				continue;
 			try {
-				m.preUpdate();
+				p.preUpdate();
 			} catch(Exception e) {
 				e.printStackTrace();
 			}

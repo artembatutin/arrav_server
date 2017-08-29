@@ -12,8 +12,8 @@ import net.edge.world.entity.actor.mob.Mob;
 
 public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
 	
-	public static final NpcMeleeStrategy INSTANCE = new NpcMeleeStrategy();
-	
+	private static final NpcMeleeStrategy INSTANCE = new NpcMeleeStrategy();
+
 	protected NpcMeleeStrategy() {
 	}
 	
@@ -55,4 +55,9 @@ public class NpcMeleeStrategy extends MeleeStrategy<Mob> {
 	public CombatType getCombatType() {
 		return CombatType.MELEE;
 	}
+
+	public static NpcMeleeStrategy get() {
+		return INSTANCE;
+	}
+
 }

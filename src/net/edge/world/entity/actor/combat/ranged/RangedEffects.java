@@ -222,24 +222,22 @@ public enum RangedEffects {
 		return effect;
 	}
 	
-	private static CombatHit hitEvent(Actor attacker, Actor defender, Actor actor, int damage, List<Hit> extra) {
+	private static void hitEvent(Actor attacker, Actor defender, Actor actor, int damage, List<Hit> extra) {
 		if(!defender.same(actor)) {
 			int hitDelay = CombatUtil.getHitDelay(attacker, defender, CombatType.RANGED);
 			int hitsplatDelay = CombatUtil.getHitsplatDelay(CombatType.RANGED);
 			CombatHit hit = new CombatHit(FormulaFactory.nextRangedHit(attacker, actor), hitDelay, hitsplatDelay);
-			
-			if(hit.isAccurate()) {
+
+			if (hit.isAccurate()) {
 				hit.setDamage(damage);
 			}
-			
+
 			attacker.getCombat().submitHits(actor, hit);
-			
-			if(extra != null) {
+
+			if (extra != null) {
 				extra.add(hit);
 			}
-			return hit;
 		}
-		return null;
 	}
 	
 }
