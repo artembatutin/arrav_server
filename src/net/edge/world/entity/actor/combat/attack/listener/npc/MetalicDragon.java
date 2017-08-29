@@ -43,7 +43,7 @@ public class MetalicDragon extends SimplifiedListener<Mob> {
 	}
 	
 	@Override
-	public void finish(Mob attacker, Actor defender) {
+	public void start(Mob attacker, Actor defender, Hit[] hits) {
 		if(!NpcMeleeStrategy.get().withinDistance(attacker, defender)) {
 			attacker.getCombat().setStrategy(DRAGONFIRE);
 		} else {

@@ -30,9 +30,9 @@ public final class CombatData<T extends Actor> {
 	private final CombatStrategy<? super T> strategy;
 	
 	/**
-	 * Whether or not this hit is the first one.
+	 * Whether or not this hit is the last one.
 	 */
-	private final boolean firstHit;
+	private final boolean lastHit;
 	
 	/**
 	 * Constructs a new {@code CombatHitData} object.
@@ -40,14 +40,14 @@ public final class CombatData<T extends Actor> {
 	 * @param defender the defender
 	 * @param hit      the combat hit
 	 * @param strategy the strategy
-	 * @param firstHit whether or not this hit is the first one
+	 * @param lastHit whether or not this hit is the first one
 	 */
-	public CombatData(T attacker, Actor defender, CombatHit hit, CombatStrategy<? super T> strategy, boolean firstHit) {
+	public CombatData(T attacker, Actor defender, CombatHit hit, CombatStrategy<? super T> strategy, boolean lastHit) {
 		this.attacker = attacker;
 		this.defender = defender;
 		this.hit = hit;
 		this.strategy = strategy;
-		this.firstHit = firstHit;
+		this.lastHit = lastHit;
 	}
 	
 	/**
@@ -99,11 +99,11 @@ public final class CombatData<T extends Actor> {
 	}
 	
 	/**
-	 * Checks if this hit data is the first hit.
-	 * @return {@code true} if this hit data is the first hit
+	 * Checks if this hit data is the last hit.
+	 * @return {@code true} if this hit data is the last hit
 	 */
-	public boolean isFirstHit() {
-		return firstHit;
+	public boolean isLastHit() {
+		return lastHit;
 	}
 	
 }

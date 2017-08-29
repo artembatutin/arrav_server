@@ -30,9 +30,9 @@ public class VengeanceListener extends SimplifiedListener<Player> {
     }
 
     @Override
-    public void finish(Player attacker, Actor defender) {
-        attacker.getCombat().removeListener(this);
-        attacker.venged = false;
+    public void finishAttacker(Actor attacker, Player defender) {
+        defender.getCombat().removeListener(this);
+        defender.venged = false;
     }
 
     public static VengeanceListener get() {

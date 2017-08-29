@@ -138,16 +138,16 @@ public class Combat<T extends Actor> {
 	}
 	
 	private void submitHits(Actor defender, CombatStrategy<? super T> strategy, CombatHit... hits) {
-		boolean first = true;
-		for(CombatHit hit : hits) {
-			CombatData<T> data = new CombatData<>(attacker, defender, hit, strategy, first);
-			if(data.isFirstHit()) {
+		for(int index = 0; index < hits.length; index++) {
+			CombatHit hit = hits[index];
+
+			CombatData<T> data = new CombatData<>(attacker, defender, hit, strategy, index == hits.length - 1);
+			if(data.isLastHit()) {
 				start(defender, strategy, hits);
 			}
 			
 			attack(defender, hit, strategy);
 			combatQueue.add(data);
-			first = false;
 		}
 	}
 	
@@ -263,10 +263,10 @@ public class Combat<T extends Actor> {
 		}
 	}
 	
-//	private void onHitsplat(Actor attacker, Hit hit, CombatType combatType) {
-//		T defender = this.attacker;
-//		listeners.forEach(listener -> listener.onHitsplat(attacker, defender, hit, combatType));
-//	}
+	private void finishAttacker(Actor attacker) {
+		T defender = this.attacker;
+		listeners.forEach(listener -> listener.finishAttacker(attacker, defender));
+	}
 
 	private void block(Actor attacker, Hit hit, CombatType combatType) {
 		T defender = this.attacker;
@@ -292,7 +292,7 @@ public class Combat<T extends Actor> {
 			listener.getModifier(attacker).ifPresent(attacker.getCombat()::removeModifier);
 		});
 
-//		defender.getCombat().listeners.forEach(listener -> listener.finish(defender, attacker));
+		defender.getCombat().finishAttacker(defender);
 	}
 	
 	public void reset() {
@@ -408,7 +408,7 @@ public class Combat<T extends Actor> {
 			protected void execute() {
 				hitsplat(data.getDefender(), data.getHit(), data.getStrategy());
 
-				if(data.isFirstHit()) {
+				if(data.isLastHit()) {
 					finish(data.getDefender(), data.getStrategy());
 				}
 

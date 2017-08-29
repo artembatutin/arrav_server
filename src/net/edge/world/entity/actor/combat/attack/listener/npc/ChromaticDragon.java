@@ -3,6 +3,7 @@ package net.edge.world.entity.actor.combat.attack.listener.npc;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.attack.listener.NpcCombatListenerSignature;
 import net.edge.world.entity.actor.combat.attack.listener.SimplifiedListener;
+import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.CombatStrategy;
 import net.edge.world.entity.actor.combat.strategy.npc.NpcMeleeStrategy;
 import net.edge.world.entity.actor.combat.strategy.npc.impl.DragonfireStrategy;
@@ -41,7 +42,7 @@ public class ChromaticDragon extends SimplifiedListener<Mob> {
 	}
 	
 	@Override
-	public void finish(Mob attacker, Actor defender) {
+	public void start(Mob attacker, Actor defender, Hit[] hits) {
 		if(!NpcMeleeStrategy.get().withinDistance(attacker, defender)) {
 			attacker.getCombat().setStrategy(DRAGONFIRE);
 		} else {

@@ -39,21 +39,21 @@ public class KingBlackDragonStrategy extends MultiStrategy {
 		}
 		return currentStrategy.canAttack(attacker, defender);
 	}
-	
+
 	@Override
-	public void block(Actor attacker, Mob defender, Hit hit, CombatType combatType) {
-		currentStrategy.block(attacker, defender, hit, combatType);
-		defender.getCombat().attack(attacker);
-	}
-	
-	@Override
-	public void finish(Mob attacker, Actor defender) {
+	public void start(Mob attacker, Actor defender, Hit[] hits) {
 		currentStrategy.finish(attacker, defender);
 		if(STAB.withinDistance(attacker, defender)) {
 			currentStrategy = randomStrategy(FULL_STRATEGIES);
 		} else {
 			currentStrategy = randomStrategy(NON_MELEE);
 		}
+	}
+
+	@Override
+	public void block(Actor attacker, Mob defender, Hit hit, CombatType combatType) {
+		currentStrategy.block(attacker, defender, hit, combatType);
+		defender.getCombat().attack(attacker);
 	}
 	
 	@Override

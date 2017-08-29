@@ -77,12 +77,20 @@ public interface CombatListener<T extends Actor> {
     void onDeath(Actor attacker, T defender, Hit hit);
 
     /**
-     * Called when the defending actor blocks a hit from the attacker.
+     * Called when the defending actor finishes their strategy's attack.
      *
      * @param attacker the attacking actor
      * @param defender the defending actor
      */
     void finish(T attacker, Actor defender);
+
+    /**
+     * Called when the attacking actor finishes their strategy's attack.
+     *
+     * @param attacker the attacking actor
+     * @param defender the defending actor
+     */
+    void finishAttacker(Actor attacker, T defender);
 
     /**
      * Gets the attack modifier of this combat attack, wrapped around an {@link
@@ -95,5 +103,6 @@ public interface CombatListener<T extends Actor> {
     default Optional<AttackModifier> getModifier(T attacker) {
         return Optional.empty();
     }
+
 }
 
