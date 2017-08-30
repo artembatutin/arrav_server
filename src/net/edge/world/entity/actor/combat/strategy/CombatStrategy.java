@@ -37,19 +37,16 @@ public abstract class CombatStrategy<T extends Actor> implements CombatListener<
 	public void hit(T attacker, Actor defender, Hit hit) { }
 
 	@Override
-	public void hitsplat(T attacker, Actor defender, Hit hit) { }
-
-	@Override
 	public void block(Actor attacker, T defender, Hit hit, CombatType combatType) { }
 	
 	@Override
 	public void onDeath(Actor attacker, T defender, Hit hit) { }
 	
 	@Override
-	public void finish(T attacker, Actor defender) { }
+	public void finishOutgoing(T attacker, Actor defender) { }
 
 	@Override
-	public void finishAttacker(Actor attacker, T defender) { }
+	public void finishIncoming(Actor attacker, T defender) { }
 
 	public abstract CombatType getCombatType();
 	

@@ -42,7 +42,7 @@ public class KingBlackDragonStrategy extends MultiStrategy {
 
 	@Override
 	public void start(Mob attacker, Actor defender, Hit[] hits) {
-		currentStrategy.finish(attacker, defender);
+		currentStrategy.finishOutgoing(attacker, defender);
 		if(STAB.withinDistance(attacker, defender)) {
 			currentStrategy = randomStrategy(FULL_STRATEGIES);
 		} else {

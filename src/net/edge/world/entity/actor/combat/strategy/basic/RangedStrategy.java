@@ -55,17 +55,33 @@ public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> 
         }
 
         exp = Math.round(exp / 10F);
-        exp *= BASE_EXPERIENCE_MULTIPLIER;
-        Skills.experience(player, exp / 3, Skills.HITPOINTS);
-        switch (player.getCombat().getFightType().getStyle()) {
-            case DEFENSIVE:
-                exp /= 2;
-                Skills.experience(player, exp, Skills.DEFENCE);
-                Skills.experience(player, exp, Skills.RANGED);
-                break;
-            default:
-                Skills.experience(player, exp, Skills.RANGED);
-                break;
+
+        if (player.getCombat().getFightType() == FightType.FLARE) {
+            exp *= 4;
+            Skills.experience(player, exp / 3, Skills.HITPOINTS);
+            Skills.experience(player, exp, Skills.RANGED);
+        } else if (player.getCombat().getFightType() == FightType.BLAZE) {
+            exp *= 2;
+            Skills.experience(player, exp / 3, Skills.HITPOINTS);
+            Skills.experience(player, exp, Skills.MAGIC);
+        } else if (player.getCombat().getFightType() == FightType.SCORCH) {
+            exp *= 4;
+            Skills.experience(player, exp / 3, Skills.HITPOINTS);
+            Skills.experience(player, exp, Skills.STRENGTH);
+        } else {
+            exp *= BASE_EXPERIENCE_MULTIPLIER;
+            Skills.experience(player, exp / 3, Skills.HITPOINTS);
+
+            switch (player.getCombat().getFightType().getStyle()) {
+                case DEFENSIVE:
+                    exp /= 2;
+                    Skills.experience(player, exp, Skills.DEFENCE);
+                    Skills.experience(player, exp, Skills.RANGED);
+                    break;
+                default:
+                    Skills.experience(player, exp, Skills.RANGED);
+                    break;
+            }
         }
     }
 

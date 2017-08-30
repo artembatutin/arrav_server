@@ -43,11 +43,6 @@ public abstract class MultiStrategy extends CombatStrategy<Mob> {
 	}
 
 	@Override
-	public void hitsplat(Mob attacker, Actor defender, Hit hit) {
-		currentStrategy.hitsplat(attacker, defender, hit);
-	}
-
-	@Override
 	public void block(Actor attacker, Mob defender, Hit hit, CombatType combatType) {
 		currentStrategy.block(attacker, defender, hit, combatType);
 	}
@@ -58,8 +53,8 @@ public abstract class MultiStrategy extends CombatStrategy<Mob> {
 	}
 	
 	@Override
-	public void finish(Mob attacker, Actor defender) {
-		currentStrategy.finish(attacker, defender);
+	public void finishOutgoing(Mob attacker, Actor defender) {
+		currentStrategy.finishOutgoing(attacker, defender);
 	}
 	
 	@Override

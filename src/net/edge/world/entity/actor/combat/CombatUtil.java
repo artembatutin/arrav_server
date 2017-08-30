@@ -87,57 +87,38 @@ public final class CombatUtil {
 	 */
 	public static void areaAction(Actor attacker, Actor defender, int distance, int max, Consumer<Actor> action) {
 		action.accept(defender);
-		if(!attacker.inMulti() || !defender.inMulti())
-			return;
+//		if(!attacker.inMulti() || !defender.inMulti()) return;
+		int added = 0;
 		for(Player other : defender.getLocalPlayers()) {
-			if(other == null)
-				continue;
-			if(other.getInstance() != defender.getInstance())
-				continue;
-			if(!other.getPosition().withinDistance(defender.getPosition(), distance))
-				continue;
-			if(other.same(attacker) || other.same(defender))
-				continue;
-			if(other.getCurrentHealth() <= 0 || other.isDead())
-				continue;
-			if(!other.inMulti() || (attacker.isPlayer() && !other.inWilderness()))
-				continue;
+			if(other == null) continue;
+			if(other.getInstance() != defender.getInstance()) continue;
+			if(!other.getPosition().withinDistance(defender.getPosition(), distance)) continue;
+			if(other.same(attacker) || other.same(defender)) continue;
+			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
+			if(!other.inMulti() || (attacker.isPlayer() && !other.inWilderness())) continue;
 			action.accept(other);
-			max++;
-			if(max == 9)
-				break;
+			if(++added == max) return;
 		}
 		for(Mob other : defender.getLocalMobs()) {
-			if(other == null)
-				continue;
-			if(other.getInstance() != defender.getInstance())
-				continue;
-			if(!other.getPosition().withinDistance(defender.getPosition(), distance))
-				continue;
-			if(other.same(attacker) || other.same(defender))
-				continue;
-			if(other.getCurrentHealth() <= 0 || other.isDead())
-				continue;
-			if(!other.getDefinition().isAttackable())
-				continue;
+			if(other == null) continue;
+			if(other.getInstance() != defender.getInstance()) continue;
+			if(!other.getPosition().withinDistance(defender.getPosition(), distance)) continue;
+			if(other.same(attacker) || other.same(defender)) continue;
+			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
+			if(!other.getDefinition().isAttackable()) continue;
+//			if(!other.inMulti()) continue;
 			action.accept(other);
-			max++;
-			if(max == 9)
-				break;
+			if(++added == max) return;
 		}
 	}
 	
 	public static <A extends Actor> List<A> actorsWithinDistance(Actor player, Set<A> actors, int radius) {
 		List<A> collected = new LinkedList<>();
 		for(A other : actors) {
-			if(other == null)
-				continue;
-			if(!other.getPosition().withinDistance(player.getPosition(), radius))
-				continue;
-			if(other.same(player))
-				continue;
-			if(other.getCurrentHealth() <= 0 || other.isDead())
-				continue;
+			if(other == null) continue;
+			if(!other.getPosition().withinDistance(player.getPosition(), radius)) continue;
+			if(other.same(player)) continue;
+			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
 			collected.add(other);
 		}
 		return collected;

@@ -42,7 +42,7 @@ public class ChromaticDragon extends SimplifiedListener<Mob> {
 	}
 	
 	@Override
-	public void start(Mob attacker, Actor defender, Hit[] hits) {
+	public void finishOutgoing(Mob attacker, Actor defender) {
 		if(!NpcMeleeStrategy.get().withinDistance(attacker, defender)) {
 			attacker.getCombat().setStrategy(DRAGONFIRE);
 		} else {

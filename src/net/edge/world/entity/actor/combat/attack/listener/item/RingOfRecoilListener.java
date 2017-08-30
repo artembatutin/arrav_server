@@ -42,7 +42,7 @@ public class RingOfRecoilListener extends SimplifiedListener<Player> {
 	}
 
 	@Override
-	public void finishAttacker(Actor attacker, Player defender) {
+	public void finishIncoming(Actor attacker, Player defender) {
 		defender.getCombat().removeListener(this);
 	}
 

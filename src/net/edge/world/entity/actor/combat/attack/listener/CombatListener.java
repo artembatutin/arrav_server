@@ -50,14 +50,6 @@ public interface CombatListener<T extends Actor> {
     void hit(T attacker, Actor defender, Hit hit);
 
     /**
-     * Called when the hitsplat is applied to the defender.
-     * @param attacker the attacking actor
-     * @param defender the defending actor
-     * @param hit      the hit to apply
-     */
-    void hitsplat(T attacker, Actor defender, Hit hit);
-
-    /**
      * Called when the defending actor blocks a hit from the attacker.
      *
      * @param attacker   the attacking actor
@@ -82,7 +74,7 @@ public interface CombatListener<T extends Actor> {
      * @param attacker the attacking actor
      * @param defender the defending actor
      */
-    void finish(T attacker, Actor defender);
+    void finishOutgoing(T attacker, Actor defender);
 
     /**
      * Called when the attacking actor finishes their strategy's attack.
@@ -90,7 +82,7 @@ public interface CombatListener<T extends Actor> {
      * @param attacker the attacking actor
      * @param defender the defending actor
      */
-    void finishAttacker(Actor attacker, T defender);
+    void finishIncoming(Actor attacker, T defender);
 
     /**
      * Gets the attack modifier of this combat attack, wrapped around an {@link

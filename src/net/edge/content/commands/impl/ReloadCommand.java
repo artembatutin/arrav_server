@@ -10,6 +10,7 @@ import net.edge.net.host.HostManager;
 import net.edge.task.Task;
 import net.edge.util.json.impl.*;
 import net.edge.world.World;
+import net.edge.world.entity.actor.combat.projectile.CombatProjectile;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.locale.area.AreaManager;
@@ -39,6 +40,11 @@ public final class ReloadCommand implements Command {
 			case "commands":
 				CommandDispatcher.reload();
 				player.message("Reloaded commands.");
+				break;
+			case "combat":
+				new CombatProjectileLoader().load();
+				new CombatRangedBowLoader().load();
+				player.message("Reloaded combat.");
 				break;
 			case "ips":
 				HostManager.deserialize(HostListType.BANNED_MAC);
