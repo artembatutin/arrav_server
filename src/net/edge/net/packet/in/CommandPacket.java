@@ -1,17 +1,16 @@
 package net.edge.net.packet.in;
 
+import net.edge.content.TabInterface;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
-import net.edge.world.entity.actor.combat.projectile.CombatProjectile;
-import net.edge.world.entity.actor.combat.ranged.RangedAmmunition;
 import net.edge.world.entity.actor.combat.strategy.player.special.CombatSpecial;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.actor.player.assets.Spellbook;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
-import net.edge.world.entity.item.Item;
 
 /**
  * The message that is sent from the client when the player chats anything
@@ -33,8 +32,8 @@ public final class CommandPacket implements IncomingPacket {
         if (player.getRights() == Rights.ADMINISTRATOR) {
             if (parts[0].equalsIgnoreCase("spec")) {
                 CombatSpecial.restore(player, 100);
-//				player.setSpellbook(Spellbook.ANCIENT);
-//				TabInterface.MAGIC.sendInterface(player, Spellbook.ANCIENT.getId());
+				player.setSpellbook(Spellbook.NORMAL);
+				TabInterface.MAGIC.sendInterface(player, Spellbook.NORMAL.getId());
                 return;
             } else if (parts[0].equalsIgnoreCase("man")) {
                 Mob npc = Mob.getNpc(1, player.getPosition().copy().move(1, 0));

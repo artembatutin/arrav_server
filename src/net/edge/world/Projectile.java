@@ -64,12 +64,7 @@ public final class Projectile {
 	 * The delay of the projectile.
 	 */
 	private final int delay;
-	
-	/**
-	 * The curve angle of the projectile.
-	 */
-	private final int curve;
-	
+
 	/**
 	 * The instance on which this projectile is being active.
 	 */
@@ -85,11 +80,10 @@ public final class Projectile {
 	 * @param delay        the delay of the projectile.
 	 * @param startHeight  the starting height of the projectile.
 	 * @param endHeight    the ending height of the projectile.
-	 * @param curve        the curve angle of the projectile.
 	 * @param instance     the world instance on which the projectile is active.
 	 * @param type         the combat type of this projectile
 	 */
-	public Projectile(Position start, Position end, int lockon, int projectileId, int speed, int delay, int startHeight, int endHeight, int curve, int instance, CombatType type) {
+	public Projectile(Position start, Position end, int lockon, int projectileId, int speed, int delay, int startHeight, int endHeight, int instance, CombatType type) {
 		this.start = start;
 		this.offset = new Position((end.getX() - start.getX()), (end.getY() - start.getY()));
 		this.lockon = lockon;
@@ -98,7 +92,6 @@ public final class Projectile {
 		this.speed = speed;
 		this.startHeight = startHeight;
 		this.endHeight = endHeight;
-		this.curve = curve;
 		this.instance = instance;
 	}
 	
@@ -112,11 +105,10 @@ public final class Projectile {
 	 * @param delay        the delay of the projectile.
 	 * @param startHeight  the starting height of the projectile.
 	 * @param endHeight    the ending height of the projectile.
-	 * @param curve        the curve angle of the projectile.
 	 * @param type         the combat type of this projectile
 	 */
-	public Projectile(Actor source, Actor victim, int projectileId, int speed, int delay, int startHeight, int endHeight, int curve, CombatType type) {
-		this(source.getCenterPosition(), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), projectileId, speed, delay, startHeight, endHeight, curve, source.getInstance(), type);
+	public Projectile(Actor source, Actor victim, int projectileId, int speed, int delay, int startHeight, int endHeight, CombatType type) {
+		this(source.getCenterPosition(), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), projectileId, speed, delay, startHeight, endHeight, source.getInstance(), type);
 	}
 	
 	/**
@@ -129,10 +121,9 @@ public final class Projectile {
 	 * @param delay        the delay of the projectile.
 	 * @param startHeight  the starting height of the projectile.
 	 * @param endHeight    the ending height of the projectile.
-	 * @param curve        the curve angle of the projectile.
 	 */
-	public Projectile(Actor source, Actor victim, int projectileId, int speed, int delay, int startHeight, int endHeight, int curve) {
-		this(source.getCenterPosition(), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), projectileId, speed, delay, startHeight, endHeight, curve, source.getInstance(), null);
+	public Projectile(Actor source, Actor victim, int projectileId, int speed, int delay, int startHeight, int endHeight) {
+		this(source.getCenterPosition(), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), projectileId, speed, delay, startHeight, endHeight, source.getInstance(), null);
 	}
 	
 	/**
@@ -217,15 +208,7 @@ public final class Projectile {
 	public int getDelay() {
 		return delay;
 	}
-	
-	/**
-	 * Gets the curve angle of the projectile.
-	 * @return the curve angle of the projectile.
-	 */
-	public int getCurve() {
-		return curve;
-	}
-	
+
 	/**
 	 * Gets the instance on which this projectile is being active.
 	 * @return the instance of this projectile.

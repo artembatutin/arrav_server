@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PlayerCombatListenerSignature {
+public @interface ItemCombatListenerSignature {
 
 	/**
 	 * The item ids to attach this listener to.

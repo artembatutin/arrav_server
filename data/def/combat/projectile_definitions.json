@@ -1,5 +1,1075 @@
 [
   {
+    "name": "Wind Strike",
+    "max-hit": 20,
+    "animation": {
+      "id": 14221,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 2700,
+      "delay": 0,
+      "height": 50
+    },
+    "projectile": {
+      "id": 2699,
+      "delay": 3,
+      "speed": 54,
+      "startHeight": 13,
+      "endHeight": 11
+    }
+  },
+  {
+    "name": "Confuse",
+    "max-hit": -1,
+    "animation": {
+      "id": 716,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 102,
+      "delay": 0,
+      "height": 85
+    },
+    "end": {
+      "id": 104,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 103,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Water Strike",
+    "max-hit": 40,
+    "animation": {
+      "id": 14221,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 2701,
+      "delay": 20,
+      "height": 0
+    },
+    "end": {
+      "id": 2708,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2703,
+      "delay": 30,
+      "speed": 54,
+      "startHeight": 27,
+      "endHeight": 21
+    }
+  },
+  {
+    "name": "Earth Strike",
+    "max-hit": 60,
+    "animation": {
+      "id": 14221,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 2713,
+      "delay": 20,
+      "height": 0
+    },
+    "end": {
+      "id": 2723,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2718,
+      "delay": 5,
+      "speed": 48,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Weaken",
+    "max-hit": -1,
+    "animation": {
+      "id": 717,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 105,
+      "delay": 20,
+      "height": 85
+    },
+    "end": {
+      "id": 107,
+      "delay": 0,
+      "height": 150
+    },
+    "projectile": {
+      "id": 106,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Fire Strike",
+    "max-hit": 80,
+    "animation": {
+      "id": 14221,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 2728,
+      "delay": 20,
+      "height": 0
+    },
+    "end": {
+      "id": 2737,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2729,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 23,
+      "endHeight": 21
+    }
+  },
+  {
+    "name": "Fire Strike Torcher",
+    "max-hit": 80,
+    "animation": {
+      "id": 3882,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 2737,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2729,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 144,
+      "endHeight": 71
+    }
+  },
+  {
+    "name": "Wind Bolt",
+    "max-hit": 90,
+    "animation": {
+      "id": 14220,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 119,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2699,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 23,
+      "endHeight": 18
+    }
+  },
+  {
+    "name": "Curse",
+    "max-hit": -1,
+    "animation": {
+      "id": 718,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 108,
+      "delay": 20,
+      "height": 85
+    },
+    "end": {
+      "id": 110,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 109,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Bind",
+    "max-hit": -1,
+    "animation": {
+      "id": 710,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 177,
+      "delay": 0,
+      "height": 85
+    },
+    "end": {
+      "id": 181,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 178,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Water Bolt",
+    "max-hit": 100,
+    "animation": {
+      "id": 14220,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 2701,
+      "delay": 20,
+      "height": 0
+    },
+    "end": {
+      "id": 2709,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2704,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 23,
+      "endHeight": 21
+    }
+  },
+  {
+    "name": "Earth Bolt",
+    "max-hit": 110,
+    "animation": {
+      "id": 14222,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 2714,
+      "delay": 20,
+      "height": 0
+    },
+    "end": {
+      "id": 2724,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2719,
+      "delay": 3,
+      "speed": 49,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Fire Bolt",
+    "max-hit": 120,
+    "animation": {
+      "id": 14223,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 2728,
+      "delay": 20,
+      "height": 0
+    },
+    "end": {
+      "id": 2738,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2731,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 18,
+      "endHeight": 18
+    }
+  },
+  {
+    "name": "Crumble Undead",
+    "max-hit": 150,
+    "animation": {
+      "id": 724,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 145,
+      "delay": 20,
+      "height": 85
+    },
+    "end": {
+      "id": 147,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 146,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Wind Blast",
+    "max-hit": 130,
+    "animation": {
+      "id": 14221,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 2700,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2699,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 23,
+      "endHeight": 21
+    }
+  },
+  {
+    "name": "Water Blast",
+    "max-hit": 140,
+    "animation": {
+      "id": 14220,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 2702,
+      "delay": 20,
+      "height": 0
+    },
+    "end": {
+      "id": 2710,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2706,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 22,
+      "endHeight": 19
+    }
+  },
+  {
+    "name": "Iban Blast",
+    "max-hit": 250,
+    "animation": {
+      "id": 708,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 87,
+      "delay": 20,
+      "height": 85
+    },
+    "end": {
+      "id": 89,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 88,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Snare",
+    "max-hit": -1,
+    "animation": {
+      "id": 710,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 177,
+      "delay": 20,
+      "height": 85
+    },
+    "end": {
+      "id": 180,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 178,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Magic Dart",
+    "max-hit": 190,
+    "animation": {
+      "id": 711,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 327,
+      "delay": 20,
+      "height": 85
+    },
+    "end": {
+      "id": 329,
+      "delay": 0,
+      "height": 0
+    },
+    "projectile": {
+      "id": 328,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Earth Blast",
+    "max-hit": 150,
+    "animation": {
+      "id": 14222,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 2715,
+      "delay": 20,
+      "height": 85
+    },
+    "end": {
+      "id": 2725,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2720,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Fire Blast",
+    "max-hit": 160,
+    "animation": {
+      "id": 14223,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 2728,
+      "delay": 20,
+      "height": 0
+    },
+    "end": {
+      "id": 2739,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2733,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 18,
+      "endHeight": 17
+    }
+  },
+  {
+    "name": "Saradomin Strike",
+    "max-hit": 200,
+    "animation": {
+      "id": 811,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 76,
+      "delay": 0,
+      "height": 100
+    }
+  },
+  {
+    "name": "Claws Of Guthix",
+    "max-hit": 200,
+    "animation": {
+      "id": 811,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 77,
+      "delay": 0,
+      "height": 100
+    }
+  },
+  {
+    "name": "Flames Of Zamorak",
+    "max-hit": 200,
+    "animation": {
+      "id": 811,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 78,
+      "delay": 0,
+      "height": 0
+    }
+  },
+  {
+    "name": "Wind Wave",
+    "max-hit": 170,
+    "animation": {
+      "id": 14221,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 2700,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2699,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 23,
+      "endHeight": 21
+    }
+  },
+  {
+    "name": "Water Wave",
+    "max-hit": 180,
+    "animation": {
+      "id": 14220,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 2702,
+      "delay": 20,
+      "height": 0
+    },
+    "end": {
+      "id": 2700,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2706,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 23,
+      "endHeight": 21
+    }
+  },
+  {
+    "name": "Vulnerability",
+    "max-hit": -1,
+    "animation": {
+      "id": 718,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 167,
+      "delay": 20,
+      "height": 85
+    },
+    "end": {
+      "id": 169,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 168,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Earth Wave",
+    "max-hit": 190,
+    "animation": {
+      "id": 14222,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 2716,
+      "delay": 20,
+      "height": 0
+    },
+    "end": {
+      "id": 2726,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2721,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Enfeeble",
+    "max-hit": -1,
+    "animation": {
+      "id": 728,
+      "delay": 10,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 170,
+      "delay": 10,
+      "height": 85
+    },
+    "end": {
+      "id": 172,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 171,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Fire Wave",
+    "max-hit": 200,
+    "animation": {
+      "id": 14223,
+      "delay": 20,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 2728,
+      "delay": 20,
+      "height": 0
+    },
+    "end": {
+      "id": 2740,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 2735,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 23,
+      "endHeight": 21
+    }
+  },
+  {
+    "name": "Entangle",
+    "max-hit": -1,
+    "animation": {
+      "id": 710,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 177,
+      "delay": 20,
+      "height": 85
+    },
+    "end": {
+      "id": 179,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 178,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Stun",
+    "max-hit": -1,
+    "animation": {
+      "id": 729,
+      "delay": 15,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 173,
+      "delay": 15,
+      "height": 85
+    },
+    "end": {
+      "id": 107,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 174,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Teleblock",
+    "max-hit": -1,
+    "animation": {
+      "id": 1819,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 345,
+      "delay": 0,
+      "height": 0
+    },
+    "projectile": {
+      "id": 344,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Smoke Rush",
+    "max-hit": 130,
+    "animation": {
+      "id": 1978,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 385,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 384,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Shadow Rush",
+    "max-hit": 140,
+    "animation": {
+      "id": 1978,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 379,
+      "delay": 0,
+      "height": 0
+    },
+    "projectile": {
+      "id": 378,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Blood Rush",
+    "max-hit": 150,
+    "animation": {
+      "id": 1978,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 373,
+      "delay": 0,
+      "height": 0
+    },
+    "projectile": {
+      "id": 372,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Ice Rush",
+    "max-hit": 160,
+    "animation": {
+      "id": 1978,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 361,
+      "delay": 0,
+      "height": 0
+    },
+    "projectile": {
+      "id": 360,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Smoke Burst",
+    "max-hit": 170,
+    "animation": {
+      "id": 1979,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 389,
+      "delay": 0,
+      "height": 0
+    }
+  },
+  {
+    "name": "Shadow Burst",
+    "max-hit": 18,
+    "animation": {
+      "id": 1979,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 382,
+      "delay": 0,
+      "height": 0
+    }
+  },
+  {
+    "name": "Blood Burst",
+    "max-hit": 210,
+    "animation": {
+      "id": 1979,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 376,
+      "delay": 0,
+      "height": 0
+    }
+  },
+  {
+    "name": "Ice Burst",
+    "max-hit": 220,
+    "animation": {
+      "id": 1979,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 363,
+      "delay": 0,
+      "height": 0
+    }
+  },
+  {
+    "name": "Smoke Blitz",
+    "max-hit": 230,
+    "animation": {
+      "id": 1978,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 387,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 386,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 31
+    }
+  },
+  {
+    "name": "Shadow Blitz",
+    "max-hit": 240,
+    "animation": {
+      "id": 1978,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 381,
+      "delay": 0,
+      "height": 0
+    },
+    "projectile": {
+      "id": 380,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 20
+    }
+  },
+  {
+    "name": "Blood Blitz",
+    "max-hit": 250,
+    "animation": {
+      "id": 1978,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 375,
+      "delay": 0,
+      "height": 0
+    },
+    "projectile": {
+      "id": 374,
+      "delay": 3,
+      "speed": 44,
+      "startHeight": 43,
+      "endHeight": 21
+    }
+  },
+  {
+    "name": "Ice Blitz",
+    "max-hit": 260,
+    "animation": {
+      "id": 1978,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "start": {
+      "id": 366,
+      "delay": 0,
+      "height": 100
+    },
+    "end": {
+      "id": 367,
+      "delay": 0,
+      "height": 0
+    }
+  },
+  {
+    "name": "Smoke Barrage",
+    "max-hit": 270,
+    "animation": {
+      "id": 1979,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 391,
+      "delay": 0,
+      "height": 100
+    }
+  },
+  {
+    "name": "Shadow Barrage",
+    "max-hit": 280,
+    "animation": {
+      "id": 1979,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 383,
+      "delay": 0,
+      "height": 0
+    }
+  },
+  {
+    "name": "Blood Barrage",
+    "max-hit": 290,
+    "animation": {
+      "id": 1979,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 377,
+      "delay": 0,
+      "height": 0
+    }
+  },
+  {
+    "name": "Ice Barrage",
+    "max-hit": 300,
+    "animation": {
+      "id": 1979,
+      "delay": 0,
+      "priority": "NORMAL"
+    },
+    "end": {
+      "id": 369,
+      "delay": 0,
+      "height": 0
+    }
+  },
+  {
     "name": "Training arrows",
     "start": {
       "id": 806,
@@ -11,8 +1081,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -27,56 +1096,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Bronze arrow (p)",
-    "start": {
-      "id": 19,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 10,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Bronze arrow (p+)",
-    "start": {
-      "id": 19,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 10,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Bronze arrow (p++)",
-    "start": {
-      "id": 19,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 10,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -91,56 +1111,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Iron arrow (p)",
-    "start": {
-      "id": 18,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 9,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Iron arrow (p+)",
-    "start": {
-      "id": 18,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 9,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Iron arrow (p++)",
-    "start": {
-      "id": 18,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 9,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -155,56 +1126,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Steel arrow (p)",
-    "start": {
-      "id": 20,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 11,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Steel arrow (p+)",
-    "start": {
-      "id": 20,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 11,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Steel arrow (p++)",
-    "start": {
-      "id": 20,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 11,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -219,56 +1141,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Mithril arrow (p)",
-    "start": {
-      "id": 21,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 12,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Mithril arrow (p+)",
-    "start": {
-      "id": 21,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 12,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Mithril arrow (p++)",
-    "start": {
-      "id": 21,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 12,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -283,56 +1156,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Adamant arrow (p)",
-    "start": {
-      "id": 22,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 13,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Adamant arrow (p+)",
-    "start": {
-      "id": 22,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 13,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Adamant arrow (p++)",
-    "start": {
-      "id": 22,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 13,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -347,56 +1171,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Rune arrow (p)",
-    "start": {
-      "id": 24,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Rune arrow (p+)",
-    "start": {
-      "id": 24,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Rune arrow (p++)",
-    "start": {
-      "id": 24,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -447,56 +1222,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Dragon arrow (p)",
-    "start": {
-      "id": 1111,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 1120,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Dragon arrow (p+)",
-    "start": {
-      "id": 1111,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 1120,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Dragon arrow (p++)",
-    "start": {
-      "id": 1111,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 1120,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -511,8 +1237,7 @@
       "delay": 3,
       "speed": 8,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -528,59 +1253,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Abyssalbane arrow (p)",
-    "ranged-effect": "ABYSSALBANE",
-    "start": {
-      "id": 2,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Abyssalbane arrows (p+)",
-    "ranged-effect": "ABYSSALBANE",
-    "start": {
-      "id": 2,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Abyssalbane arrows (p++)",
-    "ranged-effect": "ABYSSALBANE",
-    "start": {
-      "id": 2,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -595,56 +1268,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Basiliskbane arrow (p)",
-    "start": {
-      "id": 24,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Basiliskbane arrows (p+)",
-    "start": {
-      "id": 24,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Basiliskbane arrows (p++)",
-    "start": {
-      "id": 24,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -660,59 +1284,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Dragonbane arrow (p)",
-    "ranged-effect": "DRAGONBANE",
-    "start": {
-      "id": 24,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Dragonbane arrows (p+)",
-    "ranged-effect": "DRAGONBANE",
-    "start": {
-      "id": 24,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Dragonbane arrows (p++)",
-    "ranged-effect": "DRAGONBANE",
-    "start": {
-      "id": 24,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -728,59 +1300,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Wallasalkibane arrow (p)",
-    "ranged-effect": "WALLASALKIBANE",
-    "start": {
-      "id": 24,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Wallasalkibane arrows (p+)",
-    "ranged-effect": "WALLASALKIBANE",
-    "start": {
-      "id": 24,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Wallasalkibane arrows (p++)",
-    "ranged-effect": "WALLASALKIBANE",
-    "start": {
-      "id": 24,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 15,
-      "delay": 36,
-      "speed": 64,
-      "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -791,44 +1311,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Abyssalbane bolts (p)",
-    "ranged-effect": "ABYSSALBANE",
-    "projectile": {
-      "id": 27,
-      "delay": 42,
-      "speed": 86,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Abyssalbane bolts (p+)",
-    "ranged-effect": "ABYSSALBANE",
-    "projectile": {
-      "id": 27,
-      "delay": 42,
-      "speed": 86,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Abyssalbane bolts (p++)",
-    "ranged-effect": "ABYSSALBANE",
-    "projectile": {
-      "id": 27,
-      "delay": 42,
-      "speed": 86,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -839,44 +1322,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Basiliskbane bolts (p)",
-    "ranged-effect": "BASILISKBANE",
-    "projectile": {
-      "id": 27,
-      "delay": 42,
-      "speed": 86,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Basiliskbane bolts (p+)",
-    "ranged-effect": "BASILISKBANE",
-    "projectile": {
-      "id": 27,
-      "delay": 42,
-      "speed": 86,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Basiliskbane bolts (p++)",
-    "ranged-effect": "BASILISKBANE",
-    "projectile": {
-      "id": 27,
-      "delay": 42,
-      "speed": 86,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -887,44 +1333,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Dragonbane bolts (p)",
-    "ranged-effect": "DRAGONBANE",
-    "projectile": {
-      "id": 27,
-      "delay": 42,
-      "speed": 86,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Dragonbane bolts (p+)",
-    "ranged-effect": "DRAGONBANE",
-    "projectile": {
-      "id": 27,
-      "delay": 42,
-      "speed": 86,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Dragonbane bolts (p++)",
-    "ranged-effect": "DRAGONBANE",
-    "projectile": {
-      "id": 27,
-      "delay": 42,
-      "speed": 86,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -935,44 +1344,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Wallasalkibane bolts (p)",
-    "ranged-effect": "WALLASALKIBANE",
-    "projectile": {
-      "id": 27,
-      "delay": 42,
-      "speed": 86,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Wallasalkibane bolts (p+)",
-    "ranged-effect": "WALLASALKIBANE",
-    "projectile": {
-      "id": 27,
-      "delay": 42,
-      "speed": 86,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Wallasalkibane bolts (p++)",
-    "ranged-effect": "WALLASALKIBANE",
-    "projectile": {
-      "id": 27,
-      "delay": 42,
-      "speed": 86,
-      "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -987,8 +1359,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1003,8 +1374,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1019,8 +1389,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1035,8 +1404,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1051,8 +1419,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1067,8 +1434,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1083,8 +1449,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1094,8 +1459,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1105,8 +1469,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1116,8 +1479,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1132,8 +1494,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1148,8 +1509,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1164,8 +1524,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1180,8 +1539,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1196,8 +1554,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1212,8 +1569,7 @@
       "delay": 36,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1223,8 +1579,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1234,8 +1589,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1245,8 +1599,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1262,8 +1615,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1273,8 +1625,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1284,8 +1635,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1301,8 +1651,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1312,8 +1661,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1323,8 +1671,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1340,8 +1687,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1351,8 +1697,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1362,8 +1707,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1373,8 +1717,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1390,8 +1733,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1401,8 +1743,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1412,8 +1753,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1424,8 +1764,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1435,8 +1774,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1452,8 +1790,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1463,8 +1800,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1474,8 +1810,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1491,8 +1826,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1502,8 +1836,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1519,8 +1852,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1530,8 +1862,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1541,8 +1872,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1558,8 +1888,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1569,8 +1898,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1580,8 +1908,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1591,8 +1918,7 @@
       "delay": 42,
       "speed": 86,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1608,8 +1934,7 @@
       "delay": 26,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1625,8 +1950,7 @@
       "delay": 26,
       "speed": 64,
       "startHeight": 40,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -1641,56 +1965,7 @@
       "delay": 30,
       "speed": 46,
       "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Bronze knife (p)",
-    "start": {
-      "id": 219,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 212,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Bronze knife (p+)",
-    "start": {
-      "id": 219,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 212,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Bronze knife (p++)",
-    "start": {
-      "id": 219,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 212,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -1705,56 +1980,7 @@
       "delay": 30,
       "speed": 46,
       "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Iron knife (p)",
-    "start": {
-      "id": 220,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 213,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Iron knife (p+)",
-    "start": {
-      "id": 220,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 213,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Iron knife (p++)",
-    "start": {
-      "id": 220,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 213,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -1769,56 +1995,7 @@
       "delay": 30,
       "speed": 46,
       "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Steel knife (p)",
-    "start": {
-      "id": 221,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 214,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Steel knife (p+)",
-    "start": {
-      "id": 221,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 214,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Steel knife (p++)",
-    "start": {
-      "id": 221,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 214,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -1833,56 +2010,7 @@
       "delay": 30,
       "speed": 46,
       "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Black knife (p)",
-    "start": {
-      "id": 222,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 215,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Black knife (p+)",
-    "start": {
-      "id": 222,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 215,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Black knife (p++)",
-    "start": {
-      "id": 222,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 215,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -1897,56 +2025,7 @@
       "delay": 30,
       "speed": 46,
       "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Mithril knife (p)",
-    "start": {
-      "id": 223,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 216,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Mithril knife (p+)",
-    "start": {
-      "id": 223,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 216,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Mithril knife (p++)",
-    "start": {
-      "id": 223,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 216,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -1961,56 +2040,7 @@
       "delay": 30,
       "speed": 46,
       "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Adamant knife (p)",
-    "start": {
-      "id": 224,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 217,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Adamant knife (p+)",
-    "start": {
-      "id": 224,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 217,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Adamant knife (p++)",
-    "start": {
-      "id": 224,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 217,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2025,56 +2055,7 @@
       "delay": 30,
       "speed": 46,
       "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Rune knife (p)",
-    "start": {
-      "id": 225,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 218,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Rune knife (p+)",
-    "start": {
-      "id": 225,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 218,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Rune knife (p++)",
-    "start": {
-      "id": 225,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 218,
-      "delay": 30,
-      "speed": 46,
-      "startHeight": 40,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2089,56 +2070,7 @@
       "delay": 16,
       "speed": 40,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Bronze dart (p)",
-    "start": {
-      "id": 232,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 226,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Bronze dart (p+)",
-    "start": {
-      "id": 232,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 226,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Bronze dart (p++)",
-    "start": {
-      "id": 232,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 226,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2153,56 +2085,7 @@
       "delay": 16,
       "speed": 40,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Iron dart (p)",
-    "start": {
-      "id": 233,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 227,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Iron dart (p+)",
-    "start": {
-      "id": 233,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 227,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Iron dart (p++)",
-    "start": {
-      "id": 233,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 227,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2217,56 +2100,7 @@
       "delay": 16,
       "speed": 40,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Steel dart (p)",
-    "start": {
-      "id": 234,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 228,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Steel dart (p+)",
-    "start": {
-      "id": 234,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 228,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Steel dart (p++)",
-    "start": {
-      "id": 234,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 228,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2281,56 +2115,7 @@
       "delay": 16,
       "speed": 40,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Black dart (p)",
-    "start": {
-      "id": 273,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 273,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Black dart (p+)",
-    "start": {
-      "id": 273,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 273,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Black dart (p++)",
-    "start": {
-      "id": 273,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 273,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2345,56 +2130,7 @@
       "delay": 16,
       "speed": 40,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Mithril dart (p)",
-    "start": {
-      "id": 235,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 229,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Mithril dart (p+)",
-    "start": {
-      "id": 235,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 229,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Mithril dart (p++)",
-    "start": {
-      "id": 235,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 229,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2409,56 +2145,7 @@
       "delay": 16,
       "speed": 40,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Adamant dart (p)",
-    "start": {
-      "id": 236,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 230,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Adamant dart (p+)",
-    "start": {
-      "id": 236,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 230,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Adamant dart (p++)",
-    "start": {
-      "id": 236,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 230,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2473,56 +2160,7 @@
       "delay": 16,
       "speed": 40,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Rune dart (p)",
-    "start": {
-      "id": 237,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 231,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Rune dart (p+)",
-    "start": {
-      "id": 237,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 231,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Rune dart (p++)",
-    "start": {
-      "id": 237,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 231,
-      "delay": 16,
-      "speed": 40,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2532,41 +2170,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Bronze javelin (p)",
-    "projectile": {
-      "id": 200,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Bronze javelin (p+)",
-    "projectile": {
-      "id": 200,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Bronze jav'n (p++)",
-    "projectile": {
-      "id": 200,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2576,41 +2180,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Iron javelin (p)",
-    "projectile": {
-      "id": 201,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Iron javelin (p+)",
-    "projectile": {
-      "id": 201,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Iron javelin (p++)",
-    "projectile": {
-      "id": 201,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2620,41 +2190,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Steel javelin (p)",
-    "projectile": {
-      "id": 202,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Steel javelin (p+)",
-    "projectile": {
-      "id": 202,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Steel javelin (p++)",
-    "projectile": {
-      "id": 202,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2664,41 +2200,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Mithril javelin (p)",
-    "projectile": {
-      "id": 203,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Mithril javelin (p+)",
-    "projectile": {
-      "id": 203,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Mithril javelin (p++)",
-    "projectile": {
-      "id": 203,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2708,41 +2210,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Adamant javelin (p)",
-    "projectile": {
-      "id": 204,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Adamant javelin (p+)",
-    "projectile": {
-      "id": 204,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Adamant javelin (p++)",
-    "projectile": {
-      "id": 204,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2752,41 +2220,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Rune javelin (p)",
-    "projectile": {
-      "id": 205,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Rune javelin (p+)",
-    "projectile": {
-      "id": 205,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Rune javelin (p++)",
-    "projectile": {
-      "id": 205,
-      "delay": 50,
-      "speed": 80,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2801,56 +2235,7 @@
       "delay": 50,
       "speed": 70,
       "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Morrigan's javelin (p)",
-    "start": {
-      "id": 1836,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 1837,
-      "delay": 50,
-      "speed": 70,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Morrigan's javelin (p+)",
-    "start": {
-      "id": 1836,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 1837,
-      "delay": 50,
-      "speed": 70,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
-    }
-  },
-  {
-    "name": "Morrigan's javelin (p++)",
-    "start": {
-      "id": 1836,
-      "height": 100,
-      "delay": 0
-    },
-    "projectile": {
-      "id": 1837,
-      "delay": 50,
-      "speed": 70,
-      "startHeight": 45,
-      "endHeight": 37,
-      "curve": 10
+      "endHeight": 37
     }
   },
   {
@@ -2860,8 +2245,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -2871,8 +2255,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -2882,8 +2265,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -2893,8 +2275,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -2904,8 +2285,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -2915,8 +2295,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -2926,8 +2305,7 @@
       "delay": 50,
       "speed": 80,
       "startHeight": 18,
-      "endHeight": 31,
-      "curve": 10
+      "endHeight": 31
     }
   },
   {
@@ -2937,8 +2315,7 @@
       "delay": 32,
       "speed": 68,
       "startHeight": 32,
-      "endHeight": 32,
-      "curve": 10
+      "endHeight": 32
     }
   }
 ]

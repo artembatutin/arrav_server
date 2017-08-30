@@ -31,7 +31,9 @@ public final class CombatProjectileLoader extends JsonLoader {
 
     @Override
     protected void initialize(int size) {
-        DEFINITIONS = new Object2ObjectArrayMap<>(size);
+        if (DEFINITIONS == null) {
+            DEFINITIONS = new Object2ObjectArrayMap<>(size);
+        }
     }
 
     @Override
@@ -59,11 +61,7 @@ public final class CombatProjectileLoader extends JsonLoader {
             effect = MagicImpact.valueOf(effectName).getEffect();
         } else if (reader.has("ranged-effect")) {
             String effectName = reader.get("ranged-effect").getAsString();
-            try {
-                effect = RangedEffects.valueOf(effectName).getEffect();
-            } catch (Exception e) {
-                System.out.println(effectName);
-            }
+            effect = RangedEffects.valueOf(effectName).getEffect();
         }
 
         Animation animation = null;

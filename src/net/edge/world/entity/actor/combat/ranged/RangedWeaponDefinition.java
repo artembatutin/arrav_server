@@ -14,12 +14,17 @@ public class RangedWeaponDefinition {
 		return type.slot;
 	}
 	
-	public RangedAmmunition[] getAllowed() {
-		return allowed;
-	}
-	
 	public RangedWeaponType getType() {
 		return type;
 	}
-	
+
+	public boolean isValid(RangedAmmunition ammunition) {
+		if (ammunition == null) return false;
+		for (RangedAmmunition ammo : allowed) {
+			if (ammo == ammunition) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

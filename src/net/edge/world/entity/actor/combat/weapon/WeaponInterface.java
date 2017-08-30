@@ -5,7 +5,7 @@ import net.edge.content.TabInterface;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.util.json.impl.CombatRangedBowLoader;
 import net.edge.world.entity.actor.combat.attack.FightType;
-import net.edge.world.entity.actor.combat.projectile.CombatProjectile;
+import net.edge.world.entity.actor.combat.ranged.RangedAmmunition;
 import net.edge.world.entity.actor.combat.ranged.RangedWeaponDefinition;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
@@ -182,7 +182,8 @@ public enum WeaponInterface {
 		if(weapon != null && weapon.isRanged()) {
 			RangedWeaponDefinition def = CombatRangedBowLoader.DEFINITIONS.get(item.getId());
 			if(def != null) {
-				player.getCombat().setStrategy(new PlayerRangedStrategy(def));
+				RangedAmmunition ammo = RangedAmmunition.find(player.getEquipment().get(def.getSlot()));
+				player.getCombat().setStrategy(new PlayerRangedStrategy(ammo, def));
 				return;
 			}
 		}
@@ -202,9 +203,9 @@ public enum WeaponInterface {
 			TabInterface.ATTACK.sendInterface(player, WeaponInterface.UNARMED.id);
 			player.text(WeaponInterface.UNARMED.nameLine, "Unarmed");
 			player.setWeapon(WeaponInterface.UNARMED);
-			setStrategy(player);
 			CombatSpecial.assign(player);
 			WeaponFactory.updateAttackStyle(player, UNARMED);
+			setStrategy(player);
 			for(FightType type : player.getWeapon().getFightTypes()) {
 				if(type.getStyle() == player.getCombat().getFightType().getStyle()) {
 					player.getCombat().setFightType(type);
@@ -228,10 +229,10 @@ public enum WeaponInterface {
 		TabInterface.ATTACK.sendInterface(player, weapon.id);
 		player.text(weapon.nameLine, item.getDefinition().getName());
 		player.setWeapon(weapon);
-		setStrategy(player);
 		CombatSpecial.assign(player);
 		CombatSpecial.updateSpecialAmount(player);
 		WeaponFactory.updateAttackStyle(player, weapon);
+		setStrategy(player);
 		for(FightType type : weapon.getFightTypes()) {
 			if(type.getStyle() == player.getCombat().getFightType().getStyle()) {
 				player.getCombat().setFightType(type);

@@ -1,6 +1,7 @@
 package net.edge.world.entity.actor.combat.magic;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.edge.task.Task;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
@@ -12,7 +13,12 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 public enum CombatSpell {
-	WIND_STRIKE(1152, 1, 5.5f, null, CombatProjectile.getDefinition("Wind Strike"), new RequiredRune[]{new RequiredRune(MagicRune.AIR_RUNE, 1), new RequiredRune(MagicRune.MIND_RUNE, 1)}),
+	WIND_STRIKE(1152, 1, 5.5f, null,
+		CombatProjectile.getDefinition("Wind Strike"),
+			new RequiredRune[] {
+			new RequiredRune(MagicRune.AIR_RUNE, 1),
+			new RequiredRune(MagicRune.MIND_RUNE, 1)
+	}),
 	
 	WATER_STRIKE(1154, 5, 7.5f, null, CombatProjectile.getDefinition("Water Strike"), new RequiredRune[]{new RequiredRune(MagicRune.AIR_RUNE, 1), new RequiredRune(MagicRune.MIND_RUNE, 1), new RequiredRune(MagicRune.WATER_RUNE, 1)}),
 	
@@ -67,11 +73,7 @@ public enum CombatSpell {
 	ENFEEBLE(1543, 73, 83.0f, null, CombatProjectile.getDefinition("Enfeeble"), new RequiredRune[]{new RequiredRune(MagicRune.WATER_RUNE, 8), new RequiredRune(MagicRune.EARTH_RUNE, 8), new RequiredRune(MagicRune.SOUL_RUNE, 1)}),
 	
 	STUN(1562, 73, 90.0f, null, CombatProjectile.getDefinition("Stun"), new RequiredRune[]{new RequiredRune(MagicRune.WATER_RUNE, 12), new RequiredRune(MagicRune.EARTH_RUNE, 12), new RequiredRune(MagicRune.SOUL_RUNE, 1)}),
-	
-	TRIDENT_OF_THE_SWAMP(9998, 75, 3.0f, null, CombatProjectile.getDefinition("Trident of the Swamp"), new RequiredRune[]{}),
-	
-	TRIDENT_OF_THE_SEAS(9999, 75, 2.0f, null, CombatProjectile.getDefinition("Trident of the Seas"), new RequiredRune[]{}),
-	
+
 	TELE_BLOCK(12445, 85, 42.5f, null, CombatProjectile.getDefinition("Tele Block"), new RequiredRune[]{new RequiredRune(MagicRune.LAW_RUNE, 1), new RequiredRune(MagicRune.DEATH_RUNE, 1), new RequiredRune(MagicRune.CHAOS_RUNE, 1)}),
 	
 	ICE_RUSH(12861, 58, 34.0f, null, CombatProjectile.getDefinition("Ice Rush"), new RequiredRune[]{new RequiredRune(MagicRune.WATER_RUNE, 2), new RequiredRune(MagicRune.DEATH_RUNE, 2), new RequiredRune(MagicRune.CHAOS_RUNE, 2)}),
@@ -187,7 +189,13 @@ public enum CombatSpell {
 	
 	public void sendProjectile(Actor attacker, Actor defender) {
 		if(projectileDefinition != null) {
-			projectileDefinition.sendProjectile(attacker, defender, true);
+			new Task(2) {
+				@Override
+				protected void execute() {
+					projectileDefinition.sendProjectile(attacker, defender, true);
+					cancel();
+				}
+			}.submit();
 		}
 	}
 	

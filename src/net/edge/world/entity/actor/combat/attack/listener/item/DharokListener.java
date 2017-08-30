@@ -4,7 +4,7 @@ import net.edge.content.skill.Skills;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.attack.AttackModifier;
 import net.edge.world.entity.actor.combat.attack.listener.NpcCombatListenerSignature;
-import net.edge.world.entity.actor.combat.attack.listener.PlayerCombatListenerSignature;
+import net.edge.world.entity.actor.combat.attack.listener.ItemCombatListenerSignature;
 import net.edge.world.entity.actor.combat.attack.listener.SimplifiedListener;
 
 import java.util.Optional;
@@ -14,8 +14,8 @@ import java.util.Optional;
  * @author Michael | Chex
  */
 
-@PlayerCombatListenerSignature(items = {4716, 4718, 4720, 4722})
 @NpcCombatListenerSignature(npcs = {2026})
+@ItemCombatListenerSignature(items = {4716, 4718, 4720, 4722})
 public class DharokListener extends SimplifiedListener<Actor> {
 	
 	@Override

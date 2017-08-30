@@ -40,7 +40,7 @@ public final class CombatListenerDispatcher {
 		for(String directory : Utility.getSubDirectories(CombatListenerDispatcher.class)) {
 			List<CombatListener<Player>> listeners_class = Utility.getClassesInDirectory(CombatListenerDispatcher.class.getPackage().getName() + "." + directory).stream().map(clazz -> (CombatListener<Player>) clazz).collect(Collectors.toList());
 			for(CombatListener<Player> l : listeners_class) {
-				PlayerCombatListenerSignature meta = l.getClass().getAnnotation(PlayerCombatListenerSignature.class);
+				ItemCombatListenerSignature meta = l.getClass().getAnnotation(ItemCombatListenerSignature.class);
 				if(meta != null) {
 					Arrays.stream(meta.items()).forEach(i -> listeners.put(i, new CombatListenerSet(meta.items(), l)));
 				}

@@ -3,7 +3,7 @@ package net.edge.world.entity.actor.combat.attack.listener.item;
 import net.edge.net.packet.out.SendMessage;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatType;
-import net.edge.world.entity.actor.combat.attack.listener.PlayerCombatListenerSignature;
+import net.edge.world.entity.actor.combat.attack.listener.ItemCombatListenerSignature;
 import net.edge.world.entity.actor.combat.attack.listener.SimplifiedListener;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.HitIcon;
@@ -13,7 +13,7 @@ import net.edge.world.entity.item.container.impl.Equipment;
 /**
  * @author Michael | Chex
  */
-@PlayerCombatListenerSignature(items = {2550})
+@ItemCombatListenerSignature(items = {2550})
 public class RingOfRecoilListener extends SimplifiedListener<Player> {
 
 	@Override

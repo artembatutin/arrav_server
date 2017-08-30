@@ -60,18 +60,21 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 			spell.getStart().ifPresent(attacker::graphic);
 			spell.sendProjectile(attacker, defender);
 
-			List<Hit> extra = new LinkedList<>();
-			for(Hit hit : hits) {
-				Predicate<CombatImpact> filter = effect -> effect.canAffect(attacker, defender, hit);
-				Consumer<CombatImpact> execute = effect -> effect.impact(attacker, defender, hit, extra);
-				spell.getEffect().filter(filter).ifPresent(execute);
-			}
-			Collections.addAll(extra, hits);
-			addCombatExperience(attacker, spell.getBaseExperience(), extra.toArray(hits));
-
-			if(!attacker.isAutocast()) {
-				WeaponInterface.setStrategy(attacker);
-				attacker.getCombat().reset();
+			if (spell.getEffect().isPresent()) {
+				List<Hit> extra = new LinkedList<>();
+				for (Hit hit : hits) {
+					Predicate<CombatImpact> filter = effect -> effect.canAffect(attacker, defender, hit);
+					Consumer<CombatImpact> execute = effect -> effect.impact(attacker, defender, hit, extra);
+					spell.getEffect().filter(filter).ifPresent(execute);
+				}
+				if (extra.isEmpty()) {
+					Collections.addAll(extra, hits);
+					addCombatExperience(attacker, spell.getBaseExperience(), extra.toArray(new Hit[0]));
+				} else {
+					addCombatExperience(attacker, spell.getBaseExperience(), hits);
+				}
+			} else {
+				addCombatExperience(attacker, spell.getBaseExperience(), hits);
 			}
 		}
 	}
@@ -89,6 +92,14 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 			defender.graphic(SPLASH);
 		} else {
 			spell.getEnd().ifPresent(defender::graphic);
+		}
+	}
+
+	@Override
+	public void finishOutgoing(Player attacker, Actor defender) {
+		if(!attacker.isAutocast()) {
+			WeaponInterface.setStrategy(attacker);
+			attacker.getCombat().reset();
 		}
 	}
 
