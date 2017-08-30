@@ -535,7 +535,6 @@ public enum CombatSpell {
 	}
 	
 	public static CombatSpell get(int id) {
-	    System.out.println("Spell id: " + id);
 		return SPELLS.getOrDefault(id, WIND_STRIKE);
 	}
 	
