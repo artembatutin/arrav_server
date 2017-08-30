@@ -2,6 +2,8 @@ package net.edge.world.entity.actor.combat.magic;
 
 import net.edge.content.skill.Skill;
 import net.edge.content.skill.Skills;
+import net.edge.content.skill.slayer.Slayer;
+import net.edge.content.skill.slayer.SlayerKeyPolicy;
 import net.edge.net.packet.out.SendMessage;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.PoisonType;
@@ -12,6 +14,7 @@ import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.attack.FormulaFactory;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
 import java.util.List;
@@ -29,7 +32,26 @@ public enum MagicImpact {
 	VULNERABILITY((attacker, defender, hit, extra) -> lowerSkill(defender, Skills.DEFENCE, 10)),
 	ENFEEBLE((attacker, defender, hit, extra) -> lowerSkill(defender, Skills.STRENGTH, 10)),
 	STUN((attacker, defender, hit, extra) -> lowerSkill(defender, Skills.ATTACK, 10)),
-	
+
+	MAGIC_DART((attacker, defender, hit, extra) -> {
+		if (attacker.isPlayer() && hit.isAccurate()) {
+			Player player = attacker.toPlayer();
+			int damage = 10 + player.getSkills()[Skills.MAGIC].getLevel() / 10;
+
+			if (defender.isMob() && player.getSlayer().isPresent()) {
+				Mob mob = defender.toMob();
+				Slayer slayer = player.getSlayer().get();
+				String key = mob.getDefinition().getSlayerKey();
+
+				if (key != null && slayer.getKey().equals(key)) {
+					damage = 13 + player.getSkills()[Skills.MAGIC].getLevel() / 6;
+				}
+			}
+
+			hit.setDamage(RandomUtils.inclusive(damage));
+		}
+	}),
+
 	SMOKE_RUSH((attacker, defender, hit, extra) -> poison(attacker, defender, hit, PoisonType.DEFAULT_MAGIC)),
 	SMOKE_BURST((attacker, defender, hit, extra) -> CombatUtil.areaAction(attacker, defender, a -> smokeBurst(attacker, defender, a, hit, extra))),
 	SMOKE_BLITZ((attacker, defender, hit, extra) -> poison(attacker, defender, hit, PoisonType.SUPER_MAGIC)),

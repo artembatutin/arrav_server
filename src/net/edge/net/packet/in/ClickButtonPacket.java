@@ -26,7 +26,6 @@ import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendEnterName;
 import net.edge.net.packet.out.SendLogout;
-import net.edge.net.packet.out.SendMessage;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.magic.CombatSpell;
 import net.edge.world.entity.actor.combat.magic.lunars.LunarSpells;
@@ -798,16 +797,14 @@ public final class ClickButtonPacket implements IncomingPacket {
 				player.out(new SendConfig(108, 3));
 				break;
 			case 6003:
-				//				player.setAutocastSpell(MagicSpell.IBAN_BLAST);
-				//				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				//				player.out(new SendConfig(108, 3));
-				player.out(new SendMessage("NEED IBAN BLAST")); // TODO: Iban blast
+				player.setAutocastSpell(CombatSpell.IBAN_BLAST);
+				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
+				player.out(new SendConfig(108, 3));
 				break;
 			case 47005:
-				//				player.setAutocastSpell(MagicSpell.MAGIC_DART);
-				//				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
-				//				player.out(new SendConfig(108, 3));
-				player.out(new SendMessage("NEED MAGIC DART")); // TODO: Magic dart
+				player.setAutocastSpell(CombatSpell.MAGIC_DART);
+				TabInterface.ATTACK.sendInterface(player, player.getWeapon().getId());
+				player.out(new SendConfig(108, 3));
 				break;
 			case 4166:
 				player.setAutocastSpell(CombatSpell.SARADOMIN_STRIKE);

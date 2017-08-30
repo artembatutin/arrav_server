@@ -401,6 +401,7 @@
   },
   {
     "name": "Iban Blast",
+    "magic-effect": "IBAN_BLAST",
     "max-hit": 250,
     "animation": {
       "id": 708,
@@ -454,6 +455,7 @@
   },
   {
     "name": "Magic Dart",
+    "magic-effect": "MAGIC_DART",
     "max-hit": 190,
     "animation": {
       "id": 711,
