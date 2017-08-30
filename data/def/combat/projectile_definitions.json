@@ -22,6 +22,7 @@
   },
   {
     "name": "Confuse",
+    "magic-effect": "CONFUSE",
     "max-hit": -1,
     "animation": {
       "id": 716,
@@ -100,6 +101,7 @@
   },
   {
     "name": "Weaken",
+    "magic-effect": "WEAKEN",
     "max-hit": -1,
     "animation": {
       "id": 717,
@@ -194,6 +196,7 @@
   },
   {
     "name": "Curse",
+    "magic-effect": "CURSE",
     "max-hit": -1,
     "animation": {
       "id": 718,
@@ -220,6 +223,7 @@
   },
   {
     "name": "Bind",
+    "magic-effect": "BIND",
     "max-hit": -1,
     "animation": {
       "id": 710,
@@ -423,6 +427,7 @@
   },
   {
     "name": "Snare",
+    "magic-effect": "SNARE",
     "max-hit": -1,
     "animation": {
       "id": 710,
@@ -616,6 +621,7 @@
   },
   {
     "name": "Vulnerability",
+    "magic-effect": "VULNERABILITY",
     "max-hit": -1,
     "animation": {
       "id": 718,
@@ -668,6 +674,7 @@
   },
   {
     "name": "Enfeeble",
+    "magic-effect": "ENFEEBLE",
     "max-hit": -1,
     "animation": {
       "id": 728,
@@ -720,6 +727,7 @@
   },
   {
     "name": "Entangle",
+    "magic-effect": "ENTANGLE",
     "max-hit": -1,
     "animation": {
       "id": 710,
@@ -746,6 +754,7 @@
   },
   {
     "name": "Stun",
+    "magic-effect": "STUN",
     "max-hit": -1,
     "animation": {
       "id": 729,
@@ -793,6 +802,7 @@
   },
   {
     "name": "Smoke Rush",
+    "magic-effect": "SMOKE_RUSH",
     "max-hit": 130,
     "animation": {
       "id": 1978,
@@ -814,6 +824,7 @@
   },
   {
     "name": "Shadow Rush",
+    "magic-effect": "SHADOW_RUSH",
     "max-hit": 140,
     "animation": {
       "id": 1978,
@@ -835,6 +846,7 @@
   },
   {
     "name": "Blood Rush",
+    "magic-effect": "BLOOD_RUSH",
     "max-hit": 150,
     "animation": {
       "id": 1978,
@@ -856,6 +868,7 @@
   },
   {
     "name": "Ice Rush",
+    "magic-effect": "ICE_RUSH",
     "max-hit": 160,
     "animation": {
       "id": 1978,
@@ -877,6 +890,7 @@
   },
   {
     "name": "Smoke Burst",
+    "magic-effect": "SMOKE_BURST",
     "max-hit": 170,
     "animation": {
       "id": 1979,
@@ -891,6 +905,7 @@
   },
   {
     "name": "Shadow Burst",
+    "magic-effect": "SHADOW_BURST",
     "max-hit": 18,
     "animation": {
       "id": 1979,
@@ -905,6 +920,7 @@
   },
   {
     "name": "Blood Burst",
+    "magic-effect": "BLOOD_BURST",
     "max-hit": 210,
     "animation": {
       "id": 1979,
@@ -919,6 +935,7 @@
   },
   {
     "name": "Ice Burst",
+    "magic-effect": "ICE_BURST",
     "max-hit": 220,
     "animation": {
       "id": 1979,
@@ -933,6 +950,7 @@
   },
   {
     "name": "Smoke Blitz",
+    "magic-effect": "SMOKE_BLITZ",
     "max-hit": 230,
     "animation": {
       "id": 1978,
@@ -954,6 +972,7 @@
   },
   {
     "name": "Shadow Blitz",
+    "magic-effect": "SHADOW_BLITZ",
     "max-hit": 240,
     "animation": {
       "id": 1978,
@@ -975,6 +994,7 @@
   },
   {
     "name": "Blood Blitz",
+    "magic-effect": "BLOOD_BLITZ",
     "max-hit": 250,
     "animation": {
       "id": 1978,
@@ -996,6 +1016,7 @@
   },
   {
     "name": "Ice Blitz",
+    "magic-effect": "ICE_BLITZ",
     "max-hit": 260,
     "animation": {
       "id": 1978,
@@ -1015,6 +1036,7 @@
   },
   {
     "name": "Smoke Barrage",
+    "magic-effect": "SMOKE_BARRAGE",
     "max-hit": 270,
     "animation": {
       "id": 1979,
@@ -1029,6 +1051,7 @@
   },
   {
     "name": "Shadow Barrage",
+    "magic-effect": "SHADOW_BARRAGE",
     "max-hit": 280,
     "animation": {
       "id": 1979,
@@ -1043,6 +1066,7 @@
   },
   {
     "name": "Blood Barrage",
+    "magic-effect": "BLOOD_BARRAGE",
     "max-hit": 290,
     "animation": {
       "id": 1979,
@@ -1057,6 +1081,7 @@
   },
   {
     "name": "Ice Barrage",
+    "magic-effect": "ICE_BARRAGE",
     "max-hit": 300,
     "animation": {
       "id": 1979,
