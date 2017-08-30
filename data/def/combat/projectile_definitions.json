@@ -401,7 +401,6 @@
   },
   {
     "name": "Iban Blast",
-    "magic-effect": "IBAN_BLAST",
     "max-hit": 250,
     "animation": {
       "id": 708,
