@@ -238,6 +238,9 @@ public class ItemContainer implements Iterable<Item> {
 			int remaining = remaining();
 			int until = (remaining > item.getAmount()) ? item.getAmount() : remaining;
 			for(int index = 0; index < until; index++) {
+				if(preferredIndex >= capacity) {
+					break;
+				}
 				preferredIndex = (preferredIndex > capacity || preferredIndex < 0 || items[preferredIndex] == null) ? preferredIndex : computeFreeIndex();
 				if(preferredIndex == -1) {//Couldn't find an empty spot.
 					fireCapacityExceededEvent();

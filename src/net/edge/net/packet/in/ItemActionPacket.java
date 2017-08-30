@@ -55,8 +55,9 @@ public final class ItemActionPacket implements IncomingPacket {
 		if(slot < 0 || container < 0 || id < 0 || id > ItemDefinition.DEFINITIONS.length)
 			return;
 		Item item = player.getInventory().get(slot);
-		if(item == null || item.getId() != id)
+		if(item == null || item.getId() != id) {
 			return;
+		}
 		player.getCombat().reset();
 		ItemAction e = ITEM_ACTION.get(item.getId());
 		if(e != null)
@@ -81,6 +82,9 @@ public final class ItemActionPacket implements IncomingPacket {
 			return;
 		}
 		Item item = player.getInventory().get(slot);
+		if(item == null || item.getId() != id) {
+			return;
+		}
 		player.getCombat().reset();
 		ItemAction e = ITEM_ACTION.get(item.getId());
 		if(e != null)
@@ -120,6 +124,9 @@ public final class ItemActionPacket implements IncomingPacket {
 			return;
 		}
 		Item item = player.getInventory().get(slot);
+		if(item == null || item.getId() != id) {
+			return;
+		}
 		player.getCombat().reset();
 		ItemAction e = ITEM_ACTION.get(item.getId());
 		if(e != null)

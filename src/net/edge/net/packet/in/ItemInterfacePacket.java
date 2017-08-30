@@ -74,8 +74,9 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		int slot = payload.getShort(ByteTransform.A);
 		int itemId = payload.getShort(ByteTransform.A);
 		
-		if(interfaceId < 0 || slot < 0 || itemId < 0)
+		if(interfaceId < 0 || slot < 0 || itemId < 0) {
 			return;
+		}
 		if(interfaceId == 3900) {
 			if(player.getMarketShop() != null) {
 				player.getMarketShop().purchase(player, new Item(itemId, slot));
