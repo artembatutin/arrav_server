@@ -162,7 +162,7 @@ public final class Skills {
 	/**
 	 * The experience multiplier that combat related skills experience will be calculated with.
 	 */
-	private static final int COMBAT_EXPERIENCE_MULTIPLER = 1;
+	private static final int COMBAT_EXPERIENCE_MULTIPLER = 400;
 	
 	/**
 	 * The default constructor.
@@ -183,7 +183,9 @@ public final class Skills {
 			return;
 		int oldLevel = player.getSkills()[skill].getRealLevel();
 		if(skill > 6)
-			amount *= skill == PRAYER ? PRAYER_EXPERIENCE_MULTIPLIER : SKILL_EXPERIENCE_MULTIPLIER;
+			amount *= SKILL_EXPERIENCE_MULTIPLIER;
+		else
+			amount *= skill == PRAYER ? PRAYER_EXPERIENCE_MULTIPLIER : COMBAT_EXPERIENCE_MULTIPLER;
 		amount *= GameConstants.EXPERIENCE_MULTIPLIER;
 		Rights right = player.getRights();
 		amount *= right.equals(Rights.EXTREME_DONATOR) ? 1.10 : right.equals(Rights.SUPER_DONATOR) ? 1.05 : right.equals(Rights.DONATOR) ? 1.025 : 1;

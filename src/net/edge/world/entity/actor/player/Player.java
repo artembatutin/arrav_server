@@ -581,7 +581,7 @@ public final class Player extends Actor {
 			sendDefaultSidebars();
 		}
 		move(super.getPosition());
-		combat.setStrategy(PlayerMeleeStrategy.INSTANCE);
+		combat.setStrategy(PlayerMeleeStrategy.get());
 		Skills.refreshAll(this);
 		WeaponInterface.setStrategy(this);
 		equipment.updateBulk();

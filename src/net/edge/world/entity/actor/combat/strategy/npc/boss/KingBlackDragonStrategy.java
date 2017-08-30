@@ -7,26 +7,25 @@ import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
-import net.edge.world.entity.actor.combat.projectile.CombatProjectile;
 import net.edge.world.entity.actor.combat.strategy.CombatStrategy;
 import net.edge.world.entity.actor.combat.strategy.npc.MultiStrategy;
 import net.edge.world.entity.actor.combat.strategy.npc.NpcMeleeStrategy;
 import net.edge.world.entity.actor.combat.strategy.npc.impl.DragonfireStrategy;
 import net.edge.world.entity.actor.mob.Mob;
 
-/**
- * @author Michael | Chex
- */
+import static net.edge.world.entity.actor.combat.projectile.CombatProjectile.getDefinition;
+
+/** @author Michael | Chex */
 public class KingBlackDragonStrategy extends MultiStrategy {
 	
-	private static final Melee MELEE = new Melee();
+	private static final Melee STAB = new Melee();
 	private static final CrushMelee CRUSH = new CrushMelee();
 	private static final Dragonfire DRAGONFIRE = new Dragonfire();
 	private static final Poison POISON = new Poison();
 	private static final Freeze FREEZE = new Freeze();
 	private static final Shock SHOCK = new Shock();
 	
-	private static final CombatStrategy<Mob>[] FULL_STRATEGIES = createStrategyArray(CRUSH, MELEE, DRAGONFIRE, POISON, FREEZE, SHOCK);
+	private static final CombatStrategy<Mob>[] FULL_STRATEGIES = createStrategyArray(CRUSH, STAB, DRAGONFIRE, POISON, FREEZE, SHOCK);
 	private static final CombatStrategy<Mob>[] NON_MELEE = createStrategyArray(DRAGONFIRE, POISON, FREEZE, SHOCK);
 	
 	public KingBlackDragonStrategy() {
@@ -40,21 +39,21 @@ public class KingBlackDragonStrategy extends MultiStrategy {
 		}
 		return currentStrategy.canAttack(attacker, defender);
 	}
-	
+
 	@Override
-	public void block(Actor attacker, Mob defender, Hit hit, CombatType combatType) {
-		currentStrategy.block(attacker, defender, hit, combatType);
-		defender.getCombat().attack(attacker);
-	}
-	
-	@Override
-	public void finish(Mob attacker, Actor defender) {
-		currentStrategy.finish(attacker, defender);
-		if(MELEE.withinDistance(attacker, defender)) {
+	public void start(Mob attacker, Actor defender, Hit[] hits) {
+		currentStrategy.finishOutgoing(attacker, defender);
+		if(STAB.withinDistance(attacker, defender)) {
 			currentStrategy = randomStrategy(FULL_STRATEGIES);
 		} else {
 			currentStrategy = randomStrategy(NON_MELEE);
 		}
+	}
+
+	@Override
+	public void block(Actor attacker, Mob defender, Hit hit, CombatType combatType) {
+		currentStrategy.block(attacker, defender, hit, combatType);
+		defender.getCombat().attack(attacker);
 	}
 	
 	@Override
@@ -97,7 +96,7 @@ public class KingBlackDragonStrategy extends MultiStrategy {
 	private static final class Dragonfire extends DragonfireStrategy {
 		
 		Dragonfire() {
-			super(CombatProjectile.getDefinition("KBD fire"));
+			super(getDefinition("KBD fire"));
 		}
 		
 		@Override
@@ -115,7 +114,7 @@ public class KingBlackDragonStrategy extends MultiStrategy {
 	private static final class Freeze extends DragonfireStrategy {
 		
 		Freeze() {
-			super(CombatProjectile.getDefinition("KBD freeze"));
+			super(getDefinition("KBD freeze"));
 		}
 		
 		@Override
@@ -133,7 +132,7 @@ public class KingBlackDragonStrategy extends MultiStrategy {
 	private static final class Shock extends DragonfireStrategy {
 		
 		Shock() {
-			super(CombatProjectile.getDefinition("KBD shock"));
+			super(getDefinition("KBD shock"));
 		}
 		
 		@Override
@@ -151,7 +150,7 @@ public class KingBlackDragonStrategy extends MultiStrategy {
 	private static final class Poison extends DragonfireStrategy {
 		
 		Poison() {
-			super(CombatProjectile.getDefinition("KBD poison"));
+			super(getDefinition("KBD poison"));
 		}
 		
 		@Override

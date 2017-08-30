@@ -33,7 +33,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 	/**
 	 * Creates a new {@link CombatPoisonEffect}.
 	 */
-	CombatPoisonEffect() {
+	public CombatPoisonEffect() {
 		super(30);
 	}
 	

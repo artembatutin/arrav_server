@@ -19,26 +19,27 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
 	
 	@Override
 	public boolean withinDistance(T attacker, Actor defender) {
-		FightType stance = attacker.getCombat().getFightType();
 		MovementQueue movement = attacker.getMovementQueue();
 		MovementQueue otherMovement = defender.getMovementQueue();
-		int distance = getAttackDistance(attacker, stance);
-		if(!movement.isMovementDone() && !otherMovement.isMovementDone() && !movement.isLockMovement() && !attacker.isFrozen()) {
+		FightType fightType = attacker.getCombat().getFightType();
+		int distance = getAttackDistance(attacker, fightType);
+
+		if (!movement.isMovementDone() && !otherMovement.isMovementDone() && !movement.isLockMovement() && !attacker.isFrozen()) {
 			distance += 1;
-			if(movement.isRunning()) {
+			if (movement.isRunning()) {
 				distance += 2;
 			}
 		}
-		if(new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance)) {
-			if(!World.getSimplePathChecker().checkLine(attacker.getPosition(), defender.getPosition(), attacker.size())) {
-				return false;
-			}
-			attacker.getMovementQueue().reset();
-			attacker.setFollowing(false);
-			attacker.faceEntity(defender);
-			return true;
+
+		if (!new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance)) {
+			return false;
 		}
-		return false;
+
+		if (!World.getSimplePathChecker().checkLine(attacker.getPosition(), defender.getPosition(), attacker.size())) {
+			return false;
+		}
+
+		return true;
 	}
 	
 	@Override

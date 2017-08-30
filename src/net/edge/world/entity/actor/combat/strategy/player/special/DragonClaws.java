@@ -31,7 +31,7 @@ public class DragonClaws extends PlayerMeleeStrategy {
 	}
 
 	@Override
-	public void finish(Player attacker, Actor defender) {
+	public void finishOutgoing(Player attacker, Actor defender) {
 		WeaponInterface.setStrategy(attacker);
 	}
 

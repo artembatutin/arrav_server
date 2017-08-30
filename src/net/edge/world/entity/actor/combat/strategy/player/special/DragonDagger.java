@@ -24,7 +24,7 @@ public class DragonDagger extends PlayerMeleeStrategy {
 	}
 	
 	@Override
-	public void finish(Player attacker, Actor defender) {
+	public void finishOutgoing(Player attacker, Actor defender) {
 		Achievement.DRAGON_DAGGER.inc(attacker);
 		WeaponInterface.setStrategy(attacker);
 	}

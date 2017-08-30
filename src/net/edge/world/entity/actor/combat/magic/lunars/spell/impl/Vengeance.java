@@ -3,7 +3,7 @@ package net.edge.world.entity.actor.combat.magic.lunars.spell.impl;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.attack.listener.other.VengenceListener;
+import net.edge.world.entity.actor.combat.attack.listener.other.VengeanceListener;
 import net.edge.world.entity.actor.combat.magic.MagicRune;
 import net.edge.world.entity.actor.combat.magic.RequiredRune;
 import net.edge.world.entity.actor.combat.magic.lunars.spell.LunarButtonSpell;
@@ -27,7 +27,7 @@ public final class Vengeance extends LunarButtonSpell {
 	public void effect(Actor caster, Optional<Actor> victim) {
 		super.effect(caster, victim);
 		caster.toPlayer().venged = true;
-		caster.toPlayer().getCombat().addListener(VengenceListener.INSTANCE);
+		caster.toPlayer().getCombat().addListener(VengeanceListener.get());
 	}
 	
 	@Override

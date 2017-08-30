@@ -29,7 +29,7 @@ import net.edge.world.entity.actor.attribute.AttributeKey;
 import net.edge.world.entity.actor.attribute.AttributeValue;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.attack.listener.CombatListenerDispatcher;
-import net.edge.world.entity.actor.combat.attack.listener.other.VengenceListener;
+import net.edge.world.entity.actor.combat.attack.listener.other.VengeanceListener;
 import net.edge.world.entity.actor.player.assets.AntifireDetails;
 import net.edge.world.entity.actor.player.assets.PrayerBook;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -497,7 +497,7 @@ public final class PlayerSerialization {
 		public void fromJson(Gson b, Player p, JsonElement n) {
 			p.venged = n.getAsBoolean();
 			if(p.venged) {
-				p.getCombat().addListener(VengenceListener.INSTANCE);
+				p.getCombat().addListener(VengeanceListener.get());
 			}
 		}
 	}, new Token("ringOfRecoil") {

@@ -14,7 +14,7 @@ import net.edge.world.entity.item.container.impl.Equipment;
 
 public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
 	
-	public static final PlayerMeleeStrategy INSTANCE = new PlayerMeleeStrategy();
+	private static final PlayerMeleeStrategy INSTANCE = new PlayerMeleeStrategy();
 	
 	protected PlayerMeleeStrategy() {
 	}
@@ -70,4 +70,9 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
 	public CombatType getCombatType() {
 		return CombatType.MELEE;
 	}
+
+	public static PlayerMeleeStrategy get() {
+		return INSTANCE;
+	}
+
 }

@@ -9,24 +9,18 @@ import net.edge.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
 import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.player.Player;
 
-/**
- * @author Michael | Chex
- */
+/** @author Michael | Chex */
 public class ArmadylGodsword extends PlayerMeleeStrategy {
 	private static final Animation ANIMATION = new Animation(11989, Animation.AnimationPriority.HIGH);
 	private static final Graphic GRAPHIC = new Graphic(2113);
-	
+
 	@Override
-	public void attack(Player attacker, Actor defender, Hit hit) {
-		super.attack(attacker, defender, hit);
+	public void start(Player attacker, Actor defender, Hit[] hits) {
+		super.start(attacker, defender, hits);
 		attacker.graphic(GRAPHIC);
-	}
-	
-	@Override
-	public void finish(Player attacker, Actor defender) {
 		WeaponInterface.setStrategy(attacker);
 	}
-	
+
 	@Override
 	public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
 		return 4;

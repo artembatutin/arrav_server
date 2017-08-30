@@ -48,17 +48,17 @@ public enum MagicImpact {
 	ICE_RUSH((attacker, defender, hit, extra) -> freeze(defender, 5)),
 	ICE_BURST((attacker, defender, hit, extra) -> CombatUtil.areaAction(attacker, defender, a -> iceBurst(attacker, defender, a, extra))),
 	ICE_BLITZ((attacker, defender, hit, extra) -> freeze(defender, 15)),
-	ICE_BARRAGE((attacker, defender, hit, extra) -> CombatUtil.areaAction(attacker, defender, a -> iceBarrage(attacker, defender, a, extra))),
+	ICE_BARRAGE((attacker, defender, hit, extra) -> CombatUtil.areaAction(attacker, defender, actor -> iceBarrage(attacker, defender, actor, extra))),
 	
 	KBD_FREEZE((attacker, defender, hit, extra) -> freeze(defender, 5)),
 	KBD_POISON((attacker, defender, hit, extra) -> poison(attacker, defender, hit, PoisonType.DEFAULT_NPC)),
 	KBD_SHOCK((attacker, defender, hit, extra) -> kbdShock(defender)),
 	
 	AHRIM_BLAST((attacker, defender, hit, extra) -> {
-		//        if (hit.isAccurate() && Math.random() < 0.20) {
-		//            defender.skills.get(Skills.STRENGTH).removeLevel(5);
-		//            defender.skills.refresh(Skills.STRENGTH);
-		//        }
+//        if (hit.isAccurate() && Math.random() < 0.20) {
+//            defender.skills.get(Skills.STRENGTH).removeLevel(5);
+//            defender.skills.refresh(Skills.STRENGTH);
+//        }
 	});
 	
 	private final CombatImpact effect;
@@ -226,15 +226,14 @@ public enum MagicImpact {
 			freeze(actor, 20);
 		}
 	}
-	
+
 	private static CombatHit hitEvent(Actor attacker, Actor defender, Actor actor, int max, List<Hit> extra) {
-		if(!defender.same(actor)) {
-			int hitDelay = CombatUtil.getHitDelay(attacker, actor, CombatType.MAGIC);
+		if (!defender.same(actor)) {
+			int hitDelay = CombatUtil.getHitDelay(attacker, defender, CombatType.MAGIC);
 			int hitsplatDelay = CombatUtil.getHitsplatDelay(CombatType.MAGIC);
 			CombatHit hit = new CombatHit(FormulaFactory.nextMagicHit(attacker, actor, max), hitDelay, hitsplatDelay);
 			attacker.getCombat().submitHits(actor, hit);
-			if(extra != null)
-				extra.add(hit);
+			if (extra != null) extra.add(hit);
 			return hit;
 		}
 		return null;
