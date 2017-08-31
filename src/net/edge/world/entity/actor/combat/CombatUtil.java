@@ -87,7 +87,7 @@ public final class CombatUtil {
 	 */
 	public static void areaAction(Actor attacker, Actor defender, int distance, int max, Consumer<Actor> action) {
 		action.accept(defender);
-//		if(!attacker.inMulti() || !defender.inMulti()) return;
+		if(!attacker.inMulti() || !defender.inMulti()) return;
 		int added = 0;
 		for(Player other : defender.getLocalPlayers()) {
 			if(other == null) continue;
@@ -95,7 +95,8 @@ public final class CombatUtil {
 			if(!other.getPosition().withinDistance(defender.getPosition(), distance)) continue;
 			if(other.same(attacker) || other.same(defender)) continue;
 			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
-			if(!other.inMulti() || (attacker.isPlayer() && !other.inWilderness())) continue;
+			if(!other.inMulti()) continue;
+			if (attacker.isPlayer() && attacker.inWilderness() && other.inWilderness()) continue;
 			action.accept(other);
 			if(++added == max) return;
 		}
@@ -106,7 +107,7 @@ public final class CombatUtil {
 			if(other.same(attacker) || other.same(defender)) continue;
 			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
 			if(!other.getDefinition().isAttackable()) continue;
-//			if(!other.inMulti()) continue;
+			if(!other.inMulti()) continue;
 			action.accept(other);
 			if(++added == max) return;
 		}
