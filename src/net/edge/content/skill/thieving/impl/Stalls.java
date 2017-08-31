@@ -6,6 +6,7 @@ import net.edge.task.Task;
 import net.edge.util.TextUtils;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
+import net.edge.world.World;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.HitIcon;
 import net.edge.world.entity.actor.combat.hit.Hitsplat;
@@ -118,7 +119,7 @@ public final class Stalls extends Thieving {
 	@Override
 	public void onSubmit() {
 		if(stall.requirement > 40 && RandomUtils.inclusive(200) < 10) {
-			Optional<Mob> guard = player.getLocalMobs().stream().filter(g -> g.getId() == 3408 && !g.getCombat().inCombat()).findFirst();
+			Optional<Mob> guard = player.getLocalMobs().stream().filter(g -> g.getId() == 3408 || g.getId() == 2236 && !g.getCombat().inCombat()).findFirst();
 			if(guard.isPresent()) {
 				guard.get().forceChat("Get your hands off there!");
 				guard.get().faceEntity(player);
@@ -136,8 +137,8 @@ public final class Stalls extends Thieving {
 
 	@Override
 	public void onStop(boolean success) {
-		//		if(success)
-		//			World.get().submit(new StallTask(this, object));
+				if(success && stall == StallData.SEED)
+					World.get().submit(new StallTask(this, object));
 	}
 
 	@Override
@@ -175,6 +176,7 @@ public final class Stalls extends Thieving {
 		GENERAL_STALL(new int[]{4876}, EMPTY_STALLS[1], 50, new Item[]{new Item(4073, 1)}, 70, 4),
 		MAGIC_STALL(new int[]{4877}, EMPTY_STALLS[1], 75, new Item[]{new Item(14061, 1)}, 150, 8),
 		SCIMITAR_STALL(new int[]{4878}, EMPTY_STALLS[1], 90, new Item[]{new Item(6611, 1)}, 220, 12),
+		SEED(new int[]{7053}, EMPTY_STALLS[0], 80, new Item[]{new Item(5318, 1), new Item(5319, 1), new Item(5324, 3), new Item(5323, 2), new Item(5321, 2), new Item(5305, 4), new Item(5307, 2), new Item(5308, 2), new Item(5306, 3), new Item(5309, 2), new Item(5310, 1), new Item(5311, 1), new Item(5101, 1), new Item(5102, 1), new Item(5103, 1), new Item(5104, 1), new Item(5105, 1), new Item(5106, 1), new Item(5096, 1), new Item(5097, 1), new Item(5098, 1), new Item(5099, 1), new Item(5100, 1), new Item(5291, 1), new Item(5292, 1), new Item(5293, 1), new Item(5294, 1), new Item(5295, 1), new Item(5296, 1), new Item(5297, 1), new Item(5298, 1), new Item(5299, 1), new Item(5300, 1), new Item(5301, 1), new Item(5302, 1), new Item(5303, 1), new Item(5304, 1), new Item(5280, 1), new Item(5281, 1)}, 200, 14),
 		/*VEGETABLE(new int[]{4706}, EMPTY_STALLS[0], 1, new Item[]{new Item(995, 50)}, 10, 2),
 		BAKERS(new int[]{2561}, EMPTY_STALLS[0], 5, new Item[]{new Item(995, 100)}, 16, 3),
 		TEA(new int[]{635}, EMPTY_STALLS[0], 5, new Item[]{new Item(995, 500)}, 16, 7),

@@ -16,6 +16,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 
 import java.util.Optional;
+import java.util.Random;
 
 /**
  * Represents functionality for pickpocketing from various npcs.
@@ -95,15 +96,17 @@ public final class Pickpocketing extends Thieving {
 	 * The lower the return value, the lower the failure rate
 	 * @return an integer to determine how often you will fail.
 	 */
-	private double failureRate() {
-		double npcFactor = definition.requirement / 10;
-		double levelFactor = 100 / ((getPlayer().getSkills()[Skills.THIEVING].getLevel() + 1) - definition.requirement);
-		return Math.floor((levelFactor + npcFactor) / 2);
-	}
+//	private double failureRate() {
+//		double successRate = (5/833)*getPlayer().getSkills()[Skills.THIEVING].getLevel() + 17/49;
+//		return (levelFactor + npcFactor) / 2;
+//	}
 
 	@Override
 	public boolean failure() {
-		return RandomUtils.nextBoolean();
+		if(mob.getDefinition().getName().contains("Master")) {
+			return !RandomUtils.success(((((double) 5/833)*getPlayer().getSkills()[Skills.THIEVING].getLevel()) + ((double) 17/49)));
+		}
+		return (RandomUtils.inclusive(getPlayer().getSkills()[Skills.THIEVING].getLevel() + RandomUtils.inclusive(5)) < (RandomUtils.inclusive(definition.requirement) + RandomUtils.inclusive((5))));
 	}
 
 	@Override
@@ -162,6 +165,7 @@ public final class Pickpocketing extends Thieving {
 			getPlayer().graphic(STUN_GRAPHIC);
 			getPlayer().stun(definition.seconds);
 		} else {
+			getPlayer().getInventory().add(loot);
 			getPlayer().message("You pick the victims pocket.");
 		}
 		t.cancel();
@@ -206,7 +210,7 @@ public final class Pickpocketing extends Thieving {
 		MENAPHITE_THUG(new int[]{1904, 1905}, new Item[]{new Item(995, 60)}, 65, 137.5, 3, 50),
 		PALADIN(new int[]{20, 365, 2256}, new Item[]{new Item(995, 80), new Item(562, 2)}, 70, 151.75, 4, 3),
 		GNOME(new int[]{66, 67, 68}, new Item[]{new Item(995, 300), new Item(557, 1), new Item(444, 1), new Item(569, 1), new Item(2150, 1), new Item(2162, 1)}, 75, 198.5, 4, 10),
-		MASTER_FARMER(new int[]{2234, 2235, 3299}, new Item[]{new Item(5318, 1), new Item(5319, 1), new Item(5324, 3), new Item(5323, 2), new Item(5321, 2), new Item(5305, 4), new Item(5307, 2), new Item(5308, 2), new Item(5306, 3), new Item(5309, 2), new Item(5310, 1), new Item(5311, 1), new Item(5101, 1), new Item(5102, 1), new Item(5103, 1), new Item(5104, 1), new Item(5105, 1), new Item(5106, 1), new Item(5096, 1), new Item(5097, 1), new Item(5098, 1), new Item(5099, 1), new Item(5100, 1), new Item(5291, 1), new Item(5292, 1), new Item(5293, 1), new Item(5294, 1), new Item(5295, 1), new Item(5296, 1), new Item(5297, 1), new Item(5298, 1), new Item(5299, 1), new Item(5300, 1), new Item(5301, 1), new Item(5302, 1), new Item(5303, 1), new Item(5304, 1), new Item(5280, 1), new Item(5281, 1)}, 80, 43, 3, 30),
+		MASTER_FARMER(new int[]{2234, 2235, 3299}, new Item[]{new Item(5318, 1), new Item(5319, 1), new Item(5324, 3), new Item(5323, 2), new Item(5321, 2), new Item(5305, 4), new Item(5307, 2), new Item(5308, 2), new Item(5306, 3), new Item(5309, 2), new Item(5310, 1), new Item(5311, 1), new Item(5101, 1), new Item(5102, 1), new Item(5103, 1), new Item(5104, 1), new Item(5105, 1), new Item(5106, 1), new Item(5096, 1), new Item(5097, 1), new Item(5098, 1), new Item(5099, 1), new Item(5100, 1), new Item(5291, 1), new Item(5292, 1), new Item(5293, 1), new Item(5294, 1), new Item(5295, 1), new Item(5296, 1), new Item(5297, 1), new Item(5298, 1), new Item(5299, 1), new Item(5300, 1), new Item(5301, 1), new Item(5302, 1), new Item(5303, 1), new Item(5304, 1), new Item(5280, 1), new Item(5281, 1)}, 38, 43, 3, 30),
 		HERO(new int[]{21}, new Item[]{new Item(995, 300), new Item(560, 2), new Item(565, 1), new Item(444, 1), new Item(1993, 1), new Item(569, 1), new Item(1601, 1)}, 82, 273.3, 5, 40);
 
 		/**
