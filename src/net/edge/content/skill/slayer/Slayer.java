@@ -411,8 +411,7 @@ public final class Slayer {
 				continue;//Player wont be able to do slayer on a higher boss slayer requirement.
 			if(blocked.contains(task.getKey()))
 				continue;//The player blocked this task.
-			int dif = combat - task.getCombatRequirement();
-			if(dif <= 30 && dif >= -30) {
+			if(combat >= task.getCombatRequirement()) {
 				tasks.add(count, task);
 				count++;
 			}

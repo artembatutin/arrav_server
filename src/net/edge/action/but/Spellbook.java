@@ -99,32 +99,34 @@ public class Spellbook extends ActionInitializer {
 			public boolean click(Player player, int button) {
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.teleport(new Position(3223, 3218), TeleportType.TRAINING_PORTAL);
+						player.teleport(new Position(3212, 3423), TeleportType.TRAINING_PORTAL);
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
 						player.teleport(new Position(2964, 3378), TeleportType.TRAINING_PORTAL);
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(3093, 3244), TeleportType.TRAINING_PORTAL);
+						player.teleport(new Position(3223, 3218), TeleportType.TRAINING_PORTAL);
 					} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
-						player.teleport(new Position(2815, 3447), TeleportType.TRAINING_PORTAL);
+						player.teleport(new Position(3093, 3244), TeleportType.TRAINING_PORTAL);
 					} else {
 						player.getDialogueBuilder().advance();
 					}
 					if(!t.equals(OptionDialogue.OptionType.FIFTH_OPTION)) {
 						player.closeWidget();
 					}
-				}, "Lumbridge", "Falador", "Draynor", "Catherby", "@red@Next page"), new OptionDialogue(t -> {
+				}, "Varrock", "Falador", "Lumbridge", "Draynor", "@red@Next page"), new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						player.getDialogueBuilder().previous();
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(2529, 3307), TeleportType.TRAINING_PORTAL);
+						player.teleport(new Position(2803, 3433), TeleportType.TRAINING_PORTAL);
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
+						player.teleport(new Position(2529, 3307), TeleportType.TRAINING_PORTAL);
+					} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
 						player.teleport(new Position(2662, 3305), TeleportType.TRAINING_PORTAL);
 					}
 					
 					if(!t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						player.closeWidget();
 					}
-				}, "@red@Previous page", "West Ardougne", "East Ardougne", "Nevermind"));
+				}, "@red@Previous page", "Catherby", "West Ardougne", "East Ardougne", "Nevermind"));
 				return true;
 			}
 		};
