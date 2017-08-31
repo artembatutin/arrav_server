@@ -2396,11 +2396,31 @@
     }
   },
   {
-    "name": "Dragonfire",
+    "name": "Chromatic dragonfire",
+    "animation": {
+      "id": 12256,
+      "delay": 0,
+      "priority": "HIGH"
+    },
     "start": {
       "id": 1,
       "delay": 0,
-      "height": 100
+      "height": 110
+    }
+  },
+  {
+    "name": "Metalic dragonfire",
+    "animation": {
+      "id": 12256,
+      "delay": 0,
+      "priority": "HIGH"
+    },
+    "projectile": {
+      "id": 393,
+      "delay": 50,
+      "speed": 75,
+      "startHeight": 43,
+      "endHeight": 31
     }
   }
 ]

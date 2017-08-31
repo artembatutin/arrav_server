@@ -21,7 +21,7 @@ public class DragonfireStrategy extends NpcMagicStrategy {
 	
 	@Override
 	public CombatHit[] getHits(Mob attacker, Actor defender) {
-		return new CombatHit[]{CombatUtil.generateDragonfire(attacker, defender)};
+		return new CombatHit[] { CombatUtil.generateDragonfire(attacker, defender) };
 	}
 	
 }
