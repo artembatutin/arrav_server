@@ -2343,5 +2343,64 @@
       "startHeight": 32,
       "endHeight": 32
     }
+  },
+  {
+    "name": "KBD fire",
+    "projectile": {
+      "id": 393,
+      "size": 1,
+      "delay": 50,
+      "duration": 75,
+      "startHeight": 43,
+      "endHeight": 31,
+      "curve": 16
+    }
+  },
+  {
+    "name": "KBD poison",
+    "magic-effect": "KBD_POISON",
+    "projectile": {
+      "id": 394,
+      "size": 1,
+      "delay": 50,
+      "duration": 75,
+      "startHeight": 43,
+      "endHeight": 31,
+      "curve": 16
+    }
+  },
+  {
+    "name": "KBD freeze",
+    "magic-effect": "KBD_FREEZE",
+    "projectile": {
+      "id": 395,
+      "size": 1,
+      "delay": 50,
+      "duration": 75,
+      "startHeight": 43,
+      "endHeight": 31,
+      "curve": 16
+    }
+  },
+  {
+    "name": "KBD shock",
+    "magic-effect": "KBD_SHOCK",
+    "projectile": {
+      "id": 396,
+      "size": 1,
+      "delay": 50,
+      "duration": 75,
+      "startHeight": 43,
+      "endHeight": 31,
+      "curve": 16
+    }
+  },
+  {
+    "name": "Dragonfire",
+    "start": {
+      "id": 1,
+      "delay": 0,
+      "height": 100
+    }
   }
 ]
