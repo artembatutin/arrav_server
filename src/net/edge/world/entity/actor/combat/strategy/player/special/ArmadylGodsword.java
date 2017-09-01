@@ -26,7 +26,6 @@ public class ArmadylGodsword extends PlayerMeleeStrategy {
 
 	@Override
 	public void finishOutgoing(Player attacker, Actor defender) {
-		super.finishOutgoing(attacker, defender);
 		WeaponInterface.setStrategy(attacker);
 	}
 

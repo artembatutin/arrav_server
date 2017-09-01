@@ -128,14 +128,39 @@ public class Combat<T extends Actor> {
             return false;
         }
 
-        strategy.getModifier(attacker).ifPresent(this::addModifier);
-        listeners.forEach(listener -> listener.getModifier(attacker).ifPresent(this::addModifier));
+        addModifiers(strategy);
+        defender.getCombat().addModifiers();
 
         submitHits(defender, strategy, strategy.getHits(attacker, defender));
+
+        removeModifiers(strategy);
+        defender.getCombat().removeModifiers();
 
         int delayIndex = strategy.getCombatType().ordinal();
         setDelay(delayIndex, strategy.getAttackDelay(attacker, defender, type));
         return true;
+    }
+
+    private void addModifiers() {
+        addModifiers(strategy);
+    }
+
+    private void removeModifiers() {
+        removeModifiers(strategy);
+    }
+
+    private void addModifiers(CombatStrategy<? super T> strategy) {
+        if (strategy != null) {
+            strategy.getModifier(attacker).ifPresent(this::addModifier);
+        }
+        listeners.forEach(listener -> listener.getModifier(attacker).ifPresent(this::addModifier));
+    }
+
+    private void removeModifiers(CombatStrategy<? super T> strategy) {
+        if (strategy != null) {
+            strategy.getModifier(attacker).ifPresent(this::removeModifier);
+        }
+        listeners.forEach(listener -> listener.getModifier(attacker).ifPresent(this::removeModifier));
     }
 
     private void submitHits(Actor defender, CombatStrategy<? super T> strategy, CombatHit... hits) {
