@@ -19,9 +19,14 @@ public class ArmadylGodsword extends PlayerMeleeStrategy {
 	private static final AttackModifier MODIFIER = new AttackModifier().accuracy(1.00).damage(0.375);
 
 	@Override
+	public void start(Player attacker, Actor defender, Hit[] hits) {
+		super.start(attacker, defender, hits);
+		attacker.graphic(GRAPHIC);
+	}
+
+	@Override
 	public void finishOutgoing(Player attacker, Actor defender) {
 		super.finishOutgoing(attacker, defender);
-		attacker.graphic(GRAPHIC);
 		WeaponInterface.setStrategy(attacker);
 	}
 
