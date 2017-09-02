@@ -1,4 +1,4 @@
-package net.edge.world.entity.actor.combat.strategy.player.special;
+package net.edge.world.entity.actor.combat.strategy.player.special.impl;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;

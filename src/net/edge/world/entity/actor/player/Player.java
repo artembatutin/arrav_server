@@ -137,7 +137,9 @@ public final class Player extends Actor {
 	/**
 	 * The weight of the player.
 	 */
-	public double weight, runEnergy = 100D;
+	public double weight;
+
+	private double runEnergy = 100D;
 	
 	/**
 	 * The identifier for the icons above the player's head.
@@ -1374,7 +1376,11 @@ public final class Player extends Actor {
 	public MutableNumber getSkullTimer() {
 		return skullTimer;
 	}
-	
+
+	public double getRunEnergy() {
+		return runEnergy;
+	}
+
 	/**
 	 * Sets the run energy percentage counter value.
 	 * @return the new value to set.

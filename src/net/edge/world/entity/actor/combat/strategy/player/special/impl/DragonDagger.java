@@ -1,4 +1,4 @@
-package net.edge.world.entity.actor.combat.strategy.player.special;
+package net.edge.world.entity.actor.combat.strategy.player.special.impl;
 
 import net.edge.content.achievements.Achievement;
 import net.edge.world.Animation;
@@ -14,7 +14,8 @@ import net.edge.world.entity.actor.player.Player;
 import java.util.Optional;
 
 /**
- * @author Michael | Chex
+ * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
+ * @since 2-9-2017.
  */
 public class DragonDagger extends PlayerMeleeStrategy {
 	private static final Animation ANIMATION = new Animation(1062, Animation.AnimationPriority.HIGH);
@@ -23,10 +24,11 @@ public class DragonDagger extends PlayerMeleeStrategy {
 	private static final AttackModifier MODIFIER = new AttackModifier().accuracy(0.25).damage(0.15);
 
 	@Override
-	public void attack(Player attacker, Actor defender, Hit hit) {
-		super.attack(attacker, defender, hit);
+	public void start(Player attacker, Actor defender, Hit[] hits) {
+		super.start(attacker, defender, hits);
 		attacker.graphic(GRAPHIC);
 	}
+
 	@Override
 	public void finishOutgoing(Player attacker, Actor defender) {
 		Achievement.DRAGON_DAGGER.inc(attacker);

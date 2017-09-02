@@ -1,4 +1,4 @@
-package net.edge.world.entity.actor.combat.strategy.player.special;
+package net.edge.world.entity.actor.combat.strategy.player.special.impl;
 
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
@@ -17,7 +17,8 @@ import net.edge.world.entity.actor.player.Player;
 import java.util.Optional;
 
 /**
- * @author Michael | Chex
+ * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
+ * @since 2-9-2017.
  */
 public class DragonClaws extends PlayerMeleeStrategy {
 	private static final Animation ANIMATION = new Animation(10961, Animation.AnimationPriority.HIGH);

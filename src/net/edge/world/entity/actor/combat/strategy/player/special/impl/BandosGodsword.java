@@ -1,4 +1,4 @@
-package net.edge.world.entity.actor.combat.strategy.player.special;
+package net.edge.world.entity.actor.combat.strategy.player.special.impl;
 
 import net.edge.content.skill.SkillData;
 import net.edge.content.skill.Skills;
@@ -15,7 +15,8 @@ import net.edge.world.entity.actor.player.Player;
 import java.util.Optional;
 
 /**
- * @author Michael | Chex
+ * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
+ * @since 2-9-2017.
  */
 public class BandosGodsword extends PlayerMeleeStrategy {
 	private static final Animation ANIMATION = new Animation(11991, Animation.AnimationPriority.HIGH);
@@ -24,9 +25,13 @@ public class BandosGodsword extends PlayerMeleeStrategy {
 	private static final AttackModifier MODIFIER = new AttackModifier().accuracy(1.00).damage(0.21);
 
 	@Override
+	public void start(Player attacker, Actor defender, Hit[] hits) {
+		super.start(attacker, defender, hits);
+		attacker.graphic(GRAPHIC);
+	}
+	@Override
 	public void attack(Player attacker, Actor defender, Hit h) {
 		super.attack(attacker, defender, h);
-		attacker.graphic(GRAPHIC);
 		if(defender.isPlayer() && h.isAccurate()) {
 			Player victim = defender.toPlayer();
 			int damage = h.getDamage();

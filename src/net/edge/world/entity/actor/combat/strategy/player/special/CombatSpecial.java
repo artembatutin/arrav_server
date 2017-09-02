@@ -6,6 +6,7 @@ import net.edge.net.packet.out.SendUpdateSpecial;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.Combat;
 import net.edge.world.entity.actor.combat.strategy.CombatStrategy;
+import net.edge.world.entity.actor.combat.strategy.player.special.impl.*;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Equipment;
@@ -19,141 +20,42 @@ import java.util.Optional;
  */
 public enum CombatSpecial {
 	//int[] ids, int amount, double strength, double accuracy, CombatType combat, WeaponInterface weapon
-	//	ABYSSAL_WHIP(new int[]{4151, 13444, 15441, 15442, 15443, 15444}, 50, 1, 1, CombatType.MELEE, WeaponInterface.WHIP) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(1658, Animation.AnimationPriority.HIGH));
-	//			target.graphic(new Graphic(341, 140));
-	//			if(target.isPlayer()) {
-	//				//Gathering the oponent's running energy.
-	//				final Player victimPlayer = target.toPlayer();
-	//				double energy = 0;
-	//				if(victimPlayer.getRunEnergy() != 0)
-	//					energy = victimPlayer.getRunEnergy() / 4;
-	//
-	//				//Decreasing oponent's energy and increasing the attacker's energy.
-	//				victimPlayer.setRunEnergy(victimPlayer.getRunEnergy() - energy);
-	//				player.setRunEnergy(player.getRunEnergy() + energy);
-	//			}
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, false);
-	//		}
-	//	},
-	//	ANCHOR(new int[]{10887}, 50, 1.1, 1.30, CombatType.MELEE, WeaponInterface.WARHAMMER) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(5870, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(1027, 50));
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, true, 3) {
-	//				@Override
-	//				public void postAttack(int counter) {
-	//					if(target.isPlayer() && counter != 0) {
-	//						//Finalizing with the anchor effect. (decreasing random combat skill).
-	//						int skill = RandomUtils.random(Skills.DEFENCE, Skills.ATTACK, Skills.MAGIC, Skills.RANGED);
-	//						double decreaseValue = (counter / 100.0) * 10.0;
-	//						Player victim = target.toPlayer();
-	//						victim.getSkills()[skill].decreaseLevel((int) decreaseValue);
-	//						Skills.refresh(victim, skill);
-	//					}
-	//				}
-	//			};
-	//		}
-	//	},
-	//	ARMADYL_GODSWORD(new int[]{11694, 13450}, 50, 1.375, 2, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(11989, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(2113));
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, true);
-	//		}
-	//	},
-	//	ZAMORAK_GODSWORD(new int[]{11700}, 50, 1.1, 1.4, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(7070, Animation.AnimationPriority.HIGH));
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
-	//				@Override
-	//				public void postAttack(int counter) {
-	//					if(counter > 0) {
-	//						player.graphic(new Graphic(1221));
-	//						target.graphic(new Graphic((2104)));
-	//						if(!target.isFrozen()) {
-	//							if(target.size() == 1) {
-	//								target.freeze(15);
-	//							}
-	//						}
-	//					} else {
-	//						target.graphic(new Graphic(339, 10));
-	//					}
-	//				}
-	//			};
-	//		}
-	//	},
-	//	SARADOMIN_GODSWORD(new int[]{11698}, 60, 1.1, 1.8, CombatType.MELEE, WeaponInterface.WARHAMMER) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(7071, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(1220));
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
-	//				@Override
-	//				public void postAttack(int counter) {
-	//					//Healing blade effect
-	//					if(counter != 0) {
-	//						player.getSkills()[Skills.PRAYER].increaseLevel(player.getSkills()[Skills.PRAYER].getRealLevel() / 4, 990);
-	//						player.getSkills()[Skills.HITPOINTS].increaseLevel(player.getSkills()[Skills.HITPOINTS].getRealLevel() / 2, 990);
-	//					}
-	//				}
-	//			};
-	//		}
-	//	},
-	//	SARADOMIN_SWORD(new int[]{11730}, 65, 1.1, 1, CombatType.MELEE, WeaponInterface.WARHAMMER) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(11993, Animation.AnimationPriority.HIGH));
-	//
-	//			return new CombatHit(player, target, 2, CombatType.MELEE, true) {
-	//				@Override
-	//				public void postAttack(int counter) {
-	//					getHits()[1].setIcon(Hit.HitIcon.MAGIC);
-	//					target.graphic(new Graphic(1194));
-	//					if(counter != 0) {
-	//						player.getSkills()[Skills.PRAYER].increaseLevel(player.getSkills()[Skills.PRAYER].getRealLevel() / 4, 990);
-	//						player.getSkills()[Skills.HITPOINTS].increaseLevel(player.getSkills()[Skills.HITPOINTS].getRealLevel() / 2, 990);
-	//					}
-	//				}
-	//			};
-	//		}
-	//	},
-	//	DRAGON_2H_SWORD(new int[]{7158}, 60, 1, 1, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(3157, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(559));
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, false) {
-	//				@Override
-	//				public void postAttack(int counter) {
-	//					if(player.inMulti()) {
-	//						Set<? extends Actor> local = null;
-	//						if(target.isPlayer()) {
-	//							local = player.getLocalPlayers();
-	//						} else if(target.isMob()) {
-	//							local = player.getLocalMobs();
-	//						}
-	//						if(local == null)
-	//							return;
-	//						for(Actor character : local) {
-	//							if(character == null)
-	//								continue;
-	//							if(character.getPosition().withinDistance(target.getPosition(), 1) && !character.same(target) && !character.same(player) && character.getCurrentHealth() > 0 && !character.isDead()) {
-	//								Hit hit = CombatUtil.calculateRandomHit(player, target, CombatType.MELEE, 0, true);
-	//								character.damage(hit);
-	//								character.getCombat().getDamageCache().add(player, hit.getDamage());
-	//							}
-	//						}
-	//					}
-	//				}
-	//			};
-	//		}
-	//	},
+		ABYSSAL_WHIP(new int[]{4151, 13444, 15441, 15442, 15443, 15444}, 50, new AbyssalWhip()),
+		ANCHOR(new int[]{10887}, 50, new Anchor()),
+		ZAMORAK_GODSWORD(new int[]{11700}, 50, new ZamorakGodsword()),
+		SARADOMIN_GODSWORD(new int[]{11698}, 60, new SaradominGodsword()),
+		SARADOMIN_SWORD(new int[]{11730}, 65, new SaradominSword()),
+//		DRAGON_2H_SWORD(new int[]{7158}, 60, 1, 1, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
+//			@Override
+//			public CombatHit container(Player player, Actor target) {
+//				player.animation(new Animation(3157, Animation.AnimationPriority.HIGH));
+//				player.graphic(new Graphic(559));
+//				return new CombatHit(player, target, 1, CombatType.MELEE, false) {
+//					@Override
+//					public void postAttack(int counter) {
+//						if(player.inMulti()) {
+//							Set<? extends Actor> local = null;
+//							if(target.isPlayer()) {
+//								local = player.getLocalPlayers();
+//							} else if(target.isMob()) {
+//								local = player.getLocalMobs();
+//							}
+//							if(local == null)
+//								return;
+//							for(Actor character : local) {
+//								if(character == null)
+//									continue;
+//								if(character.getPosition().withinDistance(target.getPosition(), 1) && !character.same(target) && !character.same(player) && character.getCurrentHealth() > 0 && !character.isDead()) {
+//									Hit hit = CombatUtil.calculateRandomHit(player, target, CombatType.MELEE, 0, true);
+//									character.damage(hit);
+//									character.getCombat().getDamageCache().add(player, hit.getDamage());
+//								}
+//							}
+//						}
+//					}
+//				};
+//			}
+//		},
 	//	DRAGON_BATTLEAXE(new int[]{1377}, 100, 1, 1, CombatType.MELEE, WeaponInterface.BATTLEAXE) {
 	//		@Override
 	//		public void onActivation(Player player, Actor target) {
@@ -182,23 +84,6 @@ public enum CombatSpecial {
 	//		@Override
 	//		public CombatHit container(Player player, Actor target) {
 	//			throw new UnsupportedOperationException("Dragon battleaxe does not have a special attack!");
-	//		}
-	//	},
-	//	DRAGON_CLAWS(new int[]{14484, 14486}, 50, 1.05, 6, CombatType.MELEE, WeaponInterface.CLAWS) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(10961, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(1950, 50));
-	//			return new CombatHit(player, target, 4, CombatType.MELEE, true, 2);
-	//		}
-	//	},
-	//	DRAGON_DAGGER(new int[]{1215, 1231, 5680, 5698}, 25, 1.15, 1.25, CombatType.MELEE, WeaponInterface.DAGGER) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			Achievement.DRAGON_DAGGER.inc(player);
-	//			player.animation(new Animation(1062, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(252, 100));
-	//			return new CombatHit(player, target, 2, CombatType.MELEE, true, 1);
 	//		}
 	//	},
 	//	DRAGON_HALBERD(new int[]{3204, 11716}, 30, 1, 1, CombatType.MELEE, WeaponInterface.HALBERD) {
@@ -288,14 +173,6 @@ public enum CombatSpecial {
 	//			};
 	//		}
 	//	},
-	//	GRANITE_MAUL(new int[]{4153}, 50, 1, 1, CombatType.MELEE, WeaponInterface.WARHAMMER) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(1667, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(340, 40));
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, true);
-	//		}
-	//	},
 	//	KORASI_SWORD(new int[]{19780}, 60, 1.2, 1.1, CombatType.MAGIC, WeaponInterface.LONGSWORD) {
 	//		@Override
 	//		public CombatHit container(Player player, Actor target) {
@@ -313,35 +190,8 @@ public enum CombatSpecial {
 	//			};
 	//		}
 	//	},
-	//	VESTAS_LONGSWORD(new int[]{13899}, 25, 1.28, 1.25, CombatType.MELEE, WeaponInterface.LONGSWORD) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(10502, Animation.AnimationPriority.HIGH));
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, true);
-	//		}
-	//	},
-	//	STATIUS_WARHAMMER(new int[]{13902}, 30, 1.25, 1.23, CombatType.MELEE, WeaponInterface.WARHAMMER) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(10505, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(1840));
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
-	//				@Override
-	//				public void postAttack(int counter) {
-	//					if(target.isPlayer() && counter > 0) {
-	//						Player victim = target.toPlayer();
-	//						int currentDef = victim.getSkills()[Skills.DEFENCE].getRealLevel();
-	//						int defDecrease = (int) (currentDef * 0.11);
-	//						if((currentDef - defDecrease) <= 0 || currentDef <= 0)
-	//							return;
-	//						victim.getSkills()[Skills.DEFENCE].decreaseLevelReal(defDecrease);
-	//						victim.message("Your opponent has reduced your Defence level.");
-	//						player.message("Your hammer forces some of your opponent's defences to break.");
-	//					}
-	//				}
-	//			};
-	//		}
-	//	},
+		VESTAS_LONGSWORD(new int[]{13899}, 25, new VestasLongsword()),
+		STATIUS_WARHAMMER(new int[]{13902}, 30, new StatiusWarhammer()),
 	//	DARK_BOW(new int[]{11235, 15701, 15702, 15703, 15704, 13405}, 55, 1.45, 1.22, CombatType.RANGED, WeaponInterface.LONGBOW) {
 	//		@Override
 	//		public CombatHit container(Player player, Actor target) {
