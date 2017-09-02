@@ -826,6 +826,18 @@ public class ItemContainer implements Iterable<Item> {
 			Item itemOld = items[oldIndex];
 			Item itemNew = items[newIndex];
 			
+			//precaution, dragging same stackable item.
+			if(itemOld != null && itemNew != null) {
+				if(itemNew.getId() == itemOld.getId()) {
+					if(itemOld.getDefinition() != null && itemNew.getDefinition() != null) {
+						if(itemOld.getDefinition().isStackable() && itemNew.getDefinition().isStackable()) {
+							itemNew = new Item(itemNew.getId(), itemNew.getAmount() + itemOld.getAmount());
+							itemOld = null;
+						}
+					}
+				}
+			}
+			
 			items[oldIndex] = itemNew;
 			items[newIndex] = itemOld;
 			
@@ -892,9 +904,6 @@ public class ItemContainer implements Iterable<Item> {
 				continue;
 			}
 			newItems[count++] = item.copy();
-			if(count == size) {
-				break;
-			}
 		}
 		if(update)
 			reformat(newItems);

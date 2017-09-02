@@ -12,6 +12,8 @@ public final class EcoWealthCheckCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
+		if(true)
+			return;
 		EconomyController.run(new WealthReport());
 	}
 	

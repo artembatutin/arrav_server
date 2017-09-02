@@ -210,10 +210,10 @@ public final class Skills {
 				player.message("Congratulations, you've just advanced " + append + " level!");
 				player.chatWidget(data.getChatbox());
 				if(newLevel == 99 || newLevel == 120) {
-					SKILL_MASTERY.inc(player);
-					String append_max = TextUtils.appendIndefiniteArticleNoVowel(data.toString());
+					//SKILL_MASTERY.inc(player);
+					//String append_max = TextUtils.appendIndefiniteArticleNoVowel(data.toString());
 					player.graphic(new Graphic(MAXED_GRAPHICS));
-					World.get().message("@blu@[Global Announcements] @red@" + player.getFormatUsername() + "@blu@ has just reached level " + newLevel + " " + append_max + ".");
+					//World.get().message("@blu@[Global Announcements] @red@" + player.getFormatUsername() + "@blu@ has just reached level " + newLevel + " " + append_max + ".");
 				} else {
 					player.graphic(new Graphic(199));
 				}

@@ -12,6 +12,8 @@ public final class EcoItemWipeCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
+		if(true)
+			return;
 		int item = Integer.parseInt(cmd[1]);
 		EconomyController.run(new ItemEconomyWipe(item));
 	}

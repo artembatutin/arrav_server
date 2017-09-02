@@ -357,9 +357,11 @@ public final class ItemInterfacePacket implements IncomingPacket {
 			case 5382://unsure
 				break;
 			case 5064://banking inventory
-				player.getInventory().swap(fromSlot, toSlot);
-				player.getInventory().refreshSingle(player, 5064, fromSlot);
-				player.getInventory().refreshSingle(player, 5064, toSlot);
+				if(player.getAttr().get("banking").getBoolean()) {
+					player.getInventory().swap(fromSlot, toSlot);
+					player.getInventory().refreshSingle(player, 5064, fromSlot);
+					player.getInventory().refreshSingle(player, 5064, toSlot);
+				}
 				break;
 		}
 	}
