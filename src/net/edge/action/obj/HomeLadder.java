@@ -11,7 +11,7 @@ import static net.edge.content.teleport.TeleportType.LADDER;
 public class HomeLadder extends ActionInitializer {
 	@Override
 	public void init() {
-		//night's watch ladder
+		//iron man ladder
 		ObjectAction l = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
@@ -52,7 +52,7 @@ public class HomeLadder extends ActionInitializer {
 		l = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				player.teleport(new Position(3084, 3510, 0), LADDER);
+				player.teleport(new Position(3081, 3504, 0), LADDER);
 				return true;
 			}
 		};

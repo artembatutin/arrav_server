@@ -53,31 +53,17 @@ public enum Obelisk {
 		return object;
 	}
 	
-	/**
-	 * Gets the definition for this obelisk.
-	 * @param object the object being clicked.
-	 * @return an optional holding the {@link Obelisk} value found,
-	 * {@link Optional#empty} otherwise.
-	 */
-	public static Optional<Obelisk> get(GameObject object) {
-		return VALUES.stream().filter(t -> object.getId() == t.object).findAny();
-	}
-	
 	public static void action() {
-		ObjectAction a = new ObjectAction() {
-			@Override
-			public boolean click(Player player, GameObject object, int click) {
-				Optional<Obelisk> obelisk = get(object);
-				if(obelisk.isPresent()) {
-					player.getRegion().ifPresent(r -> {
-						World.get().submit(new ObeliskTask(obelisk.get(), r));
-					});
+		for(Obelisk ob : VALUES) {
+			ObjectAction a = new ObjectAction() {
+				@Override
+				public boolean click(Player player, GameObject object, int click) {
+					player.getRegion().ifPresent(r -> World.get().submit(new ObeliskTask(ob, r)));
 					return true;
 				}
-				return false;
-			}
-		};
-		VALUES.forEach(o -> a.registerFirst(o.getObject()));
+			};
+			a.registerFirst(ob.getObject());
+		}
 	}
 	
 	/**
@@ -115,7 +101,10 @@ public enum Obelisk {
 				o.setId(14825);
 				o.publish();
 			});
-			Obelisk dest = RandomUtils.random(VALUES.stream().filter(d -> d != data).collect(Collectors.toList()));
+			Obelisk dest = null;
+			while(dest == null || dest == data) {
+				dest = RandomUtils.random(VALUES.asList());
+			}
 			int x = dest.boundary.getSwX();
 			int y = dest.boundary.getSwY();
 			reg.getPlayers().forEach(p -> {

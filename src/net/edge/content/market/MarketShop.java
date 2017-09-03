@@ -125,7 +125,7 @@ public class MarketShop {
 		player.out(new SendContainer(3823, player.getInventory()));
 		player.out(new SendShop(3900, getItems()));
 		int x = player.getPosition().getX();
-		boolean counter = x == 3081 || x == 3082;
+		boolean counter = x == 3079 || x == 3080;
 		player.out(new SendInventoryInterface(counter ? -4 : -2, 3822));
 		player.text(3901, getTitle());
 		player.out(new SendForceTab(TabInterface.INVENTORY));

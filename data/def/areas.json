@@ -18,10 +18,10 @@
 	"location": [
 	  {
 		"square": {
-		  "swX": 3089,
-		  "swY": 3506,
-		  "neX": 3095,
-		  "neY": 3511,
+		  "swX": 3078,
+		  "swY": 3508,
+		  "neX": 3083,
+		  "neY": 3516,
 		  "z": 1
 		},
 		"multi": true

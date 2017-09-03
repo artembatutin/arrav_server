@@ -107,7 +107,7 @@ public final class MobActionPacket implements IncomingPacket {
 			return;
 		Position position = mob.getPosition().copy();
 		if(mob.getId() == 4650) {
-			player.getMovementQueue().smartWalk(new Position(3081, 3508));
+			player.getMovementQueue().smartWalk(new Position(3079, 3508));
 		}
 		player.getMovementListener().append(() -> {
 			if(new Boundary(position, mob.size()).within(player.getPosition(), player.size(), mob.getId() == 4650 ? 3 : 1)) {
@@ -232,6 +232,7 @@ public final class MobActionPacket implements IncomingPacket {
 			return false;
 		if(!player.inMulti() && player.getCombat().isUnderAttack() && !player.getCombat().isUnderAttackBy(mob)) {
 			player.message("You are already under attack!");
+			player.getMovementQueue().reset();
 			return false;
 		}
 		return Slayer.canAttack(player, mob);

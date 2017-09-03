@@ -6,7 +6,6 @@ import net.edge.content.skill.prayer.Prayer;
 import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
-import net.edge.world.entity.actor.combat.strategy.player.special.CombatSpecial;
 import net.edge.world.entity.actor.player.Player;
 
 /**
@@ -76,13 +75,6 @@ public final class RestoreStatTask extends Task {
 					player.getSkills()[i].decreaseLevel(1);
 					Skills.refresh(player, i);
 				}
-			}
-			if(player.getSpecialPercentage().get() < 100) {
-				//				if(player.getRights().equal(Rights.ADMINISTRATOR)) {
-				//					CombatSpecial.restore(player, 100);
-				//					return;
-				//				}
-				CombatSpecial.restore(player, 5);
 			}
 		}
 		run += 1;

@@ -56,7 +56,7 @@ public final class MobDeath extends ActorDeath<Mob> {
 			}
 			if(k.getRights().less(Rights.ADMINISTRATOR)) {
 				k.getNpcKills().incrementAndGet();
-				PlayerPanel.TOTAL_NPC_KILLS.refresh(k, "@or2@ - Total Mobs killed: @yel@" + k.getNpcKills().get());
+				PlayerPanel.TOTAL_NPC_KILLS.refresh(k, "@or2@ - Mobs killed: @yel@" + k.getNpcKills().get());
 			}
 			//achievement kills
 			int id = getActor().getId();

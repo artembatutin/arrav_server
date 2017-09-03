@@ -15,6 +15,7 @@ import net.edge.cache.decoder.MapDefinitionDecoder;
 import net.edge.cache.decoder.ObjectDefinitionDecoder;
 import net.edge.cache.decoder.RegionDecoder;
 import net.edge.content.PlayerPanel;
+import net.edge.content.RestoreSpecialTask;
 import net.edge.content.RestoreStatTask;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.object.pit.FirepitManager;
@@ -128,6 +129,7 @@ public final class Application {
 			InstanceManager.get().close(0);
 			TriviaTask.getBot().submit();
 			World.get().submit(World.getNpcMovementTask());
+			World.get().submit(new RestoreSpecialTask());
 			World.get().submit(new RestoreStatTask());
 			World.get().submit(new Task(100, false) {
 				@Override

@@ -4,6 +4,7 @@ import net.edge.content.commands.Command;
 import net.edge.content.commands.CommandSignature;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.locale.Position;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -18,6 +19,6 @@ public final class GamblingZoneCommand implements Command {
 	 */
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		//        player.teleport(new Position(2442, 3089)); TODO: add teleport
+		player.teleport(new Position(2442, 3089));
 	}
 }

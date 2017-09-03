@@ -94,10 +94,6 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			attacker.message("You're invisible and unable to attack other players.");
 			return false;
 		}
-		if(victim.isIronMan() && !victim.isIronMaxed()) {
-			attacker.message("You can't initiate combat with an iron man member.");
-			return false;
-		}
 		if(!attacker.inMulti() && attacker.getCombat().isUnderAttack() && !attacker.getCombat().isUnderAttackBy(victim)) {
 			attacker.message("You are already under attack!");
 			attacker.getMovementQueue().reset();

@@ -31,8 +31,9 @@ public final class MobNodeLoader extends JsonLoader {
 		Direction dir = reader.get("face") != null ? builder.fromJson(reader.get("face"), Direction.class) : Direction.NONE;
 		boolean coordinate = reader.get("random-walk").getAsBoolean();
 		int radius = 0;
-		if(reader.has("walk-radius"))
+		if(reader.has("walk-radius")) {
 			radius = reader.get("walk-radius").getAsInt();
+		}
 		Preconditions.checkState(!(coordinate && radius == 0));
 		Preconditions.checkState(!(!coordinate && radius > 0));
 		Preconditions.checkState(!(dir != Direction.NONE && radius > 0));

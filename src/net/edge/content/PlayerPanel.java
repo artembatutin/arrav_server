@@ -239,20 +239,20 @@ public enum PlayerPanel {
 		PlayerPanel.TOTAL_VOTES.refresh(player, "@or2@ - Total votes: @yel@" + player.totalVotes);
 		
 		PlayerPanel.MONSTER_HEADER.refresh(player, "@or1@Killing Statistics:");
-		PlayerPanel.HIGHEST_KILLSTREAK.refresh(player, "@or2@ - Highest Killstreak: @yel@" + player.getHighestKillstreak().get());
-		PlayerPanel.CURRENT_KILLSTREAK.refresh(player, "@or2@ - Current Killstreak: @yel@" + player.getCurrentKillstreak().get());
-		PlayerPanel.TOTAL_PLAYER_KILLS.refresh(player, "@or2@ - Total Players killed: @yel@" + player.getPlayerKills().get());
-		PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(player, "@or2@ - Total Player deaths: @yel@" + player.getDeathsByPlayer().get());
-		PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Total Mobs killed: @yel@" + player.getNpcKills().get());
-		PlayerPanel.TOTAL_NPC_DEATHS.refresh(player, "@or2@ - Total Mob deaths: @yel@" + player.getDeathsByNpc().get());
+		PlayerPanel.HIGHEST_KILLSTREAK.refresh(player, "@or2@ - Highest killstreak: @yel@" + player.getHighestKillstreak().get());
+		PlayerPanel.CURRENT_KILLSTREAK.refresh(player, "@or2@ - Current killstreak: @yel@" + player.getCurrentKillstreak().get());
+		PlayerPanel.TOTAL_PLAYER_KILLS.refresh(player, "@or2@ - Killed players: @yel@" + player.getPlayerKills().get());
+		PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(player, "@or2@ - Killed by players: @yel@" + player.getDeathsByPlayer().get());
+		PlayerPanel.TOTAL_NPC_KILLS.refresh(player, "@or2@ - Mobs killed: @yel@" + player.getNpcKills().get());
+		PlayerPanel.TOTAL_NPC_DEATHS.refresh(player, "@or2@ - Killed by mobs: @yel@" + player.getDeathsByNpc().get());
 		
 		PlayerPanel.EMPTY2.refresh(player, "");
 		PlayerScoreboardStatistic s = ScoreboardManager.get().getPlayerScoreboard().get(player.getFormatUsername());
 		PlayerPanel.PVP_SCOREBOARD_STATISTICS.refresh(player, "@or1@Scoreboard Statistics:");
-		PlayerPanel.PVP_HIGHEST_KILLSTREAKS.refresh(player, "@or2@ - Highest Killstreak: @yel@" + (s == null ? 0 : s.getHighestKillstreak()));
-		PlayerPanel.PVP_CURRENT_KILLSTREAKS.refresh(player, "@or2@ - Current Killstreak: @yel@" + (s == null ? 0 : s.getCurrentKillstreak()));
-		PlayerPanel.PVP_KILLS.refresh(player, "@or2@ - Players killed: @yel@" + (s == null ? 0 : s.getKills()));
-		PlayerPanel.PVP_DEATHS.refresh(player, "@or2@ - Player deaths: @yel@" + (s == null ? 0 : s.getDeaths()));
+		PlayerPanel.PVP_HIGHEST_KILLSTREAKS.refresh(player, "@or2@ - Highest killstreak: @yel@" + (s == null ? 0 : s.getHighestKillstreak()));
+		PlayerPanel.PVP_CURRENT_KILLSTREAKS.refresh(player, "@or2@ - Current killstreak: @yel@" + (s == null ? 0 : s.getCurrentKillstreak()));
+		PlayerPanel.PVP_KILLS.refresh(player, "@or2@ - Kills: @yel@" + (s == null ? 0 : s.getKills()));
+		PlayerPanel.PVP_DEATHS.refresh(player, "@or2@ - Death: @yel@" + (s == null ? 0 : s.getDeaths()));
 		
 		//achievements
 		for(Achievement a : Achievement.VALUES) {

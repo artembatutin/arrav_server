@@ -31,8 +31,10 @@ public class MobMovementTask extends Task {
 	
 	@Override
 	protected void execute() {
+		if(mobs.isEmpty())
+			return;
 		int size = mobs.size();
-		int count = RandomUtils.inclusive(size);
+		int count = RandomUtils.inclusive(size / 9);
 		for(int iterator = 0; iterator < count; iterator++) {
 			Mob mob = mobs.get(RandomUtils.inclusive(size - 1));
 			if(mob == null)
@@ -50,13 +52,10 @@ public class MobMovementTask extends Task {
 						mob.getMovementQueue().walk(pathHome.getMoves());
 				} else {
 					Direction dir = Direction.random();
-					int random_x = mob.toMob().getPosition().getX() + randomSteps(mob.size());
-					int random_y = mob.toMob().getPosition().getY() + randomSteps(mob.size());
-					Position generated_random_position = new Position(random_x, random_y);
-					Boundary boundary = new Boundary(generated_random_position, mob.size());
-					boolean traversable = TraversalMap.isTraversable(generated_random_position, boundary, dir, mob.size());
+					Position movedPos = mob.getPosition().move(dir);
+					boolean traversable = TraversalMap.isTraversable(mob.getPosition(), mob.getMovementCoordinator().getBoundary(), dir, mob.size());
 					if(traversable) {
-						Path pathHome = World.getSimplePathFinder().find(mob, generated_random_position);
+						Path pathHome = World.getSimplePathFinder().find(mob, movedPos);
 						if(pathHome.isPossible())
 							mob.getMovementQueue().walk(pathHome.getMoves());
 						else
@@ -65,10 +64,6 @@ public class MobMovementTask extends Task {
 				}
 			}
 		}
-	}
-	
-	private int randomSteps(int size) {
-		return RandomUtils.inclusive(0, size);
 	}
 	
 	ObjectList<Mob> getMobs() {

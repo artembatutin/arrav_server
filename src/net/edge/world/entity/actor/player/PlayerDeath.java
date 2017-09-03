@@ -118,7 +118,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		}
 		
 		if(Location.inFunPvP(getActor())) {
-			getActor().move(new Position(3086, 3508, 1));
+			getActor().move(new Position(3076, 3503, 1));
 			setCounter(6);
 		}
 	}
@@ -164,7 +164,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				characterStatistic = new PlayerScoreboardStatistic(getActor().getFormatUsername());
 			}
 			PlayerPanel.PVP_DEATHS.refresh(getActor(), "@or2@ - Current Player deaths: @yel@" + characterStatistic.getDeaths().incrementAndGet());
-			PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(getActor(), "@or2@ - Total Player deaths: @yel@" + getActor().getDeathsByPlayer().incrementAndGet());
+			PlayerPanel.TOTAL_PLAYER_DEATHS.refresh(getActor(), "@or2@ - Killed by players: @yel@" + getActor().getDeathsByPlayer().incrementAndGet());
 			
 			//kills
 			PlayerScoreboardStatistic killerStatistic = ScoreboardManager.get().getPlayerScoreboard().putIfAbsent(k.getFormatUsername(), new PlayerScoreboardStatistic(k.getFormatUsername()));
@@ -172,22 +172,22 @@ public final class PlayerDeath extends ActorDeath<Player> {
 				killerStatistic = new PlayerScoreboardStatistic(k.getFormatUsername());
 			}
 			
-			PlayerPanel.PVP_KILLS.refresh(k, "@or2@ - Current Players killed: @yel@" + killerStatistic.getKills().incrementAndGet());
-			PlayerPanel.TOTAL_PLAYER_KILLS.refresh(k, "@or2@ - Total Players killed: @yel@" + k.getPlayerKills().incrementAndGet());
+			PlayerPanel.PVP_KILLS.refresh(k, "@or2@ - Death: @yel@" + killerStatistic.getKills().incrementAndGet());
+			PlayerPanel.TOTAL_PLAYER_KILLS.refresh(k, "@or2@ - Killed players: @yel@" + k.getPlayerKills().incrementAndGet());
 			
 			//killstreak
 			if(k.getCurrentKillstreak().incrementAndGet() > k.getHighestKillstreak().get()) {
 				k.getHighestKillstreak().set(k.getCurrentKillstreak().get());
-				PlayerPanel.HIGHEST_KILLSTREAK.refresh(k, "@or2@ - Highest Killstreak: @yel@" + k.getHighestKillstreak());
+				PlayerPanel.HIGHEST_KILLSTREAK.refresh(k, "@or2@ - Highest killstreak: @yel@" + k.getHighestKillstreak());
 			}
 			
-			PlayerPanel.CURRENT_KILLSTREAK.refresh(k, "@or2@ - Current Killstreak: @yel@" + k.getCurrentKillstreak().get());
+			PlayerPanel.CURRENT_KILLSTREAK.refresh(k, "@or2@ - Current killstreak: @yel@" + k.getCurrentKillstreak().get());
 			
 			if(killerStatistic.getCurrentKillstreak().incrementAndGet() > killerStatistic.getHighestKillstreak().get()) {
 				killerStatistic.getHighestKillstreak().set(killerStatistic.getCurrentKillstreak().get());
-				PlayerPanel.PVP_HIGHEST_KILLSTREAKS.refresh(k, "@or2@ - Highest Killstreak: @yel@" + killerStatistic.getHighestKillstreak().get());
+				PlayerPanel.PVP_HIGHEST_KILLSTREAKS.refresh(k, "@or2@ - Highest killstreak: @yel@" + killerStatistic.getHighestKillstreak().get());
 			}
-			PlayerPanel.PVP_CURRENT_KILLSTREAKS.refresh(k, "@or2@ - Current Killstreak: @yel@" + killerStatistic.getCurrentKillstreak().get());
+			PlayerPanel.PVP_CURRENT_KILLSTREAKS.refresh(k, "@or2@ - Current killstreak: @yel@" + killerStatistic.getCurrentKillstreak().get());
 			
 			k.message(RandomUtils.random(GameConstants.DEATH_MESSAGES).replaceAll("-victim-", getActor().getFormatUsername()).replaceAll("-killer-", k.getFormatUsername()));
 		});
@@ -195,7 +195,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 		getActor().getCombat().getDamageCache().calculateProperKiller().ifPresent(e -> {
 			if(e.isMob()) {
 				getActor().getDeathsByNpc().incrementAndGet();
-				PlayerPanel.TOTAL_NPC_DEATHS.refresh(getActor(), "@or2@ - Total Mob deaths: @yel@" + getActor().getDeathsByNpc().get());
+				PlayerPanel.TOTAL_NPC_DEATHS.refresh(getActor(), "@or2@ - Killed by mobs: @yel@" + getActor().getDeathsByNpc().get());
 			}
 		});
 	}

@@ -37,17 +37,17 @@ public class HomePortal extends ActionInitializer {
 		ObjectAction staires = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				if(object.getGlobalPos().same(new Position(3082, 3510, 0))) {
+				if(object.getGlobalPos().same(new Position(3079, 3503, 0))) {
 					if(!player.getRights().isStaff() && !player.getRights().isDonator()) {
 						int total = 0;
 						for(Skill s : player.getSkills())
 							total += s.getRealLevel();
-						if(total < 2000) {
-							player.message("You need total level greater than 2000 to go up, or be a donator.");
+						if(total < 1000) {
+							player.message("You need total level greater than 1000 to go up, or be a donator.");
 							return true;
 						}
 					}
-					player.teleport(new Position(3081, 3510, 1), LADDER);
+					player.teleport(new Position(3078, 3504, 1), LADDER);
 				}
 				return true;
 			}
