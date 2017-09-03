@@ -1,7 +1,7 @@
 package net.edge.action.impl;
 
 import net.edge.action.Action;
-import net.edge.content.refillable.RefillableAction;
+import net.edge.content.item.refillable.RefillableAction;
 import net.edge.content.skill.cooking.Cooking;
 import net.edge.content.skill.crafting.JewelleryMoulding;
 import net.edge.content.skill.crafting.Spinning;

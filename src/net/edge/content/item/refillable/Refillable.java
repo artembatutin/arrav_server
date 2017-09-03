@@ -1,4 +1,4 @@
-package net.edge.content.refillable;
+package net.edge.content.item.refillable;
 
 public enum Refillable {
 

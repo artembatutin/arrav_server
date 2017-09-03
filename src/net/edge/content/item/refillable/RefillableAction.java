@@ -1,4 +1,4 @@
-package net.edge.content.refillable;
+package net.edge.content.item.refillable;
 
 import net.edge.action.impl.ItemOnObjectAction;
 import net.edge.content.skill.SkillData;

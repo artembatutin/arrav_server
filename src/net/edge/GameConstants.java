@@ -8,7 +8,7 @@ import net.edge.world.locale.Position;
 /**
  * The class that contains a collection of constants related to the game. This
  * class serves no other purpose than to hold constants.
- * @author lare96 <http://github.org/lare96>
+ * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class GameConstants {
 	
