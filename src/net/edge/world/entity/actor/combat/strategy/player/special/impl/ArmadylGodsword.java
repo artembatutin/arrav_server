@@ -17,8 +17,8 @@ import java.util.Optional;
  * @since 2-9-2017.
  */
 public class ArmadylGodsword extends PlayerMeleeStrategy {
-	private static final Animation ANIMATION = new Animation(1658, Animation.AnimationPriority.HIGH);
-	private static final Graphic GRAPHIC = new Graphic(341, 140);
+	private static final Animation ANIMATION = new Animation(11989, Animation.AnimationPriority.HIGH);
+	private static final Graphic GRAPHIC = new Graphic(2113);
 	private static final AttackModifier MODIFIER = new AttackModifier().accuracy(0.25).damage(0.375);
 
 	@Override

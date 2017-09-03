@@ -170,7 +170,6 @@ public enum WeaponInterface {
 			player.getCombat().setStrategy(new PlayerMagicStrategy(player.getAutocastSpell()));
 			return;
 		}
-		
 		if(player.isSpecialActivated()) {
 			player.getCombatSpecial().enable(player);
 			return;
@@ -178,7 +177,6 @@ public enum WeaponInterface {
 		
 		Item item = player.getEquipment().get(Equipment.WEAPON_SLOT);
 		WeaponInterface weapon = item == null ? null : INTERFACES.get(item.getId());
-		
 		if(weapon != null && weapon.isRanged()) {
 			RangedWeaponDefinition def = CombatRangedBowLoader.DEFINITIONS.get(item.getId());
 			if(def != null) {

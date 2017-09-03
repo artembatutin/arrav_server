@@ -18,9 +18,9 @@ import java.util.Optional;
  * @since 2-9-2017.
  */
 public final class SaradominGodsword extends PlayerMeleeStrategy {
-	private static final Animation ANIMATION = new Animation(7071, Animation.AnimationPriority.HIGH);
+	
 	private static final Graphic GRAPHIC = new Graphic(1220);
-
+	private static final Animation ANIMATION = new Animation(7071, Animation.AnimationPriority.HIGH);
 	private static final AttackModifier MODIFIER = new AttackModifier().accuracy(0.1).damage(0.8);
 
 	@Override

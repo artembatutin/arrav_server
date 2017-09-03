@@ -20,8 +20,9 @@ import java.util.Optional;
  * @since 2-9-2017.
  */
 public class SaradominSword extends PlayerMeleeStrategy {
-	private static final Animation ANIMATION = new Animation(11993, Animation.AnimationPriority.HIGH);
+	
 	private static final Graphic GRAPHIC = new Graphic(1194);
+	private static final Animation ANIMATION = new Animation(11993, Animation.AnimationPriority.HIGH);
 	private static final AttackModifier MODIFIER = new AttackModifier().accuracy(0.1);
 
 	@Override

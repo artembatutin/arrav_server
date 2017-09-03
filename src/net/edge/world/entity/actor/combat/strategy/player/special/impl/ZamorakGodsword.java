@@ -17,9 +17,11 @@ import java.util.Optional;
  * @since 2-9-2017.
  */
 public final class ZamorakGodsword extends PlayerMeleeStrategy {
+	
 	private static final Animation ANIMATION = new Animation(7070, Animation.AnimationPriority.HIGH);
 	private static final Graphic GRAPHIC = new Graphic(1221);
-
+	private static final Graphic GRAPHIC_VICTIM = new Graphic(2104);
+	private static final Graphic GRAPHIC_VICTIM_FAILED = new Graphic(339, 10);
 	private static final AttackModifier MODIFIER = new AttackModifier().accuracy(0.1).damage(0.4);
 
 	@Override
@@ -27,12 +29,12 @@ public final class ZamorakGodsword extends PlayerMeleeStrategy {
 		super.attack(attacker, defender, h);
 		if(h.isAccurate()) {
 			attacker.graphic(GRAPHIC);
-			defender.graphic(new Graphic(2104));
+			defender.graphic(GRAPHIC_VICTIM);
 			if(!defender.isFrozen() && defender.size() == 1) {
 				defender.freeze(20);
 			}
 		} else {
-			defender.graphic(new Graphic(339, 10));
+			defender.graphic(GRAPHIC_VICTIM_FAILED);
 		}
 	}
 
