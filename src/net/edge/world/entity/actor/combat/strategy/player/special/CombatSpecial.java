@@ -256,7 +256,7 @@ public enum CombatSpecial {
 //				};
 //			}
 //		},
-	ZAMORAK_GODSWORD(new irant[]{11700}, 50, new ZamorakGodsword()),
+	ZAMORAK_GODSWORD(new int[]{11700}, 50, new ZamorakGodsword()),
 	SARADOMIN_GODSWORD(new int[]{11698}, 60, new SaradominGodsword()),
 	DRAGON_CLAWS(new int[]{14484, 14486}, 50, new DragonClaws()),
 	DRAGON_DAGGER(new int[]{1215, 1231, 5680, 5698}, 25, new DragonDagger()),

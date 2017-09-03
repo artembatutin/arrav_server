@@ -17,9 +17,9 @@ import java.util.Optional;
  * @since 2-9-2017.
  */
 public final class AbyssalWhip extends PlayerMeleeStrategy {
-
-    private static final Animation ANIMATION = new Animation(11989, Animation.AnimationPriority.HIGH);
+    
     private static final Graphic GRAPHIC = new Graphic(2113);
+    private static final Animation ANIMATION = new Animation(11989, Animation.AnimationPriority.HIGH);
     private static final AttackModifier MODIFIER = new AttackModifier().accuracy(1.00).damage(0.375);
 
     @Override

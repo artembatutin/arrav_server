@@ -276,7 +276,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 				if(player.getMovementQueue().isRunning()) {
 					player.getMovementQueue().setRunning(false);
 				} else {
-					if(player.runEnergy <= 0) {
+					if(player.getRunEnergy() <= 0) {
 						break;
 					}
 					player.getMovementQueue().setRunning(true);

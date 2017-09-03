@@ -450,7 +450,7 @@ public final class PlayerSerialization {
 	}, new Token("run-energy") {
 		@Override
 		public Object toJson(Player p) {
-			return p.runEnergy;
+			return p.getRunEnergy();
 		}
 		
 		@Override
