@@ -22,8 +22,6 @@ public enum CombatSpecial {
 	//int[] ids, int amount, double strength, double accuracy, CombatType combat, WeaponInterface weapon
 		ABYSSAL_WHIP(new int[]{4151, 13444, 15441, 15442, 15443, 15444}, 50, new AbyssalWhip()),
 		ANCHOR(new int[]{10887}, 50, new Anchor()),
-		ZAMORAK_GODSWORD(new int[]{11700}, 50, new ZamorakGodsword()),
-		SARADOMIN_GODSWORD(new int[]{11698}, 60, new SaradominGodsword()),
 		SARADOMIN_SWORD(new int[]{11730}, 65, new SaradominSword()),
 //		DRAGON_2H_SWORD(new int[]{7158}, 60, 1, 1, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
 //			@Override
@@ -94,22 +92,6 @@ public enum CombatSpecial {
 	//			return new CombatHit(player, target, 2, CombatType.MELEE, true);
 	//		}
 	//	},
-	//	DRAGON_LONGSWORD(new int[]{1305}, 25, 1.15, 1, CombatType.MELEE, WeaponInterface.LONGSWORD) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(1058, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(248, 100));
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, true);
-	//		}
-	//	},
-	//	DRAGON_MACE(new int[]{1434}, 25, 1.50, 1.25, CombatType.MELEE, WeaponInterface.MACE) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(1060, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(251, 100));
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, true);
-	//		}
-	//	},
 	//	DRAGON_PICKAXE(new int[]{15259}, 100, 1, 1, CombatType.MELEE, WeaponInterface.PICKAXE) {
 	//		@Override
 	//		public CombatHit container(Player player, Actor target) {
@@ -129,25 +111,6 @@ public enum CombatSpecial {
 	//						Skills.refresh(player, Skills.ATTACK);
 	//						Skills.refresh(player, Skills.RANGED);
 	//						Skills.refresh(player, Skills.MAGIC);
-	//					}
-	//				}
-	//			};
-	//		}
-	//	},
-	//	DRAGON_SCIMITAR(new int[]{4587}, 55, 1, 1, CombatType.MELEE, WeaponInterface.SCIMITAR) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(12031, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(2118, 100));
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
-	//				@Override
-	//				public void postAttack(int counter) {
-	//					if(target.isPlayer() && counter != 0) {
-	//						Player victim = target.toPlayer();
-	//						Prayer.PROTECT_FROM_MAGIC.deactivate(victim);
-	//						Prayer.PROTECT_FROM_MELEE.deactivate(victim);
-	//						Prayer.PROTECT_FROM_MISSILES.deactivate(victim);
-	//						player.message("You have been injured");
 	//					}
 	//				}
 	//			};
@@ -271,30 +234,35 @@ public enum CombatSpecial {
 	//			return new CombatHit(player, target, 1, CombatType.RANGED, true);
 	//		}
 	//	},
-	//	DARKLIGHT(new int[]{6746}, 50, 1.15, 1, CombatType.MELEE, WeaponInterface.LONGSWORD) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(2890, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(483, 100));
-	//			return new CombatHit(player, target, 1, CombatType.MELEE, true) {
-	//				@Override
-	//				public void postAttack(int counter) {
-	//					if(!target.isPlayer()) {
-	//						return;
-	//					}
-	//					Skill[] skills = target.toPlayer().getSkills();
-	//					List<Skill> weaken = Arrays.asList(skills[Skills.ATTACK], skills[Skills.STRENGTH], skills[Skills.DEFENCE]);
-	//
-	//					weaken.forEach(skill -> {
-	//						int modifier = 1 + (skill.getLevel() / 100) * 5;
-	//						skill.decreaseLevel(modifier);
-	//					});
-	//				}
-	//			};
-	//		}
-	//	},
+//		DARKLIGHT(new int[]{6746}, 50, 1.15, 1, CombatType.MELEE, WeaponInterface.LONGSWORD) {
+//			@Override
+//			public CombatHit container(Player player, Actor target) {
+//				player.animation(new Animation(2890, Animation.AnimationPriority.HIGH));
+//				player.graphic(new Graphic(483, 100));
+//				return new CombatHit(player, target, 1, CombatType.MELEE, true) {
+//					@Override
+//					public void postAttack(int counter) {
+//						if(!target.isPlayer()) {
+//							return;
+//						}
+//						Skill[] skills = target.toPlayer().getSkills();
+//						List<Skill> weaken = Arrays.asList(skills[Skills.ATTACK], skills[Skills.STRENGTH], skills[Skills.DEFENCE]);
+//
+//						weaken.forEach(skill -> {
+//							int modifier = 1 + (skill.getLevel() / 100) * 5;
+//							skill.decreaseLevel(modifier);
+//						});
+//					}
+//				};
+//			}
+//		},
+	ZAMORAK_GODSWORD(new irant[]{11700}, 50, new ZamorakGodsword()),
+	SARADOMIN_GODSWORD(new int[]{11698}, 60, new SaradominGodsword()),
 	DRAGON_CLAWS(new int[]{14484, 14486}, 50, new DragonClaws()),
 	DRAGON_DAGGER(new int[]{1215, 1231, 5680, 5698}, 25, new DragonDagger()),
+	DRAGON_SCIMITAR(new int[]{4587}, 55, new DragonScimitar()),
+	DRAGON_LONGSWORD(new int[]{1305}, 25, new DragonLongsword()),
+	DRAGON_MACE(new int[]{1434}, 25, new DragonMace()),
 	BANDOS_GODSWORD(new int[]{11696}, 50, new BandosGodsword()),
 	ARMADYL_GODSWORD(new int[]{11694, 13450}, 50, new ArmadylGodsword()),
 	GRANITE_MAUL(new int[]{4153}, 50, new GraniteMaul()) {
