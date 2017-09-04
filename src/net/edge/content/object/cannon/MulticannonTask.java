@@ -135,7 +135,7 @@ public class MulticannonTask extends Task {
 		cannon.setElements(cannon.getElements() - 1);
 		new Projectile(cannon.getGlobalPos().move(1, 1), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), 53, 60, 20, 35, 30, cannon.player.getInstance(), CombatType.RANGED).sendProjectile();
 		Hit data = new Hit(damage, Hitsplat.NORMAL, HitIcon.CANON);
-		/*new Task(delay, false) {
+		new Task(2, false) {
 			@Override
 			protected void execute() {
 				victim.damage(data);
@@ -144,7 +144,7 @@ public class MulticannonTask extends Task {
 				}
 				this.cancel();
 			}
-		}.submit();*/
+		}.submit();
 	}
 	
 	private Actor getVictim() {

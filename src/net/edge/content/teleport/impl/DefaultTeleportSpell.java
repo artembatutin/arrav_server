@@ -104,10 +104,6 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 				player.message("You are already teleporting.");
 				return false;
 			}
-			if(player.getCombat().inCombat()) {
-				player.message("You can't teleport while being in combat.");
-				return false;
-			}
 		}
 		
 		DefaultTeleportSpell spell = new DefaultTeleportSpell(destination, type);

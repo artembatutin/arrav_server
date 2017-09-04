@@ -77,6 +77,13 @@ public class Multicannon extends DynamicObject {
 	 */
 	public void fire() {
 		if(getElements() == 0) {
+			if(player.getInventory().contains(2)) {
+				int amount = player.getInventory().computeAmountForId(2) > 30 ? 30 : player.getInventory().computeAmountForId(2);
+				player.getInventory().remove(new Item(2, amount));
+				this.setElements(this.getElements() + amount);
+				player.message("You charge the cannon with " + amount + " cannonballs.");
+				return;
+			}
 			player.message("There is no cannon balls to fire with.");
 			return;
 		}
@@ -251,6 +258,7 @@ public class Multicannon extends DynamicObject {
 				}
 				inv.remove(new Item(2, am));
 				cannon.setElements(cannon.getElements() + am);
+				player.message("You charge the cannon with " + am + " cannonballs.");
 				return true;
 			}
 		};

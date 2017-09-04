@@ -2,6 +2,7 @@ package net.edge.action.impl;
 
 import net.edge.action.Action;
 import net.edge.content.item.*;
+import net.edge.content.object.cannon.Multicannon;
 import net.edge.content.skill.herblore.Herb;
 import net.edge.content.skill.prayer.PrayerBoneBury;
 import net.edge.content.skill.slayer.Slayer;
@@ -38,6 +39,7 @@ public abstract class ItemAction extends Action {
 		MithrilSeed.action();
 		SummoningData.action();
 		ExperienceLamp.handleItem();
+		Multicannon.action();
 	}
 	
 }
