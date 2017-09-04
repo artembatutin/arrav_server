@@ -64,6 +64,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 	
 	@Override
 	public void preDeath() {
+		getActor().getCombat().reset(true);
 		getActor().getActivityManager().disable();
 		getActor().animation(new Animation(0x900, Animation.AnimationPriority.HIGH));
 		getActor().setSkillAction(Optional.empty());
@@ -203,7 +204,6 @@ public final class PlayerDeath extends ActorDeath<Player> {
 	@Override
 	public void postDeath() {
 		getActor().closeWidget();
-		getActor().getCombat().reset();
 		getActor().getCombat().getDamageCache().clear();
 		getActor().getTolerance().reset();
 		getActor().getSpecialPercentage().set(100);

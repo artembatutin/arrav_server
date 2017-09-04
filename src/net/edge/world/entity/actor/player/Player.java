@@ -1437,7 +1437,7 @@ public final class Player extends Actor {
 	public void setAutocastSpell(CombatSpell autocastSpell) {
 		this.autocastSpell = autocastSpell;
 		WeaponInterface.setStrategy(this);
-		combat.reset();
+		combat.reset(false);
 	}
 	
 	/**

@@ -40,7 +40,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     @Override
     public boolean canAttack(Player attacker, Actor defender) {
         if (!Requirement.canEquip(attacker, attacker.getEquipment().get(Equipment.WEAPON_SLOT))) {
-            attacker.getCombat().reset();
+            attacker.getCombat().reset(false);
             return false;
         }
 
@@ -53,7 +53,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
         } else {
             attacker.out(new SendMessage(getNoAmmunitionMessage(rangedDefinition.getType())));
         }
-        attacker.getCombat().reset();
+        attacker.getCombat().reset(false);
         return false;
     }
 

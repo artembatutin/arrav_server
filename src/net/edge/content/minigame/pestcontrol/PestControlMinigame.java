@@ -115,7 +115,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 		player.getAttr().get("master_archery").set(false);
 		CombatSpecial.restore(player, 100);
 		Skills.restoreAll(player);
-		player.getCombat().reset();
+		player.getCombat().reset(true);
 		player.getInventory().remove(new Item(1511, 28));//removing logs.
 	}
 	

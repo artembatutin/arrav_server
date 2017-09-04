@@ -49,9 +49,11 @@ public class Combat<T extends Actor> {
     }
 
     public void attack(Actor defender) {
-        within = strategy != null && defender != null && strategy.withinDistance(attacker, defender);
-        if(!canAttack(defender)) {
-            attacker.getMovementQueue().reset();
+        if(defender == null) {
+            return;
+        }
+        within = strategy != null && strategy.withinDistance(attacker, defender);
+        if (!CombatUtil.canAttack(attacker, defender)) {
             return;
         }
         this.defender = defender;
@@ -62,13 +64,6 @@ public class Combat<T extends Actor> {
 
     public void tick() {
         updateListeners();
-
-        if (defender != null) {
-            if (!defender.getPosition().withinDistance(attacker.getPosition(), 45)) {
-                reset();
-            }
-        }
-
         for (int index = 0; index < cooldowns.length; index++) {
             if (cooldowns[index] > 0) {
                 cooldowns[index]--;
@@ -228,7 +223,7 @@ public class Combat<T extends Actor> {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
             defender.getCombat().damageQueue.clear();
-            reset();
+            reset(true);
             return;
         }
 
@@ -240,7 +235,7 @@ public class Combat<T extends Actor> {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
             defender.getCombat().damageQueue.clear();
-            reset();
+            reset(true);
             return;
         }
 
@@ -256,20 +251,21 @@ public class Combat<T extends Actor> {
         lastBlocked.reset();
         lastAttacker = attacker;
         listeners.forEach(listener -> listener.block(attacker, defender, hit, combatType));
+        if (defender.getCombat().getDefender() == null && defender.isAutoRetaliate()) {
+            defender.getCombat().attack(attacker);
+        } else if(defender.isMob() && !defender.getCombat().isUnderAttack()) {
+            System.out.println("under hit");
+            defender.getCombat().attack(attacker);
+        }
     }
 
     private void hit(Actor defender, Hit hit, CombatStrategy<? super T> strategy) {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
             defender.getCombat().damageQueue.clear();
-            reset();
+            reset(true);
             return;
         }
-
-        if (defender.getCombat().getDefender() == null && defender.isAutoRetaliate()) {
-            defender.getCombat().attack(attacker);
-        }
-
         defender.getCombat().block(attacker, hit, strategy.getCombatType());
         if (strategy.getCombatType() != CombatType.MAGIC || defender.isMob()) {
             defender.animation(CombatUtil.getBlockAnimation(defender));
@@ -283,7 +279,7 @@ public class Combat<T extends Actor> {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
             defender.getCombat().damageQueue.clear();
-            reset();
+            reset(true);
             return;
         }
 
@@ -301,8 +297,7 @@ public class Combat<T extends Actor> {
         T defender = this.attacker;
         listeners.forEach(listener -> listener.onDeath(attacker, defender, hit));
         defender.getMovementQueue().reset();
-        attacker.getCombat().reset();
-        reset();
+        reset(true);
     }
 
     private void finishIncoming(Actor attacker) {
@@ -322,13 +317,19 @@ public class Combat<T extends Actor> {
         defender.getCombat().finishIncoming(defender);
     }
 
-    public void reset() {
+    public void reset(boolean fullCombat) {
         if (defender != null) {
-            defender = null;
+            if(fullCombat) {
+                Actor def = defender;
+                defender = null;
+                def.getCombat().reset(false);
+            } else {
+                defender = null;
+            }
             attacker.faceEntity(null);
             attacker.setFollowing(false);
-            attacker.getMovementQueue().reset();
         }
+        attacker.getMovementQueue().reset();
     }
 
     public void addModifier(AttackModifier modifier) {

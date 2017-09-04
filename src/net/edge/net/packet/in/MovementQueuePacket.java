@@ -35,13 +35,13 @@ public final class MovementQueuePacket implements IncomingPacket {
 		
 		if(opcode == 248) {
 			player.setFollowing(false);
-			player.getCombat().reset();
+			player.getCombat().reset(false);
 			size -= 14;
 		}
 		
 		if(opcode == 164) {
 			player.setFollowing(false);
-			player.getCombat().reset();
+			player.getCombat().reset(false);
 		} else if(opcode == 98) {
 		
 		}
@@ -54,7 +54,7 @@ public final class MovementQueuePacket implements IncomingPacket {
 		if(player.getDialogueBuilder() != null && !player.getMovementQueue().isLockMovement())
 			player.getDialogueBuilder().interrupt();
 		
-		player.getCombat().reset();
+		player.getCombat().reset(false);
 		
 		player.closeWidget();
 		if(player.getMarketShop() != null) {

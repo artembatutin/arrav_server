@@ -446,7 +446,7 @@ public abstract class Minigame {
 	public final void restore(Player player) {
 		player.resetOverloadEffect(true);
 		player.closeWidget();
-		player.getCombat().reset();
+		player.getCombat().reset(true);
 		player.getCombat().getDamageCache().clear();
 		player.getTolerance().reset();
 		player.getSpecialPercentage().set(100);

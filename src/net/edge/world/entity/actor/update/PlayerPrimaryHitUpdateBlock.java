@@ -30,8 +30,7 @@ public final class PlayerPrimaryHitUpdateBlock extends PlayerUpdateBlock {
 		msg.putShort(other.getCurrentHealth() / 10);
 		if(local) {
 			return change;
-		}//dude, the other player hit queue is 0 so it returns null is how it looks like
-		//and here its the other player. nop
+		}
 		return -1;
 	}
 }

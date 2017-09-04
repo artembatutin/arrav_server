@@ -47,13 +47,13 @@ public abstract class MagicSpell {
 		
 		if(player.getSkills()[Skills.MAGIC].getLevel() < level) {
 			player.message("You need a Magic level of " + level + " to cast this spell.");
-			player.getCombat().reset();
+			player.getCombat().reset(false);
 			return false;
 		}
 		
 		if(equipmentRequired().isPresent() && !player.getEquipment().containsAll(equipmentRequired().get())) {
 			player.message("You do not have the required equipment to cast this spell.");
-			player.getCombat().reset();
+			player.getCombat().reset(false);
 			return false;
 		}
 		

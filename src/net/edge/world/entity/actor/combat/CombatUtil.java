@@ -1,5 +1,7 @@
 package net.edge.world.entity.actor.combat;
 
+import net.edge.content.minigame.Minigame;
+import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.net.packet.out.SendMessage;
 import net.edge.util.rand.RandomUtils;
@@ -17,9 +19,11 @@ import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.AntifireDetails;
+import net.edge.world.locale.loc.Location;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -230,13 +234,44 @@ public final class CombatUtil {
 		boolean valid = validate(attacker) && validate(defender) && attacker.getInstance() == defender.getInstance();
 		boolean multi = attacker.inMulti() && defender.inMulti();
 		boolean attacked = defender.getCombat().isUnderAttack();
+		if(!valid) {
+			attacker.getCombat().reset(true);
+			return false;
+		}
+		if (!defender.getPosition().withinDistance(attacker.getPosition(), 45)) {
+			attacker.getCombat().reset(true);
+			return false;
+		}
+		if(attacked && !multi && !attacker.getCombat().isAttacking(defender)) {
+			if(attacker.isPlayer()) {
+				Player player = attacker.toPlayer();
+				player.message("You can't disturb this fight.");
+			}
+			attacker.getCombat().reset(true);
+			return false;
+		}
 		if(attacker.isPlayer() && defender.isPlayer()) {
-			if(!defender.inWilderness() || !attacker.inWilderness()) {
-				attacker.toPlayer().message("This player isn't in wilderness.");
-				return false;
+			Player player = attacker.toPlayer();
+			Player victim = defender.toPlayer();
+			Optional<Minigame> optional = MinigameHandler.getMinigame(player);
+			if(!optional.isPresent()) {
+				if(Location.inFunPvP(attacker) && Location.inFunPvP(victim)) {
+					return true;
+				}
+				if(!attacker.inWilderness() || !victim.inWilderness()) {
+					player.message("Both you and " + victim.getFormatUsername() + " need to be in the wilderness to fight!");
+					player.getCombat().reset(true);
+					return false;
+				}
+				int combatDifference = CombatUtil.combatLevelDifference(player.determineCombatLevel(), victim.determineCombatLevel());
+				if(combatDifference > player.getWildernessLevel() || combatDifference > victim.getWildernessLevel()) {
+					player.message("Your combat level difference is too great to attack that player here.");
+					player.getCombat().reset(true);
+					return false;
+				}
 			}
 		}
-		return !(attacked && !multi) && valid;
+		return true;
 	}
 	
 	private static boolean validate(Actor actor) {

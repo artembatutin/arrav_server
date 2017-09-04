@@ -48,7 +48,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 			return true;
 		}
 		attacker.message("You need some runes to cast this spell.");
-		attacker.getCombat().reset();
+		attacker.getCombat().reset(false);
 		return false;
 	}
 
@@ -99,7 +99,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 	public void finishOutgoing(Player attacker, Actor defender) {
 		if(!attacker.isAutocast()) {
 			WeaponInterface.setStrategy(attacker);
-			attacker.getCombat().reset();
+			attacker.getCombat().reset(false);
 		}
 	}
 
