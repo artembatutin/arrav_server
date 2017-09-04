@@ -1,6 +1,7 @@
 package net.edge.world.entity.actor.mob;
 
 import com.google.common.collect.ImmutableMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.content.skill.Skills;
 import net.edge.task.Task;
 import net.edge.world.World;
@@ -29,6 +30,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -42,13 +44,31 @@ public abstract class Mob extends Actor {
 	private static final ImmutableMap<Integer, Supplier<CombatStrategy<Mob>>> STRATEGIES = ImmutableMap.of(50, KingBlackDragonStrategy::new);
 	
 	/**
+	 * A mapping which contains all the custom npcs by their id.
+	 */
+	public static final Int2ObjectArrayMap<Function<Position, Mob>> CUSTOM_MOBS = new Int2ObjectArrayMap<>(
+			ImmutableMap.<Integer, Function<Position, Mob>>builder()
+					/*.put(13447, s -> new Nex())
+					.put(6247, s -> new CommanderZilyana())
+					.put(6260, s -> new GeneralGraardor())
+					.put(6222, s -> new KreeArra())
+					.put(9177, s -> new SkeletalHorror())
+					.put(8133, s -> new CorporealBeast())
+					.put(8549, Phoenix::new)
+					.put(3847, SeaTrollQueen::new)
+					.put(1158, KalphiteQueen::new)
+					.put(3340, GiantMole::new)
+					.put(14301, Glacor::new
+					)*/.build());
+	
+	/**
 	 * Gets a certain npc by the specified {@code id} and supplies it's position.
 	 * @param id  the id to get the npc by.
 	 * @param pos the position to supply this npc to.
 	 * @return the npc.
 	 */
 	public static Mob getNpc(int id, Position pos) {
-		Mob mob = new DefaultMob(id, pos);
+		final Mob mob = CUSTOM_MOBS.containsKey(id) ? CUSTOM_MOBS.get(id).apply(pos).create() : new DefaultMob(id, pos);
 		Combat<Mob> combat = mob.getCombat();
 		CombatListener<Mob> listener = CombatListenerDispatcher.NPC_LISTENERS.get(id);
 		if(listener != null) {

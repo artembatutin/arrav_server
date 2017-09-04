@@ -98,14 +98,12 @@ public enum ClanChatUpdate {
 	LOOT_SHARE_MODIFICATION() {
 		@Override
 		public void update(ClanMember member) {
-			// TODO Auto-generated method stub
 			
 		}
 	},
 	COIN_SHARE_MODIFICATION() {
 		@Override
 		public void update(ClanMember member) {
-			// TODO Auto-generated method stub
 			
 		}
 	};

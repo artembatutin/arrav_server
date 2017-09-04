@@ -67,7 +67,7 @@ public abstract class Trap {
 	 * @param mob the mob to trap.
 	 */
 	protected void trap(Mob mob) {
-		if(!this.getState().equals(TrapState.PENDING) || !canCatch(mob) || this.isAbandoned()) {
+		if(!this.getState().equals(TrapState.PENDING) || !canCatch(mob)) {
 			return;
 		}
 		onCatch(mob);

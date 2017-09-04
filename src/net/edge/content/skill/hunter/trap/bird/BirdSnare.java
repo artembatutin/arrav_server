@@ -93,7 +93,7 @@ public final class BirdSnare extends Trap {
 
 			@Override
 			public void execute() {
-				if(!getState().equals(TrapState.PENDING)) {
+				if(!getState().equals(TrapState.CATCHING)) {
 					this.cancel();
 					return;
 				}
@@ -132,14 +132,14 @@ public final class BirdSnare extends Trap {
 
 	@Override
 	public void onSequence(Task t) {
-		for(Mob mob : World.get().getMobs()) {
+		if(this.isAbandoned()) {
+			return;
+		}
+		for(Mob mob : player.getLocalMobs()) {
 			if(mob == null || mob.isDead()) {
 				continue;
 			}
 			if(this.getObject().getGlobalPos().withinDistance(mob.getPosition(), DISTANCE_PORT)) {
-				if(this.isAbandoned()) {
-					return;
-				}
 				trap(mob);
 			}
 		}

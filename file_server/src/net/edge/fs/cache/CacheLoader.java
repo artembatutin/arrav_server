@@ -82,8 +82,7 @@ public class CacheLoader {
 	}
 
 	/**
-	 * Attempts to return the file with the {@link path} requested.
-	 * 
+	 * Attempts to return the file with the {@code path} requested.
 	 * @param path		The path of the file requested.
 	 * @return			The file requested.
 	 */

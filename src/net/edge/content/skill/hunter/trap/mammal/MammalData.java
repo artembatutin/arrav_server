@@ -1,5 +1,6 @@
 package net.edge.content.skill.hunter.trap.mammal;
 
+import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.item.Item;
 
 /**
@@ -52,9 +53,9 @@ public enum MammalData {
 	}
 	
 	public static void action() {
-		//		for(MammalData data : MammalData.values()) {
-		//			Mob.CUSTOM_MOBS.put(data.npcId, s -> new Mammal(data.npcId, s, data)); TODO: mammals lol
-		//		}
+		for(MammalData data : MammalData.values()) {
+			Mob.CUSTOM_MOBS.put(data.npcId, s -> new Mammal(data.npcId, s, data));
+		}
 	}
 	
 }

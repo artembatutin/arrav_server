@@ -40,8 +40,8 @@ public enum ItemCombine {
 	FULL_SLAYER_HELMET(new Item(15492), new Item(15488), new Item(15490), new Item(13263)) {
 		@Override
 		public boolean requirement(Player player) {
-			if(player.getAttr().get("slayer_tasks").getInt() < 200) {
-				player.message("You must complete at least 200 slayer tasks.");
+			if(player.getAttr().get("slayer_tasks").getInt() < 35) {
+				player.message("You must complete at least 35 slayer tasks.");
 				return false;
 			}
 			player.message("Don't attempt to color this item.");

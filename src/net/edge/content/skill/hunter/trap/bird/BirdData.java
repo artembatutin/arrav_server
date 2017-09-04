@@ -1,5 +1,6 @@
 package net.edge.content.skill.hunter.trap.bird;
 
+import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.item.Item;
 
 /**
@@ -63,9 +64,9 @@ public enum BirdData {
 	}
 
 	public static void action() {
-		//		for(BirdData data : BirdData.values()) {
-		//			Mob.CUSTOM_MOBS.put(data.getNpcId(), s -> new Bird(data.getNpcId(), s, data)); TODO: birds hehe
-		//		}
+		for(BirdData data : BirdData.values()) {
+			Mob.CUSTOM_MOBS.put(data.getNpcId(), s -> new Bird(data.getNpcId(), s, data));
+		}
 	}
 
 }

@@ -7,6 +7,8 @@ import net.edge.content.dialogue.impl.StatementDialogue;
 import net.edge.content.item.FoodConsumable;
 import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.Minigame;
+import net.edge.content.teleport.TeleportType;
+import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.net.packet.out.SendMinimapState;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.World;
@@ -197,16 +199,16 @@ public final class BarrowsMinigame extends Minigame {
 						item--;
 					}
 				}
-				
 				Position position = new Position(BarrowsData.AHRIM.getLocation().getX(), BarrowsData.AHRIM.getLocation().getY(), BarrowsData.AHRIM.getLocation().getZ());
+				DefaultTeleportSpell teleport = new DefaultTeleportSpell(position, TeleportType.NORMAL);
 				player.out(new SendMinimapState(0));
 				if(loot.isEmpty())
 					player.message("You open the chest and it's... empty?");
 				else {
 					player.message("You grabbed one thing from the chest and a magical force teleported you.");
-					//					teleport.attach(() -> player.getInventory().addOrDrop(loot)); FIXME: teleport attachments
+					teleport.attach(() -> player.getInventory().addOrDrop(loot));
 				}
-				//				DefaultTeleportSpell.teleport(player, teleport); TODO: add telepors
+				DefaultTeleportSpell.teleport(player, teleport);
 				player.getMinigameContainer().getBarrowsContainer().getKilledBrothers().clear();
 				
 				return true;
