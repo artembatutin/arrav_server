@@ -49,10 +49,11 @@ public class Combat<T extends Actor> {
     }
 
     public void attack(Actor defender) {
-        if (!CombatUtil.canAttack(attacker, defender)) {
+        within = strategy != null && defender != null && strategy.withinDistance(attacker, defender);
+        if(!canAttack(defender)) {
+            attacker.getMovementQueue().reset();
             return;
         }
-
         this.defender = defender;
         this.lastDefender = defender;
         attacker.faceEntity(defender);
@@ -220,7 +221,6 @@ public class Combat<T extends Actor> {
                 return false;
             }
         }
-
         return true;
     }
 

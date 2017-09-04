@@ -227,7 +227,16 @@ public final class CombatUtil {
 	}
 	
 	public static boolean canAttack(Actor attacker, Actor defender) {
-		return validate(attacker) && validate(defender) && attacker.getInstance() == defender.getInstance();
+		boolean valid = validate(attacker) && validate(defender) && attacker.getInstance() == defender.getInstance();
+		boolean multi = attacker.inMulti() && defender.inMulti();
+		boolean attacked = defender.getCombat().isUnderAttack();
+		if(attacker.isPlayer() && defender.isPlayer()) {
+			if(!defender.inWilderness() || !attacker.inWilderness()) {
+				attacker.toPlayer().message("This player isn't in wilderness.");
+				return false;
+			}
+		}
+		return !(attacked && !multi) && valid;
 	}
 	
 	private static boolean validate(Actor actor) {
