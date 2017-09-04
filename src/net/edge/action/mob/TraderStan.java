@@ -55,5 +55,8 @@ public class TraderStan extends ActionInitializer {
 				return true;
 			}
 		};
+		e.registerFirst(4650);
+		e.registerSecond(4650);
+		e.registerThird(4650);
 	}
 }

@@ -237,7 +237,7 @@
 	  "z": 0
 	},
 	"random-walk": true,
-	"walk-radius": 3
+	"walk-radius": 5
   },
   {
 	"id": 4651,
