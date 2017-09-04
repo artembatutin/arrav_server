@@ -645,6 +645,7 @@ public final class Player extends Actor {
 			World.get().setStaffCount(World.get().getStaffCount() + 1);
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 		}
+		System.out.println(this + " logged in.");
 	}
 	
 	@Override

@@ -49,7 +49,7 @@ class ActorFollowTask extends Task {
 	@Override
 	public void execute() {
 		//First checks.
-		boolean combat = character.getCombat().getLastDefender().same(leader);
+		boolean combat = character.getCombat() != null && character.getCombat().getLastDefender() != null && character.getCombat().getLastDefender().same(leader);
 		if(character.getState() != EntityState.ACTIVE || leader.getState() != EntityState.ACTIVE || !character.isFollowing() || character.isDead() || leader.isDead()) {//Death and away check.
 			if(!combat) {
 				character.faceEntity(null);

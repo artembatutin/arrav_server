@@ -81,11 +81,11 @@ public class Spellbook extends ActionInitializer {
 			@Override
 			public boolean click(Player player, int button) {
 				player.widget(-15);
-				if(player.getWildernessActivity().elapsed(5, TimeUnit.MINUTES)) {
+				//if(player.getWildernessActivity().elapsed(5, TimeUnit.MINUTES)) {
 					player.message("Wilderness map has been updated! Next update in 5 minutes.");
 					player.out(new SendWildernessActivity(WildernessActivity.getPlayers()));
 					player.getWildernessActivity().reset();
-				}
+				//}
 				return true;
 			}
 		};

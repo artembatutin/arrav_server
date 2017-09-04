@@ -83,7 +83,6 @@ public final class GameSession extends Session {
 	
 	@Override
 	public void terminate() {
-		System.out.println("Game session terminating " + player);
 		if(player.getState() != EntityState.AWAITING_REMOVAL && player.getState() != EntityState.INACTIVE) {
 			World.get().queueLogout(player);
 		}

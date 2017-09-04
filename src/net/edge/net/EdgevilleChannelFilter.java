@@ -72,7 +72,6 @@ public final class EdgevilleChannelFilter extends AbstractRemoteAddressFilter<In
 		String address = address(remoteAddress);
 		ChannelFuture future = ctx.channel().closeFuture(); // Remove address once disconnected.
 		future.addListener(it -> connections.remove(address));
-		System.out.println(address);
 		connections.add(address);
 	}
 	

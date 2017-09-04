@@ -68,7 +68,6 @@ public final class OnDemandRequest extends Request {
 
 				getChannel().writeAndFlush(new OnDemandResponse(chunkData, fileType, fileId, length, chunk));
 			}
-		
 		} else {
 			getChannel().close();
 		}

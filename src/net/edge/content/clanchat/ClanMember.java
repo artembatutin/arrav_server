@@ -192,9 +192,7 @@ public final class ClanMember {
 		} else {
 			rank = ClanChatRank.forAction(action, false, true);
 		}
-		System.out.println(rank.isPresent());
 		if(rank.isPresent()) {
-			System.out.println(rank.get());
 			if(member.getRank().getValue() < rank.get().getValue()) {
 				member.getPlayer().out(new SendClanMessage("", "You were promoted to " + rank.get().toString().toLowerCase() + ".", clan.getName(), Rights.PLAYER));
 				member.setRank(rank.get());

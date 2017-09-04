@@ -89,7 +89,6 @@ public class CacheLoader {
 	 */
 	public ByteBuf request(String path) {
 		try {
-			System.out.println("request: "+ path);
 			if (path.startsWith("crc")) {
 				return getCrcTable();
 			} else if (path.startsWith("title")) {

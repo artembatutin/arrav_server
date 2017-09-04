@@ -46,6 +46,8 @@ public final class CacheArchive {
 	 * @throws IOException If some I/O exception occurs.
 	 */
 	public static CacheArchive decode(ByteBuf data) throws IOException {
+		if(data == null)
+			return null;
 		int length = Misc.getMedium(data);
 		int compressedLength = Misc.getMedium(data);
 

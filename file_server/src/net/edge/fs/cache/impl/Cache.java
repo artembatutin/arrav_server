@@ -83,6 +83,8 @@ public final class Cache {
 	 */
 	public ByteBuf get(int indexId) throws IOException {
 		CacheIndex index = readIndex(indexId);
+		if(index == null)
+			return null;
 		long position = (long) index.getId() * SECTOR_HEADER_SIZE;
 		Preconditions.checkArgument(sectorChannel.size() >= position + SECTOR_SIZE);
 		byte[] data = new byte[index.getLength()];

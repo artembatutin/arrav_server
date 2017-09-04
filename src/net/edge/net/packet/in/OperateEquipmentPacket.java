@@ -27,7 +27,6 @@ public class OperateEquipmentPacket implements IncomingPacket {
 		int slot = payload.getShort(ByteTransform.A);
 		Item item = player.getEquipment().get(slot);
 		
-		System.out.println("slot = " + slot + " option = " + option);
 		if(item == null || Item.valid(item)) {
 			return;
 		}
@@ -42,17 +41,17 @@ public class OperateEquipmentPacket implements IncomingPacket {
 			case 2564:
 			case 2566: //Ring of dueling
 				if(option == 1) {
-					System.out.println(" to Duel Arena");
+					//TODO: TO DUEL ARENA
 				}
 				if(option == 2) {
-					System.out.println(" to Castle Wars");
+					//TODO: TO CASTLE WARS
 				}
 				if(option == 3) {
-					System.out.println(" to Clan Wars");
+					//TODO: TO CLAN WARS
 				}
 				break;
 			case 11283:
-				System.out.println("Dragonfire execute");
+					//TODO: TO DRAGON FIRE EXECUTE
 				break;
 			case 1706:
 			case 1708:
@@ -60,16 +59,16 @@ public class OperateEquipmentPacket implements IncomingPacket {
 			case 1712:
 			case 10362:
 				if(option == 1) {
-					System.out.println(" to Edgeville");
+					//TODO: TO EDGEVILLE
 				}
 				if(option == 2) {
-					System.out.println(" to Karamja");
+					//TODO: TO KARAMJA
 				}
 				if(option == 3) {
-					System.out.println(" to Draynor Village");
+					//TODO: TO DRAYNOR
 				}
 				if(option == 4) {
-					System.out.println(" to Al-Kharid");
+					//TODO: TO AL-HARID
 				}
 				break;
 			default:

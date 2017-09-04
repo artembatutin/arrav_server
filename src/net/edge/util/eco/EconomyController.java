@@ -19,7 +19,6 @@ public class EconomyController {
 		File[] folder = new File("./data/players/").listFiles();
 		controller.start();
 		for(File f : folder) {
-			System.out.println(f.toString());
 			if(!f.toString().contains("json"))
 				continue;
 			f = Paths.get(f.toString()).toFile();

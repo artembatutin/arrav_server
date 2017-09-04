@@ -35,7 +35,6 @@ public final class DropItemPacket implements IncomingPacket {
 		int slot = payload.getShort(false, ByteTransform.A);
 		if(slot < 0 || id < 0)
 			return;
-		System.out.println(id);
 		Item item = player.getInventory().get(slot);
 		if(item == null || item.getId() != id)
 			return;
@@ -70,7 +69,6 @@ public final class DropItemPacket implements IncomingPacket {
 		}
 		int amount = ItemDefinition.DEFINITIONS[id].isStackable() ? item.getAmount() : 1;
 		int removed = player.getInventory().remove(new Item(id, amount), slot);
-		System.out.println(removed);
 		if(removed == 1) {//if removed 1 slot.
 			player.getRegion().ifPresent(r -> r.register(new GroundItem(new Item(id, amount), player.getPosition(), player)));
 		} else {

@@ -413,7 +413,6 @@ public final class MobDefinition {
 			boolean changed = false;
 			while((inputLine = in.readLine()) != null) {
 				if(inputLine.contains("**[[") && inputLine.contains("Common")) {
-					System.out.println("Common: " + def.getName());
 					link(def, def.getName() + "_(Common)");
 					return;
 				}

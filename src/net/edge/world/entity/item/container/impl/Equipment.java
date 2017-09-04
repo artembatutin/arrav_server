@@ -254,7 +254,6 @@ public final class Equipment extends ItemContainer {
 		CombatListenerDispatcher.CombatListenerSet listenerSet = CombatListenerDispatcher.ITEM_LISTENERS.get(equipItem.getId());
 		
 		if(listenerSet != null && player.getEquipment().containsAll(listenerSet.set)) {
-			System.out.println("added listener");
 			player.getCombat().addListener(listenerSet.listener);
 		}
 		return true;
@@ -308,7 +307,6 @@ public final class Equipment extends ItemContainer {
 			CombatListenerDispatcher.CombatListenerSet listenerSet = CombatListenerDispatcher.ITEM_LISTENERS.get(unequip.getId());
 			
 			if(listenerSet != null && !player.getEquipment().containsAll(listenerSet.set)) {
-				System.out.println("removed listener");
 				player.getCombat().removeListener(listenerSet.listener);
 			}
 			return true;

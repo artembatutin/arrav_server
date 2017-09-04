@@ -155,7 +155,6 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	 * Wrties a closed response to the login channel.
 	 */
 	private void write(ChannelHandlerContext ctx, LoginCode response) {
-		System.out.println("written: " + response);
 		Channel channel = ctx.channel();
 		LoginResponse message = new LoginResponse(response);
 		ByteBuf initialMessage = ctx.alloc().buffer(8).writeLong(0); // Write initial message.

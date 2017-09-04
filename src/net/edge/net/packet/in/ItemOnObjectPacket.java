@@ -45,9 +45,6 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 		int itemId = payload.getShort(false);
 		Item item = player.getInventory().get(slot);
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
-		if(player.getRights().equal(Rights.ADMINISTRATOR) && Application.DEBUG) {
-			System.out.println("Item ID: " + itemId + " on Object id: " + objectId);
-		}
 		if(item == null || container != 3214 || objectId < 0 || objectY < 0 || slot < 0 || objectX < 0 || itemId < 0) {
 			return;
 		}

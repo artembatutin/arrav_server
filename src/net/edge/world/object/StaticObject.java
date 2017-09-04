@@ -18,7 +18,7 @@ public class StaticObject extends GameObject {
 	private final Region region;
 	
 	/**
-	 * The packed coordinates (local XY and height) for this object.
+	 * The packed coordinates (local X Y and height) for this object.
 	 */
 	private final int packedCoordinates;
 	
