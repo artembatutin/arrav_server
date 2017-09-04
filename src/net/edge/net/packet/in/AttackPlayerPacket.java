@@ -59,7 +59,6 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		if(spell == null || index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !checkAttack(player, victim)) {
 			return;
 		}
-		
 		player.getCombat().setStrategy(new PlayerMagicStrategy(spell));
 		player.getCombat().attack(victim);
 	}
@@ -68,13 +67,16 @@ public final class AttackPlayerPacket implements IncomingPacket {
 	 * Attempts to attack a player with any other form of combat such as melee
 	 * or ranged.
 	 * @param player  the player to attempt to attack.
-	 * @param payload the payloadfer for reading the sent data.
+	 * @param payload the payload for reading the sent data.
 	 */
 	private void attackOther(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
 		if(index < 0 || index > World.get().getPlayers().capacity() || !checkAttack(player, victim))
 			return;
+		if(!checkAttack(player, victim)) {
+			return;
+		}
 		player.getCombat().attack(victim);
 	}
 	
@@ -120,7 +122,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 			}
 			int combatDifference = CombatUtil.combatLevelDifference(attacker.determineCombatLevel(), victim.determineCombatLevel());
 			if(combatDifference > attacker.getWildernessLevel() || combatDifference > victim.getWildernessLevel()) {
-				attacker.message("Your combat level " + "difference is too great to attack that player here.");
+				attacker.message("Your combat level difference is too great to attack that player here.");
 				attacker.getMovementQueue().reset();
 				return false;
 			}
