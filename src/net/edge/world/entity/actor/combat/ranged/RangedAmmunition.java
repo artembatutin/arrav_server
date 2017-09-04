@@ -6,6 +6,7 @@ import net.edge.world.Projectile;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatImpact;
 import net.edge.world.entity.actor.combat.CombatType;
+import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.projectile.CombatProjectile;
 import net.edge.world.entity.item.Item;
 
@@ -158,7 +159,8 @@ public enum RangedAmmunition {
         }
 
         if (id > 0) {
-            Projectile projectile = new Projectile(attacker, defender, id, 64, 46, 40, 31, CombatType.RANGED);
+            int speed = 56 + (int) attacker.getPosition().getDistance(defender.getPosition());
+            Projectile projectile = new Projectile(attacker, defender, id, speed, 38, 43, 40, CombatType.RANGED);
             projectile.sendProjectile();
         }
     }
