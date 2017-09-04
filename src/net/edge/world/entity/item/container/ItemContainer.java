@@ -827,7 +827,7 @@ public class ItemContainer implements Iterable<Item> {
 			Item itemNew = items[newIndex];
 			
 			//precaution, dragging same stackable item.
-			if(itemOld != null && itemNew != null) {
+			if(itemOld != null && itemNew != null && oldIndex != newIndex) {
 				if(itemNew.getId() == itemOld.getId()) {
 					if(itemOld.getDefinition() != null && itemNew.getDefinition() != null) {
 						if(itemOld.getDefinition().isStackable() && itemNew.getDefinition().isStackable()) {

@@ -55,7 +55,7 @@ public class Donating extends ConnectionUse {
 	@Override
 	public void append(Connection con) throws SQLException {
 		boolean received = false;
-		PreparedStatement st = con.prepareStatement("SELECT * FROM purchase_history WHERE LOWER(username) = ? and claimed = 0 and payment_status = 'Completed'");
+		PreparedStatement st = con.prepareStatement("SELECT * FROM purchase_history WHERE LOWER(username) = ? and claimed = 0");
 		st.setString(1, player.credentials.username.toLowerCase());
 		ResultSet rs = st.executeQuery();
 		while(rs.next()) {

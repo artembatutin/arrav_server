@@ -125,7 +125,7 @@ public final class World {
 			e.printStackTrace();
 		}
 		try {
-			donation = new Database(Application.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_donate", Application.DEBUG ? "edge_avro" : "root", Application.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
+			donation = new Database(Application.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_store", Application.DEBUG ? "edge_avro" : "root", Application.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

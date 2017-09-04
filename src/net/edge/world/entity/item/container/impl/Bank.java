@@ -137,7 +137,7 @@ public final class Bank {
 				return;
 			}
 			updateViewer(player, v.getBank(), true);
-			v.message(player.getFormatUsername() + " has just removed an item from ur bank!");
+			v.message(player.getFormatUsername() + " has just removed an item from ur bank.");
 		});
 		return withdrawed;
 	}

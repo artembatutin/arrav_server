@@ -94,7 +94,6 @@ final class BankTab extends ItemContainer {
 	boolean withdraw(Player player, int bankIndex, int amount, boolean refresh) {
 		Inventory inventory = player.getInventory();
 		Item withdrawItem = get(bankIndex);
-		
 		if(withdrawItem == null || amount < 1) { // Item doesn't exist in bank.
 			return false;
 		}
@@ -112,7 +111,6 @@ final class BankTab extends ItemContainer {
 				player.message("This item cannot be withdrawn as a note.");
 			}
 		}
-		
 		Item newWithdrawItem = withdrawItem.createWithId(newId.orElse(withdrawItem.getId()));
 		ItemDefinition newDef = newWithdrawItem.getDefinition();
 		
