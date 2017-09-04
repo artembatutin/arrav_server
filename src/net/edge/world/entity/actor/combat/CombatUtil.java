@@ -145,7 +145,7 @@ public final class CombatUtil {
 		}
 		
 		if(type.equals(CombatType.RANGED)) {
-			return Projectile.RANGED_DELAYS[distance > 10 ? 10 : distance];
+			return Projectile.RANGED_DELAYS[distance > 10 ? 10 : (int)(distance * .5)];
 		}
 		
 		return 1;

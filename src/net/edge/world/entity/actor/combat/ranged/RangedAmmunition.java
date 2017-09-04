@@ -159,7 +159,7 @@ public enum RangedAmmunition {
         }
 
         if (id > 0) {
-            int speed = 56 + (int) attacker.getPosition().getDistance(defender.getPosition());
+            int speed = 59;
             Projectile projectile = new Projectile(attacker, defender, id, speed, 38, 43, 40, CombatType.RANGED);
             projectile.sendProjectile();
         }
