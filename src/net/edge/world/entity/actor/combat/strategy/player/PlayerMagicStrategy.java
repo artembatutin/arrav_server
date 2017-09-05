@@ -76,6 +76,9 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 			} else {
 				addCombatExperience(attacker, spell.getBaseExperience(), hits);
 			}
+			if(!attacker.isAutocast()) {
+				WeaponInterface.setStrategy(attacker);
+			}
 		}
 	}
 
@@ -98,7 +101,6 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 	@Override
 	public void finishOutgoing(Player attacker, Actor defender) {
 		if(!attacker.isAutocast()) {
-			WeaponInterface.setStrategy(attacker);
 			attacker.getCombat().reset(false);
 		}
 	}
