@@ -1,88 +1,63 @@
 package net.edge.world.entity.actor.combat.attack;
 
-import net.edge.content.skill.Skills;
-import net.edge.world.entity.actor.combat.CombatType;
-
 /**
  * The enumerated type whose elements represent the fighting styles.
- * @author lare96 <http://github.com/lare96>
+ *
+ * @author Michael | Chex
  */
 public enum FightStyle {
-	
-	ACCURATE(3, 0, 0) {
-		@Override
-		public int[] skills(CombatType type) {
-			return type == CombatType.RANGED ? new int[]{Skills.RANGED} : new int[]{Skills.ATTACK};
-		}
-	},
-	AGGRESSIVE(0, 3, 0) {
-		@Override
-		public int[] skills(CombatType type) {
-			return type == CombatType.RANGED ? new int[]{Skills.RANGED} : new int[]{Skills.STRENGTH};
-		}
-	},
-	DEFENSIVE(0, 0, 3) {
-		@Override
-		public int[] skills(CombatType type) {
-			return type == CombatType.RANGED ? new int[]{Skills.RANGED, Skills.DEFENCE} : new int[]{Skills.DEFENCE};
-		}
-	},
-	CONTROLLED(1, 1, 1) {
-		@Override
-		public int[] skills(CombatType type) {
-			return new int[]{Skills.ATTACK, Skills.STRENGTH, Skills.DEFENCE};
-		}
-	};
-	/**
-	 * The increase to accuracy.
-	 */
-	private int accuracyIncrease;
-	
-	/**
-	 * The increase to defense.
-	 */
-	private int defensiveIncrease;
-	
-	/**
-	 * The increase to strength.
-	 */
-	private int strengthIncrease;
-	
-	/**
-	 * Constructs a new {@link FightStyle} element.
-	 * @param accuracyIncrease  The accuracy increase amount.
-	 * @param defensiveIncrease The defensive increase amount.
-	 */
-	FightStyle(int accuracyIncrease, int defensiveIncrease, int strengthIncrease) {
-		this.accuracyIncrease = accuracyIncrease;
-		this.defensiveIncrease = defensiveIncrease;
-		this.strengthIncrease = strengthIncrease;
-	}
-	
-	public abstract int[] skills(CombatType type);
-	
-	/**
-	 * Gets the accuracy increase for this attack type.
-	 * @return The accuracy increase.
-	 */
-	public int getAccuracyIncrease() {
-		return accuracyIncrease;
-	}
-	
-	/**
-	 * Gets the defense increase for this attack type.
-	 * @return The defense increase.
-	 */
-	public int getDefensiveIncrease() {
-		return defensiveIncrease;
-	}
-	
-	/**
-	 * Gets the strength increase for this attack type.
-	 * @return The strength increase.
-	 */
-	public int getStrengthIncrease() {
-		return strengthIncrease;
-	}
-	
+    ACCURATE(3, 0, 0),
+    AGGRESSIVE(0, 3, 0),
+    DEFENSIVE(0, 0, 3),
+    CONTROLLED(1, 1, 1);
+
+    /** The increase to accuracy. */
+    private int accuracyIncrease;
+
+    /** The increase to defense. */
+    private int defensiveIncrease;
+
+    /** The increase to strength. */
+    private int aggressiveIncrease;
+
+    /**
+     * Constructs a new {@link FightStyle} element.
+     *
+     * @param accuracyIncrease   the accuracy increase amount
+     * @param aggressiveIncrease the aggreaaive increase amount
+     * @param defensiveIncrease  the defensive increase amount
+     */
+    FightStyle(int accuracyIncrease, int aggressiveIncrease, int defensiveIncrease) {
+        this.accuracyIncrease = accuracyIncrease;
+        this.aggressiveIncrease = aggressiveIncrease;
+        this.defensiveIncrease = defensiveIncrease;
+    }
+
+    /**
+     * Gets the accuracy increase for this attack type.
+     *
+     * @return the accuracy increase
+     */
+    public int getAccuracyIncrease() {
+        return accuracyIncrease;
+    }
+
+    /**
+     * Gets the defense increase for this attack type.
+     *
+     * @return the defense increase
+     */
+    public int getDefensiveIncrease() {
+        return defensiveIncrease;
+    }
+
+    /**
+     * Gets the aggressive increase for this attack type.
+     *
+     * @return the aggressive increase
+     */
+    public int getAggressiveIncrease() {
+        return aggressiveIncrease;
+    }
+
 }
