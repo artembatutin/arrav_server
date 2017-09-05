@@ -4,13 +4,17 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.combat.Combat;
 import net.edge.world.entity.actor.combat.CombatConstants;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.HitIcon;
 import net.edge.world.entity.actor.combat.hit.Hitsplat;
+import net.edge.world.entity.actor.combat.ranged.RangedWeaponType;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Equipment;
 
 /**
  * Supplies factory methods useful for combat.
@@ -85,11 +89,17 @@ public final class FormulaFactory {
      *
      * @return a {@code Hit} representing the damage done
      */
-    public static Hit nextRangedHit(Actor attacker, Actor defender) {
+    public static Hit nextRangedHit(Actor attacker, Actor defender, RangedWeaponType type) {
         int verdict = 0;
         Hitsplat hitsplat = Hitsplat.NORMAL;
 
+
         if (isAccurate(attacker, defender, CombatType.RANGED)) {
+            if(type == RangedWeaponType.THROWN) {
+                Item weapon = attacker.toPlayer().getEquipment().get(Equipment.WEAPON_SLOT);
+                attacker.getBonus(CombatConstants.BONUS_RANGED_STRENGTH);
+                attacker.toPlayer().setBonus(CombatConstants.BONUS_RANGED_STRENGTH, weapon.getDefinition().getBonus()[CombatConstants.BONUS_RANGED_STRENGTH]);
+            }
             int max = getMaxHit(attacker, defender, CombatType.RANGED);
 
             verdict = random(max);

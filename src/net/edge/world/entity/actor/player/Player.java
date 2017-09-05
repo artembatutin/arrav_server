@@ -2122,6 +2122,11 @@ public final class Player extends Actor {
 	public void appendBonus(int index, int bonus) {
 		getEquipment().getBonuses()[index] += bonus;
 	}
+
+	public void setBonus(int index, int bonus) {
+		getEquipment().getBonuses()[index] = bonus;
+	}
+
 	
 	@Override
 	public int getSkillLevel(int skill) {

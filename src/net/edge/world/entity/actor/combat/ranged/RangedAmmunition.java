@@ -160,7 +160,7 @@ public enum RangedAmmunition {
 
         if (id > 0) {
             int speed = 59;
-            Projectile projectile = new Projectile(attacker, defender, id, speed, 38, 43, 40, CombatType.RANGED);
+            Projectile projectile = new Projectile(attacker, defender, id, speed, 35, 43, 40, CombatType.RANGED);
             projectile.sendProjectile();
         }
     }

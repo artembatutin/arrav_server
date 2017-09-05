@@ -133,14 +133,11 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
         Item arrows = attacker.getEquipment().get(Equipment.ARROWS_SLOT);
 
         if (rangedDefinition.getType() == RangedWeaponType.THROWN && arrows != null) {
-            int bonus = arrows.getDefinition().getBonus()[CombatConstants.BONUS_RANGED_STRENGTH];
-            attacker.appendBonus(Equipment.ARROWS_SLOT, -bonus);
-            CombatHit hit = nextRangedHit(attacker, defender);
-            attacker.appendBonus(Equipment.ARROWS_SLOT, arrows.getDefinition().getBonus()[CombatConstants.BONUS_RANGED_STRENGTH]);
+            CombatHit hit = nextRangedHit(attacker, defender, RangedWeaponType.THROWN);
             return new CombatHit[]{hit};
         }
 
-        return new CombatHit[]{nextRangedHit(attacker, defender)};
+        return new CombatHit[]{nextRangedHit(attacker, defender, RangedWeaponType.SHOT)};
     }
 
     @Override
