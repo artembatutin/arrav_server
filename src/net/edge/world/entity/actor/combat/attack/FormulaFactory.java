@@ -175,15 +175,25 @@ public final class FormulaFactory {
      */
     private static boolean isAccurate(Actor attacker, Actor defender, CombatType type) {
         double attackRoll = getAttackRoll(attacker, type);
-        double defenceRoll = getDefenceRoll(defender, type);
+        double defenceRoll = getDefenceRoll(defender, attacker.getCombat().getFightType(), type);
+        double chance;
 
         if (attackRoll > defenceRoll) {
-            double chance = 1 - (defenceRoll + 2) / (2 * (attackRoll + 1));
-            return RandomUtils.success(chance);
+            chance = 1 - (defenceRoll + 2) / (2 * (attackRoll + 1));
         } else {
-            double chance = attackRoll / (2 * (defenceRoll + 1));
-            return RandomUtils.success(chance);
+            chance = attackRoll / (2 * (defenceRoll + 1));
         }
+
+        int attChance = (int) (chance * 1000);
+        int defChance = 1000 - attChance;
+
+        if (attacker.isPlayer()) {
+            System.out.println("[PLAYER] " + attacker.toPlayer().getFormatUsername() + "  ---  " + ((int) (chance * 10000) / 100.0) + "% accuracy | attack roll: " + attackRoll + " -- defence roll: " + defenceRoll + " -- attack chance: " + attChance + " -- defence chance: " + defChance);
+        } else {
+            System.out.println("[NPC] " + attacker.toMob().getDefinition().getName() + "  ---  " + ((int) (chance * 10000) / 100.0) + "% accuracy | attack roll: " + attackRoll + " -- defence roll: " + defenceRoll + " -- attack chance: " + attChance + " -- defence chance: " + defChance);
+        }
+
+        return RandomUtils.success(chance);
     }
 
     private static double getAttackRoll(Actor actor, CombatType type) {
@@ -191,9 +201,9 @@ public final class FormulaFactory {
         return rollOffensive(actor, accuracy, type);
     }
 
-    private static double getDefenceRoll(Actor actor, CombatType type) {
+    private static double getDefenceRoll(Actor actor, FightType fightType, CombatType type) {
         int accuracy = getEffectiveDefence(actor, type);
-        return rollDefensive(actor, accuracy, type);
+        return rollDefensive(actor, accuracy, fightType, type);
     }
 
     /**
@@ -391,12 +401,9 @@ public final class FormulaFactory {
      *
      * @param actor the actor to roll for
      * @param level the defensive skill level
-     * @param type  the combat type to defend against
-     * @return the defensive attack roll
+     *@param type  the combat type to defend against  @return the defensive attack roll
      */
-    private static double rollDefensive(Actor actor, double level, CombatType type) {
-        FightType fightType = actor.getCombat().getFightType();
-
+    private static double rollDefensive(Actor actor, double level, FightType fightType, CombatType type) {
         if (actor.isPlayer()) {
             Player player = actor.toPlayer();
             int[] bonuses = player.getEquipment().getBonuses();
