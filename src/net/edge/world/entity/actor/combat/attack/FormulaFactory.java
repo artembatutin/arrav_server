@@ -176,24 +176,14 @@ public final class FormulaFactory {
     private static boolean isAccurate(Actor attacker, Actor defender, CombatType type) {
         double attackRoll = getAttackRoll(attacker, type);
         double defenceRoll = getDefenceRoll(defender, attacker.getCombat().getFightType(), type);
-        double chance;
 
         if (attackRoll > defenceRoll) {
-            chance = 1 - (defenceRoll + 2) / (2 * (attackRoll + 1));
+            double chance = 1 - (defenceRoll + 2) / (2 * (attackRoll + 1));
+            return RandomUtils.success(chance);
         } else {
-            chance = attackRoll / (2 * (defenceRoll + 1));
+            double chance = attackRoll / (2 * (defenceRoll + 1));
+            return RandomUtils.success(chance);
         }
-
-        int attChance = (int) (chance * 1000);
-        int defChance = 1000 - attChance;
-
-        if (attacker.isPlayer()) {
-            System.out.println("[PLAYER] " + attacker.toPlayer().getFormatUsername() + "  ---  " + ((int) (chance * 10000) / 100.0) + "% accuracy | attack roll: " + attackRoll + " -- defence roll: " + defenceRoll + " -- attack chance: " + attChance + " -- defence chance: " + defChance);
-        } else {
-            System.out.println("[NPC] " + attacker.toMob().getDefinition().getName() + "  ---  " + ((int) (chance * 10000) / 100.0) + "% accuracy | attack roll: " + attackRoll + " -- defence roll: " + defenceRoll + " -- attack chance: " + attChance + " -- defence chance: " + defChance);
-        }
-
-        return RandomUtils.success(chance);
     }
 
     private static double getAttackRoll(Actor actor, CombatType type) {
