@@ -19,6 +19,8 @@ import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.AntifireDetails;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.world.locale.loc.Location;
 
 import java.util.LinkedList;
@@ -325,5 +327,20 @@ public final class CombatUtil {
 	public static CombatStrategy<Mob>[] createStrategyArray(CombatStrategy<Mob>... strategies) {
 		return strategies;
 	}
-	
+
+	/**
+	 * Determines if {@code character} is wearing full void.
+	 * @param character the character to determine this for.
+	 * @return {@code true} if this character is wearing full void,
+	 * {@code false} otherwise.
+	 */
+	public static boolean isFullVoid(Actor character) {
+		if (character.isMob()) {
+			return character.toMob().getDefinition().getName().contains("Void Knight");
+		}
+
+		Item top = ((Player) character).getEquipment().get(Equipment.CHEST_SLOT);
+		return top != null && !(top.getId() != 8839 && top.getId() != 10611) && character.toPlayer().getEquipment().containsAll(8840, 8842);
+	}
+
 }

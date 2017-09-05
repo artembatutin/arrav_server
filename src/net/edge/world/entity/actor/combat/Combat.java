@@ -30,7 +30,7 @@ public class Combat<T extends Actor> {
     private FightType type;
 
     private CombatStrategy<? super T> strategy;
-    private final AttackModifier attackModifier = new AttackModifier();
+    private final List<AttackModifier> modifiers = new LinkedList<>();
     private final List<CombatListener<? super T>> listeners = new LinkedList<>();
     private final Deque<CombatListener<? super T>> pendingAddition = new LinkedList<>();
     private final Deque<CombatListener<? super T>> pendingRemoval = new LinkedList<>();
@@ -107,13 +107,18 @@ public class Combat<T extends Actor> {
     private void updateListeners() {
         if (!pendingAddition.isEmpty()) {
             for (Iterator<CombatListener<? super T>> iterator = pendingAddition.iterator(); iterator.hasNext(); ) {
-                listeners.add(iterator.next());
+                CombatListener<? super T> next = iterator.next();
+                addModifiers(next);
+                listeners.add(next);
                 iterator.remove();
             }
         }
+
         if (!pendingRemoval.isEmpty()) {
             for (Iterator<CombatListener<? super T>> iterator = pendingRemoval.iterator(); iterator.hasNext(); ) {
-                listeners.remove(iterator.next());
+                CombatListener<? super T> next = iterator.next();
+                listeners.remove(next);
+                removeModifiers(next);
                 iterator.remove();
             }
         }
@@ -124,39 +129,19 @@ public class Combat<T extends Actor> {
             return false;
         }
 
-        addModifiers(strategy);
-        defender.getCombat().addModifiers();
-
-        submitHits(defender, strategy, strategy.getHits(attacker, defender));
-
-        removeModifiers(strategy);
-        defender.getCombat().removeModifiers();
+        if (this.strategy != strategy) {
+            addModifiers(strategy);
+        }
 
         int delayIndex = strategy.getCombatType().ordinal();
+        submitHits(defender, strategy, strategy.getHits(attacker, defender));
         setDelay(delayIndex, strategy.getAttackDelay(attacker, defender, type));
+
+        if (this.strategy != strategy) {
+            removeModifiers(strategy);
+        }
+
         return true;
-    }
-
-    private void addModifiers() {
-        addModifiers(strategy);
-    }
-
-    private void removeModifiers() {
-        removeModifiers(strategy);
-    }
-
-    private void addModifiers(CombatStrategy<? super T> strategy) {
-        if (strategy != null) {
-            strategy.getModifier(attacker).ifPresent(this::addModifier);
-        }
-        listeners.forEach(listener -> listener.getModifier(attacker).ifPresent(this::addModifier));
-    }
-
-    private void removeModifiers(CombatStrategy<? super T> strategy) {
-        if (strategy != null) {
-            strategy.getModifier(attacker).ifPresent(this::removeModifier);
-        }
-        listeners.forEach(listener -> listener.getModifier(attacker).ifPresent(this::removeModifier));
     }
 
     private void submitHits(Actor defender, CombatStrategy<? super T> strategy, CombatHit... hits) {
@@ -328,11 +313,19 @@ public class Combat<T extends Actor> {
     }
 
     public void addModifier(AttackModifier modifier) {
-        attackModifier.add(modifier);
+        modifiers.add(modifier);
     }
 
     public void removeModifier(AttackModifier modifier) {
-        attackModifier.remove(modifier);
+        modifiers.remove(modifier);
+    }
+
+    private void addModifiers(CombatListener<? super T> listener) {
+        listener.getModifier(attacker).ifPresent(this::addModifier);
+    }
+
+    private void removeModifiers(CombatListener<? super T> listener) {
+        listener.getModifier(attacker).ifPresent(this::removeModifier);
     }
 
     public void addListener(CombatListener<? super T> attack) {
@@ -369,20 +362,32 @@ public class Combat<T extends Actor> {
         return attacker != null && attacker.same(lastAttacker) && !stopwatchElapsed(lastBlocked, CombatConstants.COMBAT_TIMER);
     }
 
-    public double getAccuracyModifier() {
-        return attackModifier.getAccuracy();
+    public int modifyAccuracy(int roll) {
+        for (AttackModifier modifier : modifiers) {
+            roll += roll * modifier.getAccuracy();
+        }
+        return roll;
     }
 
-    public double getAggressiveModifier() {
-        return attackModifier.getAggressive();
+    public int modifyAggressive(int roll) {
+        for (AttackModifier modifier : modifiers) {
+            roll += roll * modifier.getAggressive();
+        }
+        return roll;
     }
 
-    public double getDefensiveModifier() {
-        return attackModifier.getDefensive();
+    public int modiftDefensive(int roll) {
+        for (AttackModifier modifier : modifiers) {
+            roll += roll * modifier.getDefensive();
+        }
+        return roll;
     }
 
-    public double getDamageModifier() {
-        return attackModifier.getDamage();
+    public int modifyDamage(int damage) {
+        for (AttackModifier modifier : modifiers) {
+            damage += damage * modifier.getAccuracy();
+        }
+        return damage;
     }
 
     public FightType getFightType() {
@@ -398,6 +403,14 @@ public class Combat<T extends Actor> {
     }
 
     public void setStrategy(CombatStrategy<? super T> next) {
+        if (strategy != null) {
+            removeModifiers(strategy);
+        }
+
+        if (strategy != next && next != null) {
+            addModifiers(next);
+        }
+
         strategy = next;
     }
 
@@ -465,5 +478,7 @@ public class Combat<T extends Actor> {
         long blocked = lastBlocked.elapsedTime();
         return blocked > attacked ? attacked : blocked;
     }
+
+
 
 }

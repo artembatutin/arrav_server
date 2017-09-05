@@ -1,7 +1,7 @@
 package net.edge.world.entity.actor.combat.attack;
 
 public final class AttackModifier {
-	
+
 	private double accuracy;
 	private double aggressive;
 	private double defensive;
@@ -63,5 +63,4 @@ public final class AttackModifier {
 	public String toString() {
 		return String.format("[acc=%s, agg=%s, def=%s, damage=%s]", accuracy, aggressive, defensive, damage);
 	}
-
 }

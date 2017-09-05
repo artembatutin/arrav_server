@@ -1,10 +1,12 @@
 package net.edge.world.entity.actor.combat.attack;//package combat.attack;
 
 import net.edge.content.skill.Skills;
+import net.edge.content.skill.prayer.Prayer;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatConstants;
 import net.edge.world.entity.actor.combat.CombatType;
+import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.HitIcon;
 import net.edge.world.entity.actor.combat.hit.Hitsplat;
@@ -29,9 +31,9 @@ public final class FormulaFactory {
         Hitsplat hitsplat = Hitsplat.NORMAL;
 
         if (isAccurate(attacker, defender, CombatType.MELEE)) {
-            int max = getMaxHit(attacker, CombatType.MELEE);
+            int max = getMaxHit(attacker, defender, CombatType.MELEE);
             verdict = random(max);
-            verdict += verdict * attacker.getCombat().getDamageModifier();
+            verdict = attacker.getCombat().modifyDamage(verdict);
 
             if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
@@ -60,7 +62,7 @@ public final class FormulaFactory {
 
         if (isAccurate(attacker, defender, CombatType.MELEE)) {
             verdict = random(max);
-            verdict += verdict * attacker.getCombat().getDamageModifier();
+            verdict = attacker.getCombat().modifyDamage(verdict);
 
             if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
@@ -88,10 +90,10 @@ public final class FormulaFactory {
         Hitsplat hitsplat = Hitsplat.NORMAL;
 
         if (isAccurate(attacker, defender, CombatType.RANGED)) {
-            int max = getMaxHit(attacker, CombatType.RANGED);
+            int max = getMaxHit(attacker, defender, CombatType.RANGED);
 
             verdict = random(max);
-            verdict += verdict * attacker.getCombat().getDamageModifier();
+            verdict = attacker.getCombat().modifyDamage(verdict);
 
             if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
@@ -120,7 +122,7 @@ public final class FormulaFactory {
 
         if (isAccurate(attacker, defender, CombatType.RANGED)) {
             verdict = random(max);
-            verdict += verdict * attacker.getCombat().getDamageModifier();
+            verdict = attacker.getCombat().modifyDamage(verdict);
 
             if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
@@ -149,7 +151,7 @@ public final class FormulaFactory {
 
         if (isAccurate(attacker, defender, CombatType.MAGIC)) {
             verdict = random(max);
-            verdict += verdict * attacker.getCombat().getDamageModifier();
+            verdict = attacker.getCombat().modifyDamage(verdict);
 
             if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
@@ -174,117 +176,221 @@ public final class FormulaFactory {
      * @return {@code true} if the roll was accurate
      */
     private static boolean isAccurate(Actor attacker, Actor defender, CombatType type) {
-        double attackRoll = getAttackRoll(attacker, type);
-        double defenceRoll = getDefenceRoll(defender, attacker.getCombat().getFightType(), type);
+        int attackRoll = getOffensiveRoll(attacker, defender, type);
+        int defenceRoll = getDefensiveRoll(attacker, defender, type);
 
         if (attackRoll > defenceRoll) {
-            double chance = 1 - (defenceRoll + 2) / (2 * (attackRoll + 1));
+            double chance = 1 - (defenceRoll + 2) / (2.0 * (attackRoll + 1));
             return RandomUtils.success(chance);
         } else {
-            double chance = attackRoll / (2 * (defenceRoll + 1));
+            double chance = attackRoll / (2.0 * (defenceRoll + 1));
+            if (attacker.isPlayer()) {
+                System.out.println(attackRoll + " " + defenceRoll + " " + chance);
+            }
             return RandomUtils.success(chance);
         }
     }
 
-    private static double getAttackRoll(Actor actor, CombatType type) {
-        int accuracy = getEffectiveAccuracy(actor, type);
-        return rollOffensive(actor, accuracy, type);
+    public static int getOffensiveRoll(Actor attacker, Actor defender, CombatType type) {
+        int bonus = getOffensiveBonus(attacker, type);
+        int roll = getEffectiveAccuracy(attacker, defender, type);
+        roll = roll * (bonus + 64);
+        return attacker.getCombat().modifyAccuracy(roll);
     }
 
-    private static double getDefenceRoll(Actor actor, FightType fightType, CombatType type) {
-        int accuracy = getEffectiveDefence(actor, type);
-        return rollDefensive(actor, accuracy, fightType, type);
+    public static int getDefensiveRoll(Actor attacker, Actor defender, CombatType type) {
+        int bonus = getDefensiveBonus(defender, type);
+        int roll = getEffectiveDefence(attacker, defender, type);
+        roll = roll * (bonus + 64);
+        return attacker.getCombat().modiftDefensive(roll);
     }
 
     /**
      * Gets the effective accuracy level for a actor based on a combat type.
      *
-     * @param actor the actor
-     * @param type  the combat type
-     * @return the effective accuracy
+     * @param attacker    the actor
+     * @param defender the defender
+     * @param type     the combat type
+     * @return the offensive roll
      */
-    private static int getEffectiveAccuracy(Actor actor, CombatType type) {
-        double modifier = actor.getCombat().getAccuracyModifier();
+    private static int getEffectiveAccuracy(Actor attacker, Actor defender, CombatType type) {
+        FightType fightType = attacker.getCombat().getFightType();
+        int effectiveAccuracy = 8 + fightType.getStyle().getAccuracyIncrease();
+
         if (type == CombatType.RANGED) {
-            return getEffectiveRanged(actor, modifier);
+            effectiveAccuracy += getAugmentedRanged(attacker);
+            if (CombatUtil.isFullVoid(attacker)) {
+                if (!attacker.isPlayer() || attacker.toPlayer().getEquipment().contains(11664)) {
+                    effectiveAccuracy *= 1.1;
+                }
+            }
+        } else if (type == CombatType.MELEE) {
+            effectiveAccuracy += getAugmentedAttack(attacker, defender);
+            if (CombatUtil.isFullVoid(attacker)) {
+                if (!attacker.isPlayer() || attacker.toPlayer().getEquipment().contains(11665)) {
+                    effectiveAccuracy *= 1.1;
+                }
+            }
         } else if (type == CombatType.MAGIC) {
-            return getEffectiveMagic(actor, modifier);
-        } else {
-            return getEffectiveAttack(actor, modifier);
+            effectiveAccuracy += getAugmentedMagic(attacker);
+            if (CombatUtil.isFullVoid(attacker)) {
+                if (!attacker.isPlayer() || attacker.toPlayer().getEquipment().contains(11663)) {
+                    effectiveAccuracy *= 1.45;
+                }
+            }
         }
+
+        return effectiveAccuracy;
     }
 
     /**
      * Gets the effective strength level for a actor based on a combat type.
      *
-     * @param actor the actor
-     * @param type  the combat type
+     * @param attacker    the actor
+     * @param defender the defender
+     * @param type     the combat type
      * @return the effective strength
      */
-    private static int getEffectiveStrength(Actor actor, CombatType type) {
-        double modifier = actor.getCombat().getAggressiveModifier();
+    private static int getEffectiveStrength(Actor attacker, Actor defender, CombatType type) {
+        FightType fightType = attacker.getCombat().getFightType();
+        int effectiveStrength = 8 + fightType.getStyle().getAggressiveIncrease();
+
         if (type == CombatType.RANGED) {
-            return getEffectiveRanged(actor, modifier);
+            effectiveStrength += getAugmentedRanged(attacker);
+            if (CombatUtil.isFullVoid(attacker)) {
+                if (!attacker.isPlayer() || attacker.toPlayer().getEquipment().contains(11664)) {
+                    effectiveStrength *= 1.1;
+                }
+            }
+        } else if (type == CombatType.MELEE) {
+            effectiveStrength += getAugmentedStrength(attacker, defender);
+            if (CombatUtil.isFullVoid(attacker)) {
+                if (!attacker.isPlayer() || attacker.toPlayer().getEquipment().contains(11665)) {
+                    effectiveStrength *= 1.1;
+                }
+            }
         } else if (type == CombatType.MAGIC) {
-            return getEffectiveMagic(actor, modifier);
-        } else {
-            return getEffectiveStrength(actor, modifier);
+            effectiveStrength += getAugmentedMagic(attacker);
         }
+
+        return effectiveStrength;
     }
 
     /**
      * Gets the effective defence for a actor based on a combat type.
      *
-     * @param actor the actor
      * @param type  the combat type
      * @return the effective defence
      */
-    private static int getEffectiveDefence(Actor actor, CombatType type) {
-        double modifier = actor.getCombat().getDefensiveModifier();
+    private static int getEffectiveDefence(Actor attacker, Actor defender, CombatType type) {
         if (type == CombatType.MAGIC) {
-            return (int) (getEffectiveMagic(actor, modifier) * 0.70 + getEffectiveDefence(actor, modifier) * 0.30);
+            return (7 * getAugmentedMagic(defender) + 3 * getAugmentedDefence(attacker, defender)) / 10 + 8;
         } else {
-            return getEffectiveDefence(actor, modifier);
+            FightType fightType = defender.getCombat().getFightType();
+            int effectiveDefence = 8 + fightType.getStyle().getDefensiveIncrease();
+            return effectiveDefence + getAugmentedDefence(attacker, defender);
         }
     }
 
     /**
      * Gets the effective attack level for a actor.
      *
-     * @param actor    the actor
-     * @param modifier the multiplicative modifier to the final level
+     * @param attacker    the actor
      * @return the effective attack level
      */
-    private static int getEffectiveAttack(Actor actor, double modifier) {
-        int level = actor.getSkillLevel(Skills.ATTACK);
-        level += level * modifier;
+    private static int getAugmentedAttack(Actor attacker, Actor defender) {
+        int level = attacker.getSkillLevel(Skills.ATTACK);
+
+        if (attacker.isPlayer()) {
+            Player player = attacker.toPlayer();
+
+            if(Prayer.isActivated(player, Prayer.CLARITY_OF_THOUGHT)) {
+                level *= 1.05;
+            } else if(Prayer.isActivated(player, Prayer.IMPROVED_REFLEXES)) {
+                level *= 1.1;
+            } else if(Prayer.isActivated(player, Prayer.INCREDIBLE_REFLEXES)) {
+                level *= 1.15;
+            } else if(Prayer.isActivated(player, Prayer.CHIVALRY)) {
+                level *= 1.15;
+            } else if(Prayer.isActivated(player, Prayer.PIETY)) {
+                level *= 1.20;
+            } else if(Prayer.isActivated(player, Prayer.TURMOIL)) {
+                level *= 1.15;
+                if (defender != null && defender.isPlayer()) {
+                    // 1000 because if attack is 99 / 100 * 10 = 9.9 which is way to much.
+                    level *= defender.toPlayer().getSkills()[Skills.ATTACK].getRealLevel() / 1000;
+                }
+            }
+        }
+
         return level;
     }
 
     /**
      * Gets the effective strength level for a actor.
      *
-     * @param actor    the actor
-     * @param modifier the multiplicative modifier to the final level
+     * @param attacker    the attacker
      * @return the effective strength level
      */
-    private static int getEffectiveStrength(Actor actor, double modifier) {
-        int level = actor.getSkillLevel(Skills.STRENGTH);
-        level += level * modifier;
-        level += actor.getCombat().getFightType().getStyle().getAggressiveIncrease();
+    private static int getAugmentedStrength(Actor attacker, Actor defender) {
+        int level = attacker.getSkillLevel(Skills.STRENGTH);
+
+        if (attacker.isPlayer()) {
+            Player player = attacker.toPlayer();
+
+            if(Prayer.isActivated(player, Prayer.BURST_OF_STRENGTH)) {
+                level *= 1.05;
+            } else if(Prayer.isActivated(player, Prayer.SUPERHUMAN_STRENGTH)) {
+                level *= 1.1;
+            } else if(Prayer.isActivated(player, Prayer.ULTIMATE_STRENGTH)) {
+                level *= 1.15;
+            } else if(Prayer.isActivated(player, Prayer.CHIVALRY)) {
+                level *= 1.18;
+            } else if(Prayer.isActivated(player, Prayer.PIETY)) {
+                level *= 1.23;
+            } else if(Prayer.isActivated(player, Prayer.TURMOIL)) {
+                level *= 1.23;
+                if (defender != null && defender.isPlayer()) {
+                    // 1000 because if strength is 99 / 100 * 10 = 9.9 which is way to much.
+                    level *= defender.toPlayer().getSkills()[Skills.STRENGTH].getRealLevel() / 1000;
+                }
+            }
+
+        }
+
         return level;
     }
 
     /**
      * Gets the effective defence for a actor.
      *
-     * @param actor    the actor
-     * @param modifier the multiplicative modifier to the final level
      * @return the effective defence
      */
-    private static int getEffectiveDefence(Actor actor, double modifier) {
-        int level = actor.getSkillLevel(Skills.DEFENCE);
-        level += level * modifier;
+    private static int getAugmentedDefence(Actor attacker, Actor defender) {
+        int level = defender.getSkillLevel(Skills.DEFENCE);
+
+        if (defender.isPlayer()) {
+            Player player = defender.toPlayer();
+
+            if(Prayer.isActivated(player, Prayer.THICK_SKIN)) {
+                level *= 1.05;
+            } else if(Prayer.isActivated(player, Prayer.ROCK_SKIN)) {
+                level *= 1.1;
+            } else if(Prayer.isActivated(player, Prayer.STEEL_SKIN)) {
+                level *= 1.15;
+            } else if(Prayer.isActivated(player, Prayer.CHIVALRY)) {
+                level *= 1.20;
+            } else if(Prayer.isActivated(player, Prayer.PIETY)) {
+                level *= 1.25;
+            } else if(Prayer.isActivated(player, Prayer.TURMOIL)) {
+                level *= 1.15;
+                if (attacker != null && attacker.isPlayer()) {
+                    // 1000 because if defence is 99 / 100 * 10 = 9.9 which is way to much.
+                    level *= attacker.toPlayer().getSkills()[Skills.DEFENCE].getRealLevel() / 1000;
+                }
+            }
+        }
+
         return level;
     }
 
@@ -292,12 +398,23 @@ public final class FormulaFactory {
      * Gets the effective ranged level for a actor.
      *
      * @param actor    the actor
-     * @param modifier the multiplicative modifier to the final level
      * @return the effective ranged level
      */
-    private static int getEffectiveRanged(Actor actor, double modifier) {
+    private static int getAugmentedRanged(Actor actor) {
         int level = actor.getSkillLevel(Skills.RANGED);
-        level += level * modifier;
+
+        if (actor.isPlayer()) {
+            Player player = actor.toPlayer();
+
+            if (Prayer.isActivated(player, Prayer.SHARP_EYE)) {
+                level *= 1.05;
+            } else if (Prayer.isActivated(player, Prayer.HAWK_EYE)) {
+                level *= 1.1;
+            } else if (Prayer.isActivated(player, Prayer.EAGLE_EYE)) {
+                level *= 1.15;
+            }
+        }
+
         return level;
     }
 
@@ -305,19 +422,35 @@ public final class FormulaFactory {
      * Gets the effective magic level for a actor.
      *
      * @param actor    the actor
-     * @param modifier the multiplicative modifier to the final level
      * @return the effective magic level
      */
-    private static int getEffectiveMagic(Actor actor, double modifier) {
+    private static int getAugmentedMagic(Actor actor) {
         int level = actor.getSkillLevel(Skills.MAGIC);
-        level += level * modifier;
+
+        if (actor.isPlayer()) {
+            Player player = actor.toPlayer();
+
+            if (Prayer.isActivated(player, Prayer.MYSTIC_WILL)) {
+                level *= 1.05;
+            } else if (Prayer.isActivated(player, Prayer.MYSTIC_LORE)) {
+                level *= 1.1;
+            } else if (Prayer.isActivated(player, Prayer.MYSTIC_MIGHT)) {
+                level *= 1.15;
+            }
+        }
+
         return level;
     }
 
     public static int getMaxHit(Actor attacker, CombatType type) {
-        int level = getEffectiveStrength(attacker, type);
-        int bonus;
+        return getMaxHit(attacker, null, type);
+    }
 
+    public static int getMaxHit(Actor attacker, Actor defender, CombatType type) {
+        int level = getEffectiveStrength(attacker, defender, type);
+        level = attacker.getCombat().modifyAggressive(level);
+
+        int bonus;
         switch (type) {
             case MELEE:
                 bonus = attacker.getBonus(CombatConstants.BONUS_STRENGTH);
@@ -336,28 +469,22 @@ public final class FormulaFactory {
     /**
      * Gets the max hit based on level and bonus.
      *
-     * @param level the aggressive combat skill level
-     * @param bonus the total item bonuses
+     * @param level the strength level
+     * @param bonus the total strength bonuses
      * @return the max hit
      */
-    private static int maxHit(double level, double bonus) {
-        float damage = 1 + 1 / 3.0F;
-        damage += level / 10.0;
-        damage += bonus / 80.0;
-        damage += level * bonus / 640.0;
-        return Math.round(damage * 10);
+    private static int maxHit(int level, int bonus) {
+        return 5 + level * (bonus + 64) / 64;
     }
 
     /**
-     * Generates an offensive roll for an actor given the offensive skill level
-     * and combat type used.
+     * Generates an offensive bonus for an actor given the combat type used.
      *
      * @param actor the actor to roll for
-     * @param level the offensive skill level
      * @param type  the combat type to attack with
-     * @return the offensive attack roll
+     * @return the offensive bonus
      */
-    private static double rollOffensive(Actor actor, double level, CombatType type) {
+    private static int getOffensiveBonus(Actor actor, CombatType type) {
         FightType fightType = actor.getCombat().getFightType();
 
         if (actor.isPlayer()) {
@@ -365,11 +492,10 @@ public final class FormulaFactory {
             int[] bonuses = player.getEquipment().getBonuses();
 
             if (type == CombatType.MAGIC) {
-                return roll(level, bonuses[CombatConstants.ATTACK_MAGIC], 0);
+                return bonuses[CombatConstants.ATTACK_MAGIC];
             }
 
-            int bonus = bonuses[fightType.getBonus()];
-            return roll(level, bonus, fightType.getStyle().getAccuracyIncrease());
+            return bonuses[fightType.getBonus()];
         }
 
         int bonus = 0;
@@ -379,10 +505,9 @@ public final class FormulaFactory {
             bonus = actor.toMob().getDefinition().getCombat().getAttackRanged();
         } else if (type == CombatType.MAGIC) {
             bonus = actor.toMob().getDefinition().getCombat().getAttackMagic();
-            return roll(level, bonus, 0);
         }
 
-        return roll(level, bonus, fightType.getStyle().getAccuracyIncrease());
+        return bonus;
     }
 
     /**
@@ -390,53 +515,38 @@ public final class FormulaFactory {
      * and combat type used.
      *
      * @param actor the actor to roll for
-     * @param level the defensive skill level
-     *@param type  the combat type to defend against  @return the defensive attack roll
+     * @param type  the combat type to defend against
+     * @return the defensive attack roll
      */
-    private static double rollDefensive(Actor actor, double level, FightType fightType, CombatType type) {
+    private static int getDefensiveBonus(Actor actor, CombatType type) {
+        FightType fightType = actor.getCombat().getFightType();
+
         if (actor.isPlayer()) {
             Player player = actor.toPlayer();
             int[] bonuses = player.getEquipment().getBonuses();
 
             if (type == CombatType.MAGIC) {
-                return roll(level, bonuses[CombatConstants.DEFENCE_MAGIC], 0);
+                return bonuses[CombatConstants.DEFENCE_MAGIC];
             }
 
-            int bonus = bonuses[fightType.getCorrespondingBonus()];
-            return roll(level, bonus, fightType.getStyle().getDefensiveIncrease());
+            return bonuses[fightType.getCorrespondingBonus()];
         }
 
-        int bonus = 0;
         if (type == CombatType.MELEE) {
             if (fightType.getCorrespondingBonus() == CombatConstants.DEFENCE_STAB) {
-                bonus = actor.toMob().getDefinition().getCombat().getDefenceStab();
+                return actor.toMob().getDefinition().getCombat().getDefenceStab();
             } else if (fightType.getCorrespondingBonus() == CombatConstants.DEFENCE_CRUSH) {
-                bonus = actor.toMob().getDefinition().getCombat().getDefenceCrush();
+                return actor.toMob().getDefinition().getCombat().getDefenceCrush();
             } else if (fightType.getCorrespondingBonus() == CombatConstants.DEFENCE_SLASH) {
-                bonus = actor.toMob().getDefinition().getCombat().getDefenceSlash();
+                return actor.toMob().getDefinition().getCombat().getDefenceSlash();
             }
         } else if (type == CombatType.RANGED) {
-            bonus = actor.toMob().getDefinition().getCombat().getDefenceRanged();
+            return actor.toMob().getDefinition().getCombat().getDefenceRanged();
         } else if (type == CombatType.MAGIC) {
-            bonus = actor.toMob().getDefinition().getCombat().getDefenceMagic();
-            return roll(level, bonus, 0);
+            return actor.toMob().getDefinition().getCombat().getDefenceMagic();
         }
 
-        return roll(level, bonus, fightType.getStyle().getDefensiveIncrease());
-    }
-
-    /**
-     * Generates a roll boundary, given a {@code level}, {@code bonus}, and
-     * {@code stance} increase amount.
-     *
-     * @param level  the skill level
-     * @param bonus  the total bonus
-     * @param stance the stance increase to the effective level
-     * @return the roll
-     */
-    private static double roll(double level, double bonus, int stance) {
-        double effectiveLevel = level + stance + 8;
-        return effectiveLevel * (bonus + 64);
+        return 0;
     }
 
     /**

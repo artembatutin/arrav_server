@@ -85,7 +85,7 @@ public interface CombatListener<T extends Actor> {
     void finishIncoming(Actor attacker, T defender);
 
     /**
-     * Gets the attack modifier of this combat attack, wrapped around an {@link
+     * Gets the modifier for this combat attack, wrapped around an {@link
      * Optional} for ease of use.
      *
      * @param attacker the attacking actor
