@@ -4,7 +4,6 @@ import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.Combat;
 import net.edge.world.entity.actor.combat.CombatConstants;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.CombatUtil;
@@ -37,7 +36,6 @@ public final class FormulaFactory {
         if (isAccurate(attacker, defender, CombatType.MELEE)) {
             int max = getMaxHit(attacker, defender, CombatType.MELEE);
             verdict = random(max);
-            verdict = attacker.getCombat().modifyDamage(verdict);
 
             if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
@@ -66,7 +64,6 @@ public final class FormulaFactory {
 
         if (isAccurate(attacker, defender, CombatType.MELEE)) {
             verdict = random(max);
-            verdict = attacker.getCombat().modifyDamage(verdict);
 
             if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
@@ -93,17 +90,15 @@ public final class FormulaFactory {
         int verdict = 0;
         Hitsplat hitsplat = Hitsplat.NORMAL;
 
-
         if (isAccurate(attacker, defender, CombatType.RANGED)) {
-            if(type == RangedWeaponType.THROWN) {
+            if (type == RangedWeaponType.THROWN) {
                 Item weapon = attacker.toPlayer().getEquipment().get(Equipment.WEAPON_SLOT);
                 attacker.getBonus(CombatConstants.BONUS_RANGED_STRENGTH);
                 attacker.toPlayer().setBonus(CombatConstants.BONUS_RANGED_STRENGTH, weapon.getDefinition().getBonus()[CombatConstants.BONUS_RANGED_STRENGTH]);
             }
-            int max = getMaxHit(attacker, defender, CombatType.RANGED);
 
+            int max = getMaxHit(attacker, defender, CombatType.RANGED);
             verdict = random(max);
-            verdict = attacker.getCombat().modifyDamage(verdict);
 
             if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
@@ -132,7 +127,6 @@ public final class FormulaFactory {
 
         if (isAccurate(attacker, defender, CombatType.RANGED)) {
             verdict = random(max);
-            verdict = attacker.getCombat().modifyDamage(verdict);
 
             if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
@@ -161,7 +155,6 @@ public final class FormulaFactory {
 
         if (isAccurate(attacker, defender, CombatType.MAGIC)) {
             verdict = random(max);
-            verdict = attacker.getCombat().modifyDamage(verdict);
 
             if (verdict > 0) {
                 if (verdict > defender.getCurrentHealth()) {
@@ -215,7 +208,7 @@ public final class FormulaFactory {
     /**
      * Gets the effective accuracy level for a actor based on a combat type.
      *
-     * @param attacker    the actor
+     * @param attacker the actor
      * @param defender the defender
      * @param type     the combat type
      * @return the offensive roll
@@ -253,7 +246,7 @@ public final class FormulaFactory {
     /**
      * Gets the effective strength level for a actor based on a combat type.
      *
-     * @param attacker    the actor
+     * @param attacker the actor
      * @param defender the defender
      * @param type     the combat type
      * @return the effective strength
@@ -286,7 +279,7 @@ public final class FormulaFactory {
     /**
      * Gets the effective defence for a actor based on a combat type.
      *
-     * @param type  the combat type
+     * @param type the combat type
      * @return the effective defence
      */
     private static int getEffectiveDefence(Actor attacker, Actor defender, CombatType type) {
@@ -302,7 +295,7 @@ public final class FormulaFactory {
     /**
      * Gets the effective attack level for a actor.
      *
-     * @param attacker    the actor
+     * @param attacker the actor
      * @return the effective attack level
      */
     private static int getAugmentedAttack(Actor attacker, Actor defender) {
@@ -311,18 +304,11 @@ public final class FormulaFactory {
         if (attacker.isPlayer()) {
             Player player = attacker.toPlayer();
 
-            if(Prayer.isActivated(player, Prayer.CLARITY_OF_THOUGHT)) {
-                level *= 1.05;
-            } else if(Prayer.isActivated(player, Prayer.IMPROVED_REFLEXES)) {
-                level *= 1.1;
-            } else if(Prayer.isActivated(player, Prayer.INCREDIBLE_REFLEXES)) {
-                level *= 1.15;
-            } else if(Prayer.isActivated(player, Prayer.CHIVALRY)) {
-                level *= 1.15;
-            } else if(Prayer.isActivated(player, Prayer.PIETY)) {
-                level *= 1.20;
-            } else if(Prayer.isActivated(player, Prayer.TURMOIL)) {
-                level *= 1.15;
+            for (Prayer prayer : player.getPrayerActive()) {
+                level = prayer.modifyAccuracyLevel(player, level);
+            }
+
+            if (Prayer.isActivated(player, Prayer.TURMOIL)) {
                 if (defender != null && defender.isPlayer()) {
                     // 1000 because if attack is 99 / 100 * 10 = 9.9 which is way to much.
                     level *= defender.toPlayer().getSkills()[Skills.ATTACK].getRealLevel() / 1000;
@@ -336,7 +322,7 @@ public final class FormulaFactory {
     /**
      * Gets the effective strength level for a actor.
      *
-     * @param attacker    the attacker
+     * @param attacker the attacker
      * @return the effective strength level
      */
     private static int getAugmentedStrength(Actor attacker, Actor defender) {
@@ -345,18 +331,11 @@ public final class FormulaFactory {
         if (attacker.isPlayer()) {
             Player player = attacker.toPlayer();
 
-            if(Prayer.isActivated(player, Prayer.BURST_OF_STRENGTH)) {
-                level *= 1.05;
-            } else if(Prayer.isActivated(player, Prayer.SUPERHUMAN_STRENGTH)) {
-                level *= 1.1;
-            } else if(Prayer.isActivated(player, Prayer.ULTIMATE_STRENGTH)) {
-                level *= 1.15;
-            } else if(Prayer.isActivated(player, Prayer.CHIVALRY)) {
-                level *= 1.18;
-            } else if(Prayer.isActivated(player, Prayer.PIETY)) {
-                level *= 1.23;
-            } else if(Prayer.isActivated(player, Prayer.TURMOIL)) {
-                level *= 1.23;
+            for (Prayer prayer : player.getPrayerActive()) {
+                level = prayer.modifyAggressiveLevel(player, level);
+            }
+
+            if (Prayer.isActivated(player, Prayer.TURMOIL)) {
                 if (defender != null && defender.isPlayer()) {
                     // 1000 because if strength is 99 / 100 * 10 = 9.9 which is way to much.
                     level *= defender.toPlayer().getSkills()[Skills.STRENGTH].getRealLevel() / 1000;
@@ -379,18 +358,11 @@ public final class FormulaFactory {
         if (defender.isPlayer()) {
             Player player = defender.toPlayer();
 
-            if(Prayer.isActivated(player, Prayer.THICK_SKIN)) {
-                level *= 1.05;
-            } else if(Prayer.isActivated(player, Prayer.ROCK_SKIN)) {
-                level *= 1.1;
-            } else if(Prayer.isActivated(player, Prayer.STEEL_SKIN)) {
-                level *= 1.15;
-            } else if(Prayer.isActivated(player, Prayer.CHIVALRY)) {
-                level *= 1.20;
-            } else if(Prayer.isActivated(player, Prayer.PIETY)) {
-                level *= 1.25;
-            } else if(Prayer.isActivated(player, Prayer.TURMOIL)) {
-                level *= 1.15;
+            for (Prayer prayer : player.getPrayerActive()) {
+                level = prayer.modifyDefensiveLevel(player, level);
+            }
+
+            if (Prayer.isActivated(player, Prayer.TURMOIL)) {
                 if (attacker != null && attacker.isPlayer()) {
                     // 1000 because if defence is 99 / 100 * 10 = 9.9 which is way to much.
                     level *= attacker.toPlayer().getSkills()[Skills.DEFENCE].getRealLevel() / 1000;
@@ -404,7 +376,7 @@ public final class FormulaFactory {
     /**
      * Gets the effective ranged level for a actor.
      *
-     * @param actor    the actor
+     * @param actor the actor
      * @return the effective ranged level
      */
     private static int getAugmentedRanged(Actor actor) {
@@ -413,12 +385,8 @@ public final class FormulaFactory {
         if (actor.isPlayer()) {
             Player player = actor.toPlayer();
 
-            if (Prayer.isActivated(player, Prayer.SHARP_EYE)) {
-                level *= 1.05;
-            } else if (Prayer.isActivated(player, Prayer.HAWK_EYE)) {
-                level *= 1.1;
-            } else if (Prayer.isActivated(player, Prayer.EAGLE_EYE)) {
-                level *= 1.15;
+            for (Prayer prayer : player.getPrayerActive()) {
+                level = prayer.modifyAccuracyLevel(player, level);
             }
         }
 
@@ -426,10 +394,10 @@ public final class FormulaFactory {
     }
 
     /**
-     * Gets the effective magic level for a actor.
+     * Augments an actor's magic level with prayer bonuses.
      *
-     * @param actor    the actor
-     * @return the effective magic level
+     * @param actor the actor
+     * @return the augmented magic level
      */
     private static int getAugmentedMagic(Actor actor) {
         int level = actor.getSkillLevel(Skills.MAGIC);
@@ -437,12 +405,8 @@ public final class FormulaFactory {
         if (actor.isPlayer()) {
             Player player = actor.toPlayer();
 
-            if (Prayer.isActivated(player, Prayer.MYSTIC_WILL)) {
-                level *= 1.05;
-            } else if (Prayer.isActivated(player, Prayer.MYSTIC_LORE)) {
-                level *= 1.1;
-            } else if (Prayer.isActivated(player, Prayer.MYSTIC_MIGHT)) {
-                level *= 1.15;
+            for (Prayer prayer : player.getPrayerActive()) {
+                level = prayer.modifyAccuracyLevel(player, level);
             }
         }
 
@@ -457,20 +421,31 @@ public final class FormulaFactory {
         int level = getEffectiveStrength(attacker, defender, type);
         level = attacker.getCombat().modifyAggressive(level);
 
-        int bonus;
-        switch (type) {
-            case MELEE:
-                bonus = attacker.getBonus(CombatConstants.BONUS_STRENGTH);
-                return maxHit(level, bonus);
-            case RANGED:
-                bonus = attacker.getBonus(CombatConstants.BONUS_RANGED_STRENGTH);
-                return maxHit(level, bonus);
-            case MAGIC:
-                bonus = attacker.getBonus(CombatConstants.BONUS_MAGIC_DAMAGE);
-                return maxHit(level, 0) * bonus / 100;
+        int max, bonus;
+        if (type == CombatType.MELEE) {
+            bonus = attacker.getBonus(CombatConstants.BONUS_STRENGTH);
+            max = maxHit(level, bonus);
+        } else if (type == CombatType.RANGED) {
+            bonus = attacker.getBonus(CombatConstants.BONUS_RANGED_STRENGTH);
+            max = maxHit(level, bonus);
+        } else if (type == CombatType.MAGIC) {
+            bonus = attacker.getBonus(CombatConstants.BONUS_MAGIC_DAMAGE);
+            max = maxHit(level, 0) * bonus / 100;
+        } else {
+            throw new IllegalArgumentException("Combat type not found: " + type);
         }
 
-        throw new IllegalArgumentException("Combat type not found: " + type);
+        if (attacker.isPlayer()) {
+            Player player = attacker.toPlayer();
+
+            for (Prayer prayer : player.getPrayerActive()) {
+                max = prayer.modifyDamage(player, max);
+            }
+        }
+
+        attacker.getCombat().modifyDamage(max);
+        return max;
+
     }
 
     /**

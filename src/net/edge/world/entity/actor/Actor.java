@@ -388,6 +388,10 @@ public abstract class Actor extends Entity {
 			flags.flag(UpdateFlag.ANIMATION);
 		}
 	}
+
+	public final void animation(int animation) {
+		animation(new Animation(animation));
+	}
 	
 	/**
 	 * Executes {@code graphic} for this entity.
@@ -399,6 +403,10 @@ public abstract class Actor extends Entity {
 		}
 		this.graphic = graphic.copy();
 		flags.flag(UpdateFlag.GRAPHIC);
+	}
+
+	public final void graphic(int graphic) {
+		graphic(new Graphic(graphic));
 	}
 	
 	/**

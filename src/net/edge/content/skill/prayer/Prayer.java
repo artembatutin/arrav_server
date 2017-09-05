@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.edge.content.TabInterface;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.skill.Skills;
+import net.edge.content.skill.prayer.curses.LeechCurse;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendForceTab;
 import net.edge.util.TextUtils;
@@ -15,7 +16,9 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.PrayerBook;
 import net.edge.world.entity.actor.update.UpdateFlag;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -252,11 +255,33 @@ public enum Prayer {
 	},
 	DEFLECT_MELEE(PrayerBook.CURSES, 83127, 5, 9, 71, 733, 67074, 654) {
 		@Override
+		public boolean onActivation(Player player) {
+			player.getCombat().addListener(LeechCurse.get());
+			return true;
+		}
+
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.getCombat().removeListener(LeechCurse.get());
+			return true;
+		}
+		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_MISSILES, DEFLECT_MAGIC, WRATH, SOUL_SPLIT});
 		}
 	},
 	LEECH_ATTACK(PrayerBook.CURSES, 83129, 5.83, -1, 74, 734, 67074, 654) {
+		@Override
+		public boolean onActivation(Player player) {
+			player.getCombat().addListener(LeechCurse.get());
+			return true;
+		}
+
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.getCombat().removeListener(LeechCurse.get());
+			return true;
+		}
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SAP_WARRIOR, TURMOIL});
@@ -264,11 +289,33 @@ public enum Prayer {
 	},
 	LEECH_RANGED(PrayerBook.CURSES, 83131, 5.83, -1, 76, 735, 67074, 654) {
 		@Override
+		public boolean onActivation(Player player) {
+			player.getCombat().addListener(LeechCurse.get());
+			return true;
+		}
+
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.getCombat().removeListener(LeechCurse.get());
+			return true;
+		}
+		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SAP_RANGER, TURMOIL});
 		}
 	},
 	LEECH_MAGIC(PrayerBook.CURSES, 83133, 5.83, -1, 78, 736, 67074, 654) {
+		@Override
+		public boolean onActivation(Player player) {
+			player.getCombat().addListener(LeechCurse.get());
+			return true;
+		}
+
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.getCombat().removeListener(LeechCurse.get());
+			return true;
+		}
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SAP_MAGE, TURMOIL});
@@ -276,11 +323,33 @@ public enum Prayer {
 	},
 	LEECH_DEFENCE(PrayerBook.CURSES, 83135, 5.83, -1, 80, 737, 67074, 654) {
 		@Override
+		public boolean onActivation(Player player) {
+			player.getCombat().addListener(LeechCurse.get());
+			return true;
+		}
+
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.getCombat().removeListener(LeechCurse.get());
+			return true;
+		}
+		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{TURMOIL});
 		}
 	},
 	LEECH_STRENGTH(PrayerBook.CURSES, 83137, 5.83, -1, 82, 738, 67074, 654) {
+		@Override
+		public boolean onActivation(Player player) {
+			player.getCombat().addListener(LeechCurse.get());
+			return true;
+		}
+
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.getCombat().removeListener(LeechCurse.get());
+			return true;
+		}
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{TURMOIL});
@@ -288,11 +357,33 @@ public enum Prayer {
 	},
 	LEECH_ENERGY(PrayerBook.CURSES, 83139, 5.5, -1, 84, 739, 67074, 654) {
 		@Override
+		public boolean onActivation(Player player) {
+			player.getCombat().addListener(LeechCurse.get());
+			return true;
+		}
+
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.getCombat().removeListener(LeechCurse.get());
+			return true;
+		}
+		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{TURMOIL});
 		}
 	},
 	LEECH_SPECIAL_ATTACK(PrayerBook.CURSES, 83141, 6.6, -1, 86, 740, 67074, 654) {
+		@Override
+		public boolean onActivation(Player player) {
+			player.getCombat().addListener(LeechCurse.get());
+			return true;
+		}
+
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.getCombat().removeListener(LeechCurse.get());
+			return true;
+		}
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{TURMOIL});
@@ -396,6 +487,7 @@ public enum Prayer {
 		this.config = config;
 		this.quickPrayer = quickPrayer;
 		this.checkmark = checkmark;
+		this.modifier = new AttackModifier();
 	}
 	
 	/**
@@ -649,7 +741,47 @@ public enum Prayer {
 	public static boolean isActivated(Player player, Prayer prayer) {
 		return player.getPrayerActive().contains(prayer);
 	}
-	
+
+	public static Prayer[] getActivatedPrayers(Player player, Prayer... prayers) {
+		List<Prayer> active_prayers = new ArrayList<>();
+
+		for(Prayer prayer : prayers) {
+			if(isActivated(player, prayer)) {
+				active_prayers.add(prayer);
+			}
+		}
+
+		return active_prayers.toArray(new Prayer[active_prayers.size()]);
+	}
+
+	public int modifyAccuracyLevel(Player player, int level) {
+		if (Prayer.isActivated(player, this)) {
+			level += level * modifier.getAccuracy();
+		}
+		return level;
+	}
+
+	public int modifyAggressiveLevel(Player player, int level) {
+		if (Prayer.isActivated(player, this)) {
+			level += level * modifier.getAggressive();
+		}
+		return level;
+	}
+
+	public int modifyDefensiveLevel(Player player, int level) {
+		if (Prayer.isActivated(player, this)) {
+			level += level * modifier.getDefensive();
+		}
+		return level;
+	}
+
+	public int modifyDamage(Player player, int damage) {
+		if (Prayer.isActivated(player, this)) {
+			damage += damage * modifier.getDamage();
+		}
+		return damage;
+	}
+
 	/**
 	 * Determines if any of the specified prayers are activated.
 	 * @param player  the player's prayers to check.

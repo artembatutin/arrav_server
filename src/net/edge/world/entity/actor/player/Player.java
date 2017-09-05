@@ -65,6 +65,7 @@ import net.edge.world.entity.EntityState;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.Combat;
+import net.edge.world.entity.actor.combat.attack.AttackModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.magic.CombatSpell;
 import net.edge.world.entity.actor.combat.effect.CombatEffect;
@@ -343,7 +344,9 @@ public final class Player extends Actor {
 	 * The collection of stopwatches used for various timing operations.
 	 */
 	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch().reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
-	
+
+	public final Stopwatch leechDelay = new Stopwatch().reset();
+
 	/**
 	 * The collection of counters used for various counting operations.
 	 */
@@ -527,6 +530,10 @@ public final class Player extends Actor {
 	 * The saved {@link Multicannon} instance.
 	 */
 	public Optional<Multicannon> cannon = Optional.empty();
+
+
+	/** Curses modifiers. */
+	public final Map<Prayer, AttackModifier> curses_modifiers = new HashMap<>();
 	
 	/**
 	 * Creates a new {@link Player}.
@@ -2132,5 +2139,5 @@ public final class Player extends Actor {
 	public int getSkillLevel(int skill) {
 		return skills[skill].getLevel();
 	}
-	
+
 }

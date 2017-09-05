@@ -6,6 +6,7 @@ import net.edge.content.skill.prayer.Prayer;
 import net.edge.task.Task;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
+import net.edge.world.entity.actor.combat.Combat;
 import net.edge.world.entity.actor.player.Player;
 
 /**
@@ -40,6 +41,7 @@ public final class RestoreStatTask extends Task {
 			if(player.isDead()) {
 				continue;
 			}
+
 			Skill hp = player.getSkills()[Skills.HITPOINTS];
 			int maxCons = player.getMaximumHealth();
 			int currentCons = hp.getLevel();

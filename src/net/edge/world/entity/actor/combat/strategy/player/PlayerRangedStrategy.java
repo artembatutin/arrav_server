@@ -4,7 +4,6 @@ import net.edge.content.item.Requirement;
 import net.edge.net.packet.out.SendMessage;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.CombatConstants;
 import net.edge.world.entity.actor.combat.CombatImpact;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.CombatUtil;

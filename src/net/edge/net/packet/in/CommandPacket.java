@@ -11,6 +11,7 @@ import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.player.special.CombatSpecial;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.entity.actor.player.assets.PrayerBook;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.Spellbook;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -37,8 +38,7 @@ public final class CommandPacket implements IncomingPacket {
         if (player.getRights() == Rights.ADMINISTRATOR) {
             if (parts[0].equalsIgnoreCase("spec")) {
                 CombatSpecial.restore(player, 100);
-                player.setSpellbook(Spellbook.ANCIENT);
-                TabInterface.MAGIC.sendInterface(player, Spellbook.ANCIENT.getId());
+                player.setPrayerBook(PrayerBook.CURSES);
                 return;
             } else if (parts[0].equalsIgnoreCase("getroll")) {
                 String otherName = parts[1];
