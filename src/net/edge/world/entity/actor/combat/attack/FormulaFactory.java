@@ -184,9 +184,6 @@ public final class FormulaFactory {
             return RandomUtils.success(chance);
         } else {
             double chance = attackRoll / (2.0 * (defenceRoll + 1));
-            if (attacker.isPlayer()) {
-                System.out.println(attackRoll + " " + defenceRoll + " " + chance);
-            }
             return RandomUtils.success(chance);
         }
     }
