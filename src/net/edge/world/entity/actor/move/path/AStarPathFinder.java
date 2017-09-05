@@ -8,6 +8,8 @@ import net.edge.world.locale.Position;
 
 import java.util.*;
 
+import static net.edge.world.Direction.*;
+
 /**
  * Represents a {@code PathFinder} which uses the A* search algorithm(by passing obstacles).
  * @author Graham
@@ -76,7 +78,7 @@ public final class AStarPathFinder extends PathFinder {
 		
 		int distance = (int) origin.getDistance(target);
 		boolean found = false;
-		int count = 0, count2 = 0;
+		int count2 = 0;
 		do {
 			active = getCheapest(sorted);
 			Position position = active.getPosition();
@@ -84,21 +86,48 @@ public final class AStarPathFinder extends PathFinder {
 				found = true;
 				break;
 			}
-			if(count++ > 32 * 20 + 1) {
-				break;
-			}
 			open.remove(active);
 			active.close();
 			
-			for(Direction direction : Direction.VALUES) {
-				if(direction != Direction.NONE) {
-					Position move = position.move(direction);
-					if(traversable(position, size, direction) && traversable(move, size, Direction.valueOf(direction.getOpposite()))) {
-						Node node = nodes.computeIfAbsent(move, Node::new);
-						compare(active, node, open, sorted, heuristic);
-					}
-				}
-				
+			Position move = position.move(NORTH);
+			if(traversable(position, size, NORTH) && traversable(move, size, Direction.valueOf(NORTH.getOpposite()))) {
+				Node node = nodes.computeIfAbsent(move, Node::new);
+				compare(active, node, open, sorted, heuristic);
+			}
+			move = position.move(NORTH_EAST);
+			if(traversable(position, size, NORTH_EAST) && traversable(move, size, Direction.valueOf(NORTH_EAST.getOpposite()))) {
+				Node node = nodes.computeIfAbsent(move, Node::new);
+				compare(active, node, open, sorted, heuristic);
+			}
+			move = position.move(EAST);
+			if(traversable(position, size, EAST) && traversable(move, size, Direction.valueOf(EAST.getOpposite()))) {
+				Node node = nodes.computeIfAbsent(move, Node::new);
+				compare(active, node, open, sorted, heuristic);
+			}
+			move = position.move(SOUTH_EAST);
+			if(traversable(position, size, SOUTH_EAST) && traversable(move, size, Direction.valueOf(SOUTH_EAST.getOpposite()))) {
+				Node node = nodes.computeIfAbsent(move, Node::new);
+				compare(active, node, open, sorted, heuristic);
+			}
+			move = position.move(SOUTH);
+			if(traversable(position, size, SOUTH) && traversable(move, size, Direction.valueOf(SOUTH.getOpposite()))) {
+				Node node = nodes.computeIfAbsent(move, Node::new);
+				compare(active, node, open, sorted, heuristic);
+			}
+			move = position.move(SOUTH_WEST);
+			if(traversable(position, size, SOUTH_WEST) && traversable(move, size, Direction.valueOf(SOUTH_WEST.getOpposite()))) {
+				Node node = nodes.computeIfAbsent(move, Node::new);
+				compare(active, node, open, sorted, heuristic);
+			}
+			move = position.move(WEST);
+			if(traversable(position, size, WEST) && traversable(move, size, Direction.valueOf(WEST.getOpposite()))) {
+				Node node = nodes.computeIfAbsent(move, Node::new);
+				compare(active, node, open, sorted, heuristic);
+			}
+			move = position.move(NORTH_WEST);
+			if(traversable(position, size, NORTH_WEST) && traversable(move, size, Direction.valueOf(NORTH_WEST.getOpposite()))) {
+				Node node = nodes.computeIfAbsent(move, Node::new);
+				compare(active, node, open, sorted, heuristic);
 			}
 		} while(!open.isEmpty() && sorted.size() < distance * 20);
 		

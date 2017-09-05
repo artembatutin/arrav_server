@@ -2,9 +2,11 @@ package net.edge.world.entity.actor.move;
 
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.task.Task;
+import net.edge.world.Direction;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.move.path.Path;
 import net.edge.world.entity.actor.player.Player;
@@ -105,25 +107,17 @@ class ActorFollowTask extends Task {
 			return;
 		}
 		
-		//Resets if character next to the player.
-		if(boundary.within(character.getPosition(), character.size(), 1)) {
-			character.getMovementQueue().reset();
-			//Combat diagonal fighting.
-			/*if(character.getCombat().isAttacking()) {
-				Direction facing = Direction.fromDeltas(Position.delta(character.getPosition(), leader.getPosition()));
-				if(facing.isDiagonal()) {//Moving player if diagonal fighting
-					Position pos = TraversalMap.getRandomNearby(character.getPosition(), leader.getPosition(), character.size());
-					if(pos != null)
-						character.getMovementQueue().walk(pos);
-				}
+		//combat within boundary
+		CombatType type = CombatType.NONE;
+		if(combat) {
+			if (!character.getPosition().withinDistance(leader.getPosition(), 45)) {
+				character.getCombat().reset(true);
 				return;
 			}
-			return;*/
-		}
-
-		//combat within boundary
-		if(combat) {
-			if(character.getCombat().checkWithin()) {
+			if(character.getCombat().getStrategy() != null) {
+				type = character.getCombat().getStrategy().getCombatType();
+			}
+			if(character.getCombat().checkWithin() && (type == CombatType.RANGED || type == CombatType.MAGIC)) {
 				character.getMovementQueue().within = true;
 				return;
 			} else {
@@ -131,11 +125,30 @@ class ActorFollowTask extends Task {
 			}
 		}
 		
+		//Resets if character next to the player.
+		if((type == CombatType.NONE || type == CombatType.MELEE) && boundary.within(character.getPosition(), character.size(), 1)) {
+			//Combat diagonal fighting.
+			if(type == CombatType.MELEE) {
+				Direction facing = Direction.fromDeltas(Position.delta(character.getPosition(), leader.getPosition()));
+				if(facing.isDiagonal()) {//Moving player if diagonal fighting
+					Position pos = TraversalMap.getRandomNearby(leader.getPosition(), character.getPosition(), character.size());
+					if(pos != null && pos.withinDistance(character.getPosition(), 1)) {
+						character.getMovementQueue().within = false;
+						character.getMovementQueue().walk(pos);
+						return;
+					}
+				}
+				return;
+			}
+			character.getMovementQueue().within = true;
+			return;
+		} else {
+			character.getMovementQueue().within = false;
+		}
 		//returns if path calculated is next to the leader.
 		if(destination != null && boundary.within(destination, leader.size(), character.size())) {
 			return;
 		}
-		
 		//Setting new path depending on the follower's type.
 		Path path = character.isPlayer() || (character.isMob() && character.toMob().isSmart()) ? character.getAStarPathFinder().find(leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
 		if(path != null && path.isPossible()) {
@@ -164,6 +177,7 @@ class ActorFollowTask extends Task {
 	
 	@Override
 	public void onException(Exception e) {
+		e.printStackTrace();
 		onCancel();
 	}
 	

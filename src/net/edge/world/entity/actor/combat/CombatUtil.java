@@ -238,10 +238,6 @@ public final class CombatUtil {
 			attacker.getCombat().reset(true);
 			return false;
 		}
-		if (!defender.getPosition().withinDistance(attacker.getPosition(), 45)) {
-			attacker.getCombat().reset(true);
-			return false;
-		}
 		if(attacked && !multi && !attacker.getCombat().isAttacking(defender)) {
 			if(attacker.isPlayer()) {
 				Player player = attacker.toPlayer();

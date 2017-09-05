@@ -23,24 +23,14 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
 		MovementQueue otherMovement = defender.getMovementQueue();
 		FightType fightType = attacker.getCombat().getFightType();
 		int distance = getAttackDistance(attacker, fightType);
-
-		if (!movement.isMovementDone() && !otherMovement.isMovementDone() && !movement.isLockMovement() && !attacker.isFrozen()) {
+		if (movement.isRunning()) {
 			distance += 1;
-
-			if (movement.isRunning()) {
-				distance += 2;
-			}
 		}
-
-		if (!new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance)) {
+		if(!new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance)) {
 			return false;
 		}
-
-		if (!World.getSimplePathChecker().checkLine(attacker.getPosition(), defender.getPosition(), attacker.size())) {
-			return false;
-		}
-
-		return true;
+		
+		return World.getSimplePathChecker().checkLine(attacker.getPosition(), defender.getPosition(), attacker.size());
 	}
 	
 	@Override
