@@ -26,6 +26,7 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
 
 		if (!movement.isMovementDone() && !otherMovement.isMovementDone() && !movement.isLockMovement() && !attacker.isFrozen()) {
 			distance += 1;
+
 			if (movement.isRunning()) {
 				distance += 2;
 			}

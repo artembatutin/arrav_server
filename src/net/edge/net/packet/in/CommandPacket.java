@@ -5,6 +5,7 @@ import net.edge.content.commands.CommandDispatcher;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
+import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.player.special.CombatSpecial;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
@@ -32,8 +33,8 @@ public final class CommandPacket implements IncomingPacket {
         if (player.getRights() == Rights.ADMINISTRATOR) {
             if (parts[0].equalsIgnoreCase("spec")) {
                 CombatSpecial.restore(player, 100);
-				player.setSpellbook(Spellbook.NORMAL);
-				TabInterface.MAGIC.sendInterface(player, Spellbook.NORMAL.getId());
+				player.setSpellbook(Spellbook.ANCIENT);
+				TabInterface.MAGIC.sendInterface(player, Spellbook.ANCIENT.getId());
                 return;
             } else if (parts[0].equalsIgnoreCase("man")) {
                 Mob npc = Mob.getNpc(1, player.getPosition().copy().move(1, 0));
@@ -42,6 +43,9 @@ public final class CommandPacket implements IncomingPacket {
                 npc.setRespawn(false);
                 npc.setCurrentHealth(100_000);
                 World.get().getMobs().add(npc);
+                return;
+            } else if (parts[0].equalsIgnoreCase("hit")) {
+                player.damage(new Hit(250));
                 return;
             } else if (parts[0].equalsIgnoreCase("men")) {
                 for (int y = 0; y < 3; y++) {
