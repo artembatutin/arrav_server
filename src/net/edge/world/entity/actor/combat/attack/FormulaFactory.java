@@ -10,8 +10,6 @@ import net.edge.world.entity.actor.combat.hit.HitIcon;
 import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.player.Player;
 
-import java.security.SecureRandom;
-
 /**
  * Supplies factory methods useful for combat.
  *
@@ -183,26 +181,22 @@ public final class FormulaFactory {
         double defenceRoll = roll(defender, defence, type, false);
         double chance;
 
-        if (attackRoll <= defenceRoll) {
-            chance = (attackRoll - 1) / (defenceRoll * 2);
+        if (attackRoll > defenceRoll) {
+            chance = 1 - (defenceRoll + 2) / (2 * (attackRoll + 1));
         } else {
-            chance = 1 - ((defenceRoll + 1) / (attackRoll * 2));
+            chance = attackRoll / (2 * (defenceRoll + 1));
         }
 
-
-        int attChance = (int) (chance * 1000);
-        int defChance = 1000 - attChance;
-
+//        int attChance = (int) (chance * 1000);
+//        int defChance = 1000 - attChance;
+//
 //        if (attacker.isPlayer()) {
 //            System.out.println("[PLAYER] " + attacker.toPlayer().getFormatUsername() + "  ---  " + ((int) (chance * 10000) / 100.0) + "% accuracy | attack roll: " + attackRoll + " -- defence roll: " + defenceRoll + " -- attack chance: " + attChance + " -- defence chance: " + defChance);
 //        } else {
 //            System.out.println("[NPC] " + attacker.toMob().getDefinition().getName() + "  ---  " + ((int) (chance * 10000) / 100.0) + "% accuracy | attack roll: " + attackRoll + " -- defence roll: " + defenceRoll + " -- attack chance: " + attChance + " -- defence chance: " + defChance);
 //        }
 
-        int attRoll = random(attChance);
-        int defRoll = random(defChance);
-//        System.out.println(attRoll + " " + defRoll);
-        return attRoll > defRoll;
+        return RandomUtils.success(chance);
     }
 
     /**
