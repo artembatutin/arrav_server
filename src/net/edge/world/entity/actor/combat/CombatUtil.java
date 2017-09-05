@@ -130,7 +130,26 @@ public final class CombatUtil {
 		}
 		return collected;
 	}
-	
+
+	/**
+	 * Gets the corresponding combat prayer to {@code type}.
+	 * @param type the combat type to get the prayer for.
+	 * @return the corresponding combat prayer.
+	 * @throws IllegalArgumentException if the combat type is invalid.
+	 */
+	public static Prayer[] getProtectingPrayer(CombatType type) {
+		switch(type) {
+			case MELEE:
+				return new Prayer[]{Prayer.PROTECT_FROM_MELEE, Prayer.DEFLECT_MELEE};
+			case MAGIC:
+				return new Prayer[]{Prayer.PROTECT_FROM_MAGIC, Prayer.DEFLECT_MAGIC};
+			case RANGED:
+				return new Prayer[]{Prayer.PROTECT_FROM_MISSILES, Prayer.DEFLECT_MISSILES};
+			default:
+				throw new IllegalArgumentException("Invalid combat type: " + type);
+		}
+	}
+
 	/**
 	 * Gets the hit delay for the specified {@code type}.
 	 * @param attacker the character doing the hit
