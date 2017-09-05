@@ -174,29 +174,26 @@ public final class FormulaFactory {
      * @return {@code true} if the roll was accurate
      */
     private static boolean isAccurate(Actor attacker, Actor defender, CombatType type) {
-        int accuracy = getEffectiveAccuracy(attacker, type);
-        int defence = getEffectiveDefence(defender, type);
-
-        double attackRoll = roll(attacker, accuracy, type, true);
-        double defenceRoll = roll(defender, defence, type, false);
-        double chance;
+        double attackRoll = getAttackRoll(attacker, type);
+        double defenceRoll = getDefenceRoll(defender, attacker.getCombat().getFightType(), type);
 
         if (attackRoll > defenceRoll) {
-            chance = 1 - (defenceRoll + 2) / (2 * (attackRoll + 1));
+            double chance = 1 - (defenceRoll + 2) / (2 * (attackRoll + 1));
+            return RandomUtils.success(chance);
         } else {
-            chance = attackRoll / (2 * (defenceRoll + 1));
+            double chance = attackRoll / (2 * (defenceRoll + 1));
+            return RandomUtils.success(chance);
         }
+    }
 
-//        int attChance = (int) (chance * 1000);
-//        int defChance = 1000 - attChance;
-//
-//        if (attacker.isPlayer()) {
-//            System.out.println("[PLAYER] " + attacker.toPlayer().getFormatUsername() + "  ---  " + ((int) (chance * 10000) / 100.0) + "% accuracy | attack roll: " + attackRoll + " -- defence roll: " + defenceRoll + " -- attack chance: " + attChance + " -- defence chance: " + defChance);
-//        } else {
-//            System.out.println("[NPC] " + attacker.toMob().getDefinition().getName() + "  ---  " + ((int) (chance * 10000) / 100.0) + "% accuracy | attack roll: " + attackRoll + " -- defence roll: " + defenceRoll + " -- attack chance: " + attChance + " -- defence chance: " + defChance);
-//        }
+    private static double getAttackRoll(Actor actor, CombatType type) {
+        int accuracy = getEffectiveAccuracy(actor, type);
+        return rollOffensive(actor, accuracy, type);
+    }
 
-        return RandomUtils.success(chance);
+    private static double getDefenceRoll(Actor actor, FightType fightType, CombatType type) {
+        int accuracy = getEffectiveDefence(actor, type);
+        return rollDefensive(actor, accuracy, fightType, type);
     }
 
     /**
@@ -352,56 +349,65 @@ public final class FormulaFactory {
     }
 
     /**
-     * Generates a roll boundary for a specific {@code Actor}.
+     * Generates an offensive roll for an actor given the offensive skill level
+     * and combat type used.
      *
      * @param actor the actor to roll for
-     * @param level the level
-     * @return the roll
+     * @param level the offensive skill level
+     * @param type  the combat type to attack with
+     * @return the offensive attack roll
      */
-    private static double roll(Actor actor, double level, CombatType type, boolean offensive) {
+    private static double rollOffensive(Actor actor, double level, CombatType type) {
         FightType fightType = actor.getCombat().getFightType();
-
-        if (offensive) {
-            if (actor.isPlayer()) {
-                Player player = actor.toPlayer();
-                int bonus = player.getEquipment().getBonuses()[fightType.getBonus()];
-                if (type == CombatType.MAGIC) {
-                    bonus = player.getEquipment().getBonuses()[CombatConstants.ATTACK_MAGIC];
-                    return roll(level, bonus, 0);
-                }
-                return roll(level, bonus, fightType.getStyle().getAccuracyIncrease());
-            }
-
-            int bonus = 0;
-            if (type == CombatType.RANGED) {
-                bonus = actor.toMob().getDefinition().getCombat().getAttackRanged();
-                return roll(level, bonus, fightType.getStyle().getAccuracyIncrease());
-            } else if (type == CombatType.MAGIC) {
-                bonus = actor.toMob().getDefinition().getCombat().getAttackMagic();
-                return roll(level, bonus, 0);
-            } else if (type == CombatType.MELEE) {
-                bonus = actor.toMob().getDefinition().getCombat().getAttackMelee();
-                return roll(level, bonus, fightType.getStyle().getAccuracyIncrease());
-            }
-        }
 
         if (actor.isPlayer()) {
             Player player = actor.toPlayer();
-            int bonus = player.getEquipment().getBonuses()[fightType.getCorrespondingBonus()];
+            int[] bonuses = player.getEquipment().getBonuses();
+
             if (type == CombatType.MAGIC) {
-                bonus = player.getEquipment().getBonuses()[CombatConstants.DEFENCE_MAGIC];
-                return roll(level, bonus, 0);
+                return roll(level, bonuses[CombatConstants.ATTACK_MAGIC], 0);
             }
+
+            int bonus = bonuses[fightType.getBonus()];
+            return roll(level, bonus, fightType.getStyle().getAccuracyIncrease());
+        }
+
+        int bonus = 0;
+        if (type == CombatType.MELEE) {
+            bonus = actor.toMob().getDefinition().getCombat().getAttackMelee();
+        } else if (type == CombatType.RANGED) {
+            bonus = actor.toMob().getDefinition().getCombat().getAttackRanged();
+        } else if (type == CombatType.MAGIC) {
+            bonus = actor.toMob().getDefinition().getCombat().getAttackMagic();
+            return roll(level, bonus, 0);
+        }
+
+        return roll(level, bonus, fightType.getStyle().getAccuracyIncrease());
+    }
+
+    /**
+     * Generates a defensive roll for an actor given the defensive skill level
+     * and combat type used.
+     *
+     * @param actor the actor to roll for
+     * @param level the defensive skill level
+     *@param type  the combat type to defend against  @return the defensive attack roll
+     */
+    private static double rollDefensive(Actor actor, double level, FightType fightType, CombatType type) {
+        if (actor.isPlayer()) {
+            Player player = actor.toPlayer();
+            int[] bonuses = player.getEquipment().getBonuses();
+
+            if (type == CombatType.MAGIC) {
+                return roll(level, bonuses[CombatConstants.DEFENCE_MAGIC], 0);
+            }
+
+            int bonus = bonuses[fightType.getCorrespondingBonus()];
             return roll(level, bonus, fightType.getStyle().getDefensiveIncrease());
         }
 
         int bonus = 0;
-        if (type == CombatType.RANGED) {
-            bonus = actor.toMob().getDefinition().getCombat().getDefenceRanged();
-        } else if (type == CombatType.MAGIC) {
-            bonus = actor.toMob().getDefinition().getCombat().getDefenceMagic();
-            return roll(level, bonus, 0);
-        } else if (type == CombatType.MELEE) {
+        if (type == CombatType.MELEE) {
             if (fightType.getCorrespondingBonus() == CombatConstants.DEFENCE_STAB) {
                 bonus = actor.toMob().getDefinition().getCombat().getDefenceStab();
             } else if (fightType.getCorrespondingBonus() == CombatConstants.DEFENCE_CRUSH) {
@@ -409,7 +415,13 @@ public final class FormulaFactory {
             } else if (fightType.getCorrespondingBonus() == CombatConstants.DEFENCE_SLASH) {
                 bonus = actor.toMob().getDefinition().getCombat().getDefenceSlash();
             }
+        } else if (type == CombatType.RANGED) {
+            bonus = actor.toMob().getDefinition().getCombat().getDefenceRanged();
+        } else if (type == CombatType.MAGIC) {
+            bonus = actor.toMob().getDefinition().getCombat().getDefenceMagic();
+            return roll(level, bonus, 0);
         }
+
         return roll(level, bonus, fightType.getStyle().getDefensiveIncrease());
     }
 

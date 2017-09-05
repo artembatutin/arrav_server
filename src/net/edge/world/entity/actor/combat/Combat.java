@@ -302,19 +302,14 @@ public class Combat<T extends Actor> {
 
     private void finishIncoming(Actor attacker) {
         T defender = this.attacker;
+        strategy.finishIncoming(attacker, defender);
         listeners.forEach(listener -> listener.finishIncoming(attacker, defender));
     }
 
     private void finishOutgoing(Actor defender, CombatStrategy<? super T> strategy) {
         strategy.finishOutgoing(attacker, defender);
-        strategy.getModifier(attacker).ifPresent(attacker.getCombat()::removeModifier);
-
-        listeners.forEach(listener -> {
-            listener.finishOutgoing(attacker, defender);
-            listener.getModifier(attacker).ifPresent(attacker.getCombat()::removeModifier);
-        });
-
-        defender.getCombat().finishIncoming(defender);
+        listeners.forEach(listener -> listener.finishOutgoing(attacker, defender));
+        defender.getCombat().finishIncoming(attacker);
     }
 
     public void reset(boolean fullCombat) {
