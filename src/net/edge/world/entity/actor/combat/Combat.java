@@ -239,7 +239,6 @@ public class Combat<T extends Actor> {
         if (defender.getCombat().getDefender() == null && defender.isAutoRetaliate()) {
             defender.getCombat().attack(attacker);
         } else if(defender.isMob() && !defender.getCombat().isUnderAttack()) {
-            System.out.println("under hit");
             defender.getCombat().attack(attacker);
         }
     }

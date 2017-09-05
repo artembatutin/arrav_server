@@ -202,15 +202,16 @@ public enum WeaponInterface {
 			player.text(WeaponInterface.UNARMED.nameLine, "Unarmed");
 			player.setWeapon(WeaponInterface.UNARMED);
 			CombatSpecial.assign(player);
-			WeaponFactory.updateAttackStyle(player, UNARMED);
 			setStrategy(player);
 			for(FightType type : player.getWeapon().getFightTypes()) {
 				if(type.getStyle() == player.getCombat().getFightType().getStyle()) {
 					player.getCombat().setFightType(type);
-					player.out(new SendConfig(player.getCombat().getFightType().getParent(), player.getCombat().getFightType().getChild()));
+					player.out(new SendConfig(type.getParent(), type.getChild()));
 					return;
 				}
 			}
+			player.getCombat().setFightType(player.getWeapon().getFightTypes()[0]); // THIS FUCKER WAS FUCKING US XD
+			player.out(new SendConfig(player.getCombat().getFightType().getParent(), player.getCombat().getFightType().getChild()));
 			return;
 		}
 		if(weapon == WeaponInterface.UNARMED) {
@@ -229,12 +230,11 @@ public enum WeaponInterface {
 		player.setWeapon(weapon);
 		CombatSpecial.assign(player);
 		CombatSpecial.updateSpecialAmount(player);
-		WeaponFactory.updateAttackStyle(player, weapon);
 		setStrategy(player);
 		for(FightType type : weapon.getFightTypes()) {
 			if(type.getStyle() == player.getCombat().getFightType().getStyle()) {
 				player.getCombat().setFightType(type);
-				player.out(new SendConfig(player.getCombat().getFightType().getParent(), player.getCombat().getFightType().getChild()));
+				player.out(new SendConfig(type.getParent(), type.getChild()));
 				return;
 			}
 		}

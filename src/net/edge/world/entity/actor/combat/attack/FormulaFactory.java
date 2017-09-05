@@ -481,7 +481,7 @@ public final class FormulaFactory {
      * @return the max hit
      */
     private static int maxHit(int level, int bonus) {
-        return 5 + level * (bonus + 64) / 64;
+        return 5 + level + level * bonus / 64;
     }
 
     /**
