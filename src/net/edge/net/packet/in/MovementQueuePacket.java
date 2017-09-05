@@ -30,18 +30,21 @@ public final class MovementQueuePacket implements IncomingPacket {
 		if(!MinigameHandler.execute(player, m -> m.canWalk(player))) {
 			return;
 		}
-		
+		boolean reset = false;
 		player.faceEntity(null);
-		
 		if(opcode == 248) {
 			player.setFollowing(false);
 			player.getCombat().reset(false);
+			reset = true;
 			size -= 14;
 		}
 		
 		if(opcode == 164) {
 			player.setFollowing(false);
-			player.getCombat().reset(false);
+			if(!reset) {
+				player.getCombat().reset(false);
+				reset = true;
+			}
 		} else if(opcode == 98) {
 		
 		}
@@ -54,7 +57,10 @@ public final class MovementQueuePacket implements IncomingPacket {
 		if(player.getDialogueBuilder() != null && !player.getMovementQueue().isLockMovement())
 			player.getDialogueBuilder().interrupt();
 		
-		player.getCombat().reset(false);
+		if(!reset) {
+			player.getCombat().reset(false);
+			reset = true;
+		}
 		
 		player.closeWidget();
 		if(player.getMarketShop() != null) {
@@ -72,7 +78,9 @@ public final class MovementQueuePacket implements IncomingPacket {
 		
 		if(player.getMovementQueue().check()) {
 			int firstStepY = payload.getShort(ByteOrder.LITTLE);
-			player.getMovementQueue().reset();
+			if(!reset) {
+				player.getMovementQueue().reset();
+			}
 			player.getMovementQueue().setRunPath(payload.get(ByteTransform.C) == 1);
 			player.getMovementQueue().addToPath(new Position(firstStepX, firstStepY));
 			
