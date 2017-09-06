@@ -229,7 +229,7 @@ public final class CombatUtil {
 			if(hit.getDamage() - reducedDamage > 200 && victim.getCurrentHealth() > 200) {
 				if(reducedDamage > 0) {
 					hit.setDamage(hit.getDamage() - reducedDamage);
-					//					hit.setSoak(reducedDamage); // TODO: Integrate soaking
+					hit.setSoak(reducedDamage); // TODO: Integrate soaking
 				}
 			}
 		}
@@ -334,7 +334,7 @@ public final class CombatUtil {
 			damage = max == 0 ? 0 : RandomUtils.inclusive(max);
 		}
 		
-		Hit hit = new Hit(damage, Hitsplat.NORMAL, HitIcon.NONE, true);
+		Hit hit = new Hit(damage, Hitsplat.NORMAL, HitIcon.NONE, true, attacker.getSlot());
 		return new CombatHit(hit, hitDelay, hitsplatDelay);
 	}
 	

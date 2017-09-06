@@ -29,7 +29,7 @@ public final class NetworkConstants {
 	 * The maximum amount of connections that can be active at a time, or in
 	 * other words how many clients can be logged in at once per connection.
 	 */
-	static final int CONNECTION_AMOUNT = 2;
+	static final int CONNECTION_AMOUNT = 3;
 	
 	/**
 	 * The maximum amount of incoming messages per cycle.

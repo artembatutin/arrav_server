@@ -4,6 +4,7 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatConstants;
 import net.edge.world.entity.actor.combat.CombatType;
+import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.HitIcon;
 import net.edge.world.entity.actor.combat.hit.Hitsplat;
@@ -35,7 +36,6 @@ public final class FormulaFactory {
 	 */
 	public static Hit nextMeleeHit(Actor attacker, Actor defender) {
 		int verdict = 0;
-		Hitsplat hitsplat = Hitsplat.NORMAL;
 		if(isAccurate(attacker, defender, CombatType.MELEE)) {
 			verdict = random(maxHit(attacker, defender, CombatType.MELEE, 0));
 			if(verdict > 0) {
@@ -44,9 +44,10 @@ public final class FormulaFactory {
 			} else {
 				verdict = 0;
 			}
-			return new Hit(verdict, hitsplat, HitIcon.MELEE, true);
+			return CombatUtil.calculateSoaking(defender, CombatType.MELEE, new Hit(verdict, ((verdict * 100f) / maxHit(attacker, defender, CombatType.MELEE, 0)) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MELEE, true, attacker.getSlot()));
 		}
-		return new Hit(verdict, hitsplat, HitIcon.MELEE, false);
+		return CombatUtil.calculateSoaking(defender, CombatType.MELEE, new Hit(verdict, ((verdict * 100f) / maxHit(attacker, defender, CombatType.MELEE, 0)) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MELEE, false, attacker.getSlot()));
+
 	}
 	
 	/**
@@ -57,7 +58,6 @@ public final class FormulaFactory {
 	 */
 	public static Hit nextMeleeHit(Actor attacker, Actor defender, int max) {
 		int verdict = 0;
-		Hitsplat hitsplat = Hitsplat.NORMAL;
 		if(isAccurate(attacker, defender, CombatType.MELEE)) {
 			verdict = random(max);
 			if(verdict > 0) {
@@ -67,9 +67,9 @@ public final class FormulaFactory {
 			} else {
 				verdict = 0;
 			}
-			return new Hit(verdict, hitsplat, HitIcon.MELEE, true);
+			return CombatUtil.calculateSoaking(defender, CombatType.MELEE, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MELEE, true, attacker.getSlot()));
 		}
-		return new Hit(verdict, hitsplat, HitIcon.MELEE, false);
+		return CombatUtil.calculateSoaking(defender, CombatType.MELEE, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MELEE, false, attacker.getSlot()));
 	}
 	
 	/**
@@ -80,11 +80,9 @@ public final class FormulaFactory {
 	 */
 	public static Hit nextRangedHit(Actor attacker, Actor defender, RangedWeaponType type) {
 		int verdict = 0;
-		Hitsplat hitsplat = Hitsplat.NORMAL;
 		if(isAccurate(attacker, defender, CombatType.RANGED)) {
 			if(type == RangedWeaponType.THROWN) {
 				Item weapon = attacker.toPlayer().getEquipment().get(Equipment.WEAPON_SLOT);
-				attacker.getBonus(CombatConstants.BONUS_RANGED_STRENGTH);
 				attacker.toPlayer().setBonus(CombatConstants.BONUS_RANGED_STRENGTH, weapon.getDefinition().getBonus()[CombatConstants.BONUS_RANGED_STRENGTH]);
 			}
 			verdict = random(maxHit(attacker, defender, CombatType.RANGED, 0));
@@ -95,9 +93,10 @@ public final class FormulaFactory {
 			} else {
 				verdict = 0;
 			}
-			return new Hit(verdict, hitsplat, HitIcon.RANGED, true);
+			return CombatUtil.calculateSoaking(defender, CombatType.RANGED, new Hit(verdict, ((verdict * 100f) / maxHit(attacker, defender, CombatType.RANGED, 0)) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.RANGED, true, attacker.getSlot()));
 		}
-		return new Hit(verdict, hitsplat, HitIcon.RANGED, false);
+		return CombatUtil.calculateSoaking(defender, CombatType.RANGED, new Hit(verdict, ((verdict * 100f) / maxHit(attacker, defender, CombatType.RANGED, 0)) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.RANGED, false, attacker.getSlot()));
+
 	}
 	
 	/**
@@ -108,7 +107,6 @@ public final class FormulaFactory {
 	 */
 	public static Hit nextRangedHit(Actor attacker, Actor defender, int max) {
 		int verdict = 0;
-		Hitsplat hitsplat = Hitsplat.NORMAL;
 		if(isAccurate(attacker, defender, CombatType.RANGED)) {
 			verdict = random(max);
 			if(verdict > 0) {
@@ -118,9 +116,10 @@ public final class FormulaFactory {
 			} else {
 				verdict = 0;
 			}
-			return new Hit(verdict, hitsplat, HitIcon.RANGED, true);
+			return CombatUtil.calculateSoaking(defender, CombatType.RANGED, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.RANGED, true, attacker.getSlot()));
 		}
-		return new Hit(verdict, hitsplat, HitIcon.RANGED, false);
+		return CombatUtil.calculateSoaking(defender, CombatType.RANGED, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.RANGED, false, attacker.getSlot()));
+
 	}
 	
 	/**
@@ -131,7 +130,6 @@ public final class FormulaFactory {
 	 */
 	public static Hit nextMagicHit(Actor attacker, Actor defender, int max) {
 		int verdict = 0;
-		Hitsplat hitsplat = Hitsplat.NORMAL;
 		if(isAccurate(attacker, defender, CombatType.MAGIC)) {
 			verdict = random(max);
 			if(verdict > 0) {
@@ -141,9 +139,10 @@ public final class FormulaFactory {
 			} else {
 				verdict = 0;
 			}
-			return new Hit(verdict, hitsplat, HitIcon.MAGIC, true);
+			return CombatUtil.calculateSoaking(defender, CombatType.MAGIC, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MELEE, true, attacker.getSlot()));
 		}
-		return new Hit(verdict, hitsplat, HitIcon.MAGIC, false);
+		return CombatUtil.calculateSoaking(defender, CombatType.MAGIC, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MELEE, false, attacker.getSlot()));
+
 	}
 	
 	/**

@@ -1,5 +1,7 @@
 package net.edge.world.entity.actor.combat.formula;
 
+import net.edge.Application;
+import net.edge.GameConstants;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.entity.actor.Actor;
@@ -96,6 +98,9 @@ public class MeleeFormula implements Formula {
 		//void melee and dharok
 		if(CombatUtil.isFullVoid(player) && player.getEquipment().contains(11665)) {
 			level *= 1 + 0.1;
+		}
+		if(Application.DEBUG) {
+			player.message("Max hit: " + (int) ((0.5 + level * (bonus + 64) / 640) * 10));
 		}
 		return (int) ((0.5 + level * (bonus + 64) / 640) * 10);
 	}

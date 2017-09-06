@@ -20,12 +20,12 @@ public final class PlayerPrimaryHitUpdateBlock extends PlayerUpdateBlock {
 	@Override
 	public int write(Player player, Player other, GameBuffer msg) {
 		Hit hit = other.getPrimaryHit();
-		boolean local = other == player; // TODO: add local hits || (hit.hasSource() && hit.getSource() == player.getSlot());
+		boolean local = other == player || (hit.hasSource() && hit.getSource() == player.getSlot());
 		msg.putShort(hit.getDamage());
 		msg.put(hit.getHitsplat().getId() + (!local ? 5 : 0));
 		int change = msg.getBuffer().writerIndex() - 1;
 		msg.put(hit.getHitIcon().getId());
-		msg.putShort(0/*hit.getSoak()*/); // TODO: Soak
+		msg.putShort(hit.getSoak()); // TODO: Soak
 		msg.putShort(other.getMaximumHealth() / 10);
 		msg.putShort(other.getCurrentHealth() / 10);
 		if(local) {
