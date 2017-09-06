@@ -44,9 +44,9 @@ public class DragonClaws extends PlayerMeleeStrategy {
 			return secondOption(attacker, defender, first);
 		}
 
-		CombatHit second = first.copyAndModify(damage -> damage / 2);
-		CombatHit third = second.copyAndModify(damage -> damage / 2);
-		CombatHit fourth = second.copyAndModify(damage -> first.getDamage() - second.getDamage() - third.getDamage());
+		CombatHit second = first.copyAndModify(defender, CombatType.MELEE, damage -> damage / 2);
+		CombatHit third = second.copyAndModify(defender, CombatType.MELEE, damage -> damage / 2);
+		CombatHit fourth = second.copyAndModify(defender, CombatType.MELEE, damage -> first.getDamage() - second.getDamage() - third.getDamage());
 		return new CombatHit[]{first, second, third, fourth};
 	}
 
@@ -62,7 +62,7 @@ public class DragonClaws extends PlayerMeleeStrategy {
 			return thirdOption(attacker, defender, inaccurate, second);
 		}
 
-		CombatHit third = second.copyAndModify(damage -> damage / 2);
+		CombatHit third = second.copyAndModify(defender, CombatType.MELEE, damage -> damage / 2);
 		return new CombatHit[]{inaccurate, second, third, third};
 	}
 
@@ -75,7 +75,7 @@ public class DragonClaws extends PlayerMeleeStrategy {
 
 		int maxHit = FormulaFactory.maxHit(attacker, defender, CombatType.MELEE) * 3 / 4;
 		third.setDamage(maxHit);
-		CombatHit fourth = third.copyAndModify(damage -> maxHit);
+		CombatHit fourth = third.copyAndModify(defender, CombatType.MELEE, damage -> maxHit);
 		return new CombatHit[]{inaccurate, inaccurate2, third, fourth};
 	}
 

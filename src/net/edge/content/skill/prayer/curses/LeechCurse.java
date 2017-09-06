@@ -28,11 +28,11 @@ public final class LeechCurse extends SimplifiedListener<Player> {
 		if(defender == null) {
 			return;
 		}
-
+/*
 		if (!LeechCurse.checkDelay(attacker)) {
 			return;
-		}
-
+	}
+*/
 		if(RandomUtils.inclusive(0, 10) != 0) {
 			return;
 		}

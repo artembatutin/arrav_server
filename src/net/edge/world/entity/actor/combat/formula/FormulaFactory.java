@@ -139,9 +139,9 @@ public final class FormulaFactory {
 			} else {
 				verdict = 0;
 			}
-			return CombatUtil.calculateSoaking(defender, CombatType.MAGIC, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MELEE, true, attacker.getSlot()));
+			return CombatUtil.calculateSoaking(defender, CombatType.MAGIC, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MAGIC, true, attacker.getSlot()));
 		}
-		return CombatUtil.calculateSoaking(defender, CombatType.MAGIC, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MELEE, false, attacker.getSlot()));
+		return CombatUtil.calculateSoaking(defender, CombatType.MAGIC, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MAGIC, false, attacker.getSlot()));
 
 	}
 	

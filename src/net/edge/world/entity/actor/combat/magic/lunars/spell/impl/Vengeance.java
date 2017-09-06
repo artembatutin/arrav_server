@@ -32,11 +32,11 @@ public final class Vengeance extends LunarButtonSpell {
 	
 	@Override
 	public boolean canCast(Actor caster, Optional<Actor> victim) {
-		if(!super.canCast(caster, victim)) {
+		if(caster.toPlayer().venged) {
+			caster.toPlayer().message("You already have an vengeance cast.");
 			return false;
 		}
-		if(caster.toPlayer().venged) {
-			caster.toPlayer().message("You have already casted this spell...");
+		if(!super.canCast(caster, victim)) {
 			return false;
 		}
 		return true;

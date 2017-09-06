@@ -61,7 +61,7 @@ public abstract class LunarSpell extends MagicSpell {
 		}
 		
 		if(!delay.elapsed(delay(), TimeUnit.MILLISECONDS)) {
-			player.message("You must wait " + (TimeUnit.MILLISECONDS.toSeconds(delay() - delay.elapsedTime())) + " seconds before casting " + name + " again...");
+			player.message("You must wait " + (TimeUnit.MILLISECONDS.toSeconds(delay() - delay.elapsedTime())) + " seconds before casting " + name + " again.");
 			return false;
 		}
 		

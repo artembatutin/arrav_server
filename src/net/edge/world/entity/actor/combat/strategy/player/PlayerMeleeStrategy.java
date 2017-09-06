@@ -36,7 +36,7 @@ public class PlayerMeleeStrategy extends MeleeStrategy<Player> {
 			}
 		});
 	}
-	
+
 	@Override
 	public CombatHit[] getHits(Player attacker, Actor defender) {
 		return new CombatHit[]{nextMeleeHit(attacker, defender)};

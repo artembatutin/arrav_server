@@ -222,14 +222,14 @@ public final class CombatUtil {
 	 * called on two different occasions even with the same arguments.
 	 */
 	public static Hit calculateSoaking(Actor victim, CombatType type, Hit hit) {
-		if(hit.getHitIcon() == HitIcon.NONE && victim.isPlayer()) {
+		if(victim.isPlayer()) {
 			Player player = victim.toPlayer();
 			int i = type == CombatType.MAGIC ? 2 : type == CombatType.RANGED ? 1 : 0;
 			int reducedDamage = (int) ((hit.getDamage() - 200) * player.getEquipment().getBonuses()[CombatConstants.ABSORB_MELEE + i] / 100.D);
 			if(hit.getDamage() - reducedDamage > 200 && victim.getCurrentHealth() > 200) {
 				if(reducedDamage > 0) {
 					hit.setDamage(hit.getDamage() - reducedDamage);
-					hit.setSoak(reducedDamage); // TODO: Integrate soaking
+					hit.setSoak(reducedDamage);
 				}
 			}
 		}

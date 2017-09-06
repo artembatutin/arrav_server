@@ -25,7 +25,7 @@ public final class PlayerSecondaryHitUpdateBlock extends PlayerUpdateBlock {
 		msg.put(hit.getHitsplat().getId() + (!local ? 5 : 0));
 		int change = msg.getBuffer().writerIndex() - 1;
 		msg.put(hit.getHitIcon().getId());
-		msg.putShort(hit.getSoak()); // TODO: soak
+		msg.putShort(hit.getSoak());
 		msg.putShort(other.getMaximumHealth() / 10);
 		msg.putShort(other.getCurrentHealth() / 10);
 		if(local) {

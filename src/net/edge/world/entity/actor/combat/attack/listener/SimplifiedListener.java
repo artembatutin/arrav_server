@@ -32,4 +32,7 @@ public class SimplifiedListener<T extends Actor> implements CombatListener<T> {
 	@Override
 	public void finishOutgoing(T attacker, Actor defender) { }
 
+	public boolean remove(T actor) {
+		return false;
+	}
 }

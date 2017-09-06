@@ -32,7 +32,7 @@ public final class VengeanceOther extends LunarCombatSpell {
 		
 		caster.facePosition(player.getPosition());
 		
-		player.message(caster.toPlayer().getFormatUsername() + " has casted vengeance on you... ");
+		player.message(caster.toPlayer().getFormatUsername() + " has casted vengeance on you. ");
 		
 		player.graphic(new Graphic(725, 100));
 		player.venged = true;

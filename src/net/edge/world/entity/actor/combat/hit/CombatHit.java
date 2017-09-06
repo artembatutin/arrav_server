@@ -1,5 +1,9 @@
 package net.edge.world.entity.actor.combat.hit;
 
+import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.combat.CombatType;
+import net.edge.world.entity.actor.combat.CombatUtil;
+
 import java.util.function.Function;
 
 /**
@@ -18,7 +22,7 @@ public final class CombatHit extends Hit {
 	 * The hitsplat delay.
 	 */
 	private final int hitsplatDelay;
-	
+
 	/**
 	 * Constructs a new {@link CombatHit} object.
 	 * @param hit           the hit to wrap
@@ -27,6 +31,7 @@ public final class CombatHit extends Hit {
 	 */
 	public CombatHit(Hit hit, int hitDelay, int hitsplatDelay) {
 		super(hit.getDamage(), hit.getHitsplat(), hit.getHitIcon(), hit.isAccurate(), hit.getSource());
+		this.setSoak(hit.getSoak());
 		this.hitDelay = hitDelay;
 		this.hitsplatDelay = hitsplatDelay;
 	}
@@ -36,10 +41,9 @@ public final class CombatHit extends Hit {
 	 * @param modifier the damage modification
 	 * @return a copy of this combat hit with the damage modifier applied
 	 */
-	public CombatHit copyAndModify(Function<Integer, Integer> modifier) {
-		CombatHit next = new CombatHit(this, hitDelay, hitsplatDelay);
-		next.modifyDamage(modifier);
-		return next;
+	public CombatHit copyAndModify(Actor defender, CombatType type, Function<Integer, Integer> modifier) {
+		this.modifyDamage(modifier);
+		return new CombatHit(CombatUtil.calculateSoaking(defender, type, this), hitDelay, hitsplatDelay);
 	}
 	
 	/**
