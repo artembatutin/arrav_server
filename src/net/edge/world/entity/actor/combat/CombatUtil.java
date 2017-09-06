@@ -357,7 +357,6 @@ public final class CombatUtil {
 		if (character.isMob()) {
 			return character.toMob().getDefinition().getName().contains("Void Knight");
 		}
-
 		Item top = ((Player) character).getEquipment().get(Equipment.CHEST_SLOT);
 		return top != null && !(top.getId() != 8839 && top.getId() != 10611) && character.toPlayer().getEquipment().containsAll(8840, 8842);
 	}

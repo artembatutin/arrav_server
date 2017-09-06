@@ -464,12 +464,6 @@ public enum CombatSpell {
 		this.projectileDefinition = projectileDefinition;
 	}
 	
-	CombatSpell(int id, MagicSpell spell, CombatProjectile projectileDefinition) {
-		this.id = id;
-		this.spell = spell;
-		this.projectileDefinition = projectileDefinition;
-	}
-	
 	public int getId() {
 		return id;
 	}

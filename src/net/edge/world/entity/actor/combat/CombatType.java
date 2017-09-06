@@ -4,5 +4,5 @@ public enum CombatType {
 	MELEE,
 	RANGED,
 	MAGIC,
-	NONE
+	NONE;
 }

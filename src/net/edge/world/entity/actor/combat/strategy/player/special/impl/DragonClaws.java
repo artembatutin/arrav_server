@@ -6,7 +6,7 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.attack.AttackModifier;
-import net.edge.world.entity.actor.combat.attack.FormulaFactory;
+import net.edge.world.entity.actor.combat.formula.FormulaFactory;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.HitIcon;
@@ -73,7 +73,7 @@ public class DragonClaws extends PlayerMeleeStrategy {
 			return fourthOption(attacker, defender, inaccurate, inaccurate2);
 		}
 
-		int maxHit = FormulaFactory.getMaxHit(attacker, defender, CombatType.MELEE) * 3 / 4;
+		int maxHit = FormulaFactory.maxHit(attacker, defender, CombatType.MELEE) * 3 / 4;
 		third.setDamage(maxHit);
 		CombatHit fourth = third.copyAndModify(damage -> maxHit);
 		return new CombatHit[]{inaccurate, inaccurate2, third, fourth};

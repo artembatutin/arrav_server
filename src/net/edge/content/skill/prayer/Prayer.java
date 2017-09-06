@@ -11,6 +11,7 @@ import net.edge.util.TextUtils;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.World;
+import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.attack.AttackModifier;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.PrayerBook;
@@ -29,49 +30,49 @@ import java.util.Optional;
  */
 public enum Prayer {
 	/* REGULAR */
-	THICK_SKIN(PrayerBook.NORMAL, 21233, 20, -1, 1, 83, 67050, 630, new AttackModifier().defensive(0.05)) {
+	THICK_SKIN(PrayerBook.NORMAL, 21233, 20, -1, 1, 83, 67050, 630) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{ROCK_SKIN, STEEL_SKIN});
 		}
 	},
-	BURST_OF_STRENGTH(PrayerBook.NORMAL, 21234, 20, -1, 4, 84, 67051, 631, new AttackModifier().aggressive(0.05)) {
+	BURST_OF_STRENGTH(PrayerBook.NORMAL, 21234, 20, -1, 4, 84, 67051, 631) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
 	},
-	CLARITY_OF_THOUGHT(PrayerBook.NORMAL, 21235, 20, -1, 7, 85, 67052, 632, new AttackModifier().accuracy(0.05)) {
+	CLARITY_OF_THOUGHT(PrayerBook.NORMAL, 21235, 20, -1, 7, 85, 67052, 632) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
 	},
-	SHARP_EYE(PrayerBook.NORMAL, 77100, 20, -1, 8, 700, 67053, 633, new AttackModifier().accuracy(0.05)) {
+	SHARP_EYE(PrayerBook.NORMAL, 77100, 20, -1, 8, 700, 67053, 633) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
 	},
-	MYSTIC_WILL(PrayerBook.NORMAL, 77102, 20, -1, 8, 701, 67054, 634, new AttackModifier().accuracy(0.05)) {
+	MYSTIC_WILL(PrayerBook.NORMAL, 77102, 20, -1, 8, 701, 67054, 634) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, SHARP_EYE, HAWK_EYE, EAGLE_EYE, MYSTIC_LORE, MYSTIC_MIGHT, CHIVALRY, PIETY});
 		}
 	},
-	ROCK_SKIN(PrayerBook.NORMAL, 21236, 10, -1, 10, 86, 67055, 635, new AttackModifier().defensive(0.10)) {
+	ROCK_SKIN(PrayerBook.NORMAL, 21236, 10, -1, 10, 86, 67055, 635) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{THICK_SKIN, STEEL_SKIN});
 		}
 	},
-	SUPERHUMAN_STRENGTH(PrayerBook.NORMAL, 21237, 10, -1, 13, 87, 67056, 636, new AttackModifier().aggressive(0.10)) {
+	SUPERHUMAN_STRENGTH(PrayerBook.NORMAL, 21237, 10, -1, 13, 87, 67056, 636) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{BURST_OF_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
 	},
-	IMPROVED_REFLEXES(PrayerBook.NORMAL, 21238, 10, -1, 16, 88, 67057, 637, new AttackModifier().accuracy(0.10)) {
+	IMPROVED_REFLEXES(PrayerBook.NORMAL, 21238, 10, -1, 16, 88, 67057, 637) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
@@ -95,31 +96,31 @@ public enum Prayer {
 			return Optional.empty();
 		}
 	},
-	HAWK_EYE(PrayerBook.NORMAL, 77104, 10, -1, 6, 702, 67061, 641, new AttackModifier().accuracy(0.10)) {
+	HAWK_EYE(PrayerBook.NORMAL, 77104, 10, -1, 6, 702, 67061, 641) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
 	},
-	MYSTIC_LORE(PrayerBook.NORMAL, 77106, 10, -1, 6, 703, 67062, 642, new AttackModifier().accuracy(0.10)) {
+	MYSTIC_LORE(PrayerBook.NORMAL, 77106, 10, -1, 6, 703, 67062, 642) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, SHARP_EYE, HAWK_EYE, EAGLE_EYE, MYSTIC_WILL, MYSTIC_MIGHT, CHIVALRY, PIETY});
 		}
 	},
-	STEEL_SKIN(PrayerBook.NORMAL, 21242, 5, -1, 28, 92, 67063, 643, new AttackModifier().defensive(0.15)) {
+	STEEL_SKIN(PrayerBook.NORMAL, 21242, 5, -1, 28, 92, 67063, 643) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{THICK_SKIN, ROCK_SKIN});
 		}
 	},
-	ULTIMATE_STRENGTH(PrayerBook.NORMAL, 21243, 5, -1, 31, 93, 67064, 644, new AttackModifier().aggressive(0.15)) {
+	ULTIMATE_STRENGTH(PrayerBook.NORMAL, 21243, 5, -1, 31, 93, 67064, 644) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
 	},
-	INCREDIBLE_REFLEXES(PrayerBook.NORMAL, 21244, 5, -1, 34, 94, 67065, 645, new AttackModifier().accuracy(0.15)) {
+	INCREDIBLE_REFLEXES(PrayerBook.NORMAL, 21244, 5, -1, 34, 94, 67065, 645) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
@@ -143,13 +144,13 @@ public enum Prayer {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, RETRIBUTION, REDEMPTION, SMITE});
 		}
 	},
-	EAGLE_EYE(PrayerBook.NORMAL, 77109, 5, -1, 44, 704, 67069, 649, new AttackModifier().accuracy(0.15)) {
+	EAGLE_EYE(PrayerBook.NORMAL, 77109, 5, -1, 44, 704, 67069, 649) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, CHIVALRY, PIETY});
 		}
 	},
-	MYSTIC_MIGHT(PrayerBook.NORMAL, 77111, 5, -1, 45, 705, 67070, 650, new AttackModifier().accuracy(0.15)) {
+	MYSTIC_MIGHT(PrayerBook.NORMAL, 77111, 5, -1, 45, 705, 67070, 650) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, SHARP_EYE, HAWK_EYE, EAGLE_EYE, MYSTIC_LORE, MYSTIC_WILL, CHIVALRY, PIETY});
@@ -173,13 +174,13 @@ public enum Prayer {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MELEE, PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, REDEMPTION, RETRIBUTION});
 		}
 	},
-	CHIVALRY(PrayerBook.NORMAL, 77113, 2.5, -1, 60, 706, 67074, 654, new AttackModifier().accuracy(0.15).aggressive(0.18).defensive(0.20)) {
+	CHIVALRY(PrayerBook.NORMAL, 77113, 2.5, -1, 60, 706, 67074, 654) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{THICK_SKIN, ROCK_SKIN, STEEL_SKIN, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, EAGLE_EYE, HAWK_EYE, PIETY});
 		}
 	},
-	PIETY(PrayerBook.NORMAL, 77115, 2.5, -1, 70, 707, 67075, 655, new AttackModifier().accuracy(0.20).aggressive(0.23).defensive(0.25)) {
+	PIETY(PrayerBook.NORMAL, 77115, 2.5, -1, 70, 707, 67075, 655) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{THICK_SKIN, ROCK_SKIN, STEEL_SKIN, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, EAGLE_EYE, HAWK_EYE, CHIVALRY});
@@ -460,7 +461,6 @@ public enum Prayer {
 	 * The checkmark identification for quick prayer.
 	 */
 	private final int checkmark;
-	private AttackModifier modifier;
 	
 	/**
 	 * The combat prayers that will be automatically deactivated when this one
@@ -487,29 +487,6 @@ public enum Prayer {
 		this.config = config;
 		this.quickPrayer = quickPrayer;
 		this.checkmark = checkmark;
-		this.modifier = new AttackModifier();
-	}
-	
-	/**
-	 * Creates a new {@link Prayer}.
-	 * @param buttonId    the identification for this prayer.
-	 * @param drainRate   the amount of ticks it takes for prayer to be drained.
-	 * @param headIcon    the head icon present when this prayer is activated.
-	 * @param level       the level required to use this prayer.
-	 * @param config      the config to make the prayer button light up when activated.
-	 * @param quickPrayer the quick prayer button id.
-	 * @param checkmark   the quick prayer check mark condition.
-	 */
-	Prayer(PrayerBook type, int buttonId, double drainRate, int headIcon, int level, int config, int quickPrayer, int checkmark, AttackModifier modifier) {
-		this.type = type;
-		this.buttonId = buttonId;
-		this.drainRate = drainRate;
-		this.headIcon = headIcon;
-		this.level = level;
-		this.config = config;
-		this.quickPrayer = quickPrayer;
-		this.checkmark = checkmark;
-		this.modifier = modifier;
 	}
 	
 	@Override
@@ -604,9 +581,6 @@ public enum Prayer {
 			Arrays.stream(prayer.get().deactivate().get()).forEach(it -> it.deactivate(player));
 		}
 		player.getPrayerActive().add(prayer.get());
-		if(prayer.get().modifier != null) {
-			player.getCombat().addModifier(prayer.get().modifier);
-		}
 		player.out(new SendConfig(prayer.get().getConfig(), 1));
 		if(prayer.get().getHeadIcon() != -1) {
 			player.headIcon = prayer.get().getHeadIcon();
@@ -709,9 +683,6 @@ public enum Prayer {
 			return;
 		player.getPrayerActive().remove(this);
 		player.out(new SendConfig(config, 0));
-		if(modifier != null) {
-			player.getCombat().removeModifier(modifier);
-		}
 		if(headIcon != -1) {
 			player.headIcon = -1;
 			player.getFlags().flag(UpdateFlag.APPEARANCE);
@@ -752,34 +723,6 @@ public enum Prayer {
 		}
 
 		return active_prayers.toArray(new Prayer[active_prayers.size()]);
-	}
-
-	public int modifyAccuracyLevel(Player player, int level) {
-		if (Prayer.isActivated(player, this)) {
-			level += level * modifier.getAccuracy();
-		}
-		return level;
-	}
-
-	public int modifyAggressiveLevel(Player player, int level) {
-		if (Prayer.isActivated(player, this)) {
-			level += level * modifier.getAggressive();
-		}
-		return level;
-	}
-
-	public int modifyDefensiveLevel(Player player, int level) {
-		if (Prayer.isActivated(player, this)) {
-			level += level * modifier.getDefensive();
-		}
-		return level;
-	}
-
-	public int modifyDamage(Player player, int damage) {
-		if (Prayer.isActivated(player, this)) {
-			damage += damage * modifier.getDamage();
-		}
-		return damage;
 	}
 
 	/**

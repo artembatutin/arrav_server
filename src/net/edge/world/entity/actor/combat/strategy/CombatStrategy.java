@@ -4,7 +4,7 @@ import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.attack.FightType;
-import net.edge.world.entity.actor.combat.attack.FormulaFactory;
+import net.edge.world.entity.actor.combat.formula.FormulaFactory;
 import net.edge.world.entity.actor.combat.attack.listener.CombatListener;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
@@ -72,7 +72,7 @@ public abstract class CombatStrategy<T extends Actor> implements CombatListener<
 	protected final CombatHit nextRangedHit(T attacker, Actor defender, int max) {
 		int hitDelay = getHitDelay(attacker, defender, getCombatType());
 		int hitsplatDelay = getHitsplatDelay(getCombatType());
-		return nextRangedHit(attacker, defender, max, hitDelay, hitsplatDelay);
+		return new CombatHit(FormulaFactory.nextRangedHit(attacker, defender, max), hitDelay, hitsplatDelay);
 	}
 	
 	protected final CombatHit nextMagicHit(T attacker, Actor defender, int max) {
@@ -87,10 +87,6 @@ public abstract class CombatStrategy<T extends Actor> implements CombatListener<
 
 	private CombatHit nextMeleeHit(T attacker, Actor defender, int hitDelay, int hitsplatDelay) {
 		return new CombatHit(FormulaFactory.nextMeleeHit(attacker, defender), hitDelay, hitsplatDelay);
-	}
-
-	private CombatHit nextRangedHit(T attacker, Actor defender, int max, int hitDelay, int hitsplatDelay) {
-		return new CombatHit(FormulaFactory.nextRangedHit(attacker, defender, max), hitDelay, hitsplatDelay);
 	}
 
 	private CombatHit nextRangedHit(T attacker, Actor defender, int hitDelay, int hitsplatDelay, RangedWeaponType type) {

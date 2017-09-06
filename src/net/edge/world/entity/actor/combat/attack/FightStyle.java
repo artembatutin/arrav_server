@@ -6,13 +6,10 @@ package net.edge.world.entity.actor.combat.attack;
  * @author Michael | Chex
  */
 public enum FightStyle {
-    ACCURATE(3, 0, 0),
-    AGGRESSIVE(0, 3, 0),
-    DEFENSIVE(0, 0, 3),
-    CONTROLLED(1, 1, 1);
-
-    /** The increase to accuracy. */
-    private int accuracyIncrease;
+    ACCURATE(0, 0),
+    AGGRESSIVE(3, 0),
+    DEFENSIVE(0, 3),
+    CONTROLLED(1, 1);
 
     /** The increase to defense. */
     private int defensiveIncrease;
@@ -22,24 +19,12 @@ public enum FightStyle {
 
     /**
      * Constructs a new {@link FightStyle} element.
-     *
-     * @param accuracyIncrease   the accuracy increase amount
      * @param aggressiveIncrease the aggreaaive increase amount
      * @param defensiveIncrease  the defensive increase amount
      */
-    FightStyle(int accuracyIncrease, int aggressiveIncrease, int defensiveIncrease) {
-        this.accuracyIncrease = accuracyIncrease;
+    FightStyle(int aggressiveIncrease, int defensiveIncrease) {
         this.aggressiveIncrease = aggressiveIncrease;
         this.defensiveIncrease = defensiveIncrease;
-    }
-
-    /**
-     * Gets the accuracy increase for this attack type.
-     *
-     * @return the accuracy increase
-     */
-    public int getAccuracyIncrease() {
-        return accuracyIncrease;
     }
 
     /**

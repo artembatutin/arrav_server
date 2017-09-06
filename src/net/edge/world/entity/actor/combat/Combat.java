@@ -362,29 +362,37 @@ public class Combat<T extends Actor> {
     }
 
     public int modifyAccuracy(int roll) {
-        for (AttackModifier modifier : modifiers) {
-            roll += roll * modifier.getAccuracy();
+        if(!modifiers.isEmpty()) {
+            for(AttackModifier modifier : modifiers) {
+                roll *= 1 + modifier.getAccuracy();
+            }
         }
         return roll;
     }
 
     public int modifyAggressive(int roll) {
-        for (AttackModifier modifier : modifiers) {
-            roll += roll * modifier.getAggressive();
+        if(!modifiers.isEmpty()) {
+            for(AttackModifier modifier : modifiers) {
+                roll *= 1 + modifier.getAggressive();
+            }
         }
         return roll;
     }
 
-    public int modiftDefensive(int roll) {
-        for (AttackModifier modifier : modifiers) {
-            roll += roll * modifier.getDefensive();
+    public int modifyDefensive(int roll) {
+        if(!modifiers.isEmpty()) {
+            for(AttackModifier modifier : modifiers) {
+                roll *= 1 + modifier.getDefensive();
+            }
         }
         return roll;
     }
 
     public int modifyDamage(int damage) {
-        for (AttackModifier modifier : modifiers) {
-            damage += damage * modifier.getAccuracy();
+        if(!modifiers.isEmpty()) {
+            for(AttackModifier modifier : modifiers) {
+                damage *= 1 + modifier.getAccuracy();
+            }
         }
         return damage;
     }
@@ -405,11 +413,9 @@ public class Combat<T extends Actor> {
         if (strategy != null) {
             removeModifiers(strategy);
         }
-
         if (strategy != next && next != null) {
             addModifiers(next);
         }
-
         strategy = next;
     }
 

@@ -817,12 +817,31 @@ public abstract class Actor extends Entity {
 		this.visible = visible;
 	}
 	
+	/**
+	 * Gets the combat handler of this {@link Actor}.
+	 * @return combat handler.
+	 */
 	public abstract Combat<? extends Actor> getCombat();
 	
+	/**
+	 * Gets a combat bonus.
+	 * @param index bonus index.
+	 * @return bonus amount.
+	 */
 	public abstract int getBonus(int index);
 	
+	/**
+	 * Appends a bonus.
+	 * @param index bonus index.
+	 * @param bonus bonus amount appended.
+	 */
 	public abstract void appendBonus(int index, int bonus);
 	
+	/**
+	 * Gets the skill level of the actor.
+	 * @param skill skill id.
+	 * @return the statistic skill.
+	 */
 	public abstract int getSkillLevel(int skill);
 	
 	/**

@@ -6,7 +6,7 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.attack.AttackModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
-import net.edge.world.entity.actor.combat.attack.FormulaFactory;
+import net.edge.world.entity.actor.combat.formula.FormulaFactory;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
@@ -38,7 +38,7 @@ public class SaradominSword extends PlayerMeleeStrategy {
 
 	@Override
 	public CombatHit[] getHits(Player attacker, Actor defender) {
-		return new CombatHit[]{nextMeleeHit(attacker, defender), nextMagicHit(attacker, defender, FormulaFactory.getMaxHit(attacker, defender, CombatType.MELEE), 1, 0)};
+		return new CombatHit[]{nextMeleeHit(attacker, defender), nextMagicHit(attacker, defender, FormulaFactory.maxHit(attacker, defender, CombatType.MELEE), 1, 0)};
 	}
 
 	@Override
