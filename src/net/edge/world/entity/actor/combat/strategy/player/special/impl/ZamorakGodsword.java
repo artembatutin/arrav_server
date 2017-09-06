@@ -3,7 +3,7 @@ package net.edge.world.entity.actor.combat.strategy.player.special.impl;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.attack.AttackModifier;
+import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
@@ -22,7 +22,7 @@ public final class ZamorakGodsword extends PlayerMeleeStrategy {
 	private static final Graphic GRAPHIC = new Graphic(1221);
 	private static final Graphic GRAPHIC_VICTIM = new Graphic(2104);
 	private static final Graphic GRAPHIC_VICTIM_FAILED = new Graphic(339, 10);
-	private static final AttackModifier MODIFIER = new AttackModifier().accuracy(0.1).damage(0.4);
+	private static final CombatModifier MODIFIER = new CombatModifier().attack(0.1).damage(0.4);
 
 	@Override
 	public void attack(Player attacker, Actor defender, Hit h) {
@@ -54,7 +54,7 @@ public final class ZamorakGodsword extends PlayerMeleeStrategy {
 	}
 
 	@Override
-	public Optional<AttackModifier> getModifier(Player attacker) {
+	public Optional<CombatModifier> getModifier(Player attacker) {
 		return Optional.of(MODIFIER);
 	}
 

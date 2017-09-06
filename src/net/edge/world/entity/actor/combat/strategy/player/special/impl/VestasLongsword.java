@@ -2,7 +2,7 @@ package net.edge.world.entity.actor.combat.strategy.player.special.impl;
 
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.attack.AttackModifier;
+import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 public class VestasLongsword extends PlayerMeleeStrategy {
 	private static final Animation ANIMATION = new Animation(10502, Animation.AnimationPriority.HIGH);
-	private static final AttackModifier MODIFIER = new AttackModifier().accuracy(0.25).damage(0.28);
+	private static final CombatModifier MODIFIER = new CombatModifier().attack(0.25).damage(0.28);
 
 	@Override
 	public void start(Player attacker, Actor defender, Hit[] hits) {
@@ -40,7 +40,7 @@ public class VestasLongsword extends PlayerMeleeStrategy {
 	}
 
 	@Override
-	public Optional<AttackModifier> getModifier(Player attacker) {
+	public Optional<CombatModifier> getModifier(Player attacker) {
 		return Optional.of(MODIFIER);
 	}
 

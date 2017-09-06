@@ -330,6 +330,8 @@ public final class RandomUtils {
 	 * @return {@code true} if successful, {@code false} otherwise.
 	 */
 	public static boolean success(double value) {
+		if(value >= 1)
+			return true;
 		return ThreadLocalRandom.current().nextDouble() <= value;
 	}
 	

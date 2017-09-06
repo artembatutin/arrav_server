@@ -2,7 +2,7 @@ package net.edge.world.entity.actor.combat.attack.listener;
 
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatType;
-import net.edge.world.entity.actor.combat.attack.AttackModifier;
+import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.hit.Hit;
 
 import java.util.Optional;
@@ -89,10 +89,10 @@ public interface CombatListener<T extends Actor> {
      * Optional} for ease of use.
      *
      * @param attacker the attacking actor
-     * @return an {@link Optional} wrapping the {@link AttackModifier} if
+     * @return an {@link Optional} wrapping the {@link CombatModifier} if
      * present.
      */
-    default Optional<AttackModifier> getModifier(T attacker) {
+    default Optional<CombatModifier> getModifier(T attacker) {
         return Optional.empty();
     }
 

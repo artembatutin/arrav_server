@@ -11,8 +11,6 @@ import net.edge.util.TextUtils;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.World;
-import net.edge.world.entity.actor.combat.CombatType;
-import net.edge.world.entity.actor.combat.attack.AttackModifier;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.PrayerBook;
 import net.edge.world.entity.actor.update.UpdateFlag;

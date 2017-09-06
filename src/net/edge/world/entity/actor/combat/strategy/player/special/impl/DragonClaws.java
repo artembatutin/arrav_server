@@ -5,7 +5,7 @@ import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.CombatUtil;
-import net.edge.world.entity.actor.combat.attack.AttackModifier;
+import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.formula.FormulaFactory;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
@@ -23,7 +23,7 @@ import java.util.Optional;
 public class DragonClaws extends PlayerMeleeStrategy {
 	private static final Animation ANIMATION = new Animation(10961, Animation.AnimationPriority.HIGH);
 	private static final Graphic GRAPHIC = new Graphic(1950, 50);
-	private static final AttackModifier MODIFIER = new AttackModifier().accuracy(0.75).damage(0.05);
+	private static final CombatModifier MODIFIER = new CombatModifier().attack(0.75).damage(0.05);
 
 	@Override
 	public void start(Player attacker, Actor defender, Hit[] hits) {
@@ -94,7 +94,7 @@ public class DragonClaws extends PlayerMeleeStrategy {
 	}
 
 	@Override
-	public Optional<AttackModifier> getModifier(Player attacker) {
+	public Optional<CombatModifier> getModifier(Player attacker) {
 		return Optional.of(MODIFIER);
 	}
 }

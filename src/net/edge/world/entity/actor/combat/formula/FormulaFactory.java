@@ -158,14 +158,14 @@ public final class FormulaFactory {
 			return true;
 		}
 		Formula formula = FORMULAS[type.ordinal()];
-		int attack = formula.attack(attacker, defender);
-		int defence = formula.defence(attacker, defender);
-		if(attack > defence) {
-			double chance = 1 - (defence + 2) / (2.0 * (attack + 1));
-			return RandomUtils.success(chance);
+		double attack = attacker.getCombat().modAttack(formula.attack(attacker, defender));
+		double defence = defender.getCombat().modDefence(formula.defence(attacker, defender));
+		if(defence > attack) {
+			double chance = (attack - 1D) / (2D * defence);
+			return chance >= 1 || RandomUtils.success(chance);
 		} else {
-			double chance = attack / (2.0 * (defence + 1));
-			return RandomUtils.success(chance);
+			double chance = 1 - (defence + 1) / (2 * attack);
+			return chance >= 1 || RandomUtils.success(chance);
 		}
 	}
 	
@@ -196,7 +196,7 @@ public final class FormulaFactory {
 			return 0;
 		}
 		Formula formula = FORMULAS[type.ordinal()];
-		return formula.maxHit(attacker, defender);
+		return attacker.getCombat().modDamage(formula.maxHit(attacker, defender));
 	}
 	
 	/**

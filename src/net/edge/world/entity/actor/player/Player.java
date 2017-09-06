@@ -65,7 +65,7 @@ import net.edge.world.entity.EntityState;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.Combat;
-import net.edge.world.entity.actor.combat.attack.AttackModifier;
+import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.magic.CombatSpell;
 import net.edge.world.entity.actor.combat.effect.CombatEffect;
@@ -533,7 +533,7 @@ public final class Player extends Actor {
 
 
 	/** Curses modifiers. */
-	public final Map<Prayer, AttackModifier> curses_modifiers = new HashMap<>();
+	public final Map<Prayer, CombatModifier> curses_modifiers = new HashMap<>();
 	
 	/**
 	 * Creates a new {@link Player}.

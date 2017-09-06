@@ -2,7 +2,7 @@ package net.edge.world.entity.actor.combat.attack.listener.item;
 
 import net.edge.content.skill.Skills;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.attack.AttackModifier;
+import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.attack.listener.ItemCombatListenerSignature;
 import net.edge.world.entity.actor.combat.attack.listener.NpcCombatListenerSignature;
 import net.edge.world.entity.actor.combat.attack.listener.SimplifiedListener;
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class DharokListener extends SimplifiedListener<Actor> {
 
     @Override
-    public Optional<AttackModifier> getModifier(Actor attacker) {
+    public Optional<CombatModifier> getModifier(Actor attacker) {
         int maxHealth;
 
         if (attacker.isMob()) {
@@ -29,7 +29,7 @@ public class DharokListener extends SimplifiedListener<Actor> {
         }
 
         int health = attacker.getCurrentHealth() > maxHealth ? 0 : maxHealth - attacker.getCurrentHealth();
-        AttackModifier modifier = new AttackModifier().damage(health * 0.001);
+        CombatModifier modifier = new CombatModifier().damage(health * 0.001);
         return Optional.of(modifier);
     }
 

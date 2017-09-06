@@ -4,7 +4,7 @@ import net.edge.util.rand.RandomUtils;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatType;
-import net.edge.world.entity.actor.combat.attack.AttackModifier;
+import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
@@ -83,7 +83,7 @@ public abstract class MultiStrategy extends CombatStrategy<Mob> {
 	}
 	
 	@Override
-	public Optional<AttackModifier> getModifier(Mob attacker) {
+	public Optional<CombatModifier> getModifier(Mob attacker) {
 		return currentStrategy.getModifier(attacker);
 	}
 	

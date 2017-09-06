@@ -4,7 +4,7 @@ import net.edge.content.skill.Skills;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.attack.AttackModifier;
+import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class StatiusWarhammer extends PlayerMeleeStrategy {
 	private static final Animation ANIMATION = new Animation(10505, Animation.AnimationPriority.HIGH);
 	private static final Graphic GRAPHIC = new Graphic(1840);
-	private static final AttackModifier MODIFIER = new AttackModifier().accuracy(0.23).damage(0.25);
+	private static final CombatModifier MODIFIER = new CombatModifier().attack(0.23).damage(0.25);
 
 	@Override
 	public void start(Player attacker, Actor defender, Hit[] hits) {
@@ -57,7 +57,7 @@ public class StatiusWarhammer extends PlayerMeleeStrategy {
 	}
 
 	@Override
-	public Optional<AttackModifier> getModifier(Player attacker) {
+	public Optional<CombatModifier> getModifier(Player attacker) {
 		return Optional.of(MODIFIER);
 	}
 

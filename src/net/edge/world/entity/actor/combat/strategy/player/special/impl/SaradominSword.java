@@ -4,7 +4,7 @@ import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatType;
-import net.edge.world.entity.actor.combat.attack.AttackModifier;
+import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.formula.FormulaFactory;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
@@ -23,7 +23,7 @@ public class SaradominSword extends PlayerMeleeStrategy {
 	
 	private static final Graphic GRAPHIC = new Graphic(1194);
 	private static final Animation ANIMATION = new Animation(11993, Animation.AnimationPriority.HIGH);
-	private static final AttackModifier MODIFIER = new AttackModifier().accuracy(0.1);
+	private static final CombatModifier MODIFIER = new CombatModifier().attack(0.1);
 
 	@Override
 	public void start(Player attacker, Actor defender, Hit[] hits) {
@@ -52,7 +52,7 @@ public class SaradominSword extends PlayerMeleeStrategy {
 	}
 
 	@Override
-	public Optional<AttackModifier> getModifier(Player attacker) {
+	public Optional<CombatModifier> getModifier(Player attacker) {
 		return Optional.of(MODIFIER);
 	}
 

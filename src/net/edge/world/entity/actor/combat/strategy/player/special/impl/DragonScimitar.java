@@ -4,7 +4,7 @@ import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.attack.AttackModifier;
+import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
@@ -21,7 +21,7 @@ public final class DragonScimitar extends PlayerMeleeStrategy {
 
     private static final Animation ANIMATION = new Animation(12031, Animation.AnimationPriority.HIGH);
     private static final Graphic GRAPHIC = new Graphic(2118, 100);
-    private static final AttackModifier MODIFIER = new AttackModifier().accuracy(1.00);
+    private static final CombatModifier MODIFIER = new CombatModifier().attack(1.00);
 
     @Override
     public void start(Player attacker, Actor defender, Hit[] hits) {
@@ -58,7 +58,7 @@ public final class DragonScimitar extends PlayerMeleeStrategy {
     }
 
     @Override
-    public Optional<AttackModifier> getModifier(Player attacker) {
+    public Optional<CombatModifier> getModifier(Player attacker) {
         return Optional.of(MODIFIER);
     }
 }

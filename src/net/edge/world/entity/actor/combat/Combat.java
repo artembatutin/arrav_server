@@ -3,7 +3,7 @@ package net.edge.world.entity.actor.combat;
 import net.edge.task.Task;
 import net.edge.util.Stopwatch;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.attack.AttackModifier;
+import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.attack.listener.CombatListener;
 import net.edge.world.entity.actor.combat.hit.CombatData;
@@ -30,7 +30,7 @@ public class Combat<T extends Actor> {
     private FightType type;
 
     private CombatStrategy<? super T> strategy;
-    private final List<AttackModifier> modifiers = new LinkedList<>();
+    private final List<CombatModifier> modifiers = new LinkedList<>();
     private final List<CombatListener<? super T>> listeners = new LinkedList<>();
     private final Deque<CombatListener<? super T>> pendingAddition = new LinkedList<>();
     private final Deque<CombatListener<? super T>> pendingRemoval = new LinkedList<>();
@@ -311,11 +311,11 @@ public class Combat<T extends Actor> {
         attacker.getMovementQueue().reset();
     }
 
-    public void addModifier(AttackModifier modifier) {
+    public void addModifier(CombatModifier modifier) {
         modifiers.add(modifier);
     }
 
-    public void removeModifier(AttackModifier modifier) {
+    public void removeModifier(CombatModifier modifier) {
         modifiers.remove(modifier);
     }
 
@@ -361,40 +361,31 @@ public class Combat<T extends Actor> {
         return attacker != null && attacker.same(lastAttacker) && !stopwatchElapsed(lastBlocked, CombatConstants.COMBAT_TIMER);
     }
 
-    public int modifyAccuracy(int roll) {
+    public int modDamage(int roll) {
         if(!modifiers.isEmpty()) {
-            for(AttackModifier modifier : modifiers) {
-                roll *= 1 + modifier.getAccuracy();
+            for(CombatModifier modifier : modifiers) {
+                roll *= 1 + modifier.getDamage();
             }
         }
         return roll;
     }
 
-    public int modifyAggressive(int roll) {
+    public int modDefence(int roll) {
         if(!modifiers.isEmpty()) {
-            for(AttackModifier modifier : modifiers) {
-                roll *= 1 + modifier.getAggressive();
+            for(CombatModifier modifier : modifiers) {
+                roll *= 1 + modifier.getDefence();
             }
         }
         return roll;
     }
-
-    public int modifyDefensive(int roll) {
+    
+    public int modAttack(int roll) {
         if(!modifiers.isEmpty()) {
-            for(AttackModifier modifier : modifiers) {
-                roll *= 1 + modifier.getDefensive();
+            for(CombatModifier modifier : modifiers) {
+                roll *= 1 + modifier.getAttack();
             }
         }
         return roll;
-    }
-
-    public int modifyDamage(int damage) {
-        if(!modifiers.isEmpty()) {
-            for(AttackModifier modifier : modifiers) {
-                damage *= 1 + modifier.getAccuracy();
-            }
-        }
-        return damage;
     }
 
     public FightType getFightType() {
