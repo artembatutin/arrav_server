@@ -25,7 +25,6 @@ public final class EdgevilleUpstreamHandler extends ChannelInboundHandlerAdapter
 		if(NetworkConstants.IGNORED_NETWORK_EXCEPTIONS.stream().noneMatch($it -> Objects.equal($it, e.getMessage()))) {
 			e.printStackTrace();
 		}
-		
 		ctx.close();
 	}
 	
@@ -35,7 +34,6 @@ public final class EdgevilleUpstreamHandler extends ChannelInboundHandlerAdapter
 		if(session == null) {
 			throw new IllegalStateException("session == null");
 		}
-		
 		session.handleUpstreamMessage(msg);
 	}
 	

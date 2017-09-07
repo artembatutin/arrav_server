@@ -286,6 +286,10 @@ public class Combat<T extends Actor> {
 
     private void finishIncoming(Actor attacker) {
         T defender = this.attacker;
+        //TODO NULLPOINTER HERE.
+        System.out.println(strategy);
+        System.out.println(attacker);
+        System.out.println(defender);
         strategy.finishIncoming(attacker, defender);
         listeners.forEach(listener -> listener.finishIncoming(attacker, defender));
     }
