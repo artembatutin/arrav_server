@@ -6,10 +6,13 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatConstants;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.CombatUtil;
+import net.edge.world.entity.actor.combat.attack.CurseModifier;
 import net.edge.world.entity.actor.combat.attack.FightStyle;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
+
+import java.util.Map;
 
 /**
  * A {@link Formula} for the ranged {@link CombatType}.
@@ -30,6 +33,14 @@ public class RangedFormula implements Formula {
 				level *= 1.1;
 			} else if(Prayer.isActivated(player, Prayer.EAGLE_EYE)) {
 				level *= 1.15;
+			} else if(Prayer.isActivated(player, Prayer.LEECH_RANGED)) {
+				double leech = 1.05;//standaard 5
+
+				Map<Actor, CurseModifier> offensive = attacker.getCombat().curseModifiers;
+
+				double leechBonus = offensive.getOrDefault(defender, new CurseModifier()).getRangedBonus();
+
+				level *= (leech + leechBonus);
 			}
 			//rounding
 			level = (int) level;

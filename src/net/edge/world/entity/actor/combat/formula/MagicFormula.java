@@ -6,8 +6,11 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatConstants;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.CombatUtil;
+import net.edge.world.entity.actor.combat.attack.CurseModifier;
 import net.edge.world.entity.actor.combat.attack.FightStyle;
 import net.edge.world.entity.actor.player.Player;
+
+import java.util.Map;
 
 /**
  * A {@link Formula} for the magic {@link CombatType}.
@@ -28,6 +31,14 @@ public class MagicFormula implements Formula {
 				level *= 1.1;
 			} else if(Prayer.isActivated(player, Prayer.MYSTIC_WILL)) {
 				level *= 1.05;
+			} else if(Prayer.isActivated(player, Prayer.LEECH_MAGIC)) {
+				double leech = 1.05;//standaard 5
+
+				Map<Actor, CurseModifier> offensive = attacker.getCombat().curseModifiers;
+
+				double leechBonus = offensive.getOrDefault(defender, new CurseModifier()).getMagicBonus();
+
+				level *= (leech + leechBonus);
 			}
 			//rounding and add up 8
 			level = (int) level;

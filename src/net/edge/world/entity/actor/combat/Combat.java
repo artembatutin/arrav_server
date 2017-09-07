@@ -4,6 +4,7 @@ import net.edge.task.Task;
 import net.edge.util.Stopwatch;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.attack.CombatModifier;
+import net.edge.world.entity.actor.combat.attack.CurseModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.attack.listener.CombatListener;
 import net.edge.world.entity.actor.combat.hit.CombatData;
@@ -11,10 +12,7 @@ import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.CombatStrategy;
 
-import java.util.Deque;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Combat<T extends Actor> {
@@ -28,6 +26,8 @@ public class Combat<T extends Actor> {
     private final Stopwatch lastAttacked = new Stopwatch();
     private final Stopwatch lastBlocked = new Stopwatch();
     private FightType type;
+
+    public final Map<Actor, CurseModifier> curseModifiers = new HashMap<>();
 
     private CombatStrategy<? super T> strategy;
     private final List<CombatModifier> modifiers = new LinkedList<>();

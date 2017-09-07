@@ -8,10 +8,13 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatConstants;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.CombatUtil;
+import net.edge.world.entity.actor.combat.attack.CurseModifier;
 import net.edge.world.entity.actor.combat.attack.FightStyle;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
+
+import java.util.Map;
 
 /**
  * A {@link Formula} for the melee {@link CombatType}.
@@ -38,6 +41,30 @@ public class MeleeFormula implements Formula {
 				level *= 1.20;
 			} else if(Prayer.isActivated(player, Prayer.TURMOIL)) {
 				level *= 1.15 + (defender.isPlayer() ? (defender.toPlayer().getSkills()[Skills.ATTACK].getRealLevel() / 1000D) : 0.0);
+			} else if(Prayer.isActivated(player, Prayer.LEECH_ATTACK)) {
+				double leech = 1.05;//standaard 5
+
+				Map<Actor, CurseModifier> offensive = attacker.getCombat().curseModifiers;
+
+				double leechBonus = offensive.getOrDefault(defender, new CurseModifier()).getAttackBonus();
+
+				level *= (leech + leechBonus);
+			} else if(Prayer.isActivated(player, Prayer.LEECH_DEFENCE)) {
+				double leech = 1.05;//standaard 5
+
+				Map<Actor, CurseModifier> offensive = attacker.getCombat().curseModifiers;
+
+				double leechBonus = offensive.getOrDefault(defender, new CurseModifier()).getDefenseBonus();
+
+				level *= (leech + leechBonus);
+			} else if(Prayer.isActivated(player, Prayer.LEECH_STRENGTH)) {
+				double leech = 1.05;//standaard 5
+
+				Map<Actor, CurseModifier> offensive = attacker.getCombat().curseModifiers;
+
+				double leechBonus = offensive.getOrDefault(defender, new CurseModifier()).getStrengthBonus();
+
+				level *= (leech + leechBonus);
 			}
 			//rounding
 			level = (int) level;
