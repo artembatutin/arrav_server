@@ -34,23 +34,26 @@ public class AttackCurseEvent extends Task {
 
 		Map<Actor, CurseModifier> offensiveModifier = attacker.getCombat().curseModifiers;
 
-		if(!offensiveModifier.containsKey(defender)) {
-			offensiveModifier.put(defender, new CurseModifier());
+		if(!offensiveModifier.containsKey(attacker)) {
+			offensiveModifier.put(attacker, new CurseModifier());
+			offensiveModifier.put(attacker, new CurseModifier().attack(0.05));
 		}
 
-		if(offensiveModifier.get(defender).getAttackBonus() < 0.05) {
-			offensiveModifier.get(defender).attack(0.01);
+		if(offensiveModifier.get(attacker).getAttackBonus() < 0.10) {
+			offensiveModifier.get(attacker).attack(0.01);
+			attacker.toPlayer().message("attack:" + offensiveModifier.get(attacker).getAttackBonus());
 		}
 
 		Map<Actor, CurseModifier> defensiveModifier = defender.getCombat().curseModifiers;
 
-		if(!defensiveModifier.containsKey(attacker)) {
-			defensiveModifier.put(attacker, new CurseModifier().attack(-0.10));
+		if(!defensiveModifier.containsKey(defender)) {
+			defensiveModifier.put(defender, new CurseModifier().attack(-0.10));
 			return;//don't decrease attack bonus further
 		}
 
-		if(defensiveModifier.get(attacker).getAttackBonus() > -0.25) {
-			defensiveModifier.get(attacker).attack(-0.01);
+		if(defensiveModifier.get(defender).getAttackBonus() > -0.25) {
+			defensiveModifier.get(defender).attack(-0.01);
+			defender.toPlayer().message("Attack:" +defensiveModifier.get(defender).getAttackBonus());
 		}
 
 

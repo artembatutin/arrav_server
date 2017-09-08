@@ -33,9 +33,9 @@ public final class LeechCurse extends SimplifiedListener<Player> {
 			return;
 	}
 */
-		if(RandomUtils.inclusive(0, 10) != 0) {
-			return;
-		}
+//		if(RandomUtils.inclusive(0, 10) != 0) {
+//			return;
+//		}
 
 		Prayer[] prayers = new Prayer[]{Prayer.LEECH_ATTACK, Prayer.LEECH_DEFENCE, Prayer.LEECH_ENERGY, Prayer.LEECH_MAGIC, Prayer.LEECH_RANGED, Prayer.LEECH_SPECIAL_ATTACK, Prayer.LEECH_STRENGTH};
 
