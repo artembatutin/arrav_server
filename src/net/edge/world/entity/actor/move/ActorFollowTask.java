@@ -114,8 +114,8 @@ class ActorFollowTask extends Task {
 				character.getCombat().reset(true);
 				return;
 			}
-			if(character.getCombat().getStrategy() != null) {
-				type = character.getCombat().getStrategy().getCombatType();
+			if(character.getStrategy() != null) {
+				type = character.getStrategy().getCombatType();
 			}
 			if(character.getCombat().checkWithin() && (type == CombatType.RANGED || type == CombatType.MAGIC)) {
 				character.getMovementQueue().within = true;

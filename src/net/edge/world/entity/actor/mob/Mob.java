@@ -60,7 +60,9 @@ public abstract class Mob extends Actor {
 					.put(3340, GiantMole::new)
 					.put(14301, Glacor::new
 					)*/.build());
-	
+
+	private CombatStrategy<Mob> strategy;
+
 	/**
 	 * Gets a certain npc by the specified {@code id} and supplies it's position.
 	 * @param id  the id to get the npc by.
@@ -71,10 +73,12 @@ public abstract class Mob extends Actor {
 		final Mob mob = CUSTOM_MOBS.containsKey(id) ? CUSTOM_MOBS.get(id).apply(pos).create() : new DefaultMob(id, pos);
 		Combat<Mob> combat = mob.getCombat();
 		CombatListener<Mob> listener = CombatListenerDispatcher.NPC_LISTENERS.get(id);
-		if(listener != null) {
+
+		if (listener != null) {
 			combat.addListener(listener);
 		}
-		combat.setStrategy(STRATEGIES.getOrDefault(id, () -> loadStrategy(mob).orElse(NpcMeleeStrategy.get())).get());
+
+		mob.strategy = STRATEGIES.getOrDefault(id, () -> loadStrategy(mob).orElse(NpcMeleeStrategy.get())).get();
 		return mob;
 	}
 	
@@ -562,7 +566,16 @@ public abstract class Mob extends Actor {
 	@Override
 	public void appendBonus(int index, int bonus) {
 	}
-	
+
+	@Override
+	public CombatStrategy<Mob> getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(CombatStrategy<Mob> strategy) {
+		this.strategy = strategy;
+	}
+
 	@Override
 	public int getSkillLevel(int skill) {
 		if(skill == Skills.ATTACK) {
@@ -578,4 +591,6 @@ public abstract class Mob extends Actor {
 		} else
 			return 0;
 	}
+
+
 }

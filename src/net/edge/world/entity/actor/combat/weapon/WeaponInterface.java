@@ -3,17 +3,10 @@ package net.edge.world.entity.actor.combat.weapon;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.edge.content.TabInterface;
 import net.edge.net.packet.out.SendConfig;
-import net.edge.util.json.impl.CombatRangedBowLoader;
 import net.edge.world.entity.actor.combat.attack.FightType;
-import net.edge.world.entity.actor.combat.ranged.RangedAmmunition;
-import net.edge.world.entity.actor.combat.ranged.RangedWeaponDefinition;
-import net.edge.world.entity.actor.combat.strategy.player.PlayerMagicStrategy;
-import net.edge.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
-import net.edge.world.entity.actor.combat.strategy.player.PlayerRangedStrategy;
 import net.edge.world.entity.actor.combat.strategy.player.special.CombatSpecial;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
-import net.edge.world.entity.item.container.impl.Equipment;
 
 /**
  * The enumerated type whose elements represent the weapon interfaces.
@@ -164,30 +157,7 @@ public enum WeaponInterface {
 				return false;
 		}
 	}
-	
-	public static void setStrategy(Player player) {
-		if(player.isAutocast()) {
-			player.getCombat().setStrategy(new PlayerMagicStrategy(player.getAutocastSpell()));
-			return;
-		}
-		if(player.isSpecialActivated()) {
-			player.getCombatSpecial().enable(player);
-			return;
-		}
-		
-		Item item = player.getEquipment().get(Equipment.WEAPON_SLOT);
-		WeaponInterface weapon = item == null ? null : INTERFACES.get(item.getId());
-		if(weapon != null && weapon.isRanged()) {
-			RangedWeaponDefinition def = CombatRangedBowLoader.DEFINITIONS.get(item.getId());
-			if(def != null) {
-				RangedAmmunition ammo = RangedAmmunition.find(player.getEquipment().get(def.getSlot()));
-				player.getCombat().setStrategy(new PlayerRangedStrategy(ammo, def));
-				return;
-			}
-		}
-		player.getCombat().setStrategy(PlayerMeleeStrategy.get());
-	}
-	
+
 	/**
 	 * The method executed when weapon {@code item} is equipped or unequipped
 	 * that assigns a weapon interface to {@code player}.
@@ -202,7 +172,6 @@ public enum WeaponInterface {
 			player.text(WeaponInterface.UNARMED.nameLine, "Unarmed");
 			player.setWeapon(WeaponInterface.UNARMED);
 			CombatSpecial.assign(player);
-			setStrategy(player);
 			for(FightType type : player.getWeapon().getFightTypes()) {
 				if(type.getStyle() == player.getCombat().getFightType().getStyle()) {
 					player.getCombat().setFightType(type);
@@ -218,7 +187,6 @@ public enum WeaponInterface {
 			TabInterface.ATTACK.sendInterface(player, weapon.id);
 			player.text(weapon.nameLine, "Unarmed");
 			player.setWeapon(WeaponInterface.UNARMED);
-			setStrategy(player);
 			return;
 		} else if(weapon == WeaponInterface.CROSSBOW) {
 			player.text(weapon.nameLine - 1, "Weapon: ");
@@ -230,7 +198,6 @@ public enum WeaponInterface {
 		player.setWeapon(weapon);
 		CombatSpecial.assign(player);
 		CombatSpecial.updateSpecialAmount(player);
-		setStrategy(player);
 		for(FightType type : weapon.getFightTypes()) {
 			if(type.getStyle() == player.getCombat().getFightType().getStyle()) {
 				player.getCombat().setFightType(type);

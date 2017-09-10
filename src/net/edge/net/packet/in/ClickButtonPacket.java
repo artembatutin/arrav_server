@@ -17,6 +17,7 @@ import net.edge.content.skill.cooking.DoughCreation;
 import net.edge.content.skill.crafting.*;
 import net.edge.content.skill.fletching.BowCarving;
 import net.edge.content.skill.magic.EnchantCrossbowBolts;
+import net.edge.content.skill.magic.Spellbook;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.smithing.Smelting;
@@ -32,7 +33,6 @@ import net.edge.world.entity.actor.combat.magic.lunars.LunarSpells;
 import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
-import net.edge.content.skill.magic.Spellbook;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Equipment;
@@ -923,12 +923,12 @@ public final class ClickButtonPacket implements IncomingPacket {
 				if(player.isSpecialActivated()) {
 					player.out(new SendConfig(301, 0));
 					player.setSpecialActivated(false);
-					WeaponInterface.setStrategy(player);
 				} else {
-					if(player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
+					if (player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
 						player.message("You do not have enough special energy left!");
 						break;
 					}
+
 					player.setSpecialActivated(true);
 					player.out(new SendConfig(301, 1));
 					player.getCombatSpecial().enable(player);

@@ -13,7 +13,6 @@ import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.combat.magic.CombatSpell;
-import net.edge.world.entity.actor.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobDefinition;
 import net.edge.world.entity.actor.player.Player;
@@ -91,7 +90,7 @@ public final class MobActionPacket implements IncomingPacket {
 			return;
 		}
 		player.getTolerance().reset();
-		player.getCombat().setStrategy(new PlayerMagicStrategy(spell));
+		player.setSingleCast(spell);
 		player.getCombat().attack(mob);
 	}
 	
@@ -103,7 +102,7 @@ public final class MobActionPacket implements IncomingPacket {
 	private void firstClick(Player player, IncomingMsg payload) {
 		int index = payload.getShort(true, ByteOrder.LITTLE);
 		Mob mob = World.get().getMobs().get(index - 1);
-		if(mob == null)
+		if (mob == null)
 			return;
 		Position position = mob.getPosition().copy();
 		if(mob.getId() == 4650) {

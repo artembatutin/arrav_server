@@ -10,7 +10,6 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.magic.CombatSpell;
 import net.edge.world.entity.actor.combat.magic.lunars.LunarSpells;
-import net.edge.world.entity.actor.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.container.session.ExchangeSession;
@@ -59,7 +58,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 		if(spell == null || index < 0 || index > World.get().getPlayers().capacity() || spellId < 0 || !checkAttack(player, victim)) {
 			return;
 		}
-		player.getCombat().setStrategy(new PlayerMagicStrategy(spell));
+		player.setSingleCast(spell);
 		player.getCombat().attack(victim);
 	}
 	

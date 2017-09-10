@@ -3,7 +3,6 @@ package net.edge.world.entity.actor.combat.attack.listener.npc;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.attack.listener.NpcCombatListenerSignature;
 import net.edge.world.entity.actor.combat.attack.listener.SimplifiedListener;
-import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.CombatStrategy;
 import net.edge.world.entity.actor.combat.strategy.npc.NpcMeleeStrategy;
 import net.edge.world.entity.actor.combat.strategy.npc.impl.DragonfireStrategy;
@@ -36,17 +35,17 @@ public class ChromaticDragon extends SimplifiedListener<Mob> {
 	@Override
 	public boolean canAttack(Mob attacker, Actor defender) {
 		if(!NpcMeleeStrategy.get().withinDistance(attacker, defender)) {
-			attacker.getCombat().setStrategy(DRAGONFIRE);
+			attacker.setStrategy(DRAGONFIRE);
 		}
-		return attacker.getCombat().getStrategy().canAttack(attacker, defender);
+		return attacker.getStrategy().canAttack(attacker, defender);
 	}
 	
 	@Override
 	public void finishOutgoing(Mob attacker, Actor defender) {
 		if(!NpcMeleeStrategy.get().withinDistance(attacker, defender)) {
-			attacker.getCombat().setStrategy(DRAGONFIRE);
+			attacker.setStrategy(DRAGONFIRE);
 		} else {
-			attacker.getCombat().setStrategy(randomStrategy(STRATEGIES));
+			attacker.setStrategy(randomStrategy(STRATEGIES));
 		}
 	}
 	

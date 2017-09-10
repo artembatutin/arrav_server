@@ -11,8 +11,6 @@ import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.effect.impl.CombatPoisonEffect;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
-import net.edge.world.entity.actor.combat.ranged.RangedAmmunition;
-import net.edge.world.entity.actor.combat.ranged.RangedWeaponDefinition;
 import net.edge.world.entity.actor.combat.ranged.RangedWeaponType;
 import net.edge.world.entity.actor.combat.strategy.basic.RangedStrategy;
 import net.edge.world.entity.actor.player.Player;
@@ -23,17 +21,14 @@ import net.edge.world.entity.item.container.impl.Equipment;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class PlayerRangedStrategy extends RangedStrategy<Player> {
-    private final RangedWeaponDefinition rangedDefinition;
-    private final RangedAmmunition ammunition;
-
-    public PlayerRangedStrategy(RangedAmmunition ammunition, RangedWeaponDefinition definition) {
-        this.ammunition = ammunition;
-        this.rangedDefinition = Objects.requireNonNull(definition);
+    
+    private static final PlayerRangedStrategy INSTANCE = new PlayerRangedStrategy();
+    
+    private PlayerRangedStrategy() {
     }
 
     @Override
@@ -43,14 +38,14 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
             return false;
         }
 
-        Item ammo = attacker.getEquipment().get(rangedDefinition.getSlot());
+        Item ammo = attacker.getEquipment().get(attacker.rangedDefinition.getSlot());
         if (ammo != null) {
-            if (rangedDefinition.isValid(ammunition)) {
+            if (attacker.rangedDefinition.isValid(attacker.rangedAmmo)) {
                 return true;
             }
-            attacker.out(new SendMessage(getInvalidAmmunitionMessage(rangedDefinition.getType())));
+            attacker.out(new SendMessage(getInvalidAmmunitionMessage(attacker.rangedDefinition.getType())));
         } else {
-            attacker.out(new SendMessage(getNoAmmunitionMessage(rangedDefinition.getType())));
+            attacker.out(new SendMessage(getNoAmmunitionMessage(attacker.rangedDefinition.getType())));
         }
         attacker.getCombat().reset(false);
         return false;
@@ -59,17 +54,17 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     @Override
     public void start(Player attacker, Actor defender, Hit[] hits) {
         if (attacker.getCombat().getDefender() == defender) {
-            Animation animation = ammunition.getAnimation().orElse(getAttackAnimation(attacker, defender));
+            Animation animation = attacker.rangedAmmo.getAnimation().orElse(getAttackAnimation(attacker, defender));
             attacker.animation(animation);
-            ammunition.getStart().ifPresent(attacker::graphic);
-            ammunition.sendProjectile(attacker, defender);
+            attacker.rangedAmmo.getStart().ifPresent(attacker::graphic);
+            attacker.rangedAmmo.sendProjectile(attacker, defender);
 
-            if (ammunition.getEffect().isPresent()) {
+            if (attacker.rangedAmmo.getEffect().isPresent()) {
                 List<Hit> extra = new LinkedList<>();
                 for (Hit hit : hits) {
                     Predicate<CombatImpact> filter = effect -> effect.canAffect(attacker, defender, hit);
                     Consumer<CombatImpact> execute = effect -> effect.impact(attacker, defender, hit, extra);
-                    ammunition.getEffect().filter(filter).ifPresent(execute);
+                    attacker.rangedAmmo.getEffect().filter(filter).ifPresent(execute);
                 }
                 if (extra.isEmpty()) {
                     Collections.addAll(extra, hits);
@@ -85,13 +80,13 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 
     @Override
     public void attack(Player attacker, Actor defender, Hit hit) {
-        removeAmmunition(attacker, defender, rangedDefinition.getType());
+        removeAmmunition(attacker, defender, attacker.rangedDefinition.getType());
     }
 
     @Override
     public void hit(Player attacker, Actor defender, Hit hit) {
-        ammunition.getEnd().ifPresent(defender::graphic);
-        CombatPoisonEffect.getPoisonType(attacker.getEquipment().get(rangedDefinition.getSlot())).ifPresent(p -> {
+        attacker.rangedAmmo.getEnd().ifPresent(defender::graphic);
+        CombatPoisonEffect.getPoisonType(attacker.getEquipment().get(attacker.rangedDefinition.getSlot())).ifPresent(p -> {
             if (hit.getDamage() > 0) {
                 defender.poison(p);
             }
@@ -131,7 +126,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     public CombatHit[] getHits(Player attacker, Actor defender) {
         Item arrows = attacker.getEquipment().get(Equipment.ARROWS_SLOT);
 
-        if (rangedDefinition.getType() == RangedWeaponType.THROWN && arrows != null) {
+        if (attacker.rangedDefinition.getType() == RangedWeaponType.THROWN && arrows != null) {
             CombatHit hit = nextRangedHit(attacker, defender, RangedWeaponType.THROWN);
             return new CombatHit[]{hit};
         }
@@ -150,20 +145,20 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
         next.decrementAmount();
         attacker.getEquipment().set(type.getSlot(), next, true);
 
-        if (ammunition.isDroppable()) {
-            GroundItem groundItem = new GroundItem(new Item(next.getId(), ammunition.getRemoval()), defender.getPosition(), attacker);
+        if (attacker.rangedAmmo.isDroppable()) {
+            GroundItem groundItem = new GroundItem(new Item(next.getId(), attacker.rangedAmmo.getRemoval()), defender.getPosition(), attacker);
             groundItem.getRegion().ifPresent(r -> r.register(groundItem, true));
         }
 
         if (next.getAmount() == 0) {
-            attacker.out(new SendMessage("That was the last of your ammunition!"));
+            attacker.out(new SendMessage("That was the last of your attacker.ammunition!"));
             attacker.getEquipment().unequip(type.getSlot(), null, true, -1);
         }
     }
 
     private static String getInvalidAmmunitionMessage(RangedWeaponType type) {
         if (type == RangedWeaponType.SHOT) {
-            return "You can't use this ammunition with this weapon.";
+            return "You can't use this attacker.ammunition with this weapon.";
         }
         if (type == RangedWeaponType.THROWN) {
             return "That's weird, there was a ranged weapon error. Contact developers stat!";
@@ -173,12 +168,16 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 
     private static String getNoAmmunitionMessage(RangedWeaponType type) {
         if (type == RangedWeaponType.SHOT) {
-            return "You need some ammunition to use this weapon!";
+            return "You need some attacker.ammunition to use this weapon!";
         }
         if (type == RangedWeaponType.THROWN) {
             return "That's weird, there was a ranged weapon error. Contact developers stat!";
         }
         return null;
+    }
+
+    public static PlayerRangedStrategy get() {
+        return INSTANCE;
     }
 
 }

@@ -153,14 +153,16 @@ public final class FormulaFactory {
 	 * @return {@code true} if the roll was accurate
 	 */
 	private static boolean isAccurate(Actor attacker, Actor defender, CombatType type) {
-		if(type == CombatType.NONE) {
+		if (type == CombatType.NONE) {
 			return true;
 		}
+
 		Formula formula = FORMULAS[type.ordinal()];
-		double attack = attacker.getCombat().modAttack(formula.attack(attacker, defender));
-		double defence = defender.getCombat().modDefence(formula.defence(attacker, defender));
-		if(defence > attack) {
-			double chance = (attack - 1D) / (2D * defence);
+		double attack = attacker.getCombat().modAttack(defender, formula.attack(attacker, defender));
+		double defence = defender.getCombat().modDefence(defender, formula.defence(attacker, defender));
+
+		if (defence > attack) {
+			double chance = (attack - 1) / (2 * defence);
 			return chance >= 1 || RandomUtils.success(chance);
 		} else {
 			double chance = 1 - (defence + 1) / (2 * attack);
@@ -188,14 +190,16 @@ public final class FormulaFactory {
 	 * @return max hit calculated.
 	 */
 	public static int maxHit(Actor attacker, Actor defender, CombatType type, int max) {
-		if(max > 0) {
+		if (max > 0) {
 			return max;
 		}
+
 		if(type == CombatType.NONE) {
 			return 0;
 		}
+
 		Formula formula = FORMULAS[type.ordinal()];
-		return attacker.getCombat().modDamage(formula.maxHit(attacker, defender));
+		return attacker.getCombat().modDamage(defender, formula.maxHit(attacker, defender));
 	}
 	
 	/**
@@ -207,8 +211,7 @@ public final class FormulaFactory {
 	 * @return a pseudo-random number
 	 */
 	private static int random(int max) {
-		if (max <= 0)
-			return 0;
+		if (max <= 0) return 0;
 		return RandomUtils.inclusive(max);
 	}
 	

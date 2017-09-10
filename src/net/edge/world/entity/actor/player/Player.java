@@ -60,6 +60,7 @@ import net.edge.util.ActionListener;
 import net.edge.util.MutableNumber;
 import net.edge.util.Stopwatch;
 import net.edge.util.Utility;
+import net.edge.util.json.impl.CombatRangedBowLoader;
 import net.edge.world.Graphic;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
@@ -73,7 +74,12 @@ import net.edge.world.entity.actor.combat.effect.CombatEffect;
 import net.edge.world.entity.actor.combat.effect.CombatEffectTask;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.Hitsplat;
+import net.edge.world.entity.actor.combat.ranged.RangedAmmunition;
+import net.edge.world.entity.actor.combat.ranged.RangedWeaponDefinition;
+import net.edge.world.entity.actor.combat.strategy.CombatStrategy;
+import net.edge.world.entity.actor.combat.strategy.player.PlayerMagicStrategy;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
+import net.edge.world.entity.actor.combat.strategy.player.PlayerRangedStrategy;
 import net.edge.world.entity.actor.combat.strategy.player.special.CombatSpecial;
 import net.edge.world.entity.actor.combat.weapon.WeaponAnimation;
 import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
@@ -82,6 +88,7 @@ import net.edge.world.entity.actor.mob.MobAggression;
 import net.edge.world.entity.actor.player.assets.*;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.actor.update.UpdateFlag;
+import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Bank;
 import net.edge.world.entity.item.container.impl.Equipment;
 import net.edge.world.entity.item.container.impl.Inventory;
@@ -397,7 +404,12 @@ public final class Player extends Actor {
 	 * The spell that has been selected to auto-cast.
 	 */
 	private CombatSpell autocastSpell;
-	
+
+	/**
+	 * The spell that has been selected to single-cast.
+	 */
+	private CombatSpell singleCast;
+
 	/**
 	 * The current viewing orb that this player has openShop.
 	 */
@@ -535,6 +547,9 @@ public final class Player extends Actor {
 
 	/** Curses modifiers. */
 	public final Map<Prayer, CombatModifier> curses_modifiers = new HashMap<>();
+
+	public RangedWeaponDefinition rangedDefinition;
+	public RangedAmmunition rangedAmmo;
 	
 	/**
 	 * Creates a new {@link Player}.
@@ -591,9 +606,7 @@ public final class Player extends Actor {
 			sendDefaultSidebars();
 		}
 		move(super.getPosition());
-		combat.setStrategy(PlayerMeleeStrategy.get());
 		Skills.refreshAll(this);
-		WeaponInterface.setStrategy(this);
 		equipment.updateBulk();
 		inventory.updateBulk();
 		out(new SendPrivateMessageStatus(2));
@@ -992,8 +1005,42 @@ public final class Player extends Actor {
 			out(new SendEnergy());
 		}
 	}
-	
-	/**
+
+    @Override
+    public CombatStrategy<Player> getStrategy() {
+        if (isSingleCast()) {
+            return new PlayerMagicStrategy(singleCast);
+        }
+
+        if (isAutocast()) {
+            return new PlayerMagicStrategy(autocastSpell);
+        }
+
+        if (isSpecialActivated()) {
+            if (combatSpecial == null || combatSpecial.getStrategy() == null) {
+                setSpecialActivated(false);
+            } else {
+                return combatSpecial.getStrategy();
+            }
+        }
+
+        Item item = equipment.get(Equipment.WEAPON_SLOT);
+
+        if (item != null) {
+			RangedWeaponDefinition def = CombatRangedBowLoader.DEFINITIONS.get(item.getId());
+
+			if (def != null) {
+				RangedAmmunition ammo = RangedAmmunition.find(equipment.get(def.getSlot()));
+				rangedDefinition = def;
+				rangedAmmo = ammo;
+				return PlayerRangedStrategy.get();
+			}
+		}
+
+        return PlayerMeleeStrategy.get();
+    }
+
+    /**
 	 * Gets the formatted version of the username for this player.
 	 * @return the formatted username.
 	 */
@@ -1444,7 +1491,6 @@ public final class Player extends Actor {
 	 */
 	public void setAutocastSpell(CombatSpell autocastSpell) {
 		this.autocastSpell = autocastSpell;
-		WeaponInterface.setStrategy(this);
 		combat.reset(false);
 	}
 	
@@ -1455,7 +1501,23 @@ public final class Player extends Actor {
 	public boolean isAutocast() {
 		return autocastSpell != null;
 	}
-	
+
+	/**
+	 * Checks whether or not an auto-cast spell is set.
+	 * @return {@code true} if there is an active auto-cast spell
+	 */
+	public boolean isSingleCast() {
+		return singleCast != null;
+	}
+
+	/**
+	 * Checks whether or not an auto-cast spell is set.
+	 * @return {@code true} if there is an active auto-cast spell
+	 */
+	public void setSingleCast(CombatSpell spell) {
+		singleCast = spell;
+	}
+
 	/**
 	 * Gets the combat special that has been activated.
 	 * @return the activated combat special.

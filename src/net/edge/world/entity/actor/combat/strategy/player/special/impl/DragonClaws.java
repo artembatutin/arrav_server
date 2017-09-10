@@ -32,11 +32,6 @@ public class DragonClaws extends PlayerMeleeStrategy {
 	}
 
 	@Override
-	public void finishOutgoing(Player attacker, Actor defender) {
-		WeaponInterface.setStrategy(attacker);
-	}
-
-	@Override
 	public CombatHit[] getHits(Player attacker, Actor defender) {
 		CombatHit first = nextMeleeHit(attacker, defender);
 

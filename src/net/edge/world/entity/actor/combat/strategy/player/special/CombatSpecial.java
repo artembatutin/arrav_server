@@ -2,6 +2,7 @@ package net.edge.world.entity.actor.combat.strategy.player.special;
 
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendInterfaceLayer;
+import net.edge.net.packet.out.SendMessage;
 import net.edge.net.packet.out.SendUpdateSpecial;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.Combat;
@@ -268,15 +269,20 @@ public enum CombatSpecial {
 	GRANITE_MAUL(new int[]{4153}, 50, new GraniteMaul()) {
 		@Override
 		public void enable(Player player) {
-			Combat<Player> combat = player.getCombat();
-			CombatStrategy<Player> strategy = new GraniteMaul();
-			Actor defender = combat.getLastDefender();
-			
-			if(combat.isAttacking(defender) && combat.submitStrategy(defender, strategy)) {
+			if (player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
+				player.out(new SendMessage("You do not have enough special energy left!"));
 				return;
 			}
-			
-			combat.setStrategy(strategy);
+
+			player.setSpecialActivated(true);
+			player.out(new SendConfig(301, 1));
+
+			Combat<Player> combat = player.getCombat();
+			Actor defender = combat.getLastDefender();
+
+			if (combat.isAttacking(defender)) {
+				combat.submitStrategy(defender, GraniteMaul.get());
+			}
 		}
 	};
 	
@@ -305,15 +311,7 @@ public enum CombatSpecial {
 		this.amount = amount;
 		this.strategy = strategy;
 	}
-	
-	/**
-	 * Executes exactly when {@code player} activates the special bar.
-	 * @param player the player who activated the special bar.
-	 */
-	public void enable(Player player) {
-		player.getCombat().setStrategy(strategy);
-	}
-	
+
 	/**
 	 * Drains the special bar for {@code player}.
 	 * @param player the player who's special bar will be drained.
@@ -321,8 +319,7 @@ public enum CombatSpecial {
 	public void drain(Player player) {
 		player.getSpecialPercentage().decrementAndGet(amount, 0);
 		updateSpecialAmount(player);
-		player.out(new SendConfig(301, 0));
-		player.setSpecialActivated(false);
+		disable(player);
 	}
 	
 	/**
@@ -360,22 +357,60 @@ public enum CombatSpecial {
 	 * @param player the player to update the interface for.
 	 */
 	public static void assign(Player player) {
-		if(player.getWeapon().getSpecialBar() == -1) {
+		if (player.getWeapon().getSpecialBar() == -1) {
+			if (player.getCombatSpecial() != null) {
+				player.getCombatSpecial().disable(player);
+			}
 			player.setCombatSpecial(null);
 			return;
 		}
+
 		Item item = player.getEquipment().get(Equipment.WEAPON_SLOT);
-		if(item == null) {
+		if (item == null) {
+			if (player.getCombatSpecial() != null) {
+				player.getCombatSpecial().disable(player);
+			}
+			player.setCombatSpecial(null);
 			return;
 		}
+
 		Optional<CombatSpecial> special = Arrays.stream(CombatSpecial.values()).filter(c -> Arrays.stream(c.getIds()).anyMatch(id -> item.getId() == id)).findFirst();
-		if(special.isPresent()) {
+		if (special.isPresent()) {
+			if (player.getCombatSpecial() != null) {
+				player.getCombatSpecial().disable(player);
+			}
+
 			player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), false));
 			player.setCombatSpecial(special.get());
 			return;
 		}
+
 		player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), true));
 		player.setCombatSpecial(null);
+
+		if (player.getCombatSpecial() != null) {
+			player.getCombatSpecial().disable(player);
+		}
+	}
+
+
+	public void enable(Player player) {
+		if (!player.isSpecialActivated()) {
+			if (player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
+				player.out(new SendMessage("You do not have enough special energy left!"));
+				return;
+			}
+
+			player.out(new SendConfig(301, 1));
+			player.setSpecialActivated(true);
+		}
+	}
+
+	public void disable(Player player) {
+		if (player.isSpecialActivated()) {
+			player.out(new SendConfig(301, 0));
+			player.setSpecialActivated(false);
+		}
 	}
 	
 	/**
@@ -393,5 +428,9 @@ public enum CombatSpecial {
 	public final int getAmount() {
 		return amount;
 	}
-	
+
+	public CombatStrategy<Player> getStrategy() {
+		return strategy;
+	}
+
 }

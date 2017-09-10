@@ -41,10 +41,6 @@ public class StatiusWarhammer extends PlayerMeleeStrategy {
 			player.message("Your hammer forces some of your opponent's defences to break.");
 		}
 	}
-	@Override
-	public void finishOutgoing(Player attacker, Actor defender) {
-		WeaponInterface.setStrategy(attacker);
-	}
 
 	@Override
 	public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {

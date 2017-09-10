@@ -7,7 +7,6 @@ import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
-import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.player.Player;
 
 public class GraniteMaul extends PlayerMeleeStrategy {
@@ -19,11 +18,6 @@ public class GraniteMaul extends PlayerMeleeStrategy {
 	public void start(Player attacker, Actor defender, Hit[] hits) {
 		super.start(attacker, defender, hits);
 		attacker.graphic(GRAPHIC);
-	}
-
-	@Override
-	public void finishOutgoing(Player attacker, Actor defender) {
-		WeaponInterface.setStrategy(attacker);
 	}
 
 	@Override

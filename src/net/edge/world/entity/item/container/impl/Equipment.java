@@ -236,8 +236,7 @@ public final class Equipment extends ItemContainer {
 			ShieldAnimation.execute(player, equipItem);
 		}
 
-		if(type == EquipmentType.ARROWS) {
-			WeaponInterface.setStrategy(player);
+		if (type == EquipmentType.ARROWS) {
 			player.getCombat().reset(false);
 		}
 
@@ -292,7 +291,6 @@ public final class Equipment extends ItemContainer {
 				player.setShieldAnimation(null);
 			}
 			if(equipmentIndex == Equipment.ARROWS_SLOT) {
-				WeaponInterface.setStrategy(player);
 				player.getCombat().reset(false);
 			}
 			if(equipmentIndex == Equipment.WEAPON_SLOT) {

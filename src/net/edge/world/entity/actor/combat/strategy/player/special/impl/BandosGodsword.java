@@ -58,11 +58,6 @@ public class BandosGodsword extends PlayerMeleeStrategy {
 	}
 
 	@Override
-	public void finishOutgoing(Player attacker, Actor defender) {
-		WeaponInterface.setStrategy(attacker);
-	}
-
-	@Override
 	public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
 		return 4;
 	}

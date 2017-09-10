@@ -11,15 +11,20 @@ import java.util.Optional;
 
 /**
  * Handles the Dharok's armor effects to the assigned npc and item ids.
- *
  * @author Michael | Chex
  */
-@NpcCombatListenerSignature(npcs = { 2026 })
-@ItemCombatListenerSignature(items = { 4716, 4718, 4720, 4722 })
+@NpcCombatListenerSignature(npcs = {1671})
+@ItemCombatListenerSignature(items = {4716, 4718, 4720, 4722})
 public class DharokListener extends SimplifiedListener<Actor> {
+
+    private static final CombatModifier MODIFIER = new CombatModifier().damage(DharokListener::modifyDamage);
 
     @Override
     public Optional<CombatModifier> getModifier(Actor attacker) {
+        return Optional.of(MODIFIER);
+    }
+
+    private static int modifyDamage(Actor attacker, Actor defender, int damage) {
         int maxHealth;
 
         if (attacker.isMob()) {
@@ -28,9 +33,9 @@ public class DharokListener extends SimplifiedListener<Actor> {
             maxHealth = attacker.toPlayer().getSkills()[Skills.HITPOINTS].getRealLevel() * 10;
         }
 
-        int health = attacker.getCurrentHealth() > maxHealth ? 0 : maxHealth - attacker.getCurrentHealth();
-        CombatModifier modifier = new CombatModifier().damage(health * 0.001);
-        return Optional.of(modifier);
+        int health = maxHealth - attacker.getCurrentHealth();
+        if (health < 0) health = 0;
+        return damage + damage * health / 100;
     }
 
 }

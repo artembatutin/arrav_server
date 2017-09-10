@@ -32,11 +32,6 @@ public class SaradominSword extends PlayerMeleeStrategy {
 	}
 
 	@Override
-	public void finishOutgoing(Player attacker, Actor defender) {
-		WeaponInterface.setStrategy(attacker);
-	}
-
-	@Override
 	public CombatHit[] getHits(Player attacker, Actor defender) {
 		return new CombatHit[]{nextMeleeHit(attacker, defender), nextMagicHit(attacker, defender, FormulaFactory.maxHit(attacker, defender, CombatType.MELEE), 1, 0)};
 	}

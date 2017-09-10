@@ -29,7 +29,7 @@ public class Combat<T extends Actor> {
 
     public final Map<Actor, CurseModifier> curseModifiers = new HashMap<>();
 
-    private CombatStrategy<? super T> strategy;
+    private CombatStrategy<? super T> lastStrategy;
     private final List<CombatModifier> modifiers = new LinkedList<>();
     private final List<CombatListener<? super T>> listeners = new LinkedList<>();
     private final Deque<CombatListener<? super T>> pendingAddition = new LinkedList<>();
@@ -52,10 +52,14 @@ public class Combat<T extends Actor> {
         if(defender == null) {
             return;
         }
+
+        CombatStrategy<? super T> strategy = attacker.getStrategy();
         within = strategy != null && strategy.withinDistance(attacker, defender);
+
         if (!CombatUtil.canAttack(attacker, defender)) {
             return;
         }
+
         this.defender = defender;
         this.lastDefender = defender;
         attacker.faceEntity(defender);
@@ -68,8 +72,17 @@ public class Combat<T extends Actor> {
             if (cooldowns[index] > 0) {
                 cooldowns[index]--;
             } else {
-                if (defender == null || strategy == null) continue;
-                if (strategy.getCombatType().ordinal() != index) continue;
+                if (defender == null) {
+                    continue;
+                }
+
+                CombatStrategy<? super T> strategy = attacker.getStrategy();
+                setLastStrategy(strategy);
+
+                if (strategy.getCombatType().ordinal() != index) {
+                    continue;
+                }
+
                 submitStrategy(defender, strategy);
             }
         }
@@ -86,6 +99,17 @@ public class Combat<T extends Actor> {
                 hitsplatCooldowns[index] = 2;
                 sent++;
             }
+        }
+    }
+
+    public void setLastStrategy(CombatStrategy<? super T> strategy) {
+        if (strategy != lastStrategy) {
+            if (lastStrategy != null) {
+                removeModifiers(lastStrategy);
+            }
+
+            addModifiers(strategy);
+            lastStrategy = strategy;
         }
     }
 
@@ -125,22 +149,13 @@ public class Combat<T extends Actor> {
     }
 
     public boolean submitStrategy(Actor defender, CombatStrategy<? super T> strategy) {
-        if (!canAttack(defender)) {
+        if (!canAttack(defender, strategy)) {
             return false;
-        }
-
-        if (this.strategy != strategy) {
-            addModifiers(strategy);
         }
 
         int delayIndex = strategy.getCombatType().ordinal();
         submitHits(defender, strategy, strategy.getHits(attacker, defender));
         setDelay(delayIndex, strategy.getAttackDelay(attacker, defender, type));
-
-        if (this.strategy != strategy) {
-            removeModifiers(strategy);
-        }
-
         return true;
     }
 
@@ -161,7 +176,7 @@ public class Combat<T extends Actor> {
     }
 
     public void submitHits(Actor defender, CombatHit... hits) {
-        submitHits(defender, strategy, hits);
+        submitHits(defender, attacker.getStrategy(), hits);
     }
 
     public void queueDamage(Hit hit) {
@@ -186,7 +201,7 @@ public class Combat<T extends Actor> {
         }
     }
 
-    private boolean canAttack(Actor defender) {
+    private boolean canAttack(Actor defender, CombatStrategy<? super T> strategy) {
         if (!within) {
             return false;
         }
@@ -286,18 +301,13 @@ public class Combat<T extends Actor> {
 
     private void finishIncoming(Actor attacker) {
         T defender = this.attacker;
-        //TODO NULLPOINTER HERE.
-        System.out.println(strategy);
-        System.out.println(attacker);
-        System.out.println(defender);
-        strategy.finishIncoming(attacker, defender);
+        attacker.getStrategy().finishIncoming(attacker, defender);
         listeners.forEach(listener -> listener.finishIncoming(attacker, defender));
     }
 
     private void finishOutgoing(Actor defender, CombatStrategy<? super T> strategy) {
         strategy.finishOutgoing(attacker, defender);
-        listeners.forEach(listener -> listener.finishOutgoing(attacker, defender));
-        defender.getCombat().finishIncoming(attacker);
+        defender.getCombat().finishIncoming(defender);
     }
 
     public void reset(boolean fullCombat) {
@@ -365,28 +375,28 @@ public class Combat<T extends Actor> {
         return attacker != null && attacker.same(lastAttacker) && !stopwatchElapsed(lastBlocked, CombatConstants.COMBAT_TIMER);
     }
 
-    public int modDamage(int roll) {
+    public int modAttack(Actor defender, int roll) {
         if(!modifiers.isEmpty()) {
             for(CombatModifier modifier : modifiers) {
-                roll *= 1 + modifier.getDamage();
+                roll = modifier.modifyAttack(attacker, defender, roll);
             }
         }
         return roll;
     }
 
-    public int modDefence(int roll) {
+    public int modDefence(Actor defender, int roll) {
         if(!modifiers.isEmpty()) {
             for(CombatModifier modifier : modifiers) {
-                roll *= 1 + modifier.getDefence();
+                roll = modifier.modifyDefence(attacker, defender, roll);
             }
         }
         return roll;
     }
-    
-    public int modAttack(int roll) {
+
+    public int modDamage(Actor defender, int roll) {
         if(!modifiers.isEmpty()) {
             for(CombatModifier modifier : modifiers) {
-                roll *= 1 + modifier.getAttack();
+                roll = modifier.modifyDamage(attacker, defender, roll);
             }
         }
         return roll;
@@ -400,21 +410,8 @@ public class Combat<T extends Actor> {
         this.type = type;
     }
 
-    public CombatStrategy<? super T> getStrategy() {
-        return strategy;
-    }
-
-    public void setStrategy(CombatStrategy<? super T> next) {
-        if (strategy != null) {
-            removeModifiers(strategy);
-        }
-        if (strategy != next && next != null) {
-            addModifiers(next);
-        }
-        strategy = next;
-    }
-
     public boolean checkWithin() {
+        CombatStrategy<? super T> strategy = attacker.getStrategy();
         within = strategy != null && defender != null && strategy.withinDistance(attacker, defender);
         return within;
     }

@@ -12,6 +12,7 @@ import net.edge.world.entity.actor.combat.Combat;
 import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.effect.CombatEffectType;
 import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.combat.strategy.CombatStrategy;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.move.ForcedMovement;
 import net.edge.world.entity.actor.move.MovementQueue;
@@ -822,6 +823,8 @@ public abstract class Actor extends Entity {
 	 * @return combat handler.
 	 */
 	public abstract Combat<? extends Actor> getCombat();
+
+	public abstract <T extends Actor> CombatStrategy<? super T> getStrategy();
 	
 	/**
 	 * Gets a combat bonus.
