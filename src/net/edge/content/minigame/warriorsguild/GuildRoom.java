@@ -7,7 +7,7 @@ import net.edge.content.item.PotionConsumable;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.actor.player.assets.PrayerBook;
+import net.edge.content.skill.prayer.PrayerBook;
 import net.edge.world.locale.Position;
 
 /**

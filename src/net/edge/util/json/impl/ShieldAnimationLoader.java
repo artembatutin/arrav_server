@@ -3,7 +3,7 @@ package net.edge.util.json.impl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.edge.util.json.JsonLoader;
-import net.edge.world.entity.actor.player.assets.ShieldAnimation;
+import net.edge.content.ShieldAnimation;
 import net.edge.world.entity.item.ItemDefinition;
 
 import java.util.Arrays;

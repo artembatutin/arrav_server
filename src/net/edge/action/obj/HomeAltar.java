@@ -6,8 +6,8 @@ import net.edge.content.dialogue.impl.OptionDialogue;
 import net.edge.content.skill.Skills;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.actor.player.assets.PrayerBook;
-import net.edge.world.entity.actor.player.assets.Spellbook;
+import net.edge.content.skill.prayer.PrayerBook;
+import net.edge.content.skill.magic.Spellbook;
 import net.edge.world.object.GameObject;
 
 public class HomeAltar extends ActionInitializer {

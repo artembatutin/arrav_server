@@ -12,7 +12,6 @@ import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.actor.player.assets.PrayerBook;
 import net.edge.world.entity.actor.update.UpdateFlag;
 
 import java.util.ArrayList;
@@ -184,7 +183,7 @@ public enum Prayer {
 			return Optional.of(new Prayer[]{THICK_SKIN, ROCK_SKIN, STEEL_SKIN, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, EAGLE_EYE, HAWK_EYE, CHIVALRY});
 		}
 	}, /* CURSES */
-	CURSES_PROTECT_ITEM(PrayerBook.CURSES, 83109, 30, -1, 50, 724, 67074, 654) {
+	CURSES_PROTECT_ITEM(PrayerBook.CURSES, 83109, 30, -1, 50, 724, 67050, 630) {
 		@Override
 		public boolean onActivation(Player player) {
 			player.animation(new Animation(12567));
@@ -197,31 +196,31 @@ public enum Prayer {
 			return Optional.empty();
 		}
 	},
-	SAP_WARRIOR(PrayerBook.CURSES, 83111, 4.16, -1, 50, 725, 67074, 654) {
+	SAP_WARRIOR(PrayerBook.CURSES, 83111, 4.16, -1, 50, 725, 67051, 631) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{LEECH_ATTACK, TURMOIL});
 		}
 	},
-	SAP_RANGER(PrayerBook.CURSES, 83113, 4.16, -1, 52, 726, 67074, 654) {
+	SAP_RANGER(PrayerBook.CURSES, 83113, 4.16, -1, 52, 726, 67052, 632) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{LEECH_RANGED, TURMOIL});
 		}
 	},
-	SAP_MAGE(PrayerBook.CURSES, 83115, 4.16, -1, 54, 727, 67074, 654) {
+	SAP_MAGE(PrayerBook.CURSES, 83115, 4.16, -1, 54, 727, 67053, 633) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{LEECH_MAGIC, TURMOIL});
 		}
 	},
-	SAP_SPIRIT(PrayerBook.CURSES, 83117, 4.16, -1, 56, 728, 67074, 654) {
+	SAP_SPIRIT(PrayerBook.CURSES, 83117, 4.16, -1, 56, 728, 67054, 634) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{LEECH_SPECIAL_ATTACK, TURMOIL});
 		}
 	},
-	BERSERKER(PrayerBook.CURSES, 83119, 30, -1, 59, 729, 67074, 654) {
+	BERSERKER(PrayerBook.CURSES, 83119, 30, -1, 59, 729, 67055, 635) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.empty();
@@ -234,25 +233,25 @@ public enum Prayer {
 			return true;
 		}
 	},
-	DEFLECT_SUMMONING(PrayerBook.CURSES, 83121, 5, 12, 62, 730, 67074, 654) {
+	DEFLECT_SUMMONING(PrayerBook.CURSES, 83121, 5, 12, 62, 730, 67056, 636) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{WRATH, SOUL_SPLIT});
 		}
 	},
-	DEFLECT_MAGIC(PrayerBook.CURSES, 83123, 5, 10, 65, 731, 67074, 654) {
+	DEFLECT_MAGIC(PrayerBook.CURSES, 83123, 5, 10, 65, 731, 67057, 637) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_MISSILES, DEFLECT_MELEE, WRATH, SOUL_SPLIT});
 		}
 	},
-	DEFLECT_MISSILES(PrayerBook.CURSES, 83125, 5, 11, 68, 732, 67074, 654) {
+	DEFLECT_MISSILES(PrayerBook.CURSES, 83125, 5, 11, 68, 732, 67058, 638) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_MAGIC, DEFLECT_MELEE, WRATH, SOUL_SPLIT});
 		}
 	},
-	DEFLECT_MELEE(PrayerBook.CURSES, 83127, 5, 9, 71, 733, 67074, 654) {
+	DEFLECT_MELEE(PrayerBook.CURSES, 83127, 5, 9, 71, 733, 67059, 639) {
 		@Override
 		public boolean onActivation(Player player) {
 			player.getCombat().addListener(LeechCurse.get());
@@ -269,7 +268,7 @@ public enum Prayer {
 			return Optional.of(new Prayer[]{DEFLECT_MISSILES, DEFLECT_MAGIC, WRATH, SOUL_SPLIT});
 		}
 	},
-	LEECH_ATTACK(PrayerBook.CURSES, 83129, 5.83, -1, 74, 734, 67074, 654) {
+	LEECH_ATTACK(PrayerBook.CURSES, 83129, 5.83, -1, 74, 734, 67060, 640) {
 		@Override
 		public boolean onActivation(Player player) {
 			player.getCombat().addListener(LeechCurse.get());
@@ -286,7 +285,7 @@ public enum Prayer {
 			return Optional.of(new Prayer[]{SAP_WARRIOR, TURMOIL});
 		}
 	},
-	LEECH_RANGED(PrayerBook.CURSES, 83131, 5.83, -1, 76, 735, 67074, 654) {
+	LEECH_RANGED(PrayerBook.CURSES, 83131, 5.83, -1, 76, 735, 67061, 641) {
 		@Override
 		public boolean onActivation(Player player) {
 			player.getCombat().addListener(LeechCurse.get());
@@ -303,7 +302,7 @@ public enum Prayer {
 			return Optional.of(new Prayer[]{SAP_RANGER, TURMOIL});
 		}
 	},
-	LEECH_MAGIC(PrayerBook.CURSES, 83133, 5.83, -1, 78, 736, 67074, 654) {
+	LEECH_MAGIC(PrayerBook.CURSES, 83133, 5.83, -1, 78, 736, 67062, 642) {
 		@Override
 		public boolean onActivation(Player player) {
 			player.getCombat().addListener(LeechCurse.get());
@@ -320,7 +319,7 @@ public enum Prayer {
 			return Optional.of(new Prayer[]{SAP_MAGE, TURMOIL});
 		}
 	},
-	LEECH_DEFENCE(PrayerBook.CURSES, 83135, 5.83, -1, 80, 737, 67074, 654) {
+	LEECH_DEFENCE(PrayerBook.CURSES, 83135, 5.83, -1, 80, 737, 67063, 643) {
 		@Override
 		public boolean onActivation(Player player) {
 			player.getCombat().addListener(LeechCurse.get());
@@ -337,7 +336,7 @@ public enum Prayer {
 			return Optional.of(new Prayer[]{TURMOIL});
 		}
 	},
-	LEECH_STRENGTH(PrayerBook.CURSES, 83137, 5.83, -1, 82, 738, 67074, 654) {
+	LEECH_STRENGTH(PrayerBook.CURSES, 83137, 5.83, -1, 82, 738, 67064, 644) {
 		@Override
 		public boolean onActivation(Player player) {
 			player.getCombat().addListener(LeechCurse.get());
@@ -354,7 +353,7 @@ public enum Prayer {
 			return Optional.of(new Prayer[]{TURMOIL});
 		}
 	},
-	LEECH_ENERGY(PrayerBook.CURSES, 83139, 5.5, -1, 84, 739, 67074, 654) {
+	LEECH_ENERGY(PrayerBook.CURSES, 83139, 5.5, -1, 84, 739, 67065, 645) {
 		@Override
 		public boolean onActivation(Player player) {
 			player.getCombat().addListener(LeechCurse.get());
@@ -371,7 +370,7 @@ public enum Prayer {
 			return Optional.of(new Prayer[]{TURMOIL});
 		}
 	},
-	LEECH_SPECIAL_ATTACK(PrayerBook.CURSES, 83141, 6.6, -1, 86, 740, 67074, 654) {
+	LEECH_SPECIAL_ATTACK(PrayerBook.CURSES, 83141, 6.6, -1, 86, 740, 67066, 646) {
 		@Override
 		public boolean onActivation(Player player) {
 			player.getCombat().addListener(LeechCurse.get());
@@ -388,19 +387,19 @@ public enum Prayer {
 			return Optional.of(new Prayer[]{TURMOIL});
 		}
 	},
-	WRATH(PrayerBook.CURSES, 83143, 16.6, 16, 89, 741, 67074, 654) {
+	WRATH(PrayerBook.CURSES, 83143, 16.6, 16, 89, 741, 67067, 647) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_SUMMONING, DEFLECT_MAGIC, DEFLECT_MISSILES, DEFLECT_MELEE, SOUL_SPLIT});
 		}
 	},
-	SOUL_SPLIT(PrayerBook.CURSES, 83145, 3.33, 17, 92, 742, 67074, 654) {
+	SOUL_SPLIT(PrayerBook.CURSES, 83145, 3.33, 17, 92, 742, 67068, 648) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_SUMMONING, DEFLECT_MAGIC, DEFLECT_MISSILES, DEFLECT_MELEE, WRATH});
 		}
 	},
-	TURMOIL(PrayerBook.CURSES, 83147, 3.66, -1, 95, 743, 67074, 654) {
+	TURMOIL(PrayerBook.CURSES, 83147, 3.66, -1, 95, 743, 67069, 649) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SAP_WARRIOR, SAP_RANGER, SAP_MAGE, SAP_SPIRIT, LEECH_ATTACK, LEECH_RANGED, LEECH_MAGIC, LEECH_DEFENCE, LEECH_STRENGTH, LEECH_ENERGY, LEECH_SPECIAL_ATTACK});
@@ -528,8 +527,13 @@ public enum Prayer {
 	 * @param id The identification to check for.
 	 * @return Optional.present if the identification matched, optional.empty otherwise.
 	 */
-	public static Optional<Prayer> getQuickPrayer(int id) {
-		return VALUES.stream().filter(prayer -> prayer.quickPrayer == id).findAny();
+	public static Optional<Prayer> getQuickPrayer(int id, PrayerBook book) {
+		for(Prayer pray : VALUES) {
+			if(pray.getType().equals(book) && pray.quickPrayer == id) {
+				return Optional.of(pray);
+			}
+		}
+		return Optional.empty();
 	}
 	
 	/**
@@ -613,14 +617,15 @@ public enum Prayer {
 		if(buttonId == 49) {//selecting
 			TabInterface.PRAYER.sendInterface(player, player.getPrayerBook() == PrayerBook.CURSES ? 18200 : 17200);
 			player.out(new SendForceTab(TabInterface.PRAYER));
-			VALUES.stream().filter(p -> p.getType() == player.getPrayerBook()).forEach(p -> {
-				if(player.getQuickPrayers().contains(p)) {
-					player.out(new SendConfig(p.getCheckmark(), 1));
-				} else {
-					player.out(new SendConfig(p.getCheckmark(), 0));
+			for(Prayer pray : VALUES) {
+				if(pray.getType() == player.getPrayerBook()) {
+					if(player.getQuickPrayers().contains(pray)) {
+						player.out(new SendConfig(pray.getCheckmark(), 1));
+					} else {
+						player.out(new SendConfig(pray.getCheckmark(), 0));
+					}
 				}
-			});
-			
+			}
 			return true;
 		}
 		if(buttonId == 1005) {//confirm
@@ -638,20 +643,22 @@ public enum Prayer {
 	 * @param buttonId The button identification to check for.
 	 */
 	public static boolean toggleQuickPrayer(Player player, int buttonId) {
-		Optional<Prayer> prayer = getQuickPrayer(buttonId);
+		Optional<Prayer> prayer = getQuickPrayer(buttonId, player.getPrayerBook());
 		
 		if(!prayer.isPresent())
 			return false;
-		
 		Prayer pray = prayer.get();
-		
 		if(Prayer.isSelected(player, prayer.get())) {
 			pray.deselectQuickPrayer(player);
 			return true;
 		}
 		
-		if(prayer.get().deactivate().isPresent())
-			Arrays.stream(pray.deactivate().get()).forEach(it -> it.deselectQuickPrayer(player));
+		if(prayer.get().deactivate().isPresent()) {
+			for(Prayer de : pray.deactivate().get()) {
+				de.deselectQuickPrayer(player);
+			}
+		}
+		System.out.println(prayer.get());
 		player.getSelectedQuickPrayers().add(prayer.get());
 		player.out(new SendConfig(prayer.get().getCheckmark(), 1));
 		return true;

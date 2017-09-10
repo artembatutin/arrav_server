@@ -32,7 +32,7 @@ import net.edge.world.entity.actor.combat.magic.lunars.LunarSpells;
 import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
-import net.edge.world.entity.actor.player.assets.Spellbook;
+import net.edge.content.skill.magic.Spellbook;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.container.impl.Equipment;

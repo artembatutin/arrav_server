@@ -9,7 +9,7 @@ import net.edge.task.Task;
 import net.edge.util.ActionListener;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.actor.player.assets.Spellbook;
+import net.edge.content.skill.magic.Spellbook;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
 import net.edge.world.locale.Position;
 import net.edge.world.locale.loc.Location;

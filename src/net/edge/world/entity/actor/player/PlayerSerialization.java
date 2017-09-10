@@ -31,9 +31,9 @@ import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.attack.listener.CombatListenerDispatcher;
 import net.edge.world.entity.actor.combat.attack.listener.other.VengeanceListener;
 import net.edge.world.entity.actor.player.assets.AntifireDetails;
-import net.edge.world.entity.actor.player.assets.PrayerBook;
+import net.edge.content.skill.prayer.PrayerBook;
 import net.edge.world.entity.actor.player.assets.Rights;
-import net.edge.world.entity.actor.player.assets.Spellbook;
+import net.edge.content.skill.magic.Spellbook;
 import net.edge.world.entity.item.Item;
 import net.edge.world.locale.Position;
 

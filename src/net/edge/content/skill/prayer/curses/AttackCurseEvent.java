@@ -41,7 +41,6 @@ public class AttackCurseEvent extends Task {
 
 		if(offensiveModifier.get(attacker).getAttackBonus() < 0.10) {
 			offensiveModifier.get(attacker).attack(0.01);
-			attacker.toPlayer().message("attack:" + offensiveModifier.get(attacker).getAttackBonus());
 		}
 
 		Map<Actor, CurseModifier> defensiveModifier = defender.getCombat().curseModifiers;
@@ -53,7 +52,6 @@ public class AttackCurseEvent extends Task {
 
 		if(defensiveModifier.get(defender).getAttackBonus() > -0.25) {
 			defensiveModifier.get(defender).attack(-0.01);
-			defender.toPlayer().message("Attack:" +defensiveModifier.get(defender).getAttackBonus());
 		}
 
 

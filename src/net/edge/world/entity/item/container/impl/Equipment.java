@@ -10,7 +10,7 @@ import net.edge.world.entity.actor.combat.attack.listener.CombatListenerDispatch
 import net.edge.world.entity.actor.combat.weapon.WeaponAnimation;
 import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.actor.player.assets.ShieldAnimation;
+import net.edge.content.ShieldAnimation;
 import net.edge.world.entity.actor.update.UpdateFlag;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.ItemDefinition;

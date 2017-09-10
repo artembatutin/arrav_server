@@ -1,4 +1,4 @@
-package net.edge.world.entity.actor.player.assets;
+package net.edge.content.skill.magic;
 
 import net.edge.content.TabInterface;
 import net.edge.task.Task;

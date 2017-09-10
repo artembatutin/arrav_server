@@ -11,7 +11,7 @@ import net.edge.world.entity.actor.combat.magic.MagicRune;
 import net.edge.world.entity.actor.combat.magic.RequiredRune;
 import net.edge.world.entity.actor.combat.magic.lunars.LunarSpell;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.actor.player.assets.Spellbook;
+import net.edge.content.skill.magic.Spellbook;
 
 import java.util.Optional;
 

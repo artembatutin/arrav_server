@@ -1,4 +1,4 @@
-package net.edge.world.entity.actor.player.assets;
+package net.edge.content;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.edge.world.entity.actor.player.Player;

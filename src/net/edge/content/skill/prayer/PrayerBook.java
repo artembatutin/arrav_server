@@ -1,4 +1,4 @@
-package net.edge.world.entity.actor.player.assets;
+package net.edge.content.skill.prayer;
 
 import net.edge.content.TabInterface;
 import net.edge.world.entity.actor.player.Player;

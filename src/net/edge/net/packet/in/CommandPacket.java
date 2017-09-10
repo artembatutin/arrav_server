@@ -4,17 +4,13 @@ import net.edge.content.commands.CommandDispatcher;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
-import net.edge.world.entity.actor.combat.CombatType;
-import net.edge.world.entity.actor.combat.formula.FormulaFactory;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.player.special.CombatSpecial;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
-import net.edge.world.entity.actor.player.assets.PrayerBook;
+import net.edge.content.skill.prayer.PrayerBook;
 import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
-
-import java.util.Optional;
 
 /**
  * The message that is sent from the client when the player chats anything
