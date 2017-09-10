@@ -27,8 +27,8 @@ import java.util.function.Predicate;
 public class PlayerRangedStrategy extends RangedStrategy<Player> {
     
     private static final PlayerRangedStrategy INSTANCE = new PlayerRangedStrategy();
-    
-    private PlayerRangedStrategy() {
+
+    protected PlayerRangedStrategy() {
     }
 
     @Override
@@ -54,11 +54,12 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     @Override
     public void start(Player attacker, Actor defender, Hit[] hits) {
         if (attacker.getCombat().getDefender() == defender) {
-            Animation animation = attacker.rangedAmmo.getAnimation().orElse(getAttackAnimation(attacker, defender));
-            attacker.animation(animation);
-            attacker.rangedAmmo.getStart().ifPresent(attacker::graphic);
-            attacker.rangedAmmo.sendProjectile(attacker, defender);
-
+            if(!disableAnimations()) {
+                Animation animation = attacker.rangedAmmo.getAnimation().orElse(getAttackAnimation(attacker, defender));
+                attacker.animation(animation);
+                attacker.rangedAmmo.getStart().ifPresent(attacker::graphic);
+                attacker.rangedAmmo.sendProjectile(attacker, defender);
+            }
             if (attacker.rangedAmmo.getEffect().isPresent()) {
                 List<Hit> extra = new LinkedList<>();
                 for (Hit hit : hits) {
@@ -180,4 +181,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
         return INSTANCE;
     }
 
+    public boolean disableAnimations() {
+        return false;
+    }
 }

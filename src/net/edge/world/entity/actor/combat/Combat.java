@@ -191,7 +191,7 @@ public class Combat<T extends Actor> {
         }
     }
 
-    private void setDelay(int index, int delay) {
+    public void setDelay(int index, int delay) {
         for (int idx = 0; idx < cooldowns.length; idx++) {
             if (idx != index) {
                 cooldowns[idx] += 2;
@@ -199,6 +199,20 @@ public class Combat<T extends Actor> {
                 cooldowns[idx] = delay;
             }
         }
+    }
+
+    public void setDelay(int delay) {
+        for (int idx = 0; idx < cooldowns.length; idx++) {
+            setDelay(idx, delay);
+        }
+    }
+
+    public void resetDelay() {
+        if(lastStrategy == null) {
+            return;
+        }
+
+        cooldowns[lastStrategy.getCombatType().ordinal()] = lastStrategy.getAttackDelay(attacker, defender, type);
     }
 
     private boolean canAttack(Actor defender, CombatStrategy<? super T> strategy) {

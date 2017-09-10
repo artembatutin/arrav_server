@@ -1,9 +1,12 @@
 package net.edge.world.entity.actor.combat.strategy.player.special;
 
+import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendInterfaceLayer;
 import net.edge.net.packet.out.SendMessage;
 import net.edge.net.packet.out.SendUpdateSpecial;
+import net.edge.world.Animation;
+import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.Combat;
 import net.edge.world.entity.actor.combat.strategy.CombatStrategy;
@@ -21,10 +24,10 @@ import java.util.Optional;
  */
 public enum CombatSpecial {
 	//int[] ids, int amount, double strength, double accuracy, CombatType combat, WeaponInterface weapon
-		ABYSSAL_WHIP(new int[]{4151, 13444, 15441, 15442, 15443, 15444}, 50, new AbyssalWhip()),
-		ANCHOR(new int[]{10887}, 50, new Anchor()),
-		SARADOMIN_SWORD(new int[]{11730}, 65, new SaradominSword()),
-//		DRAGON_2H_SWORD(new int[]{7158}, 60, 1, 1, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
+	ABYSSAL_WHIP(new int[]{4151, 13444, 15441, 15442, 15443, 15444}, 50, new AbyssalWhip()),
+	ANCHOR(new int[]{10887}, 50, new Anchor()),
+	SARADOMIN_SWORD(new int[]{11730}, 65, new SaradominSword()),
+	//		DRAGON_2H_SWORD(new int[]{7158}, 60, 1, 1, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
 //			@Override
 //			public CombatHit container(Player player, Actor target) {
 //				player.animation(new Animation(3157, Animation.AnimationPriority.HIGH));
@@ -55,44 +58,32 @@ public enum CombatSpecial {
 //				};
 //			}
 //		},
-	//	DRAGON_BATTLEAXE(new int[]{1377}, 100, 1, 1, CombatType.MELEE, WeaponInterface.BATTLEAXE) {
-	//		@Override
-	//		public void onActivation(Player player, Actor target) {
-	//			int newStrength = (int) (player.getSkills()[Skills.STRENGTH].getRealLevel() * 0.2);
-	//			int newAttack = (int) (player.getSkills()[Skills.ATTACK].getRealLevel() * 0.1);
-	//			int newDefence = (int) (player.getSkills()[Skills.DEFENCE].getRealLevel() * 0.1);
-	//			int newRanged = (int) (player.getSkills()[Skills.RANGED].getRealLevel() * 0.1);
-	//			int newMagic = (int) (player.getSkills()[Skills.MAGIC].getRealLevel() * 0.1);
-	//			player.graphic(new Graphic(246, -100));
-	//			player.animation(new Animation(1056));
-	//			player.forceChat("Raarrrrrgggggghhhhhhh!");
-	//			player.getSkills()[Skills.STRENGTH].increaseLevelReal(newStrength);
-	//			player.getSkills()[Skills.ATTACK].decreaseLevelReal(newAttack);
-	//			player.getSkills()[Skills.DEFENCE].decreaseLevelReal(newDefence);
-	//			player.getSkills()[Skills.RANGED].decreaseLevelReal(newRanged);
-	//			player.getSkills()[Skills.MAGIC].decreaseLevelReal(newMagic);
-	//			Skills.refresh(player, Skills.STRENGTH);
-	//			Skills.refresh(player, Skills.ATTACK);
-	//			Skills.refresh(player, Skills.DEFENCE);
-	//			Skills.refresh(player, Skills.RANGED);
-	//			Skills.refresh(player, Skills.MAGIC);
-	//			player.getCombat().cooldown(true);
-	//			CombatSpecial.drain(player, DRAGON_BATTLEAXE.amount);
-	//		}
-	//
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			throw new UnsupportedOperationException("Dragon battleaxe does not have a special attack!");
-	//		}
-	//	},
-	//	DRAGON_HALBERD(new int[]{3204, 11716}, 30, 1, 1, CombatType.MELEE, WeaponInterface.HALBERD) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(1203, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(282, 100));
-	//			return new CombatHit(player, target, 2, CombatType.MELEE, true);
-	//		}
-	//	},
+	DRAGON_BATTLEAXE(new int[]{1377}, 100, null) {
+		@Override
+		public void enable(Player player) {
+			int newStrength = (int) (player.getSkills()[Skills.STRENGTH].getRealLevel() * 0.2);
+			int newAttack = (int) (player.getSkills()[Skills.ATTACK].getRealLevel() * 0.1);
+			int newDefence = (int) (player.getSkills()[Skills.DEFENCE].getRealLevel() * 0.1);
+			int newRanged = (int) (player.getSkills()[Skills.RANGED].getRealLevel() * 0.1);
+			int newMagic = (int) (player.getSkills()[Skills.MAGIC].getRealLevel() * 0.1);
+			player.graphic(new Graphic(246, -110));
+			player.animation(new Animation(1056));
+			player.forceChat("Raarrrrrgggggghhhhhhh!");
+			player.getSkills()[Skills.STRENGTH].increaseLevelReal(newStrength);
+			player.getSkills()[Skills.ATTACK].decreaseLevelReal(newAttack);
+			player.getSkills()[Skills.DEFENCE].decreaseLevelReal(newDefence);
+			player.getSkills()[Skills.RANGED].decreaseLevelReal(newRanged);
+			player.getSkills()[Skills.MAGIC].decreaseLevelReal(newMagic);
+			Skills.refresh(player, Skills.STRENGTH);
+			Skills.refresh(player, Skills.ATTACK);
+			Skills.refresh(player, Skills.DEFENCE);
+			Skills.refresh(player, Skills.RANGED);
+			Skills.refresh(player, Skills.MAGIC);
+			player.getCombat().resetDelay();
+			CombatSpecial.DRAGON_BATTLEAXE.drain(player);
+		}
+	},
+	DRAGON_HALBERD(new int[]{3204, 11716}, 30, new DragonHalberd()),
 	//	DRAGON_PICKAXE(new int[]{15259}, 100, 1, 1, CombatType.MELEE, WeaponInterface.PICKAXE) {
 	//		@Override
 	//		public CombatHit container(Player player, Actor target) {
@@ -154,8 +145,8 @@ public enum CombatSpecial {
 	//			};
 	//		}
 	//	},
-		VESTAS_LONGSWORD(new int[]{13899}, 25, new VestasLongsword()),
-		STATIUS_WARHAMMER(new int[]{13902}, 30, new StatiusWarhammer()),
+	VESTAS_LONGSWORD(new int[]{13899}, 25, new VestasLongsword()),
+	STATIUS_WARHAMMER(new int[]{13902}, 30, new StatiusWarhammer()),
 	//	DARK_BOW(new int[]{11235, 15701, 15702, 15703, 15704, 13405}, 55, 1.45, 1.22, CombatType.RANGED, WeaponInterface.LONGBOW) {
 	//		@Override
 	//		public CombatHit container(Player player, Actor target) {
@@ -193,24 +184,7 @@ public enum CombatSpecial {
 	//			};
 	//		}
 	//	},
-	//	MAGIC_SHORTBOW(new int[]{861}, 50, 1, 1.1, CombatType.RANGED, WeaponInterface.SHORTBOW) {
-	//		@Override
-	//		public CombatHit container(Player player, Actor target) {
-	//			player.animation(new Animation(426, Animation.AnimationPriority.HIGH));
-	//			player.graphic(new Graphic(250, 100));
-	//			int delay = new Projectile(player, target, 249, 58, 40, 43, 31, 0, CombatType.RANGED).sendProjectile().getTravelTime();
-	//			World.get().submit(new Task(1, false) {
-	//				@Override
-	//				public void execute() {
-	//					player.animation(new Animation(426, Animation.AnimationPriority.HIGH));
-	//					//player.graphic(new Graphic(250, 100));
-	//					new Projectile(player, target, 249, 48, 30, 43, 31, 0, CombatType.RANGED).sendProjectile();
-	//					this.cancel();
-	//				}
-	//			});
-	//			return new CombatHit(player, target, 2, CombatType.RANGED, true, delay);
-	//		}
-	//	},
+		MAGIC_SHORTBOW(new int[]{861}, 50, new MagicShortbow()),
 	//	MAGIC_LONGBOW(new int[]{859}, 35, 1, 5, CombatType.RANGED, WeaponInterface.LONGBOW) {
 	//		@Override
 	//		public CombatHit container(Player player, Actor target) {
@@ -285,22 +259,22 @@ public enum CombatSpecial {
 			}
 		}
 	};
-	
+
 	/**
 	 * The identifiers for the weapons that perform this special.
 	 */
 	private final int[] ids;
-	
+
 	/**
 	 * The amount of special energy drained by this attack.
 	 */
 	private final int amount;
-	
+
 	/**
 	 * The strength bonus added when performing this special attack.
 	 */
 	private final CombatStrategy<Player> strategy;
-	
+
 	/**
 	 * Creates a new {@link CombatSpecial}.
 	 * @param ids    the identifiers for the weapons that perform this special.
@@ -321,7 +295,7 @@ public enum CombatSpecial {
 		updateSpecialAmount(player);
 		disable(player);
 	}
-	
+
 	/**
 	 * Restores the special bar for {@code player}.
 	 * @param player the player who's special bar will be restored.
@@ -331,7 +305,7 @@ public enum CombatSpecial {
 		player.getSpecialPercentage().incrementAndGet(amount, 100);
 		updateSpecialAmount(player);
 	}
-	
+
 	/**
 	 * Updates the special bar with the amount of special energy {@code player}
 	 * has.
@@ -341,17 +315,17 @@ public enum CombatSpecial {
 		if(player.getWeapon().getSpecialBar() == -1 || player.getWeapon().getSpecialMeter() == -1) {
 			return;
 		}
-		
+
 		int specialCheck = 10;
 		int specialBar = player.getWeapon().getSpecialMeter();
 		int specialAmount = player.getSpecialPercentage().get() / 10;
-		
+
 		for(int i = 0; i < 10; i++) {
 			player.out(new SendUpdateSpecial(--specialBar, specialAmount >= specialCheck ? 500 : 0));
 			specialCheck--;
 		}
 	}
-	
+
 	/**
 	 * Updates the weapon interface with a special bar if needed.
 	 * @param player the player to update the interface for.
@@ -412,7 +386,7 @@ public enum CombatSpecial {
 			player.setSpecialActivated(false);
 		}
 	}
-	
+
 	/**
 	 * Gets the identifiers for the weapons that perform this special.
 	 * @return the identifiers for the weapons.
@@ -420,7 +394,7 @@ public enum CombatSpecial {
 	public final int[] getIds() {
 		return ids;
 	}
-	
+
 	/**
 	 * Gets the amount of special energy drained by this attack.
 	 * @return the amount of special energy drained.
