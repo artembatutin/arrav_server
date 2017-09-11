@@ -315,13 +315,13 @@ public class Combat<T extends Actor> {
 
     private void finishIncoming(Actor attacker) {
         T defender = this.attacker;
-        attacker.getStrategy().finishIncoming(attacker, defender);
+        defender.getStrategy().finishIncoming(attacker, defender);
         listeners.forEach(listener -> listener.finishIncoming(attacker, defender));
     }
 
     private void finishOutgoing(Actor defender, CombatStrategy<? super T> strategy) {
         strategy.finishOutgoing(attacker, defender);
-        defender.getCombat().finishIncoming(defender);
+        defender.getCombat().finishIncoming(attacker);
     }
 
     public void reset(boolean fullCombat) {
