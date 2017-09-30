@@ -1,11 +1,13 @@
 package net.edge.world.entity.actor.combat.formula;
 
+import net.edge.Application;
 import net.edge.content.skill.Skills;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatConstants;
 import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.CombatUtil;
+import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.attack.CurseModifier;
 import net.edge.world.entity.actor.combat.attack.FightStyle;
 import net.edge.world.entity.actor.combat.attack.FightType;
@@ -67,8 +69,8 @@ public class RangedFormula implements Formula {
 		}
 		
 		Player player = (Player) attacker;
-		int bonus = getOffensiveBonus(attacker, defender);
-		double level = attacker.getSkillLevel(Skills.STRENGTH);
+		int bonus = getStrength(attacker, defender);
+		double level = attacker.getSkillLevel(Skills.RANGED);
 		//prayer adjustments
 		if(Prayer.isActivated(player, Prayer.SHARP_EYE)) {
 			level *= 1.05;
@@ -85,12 +87,16 @@ public class RangedFormula implements Formula {
 		}
 		//add up
 		level += 8;
-		if(CombatUtil.isFullVoid(attacker) && player.getEquipment().contains(11665)) {
+		if(CombatUtil.isFullVoid(attacker) && player.getEquipment().contains(11664)) {
 			level *= 1.1;
 		}
 		//rounding
 		level = (int) level;
-		return (int) ((0.5 + level * (bonus + 64) / 640) * 10);
+		double baseDamage = Math.floor(0.5 + level * (bonus + 64) / 640);
+		if(Application.DEBUG) {
+			player.message("Max hit: " + (int) (baseDamage * 10));
+		}
+		return (int) (baseDamage * 10);
 	}
 	
 	@Override

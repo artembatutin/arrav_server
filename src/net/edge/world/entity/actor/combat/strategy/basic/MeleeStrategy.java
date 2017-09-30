@@ -38,7 +38,7 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
 		return true;
 	}
 	
-	protected static void addCombatExperience(Player player, Hit... hits) {
+	public static void addCombatExperience(Player player, Hit... hits) {
 		int exp = 0;
 		for(Hit hit : hits) {
 			exp += hit.getDamage();

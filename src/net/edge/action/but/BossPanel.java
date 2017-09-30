@@ -15,7 +15,7 @@ public class BossPanel extends ActionInitializer {
 		ButtonAction e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3535, 5186), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(3535, 5186), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -24,7 +24,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3366, 3512), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(3366, 3512), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -33,7 +33,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2343, 3687), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(2343, 3687), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -42,7 +42,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3114, 5528), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(3114, 5528), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -51,7 +51,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2601, 5706), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(2601, 5706), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -60,7 +60,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(1752, 5237), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(1752, 5237), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -69,7 +69,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2272, 4682), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(2272, 4682), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -78,7 +78,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3260, 3923), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(3260, 3923), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -87,7 +87,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3508, 9493), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(3484, 9510, 2), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -96,7 +96,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3197, 3873), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(3197, 3873), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -105,7 +105,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3360, 5854), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(3360, 5854), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -114,7 +114,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2439, 5170), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(2439, 5170), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -123,7 +123,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2968, 4387, 2), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(2968, 4387, 2), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -132,7 +132,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2903, 5205), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(2903, 5205), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -141,7 +141,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2871, 5318, 2), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(2871, 5318, 2), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -150,7 +150,7 @@ public class BossPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(1910, 4371), TeleportType.BOSS_PORTAL);
+				player.teleport(new Position(1910, 4371), TeleportType.NORMAL);
 				return true;
 			}
 		};

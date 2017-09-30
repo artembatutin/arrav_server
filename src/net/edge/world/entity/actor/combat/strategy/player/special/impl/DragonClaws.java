@@ -41,7 +41,7 @@ public class DragonClaws extends PlayerMeleeStrategy {
 
 		CombatHit second = first.copyAndModify(defender, CombatType.MELEE, damage -> damage / 2);
 		CombatHit third = second.copyAndModify(defender, CombatType.MELEE, damage -> damage / 2);
-		CombatHit fourth = second.copyAndModify(defender, CombatType.MELEE, damage -> first.getDamage() - second.getDamage() - third.getDamage());
+		CombatHit fourth = first.copyAndModify(defender, CombatType.MELEE, damage -> first.getDamage() - second.getDamage() - third.getDamage());
 		return new CombatHit[]{first, second, third, fourth};
 	}
 

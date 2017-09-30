@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 import static net.edge.content.achievements.Achievement.RUNE_CRAFTER;
-import static net.edge.content.teleport.TeleportType.TRAINING_PORTAL;
+import static net.edge.content.teleport.TeleportType.NORMAL;
 
 /**
  * Holds functionality for the runecrafting skill.
@@ -85,7 +85,7 @@ public final class Runecrafting extends ProducingSkillAction {
 			ItemAction action = new ItemAction() {
 				@Override
 				public boolean click(Player player, Item item, int container, int slot, int click) {
-					player.teleport(a.getPosition(), TRAINING_PORTAL);
+					player.teleport(a.getPosition(), NORMAL);
 					return true;
 				}
 			};

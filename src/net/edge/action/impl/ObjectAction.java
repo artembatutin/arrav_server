@@ -1,5 +1,6 @@
 package net.edge.action.impl;
 
+import net.edge.GameConstants;
 import net.edge.action.Action;
 import net.edge.content.minigame.fightcaves.FightcavesMinigame;
 import net.edge.content.minigame.nexchamber.NexMinigame;
@@ -20,9 +21,11 @@ import net.edge.content.skill.runecrafting.Runecrafting;
 import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.thieving.impl.Stalls;
 import net.edge.content.skill.woodcutting.Woodcutting;
+import net.edge.content.teleport.TeleportType;
 import net.edge.content.wilderness.Obelisk;
 import net.edge.net.packet.in.ObjectActionPacket;
 import net.edge.world.entity.actor.player.Player;
+import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
 /**
@@ -80,6 +83,31 @@ public abstract class ObjectAction extends Action {
 		BirdData.action();
 		MammalData.action();
 		Hunter.action();
+
+			ObjectAction a = new ObjectAction() {
+				@Override
+				public boolean click(Player player, GameObject object, int click) {
+					player.teleport(new Position(3507, 9494), TeleportType.LADDER);
+					return true;
+				}
+			};
+			a.registerFirst(65613);
+		a = new ObjectAction() {
+			@Override
+			public boolean click(Player player, GameObject object, int click) {
+				player.teleport(new Position(3509, 9496, 2), TeleportType.LADDER);
+				return true;
+			}
+		};
+		a.registerFirst(45835);
+		a = new ObjectAction() {
+			@Override
+			public boolean click(Player player, GameObject object, int click) {
+				player.teleport(GameConstants.STARTING_POSITION, TeleportType.LADDER);
+				return true;
+			}
+		};
+		a.registerFirst(45832);
 	}
 	
 }

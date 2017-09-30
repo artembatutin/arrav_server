@@ -14,7 +14,7 @@ public class MonsterPanel extends ActionInitializer {
 		ButtonAction e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2681, 3728), TeleportType.TRAINING_PORTAL);
+				player.teleport(new Position(2681, 3728), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -22,7 +22,7 @@ public class MonsterPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2884, 9798), TeleportType.TRAINING_PORTAL);
+				player.teleport(new Position(2884, 9798), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -30,7 +30,7 @@ public class MonsterPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2713, 9564), TeleportType.TRAINING_PORTAL);
+				player.teleport(new Position(2713, 9564), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -38,7 +38,7 @@ public class MonsterPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3097, 9876), TeleportType.TRAINING_PORTAL);
+				player.teleport(new Position(3097, 9876), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -46,7 +46,7 @@ public class MonsterPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2896, 2724), TeleportType.TRAINING_PORTAL);
+				player.teleport(new Position(2896, 2724), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -54,7 +54,7 @@ public class MonsterPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3429, 3538), TeleportType.TRAINING_PORTAL);
+				player.teleport(new Position(3429, 3538), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -62,7 +62,7 @@ public class MonsterPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2806, 10002, 0), TeleportType.TRAINING_PORTAL);
+				player.teleport(new Position(2806, 10002, 0), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -70,7 +70,7 @@ public class MonsterPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(1751, 5290, 1), TeleportType.TRAINING_PORTAL);
+				player.teleport(new Position(1751, 5290, 1), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -78,7 +78,7 @@ public class MonsterPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(1488, 4704, 0), TeleportType.TRAINING_PORTAL);
+				player.teleport(new Position(1488, 4704, 0), TeleportType.NORMAL);
 				return true;
 			}
 		};
@@ -86,7 +86,7 @@ public class MonsterPanel extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(4170, 5706, 0), TeleportType.TRAINING_PORTAL);
+				player.teleport(new Position(4170, 5706, 0), TeleportType.NORMAL);
 				return true;
 			}
 		};

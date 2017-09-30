@@ -14,7 +14,7 @@ import net.edge.world.locale.Boundary;
  * @author Michael | Chex
  */
 public abstract class MagicStrategy<T extends Actor> extends CombatStrategy<T> {
-	
+
 	private static final int BASE_EXPERIENCE_MULTIPLIER = 2;
 	
 	@Override

@@ -15,6 +15,11 @@ import net.edge.world.locale.Boundary;
  */
 public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> {
 
+    /**
+     * Base Experience multiplier.
+     * ON CHANGE: DO NOT FORGET TO CHANGE THE XP MULTIPLIER ON CANNON
+     * {@link net.edge.content.object.cannon.MulticannonTask}
+     */
     private static final int BASE_EXPERIENCE_MULTIPLIER = 4;
 
     @Override
@@ -48,7 +53,7 @@ public abstract class RangedStrategy<T extends Actor> extends CombatStrategy<T> 
         return true;
     }
 
-    protected static void addCombatExperience(Player player, Hit... hits) {
+    public static void addCombatExperience(Player player, Hit... hits) {
         int exp = 0;
         for (Hit hit : hits) {
             exp += hit.getDamage();

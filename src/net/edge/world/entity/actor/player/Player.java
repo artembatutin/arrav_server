@@ -1016,6 +1016,26 @@ public final class Player extends Actor {
             return new PlayerMagicStrategy(autocastSpell);
         }
 
+		Item item = equipment.get(Equipment.WEAPON_SLOT);
+
+		if (item != null) {
+			RangedWeaponDefinition def = CombatRangedBowLoader.DEFINITIONS.get(item.getId());
+
+			if (def != null) {
+				RangedAmmunition ammo = RangedAmmunition.find(equipment.get(def.getSlot()));
+				rangedDefinition = def;
+				rangedAmmo = ammo;
+				if (isSpecialActivated()) {
+					if (combatSpecial == null || combatSpecial.getStrategy() == null) {
+						setSpecialActivated(false);
+					} else {
+						return combatSpecial.getStrategy();
+					}
+				}
+				return PlayerRangedStrategy.get();
+			}
+		}
+
         if (isSpecialActivated()) {
             if (combatSpecial == null || combatSpecial.getStrategy() == null) {
                 setSpecialActivated(false);
@@ -1023,19 +1043,6 @@ public final class Player extends Actor {
                 return combatSpecial.getStrategy();
             }
         }
-
-        Item item = equipment.get(Equipment.WEAPON_SLOT);
-
-        if (item != null) {
-			RangedWeaponDefinition def = CombatRangedBowLoader.DEFINITIONS.get(item.getId());
-
-			if (def != null) {
-				RangedAmmunition ammo = RangedAmmunition.find(equipment.get(def.getSlot()));
-				rangedDefinition = def;
-				rangedAmmo = ammo;
-				return PlayerRangedStrategy.get();
-			}
-		}
 
         return PlayerMeleeStrategy.get();
     }

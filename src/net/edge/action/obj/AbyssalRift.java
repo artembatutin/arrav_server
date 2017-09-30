@@ -6,7 +6,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
-import static net.edge.content.teleport.TeleportType.TRAINING_PORTAL;
+import static net.edge.content.teleport.TeleportType.NORMAL;
 
 public class AbyssalRift extends ActionInitializer {
 	@Override
@@ -27,7 +27,7 @@ public class AbyssalRift extends ActionInitializer {
 			l = new ObjectAction() {
 				@Override
 				public boolean click(Player player, GameObject object, int click) {
-					player.teleport(pos[ii], TRAINING_PORTAL);
+					player.teleport(pos[ii], NORMAL);
 					return true;
 				}
 			};

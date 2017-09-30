@@ -124,12 +124,13 @@ public class Multicannon extends DynamicObject {
 				
 				//clip & location
 				boolean clip = true;
-				for(int x = 0; x < 3; x++) {
+				for(int x = 0; x < 2; x++) {
 					if(!clip)
 						break;
-					for(int y = 0; y < 3; y++) {
-						if(reg.getTile(0, (player.getPosition().getX() & 0x3F) + x, (player.getPosition().getY() & 0x3F) + y).getFlags() != TraversalConstants.NONE) {
-							clip = false;
+					for(int y = 0; y < 2; y++) {
+						if(reg.getTile(player.getPosition().getZ(), (player.getPosition().getX() & 0x3F) + x, (player.getPosition().getY() & 0x3F) + y).getFlags() != TraversalConstants.NONE) {
+							player.message("tile: X:" +((player.getPosition().getX() & 0x3F) + x) + ", Y: "+((player.getPosition().getY() & 0x3F) + y) +"," +reg.getTile(0, (player.getPosition().getX() & 0x3F) + x, (player.getPosition().getY() & 0x3F) + y).getFlags());
+								clip = false;
 							break;
 						}
 						if(reg.getObjects(player.getPosition().move(x, y)).hasInteractive()) {

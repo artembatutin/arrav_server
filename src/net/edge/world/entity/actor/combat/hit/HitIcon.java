@@ -34,7 +34,7 @@ public enum HitIcon {
 	/**
 	 * Represents the canon hit icon.
 	 */
-	CANON(4);
+	CANNON(4);
 	
 	/**
 	 * The identification for this hit type.

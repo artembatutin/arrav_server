@@ -99,13 +99,13 @@ public class Spellbook extends ActionInitializer {
 			public boolean click(Player player, int button) {
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.teleport(new Position(3212, 3423), TeleportType.TRAINING_PORTAL);
+						player.teleport(new Position(3212, 3423), TeleportType.NORMAL);
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(2964, 3378), TeleportType.TRAINING_PORTAL);
+						player.teleport(new Position(2964, 3378), TeleportType.NORMAL);
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(3223, 3218), TeleportType.TRAINING_PORTAL);
+						player.teleport(new Position(3223, 3218), TeleportType.NORMAL);
 					} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
-						player.teleport(new Position(3093, 3244), TeleportType.TRAINING_PORTAL);
+						player.teleport(new Position(3093, 3244), TeleportType.NORMAL);
 					} else {
 						player.getDialogueBuilder().advance();
 					}
@@ -116,11 +116,11 @@ public class Spellbook extends ActionInitializer {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 						player.getDialogueBuilder().previous();
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(2803, 3433), TeleportType.TRAINING_PORTAL);
+						player.teleport(new Position(2803, 3433), TeleportType.NORMAL);
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(2529, 3307), TeleportType.TRAINING_PORTAL);
+						player.teleport(new Position(2529, 3307), TeleportType.NORMAL);
 					} else if(t.equals(OptionDialogue.OptionType.FOURTH_OPTION)) {
-						player.teleport(new Position(2662, 3305), TeleportType.TRAINING_PORTAL);
+						player.teleport(new Position(2662, 3305), TeleportType.NORMAL);
 					}
 					
 					if(!t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {

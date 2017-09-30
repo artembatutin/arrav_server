@@ -11,6 +11,7 @@ import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.effect.impl.CombatPoisonEffect;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.combat.ranged.RangedWeaponDefinition;
 import net.edge.world.entity.actor.combat.ranged.RangedWeaponType;
 import net.edge.world.entity.actor.combat.strategy.basic.RangedStrategy;
 import net.edge.world.entity.actor.player.Player;
@@ -75,6 +76,9 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
                 }
             } else {
                 addCombatExperience(attacker, hits);
+            }
+            if(attacker.isSpecialActivated()) {
+                attacker.getCombatSpecial().drain(attacker);
             }
         }
     }

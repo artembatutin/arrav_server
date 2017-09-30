@@ -13,11 +13,11 @@ public final class MasterCommand implements Command {
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		if(player.getRights().equal(Rights.ADMINISTRATOR)) {
 			for(int i = 0; i < player.getSkills().length; i++) {
-				Skills.experience(player, (Integer.MAX_VALUE - player.getSkills()[i].getExperience()), i);
+				Skills.experience(player, 14000000, i);
 			}
 		} else {
 			for(int i = 0; i < 6; i++) {
-				Skills.experience(player, (Integer.MAX_VALUE - player.getSkills()[i].getExperience()), i);
+				Skills.experience(player, 14000000, i);
 			}
 		}
 	}

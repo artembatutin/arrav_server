@@ -13,10 +13,7 @@ import java.util.function.Function;
  */
 public final class CombatHit extends Hit {
 	
-	/**
-	 * The hit delay.
-	 */
-	private final int hitDelay;
+	private int hitDelay;
 	
 	/**
 	 * The hitsplat delay.
@@ -32,7 +29,7 @@ public final class CombatHit extends Hit {
 	public CombatHit(Hit hit, int hitDelay, int hitsplatDelay) {
 		super(hit.getDamage(), hit.getHitsplat(), hit.getHitIcon(), hit.isAccurate(), hit.getSource());
 		this.setSoak(hit.getSoak());
-		this.hitDelay = hitDelay;
+		this.setHitDelay(hitDelay);
 		this.hitsplatDelay = hitsplatDelay;
 	}
 	
@@ -42,16 +39,23 @@ public final class CombatHit extends Hit {
 	 * @return a copy of this combat hit with the damage modifier applied
 	 */
 	public CombatHit copyAndModify(Actor defender, CombatType type, Function<Integer, Integer> modifier) {
-		this.modifyDamage(modifier);
-		return new CombatHit(CombatUtil.calculateSoaking(defender, type, this), hitDelay, hitsplatDelay);
+		CombatHit next = new CombatHit(CombatUtil.calculateSoaking(defender, type, this), getHitDelay(), hitsplatDelay);
+		next.modifyDamage(modifier);
+		return next;
 	}
 	
 	/**
+	 * The hit delay.
+	 */ /**
 	 * Gets the hit delay.
 	 * @return the hit delay.
 	 */
 	public int getHitDelay() {
 		return hitDelay;
+	}
+
+	public void setHitDelay(int hitDelay) {
+		this.hitDelay = hitDelay;
 	}
 	
 	/**
@@ -61,5 +65,5 @@ public final class CombatHit extends Hit {
 	public int getHitsplatDelay() {
 		return hitsplatDelay;
 	}
-	
+
 }

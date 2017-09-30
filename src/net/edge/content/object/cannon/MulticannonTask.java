@@ -1,5 +1,6 @@
 package net.edge.content.object.cannon;
 
+import net.edge.content.skill.Skills;
 import net.edge.net.packet.out.SendObjectAnimation;
 import net.edge.task.Task;
 import net.edge.util.rand.RandomUtils;
@@ -7,6 +8,7 @@ import net.edge.world.Direction;
 import net.edge.world.Projectile;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.CombatType;
+import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.HitIcon;
 import net.edge.world.entity.actor.combat.hit.Hitsplat;
@@ -126,6 +128,12 @@ public class MulticannonTask extends Task {
 				break;
 		}
 	}
+
+	/**
+	 *  Applies damage to the victim.
+	 *  4* exp multiplier is based on:
+	 *  {@link net.edge.world.entity.actor.combat.strategy.basic.RangedStrategy#BASE_EXPERIENCE_MULTIPLIER}
+	 */
 	
 	private void fire() {
 		Actor victim = getVictim();
@@ -134,7 +142,15 @@ public class MulticannonTask extends Task {
 		int damage = RandomUtils.inclusive(300);
 		cannon.setElements(cannon.getElements() - 1);
 		new Projectile(cannon.getGlobalPos().move(1, 1), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), 53, 60, 20, 35, 30, cannon.player.getInstance(), CombatType.RANGED).sendProjectile();
-		Hit data = new Hit(damage, Hitsplat.NORMAL, HitIcon.CANON);
+		//Hit data = CombatUtil.calculateSoaking(victim, CombatType.RANGED, new Hit(damage, Hitsplat.NORMAL, HitIcon.CANNON, true, cannon.player.getSlot()));
+		Hit data = new Hit(damage, Hitsplat.NORMAL, HitIcon.CANNON);
+
+		int exp = 0;
+		exp += damage;
+		exp = Math.round(exp / 10F);
+		exp *= 4;
+		Skills.experience(cannon.player, exp / 2, Skills.RANGED);
+
 		new Task(2, false) {
 			@Override
 			protected void execute() {

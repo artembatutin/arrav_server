@@ -6,7 +6,7 @@ import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
 import net.edge.world.object.GameObject;
 
-import static net.edge.content.teleport.TeleportType.BOSS_PORTAL;
+import static net.edge.content.teleport.TeleportType.NORMAL;
 
 public class KingDragonLever extends ActionInitializer {
 	@Override
@@ -14,7 +14,7 @@ public class KingDragonLever extends ActionInitializer {
 		ObjectAction open = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				player.teleport(new Position(3220, 3430, 0), BOSS_PORTAL);
+				player.teleport(new Position(3220, 3430, 0), NORMAL);
 				return true;
 			}
 		};
