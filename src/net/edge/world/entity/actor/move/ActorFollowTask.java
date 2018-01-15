@@ -111,7 +111,7 @@ class ActorFollowTask extends Task {
 		CombatType type = CombatType.NONE;
 		if(combat) {
 			if (!character.getPosition().withinDistance(leader.getPosition(), 45)) {
-				character.getCombat().reset(true);
+				character.getCombat().reset(true, true);
 				return;
 			}
 			if(character.getStrategy() != null) {

@@ -30,12 +30,12 @@ public class DharokListener extends SimplifiedListener<Actor> {
         if (attacker.isMob()) {
             maxHealth = attacker.toMob().getDefinition().getHitpoints();
         } else {
-            maxHealth = attacker.toPlayer().getSkills()[Skills.HITPOINTS].getRealLevel() * 10;
+            maxHealth = attacker.toPlayer().getMaximumHealth();
         }
 
-        int health = maxHealth - attacker.getCurrentHealth();
-        if (health < 0) health = 0;
-        return damage + damage * health / 100;
+        double multiplier = (((maxHealth - attacker.getCurrentHealth()) / 10 ) * 0.01) + 1;
+
+        return (int) ((damage * multiplier));
     }
 
 }

@@ -237,13 +237,13 @@ public final class Equipment extends ItemContainer {
 		}
 
 		if (type == EquipmentType.ARROWS) {
-			player.getCombat().reset(false);
+			player.getCombat().reset(false, false);
 		}
 
 		if(type == WEAPON && def.isWeapon()) {
 			WeaponInterface.execute(player, equipItem);
 			WeaponAnimation.execute(player, equipItem);
-			player.getCombat().reset(false);
+			player.getCombat().reset(false, false);
 			player.setAutocastSpell(null);
 			player.out(new SendConfig(108, 0));
 			player.out(new SendConfig(301, 0));
@@ -291,12 +291,12 @@ public final class Equipment extends ItemContainer {
 				player.setShieldAnimation(null);
 			}
 			if(equipmentIndex == Equipment.ARROWS_SLOT) {
-				player.getCombat().reset(false);
+				player.getCombat().reset(false, false);
 			}
 			if(equipmentIndex == Equipment.WEAPON_SLOT) {
 				WeaponInterface.execute(player, null);
 				WeaponAnimation.execute(player, new Item(0));
-				player.getCombat().reset(false);
+				player.getCombat().reset(false, false);
 				player.setAutocastSpell(null);
 				player.out(new SendConfig(108, 0));
 				player.out(new SendConfig(301, 0));

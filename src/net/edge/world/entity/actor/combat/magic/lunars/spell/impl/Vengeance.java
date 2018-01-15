@@ -20,7 +20,7 @@ public final class Vengeance extends LunarButtonSpell {
 	 * Constructs a new {@link Vengeance}.
 	 */
 	public Vengeance() {
-		super("Vengeance", 118082, 94, 112, new RequiredRune(MagicRune.ASTRAL_RUNE, 4), new RequiredRune(MagicRune.DEATH_RUNE, 2), new RequiredRune(MagicRune.LAW_RUNE, 10));
+		super("Vengeance", 118082, 94, 112, new RequiredRune(MagicRune.ASTRAL_RUNE, 4), new RequiredRune(MagicRune.DEATH_RUNE, 2), new RequiredRune(MagicRune.EARTH_RUNE, 10));
 	}
 	
 	@Override

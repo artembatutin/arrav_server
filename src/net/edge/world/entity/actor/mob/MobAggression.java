@@ -91,7 +91,7 @@ public final class MobAggression {
 	}
 	
 	public static void retreat(Mob mob) {
-		mob.getCombat().reset(false);
+		mob.getCombat().reset(false, true);
 		mob.getMovementQueue().smartWalk(mob.getOriginalPosition());
 		mob.getAttr().get("isRetreating").set(true);
 	}

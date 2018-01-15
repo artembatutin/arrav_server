@@ -100,7 +100,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 		switch(interfaceId) {
 			case 1688:
 				player.getEquipment().unequip(slot);
-				player.getCombat().reset(false);
+				player.getCombat().reset(false, false);
 				break;
 			case 3322:
 				if(!session.isPresent()) {

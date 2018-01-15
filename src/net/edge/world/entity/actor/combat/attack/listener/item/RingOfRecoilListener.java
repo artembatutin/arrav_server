@@ -7,6 +7,7 @@ import net.edge.world.entity.actor.combat.attack.listener.ItemCombatListenerSign
 import net.edge.world.entity.actor.combat.attack.listener.SimplifiedListener;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.HitIcon;
+import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.container.impl.Equipment;
 
@@ -37,7 +38,7 @@ public class RingOfRecoilListener extends SimplifiedListener<Player> {
 		}
 
 		defender.ringOfRecoil = charges;
-		attacker.damage(new Hit(recoil, HitIcon.DEFLECT));
+		attacker.damage(new Hit(recoil, Hitsplat.NORMAL_LOCAL));
 		attacker.getCombat().getDamageCache().add(defender, recoil);
 	}
 

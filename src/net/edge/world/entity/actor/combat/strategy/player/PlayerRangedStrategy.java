@@ -11,7 +11,6 @@ import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.effect.impl.CombatPoisonEffect;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
-import net.edge.world.entity.actor.combat.ranged.RangedWeaponDefinition;
 import net.edge.world.entity.actor.combat.ranged.RangedWeaponType;
 import net.edge.world.entity.actor.combat.strategy.basic.RangedStrategy;
 import net.edge.world.entity.actor.player.Player;
@@ -35,7 +34,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
     @Override
     public boolean canAttack(Player attacker, Actor defender) {
         if (!Requirement.canEquip(attacker, attacker.getEquipment().get(Equipment.WEAPON_SLOT))) {
-            attacker.getCombat().reset(false);
+            attacker.getCombat().reset(false, true);
             return false;
         }
 
@@ -48,7 +47,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
         } else {
             attacker.out(new SendMessage(getNoAmmunitionMessage(attacker.rangedDefinition.getType())));
         }
-        attacker.getCombat().reset(false);
+        attacker.getCombat().reset(false, true);
         return false;
     }
 

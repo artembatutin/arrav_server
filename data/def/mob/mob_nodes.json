@@ -18969,7 +18969,7 @@
 	"walk-radius": 2
   },
   {
-	"id": 1154,
+	"id": 1157,
 	"position": {
 	  "x": 3513,
 	  "y": 9493,
@@ -21289,17 +21289,7 @@
 	"walk-radius": 2
   },
   {
-	"id": 1154,
-	"position": {
-	  "x": 3513,
-	  "y": 9493,
-	  "z": 2
-	},
-	"random-walk": true,
-	"walk-radius": 2
-  },
-  {
-	"id": 1154,
+	"id": 1157,
 	"position": {
 	  "x": 3505,
 	  "y": 9496,

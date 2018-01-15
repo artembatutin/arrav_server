@@ -17453,8 +17453,8 @@
 	  },
 	  {
 		"id": 995,
-		"minimum": 1,
-		"maximum": 34000,
+		"minimum": 25000,
+		"maximum": 200000,
 		"chance": "COMMON"
 	  },
 	  {

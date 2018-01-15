@@ -2346,53 +2346,65 @@
   },
   {
     "name": "KBD fire",
+    "animation": {
+      "id": 81,
+      "delay": 0,
+      "priority": "HIGH"
+    },
     "projectile": {
       "id": 393,
-      "size": 1,
       "delay": 50,
-      "duration": 75,
+      "speed": 75,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 16
+      "endHeight": 31
     }
   },
   {
     "name": "KBD poison",
     "magic-effect": "KBD_POISON",
+    "animation": {
+      "id": 81,
+      "delay": 0,
+      "priority": "HIGH"
+    },
     "projectile": {
       "id": 394,
-      "size": 1,
       "delay": 50,
-      "duration": 75,
+      "speed": 75,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 16
+      "endHeight": 31
     }
   },
   {
     "name": "KBD freeze",
     "magic-effect": "KBD_FREEZE",
+    "animation": {
+      "id": 81,
+      "delay": 0,
+      "priority": "HIGH"
+    },
     "projectile": {
       "id": 395,
-      "size": 1,
       "delay": 50,
-      "duration": 75,
+      "speed": 75,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 16
+      "endHeight": 31
     }
   },
   {
     "name": "KBD shock",
     "magic-effect": "KBD_SHOCK",
+    "animation": {
+      "id": 81,
+      "delay": 0,
+      "priority": "HIGH"
+    },
     "projectile": {
       "id": 396,
-      "size": 1,
       "delay": 50,
-      "duration": 75,
+      "speed": 75,
       "startHeight": 43,
-      "endHeight": 31,
-      "curve": 16
+      "endHeight": 31
     }
   },
   {
@@ -2411,7 +2423,7 @@
   {
     "name": "Metalic dragonfire",
     "animation": {
-      "id": 12256,
+      "id": 14246,
       "delay": 0,
       "priority": "HIGH"
     },

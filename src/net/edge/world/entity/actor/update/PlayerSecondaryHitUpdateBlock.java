@@ -2,6 +2,7 @@ package net.edge.world.entity.actor.update;
 
 import net.edge.net.codec.GameBuffer;
 import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.player.Player;
 
 /**
@@ -22,7 +23,7 @@ public final class PlayerSecondaryHitUpdateBlock extends PlayerUpdateBlock {
 		Hit hit = other.getSecondaryHit();
 		boolean local = other == player || (hit.hasSource() && hit.getSource() == player.getSlot());
 		msg.putShort(hit.getDamage());
-		msg.put(hit.getHitsplat().getId() + (!local ? 5 : 0));
+		msg.put(hit.getHitsplat().getId() + (!local ? (hit.getHitsplat() != Hitsplat.NORMAL_LOCAL ? 5 : 0) : 0));
 		int change = msg.getBuffer().writerIndex() - 1;
 		msg.put(hit.getHitIcon().getId());
 		msg.putShort(hit.getSoak());

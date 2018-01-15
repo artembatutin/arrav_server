@@ -30,7 +30,7 @@ public class Shifter extends Pest {
 			Optional<Position> destination = TraversalMap.getRandomTraversableTile(move, size());
 			destination.ifPresent(this::move);
 			graphic(new Graphic(308, 100));
-			getCombat().reset(false);
+			getCombat().reset(false, true);
 		}
 		
 		if(!getCombat().isAttacking()) {

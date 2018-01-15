@@ -39,7 +39,7 @@ public final class MobDeath extends ActorDeath<Mob> {
 	
 	@Override
 	public void preDeath() {
-		getActor().getCombat().reset(true);
+		getActor().getCombat().reset(true, true);
 		getActor().animation(new Animation(getActor().getDefinition().getDeathAnimation(), Animation.AnimationPriority.HIGH));
 	}
 	

@@ -237,7 +237,7 @@ public class Combat<T extends Actor> {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
             defender.getCombat().damageQueue.clear();
-            reset(true);
+            reset(true, true);
             return;
         }
 
@@ -249,7 +249,7 @@ public class Combat<T extends Actor> {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
             defender.getCombat().damageQueue.clear();
-            reset(true);
+            reset(true, true);
             return;
         }
 
@@ -265,7 +265,7 @@ public class Combat<T extends Actor> {
         lastBlocked.reset();
         lastAttacker = attacker;
         listeners.forEach(listener -> listener.block(attacker, defender, hit, combatType));
-        if (defender.getCombat().getDefender() == null && defender.isAutoRetaliate()) {
+        if (defender.getCombat().getDefender() == null && defender.isAutoRetaliate() || defender.getStrategy().hitBack()) {
             defender.getCombat().attack(attacker);
         } else if(defender.isMob() && !defender.getCombat().isUnderAttack()) {
             defender.getCombat().attack(attacker);
@@ -276,7 +276,7 @@ public class Combat<T extends Actor> {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
             defender.getCombat().damageQueue.clear();
-            reset(true);
+            reset(true, true);
             return;
         }
         defender.getCombat().block(attacker, hit, strategy.getCombatType());
@@ -292,7 +292,7 @@ public class Combat<T extends Actor> {
         if (!CombatUtil.canAttack(attacker, defender)) {
             combatQueue.removeIf(_hit -> _hit.getDefender() == defender);
             defender.getCombat().damageQueue.clear();
-            reset(true);
+            reset(true, true);
             return;
         }
 
@@ -310,7 +310,7 @@ public class Combat<T extends Actor> {
         T defender = this.attacker;
         listeners.forEach(listener -> listener.onDeath(attacker, defender, hit));
         defender.getMovementQueue().reset();
-        reset(true);
+        reset(true, true);
     }
 
     private void finishIncoming(Actor attacker) {
@@ -324,19 +324,22 @@ public class Combat<T extends Actor> {
         defender.getCombat().finishIncoming(attacker);
     }
 
-    public void reset(boolean fullCombat) {
+
+    public void reset(boolean fullCombat, boolean resetWalk) {
         if (defender != null) {
             if(fullCombat) {
                 Actor def = defender;
                 defender = null;
-                def.getCombat().reset(false);
+                def.getCombat().reset(false, true);
             } else {
                 defender = null;
             }
             attacker.faceEntity(null);
             attacker.setFollowing(false);
         }
-        attacker.getMovementQueue().reset();
+        if(resetWalk) {
+            attacker.getMovementQueue().reset();
+        }
     }
 
     public void addModifier(CombatModifier modifier) {

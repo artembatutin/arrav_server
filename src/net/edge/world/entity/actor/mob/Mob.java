@@ -168,7 +168,9 @@ public abstract class Mob extends Actor {
 	 * The special amount of this npc, between 0 and 100. 101 sets it off.
 	 */
 	private OptionalInt special = OptionalInt.empty();
-	
+
+
+
 	/**
 	 * Creates a new {@link Mob}.
 	 * @param id       the identification for this NPC.
@@ -182,6 +184,14 @@ public abstract class Mob extends Actor {
 		this.currentHealth = maxHealth;
 		this.owner = -1;
 		getMovementCoordinator().setRadius(3);
+		Combat<Mob> combat = this.getCombat();
+		CombatListener<Mob> listener = CombatListenerDispatcher.NPC_LISTENERS.get(id);
+
+		if (listener != null) {
+			combat.addListener(listener);
+		}
+
+		this.strategy = STRATEGIES.getOrDefault(id, () -> loadStrategy(this).orElse(NpcMeleeStrategy.get())).get();
 	}
 	
 	/**

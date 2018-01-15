@@ -134,14 +134,15 @@ public final class AnimationRoom extends GuildRoom {
 		LinkedTaskSequence seq = new LinkedTaskSequence();
 		seq.connect(5, () -> {
 			player.getDialogueBuilder().append(new StatementDialogue("The animator hums, something appears to be working.", "You stand back..."));
-			ForcedMovement.create(player, player.getPosition().move(0, 3), null).setSecondSpeed(42).setDirection(ForcedMovementDirection.SOUTH).submit();
+			ForcedMovement.create(player, player.getPosition().move(0, 3), null).setSecondSpeed(62).setDirection(ForcedMovementDirection.SOUTH).submit();
 		});
 		seq.connect(3, () -> {
-			World.get().getMobs().add(arm);
 			arm.setOwner(player);
+			World.get().getMobs().add(arm);
 		});
 		seq.connect(2, () -> {
-			arm.forceChat("I'M ALIVE!!!!");
+			arm.animation(4166);
+			arm.forceChat("I'M ALIVE!");
 		});
 		seq.connect(1, () -> arm.getCombat().attack(player));
 		seq.connect(1, () -> player.getActivityManager().enable());

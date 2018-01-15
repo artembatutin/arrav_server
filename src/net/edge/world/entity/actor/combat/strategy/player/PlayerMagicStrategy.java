@@ -12,7 +12,6 @@ import net.edge.world.entity.actor.combat.magic.CombatSpell;
 import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.basic.MagicStrategy;
-import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
@@ -48,7 +47,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 			return true;
 		}
 		attacker.message("You need some runes to cast this spell.");
-		attacker.getCombat().reset(false);
+		attacker.getCombat().reset(false, true);
 		return false;
 	}
 
@@ -80,7 +79,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 			if (attacker.isSingleCast()) {
 				attacker.facePosition(defender.getPosition());
 				attacker.setSingleCast(null);
-				attacker.getCombat().reset(true);
+				attacker.getCombat().reset(true, true);
 			}
 		}
 	}
@@ -104,7 +103,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 	@Override
 	public void finishOutgoing(Player attacker, Actor defender) {
 		if(!attacker.isAutocast()) {
-			attacker.getCombat().reset(false);
+			attacker.getCombat().reset(false, true);
 		}
 	}
 

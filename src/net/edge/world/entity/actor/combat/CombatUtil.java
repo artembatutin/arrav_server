@@ -256,15 +256,15 @@ public final class CombatUtil {
 		boolean multi = attacker.inMulti() && defender.inMulti();
 		boolean attacked = defender.getCombat().isUnderAttack();
 		if(!valid) {
-			attacker.getCombat().reset(true);
+			attacker.getCombat().reset(true, true);
 			return false;
 		}
 		if(attacked && !multi && !attacker.getCombat().isAttacking(defender)) {
 			if(attacker.isPlayer()) {
 				Player player = attacker.toPlayer();
-				player.message("You can't disturb this fight.");
+				player.message("This player is already in combat.");
 			}
-			attacker.getCombat().reset(true);
+			attacker.getCombat().reset(true, true);
 			return false;
 		}
 		if(attacker.isPlayer() && defender.isPlayer()) {
@@ -277,13 +277,13 @@ public final class CombatUtil {
 				}
 				if(!attacker.inWilderness() || !victim.inWilderness()) {
 					player.message("Both you and " + victim.getFormatUsername() + " need to be in the wilderness to fight!");
-					player.getCombat().reset(true);
+					player.getCombat().reset(true, true);
 					return false;
 				}
 				int combatDifference = CombatUtil.combatLevelDifference(player.determineCombatLevel(), victim.determineCombatLevel());
 				if(combatDifference > player.getWildernessLevel() || combatDifference > victim.getWildernessLevel()) {
 					player.message("Your combat level difference is too great to attack that player here.");
-					player.getCombat().reset(true);
+					player.getCombat().reset(true, true);
 					return false;
 				}
 			}

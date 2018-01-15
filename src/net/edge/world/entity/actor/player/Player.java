@@ -776,13 +776,13 @@ public final class Player extends Actor {
 	
 	@Override
 	public Hit decrementHealth(Hit hit) {
-		if(hit.getDamage() > skills[Skills.HITPOINTS].getLevel()) {
-			hit.setDamage(skills[Skills.HITPOINTS].getLevel());
+		if(hit.getDamage() > getCurrentHealth()) {
+			hit.setDamage(getCurrentHealth());
 			if(hit.getHitsplat() == Hitsplat.CRITICAL) {
 				hit.set(Hitsplat.NORMAL);
 			}
 		}
-		skills[Skills.HITPOINTS].decreaseLevel(hit.getDamage());
+		skills[Skills.HITPOINTS].decreaseLevel(hit.getDamage(), 0, true);
 		Skills.refresh(this, Skills.HITPOINTS);
 		closeWidget();
 		if(getCurrentHealth() <= 0) {
@@ -1498,7 +1498,7 @@ public final class Player extends Actor {
 	 */
 	public void setAutocastSpell(CombatSpell autocastSpell) {
 		this.autocastSpell = autocastSpell;
-		combat.reset(false);
+		combat.reset(false, false);
 	}
 	
 	/**

@@ -43,7 +43,7 @@ public abstract class TeleportSpell {
 		player.widget(-1);
 		player.out(new SendWalkable(-1));
 		player.setTeleportStage(1);
-		player.getCombat().reset(true);
+		player.getCombat().reset(true, true);
 		player.faceEntity(null);
 		player.setFollowing(false);
 		player.setFollowEntity(null);

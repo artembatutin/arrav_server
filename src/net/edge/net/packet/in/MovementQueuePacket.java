@@ -34,7 +34,7 @@ public final class MovementQueuePacket implements IncomingPacket {
 		player.faceEntity(null);
 		if(opcode == 248) {
 			player.setFollowing(false);
-			player.getCombat().reset(false);
+			player.getCombat().reset(false, true);
 			reset = true;
 			size -= 14;
 		}
@@ -42,7 +42,7 @@ public final class MovementQueuePacket implements IncomingPacket {
 		if(opcode == 164) {
 			player.setFollowing(false);
 			if(!reset) {
-				player.getCombat().reset(false);
+				player.getCombat().reset(false, true);
 				reset = true;
 			}
 		} else if(opcode == 98) {
@@ -58,7 +58,7 @@ public final class MovementQueuePacket implements IncomingPacket {
 			player.getDialogueBuilder().interrupt();
 		
 		if(!reset) {
-			player.getCombat().reset(false);
+			player.getCombat().reset(false, true);
 			reset = true;
 		}
 		

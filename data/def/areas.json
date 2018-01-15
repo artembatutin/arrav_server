@@ -43,6 +43,21 @@
 	  }
 	]
   },
+	{
+		"name": "KALPHITE_TUNNEL",
+		"location": [
+			{
+				"square": {
+					"swX": 3449,
+					"swY": 9467,
+					"neX": 3521,
+					"neY": 9537,
+					"z": 2
+				},
+				"multi": true
+			}
+		]
+	},
   {
 	"name": "KING_BLACK_DRAGON",
 	"location": [

@@ -5,6 +5,7 @@ import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.attack.listener.SimplifiedListener;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.HitIcon;
+import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.player.Player;
 
 /**
@@ -25,7 +26,7 @@ public class VengeanceListener extends SimplifiedListener<Player> {
 
         defender.forceChat("Taste vengeance!");
         this.remove(defender);
-        Hit recoil = new Hit((int) (hit.getDamage() * 0.75), HitIcon.DEFLECT);
+        Hit recoil = new Hit((int) (hit.getDamage() * 0.75), Hitsplat.NORMAL_LOCAL);
         attacker.damage(recoil);
         attacker.getCombat().getDamageCache().add(defender, recoil.getDamage());
         defender.venged = false;

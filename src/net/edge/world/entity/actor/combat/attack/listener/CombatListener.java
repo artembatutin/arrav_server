@@ -96,5 +96,13 @@ public interface CombatListener<T extends Actor> {
         return Optional.empty();
     }
 
+    /**
+     +	 * Condition if the strategist hits back.
+     +	 * @return hits back on an incoming attack.
+     +	 */
+    default boolean hitBack() {
+        return false;
+    }
+
 }
 
