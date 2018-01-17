@@ -6,10 +6,13 @@ package net.edge.world.entity.actor.combat.attack;
  * @author Michael | Chex
  */
 public enum FightStyle {
-    ACCURATE(0, 0),
-    AGGRESSIVE(3, 0),
-    DEFENSIVE(0, 3),
-    CONTROLLED(1, 1);
+    ACCURATE(3, 0, 0),
+    AGGRESSIVE(0, 3, 0),
+    DEFENSIVE(0, 0, 3),
+    CONTROLLED(1, 1, 1);
+
+    /** The increase to defense. */
+    private int accuracyIncrease;
 
     /** The increase to defense. */
     private int defensiveIncrease;
@@ -19,21 +22,24 @@ public enum FightStyle {
 
     /**
      * Constructs a new {@link FightStyle} element.
+     *
+     * @param accuracyIncrease
      * @param aggressiveIncrease the aggreaaive increase amount
      * @param defensiveIncrease  the defensive increase amount
      */
-    FightStyle(int aggressiveIncrease, int defensiveIncrease) {
+    FightStyle(int accuracyIncrease, int aggressiveIncrease, int defensiveIncrease) {
+        this.accuracyIncrease = accuracyIncrease;
         this.aggressiveIncrease = aggressiveIncrease;
         this.defensiveIncrease = defensiveIncrease;
     }
 
     /**
-     * Gets the defense increase for this attack type.
+     * Gets the accuracy increase for this attack type.
      *
-     * @return the defense increase
+     * @return the accuracy increase
      */
-    public int getDefensiveIncrease() {
-        return defensiveIncrease;
+    public int getAccuracyIncrease() {
+        return accuracyIncrease;
     }
 
     /**
@@ -43,6 +49,15 @@ public enum FightStyle {
      */
     public int getAggressiveIncrease() {
         return aggressiveIncrease;
+    }
+
+    /**
+     * Gets the defense increase for this attack type.
+     *
+     * @return the defense increase
+     */
+    public int getDefensiveIncrease() {
+        return defensiveIncrease;
     }
 
 }

@@ -3,6 +3,10 @@ package net.edge.world.entity.actor;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.task.Task;
 import net.edge.world.World;
+import net.edge.world.entity.actor.combat.hit.Hit;
+import net.edge.world.entity.actor.player.Player;
+
+import java.util.Optional;
 
 /**
  * The parent class that handles the death process for all characters.
@@ -50,6 +54,9 @@ public abstract class ActorDeath<T extends Actor> extends Task {
 	
 	@Override
 	public final void execute() {
+		Hit lastHit = getActor().getCombat().getDamageCache().getLastHit();
+		Optional<Player> killer = getActor().getCombat().getDamageCache().getPlayerKiller();
+
 		switch(counter++) {
 			case 0:
 				getActor().setDead(true);
@@ -57,15 +64,24 @@ public abstract class ActorDeath<T extends Actor> extends Task {
 				getActor().getMovementQueue().reset();
 				getActor().unfreeze();
 				getActor().unStun();
+				killer.filter(Actor::isPlayer).ifPresent(k -> k.getCombat().resetTimers());
 				if(getActor().isPlayer()) {
 					getActor().toPlayer().out(new SendConfig(174, 0));
 				}
 				break;
 			case 1:
 				preDeath();
+				killer.ifPresent(k -> {
+					k.getCombat().preKill(getActor(), lastHit);
+					getActor().getCombat().preDeath(k, lastHit);
+				});
 				break;
 			case 5:
 				death();
+				killer.ifPresent(k -> {
+					k.getCombat().onKill(getActor(), lastHit);
+					getActor().getCombat().onDeath(k, lastHit);
+				});
 				break;
 			case 6:
 				postDeath();

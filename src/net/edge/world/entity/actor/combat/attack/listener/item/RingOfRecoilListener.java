@@ -6,7 +6,6 @@ import net.edge.world.entity.actor.combat.CombatType;
 import net.edge.world.entity.actor.combat.attack.listener.ItemCombatListenerSignature;
 import net.edge.world.entity.actor.combat.attack.listener.SimplifiedListener;
 import net.edge.world.entity.actor.combat.hit.Hit;
-import net.edge.world.entity.actor.combat.hit.HitIcon;
 import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.container.impl.Equipment;
@@ -30,7 +29,7 @@ public class RingOfRecoilListener extends SimplifiedListener<Player> {
 		if(charges <= 0) {
 			defender.out(new SendMessage("Your ring of recoil has shattered!"));
 			defender.getEquipment().unequip(Equipment.RING_SLOT, null, true, -1);
-			this.remove(defender);
+			defender.getCombat().removeListener(this);
 			// if charge is negative, recoil was too high for it's charge
 			// so we add the -charges to get the amount of recoil left
 			recoil += charges;
@@ -39,13 +38,7 @@ public class RingOfRecoilListener extends SimplifiedListener<Player> {
 
 		defender.ringOfRecoil = charges;
 		attacker.damage(new Hit(recoil, Hitsplat.NORMAL_LOCAL));
-		attacker.getCombat().getDamageCache().add(defender, recoil);
-	}
-
-	@Override
-	public boolean remove(Player defender) {
-		defender.getCombat().removeListener(this);
-		return true;
+		attacker.getCombat().getDamageCache().add(defender, new Hit(recoil));
 	}
 
 }

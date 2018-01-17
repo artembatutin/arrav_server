@@ -56,6 +56,7 @@ public final class MobDeath extends ActorDeath<Mob> {
 				k.getNpcKills().incrementAndGet();
 				PlayerPanel.TOTAL_NPC_KILLS.refresh(k, "@or2@ - Mobs killed: @yel@" + k.getNpcKills().get());
 			}
+
 			//achievement kills
 			int id = getActor().getId();
 			if(id > 0 && id < 2)
@@ -71,7 +72,7 @@ public final class MobDeath extends ActorDeath<Mob> {
 	@Override
 	public void postDeath() {
 		try {
-			if(getActor().isRespawn()) {
+			if (getActor().isRespawn()) {
 				World.get().submit(new Task(getActor().getDefinition().getRespawnTime(), false) {
 					@Override
 					public void execute() {

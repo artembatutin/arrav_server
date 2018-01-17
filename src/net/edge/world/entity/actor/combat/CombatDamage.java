@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.edge.util.Stopwatch;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.Actor;
+import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
@@ -22,19 +23,22 @@ public final class CombatDamage {
 	 * The damages of players who have inflicted damage.
 	 */
 	private final Object2ObjectOpenHashMap<Actor, DamageCounter> attackers = new Object2ObjectOpenHashMap<>();
-	
-	/**
+
+	private Hit lastHit;
+
+    /**
 	 * Registers damage in the backing collection for {@code character}. This
 	 * method has no effect if the character isn't a {@code PLAYER} or if
 	 * {@code amount} is below {@code 0}.
 	 * @param character the character to register damage for.
-	 * @param amount    the amount of damage to register.
+	 * @param hit    the hit to register.
 	 */
-	public void add(Actor character, int amount) {
-		if(amount > 0) {
-			DamageCounter counter = attackers.putIfAbsent(character, new DamageCounter(amount));
+	public void add(Actor character, Hit hit) {
+		if(hit.getDamage() > 0) {
+			DamageCounter counter = attackers.putIfAbsent(character, new DamageCounter(hit.getDamage()));
 			if(counter != null)
-				counter.incrementAmount(amount);
+				counter.incrementAmount(hit.getDamage());
+			lastHit = hit;
 		}
 	}
 	
@@ -113,7 +117,15 @@ public final class CombatDamage {
 	public void clear() {
 		attackers.clear();
 	}
-	
+
+	/**
+	 * Gets the last hit added to the damage map.
+	 * @return the last hit
+	 */
+	public Hit getLastHit() {
+		return lastHit;
+	}
+
 	/**
 	 * A counter that will track the amount of damage dealt and whether that
 	 * damaged has timed out or not.

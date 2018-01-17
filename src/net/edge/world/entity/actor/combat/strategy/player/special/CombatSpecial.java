@@ -79,7 +79,7 @@ public enum CombatSpecial {
 			Skills.refresh(player, Skills.DEFENCE);
 			Skills.refresh(player, Skills.RANGED);
 			Skills.refresh(player, Skills.MAGIC);
-			player.getCombat().resetDelay();
+			player.getCombat().cooldown(6);
 			CombatSpecial.DRAGON_BATTLEAXE.drain(player);
 		}
 	},

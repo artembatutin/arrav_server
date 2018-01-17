@@ -37,7 +37,8 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
 	public boolean canAttack(T attacker, Actor defender) {
 		return true;
 	}
-	
+
+
 	public static void addCombatExperience(Player player, Hit... hits) {
 		int exp = 0;
 		for(Hit hit : hits) {

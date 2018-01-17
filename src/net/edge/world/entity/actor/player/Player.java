@@ -8,7 +8,9 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.edge.Application;
 import net.edge.GameConstants;
-import net.edge.content.*;
+import net.edge.content.PlayerPanel;
+import net.edge.content.ShieldAnimation;
+import net.edge.content.TabInterface;
 import net.edge.content.achievements.Achievement;
 import net.edge.content.clanchat.ClanManager;
 import net.edge.content.clanchat.ClanMember;
@@ -43,6 +45,7 @@ import net.edge.content.skill.farming.patch.PatchType;
 import net.edge.content.skill.magic.Spellbook;
 import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.prayer.PrayerBook;
+import net.edge.content.skill.prayer.curses.CurseManager;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.summoning.Summoning;
@@ -67,13 +70,13 @@ import net.edge.world.entity.EntityState;
 import net.edge.world.entity.EntityType;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.combat.Combat;
-import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
-import net.edge.world.entity.actor.combat.magic.CombatSpell;
 import net.edge.world.entity.actor.combat.effect.CombatEffect;
 import net.edge.world.entity.actor.combat.effect.CombatEffectTask;
+import net.edge.world.entity.actor.combat.formula.FormulaModifier;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.Hitsplat;
+import net.edge.world.entity.actor.combat.magic.CombatSpell;
 import net.edge.world.entity.actor.combat.ranged.RangedAmmunition;
 import net.edge.world.entity.actor.combat.ranged.RangedWeaponDefinition;
 import net.edge.world.entity.actor.combat.strategy.CombatStrategy;
@@ -85,7 +88,9 @@ import net.edge.world.entity.actor.combat.weapon.WeaponAnimation;
 import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobAggression;
-import net.edge.world.entity.actor.player.assets.*;
+import net.edge.world.entity.actor.player.assets.AntifireDetails;
+import net.edge.world.entity.actor.player.assets.PrivateMessage;
+import net.edge.world.entity.actor.player.assets.Rights;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 import net.edge.world.entity.actor.update.UpdateFlag;
 import net.edge.world.entity.item.Item;
@@ -345,7 +350,9 @@ public final class Player extends Actor {
 	 * The overload effect for this player.
 	 */
 	private OverloadEffectTask overloadEffect;
-	
+
+	public CurseManager curseManager = new CurseManager();
+
 	public final ImmutableMap<String, Stopwatch> consumeDelay = ImmutableMap.of("SPECIAL", new Stopwatch().reset(), "FOOD", new Stopwatch().reset(), "DRINKS", new Stopwatch().reset());
 	
 	/**
@@ -546,7 +553,7 @@ public final class Player extends Actor {
 
 
 	/** Curses modifiers. */
-	public final Map<Prayer, CombatModifier> curses_modifiers = new HashMap<>();
+	public final Map<Prayer, FormulaModifier<Player>> curses_modifiers = new HashMap<>();
 
 	public RangedWeaponDefinition rangedDefinition;
 	public RangedAmmunition rangedAmmo;
@@ -1223,7 +1230,7 @@ public final class Player extends Actor {
 	public void message(String message) {
 		out(new SendMessage(message));
 	}
-	
+
 	/**
 	 * @return {@link #enterInputListener}.
 	 */
@@ -1283,7 +1290,7 @@ public final class Player extends Actor {
 			overloadEffect = null;
 		}
 	}
-	
+
 	/**
 	 * Gets the array of skills that can be trained by this player.
 	 * @return the skills that can be trained.

@@ -190,6 +190,10 @@ public class Hit {
         this.hitsplat = hitsplat;
     }
 
+    public void setAccurate(boolean accurate) {
+        this.accurate = accurate;
+    }
+
     public void setAs(Hit other) {
         this.damage = other.damage;
         this.hitIcon = other.hitIcon;

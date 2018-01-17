@@ -250,38 +250,46 @@ public final class CombatUtil {
 		
 		return new Animation(actor.toMob().getDefinition().getDefenceAnimation(), Animation.AnimationPriority.LOW);
 	}
-	
-	public static boolean canAttack(Actor attacker, Actor defender) {
-		boolean valid = validate(attacker) && validate(defender) && attacker.getInstance() == defender.getInstance();
-		boolean multi = attacker.inMulti() && defender.inMulti();
-		boolean attacked = defender.getCombat().isUnderAttack();
-		if(!valid) {
+
+	static boolean validateMobs(Actor attacker, Actor defender) {
+		if (!validate(attacker) || !validate(defender)) {
 			attacker.getCombat().reset(true, true);
 			return false;
 		}
-		if(attacked && !multi && !attacker.getCombat().isAttacking(defender)) {
-			if(attacker.isPlayer()) {
+
+		if (!canAttack(attacker, defender)) {
+			attacker.getCombat().reset(true, true);
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean canAttack(Actor attacker, Actor defender) {
+		boolean multi = attacker.inMulti() && defender.inMulti();
+		boolean attacked = defender.getCombat().isUnderAttack();
+		if (attacked && !multi && !attacker.getCombat().isAttacking(defender)) {
+			if (attacker.isPlayer()) {
 				Player player = attacker.toPlayer();
 				player.message("This player is already in combat.");
 			}
 			attacker.getCombat().reset(true, true);
 			return false;
 		}
-		if(attacker.isPlayer() && defender.isPlayer()) {
+		if (attacker.isPlayer() && defender.isPlayer()) {
 			Player player = attacker.toPlayer();
 			Player victim = defender.toPlayer();
 			Optional<Minigame> optional = MinigameHandler.getMinigame(player);
-			if(!optional.isPresent()) {
-				if(Location.inFunPvP(attacker) && Location.inFunPvP(victim)) {
+			if (!optional.isPresent()) {
+				if (Location.inFunPvP(attacker) && Location.inFunPvP(victim)) {
 					return true;
 				}
-				if(!attacker.inWilderness() || !victim.inWilderness()) {
+				if (!attacker.inWilderness() || !victim.inWilderness()) {
 					player.message("Both you and " + victim.getFormatUsername() + " need to be in the wilderness to fight!");
 					player.getCombat().reset(true, true);
 					return false;
 				}
 				int combatDifference = CombatUtil.combatLevelDifference(player.determineCombatLevel(), victim.determineCombatLevel());
-				if(combatDifference > player.getWildernessLevel() || combatDifference > victim.getWildernessLevel()) {
+				if (combatDifference > player.getWildernessLevel() || combatDifference > victim.getWildernessLevel()) {
 					player.message("Your combat level difference is too great to attack that player here.");
 					player.getCombat().reset(true, true);
 					return false;
@@ -300,40 +308,44 @@ public final class CombatUtil {
 	}
 	
 	public static CombatHit generateDragonfire(Mob attacker, Actor defender, int max, boolean prayer) {
-		int damage;
 		int hitDelay = getHitDelay(attacker, defender, CombatType.MAGIC);
 		int hitsplatDelay = getHitsplatDelay(CombatType.MAGIC);
-		
-		if(defender.isPlayer()) {
+		return generateDragonfire(attacker, defender, max, hitDelay, hitsplatDelay, prayer);
+	}
+
+	public static CombatHit generateDragonfire(Mob attacker, Actor defender, int max, int hitDelay, int hitsplatDelay, boolean prayer) {
+		int damage;
+
+		if (defender.isPlayer()) {
 			Player player = defender.toPlayer();
 			prayer &= player.getPrayerActive().contains(Prayer.PROTECT_FROM_MAGIC);
 			boolean shield = player.getEquipment().containsAny(1540, 11283);
 			boolean potion = player.getAntifireDetails().isPresent();
-			
-			if(shield && potion) {
+
+			if (shield && potion) {
 				max = 0;
-			} else if(potion) {
+			} else if (potion) {
 				AntifireDetails.AntifireType type = player.getAntifireDetails().get().getType();
 				max -= type.getReduction();
-				if(max <= 0) {
+				if (max <= 0) {
 					max = 0;
 				}
-			} else if(shield) {
+			} else if (shield) {
 				max -= 500;
-			} else if(prayer) {
+			} else if (prayer) {
 				max -= 450;
 			}
-			
+
 			damage = max == 0 ? 0 : RandomUtils.inclusive(max);
-			if(damage >= 150) {
+			if (damage >= 150) {
 				player.out(new SendMessage("You are horribly burned by the dragonfire!"));
-			} else if(!shield && !potion && !prayer && damage < 90 && damage > 0) {
+			} else if (!shield && !potion && !prayer && damage < 90 && damage > 0) {
 				player.out(new SendMessage("You manage to resist some of the dragonfire."));
 			}
 		} else {
 			damage = max == 0 ? 0 : RandomUtils.inclusive(max);
 		}
-		
+
 		Hit hit = new Hit(damage, Hitsplat.NORMAL, HitIcon.NONE, true, attacker.getSlot());
 		return new CombatHit(hit, hitDelay, hitsplatDelay);
 	}

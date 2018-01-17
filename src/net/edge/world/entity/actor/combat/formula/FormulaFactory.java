@@ -2,217 +2,106 @@ package net.edge.world.entity.actor.combat.formula;
 
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.CombatConstants;
 import net.edge.world.entity.actor.combat.CombatType;
-import net.edge.world.entity.actor.combat.CombatUtil;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.HitIcon;
 import net.edge.world.entity.actor.combat.hit.Hitsplat;
-import net.edge.world.entity.actor.combat.ranged.RangedWeaponType;
-import net.edge.world.entity.item.Item;
-import net.edge.world.entity.item.container.impl.Equipment;
 
 /**
  * Supplies factory methods useful for combat.
- * @author Artem Batutin <artembatutin@gmail.com>
+ *
  * @author Michael | Chex
  */
 public final class FormulaFactory {
-	
-	/**
-	 * Formulas stored in an array for quick access on type index.
-	 */
-	private final static Formula[] FORMULAS = {
-			new MeleeFormula(),
-			new RangedFormula(),
-			new MagicFormula()
-	};
-	
-	/**
-	 * Builds the next hit for the {@code attacker}. If the hit is accurate,
-	 * then the max hit formula will calculate a random number to be generated
-	 * from a range of range [0, max].
-	 * @return a {@code Hit} representing the damage done
-	 */
-	public static Hit nextMeleeHit(Actor attacker, Actor defender) {
-		int verdict = 0;
-		if(isAccurate(attacker, defender, CombatType.MELEE)) {
-			verdict = random(maxHit(attacker, defender, CombatType.MELEE, 0));
-			if(verdict > 0) {
-				if(verdict > defender.getCurrentHealth())
-					verdict = defender.getCurrentHealth();
-			} else {
-				verdict = 0;
-			}
-			return CombatUtil.calculateSoaking(defender, CombatType.MELEE, new Hit(verdict, ((verdict * 100f) / maxHit(attacker, defender, CombatType.MELEE, 0)) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MELEE, true, attacker.getSlot()));
-		}
-		return CombatUtil.calculateSoaking(defender, CombatType.MELEE, new Hit(verdict, ((verdict * 100f) / maxHit(attacker, defender, CombatType.MELEE, 0)) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MELEE, false, attacker.getSlot()));
 
-	}
-	
-	/**
-	 * Builds the next hit for the {@code attacker}. If the hit is accurate,
-	 * then the max hit formula will calculate a random number to be generated
-	 * from a range of range [0, max].
-	 * @return a {@code Hit} representing the damage done
-	 */
-	public static Hit nextMeleeHit(Actor attacker, Actor defender, int max) {
-		int verdict = 0;
-		if(isAccurate(attacker, defender, CombatType.MELEE)) {
-			verdict = random(max);
-			if(verdict > 0) {
-				if(verdict > defender.getCurrentHealth()) {
-					verdict = defender.getCurrentHealth();
-				}
-			} else {
-				verdict = 0;
-			}
-			return CombatUtil.calculateSoaking(defender, CombatType.MELEE, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MELEE, true, attacker.getSlot()));
-		}
-		return CombatUtil.calculateSoaking(defender, CombatType.MELEE, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MELEE, false, attacker.getSlot()));
-	}
-	
-	/**
-	 * Builds the next hit for the {@code attacker}. If the hit is accurate,
-	 * then the max hit formula will calculate a random number to be generated
-	 * from a range of range [0, max].
-	 * @return a {@code Hit} representing the damage done
-	 */
-	public static Hit nextRangedHit(Actor attacker, Actor defender, RangedWeaponType type) {
-		int verdict = 0;
-		if(isAccurate(attacker, defender, CombatType.RANGED)) {
-			if(type == RangedWeaponType.THROWN) {
-				Item weapon = attacker.toPlayer().getEquipment().get(Equipment.WEAPON_SLOT);
-				attacker.toPlayer().setBonus(CombatConstants.BONUS_RANGED_STRENGTH, weapon.getDefinition().getBonus()[CombatConstants.BONUS_RANGED_STRENGTH]);
-			}
-			verdict = random(maxHit(attacker, defender, CombatType.RANGED, 0));
-			if(verdict > 0) {
-				if(verdict > defender.getCurrentHealth()) {
-					verdict = defender.getCurrentHealth();
-				}
-			} else {
-				verdict = 0;
-			}
-			return CombatUtil.calculateSoaking(defender, CombatType.RANGED, new Hit(verdict, ((verdict * 100f) / maxHit(attacker, defender, CombatType.RANGED, 0)) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.RANGED, true, attacker.getSlot()));
-		}
-		return CombatUtil.calculateSoaking(defender, CombatType.RANGED, new Hit(verdict, ((verdict * 100f) / maxHit(attacker, defender, CombatType.RANGED, 0)) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.RANGED, false, attacker.getSlot()));
+    public static Hit nextMeleeHit(Actor attacker, Actor defender) {
+        int max = getMaxHit(attacker, defender, CombatType.MELEE);
+        return nextHit(attacker, defender, max, Hitsplat.NORMAL, HitIcon.MELEE);
+    }
 
-	}
-	
-	/**
-	 * Builds the next hit for the {@code attacker}. If the hit is accurate,
-	 * then the max hit formula will calculate a random number to be generated
-	 * from a range of range [0, max].
-	 * @return a {@code Hit} representing the damage done
-	 */
-	public static Hit nextRangedHit(Actor attacker, Actor defender, int max) {
-		int verdict = 0;
-		if(isAccurate(attacker, defender, CombatType.RANGED)) {
-			verdict = random(max);
-			if(verdict > 0) {
-				if(verdict > defender.getCurrentHealth()) {
-					verdict = defender.getCurrentHealth();
-				}
-			} else {
-				verdict = 0;
-			}
-			return CombatUtil.calculateSoaking(defender, CombatType.RANGED, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.RANGED, true, attacker.getSlot()));
-		}
-		return CombatUtil.calculateSoaking(defender, CombatType.RANGED, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.RANGED, false, attacker.getSlot()));
+    public static Hit nextMeleeHit(Actor attacker, Actor defender, int max) {
+        return nextHit(attacker, defender, max, Hitsplat.NORMAL, HitIcon.MELEE);
+    }
 
-	}
-	
-	/**
-	 * Builds the next hit for the {@code attacker}. If the hit is accurate,
-	 * then the max hit formula will calculate a random number to be generated
-	 * from a range of range [0, max].
-	 * @return a {@code Hit} representing the damage done
-	 */
-	public static Hit nextMagicHit(Actor attacker, Actor defender, int max) {
-		int verdict = 0;
-		if(isAccurate(attacker, defender, CombatType.MAGIC)) {
-			verdict = random(max);
-			if(verdict > 0) {
-				if(verdict > defender.getCurrentHealth()) {
-					verdict = defender.getCurrentHealth();
-				}
-			} else {
-				verdict = 0;
-			}
-			return CombatUtil.calculateSoaking(defender, CombatType.MAGIC, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MAGIC, true, attacker.getSlot()));
-		}
-		return CombatUtil.calculateSoaking(defender, CombatType.MAGIC, new Hit(verdict, ((verdict * 100f) / max) > 95 ? Hitsplat.CRITICAL : Hitsplat.NORMAL, HitIcon.MAGIC, false, attacker.getSlot()));
+    public static Hit nextRangedHit(Actor attacker, Actor defender, int max) {
+        return nextHit(attacker, defender, max, Hitsplat.NORMAL, HitIcon.RANGED);
+    }
 
-	}
-	
-	/**
-	 * Determines if the attacker's next hit is accurate against the defender.
-	 * @param attacker the attacking entity
-	 * @param defender the defending entity
-	 * @param type     the combat type
-	 * @return {@code true} if the roll was accurate
-	 */
-	private static boolean isAccurate(Actor attacker, Actor defender, CombatType type) {
-		if (type == CombatType.NONE) {
-			return true;
-		}
+    public static Hit nextMagicHit(Actor attacker, Actor defender, int max) {
+        return nextHit(attacker, defender, max, Hitsplat.NORMAL, HitIcon.MAGIC);
+    }
 
-		Formula formula = FORMULAS[type.ordinal()];
-		double attack = attacker.getCombat().modAttack(defender, formula.attack(attacker, defender));
-		double defence = defender.getCombat().modDefence(defender, formula.defence(attacker, defender));
+    private static Hit nextHit(Actor attacker, Actor defender, int max, Hitsplat hitsplat, HitIcon icon) {
+        Hit hit = new Hit(0, hitsplat, icon, false, attacker.getSlot());
 
-		if (defence > attack) {
-			double chance = (attack - 1) / (2 * defence);
-			return chance >= 1 || RandomUtils.success(chance);
-		} else {
-			double chance = 1 - (defence + 1) / (2 * attack);
-			return chance >= 1 || RandomUtils.success(chance);
-		}
-	}
-	
-	/**
-	 * Calculates a max hit depending on the formula combat type.
-	 * @param attacker the attacking entity
-	 * @param defender the defending entity
-	 * @param type     the combat type
-	 * @return max hit calculated.
-	 */
-	public static int maxHit(Actor attacker, Actor defender, CombatType type) {
-		return maxHit(attacker, defender, type, 0);
-	}
-	
-	/**
-	 * Calculates a max hit depending on the formula combat type.
-	 * @param attacker the attacking entity
-	 * @param defender the defending entity
-	 * @param type     the combat type
-	 * @param max      the starting max hit given.
-	 * @return max hit calculated.
-	 */
-	public static int maxHit(Actor attacker, Actor defender, CombatType type, int max) {
-		if (max > 0) {
-			return max;
-		}
+        if (max < 1)
+            return hit;
 
-		if(type == CombatType.NONE) {
-			return 0;
-		}
+        /*
+         * Use attacker's strategy since formulas are dependent on the main combat
+         * type of the attack. This allows for melee-based magic attacks,
+         * ranged-based melee attacks, etc.
+         */
+        if (isAccurate(attacker, defender, attacker.getStrategy().getCombatType())) {
+            int verdict = RandomUtils.inclusive(0, max);
+            verdict = attacker.getCombat().modifyDamage(defender, verdict);
 
-		Formula formula = FORMULAS[type.ordinal()];
-		return attacker.getCombat().modDamage(defender, formula.maxHit(attacker, defender));
-	}
-	
-	/**
-	 * Generates a pseudo-random number with the lower bound being {@code min}
-	 * and the upper bound being {@code max}. The inclusive state will be the
-	 * interval {@code [min, max]} if {@code true}, or {@code [min, max)} if
-	 * {@code false}.
-	 * @param max the upper bound
-	 * @return a pseudo-random number
-	 */
-	private static int random(int max) {
-		if (max <= 0) return 0;
-		return RandomUtils.inclusive(max);
-	}
-	
+            if (verdict > defender.getCurrentHealth()) {
+                verdict = defender.getCurrentHealth();
+            }
+
+            hit.setDamage(verdict);
+            hit.setAccurate(true);
+
+
+            if (verdict * 100 / max > 95) {
+                hit.set(Hitsplat.CRITICAL);
+            }
+        }
+
+        return hit;
+    }
+
+    private static boolean isAccurate(Actor attacker, Actor defender, CombatType type) {
+        double attack = rollOffensive(attacker, defender, type.getFormula());
+        double defence = rollDefensive(attacker, defender, type.getFormula());
+        /*
+
+            Old accuracy calc, if you prefer it
+
+            if (defence > attack) {
+                double chance = (attack - 1) / (2 * defence);
+                return chance >= 1 || RandomUtils.success(chance);
+            } else {
+                double chance = 1 - (defence + 1) / (2 * attack);
+                return chance >= 1 || RandomUtils.success(chance);
+            }
+
+         */
+        return RandomUtils.success(attack / (attack + defence));
+    }
+
+    public static int rollOffensive(Actor attacker, Actor defender, FormulaModifier<Actor> formula) {
+        int roll = formula.modifyAccuracy(attacker, defender, 0);
+        int bonus = formula.modifyOffensiveBonus(attacker, defender, 0);
+        return roll * (bonus + 64);
+    }
+
+    public static int rollDefensive(Actor attacker, Actor defender, FormulaModifier<Actor> formula) {
+        int roll = formula.modifyDefensive(attacker, defender, 0);
+        int bonus = formula.modifyDefensiveBonus(attacker, defender, 0);
+        return roll * (bonus + 64);
+    }
+
+    public static int getMaxHit(Actor attacker, Actor defender, CombatType type) {
+        FormulaModifier<Actor> formula = type.getFormula();
+        int level = formula.modifyAggressive(attacker, defender, 0);
+        int bonus = formula.modifyAggressiveBonus(attacker, defender, 0);
+        return maxHit(level, bonus);
+    }
+
+    private static int maxHit(int level, int bonus) {
+        return (320 + level * (bonus + 64)) / 64;
+    }
+
 }

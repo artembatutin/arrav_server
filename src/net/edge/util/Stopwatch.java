@@ -54,7 +54,13 @@ public final class Stopwatch {
 		state = State.RUNNING;
 		return this;
 	}
-	
+
+	public Stopwatch reset(long delay, TimeUnit unit) {
+		cachedTime = Stopwatch.currentTime() + TimeUnit.MILLISECONDS.convert(delay, unit);
+		state = State.RUNNING;
+		return this;
+	}
+
 	/**
 	 * Sets the internal cached time to {@code 0} effectively putting this
 	 * stopwatch in a {@link State#STOPPED} state.

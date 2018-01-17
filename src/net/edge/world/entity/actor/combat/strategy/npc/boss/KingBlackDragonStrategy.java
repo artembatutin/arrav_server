@@ -9,7 +9,6 @@ import net.edge.world.entity.actor.combat.hit.CombatHit;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.CombatStrategy;
 import net.edge.world.entity.actor.combat.strategy.npc.MultiStrategy;
-import net.edge.world.entity.actor.combat.strategy.npc.NpcMagicStrategy;
 import net.edge.world.entity.actor.combat.strategy.npc.NpcMeleeStrategy;
 import net.edge.world.entity.actor.combat.strategy.npc.impl.DragonfireStrategy;
 import net.edge.world.entity.actor.mob.Mob;

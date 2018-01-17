@@ -41,7 +41,7 @@ public abstract class MagicStrategy<T extends Actor> extends CombatStrategy<T> {
 	public boolean canAttack(T attacker, Actor defender) {
 		return true;
 	}
-	
+
 	protected static void addCombatExperience(Player player, double base, Hit... hits) {
 		int exp = 0;
 		for(Hit hit : hits) {

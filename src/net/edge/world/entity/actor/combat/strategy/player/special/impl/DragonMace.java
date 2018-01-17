@@ -3,14 +3,10 @@ package net.edge.world.entity.actor.combat.strategy.player.special.impl;
 import net.edge.world.Animation;
 import net.edge.world.Graphic;
 import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.combat.attack.CombatModifier;
 import net.edge.world.entity.actor.combat.attack.FightType;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.strategy.player.PlayerMeleeStrategy;
-import net.edge.world.entity.actor.combat.weapon.WeaponInterface;
 import net.edge.world.entity.actor.player.Player;
-
-import java.util.Optional;
 
 /**
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
@@ -20,7 +16,6 @@ public final class DragonMace extends PlayerMeleeStrategy {
 
     private static final Animation ANIMATION = new Animation(1060, Animation.AnimationPriority.HIGH);
     private static final Graphic GRAPHIC = new Graphic(251, 100);
-    private static final CombatModifier MODIFIER = new CombatModifier().damage(0.50).attack(0.25);
 
     @Override
     public void start(Player attacker, Actor defender, Hit[] hits) {
@@ -39,7 +34,13 @@ public final class DragonMace extends PlayerMeleeStrategy {
     }
 
     @Override
-    public Optional<CombatModifier> getModifier(Player attacker) {
-        return Optional.of(MODIFIER);
+    public int modifyAccuracy(Player attacker, Actor defender, int roll) {
+        return (int) (roll * 1.25);
     }
+
+    @Override
+    public int modifyDamage(Player attacker, Actor defender, int damage) {
+        return (int) (damage * 1.50);
+    }
+
 }
