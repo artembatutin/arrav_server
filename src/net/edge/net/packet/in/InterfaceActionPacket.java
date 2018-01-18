@@ -1,9 +1,9 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.clanchat.ClanChatRank;
 import net.edge.content.clanchat.ClanChatUpdate;
 import net.edge.content.clanchat.ClanManager;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendEnterName;
 import net.edge.util.TextUtils;
@@ -19,11 +19,11 @@ import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 public final class InterfaceActionPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.INTERFACE_ACTION))
 			return;
-		int interfaceId = payload.getInt();
-		int action = payload.getInt();
+		int interfaceId = buf.getInt();
+		int action = buf.getInt();
 		if(player.getClan().isPresent()) {
 			player.getClan().get().getClan().getSettings().click(player.getClan().get(), interfaceId, action);
 		}

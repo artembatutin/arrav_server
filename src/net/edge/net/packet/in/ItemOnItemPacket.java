@@ -1,5 +1,6 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ItemOnItemAction;
 import net.edge.content.item.ItemCombine;
@@ -16,7 +17,6 @@ import net.edge.content.skill.herblore.Grinding;
 import net.edge.content.skill.herblore.TarCreation;
 import net.edge.content.skill.herblore.UnfinishedPotion;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -31,13 +31,13 @@ public final class ItemOnItemPacket implements IncomingPacket {
 	public static final ActionContainer<ItemOnItemAction> ACTIONS = new ActionContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ON_ITEM))
 			return;
-		int secondSlot = payload.getShort();
-		int firstSlot = payload.getShort(ByteTransform.A);
-		payload.getShort();
-		payload.getShort();
+		int secondSlot = buf.getShort();
+		int firstSlot = buf.getShort(ByteTransform.A);
+		buf.getShort();
+		buf.getShort();
 		Item itemUsed = player.getInventory().get(firstSlot);
 		Item itemOn = player.getInventory().get(secondSlot);
 		if(secondSlot < 0 || firstSlot < 0 || itemUsed == null || itemOn == null) {

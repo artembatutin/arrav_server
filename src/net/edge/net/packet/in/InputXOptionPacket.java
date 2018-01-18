@@ -1,9 +1,9 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendEnterAmount;
 import net.edge.world.entity.actor.player.Player;
@@ -16,10 +16,10 @@ import net.edge.world.entity.item.container.session.ExchangeSessionType;
 public final class InputXOptionPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
-		int slot = payload.getShort(ByteOrder.LITTLE);
-		int interfaceId = payload.getShort(ByteTransform.A);
-		int itemId = payload.getShort(ByteOrder.LITTLE);
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+		int slot = buf.getShort(ByteOrder.LITTLE);
+		int interfaceId = buf.getShort(ByteTransform.A);
+		int itemId = buf.getShort(ByteOrder.LITTLE);
 		
 		if(slot < 0 || interfaceId < 0 || itemId < 0 || itemId > ItemDefinition.DEFINITIONS.length) {
 			return;

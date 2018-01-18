@@ -1,7 +1,7 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.minigame.MinigameHandler;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -15,7 +15,7 @@ import net.edge.world.entity.item.container.session.ExchangeSessionManager;
 public final class InterfaceClickPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.INTERFACE_CLICK))
 			return;
 		

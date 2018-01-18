@@ -1,11 +1,11 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.Application;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ObjectAction;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.content.object.star.ShootingStarManager;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
@@ -35,27 +35,27 @@ public final class ObjectActionPacket implements IncomingPacket {
 	public static final ActionContainer<ObjectAction> CONSTRUCTION = new ActionContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.OBJECT_ACTION))
 			return;
 		switch(opcode) {
 			case 132:
-				click(1, player, payload);
+				click(1, player, buf);
 				break;
 			case 252:
-				click(2, player, payload);
+				click(2, player, buf);
 				break;
 			case 70:
-				click(3, player, payload);
+				click(3, player, buf);
 				break;
 			case 234:
-				click(4, player, payload);
+				click(4, player, buf);
 				break;
 			case 228:
-				click(5, player, payload);
+				click(5, player, buf);
 				break;
 			case 35:
-				spellObject(player, payload);
+				spellObject(player, buf);
 				break;
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.OBJECT_ACTION);
@@ -65,13 +65,13 @@ public final class ObjectActionPacket implements IncomingPacket {
 	 * Handles object click for the {@code player}.
 	 * @param action  the action number.
 	 * @param player  the player to handle this for.
-	 * @param payload the payload for reading the sent data.
+	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void click(int action, Player player, IncomingMsg payload) {
+	private void click(int action, Player player, ByteBuf buf) {
 		//Getting data.
-		int objectId = payload.getMedium();
-		int objectX = payload.getShort(false);
-		int objectY = payload.getShort(false);
+		int objectId = buf.getMedium();
+		int objectX = buf.getShort(false);
+		int objectY = buf.getShort(false);
 		
 		//Validating data.
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
@@ -164,14 +164,14 @@ public final class ObjectActionPacket implements IncomingPacket {
 	/**
 	 * Handles the spell on object for the {@code player}.
 	 * @param player  the player to handle this for.
-	 * @param payload the payload for reading the sent data.
+	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void spellObject(Player player, IncomingMsg payload) {
+	private void spellObject(Player player, ByteBuf buf) {
 		//Getting data.
-		int objectId = payload.getMedium();
-		int objectX = payload.getShort(false);
-		int objectY = payload.getShort(false);
-		int spell = payload.getShort(false);
+		int objectId = buf.getMedium();
+		int objectX = buf.getShort(false);
+		int objectY = buf.getShort(false);
+		int spell = buf.getShort(false);
 		//Validating data.
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(spell < 0 || objectId < 0 || objectX < 0 || objectY < 0)

@@ -1,7 +1,6 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -16,10 +15,10 @@ public final class SendInterfaceLayer implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(171);
-		msg.put(hide ? 1 : 0);
-		msg.putShort(id);
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(171);
+		buf.put(hide ? 1 : 0);
+		buf.putShort(id);
+		return buf;
 	}
 }

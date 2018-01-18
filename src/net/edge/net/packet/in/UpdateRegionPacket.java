@@ -1,7 +1,7 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
@@ -18,7 +18,7 @@ import net.edge.world.entity.region.Region;
 public final class UpdateRegionPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.isUpdateRegion()) {
 			World.getRegions().updateRegionObjects(player);
 			player.sendInterfaces();

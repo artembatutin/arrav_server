@@ -1,7 +1,6 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
@@ -23,20 +22,20 @@ public final class SendProjectile implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		new SendCoordinates(position).write(player, msg);
-		msg.message(117);
-		msg.put(0);
-		msg.put(offset.getX());
-		msg.put(offset.getY());
-		msg.putShort(lockon);
-		msg.putShort(gfxMoving);
-		msg.put(startHeight);
-		msg.put(endHeight);
-		msg.putShort(time);
-		msg.putShort(speed);
-		msg.put(16);
-		msg.put(64);
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		new SendCoordinates(position).write(player, buf);
+		buf.message(117);
+		buf.put(0);
+		buf.put(offset.getX());
+		buf.put(offset.getY());
+		buf.putShort(lockon);
+		buf.putShort(gfxMoving);
+		buf.put(startHeight);
+		buf.put(endHeight);
+		buf.putShort(time);
+		buf.putShort(speed);
+		buf.put(16);
+		buf.put(64);
+		return buf;
 	}
 }

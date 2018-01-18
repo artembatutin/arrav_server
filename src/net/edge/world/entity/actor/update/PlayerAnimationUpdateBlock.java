@@ -1,8 +1,8 @@
 package net.edge.world.entity.actor.update;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.GameBuffer;
 import net.edge.world.Animation;
 import net.edge.world.entity.actor.player.Player;
 
@@ -20,9 +20,9 @@ public final class PlayerAnimationUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Player other, GameBuffer msg) {
-		msg.putShort(other.getAnimation().getId(), ByteOrder.LITTLE);
-		msg.put(other.getAnimation().getDelay(), ByteTransform.C);
+	public int write(Player player, Player other, ByteBuf buf) {
+		buf.putShort(other.getAnimation().getId(), ByteOrder.LITTLE);
+		buf.put(other.getAnimation().getDelay(), ByteTransform.C);
 		return -1;
 	}
 }

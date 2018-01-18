@@ -1,6 +1,6 @@
 package net.edge.net.packet.in;
 
-import net.edge.net.codec.IncomingMsg;
+import io.netty.buffer.ByteBuf;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.util.TextUtils;
 import net.edge.world.entity.actor.player.Player;
@@ -13,17 +13,17 @@ public final class EnterInputPacket implements IncomingPacket {
 	public static final int ENTER_AMOUNT_OPCODE = 208, ENTER_SYNTAX_OPCODE = 60;
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ENTER_INPUT)) {
 			return;
 		}
 		
 		switch(opcode) {
 			case ENTER_AMOUNT_OPCODE:
-				enterAmount(player, payload);
+				enterAmount(player, buf);
 				break;
 			case ENTER_SYNTAX_OPCODE:
-				enterSyntax(player, payload);
+				enterSyntax(player, buf);
 				break;
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.ENTER_INPUT);
@@ -32,10 +32,10 @@ public final class EnterInputPacket implements IncomingPacket {
 	/**
 	 * The enter amount packet which deals with numerical values.
 	 * @param player  the player this packet is sent for.
-	 * @param payload the payload chained to this packet.
+	 * @param buf the buffer chained to this packet.
 	 */
-	private void enterAmount(Player player, IncomingMsg payload) {
-		int amount = payload.getInt();
+	private void enterAmount(Player player, ByteBuf buf) {
+		int amount = buf.getInt();
 		if(amount < 1) {
 			return;
 		}
@@ -46,10 +46,10 @@ public final class EnterInputPacket implements IncomingPacket {
 	/**
 	 * The enter syntax packet which deals with alphabetical values.
 	 * @param player  the player this packet is sent for.
-	 * @param payload the payload chained to this packet.
+	 * @param buf the buffer chained to this packet.
 	 */
-	private void enterSyntax(Player player, IncomingMsg payload) {
-		String name = TextUtils.hashToName(payload.getLong());
+	private void enterSyntax(Player player, ByteBuf buf) {
+		String name = TextUtils.hashToName(buf.getLong());
 		if(name.isEmpty()) {
 			return;
 		}

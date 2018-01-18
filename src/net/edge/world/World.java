@@ -9,7 +9,7 @@ import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.net.database.Database;
 import net.edge.net.database.pool.ConnectionPool;
 import net.edge.net.packet.out.SendYell;
-import net.edge.net.session.GameSession;
+import net.edge.net.Session;
 import net.edge.task.Task;
 import net.edge.task.TaskManager;
 import net.edge.util.Stopwatch;
@@ -33,7 +33,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 
-import static net.edge.net.session.GameSession.UPDATE_LIMIT;
+import static net.edge.net.Session.UPDATE_LIMIT;
 import static net.edge.world.entity.EntityState.AWAITING_REMOVAL;
 import static net.edge.world.entity.EntityState.IDLE;
 
@@ -171,7 +171,7 @@ public final class World extends AbstractScheduledService {
 	private void handleIncomingPackets() {
 		for(Player player : players) {
 			if(player != null) {
-				GameSession session = player.getSession();
+				Session session = player.getSession();
 				if(session != null) {
 					session.pollIncomingPackets();
 				}

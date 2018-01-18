@@ -1,7 +1,6 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -16,11 +15,11 @@ public final class SendFade implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(80);
-		msg.put(start);
-		msg.put(duration);
-		msg.put(end);
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(80);
+		buf.put(start);
+		buf.put(duration);
+		buf.put(end);
+		return buf;
 	}
 }

@@ -1,5 +1,6 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.Application;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ButtonAction;
@@ -22,7 +23,6 @@ import net.edge.content.skill.prayer.Prayer;
 import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.smithing.Smelting;
 import net.edge.content.skill.summoning.Summoning;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendConfig;
 import net.edge.net.packet.out.SendEnterName;
@@ -69,8 +69,8 @@ public final class ClickButtonPacket implements IncomingPacket {
 	}
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
-		int button = PROPER_READ ? payload.getShort() : hexToInt(payload.getBytes(2));
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+		int button = PROPER_READ ? buf.getShort() : hexToInt(buf.getBytes(2));
 		if(Application.DEBUG && player.getRights().equals(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}

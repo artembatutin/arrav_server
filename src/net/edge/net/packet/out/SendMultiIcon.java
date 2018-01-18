@@ -1,7 +1,6 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -14,9 +13,9 @@ public final class SendMultiIcon implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(61);
-		msg.put(hide ? 0 : 1);
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(61);
+		buf.put(hide ? 0 : 1);
+		return buf;
 	}
 }

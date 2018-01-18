@@ -1,6 +1,7 @@
 package net.edge.world.entity.actor.player;
 
 import com.google.common.collect.ImmutableMap;
+import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
@@ -54,10 +55,9 @@ import net.edge.content.teleport.TeleportType;
 import net.edge.content.teleport.impl.DefaultTeleportSpell;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.content.wilderness.WildernessActivity;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.net.packet.out.*;
-import net.edge.net.session.GameSession;
+import net.edge.net.Session;
 import net.edge.task.Task;
 import net.edge.util.ActionListener;
 import net.edge.util.MutableNumber;
@@ -344,7 +344,7 @@ public final class Player extends Actor {
 	/**
 	 * The I/O manager that manages I/O operations for this player.
 	 */
-	private GameSession session;
+	private Session session;
 	
 	/**
 	 * The overload effect for this player.
@@ -499,7 +499,7 @@ public final class Player extends Actor {
 	/**
 	 * The cached player update block for updating.
 	 */
-	private GameBuffer cachedUpdateBlock;
+	private ByteBuf cachedUpdateBlock;
 	
 	/**
 	 * The stand index for this player.
@@ -764,7 +764,6 @@ public final class Player extends Actor {
 	public void update() {
 		write(new SendPlayerUpdate());
 		write(new SendMobUpdate());
-		getSession().flushQueue();
 		session.pollOutgoingPackets();
 	}
 	
@@ -1154,16 +1153,16 @@ public final class Player extends Actor {
 	}
 	
 	/**
-	 * @return The {@link GameSession} assigned to this {@code Player}.
+	 * @return The {@link Session} assigned to this {@code Player}.
 	 */
-	public GameSession getSession() {
+	public Session getSession() {
 		return session;
 	}
 	
 	/**
 	 * Sets the value for {@link #session}.
 	 */
-	public void setSession(GameSession session) {
+	public void setSession(Session session) {
 		checkState(this.session == null, "session already set!");
 		this.session = session;
 	}
@@ -1829,7 +1828,7 @@ public final class Player extends Actor {
 	 * Gets the cached player update block for updating.
 	 * @return the cached update block.
 	 */
-	public GameBuffer getCachedUpdateBlock() {
+	public ByteBuf getCachedUpdateBlock() {
 		return cachedUpdateBlock;
 	}
 	
@@ -1837,7 +1836,7 @@ public final class Player extends Actor {
 	 * Sets the value for {@link Player#cachedUpdateBlock}.
 	 * @param cachedUpdateBlock the new value to set.
 	 */
-	public void setCachedUpdateBlock(GameBuffer cachedUpdateBlock) {
+	public void setCachedUpdateBlock(ByteBuf cachedUpdateBlock) {
 		this.cachedUpdateBlock = cachedUpdateBlock;
 	}
 	

@@ -1,8 +1,8 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendMobDrop;
 import net.edge.util.rand.Chance;
@@ -26,13 +26,13 @@ public final class MobInformationPacket implements IncomingPacket {
 	public static final ObjectList<SuggestedDrop> SUGGESTED = new ObjectArrayList<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(opcode == 19) {
-			Chance chance = Chance.values()[payload.get()];
+			Chance chance = Chance.values()[buf.get()];
 			int mob = player.getAttr().get("npcInformation").getInt();
-			int item = payload.getShort();
-			int min = payload.getShort();
-			int max = payload.getShort();
+			int item = buf.getShort();
+			int min = buf.getShort();
+			int max = buf.getShort();
 			if(min != 99 && min != 88 && max > 2) {
 				ItemDefinition def = ItemDefinition.get(item);
 				if(def != null) {
@@ -111,7 +111,7 @@ public final class MobInformationPacket implements IncomingPacket {
 				player.message("Your suggestion has been submitted.");
 			}
 		} else {
-			int id = payload.getShort();
+			int id = buf.getShort();
 			if(id < 0 || id > MobDefinition.DEFINITIONS.length) {
 				player.message("No information found.");
 				return;

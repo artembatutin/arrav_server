@@ -3,8 +3,7 @@ package net.edge.net.packet.out;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.PacketType;
+import net.edge.net.codec.game.GamePacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.Direction;
 import net.edge.world.entity.EntityState;
@@ -23,60 +22,60 @@ import java.util.Iterator;
 public final class SendPlayerUpdate implements OutgoingPacket {
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
+	public ByteBuf write(Player player, ByteBuf buf) {
 		ByteBufAllocator alloc = player.getSession().alloc();
-		msg.message(81, PacketType.VARIABLE_SHORT);
-		GameBuffer blockMsg = new GameBuffer(alloc.buffer(64));
+		buf.message(81, GamePacketType.VARIABLE_SHORT);
+		ByteBuf blockMsg = alloc.buffer(64);
 		try {
-			msg.startBitAccess();
-			handleMovement(player, msg);
+			buf.startBitAccess();
+			handleMovement(player, buf);
 			UpdateManager.encode(player, player, blockMsg, UpdateState.UPDATE_SELF);
 			
-			msg.putBits(8, player.getLocalPlayers().size());
+			buf.putBits(8, player.getLocalPlayers().size());
 			Iterator<Player> $it = player.getLocalPlayers().iterator();
 			while($it.hasNext()) {
 				Player other = $it.next();
 				if(other.isVisible() && other.getInstance() == player.getInstance() && other.getPosition().isViewableFrom(player.getPosition()) && other.getState() == EntityState.ACTIVE && !other.isNeedsPlacement()) {
-					handleMovement(other, msg);
+					handleMovement(other, buf);
 					UpdateManager.encode(player, other, blockMsg, UpdateState.UPDATE_LOCAL);
 				} else {
-					msg.putBit(true);
-					msg.putBits(2, 3);
+					buf.putBit(true);
+					buf.putBits(2, 3);
 					$it.remove();
 				}
 			}
 			
 			int added = 0;
 			player.getRegion().ifPresent(r -> {
-				processPlayers(r, player, blockMsg, msg, added);
+				processPlayers(r, player, blockMsg, buf, added);
 				ObjectList<Region> surrounding = r.getSurroundingRegions();
 				if(surrounding != null) {
 					for(Region s : surrounding) {
-						processPlayers(s, player, blockMsg, msg, added);
+						processPlayers(s, player, blockMsg, buf, added);
 					}
 				}
 			});
 			
-			if(blockMsg.getBuffer().writerIndex() > 0) {
-				msg.putBits(11, 2047);
-				msg.endBitAccess();
-				msg.putBytes(blockMsg);
+			if(blockMsg.writerIndex() > 0) {
+				buf.putBits(11, 2047);
+				buf.endBitAccess();
+				buf.putBytes(blockMsg);
 			} else {
-				msg.endBitAccess();
+				buf.endBitAccess();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			blockMsg.release();
 		}
-		msg.endVarSize();
-		return msg.getBuffer();
+		buf.endVarSize();
+		return buf;
 	}
 	
 	/**
 	 * Processing the addition of player from a region.
 	 */
-	private void processPlayers(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, int added) {
+	private void processPlayers(Region region, Player player, ByteBuf blockMsg, ByteBuf msg, int added) {
 		if(region != null) {
 			if(!region.getPlayers().isEmpty()) {
 				for(Player other : region.getPlayers()) {
@@ -106,7 +105,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 	 * @param player    The {@link Player} this update message is being sent for.
 	 * @param addPlayer The {@code Player} being added.
 	 */
-	private void addPlayer(GameBuffer msg, Player player, Player addPlayer) {
+	private void addPlayer(ByteBuf msg, Player player, Player addPlayer) {
 		msg.putBits(11, addPlayer.getSlot());
 		msg.putBit(true);
 		msg.putBit(true);
@@ -121,7 +120,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 	 * @param player The {@link Player} to handle running and walking for.
 	 * @param msg    The main update message.
 	 */
-	private void handleMovement(Player player, GameBuffer msg) {
+	private void handleMovement(Player player, ByteBuf msg) {
 		boolean needsUpdate = !player.getFlags().isEmpty();
 		if(player.isNeedsPlacement()) {
 			Position position = player.getPosition();

@@ -1,7 +1,7 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteOrder;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
@@ -14,10 +14,10 @@ import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 public final class FollowPlayerPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.FOLLOW_PLAYER))
 			return;
-		int index = payload.getShort(false, ByteOrder.LITTLE);
+		int index = buf.getShort(false, ByteOrder.LITTLE);
 		Player follow = World.get().getPlayers().get(index - 1);
 		
 		if(follow == null || !follow.getPosition().isViewableFrom(player.getPosition()) || follow.same(player))

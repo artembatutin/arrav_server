@@ -1,10 +1,10 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.GameConstants;
 import net.edge.content.item.pets.Pet;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.net.packet.out.SendItemOnInterfaceSlot;
 import net.edge.world.entity.actor.player.Player;
@@ -21,7 +21,7 @@ import net.edge.world.entity.item.container.ItemContainer;
 public final class DropItemPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(GameConstants.DROP_DISABLED) {
 			player.message("Dropping items has temporary been disabled!");
 			return;
@@ -30,10 +30,10 @@ public final class DropItemPacket implements IncomingPacket {
 			return;
 		}
 		
-		int id = payload.getShort(false, ByteTransform.A);
-		payload.get(false);
-		payload.get(false);
-		int slot = payload.getShort(false, ByteTransform.A);
+		int id = buf.getShort(false, ByteTransform.A);
+		buf.get(false);
+		buf.get(false);
+		int slot = buf.getShort(false, ByteTransform.A);
 		if(slot < 0 || id < 0)
 			return;
 		Item item = player.getInventory().get(slot);

@@ -1,7 +1,6 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -16,13 +15,13 @@ public final class SendPrivateFriendUpdate implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
+	public ByteBuf write(Player player, ByteBuf buf) {
 		int value = online ? 1 : 0;
 		if(value != 0)
 			value += 9;
-		msg.message(50);
-		msg.putLong(name);
-		msg.put(value);
-		return msg.getBuffer();
+		buf.message(50);
+		buf.putLong(name);
+		buf.put(value);
+		return buf;
 	}
 }

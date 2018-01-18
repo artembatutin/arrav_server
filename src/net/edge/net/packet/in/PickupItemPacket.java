@@ -1,9 +1,9 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.market.MarketItem;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.net.codec.ByteOrder;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.util.log.impl.DropItemLog;
 import net.edge.world.World;
@@ -23,12 +23,12 @@ import java.util.Optional;
 public final class PickupItemPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.PICKUP_ITEM))
 			return;
-		int itemY = payload.getShort(ByteOrder.LITTLE);
-		int itemId = payload.getShort(false);
-		int itemX = payload.getShort(ByteOrder.LITTLE);
+		int itemY = buf.getShort(ByteOrder.LITTLE);
+		int itemId = buf.getShort(false);
+		int itemX = buf.getShort(ByteOrder.LITTLE);
 		if(itemY < 0 || itemId < 0 || itemX < 0)
 			return;
 		Position position = new Position(itemX, itemY, player.getPosition().getZ());

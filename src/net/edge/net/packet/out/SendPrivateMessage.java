@@ -1,8 +1,7 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.PacketType;
+import net.edge.net.codec.game.GamePacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -20,13 +19,13 @@ public final class SendPrivateMessage implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(196, PacketType.VARIABLE_BYTE);
-		msg.putLong(name);
-		msg.putInt(player.getPrivateMessage().getLastMessage().getAndIncrement());
-		msg.put(rights);
-		msg.putBytes(message, size);
-		msg.endVarSize();
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(196, GamePacketType.VARIABLE_BYTE);
+		buf.putLong(name);
+		buf.putInt(player.getPrivateMessage().getLastMessage().getAndIncrement());
+		buf.put(rights);
+		buf.putBytes(message, size);
+		buf.endVarSize();
+		return buf;
 	}
 }

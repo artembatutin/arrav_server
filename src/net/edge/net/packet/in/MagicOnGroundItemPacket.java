@@ -1,9 +1,9 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.Application;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -14,11 +14,11 @@ import net.edge.world.entity.actor.player.Player;
 public class MagicOnGroundItemPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
-		int x = payload.getShort(false, ByteOrder.LITTLE);
-		int y = payload.getShort(false, ByteOrder.LITTLE);
-		int itemId = payload.getShort(true);
-		int spellId = payload.getShort(false, ByteTransform.A);
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+		int x = buf.getShort(false, ByteOrder.LITTLE);
+		int y = buf.getShort(false, ByteOrder.LITTLE);
+		int itemId = buf.getShort(true);
+		int spellId = buf.getShort(false, ByteTransform.A);
 		
 		if(Application.DEBUG) {
 			player.message("item = " + itemId + ", spell = " + spellId + ", x = " + x + ", y = " + y + ".");

@@ -1,8 +1,8 @@
 package net.edge.world.entity.actor.update;
 
 import com.google.common.collect.ImmutableMap;
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.GameBuffer;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.PlayerAppearance;
 import net.edge.world.entity.item.container.impl.Equipment;
@@ -37,9 +37,9 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 			put(456, 619).build();
 	
 	@Override
-	public int write(Player player, Player other, GameBuffer msg) {
+	public int write(Player player, Player other, ByteBuf msg) {
 		PlayerAppearance appearance = other.getAppearance();
-		GameBuffer buf = new GameBuffer(player.getSession().alloc().buffer(32));
+		ByteBuf buf = player.getSession().alloc().buffer(32);
 		try {
 			buf.put(appearance.getGender());
 			buf.put(other.headIcon);
@@ -134,8 +134,8 @@ public final class PlayerAppearanceUpdateBlock extends PlayerUpdateBlock {
 			buf.putLong(other.credentials.usernameHash);
 			buf.put(other.determineCombatLevel() < 3 ? 3 : other.determineCombatLevel());
 			buf.put(other.isIronMan() ? 1 : 0);
-			msg.put(buf.getBuffer().writerIndex(), ByteTransform.C);
-			msg.putBytes(buf.getBuffer());
+			msg.put(buf.writerIndex(), ByteTransform.C);
+			msg.putBytes(buf);
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

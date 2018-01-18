@@ -1,9 +1,9 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.GameConstants;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.net.codec.ByteOrder;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
@@ -21,16 +21,16 @@ import net.edge.world.entity.item.container.session.impl.TradeSession;
 public final class RequestPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.REQUEST_MESSAGE))
 			return;
 		
 		switch(opcode) {
 			case 139:
-				tradeRequest(player, payload);
+				tradeRequest(player, buf);
 				break;
 			case 128:
-				duelRequest(player, payload);
+				duelRequest(player, buf);
 				break;
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.REQUEST_MESSAGE);
@@ -39,10 +39,10 @@ public final class RequestPacket implements IncomingPacket {
 	/**
 	 * Handles a trade request for {@code player}.
 	 * @param player  the player to handle this for.
-	 * @param payload the payloadfer for reading the sent data.
+	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void tradeRequest(Player player, IncomingMsg payload) {
-		int index = payload.getShort(true, ByteOrder.LITTLE);
+	private void tradeRequest(Player player, ByteBuf buf) {
+		int index = buf.getShort(true, ByteOrder.LITTLE);
 		Player other = World.get().getPlayers().get(index - 1);
 		if(GameConstants.TRADE_DISABLED) {
 			player.message("Trading has been temporarily disabled!");
@@ -57,10 +57,10 @@ public final class RequestPacket implements IncomingPacket {
 	/**
 	 * Handles a duel request for {@code player}.
 	 * @param player  the player to handle this for.
-	 * @param payload the payload for reading the sent data.
+	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void duelRequest(Player player, IncomingMsg payload) {
-		int index = payload.getShort(false);
+	private void duelRequest(Player player, ByteBuf buf) {
+		int index = buf.getShort(false);
 		Player other = World.get().getPlayers().get(index - 1);
 		if(GameConstants.DUEL_DISABLED) {
 			player.message("Duelling has been temporarily disabled!");

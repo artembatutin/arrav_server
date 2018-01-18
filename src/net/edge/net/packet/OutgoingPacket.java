@@ -1,7 +1,6 @@
 package net.edge.net.packet;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
 import net.edge.world.entity.actor.player.Player;
 
 /**
@@ -15,13 +14,13 @@ public interface OutgoingPacket {
 	}
 	
 	default int size() {
-		return 256;
+		return 128;
 	}
 	
 	default int opcode() {
 		return -1;
 	}
 	
-	ByteBuf write(Player player, GameBuffer msg);
+	ByteBuf write(Player player, ByteBuf buf);
 	
 }

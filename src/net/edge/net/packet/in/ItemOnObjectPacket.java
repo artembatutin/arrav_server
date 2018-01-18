@@ -1,5 +1,6 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.Application;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ItemOnObjectAction;
@@ -8,7 +9,6 @@ import net.edge.content.object.pit.FirepitManager;
 import net.edge.content.skill.smithing.Smithing;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
@@ -32,17 +32,17 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 	public static final ActionContainer<ItemOnObjectAction> ITEMS = new ActionContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ON_OBJECT)) {
 			return;
 		}
 		
-		int container = payload.getShort(false);
-		int objectId = payload.getMedium();
-		int objectY = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
-		int slot = payload.getShort(true, ByteOrder.LITTLE);
-		int objectX = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
-		int itemId = payload.getShort(false);
+		int container = buf.getShort(false);
+		int objectId = buf.getMedium();
+		int objectY = buf.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
+		int slot = buf.getShort(true, ByteOrder.LITTLE);
+		int objectX = buf.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
+		int itemId = buf.getShort(false);
 		Item item = player.getInventory().get(slot);
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(item == null || container != 3214 || objectId < 0 || objectY < 0 || slot < 0 || objectX < 0 || itemId < 0) {

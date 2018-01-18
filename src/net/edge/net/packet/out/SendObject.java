@@ -2,7 +2,6 @@ package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -39,12 +38,12 @@ public final class SendObject implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		new SendCoordinates(object.getGlobalPos()).write(player, msg);
-		msg.message(151);
-		msg.put(0, ByteTransform.S);
-		msg.putInt(object.getId());
-		msg.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.S);
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		new SendCoordinates(object.getGlobalPos()).write(player, buf);
+		buf.message(151);
+		buf.put(0, ByteTransform.S);
+		buf.putInt(object.getId());
+		buf.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.S);
+		return buf;
 	}
 }

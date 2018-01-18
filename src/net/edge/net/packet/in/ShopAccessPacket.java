@@ -1,7 +1,7 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.market.MarketCounter;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
@@ -13,9 +13,9 @@ import net.edge.world.locale.Position;
 public final class ShopAccessPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(opcode == 20) {//shop opening
-			int shop = payload.getShort();
+			int shop = buf.getShort();
 			if(player.getPosition().withinDistance(new Position(3080, 3507), 2)) {
 				if(MarketCounter.getShops().containsKey(shop)) {
 					MarketCounter.getShops().get(shop).openShop(player);

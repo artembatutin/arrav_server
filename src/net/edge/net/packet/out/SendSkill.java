@@ -2,7 +2,6 @@ package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteOrder;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -17,11 +16,11 @@ public final class SendSkill implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(134);
-		msg.put(id);
-		msg.putInt(exp, ByteOrder.MIDDLE);
-		msg.putInt(level);
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(134);
+		buf.put(id);
+		buf.putInt(exp, ByteOrder.MIDDLE);
+		buf.putInt(level);
+		return buf;
 	}
 }

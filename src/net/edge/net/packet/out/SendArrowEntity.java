@@ -1,7 +1,6 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
@@ -15,12 +14,12 @@ public final class SendArrowEntity implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(248);
-		msg.put(entity.isMob() ? 1 : 10);
-		msg.putShort(entity.getSlot());
-		msg.put(0);
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(248);
+		buf.put(entity.isMob() ? 1 : 10);
+		buf.putShort(entity.getSlot());
+		buf.put(0);
+		return buf;
 	}
 	
 }

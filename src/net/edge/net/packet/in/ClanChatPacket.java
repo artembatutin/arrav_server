@@ -1,7 +1,7 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.quest.QuestManager;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -14,10 +14,10 @@ import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 public final class ClanChatPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.CHAT_MESSAGE))
 			return;
-		String input = payload.getCString();
+		String input = buf.getCString();
 		if(input.equalsIgnoreCase("may luck be yours on halloween.") || input.equalsIgnoreCase("may luck be yours on halloween")) {
 			player.getQuestManager().start(QuestManager.Quests.HALLOWEEN);
 			return;

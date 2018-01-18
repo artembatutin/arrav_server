@@ -1,8 +1,8 @@
 package net.edge.world.entity.actor.update;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.GameBuffer;
 import net.edge.world.entity.actor.move.ForcedMovement;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
@@ -21,7 +21,7 @@ public final class PlayerForceMovementUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Player other, GameBuffer msg) {
+	public int write(Player player, Player other, ByteBuf buf) {
 		ForcedMovement movement = other.getForcedMovement();
 		Position lastRegion = player.getLastRegion();
 		Position position = other.getPosition();
@@ -34,13 +34,13 @@ public final class PlayerForceMovementUpdateBlock extends PlayerUpdateBlock {
 		int secondX = movement.getSecond().getX() - position.getX();
 		int secondY = movement.getSecond().getY() - position.getY();
 		
-		msg.put(position.getLocalX(lastRegion) + firstX, ByteTransform.S);
-		msg.put(position.getLocalY(lastRegion) + firstY, ByteTransform.S);
-		msg.put(position.getLocalX(lastRegion) + secondX, ByteTransform.S);
-		msg.put(position.getLocalY(lastRegion) + secondY, ByteTransform.S);
-		msg.putShort(firstVelocity, ByteTransform.A, ByteOrder.LITTLE);
-		msg.putShort(secondVelocity, ByteTransform.A);
-		msg.put(direction, ByteTransform.S);
+		buf.put(position.getLocalX(lastRegion) + firstX, ByteTransform.S);
+		buf.put(position.getLocalY(lastRegion) + firstY, ByteTransform.S);
+		buf.put(position.getLocalX(lastRegion) + secondX, ByteTransform.S);
+		buf.put(position.getLocalY(lastRegion) + secondY, ByteTransform.S);
+		buf.putShort(firstVelocity, ByteTransform.A, ByteOrder.LITTLE);
+		buf.putShort(secondVelocity, ByteTransform.A);
+		buf.put(direction, ByteTransform.S);
 		return -1;
 	}
 }

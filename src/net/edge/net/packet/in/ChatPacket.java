@@ -1,7 +1,7 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
@@ -14,17 +14,17 @@ import net.edge.world.entity.actor.update.UpdateFlag;
 public final class ChatPacket implements IncomingPacket {
 
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityType.CHAT_MESSAGE))
 			return;
 		if(player.muted || player.ipMuted) {
 			player.message("You are currently muted.");
 			return;
 		}
-		int effects = payload.get(false, ByteTransform.S);
-		int color = payload.get(false, ByteTransform.S);
+		int effects = buf.get(false, ByteTransform.S);
+		int color = buf.get(false, ByteTransform.S);
 		int chatLength = (size - 2);
-		byte[] text = payload.getBytesReverse(chatLength, ByteTransform.A);
+		byte[] text = buf.getBytesReverse(chatLength, ByteTransform.A);
 		if(effects < 0 || color < 0 || chatLength < 0)
 			return;
 		player.setChatEffects(effects);

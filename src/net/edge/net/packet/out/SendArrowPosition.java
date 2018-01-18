@@ -1,7 +1,6 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
@@ -36,12 +35,12 @@ public final class SendArrowPosition implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(254);
-		msg.put(direction);
-		msg.putShort(position.getX());
-		msg.putShort(position.getY());
-		msg.put(position.getZ());
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(254);
+		buf.put(direction);
+		buf.putShort(position.getX());
+		buf.putShort(position.getY());
+		buf.put(position.getZ());
+		return buf;
 	}
 }

@@ -1,7 +1,7 @@
 package net.edge.world.entity.actor.update;
 
 import com.google.common.base.MoreObjects;
-import net.edge.net.codec.GameBuffer;
+import io.netty.buffer.ByteBuf;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.player.Player;
 
@@ -60,9 +60,9 @@ public abstract class UpdateBlock<E extends Actor> {
 	 * Writes the data for this update block into {@code buf}.
 	 * @param player The player for whom we are updating.
 	 * @param mob    The {@link Actor} this update block is being written for.
-	 * @param msg    The buffer to write the data to.
+	 * @param buf    The buffer to write the data to.
 	 */
-	public abstract int write(Player player, E mob, GameBuffer msg);
+	public abstract int write(Player player, E mob, ByteBuf buf);
 	
 	/**
 	 * @return The bit mask for this update block.

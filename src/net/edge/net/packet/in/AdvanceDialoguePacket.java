@@ -1,6 +1,6 @@
 package net.edge.net.packet.in;
 
-import net.edge.net.codec.IncomingMsg;
+import io.netty.buffer.ByteBuf;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
@@ -13,7 +13,7 @@ import net.edge.world.entity.actor.player.assets.activity.ActivityManager.Activi
 public final class AdvanceDialoguePacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityType.DIALOGUE_INTERACTION))
 			return;
 		player.getDialogueBuilder().advance();

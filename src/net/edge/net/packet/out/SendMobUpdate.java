@@ -3,8 +3,7 @@ package net.edge.net.packet.out;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.PacketType;
+import net.edge.net.codec.game.GamePacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.Direction;
 import net.edge.world.entity.EntityState;
@@ -22,58 +21,58 @@ import java.util.Iterator;
  */
 public final class SendMobUpdate implements OutgoingPacket {
 	
-	public ByteBuf write(Player player, GameBuffer msg) {
+	public ByteBuf write(Player player, ByteBuf buf) {
 		ByteBufAllocator alloc = player.getSession().alloc();
-		msg.message(65, PacketType.VARIABLE_SHORT);
-		GameBuffer blockMsg = new GameBuffer(alloc.buffer(64));
+		buf.message(65, GamePacketType.VARIABLE_SHORT);
+		ByteBuf blockMsg = alloc.buffer(64);
 		try {
-			msg.startBitAccess();
-			msg.putBits(8, player.getLocalMobs().size());
+			buf.startBitAccess();
+			buf.putBits(8, player.getLocalMobs().size());
 			Iterator<Mob> $it = player.getLocalMobs().iterator();
 			while($it.hasNext()) {
 				Mob mob = $it.next();
 				if(mob.getState() == EntityState.ACTIVE && mob.isVisible() && player.getInstance() == mob.getInstance() && mob.getPosition().isViewableFrom(player.getPosition()) && !mob.isNeedsPlacement()) {
-					handleMovement(mob, msg);
+					handleMovement(mob, buf);
 					UpdateManager.encode(player, mob, blockMsg, UpdateState.UPDATE_LOCAL);
 				} else {
-					msg.putBit(true);
-					msg.putBits(2, 3);
+					buf.putBit(true);
+					buf.putBits(2, 3);
 					$it.remove();
 				}
 			}
 			
 			int added = 0;
 			player.getRegion().ifPresent(r -> {
-				processMobs(r, player, blockMsg, msg, added);
+				processMobs(r, player, blockMsg, buf, added);
 				ObjectList<Region> surrounding = r.getSurroundingRegions();
 				if(surrounding != null) {
 					for(Region s : surrounding) {
-						processMobs(s, player, blockMsg, msg, added);
+						processMobs(s, player, blockMsg, buf, added);
 					}
 				}
 			});
 			
-			if(blockMsg.getBuffer().writerIndex() > 0) {
-				msg.putBits(14, 16383);
-				msg.endBitAccess();
-				msg.putBytes(blockMsg);
+			if(blockMsg.writerIndex() > 0) {
+				buf.putBits(14, 16383);
+				buf.endBitAccess();
+				buf.putBytes(blockMsg);
 			} else {
-				msg.endBitAccess();
+				buf.endBitAccess();
 			}
 		} catch(Exception e) {
-			msg.release();
+			buf.release();
 			throw e;
 		} finally {
 			blockMsg.release();
 		}
-		msg.endVarSize();
-		return msg.getBuffer();
+		buf.endVarSize();
+		return buf;
 	}
 	
 	/**
 	 * Processing the addition of npc from a region.
 	 */
-	private void processMobs(Region region, Player player, GameBuffer blockMsg, GameBuffer msg, int added) {
+	private void processMobs(Region region, Player player, ByteBuf blockMsg, ByteBuf msg, int added) {
 		if(region != null) {
 			if(!region.getMobs().isEmpty()) {
 				for(Mob mob : region.getMobs()) {
@@ -103,7 +102,7 @@ public final class SendMobUpdate implements OutgoingPacket {
 	 * @param player The {@link Player} this update message is being sent for.
 	 * @param addMob The {@link Mob} being added.
 	 */
-	private void addNpc(Player player, Mob addMob, GameBuffer msg) {
+	private void addNpc(Player player, Mob addMob, ByteBuf msg) {
 		boolean updateRequired = !addMob.getFlags().isEmpty();
 		int deltaX = addMob.getPosition().getX() - player.getPosition().getX();
 		int deltaY = addMob.getPosition().getY() - player.getPosition().getY();
@@ -121,7 +120,7 @@ public final class SendMobUpdate implements OutgoingPacket {
 	 * @param mob The {@link Player} to handle running and walking for.
 	 * @param msg The main update message.
 	 */
-	private void handleMovement(Mob mob, GameBuffer msg) {
+	private void handleMovement(Mob mob, ByteBuf msg) {
 		boolean updateRequired = !mob.getFlags().isEmpty();
 		if(mob.getPrimaryDirection() == Direction.NONE) {
 			if(updateRequired) {

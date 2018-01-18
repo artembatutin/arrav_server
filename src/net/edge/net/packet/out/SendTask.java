@@ -1,8 +1,7 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.PacketType;
+import net.edge.net.codec.game.GamePacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -15,10 +14,10 @@ public final class SendTask implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(90, PacketType.VARIABLE_SHORT);
-		msg.putCString(task);
-		msg.endVarSize();
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(90, GamePacketType.VARIABLE_SHORT);
+		buf.putCString(task);
+		buf.endVarSize();
+		return buf;
 	}
 }

@@ -2,8 +2,7 @@ package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.PacketType;
+import net.edge.net.codec.game.GamePacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -20,12 +19,12 @@ public final class SendContextMenu implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(104, PacketType.VARIABLE_BYTE);
-		msg.put(slot, ByteTransform.C);
-		msg.put(top ? 1 : 0, ByteTransform.A);
-		msg.putCString(option);
-		msg.endVarSize();
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(104, GamePacketType.VARIABLE_BYTE);
+		buf.put(slot, ByteTransform.C);
+		buf.put(top ? 1 : 0, ByteTransform.A);
+		buf.putCString(option);
+		buf.endVarSize();
+		return buf;
 	}
 }

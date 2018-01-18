@@ -23,10 +23,9 @@ import net.edge.content.RestoreStatTask;
 import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.object.pit.FirepitManager;
 import net.edge.content.object.star.ShootingStarManager;
-import net.edge.content.scoreboard.ScoreboardManager;
 import net.edge.content.scoreboard.ScoreboardTask;
 import net.edge.content.trivia.TriviaTask;
-import net.edge.net.EdgevilleChannelInitializer;
+import net.edge.net.ArravChannelInitializer;
 import net.edge.net.NetworkConstants;
 import net.edge.net.host.HostListType;
 import net.edge.net.host.HostManager;
@@ -39,8 +38,6 @@ import net.edge.world.entity.actor.attribute.AttributeKey;
 import net.edge.world.entity.actor.combat.attack.listener.CombatListenerDispatcher;
 import net.edge.world.locale.InstanceManager;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -172,7 +169,7 @@ public final class Application {
 		ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
 		bootstrap.group(loopGroup);
 		bootstrap.channel(NioServerSocketChannel.class);
-		bootstrap.childHandler(new EdgevilleChannelInitializer());
+		bootstrap.childHandler(new ArravChannelInitializer());
 		bootstrap.bind(NetworkConstants.PORT_ONLINE).syncUninterruptibly();
 		
 	}

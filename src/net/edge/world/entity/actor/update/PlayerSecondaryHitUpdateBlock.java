@@ -1,6 +1,6 @@
 package net.edge.world.entity.actor.update;
 
-import net.edge.net.codec.GameBuffer;
+import io.netty.buffer.ByteBuf;
 import net.edge.world.entity.actor.combat.hit.Hit;
 import net.edge.world.entity.actor.combat.hit.Hitsplat;
 import net.edge.world.entity.actor.player.Player;
@@ -19,16 +19,16 @@ public final class PlayerSecondaryHitUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Player other, GameBuffer msg) {
+	public int write(Player player, Player other, ByteBuf buf) {
 		Hit hit = other.getSecondaryHit();
 		boolean local = other == player || (hit.hasSource() && hit.getSource() == player.getSlot());
-		msg.putShort(hit.getDamage());
-		msg.put(hit.getHitsplat().getId() + (!local ? (hit.getHitsplat() != Hitsplat.NORMAL_LOCAL ? 5 : 0) : 0));
-		int change = msg.getBuffer().writerIndex() - 1;
-		msg.put(hit.getHitIcon().getId());
-		msg.putShort(hit.getSoak());
-		msg.putShort(other.getMaximumHealth() / 10);
-		msg.putShort(other.getCurrentHealth() / 10);
+		buf.putShort(hit.getDamage());
+		buf.put(hit.getHitsplat().getId() + (!local ? (hit.getHitsplat() != Hitsplat.NORMAL_LOCAL ? 5 : 0) : 0));
+		int change = buf.writerIndex() - 1;
+		buf.put(hit.getHitIcon().getId());
+		buf.putShort(hit.getSoak());
+		buf.putShort(other.getMaximumHealth() / 10);
+		buf.putShort(other.getCurrentHealth() / 10);
 		if(local) {
 			return change;
 		}

@@ -1,6 +1,6 @@
 package net.edge.net.packet.in;
 
-import net.edge.net.codec.IncomingMsg;
+import io.netty.buffer.ByteBuf;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -11,7 +11,7 @@ import net.edge.world.entity.actor.player.Player;
 public final class IdleStatePacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 	
 	}
 }

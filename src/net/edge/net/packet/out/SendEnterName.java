@@ -1,8 +1,7 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.PacketType;
+import net.edge.net.codec.game.GamePacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.util.ActionListener;
 import net.edge.world.entity.actor.player.Player;
@@ -27,10 +26,10 @@ public final class SendEnterName implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(187, PacketType.VARIABLE_BYTE);
-		msg.putCString(title);
-		msg.endVarSize();
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(187, GamePacketType.VARIABLE_BYTE);
+		buf.putCString(title);
+		buf.endVarSize();
+		return buf;
 	}
 }

@@ -1,14 +1,10 @@
 package net.edge.cache;
 
-import com.google.common.base.Preconditions;
-
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
-import java.nio.channels.SeekableByteChannel;
 
 /**
- * Represents a {@link Sector} and {@link Index} cache.
+ * Represents a sector and index cache.
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -21,13 +17,13 @@ public final class Cache {
 	public static final int INDEX_SIZE = 6;
 
 	/**
-	 * Represents the size of a {@link Sector}s header.
+	 * Represents the size of a sector header.
 	 * Calculating the total size of the sector header. the total size may be that of a {@code long}.
 	 */
 	public static final int SECTOR_HEADER_SIZE = 8;
 
 	/**
-	 * Represents the size of a {@link Sector}s header.
+	 * Represents the size of a sector header.
 	 * Calculating the total size of the sector header. the total size may be that of a {@code long}
 	 */
 	private static final int SECTOR_SIZE = 520;

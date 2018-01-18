@@ -2,7 +2,6 @@ package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteOrder;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -16,16 +15,16 @@ public final class SendConfig implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
+	public ByteBuf write(Player player, ByteBuf buf) {
 		if(state < Byte.MIN_VALUE || state > Byte.MAX_VALUE) {
-			msg.message(87);
-			msg.putShort(id, ByteOrder.LITTLE);
-			msg.putInt(state, ByteOrder.MIDDLE);
-			return msg.getBuffer();
+			buf.message(87);
+			buf.putShort(id, ByteOrder.LITTLE);
+			buf.putInt(state, ByteOrder.MIDDLE);
+			return buf;
 		}
-		msg.message(36);
-		msg.putShort(id, ByteOrder.LITTLE);
-		msg.put(state);
-		return msg.getBuffer();
+		buf.message(36);
+		buf.putShort(id, ByteOrder.LITTLE);
+		buf.put(state);
+		return buf;
 	}
 }

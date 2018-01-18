@@ -1,8 +1,8 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.skill.magic.Enchanting;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.util.Stopwatch;
 import net.edge.world.entity.actor.combat.magic.lunars.LunarSpells;
@@ -21,7 +21,7 @@ public final class MagicOnItemPacket implements IncomingPacket {
 	private final Stopwatch delay = new Stopwatch().reset();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityType.MAGIC_ON_ITEM)) {
 			return;
 		}
@@ -30,10 +30,10 @@ public final class MagicOnItemPacket implements IncomingPacket {
 			return;
 		}
 		
-		int slot = payload.getShort(true, ByteTransform.NORMAL);
-		int id = payload.getShort(true, ByteTransform.A);
-		int interfaceId = payload.getShort(true, ByteTransform.C);
-		int spellId = payload.getShort(true, ByteTransform.A);
+		int slot = buf.getShort(true, ByteTransform.NORMAL);
+		int id = buf.getShort(true, ByteTransform.A);
+		int interfaceId = buf.getShort(true, ByteTransform.C);
+		int spellId = buf.getShort(true, ByteTransform.A);
 		
 		if(slot < 0 || interfaceId < 0 || spellId < 0 || id < 0 || id > ItemDefinition.DEFINITIONS.length)
 			return;

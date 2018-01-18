@@ -1,6 +1,6 @@
 package net.edge.world.entity.actor.update;
 
-import net.edge.net.codec.GameBuffer;
+import io.netty.buffer.ByteBuf;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
@@ -18,9 +18,9 @@ public final class MobGraphicUpdateBlock extends MobUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Mob mob, GameBuffer msg) {
-		msg.putShort(mob.getGraphic().getId());
-		msg.putInt(mob.getGraphic().getHeight() << 16 | mob.getGraphic().getDelay() & 0xFFFF);
+	public int write(Player player, Mob mob, ByteBuf buf) {
+		buf.putShort(mob.getGraphic().getId());
+		buf.putInt(mob.getGraphic().getHeight() << 16 | mob.getGraphic().getDelay() & 0xFFFF);
 		return -1;
 	}
 }

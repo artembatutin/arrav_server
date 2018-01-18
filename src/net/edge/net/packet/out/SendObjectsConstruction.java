@@ -3,8 +3,7 @@ package net.edge.net.packet.out;
 import io.netty.buffer.ByteBuf;
 import net.edge.content.skill.construction.furniture.Furniture;
 import net.edge.content.skill.construction.furniture.HotSpots;
-import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.PacketType;
+import net.edge.net.codec.game.GamePacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.item.Item;
@@ -27,20 +26,20 @@ public final class SendObjectsConstruction implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
+	public ByteBuf write(Player player, ByteBuf buf) {
 		Furniture[] panel = spot.getFurnitures();
-		msg.message(130, PacketType.VARIABLE_BYTE);
-		msg.put(panel.length);
+		buf.message(130, GamePacketType.VARIABLE_BYTE);
+		buf.put(panel.length);
 		for(Furniture furniture : panel) {
-			msg.putShort(furniture.getItemId());
-			msg.put(furniture.getLevel());
-			msg.put(furniture.getRequiredItems().length);
+			buf.putShort(furniture.getItemId());
+			buf.put(furniture.getLevel());
+			buf.put(furniture.getRequiredItems().length);
 			for(Item req : furniture.getRequiredItems()) {
-				msg.putShort(req.getId());
-				msg.putShort(req.getAmount());
+				buf.putShort(req.getId());
+				buf.putShort(req.getAmount());
 			}
 		}
-		msg.endVarSize();
-		return msg.getBuffer();
+		buf.endVarSize();
+		return buf;
 	}
 }

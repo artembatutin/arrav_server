@@ -1,11 +1,12 @@
 package net.edge.net.codec.login;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
 /**
- * An immutable message that is written through a channel and forwarded to the {@link LoginEncoder} where it is encoded and
- * sent to the client.
+ * The login response given as {@link ByteBuf} to the client.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public final class LoginResponse {
@@ -44,6 +45,19 @@ public final class LoginResponse {
 	 */
 	public LoginResponse(LoginCode response) {
 		this(response, Rights.PLAYER, false);
+	}
+	
+	/**
+	 * Converts this {@link LoginResponse} to a {@link ByteBuf}.
+	 * @return response {@link ByteBuf}.
+	 */
+	public ByteBuf toBuf() {
+		ByteBuf out = Unpooled.buffer(2);
+		out.writeByte(response.getCode());
+		if(response == LoginCode.NORMAL) {
+			out.writeByte(rights == Rights.PLAYER && iron ? Rights.IRON_MAN.getProtocolValue() : rights.getProtocolValue());
+		}
+		return out;
 	}
 
 	/**

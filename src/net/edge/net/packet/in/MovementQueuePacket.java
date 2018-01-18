@@ -1,11 +1,11 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.Application;
 import net.edge.content.market.MarketShop;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -20,7 +20,7 @@ import net.edge.world.locale.Position;
 public final class MovementQueuePacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.WALKING)) {
 			return;
 		}
@@ -69,19 +69,19 @@ public final class MovementQueuePacket implements IncomingPacket {
 		
 		int steps = (size - 5) / 2;
 		int[][] path = new int[steps][2];
-		int firstStepX = payload.getShort(ByteTransform.A, ByteOrder.LITTLE);
+		int firstStepX = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);
 		
 		for(int i = 0; i < steps; i++) {
-			path[i][0] = payload.get();
-			path[i][1] = payload.get();
+			path[i][0] = buf.get();
+			path[i][1] = buf.get();
 		}
 		
 		if(player.getMovementQueue().check()) {
-			int firstStepY = payload.getShort(ByteOrder.LITTLE);
+			int firstStepY = buf.getShort(ByteOrder.LITTLE);
 			if(!reset) {
 				player.getMovementQueue().reset();
 			}
-			player.getMovementQueue().setRunPath(payload.get(ByteTransform.C) == 1);
+			player.getMovementQueue().setRunPath(buf.get(ByteTransform.C) == 1);
 			player.getMovementQueue().addToPath(new Position(firstStepX, firstStepY));
 			
 			for(int i = 0; i < steps; i++) {

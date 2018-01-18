@@ -91,7 +91,7 @@ public class Construction {
 						me.move(new Position(Constants.MIDDLE_X, Constants.MIDDLE_Y, 0));
 						break;
 					case 3:
-						me.write(new SendPaletteMap(house.getPalette()));
+						me.out(new SendPaletteMap(house.getPalette()));
 						break;
 					case 4:
 						placeAllFurniture(me, 0);

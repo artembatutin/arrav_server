@@ -1,8 +1,7 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.PacketType;
+import net.edge.net.codec.game.GamePacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -19,12 +18,12 @@ public final class SendYell implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(210, PacketType.VARIABLE_BYTE);
-		msg.putCString(author);
-		msg.putCString(message);
-		msg.putShort(rank.getProtocolValue());
-		msg.endVarSize();
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(210, GamePacketType.VARIABLE_BYTE);
+		buf.putCString(author);
+		buf.putCString(message);
+		buf.putShort(rank.getProtocolValue());
+		buf.endVarSize();
+		return buf;
 	}
 }

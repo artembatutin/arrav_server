@@ -1,8 +1,8 @@
 package net.edge.world.entity.actor.update;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.edge.net.codec.ByteOrder;
-import net.edge.net.codec.GameBuffer;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.player.Player;
 
@@ -23,7 +23,7 @@ public final class UpdateManager {
 			return;
 		}
 		int mask = 0;
-		GameBuffer encodedBlock = new GameBuffer(Unpooled.buffer(64));
+		ByteBuf encodedBlock = Unpooled.buffer(64);
 		if(other.getFlags().get(UpdateFlag.GRAPHIC)) {
 			mask |= 0x100;
 		}
@@ -86,7 +86,7 @@ public final class UpdateManager {
 		other.setCachedUpdateBlock(encodedBlock);
 	}
 	
-	public static void encode(Player player, Player other, GameBuffer msg, UpdateState state) {
+	public static void encode(Player player, Player other, ByteBuf msg, UpdateState state) {
 		if(other.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
 		}
@@ -95,7 +95,7 @@ public final class UpdateManager {
 			//msg.putBytes(other.getCachedUpdateBlock().getBuffer().array());
 			//return;
 		}
-		GameBuffer encodedBlock = new GameBuffer(Unpooled.buffer(64));
+		ByteBuf encodedBlock = Unpooled.buffer(64);
 		int mask = 0;
 		if(other.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {
 			mask |= 0x400;
@@ -173,11 +173,11 @@ public final class UpdateManager {
 		}
 	}
 	
-	public static void encode(Player player, Mob mob, GameBuffer msg, UpdateState state) {
+	public static void encode(Player player, Mob mob, ByteBuf msg, UpdateState state) {
 		if(mob.getFlags().isEmpty() && state != UpdateState.ADD_LOCAL) {
 			return;
 		}
-		GameBuffer encodedBlock = new GameBuffer(player.getSession().alloc().buffer(64));
+		ByteBuf encodedBlock = player.getSession().alloc().buffer(64);
 		int mask = 0;
 		
 		if(mob.getFlags().get(UpdateFlag.FORCE_MOVEMENT)) {

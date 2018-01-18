@@ -1,5 +1,6 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.ItemAction;
 import net.edge.content.Attributes;
@@ -9,7 +10,6 @@ import net.edge.content.skill.runecrafting.pouch.PouchType;
 import net.edge.content.skill.smithing.Smithing;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -34,31 +34,31 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	public static final ActionContainer<ItemAction> EQUIP = new ActionContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_INTERFACE))
 			return;
 		
 		switch(opcode) {
 			case 145:
-				firstSlot(player, payload);
+				firstSlot(player, buf);
 				break;
 			case 117:
-				secondSlot(player, payload);
+				secondSlot(player, buf);
 				break;
 			case 43:
-				thirdSlot(player, payload);
+				thirdSlot(player, buf);
 				break;
 			case 129:
-				fourthSlot(player, payload);
+				fourthSlot(player, buf);
 				break;
 			case 41:
-				equipItem(player, payload);
+				equipItem(player, buf);
 				break;
 			case 214:
-				swapSlots(player, payload);
+				swapSlots(player, buf);
 				break;
 			case 216:
-				bankTab(player, payload);
+				bankTab(player, buf);
 				break;
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.ITEM_INTERFACE);
@@ -67,12 +67,12 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	/**
 	 * Handles the first item slot click on an interface.
 	 * @param player  the player to handle this for.
-	 * @param payload the payload buffer for reading the sent data.
+	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void firstSlot(Player player, IncomingMsg payload) {
-		int interfaceId = payload.getShort(ByteTransform.A);
-		int slot = payload.getShort(ByteTransform.A);
-		int itemId = payload.getShort(ByteTransform.A);
+	private void firstSlot(Player player, ByteBuf buf) {
+		int interfaceId = buf.getShort(ByteTransform.A);
+		int slot = buf.getShort(ByteTransform.A);
+		int itemId = buf.getShort(ByteTransform.A);
 		
 		if(interfaceId < 0 || slot < 0 || itemId < 0) {
 			return;
@@ -134,12 +134,12 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	/**
 	 * Handles the second item slot click on an interface.
 	 * @param player  the player to handle this for.
-	 * @param payload the payload buffer for reading the sent data.
+	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void secondSlot(Player player, IncomingMsg payload) {
-		int interfaceId = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
-		int itemId = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
-		int slot = payload.getShort(true, ByteOrder.LITTLE);
+	private void secondSlot(Player player, ByteBuf buf) {
+		int interfaceId = buf.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
+		int itemId = buf.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
+		int slot = buf.getShort(true, ByteOrder.LITTLE);
 		if(interfaceId < 0 || slot < 0 || itemId < 0)
 			return;
 		if(interfaceId == 3823) {
@@ -190,12 +190,12 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	/**
 	 * Handles the third item slot click on an interface.
 	 * @param player  the player to handle this for.
-	 * @param payload the payload buffer for reading the sent data.
+	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void thirdSlot(Player player, IncomingMsg payload) {
-		int interfaceId = payload.getShort(ByteOrder.LITTLE);
-		int itemId = payload.getShort(ByteTransform.A);
-		int slot = payload.getShort(ByteTransform.A);
+	private void thirdSlot(Player player, ByteBuf buf) {
+		int interfaceId = buf.getShort(ByteOrder.LITTLE);
+		int itemId = buf.getShort(ByteTransform.A);
+		int slot = buf.getShort(ByteTransform.A);
 		if(interfaceId < 0 || slot < 0 || itemId < 0)
 			return;
 		if(Attributes.thirdSlot(player, interfaceId, slot)) {
@@ -245,12 +245,12 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	/**
 	 * Handles the fourth item slot click on an interface.
 	 * @param player  the player to handle this for.
-	 * @param payload the payload buffer for reading the sent data.
+	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void fourthSlot(Player player, IncomingMsg payload) {
-		int slot = payload.getShort(ByteTransform.A);
-		int interfaceId = payload.getShort();
-		int itemId = payload.getShort(ByteTransform.A);
+	private void fourthSlot(Player player, ByteBuf buf) {
+		int slot = buf.getShort(ByteTransform.A);
+		int interfaceId = buf.getShort();
+		int itemId = buf.getShort(ByteTransform.A);
 		if(interfaceId < 0 || slot < 0 || itemId < 0)
 			return;
 		if(interfaceId == 3823) {
@@ -295,12 +295,12 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	/**
 	 * Handles the equipping of an item for {@code player}.
 	 * @param player  the player to handle this for.
-	 * @param payload the payload buffer for reading the sent data.
+	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void equipItem(Player player, IncomingMsg payload) {
-		int itemId = payload.getShort(false);
-		int slot = payload.getShort(false, ByteTransform.A);
-		int interfaceId = payload.getShort(false, ByteTransform.A);
+	private void equipItem(Player player, ByteBuf buf) {
+		int itemId = buf.getShort(false);
+		int slot = buf.getShort(false, ByteTransform.A);
+		int interfaceId = buf.getShort(false, ByteTransform.A);
 		if(interfaceId < 0 || slot < 0 || itemId < 0 || itemId > ItemDefinition.DEFINITIONS.length)
 			return;
 		
@@ -335,12 +335,12 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	/**
 	 * Handles the swapping of items on an interface for {@code player}.
 	 * @param player  the player to handle this for.
-	 * @param payload the payload buffer for reading the sent data.
+	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void swapSlots(Player player, IncomingMsg payload) {
-		int interfaceId = payload.getShort(ByteTransform.A, ByteOrder.LITTLE);
-		int fromSlot = payload.getShort(ByteTransform.A, ByteOrder.LITTLE);
-		int toSlot = payload.getShort(ByteOrder.LITTLE);
+	private void swapSlots(Player player, ByteBuf buf) {
+		int interfaceId = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);
+		int fromSlot = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);
+		int toSlot = buf.getShort(ByteOrder.LITTLE);
 		if(interfaceId < 0 || fromSlot < 0 || toSlot < 0)
 			return;
 		if(interfaceId >= 0 && interfaceId <= 9) {
@@ -369,12 +369,12 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	/**
 	 * Handles the bank tab switching of items on the bank panel for the {@code player}.
 	 * @param player  the player to handle this for.
-	 * @param payload the payload buffer for reading the sent data.
+	 * @param buf the payload buffer for reading the sent data.
 	 */
-	private void bankTab(Player player, IncomingMsg payload) {
-		int tab = payload.getShort(ByteTransform.A, ByteOrder.LITTLE);
-		int fromSlot = payload.getShort(ByteTransform.A, ByteOrder.LITTLE);
-		int toTab = payload.getShort(ByteTransform.A, ByteOrder.LITTLE);
+	private void bankTab(Player player, ByteBuf buf) {
+		int tab = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);
+		int fromSlot = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);
+		int toTab = buf.getShort(ByteTransform.A, ByteOrder.LITTLE);
 		if(tab < 0 || fromSlot < 0 || toTab < 0)
 			return;
 		player.getBank().tabTransfer(tab, fromSlot, toTab);

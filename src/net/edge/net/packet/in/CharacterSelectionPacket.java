@@ -1,6 +1,6 @@
 package net.edge.net.packet.in;
 
-import net.edge.net.codec.IncomingMsg;
+import io.netty.buffer.ByteBuf;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.PlayerAppearance;
@@ -27,21 +27,21 @@ public final class CharacterSelectionPacket implements IncomingPacket {
 	};
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityType.CHARACTER_SELECTION))
 			return;
 		int cursor = 0;
 		int[] values = new int[13];
-		int gender = payload.get();
+		int gender = buf.get();
 		if(gender != PlayerAppearance.GENDER_FEMALE && gender != PlayerAppearance.GENDER_MALE)
 			return;
 		values[cursor++] = gender;
 		for(int i = 0; i < 7; i++) {
-			int value = payload.getShort();
+			int value = buf.getShort();
 			values[cursor++] = value;
 		}
 		for(int[] VALID_COLOR : VALID_COLORS) {
-			int value = payload.getShort();
+			int value = buf.getShort();
 			if((value < VALID_COLOR[0]) || (value > VALID_COLOR[1])) {
 				return;
 			}

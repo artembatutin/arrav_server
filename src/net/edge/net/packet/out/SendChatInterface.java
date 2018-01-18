@@ -2,7 +2,6 @@ package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
 import net.edge.net.codec.ByteOrder;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -15,9 +14,9 @@ public final class SendChatInterface implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(164);
-		msg.putShort(id, ByteOrder.LITTLE);
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(164);
+		buf.putShort(id, ByteOrder.LITTLE);
+		return buf;
 	}
 }

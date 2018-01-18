@@ -1,10 +1,10 @@
-package net.edge.net.codec;
+package net.edge.net.codec.game;
 
 /**
  * An enumerated type whose elements represent the possible {@link IncomingMsg} types.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public enum PacketType {
+public enum GamePacketType {
 
 	/**
 	 * Represents a non-game packet of data.

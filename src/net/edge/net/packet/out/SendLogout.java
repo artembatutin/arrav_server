@@ -1,8 +1,7 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.PacketType;
+import net.edge.net.codec.game.GamePacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
@@ -18,9 +17,9 @@ public final class SendLogout implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(109, PacketType.VARIABLE_SHORT);
-		msg.endVarSize();
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(109, GamePacketType.VARIABLE_SHORT);
+		buf.endVarSize();
+		return buf;
 	}
 }

@@ -1,7 +1,7 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.commands.CommandDispatcher;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.combat.hit.Hit;
@@ -21,12 +21,12 @@ import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
 public final class CommandPacket implements IncomingPacket {
 
     @Override
-    public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+    public void handle(Player player, int opcode, int size, ByteBuf buf) {
         if (player.getActivityManager().contains(ActivityManager.ActivityType.COMMAND_MESSAGE)) {
             return;
         }
 
-        String command = payload.getCString();
+        String command = buf.getCString();
         String[] parts = command.toLowerCase().split(" ");
 
         if (player.getRights() == Rights.ADMINISTRATOR) {

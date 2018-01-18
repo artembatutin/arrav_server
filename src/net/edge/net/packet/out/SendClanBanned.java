@@ -2,8 +2,7 @@ package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.edge.net.codec.GameBuffer;
-import net.edge.net.codec.PacketType;
+import net.edge.net.codec.game.GamePacketType;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -16,14 +15,14 @@ public final class SendClanBanned implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(52, PacketType.VARIABLE_BYTE);
-		msg.putShort(bans.size());
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(52, GamePacketType.VARIABLE_BYTE);
+		buf.putShort(bans.size());
 		for(String s : bans) {
-			msg.putCString(s);
+			buf.putCString(s);
 		}
-		msg.endVarSize();
-		msg.endVarSize();
-		return msg.getBuffer();
+		buf.endVarSize();
+		buf.endVarSize();
+		return buf;
 	}
 }

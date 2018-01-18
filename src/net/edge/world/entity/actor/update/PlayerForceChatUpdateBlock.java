@@ -1,6 +1,6 @@
 package net.edge.world.entity.actor.update;
 
-import net.edge.net.codec.GameBuffer;
+import io.netty.buffer.ByteBuf;
 import net.edge.world.entity.actor.player.Player;
 
 /**
@@ -17,8 +17,8 @@ public final class PlayerForceChatUpdateBlock extends PlayerUpdateBlock {
 	}
 	
 	@Override
-	public int write(Player player, Player other, GameBuffer msg) {
-		msg.putCString(other.getForcedText());
+	public int write(Player player, Player other, ByteBuf buf) {
+		buf.putCString(other.getForcedText());
 		return -1;
 	}
 }

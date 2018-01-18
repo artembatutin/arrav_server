@@ -3,7 +3,6 @@ package net.edge.net.packet.out;
 import io.netty.buffer.ByteBuf;
 import net.edge.content.TabInterface;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 
@@ -18,11 +17,11 @@ public final class SendTab implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		msg.message(71);
-		msg.putShort(id);
-		msg.put(tab.getOld(), ByteTransform.A);
-		msg.put(tab.getNew(), ByteTransform.A);
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		buf.message(71);
+		buf.putShort(id);
+		buf.put(tab.getOld(), ByteTransform.A);
+		buf.put(tab.getNew(), ByteTransform.A);
+		return buf;
 	}
 }

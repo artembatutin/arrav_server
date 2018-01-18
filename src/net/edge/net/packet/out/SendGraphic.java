@@ -1,7 +1,6 @@
 package net.edge.net.packet.out;
 
 import io.netty.buffer.ByteBuf;
-import net.edge.net.codec.GameBuffer;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.locale.Position;
@@ -31,13 +30,13 @@ public final class SendGraphic implements OutgoingPacket {
 	}
 	
 	@Override
-	public ByteBuf write(Player player, GameBuffer msg) {
-		new SendCoordinates(position).write(player, msg);
-		msg.message(4);
-		msg.put(0);
-		msg.putShort(id);
-		msg.put(level);
-		msg.putShort(0);
-		return msg.getBuffer();
+	public ByteBuf write(Player player, ByteBuf buf) {
+		new SendCoordinates(position).write(player, buf);
+		buf.message(4);
+		buf.put(0);
+		buf.putShort(id);
+		buf.put(level);
+		buf.putShort(0);
+		return buf;
 	}
 }

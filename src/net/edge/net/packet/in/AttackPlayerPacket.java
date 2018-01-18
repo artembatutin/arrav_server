@@ -1,10 +1,10 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.minigame.Minigame;
 import net.edge.content.minigame.MinigameHandler;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.combat.CombatUtil;
@@ -26,15 +26,15 @@ import java.util.Optional;
 public final class AttackPlayerPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ATTACK_PLAYER))
 			return;
 		switch(opcode) {
 			case 249:
-				attackMagic(player, payload);
+				attackMagic(player, buf);
 				break;
 			case 153:
-				attackOther(player, payload);
+				attackOther(player, buf);
 				break;
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.ATTACK_PLAYER);
@@ -43,11 +43,11 @@ public final class AttackPlayerPacket implements IncomingPacket {
 	/**
 	 * Attempts to attack a player with a magic spell.
 	 * @param player  the player to attempt to attack.
-	 * @param payload the payloadfer for reading the sent data.
+	 * @param buf the buffer for reading the sent data.
 	 */
-	private void attackMagic(Player player, IncomingMsg payload) {
-		int index = payload.getShort(true, ByteTransform.A);
-		int spellId = payload.getShort(true, ByteOrder.LITTLE);
+	private void attackMagic(Player player, ByteBuf buf) {
+		int index = buf.getShort(true, ByteTransform.A);
+		int spellId = buf.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
 		
 		if(LunarSpells.castCombatSpells(player, victim, spellId)) {
@@ -66,10 +66,10 @@ public final class AttackPlayerPacket implements IncomingPacket {
 	 * Attempts to attack a player with any other form of combat such as melee
 	 * or ranged.
 	 * @param player  the player to attempt to attack.
-	 * @param payload the payload for reading the sent data.
+	 * @param buf the buffer for reading the sent data.
 	 */
-	private void attackOther(Player player, IncomingMsg payload) {
-		int index = payload.getShort(true, ByteOrder.LITTLE);
+	private void attackOther(Player player, ByteBuf buf) {
+		int index = buf.getShort(true, ByteOrder.LITTLE);
 		Player victim = World.get().getPlayers().get(index - 1);
 		if(index < 0 || index > World.get().getPlayers().capacity() || !checkAttack(player, victim))
 			return;

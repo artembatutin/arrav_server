@@ -1,5 +1,6 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.Application;
 import net.edge.action.ActionContainer;
 import net.edge.action.impl.MobAction;
@@ -9,7 +10,6 @@ import net.edge.content.skill.slayer.Slayer;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.combat.magic.CombatSpell;
@@ -36,27 +36,27 @@ public final class MobActionPacket implements IncomingPacket {
 	public static final ActionContainer<MobAction> FOURTH = new ActionContainer<>();
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.NPC_ACTION))
 			return;
 		switch(opcode) {
 			case 72:
-				attackOther(player, payload);
+				attackOther(player, buf);
 				break;
 			case 131:
-				attackMagic(player, payload);
+				attackMagic(player, buf);
 				break;
 			case 155:
-				firstClick(player, payload);
+				firstClick(player, buf);
 				break;
 			case 17:
-				secondClick(player, payload);
+				secondClick(player, buf);
 				break;
 			case 21:
-				thirdClick(player, payload);
+				thirdClick(player, buf);
 				break;
 			case 18:
-				fourthClick(player, payload);
+				fourthClick(player, buf);
 				break;
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.NPC_ACTION);
@@ -65,10 +65,10 @@ public final class MobActionPacket implements IncomingPacket {
 	/**
 	 * Handles the melee and ranged attacks on an NPC.
 	 * @param player  the player this will be handled for.
-	 * @param payload the payload that will read the sent data.
+	 * @param buf the payload buffer that will read the sent data.
 	 */
-	private void attackOther(Player player, IncomingMsg payload) {
-		int index = payload.getShort(false, ByteTransform.A);
+	private void attackOther(Player player, ByteBuf buf) {
+		int index = buf.getShort(false, ByteTransform.A);
 		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null || !checkAttack(player, mob))
 			return;
@@ -79,11 +79,11 @@ public final class MobActionPacket implements IncomingPacket {
 	/**
 	 * Handles the magic attacks on an NPC.
 	 * @param player  the player this will be handled for.
-	 * @param payload the payload that will read the sent data.
+	 * @param buf the payload buffer that will read the sent data.
 	 */
-	private void attackMagic(Player player, IncomingMsg payload) {
-		int index = payload.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
-		int spellId = payload.getShort(true, ByteTransform.A);
+	private void attackMagic(Player player, ByteBuf buf) {
+		int index = buf.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
+		int spellId = buf.getShort(true, ByteTransform.A);
 		Mob mob = World.get().getMobs().get(index - 1);
 		CombatSpell spell = CombatSpell.get(spellId);
 		if(mob == null || spell == null || !checkAttack(player, mob)) {
@@ -97,10 +97,10 @@ public final class MobActionPacket implements IncomingPacket {
 	/**
 	 * Handles the first click NPC slot.
 	 * @param player  the player this will be handled for.
-	 * @param payload the payload that will read the sent data.
+	 * @param buf the payload buffer that will read the sent data.
 	 */
-	private void firstClick(Player player, IncomingMsg payload) {
-		int index = payload.getShort(true, ByteOrder.LITTLE);
+	private void firstClick(Player player, ByteBuf buf) {
+		int index = buf.getShort(true, ByteOrder.LITTLE);
 		Mob mob = World.get().getMobs().get(index - 1);
 		if (mob == null)
 			return;
@@ -134,10 +134,10 @@ public final class MobActionPacket implements IncomingPacket {
 	/**
 	 * Handles the second click NPC slot.
 	 * @param player  the player this will be handled for.
-	 * @param payload the payload that will read the sent data.
+	 * @param buf the payload buffer that will read the sent data.
 	 */
-	private void secondClick(Player player, IncomingMsg payload) {
-		int index = payload.getShort(false, ByteTransform.A, ByteOrder.LITTLE);
+	private void secondClick(Player player, ByteBuf buf) {
+		int index = buf.getShort(false, ByteTransform.A, ByteOrder.LITTLE);
 		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null)
 			return;
@@ -165,10 +165,10 @@ public final class MobActionPacket implements IncomingPacket {
 	/**
 	 * Handles the third click NPC slot.
 	 * @param player  the player this will be handled for.
-	 * @param payload the payload that will read the sent data.
+	 * @param buf the payload buffer that will read the sent data.
 	 */
-	private void thirdClick(Player player, IncomingMsg payload) {
-		int index = payload.getShort(true);
+	private void thirdClick(Player player, ByteBuf buf) {
+		int index = buf.getShort(true);
 		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null)
 			return;
@@ -193,10 +193,10 @@ public final class MobActionPacket implements IncomingPacket {
 	/**
 	 * Handles the fourth click NPC slot.
 	 * @param player  the player this will be handled for.
-	 * @param payload the payload that will read the sent data.
+	 * @param buf the payload buffer that will read the sent data.
 	 */
-	private void fourthClick(Player player, IncomingMsg payload) {
-		int index = payload.getShort(true, ByteOrder.LITTLE);
+	private void fourthClick(Player player, ByteBuf buf) {
+		int index = buf.getShort(true, ByteOrder.LITTLE);
 		Mob mob = World.get().getMobs().get(index - 1);
 		if(mob == null)
 			return;

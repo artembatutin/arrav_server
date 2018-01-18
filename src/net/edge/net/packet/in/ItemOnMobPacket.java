@@ -1,11 +1,11 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.content.item.pets.Pet;
 import net.edge.content.skill.crafting.Tanning;
 import net.edge.content.skill.summoning.Summoning;
 import net.edge.net.codec.ByteOrder;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.actor.mob.Mob;
@@ -16,15 +16,15 @@ import net.edge.world.entity.item.Item;
 public final class ItemOnMobPacket implements IncomingPacket {
 	
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(player.getActivityManager().contains(ActivityManager.ActivityType.ITEM_ON_NPC)) {
 			return;
 		}
 		
-		int itemId = payload.getShort(false, ByteTransform.A);
-		int mob = payload.getShort(false, ByteTransform.A);
-		int slot = payload.getShort(true, ByteOrder.LITTLE);
-		int container = payload.getShort(false, ByteTransform.A);
+		int itemId = buf.getShort(false, ByteTransform.A);
+		int mob = buf.getShort(false, ByteTransform.A);
+		int slot = buf.getShort(true, ByteOrder.LITTLE);
+		int container = buf.getShort(false, ByteTransform.A);
 		
 		Item item = null;
 		if(container == 3214) {

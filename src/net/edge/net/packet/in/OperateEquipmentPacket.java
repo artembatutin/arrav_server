@@ -1,8 +1,8 @@
 package net.edge.net.packet.in;
 
+import io.netty.buffer.ByteBuf;
 import net.edge.Application;
 import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.IncomingMsg;
 import net.edge.net.packet.IncomingPacket;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -19,12 +19,12 @@ public class OperateEquipmentPacket implements IncomingPacket {
 	 * @param player  the player this message is being handled for.
 	 * @param opcode  the opcode of this message.
 	 * @param size    the size of this message.
-	 * @param payload the data contained within this message.
+	 * @param buf the data contained within this message.
 	 */
 	@Override
-	public void handle(Player player, int opcode, int size, IncomingMsg payload) {
-		int option = payload.getShort(ByteTransform.A);
-		int slot = payload.getShort(ByteTransform.A);
+	public void handle(Player player, int opcode, int size, ByteBuf buf) {
+		int option = buf.getShort(ByteTransform.A);
+		int slot = buf.getShort(ByteTransform.A);
 		Item item = player.getEquipment().get(slot);
 		
 		if(item == null || Item.valid(item)) {
