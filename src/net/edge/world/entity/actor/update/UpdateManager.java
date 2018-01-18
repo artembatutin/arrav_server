@@ -92,7 +92,7 @@ public final class UpdateManager {
 		}
 		boolean cacheBlocks = (state != UpdateState.ADD_LOCAL && state != UpdateState.UPDATE_SELF);
 		if(other.getCachedUpdateBlock() != null && cacheBlocks) {
-			//msg.putBytes(other.getCachedUpdateBlock().getBuffer().array());
+			//msg.putBytes(other.getCachedUpdateBlock().array());
 			//return;
 		}
 		ByteBuf encodedBlock = Unpooled.buffer(64);

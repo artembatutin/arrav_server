@@ -9,7 +9,6 @@ import net.edge.GameConstants;
 import net.edge.net.codec.game.GamePacketType;
 import net.edge.net.codec.game.GameState;
 import net.edge.net.codec.crypto.IsaacRandom;
-import net.edge.net.codec.login.LoginRequest;
 import net.edge.net.codec.login.LoginResponse;
 import net.edge.net.codec.login.LoginState;
 import net.edge.net.codec.login.LoginCode;
@@ -44,14 +43,9 @@ public class Session {
 	 */
 	private static final Logger LOGGER = Logger.getLogger(Session.class.getName());
 	
-	/**
-	 * Game stream capacity.
-	 */
+	/** Game stream capacity. */
 	private static int BUFFER_SIZE = 5000;
-	
-	/**
-	 * The cap limit of outgoing packets per session.
-	 */
+	/** The cap limit of outgoing packets per session. */
 	public static int UPDATE_LIMIT = 200;
 	
 	/** The {@link Channel} to send and receive messages through. */
@@ -66,6 +60,12 @@ public class Session {
 	/** Condition if this session is active. */
 	private boolean active = true;
 	
+	/** The player's username hash received from client. */
+	private long usernameHash;
+	/** The player's username on login. */
+	private String username;
+	/** The player's password on login. */
+	private String password;
 	/** The player associated with this session. */
 	private Player player;
 	
@@ -324,35 +324,33 @@ public class Session {
 	}
 	
 	/**
-	 * Handles a {@link LoginRequest}.
-	 * @param request The message containing the credentials.
+	 * Handles a login request.
 	 * @throws Exception If any errors occur while handling credentials.
 	 */
-	private void handleRequest(final LoginRequest request) throws Exception {
-		player = new Player(new PlayerCredentials(request.getUsername(), request.getPassword()));
+	private void handleRequest() throws Exception {
+		player = new Player(new PlayerCredentials(username, password));
 		LoginCode response = LoginCode.NORMAL;
-		macAddress = request.getMacAddress();
 		
 		// Validate the username and password, change login response if needed
 		// for invalid credentials or the world being full.
-		boolean invalidCredentials = !request.getUsername().matches("^[a-zA-Z0-9_ ]{1,12}$") || request.getPassword().isEmpty() || request.getPassword().length() > 20;
+		boolean invalidCredentials = !username.matches("^[a-zA-Z0-9_ ]{1,12}$") || password.isEmpty() || password.length() > 20;
 		response = invalidCredentials ? LoginCode.INVALID_CREDENTIALS : World.get().getPlayers().remaining() == 0 ? LoginCode.WORLD_FULL : response;
 		
 		// Validating login before deserialization.
 		if(response == LoginCode.NORMAL) {
-			player.credentials.setUsername(request.getUsername());
-			player.credentials.password = request.getPassword();
+			player.credentials.setUsername(username);
+			player.credentials.password = password;
 		}
 		
 		// Validating player login possibility.
-		if(response == LoginCode.NORMAL && World.get().getPlayer(request.getUsernameHash()).isPresent()) {
+		if(response == LoginCode.NORMAL && World.get().getPlayer(usernameHash).isPresent()) {
 			response = LoginCode.ACCOUNT_ONLINE;
 		}
 		
 		// Deserialization
 		PlayerSerialization.SerializeResponse serial = null;
 		if(response == LoginCode.NORMAL) {
-			serial = new PlayerSerialization(player).loginCheck(request.getPassword());
+			serial = new PlayerSerialization(player).loginCheck(password);
 			response = serial.getResponse();
 		}
 		
@@ -394,21 +392,18 @@ public class Session {
 			}
 			//mac address
 			int macId = in.readInt();
-			String mac = String.valueOf(macId);
-			ctx.channel().attr(NetworkConstants.USR_MAC).set(mac);
-			if(HostManager.contains(mac, HostListType.BANNED_MAC)) {
+			macAddress = String.valueOf(macId);
+			if(HostManager.contains(macAddress, HostListType.BANNED_MAC)) {
 				write(ctx, LoginCode.ACCOUNT_DISABLED);
 				return;
 			}
 			//username hash
-			long usernameHash = in.readLong();
-			ctx.channel().attr(NetworkConstants.USR_HASH).set(usernameHash);
+			usernameHash = in.readLong();
 			if(World.get().getPlayer(usernameHash).isPresent()) {
 				write(ctx, LoginCode.ACCOUNT_ONLINE);
 				return;
 			}
-			ByteBuf buf = ctx.alloc().buffer(17);
-			buf.writeLong(0);
+			ByteBuf buf = ctx.alloc().buffer(9);
 			buf.writeByte(0);
 			buf.writeLong(RANDOM.nextLong());
 			ctx.writeAndFlush(buf, ctx.voidPromise());
@@ -448,11 +443,9 @@ public class Session {
 					isaacSeed[i] += 50;
 				}
 				encryptor = new IsaacRandom(isaacSeed);
-				String password = rsaBuffer.getCString().toLowerCase();
-				long usernameHash = ctx.channel().attr(NetworkConstants.USR_HASH).get();
-				String username = TextUtils.hashToName(usernameHash).replaceAll("_", " ").toLowerCase().trim();
-				String macAddress = ctx.channel().attr(NetworkConstants.USR_MAC).get();
-				handleRequest(new LoginRequest(usernameHash, username, password, macAddress));
+				password = rsaBuffer.getCString().toLowerCase();
+				username = TextUtils.hashToName(usernameHash).replaceAll("_", " ").toLowerCase().trim();
+				handleRequest();
 			} finally {
 				if(rsaBuffer.isReadable()) {
 					rsaBuffer.release();

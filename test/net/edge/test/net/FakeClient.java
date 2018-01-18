@@ -7,6 +7,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import net.edge.util.TextUtils;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -57,8 +58,8 @@ public final class FakeClient {
                             rsa.writeInt(random.nextInt());
                             rsa.writeInt(random.nextInt());
 
-                            rsa.writeInt(0); // uid
-                            rsa.putCString("Bot" + count.get());
+                            //rsa.writeInt(0); // uid
+                            //rsa.putCString("Bot" + count.get());
                             rsa.putCString("123456");
 
                             byte[] rsaBytes = new byte[rsa.readableBytes()];
@@ -66,19 +67,11 @@ public final class FakeClient {
     
                             ByteBuf payload = ctx.alloc().buffer();
 
-                            payload.writeByte(255); // magic value
-                            payload.writeShort(27); // revision
-                            payload.writeBoolean(false); // low mem
-
-                            for (int i = 0; i < 9; i++) {
-                                payload.writeInt(0);
-                            }
-
                             payload.writeByte(rsaBytes.length); // rsa block size
                             payload.writeBytes(rsaBytes);
-
+    
                             ByteBuf out = ctx.alloc().buffer();
-                            out.writeByte(16); // connection type
+                            //out.writeByte(16); // connection type
                             out.writeByte(payload.readableBytes()); // payload size
                             out.writeBytes(payload);
 
@@ -94,13 +87,35 @@ public final class FakeClient {
             }
         });
 
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 4000; i++) {
             // Start the client.
+            System.out.println("connecting bot " + i);
             Channel f = b.connect("127.0.0.1", 43594).sync().channel(); //(5)
             ByteBuf buffer = f.alloc().buffer();
-            buffer.writeByte(14);
-            buffer.writeByte(0);
+            buffer.writeShort(37);
+            buffer.writeInt(37);
+            buffer.writeLong(encryptName("Bot" + count.get()));
             f.writeAndFlush(buffer, f.voidPromise());
         }
+    }
+    
+    /**
+     * Encrypts a long value.
+     */
+    public static long encryptName(String name) {
+        long l = 0L;
+        for(int i = 0; i < name.length() && i <= 12; i++) {
+            char c = name.charAt(i);
+            l *= 37L;
+            if(c >= 'A' && c <= 'Z')
+                l += (1 + c) - 65;
+            else if(c >= 'a' && c <= 'z')
+                l += (1 + c) - 97;
+            else if(c >= '0' && c <= '9')
+                l += (27 + c) - 48;
+        }
+        while(l % 37L == 0L && l != 0L)
+            l /= 37L;
+        return l;
     }
 }

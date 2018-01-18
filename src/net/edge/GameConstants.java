@@ -63,7 +63,7 @@ public final class GameConstants {
 	 * The maximum amount of players that can be logged in on a single game
 	 * sequence.
 	 */
-	public static final int LOGIN_THRESHOLD = 2;
+	public static final int LOGIN_THRESHOLD = 30;
 	
 	/**
 	 * The maximum amount of players that can be logged in on a single game

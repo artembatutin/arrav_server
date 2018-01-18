@@ -52,18 +52,6 @@ public final class NetworkConstants {
 	public static final AttributeKey<Session> SESSION_KEY = AttributeKey.valueOf("session.KEY");
 	
 	/**
-	 * The {@link AttributeKey} value that is used to retrieve the username hash
-	 * instance from the attribute map of a {@link io.netty.channel.Channel}.
-	 */
-	public static final AttributeKey<Long> USR_HASH = AttributeKey.valueOf("session.HASH");
-	
-	/**
-	 * The {@link AttributeKey} value that is used to retrieve the session's mac address
-	 * instance from the attribute map of a {@link io.netty.channel.Channel}.
-	 */
-	public static final AttributeKey<String> USR_MAC = AttributeKey.valueOf("session.MAC");
-	
-	/**
 	 * The private RSA modulus value.
 	 */
 	public static final BigInteger RSA_MODULUS = new BigInteger("94306533927366675756465748344550949689550982334568289470527341681445613288505954291473168510012417401156971344988779343797488043615702971738296505168869556915772193568338164756326915583511871429998053169912492097791139829802309908513249248934714848531624001166946082342750924060600795950241816621880914628143");

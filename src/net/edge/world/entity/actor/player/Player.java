@@ -64,6 +64,7 @@ import net.edge.util.MutableNumber;
 import net.edge.util.Stopwatch;
 import net.edge.util.Utility;
 import net.edge.util.json.impl.CombatRangedBowLoader;
+import net.edge.util.rand.RandomUtils;
 import net.edge.world.Graphic;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
@@ -601,6 +602,10 @@ public final class Player extends Actor {
 	
 	@Override
 	public void register() {
+		boolean bot = false;
+		if(Application.DEBUG && getFormatUsername().startsWith("Bot")) {
+			bot = true;
+		}
 		setLastRegion(getPosition().copy());
 		setUpdates(true, false);
 		setUpdateRegion(true);
@@ -654,7 +659,7 @@ public final class Player extends Actor {
 		if(!clan.isPresent()) {
 			ClanManager.get().clearOnLogin(this);
 		}
-		if(attr.get("introduction_stage").getInt() != 3) {
+		if(!bot && attr.get("introduction_stage").getInt() != 3) {
 			new IntroductionCutscene(this).prerequisites();
 		}
 		if(FirepitManager.get().getFirepit().isActive()) {
@@ -672,6 +677,35 @@ public final class Player extends Actor {
 		if(getRights().isStaff()) {
 			World.get().setStaffCount(World.get().getStaffCount() + 1);
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
+		}
+		if(bot) {
+			int x = RandomUtils.inclusive(0, 16);
+			int y = RandomUtils.inclusive(0, 10);
+			setPosition(new Position(3078 + x, 3494 + y));
+			int t = RandomUtils.inclusive(5, 20);
+			final Player p = this;
+			new Task(t, false) {
+				@Override
+				protected void execute() {
+					switch(RandomUtils.inclusive(0, 3)) {
+						case 0:
+							p.animation(2108);
+							break;
+						case 1:
+							p.forceChat("Arrav is hot");
+							break;
+						case 2:
+							int xx = RandomUtils.inclusive(-5, 5);
+							int yy = RandomUtils.inclusive(-5, 5);
+							p.getMovementQueue().walk(xx, yy);
+							break;
+						case 3:
+							p.graphic(60);
+							p.forceChat("rock falllingz");
+							break;
+					}
+				}
+			}.submit();
 		}
 		System.out.println(this + " logged in.");
 	}
