@@ -7,10 +7,7 @@ import net.edge.world.Direction;
 import net.edge.world.World;
 import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
-import net.edge.world.object.GameObject;
-import net.edge.world.object.ObjectDefinition;
-import net.edge.world.object.ObjectDirection;
-import net.edge.world.object.ObjectType;
+import net.edge.world.object.*;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -72,6 +69,18 @@ public final class TraversalMap {
 				else
 					unmarkWall(reg, object.getDirection(), position.getZ(), position.getX(), position.getY(), object.getObjectType(), def.isWalkable());
 			}
+		}
+		if(object.getObjectType().getGroup() == ObjectGroup.ROOFING) {
+			return;
+		}
+		if(object.getObjectType().getGroup() == ObjectGroup.WALL_DECORATION) {
+			return;
+		}
+		if(object.getObjectType().getGroup() == ObjectGroup.WALL && !def.hasActions()) {
+			return;
+		}
+		if(object.getObjectType().getGroup() == ObjectGroup.GROUND_DECORATION && !def.hasActions()) {
+			return;
 		}
 		if(reg == null)
 			reg = World.getRegions().getRegion(position).orElse(null);
@@ -1169,5 +1178,22 @@ public final class TraversalMap {
 			}
 		}
 	}
+	
+	public static boolean blockedNorth(Position position) {
+		return !isTraversableNorth(position.getZ(), position.getX(), position.getY(), false);
+	}
+	
+	public static boolean blockedEast(Position position) {
+		return !isTraversableEast(position.getZ(), position.getX(), position.getY(), false);
+	}
+	
+	public static boolean blockedSouth(Position position) {
+		return !isTraversableSouth(position.getZ(), position.getX(), position.getY(), false);
+	}
+	
+	public static boolean blockedWest(Position position) {
+		return !isTraversableWest(position.getZ(), position.getX(), position.getY(), false);
+	}
+	
 	
 }

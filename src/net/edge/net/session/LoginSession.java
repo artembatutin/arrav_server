@@ -99,10 +99,8 @@ public final class LoginSession extends Session {
 		GameSession session = new GameSession(player, channel, request.getMacAddress(), request.getEncryptor(), request.getDecryptor());
 		channel.attr(NetworkConstants.SESSION_KEY).set(session);
 		player.setSession(session);
-		World.get().run(() -> {
-			new PlayerSerialization(player).deserialize(reader);
-			World.get().queueLogin(player);
-		});
+		new PlayerSerialization(player).deserialize(reader);
+		World.get().queueLogin(player);
 	}
 	
 }

@@ -334,9 +334,9 @@ public enum FoodConsumable {
 					if(!MinigameHandler.execute(player, m -> m.canEat(player, food))) {
 						return false;
 					}
+					player.getInventory().remove(item, slot);
 					player.animation(new Animation(829));
 					player.consumeDelay.get(food.special() ? "SPECIAL" : "FOOD").reset();
-					player.getInventory().remove(item, slot);
 					Optional<Item> replacement = Optional.empty();
 					int length = food.getIds().length;
 					for(int index = 0; index < length; index++) {
@@ -345,9 +345,9 @@ public enum FoodConsumable {
 						}
 					}
 					replacement.ifPresent(item1 -> player.getInventory().set(slot, item1, true));
+					Skills.refresh(player, Skills.HITPOINTS);
 					player.message(food.getMessage());
 					food.onEffect(player);
-					Skills.refresh(player, Skills.HITPOINTS);
 					return true;
 				}
 			};

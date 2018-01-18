@@ -14,6 +14,14 @@ public interface OutgoingPacket {
 		return true;
 	}
 	
+	default int size() {
+		return 256;
+	}
+	
+	default int opcode() {
+		return -1;
+	}
+	
 	ByteBuf write(Player player, GameBuffer msg);
 	
 }

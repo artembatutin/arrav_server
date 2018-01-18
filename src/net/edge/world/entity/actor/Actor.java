@@ -193,10 +193,6 @@ public abstract class Actor extends Entity {
 	 */
 	private boolean dead;
 	
-	/**
-	 * The pathfinder used by this {@link Actor}.
-	 */
-	private final AStarPathFinder aStarPathFinder;
 	private int health;
 	
 	/**
@@ -208,7 +204,6 @@ public abstract class Actor extends Entity {
 		super(position, type);
 		setPosition(position);
 		this.autoRetaliate = (type == EntityType.NPC);
-		this.aStarPathFinder = new AStarPathFinder(this, new Manhattan());
 	}
 	
 	public abstract void preUpdate();
@@ -787,10 +782,6 @@ public abstract class Actor extends Entity {
 	 */
 	public final boolean isDead() {
 		return dead;
-	}
-	
-	public final AStarPathFinder getAStarPathFinder() {
-		return aStarPathFinder;
 	}
 	
 	/**

@@ -48,7 +48,7 @@ public final class ScoreboardManager {
 	/**
 	 * Determines if the player score board has been reset.
 	 */
-	private boolean resetPlayerScoreboardStatistic = false;
+	private boolean boardResetted = false;
 	
 	/**
 	 * Serializes the individual scoreboard.
@@ -104,7 +104,7 @@ public final class ScoreboardManager {
 	 * Resets all the statistics on the player scoreboard and rewards the top-3 players.
 	 */
 	public void resetPlayerScoreboard() {
-		this.setResetPlayerScoreboardStatistic(true);
+		this.setBoardResetted(true);
 		
 		if(player_scoreboard.size() < 10) {
 			World.get().message("There weren't enough players participating in the player scoreboard event.", true);
@@ -191,15 +191,15 @@ public final class ScoreboardManager {
 	/**
 	 * @return the resetPlayerScoreboardStatistic
 	 */
-	public boolean isResetPlayerScoreboardStatistic() {
-		return resetPlayerScoreboardStatistic;
+	public boolean isBoardResetted() {
+		return boardResetted;
 	}
 	
 	/**
-	 * @param resetPlayerScoreboardStatistic the resetPlayerScoreboardStatistic to set
+	 * @param boardResetted the boardResetted to set
 	 */
-	public void setResetPlayerScoreboardStatistic(boolean resetPlayerScoreboardStatistic) {
-		this.resetPlayerScoreboardStatistic = resetPlayerScoreboardStatistic;
+	public void setBoardResetted(boolean boardResetted) {
+		this.boardResetted = boardResetted;
 	}
 	
 	/**

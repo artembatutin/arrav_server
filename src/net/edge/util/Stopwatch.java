@@ -60,6 +60,15 @@ public final class Stopwatch {
 		state = State.RUNNING;
 		return this;
 	}
+	
+	/**
+	 * Starts the stop watch.
+	 * @return set state to run.
+	 */
+	public Stopwatch run() {
+		state = State.RUNNING;
+		return this;
+	}
 
 	/**
 	 * Sets the internal cached time to {@code 0} effectively putting this

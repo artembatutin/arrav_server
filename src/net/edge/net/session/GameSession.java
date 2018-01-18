@@ -4,18 +4,19 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
-import io.netty.util.internal.shaded.org.jctools.queues.atomic.MpscLinkedAtomicQueue;
 import net.edge.net.NetworkConstants;
 import net.edge.net.codec.GameBuffer;
 import net.edge.net.codec.IncomingMsg;
 import net.edge.net.codec.crypto.IsaacRandom;
 import net.edge.net.codec.game.GameDecoder;
+import net.edge.net.codec.game.GameEncoder;
 import net.edge.net.packet.OutgoingPacket;
 import net.edge.world.World;
 import net.edge.world.entity.EntityState;
 import net.edge.world.entity.actor.player.Player;
 
-import java.util.AbstractQueue;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * A {@link Session} implementation that handles networking for a {@link Player} during gameplay.
@@ -30,12 +31,12 @@ public final class GameSession extends Session {
 	/**
 	 * The queue of {@link IncomingMsg}s.
 	 */
-	private final AbstractQueue<IncomingMsg> incoming = new MpscLinkedAtomicQueue<>();
+	private final Queue<IncomingMsg> incoming = new ConcurrentLinkedQueue<>();
 	
 	/**
 	 * The queue of {@link OutgoingPacket}s.
 	 */
-	private final AbstractQueue<OutgoingPacket> outgoing = new MpscLinkedAtomicQueue<>();
+	private final Queue<OutgoingPacket> outgoing = new ConcurrentLinkedQueue<>();
 	
 	/**
 	 * The player assigned to this {@code GameSession}.
@@ -65,6 +66,7 @@ public final class GameSession extends Session {
 		this.macAddress = macAddress;
 		this.encryptor = encryptor;
 		getChannel().pipeline().replace("login-decoder", "game-decoder", new GameDecoder(decryptor, this));
+		getChannel().pipeline().replace("login-encoder", "game-encoder", new GameEncoder(decryptor, player));
 	}
 	
 	@Override
@@ -149,7 +151,7 @@ public final class GameSession extends Session {
 	 */
 	public void write(OutgoingPacket packet) {
 		if(getChannel().isActive() && getChannel().isRegistered()) {
-			ByteBuf temp = packet.write(player, new GameBuffer(Unpooled.buffer(256), encryptor));
+			ByteBuf temp = packet.write(player, new GameBuffer(Unpooled.buffer(packet.size()), encryptor));
 			getChannel().write(temp);
 		}
 	}

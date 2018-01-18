@@ -45,6 +45,8 @@ public class Combat<T extends Actor> {
     public Combat(T attacker) {
         this.attacker = attacker;
         type = FightType.UNARMED_PUNCH;
+        lastAttacked.run();
+        lastBlocked.run();
     }
 
     public void attack(Actor defender) {

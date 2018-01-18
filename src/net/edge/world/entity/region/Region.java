@@ -8,6 +8,7 @@ import net.edge.net.packet.out.SendItemNode;
 import net.edge.net.packet.out.SendItemNodeRemoval;
 import net.edge.task.Task;
 import net.edge.util.LoggerUtils;
+import net.edge.util.Utility;
 import net.edge.util.rand.RandomUtils;
 import net.edge.world.entity.Entity;
 import net.edge.world.entity.EntityState;
@@ -243,7 +244,7 @@ public final class Region extends Entity {
 	
 	/**
 	 * The method that attempts to register {@code item}.
-	 * @param item  the item to attempt to register.
+	 * @param item the item to attempt to register.
 	 * @param stack if the item should stack upon registration.
 	 * @return {@code true} if the item was registered, {@code false} otherwise.
 	 */
@@ -314,7 +315,7 @@ public final class Region extends Entity {
 	
 	/**
 	 * The method that retrieves the item with {@code id} on {@code position}.
-	 * @param id       the identifier to retrieve the item with.
+	 * @param id the identifier to retrieve the item with.
 	 * @param position the position to retrieve the item on.
 	 * @return the item instance wrapped in an optional, or an empty optional if
 	 * no item is found.
@@ -366,7 +367,7 @@ public final class Region extends Entity {
 	
 	/**
 	 * Gets the an {@link Optional} of {@link GameObject}s on the specified {@link Position} with the specified {@code id}.
-	 * @param id       The id of the object to seek for.
+	 * @param id The id of the object to seek for.
 	 * @param position The position.
 	 * @return A {@link Optional} of {@link GameObject} on the specified position.
 	 */
@@ -376,7 +377,7 @@ public final class Region extends Entity {
 	
 	/**
 	 * Gets the an {@link Optional} of {@link GameObject}s on the specified {@link Position} with the specified {@code type}.
-	 * @param type     The type of the object to seek for.
+	 * @param type The type of the object to seek for.
 	 * @param position The position.
 	 * @return A {@link Optional} of {@link GameObject} on the specified position.
 	 */
@@ -390,7 +391,7 @@ public final class Region extends Entity {
 	
 	/**
 	 * Gets the an {@link Optional} of {@link GameObject}s with the specified {@code id} and {@code packed} coordinates.
-	 * @param id     The id of the object to seek for.
+	 * @param id The id of the object to seek for.
 	 * @param packed The packed position.
 	 * @return A {@link Optional} of {@link GameObject}.
 	 */
@@ -427,6 +428,58 @@ public final class Region extends Entity {
 	}
 	
 	/**
+	 * Finds if the two position with sizes are reachable.
+	 * @param source source pos.
+	 * @param sourceWidth source width.
+	 * @param sourceLength source length.
+	 * @param target target pos.
+	 * @param targetWidth target width.
+	 * @param targetLength target length.
+	 * @return true if reachable.
+	 */
+	public static boolean reachable(Position source, int sourceWidth, int sourceLength, Position target, int targetWidth, int targetLength) {
+		if(Utility.inside(source, sourceWidth, sourceLength, target, targetWidth, targetLength)) {
+			return true;//targetWidth == 0 || targetLength == 0;
+		}
+		
+		int x, y;
+		int sourceTopX = source.getX() + sourceWidth - 1;
+		int sourceTopY = source.getY() + sourceLength - 1;
+		int targetTopX = target.getX() + targetWidth - 1;
+		int targetTopY = target.getY() + targetLength - 1;
+		
+		if(sourceTopY == target.getY() - 1 && source.getX() >= target.getX() && source.getX() <= targetTopX) {
+			for(x = 0, y = sourceLength - 1; x < sourceWidth; x++)
+				if(TraversalMap.blockedNorth(source.move(x, y)))
+					return false;
+			return true;
+		}
+		
+		if(sourceTopX == target.getX() - 1 && source.getY() >= target.getY() && source.getY() <= targetTopY) {
+			for(x = 0, y = 0; y < sourceLength; y++)
+				if(TraversalMap.blockedEast(source.move(x, y)))
+					return false;
+			return true;
+		}
+		
+		if(source.getY() == targetTopY + 1 && source.getX() >= target.getX() && source.getX() <= targetTopX) {
+			for(x = 0, y = 0; x < sourceWidth; x++)
+				if(TraversalMap.blockedSouth(source.move(x, y)))
+					return false;
+			return true;
+		}
+		
+		if(source.getX() == targetTopX + 1 && source.getY() >= target.getY() && source.getY() <= targetTopY) {
+			for(x = sourceWidth - 1, y = 0; y < sourceLength; y++)
+				if(TraversalMap.blockedWest(source.move(x, y)))
+					return false;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Determines if there any player around this region.
 	 * @return {@code true} if there is a player around regionally, {@code false} otherwise.
 	 */
@@ -447,8 +500,8 @@ public final class Region extends Entity {
 	 * Gets a single tile in this region from the specified height, x and y
 	 * coordinates.
 	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
 	 * @return The tile in this region for the specified attributes.
 	 */
 	public RegionTile getTile(int height, int x, int y) {

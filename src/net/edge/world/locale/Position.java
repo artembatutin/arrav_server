@@ -268,7 +268,7 @@ public class Position {
 	 * Gets the {@code X} region chunk relative to this position.
 	 * @return the {@code X} region chunk.
 	 */
-	private int getChunkX() {
+	public int getChunkX() {
 		return (x >> 6);
 	}
 	
@@ -276,7 +276,7 @@ public class Position {
 	 * Gets the {@code Y} region chunk relative to this position.
 	 * @return the {@code Y} region chunk.
 	 */
-	private int getChunkY() {
+	public int getChunkY() {
 		return (y >> 6);
 	}
 	

@@ -5,6 +5,9 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.epoll.Epoll;
+import io.netty.channel.epoll.EpollEventLoopGroup;
+import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.ResourceLeakDetector;
@@ -21,6 +24,7 @@ import net.edge.content.commands.CommandDispatcher;
 import net.edge.content.object.pit.FirepitManager;
 import net.edge.content.object.star.ShootingStarManager;
 import net.edge.content.scoreboard.ScoreboardManager;
+import net.edge.content.scoreboard.ScoreboardTask;
 import net.edge.content.trivia.TriviaTask;
 import net.edge.net.EdgevilleChannelInitializer;
 import net.edge.net.NetworkConstants;
@@ -117,7 +121,7 @@ public final class Application {
 	 * Initializing all of the individual modules.
 	 * @throws Exception If any exceptions are thrown during initialization.
 	 */
-	public void init() throws Exception {
+	private void init() {
 		try {
 			LOGGER.info("Main is being initialized...");
 			prepare();
@@ -125,23 +129,17 @@ public final class Application {
 			initTasks();
 			launch.shutdown();
 			launch.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			World.get().start();
+			World.get().startAsync().awaitRunning();
 			InstanceManager.get().close(0);
 			TriviaTask.getBot().submit();
 			World.get().submit(World.getNpcMovementTask());
 			World.get().submit(new RestoreSpecialTask());
 			World.get().submit(new RestoreStatTask());
+			World.get().submit(new ScoreboardTask());
 			World.get().submit(new Task(100, false) {
 				@Override
 				public void execute() {
 					PlayerPanel.UPTIME.refreshAll("@or2@ - Uptime: @yel@" + Utility.timeConvert(World.getRunningTime().elapsedTime(TimeUnit.MINUTES)));
-					LocalDate date = LocalDate.now();
-					ScoreboardManager score = ScoreboardManager.get();
-					if(date.getDayOfWeek().equals(DayOfWeek.MONDAY) && !score.isResetPlayerScoreboardStatistic()) {
-						score.resetPlayerScoreboard();
-					} else if(!date.getDayOfWeek().equals(DayOfWeek.MONDAY) && score.isResetPlayerScoreboardStatistic()) {
-						score.setResetPlayerScoreboardStatistic(false);
-					}
 					ShootingStarManager.get().process();
 				}
 			});
@@ -160,16 +158,18 @@ public final class Application {
 	 * Initializes the Netty implementation. Will block indefinitely until the {@link ServerBootstrap} is bound.
 	 * @throws Exception If any exceptions are thrown while binding.
 	 */
-	private void bind() throws Exception {
-		//		if we run server on a unix machine, then we can use a native implementation instead of nio
-		//		if (Epoll.isAvailable()) {
-		//			EventLoopGroup loopGroup = new EpollEventLoopGroup();
-		//			bootstrap.channel(EpollServerSocketChannel.class);
-		//		}
+	private void bind() {
 		LOGGER.info("Binding Edgeville on port " + NetworkConstants.PORT_ONLINE + ".");
 		ServerBootstrap bootstrap = new ServerBootstrap();
-		EventLoopGroup loopGroup = new NioEventLoopGroup();
-		ResourceLeakDetector.setLevel(DEBUG ? ResourceLeakDetector.Level.PARANOID : ResourceLeakDetector.Level.DISABLED);
+		EventLoopGroup loopGroup;
+		//if we run server on a unix machine, then we can use a native implementation instead of nio
+		if (Epoll.isAvailable()) {
+			loopGroup = new EpollEventLoopGroup();
+			bootstrap.channel(EpollServerSocketChannel.class);
+		} else {
+			loopGroup = new NioEventLoopGroup();
+		}
+		ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
 		bootstrap.group(loopGroup);
 		bootstrap.channel(NioServerSocketChannel.class);
 		bootstrap.childHandler(new EdgevilleChannelInitializer());

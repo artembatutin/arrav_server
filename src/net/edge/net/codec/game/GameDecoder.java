@@ -66,7 +66,7 @@ public final class GameDecoder extends ByteToMessageDecoder {
 	}
 	
 	@Override
-	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
 		switch(state) {
 			case OPCODE:
 				opcode(in, out);
@@ -148,19 +148,12 @@ public final class GameDecoder extends ByteToMessageDecoder {
 				payload.release();
 				return;
 			}
-			session.handleUpstreamMessage(new IncomingMsg(opcode, type, payload));
+			out.add(new IncomingMsg(opcode, type, payload));
 		} finally {
-			resetState();
+			opcode = -1;
+			size = -1;
+			state = State.OPCODE;
 		}
-	}
-	
-	/**
-	 * Resets the state of this {@code MessageDecoder} to its default.
-	 */
-	private void resetState() {
-		opcode = -1;
-		size = -1;
-		state = State.OPCODE;
 	}
 	
 	/**

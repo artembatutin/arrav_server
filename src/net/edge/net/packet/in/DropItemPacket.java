@@ -12,6 +12,7 @@ import net.edge.world.entity.actor.player.assets.activity.ActivityManager.Activi
 import net.edge.world.entity.item.GroundItem;
 import net.edge.world.entity.item.Item;
 import net.edge.world.entity.item.ItemDefinition;
+import net.edge.world.entity.item.container.ItemContainer;
 
 /**
  * The message sent from the client when the player drops an item.
@@ -68,12 +69,14 @@ public final class DropItemPacket implements IncomingPacket {
 			player.getSkillActionTask().get().cancel();
 		}
 		int amount = ItemDefinition.DEFINITIONS[id].isStackable() ? item.getAmount() : 1;
+		player.getInventory().policy = ItemContainer.StackPolicy.NEVER;
 		int removed = player.getInventory().remove(new Item(id, amount), slot);
 		if(removed == 1) {//if removed 1 slot.
 			player.getRegion().ifPresent(r -> r.register(new GroundItem(new Item(id, amount), player.getPosition(), player)));
 		} else {
 			player.getInventory().updateSingle(null, null, slot, true);
 		}
+		player.getInventory().policy = ItemContainer.StackPolicy.STANDARD;
 		player.getActivityManager().execute(ActivityType.DROP_ITEM);
 	}
 }

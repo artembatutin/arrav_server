@@ -23,8 +23,7 @@ public final class ChannelHandler extends SimpleChannelInboundHandler<Request> {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
-		if (!FileServerConstants.IGNORED_NETWORK_EXCEPTIONS.stream()
-				.anyMatch($it -> Objects.equal($it, e.getMessage()))) {
+		if (FileServerConstants.IGNORED_NETWORK_EXCEPTIONS.stream().noneMatch($it -> Objects.equal($it, e.getMessage()))) {
 			e.printStackTrace();
 		}
 		ctx.channel().close();

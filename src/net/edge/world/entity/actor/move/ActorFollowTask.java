@@ -150,7 +150,7 @@ class ActorFollowTask extends Task {
 			return;
 		}
 		//Setting new path depending on the follower's type.
-		Path path = character.isPlayer() || (character.isMob() && character.toMob().isSmart()) ? character.getAStarPathFinder().find(leader.getPosition()) : World.getSimplePathFinder().find(character, leader.getPosition());
+		Path path = character.isPlayer() || (character.isMob() && character.toMob().isSmart()) ? World.getSmartPathfinder().find(character.getPosition(), character.size(), leader.getPosition(), leader.size()) : World.getSimplePathfinder().find(character, leader.getPosition());
 		if(path != null && path.isPossible()) {
 			//removing the points overlapping the leader's boundaries. //TODO: fix or remove.
 			//while(boundary.inside(path.poll(), leader.size()));

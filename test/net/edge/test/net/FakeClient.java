@@ -48,7 +48,7 @@ public final class FakeClient {
                     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> list) throws Exception {
                         if (!loggedIn) {
                             ByteBuf rsa = ctx.alloc().buffer();
-
+                            
                             // rsa block prefix
                             rsa.writeByte(10);
 

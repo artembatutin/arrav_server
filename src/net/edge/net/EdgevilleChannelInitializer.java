@@ -27,7 +27,9 @@ public final class EdgevilleChannelInitializer extends ChannelInitializer<Socket
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ch.attr(NetworkConstants.SESSION_KEY).setIfAbsent(new LoginSession(ch));
+		//TODO REMOVE THIS. SET SOCKET TIMEOUT MYSELF. PER PACKET? YES. LAST PACKET RECEIVED? GREATER THAN FIVE SECONDS? CLOSED IT OUT.
 		ch.pipeline().addLast("read-timeout", new ReadTimeoutHandler(NetworkConstants.SESSION_TIMEOUT));
+		//TODO HANDLER, CHANNEL REGISTER EVENT -> CHECK FILTERING.
 		ch.pipeline().addLast("channel-filter", FILTER);
 		ch.pipeline().addLast("login-decoder", new LoginDecoder());
 		ch.pipeline().addLast("login-encoder", new LoginEncoder());

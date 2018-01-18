@@ -29,7 +29,7 @@ public final class GameEncoder extends MessageToByteEncoder<OutgoingPacket> {
 	}
 
 	@Override
-	protected void encode(io.netty.channel.ChannelHandlerContext ctx, OutgoingPacket msg, ByteBuf out) throws Exception {
+	protected void encode(io.netty.channel.ChannelHandlerContext ctx, OutgoingPacket msg, ByteBuf out) {
 		msg.write(player, new GameBuffer(out, encryptor));
 	}
 }

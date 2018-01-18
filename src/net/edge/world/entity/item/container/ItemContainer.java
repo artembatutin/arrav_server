@@ -111,7 +111,7 @@ public class ItemContainer implements Iterable<Item> {
 	/**
 	 * The policy of this container.
 	 */
-	private final StackPolicy policy;
+	public StackPolicy policy;
 	
 	/**
 	 * The {@link Item}s within this container.
@@ -360,7 +360,7 @@ public class ItemContainer implements Iterable<Item> {
 			size--;
 			return -1;
 		}
-		boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;
+		boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;//todo cant be stackable remove if 1 slot to be removed.
 		if(stackable) {
 			preferredIndex = computeIndexForId(item.getId());
 		} else {
@@ -375,7 +375,7 @@ public class ItemContainer implements Iterable<Item> {
 		}
 		
 		int cleared = 0;
-		if(stackable) {
+		if(stackable) {//todo issue might be here.
 			Item current = items[preferredIndex];
 			if(current.getAmount() > item.getAmount()) {
 				if(!test && item.getId() == current.getId())
@@ -384,7 +384,7 @@ public class ItemContainer implements Iterable<Item> {
 				if(!test && item.getId() == current.getId()) {
 					items[preferredIndex] = null;
 					size--;
-				}
+				}//todo removing item even if lower and then dropping the full amount.
 				cleared++;
 			}
 			updateSingle(current, items[preferredIndex], preferredIndex, refresh);

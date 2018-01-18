@@ -8,7 +8,6 @@ import net.edge.world.Direction;
 import net.edge.world.World;
 import net.edge.world.entity.actor.move.path.Path;
 import net.edge.world.entity.region.TraversalMap;
-import net.edge.world.locale.Boundary;
 import net.edge.world.locale.Position;
 
 /**
@@ -47,7 +46,7 @@ public class MobMovementTask extends Task {
 			}
 			if(mob.getMovementQueue().isMovementDone()) {
 				if(!move.getBoundary().inside(mob.getPosition(), mob.size())) {
-					Path pathHome = mob.getAStarPathFinder().find(mob.getOriginalPosition());
+					Path pathHome = World.getSmartPathfinder().find(mob.getPosition(), mob.size(), mob.getOriginalPosition(), mob.size());
 					if(pathHome != null && pathHome.isPossible())
 						mob.getMovementQueue().walk(pathHome.getMoves());
 				} else {
@@ -55,7 +54,7 @@ public class MobMovementTask extends Task {
 					Position movedPos = mob.getPosition().move(dir);
 					boolean traversable = TraversalMap.isTraversable(mob.getPosition(), mob.getMovementCoordinator().getBoundary(), dir, mob.size());
 					if(traversable) {
-						Path pathHome = World.getSimplePathFinder().find(mob, movedPos);
+						Path pathHome = World.getSimplePathfinder().find(mob, movedPos);
 						if(pathHome.isPossible())
 							mob.getMovementQueue().walk(pathHome.getMoves());
 						else

@@ -4,7 +4,10 @@ import com.google.common.base.Preconditions;
 import net.edge.cache.archive.Archive;
 
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -149,7 +152,8 @@ public final class FileSystem {
 		Path data = root.resolve(DATA_PREFIX);
 		Preconditions.checkArgument(Files.exists(data), "No data file found in the specified path!");
 		
-		SeekableByteChannel dataChannel = Files.newByteChannel(data, READ, WRITE);
+		RandomAccessFile dataFile = new RandomAccessFile(data.toFile(), "rw");
+		MappedByteBuffer dataChannel = dataFile.getChannel().map(FileChannel.MapMode.READ_ONLY, 0, dataFile.length()).load();
 		
 		Cache[] caches = new Cache[MAXIMUM_INDICES];
 		Archive[] archives = new Archive[MAXIMUM_ARCHIVES];
@@ -157,7 +161,8 @@ public final class FileSystem {
 		for(int index = 0; index < caches.length; index++) {
 			Path path = root.resolve(INDEX_PREFIX + index);
 			if(Files.exists(path)) {
-				SeekableByteChannel indexChannel = Files.newByteChannel(path, READ, WRITE);
+				RandomAccessFile idxFile = new RandomAccessFile(path.toFile(), "rw");
+				MappedByteBuffer indexChannel = idxFile.getChannel().map(FileChannel.MapMode.READ_ONLY, 0, idxFile.length()).load();
 				caches[index] = new Cache(dataChannel, indexChannel, index);
 			}
 		}
@@ -209,47 +214,4 @@ public final class FileSystem {
 			return cache.get(indexId);
 		}
 	}
-	
-	/**
-	 * Returns the cached {@link #archiveHashes} if they exist, otherwise they
-	 * are calculated and cached for future use.
-	 * @return The hashes of each {@link Archive}.
-	 * @throws IOException If some I/O exception occurs.
-	 */
-	public ByteBuffer getArchiveHashes() throws IOException {
-		synchronized(this) {
-			if(archiveHashes != null) {
-				return archiveHashes.duplicate();
-			}
-		}
-		
-		int[] crcs = new int[MAXIMUM_ARCHIVES];
-		
-		CRC32 crc32 = new CRC32();
-		for(int file = 1; file < crcs.length; file++) {
-			crc32.reset();
-			
-			ByteBuffer buffer = getFile(CONFIG_INDEX, file);
-			crc32.update(buffer);
-			
-			crcs[file] = (int) crc32.getValue();
-		}
-		
-		ByteBuffer buffer = ByteBuffer.allocate((crcs.length + 1) * Integer.BYTES);
-		
-		int hash = 1234;
-		for(int crc : crcs) {
-			hash = (hash << 1) + crc;
-			buffer.putInt(crc);
-		}
-		
-		buffer.putInt(hash);
-		buffer.flip();
-		
-		synchronized(this) {
-			archiveHashes = buffer.asReadOnlyBuffer();
-			return archiveHashes.duplicate();
-		}
-	}
-	
 }

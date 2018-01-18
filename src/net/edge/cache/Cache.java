@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
 import java.nio.channels.SeekableByteChannel;
 
 /**
@@ -29,118 +30,103 @@ public final class Cache {
 	 * Represents the size of a {@link Sector}s header.
 	 * Calculating the total size of the sector header. the total size may be that of a {@code long}
 	 */
-	public static final int SECTOR_SIZE = 520;
+	private static final int SECTOR_SIZE = 520;
 
 	/**
-	 * A {@link ByteBuffer} allocated to {@link #SECTOR_SIZE}.
+	 * Byte buffer array.
 	 * <p>
 	 * This byte buffer is used to read index and sector data from their
 	 * respective byte channels.
 	 * </p>
 	 */
-	private final ByteBuffer buffer = ByteBuffer.allocate(SECTOR_SIZE);
+	private static final byte[] buffer = new byte[SECTOR_SIZE];
 
 	/**
 	 * A byte channel that contains a series of variable-length bytes which
 	 * represent a sector.
 	 */
-	private final SeekableByteChannel sectorChannel;
+	private final MappedByteBuffer dataChannel;
 
 	/**
 	 * A byte channel that contains a series of variable-length bytes which
 	 * represent a index.
 	 */
-	private final SeekableByteChannel indexChannel;
+	private final MappedByteBuffer indexChannel;
 
 	/**
 	 * Represents the id of this {@link Cache}.
 	 */
-	private final int id;
+	private final int index;
 
 	/**
 	 * Constructs a new {@link Cache} with the specified sector and index
 	 * channels and id.
-	 * @param sectorChannel The cache sectors byte channel.
+	 * @param dataChannel The cache sectors byte channel.
 	 * @param indexChannel  The cache sectors index channel.
-	 * @param id            This caches id.
+	 * @param index            This caches index.
 	 */
-	protected Cache(SeekableByteChannel sectorChannel, SeekableByteChannel indexChannel, int id) {
-		this.sectorChannel = sectorChannel;
+	Cache(MappedByteBuffer dataChannel, MappedByteBuffer indexChannel, int index) {
+		this.dataChannel = dataChannel;
 		this.indexChannel = indexChannel;
-		this.id = ++id;
+		this.index = ++index;
 	}
-
+	
 	/**
-	 * Gets a {@link ByteBuffer} of data within this cache for the specified
-	 * index id.
-	 * @param indexId The file id to get.
-	 * @return A wrapped byte buffer of the specified files data, never
-	 * {@code null}.
-	 * @throws IOException If some I/O exception occurs.
+	 * Gives out a byte array of the requested file.
+	 * @param indexId index id to grab.
+	 * @return buffer byte array.
 	 */
-	public ByteBuffer get(int indexId) throws IOException {
-		Index index = readIndex(indexId);
-		long position = (long) index.getId() * SECTOR_HEADER_SIZE;
-
-		Preconditions.checkArgument(sectorChannel.size() >= position + SECTOR_SIZE);
-
-		byte[] data = new byte[index.getLength()];
-		int next = index.getId();
-		int offset = 0;
-
-		for(int chunk = 0; offset < index.getLength(); chunk++) {
-			int read = Math.min(index.getLength() - offset, 512);
-
-			Sector sector = readSector(next, data, offset, read);
-			sector.check(id, indexId, chunk);
-
-			next = sector.getNextIndexId();
-			offset += read;
+	public ByteBuffer get(int indexId) {
+		indexChannel.position(indexId * INDEX_SIZE);
+		int n;
+		for(int i = 0; i < INDEX_SIZE; i += n) {
+			try {
+				indexChannel.get(buffer, i, INDEX_SIZE - i);
+				n = INDEX_SIZE - i;
+			} catch(Exception e) {
+				return null;
+			}
 		}
-
-		return ByteBuffer.wrap(data);
-	}
-
-	/**
-	 * Reads an {@link Index} for the specified {@code indexId} and returns the
-	 * decoded data.
-	 * @param indexId The id of the index to read.
-	 * @return The decoded index.
-	 * @throws IOException If some I/O exception occurs.
-	 */
-	private Index readIndex(int indexId) throws IOException {
-		long position = (long) indexId * INDEX_SIZE;
-
-		buffer.clear().limit(INDEX_SIZE);
-		indexChannel.position(position);
-		indexChannel.read(buffer);
-		buffer.flip();
-
-		Index index = Index.decode(buffer);
-		index.check();
-
-		return index;
-	}
-
-	/**
-	 * Reads a {@link Sector} for the specified {@code sectorId} and returns the
-	 * decoded data.
-	 * @param sectorId The id of the sector to read.
-	 * @param data     The sectors data.
-	 * @param offset   The sectors data offset.
-	 * @param length   The length of the sectors data.
-	 * @return The decoded sector.
-	 * @throws IOException If some I/O exception occurs.
-	 */
-	private Sector readSector(int sectorId, byte[] data, int offset, int length) throws IOException {
-		long position = (long) sectorId * SECTOR_SIZE;
-
-		buffer.clear().limit(length + SECTOR_HEADER_SIZE);
-		sectorChannel.position(position);
-		sectorChannel.read(buffer);
-		buffer.flip();
-
-		return Sector.decode(buffer, data, offset, length);
+		int fileSize = ((buffer[0] & 0xff) << 16) + ((buffer[1] & 0xff) << 8) + (buffer[2] & 0xff);
+		int fileBlock = ((buffer[3] & 0xff) << 16) + ((buffer[4] & 0xff) << 8) + (buffer[5] & 0xff);
+		
+		byte[] fileBuffer = new byte[fileSize];
+		int read = 0;
+		for(int i = 0; read < fileSize; i++) {
+			if(fileBlock == 0) {
+				return null;
+			}
+			dataChannel.position(fileBlock * SECTOR_SIZE);
+			int size = 0;
+			int remaining = fileSize - read;
+			if(remaining > 512) {
+				remaining = 512;
+			}
+			int nbytes;
+			for(; size < remaining + SECTOR_HEADER_SIZE; size += nbytes) {
+				try {
+					dataChannel.get(buffer, size, remaining + SECTOR_HEADER_SIZE - size);
+					nbytes = remaining + SECTOR_HEADER_SIZE - size;
+				} catch(Exception e) {
+					return null;
+				}
+			}
+			int nextFileId = ((buffer[0] & 0xff) << 8) + (buffer[1] & 0xff);
+			int currentPartId = ((buffer[2] & 0xff) << 8) + (buffer[3] & 0xff);
+			int nextBlockId = ((buffer[4] & 0xff) << 16) + ((buffer[5] & 0xff) << 8) + (buffer[6] & 0xff);
+			int nextStoreId = buffer[7] & 0xff;
+			if(nextFileId != indexId || currentPartId != i || nextStoreId != index) {
+				return null;
+			}
+			if(nextBlockId < 0 || nextBlockId > dataChannel.capacity() / 520L) {
+				return null;
+			}
+			for(int k3 = 0; k3 < remaining; k3++) {
+				fileBuffer[read++] = buffer[k3 + 8];
+			}
+			fileBlock = nextBlockId;
+		}
+		return ByteBuffer.wrap(fileBuffer);
 	}
 
 }

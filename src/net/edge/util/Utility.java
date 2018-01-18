@@ -2,6 +2,7 @@ package net.edge.util;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import net.edge.world.locale.Position;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -79,6 +80,22 @@ public final class Utility {
 		File file = new File(directory);
 		String[] directories = file.list((current, name) -> new File(current, name).isDirectory());
 		return new ObjectArrayList<>(directories);
+	}
+	
+	public static boolean inside(Position source, int sourceWidth, int sourceLength, Position target, int targetWidth, int targetLength) {
+		if (sourceWidth <= 0) sourceWidth = 1;
+		if (sourceLength <= 0) sourceLength = 1;
+		if (targetWidth <= 0) targetWidth = 1;
+		if (targetLength <= 0) targetLength = 1;
+		Position sourceTopRight = source.move(sourceWidth - 1, sourceLength - 1, 0);
+		Position targetTopRight = target.move(targetWidth - 1, targetLength - 1, 0);
+		if (source.equals(target) || sourceTopRight.equals(targetTopRight)) {
+			return true;
+		}
+		if (source.getX() > targetTopRight.getX() || sourceTopRight.getX() < target.getX()) {
+			return false;
+		}
+		return source.getY() <= targetTopRight.getY() && sourceTopRight.getY() >= target.getY();
 	}
 	
 	private static int lines = 0;

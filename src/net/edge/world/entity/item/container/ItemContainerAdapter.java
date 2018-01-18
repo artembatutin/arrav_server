@@ -33,7 +33,6 @@ public abstract class ItemContainerAdapter implements ItemContainerListener {
 	public void singleUpdate(ItemContainer container, Item oldItem, Item newItem, int slot, boolean update) {
 		if(update)
 			updateItem(container, newItem, slot);
-		World.getLoggingManager().write(Log.create(new ContainerLog(player, container, oldItem, newItem, slot)));
 	}
 	
 	@Override

@@ -1,10 +1,9 @@
 package net.edge.world;
 
+import com.google.common.util.concurrent.AbstractScheduledService;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import net.edge.Application;
 import net.edge.GameConstants;
-import net.edge.GamePulseHandler;
 import net.edge.content.PlayerPanel;
 import net.edge.content.commands.impl.UpdateCommand;
 import net.edge.net.database.Database;
@@ -15,13 +14,13 @@ import net.edge.task.Task;
 import net.edge.task.TaskManager;
 import net.edge.util.Stopwatch;
 import net.edge.util.TextUtils;
-import net.edge.util.ThreadUtil;
 import net.edge.util.log.LoggingManager;
 import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.ActorList;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobMovementTask;
 import net.edge.world.entity.actor.move.path.SimplePathChecker;
+import net.edge.world.entity.actor.move.path.impl.DijkstraPathFinder;
 import net.edge.world.entity.actor.move.path.impl.SimplePathFinder;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -32,8 +31,6 @@ import net.edge.world.sync.Synchronizer;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import static net.edge.net.session.GameSession.UPDATE_LIMIT;
@@ -44,7 +41,7 @@ import static net.edge.world.entity.EntityState.IDLE;
  * The static utility class that contains functions to manage and process game characters.
  * @author Artem Batutin <artembatutin@gmail.com>
  */
-public final class World {
+public final class World extends AbstractScheduledService {
 	
 	/**
 	 * An implementation of the singleton pattern to prevent indirect
@@ -56,11 +53,6 @@ public final class World {
 	 * Main game synchronizer.
 	 */
 	private final Synchronizer sync = new Synchronizer();
-	
-	/**
-	 * The scheduled executor service.
-	 */
-	private final ScheduledExecutorService pulser = Executors.newSingleThreadScheduledExecutor(ThreadUtil.create("GamePulse"));
 	
 	/**
 	 * The manager for the queue of game tasks.
@@ -131,46 +123,13 @@ public final class World {
 //		}
 	}
 	
-	/**
-	 * Starts the synchronized pulser.
-	 */
-	public void start() {
-		pulser.scheduleAtFixedRate(new GamePulseHandler(this), 600, 600, TimeUnit.MILLISECONDS);
+	@Override
+	protected String serviceName() {
+		return "GamePulse";
 	}
 	
-	/**
-	 * Sends a task to the synchronized pulser.
-	 * @param r task to be sent.
-	 */
-	public void run(Runnable r) {
-		pulser.submit(r);
-	}
-	
-	/**
-	 * Closes the synchronized pulser.
-	 */
-	public void shutdown() {
-		pulser.shutdownNow();
-	}
-	
-	/**
-	 * Handles incoming packets for players.
-	 */
-	private void handleIncomingPackets() {
-		for(Player player : players) {
-			if(player != null) {
-				GameSession session = player.getSession();
-				if(session != null) {
-					session.pollIncomingPackets();
-				}
-			}
-		}
-	}
-	
-	/**
-	 * The method that executes the update sequence for all in game characters every cycle.
-	 */
-	public void pulse() throws InterruptedException {
+	@Override
+	protected void runOneIteration() {
 		final long start = System.currentTimeMillis();
 		
 		synchronized(this) {
@@ -191,8 +150,6 @@ public final class World {
 		}
 		
 		millis = System.currentTimeMillis() - start;
-		if(millis > 600)
-			over++;
 		if(millis > 400) {
 			UPDATE_LIMIT -= 20;
 			if(UPDATE_LIMIT < 40)
@@ -200,10 +157,27 @@ public final class World {
 		} else if(UPDATE_LIMIT < 200) {
 			UPDATE_LIMIT += 20;
 		}
-		//System.out.println("took: " + millis + " - players online: " + players.size() + " parsing packets: " + outLimit + " - went over 600ms " + over + " times");
+		System.out.println("took: " + millis + " - players: " + players.size()+ " - mobs: " + mobs.size() + " - logins: " + logins.size());
 	}
 	
-	private int over = 0;
+	@Override
+	protected Scheduler scheduler() {
+		return Scheduler.newFixedDelaySchedule(600, 600, TimeUnit.MILLISECONDS);
+	}
+	
+	/**
+	 * Handles incoming packets for players.
+	 */
+	private void handleIncomingPackets() {
+		for(Player player : players) {
+			if(player != null) {
+				GameSession session = player.getSession();
+				if(session != null) {
+					session.pollIncomingPackets();
+				}
+			}
+		}
+	}
 	
 	/**
 	 * Queues {@code player} to be logged in on the next server sequence.
@@ -508,6 +482,11 @@ public final class World {
 	private static final RegionManager REGION_MANAGER = new RegionManager();
 	
 	/**
+	 * Client implementation of a smart pathfinder.
+	 */
+	private static final DijkstraPathFinder SMART_PATH_FINDER = new DijkstraPathFinder();
+	
+	/**
 	 * This world's straight line pathfinder used for NPCs movements.
 	 */
 	private static final SimplePathFinder SIMPLE_PATH_FINDER = new SimplePathFinder();
@@ -562,9 +541,17 @@ public final class World {
 	}
 	
 	/**
+	 * Client implementation of a smart pathfinder.
+	 * @return the pathfinder instance.
+	 */
+	public static DijkstraPathFinder getSmartPathfinder() {
+		return SMART_PATH_FINDER;
+	}
+	
+	/**
 	 * Returns this world's straight pathfinder.
 	 */
-	public static SimplePathFinder getSimplePathFinder() {
+	public static SimplePathFinder getSimplePathfinder() {
 		return SIMPLE_PATH_FINDER;
 	}
 	
