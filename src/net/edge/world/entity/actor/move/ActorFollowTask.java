@@ -23,12 +23,12 @@ import java.util.Optional;
 class ActorFollowTask extends Task {
 	
 	/**
-	 * The character this process is being executed for.
+	 * The actor this process is being executed for.
 	 */
-	private final Actor character;
+	private final Actor actor;
 	
 	/**
-	 * The character being followed in this process.
+	 * The actor being followed in this process.
 	 */
 	private final Actor leader;
 	
@@ -39,34 +39,34 @@ class ActorFollowTask extends Task {
 	
 	/**
 	 * Creates a new {@link ActorFollowTask}.
-	 * @param character the character this process is being executed for.
-	 * @param leader    the character being followed in this process.
+	 * @param actor the actor this process is being executed for.
+	 * @param leader    the actor being followed in this process.
 	 */
-	ActorFollowTask(Actor character, Actor leader) {
+	ActorFollowTask(Actor actor, Actor leader) {
 		super(1, true);
-		this.character = character;
+		this.actor = actor;
 		this.leader = leader;
 	}
 	
 	@Override
 	public void execute() {
 		//First checks.
-		boolean combat = character.getCombat() != null && character.getCombat().getLastDefender() != null && character.getCombat().getLastDefender().same(leader);
-		if(character.getState() != EntityState.ACTIVE || leader.getState() != EntityState.ACTIVE || !character.isFollowing() || character.isDead() || leader.isDead()) {//Death and away check.
+		boolean combat = actor.getCombat() != null && actor.getCombat().getLastDefender() != null && actor.getCombat().getLastDefender().same(leader);
+		if(actor.getState() != EntityState.ACTIVE || leader.getState() != EntityState.ACTIVE || !actor.isFollowing() || actor.isDead() || leader.isDead()) {//Death and away check.
 			if(!combat) {
-				character.faceEntity(null);
+				actor.faceEntity(null);
 			}
-			character.setFollowing(false);
-			character.setFollowEntity(null);
+			actor.setFollowing(false);
+			actor.setFollowEntity(null);
 			this.cancel();
 			return;
 		}
 		
 		//Familiar calling back.
-		if(character.isMob()) {
-			Mob mob = character.toMob();
+		if(actor.isMob()) {
+			Mob mob = actor.toMob();
 			if(mob.isFamiliar() || mob.isPet()) {
-				if(!character.getPosition().withinDistance(leader.getPosition(), 15)) {
+				if(!actor.getPosition().withinDistance(leader.getPosition(), 15)) {
 					if(leader.isPlayer()) {
 						if(mob.isFamiliar()) {
 							Summoning.callFamiliar(leader.toPlayer());
@@ -79,12 +79,12 @@ class ActorFollowTask extends Task {
 		}
 		
 		//Entity facing.
-		character.faceEntity(leader);
+		actor.faceEntity(leader);
 		
 		//Movement locks.
-		if(character.getMovementQueue().isLockMovement() || character.isFrozen() || character.isStunned()) {//Requirement check.
-			if(character.isPlayer()) {
-				Player player = character.toPlayer();
+		if(actor.getMovementQueue().isLockMovement() || actor.isFrozen() || actor.isStunned()) {//Requirement check.
+			if(actor.isPlayer()) {
+				Player player = actor.toPlayer();
 				if(player.isFrozen())
 					player.message("You're currently frozen and you cannot move.");
 				if(player.isStunned())
@@ -97,12 +97,12 @@ class ActorFollowTask extends Task {
 		Boundary boundary = new Boundary(leader.getPosition(), leader.size());
 		
 		//Randomized walk away from leader's tile.
-		if(boundary.inside(character.getPosition(), character.size())) {
+		if(boundary.inside(actor.getPosition(), actor.size())) {
 			//Only moving when movement is done.
-			if(character.getMovementQueue().isMovementDone()) {
-				character.getMovementQueue().reset();
+			if(actor.getMovementQueue().isMovementDone()) {
+				actor.getMovementQueue().reset();
 				//outside of the leader's boundary but still nearby
-				TraversalMap.traversablesNextToBoundary(leader.getPosition(), leader.size(), character.size(), new Boundary(character.getPosition(), character.size()), p -> character.getMovementQueue().walk(p));
+				TraversalMap.traversablesNextToBoundary(leader.getPosition(), leader.size(), actor.size(), new Boundary(actor.getPosition(), actor.size()), p -> actor.getMovementQueue().walk(p));
 			}
 			return;
 		}
@@ -110,54 +110,54 @@ class ActorFollowTask extends Task {
 		//combat within boundary
 		CombatType type = CombatType.NONE;
 		if(combat) {
-			if (!character.getPosition().withinDistance(leader.getPosition(), 45)) {
-				character.getCombat().reset(true, true);
+			if (!actor.getPosition().withinDistance(leader.getPosition(), 45)) {
+				actor.getCombat().reset(true, true);
 				return;
 			}
-			if(character.getStrategy() != null) {
-				type = character.getStrategy().getCombatType();
+			if(actor.getStrategy() != null) {
+				type = actor.getStrategy().getCombatType();
 			}
-			if(character.getCombat().checkWithin() && (type == CombatType.RANGED || type == CombatType.MAGIC)) {
-				character.getMovementQueue().within = true;
+			if(actor.getCombat().checkWithin() && (type == CombatType.RANGED || type == CombatType.MAGIC)) {
+				actor.getMovementQueue().within = true;
 				return;
 			} else {
-				character.getMovementQueue().within = false;
+				actor.getMovementQueue().within = false;
 			}
 		}
 		
-		//Resets if character next to the player.
-		if((type == CombatType.NONE || type == CombatType.MELEE) && boundary.within(character.getPosition(), character.size(), 1)) {
+		//Resets if actor next to the player.
+		if((type == CombatType.NONE || type == CombatType.MELEE) && boundary.within(actor.getPosition(), actor.size(), 1)) {
 			//Combat diagonal fighting.
 			if(type == CombatType.MELEE) {
-				Direction facing = Direction.fromDeltas(Position.delta(character.getPosition(), leader.getPosition()));
+				Direction facing = Direction.fromDeltas(Position.delta(actor.getPosition(), leader.getPosition()));
 				if(facing.isDiagonal()) {//Moving player if diagonal fighting
-					Position pos = TraversalMap.getRandomNearby(leader.getPosition(), character.getPosition(), character.size());
-					if(pos != null && pos.withinDistance(character.getPosition(), 1)) {
-						character.getMovementQueue().within = false;
-						character.getMovementQueue().walk(pos);
+					Position pos = TraversalMap.getRandomNearby(leader.getPosition(), actor.getPosition(), actor.size());
+					if(pos != null && pos.withinDistance(actor.getPosition(), 1)) {
+						actor.getMovementQueue().within = false;
+						actor.getMovementQueue().walk(pos);
 						return;
 					}
 				}
 				return;
 			}
-			character.getMovementQueue().within = true;
+			actor.getMovementQueue().within = true;
 			return;
 		} else {
-			character.getMovementQueue().within = false;
+			actor.getMovementQueue().within = false;
 		}
 		//returns if path calculated is next to the leader.
-		if(destination != null && boundary.within(destination, leader.size(), character.size())) {
+		if(destination != null && boundary.within(destination, leader.size(), actor.size())) {
 			return;
 		}
 		//Setting new path depending on the follower's type.
-		Path path = character.isPlayer() || (character.isMob() && character.toMob().isSmart()) ? World.getSmartPathfinder().find(character.getPosition(), character.size(), leader.getPosition(), leader.size()) : World.getSimplePathfinder().find(character, leader.getPosition());
+		Path path = actor.isPlayer() || (actor.isMob() && actor.toMob().isSmart()) ? World.getSmartPathfinder().find(actor.getPosition(), leader.getPosition(), actor.size()) : World.getSimplePathfinder().find(actor, leader.getPosition());
 		if(path != null && path.isPossible()) {
 			//removing the points overlapping the leader's boundaries. //TODO: fix or remove.
 			//while(boundary.inside(path.poll(), leader.size()));
-			character.getMovementQueue().walk(path.getMoves());
+			actor.getMovementQueue().walk(path.getMoves());
 			destination = path.getDestination();
 		} else {
-			character.getMovementQueue().reset();
+			actor.getMovementQueue().reset();
 			destination = null;
 		}
 	}
@@ -165,10 +165,10 @@ class ActorFollowTask extends Task {
 	@Override
 	public void onCancel() {
 		destination = null;
-		character.setFollowing(false);
-		character.setFollowEntity(null);
-		character.getMovementQueue().within = false;
-		character.getMovementQueue().setFollowTask(Optional.empty());
+		actor.setFollowing(false);
+		actor.setFollowEntity(null);
+		actor.getMovementQueue().within = false;
+		actor.getMovementQueue().setFollowTask(Optional.empty());
 	}
 	
 	public void setDestination(Position destination) {

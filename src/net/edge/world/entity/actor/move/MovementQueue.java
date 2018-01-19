@@ -10,6 +10,9 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.move.path.Path;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
+import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.region.RegionManager;
 import net.edge.world.locale.Position;
 
 import java.util.Deque;
@@ -201,7 +204,7 @@ public final class MovementQueue {
 	public void smartWalk(Position position) {
 		if(!World.getRegions().exists(position))
 			return;
-		Path path = World.getSmartPathfinder().find(character.getPosition(), character.size(), position, character.size());
+		Path path = World.getSmartPathfinder().find(character.getPosition(), position, character.size());
 		if(path != null && path.isPossible()) {
 			walk(path.getMoves());
 		} else {

@@ -49,8 +49,8 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 		}
 		int limit = NetworkConstants.CONNECTION_AMOUNT;
 		if(connections.count(address) >= limit) { // Reject if more than CONNECTION_LIMIT active connections.
-			Session.write(ctx, LoginCode.LOGIN_LIMIT_EXCEEDED);
-			return;
+			//Session.write(ctx, LoginCode.LOGIN_LIMIT_EXCEEDED);
+			//return;
 		}
 		ChannelFuture future = ctx.channel().closeFuture(); // Remove address once disconnected.
 		future.addListener(it -> connections.remove(address));

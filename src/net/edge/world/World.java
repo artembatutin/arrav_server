@@ -19,8 +19,8 @@ import net.edge.world.entity.actor.Actor;
 import net.edge.world.entity.actor.ActorList;
 import net.edge.world.entity.actor.mob.Mob;
 import net.edge.world.entity.actor.mob.MobMovementTask;
+import net.edge.world.entity.actor.move.path.AStarPathFinder;
 import net.edge.world.entity.actor.move.path.SimplePathChecker;
-import net.edge.world.entity.actor.move.path.impl.DijkstraPathFinder;
 import net.edge.world.entity.actor.move.path.impl.SimplePathFinder;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
@@ -484,7 +484,7 @@ public final class World extends AbstractScheduledService {
 	/**
 	 * Client implementation of a smart pathfinder.
 	 */
-	private static final DijkstraPathFinder SMART_PATH_FINDER = new DijkstraPathFinder();
+	private static final AStarPathFinder SMART_PATH_FINDER = new AStarPathFinder();
 	
 	/**
 	 * This world's straight line pathfinder used for NPCs movements.
@@ -544,7 +544,7 @@ public final class World extends AbstractScheduledService {
 	 * Client implementation of a smart pathfinder.
 	 * @return the pathfinder instance.
 	 */
-	public static DijkstraPathFinder getSmartPathfinder() {
+	public static AStarPathFinder getSmartPathfinder() {
 		return SMART_PATH_FINDER;
 	}
 	

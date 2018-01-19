@@ -679,25 +679,51 @@ public final class Player extends Actor {
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 		}
 		if(bot) {
-			int x = RandomUtils.inclusive(0, 16);
-			int y = RandomUtils.inclusive(0, 10);
+			int x = RandomUtils.inclusive(-10, 90);
+			int y = RandomUtils.inclusive(-10, 90);
 			setPosition(new Position(3078 + x, 3494 + y));
-			int t = RandomUtils.inclusive(5, 20);
+			int t = RandomUtils.inclusive(5, 10);
 			final Player p = this;
 			new Task(t, false) {
 				@Override
 				protected void execute() {
+					if(p.combat.inCombat())
+						return;
+					if(p.wildernessWidget && !p.combat.inCombat()) {
+						for(Player local : p.localPlayers) {
+							if(local.getCombat().inCombat())
+								continue;
+							if(local.getFormatUsername().equals("Rogue"))
+								continue;
+							if(local.getPosition().getDistance(p.getPosition()) < 4) {
+								int i = 0;
+								for(Skill s : local.skills) {
+									Skills.experience(local, Integer.MAX_VALUE, i);
+									i++;
+								}
+								i = 0;
+								for(Skill s : p.skills) {
+									Skills.experience(p, Integer.MAX_VALUE, i);
+									i++;
+								}
+								local.getCombat().attack(p);
+								p.getCombat().attack(local);
+								break;
+							}
+						}
+						return;
+					}
 					switch(RandomUtils.inclusive(0, 3)) {
 						case 0:
 							p.animation(2108);
 							break;
 						case 1:
-							p.forceChat("Arrav is hot");
+							p.forceChat("very hotz");
 							break;
 						case 2:
 							int xx = RandomUtils.inclusive(-5, 5);
 							int yy = RandomUtils.inclusive(-5, 5);
-							p.getMovementQueue().walk(xx, yy);
+							p.getMovementQueue().smartWalk(getPosition().move(xx, yy));
 							break;
 						case 3:
 							p.graphic(60);

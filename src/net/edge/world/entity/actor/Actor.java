@@ -18,6 +18,7 @@ import net.edge.world.entity.actor.move.ForcedMovement;
 import net.edge.world.entity.actor.move.MovementQueue;
 import net.edge.world.entity.actor.move.MovementQueueListener;
 import net.edge.world.entity.actor.move.path.AStarPathFinder;
+import net.edge.world.entity.actor.move.path.distance.Chebyshev;
 import net.edge.world.entity.actor.move.path.distance.Manhattan;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.activity.ActivityManager;
@@ -82,11 +83,6 @@ public abstract class Actor extends Entity {
 	 * The flag that determines if this entity is visible or not.
 	 */
 	private boolean visible = true;
-	
-	/**
-	 * The aggression tick timer to not check npc aggression each tick.
-	 */
-	private int aggressionTick;
 	
 	/**
 	 * The viewing distance of a {@link Actor}.
@@ -192,8 +188,6 @@ public abstract class Actor extends Entity {
 	 * The flag determining if this entity is dead.
 	 */
 	private boolean dead;
-	
-	private int health;
 	
 	/**
 	 * Creates a new {@link Actor}.

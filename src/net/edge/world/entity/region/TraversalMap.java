@@ -429,7 +429,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse north otherwise
 	 * <code>false</code>
 	 */
-	private static boolean isTraversableNorth(int height, int x, int y, int size) {
+	public static boolean isTraversableNorth(int height, int x, int y, int size) {
 		for(int offsetX = 0; offsetX < size; offsetX++) {
 			for(int offsetY = 0; offsetY < size; offsetY++) {
 				if(!isTraversableNorth(height, x + offsetX, y + offsetY)) {
@@ -448,7 +448,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse north otherwise
 	 * <code>false</code>.
 	 */
-	private static boolean isTraversableNorth(int height, int x, int y) {
+	public static boolean isTraversableNorth(int height, int x, int y) {
 		return isTraversableNorth(height, x, y, false);
 	}
 	
@@ -461,7 +461,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse north otherwise
 	 * <code>false</code>.
 	 */
-	private static boolean isTraversableNorth(int height, int x, int y, boolean impenetrable) {
+	public static boolean isTraversableNorth(int height, int x, int y, boolean impenetrable) {
 		if(impenetrable) {
 			return isInactive(height, x, y + 1, TraversalConstants.IMPENETRABLE_BLOCKED | TraversalConstants.IMPENETRABLE_WALL_SOUTH);
 		}
@@ -477,7 +477,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse south otherwise
 	 * <code>false</code>
 	 */
-	private static boolean isTraversableSouth(int height, int x, int y, int size) {
+	public static boolean isTraversableSouth(int height, int x, int y, int size) {
 		for(int offsetX = 0; offsetX < size; offsetX++) {
 			for(int offsetY = 0; offsetY < size; offsetY++) {
 				if(!isTraversableSouth(height, x + offsetX, y + offsetY)) {
@@ -496,7 +496,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse south otherwise
 	 * <code>false</code>.
 	 */
-	private static boolean isTraversableSouth(int height, int x, int y) {
+	public static boolean isTraversableSouth(int height, int x, int y) {
 		return isTraversableSouth(height, x, y, false);
 	}
 	
@@ -509,7 +509,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse south otherwise
 	 * <code>false</code>.
 	 */
-	private static boolean isTraversableSouth(int height, int x, int y, boolean impenetrable) {
+	public static boolean isTraversableSouth(int height, int x, int y, boolean impenetrable) {
 		if(impenetrable) {
 			return isInactive(height, x, y - 1, TraversalConstants.IMPENETRABLE_BLOCKED | TraversalConstants.IMPENETRABLE_WALL_NORTH);
 		}
@@ -525,7 +525,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse east otherwise
 	 * <code>false</code>
 	 */
-	private static boolean isTraversableEast(int height, int x, int y, int size) {
+	public static boolean isTraversableEast(int height, int x, int y, int size) {
 		for(int offsetX = 0; offsetX < size; offsetX++) {
 			for(int offsetY = 0; offsetY < size; offsetY++) {
 				if(!isTraversableEast(height, x + offsetX, y + offsetY)) {
@@ -544,7 +544,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse east otherwise
 	 * <code>false</code>.
 	 */
-	private static boolean isTraversableEast(int height, int x, int y) {
+	public static boolean isTraversableEast(int height, int x, int y) {
 		return isTraversableEast(height, x, y, false);
 	}
 	
@@ -557,7 +557,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse east otherwise
 	 * <code>false</code>.
 	 */
-	private static boolean isTraversableEast(int height, int x, int y, boolean impenetrable) {
+	public static boolean isTraversableEast(int height, int x, int y, boolean impenetrable) {
 		if(impenetrable) {
 			return isInactive(height, x + 1, y, TraversalConstants.IMPENETRABLE_BLOCKED | TraversalConstants.IMPENETRABLE_WALL_WEST);
 		}
@@ -573,7 +573,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse west otherwise
 	 * <code>false</code>
 	 */
-	private static boolean isTraversableWest(int height, int x, int y, int size) {
+	public static boolean isTraversableWest(int height, int x, int y, int size) {
 		for(int offsetX = 0; offsetX < size; offsetX++) {
 			for(int offsetY = 0; offsetY < size; offsetY++) {
 				if(!isTraversableWest(height, x + offsetX, y + offsetY)) {
@@ -592,7 +592,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse west otherwise
 	 * <code>false</code>.
 	 */
-	private static boolean isTraversableWest(int height, int x, int y) {
+	public static boolean isTraversableWest(int height, int x, int y) {
 		return isTraversableWest(height, x, y, false);
 	}
 	
@@ -605,7 +605,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse west otherwise
 	 * <code>false</code>.
 	 */
-	private static boolean isTraversableWest(int height, int x, int y, boolean impenetrable) {
+	public static boolean isTraversableWest(int height, int x, int y, boolean impenetrable) {
 		if(impenetrable) {
 			return isInactive(height, x - 1, y, TraversalConstants.IMPENETRABLE_BLOCKED | TraversalConstants.IMPENETRABLE_WALL_EAST);
 		}
@@ -621,7 +621,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse north east
 	 * otherwise <code>false</code>
 	 */
-	private static boolean isTraversableNorthEast(int height, int x, int y, int size) {
+	public static boolean isTraversableNorthEast(int height, int x, int y, int size) {
 		for(int offsetX = 0; offsetX < size; offsetX++) {
 			for(int offsetY = 0; offsetY < size; offsetY++) {
 				if(!isTraversableNorthEast(height, x + offsetX, y + offsetY)) {
@@ -640,7 +640,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse north east
 	 * otherwise <code>false</code>.
 	 */
-	private static boolean isTraversableNorthEast(int height, int x, int y) {
+	public static boolean isTraversableNorthEast(int height, int x, int y) {
 		return isTraversableNorthEast(height, x, y, false);
 	}
 	
@@ -653,7 +653,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse north east
 	 * otherwise <code>false</code>.
 	 */
-	private static boolean isTraversableNorthEast(int height, int x, int y, boolean impenetrable) {
+	public static boolean isTraversableNorthEast(int height, int x, int y, boolean impenetrable) {
 		if(impenetrable) {
 			return isInactive(height, x + 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_WALL_SOUTH | TraversalConstants.IMPENETRABLE_WALL_SOUTH_WEST) && isInactive(height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_BLOCKED) && isInactive(height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH | TraversalConstants.IMPENETRABLE_BLOCKED);
 		}
@@ -669,7 +669,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse north west
 	 * otherwise <code>false</code>
 	 */
-	private static boolean isTraversableNorthWest(int height, int x, int y, int size) {
+	public static boolean isTraversableNorthWest(int height, int x, int y, int size) {
 		for(int offsetX = 0; offsetX < size; offsetX++) {
 			for(int offsetY = 0; offsetY < size; offsetY++) {
 				if(!isTraversableNorthWest(height, x + offsetX, y + offsetY)) {
@@ -688,7 +688,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse north west
 	 * otherwise <code>false</code>.
 	 */
-	private static boolean isTraversableNorthWest(int height, int x, int y) {
+	public static boolean isTraversableNorthWest(int height, int x, int y) {
 		return isTraversableNorthWest(height, x, y, false);
 	}
 	
@@ -701,7 +701,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse north west
 	 * otherwise <code>false</code>.
 	 */
-	private static boolean isTraversableNorthWest(int height, int x, int y, boolean impenetrable) {
+	public static boolean isTraversableNorthWest(int height, int x, int y, boolean impenetrable) {
 		if(impenetrable) {
 			return isInactive(height, x - 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_SOUTH | TraversalConstants.IMPENETRABLE_WALL_SOUTH_EAST) && isInactive(height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_BLOCKED) && isInactive(height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH | TraversalConstants.IMPENETRABLE_BLOCKED);
 		}
@@ -717,7 +717,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse south east
 	 * otherwise <code>false</code>
 	 */
-	private static boolean isTraversableSouthEast(int height, int x, int y, int size) {
+	public static boolean isTraversableSouthEast(int height, int x, int y, int size) {
 		for(int offsetX = 0; offsetX < size; offsetX++) {
 			for(int offsetY = 0; offsetY < size; offsetY++) {
 				if(!isTraversableSouthEast(height, x + offsetX, y + offsetY)) {
@@ -736,7 +736,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse south east
 	 * otherwise <code>false</code>.
 	 */
-	private static boolean isTraversableSouthEast(int height, int x, int y) {
+	public static boolean isTraversableSouthEast(int height, int x, int y) {
 		return isTraversableSouthEast(height, x, y, false);
 	}
 	
@@ -765,7 +765,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse south west
 	 * otherwise <code>false</code>
 	 */
-	private static boolean isTraversableSouthWest(int height, int x, int y, int size) {
+	public static boolean isTraversableSouthWest(int height, int x, int y, int size) {
 		for(int offsetX = 0; offsetX < size; offsetX++) {
 			for(int offsetY = 0; offsetY < size; offsetY++) {
 				if(!isTraversableSouthWest(height, x + offsetX, y + offsetY)) {
@@ -784,7 +784,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse south west
 	 * otherwise <code>false</code>.
 	 */
-	private static boolean isTraversableSouthWest(int height, int x, int y) {
+	public static boolean isTraversableSouthWest(int height, int x, int y) {
 		return isTraversableSouthWest(height, x, y, false);
 	}
 	
@@ -797,7 +797,7 @@ public final class TraversalMap {
 	 * @return <code>true</code> if it is possible to traverse south west
 	 * otherwise <code>false</code>.
 	 */
-	private static boolean isTraversableSouthWest(int height, int x, int y, boolean impenetrable) {
+	public static boolean isTraversableSouthWest(int height, int x, int y, boolean impenetrable) {
 		if(impenetrable) {
 			return isInactive(height, x - 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_NORTH | TraversalConstants.IMPENETRABLE_WALL_NORTH_EAST) && isInactive(height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_BLOCKED) && isInactive(height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH | TraversalConstants.IMPENETRABLE_BLOCKED);
 		}

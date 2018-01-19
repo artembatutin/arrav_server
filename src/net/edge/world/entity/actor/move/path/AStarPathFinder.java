@@ -1,14 +1,12 @@
 package net.edge.world.entity.actor.move.path;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import net.edge.world.Direction;
-import net.edge.world.entity.actor.Actor;
-import net.edge.world.entity.actor.move.path.distance.Distance;
+import net.edge.world.World;
+import net.edge.world.entity.item.GroundItem;
+import net.edge.world.entity.item.Item;
+import net.edge.world.entity.region.TraversalMap;
 import net.edge.world.locale.Position;
 
 import java.util.*;
-
-import static net.edge.world.Direction.*;
 
 /**
  * Represents a {@code PathFinder} which uses the A* search algorithm(by passing obstacles).
@@ -20,162 +18,102 @@ import static net.edge.world.Direction.*;
 public final class AStarPathFinder extends PathFinder {
 	
 	/**
-	 * The Heuristic used by this {@code PathFinder}.
+	 * The cost of moving in a straight line.
 	 */
-	private final Distance heuristic;
+	private static final int COST_STRAIGHT = 10;
 	
-	private final Actor character;
-	
-	private final Object2ObjectArrayMap<Position, Node> nodes = new Object2ObjectArrayMap<>();
-	
-	private final Set<Node> open = new HashSet<>();
-	
-	private final Queue<Node> sorted = new PriorityQueue<>();
-	
-	private final Deque<Position> shortest = new ArrayDeque<>();
-	
-	/**
-	 * Constructs a new {@link AStarPathFinder} with the specified traversal tool.mapviewer.
-	 */
-	public AStarPathFinder(Actor character, Distance heuristic) {
-		this.character = character;
-		this.heuristic = heuristic;
-	}
-	
-	/**
-	 * A default method to find a path for the specified {@link Actor}.
-	 * @param destination The destination of the path.
-	 * @return A {@link Deque} of {@link Position steps} to the specified destination.
-	 */
-	public Path find(Position destination) {
-		Position origin = character.getPosition();
-		if(origin.getZ() != destination.getZ())
-			return new Path(null);
-		return find(new Position(origin.getX(), origin.getY(), origin.getZ()), destination, character.size());
-	}
-	
-	/**
-	 * Performs the path finding calculations to find the path using the A* algorithm.
-	 * @param origin The origin Position.
-	 * @param target The target Position.
-	 * @param size   The amount of positions the travers takes up.
-	 * @return The path to pursue to reach the destination.
-	 */
-	@Override
-	public Path find(Position origin, Position target, int size) {
-		if(origin.getZ() != target.getZ())
-			return new Path(null);
-		nodes.clear();
-		Node start = new Node(origin), end = new Node(target);
-		nodes.put(origin, start);
-		nodes.put(target, end);
+	public Path find(Position origin, Position destination, int size) {
+		Map<Position, Node> nodes = new HashMap<>();
 		
-		open.clear();
-		sorted.clear();
+		int z = origin.getZ();
+		int dist = (int) origin.getDistance(destination);
+		Node start = new Node(origin);
+		Node end = new Node(destination);
+		start.setCost(1000);
+		nodes.put(start.getPosition(), start);
+		nodes.put(end.getPosition(), end);
+		
+		Set<Node> open = new HashSet<>();
+		Queue<Node> sorted = new PriorityQueue<>();
+		
+		Node closest = start;
+		boolean found = false;
 		open.add(start);
 		sorted.add(start);
-		Node active;
-		
-		int distance = (int) origin.getDistance(target);
-		boolean found = false;
-		int count2 = 0;
+		int process = dist * 5;
 		do {
-			active = getCheapest(sorted);
-			Position position = active.getPosition();
-			if(position.same(target)) {
+			process--;
+			if(process <= 0)
+				break;
+			Node active = getCheapest(sorted);
+			Position pos = active.getPosition();
+			if(pos.getX() == destination.getX() && pos.getY() == destination.getY()) {
 				found = true;
 				break;
 			}
+			
 			open.remove(active);
 			active.close();
 			
-			Position move = position.move(NORTH);
-			if(traversable(position, size, NORTH) && traversable(move, size, Direction.valueOf(NORTH.getOpposite()))) {
-				Node node = nodes.computeIfAbsent(move, Node::new);
-				compare(active, node, open, sorted, heuristic);
+			int x = pos.getX();
+			int y = pos.getY();
+			if(TraversalMap.isTraversableSouth(z, x, y, size)) {
+				Node other = createIfAbsent(new Position(x, y - 1, z), nodes);
+				closest = compare(closest, end, active, other, open, sorted);
 			}
-			move = position.move(NORTH_EAST);
-			if(traversable(position, size, NORTH_EAST) && traversable(move, size, Direction.valueOf(NORTH_EAST.getOpposite()))) {
-				Node node = nodes.computeIfAbsent(move, Node::new);
-				compare(active, node, open, sorted, heuristic);
+			
+			if(TraversalMap.isTraversableWest(z, x, y, size)) {
+				Node other = createIfAbsent(new Position(x - 1, y, z), nodes);
+				closest = compare(closest, end, active, other, open, sorted);
 			}
-			move = position.move(EAST);
-			if(traversable(position, size, EAST) && traversable(move, size, Direction.valueOf(EAST.getOpposite()))) {
-				Node node = nodes.computeIfAbsent(move, Node::new);
-				compare(active, node, open, sorted, heuristic);
+			
+			if(TraversalMap.isTraversableNorth(z, x, y, size)) {
+				Node other = createIfAbsent(new Position(x, y + 1, z), nodes);
+				closest = compare(closest, end, active, other, open, sorted);
 			}
-			move = position.move(SOUTH_EAST);
-			if(traversable(position, size, SOUTH_EAST) && traversable(move, size, Direction.valueOf(SOUTH_EAST.getOpposite()))) {
-				Node node = nodes.computeIfAbsent(move, Node::new);
-				compare(active, node, open, sorted, heuristic);
+			
+			if(TraversalMap.isTraversableEast(z, x, y, size)) {
+				Node other = createIfAbsent(new Position(x + 1, y, z), nodes);
+				closest = compare(closest, end, active, other, open, sorted);
 			}
-			move = position.move(SOUTH);
-			if(traversable(position, size, SOUTH) && traversable(move, size, Direction.valueOf(SOUTH.getOpposite()))) {
-				Node node = nodes.computeIfAbsent(move, Node::new);
-				compare(active, node, open, sorted, heuristic);
+			
+			if(TraversalMap.isTraversableSouthWest(z, x, y, size)) {
+				Node other = createIfAbsent(new Position(x - 1, y - 1, z), nodes);
+				closest = compare(closest, end, active, other, open, sorted);
 			}
-			move = position.move(SOUTH_WEST);
-			if(traversable(position, size, SOUTH_WEST) && traversable(move, size, Direction.valueOf(SOUTH_WEST.getOpposite()))) {
-				Node node = nodes.computeIfAbsent(move, Node::new);
-				compare(active, node, open, sorted, heuristic);
+			
+			if(TraversalMap.isTraversableNorthWest(z, x, y, size)) {
+				Node other = createIfAbsent(new Position(x - 1, y + 1, z), nodes);
+				closest = compare(closest, end, active, other, open, sorted);
 			}
-			move = position.move(WEST);
-			if(traversable(position, size, WEST) && traversable(move, size, Direction.valueOf(WEST.getOpposite()))) {
-				Node node = nodes.computeIfAbsent(move, Node::new);
-				compare(active, node, open, sorted, heuristic);
+			
+			if(TraversalMap.isTraversableSouthEast(z, x, y, size)) {
+				Node other = createIfAbsent(new Position(x + 1, y - 1, z), nodes);
+				closest = compare(closest, end, active, other, open, sorted);
 			}
-			move = position.move(NORTH_WEST);
-			if(traversable(position, size, NORTH_WEST) && traversable(move, size, Direction.valueOf(NORTH_WEST.getOpposite()))) {
-				Node node = nodes.computeIfAbsent(move, Node::new);
-				compare(active, node, open, sorted, heuristic);
+			
+			if(TraversalMap.isTraversableNorthEast(z, x, y, size)) {
+				Node other = createIfAbsent(new Position(x + 1, y + 1, z), nodes);
+				closest = compare(closest, end, active, other, open, sorted);
 			}
-		} while(!open.isEmpty() && sorted.size() < distance * 20);
+			
+		} while(!open.isEmpty());
 		
-		shortest.clear();
-		if(found) {
-			if(end.hasParent())
-				active = end;
-			if(active.hasParent()) {
-				Position position = active.getPosition();
-				
-				while(!origin.same(position)) {
-					shortest.addFirst(position);
-					active = active.getParent(); // If the target has a parent then all of the others will.
-					position = active.getPosition();
-					if(count2++ > 100) {
-						break;
-					}
-				}
+		Deque<Position> shortest = new ArrayDeque<>();
+		Node active = found ? end : closest;
+		if(active != null && active.getParent() != null) {
+			Position position = active.getPosition();
+			while(!active.equals(start)) {
+				shortest.addFirst(position);
+				active = active.getParent();
+				position = active.getPosition();
 			}
-		} else
-			return null;
+		}
 		return new Path(shortest);
 	}
 	
 	/**
-	 * Compares the two specified {@link Node}s, adding the other node to the openShop {@link Set} if the estimation is
-	 * cheaper than the current cost.
-	 * @param active    The active node.
-	 * @param other     The node to compare the active node against.
-	 * @param open      The set of openShop nodes.
-	 * @param sorted    The sorted {@link Queue} of nodes.
-	 * @param heuristic The {@link Distance} used to estimate the cost of the node.
-	 */
-	private void compare(Node active, Node other, Set<Node> open, Queue<Node> sorted, Distance heuristic) {
-		int cost = active.getCost() + heuristic.calculate(active.getPosition(), other.getPosition());
-		if(other.getCost() > cost) {
-			open.remove(other);
-			other.close();
-		} else if(other.isOpen() && !open.contains(other)) {
-			other.setCost(cost);
-			other.setParent(active);
-			open.add(other);
-			sorted.add(other);
-		}
-	}
-	
-	/**
-	 * Gets the cheapest openShop {@link Node} from the {@link Queue}.
+	 * Gets the cheapest open {@link Node} from the {@link Queue}.
 	 * @param nodes The queue of nodes.
 	 * @return The cheapest node.
 	 */
@@ -185,171 +123,194 @@ public final class AStarPathFinder extends PathFinder {
 			nodes.poll();
 			node = nodes.peek();
 		}
+		
 		return node;
 	}
 	
-}
-
-/**
- * A {@code Entity} representing a weighted {@link Position}.
- * @author Graham
- * @author Major
- * @author Artem Batutin <artembatutin@gmail.com>
- * @author Ryley Kimmel <ryley.kimmel@live.com>
- */
-final class Node implements Comparable<Node> {
-	
 	/**
-	 * The cost of this {@code Entity}.
+	 * Gets the closest node possible.
+	 * @param nodes The queue of nodes.
+	 * @return The closest cheapest node.
 	 */
-	private int cost;
-	
-	/**
-	 * Whether or not this {@code Entity} is openShop.
-	 */
-	private boolean open = true;
-	
-	/**
-	 * The parent {@code Entity} of this Entity.
-	 */
-	private Optional<Node> parent = Optional.empty();
-	
-	/**
-	 * The Position of this {@code Entity}.
-	 */
-	private final Position position;
-	
-	/**
-	 * Creates the {@code Entity} with the specified {@link Position} and cost.
-	 * @param position The Position.
-	 */
-	public Node(Position position) {
-		this(position, 0);
-	}
-	
-	/**
-	 * Creates the {@code Entity} with the specified {@link Position} and cost.
-	 * @param position The Position.
-	 * @param cost     The cost of the Entity.
-	 */
-	public Node(Position position, int cost) {
-		this.position = position;
-		this.cost = cost;
-	}
-	
-	/**
-	 * Sets the cost of this Entity.
-	 * @param cost The cost.
-	 */
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
-	
-	/**
-	 * Gets the cost of this Entity.
-	 * @return The cost.
-	 */
-	public int getCost() {
-		return cost;
-	}
-	
-	/**
-	 * Closes this Entity.
-	 */
-	public void close() {
-		open = false;
-	}
-	
-	/**
-	 * Returns whether or not this {@link Node} is openShop.
-	 * @return {@code true} if this Entity is openShop, otherwise {@code false}.
-	 */
-	public boolean isOpen() {
-		return open;
-	}
-	
-	/**
-	 * Sets the parent Entity of this Entity.
-	 * @param parent The parent Entity. May be {@code null}.
-	 */
-	public void setParent(Node parent) {
-		this.parent = Optional.ofNullable(parent);
-	}
-	
-	/**
-	 * Gets the parent Entity of this Entity.
-	 * @return The parent Entity.
-	 * @throws NoSuchElementException If this Entity does not have a parent.
-	 */
-	public Node getParent() {
-		return parent.get();
-	}
-	
-	/**
-	 * Returns whether or not this Entity has a parent Entity.
-	 * @return {@code true} if this Entity has a parent Entity, otherwise {@code false}.
-	 */
-	public boolean hasParent() {
-		return parent.isPresent();
-	}
-	
-	/**
-	 * Gets the {@link Position} this Entity represents.
-	 * @return The position.
-	 */
-	public Position getPosition() {
-		return position;
-	}
-	
-	/**
-	 * Compares the {@code Entity}'s cost with another.
-	 * @param other The other Entity to check.
-	 * @return The differential Integer.
-	 */
-	@Override
-	public int compareTo(Node other) {
-		return Integer.compare(cost, other.cost);
-	}
-	
-	/**
-	 * Gets the condition if the Entity equals another object.
-	 * @param obj The object to be checked.
-	 * @return {@code true} if it's the same as the object, {@code false} otherwise.
-	 */
-	@Override
-	public final boolean equals(Object obj) {
-		if(this == obj)
-			return true;
-		if(obj == null)
-			return false;
-		if(!(obj instanceof Node))
-			return false;
-		Node other = (Node) obj;
-		return getPosition().getX() == other.getPosition().getX() && getPosition().getY() == other.getPosition().getY() && getPosition().getZ() == other.getPosition()
-				.getZ() && getCost() == other.getCost() && getParent().getCost() == other.getParent().getCost() && getParent().getPosition().getX() == other.getParent().getPosition().getX() && getParent().getPosition().getY() == other.getParent()
-				.getPosition()
-				.getY() && getParent().getPosition().getZ() == other.getPosition().getZ();
-	}
-	
-	/**
-	 * Gets the node's hash code.
-	 * @return hash code.
-	 */
-	@Override
-	public final int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + position.getX();
-		result = prime * result + position.getY();
-		result = prime * result + position.getZ();
-		if(parent.isPresent()) {
-			Position p = parent.get().getPosition();
-			result = prime * result + p.getX();
-			result = prime * result + p.getY();
-			result = prime * result + p.getZ();
+	private Node getClosest(Queue<Node> nodes) {
+		Node node = nodes.peek();
+		while(!node.isOpen()) {
+			nodes.poll();
+			node = nodes.peek();
 		}
-		result = prime * result + cost;
-		return result;
+		return node;
+	}
+	
+	/**
+	 * Compares the two specified {@link Node}s, adding the check node to the
+	 * open {@link Set} if the estimation is cheaper than the current cost.
+	 * @param closest The closest node found.
+	 * @param active The active node.
+	 * @param check The node to compare the active node against.
+	 * @param open The set of open nodes.
+	 * @param sorted The sorted {@link Queue} of nodes.
+	 * @return The closets node of all the search.
+	 */
+	private Node compare(Node closest, Node end, Node active, Node check, Set<Node> open, Queue<Node> sorted) {
+		int cost = estimateDistance(check.getPosition(), end.getPosition());
+		if(cost < closest.getCost()) {
+			closest = check;
+		}
+		if(check.getCost() > cost) {
+			open.remove(check);
+			check.close();
+		} else if(check.isOpen() && !open.contains(check)) {
+			check.setCost(cost);
+			check.setParent(active);
+			open.add(check);
+			sorted.add(check);
+		}
+		return closest;
+	}
+	
+	/**
+	 * Creates a {@link Node} and inserts it into the specified {@link Map} if
+	 * one does not already exist, then returns that node.
+	 * @param position The {@link Position}.
+	 * @param nodes The map of positions to nodes.
+	 * @return The node.
+	 */
+	private Node createIfAbsent(Position position, Map<Position, Node> nodes) {
+		Node existing = nodes.get(position);
+		if(existing == null) {
+			existing = new Node(position);
+			nodes.put(position, existing);
+		}
+		
+		return existing;
+	}
+	
+	/**
+	 * A heuristic to estimate the distance between two positions.
+	 * @param next The next check position.
+	 * @param dest The destination position.
+	 * @return The estimated distance between the two positions.
+	 */
+	private int estimateDistance(Position next, Position dest) {
+		int deltaX = next.getX() - dest.getX();
+		int deltaY = next.getY() - dest.getY();
+		return (Math.abs(deltaX) + Math.abs(deltaY)) * COST_STRAIGHT;
+	}
+	
+	/**
+	 * Represents a node used by the A* algorithm.
+	 * @author Graham
+	 * @author Ryley Kimmel <ryley.kimmel@live.com>
+	 */
+	private static final class Node implements Comparable<Node> {
+		
+		/**
+		 * The parent node.
+		 */
+		private Node parent;
+		
+		/**
+		 * The cost.
+		 */
+		private int cost;
+		
+		/**
+		 * Whether or not this node is open.
+		 */
+		private boolean open = true;
+		
+		/**
+		 * The position of this node.
+		 */
+		private final Position position;
+		
+		/**
+		 * Constructs a new {@link Node}.
+		 * @param position The position of this node.
+		 */
+		public Node(Position position) {
+			this.position = Objects.requireNonNull(position);
+		}
+		
+		/**
+		 * Sets the parent.
+		 * @param parent The parent.
+		 */
+		public void setParent(Node parent) {
+			this.parent = parent;
+		}
+		
+		/**
+		 * Gets the parent node.
+		 * @return The parent node.
+		 */
+		public Node getParent() {
+			return parent;
+		}
+		
+		/**
+		 * Sets the cost.
+		 * @param cost The cost.
+		 */
+		public void setCost(int cost) {
+			this.cost = cost;
+		}
+		
+		/**
+		 * Gets the cost.
+		 * @return The cost.
+		 */
+		public int getCost() {
+			return cost;
+		}
+		
+		/**
+		 * Tests whether or not this node is open.
+		 */
+		public boolean isOpen() {
+			return open;
+		}
+		
+		/**
+		 * Closes this node.
+		 */
+		public void close() {
+			open = false;
+		}
+		
+		/**
+		 * Returns the position of this node.
+		 */
+		public Position getPosition() {
+			return position;
+		}
+		
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + cost;
+			result = prime * result + Objects.hashCode(parent);
+			result = prime * result + position.hashCode();
+			result = prime * result + Boolean.hashCode(open);
+			return result;
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if(obj instanceof Node) {
+				Node other = (Node) obj;
+				return cost == other.cost && Objects.equals(parent, other.parent) && position.same(other.position) && open == other.open;
+			}
+			
+			return false;
+		}
+		
+		@Override
+		public int compareTo(Node node) {
+			return cost - node.cost;
+		}
+		
 	}
 	
 }

@@ -17,17 +17,7 @@ public abstract class PathFinder {
 	 * @param size   The entity's size.
 	 * @return The path containing the Positions to go through.
 	 */
-	public Path find(Position origin, Position target, int size) {
-		throw new NotImplementedException();
-	}
-	
-	public Path find(Position origin, int originSize, Position target, int targetSize) {
-		return find(origin, originSize, originSize, target, targetSize, targetSize);
-	}
-	
-	public Path find(Position origin, int originWidth, int originLength, Position target, int targetWidth, int targetLength) {
-		throw new NotImplementedException();
-	}
+	public abstract Path find(Position origin, Position target, int size);
 	
 	/**
 	 * Returns whether or not a {@link Position} walking one step in any of the specified {@link Direction}s would lead
