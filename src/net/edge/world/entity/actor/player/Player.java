@@ -631,9 +631,7 @@ public final class Player extends Actor {
 				World.get().submit(new CombatEffectTask(this, $it));
 		});
 		ExchangeSessionManager.get().resetRequests(this);
-		message("@blu@Welcome to Edgeville ( Combat Beta )!");
-		message("@blu@In this beta, spawn items with ::item id amount");
-		message("@blu@You can also max your combat skills with ::master");
+		message("@blu@Welcome to Arrav!");
 		message("@blu@Report bugs with ::bug description");
 		if(UpdateCommand.inProgess == 1) {
 			message("@red@There is currently an update schedule in progress. You'll be kicked off soon.");

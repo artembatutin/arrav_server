@@ -7,10 +7,10 @@ import net.edge.util.rand.RandomUtils;
  * @since 3-6-2017.
  */
 public enum TriviaData {
-	_1("When Edgeville was released.", "11 august"),
+	_1("When Arrav was released.", "1 march"),
 	_2("What is 521+412", "933"),
 	_3("What is the maximum combat level?", "138"),
-	_4("How much coins does a starterpack in Edgeville contain?", "5m", "5000000", "5million"),
+	_4("How much coins does a starterpack in Arrav contain?", "5m", "5000000", "5million"),
 	_5("Who is the shop owner of the Blood money store?", "hazelmere"),
 	_6("Who is the shop owner of the Edge tokens store?", "party Pete"),
 	_7("How many Hitpoints do Sharks heal?", "20", "Twenty", "200", "two hundred"),

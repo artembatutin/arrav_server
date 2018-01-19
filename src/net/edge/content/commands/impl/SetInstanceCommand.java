@@ -5,7 +5,7 @@ import net.edge.content.commands.CommandSignature;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"instance"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR}, syntax = "Go to a new instance, ::instance id")
+@CommandSignature(alias = {"instance"}, rights = {Rights.ADMINISTRATOR,}, syntax = "Go to a new instance, ::instance id")
 public final class SetInstanceCommand implements Command {
 	
 	@Override

@@ -1,7 +1,7 @@
 [
   {
-	"owner": "avro",
-	"name": "Edgeville",
+	"owner": "rogue",
+	"name": "Arrav",
 	"loot": false,
 	"ban": "OWNER",
 	"mute": "OWNER",
@@ -11,38 +11,6 @@
 	"ranked": [
 	  {
 		"name": "avro",
-		"rank": "OWNER"
-	  }
-	]
-  },
-  {
-	"owner": "rela",
-	"name": "Rela",
-	"loot": false,
-	"ban": "OWNER",
-	"mute": "OWNER",
-	"talk": "MEMBER",
-	"mutes": [],
-	"bans": [],
-	"ranked": [
-	  {
-		"name": "rela",
-		"rank": "OWNER"
-	  }
-	]
-  },
-  {
-	"owner": "dharry",
-	"name": "Dharry",
-	"loot": false,
-	"ban": "OWNER",
-	"mute": "OWNER",
-	"talk": "MEMBER",
-	"mutes": [],
-	"bans": [],
-	"ranked": [
-	  {
-		"name": "dharry",
 		"rank": "OWNER"
 	  }
 	]

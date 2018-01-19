@@ -6,7 +6,7 @@ import net.edge.world.World;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"movetome"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.MODERATOR}, syntax = "Moves a player to you, ::movetome username")
+@CommandSignature(alias = {"movetome"}, rights = {Rights.ADMINISTRATOR, Rights.MODERATOR}, syntax = "Moves a player to you, ::movetome username")
 public final class MoveToMeCommand implements Command {
 	
 	@Override

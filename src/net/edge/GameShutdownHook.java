@@ -35,7 +35,7 @@ public final class GameShutdownHook extends Thread {
 	private final ListeningExecutorService exit;
 	
 	GameShutdownHook() {
-		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleShutdown").build());
+		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("ArravShutdownHook").build());
 		exit = MoreExecutors.listeningDecorator(delegateService);
 	}
 	

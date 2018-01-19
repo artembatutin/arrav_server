@@ -5,7 +5,7 @@ import net.edge.content.commands.CommandSignature;
 import net.edge.world.entity.actor.player.Player;
 import net.edge.world.entity.actor.player.assets.Rights;
 
-@CommandSignature(alias = {"mypos", "pos"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.MODERATOR}, syntax = "Gives coordinates, ::pos")
+@CommandSignature(alias = {"mypos", "pos"}, rights = {Rights.ADMINISTRATOR, Rights.MODERATOR}, syntax = "Gives coordinates, ::pos")
 public final class PositionCommand implements Command {
 	
 	@Override

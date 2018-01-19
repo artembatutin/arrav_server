@@ -10,7 +10,7 @@ import net.edge.world.entity.item.Item;
 
 import static net.edge.content.achievements.Achievement.VOTE;
 
-@CommandSignature(alias = {"redeem"}, rights = {Rights.ADMINISTRATOR, Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR, Rights.GOLDEN_DONATOR, Rights.EXTREME_DONATOR, Rights.SUPER_DONATOR, Rights.DONATOR, Rights.IRON_MAN, Rights.DESIGNER, Rights.YOUTUBER, Rights.HELPER, Rights.PLAYER}, syntax = "Redeem a vote auth, ::redeem auth")
+@CommandSignature(alias = {"redeem"}, rights = {Rights.ADMINISTRATOR, Rights.SENIOR_MODERATOR, Rights.MODERATOR, Rights.GOLDEN_DONATOR, Rights.EXTREME_DONATOR, Rights.SUPER_DONATOR, Rights.DONATOR, Rights.IRON_MAN, Rights.DESIGNER, Rights.YOUTUBER, Rights.HELPER, Rights.PLAYER}, syntax = "Redeem a vote auth, ::redeem auth")
 public final class RedeemCommand implements Command {
 	
 	/**

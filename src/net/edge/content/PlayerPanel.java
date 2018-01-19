@@ -167,7 +167,7 @@ public enum PlayerPanel {
 	TOTAL_VOTES() {
 		@Override
 		public void onClick(Player player) {
-			player.message("You have voted " + player.totalVotes + "x for Edgeville.");
+			player.message("You have voted " + player.totalVotes + "x for Arrav.");
 		}
 	},
 	

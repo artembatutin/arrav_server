@@ -84,7 +84,7 @@ public final class Application {
 	static {
 		//System.out.println("Lines in project: " + Utility.linesInProject(new File("./src/")));
 		try {
-			Thread.currentThread().setName("EdgevilleInitializationThread");
+			Thread.currentThread().setName("ArravInitializationThread");
 		} catch(Exception e) {
 			throw new ExceptionInInitializerError(e);
 		}
@@ -113,7 +113,7 @@ public final class Application {
 	 * A package-private constructor to discourage external instantiation.
 	 */
 	public Application() {
-		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("EdgevilleInitialization").build());
+		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("ArravInitialization").build());
 		launch = MoreExecutors.listeningDecorator(delegateService);
 	}
 	
@@ -123,6 +123,7 @@ public final class Application {
 	 */
 	private void init() {
 		try {
+			long time = System.currentTimeMillis();
 			LOGGER.info("Main is being initialized...");
 			prepare();
 			bind();
@@ -143,7 +144,8 @@ public final class Application {
 					ShootingStarManager.get().process();
 				}
 			});
-			LOGGER.info("Edgeville is now online!");
+			time = System.currentTimeMillis() - time;
+			LOGGER.info("Arrav is now online (" + time + ").");
 			STARTING = false;
 		} catch(Exception e) {
 			LOGGER.log(Level.SEVERE, "An error occurred while binding the Bootstrap!", e);
@@ -159,7 +161,7 @@ public final class Application {
 	 * @throws Exception If any exceptions are thrown while binding.
 	 */
 	private void bind() {
-		LOGGER.info("Binding Edgeville on port " + NetworkConstants.PORT_ONLINE + ".");
+		LOGGER.info("Binding Arrav on port " + NetworkConstants.PORT_ONLINE + ".");
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		EventLoopGroup loopGroup;
 		//If epoll possible, better to use it (for linux systems).

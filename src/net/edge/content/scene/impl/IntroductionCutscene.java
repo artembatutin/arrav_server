@@ -53,7 +53,7 @@ public final class IntroductionCutscene extends Cutscene {
 		player.setPosition(new Position(3088, 3509));
 		if(player.getPosition().same(new Position(3088, 3509))) {
 			if(player.getAttr().get("introduction_stage").getInt() == 1) {
-				player.getDialogueBuilder().append(new StatementDialogue("Welcome to the World of @blu@Edgeville!").attach(() -> {
+				player.getDialogueBuilder().append(new StatementDialogue("Welcome to the World of @blu@Arrav!").attach(() -> {
 					player.getActivityManager().set(ActivityType.CLICK_BUTTON);
 					player.out(new SendCameraMovement(new Position(3085, 3510), 310, 2, 10));
 					player.out(new SendCameraAngle(new Position(3093, 3509), 300, 2, 10));
@@ -74,7 +74,7 @@ public final class IntroductionCutscene extends Cutscene {
 				}), new StatementDialogue("This shiny portal allows you to", "get anywhere: @red@skills, minigames, bosses.").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3087, 3514), 340, 2, 10));
 					player.out(new SendCameraAngle(new Position(3083, 3514), 320, 2, 5));
-				}), new StatementDialogue("There is one slayer master in Edgeville, ask her for any tasks.").attach(() -> {
+				}), new StatementDialogue("There is one slayer master in Arrav, ask her for any tasks.").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3087, 3501), 280, 2, 10));
 					player.out(new SendCameraAngle(new Position(3085, 3502), 240, 2, 10));
 				}), new StatementDialogue("This is the @red@Fire pit.", "Firing it up will enable double xp.").attach(() -> {
@@ -102,7 +102,7 @@ public final class IntroductionCutscene extends Cutscene {
 				}), new StatementDialogue("Another place on the list is the @red@Camp.", "Most of holidays activities will be held here.").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3106, 3504), 1900, 2, 10));
 					player.out(new SendCameraAngle(new Position(3107, 3512), 2100, 2, 10));
-				}), new StatementDialogue("We hope you'll enjoy your stay at @red@Edgeville.", "Don't forget to register on our forums.", "Report bugs also!").attach(() -> {
+				}), new StatementDialogue("We hope you'll enjoy your stay at @red@Arrav.", "Don't forget to register on our forums.", "Report bugs also!").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3096, 3519), 1900, 2, 10));
 					player.out(new SendCameraAngle(new Position(3087, 3510), 2100, 2, 10));
 				}), complete());
