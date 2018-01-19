@@ -115,10 +115,15 @@ public class Session {
 	 * @throws Exception exception
 	 */
 	void handleMessage(ChannelHandlerContext ctx, Object msg) throws Exception {
-		if(isGame) {
-			game((ByteBuf) msg);
-		} else {
-			login(ctx, (ByteBuf) msg);
+		ByteBuf in = (ByteBuf) msg;
+		try {
+			if(isGame) {
+				game(in);
+			} else {
+				login(ctx, in);
+			}
+		} finally {
+			in.release();
 		}
 	}
 	
@@ -233,20 +238,16 @@ public class Session {
 	}
 	
 	private void game(ByteBuf in) {
-		try {
-			switch(gameState) {
-				case OPCODE:
-					opcode(in);
-					break;
-				case SIZE:
-					size(in);
-					break;
-				case PAYLOAD:
-					payload(in);
-					break;
-			}
-		} finally {
-			in.readableBytes();
+		switch(gameState) {
+			case OPCODE:
+				opcode(in);
+				break;
+			case SIZE:
+				size(in);
+				break;
+			case PAYLOAD:
+				payload(in);
+				break;
 		}
 	}
 	
@@ -266,6 +267,11 @@ public class Session {
 				type = GamePacketType.VARIABLE_SHORT;
 			} else {
 				type = GamePacketType.FIXED;
+			}
+			
+			if(opcode == 0) {
+				//reset timeout.
+				return;
 			}
 			
 			if(size == 0) {
@@ -304,6 +310,12 @@ public class Session {
 	 * @param in The data being decoded.
 	 */
 	private void payload(ByteBuf in) {
+		if(opcode < 0)
+			return;
+		if(size < 0)
+			return;
+		if(type != GamePacketType.RAW)
+			return;
 		if(in.isReadable(size)) {
 			ByteBuf newBuffer = in.readBytes(size);
 			queueMessage(newBuffer);
@@ -316,9 +328,6 @@ public class Session {
 	 * @param payload The payload of the {@code Packet}.
 	 */
 	private void queueMessage(ByteBuf payload) {
-		checkState(opcode >= 0, "opcode < 0");
-		checkState(size >= 0, "size < 0");
-		checkState(type != GamePacketType.RAW, "type == GamePacketType.RAW");
 		try {
 			if(NetworkConstants.MESSAGES[opcode] == null) {
 				LOGGER.info("Unhandled packet " + opcode + " - " + size);
