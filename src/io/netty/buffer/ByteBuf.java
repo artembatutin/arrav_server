@@ -393,30 +393,30 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @throws IllegalArgumentException If the number of bits is not between 1 and 31 inclusive.
 	 */
 	public void putBits(int numBits, int value) {
-		if(!hasArray()) {
-			throw new UnsupportedOperationException("The ByteBuf implementation must support array() for bit usage.");
-		}
-		
 		int bytes = (int) Math.ceil((double) numBits / 8D) + 1;
 		ensureWritable((bitIndex + 7) / 8 + bytes);
-		
-		final byte[] buffer = this.array();
 		
 		int bytePos = bitIndex >> 3;
 		int bitOffset = 8 - (bitIndex & 7);
 		bitIndex += numBits;
 		
-		for(; numBits > bitOffset; bitOffset = 8) {
-			buffer[bytePos] &= ~BIT_MASK[bitOffset];
-			buffer[bytePos++] |= (value >> (numBits - bitOffset)) & BIT_MASK[bitOffset];
+		while(numBits > bitOffset) {
+			int temp = getByte(bytePos);
+			temp &= ~BIT_MASK[bitOffset];
+			temp |= (value >> (numBits - bitOffset)) & BIT_MASK[bitOffset];
+			setByte(bytePos++, temp);
 			numBits -= bitOffset;
+			bitOffset = 8;
 		}
+		int temp = getByte(bytePos);
 		if(numBits == bitOffset) {
-			buffer[bytePos] &= ~BIT_MASK[bitOffset];
-			buffer[bytePos] |= value & BIT_MASK[bitOffset];
+			temp &= ~BIT_MASK[bitOffset];
+			temp |= value & BIT_MASK[bitOffset];
+			setByte(bytePos, temp);
 		} else {
-			buffer[bytePos] &= ~(BIT_MASK[numBits] << (bitOffset - numBits));
-			buffer[bytePos] |= (value & BIT_MASK[numBits]) << (bitOffset - numBits);
+			temp &= ~(BIT_MASK[numBits] << (bitOffset - numBits));
+			temp |= (value & BIT_MASK[numBits]) << (bitOffset - numBits);
+			setByte(bytePos, temp);
 		}
 	}
 	

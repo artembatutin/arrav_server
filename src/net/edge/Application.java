@@ -46,6 +46,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import static io.netty.util.ResourceLeakDetector.Level.DISABLED;
+import static io.netty.util.ResourceLeakDetector.Level.PARANOID;
+
 /**
  * The main class that will register and bind the server effectively.
  * @author Artem Batutin <artembatutin@gmail.com>
@@ -159,14 +162,14 @@ public final class Application {
 		LOGGER.info("Binding Edgeville on port " + NetworkConstants.PORT_ONLINE + ".");
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		EventLoopGroup loopGroup;
-		//if we run server on a unix machine, then we can use a native implementation instead of nio
+		//If epoll possible, better to use it (for linux systems).
 		if (Epoll.isAvailable()) {
 			loopGroup = new EpollEventLoopGroup();
 			bootstrap.channel(EpollServerSocketChannel.class);
 		} else {
 			loopGroup = new NioEventLoopGroup();
 		}
-		ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
+		ResourceLeakDetector.setLevel(DEBUG ? PARANOID : DISABLED);
 		bootstrap.group(loopGroup);
 		bootstrap.channel(NioServerSocketChannel.class);
 		bootstrap.childHandler(new ArravChannelInitializer());

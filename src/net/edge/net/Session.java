@@ -1,6 +1,5 @@
 package net.edge.net;
 
-import com.google.gson.JsonObject;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
@@ -100,7 +99,7 @@ public class Session {
 	/** The type of the message currently being decoded. */
 	private GamePacketType type = GamePacketType.RAW;
 	/** The main game stream buffer to encode all outgoing packets. */
-	private ByteBuf stream = Unpooled.buffer(BUFFER_SIZE);
+	private ByteBuf stream;
 	/**
 	 * Creates a new {@link Session}.
 	 * @param channel The {@link Channel} to send and receive messages through.
@@ -133,6 +132,25 @@ public class Session {
 			} else if(player.getState() == EntityState.ACTIVE) {
 				World.get().queueLogout(player);
 			}
+		}
+	}
+	
+	/**
+	 * Unregisters this session.
+	 */
+	void unregister() {
+		if(stream != null) {
+			if(stream.refCnt() != 0)
+				stream.release();
+		}
+		if(player != null) {
+			LOGGER.info("Unregistered session for " + player.getFormatUsername());
+		}
+		terminate();//in case player didn't logged out.
+		player = null;
+		if(incoming != null) {
+			incoming.clear();
+			outgoing.clear();
 		}
 	}
 	
@@ -360,9 +378,8 @@ public class Session {
 			return;
 		}
 		future.awaitUninterruptibly();
-		afterRequest();
-		final JsonObject reader = serial.getReader();
-		new PlayerSerialization(player).deserialize(reader);
+		initGame();
+		new PlayerSerialization(player).deserialize(serial.getReader());
 		World.get().queueLogin(player);
 	}
 	
@@ -474,12 +491,16 @@ public class Session {
 		return ((InetSocketAddress )ctx.channel().remoteAddress()).getAddress().getHostAddress();
 	}
 	
-	private void afterRequest() {
+	/**
+	 * Prepares the session for the game process.
+	 */
+	private void initGame() {
+		stream = alloc().buffer(BUFFER_SIZE);
+		stream.outgoing(encryptor);
 		player.setSession(this);
 		outgoing = new ConcurrentLinkedQueue<>();
 		incoming = new ConcurrentLinkedQueue<>();
 		isGame = true;
-		stream.outgoing(encryptor);
 	}
 	
 	/**

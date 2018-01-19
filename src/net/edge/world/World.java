@@ -131,7 +131,7 @@ public final class World extends AbstractScheduledService {
 	@Override
 	protected void runOneIteration() {
 		final long start = System.currentTimeMillis();
-		
+		int logs = logins.size();
 		synchronized(this) {
 			dequeueLogins();
 			registerActors();
@@ -157,7 +157,7 @@ public final class World extends AbstractScheduledService {
 		} else if(UPDATE_LIMIT < 200) {
 			UPDATE_LIMIT += 20;
 		}
-		System.out.println("took: " + millis + " - players: " + players.size()+ " - mobs: " + mobs.size() + " - logins: " + logins.size());
+		System.out.println("took: " + millis + " - players: " + players.size()+ " - mobs: " + mobs.size() + " - logins: " + logs);
 	}
 	
 	@Override

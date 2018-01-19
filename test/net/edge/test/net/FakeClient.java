@@ -87,7 +87,7 @@ public final class FakeClient {
             }
         });
 
-        for (int i = 0; i < 4000; i++) {
+        for (int i = 0; i < 400; i++) {
             // Start the client.
             System.out.println("connecting bot " + i);
             Channel f = b.connect("127.0.0.1", 43594).sync().channel(); //(5)

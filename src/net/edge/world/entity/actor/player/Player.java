@@ -679,15 +679,17 @@ public final class Player extends Actor {
 			PlayerPanel.STAFF_ONLINE.refreshAll("@or3@ - Staff online: @yel@" + World.get().getStaffCount());
 		}
 		if(bot) {
-			int x = RandomUtils.inclusive(-10, 90);
-			int y = RandomUtils.inclusive(-10, 90);
+			int x = RandomUtils.inclusive(0, 16);
+			int y = RandomUtils.inclusive(0, 16);
 			setPosition(new Position(3078 + x, 3494 + y));
-			int t = RandomUtils.inclusive(5, 10);
+			int t = RandomUtils.inclusive(2, 5);
 			final Player p = this;
 			new Task(t, false) {
 				@Override
 				protected void execute() {
-					if(p.combat.inCombat())
+					if(!p.getMovementQueue().isMovementDone())
+						return;
+					/*if(p.combat.inCombat())
 						return;
 					if(p.wildernessWidget && !p.combat.inCombat()) {
 						for(Player local : p.localPlayers) {
@@ -712,7 +714,12 @@ public final class Player extends Actor {
 							}
 						}
 						return;
-					}
+					}*/
+					int xx = RandomUtils.inclusive(-5, 5);
+					int yy = RandomUtils.inclusive(-5, 5);
+					p.getMovementQueue().smartWalk(getPosition().move(xx, yy));
+					if(true)
+						return;
 					switch(RandomUtils.inclusive(0, 3)) {
 						case 0:
 							p.animation(2108);
@@ -721,8 +728,6 @@ public final class Player extends Actor {
 							p.forceChat("very hotz");
 							break;
 						case 2:
-							int xx = RandomUtils.inclusive(-5, 5);
-							int yy = RandomUtils.inclusive(-5, 5);
 							p.getMovementQueue().smartWalk(getPosition().move(xx, yy));
 							break;
 						case 3:

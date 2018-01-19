@@ -59,7 +59,11 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-		//nothing
+		Session session = ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
+		if (session == null) {
+			throw new IllegalStateException("session == null");
+		}
+		session.unregister();
 	}
 	
 	@Override
