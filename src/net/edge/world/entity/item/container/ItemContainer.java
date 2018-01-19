@@ -355,9 +355,10 @@ public class ItemContainer implements Iterable<Item> {
 		
 		ItemDefinition def = item.getDefinition();
 		if(def == null) {
+			if(items[preferredIndex] != null)
+				size--;
 			items[preferredIndex] = null;
 			updateSingle(items[preferredIndex], null, preferredIndex, refresh);
-			size--;
 			return -1;
 		}
 		boolean stackable = (policy == STANDARD && def.isStackable()) || policy == ALWAYS;//todo cant be stackable remove if 1 slot to be removed.
@@ -405,9 +406,10 @@ public class ItemContainer implements Iterable<Item> {
 				}
 				if(!test) {
 					Item oldItem = items[preferredIndex];
+					if(oldItem != null)
+						size--;
 					items[preferredIndex] = null;
 					updateSingle(oldItem, null, preferredIndex++, refresh);
-					size--;
 				}
 				cleared++;
 			}
@@ -1079,9 +1081,11 @@ public class ItemContainer implements Iterable<Item> {
 	 */
 	public final void set(int index, Item item, boolean refresh) {
 		Item oldItem = items[index];
-		items[index] = item;
-		if(item == null)
+		if(oldItem == null && item != null)
+			size++;
+		else if(oldItem != null && item == null)
 			size--;
+		items[index] = item;
 		updateSingle(oldItem, items[index], index, refresh);
 	}
 	

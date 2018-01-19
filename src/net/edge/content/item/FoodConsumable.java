@@ -337,14 +337,16 @@ public enum FoodConsumable {
 					player.getInventory().remove(item, slot);
 					player.animation(new Animation(829));
 					player.consumeDelay.get(food.special() ? "SPECIAL" : "FOOD").reset();
-					Optional<Item> replacement = Optional.empty();
-					int length = food.getIds().length;
-					for(int index = 0; index < length; index++) {
-						if(food.getIds()[index] == item.getId() && index + 1 < length) {
-							replacement = Optional.of(new Item(food.getIds()[index + 1]));
+					int rempSize = food.getIds().length;
+					if(rempSize > 0) {
+						Optional<Item> replacement = Optional.empty();
+						for(int index = 0; index < rempSize; index++) {
+							if(food.getIds()[index] == item.getId() && index + 1 < rempSize) {
+								replacement = Optional.of(new Item(food.getIds()[index + 1]));
+							}
 						}
+						replacement.ifPresent(item1 -> player.getInventory().set(slot, item1, true));
 					}
-					replacement.ifPresent(item1 -> player.getInventory().set(slot, item1, true));
 					Skills.refresh(player, Skills.HITPOINTS);
 					player.message(food.getMessage());
 					food.onEffect(player);
