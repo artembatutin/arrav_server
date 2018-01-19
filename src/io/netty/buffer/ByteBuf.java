@@ -17,9 +17,9 @@ package io.netty.buffer;
 
 import io.netty.util.ByteProcessor;
 import io.netty.util.ReferenceCounted;
-import net.edge.net.codec.ByteTransform;
-import net.edge.net.codec.crypto.IsaacRandom;
-import net.edge.net.codec.game.GamePacketType;
+import net.arrav.net.codec.ByteTransform;
+import net.arrav.net.codec.crypto.IsaacRandom;
+import net.arrav.net.codec.game.GamePacketType;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -469,7 +469,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return An instance of this byte message.
 	 * @throws UnsupportedOperationException If middle or inverse-middle value types are selected.
 	 */
-	public void putShort(int value, ByteTransform type, net.edge.net.codec.ByteOrder order) {
+	public void putShort(int value, ByteTransform type, net.arrav.net.codec.ByteOrder order) {
 		switch(order) {
 			case BIG:
 				put(value >> 8);
@@ -492,7 +492,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return An instance of this byte message.
 	 */
 	public void putShort(int value) {
-		putShort(value, ByteTransform.NORMAL, net.edge.net.codec.ByteOrder.BIG);
+		putShort(value, ByteTransform.NORMAL, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -502,7 +502,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return An instance of this byte message.
 	 */
 	public void putShort(int value, ByteTransform type) {
-		putShort(value, type, net.edge.net.codec.ByteOrder.BIG);
+		putShort(value, type, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -511,7 +511,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @param order The byte endianness type.
 	 * @return An instance of this byte message.
 	 */
-	public void putShort(int value, net.edge.net.codec.ByteOrder order) {
+	public void putShort(int value, net.arrav.net.codec.ByteOrder order) {
 		putShort(value, ByteTransform.NORMAL, order);
 	}
 	
@@ -522,7 +522,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @param order The byte endianness type.
 	 * @return An instance of this byte message.
 	 */
-	public void putInt(int value, ByteTransform type, net.edge.net.codec.ByteOrder order) {
+	public void putInt(int value, ByteTransform type, net.arrav.net.codec.ByteOrder order) {
 		switch(order) {
 			case BIG:
 				put(value >> 24);
@@ -557,7 +557,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return An instance of this byte message.
 	 */
 	public void putInt(int value) {
-		putInt(value, ByteTransform.NORMAL, net.edge.net.codec.ByteOrder.BIG);
+		putInt(value, ByteTransform.NORMAL, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -567,7 +567,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return An instance of this byte message.
 	 */
 	public void putInt(int value, ByteTransform type) {
-		putInt(value, type, net.edge.net.codec.ByteOrder.BIG);
+		putInt(value, type, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -576,7 +576,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @param order The byte endianness type.
 	 * @return An instance of this byte message.
 	 */
-	public void putInt(int value, net.edge.net.codec.ByteOrder order) {
+	public void putInt(int value, net.arrav.net.codec.ByteOrder order) {
 		putInt(value, ByteTransform.NORMAL, order);
 	}
 	
@@ -588,7 +588,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return An instance of this byte message.
 	 * @throws UnsupportedOperationException If middle or inverse-middle value types are selected.
 	 */
-	public void putLong(long value, ByteTransform type, net.edge.net.codec.ByteOrder order) {
+	public void putLong(long value, ByteTransform type, net.arrav.net.codec.ByteOrder order) {
 		switch(order) {
 			case BIG:
 				put((int) (value >> 56));
@@ -623,7 +623,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return An instance of this byte message.
 	 */
 	public void putLong(long value) {
-		putLong(value, ByteTransform.NORMAL, net.edge.net.codec.ByteOrder.BIG);
+		putLong(value, ByteTransform.NORMAL, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -633,7 +633,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return An instance of this byte message.
 	 */
 	public void putLong(long value, ByteTransform type) {
-		putLong(value, type, net.edge.net.codec.ByteOrder.BIG);
+		putLong(value, type, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -642,7 +642,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @param order The byte endianness type. to write.
 	 * @return An instance of this byte message.
 	 */
-	public void putLong(long value, net.edge.net.codec.ByteOrder order) {
+	public void putLong(long value, net.arrav.net.codec.ByteOrder order) {
 		putLong(value, ByteTransform.NORMAL, order);
 	}
 	
@@ -739,7 +739,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return The value of the short.
 	 * @throws UnsupportedOperationException if middle or inverse-middle value types are selected.
 	 */
-	public int getShort(boolean signed, ByteTransform type, net.edge.net.codec.ByteOrder order) {
+	public int getShort(boolean signed, ByteTransform type, net.arrav.net.codec.ByteOrder order) {
 		int value = 0;
 		switch(order) {
 			case BIG:
@@ -763,7 +763,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return The value of the short.
 	 */
 	public int getShort() {
-		return getShort(true, ByteTransform.NORMAL, net.edge.net.codec.ByteOrder.BIG);
+		return getShort(true, ByteTransform.NORMAL, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -772,7 +772,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return The value of the short.
 	 */
 	public int getShort(boolean signed) {
-		return getShort(signed, ByteTransform.NORMAL, net.edge.net.codec.ByteOrder.BIG);
+		return getShort(signed, ByteTransform.NORMAL, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -781,7 +781,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return The value of the short.
 	 */
 	public int getShort(ByteTransform type) {
-		return getShort(true, type, net.edge.net.codec.ByteOrder.BIG);
+		return getShort(true, type, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -791,7 +791,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return The value of the short.
 	 */
 	public int getShort(boolean signed, ByteTransform type) {
-		return getShort(signed, type, net.edge.net.codec.ByteOrder.BIG);
+		return getShort(signed, type, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -799,7 +799,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @param order The byte endianness type.
 	 * @return The value of the short.
 	 */
-	public int getShort(net.edge.net.codec.ByteOrder order) {
+	public int getShort(net.arrav.net.codec.ByteOrder order) {
 		return getShort(true, ByteTransform.NORMAL, order);
 	}
 	
@@ -809,7 +809,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @param order  The byte endianness type.
 	 * @return The value of the short.
 	 */
-	public int getShort(boolean signed, net.edge.net.codec.ByteOrder order) {
+	public int getShort(boolean signed, net.arrav.net.codec.ByteOrder order) {
 		return getShort(signed, ByteTransform.NORMAL, order);
 	}
 	
@@ -819,7 +819,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @param order The byte endianness type.
 	 * @return The value of the short.
 	 */
-	public int getShort(ByteTransform type, net.edge.net.codec.ByteOrder order) {
+	public int getShort(ByteTransform type, net.arrav.net.codec.ByteOrder order) {
 		return getShort(true, type, order);
 	}
 	
@@ -830,7 +830,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @param order  The byte endianness type.
 	 * @return The value of the integer.
 	 */
-	public int getInt(boolean signed, ByteTransform type, net.edge.net.codec.ByteOrder order) {
+	public int getInt(boolean signed, ByteTransform type, net.arrav.net.codec.ByteOrder order) {
 		long value = 0;
 		switch(order) {
 			case BIG:
@@ -866,7 +866,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return The value of the integer.
 	 */
 	public int getInt() {
-		return getInt(true, ByteTransform.NORMAL, net.edge.net.codec.ByteOrder.BIG);
+		return getInt(true, ByteTransform.NORMAL, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -875,7 +875,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return The value of the integer.
 	 */
 	public int getInt(boolean signed) {
-		return getInt(signed, ByteTransform.NORMAL, net.edge.net.codec.ByteOrder.BIG);
+		return getInt(signed, ByteTransform.NORMAL, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -884,7 +884,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return The value of the integer.
 	 */
 	public int getInt(ByteTransform type) {
-		return getInt(true, type, net.edge.net.codec.ByteOrder.BIG);
+		return getInt(true, type, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -894,7 +894,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return The value of the integer.
 	 */
 	public int getInt(boolean signed, ByteTransform type) {
-		return getInt(signed, type, net.edge.net.codec.ByteOrder.BIG);
+		return getInt(signed, type, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -902,7 +902,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @param order The byte endianness type.
 	 * @return The value of the integer.
 	 */
-	public int getInt(net.edge.net.codec.ByteOrder order) {
+	public int getInt(net.arrav.net.codec.ByteOrder order) {
 		return getInt(true, ByteTransform.NORMAL, order);
 	}
 	
@@ -912,7 +912,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @param order  The byte endianness type.
 	 * @return The value of the integer.
 	 */
-	public int getInt(boolean signed, net.edge.net.codec.ByteOrder order) {
+	public int getInt(boolean signed, net.arrav.net.codec.ByteOrder order) {
 		return getInt(signed, ByteTransform.NORMAL, order);
 	}
 	
@@ -922,7 +922,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @param order The byte endianness type.
 	 * @return The value of the integer.
 	 */
-	public int getInt(ByteTransform type, net.edge.net.codec.ByteOrder order) {
+	public int getInt(ByteTransform type, net.arrav.net.codec.ByteOrder order) {
 		return getInt(true, type, order);
 	}
 	
@@ -933,7 +933,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return The value of the long.
 	 * @throws UnsupportedOperationException if middle or inverse-middle value types are selected.
 	 */
-	public long getLong(ByteTransform type, net.edge.net.codec.ByteOrder order) {
+	public long getLong(ByteTransform type, net.arrav.net.codec.ByteOrder order) {
 		long value = 0;
 		switch(order) {
 			case BIG:
@@ -968,7 +968,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return The value of the long.
 	 */
 	public long getLong() {
-		return getLong(ByteTransform.NORMAL, net.edge.net.codec.ByteOrder.BIG);
+		return getLong(ByteTransform.NORMAL, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -977,7 +977,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @return The value of the long.
 	 */
 	public long getLong(ByteTransform type) {
-		return getLong(type, net.edge.net.codec.ByteOrder.BIG);
+		return getLong(type, net.arrav.net.codec.ByteOrder.BIG);
 	}
 	
 	/**
@@ -985,7 +985,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * @param order The byte endianness type.
 	 * @return The value of the long.
 	 */
-	public long getLong(net.edge.net.codec.ByteOrder order) {
+	public long getLong(net.arrav.net.codec.ByteOrder order) {
 		return getLong(ByteTransform.NORMAL, order);
 	}
 	

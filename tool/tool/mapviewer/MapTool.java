@@ -1,6 +1,6 @@
 package tool.mapviewer;
 
-import net.edge.world.locale.Position;
+import net.arrav.world.locale.Position;
 import tool.mapviewer.menu.MapMenuBar;
 
 import javax.swing.*;
