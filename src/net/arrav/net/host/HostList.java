@@ -3,7 +3,11 @@ package net.arrav.net.host;
 import com.google.common.collect.Sets;
 import net.arrav.world.entity.actor.player.Player;
 
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.Set;
@@ -69,6 +73,12 @@ public class HostList {
 	 * Saves the blocked entries.
 	 */
 	public void serialize() {
+		//try {
+		//	RandomAccessFile file = new RandomAccessFile("./data/", type.getFile() + ".txt");
+		//	file.getChannel().map(FileChannel.MapMode.READ_WRITE, 0, file.length());
+		//} catch(IOException e) {
+		//	e.printStackTrace();
+		//}
 		try(FileWriter out = new FileWriter(Paths.get("./data/", type.getFile() + ".txt").toFile())) {
 			for(String b : BLOCKED) {
 				out.write(b);

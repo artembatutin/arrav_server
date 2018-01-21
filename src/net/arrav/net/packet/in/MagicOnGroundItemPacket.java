@@ -1,7 +1,7 @@
 package net.arrav.net.packet.in;
 
 import io.netty.buffer.ByteBuf;
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.net.codec.ByteOrder;
 import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.packet.IncomingPacket;
@@ -20,7 +20,7 @@ public class MagicOnGroundItemPacket implements IncomingPacket {
 		int itemId = buf.getShort(true);
 		int spellId = buf.getShort(false, ByteTransform.A);
 		
-		if(Application.DEBUG) {
+		if(Arrav.DEBUG) {
 			player.message("item = " + itemId + ", spell = " + spellId + ", x = " + x + ", y = " + y + ".");
 		}
 	}

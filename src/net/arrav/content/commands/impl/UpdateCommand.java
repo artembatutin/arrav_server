@@ -1,6 +1,6 @@
 package net.arrav.content.commands.impl;
 
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.content.commands.Command;
 import net.arrav.content.commands.CommandSignature;
 import net.arrav.net.packet.out.SendLogout;
@@ -30,13 +30,13 @@ public final class UpdateCommand implements Command {
 		while((other = it.next()) != null) {
 			other.out(new SendUpdateTimer(timer * 50 / 30));
 		}
-		Application.UPDATING = timer;
+		Arrav.UPDATING = timer;
 		World.get().getTask().submit(new Task(1, true) {
 			@Override
 			protected void execute() {
-				Application.UPDATING -= 0.6;
-				System.out.println("Update count: " + Application.UPDATING);
-				if(Application.UPDATING <= 0) {
+				Arrav.UPDATING -= 0.6;
+				System.out.println("Update count: " + Arrav.UPDATING);
+				if(Arrav.UPDATING <= 0) {
 					inProgess = 2;
 					System.out.println("Setting player into updating mode.");
 					System.out.println("Logging players out... - Players online: " + World.get().getPlayers().size());

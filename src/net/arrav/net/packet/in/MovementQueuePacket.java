@@ -1,7 +1,7 @@
 package net.arrav.net.packet.in;
 
 import io.netty.buffer.ByteBuf;
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.content.market.MarketShop;
 import net.arrav.content.minigame.MinigameHandler;
 import net.arrav.net.codec.ByteOrder;
@@ -92,7 +92,7 @@ public final class MovementQueuePacket implements IncomingPacket {
 			player.getMovementQueue().finish();
 		}
 		
-		if(Application.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
+		if(Arrav.DEBUG && player.getRights().greater(Rights.ADMINISTRATOR)) {
 			player.message("DEBUG[walking= " + player.getPosition().getRegion() + "]");
 		}
 		player.getActivityManager().execute(ActivityManager.ActivityType.WALKING);

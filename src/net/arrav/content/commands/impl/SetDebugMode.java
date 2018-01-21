@@ -1,6 +1,6 @@
 package net.arrav.content.commands.impl;
 
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.content.commands.Command;
 import net.arrav.content.commands.CommandSignature;
 import net.arrav.world.entity.actor.player.Player;
@@ -11,8 +11,8 @@ public final class SetDebugMode implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		Application.DEBUG = !Application.DEBUG;
-		player.message("Debug mode is set to: " + Application.DEBUG);
+		Arrav.DEBUG = !Arrav.DEBUG;
+		player.message("Debug mode is set to: " + Arrav.DEBUG);
 	}
 	
 }

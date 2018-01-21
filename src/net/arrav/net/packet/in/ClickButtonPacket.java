@@ -1,7 +1,7 @@
 package net.arrav.net.packet.in;
 
 import io.netty.buffer.ByteBuf;
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.ButtonAction;
 import net.arrav.content.Emote;
@@ -71,7 +71,7 @@ public final class ClickButtonPacket implements IncomingPacket {
 	@Override
 	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		int button = PROPER_READ ? buf.getShort() : hexToInt(buf.getBytes(2));
-		if(Application.DEBUG && player.getRights().equals(Rights.ADMINISTRATOR)) {
+		if(Arrav.DEBUG && player.getRights().equals(Rights.ADMINISTRATOR)) {
 			player.message("Clicked button " + button + ".");
 		}
 		

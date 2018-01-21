@@ -112,12 +112,12 @@ public final class World extends AbstractScheduledService {
 	static {
 //		int amtCpu = Runtime.getRuntime().availableProcessors();
 //		try {
-//			score = new Database(Application.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_score", Application.DEBUG ? "edge_avro" : "root", Application.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
+//			score = new Database(Arrav.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_score", Arrav.DEBUG ? "edge_avro" : "root", Arrav.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
 //		} catch(Exception e) {
 //			e.printStackTrace();
 //		}
 //		try {
-//			donation = new Database(Application.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_store", Application.DEBUG ? "edge_avro" : "root", Application.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
+//			donation = new Database(Arrav.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_store", Arrav.DEBUG ? "edge_avro" : "root", Arrav.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
 //		} catch(Exception e) {
 //			e.printStackTrace();
 //		}

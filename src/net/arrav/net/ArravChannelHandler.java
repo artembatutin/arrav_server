@@ -7,7 +7,7 @@ import io.netty.channel.*;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.content.commands.impl.UpdateCommand;
 import net.arrav.net.codec.login.LoginCode;
 import net.arrav.net.host.HostListType;
@@ -37,7 +37,7 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 			Session.write(ctx, LoginCode.SERVER_BEING_UPDATED);
 			return;
 		}
-		if(Application.STARTING) {
+		if(Arrav.STARTING) {
 			Session.write(ctx, LoginCode.SERVER_STARTING);
 			return;
 		}

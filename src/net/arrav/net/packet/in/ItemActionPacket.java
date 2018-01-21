@@ -1,7 +1,7 @@
 package net.arrav.net.packet.in;
 
 import io.netty.buffer.ByteBuf;
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.ItemAction;
 import net.arrav.content.skill.runecrafting.Runecrafting;
@@ -49,7 +49,7 @@ public final class ItemActionPacket implements IncomingPacket {
 		int container = buf.getShort(true, ByteTransform.A, ByteOrder.LITTLE);
 		int slot = buf.getShort(false, ByteTransform.A);
 		int id = buf.getShort(false, ByteOrder.LITTLE);
-		if(Application.DEBUG) {
+		if(Arrav.DEBUG) {
 			player.message("Item action: First click, ID: " + id);
 		}
 		if(slot < 0 || container < 0 || id < 0 || id > ItemDefinition.DEFINITIONS.length)
@@ -75,7 +75,7 @@ public final class ItemActionPacket implements IncomingPacket {
 		int container = buf.getShort(true, ByteTransform.A);
 		int slot = buf.getShort(true, ByteOrder.LITTLE);
 		int id = buf.getShort(true, ByteTransform.A);
-		if(Application.DEBUG) {
+		if(Arrav.DEBUG) {
 			player.message("Item action: second click, ID: " + id);
 		}
 		if(slot < 0 || container < 0 || id < 0 || id > ItemDefinition.DEFINITIONS.length) {
@@ -117,7 +117,7 @@ public final class ItemActionPacket implements IncomingPacket {
 		int container = buf.getShort(true, ByteTransform.A);
 		int slot = buf.getShort(true, ByteOrder.LITTLE);
 		int id = buf.getShort(true, ByteTransform.A);
-		if(Application.DEBUG) {
+		if(Arrav.DEBUG) {
 			player.message("Item action: third click, ID: " + id);
 		}
 		if(slot < 0 || container < 0 || id < 0 || id > ItemDefinition.DEFINITIONS.length) {

@@ -7,7 +7,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.GameConstants;
 import net.arrav.content.PlayerPanel;
 import net.arrav.content.ShieldAnimation;
@@ -603,7 +603,7 @@ public final class Player extends Actor {
 	@Override
 	public void register() {
 		boolean bot = false;
-		if(Application.DEBUG && getFormatUsername().startsWith("Bot")) {
+		if(Arrav.DEBUG && getFormatUsername().startsWith("Bot")) {
 			bot = true;
 		}
 		setLastRegion(getPosition().copy());
@@ -667,8 +667,8 @@ public final class Player extends Actor {
 			this.message("@red@[ANNOUNCEMENT]: " + ShootingStarManager.get().getShootingStar().getLocationData().getMessageWhenActive());
 		}
 		TriviaTask.getBot().onLogin(this);
-		if(Application.UPDATING > 0) {
-			out(new SendUpdateTimer((int) (Application.UPDATING * 50 / 30)));
+		if(Arrav.UPDATING > 0) {
+			out(new SendUpdateTimer((int) (Arrav.UPDATING * 50 / 30)));
 		}
 		Summoning.login(this);
 		FarmingManager.login(this);

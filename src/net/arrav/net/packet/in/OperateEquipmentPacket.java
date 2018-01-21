@@ -1,7 +1,7 @@
 package net.arrav.net.packet.in;
 
 import io.netty.buffer.ByteBuf;
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.packet.IncomingPacket;
 import net.arrav.world.entity.actor.player.Player;
@@ -72,7 +72,7 @@ public class OperateEquipmentPacket implements IncomingPacket {
 				}
 				break;
 			default:
-				if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG) {
+				if(player.getRights().greater(Rights.ADMINISTRATOR) && Arrav.DEBUG) {
 					player.message("Operate Item - itemId: " + slot + " amount: " + item.getAmount() + " slot: ");
 				}
 				break;

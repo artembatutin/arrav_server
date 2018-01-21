@@ -1,7 +1,7 @@
 package net.arrav.net.packet.in;
 
 import io.netty.buffer.ByteBuf;
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.MobAction;
 import net.arrav.content.item.pets.Pet;
@@ -127,7 +127,7 @@ public final class MobActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Arrav.DEBUG)
 			player.message("[NPC1]:" + mob.toString());
 	}
 	
@@ -158,7 +158,7 @@ public final class MobActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Arrav.DEBUG)
 			player.message("[NPC2]:" + mob.toString());
 	}
 	
@@ -186,7 +186,7 @@ public final class MobActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Arrav.DEBUG)
 			player.message("[NPC3]:" + mob.toString());
 	}
 	
@@ -215,7 +215,7 @@ public final class MobActionPacket implements IncomingPacket {
 				}
 			}
 		});
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Arrav.DEBUG)
 			player.message("[NPC4]:" + mob.toString());
 	}
 	

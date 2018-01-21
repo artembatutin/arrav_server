@@ -1,7 +1,7 @@
 package net.arrav.net.packet.in;
 
 import io.netty.buffer.ByteBuf;
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.ItemOnObjectAction;
 import net.arrav.content.minigame.MinigameHandler;
@@ -59,7 +59,7 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 			return;
 		
 		final GameObject object = o.get();
-		if(player.getRights().greater(Rights.ADMINISTRATOR) && Application.DEBUG)
+		if(player.getRights().greater(Rights.ADMINISTRATOR) && Arrav.DEBUG)
 			player.message("[ItemOnObject message] objectId = " + object.toString() + ", itemId = " + item.getId());
 		
 		player.facePosition(position);

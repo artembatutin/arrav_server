@@ -1,7 +1,7 @@
 package net.arrav.net.packet.in;
 
 import io.netty.buffer.ByteBuf;
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.action.ActionContainer;
 import net.arrav.action.impl.ObjectAction;
 import net.arrav.content.minigame.MinigameHandler;
@@ -100,7 +100,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 		if(!o.isPresent())
 			return;
 		final GameObject object = o.get();
-		if(player.getRights().equals(Rights.ADMINISTRATOR) && Application.DEBUG)
+		if(player.getRights().equals(Rights.ADMINISTRATOR) && Arrav.DEBUG)
 			player.message("[OBJ" + action + "]:" + object.getId() + " - " + object.getGlobalPos().toString());
 		boolean distanceIgnore = (action == 1 && (objectId == 85584 || objectId == 85532 || objectId == 85534));
 		Boundary boundary = new Boundary(position, object.getDefinition().getSize());

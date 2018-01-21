@@ -1,6 +1,6 @@
 package net.arrav.content.object.star;
 
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.util.Stopwatch;
 import net.arrav.util.rand.RandomUtils;
 import net.arrav.world.World;
@@ -34,7 +34,7 @@ public final class ShootingStarManager {
 	 * The process method which is invoked every minute on start-up.
 	 */
 	public void process() {
-		if(Application.STARTING) {
+		if(Arrav.STARTING) {
 			return;
 		}
 		if(!stopwatch.elapsed(28, TimeUnit.MINUTES) || (star != null && star.sprite.getState().equals(EntityState.ACTIVE))) { // 1 minute correction, because task runs every minute and it might skip.

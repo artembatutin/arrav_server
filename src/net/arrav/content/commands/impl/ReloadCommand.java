@@ -1,6 +1,6 @@
 package net.arrav.content.commands.impl;
 
-import net.arrav.Application;
+import net.arrav.Arrav;
 import net.arrav.content.commands.Command;
 import net.arrav.content.commands.CommandDispatcher;
 import net.arrav.content.commands.CommandSignature;
@@ -22,7 +22,7 @@ public final class ReloadCommand implements Command {
 	public void execute(Player player, String[] cmd, String command) throws Exception {
 		switch(cmd[1].toLowerCase()) {
 			case "actions":
-				Application.loadEvents();
+				Arrav.loadEvents();
 				player.message("Reloaded action events.");
 				break;
 			case "drops":

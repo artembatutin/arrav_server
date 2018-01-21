@@ -54,7 +54,7 @@ import static io.netty.util.ResourceLeakDetector.Level.PARANOID;
  * @author Artem Batutin <artembatutin@gmail.com>
  * @author lare96 <http://github.com/lare96>
  */
-public final class Application {
+public final class Arrav {
 	
 	/**
 	 * The flag that determines if debugging messages should be printed or not.
@@ -79,7 +79,7 @@ public final class Application {
 	/**
 	 * The LOGGER that will print important information.
 	 */
-	private final static Logger LOGGER = LoggerUtils.getLogger(Application.class);
+	private final static Logger LOGGER = LoggerUtils.getLogger(Arrav.class);
 	
 	static {
 		//System.out.println("Lines in project: " + Utility.linesInProject(new File("./src/")));
@@ -91,7 +91,7 @@ public final class Application {
 	}
 	
 	/**
-	 * Invoked when this program is started, initializes the {@link Application}.
+	 * Invoked when this program is started, initializes the {@link Arrav}.
 	 * @param args The runtime arguments, none of which are parsed.
 	 */
 	public static void main(String[] args) {
@@ -101,8 +101,8 @@ public final class Application {
 			DEBUG = false;
 		}
 		try {
-			Application edgeville = new Application();
-			edgeville.init();
+			Arrav arrav = new Arrav();
+			arrav.init();
 		} catch(Exception e) {
 			LOGGER.log(Level.SEVERE, "Error in game run time!", e);
 			System.exit(0);
@@ -112,7 +112,7 @@ public final class Application {
 	/**
 	 * A package-private constructor to discourage external instantiation.
 	 */
-	public Application() {
+	public Arrav() {
 		ExecutorService delegateService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), new ThreadFactoryBuilder().setNameFormat("ArravInitialization").build());
 		launch = MoreExecutors.listeningDecorator(delegateService);
 	}
@@ -124,7 +124,7 @@ public final class Application {
 	private void init() {
 		try {
 			long time = System.currentTimeMillis();
-			LOGGER.info("Main is being initialized...");
+			LOGGER.info("Arrav is being initialized...");
 			prepare();
 			bind();
 			initTasks();
