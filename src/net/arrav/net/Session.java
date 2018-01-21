@@ -271,7 +271,7 @@ public class Session {
 			
 			if(opcode == 0) {
 				//reset timeout.
-				return;
+				//return;
 			}
 			
 			if(size == 0) {
@@ -310,12 +310,6 @@ public class Session {
 	 * @param in The data being decoded.
 	 */
 	private void payload(ByteBuf in) {
-		if(opcode < 0)
-			return;
-		if(size < 0)
-			return;
-		if(type != GamePacketType.RAW)
-			return;
 		if(in.isReadable(size)) {
 			ByteBuf newBuffer = in.readBytes(size);
 			queueMessage(newBuffer);
@@ -328,6 +322,9 @@ public class Session {
 	 * @param payload The payload of the {@code Packet}.
 	 */
 	private void queueMessage(ByteBuf payload) {
+		checkState(opcode >= 0, "opcode < 0");
+		checkState(size >= 0, "size < 0");
+		checkState(type != GamePacketType.RAW, "type == GamePacketType.RAW");
 		try {
 			if(NetworkConstants.MESSAGES[opcode] == null) {
 				LOGGER.info("Unhandled packet " + opcode + " - " + size);
