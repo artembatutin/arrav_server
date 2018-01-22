@@ -1,5 +1,6 @@
 package net.arrav.net.host;
 
+import net.arrav.net.Session;
 import net.arrav.world.entity.actor.player.Player;
 
 /**
@@ -44,9 +45,13 @@ public final class HostManager {
 	/**
 	 * Adds a blocked entry to the desired type.
 	 */
-	public static void add(Player player, HostListType type) {
+	public static boolean add(Player player, HostListType type) {
+		if(type == HostListType.BANNED_MAC && !Session.validMac(player.getSession().getMacAddress())) {
+			return false;
+		}
 		HostList list = lists[type.getIndex()];
 		list.add(player);
+		return true;
 	}
 	
 	/**

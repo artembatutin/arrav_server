@@ -43,9 +43,11 @@ public class Session {
 	private static final Logger LOGGER = Logger.getLogger(Session.class.getName());
 	
 	/** Game stream capacity. */
-	private static int BUFFER_SIZE = 5000;
+	private final static int BUFFER_SIZE = 5000;
 	/** The cap limit of outgoing packets per session. */
 	public static int UPDATE_LIMIT = 200;
+	/** Invalid constants of an unknown mac address. */
+	private static String INVALID_MAC = "0";
 	
 	/** The {@link Channel} to send and receive messages through. */
 	private final Channel channel;
@@ -416,7 +418,7 @@ public class Session {
 			//mac address
 			int macId = in.readInt();
 			macAddress = String.valueOf(macId);
-			if(HostManager.contains(macAddress, HostListType.BANNED_MAC)) {
+			if(validMac(macAddress) && HostManager.contains(macAddress, HostListType.BANNED_MAC)) {
 				write(ctx, LoginCode.ACCOUNT_DISABLED);
 				return;
 			}
@@ -507,6 +509,15 @@ public class Session {
 		outgoing = new ConcurrentLinkedQueue<>();
 		incoming = new ConcurrentLinkedQueue<>();
 		isGame = true;
+	}
+
+	/**
+	 * Returns {@code true} if mac is valid.
+	 * @param mac mac address to verify.
+	 * @return if mac is valid.
+	 */
+	public static boolean validMac(String mac) {
+		return !mac.equals(INVALID_MAC);
 	}
 	
 	/**

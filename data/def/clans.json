@@ -1,18 +1,18 @@
 [
   {
-	"owner": "rogue",
-	"name": "Arrav",
-	"loot": false,
-	"ban": "OWNER",
-	"mute": "OWNER",
-	"talk": "MEMBER",
-	"mutes": [],
-	"bans": [],
-	"ranked": [
-	  {
-		"name": "avro",
-		"rank": "OWNER"
-	  }
-	]
+    "owner": "rogue",
+    "name": "Arrav",
+    "loot": false,
+    "ban": "OWNER",
+    "mute": "OWNER",
+    "talk": "MEMBER",
+    "mutes": [],
+    "bans": [],
+    "ranked": [
+      {
+        "name": "avro",
+        "rank": "OWNER"
+      }
+    ]
   }
 ]
