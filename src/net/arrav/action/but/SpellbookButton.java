@@ -9,7 +9,7 @@ import net.arrav.net.packet.out.SendWildernessActivity;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
 
-public class Spellbook extends ActionInitializer {
+public class SpellbookButton extends ActionInitializer {
 	
 	@Override
 	public void init() {
@@ -131,7 +131,6 @@ public class Spellbook extends ActionInitializer {
 		e.register(4143);
 		e.register(50245);
 		e.register(117210);
-		
 	}
 	
 }

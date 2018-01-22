@@ -31,7 +31,7 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	private final Multiset<String> connections = ConcurrentHashMultiset.create();
 	
 	@Override
-	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+	public void channelRegistered(ChannelHandlerContext ctx) {
 		String address = Session.address(ctx);
 		if(UpdateCommand.inProgess == 2) {
 			Session.write(ctx, LoginCode.SERVER_BEING_UPDATED);
@@ -56,7 +56,7 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	}
 	
 	@Override
-	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+	public void channelUnregistered(ChannelHandlerContext ctx) {
 		Session session = ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
 		if (session == null) {
 			throw new IllegalStateException("session == null");
@@ -65,12 +65,12 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	}
 	
 	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+	public void channelActive(ChannelHandlerContext ctx) {
 		ctx.fireChannelActive();
 	}
 	
 	@Override
-	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+	public void channelInactive(ChannelHandlerContext ctx) {
 		Session session = ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
 		if(session != null) {
 			session.terminate();
@@ -78,7 +78,7 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	}
 	
 	@Override
-	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		try {
 			Session session = ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
 			if (session == null) {
@@ -91,12 +91,12 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	}
 	
 	@Override
-	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+	public void channelReadComplete(ChannelHandlerContext ctx) {
 		ctx.fireChannelReadComplete();
 	}
 	
 	@Override
-	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
 		if(evt instanceof IdleStateEvent) {
 			IdleStateEvent event = (IdleStateEvent) evt;
 			if(event.state() == IdleState.READER_IDLE) {
@@ -106,12 +106,12 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	}
 	
 	@Override
-	public void channelWritabilityChanged(ChannelHandlerContext ctx) throws Exception {
+	public void channelWritabilityChanged(ChannelHandlerContext ctx) {
 		ctx.fireChannelWritabilityChanged();
 	}
 	
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) throws Exception {
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
 		if(NetworkConstants.IGNORED_NETWORK_EXCEPTIONS.stream().noneMatch($it -> Objects.equal($it, e.getMessage()))) {
 			e.printStackTrace();
 		}

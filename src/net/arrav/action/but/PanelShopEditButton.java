@@ -7,7 +7,7 @@ import net.arrav.content.market.MarketShop;
 import net.arrav.net.packet.out.SendEnterAmount;
 import net.arrav.world.entity.actor.player.Player;
 
-public class ShopEditing extends ActionInitializer {
+public class PanelShopEditButton extends ActionInitializer {
 	
 	@Override
 	public void init() {

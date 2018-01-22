@@ -8,7 +8,7 @@ import net.arrav.net.host.HostManager;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
 
-public class IronManSelection extends ActionInitializer {
+public class PanelIronManButton extends ActionInitializer {
 	
 	@Override
 	public void init() {

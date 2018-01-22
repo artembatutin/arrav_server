@@ -1,5 +1,6 @@
 package net.arrav.content;
 
+import net.arrav.action.impl.ButtonAction;
 import net.arrav.world.Animation;
 import net.arrav.world.Graphic;
 import net.arrav.world.entity.actor.player.Player;
@@ -72,24 +73,20 @@ public enum Emote {
 		this.animation = animation;
 		this.graphic = graphic;
 	}
-	
-	/**
-	 * Handles the emotes on each button click.
-	 * @param player The playing clicking the button.
-	 * @param button The button id.
-	 * @return {@code true} if emote is handled, {@code false} otherwise.
-	 */
-	public static boolean handle(Player player, int button) {
+
+	public static void action() {
 		for(Emote emote : Emote.values()) {
-			if(button == emote.button) {
-				if(emote.animation != -1)
-					player.animation(new Animation(emote.animation));
-				if(emote.graphic != -1)
-					player.graphic(new Graphic(emote.graphic));
-				return true;
-			}
+			new ButtonAction() {
+				@Override
+				public boolean click(Player player, int button) {
+					if(emote.animation != -1)
+						player.animation(new Animation(emote.animation));
+					if(emote.graphic != -1)
+						player.graphic(new Graphic(emote.graphic));
+					return true;
+				}
+			}.register(emote.button);
 		}
-		return false;
 	}
 	
 }

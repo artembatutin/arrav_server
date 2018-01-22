@@ -2,6 +2,7 @@ package net.arrav.content.item;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.arrav.action.impl.ButtonAction;
 import net.arrav.action.impl.MobAction;
 import net.arrav.content.dialogue.Expression;
 import net.arrav.content.dialogue.impl.GiveItemDialogue;
@@ -120,29 +121,20 @@ public enum Skillcape {
 		return true;
 	}
 	
-	/**
-	 * Handles the skill cape emote.
-	 * @param player The player clicking the button.
-	 * @param button The button clicked.
-	 * @return {@code true} if the emote was handled, {@code false} otherwise.
-	 */
-	public static boolean handle(Player player, int button) {
-		if(button != 74108) {
-			return false;
-		}
-		
-		Skillcape cape = getSkillcape(player.getEquipment().get(Equipment.CAPE_SLOT).getId());
-		
-		if(cape == null) {
-			return false;
-		}
-		
-		player.animation(new Animation(cape.getAnimation()));
-		player.graphic(new Graphic(cape.getGraphic()));
-		return true;
-	}
-	
 	public static void action() {
+		ButtonAction b = new ButtonAction() {
+			@Override
+			public boolean click(Player player, int button) {
+				Skillcape cape = getSkillcape(player.getEquipment().get(Equipment.CAPE_SLOT).getId());
+				if(cape == null) {
+					return true;
+				}
+				player.animation(new Animation(cape.getAnimation()));
+				player.graphic(new Graphic(cape.getGraphic()));
+				return true;
+			}
+		};
+		b.register(74108);
 		for(Skillcape c : Skillcape.values()) {
 			MobAction e = new MobAction() {
 				@Override

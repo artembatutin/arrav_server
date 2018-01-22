@@ -10,7 +10,7 @@ import net.arrav.world.entity.item.Item;
 
 import java.util.Optional;
 
-public class FamiliarControls extends ActionInitializer {
+public class ControlsFamiliarButton extends ActionInitializer {
 	
 	@Override
 	public void init() {

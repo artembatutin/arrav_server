@@ -6,7 +6,7 @@ import net.arrav.content.teleport.TeleportType;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
 
-public class MinigamePanel extends ActionInitializer {
+public class PanelMinigameButton extends ActionInitializer {
 	
 	@Override
 	public void init() {

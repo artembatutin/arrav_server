@@ -1,7 +1,8 @@
 package net.arrav.action.impl;
 
 import net.arrav.action.Action;
-import net.arrav.action.but.Spellbook;
+import net.arrav.action.but.SpellbookButton;
+import net.arrav.content.Emote;
 import net.arrav.content.PlayerPanel;
 import net.arrav.net.packet.in.ClickButtonPacket;
 import net.arrav.world.entity.actor.player.Player;
@@ -19,8 +20,9 @@ public abstract class ButtonAction extends Action {
 	}
 	
 	public static void init() {
-		new Spellbook();
+		new SpellbookButton();
 		PlayerPanel.action();
+		Emote.action();
 	}
 	
 }

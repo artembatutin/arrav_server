@@ -9,7 +9,7 @@ import net.arrav.world.locale.Position;
 
 import java.util.Optional;
 
-public class PetControls extends ActionInitializer {
+public class ControlsPetButton extends ActionInitializer {
 	
 	@Override
 	public void init() {
