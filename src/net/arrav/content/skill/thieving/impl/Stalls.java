@@ -48,7 +48,7 @@ public final class Stalls extends Thieving {
 	 * @param object the object this player is interacting with.
 	 */
 	private Stalls(Player player, StallData stall, DynamicObject object) {
-		super(player, object.getGlobalPos());
+		super(player, object.getPosition());
 		this.stall = stall;
 		this.object = object;
 		this.loot = RandomUtils.random(stall.loot);

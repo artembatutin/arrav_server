@@ -138,7 +138,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	
 	@Override
 	public boolean onFirstClickObject(Player player, GameObject object) {
-		Position pos = object.getGlobalPos();
+		Position pos = object.getPosition();
 		//west north ladder.
 		//		if(object.getId() == 14296 && pos.getX() == 2644) {
 		//			player.teleport(new Position(player.getPosition().getX() <= 2643 ? 2645 : 2643, 2601), LADDER); FIXME: FIX TELEPORTS
@@ -164,7 +164,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 		//			return false;
 		//		}
 		for(PestGate gate : gates) {
-			if(gate.clicked(object.getGlobalPos())) {
+			if(gate.clicked(object.getPosition())) {
 				gate.click(player);
 				return false;
 			}
@@ -181,7 +181,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	@Override
 	public boolean onThirdClickObject(Player player, GameObject object) {
 		for(PestGate gate : gates) {
-			if(gate.clicked(object.getGlobalPos())) {
+			if(gate.clicked(object.getPosition())) {
 				gate.repair(player);
 				return true;
 			}

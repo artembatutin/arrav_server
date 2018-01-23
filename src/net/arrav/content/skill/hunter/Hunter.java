@@ -57,7 +57,7 @@ public final class Hunter {
 			GLOBAL_TRAPS.get(player).getTraps().forEach(t -> {
 				t.setAbandoned(true);
 				t.getObject().publish();
-				t.getObject().getRegion().ifPresent(r -> r.register(new GroundItem(new Item(t.getType().getItemId()), t.getObject().getGlobalPos().copy(), player)));
+				t.getObject().getRegion().ifPresent(r -> r.register(new GroundItem(new Item(t.getType().getItemId()), t.getObject().getPosition().copy(), player)));
 			});
 			GLOBAL_TRAPS.get(player).getTraps().clear();
 		} else {
@@ -65,7 +65,7 @@ public final class Hunter {
 			trap.setAbandoned(true);
 			trap.getObject().remove();
 			player.message("You have abandoned your trap...");
-			trap.getObject().getRegion().ifPresent(r -> r.register(new GroundItem(new Item(trap.getType().getItemId()), trap.getObject().getGlobalPos().copy(), player)));
+			trap.getObject().getRegion().ifPresent(r -> r.register(new GroundItem(new Item(trap.getType().getItemId()), trap.getObject().getPosition().copy(), player)));
 		}
 
 		if(GLOBAL_TRAPS.get(player).getTraps().isEmpty()) {
@@ -196,7 +196,7 @@ public final class Hunter {
 		if(!GLOBAL_TRAPS.containsKey(player))
 			return Optional.empty();
 		for(Trap t : GLOBAL_TRAPS.get(player).getTraps()) {
-			if(t.getObject().getId() == object.getId() && t.getObject().getGlobalPos().same(object.getGlobalPos())) {
+			if(t.getObject().getId() == object.getId() && t.getObject().getPosition().same(object.getPosition())) {
 				return Optional.of(t);
 			}
 		}

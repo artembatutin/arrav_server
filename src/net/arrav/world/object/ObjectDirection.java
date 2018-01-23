@@ -16,27 +16,22 @@ public enum ObjectDirection {
 	/**
 	 * The north orientation.
 	 */
-	NORTH(1),
+	NORTH(1, 2),
 	
 	/**
 	 * The south orientation.
 	 */
-	SOUTH(3),
+	SOUTH(3, 0),
 	
 	/**
 	 * The east orientation.
 	 */
-	EAST(2),
+	EAST(2, 3),
 	
 	/**
 	 * The west orientation.
 	 */
-	WEST(0);
-	
-	/**
-	 * Caches our enum values.
-	 */
-	private static final ImmutableSet<ObjectDirection> VALUES = Sets.immutableEnumSet(EnumSet.allOf(ObjectDirection.class));
+	WEST(0, 1);
 	
 	/**
 	 * The identification of this direction.
@@ -44,10 +39,16 @@ public enum ObjectDirection {
 	private final int id;
 	
 	/**
+	 * The rotate identification of this direction.
+	 */
+	private final int rotate;
+	
+	/**
 	 * Creates a new {@link ObjectDirection}.
 	 */
-	ObjectDirection(int id) {
+	ObjectDirection(int id, int rotate) {
 		this.id = id;
+		this.rotate = rotate;
 	}
 	
 	/**
@@ -81,6 +82,14 @@ public enum ObjectDirection {
 	 */
 	public static Optional<ObjectDirection> valueOf(int id) {
 		return Optional.ofNullable(values.get(id));
+	}
+	
+	/**
+	 * Gets the rotated direction.
+	 * @return rotated direction.
+	 */
+	public ObjectDirection rotate() {
+		return values.get(rotate);
 	}
 	
 }

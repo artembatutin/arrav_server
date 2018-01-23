@@ -1,4 +1,4 @@
-package tool;
+package net.arrav.tool;
 
 import java.io.BufferedWriter;
 import java.io.File;

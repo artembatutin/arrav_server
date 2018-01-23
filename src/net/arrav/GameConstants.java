@@ -97,7 +97,7 @@ public final class GameConstants {
 	/**
 	 * The position new players will be moved to.
 	 */
-	public static final Position STARTING_POSITION = new Position(3087, 3499);
+	public static final Position STARTING_POSITION = new Position(3088, 3509);
 	
 	/**
 	 * The items that are not allowed to be bought by shops.

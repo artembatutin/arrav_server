@@ -97,7 +97,7 @@ public final class BirdSnare extends Trap {
 					this.cancel();
 					return;
 				}
-				mob.getMovementQueue().walk(getObject().getGlobalPos().copy());
+				mob.getMovementQueue().walk(getObject().getPosition().copy());
 				if(isAbandoned()) {
 					this.cancel();
 					return;
@@ -139,7 +139,7 @@ public final class BirdSnare extends Trap {
 			if(mob == null || mob.isDead()) {
 				continue;
 			}
-			if(this.getObject().getGlobalPos().withinDistance(mob.getPosition(), DISTANCE_PORT)) {
+			if(this.getObject().getPosition().withinDistance(mob.getPosition(), DISTANCE_PORT)) {
 				trap(mob);
 			}
 		}

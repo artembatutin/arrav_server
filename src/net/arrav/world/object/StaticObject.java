@@ -35,17 +35,17 @@ public class StaticObject extends GameObject {
 	}
 	
 	@Override
-	public GameObject copy() {
+	public StaticObject copy() {
 		return new StaticObject(region, getId(), packedCoordinates, getDirection(), getObjectType());
 	}
 	
 	@Override
-	public GameObject copy(ObjectDirection direction) {
+	public StaticObject copy(ObjectDirection direction) {
 		return new StaticObject(region, getId(), packedCoordinates, direction, getObjectType());
 	}
 	
 	@Override
-	public GameObject copy(ObjectType type) {
+	public StaticObject copy(ObjectType type) {
 		return new StaticObject(region, getId(), packedCoordinates, getDirection(), type);
 	}
 	
@@ -65,7 +65,7 @@ public class StaticObject extends GameObject {
 	}
 	
 	@Override
-	public Position getGlobalPos() {
+	public Position getPosition() {
 		return new Position(getX(), getY(), getZ());
 	}
 	
@@ -106,5 +106,21 @@ public class StaticObject extends GameObject {
 	@Override
 	public StaticObject toStatic() {
 		return this;
+	}
+	
+	/**
+	 * Returns a new static object with a rotated direction.
+	 * @return static object.
+	 */
+	public StaticObject rotate() {
+		return new StaticObject(region, getId(), getLocalPos(), getDirection().rotate(), getObjectType());
+	}
+	
+	/**
+	 * Returns a new static object with a different type.
+	 * @return static object.
+	 */
+	public StaticObject toggleType() {
+		return new StaticObject(region, getId(), getLocalPos(), getDirection(), getObjectType().toggle());
 	}
 }

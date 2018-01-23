@@ -59,7 +59,7 @@ public final class RefillableAction extends ProducingSkillAction {
 	}
 
 	public RefillableAction(Player player, Refillable refillable, GameObject object) {
-		super(player, Optional.of(object.getGlobalPos()));
+		super(player, Optional.of(object.getPosition()));
 		this.refillable = refillable;
 		this.gameObject = object;
 	}

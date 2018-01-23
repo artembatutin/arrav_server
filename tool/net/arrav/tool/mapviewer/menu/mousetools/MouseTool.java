@@ -1,4 +1,4 @@
-package tool.mapviewer.menu.mousetools;
+package net.arrav.tool.mapviewer.menu.mousetools;
 
 import java.awt.event.MouseAdapter;
 

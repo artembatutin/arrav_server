@@ -47,7 +47,7 @@ public final class FirepitManager {
 	 * @return {@code true} if the pit was fired, {@code false} otherwise.
 	 */
 	public boolean fire(Player player, GameObject object, Item item) {
-		FirepitObject pit = firepit.getGlobalPos().same(object.getGlobalPos()) && firepit.getId() == object.getId() ? firepit : null;
+		FirepitObject pit = firepit.getPosition().same(object.getPosition()) && firepit.getId() == object.getId() ? firepit : null;
 		if(pit == null) {
 			return false;
 		}

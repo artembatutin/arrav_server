@@ -30,7 +30,7 @@ public final class Cooking extends ProducingSkillAction {
 	private final ThreadLocalRandom random = ThreadLocalRandom.current();
 
 	public Cooking(Player player, GameObject object, CookingData data, boolean cookStove, int counter, boolean spell) {
-		super(player, spell ? Optional.empty() : Optional.of(object.getGlobalPos()));
+		super(player, spell ? Optional.empty() : Optional.of(object.getPosition()));
 		this.data = data;
 		this.object = object;
 		this.cookStove = cookStove;

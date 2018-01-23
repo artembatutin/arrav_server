@@ -15,11 +15,11 @@ public class SimplePortal extends ActionInitializer {
 		ObjectAction portal = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				if(object.getGlobalPos().same(new Position(3005, 3963, 0)))//wilderness agility
+				if(object.getPosition().same(new Position(3005, 3963, 0)))//wilderness agility
 					player.teleport(GameConstants.STARTING_POSITION, TeleportType.OBELISK);
-				if(object.getGlobalPos().same(new Position(2996, 9823, 0)))//to rune essence
+				if(object.getPosition().same(new Position(2996, 9823, 0)))//to rune essence
 					player.teleport(new Position(2922, 4819, 0), TeleportType.FREEZE);
-				if(object.getGlobalPos().same(new Position(2922, 4819, 0)))//from rune essence
+				if(object.getPosition().same(new Position(2922, 4819, 0)))//from rune essence
 					player.teleport(new Position(2996, 9823, 0), TeleportType.FREEZE);
 				return true;
 			}

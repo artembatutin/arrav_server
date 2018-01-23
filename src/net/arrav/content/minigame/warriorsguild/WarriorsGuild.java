@@ -24,14 +24,14 @@ public final class WarriorsGuild {
 		ObjectAction c = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				return object.getGlobalPos().same(new Position(2839, 3537)) && CyclopsRoom.enter(player, object);
+				return object.getPosition().same(new Position(2839, 3537)) && CyclopsRoom.enter(player, object);
 			}
 		};
 		c.registerFirst(43741);
 		ObjectAction a = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				return !(!object.getGlobalPos().same(new Position(2855, 3546)) && !object.getGlobalPos().same(new Position(2854, 3546))) && AnimationRoom.enter(player, object);
+				return !(!object.getPosition().same(new Position(2855, 3546)) && !object.getPosition().same(new Position(2854, 3546))) && AnimationRoom.enter(player, object);
 			}
 		};
 		a.registerFirst(15641);

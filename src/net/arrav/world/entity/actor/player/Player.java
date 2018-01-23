@@ -551,11 +551,7 @@ public final class Player extends Actor {
 	 * The saved {@link Multicannon} instance.
 	 */
 	public Optional<Multicannon> cannon = Optional.empty();
-
-
-	/** Curses modifiers. */
-	public final Map<Prayer, FormulaModifier<Player>> curses_modifiers = new HashMap<>();
-
+	
 	public RangedWeaponDefinition rangedDefinition;
 	public RangedAmmunition rangedAmmo;
 	

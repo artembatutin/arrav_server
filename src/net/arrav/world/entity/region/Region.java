@@ -117,9 +117,16 @@ public final class Region extends Entity {
 	
 	/**
 	 * Creates a new {@link Region}.
-	 * @param regionId The id of this region.
 	 */
-	Region(int regionId, RegionManager manager) {
+	public Region(int regionId) {
+		super(new Position((regionId >> 8) << 6, (regionId & 0xFF) << 6), EntityType.REGION);
+		this.regionId = regionId;
+	}
+	
+	/**
+	 * Creates a new {@link Region}.
+	 */
+	public Region(int regionId, RegionManager manager) {
 		super(new Position((regionId >> 8) << 6, (regionId & 0xFF) << 6), EntityType.REGION);
 		this.regionId = regionId;
 		this.manager = manager;
@@ -535,6 +542,8 @@ public final class Region extends Entity {
 	 * @return surrounding regions.
 	 */
 	public ObjectList<Region> getSurroundingRegions() {
+		if(manager == null)
+			return null;
 		if(surroundingRegions == null) {
 			ObjectList<Region> regions = new ObjectArrayList<>();
 			manager.getRegion(regionId).ifPresent(regions::add);

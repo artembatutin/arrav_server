@@ -30,7 +30,7 @@ public final class Bonfire extends DestructionSkillAction {
 	private int amount;
 	
 	public Bonfire(Player player, GameObject object, LogType log, FirepitObject pit) {
-		super(player, Optional.of(object.getGlobalPos()));
+		super(player, Optional.of(object.getPosition()));
 		this.object = object.toDynamic();
 		this.log = log;
 		this.pit = pit;

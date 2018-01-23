@@ -54,7 +54,7 @@ public final class Woodcutting extends HarvestingSkillAction {
 	 * Constructs a new {@link Woodcutting} skill.
 	 */
 	public Woodcutting(Player player, Tree tree, GameObject object, Patch patch) {
-		super(player, Optional.of(object.getGlobalPos()));
+		super(player, Optional.of(object.getPosition()));
 		this.objectName = object.getDefinition().getName().toLowerCase();
 		this.tree = tree;
 		this.hatchet = Hatchet.getDefinition(player).orElse(null);
@@ -147,7 +147,7 @@ public final class Woodcutting extends HarvestingSkillAction {
 				}
 			});
 			if(tree.equals(Tree.VINES)) {//Vines
-				Position delta = Position.delta(object.getGlobalPos(), player.getPosition());
+				Position delta = Position.delta(object.getPosition(), player.getPosition());
 				Direction dir = Direction.fromDeltas(delta);
 				player.getMovementQueue().walk(-dir.getX() * 2, -dir.getY() * 2);
 			}

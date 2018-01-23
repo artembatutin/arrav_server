@@ -1,6 +1,6 @@
-package tool.mapviewer;
+package net.arrav.tool.mapviewer;
 
-import tool.mapviewer.util.Resources;
+import net.arrav.tool.mapviewer.util.Resources;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

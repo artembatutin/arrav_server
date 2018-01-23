@@ -13,7 +13,7 @@ public class AncientCavern extends ActionInitializer {
 		ObjectAction s = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				if(object.getGlobalPos().same(new Position(1778, 5344, 0)))
+				if(object.getPosition().same(new Position(1778, 5344, 0)))
 					player.move(new Position(1778, 5343, 1));
 				return true;
 			}
@@ -22,7 +22,7 @@ public class AncientCavern extends ActionInitializer {
 		s = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				if(object.getGlobalPos().same(new Position(1778, 5344, 1)))
+				if(object.getPosition().same(new Position(1778, 5344, 1)))
 					player.move(new Position(1778, 5346, 0));
 				return true;
 			}
@@ -31,7 +31,7 @@ public class AncientCavern extends ActionInitializer {
 		s = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				if(object.getGlobalPos().same(new Position(1744, 5322, 1)))
+				if(object.getPosition().same(new Position(1744, 5322, 1)))
 					player.move(new Position(1745, 5325, 0));
 				return true;
 			}
@@ -40,7 +40,7 @@ public class AncientCavern extends ActionInitializer {
 		s = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				if(object.getGlobalPos().same(new Position(1744, 5323, 0)))
+				if(object.getPosition().same(new Position(1744, 5323, 0)))
 					player.move(new Position(1744, 5321, 1));
 				return true;
 			}

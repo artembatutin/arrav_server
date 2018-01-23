@@ -57,7 +57,7 @@ public final class Mining extends HarvestingSkillAction {
 	 * @param object the rock object.
 	 */
 	public Mining(Player player, RockData rock, GameObject object) {
-		super(player, Optional.of(object.getGlobalPos()));
+		super(player, Optional.of(object.getPosition()));
 		if(rock == RockData.ESSENCE && player.getSkills()[Skills.MINING].getRealLevel() >= 30)
 			rock = RockData.PURE_ESSENCE;
 		this.rock = rock;

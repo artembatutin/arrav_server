@@ -130,7 +130,7 @@ public final class Smithing extends ProducingSkillAction {
 								player.closeWidget();
 								
 								player.animation(new Animation(898));
-								SendGraphic.local(player, 2123, object.getGlobalPos().copy(), 50);
+								SendGraphic.local(player, 2123, object.getPosition().copy(), 50);
 								LinkedTaskSequence seq = new LinkedTaskSequence();
 								seq.connect(3, () -> {
 									
@@ -171,7 +171,7 @@ public final class Smithing extends ProducingSkillAction {
 				return false;
 			}
 			player.animation(new Animation(898));
-			SendGraphic.local(player, 2123, object.getGlobalPos().copy(), 50);
+			SendGraphic.local(player, 2123, object.getPosition().copy(), 50);
 			player.getInventory().removeAll(new Item(11710), new Item(11712), new Item(11714));
 			player.getInventory().add(new Item(11690));
 			return true;
@@ -214,7 +214,7 @@ public final class Smithing extends ProducingSkillAction {
 			return false;
 		}
 		player.getAttr().get("smithing_equipment").set(table.getBar());
-		player.getAttr().get("smithing_position").set(object.getGlobalPos());
+		player.getAttr().get("smithing_position").set(object.getPosition());
 		player.widget(994);
 		return true;
 	}

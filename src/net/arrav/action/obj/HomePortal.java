@@ -37,7 +37,7 @@ public class HomePortal extends ActionInitializer {
 		ObjectAction staires = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				if(object.getGlobalPos().same(new Position(3079, 3503, 0))) {
+				if(object.getPosition().same(new Position(3079, 3503, 0))) {
 					if(!player.getRights().isStaff() && !player.getRights().isDonator()) {
 						int total = 0;
 						for(Skill s : player.getSkills())

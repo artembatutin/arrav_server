@@ -189,4 +189,15 @@ public enum ObjectType {
 		return Optional.ofNullable(values.get(id));
 	}
 	
+	/**
+	 * Gets the next object type from the list.
+	 * @return the next object type.
+	 */
+	public ObjectType toggle() {
+		int next = getId() + 1;
+		if(next == 23)
+			next = 0;
+		return valueOf(next).get();
+	}
+	
 }

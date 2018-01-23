@@ -82,7 +82,7 @@ public class DynamicObject extends GameObject {
 	}
 	
 	@Override
-	public Position getGlobalPos() {
+	public Position getPosition() {
 		return position;
 	}
 	

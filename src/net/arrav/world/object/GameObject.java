@@ -153,7 +153,16 @@ public abstract class GameObject {
 	 * Gets the unpacked position of this object as {@link Position} instance.
 	 * @return an position instance of this object.
 	 */
-	public abstract Position getGlobalPos();
+	public abstract Position getPosition();
+	
+	/**
+	 * Gets the region position of this object as {@link Position} instance.
+	 * @return an regional position instance of this object.
+	 */
+	public Position getRegionPos() {
+		Position p = getPosition();
+		return new Position(p.getRegionLocalX(), p.getRegionLocalY());
+	}
 	
 	/**
 	 * Gets the packed position of this object in an integer.

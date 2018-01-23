@@ -39,7 +39,7 @@ public final class SendObject implements OutgoingPacket {
 	
 	@Override
 	public ByteBuf write(Player player, ByteBuf buf) {
-		new SendCoordinates(object.getGlobalPos()).write(player, buf);
+		new SendCoordinates(object.getPosition()).write(player, buf);
 		buf.message(151);
 		buf.put(0, ByteTransform.S);
 		buf.putInt(object.getId());

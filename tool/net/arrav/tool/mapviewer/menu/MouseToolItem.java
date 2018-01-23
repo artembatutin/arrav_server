@@ -1,6 +1,6 @@
-package tool.mapviewer.menu;
+package net.arrav.tool.mapviewer.menu;
 
-import tool.mapviewer.menu.mousetools.MouseTool;
+import net.arrav.tool.mapviewer.menu.mousetools.MouseTool;
 
 import javax.swing.*;
 

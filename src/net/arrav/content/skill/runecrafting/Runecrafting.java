@@ -67,7 +67,7 @@ public final class Runecrafting extends ProducingSkillAction {
 	 * @param object the object the {@code player} is interacting with.
 	 */
 	private Runecrafting(Player player, GameObject object, Altar altar) {
-		super(player, Optional.of(object.getGlobalPos()));
+		super(player, Optional.of(object.getPosition()));
 		this.altar = altar;
 	}
 

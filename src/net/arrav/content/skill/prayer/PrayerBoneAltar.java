@@ -19,7 +19,7 @@ public final class PrayerBoneAltar extends DestructionSkillAction {
 	private final boolean prayLoc;
 	
 	public PrayerBoneAltar(Player player, GameObject object, Bone bone) {
-		super(player, Optional.of(object.getGlobalPos()));
+		super(player, Optional.of(object.getPosition()));
 		this.bone = bone;
 		prayLoc = object.getId() == 15050;
 	}

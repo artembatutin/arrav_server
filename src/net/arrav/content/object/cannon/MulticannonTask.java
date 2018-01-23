@@ -38,18 +38,18 @@ public class MulticannonTask extends Task {
 			cancel();
 			return;
 		}
-		if(cannon.getGlobalPos().getDistance(cannon.player.getPosition()) > 30) {
+		if(cannon.getPosition().getDistance(cannon.player.getPosition()) > 30) {
 			cannon.player.message("Your cannon is now on the floor because you weren't close enough to repair it in time.");
 			cancel();
 			cannon.remove();
 			cannon.getRegion().ifPresent(r -> {
 				if(cannon.getElements() > 0) {
-					r.register(new GroundItem(new Item(2, cannon.getElements()), cannon.getGlobalPos(), cannon.player));
+					r.register(new GroundItem(new Item(2, cannon.getElements()), cannon.getPosition(), cannon.player));
 				}
-				r.register(new GroundItem(new Item(6), cannon.getGlobalPos(), cannon.player));
-				r.register(new GroundItem(new Item(8), cannon.getGlobalPos(), cannon.player));
-				r.register(new GroundItem(new Item(10), cannon.getGlobalPos(), cannon.player));
-				r.register(new GroundItem(new Item(12), cannon.getGlobalPos(), cannon.player));
+				r.register(new GroundItem(new Item(6), cannon.getPosition(), cannon.player));
+				r.register(new GroundItem(new Item(8), cannon.getPosition(), cannon.player));
+				r.register(new GroundItem(new Item(10), cannon.getPosition(), cannon.player));
+				r.register(new GroundItem(new Item(12), cannon.getPosition(), cannon.player));
 			});
 		} else if(cannon.getElements() < 1) {
 			cannon.player.message("Your cannon has run out of ammo!");
@@ -101,28 +101,28 @@ public class MulticannonTask extends Task {
 		Player p = cannon.player;
 		switch(cannon.facing) {
 			case NORTH: // north
-				p.out(new SendObjectAnimation(cannon.getGlobalPos(), 516, cannon.getObjectType(), -1));
+				p.out(new SendObjectAnimation(cannon.getPosition(), 516, cannon.getObjectType(), -1));
 				break;
 			case NORTH_EAST: // north-east
-				p.out(new SendObjectAnimation(cannon.getGlobalPos(), 517, cannon.getObjectType(), -1));
+				p.out(new SendObjectAnimation(cannon.getPosition(), 517, cannon.getObjectType(), -1));
 				break;
 			case EAST: // east
-				p.out(new SendObjectAnimation(cannon.getGlobalPos(), 518, cannon.getObjectType(), -1));
+				p.out(new SendObjectAnimation(cannon.getPosition(), 518, cannon.getObjectType(), -1));
 				break;
 			case SOUTH_EAST: // south-east
-				p.out(new SendObjectAnimation(cannon.getGlobalPos(), 519, cannon.getObjectType(), -1));
+				p.out(new SendObjectAnimation(cannon.getPosition(), 519, cannon.getObjectType(), -1));
 				break;
 			case SOUTH: // south
-				p.out(new SendObjectAnimation(cannon.getGlobalPos(), 520, cannon.getObjectType(), -1));
+				p.out(new SendObjectAnimation(cannon.getPosition(), 520, cannon.getObjectType(), -1));
 				break;
 			case SOUTH_WEST: // south-west
-				p.out(new SendObjectAnimation(cannon.getGlobalPos(), 521, cannon.getObjectType(), -1));
+				p.out(new SendObjectAnimation(cannon.getPosition(), 521, cannon.getObjectType(), -1));
 				break;
 			case WEST: // west
-				p.out(new SendObjectAnimation(cannon.getGlobalPos(), 514, cannon.getObjectType(), -1));
+				p.out(new SendObjectAnimation(cannon.getPosition(), 514, cannon.getObjectType(), -1));
 				break;
 			case NORTH_WEST: // north-west
-				p.out(new SendObjectAnimation(cannon.getGlobalPos(), 515, cannon.getObjectType(), -1));
+				p.out(new SendObjectAnimation(cannon.getPosition(), 515, cannon.getObjectType(), -1));
 				cannon.facing = null;
 				break;
 		}
@@ -140,7 +140,7 @@ public class MulticannonTask extends Task {
 			return;
 		int damage = RandomUtils.inclusive(300);
 		cannon.setElements(cannon.getElements() - 1);
-		new Projectile(cannon.getGlobalPos().move(1, 1), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), 53, 60, 20, 35, 30, cannon.player.getInstance(), CombatType.RANGED).sendProjectile();
+		new Projectile(cannon.getPosition().move(1, 1), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), 53, 60, 20, 35, 30, cannon.player.getInstance(), CombatType.RANGED).sendProjectile();
 		//Hit data = CombatUtil.calculateSoaking(victim, CombatType.RANGED, new Hit(damage, Hitsplat.NORMAL, HitIcon.CANNON, true, cannon.player.getSlot()));
 		Hit data = new Hit(damage, Hitsplat.NORMAL, HitIcon.CANNON);
 
@@ -163,15 +163,15 @@ public class MulticannonTask extends Task {
 	}
 	
 	private Actor getVictim() {
-		int myX = cannon.getGlobalPos().getX();
-		int myY = cannon.getGlobalPos().getY();
+		int myX = cannon.getPosition().getX();
+		int myY = cannon.getPosition().getY();
 		if(cannon.player.inMulti()) {
 			for(Mob m : cannon.player.getLocalMobs()) {
 				if(m.isDead())
 					continue;
 				if(!m.getDefinition().isAttackable())
 					continue;
-				if(m.getPosition().getDistance(cannon.getGlobalPos()) > 8)
+				if(m.getPosition().getDistance(cannon.getPosition()) > 8)
 					continue;
 				if(check(m, myX, myY)) {
 					return m;

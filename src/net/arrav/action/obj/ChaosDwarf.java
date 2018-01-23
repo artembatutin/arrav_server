@@ -14,7 +14,7 @@ public class ChaosDwarf extends ActionInitializer {
 		ObjectAction l = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				if(object.getGlobalPos().same(new Position(1487, 4704)))
+				if(object.getPosition().same(new Position(1487, 4704)))
 					player.teleport(new Position(3085, 3513, 0), NORMAL);
 				return true;
 			}

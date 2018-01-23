@@ -71,7 +71,7 @@ public final class AnimationRoom extends GuildRoom {
 			player.message("You are missing some items in order to animate this armour set.");
 			return false;
 		}
-		armour = Optional.of(new AnimatedArmour(data.get(), object.getGlobalPos()));
+		armour = Optional.of(new AnimatedArmour(data.get(), object.getPosition()));
 		onEnter(player);
 		return true;
 	}

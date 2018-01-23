@@ -16,7 +16,7 @@ public final class SendObjectRemoval implements OutgoingPacket {
 	
 	@Override
 	public ByteBuf write(Player player, ByteBuf buf) {
-		new SendCoordinates(object.getGlobalPos()).write(player, buf);
+		new SendCoordinates(object.getPosition()).write(player, buf);
 		buf.message(101);
 		buf.put((object.getObjectType().getId() << 2) + (object.getDirection().getId() & 3), ByteTransform.C);
 		buf.put(0);

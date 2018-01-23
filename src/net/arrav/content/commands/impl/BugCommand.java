@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.arrav.content.commands.Command;
 import net.arrav.content.commands.CommandSignature;
 import net.arrav.content.minigame.rfd.RFDMinigame;
+import net.arrav.content.scene.impl.IntroductionCutscene;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
 
@@ -14,7 +15,7 @@ public final class BugCommand implements Command {
 	
 	@Override
 	public void execute(Player player, String[] cmd, String command) throws Exception {
-		/*StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		sb.append(player.getFormatUsername());
 		sb.append(":");
 		for(String s : cmd) {
@@ -22,8 +23,7 @@ public final class BugCommand implements Command {
 			sb.append(" ");
 		}
 		REPORT_LINES.add(sb.toString());
-		player.message("Your bug has been reported, thank you!");*/
-		RFDMinigame.enterRFD(player);
+		player.message("Your bug has been reported, thank you!");
 	}
 	
 }

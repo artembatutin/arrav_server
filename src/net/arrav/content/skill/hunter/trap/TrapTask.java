@@ -39,7 +39,7 @@ public final class TrapTask extends Task {
 		} else {
 			//distance check.
 			traps.forEach(t -> {
-				boolean withinDistance = player.getPosition().withinDistance(t.getObject().getGlobalPos(), 25);
+				boolean withinDistance = player.getPosition().withinDistance(t.getObject().getPosition(), 25);
 				if(!withinDistance && !t.isAbandoned()) {
 					Hunter.abandon(player, t, false);
 				}

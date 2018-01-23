@@ -30,7 +30,7 @@ public final class StarSprite extends Mob {
 	 * @param star {@link #star}.
 	 */
 	public StarSprite(ShootingStar star) {
-		super(8091, star.getGlobalPos().copy());
+		super(8091, star.getPosition().copy());
 		this.star = star;
 	}
 	

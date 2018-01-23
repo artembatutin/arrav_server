@@ -31,7 +31,7 @@ public class FarmingAction {
 			ObjectAction obj = new ObjectAction() {
 				@Override
 				public boolean click(Player player, GameObject object, int option) {
-					final Farming farming = new Farming(player, Optional.of(object.getGlobalPos()));
+					final Farming farming = new Farming(player, Optional.of(object.getPosition()));
 					farming.patch = player.patches.get(patchType);
 					if(farming.patch != null && farming.patch.getSeedType() != null) {
 						boolean fullyGrown = farming.patch.isFullyGrown();

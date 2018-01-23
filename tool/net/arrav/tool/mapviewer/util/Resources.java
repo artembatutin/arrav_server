@@ -1,4 +1,4 @@
-package tool.mapviewer.util;
+package net.arrav.tool.mapviewer.util;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

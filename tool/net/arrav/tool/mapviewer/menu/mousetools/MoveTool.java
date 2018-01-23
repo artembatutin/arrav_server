@@ -1,8 +1,8 @@
-package tool.mapviewer.menu.mousetools;
+package net.arrav.tool.mapviewer.menu.mousetools;
 
 import net.arrav.world.locale.Position;
 import net.arrav.world.World;
-import tool.mapviewer.MapTool;
+import net.arrav.tool.mapviewer.MapTool;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -37,11 +37,10 @@ public class MoveTool extends MouseTool {
 			isLeftDrag = true;
 			lastDragX = context.getMap().getMapX(e.getX());
 			lastDragY = context.getMap().getMapY(e.getY());
-			
 		} else {
 			lastDragX = context.getMap().getMapX(e.getX());
 			lastDragY = context.getMap().getMapY(e.getY());
-			World.get().getPlayers().findFirst(p -> p.credentials.username.toLowerCase().equals("avro")).ifPresent(o -> o.move(new Position(lastDragX, lastDragY)));
+			World.get().getPlayers().findFirst(p -> p.credentials.username.toLowerCase().equals("rogue")).ifPresent(o -> o.move(new Position(lastDragX, lastDragY)));
 			context.setCurrent(new Position(lastDragX, lastDragY));
 			context.getMap().repaint();
 		}

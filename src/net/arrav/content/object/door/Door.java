@@ -30,7 +30,7 @@ public class Door {
 		boolean closed = object.getDefinition().hasAction("open");
 		original = object.copy();
 		
-		Position pos = original.getGlobalPos();
+		Position pos = original.getPosition();
 		//getting second door if found.
 		if(original.getObjectType() == STRAIGHT_WALL) {
 			if(original.getDirection() == WEST || original.getDirection() == EAST) {
@@ -102,13 +102,13 @@ public class Door {
 					}
 				}
 			} else {
-				Position pos2 = originalSecond.getGlobalPos();
+				Position pos2 = originalSecond.getPosition();
 				if(closed)
 					first = (original.getDirection() == WEST || original.getDirection() == EAST) ? pos.getY() < pos2.getY() ? original : originalSecond : pos.getX() < pos2.getX() ? original : originalSecond;
 				else
 					first = (original.getDirection() == WEST || original.getDirection() == EAST) ? pos.getX() < pos2.getX() ? original : originalSecond : pos.getY() < pos2.getY() ? original : originalSecond;
-				second = original.getId() == first.getId() && original.getGlobalPos().same(first.getGlobalPos()) ? originalSecond : original;
-				pos = first.getGlobalPos();
+				second = original.getId() == first.getId() && original.getPosition().same(first.getPosition()) ? originalSecond : original;
+				pos = first.getPosition();
 				
 				if(closed) {
 					if(first.getDirection() == WEST || first.getDirection() == EAST) {
@@ -181,11 +181,11 @@ public class Door {
 			}
 		}
 		if(first != null) {
-			appended = new DynamicObject(first.getId(), first.getGlobalPos().move(xAdjustment, yAdjustment), direction, first.getObjectType(), false, 0, 0);
-			appendedSecond = direction2 == null ? null : new DynamicObject(second.getId(), second.getGlobalPos().move(xAdjustment2, yAdjustment2), direction2, second.getObjectType(), false, 0, 0);
+			appended = new DynamicObject(first.getId(), first.getPosition().move(xAdjustment, yAdjustment), direction, first.getObjectType(), false, 0, 0);
+			appendedSecond = direction2 == null ? null : new DynamicObject(second.getId(), second.getPosition().move(xAdjustment2, yAdjustment2), direction2, second.getObjectType(), false, 0, 0);
 		} else {
-			appended = new DynamicObject(object.getId(), object.getGlobalPos().move(xAdjustment, yAdjustment), direction, object.getObjectType(), false, 0, 0);
-			appendedSecond = direction2 == null ? null : new DynamicObject(object.getId(), object.getGlobalPos().move(xAdjustment2, yAdjustment2), direction2, object.getObjectType(), false, 0, 0);
+			appended = new DynamicObject(object.getId(), object.getPosition().move(xAdjustment, yAdjustment), direction, object.getObjectType(), false, 0, 0);
+			appendedSecond = direction2 == null ? null : new DynamicObject(object.getId(), object.getPosition().move(xAdjustment2, yAdjustment2), direction2, object.getObjectType(), false, 0, 0);
 		}
 	}
 	
@@ -225,11 +225,11 @@ public class Door {
 	}
 	
 	public Position getCurrentOne() {
-		return isAppend ? appended.getGlobalPos() : original.getGlobalPos();
+		return isAppend ? appended.getPosition() : original.getPosition();
 	}
 	
 	public Position getCurrentSecond() {
-		return isAppend ? appendedSecond == null ? null : appendedSecond.getGlobalPos() : originalSecond == null ? null : originalSecond.getGlobalPos();
+		return isAppend ? appendedSecond == null ? null : appendedSecond.getPosition() : originalSecond == null ? null : originalSecond.getPosition();
 	}
 	
 	public void setAppendId(int id) {

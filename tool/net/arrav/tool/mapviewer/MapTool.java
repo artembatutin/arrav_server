@@ -1,7 +1,7 @@
-package tool.mapviewer;
+package net.arrav.tool.mapviewer;
 
 import net.arrav.world.locale.Position;
-import tool.mapviewer.menu.MapMenuBar;
+import net.arrav.tool.mapviewer.menu.MapMenuBar;
 
 import javax.swing.*;
 import java.awt.*;

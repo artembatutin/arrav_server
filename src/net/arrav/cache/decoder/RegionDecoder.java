@@ -8,10 +8,7 @@ import net.arrav.util.ByteBufferUtil;
 import net.arrav.util.CompressionUtil;
 import net.arrav.util.LoggerUtils;
 import net.arrav.world.World;
-import net.arrav.world.entity.region.Region;
-import net.arrav.world.entity.region.RegionDefinition;
-import net.arrav.world.entity.region.RegionTile;
-import net.arrav.world.entity.region.TraversalMap;
+import net.arrav.world.entity.region.*;
 import net.arrav.world.locale.Position;
 import net.arrav.world.object.GameObject;
 import net.arrav.world.object.ObjectDirection;
@@ -19,8 +16,7 @@ import net.arrav.world.object.ObjectType;
 import net.arrav.world.object.StaticObject;
 
 import java.nio.ByteBuffer;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -81,7 +77,7 @@ public final class RegionDecoder implements Runnable {
 				
 				ByteBuffer gameObjectData = fs.getFile(FileSystem.MAP_INDEX, def.getObjectFile());
 				ByteBuffer gameObjectBuffer = ByteBuffer.wrap(CompressionUtil.gunzip(gameObjectData.array()));
-				ObjectList<StaticObject> objects = parseGameObject(r, gameObjectBuffer, x, y, downHeights, isNew);
+				ObjectList<StaticObject> objects = parseGameObject(def.getObjectFile(), r, gameObjectBuffer, x, y, downHeights, isNew);
 				for(StaticObject o : objects) {
 					TraversalMap.markObject(r, o, true, true);
 					if(o.getDefinition() != null && DoorHandler.isDoor(o.getDefinition()))
@@ -98,12 +94,13 @@ public final class RegionDecoder implements Runnable {
 	
 	/**
 	 * Parses a {@link GameObject} on the specified coordinates.
-	 * @param gameObjectBuffer The uncompressed game object data buffer.
-	 * @param x                The x coordinate this object is on.
-	 * @param y                The y coordinate this object is on.
 	 */
-	private ObjectList<StaticObject> parseGameObject(Region region, ByteBuffer gameObjectBuffer, int x, int y, ObjectList<Position> downHeights, boolean isNew) {
+	public ObjectList<StaticObject> parseGameObject(int file, Region region, ByteBuffer gameObjectBuffer, int x, int y, ObjectList<Position> downHeights, boolean isNew) {
 		ObjectList<StaticObject> objs = new ObjectArrayList<>();
+		int offset = 0;
+		if(file == 625) {
+			offset = 5;
+		}
 		for(int deltaId, id = -1; (deltaId = ByteBufferUtil.getSmart(gameObjectBuffer)) != 0; ) {
 			id += deltaId;
 			for(int deltaPos, hash = 0; (deltaPos = ByteBufferUtil.getSmart(gameObjectBuffer)) != 0; ) {
@@ -112,7 +109,7 @@ public final class RegionDecoder implements Runnable {
 				int localY = hash & 0x3F;
 				int height = hash >> 12;
 				int attributeHashCode = gameObjectBuffer.get() & 0xFF;
-				Optional<ObjectType> type = ObjectType.valueOf(attributeHashCode >> 2);
+				Optional<ObjectType> type = ObjectType.valueOf((attributeHashCode >> 2) - offset);
 				Optional<ObjectDirection> orientation = ObjectDirection.valueOf(attributeHashCode & 0x3);
 				Position pos = new Position(x + localX, y + localY, height);
 				if(height > 0) {
@@ -138,9 +135,6 @@ public final class RegionDecoder implements Runnable {
 	
 	/**
 	 * Loads all of the tool.mapviewer indexes entries and decodes each.
-	 * @param mapBuffer The uncompressed tool.mapviewer entry data buffer.
-	 * @param x         The x coordinate of this tool.mapviewer entry.
-	 * @param y         The y coordinate of this tool.mapviewer entry.
 	 */
 	private void parseTerrain(Region region, ByteBuffer mapBuffer, int x, int y, ObjectList<Position> downHeights) {
 		for(int height = 0; height < 4; height++) {
@@ -175,8 +169,6 @@ public final class RegionDecoder implements Runnable {
 	
 	/**
 	 * Decodes the terrains {@link Position}.
-	 * @param flags    The flags for the specified position.
-	 * @param position The decoded position.
 	 */
 	private void terrainDecoded(Region region, int flags, Position position, ObjectList<Position> downHeights) {
 		if(position.getZ() > 0 && downHeights.contains(new Position(position.getX(), position.getY(), 1))) {

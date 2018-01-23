@@ -53,7 +53,7 @@ public final class StarMining extends HarvestingSkillAction {
 	 * @param star   the star rock.
 	 */
 	public StarMining(Player player, ShootingStar star) {
-		super(player, Optional.of(star.getGlobalPos()));
+		super(player, Optional.of(star.getPosition()));
 		this.star = star;
 		this.pickaxe = PickaxeData.getDefinition(player).orElse(null);
 	}

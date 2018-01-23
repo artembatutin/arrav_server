@@ -94,12 +94,12 @@ public final class BoxTrap extends Trap {
 			
 			@Override
 			public void execute() {
-				mob.getMovementQueue().walk(getObject().getGlobalPos().copy());
+				mob.getMovementQueue().walk(getObject().getPosition().copy());
 				if(isAbandoned()) {
 					this.cancel();
 					return;
 				}
-				if(mob.getPosition().same(getObject().getGlobalPos())) {
+				if(mob.getPosition().same(getObject().getPosition())) {
 					this.cancel();
 					if(player.getSkills()[Skills.HUNTER].getLevel() < mammal.getData().requirement) {
 						setState(TrapState.FALLEN, mob);
@@ -132,7 +132,7 @@ public final class BoxTrap extends Trap {
 			if(mob == null || mob.isDead()) {
 				continue;
 			}
-			if(this.getObject().getGlobalPos().withinDistance(mob.getPosition(), DISTANCE_PORT)) {
+			if(this.getObject().getPosition().withinDistance(mob.getPosition(), DISTANCE_PORT)) {
 				if(this.isAbandoned()) {
 					return;
 				}
