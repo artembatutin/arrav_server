@@ -30,7 +30,7 @@ public final class FirepitObject extends DynamicObject {
 	 * Constructs a new {@link FirepitObject}.
 	 */
 	FirepitObject() {
-		super(FirepitData.PHASE_ONE.objectId, new Position(3081, 3497), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, 0);
+		super(FirepitData.PHASE_ONE.objectId, new Position(3092, 3496), ObjectDirection.SOUTH, ObjectType.GENERAL_PROP, false, 0, 0);
 		this.data = FirepitData.PHASE_ONE;
 		this.active = Optional.empty();//never active when constructed.
 	}

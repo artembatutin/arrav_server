@@ -65,15 +65,15 @@ public class DoorHandler {
 	 */
 	private static boolean exception(Player player, GameObject object) {
 		
-		if(object.getId() == 34811 && object.getPosition().same(new Position(3104, 3498))) {
+		if(object.getId() == 24376 && object.getPosition().same(new Position(3082, 3489))) {
 			if(player.isIronMan() || player.getRights().isStaff()) {
-				player.teleport(new Position(player.getPosition().getX() >= 3104 ? 3103 : 3104, 3498), DOOR);
-				if(player.getPosition().getX() >= 3104)
+				player.teleport(new Position(player.getPosition().getX() >= 3082 ? 3081 : 3082, 3489), DOOR);
+				if(player.getPosition().getX() >= 3082)
 					player.getLocalMobs().stream().filter(n -> n.getId() == 6184).findFirst().ifPresent(e -> e.forceChat("Welcome to the iron man house " + (player.isIronMaxed() ? "captain" : "soldier") + " " + player.getFormatUsername() + "."));
 			} else
 				player.getLocalMobs().stream().filter(n -> n.getId() == 6184).findFirst().ifPresent(e -> e.forceChat("Only iron man members can enter, sir."));
 			return true;
-		} else if(object.getId() == 34811 && object.getPosition().same(new Position(3091, 3507, 1))) {
+		}/* else if(object.getId() == 34811 && object.getPosition().same(new Position(3091, 3507, 1))) {
 			if(player.getRights().isDonator() || player.getRights().isStaff()) {
 				player.teleport(new Position(player.getPosition().getX() >= 3091 ? 3090 : 3091, 3507, 1), DOOR);
 				if(player.getPosition().getX() < 3091)
@@ -81,7 +81,7 @@ public class DoorHandler {
 			} else
 				player.getLocalMobs().stream().filter(n -> n.getId() == 8328).findFirst().ifPresent(e -> e.forceChat("Only donators can enter, sir."));
 			return true;
-		}
+		}*/
 		
 		switch(object.getId()) {
 			case 68429://armadyl gwd door

@@ -95,7 +95,7 @@ public final class RegionDecoder implements Runnable {
 	/**
 	 * Parses a {@link GameObject} on the specified coordinates.
 	 */
-	public ObjectList<StaticObject> parseGameObject(int file, Region region, ByteBuffer gameObjectBuffer, int x, int y, ObjectList<Position> downHeights, boolean isNew) {
+	private ObjectList<StaticObject> parseGameObject(int file, Region region, ByteBuffer gameObjectBuffer, int x, int y, ObjectList<Position> downHeights, boolean isNew) {
 		ObjectList<StaticObject> objs = new ObjectArrayList<>();
 		int offset = 0;
 		if(file == 625) {
