@@ -1,4 +1,14 @@
 [
+	{
+		"id": 6537,
+		"position": {
+			"x": 3089,
+			"y": 3513,
+			"z": 0
+		},
+		"random-walk": true,
+		"walk-radius": 3
+	},
   {
 	"id": 953,
 	"position": {
