@@ -367,6 +367,7 @@ public final class PlayerSerialization {
 		public void fromJson(Gson b, Player p, JsonElement n) {
 			p.getAppearance().setValues(b.fromJson(n, int[].class));
 		}
+		//done up to here.
 	}, new Token("prayer-type") {
 		@Override
 		public Object toJson(Player p) {

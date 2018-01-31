@@ -7,6 +7,11 @@ import com.google.common.base.Preconditions;
  * @author lare96 <http://github.com/lare96>
  */
 public final class PlayerAppearance {
+
+	/**
+	 * Size of the appearance array.
+	 */
+	public static final int SIZE = 13;
 	
 	/**
 	 * The player appearance update male gender identifier.
@@ -126,7 +131,7 @@ public final class PlayerAppearance {
 	 * @param values the array of appearance values that will be set.
 	 */
 	public void setValues(int[] values) {
-		Preconditions.checkArgument(values.length == 13);
+		Preconditions.checkArgument(values.length == SIZE);
 		gender = values[0];
 		head = values[1];
 		beard = values[2];
