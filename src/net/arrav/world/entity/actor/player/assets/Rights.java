@@ -20,12 +20,6 @@ public enum Rights {
 	MODERATOR(9, 7),
 	SENIOR_MODERATOR(10, 9),
 	ADMINISTRATOR(11, 10);
-
-	private final static Rights[] VALUES;
-
-	static {
-		VALUES = values();
-	}
 	
 	/**
 	 * The value of this rank as seen by the protocol.
@@ -46,15 +40,6 @@ public enum Rights {
 	Rights(int protocolValue, int value) {
 		this.protocolValue = protocolValue;
 		this.value = value;
-	}
-
-	/**
-	 * Gets the right on the index.
-	 * @param index index.
-	 * @return right.
-	 */
-	public static final Rights getIndex(int index) {
-		return VALUES[index];
 	}
 	
 	/**
