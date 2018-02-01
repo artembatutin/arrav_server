@@ -1,6 +1,8 @@
 package net.arrav.world.entity.actor.player;
 
 import com.google.gson.*;
+import com.jsoniter.JsonIterator;
+import com.jsoniter.any.Any;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.arrav.content.PlayerPanel;
@@ -37,9 +39,7 @@ import net.arrav.content.skill.magic.Spellbook;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.locale.Position;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -134,6 +134,21 @@ public final class PlayerSerialization {
 				return response;
 			}
 			cf.setReadable(true);
+
+			try (FileInputStream in = new FileInputStream(file)) {
+				int size = (int) file.length();
+				byte[] buf = new byte[size];
+				int readed = in.read(buf);
+				if(readed != size) {
+					
+				}
+				Any records = JsonIterator.deserialize(buf);
+				System.out.println("buf " + records.size());
+				System.out.println(records.get("username").toString());
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+
 			try(FileReader in = new FileReader(cf)) {
 				JsonElement read = new JsonParser().parse(in);
 				JsonObject decoded = (JsonObject) read;
