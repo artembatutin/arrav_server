@@ -171,7 +171,7 @@ public final class Arrav {
 		} else {
 			loopGroup = new NioEventLoopGroup();
 		}
-		ResourceLeakDetector.setLevel(DEBUG ? PARANOID : DISABLED);
+		ResourceLeakDetector.setLevel(DEBUG ? DISABLED : DISABLED);
 		bootstrap.group(loopGroup);
 		bootstrap.channel(NioServerSocketChannel.class);
 		bootstrap.childHandler(new ArravChannelInitializer());

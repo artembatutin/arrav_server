@@ -1,6 +1,11 @@
 package net.arrav.world.entity.actor.player;
 
-import com.google.gson.*;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.jsoniter.JsonIterator;
+import com.jsoniter.any.Any;
+import com.jsoniter.output.JsonStream;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.arrav.content.PlayerPanel;
@@ -11,7 +16,6 @@ import net.arrav.content.item.pets.PetManager;
 import net.arrav.content.item.pets.PetProgress;
 import net.arrav.content.minigame.barrows.BarrowsData;
 import net.arrav.content.skill.Skill;
-import net.arrav.content.skill.Skills;
 import net.arrav.content.skill.construction.House;
 import net.arrav.content.skill.construction.room.Room;
 import net.arrav.content.skill.farming.patch.Patch;
@@ -24,7 +28,6 @@ import net.arrav.content.skill.summoning.familiar.FamiliarContainer;
 import net.arrav.net.codec.login.LoginCode;
 import net.arrav.net.host.HostListType;
 import net.arrav.net.host.HostManager;
-import net.arrav.util.json.GsonUtils;
 import net.arrav.world.entity.actor.attribute.AttributeKey;
 import net.arrav.world.entity.actor.attribute.AttributeValue;
 import net.arrav.world.entity.actor.combat.attack.FightType;
@@ -37,9 +40,7 @@ import net.arrav.content.skill.magic.Spellbook;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.locale.Position;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -59,6 +60,8 @@ import static net.arrav.net.codec.login.LoginCode.*;
  * @author lare96 <http://github.com/lare96>
  */
 public final class PlayerSerialization {
+	
+	private static final int ENSURE_SIZE = 40960;
 	
 	/**
 	 * The player this serializer is dedicated to.
@@ -92,15 +95,28 @@ public final class PlayerSerialization {
 					throw new IllegalStateException("Unable to register directory for character files!");
 				}
 			}
-			try(FileWriter out = new FileWriter(cf)) {
-				Gson gson = new GsonBuilder().setPrettyPrinting().create();
-				JsonObject obj = new JsonObject();
+			try(FileOutputStream out = new FileOutputStream(cf)) {
+				Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+				JsonStream stream = new JsonStream(out, ENSURE_SIZE);
+				stream.writeObjectStart();
 				for(Token token : TOKENS) {
-					obj.add(token.getName(), gson.toJsonTree(token.toJson(player)));
+					stream.writeObjectField(token.getName());
+					token.toJson(player, stream);
+					stream.writeRaw(",");
 				}
-				obj.add("achievements", gson.toJsonTree(player.achievements, Map.class));
-				obj.add("patches", gson.toJsonTree(player.patches, Map.class));
-				obj.add("quests", gson.toJsonTree(player.getQuestManager().getStartedQuests(), Map.class));
+				//write achievements
+				stream.writeObjectField("achievements");
+				stream.writeRaw(gson.toJson(player.achievements, Map.class));
+				stream.writeRaw(",");
+				//write farming patches
+				stream.writeObjectField("patches");
+				stream.writeRaw(gson.toJson(player.patches, Map.class));
+				stream.writeRaw(",");
+				//write quest
+				stream.writeObjectField("quests");
+				stream.writeRaw(gson.toJson(player.getQuestManager().getStartedQuests(), Map.class));
+				stream.writeRaw(",");
+				//write attributes
 				Object2ObjectArrayMap<String, Object> attributes = new Object2ObjectArrayMap<>();
 				for(Map.Entry<String, AttributeValue<?>> it : player.getAttr()) {
 					AttributeKey<?> key = AttributeKey.ALIASES.get(it.getKey());
@@ -113,8 +129,14 @@ public final class PlayerSerialization {
 						attributes.put(key.getName(), attributeEntry);
 					}
 				}
-				obj.add("attributes", gson.toJsonTree(attributes));
-				out.write(gson.toJson(obj));
+				stream.writeObjectField("attributes");
+				stream.writeRaw(gson.toJson(attributes));
+				
+				stream.writeObjectEnd();
+				stream.flush();
+				stream.close();
+			} catch(IOException e) {
+				e.printStackTrace();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -126,420 +148,397 @@ public final class PlayerSerialization {
 	 * @param password the password used to connect.
 	 * @return login response with the encoded json object.
 	 */
-	public SerializeResponse loginCheck(String password) {
-		SerializeResponse response = new SerializeResponse(LoginCode.NORMAL);
+	public LoginCode loginCheck(String password) {
 		try {
-			File file = Paths.get("./data/players/" + player.credentials.username + ".json").toFile();
-			if(!file.exists()) {
-				return response;
+			if(!cf.exists()) {
+				player.getSession().initGame();
+				return NORMAL;
 			}
 			cf.setReadable(true);
-			try(FileReader in = new FileReader(cf)) {
-				JsonElement read = new JsonParser().parse(in);
-				JsonObject decoded = (JsonObject) read;
-				if(decoded.isJsonNull()) {
-					response.setResponse(COULD_NOT_COMPLETE_LOGIN);
-					response.setReader(null);
-					return response;
+
+			try (FileInputStream in = new FileInputStream(cf)) {
+				int size = (int) cf.length();
+				byte[] buf = new byte[size];
+				int readed = in.read(buf);
+				if(readed != size) {
+					return COULD_NOT_COMPLETE_LOGIN;
 				}
-				response.setReader(decoded);
-				if(decoded.has("password")) {
-					String realPassword = decoded.get("password").getAsString();
-					if(!password.equals(realPassword) && password.length() > 0) {
-						response.setResponse(INVALID_CREDENTIALS);
-						response.setReader(null);
-						return response;
+				Any data = JsonIterator.deserialize(buf);
+				//password check.
+				String pass = data.get("password").toString();
+				if(!password.equals(pass) && password.length() > 0) {
+					return INVALID_CREDENTIALS;
+				}
+				//ban check.
+				player.banned = data.get("banned").toBoolean();
+				if(player.banned) {
+					return ACCOUNT_DISABLED;
+				}
+				player.getSession().initGame();
+				for(Token token : TOKENS) {
+					Any tokenData = data.get(token.getName());
+					if(tokenData != null) {
+						token.fromJson(player, tokenData);
 					}
 				}
-				if(decoded.has("banned")) {
-					if(decoded.get("banned").getAsBoolean()) {
-						response.setResponse(ACCOUNT_DISABLED);
-						response.setReader(null);
-						return response;
-					}
+				Any attributes = data.get("attributes");
+				if(attributes != null) {
+					attributes.asMap().forEach((k,v) -> {
+						try {
+							String old = v.get("type").toString();
+							Class<?> type;
+							type = Class.forName(old);
+							Object obj = v.get("value").as(type);
+							if(AttributeKey.ALIASES.keySet().stream().anyMatch(s -> s.equals(k)))
+								player.getAttr().get(k).set(obj);
+						} catch(ClassNotFoundException e) {
+							e.printStackTrace();
+						}
+					});
 				}
-				if(decoded.has("rights")) {
-					player.setRights(Rights.valueOf(decoded.get("rights").getAsString()));
+				Any achievements = data.get("achievements");
+				if(achievements != null) {
+					achievements.asMap().forEach((k,v) -> player.achievements.put(Achievement.valueOf(k), v.toInt()));
 				}
-				if(decoded.has("ironman")) {
-					player.setIron(decoded.get("ironman").getAsInt(), false);
+				Any patches = data.get("patches");
+				if(patches != null) {
+					patches.asMap().forEach((k,v) -> player.patches.put(PatchType.valueOf(k), v.as(Patch.class)));
 				}
+			} catch(IOException e) {
+				e.printStackTrace();
 			}
+
 		} catch(Exception e) {
 			e.printStackTrace();
-			response.setResponse(COULD_NOT_COMPLETE_LOGIN);
-			response.setReader(null);
-			return response;
+			return COULD_NOT_COMPLETE_LOGIN;
 		}
-		return response;
-	}
-	
-	/**
-	 * Deserializes the player from a {@code JSON} file.
-	 */
-	public void deserialize(JsonObject reader) {
-		try {
-			if(reader == null) {
-				Skills.create(player);
-				return;
-			}
-			Gson gson = new GsonBuilder().create();
-			for(Token token : TOKENS) {
-				if(reader.has(token.getName()))
-					token.fromJson(gson, player, reader.get(token.getName()));
-			}
-			if(reader.has("attributes")) {
-				JsonObject attr = reader.get("attributes").getAsJsonObject();
-				for(Map.Entry<String, JsonElement> it : attr.entrySet()) {
-					JsonObject obj = it.getValue().getAsJsonObject();
-					String old = obj.get("type").getAsString();
-					Class<?> type = Class.forName(old);
-					Object data = GsonUtils.getAsType(obj.get("value"), type);
-					if(AttributeKey.ALIASES.keySet().stream().anyMatch(s -> s.equals(it.getKey())))
-						player.getAttr().get(it.getKey()).set(data);
-				}
-			}
-			if(reader.has("achievements")) {
-				JsonObject attr = reader.get("achievements").getAsJsonObject();
-				for(Map.Entry<String, JsonElement> it : attr.entrySet()) {
-					player.achievements.put(Achievement.valueOf(it.getKey()), it.getValue().getAsInt());
-				}
-			}
-			if(reader.has("patches")) {
-				JsonObject attr = reader.get("patches").getAsJsonObject();
-				for(Map.Entry<String, JsonElement> it : attr.entrySet()) {
-					player.patches.put(PatchType.valueOf(it.getKey()), gson.fromJson(it.getValue(), Patch.class));
-				}
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		return NORMAL;
 	}
 	
 	public static Token bank(int index) {
 		return new Token("bank" + index) {
 			@Override
-			public Object toJson(Player p) {
-				return p.getBank().items(index);
+			public void toJson(Player p, JsonStream s) throws IOException {
+				s.writeVal(p.getBank().items(index));
 			}
 			
 			@Override
-			public void fromJson(Gson b, Player p, JsonElement n) {
-				p.getBank().setItems(index, b.fromJson(n, Item[].class));
+			public void fromJson(Player p, Any n) {
+				p.getBank().setItems(index, n.as(Item[].class));
 			}
 		};
 	}
 	
 	private static final Token[] TOKENS = {new Token("username") {
 		@Override
-		public Object toJson(Player p) {
-			return p.credentials.username;
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.credentials.username);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.credentials.setUsername(n.getAsString());
+		public void fromJson(Player p, Any n) {
+			p.credentials.setUsername(n.toString());
 		}
 	}, new Token("password") {
 		@Override
-		public Object toJson(Player p) {
-			return p.credentials.password;
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.credentials.password);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.credentials.password = n.getAsString();
+		public void fromJson(Player p, Any n) {
+			p.credentials.password = n.toString();
 		}
 	}, new Token("banned") {
 		@Override
-		public Object toJson(Player p) {
-			return p.banned;
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.banned);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.banned = n.getAsBoolean();
+		public void fromJson(Player p, Any n) {
+			p.banned = n.toBoolean();
 		}
 	}, new Token("muted") {
 		@Override
-		public Object toJson(Player p) {
-			return p.muted;
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.muted);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.muted = n.getAsBoolean();
+		public void fromJson(Player p, Any n) {
+			p.muted = n.toBoolean();
 			if(HostManager.contains(p.credentials.username, HostListType.MUTED_IP)) {
 				p.ipMuted = true;
 			}
 		}
 	}, new Token("position") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getPosition();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getPosition());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setPosition(b.fromJson(n, Position.class));
+		public void fromJson(Player p, Any n) {
+			p.setPosition(n.as(Position.class));
 		}
 	}, new Token("rights") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getRights();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getRights().toString());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setRights(Rights.valueOf(n.getAsString()));
+		public void fromJson(Player p, Any n) {
+			p.setRights(Rights.valueOf(n.toString().toUpperCase()));
 		}
 	}, new Token("xp-lock") {
 		@Override
-		public Object toJson(Player p) {
-			return p.lockedXP;
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.lockedXP);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.lockedXP = n.getAsBoolean();
+		public void fromJson(Player p, Any n) {
+			p.lockedXP = n.toBoolean();
 		}
 	}, new Token("ironman") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getIronMan();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getIronMan());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setIron(n.getAsInt(), true);
+		public void fromJson(Player p, Any n) {
+			p.setIron(n.toInt(), true);
 		}
 	}, new Token("totalDonated") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getTotalDonated(false);
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getTotalDonated(false));
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.totalDonated += n.getAsInt();
+		public void fromJson(Player p, Any n) {
+			p.totalDonated += n.toInt();
 		}
 	}, new Token("totalVotes") {
 		
 		@Override
-		public Object toJson(Player p) {
-			return p.totalVotes;
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.totalVotes);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.totalVotes += n.getAsInt();
+		public void fromJson(Player p, Any n) {
+			p.totalVotes += n.toInt();
 			PlayerPanel.TOTAL_VOTES.refresh(p, "@or2@ - Total votes: @yel@" + p.totalVotes);
 		}
 	}, new Token("vote") {
 		@Override
-		public Object toJson(Player p) {
-			return p.votePoints;
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.votePoints);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.votePoints += n.getAsInt();
+		public void fromJson(Player p, Any n) {
+			p.votePoints += n.toInt();
 		}
 	}, new Token("clan") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getClan().map(clanMember -> clanMember.getClan().getOwner()).orElse("");
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getClan().map(clanMember -> clanMember.getClan().getOwner()).orElse(""));
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			String clan = n.getAsString();
+		public void fromJson(Player p, Any n) {
+			String clan = n.toString();
 			if(clan.length() > 0)
-				ClanManager.get().join(p, n.getAsString());
+				ClanManager.get().join(p, n.toString());
 		}
 	}, new Token("appearance") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getAppearance().getValues();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getAppearance().getValues());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getAppearance().setValues(b.fromJson(n, int[].class));
+		public void fromJson(Player p, Any n) {
+			p.getAppearance().setValues(n.as(int[].class));
 		}
 	}, new Token("prayer-type") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getPrayerBook();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getPrayerBook().toString());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setPrayerBook(PrayerBook.valueOf(n.getAsString()));
+		public void fromJson(Player p, Any n) {
+			p.setPrayerBook(PrayerBook.valueOf(n.toString().toUpperCase()));
 		}
 	}, new Token("spell-book") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getSpellbook();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getSpellbook().toString());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setSpellbook(Spellbook.valueOf(n.getAsString()));
+		public void fromJson(Player p, Any n) {
+			p.setSpellbook(Spellbook.valueOf(n.toString().toUpperCase()));
 		}
 	}, new Token("last-killer") {
 		@Override
-		public Object toJson(Player p) {
-			return p.lastKiller;
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.lastKiller);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.lastKiller = n.getAsString();
+		public void fromJson(Player p, Any n) {
+			p.lastKiller = n.toString();
 		}
 	}, new Token("fight-type") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getCombat().getFightType();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getCombat().getFightType().toString());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getCombat().setFightType(FightType.valueOf(n.getAsString()));
+		public void fromJson(Player p, Any n) {
+			p.getCombat().setFightType(FightType.valueOf(n.toString()));
 		}
 	}, new Token("poison-damage") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getPoisonDamage().get();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getPoisonDamage().get());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getPoisonDamage().set(n.getAsInt());
+		public void fromJson(Player p, Any n) {
+			p.getPoisonDamage().set(n.toInt());
 		}
 	}, new Token("auto-retaliate") {
 		@Override
-		public Object toJson(Player p) {
-			return p.isAutoRetaliate();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.isAutoRetaliate());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setAutoRetaliate(n.getAsBoolean());
+		public void fromJson(Player p, Any n) {
+			p.setAutoRetaliate(n.toBoolean());
 		}
 	}, new Token("running") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getMovementQueue().isRunning();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getMovementQueue().isRunning());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getMovementQueue().setRunning(n.getAsBoolean());
+		public void fromJson(Player p, Any n) {
+			p.getMovementQueue().setRunning(n.toBoolean());
 		}
 	}, new Token("antifire-details") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getAntifireDetails().orElse(null);
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getAntifireDetails().orElse(null));
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setAntifireDetail(n.isJsonNull() ? Optional.empty() : Optional.of(b.fromJson(n.getAsJsonObject(), AntifireDetails.class)));
+		public void fromJson(Player p, Any n) {
+			p.setAntifireDetail(n.as(AntifireDetails.class));
 		}
 	}, new Token("run-energy") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getRunEnergy();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getRunEnergy());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setRunEnergy(n.getAsDouble());
+		public void fromJson(Player p, Any n) {
+			p.setRunEnergy(n.toDouble());
 		}
 	}, new Token("special-amount") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getSpecialPercentage().get();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getSpecialPercentage().get());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getSpecialPercentage().set(n.getAsInt());
+		public void fromJson(Player p, Any n) {
+			p.getSpecialPercentage().set(n.toInt());
 		}
 	}, new Token("teleblock-timer") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getTeleblockTimer().get();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getTeleblockTimer().get());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getTeleblockTimer().set(n.getAsInt());
+		public void fromJson(Player p, Any n) {
+			p.getTeleblockTimer().set(n.toInt());
 		}
 	}, new Token("skull-timer") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getSkullTimer().get();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getSkullTimer().get());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getSkullTimer().set(n.getAsInt());
+		public void fromJson(Player p, Any n) {
+			p.getSkullTimer().set(n.toInt());
 		}
 	}, new Token("vengeance") {
 		@Override
-		public Object toJson(Player p) {
-			return p.venged;
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.venged);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.venged = n.getAsBoolean();
+		public void fromJson(Player p, Any n) {
+			p.venged = n.toBoolean();
 			if(p.venged) {
 				p.getCombat().addListener(VengeanceListener.get());
 			}
 		}
 	}, new Token("ringOfRecoil") {
 		@Override
-		public Object toJson(Player p) {
-			return p.ringOfRecoil;
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.ringOfRecoil);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.ringOfRecoil = n.getAsInt();
+		public void fromJson(Player p, Any n) {
+			p.ringOfRecoil = n.toInt();
 		}
 	}, new Token("skills") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getSkills();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getSkills());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
+		public void fromJson(Player p, Any n) {
 			Skill[] skills = p.getSkills();
-			System.arraycopy(b.fromJson(n, Skill[].class), 0, skills, 0, skills.length);
+			System.arraycopy(n.as(Skill[].class), 0, skills, 0, skills.length);
 		}
 	}, new Token("inventory") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getInventory().getItems();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getInventory().getItems());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getInventory().fillItems(b.fromJson(n, Item[].class));
+		public void fromJson(Player p, Any n) {
+			p.getInventory().fillItems(n.as(Item[].class));
 		}
 	}, new Token("equipment") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getEquipment().getItems();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getEquipment().getItems());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getEquipment().fillItems(b.fromJson(n, Item[].class));
+		public void fromJson(Player p, Any n) {
+			p.getEquipment().fillItems(n.as(Item[].class));
 			for(Item item : p.getEquipment().getItems()) {
 				if(item != null) {
 					CombatListenerDispatcher.CombatListenerSet listenerSet = CombatListenerDispatcher.ITEM_LISTENERS.get(item.getId());
@@ -552,236 +551,242 @@ public final class PlayerSerialization {
 		}
 	}, bank(0), bank(1), bank(2), bank(3), bank(4), bank(5), bank(6), bank(7), bank(8), new Token("friends") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getFriends().toArray();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getFriends().toArray());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			Collections.addAll(p.getFriends(), b.fromJson(n, Long[].class));
+		public void fromJson(Player p, Any n) {
+			Collections.addAll(p.getFriends(), n.as(Long[].class));
 		}
 	}, new Token("ignores") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getIgnores().toArray();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getIgnores().toArray());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			Collections.addAll(p.getIgnores(), b.fromJson(n, Long[].class));
+		public void fromJson(Player p, Any n) {
+			Collections.addAll(p.getIgnores(), n.as(Long[].class));
 		}
 	}, new Token("total-player-kills") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getPlayerKills().get();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getPlayerKills().get());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getPlayerKills().set(n.getAsInt());
+		public void fromJson(Player p, Any n) {
+			p.getPlayerKills().set(n.toInt());
 		}
 	}, new Token("total-player-deaths") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getDeathsByPlayer().get();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getDeathsByPlayer().get());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getDeathsByPlayer().set(n.getAsInt());
+		public void fromJson(Player p, Any n) {
+			p.getDeathsByPlayer().set(n.toInt());
 		}
 	}, new Token("total-npc-kills") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getNpcKills().get();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getNpcKills().get());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getNpcKills().set(n.getAsInt());
+		public void fromJson(Player p, Any n) {
+			p.getNpcKills().set(n.toInt());
 		}
 	}, new Token("total-npc-deaths") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getDeathsByNpc().get();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getDeathsByNpc().get());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getDeathsByNpc().set(n.getAsInt());
+		public void fromJson(Player p, Any n) {
+			p.getDeathsByNpc().set(n.toInt());
 		}
 	}, new Token("total-player-kills") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getPlayerKills().get();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getPlayerKills().get());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getPlayerKills().set(n.getAsInt());
+		public void fromJson(Player p, Any n) {
+			p.getPlayerKills().set(n.toInt());
 		}
 	}, new Token("current-killstreak") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getCurrentKillstreak().get();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getCurrentKillstreak().get());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getCurrentKillstreak().set(n.getAsInt());
+		public void fromJson(Player p, Any n) {
+			p.getCurrentKillstreak().set(n.toInt());
 		}
 	}, new Token("highest-killstreak") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getHighestKillstreak().get();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getHighestKillstreak().get());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getHighestKillstreak().set(n.getAsInt());
+		public void fromJson(Player p, Any n) {
+			p.getHighestKillstreak().set(n.toInt());
 		}
 	}, new Token("godwars-killcount") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getGodwarsKillcount();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getGodwarsKillcount());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setGodwarsKillcount(b.fromJson(n, int[].class));
+		public void fromJson(Player p, Any n) {
+			p.setGodwarsKillcount(n.as(int[].class));
 		}
 	}, new Token("killed-brothers") {
 		@Override
-		public Object toJson(Player p) {
+		public void toJson(Player p, JsonStream s) throws IOException {
 			EnumSet<BarrowsData> barrows = p.getMinigameContainer().getBarrowsContainer().getKilledBrothers();
-			return barrows.toArray();
+			s.writeVal(barrows.toArray());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
+		public void fromJson(Player p, Any n) {
 			EnumSet<BarrowsData> barrows = p.getMinigameContainer().getBarrowsContainer().getKilledBrothers();
-			Collections.addAll(barrows, b.fromJson(n, BarrowsData[].class));
+			Collections.addAll(barrows, n.as(BarrowsData[].class));
 		}
 	}, new Token("slayerPoints") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getSlayerPoints();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getSlayerPoints());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.updateSlayers(n.getAsInt());
+		public void fromJson(Player p, Any n) {
+			p.updateSlayers(n.toInt());
 		}
 	}, new Token("slayer") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getSlayer().orElse(null);
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getSlayer().orElse(null));
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setSlayer(n.isJsonNull() ? Optional.empty() : Optional.of(b.fromJson(n, Slayer.class)));
+		public void fromJson(Player p, Any n) {
+			Slayer s = n.as(Slayer.class);
+			p.setSlayer(s == null ? Optional.empty() : Optional.of(s));
 		}
 	}, new Token("blocked-tasks") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getBlockedTasks();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getBlockedTasks());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.setBlockedTasks(b.fromJson(n, String[].class));
+		public void fromJson(Player p, Any n) {
+			p.setBlockedTasks(n.as(String[].class));
 		}
 	}, new Token("pets") {
 		@Override
-		public Object toJson(Player p) {
-			return p.getPetManager().getProgress().toArray();
+		public void toJson(Player p, JsonStream s) throws IOException {
+			s.writeVal(p.getPetManager().getProgress().toArray());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			Collections.addAll(p.getPetManager().getProgress(), b.fromJson(n, PetProgress[].class));
+		public void fromJson(Player p, Any n) {
+			Collections.addAll(p.getPetManager().getProgress(), n.as(PetProgress[].class));
 		}
 	}, new Token("pet") {
 		@Override
-		public Object toJson(Player p) {
+		public void toJson(Player p, JsonStream s) throws IOException {
 			PetManager pets = p.getPetManager();
-			return pets.getPet().isPresent() ? pets.getPet().get().getProgress() : null;
+			s.writeVal(pets.getPet().isPresent() ? pets.getPet().get().getProgress() : null);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			PetManager pets = p.getPetManager();
-			pets.put(n.isJsonNull() ? null : new Pet((b.fromJson(n, PetProgress.class)), new Position(0, 0)));
+		public void fromJson(Player p, Any n) {
+			PetProgress progress = n.as(PetProgress.class);
+			if(progress != null) {
+				PetManager pets = p.getPetManager();
+				pets.put(new Pet(progress, new Position(0, 0)));
+			}
 		}
 	}, new Token("familiar") {
 		@Override
-		public Object toJson(Player p) {
+		public void toJson(Player p, JsonStream s) throws IOException {
 			Familiar familiar = p.getFamiliar().orElse(null);
-			return familiar != null ? familiar.getData() : null;
+			s.writeVal(familiar != null ? familiar.getData() : null);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			if(!n.isJsonNull()) {
-				SummoningData data = SummoningData.valueOf(n.getAsString());
+		public void fromJson(Player p, Any n) {
+			String fam = n.toString();
+			if(fam == null || fam.equals("null")) {
+				p.setFamiliar(Optional.empty());
+			} else {
+				SummoningData data = SummoningData.valueOf(fam.toUpperCase());
 				Familiar familiar = data.create();
 				p.setFamiliar(Optional.of(familiar));
-			} else
-				p.setFamiliar(Optional.empty());
+			}
 		}
 	}, new Token("familiar-life") {
 		@Override
-		public Object toJson(Player p) {
+		public void toJson(Player p, JsonStream s) throws IOException {
 			Familiar familiar = p.getFamiliar().orElse(null);
-			return familiar != null ? familiar.getCurrentHealth() : 0;
+			s.writeVal(familiar != null ? familiar.getCurrentHealth() : 0);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getFamiliar().ifPresent(ffs -> ffs.setCurrentHealth(n.getAsInt()));
+		public void fromJson(Player p, Any n) {
+			p.getFamiliar().ifPresent(ffs -> ffs.setCurrentHealth(n.toInt()));
 		}
 	}, new Token("familiar-duration") {
 		@Override
-		public Object toJson(Player p) {
+		public void toJson(Player p, JsonStream s) throws IOException {
 			Familiar familiar = p.getFamiliar().orElse(null);
-			return familiar != null ? familiar.getDuration() : 0;
+			s.writeVal(familiar != null ? familiar.getDuration() : 0);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			p.getFamiliar().ifPresent(ffs -> ffs.setDuration(n.getAsInt()));
+		public void fromJson(Player p, Any n) {
+			p.getFamiliar().ifPresent(ffs -> ffs.setDuration(n.toInt()));
 		}
 	}, new Token("familiar-storage") {
 		@Override
-		public Object toJson(Player p) {
+		public void toJson(Player p, JsonStream s) throws IOException {
 			Familiar familiar = p.getFamiliar().orElse(null);
-			return familiar != null && familiar.getAbilityType().getType() == BEAST_OF_BURDEN ? ((FamiliarContainer) familiar.getAbilityType()).getContainer().getItems() : null;
+			s.writeVal(familiar != null && familiar.getAbilityType().getType() == BEAST_OF_BURDEN ? ((FamiliarContainer) familiar.getAbilityType()).getContainer().getItems() : null);
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			if(!n.isJsonNull()) {
+		public void fromJson(Player p, Any n) {
+			//if(!n.isJsonNull()) {
 				p.getFamiliar().ifPresent(ffs -> {
 					FamiliarAbility ability = ffs.getAbilityType();
 					if(ability.getType() == BEAST_OF_BURDEN) {
-						((FamiliarContainer) ability).getContainer().fillItems((b.fromJson(n, Item[].class)));
+						((FamiliarContainer) ability).getContainer().fillItems((n.as(Item[].class)));
 					}
 				});
-			}
+			//}
 		}
 	}, new Token("house-rooms") {
 		@Override
-		public Object toJson(Player p) {
+		public void toJson(Player p, JsonStream s) throws IOException {
 			House house = p.getHouse();
-			return house.get().getRooms();
+			s.writeVal(house.get().getRooms());
 		}
 		
 		@Override
-		public void fromJson(Gson b, Player p, JsonElement n) {
-			if(!n.isJsonNull()) {
-				p.getHouse().get().setRooms(b.fromJson(n, Room[][][].class));
-			}
+		public void fromJson(Player p, Any n) {
+			//if(!n.isJsonNull()) {
+				p.getHouse().get().setRooms(n.as(Room[][][].class));
+			//}
 		}
 	}};
 	
@@ -804,9 +809,9 @@ public final class PlayerSerialization {
 			this.name = name;
 		}
 		
-		public abstract Object toJson(Player p);
+		public abstract void toJson(Player p, JsonStream s) throws IOException;
 		
-		public abstract void fromJson(Gson b, Player p, JsonElement n);
+		public abstract void fromJson(Player p, Any n);
 		
 		@Override
 		public String toString() {
@@ -846,39 +851,6 @@ public final class PlayerSerialization {
 			return name;
 		}
 		
-	}
-	
-	public static class SerializeResponse {
-		
-		/**
-		 * Login response to give away.
-		 */
-		private LoginCode response;
-		
-		/**
-		 * Saved reader for later usage.
-		 */
-		private JsonObject reader;
-		
-		public SerializeResponse(LoginCode response) {
-			this.response = response;
-		}
-		
-		public LoginCode getResponse() {
-			return response;
-		}
-		
-		public void setResponse(LoginCode response) {
-			this.response = response;
-		}
-		
-		public JsonObject getReader() {
-			return reader;
-		}
-		
-		public void setReader(JsonObject reader) {
-			this.reader = reader;
-		}
 	}
 	
 }

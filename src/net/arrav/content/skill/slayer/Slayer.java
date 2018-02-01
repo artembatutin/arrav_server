@@ -1,5 +1,6 @@
 package net.arrav.content.skill.slayer;
 
+import com.jsoniter.annotation.JsonProperty;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -53,16 +54,19 @@ public final class Slayer {
 	/**
 	 * The slayer master this player is on.
 	 */
+	@JsonProperty(value = "master")
 	private final SlayerMaster master;
 	
 	/**
 	 * The slayer key policy this player has.
 	 */
+	@JsonProperty(value = "key")
 	private final String key;
 	
 	/**
 	 * The slayer key policy this player has.
 	 */
+	@JsonProperty(value = "dif")
 	private final SlayerDifficulty difficulty;
 	
 	/**
@@ -73,11 +77,13 @@ public final class Slayer {
 	/**
 	 * The amount of points received at the end of the task.
 	 */
+	@JsonProperty(value = "points")
 	public final int points;
 	
 	/**
 	 * The amount of times this player has to kill the task.
 	 */
+	@JsonProperty(value = "kill")
 	private int amount;
 	
 	/**

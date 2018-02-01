@@ -1,13 +1,25 @@
 package net.arrav.content.skill.construction.room;
 
+import com.jsoniter.annotation.JsonProperty;
+
 /**
  * Represents a single room.
  */
 public class Room {
 	
+	@JsonProperty(value = "data")
 	private final RoomData data;
+	@JsonProperty(value = "fur")
 	private final RoomFurniture[] furniture;
-	private int rotation, theme;
+	@JsonProperty(value = "rot")
+	private int rotation;
+	@JsonProperty(value = "theme")
+	private int theme;
+	
+	public Room() {
+		data = null;
+		furniture = null;
+	}
 	
 	public Room(RoomData data, int rotation, int theme) {
 		this.rotation = rotation;

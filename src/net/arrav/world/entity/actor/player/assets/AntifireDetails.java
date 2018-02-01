@@ -1,12 +1,19 @@
 package net.arrav.world.entity.actor.player.assets;
 
+import com.jsoniter.annotation.JsonProperty;
 import net.arrav.util.MutableNumber;
 
 public final class AntifireDetails {
 	
+	@JsonProperty(value = "delay")
 	private final MutableNumber antifireDelay = new MutableNumber(600);
 	
+	@JsonProperty(value = "type")
 	private final AntifireType type;
+	
+	public AntifireDetails() {
+		type = AntifireType.REGULAR;
+	}
 	
 	public AntifireDetails(AntifireType type) {
 		this.type = type;

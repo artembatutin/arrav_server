@@ -1,5 +1,6 @@
 package net.arrav.content.skill.construction.room;
 
+import com.jsoniter.annotation.JsonProperty;
 import net.arrav.content.skill.construction.furniture.Furniture;
 
 /**
@@ -8,8 +9,16 @@ import net.arrav.content.skill.construction.furniture.Furniture;
  */
 public class RoomFurniture {
 	
+	@JsonProperty(value = "fur")
 	private final Furniture furniture;
-	private int standardXOff, standardYOff;
+	@JsonProperty(value = "xOff")
+	private int standardXOff;
+	@JsonProperty(value = "yOff")
+	private int standardYOff;
+	
+	public RoomFurniture() {
+		furniture = null;
+	}
 	
 	public RoomFurniture(Furniture furniture, int standardXOff, int standardYOff) {
 		this.furniture = furniture;
