@@ -11,7 +11,7 @@ public class Bankers extends ActionInitializer {
 		MobAction e = new MobAction() {
 			@Override
 			public boolean click(Player player, Mob npc, int click) {
-				player.getBank().open();
+				player.getBank().open(false);
 				return true;
 			}
 		};

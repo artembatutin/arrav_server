@@ -20,7 +20,7 @@ public enum ClanChatUpdate {
 			Player player = member.getPlayer();
 			if(member.getRank().getValue() >= clan.getSettings().getBan().getValue())
 				player.text(50306, clan.getName());
-			player.text(50139, "Talking in: @or1@" + clan.getName());
+			player.text(50139, "Talking in: @lye@" + clan.getName());
 			player.text(50140, "Owner: " + TextUtils.capitalize(clan.getOwner()));
 			player.text(50135, "Leave Clan");
 			if(member.getRank().getValue() >= clan.getSettings().getBan().getValue()) {
@@ -46,7 +46,7 @@ public enum ClanChatUpdate {
 				ClanMember m = clan.getMembers()[pos];
 				if(m.getRank().getValue() >= m.getClan().getLowest().getValue())
 					m.getPlayer().text(50306, clan.getName());
-				m.getPlayer().text(50139, "Talking in: @or1@" + clan.getName());
+				m.getPlayer().text(50139, "Talking in: @lye@" + clan.getName());
 				m.getPlayer().out(new SendClanMessage("The clan name has been changed.", clan.getName(), clan.getName(), Rights.PLAYER));
 			}
 		}

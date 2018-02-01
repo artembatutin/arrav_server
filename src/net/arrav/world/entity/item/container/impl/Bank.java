@@ -1,5 +1,6 @@
 package net.arrav.world.entity.item.container.impl;
 
+import net.arrav.content.BankPin;
 import net.arrav.content.minigame.MinigameHandler;
 import net.arrav.net.packet.out.SendConfig;
 import net.arrav.net.packet.out.SendContainer;
@@ -64,11 +65,18 @@ public final class Bank {
 	/**
 	 * Opens and refreshes the bank for {@code player}.
 	 */
-	public void open() {
+	public void open(boolean setPin) {
 		if(!MinigameHandler.execute(player, m -> m.canBank(player))) {
 			return;
 		}
 		shiftAll();
+		player.resetingPin = false;
+		if((player.bankPin.length() < 4 && setPin)
+				|| (player.bankPin.length() >= 4 && ! player.bankPin
+				.equals(player.enterPin))) {
+			BankPin.loadUpPinInterface(player);
+			return;
+		}
 		player.getAttr().get("banking").set(true);
 		player.out(new SendConfig(115, player.getAttr().get("withdraw_as_note").getBoolean() ? 1 : 0));
 		player.out(new SendConfig(116, player.getAttr().get("insert_item").getBoolean() ? 1 : 0));

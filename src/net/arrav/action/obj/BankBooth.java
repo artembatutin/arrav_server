@@ -11,7 +11,7 @@ public class BankBooth extends ActionInitializer {
 		ObjectAction open = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {
-				player.getBank().open();
+				player.getBank().open(false);
 				return true;
 			}
 		};

@@ -1834,6 +1834,14 @@ public final class Player extends Actor {
 	public void setChatColor(int chatColor) {
 		this.chatColor = chatColor;
 	}
+
+	/**
+	 * Everything bank pin related
+	 */
+	public String bankPin = "";
+	public int[] pinOrder = new int[10];
+	public String enterPin = "";
+	public boolean resetingPin = false;
 	
 	/**
 	 * Gets the current chat effects the player is using.
