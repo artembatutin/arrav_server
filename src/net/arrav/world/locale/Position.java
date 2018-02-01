@@ -1,5 +1,7 @@
 package net.arrav.world.locale;
 
+import com.jsoniter.annotation.JsonIgnore;
+import com.jsoniter.annotation.JsonProperty;
 import net.arrav.util.rand.RandomUtils;
 import net.arrav.world.Direction;
 
@@ -14,17 +16,26 @@ public class Position {
 	/**
 	 * The {@code X} coordinate.
 	 */
+	@JsonProperty(value = "x")
 	private final int x;
 	
 	/**
 	 * The {@code Y} coordinate.
 	 */
+	@JsonProperty(value = "y")
 	private final int y;
 	
 	/**
 	 * The {@code Z} coordinate.
 	 */
+	@JsonProperty(value = "z")
 	private final int z;
+	
+	public Position() {
+		x = 0;
+		y = 0;
+		z = 0;
+	}
 	
 	/**
 	 * Creates a new {@link Position}.
@@ -162,6 +173,7 @@ public class Position {
 	 * Returns a local packed integer.
 	 * @return packed position integer.
 	 */
+	@JsonIgnore
 	public int toLocalPacked() {
 		return (z & 0x3f) << 12 | (getRegionLocalX() & 0x3f) << 6 | (getRegionLocalY() & 0x3f);
 	}
@@ -170,6 +182,7 @@ public class Position {
 	 * Gets the local packed X coordinate.
 	 * @return regional local X.
 	 */
+	@JsonIgnore
 	public int getRegionLocalX() {
 		return x - (x & 0x3F) * 64;
 	}
@@ -178,6 +191,7 @@ public class Position {
 	 * Gets the local packed Y coordinate.
 	 * @return regional local Y.
 	 */
+	@JsonIgnore
 	public int getRegionLocalY() {
 		return y - (y & 0x3F) * 64;
 	}
@@ -210,6 +224,7 @@ public class Position {
 	 * Gets the region identification relative to this position.
 	 * @return the region identification.
 	 */
+	@JsonIgnore
 	public final int getRegion() {
 		return ((getChunkX() << 8) + getChunkY());
 	}
@@ -218,6 +233,7 @@ public class Position {
 	 * Gets the {@code X} coordinate of the region containing this position.
 	 * @return the {@code X} coordinate of the region.
 	 */
+	@JsonIgnore
 	public final int getRegionX() {
 		return (x >> 3) - 6;
 	}
@@ -226,6 +242,7 @@ public class Position {
 	 * Gets the {@code Y} coordinate of the region containing this position.
 	 * @return the {@code Y} coordinate of the region
 	 */
+	@JsonIgnore
 	public final int getRegionY() {
 		return (y >> 3) - 6;
 	}
@@ -235,6 +252,7 @@ public class Position {
 	 * @param base the relative base position.
 	 * @return the local {@code X} coordinate.
 	 */
+	@JsonIgnore
 	public final int getLocalX(Position base) {
 		return x - 8 * base.getRegionX();
 	}
@@ -244,6 +262,7 @@ public class Position {
 	 * @param base the relative base position.
 	 * @return the local {@code Y} coordinate.
 	 */
+	@JsonIgnore
 	public final int getLocalY(Position base) {
 		return y - 8 * base.getRegionY();
 	}
@@ -252,6 +271,7 @@ public class Position {
 	 * Gets the local {@code X} coordinate relative to this position.
 	 * @return the local {@code X} coordinate.
 	 */
+	@JsonIgnore
 	public final int getLocalX() {
 		return getLocalX(this);
 	}
@@ -260,6 +280,7 @@ public class Position {
 	 * Gets the local {@code Y} coordinate relative to this Position.
 	 * @return the local {@code Y} coordinate.
 	 */
+	@JsonIgnore
 	public final int getLocalY() {
 		return getLocalY(this);
 	}
@@ -268,6 +289,7 @@ public class Position {
 	 * Gets the {@code X} region chunk relative to this position.
 	 * @return the {@code X} region chunk.
 	 */
+	@JsonIgnore
 	public int getChunkX() {
 		return (x >> 6);
 	}
@@ -276,6 +298,7 @@ public class Position {
 	 * Gets the {@code Y} region chunk relative to this position.
 	 * @return the {@code Y} region chunk.
 	 */
+	@JsonIgnore
 	public int getChunkY() {
 		return (y >> 6);
 	}
@@ -284,6 +307,7 @@ public class Position {
 	 * Returns the base local x coordinate.
 	 * @return The base local x coordinate.
 	 */
+	@JsonIgnore
 	public int getBaseLocalX() {
 		return getTopLeftRegionX() * 8;
 	}
@@ -292,6 +316,7 @@ public class Position {
 	 * Returns the base local y coordinate.
 	 * @return The base local y coordinate.
 	 */
+	@JsonIgnore
 	public int getBaseLocalY() {
 		return getTopLeftRegionY() * 8;
 	}
@@ -300,6 +325,7 @@ public class Position {
 	 * Gets the x coordinate of the region.
 	 * @return The region x coordinate.
 	 */
+	@JsonIgnore
 	public int getTopLeftRegionX() {
 		return x / 8 - 6;
 	}
@@ -308,6 +334,7 @@ public class Position {
 	 * Gets the y coordinate of the region.
 	 * @return The region y coordinate.
 	 */
+	@JsonIgnore
 	public int getTopLeftRegionY() {
 		return y / 8 - 6;
 	}
@@ -316,6 +343,7 @@ public class Position {
 	 * Gets the absolute x coordinate of this Region (which can be compared directly against {@link Position#getX()}.
 	 * @return The absolute x coordinate.
 	 */
+	@JsonIgnore
 	public int getAbsoluteX() {
 		return 8 * (x + 6);
 	}
@@ -324,6 +352,7 @@ public class Position {
 	 * Gets the absolute y coordinate of this Region (which can be compared directly against {@link Position#getY()}.
 	 * @return The absolute y coordinate.
 	 */
+	@JsonIgnore
 	public int getAbsoluteY() {
 		return 8 * (y + 6);
 	}

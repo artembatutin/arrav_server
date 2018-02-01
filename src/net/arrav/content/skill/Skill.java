@@ -1,5 +1,7 @@
 package net.arrav.content.skill;
 
+import com.jsoniter.annotation.JsonIgnore;
+import com.jsoniter.annotation.JsonProperty;
 import net.arrav.util.Stopwatch;
 
 /**
@@ -21,28 +23,33 @@ public final class Skill {
 	/**
 	 * The level of this skill that can be trained.
 	 */
+	@JsonProperty(value = "lvl")
 	private int level = 1;
 	
 	/**
 	 * The experience of this skill that can be trained.
 	 */
+	@JsonProperty(value = "xp")
 	private double experience = 0;
 	
 	/**
 	 * The cached real level of this skill that can be trained, to reduce the
 	 * amount of expensive level calculations.
 	 */
+	@JsonIgnore
 	private int realLevel = 1;
 	
 	/**
 	 * The current goal of the current skill.
 	 */
+	@JsonProperty(value = "goal")
 	private int goal = 0;
 	
 	/**
 	 * Gets the level based on the experience the player has.
 	 * @return the level based on experience.
 	 */
+	@JsonIgnore
 	public int getLevelForExperience() {
 		int points = 0;
 		int output;

@@ -1,6 +1,8 @@
 package net.arrav.world.entity.item;
 
 import com.google.common.collect.Iterables;
+import com.jsoniter.annotation.JsonIgnore;
+import com.jsoniter.annotation.JsonProperty;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.arrav.content.market.MarketItem;
@@ -14,12 +16,22 @@ public final class Item {
 	/**
 	 * The identification of this item.
 	 */
+	@JsonProperty(value = "i")
 	private int id;
 	
 	/**
 	 * The quantity of this item.
 	 */
+	@JsonProperty(value = "a")
 	private int amount;
+	
+	/**
+	 * Empty constructor.
+	 */
+	public Item() {
+		id = 0;
+		amount = 0;
+	}
 	
 	/**
 	 * Creates a new {@link Item}.
@@ -201,6 +213,7 @@ public final class Item {
 	 * Gets the item definition for the item identifier.
 	 * @return the item definition.
 	 */
+	@JsonIgnore
 	public final ItemDefinition getDefinition() {
 		return ItemDefinition.DEFINITIONS[id];
 	}
@@ -209,6 +222,7 @@ public final class Item {
 	 * Gets the name of this item.
 	 * @return item name.
 	 */
+	@JsonIgnore
 	public String getName() {
 		return ItemDefinition.DEFINITIONS[id].getName();
 	}
@@ -217,6 +231,7 @@ public final class Item {
 	 * Gets the item value for the item identifier.
 	 * @return the item value.
 	 */
+	@JsonIgnore
 	public final MarketItem getValue() {
 		return MarketItem.VALUES[id];
 	}

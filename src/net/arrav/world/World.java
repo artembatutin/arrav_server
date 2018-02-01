@@ -199,6 +199,7 @@ public final class World extends AbstractScheduledService {
 				if(player == null) {
 					break;
 				}
+				System.out.println(player.credentials.username);
 				if(playerByNames.containsKey(player.credentials.usernameHash)) {
 					player.getSession().getChannel().close();
 				} else if(players.add(player)) {

@@ -1,12 +1,21 @@
 package net.arrav.content.item.pets;
 
+import com.jsoniter.annotation.JsonProperty;
+
 public final class PetProgress {
 	
+	@JsonProperty(value = "data")
 	private final PetData data;
 	
+	@JsonProperty(value = "hunger")
 	private double hunger;
 	
+	@JsonProperty(value = "growth")
 	private double growth;
+	
+	public PetProgress() {
+		data = null;
+	}
 	
 	public PetProgress(PetData data) {
 		this.data = data;

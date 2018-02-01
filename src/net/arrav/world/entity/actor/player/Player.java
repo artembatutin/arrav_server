@@ -1487,7 +1487,7 @@ public final class Player extends Actor {
 	 * @param details the anti-fire instance to set.
 	 */
 	public void setAntifireDetail(AntifireDetails details) {
-		setAntifireDetail(Optional.of(details));
+		setAntifireDetail(details == null ? Optional.empty() : Optional.of(details));
 	}
 	
 	/**

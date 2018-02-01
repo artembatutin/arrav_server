@@ -355,6 +355,7 @@ public class Session {
 	 */
 	private void handleRequest() throws Exception {
 		player = new Player(new PlayerCredentials(username, password));
+		player.setSession(this);
 		LoginCode response = LoginCode.NORMAL;
 		
 		// Validate the username and password, change login response if needed
@@ -374,10 +375,8 @@ public class Session {
 		}
 		
 		// Deserialization
-		PlayerSerialization.SerializeResponse serial = null;
 		if(response == LoginCode.NORMAL) {
-			serial = new PlayerSerialization(player).loginCheck(password);
-			response = serial.getResponse();
+			response = new PlayerSerialization(player).loginCheck(password);
 		}
 		
 		ChannelFuture future = channel.writeAndFlush(new LoginResponse(response, player.getRights(), player.isIronMan()).toBuf());
@@ -386,8 +385,6 @@ public class Session {
 			return;
 		}
 		future.awaitUninterruptibly();
-		initGame();
-		new PlayerSerialization(player).deserialize(serial.getReader());
 		World.get().queueLogin(player);
 	}
 	
@@ -502,10 +499,9 @@ public class Session {
 	/**
 	 * Prepares the session for the game process.
 	 */
-	private void initGame() {
+	public void initGame() {
 		stream = alloc().buffer(BUFFER_SIZE);
 		stream.outgoing(encryptor);
-		player.setSession(this);
 		outgoing = new ConcurrentLinkedQueue<>();
 		incoming = new ConcurrentLinkedQueue<>();
 		isGame = true;
