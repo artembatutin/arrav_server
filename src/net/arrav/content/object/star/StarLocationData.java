@@ -12,7 +12,7 @@ import java.util.EnumSet;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum StarLocationData {
-	EDGEVILLE_LOCATION(3101, 3508, "A shooting star has just struck east from Edgeville's bank!", "The star east from Edgeville's bank hasn't been mined yet!"),
+	EDGEVILLE_LOCATION(3103, 3508, "A shooting star has just struck east from Edgeville's bank!", "The star east from Edgeville's bank hasn't been mined yet!"),
 	LUMBRIDGE_BRIDGE_LOCATION(3234, 3224, "A shooting star has just struck near the Lumbridge's bridge!", "The star near the Lumbridge's bridge hasn't been mined yet!"),
 	ROCK_CRABS_LOCATION(2660, 3708, "A shooting star has just struck near the rock crabs!", "The star near the Rock crabs hasn't been mined yet!"),
 	VARROCK_LOCATION(3217, 3429, "A shooting star has just struck near in the center of Varrock", "The star near in the center of Varrock hasn't been mined yet!"),
