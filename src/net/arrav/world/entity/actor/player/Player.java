@@ -878,7 +878,7 @@ public final class Player extends Actor {
 	}
 	
 	public int getMaximumHealth() {
-		int hitpoints = skills[Skills.HITPOINTS].getRealLevel();
+		int hitpoints = skills[Skills.HITPOINTS].getLevel();
 		if(equipment.containsAny(20135, 20147, 20159)) {//nex helms
 			hitpoints += 13;
 		}
