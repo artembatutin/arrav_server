@@ -16,7 +16,7 @@ public final class ShopAccessPacket implements IncomingPacket {
 	public void handle(Player player, int opcode, int size, ByteBuf buf) {
 		if(opcode == 20) {//shop opening
 			int shop = buf.getShort();
-			if(player.getPosition().withinDistance(new Position(3080, 3507), 2)) {
+			if(player.getPosition().withinDistance(new Position(3078, 3510), 3)) {
 				if(MarketCounter.getShops().containsKey(shop)) {
 					MarketCounter.getShops().get(shop).openShop(player);
 				}
