@@ -36,7 +36,7 @@ public final class Skill {
 	 * The cached real level of this skill that can be trained, to reduce the
 	 * amount of expensive level calculations.
 	 */
-	@JsonIgnore
+	@JsonProperty(value = "rlvl")
 	private int realLevel = 1;
 	
 	/**

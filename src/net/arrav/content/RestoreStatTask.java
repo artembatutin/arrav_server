@@ -47,14 +47,12 @@ public final class RestoreStatTask extends Task {
 			if(currentCons > maxCons) {
 				hp.decreaseLevel(1);
 				Skills.refresh(player, Skills.HITPOINTS);
-			} else if(currentCons < maxCons) {
+			} else if(currentCons < maxCons && player.getAttr().get("accept_aid").getBoolean()) {
 				int amount = player.getAttr().get("lunar_dream").getBoolean() ? 5 : 1;
-				hp.increaseLevel(amount, maxCons);
 				if(Prayer.isActivated(player, Prayer.RAPID_HEAL)) {
-					if(player.getSkills()[Skills.HITPOINTS].getLevel() < maxCons) {
-						player.getSkills()[Skills.HITPOINTS].increaseLevel(1, maxCons);
-					}
+					amount += 1;
 				}
+				player.getSkills()[Skills.HITPOINTS].increaseLevel(amount, maxCons);
 				Skills.refresh(player, Skills.HITPOINTS);
 			}
 			if(run != 6)//Excluding the other skills to restore.

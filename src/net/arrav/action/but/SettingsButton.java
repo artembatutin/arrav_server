@@ -29,7 +29,7 @@ public class SettingsButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				Boolean acceptAid = (Boolean) player.getAttr().get("accept_aid").get();
+				Boolean acceptAid = player.getAttr().get("accept_aid").getBoolean();
 				if(!acceptAid) {
 					player.message("Accept aid has been turned on.");
 					player.getAttr().get("accept_aid").set(true);
