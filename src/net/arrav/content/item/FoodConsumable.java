@@ -347,9 +347,9 @@ public enum FoodConsumable {
 						}
 						replacement.ifPresent(item1 -> player.getInventory().set(slot, item1, true));
 					}
-					Skills.refresh(player, Skills.HITPOINTS);
-					player.message(food.getMessage());
 					food.onEffect(player);
+					player.message(food.getMessage());
+					Skills.refresh(player, Skills.HITPOINTS);
 					return true;
 				}
 			};

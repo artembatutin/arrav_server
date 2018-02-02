@@ -2,6 +2,7 @@ package net.arrav.world.entity.actor.player.assets.activity;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import net.arrav.content.object.BarChair;
 import net.arrav.content.skill.action.SkillActionTask;
 import net.arrav.task.LinkedTaskSequence;
 import net.arrav.world.entity.actor.player.Player;

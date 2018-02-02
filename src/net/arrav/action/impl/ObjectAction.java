@@ -6,6 +6,7 @@ import net.arrav.content.minigame.fightcaves.FightcavesMinigame;
 import net.arrav.content.minigame.nexchamber.NexMinigame;
 import net.arrav.content.minigame.pestcontrol.PestControlWaitingLobby;
 import net.arrav.content.minigame.warriorsguild.WarriorsGuild;
+import net.arrav.content.object.BarChair;
 import net.arrav.content.object.WebSlashing;
 import net.arrav.content.skill.agility.impl.wild.WildernessAgility;
 import net.arrav.content.skill.agility.test.barb.BarbAgility;
@@ -68,10 +69,10 @@ public abstract class ObjectAction extends Action {
 		Woodcutting.action();
 		Mining.action();
 		Runecrafting.action();
-		//		GnomeStrongholdAgility.action();
+		//GnomeStrongholdAgility.action();
 		NexMinigame.action();
 		GnomeAgility.action();
-		//		BarbarianOutpostAgility.action();
+		//BarbarianOutpostAgility.action();
 		BarbAgility.action();
 		WildernessAgility.action();
 		Shortcuts.action();
@@ -83,15 +84,16 @@ public abstract class ObjectAction extends Action {
 		BirdData.action();
 		MammalData.action();
 		Hunter.action();
-
-			ObjectAction a = new ObjectAction() {
-				@Override
-				public boolean click(Player player, GameObject object, int click) {
-					player.teleport(new Position(3507, 9494), TeleportType.LADDER);
-					return true;
-				}
-			};
-			a.registerFirst(65613);
+		BarChair.action();
+		
+		ObjectAction a = new ObjectAction() {
+			@Override
+			public boolean click(Player player, GameObject object, int click) {
+				player.teleport(new Position(3507, 9494), TeleportType.LADDER);
+				return true;
+			}
+		};
+		a.registerFirst(65613);
 		a = new ObjectAction() {
 			@Override
 			public boolean click(Player player, GameObject object, int click) {

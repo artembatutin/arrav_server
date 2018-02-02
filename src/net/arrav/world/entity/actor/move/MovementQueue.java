@@ -122,6 +122,9 @@ public final class MovementQueue {
 			
 			if(character.isPlayer()) {
 				Player player = character.toPlayer();
+				if(player.sitting != null) {
+					player.sitting.unsit();
+				}
 				if(player.getRights().less(Rights.ADMINISTRATOR)) {
 					if(player.getRunEnergy() > 0 && !(player.isIronMaxed() && !player.inWilderness())) {
 						double drainRate = 0.7D;

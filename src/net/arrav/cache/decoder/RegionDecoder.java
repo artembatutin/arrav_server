@@ -3,6 +3,7 @@ package net.arrav.cache.decoder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.arrav.cache.FileSystem;
+import net.arrav.content.object.BarChair;
 import net.arrav.content.object.door.DoorHandler;
 import net.arrav.util.ByteBufferUtil;
 import net.arrav.util.CompressionUtil;
@@ -82,6 +83,8 @@ public final class RegionDecoder implements Runnable {
 					TraversalMap.markObject(r, o, true, true);
 					if(o.getDefinition() != null && DoorHandler.isDoor(o.getDefinition()))
 						DoorHandler.APPENDER.registerFirst(o.getId());
+					if(o.getId() == BarChair.CHAIR_ID)
+						BarChair.register(o);
 				}
 				downHeights.clear();
 				objects.clear();

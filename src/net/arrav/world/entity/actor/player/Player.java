@@ -28,6 +28,7 @@ import net.arrav.content.market.MarketShop;
 import net.arrav.content.minigame.Minigame;
 import net.arrav.content.minigame.MinigameContainer;
 import net.arrav.content.minigame.MinigameHandler;
+import net.arrav.content.object.BarChair;
 import net.arrav.content.object.ViewingOrb;
 import net.arrav.content.object.cannon.Multicannon;
 import net.arrav.content.object.pit.FirepitManager;
@@ -138,57 +139,17 @@ public final class Player extends Actor {
 	 * 2 - iron man maxed
 	 */
 	private int ironMan;
-	
-	/**
-	 * The wilderness level this player is in.
-	 */
 	private int wildernessLevel;
-	
-	/**
-	 * The ring of recoil charges.
-	 */
 	public int ringOfRecoil = 400;
-	
-	/**
-	 * The weight of the player.
-	 */
 	public double weight;
-
 	private double runEnergy = 100D;
-	
-	/**
-	 * The identifier for the icons above the player's head.
-	 */
 	public int headIcon = -1, skullIcon = -1;
-	
-	/**
-	 * Counted flags
-	 */
 	public int votePoints, totalVotes, totalDonated, aggressionTick;
-	
-	/**
-	 * Condition flags.
-	 */
 	private boolean specialActivated, updateRegion;
-	
-	/**
-	 * Player flag states.
-	 */
 	public boolean venged, banned, muted, ipMuted, autocasting, screenFocus, firstLogin, lockedXP;
-	
-	/**
-	 * The flag of a walkable interface context.
-	 */
 	public boolean wildernessWidget, multicombatWidget, duelingWidget, godwarsWidget;
-	
-	/**
-	 * The last username that killed this player.
-	 */
+	public BarChair sitting;
 	String lastKiller = null;
-	
-	/**
-	 * The godwars killcount that can be increased by this player.
-	 */
 	private int[] godwarsKillcount = new int[4];
 	
 	/**

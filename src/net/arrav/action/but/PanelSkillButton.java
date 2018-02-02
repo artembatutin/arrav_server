@@ -24,7 +24,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3093, 3479, 1), TeleportType.NORMAL);
+				player.teleport(new Position(3094, 3505), TeleportType.NORMAL);
 				return true;
 			}
 		};

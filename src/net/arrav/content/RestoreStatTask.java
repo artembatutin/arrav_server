@@ -44,6 +44,7 @@ public final class RestoreStatTask extends Task {
 			Skill hp = player.getSkills()[Skills.HITPOINTS];
 			int maxCons = player.getMaximumHealth();
 			int currentCons = hp.getLevel();
+			System.out.println(maxCons + " - "+ currentCons);
 			if(currentCons > maxCons) {
 				hp.decreaseLevel(1);
 				Skills.refresh(player, Skills.HITPOINTS);
@@ -63,7 +64,6 @@ public final class RestoreStatTask extends Task {
 				int realLevel = player.getSkills()[i].getRealLevel();
 				if(player.getSkills()[i].getLevel() < realLevel && i != Skills.PRAYER && i != Skills.SUMMONING) {
 					player.getSkills()[i].increaseLevel(1);
-					
 					if(Prayer.isActivated(player, Prayer.RAPID_RESTORE)) {
 						if(player.getSkills()[i].getLevel() < realLevel) {
 							player.getSkills()[i].increaseLevel(1);
