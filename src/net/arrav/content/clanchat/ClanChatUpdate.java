@@ -21,7 +21,7 @@ public enum ClanChatUpdate {
 			if(member.getRank().getValue() >= clan.getSettings().getBan().getValue())
 				player.text(50306, clan.getName());
 			player.text(50139, "Talking in: @lye@" + clan.getName());
-			player.text(50140, "Owner: " + TextUtils.capitalize(clan.getOwner()));
+			player.text(50140, "Owner: @whi@" + TextUtils.capitalize(clan.getOwner()));
 			player.text(50135, "Leave Clan");
 			if(member.getRank().getValue() >= clan.getSettings().getBan().getValue()) {
 				player.text(50136, "Manage");
