@@ -49,7 +49,7 @@ public final class FakeClient {
                             ByteBuf rsa = ctx.alloc().buffer();
                             
                             // rsa block prefix
-                            rsa.writeByte(10);
+                            //rsa.writeByte(10);
 
                             // session keys
                             rsa.writeInt(random.nextInt());
@@ -59,8 +59,10 @@ public final class FakeClient {
 
                             //rsa.writeInt(0); // uid
                             //rsa.putCString("Bot" + count.get());
-                            rsa.putCString("123456");
-
+                            rsa.writeInt(37);
+                            rsa.putCString("Bot" + count.get());
+                            rsa.putCString("asddsa");
+                            
                             byte[] rsaBytes = new byte[rsa.readableBytes()];
                             rsa.readBytes(rsaBytes);
     
@@ -79,7 +81,7 @@ public final class FakeClient {
                             count.incrementAndGet();
                         } else {
                             int pktId = in.readUnsignedByte();
-                            System.out.println("received pkt id: " + pktId);
+                            //System.out.println("received pkt id: " + pktId);
                         }
                     }
                 });
@@ -89,32 +91,10 @@ public final class FakeClient {
         for (int i = 0; i < 2000; i++) {
             // Start the client.
             System.out.println("connecting bot " + i);
-            Channel f = b.connect("127.0.0.1", 43594).sync().channel(); //(5)
+            Channel f = b.connect("127.0.0.1", 43594).sync().channel();
             ByteBuf buffer = f.alloc().buffer();
-            buffer.writeShort(37);
-            buffer.writeInt(37);
-            buffer.writeLong(encryptName("Bot" + count.get()));
+            buffer.writeByte(37);
             f.writeAndFlush(buffer, f.voidPromise());
         }
-    }
-    
-    /**
-     * Encrypts a long value.
-     */
-    public static long encryptName(String name) {
-        long l = 0L;
-        for(int i = 0; i < name.length() && i <= 12; i++) {
-            char c = name.charAt(i);
-            l *= 37L;
-            if(c >= 'A' && c <= 'Z')
-                l += (1 + c) - 65;
-            else if(c >= 'a' && c <= 'z')
-                l += (1 + c) - 97;
-            else if(c >= '0' && c <= '9')
-                l += (27 + c) - 48;
-        }
-        while(l % 37L == 0L && l != 0L)
-            l /= 37L;
-        return l;
     }
 }

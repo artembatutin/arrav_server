@@ -44,7 +44,6 @@ public final class RestoreStatTask extends Task {
 			Skill hp = player.getSkills()[Skills.HITPOINTS];
 			int maxCons = player.getMaximumHealth();
 			int currentCons = hp.getLevel();
-			System.out.println(maxCons + " - "+ currentCons);
 			if(currentCons > maxCons) {
 				hp.decreaseLevel(1);
 				Skills.refresh(player, Skills.HITPOINTS);

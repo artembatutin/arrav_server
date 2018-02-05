@@ -31,11 +31,6 @@ public final class NetworkConstants {
 	static final int CONNECTION_AMOUNT = 3;
 	
 	/**
-	 * The maximum amount of incoming messages per cycle.
-	 */
-	public static final int MESSAGE_LIMIT = 20;
-	
-	/**
 	 * An array of the message opcodes mapped to their respective listeners.
 	 */
 	public static final IncomingPacket[] MESSAGES = new IncomingPacket[256];
@@ -49,7 +44,7 @@ public final class NetworkConstants {
 	 * The {@link AttributeKey} value that is used to retrieve the session
 	 * instance from the attribute map of a {@link io.netty.channel.Channel}.
 	 */
-	public static final AttributeKey<Session> SESSION_KEY = AttributeKey.valueOf("session.KEY");
+	static final AttributeKey<Session> SESSION_KEY = AttributeKey.valueOf("session.KEY");
 	
 	/**
 	 * The private RSA modulus value.

@@ -218,7 +218,7 @@ public class Session {
 	 */
 	public void write(OutgoingPacket packet) {
 		//if(channel.isActive() && channel.isRegistered()) {
-			packet.write(player, stream);
+		packet.write(player, stream);
 		//}
 	}
 	
@@ -273,11 +273,13 @@ public class Session {
 			
 			if(opcode == 0) {
 				//reset timeout.
-				//return;
+				opcode(in);
+				return;
 			}
 			
 			if(size == 0) {
-				queueMessage(Unpooled.EMPTY_BUFFER);
+				if(NetworkConstants.MESSAGES[opcode] != null)
+					queueMessage(Unpooled.EMPTY_BUFFER);
 				opcode(in);
 				return;
 			}
@@ -313,9 +315,16 @@ public class Session {
 	 */
 	private void payload(ByteBuf in) {
 		if(in.isReadable(size)) {
-			ByteBuf newBuffer = in.readBytes(size);
-			queueMessage(newBuffer);
-			opcode(in);
+			if(NetworkConstants.MESSAGES[opcode] == null) {
+				in.skipBytes(size);//skip bytes.
+				LOGGER.info("Skipped unhandled packet " + opcode + " - " + size);
+				resetMessage();
+				opcode(in);
+			} else {
+				ByteBuf newBuffer = in.readBytes(size);
+				queueMessage(newBuffer);
+				opcode(in);
+			}
 		}
 	}
 	
@@ -324,16 +333,7 @@ public class Session {
 	 * @param payload The payload of the {@code Packet}.
 	 */
 	private void queueMessage(ByteBuf payload) {
-		checkState(opcode >= 0, "opcode < 0");
-		checkState(size >= 0, "size < 0");
-		checkState(type != GamePacketType.RAW, "type == GamePacketType.RAW");
 		try {
-			if(NetworkConstants.MESSAGES[opcode] == null) {
-				LOGGER.info("Unhandled packet " + opcode + " - " + size);
-				payload.release();
-				return;
-			}
-			
 			ByteBuf packet = payload.incoming(opcode, type);
 			if(packet.getOpcode() != 0) {
 				if(packet.getOpcode() == 41) {
@@ -343,44 +343,45 @@ public class Session {
 				incoming.offer(packet);
 			}
 		} finally {
-			opcode = -1;
-			size = -1;
-			gameState = GameState.OPCODE;
+			resetMessage();
 		}
+	}
+	
+	/**
+	 * Resets the incoming message procedure.
+	 */
+	private void resetMessage() {
+		opcode = -1;
+		size = -1;
+		gameState = GameState.OPCODE;
 	}
 	
 	/**
 	 * Handles a login request.
 	 * @throws Exception If any errors occur while handling credentials.
 	 */
-	private void handleRequest() throws Exception {
+	private void handleRequest(ChannelHandlerContext ctx) throws Exception {
 		player = new Player(new PlayerCredentials(username, password));
 		player.setSession(this);
-		LoginCode response = LoginCode.NORMAL;
+		LoginCode code = LoginCode.NORMAL;
 		
-		// Validate the username and password, change login response if needed
+		// Validate the username and password, change login code if needed
 		// for invalid credentials or the world being full.
 		boolean invalidCredentials = !username.matches("^[a-zA-Z0-9_ ]{1,12}$") || password.isEmpty() || password.length() > 20;
-		response = invalidCredentials ? LoginCode.INVALID_CREDENTIALS : World.get().getPlayers().remaining() == 0 ? LoginCode.WORLD_FULL : response;
-		
-		// Validating login before deserialization.
-		if(response == LoginCode.NORMAL) {
-			player.credentials.setUsername(username);
-			player.credentials.password = password;
-		}
+		code = invalidCredentials ? LoginCode.INVALID_CREDENTIALS : World.get().getPlayers().remaining() == 0 ? LoginCode.WORLD_FULL : code;
 		
 		// Validating player login possibility.
-		if(response == LoginCode.NORMAL && World.get().getPlayer(usernameHash).isPresent()) {
-			response = LoginCode.ACCOUNT_ONLINE;
+		if(code == LoginCode.NORMAL && World.get().getPlayer(usernameHash).isPresent()) {
+			code = LoginCode.ACCOUNT_ONLINE;
 		}
-		
 		// Deserialization
-		if(response == LoginCode.NORMAL) {
-			response = new PlayerSerialization(player).loginCheck(password);
+		if(code == LoginCode.NORMAL) {
+			player.credentials.setUsername(username);
+			player.credentials.password = password;
+			code = new PlayerSerialization(player).loginCheck(password);
 		}
-		
-		ChannelFuture future = channel.writeAndFlush(new LoginResponse(response, player.getRights(), player.isIronMan()).toBuf());
-		if(response != LoginCode.NORMAL) {
+		ChannelFuture future = channel.writeAndFlush(new LoginResponse(code, player.getRights(), player.isIronMan()).toBuf(ctx));
+		if(code != LoginCode.NORMAL) {
 			future.addListener(ChannelFutureListener.CLOSE);
 			return;
 		}
@@ -406,23 +407,10 @@ public class Session {
 	 * @throws Exception If any exceptions occur while decoding this portion of the protocol.
 	 */
 	private void decodeHandshake(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-		if(in.readableBytes() >= 14) {
-			int build = in.readUnsignedShort();
+		if(in.readableBytes() >= 1) {
+			int build = in.get();
 			if(build != GameConstants.CLIENT_BUILD) {
 				write(ctx, LoginCode.WRONG_BUILD_NUMBER);
-				return;
-			}
-			//mac address
-			int macId = in.readInt();
-			macAddress = String.valueOf(macId);
-			if(validMac(macAddress) && HostManager.contains(macAddress, HostListType.BANNED_MAC)) {
-				write(ctx, LoginCode.ACCOUNT_DISABLED);
-				return;
-			}
-			//username hash
-			usernameHash = in.readLong();
-			if(World.get().getPlayer(usernameHash).isPresent()) {
-				write(ctx, LoginCode.ACCOUNT_ONLINE);
 				return;
 			}
 			ByteBuf buf = ctx.alloc().buffer(9);
@@ -465,9 +453,20 @@ public class Session {
 					isaacSeed[i] += 50;
 				}
 				encryptor = new IsaacRandom(isaacSeed);
+				//mac address
+				int macId = rsaBuffer.readInt();
+				macAddress = String.valueOf(macId);
+				if(validMac(macAddress) && HostManager.contains(macAddress, HostListType.BANNED_MAC)) {
+					write(ctx, LoginCode.ACCOUNT_DISABLED);
+					return;
+				}
+				username = rsaBuffer.getCString().toLowerCase().replaceAll("_", " ").toLowerCase().trim();
 				password = rsaBuffer.getCString().toLowerCase();
-				username = TextUtils.hashToName(usernameHash).replaceAll("_", " ").toLowerCase().trim();
-				handleRequest();
+				if(World.get().getPlayer(username).isPresent()) {
+					write(ctx, LoginCode.ACCOUNT_ONLINE);
+					return;
+				}
+				handleRequest(ctx);
 			} finally {
 				if(rsaBuffer.isReadable()) {
 					rsaBuffer.release();
@@ -482,9 +481,11 @@ public class Session {
 	public static void write(ChannelHandlerContext ctx, LoginCode response) {
 		Channel channel = ctx.channel();
 		LoginResponse message = new LoginResponse(response);
-		ByteBuf initialMessage = ctx.alloc().buffer(8).writeLong(0); // Write initial message.
-		channel.write(initialMessage, channel.voidPromise());
-		channel.writeAndFlush(message.toBuf()).addListener(ChannelFutureListener.CLOSE); // Write response message.
+		if(response == LoginCode.NORMAL) {
+			ByteBuf initialMessage = ctx.alloc().buffer(9).writeLong(0); // Write initial message.
+			channel.write(initialMessage, channel.voidPromise());
+		}
+		channel.writeAndFlush(message.toBuf(ctx)).addListener(ChannelFutureListener.CLOSE); // Write response message.
 	}
 	
 	/**

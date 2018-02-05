@@ -65,7 +65,6 @@ public final class RandomUtils {
 	public static int inclusive(int min, int max) {
 		if(min == max)
 			return min;
-		checkArgument(max >= min, "max < min");
 		return ThreadLocalRandom.current().nextInt((max - min) + 1) + min;
 	}
 	

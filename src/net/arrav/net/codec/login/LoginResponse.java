@@ -2,6 +2,8 @@ package net.arrav.net.codec.login;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
+import net.arrav.net.Session;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
 
@@ -51,8 +53,8 @@ public final class LoginResponse {
 	 * Converts this {@link LoginResponse} to a {@link ByteBuf}.
 	 * @return response {@link ByteBuf}.
 	 */
-	public ByteBuf toBuf() {
-		ByteBuf out = Unpooled.buffer(2);
+	public ByteBuf toBuf(ChannelHandlerContext ctx) {
+		ByteBuf out = ctx.channel().alloc().buffer(2);
 		out.writeByte(response.getCode());
 		if(response == LoginCode.NORMAL) {
 			out.writeByte(rights == Rights.PLAYER && iron ? Rights.IRON_MAN.getProtocolValue() : rights.getProtocolValue());
