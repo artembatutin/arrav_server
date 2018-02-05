@@ -60,7 +60,10 @@ import static net.arrav.net.codec.login.LoginCode.*;
  * @author lare96 <http://github.com/lare96>
  */
 public final class PlayerSerialization {
-	
+
+	/**
+	 * Ensures a minimal character save size.
+	 */
 	private static final int ENSURE_SIZE = 40960;
 	
 	/**
