@@ -20,6 +20,11 @@ import net.arrav.world.entity.actor.combat.strategy.npc.NpcMagicStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.NpcMeleeStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.NpcRangedStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.KingBlackDragonStrategy;
+import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.GeneralGraardorStrategy;
+import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.SergeantGrimspikeStrategy;
+import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.SergeantSteelwillStrategy;
+import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.SergeantStrongstackStrategy;
+import net.arrav.world.entity.actor.mob.impl.godwars.GeneralGraardor;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.update.UpdateFlag;
 import net.arrav.world.locale.Position;
@@ -41,13 +46,19 @@ import java.util.function.Supplier;
  */
 public abstract class Mob extends Actor {
 	
-	private static final ImmutableMap<Integer, Supplier<CombatStrategy<Mob>>> STRATEGIES = ImmutableMap.of(50, KingBlackDragonStrategy::new);
+	private static final ImmutableMap<Integer, Supplier<CombatStrategy<Mob>>> STRATEGIES = ImmutableMap.of(
+			50, KingBlackDragonStrategy::new,
+			6260, GeneralGraardorStrategy::new,
+			6263, SergeantSteelwillStrategy::new,
+			6261, SergeantStrongstackStrategy::new,
+			6265, SergeantGrimspikeStrategy::new);
 	
 	/**
 	 * A mapping which contains all the custom npcs by their id.
 	 */
 	public static final Int2ObjectArrayMap<Function<Position, Mob>> CUSTOM_MOBS = new Int2ObjectArrayMap<>(
 			ImmutableMap.<Integer, Function<Position, Mob>>builder()
+					.put(6260, s -> new GeneralGraardor())
 					/*.put(13447, s -> new Nex())
 					.put(6247, s -> new CommanderZilyana())
 					.put(6260, s -> new GeneralGraardor())

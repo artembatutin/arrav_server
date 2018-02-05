@@ -2434,5 +2434,47 @@
       "startHeight": 43,
       "endHeight": 31
     }
+  },
+  {
+    "name": "Sergeant steelwill",
+    "max-hit": 160,
+    "animation": {
+      "id": 6154,
+      "delay": 0,
+      "priority": "HIGH"
+    },
+    "start": {
+      "id": 1202,
+      "delay": 0,
+      "height": 85
+    },
+    "projectile": {
+      "id": 1203,
+      "delay": 44,
+      "speed": 75,
+      "startHeight": 43,
+      "endHeight": 43
+    }
+  },
+  {
+    "name": "Sergeant grimspike",
+    "max-hit": 210,
+    "animation": {
+      "id": 6154,
+      "delay": 0,
+      "priority": "HIGH"
+    },
+    "start": {
+      "id": 1202,
+      "delay": 0,
+      "height": 85
+    },
+    "projectile": {
+      "id": 44,
+      "delay": 44,
+      "speed": 75,
+      "startHeight": 43,
+      "endHeight": 43
+    }
   }
 ]
