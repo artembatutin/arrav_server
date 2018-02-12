@@ -2525,5 +2525,106 @@
     "startHeight": 43,
     "endHeight": 43
   }
-}
+},
+  {
+    "name": "Kalphite Ranged",
+    "max-hit": 310,
+    "animation": {
+      "id": 6240,
+      "delay": 0,
+      "priority": "HIGH"
+    },
+    "projectile": {
+      "id": 473,
+      "delay": 44,
+      "speed": 75,
+      "startHeight": 43,
+      "endHeight": 41
+    }
+  },
+  {
+    "name": "Kalphite Magic",
+    "max-hit": 310,
+    "animation": {
+      "id": 6240,
+      "delay": 0,
+      "priority": "HIGH"
+    },
+    "projectile": {
+      "id": 280,
+      "delay": 44,
+      "speed": 75,
+      "startHeight": 43,
+      "endHeight": 41
+    }
+  },
+  {
+    "name": "Dagannoth Supreme",
+    "max-hit": 300,
+    "projectile": {
+      "id": 1937,
+      "delay": 44,
+      "speed": 75,
+      "startHeight": 60,
+      "endHeight": 43
+    }
+  },
+  {
+    "name": "Dagannoth Prime",
+    "max-hit": 500,
+    "projectile": {
+      "id": 500,
+      "delay": 44,
+      "speed": 75,
+      "startHeight": 60,
+      "endHeight": 43
+    },
+    "end": {
+      "id": 502,
+      "height": 100,
+      "delay": 10
+    }
+  },
+  {
+    "name": "Tormented_Demon Ranged",
+    "max-hit": 269,
+    "animation": {
+      "id": 10919,
+      "delay": 20,
+      "priority": "HIGH"
+    },
+    "start": {
+      "id": 1888,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 1887,
+      "delay": 44,
+      "speed": 75,
+      "startHeight": 60,
+      "endHeight": 43
+    }
+  },
+  {
+    "name": "Tormented_Demon Magic",
+    "max-hit": 269,
+    "animation": {
+      "id": 10918,
+      "delay": 20,
+      "priority": "HIGH"
+    },
+    "start": {
+      "id": 1883,
+      "delay": 0,
+      "height": 100
+    },
+    "projectile": {
+      "id": 1884,
+      "delay": 44,
+      "speed": 75,
+      "startHeight": 60,
+      "endHeight": 43
+    }
+  }
 ]

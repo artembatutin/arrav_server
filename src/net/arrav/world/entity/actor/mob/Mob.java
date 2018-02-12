@@ -2,7 +2,7 @@ package net.arrav.world.entity.actor.mob;
 
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-import jdk.nashorn.internal.ir.annotations.Immutable;
+
 import net.arrav.content.skill.Skills;
 import net.arrav.task.Task;
 import net.arrav.world.World;
@@ -20,6 +20,12 @@ import net.arrav.world.entity.actor.combat.strategy.CombatStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.NpcMagicStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.NpcMeleeStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.NpcRangedStrategy;
+import net.arrav.world.entity.actor.combat.strategy.npc.boss.GiantMoleStrategy;
+import net.arrav.world.entity.actor.combat.strategy.npc.boss.TormentedDemonStrategy;
+import net.arrav.world.entity.actor.combat.strategy.npc.boss.dagannoth.DagannothPrimeStrategy;
+import net.arrav.world.entity.actor.combat.strategy.npc.boss.dagannoth.DagannothRexStrategy;
+import net.arrav.world.entity.actor.combat.strategy.npc.boss.dagannoth.DagannothSupremeStrategy;
+import net.arrav.world.entity.actor.combat.strategy.npc.boss.KalphiteQueenStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.KingBlackDragonStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.armadyl.FlightKilisaStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.armadyl.FlockleaderGeerinStrategy;
@@ -29,6 +35,7 @@ import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.Gene
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.SergeantGrimspikeStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.SergeantSteelwillStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.SergeantStrongstackStrategy;
+import net.arrav.world.entity.actor.mob.impl.KalphiteQueen;
 import net.arrav.world.entity.actor.mob.impl.godwars.GeneralGraardor;
 import net.arrav.world.entity.actor.mob.impl.godwars.KreeArra;
 import net.arrav.world.entity.actor.player.Player;
@@ -64,7 +71,13 @@ public abstract class Mob extends Actor {
 			.put(6222, KreeArraStrategy::new)
 			.put(6227, FlightKilisaStrategy::new)
 			.put(6225, FlockleaderGeerinStrategy::new)
-			.put(6223, WingmanSkreeStrategy::new).build());
+			.put(6223, WingmanSkreeStrategy::new)
+			.put(1158, KalphiteQueenStrategy::new)
+			.put(2881, DagannothSupremeStrategy::new)
+			.put(2882, DagannothPrimeStrategy::new)
+			.put(2883, DagannothRexStrategy::new)
+			.put(8349, TormentedDemonStrategy::new).put(8350, TormentedDemonStrategy::new).put(8351, TormentedDemonStrategy::new)
+			.put(3340, GiantMoleStrategy::new).build());
 
 	/**
 	 * A mapping which contains all the custom npcs by their id.
@@ -73,6 +86,7 @@ public abstract class Mob extends Actor {
 			ImmutableMap.<Integer, Function<Position, Mob>>builder()
 					.put(6260, s -> new GeneralGraardor())
 					.put(6222, s -> new KreeArra())
+					.put(1158, KalphiteQueen::new)
 					/*.put(13447, s -> new Nex())
 					.put(6247, s -> new CommanderZilyana())
 					.put(6260, s -> new GeneralGraardor())
