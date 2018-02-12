@@ -1,10 +1,5 @@
 [![N|Solid](https://i.imgur.com/8YoKlal.png)](https://arrav.net/)
 # Emulating Something Remarkable.
-
-# Current Development
-___
-
-# Avar-Related Information
 ___
 > As Arrav came across the fields to the south of Avarrocka he saw over the trees a column of black smoke. It was a windless day, and this column - climbing straight and true into the sky - looked to Arrav like the finger of an angry god. He hastened his pace, racing through the forests beyond which lay Avarrocka. A few beasts lunged at him from the surrounding vegetation, but he paid them no heed, swatting claws and teeth back with swift flicks of his powerful hands.
 
