@@ -100,6 +100,7 @@ import net.arrav.world.entity.item.container.impl.Bank;
 import net.arrav.world.entity.item.container.impl.Equipment;
 import net.arrav.world.entity.item.container.impl.Inventory;
 import net.arrav.world.entity.item.container.session.ExchangeSessionManager;
+import net.arrav.world.entity.item.container.session.test._ExchangeSessionManager;
 import net.arrav.world.locale.Position;
 import net.arrav.world.locale.loc.Location;
 
@@ -167,7 +168,9 @@ public final class Player extends Actor {
 	 * The cached player's farming patches progress.
 	 */
 	public Object2ObjectArrayMap<PatchType, Patch> patches = new Object2ObjectArrayMap<>(PatchType.VALUES.size());
-	
+
+	public final _ExchangeSessionManager exchange_manager = new _ExchangeSessionManager(this);
+
 	/**
 	 * Uniquely spawned mob/npcs for this player.
 	 */

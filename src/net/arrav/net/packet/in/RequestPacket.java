@@ -51,7 +51,8 @@ public final class RequestPacket implements IncomingPacket {
 			return;
 		if(!MinigameHandler.execute(player, m -> m.canTrade(player, other)))
 			return;
-		ExchangeSessionManager.get().request(new TradeSession(player, other, ExchangeSession.REQUEST));
+		//ExchangeSessionManager.get().request(new TradeSession(player, other, ExchangeSession.REQUEST));
+		player.exchange_manager.request(new net.arrav.world.entity.item.container.session.test.impl.TradeSession(player, other));
 	}
 	
 	/**
