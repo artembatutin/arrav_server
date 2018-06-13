@@ -16,7 +16,7 @@ public class PanelSkillButton extends ActionInitializer {
 		ButtonAction e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3366, 3509), TeleportType.NORMAL);
+				player.teleport(new Position(3366, 3509), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -24,7 +24,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3094, 3505), TeleportType.NORMAL);
+				player.teleport(new Position(3094, 3505), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -32,7 +32,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3147, 3451), TeleportType.NORMAL);
+				player.teleport(new Position(3147, 3451), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -40,7 +40,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2605, 4774), TeleportType.NORMAL);
+				player.teleport(new Position(2605, 4774), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -48,7 +48,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2605, 3412), TeleportType.NORMAL);
+				player.teleport(new Position(2605, 3412), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -56,7 +56,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3039, 4834), TeleportType.NORMAL);
+				player.teleport(new Position(3039, 4834), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -64,7 +64,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3002, 9799), TeleportType.NORMAL);
+				player.teleport(new Position(3002, 9799), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -72,7 +72,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2998, 9829), TeleportType.NORMAL);
+				player.teleport(new Position(2998, 9829), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -80,7 +80,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2998, 9826), TeleportType.NORMAL);
+				player.teleport(new Position(2998, 9826), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -88,7 +88,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2610, 3095), TeleportType.NORMAL);
+				player.teleport(new Position(2610, 3095), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -96,7 +96,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3350, 3334), TeleportType.NORMAL);
+				player.teleport(new Position(3350, 3334), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -104,7 +104,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2898, 3430), TeleportType.NORMAL);
+				player.teleport(new Position(2898, 3430), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -112,7 +112,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2807, 3464), TeleportType.NORMAL);
+				player.teleport(new Position(2807, 3464), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -120,7 +120,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3077, 3518), TeleportType.NORMAL);
+				player.teleport(new Position(3077, 3518), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};
@@ -130,11 +130,11 @@ public class PanelSkillButton extends ActionInitializer {
 			public boolean click(Player player, int button) {
 				player.getDialogueBuilder().append(new OptionDialogue(t -> {
 					if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
-						player.teleport(new Position(2475, 3439), TeleportType.NORMAL);
+						player.teleport(new Position(2475, 3439), TeleportType.TRAINING_PORTAL);
 					} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
-						player.teleport(new Position(2551, 3556), TeleportType.NORMAL);
+						player.teleport(new Position(2551, 3556), TeleportType.TRAINING_PORTAL);
 					} else if(t.equals(OptionDialogue.OptionType.THIRD_OPTION)) {
-						player.teleport(new Position(2998, 3915), TeleportType.NORMAL);
+						player.teleport(new Position(2998, 3915), TeleportType.TRAINING_PORTAL);
 					}
 				}, "Gnome", "Barbarian", "@red@Wilderness"));
 				return true;
@@ -144,7 +144,7 @@ public class PanelSkillButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2375, 3618), TeleportType.NORMAL);
+				player.teleport(new Position(2375, 3618), TeleportType.TRAINING_PORTAL);
 				return true;
 			}
 		};

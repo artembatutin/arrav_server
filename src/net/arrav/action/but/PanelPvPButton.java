@@ -23,7 +23,7 @@ public class PanelPvPButton extends ActionInitializer {
 			ButtonAction e = new ButtonAction() {
 				@Override
 				public boolean click(Player player, int button) {
-					player.teleport(teleports[index], TeleportType.NORMAL);
+					player.teleport(teleports[index], TeleportType.PVP_PORTAL);
 					return true;
 				}
 			};

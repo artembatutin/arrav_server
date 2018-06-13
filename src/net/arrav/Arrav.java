@@ -186,10 +186,10 @@ public final class Arrav {
 	private void initTasks() throws Exception {
 		FileSystem fs = FileSystem.create("data/cache");
 		AttributeKey.init();
-		//object/region decoding must be done before parallel.
+		//object/region decoding must be done sequentially.
 		new ObjectDefinitionDecoder(fs).run();
 		new MapDefinitionDecoder(fs).run();
-		//new RegionDecoder(fs).run();
+		new RegionDecoder(fs).run();
 		FirepitManager.get().register();
 		//Item decoding.
 		launch.execute(() -> {

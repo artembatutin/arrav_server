@@ -85,31 +85,6 @@ public abstract class ObjectAction extends Action {
 		MammalData.action();
 		Hunter.action();
 		BarChair.action();
-		
-		ObjectAction a = new ObjectAction() {
-			@Override
-			public boolean click(Player player, GameObject object, int click) {
-				player.teleport(new Position(3507, 9494), TeleportType.LADDER);
-				return true;
-			}
-		};
-		a.registerFirst(65613);
-		a = new ObjectAction() {
-			@Override
-			public boolean click(Player player, GameObject object, int click) {
-				player.teleport(new Position(3509, 9496, 2), TeleportType.LADDER);
-				return true;
-			}
-		};
-		a.registerFirst(45835);
-		a = new ObjectAction() {
-			@Override
-			public boolean click(Player player, GameObject object, int click) {
-				player.teleport(GameConstants.STARTING_POSITION, TeleportType.LADDER);
-				return true;
-			}
-		};
-		a.registerFirst(45832);
 	}
 	
 }

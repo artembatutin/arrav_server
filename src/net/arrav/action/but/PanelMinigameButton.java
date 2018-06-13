@@ -15,7 +15,7 @@ public class PanelMinigameButton extends ActionInitializer {
 		ButtonAction e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3366, 3512), TeleportType.NORMAL);
+				player.teleport(new Position(3366, 3512), TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -24,7 +24,7 @@ public class PanelMinigameButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3565, 3306), TeleportType.NORMAL);
+				player.teleport(new Position(3565, 3306), TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -33,7 +33,7 @@ public class PanelMinigameButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(3363, 3275), TeleportType.NORMAL);
+				player.teleport(new Position(3363, 3275), TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -42,7 +42,7 @@ public class PanelMinigameButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2658, 2659), TeleportType.NORMAL);
+				player.teleport(new Position(2658, 2659), TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -51,7 +51,7 @@ public class PanelMinigameButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2399, 5178), TeleportType.NORMAL);
+				player.teleport(new Position(2399, 5178), TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
@@ -60,7 +60,7 @@ public class PanelMinigameButton extends ActionInitializer {
 		e = new ButtonAction() {
 			@Override
 			public boolean click(Player player, int button) {
-				player.teleport(new Position(2844, 3542), TeleportType.NORMAL);
+				player.teleport(new Position(2844, 3542), TeleportType.BOSS_PORTAL);
 				return true;
 			}
 		};
