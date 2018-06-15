@@ -2,14 +2,11 @@ package net.arrav.world.entity.actor.mob.impl.godwars;
 
 import com.google.common.collect.ImmutableSet;
 import net.arrav.world.World;
-import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.bandos.GeneralGraardorStrategy;
 import net.arrav.world.entity.actor.mob.DefaultMob;
 import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.mob.MobAggression;
 import net.arrav.world.locale.Position;
 import net.arrav.world.locale.loc.SquareLocation;
-
-import java.util.Optional;
 
 /**
  * The class which represents a single graardor boss with it's minions.

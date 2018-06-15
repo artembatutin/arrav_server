@@ -38,7 +38,7 @@ public enum Rune {
 
 	/**
 	 * Constructs a new {@link Rune} enumerator.
-	 * @param item       {@link #item}.
+	 * @param item {@link #item}.
 	 * @param multiplier {@link #multiplier}.
 	 */
 	Rune(int item, RunecraftingMultiplier... multiplier) {

@@ -2,7 +2,6 @@ package net.arrav.world.entity.actor.mob;
 
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
-
 import net.arrav.content.skill.Skills;
 import net.arrav.task.Task;
 import net.arrav.world.World;
@@ -21,12 +20,12 @@ import net.arrav.world.entity.actor.combat.strategy.npc.NpcMagicStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.NpcMeleeStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.NpcRangedStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.GiantMoleStrategy;
+import net.arrav.world.entity.actor.combat.strategy.npc.boss.KalphiteQueenStrategy;
+import net.arrav.world.entity.actor.combat.strategy.npc.boss.KingBlackDragonStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.TormentedDemonStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.dagannoth.DagannothPrimeStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.dagannoth.DagannothRexStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.dagannoth.DagannothSupremeStrategy;
-import net.arrav.world.entity.actor.combat.strategy.npc.boss.KalphiteQueenStrategy;
-import net.arrav.world.entity.actor.combat.strategy.npc.boss.KingBlackDragonStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.armadyl.FlightKilisaStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.armadyl.FlockleaderGeerinStrategy;
 import net.arrav.world.entity.actor.combat.strategy.npc.boss.godwars.armadyl.KreeArraStrategy;
@@ -58,53 +57,33 @@ import java.util.function.Supplier;
  * @author lare96 <http://github.com/lare96>
  */
 public abstract class Mob extends Actor {
-
-
+	
 	//private static final ImmutableMap<Integer, Supplier<CombatStrategy<Mob>>> STRATEGIES = ImmutableMap.builder().put(50, KingBlackDragonStrategy::new).build();
-
-	private static final Int2ObjectArrayMap<Supplier<CombatStrategy<Mob>>> STRATEGIES = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, Supplier<CombatStrategy<Mob>>>builder()
-			.put(50, KingBlackDragonStrategy::new)
-			.put(6260, GeneralGraardorStrategy::new)
-			.put(6263, SergeantSteelwillStrategy::new)
-			.put(6261, SergeantStrongstackStrategy::new)
-			.put(6265, SergeantGrimspikeStrategy::new)
-			.put(6222, KreeArraStrategy::new)
-			.put(6227, FlightKilisaStrategy::new)
-			.put(6225, FlockleaderGeerinStrategy::new)
-			.put(6223, WingmanSkreeStrategy::new)
-			.put(1158, KalphiteQueenStrategy::new)
-			.put(2881, DagannothSupremeStrategy::new)
-			.put(2882, DagannothPrimeStrategy::new)
-			.put(2883, DagannothRexStrategy::new)
-			.put(8349, TormentedDemonStrategy::new).put(8350, TormentedDemonStrategy::new).put(8351, TormentedDemonStrategy::new)
-			.put(3340, GiantMoleStrategy::new).build());
-
+	
+	private static final Int2ObjectArrayMap<Supplier<CombatStrategy<Mob>>> STRATEGIES = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, Supplier<CombatStrategy<Mob>>>builder().put(50, KingBlackDragonStrategy::new).put(6260, GeneralGraardorStrategy::new).put(6263, SergeantSteelwillStrategy::new).put(6261, SergeantStrongstackStrategy::new).put(6265, SergeantGrimspikeStrategy::new).put(6222, KreeArraStrategy::new).put(6227, FlightKilisaStrategy::new).put(6225, FlockleaderGeerinStrategy::new).put(6223, WingmanSkreeStrategy::new).put(1158, KalphiteQueenStrategy::new).put(2881, DagannothSupremeStrategy::new).put(2882, DagannothPrimeStrategy::new).put(2883, DagannothRexStrategy::new).put(8349, TormentedDemonStrategy::new).put(8350, TormentedDemonStrategy::new).put(8351, TormentedDemonStrategy::new).put(3340, GiantMoleStrategy::new).build());
+	
 	/**
 	 * A mapping which contains all the custom npcs by their id.
 	 */
-	public static final Int2ObjectArrayMap<Function<Position, Mob>> CUSTOM_MOBS = new Int2ObjectArrayMap<>(
-			ImmutableMap.<Integer, Function<Position, Mob>>builder()
-					.put(6260, s -> new GeneralGraardor())
-					.put(6222, s -> new KreeArra())
-					.put(1158, KalphiteQueen::new)
-					/*.put(13447, s -> new Nex())
-					.put(6247, s -> new CommanderZilyana())
-					.put(6260, s -> new GeneralGraardor())
-					.put(6222, s -> new KreeArra())
-					.put(9177, s -> new SkeletalHorror())
-					.put(8133, s -> new CorporealBeast())
-					.put(8549, Phoenix::new)
-					.put(3847, SeaTrollQueen::new)
-					.put(1158, KalphiteQueen::new)
-					.put(3340, GiantMole::new)
-					.put(14301, Glacor::new
-					)*/.build());
-
+	public static final Int2ObjectArrayMap<Function<Position, Mob>> CUSTOM_MOBS = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, Function<Position, Mob>>builder().put(6260, s -> new GeneralGraardor()).put(6222, s -> new KreeArra()).put(1158, KalphiteQueen::new)
+			/*.put(13447, s -> new Nex())
+			.put(6247, s -> new CommanderZilyana())
+			.put(6260, s -> new GeneralGraardor())
+			.put(6222, s -> new KreeArra())
+			.put(9177, s -> new SkeletalHorror())
+			.put(8133, s -> new CorporealBeast())
+			.put(8549, Phoenix::new)
+			.put(3847, SeaTrollQueen::new)
+			.put(1158, KalphiteQueen::new)
+			.put(3340, GiantMole::new)
+			.put(14301, Glacor::new
+			)*/.build());
+	
 	private CombatStrategy<Mob> strategy;
-
+	
 	/**
 	 * Gets a certain npc by the specified {@code id} and supplies it's position.
-	 * @param id  the id to get the npc by.
+	 * @param id the id to get the npc by.
 	 * @param pos the position to supply this npc to.
 	 * @return the npc.
 	 */
@@ -112,11 +91,11 @@ public abstract class Mob extends Actor {
 		final Mob mob = CUSTOM_MOBS.containsKey(id) ? CUSTOM_MOBS.get(id).apply(pos).create() : new DefaultMob(id, pos);
 		Combat<Mob> combat = mob.getCombat();
 		CombatListener<Mob> listener = CombatListenerDispatcher.NPC_LISTENERS.get(id);
-
-		if (listener != null) {
+		
+		if(listener != null) {
 			combat.addListener(listener);
 		}
-
+		
 		mob.strategy = STRATEGIES.getOrDefault(id, () -> loadStrategy(mob).orElse(NpcMeleeStrategy.get())).get();
 		return mob;
 	}
@@ -207,12 +186,10 @@ public abstract class Mob extends Actor {
 	 * The special amount of this npc, between 0 and 100. 101 sets it off.
 	 */
 	private OptionalInt special = OptionalInt.empty();
-
-
-
+	
 	/**
 	 * Creates a new {@link Mob}.
-	 * @param id       the identification for this NPC.
+	 * @param id the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
 	public Mob(int id, Position position) {
@@ -225,11 +202,11 @@ public abstract class Mob extends Actor {
 		getMovementCoordinator().setRadius(3);
 		Combat<Mob> combat = this.getCombat();
 		CombatListener<Mob> listener = CombatListenerDispatcher.NPC_LISTENERS.get(id);
-
-		if (listener != null) {
+		
+		if(listener != null) {
 			combat.addListener(listener);
 		}
-
+		
 		this.strategy = STRATEGIES.getOrDefault(id, () -> loadStrategy(this).orElse(NpcMeleeStrategy.get())).get();
 	}
 	
@@ -615,16 +592,16 @@ public abstract class Mob extends Actor {
 	@Override
 	public void appendBonus(int index, int bonus) {
 	}
-
+	
 	@Override
 	public CombatStrategy<Mob> getStrategy() {
 		return strategy;
 	}
-
+	
 	public void setStrategy(CombatStrategy<Mob> strategy) {
 		this.strategy = strategy;
 	}
-
+	
 	@Override
 	public int getSkillLevel(int skill) {
 		if(skill == Skills.ATTACK) {
@@ -640,6 +617,5 @@ public abstract class Mob extends Actor {
 		} else
 			return 0;
 	}
-
-
+	
 }

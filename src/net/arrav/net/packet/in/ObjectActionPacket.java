@@ -14,7 +14,7 @@ import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
 import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Boundary;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.*;
+import net.arrav.world.entity.object.*;
 
 import java.util.Optional;
 
@@ -63,8 +63,8 @@ public final class ObjectActionPacket implements IncomingPacket {
 	
 	/**
 	 * Handles object click for the {@code player}.
-	 * @param action  the action number.
-	 * @param player  the player to handle this for.
+	 * @param action the action number.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
 	private void click(int action, Player player, ByteBuf buf) {
@@ -163,7 +163,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the spell on object for the {@code player}.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
 	private void spellObject(Player player, ByteBuf buf) {

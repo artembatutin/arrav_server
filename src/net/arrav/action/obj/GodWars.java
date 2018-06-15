@@ -13,7 +13,7 @@ import net.arrav.world.entity.actor.move.ForcedMovementDirection;
 import net.arrav.world.entity.actor.move.ForcedMovementManager;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 public class GodWars extends ActionInitializer {
 	@Override

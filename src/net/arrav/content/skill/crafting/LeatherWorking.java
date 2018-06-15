@@ -36,7 +36,7 @@ public final class LeatherWorking extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link LeatherWorking}.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
+	 * @param data {@link #data}.
 	 * @param amount {@link #amount}.
 	 */
 	public LeatherWorking(Player player, LeatherData data, int amount) {
@@ -67,7 +67,7 @@ public final class LeatherWorking extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to register products from leather.
-	 * @param player   the player attempting to register the products.
+	 * @param player the player attempting to register the products.
 	 * @param buttonId the button the player has clicked.
 	 * @return {@code true} if the skill action was submitted, {@code false} otherwise.
 	 */
@@ -99,7 +99,7 @@ public final class LeatherWorking extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to open the leather working interface.
-	 * @param player   the player that attempted to open the interface.
+	 * @param player the player that attempted to open the interface.
 	 * @param itemUsed the item that was interacted with.
 	 * @return {@code true} if the interface was opened, {@code false} otherwise.
 	 */
@@ -253,11 +253,11 @@ public final class LeatherWorking extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link LeatherWorking}.
-		 * @param buttonId    {@link #buttonId}.
-		 * @param produced    {@link #produced}.
+		 * @param buttonId {@link #buttonId}.
+		 * @param produced {@link #produced}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
-		 * @param amount      {@link #amount}.
+		 * @param experience {@link #experience}.
+		 * @param amount {@link #amount}.
 		 */
 		LeatherData(int buttonId, int produced, int requirement, double experience, int amount) {
 			this.buttonId = buttonId;
@@ -270,8 +270,8 @@ public final class LeatherWorking extends ProducingSkillAction {
 		/**
 		 * Constructs a new {@link LeatherData}.
 		 * @param buttonId {@link #buttonId}.
-		 * @param data     the tanning data to construct a new one from.
-		 * @param amount   {@link #amount}.
+		 * @param data the tanning data to construct a new one from.
+		 * @param amount {@link #amount}.
 		 */
 		LeatherData(int buttonId, LeatherData data, int amount) {
 			this.buttonId = buttonId;

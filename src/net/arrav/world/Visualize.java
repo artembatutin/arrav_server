@@ -23,7 +23,7 @@ public final class Visualize {
 	/**
 	 * Constructs a new {@link Visualize}.
 	 * @param animation {@link #animation}.
-	 * @param graphic   {@link #graphic}.
+	 * @param graphic {@link #graphic}.
 	 */
 	public Visualize(Optional<Animation> animation, Optional<Graphic> graphic) {
 		this.animation = animation;
@@ -33,7 +33,7 @@ public final class Visualize {
 	/**
 	 * Constructs a new {@link Visualize}.
 	 * @param animation {@link #animation}.
-	 * @param graphic   {@link #graphic}.
+	 * @param graphic {@link #graphic}.
 	 */
 	public Visualize(Animation animation, Graphic graphic) {
 		this(Optional.of(animation), Optional.of(graphic));

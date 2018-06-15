@@ -52,8 +52,8 @@ public abstract class ExchangeSession {
 	/**
 	 * Constructs a new {@link ExchangeSession}.
 	 * @param players {@link #players}.
-	 * @param stage   {@link #stage}.
-	 * @param type    {@link #type}.
+	 * @param stage {@link #stage}.
+	 * @param type {@link #type}.
 	 */
 	public ExchangeSession(List<Player> players, int stage, ExchangeSessionType type) {
 		this.players.addAll(players);
@@ -65,8 +65,8 @@ public abstract class ExchangeSession {
 	/**
 	 * Checks if the item can be added to the container.
 	 * @param player the player who's attempting to add an item.
-	 * @param item   the item that was attempted to being added.
-	 * @param slot   the slot the item is being added from.
+	 * @param item the item that was attempted to being added.
+	 * @param slot the slot the item is being added from.
 	 * @return <true> if the item can, <false> otherwise.
 	 */
 	public abstract boolean canAddItem(Player player, Item item, int slot);
@@ -74,7 +74,7 @@ public abstract class ExchangeSession {
 	/**
 	 * Any functionality that should be dealth with when a player sends a request
 	 * should be handled in here.
-	 * @param player    the player who requested the exchange session.
+	 * @param player the player who requested the exchange session.
 	 * @param requested the player who was requested by the {@code player}.
 	 */
 	public abstract void onRequest(Player player, Player requested);
@@ -97,7 +97,7 @@ public abstract class ExchangeSession {
 	/**
 	 * Accepts the new {@code stage}.
 	 * @param player the player who accepted the stage.
-	 * @param stage  the possible stages.
+	 * @param stage the possible stages.
 	 */
 	public abstract void accept(Player player, int stage);
 	
@@ -119,7 +119,7 @@ public abstract class ExchangeSession {
 	/**
 	 * Attempts to add an item to the container.
 	 * @param player the player we're adding this item for.
-	 * @param slot   the inventory slot being added onto it.
+	 * @param slot the inventory slot being added onto it.
 	 * @param amount the amount being added.
 	 * @return <true> if the item was added, <false> otherwise.
 	 */
@@ -171,7 +171,7 @@ public abstract class ExchangeSession {
 	/**
 	 * Attempts to remove an item from the container.
 	 * @param player the player we're removing this item for.
-	 * @param item   the item being removed.
+	 * @param item the item being removed.
 	 * @return <true> if the item was removed, <false> otherwise.
 	 */
 	public final boolean remove(Player player, Item item) {

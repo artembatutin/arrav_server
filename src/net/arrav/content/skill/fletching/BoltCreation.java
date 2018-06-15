@@ -35,7 +35,7 @@ public final class BoltCreation extends ProducingSkillAction {
 	/**
 	 * Attempts to start this skill action.
 	 * @param player the player attempting to start the skill action.
-	 * @param used   the item used on the usedOn.
+	 * @param used the item used on the usedOn.
 	 * @param usedOn the item that was used by the used.
 	 * @return {@code true} if the skill action submitted, {@code false} otherwise.
 	 */
@@ -182,11 +182,11 @@ public final class BoltCreation extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link BoltData}.
-		 * @param unfinished  {@link #unfinished}.
-		 * @param required    {@link #required}.
-		 * @param product     {@link #product}.
+		 * @param unfinished {@link #unfinished}.
+		 * @param required {@link #required}.
+		 * @param product {@link #product}.
 		 * @param requirement {@link #required}.
-		 * @param experience  {@link #experience}.
+		 * @param experience {@link #experience}.
 		 */
 		BoltData(int unfinished, int required, int product, int requirement, double experience) {
 			this.unfinished = new Item(unfinished);

@@ -15,7 +15,7 @@ public final class Utility {
 	
 	/**
 	 * Formats a double value to the given decimals.
-	 * @param value  the value to format.
+	 * @param value the value to format.
 	 * @param places the amount of decimals to format.
 	 * @return the value which has been formatted.
 	 */
@@ -83,16 +83,20 @@ public final class Utility {
 	}
 	
 	public static boolean inside(Position source, int sourceWidth, int sourceLength, Position target, int targetWidth, int targetLength) {
-		if (sourceWidth <= 0) sourceWidth = 1;
-		if (sourceLength <= 0) sourceLength = 1;
-		if (targetWidth <= 0) targetWidth = 1;
-		if (targetLength <= 0) targetLength = 1;
+		if(sourceWidth <= 0)
+			sourceWidth = 1;
+		if(sourceLength <= 0)
+			sourceLength = 1;
+		if(targetWidth <= 0)
+			targetWidth = 1;
+		if(targetLength <= 0)
+			targetLength = 1;
 		Position sourceTopRight = source.move(sourceWidth - 1, sourceLength - 1, 0);
 		Position targetTopRight = target.move(targetWidth - 1, targetLength - 1, 0);
-		if (source.equals(target) || sourceTopRight.equals(targetTopRight)) {
+		if(source.equals(target) || sourceTopRight.equals(targetTopRight)) {
 			return true;
 		}
-		if (source.getX() > targetTopRight.getX() || sourceTopRight.getX() < target.getX()) {
+		if(source.getX() > targetTopRight.getX() || sourceTopRight.getX() < target.getX()) {
 			return false;
 		}
 		return source.getY() <= targetTopRight.getY() && sourceTopRight.getY() >= target.getY();

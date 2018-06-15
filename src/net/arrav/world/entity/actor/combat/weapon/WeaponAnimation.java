@@ -42,10 +42,10 @@ public final class WeaponAnimation {
 	
 	/**
 	 * Creates a new {@link WeaponAnimation}.
-	 * @param standing  the standing animation for this weapon.
-	 * @param walking   the walking animation for this weapon.
-	 * @param running   the running animation for this weapon.
-	 * @param blocking  the blocking animation for this weapon.
+	 * @param standing the standing animation for this weapon.
+	 * @param walking the walking animation for this weapon.
+	 * @param running the running animation for this weapon.
+	 * @param blocking the blocking animation for this weapon.
 	 * @param attacking the attacking animation for this weapon.
 	 */
 	public WeaponAnimation(int standing, int walking, int running, int blocking, int[] attacking) {
@@ -70,7 +70,7 @@ public final class WeaponAnimation {
 	 * The method executed when weapon {@code item} is equipped that assigns a
 	 * weapon animation to {@code player}.
 	 * @param player the player equipping the item.
-	 * @param item   the item the player is equipping.
+	 * @param item the item the player is equipping.
 	 */
 	public static void execute(Player player, Item item) {
 		WeaponAnimation animation = item == null ? ANIMATIONS.get(0) : ANIMATIONS.get(item.getId());

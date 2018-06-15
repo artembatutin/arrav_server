@@ -14,7 +14,7 @@ public final class PotionDecanting {
 	 * Holds support for manually decanting, this is done by mixing two potions of
 	 * the same kind together.
 	 * @param player the player who's decanting.
-	 * @param used   the item that was used.
+	 * @param used the item that was used.
 	 * @param usedOn the item the first item was used on.
 	 * @return {@code true} if any items were decanted, {@code false} otherwise.
 	 */

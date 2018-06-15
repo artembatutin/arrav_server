@@ -6,9 +6,9 @@ import net.arrav.world.entity.actor.player.Player;
 
 public class HawkEyeListener extends SimplifiedListener<Player> {
 
-    @Override
-    public int modifyRangedLevel(Player attacker, Actor defender, int level) {
-        return level * 11 / 10;
-    }
+	@Override
+	public int modifyRangedLevel(Player attacker, Actor defender, int level) {
+		return level * 11 / 10;
+	}
 
 }

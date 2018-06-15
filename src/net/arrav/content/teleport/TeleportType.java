@@ -57,12 +57,12 @@ public enum TeleportType {
 	
 	/**
 	 * Constructs a new {@link TeleportType}.
-	 * @param startDelay     {@link #startDelay}.
-	 * @param endDelay       {@link #endDelay}.
+	 * @param startDelay {@link #startDelay}.
+	 * @param endDelay {@link #endDelay}.
 	 * @param startAnimation {@link #startAnimation}.
-	 * @param endAnimation   {@link #endAnimation}.
-	 * @param startGraphic   {@link #startGraphic}.
-	 * @param endGraphic     {@link #endGraphic}.
+	 * @param endAnimation {@link #endAnimation}.
+	 * @param startGraphic {@link #startGraphic}.
+	 * @param endGraphic {@link #endGraphic}.
 	 */
 	TeleportType(int startDelay, int endDelay, Optional<Animation> startAnimation, Optional<Animation> endAnimation, Optional<Graphic> startGraphic, Optional<Graphic> endGraphic) {
 		this.startDelay = startDelay;

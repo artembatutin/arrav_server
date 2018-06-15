@@ -6,9 +6,9 @@ import net.arrav.world.entity.actor.player.Player;
 
 public class ClarityOfThoughtListener extends SimplifiedListener<Player> {
 
-    @Override
-    public int modifyAttackLevel(Player attacker, Actor defender, int damage) {
-        return damage * 21 / 20;
-    }
+	@Override
+	public int modifyAttackLevel(Player attacker, Actor defender, int damage) {
+		return damage * 21 / 20;
+	}
 
 }

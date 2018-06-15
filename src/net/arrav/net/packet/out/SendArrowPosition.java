@@ -12,22 +12,22 @@ public final class SendArrowPosition implements OutgoingPacket {
 	
 	/**
 	 * The message that sends a hint arrow on a position.
-	 * @param position  the position to send the arrow on.
+	 * @param position the position to send the arrow on.
 	 * @param direction the direction on the position to send the arrow on. The
-	 *                  possible directions to put the arrow on are as follows:
-	 *                  <p>
-	 *                  <p>
-	 *                  Middle: 2
-	 *                  <p>
-	 *                  West: 3
-	 *                  <p>
-	 *                  East: 4
-	 *                  <p>
-	 *                  South: 5
-	 *                  <p>
-	 *                  North: 6
-	 *                  <p>
-	 *                  <p>
+	 * possible directions to put the arrow on are as follows:
+	 * <p>
+	 * <p>
+	 * Middle: 2
+	 * <p>
+	 * West: 3
+	 * <p>
+	 * East: 4
+	 * <p>
+	 * South: 5
+	 * <p>
+	 * North: 6
+	 * <p>
+	 * <p>
 	 */
 	public SendArrowPosition(Position position, int direction) {
 		this.position = position;

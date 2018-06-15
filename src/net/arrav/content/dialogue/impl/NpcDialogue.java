@@ -26,9 +26,9 @@ public final class NpcDialogue extends Dialogue {
 	
 	/**
 	 * Creates a new {@link NpcDialogue}.
-	 * @param npc        the identifier for the NPC sending this dialogue.
+	 * @param npc the identifier for the NPC sending this dialogue.
 	 * @param expression the expression that this NPC will display.
-	 * @param text       the text that will be displayed on the dialogue.
+	 * @param text the text that will be displayed on the dialogue.
 	 */
 	public NpcDialogue(int npc, Expression expression, String... text) {
 		super(text);
@@ -38,7 +38,7 @@ public final class NpcDialogue extends Dialogue {
 	
 	/**
 	 * Creates a new {@link NpcDialogue} with the default expression.
-	 * @param npc  the identifier for the NPC sending this dialogue.
+	 * @param npc the identifier for the NPC sending this dialogue.
 	 * @param text the text that will be displayed on the dialogue.
 	 */
 	public NpcDialogue(int npc, String... text) {

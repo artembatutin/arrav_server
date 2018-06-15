@@ -90,7 +90,7 @@ public enum Achievement {
 	/**
 	 * Constructs a new <code>Achievement<code>.
 	 * @param amount The amount required to complete the achievement.
-	 * @param task   The achievement task string.
+	 * @param task The achievement task string.
 	 */
 	Achievement(String task, int... amount) {
 		this.amount = amount;

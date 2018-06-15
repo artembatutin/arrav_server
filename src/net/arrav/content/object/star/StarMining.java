@@ -50,7 +50,7 @@ public final class StarMining extends HarvestingSkillAction {
 	/**
 	 * Constructs a new {@link StarMining}.
 	 * @param player {@link #player}.
-	 * @param star   the star rock.
+	 * @param star the star rock.
 	 */
 	public StarMining(Player player, ShootingStar star) {
 		super(player, Optional.of(star.getPosition()));
@@ -61,7 +61,7 @@ public final class StarMining extends HarvestingSkillAction {
 	/**
 	 * Starts the skill action for the mining skill.
 	 * @param player the player we are starting the action for.
-	 * @param star   the star that we're mining.
+	 * @param star the star that we're mining.
 	 * @return <true> if the skill action started, <false> otherwise.
 	 */
 	public static boolean mine(Player player, ShootingStar star) {

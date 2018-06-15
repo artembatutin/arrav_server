@@ -59,7 +59,7 @@ public final class CombatPoisonEffect extends CombatEffect {
 	
 	@Override
 	public void process(Actor t) {
-		if (t.getPoisonDamage().get() <= 0) {
+		if(t.getPoisonDamage().get() <= 0) {
 			if(t.isPlayer()) {
 				t.toPlayer().out(new SendConfig(174, 0));
 			}
@@ -68,16 +68,16 @@ public final class CombatPoisonEffect extends CombatEffect {
 		}
 		t.damage(new Hit(t.getPoisonDamage().get() * 10, Hitsplat.POISON, HitIcon.NONE));
 		t.getPoisonDamage().decrementAndGet();
-//		amount--;
-//		t.damage(new Hit(t.getPoisonDamage().get() * 10, Hitsplat.POISON, HitIcon.NONE));
-//		if(amount == 0) {
-//			amount = 4;
-//			int val = t.getPoisonDamage().decrementAndGet();
-//
-//			if(val < 1) {
-//				t.getPoisonDamage().set(0);//clear poison.
-//			}
-//		}
+		//		amount--;
+		//		t.damage(new Hit(t.getPoisonDamage().get() * 10, Hitsplat.POISON, HitIcon.NONE));
+		//		if(amount == 0) {
+		//			amount = 4;
+		//			int val = t.getPoisonDamage().decrementAndGet();
+		//
+		//			if(val < 1) {
+		//				t.getPoisonDamage().set(0);//clear poison.
+		//			}
+		//		}
 	}
 	
 	@Override

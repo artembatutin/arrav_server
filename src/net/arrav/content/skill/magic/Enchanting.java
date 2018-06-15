@@ -46,10 +46,10 @@ public final class Enchanting extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link Enchanting}.
-	 * @param player     {@link #getPlayer()}.
+	 * @param player {@link #getPlayer()}.
 	 * @param definition {@link #definition}.
-	 * @param item       {@link #item}.
-	 * @param slot       {@link #slot}.
+	 * @param item {@link #item}.
+	 * @param slot {@link #slot}.
 	 */
 	public Enchanting(Player player, Item item, EnchantingData definition, int slot) {
 		super(player, Optional.empty());
@@ -60,9 +60,9 @@ public final class Enchanting extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to execute the skill action for the specified {@code player}.
-	 * @param player  {@link #getPlayer()}.
-	 * @param item    {@link #item}.
-	 * @param slot    {@link #slot}.
+	 * @param player {@link #getPlayer()}.
+	 * @param item {@link #item}.
+	 * @param slot {@link #slot}.
 	 * @param spellId {@link EnchantingData#spellId}.
 	 * @return <true> if the skill action was executed, <false> otherwise.
 	 */
@@ -361,13 +361,13 @@ public final class Enchanting extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link EnchantingData}.
-		 * @param spellId     {@link #spellId}.
+		 * @param spellId {@link #spellId}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
-		 * @param produced    {@link #produced}.
-		 * @param removed     {@link #removed}.
-		 * @param animation   {@link #animation}.
-		 * @param graphic     {@link #graphic}.
+		 * @param experience {@link #experience}.
+		 * @param produced {@link #produced}.
+		 * @param removed {@link #removed}.
+		 * @param animation {@link #animation}.
+		 * @param graphic {@link #graphic}.
 		 */
 		EnchantingData(int spellId, int requirement, double experience, Item[] produced, Item[] removed, Optional<Animation> animation, Optional<Graphic> graphic) {
 			this.spellId = spellId;
@@ -381,13 +381,13 @@ public final class Enchanting extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link EnchantingData}.
-		 * @param spellId     {@link #spellId}.
+		 * @param spellId {@link #spellId}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
-		 * @param produced    {@link #produced}.
-		 * @param removed     {@link #removed}.
-		 * @param animation   {@link #animation}.
-		 * @param graphic     {@link #graphic}.
+		 * @param experience {@link #experience}.
+		 * @param produced {@link #produced}.
+		 * @param removed {@link #removed}.
+		 * @param animation {@link #animation}.
+		 * @param graphic {@link #graphic}.
 		 */
 		EnchantingData(int spellId, int requirement, double experience, Item[] produced, Item[] removed, Animation animation, Graphic graphic) {
 			this.spellId = spellId;
@@ -401,13 +401,13 @@ public final class Enchanting extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link EnchantingData}.
-		 * @param spellId     {@link #spellId}.
+		 * @param spellId {@link #spellId}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
-		 * @param produced    {@link #produced}.
-		 * @param removed     {@link #removed}.
-		 * @param animation   {@link #animation}.
-		 * @param graphic     {@link #graphic}.
+		 * @param experience {@link #experience}.
+		 * @param produced {@link #produced}.
+		 * @param removed {@link #removed}.
+		 * @param animation {@link #animation}.
+		 * @param graphic {@link #graphic}.
 		 */
 		EnchantingData(int spellId, int requirement, double experience, Item[] produced, Item[] removed, int animation, int graphic) {
 			this.spellId = spellId;
@@ -422,7 +422,7 @@ public final class Enchanting extends ProducingSkillAction {
 		/**
 		 * Checks if this spell can be casted.
 		 * @param player the player to check for.
-		 * @param item   the item that this spell was used on.
+		 * @param item the item that this spell was used on.
 		 * @return <true> if the player can, <false> otherwise.
 		 */
 		public boolean canCast(Player player, Item item) {
@@ -432,11 +432,11 @@ public final class Enchanting extends ProducingSkillAction {
 		/**
 		 * Any extra functionality that should be handled when this spell is casted.
 		 * @param player the player to execute the functionality for.
-		 * @param item   the item that this spell was used on.
-		 * @param slot   the slot that this item is in.
+		 * @param item the item that this spell was used on.
+		 * @param slot the slot that this item is in.
 		 */
 		public void onCast(Player player, Item item, int slot) {
-		
+
 		}
 		
 		/**

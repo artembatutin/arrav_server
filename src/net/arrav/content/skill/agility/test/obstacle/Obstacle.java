@@ -64,15 +64,15 @@ public abstract class Obstacle {
 	}
 	
 	public void initialize(Player player) {
-	
+
 	}
 	
 	public void execute(Player player, Task t) {
-	
+
 	}
 	
 	public void onStop(Player player) {
-	
+
 	}
 	
 }

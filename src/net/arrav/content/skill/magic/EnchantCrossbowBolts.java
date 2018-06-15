@@ -39,7 +39,7 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to enchant our bolts.
-	 * @param player   {@link #getPlayer()}.
+	 * @param player {@link #getPlayer()}.
 	 * @param buttonId the button clicked.
 	 * @return {@code true} if any of our bolts are enchanted, {@code false} otherwise.
 	 */
@@ -55,7 +55,7 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to open the enchant crossbow bolts interface.
-	 * @param player   {@link #getPlayer()}.
+	 * @param player {@link #getPlayer()}.
 	 * @param buttonId the button the player clicked.
 	 * @return {@code true} if the interface was opened, {@code false} otherwise.
 	 */
@@ -212,10 +212,10 @@ public final class EnchantCrossbowBolts extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link BoltData}.
-		 * @param buttonId   {@link #buttonId}
-		 * @param required   {@link #required}.
-		 * @param produced   {@link #produced}.
-		 * @param level      {@link #level}.
+		 * @param buttonId {@link #buttonId}
+		 * @param required {@link #required}.
+		 * @param produced {@link #produced}.
+		 * @param level {@link #level}.
 		 * @param experience {@link #experience}.
 		 */
 		private BoltData(int buttonId, Item[] required, int produced, int level, double experience) {

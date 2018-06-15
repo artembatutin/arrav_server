@@ -3,10 +3,8 @@ package net.arrav.action.but;
 import net.arrav.action.ActionInitializer;
 import net.arrav.action.impl.ButtonAction;
 import net.arrav.content.minigame.MinigameHandler;
-import net.arrav.content.teleport.TeleportType;
 import net.arrav.net.packet.out.SendConfig;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.locale.Position;
 
 public class CombatSpecialButton extends ActionInitializer {
 	
@@ -26,7 +24,7 @@ public class CombatSpecialButton extends ActionInitializer {
 					player.out(new SendConfig(301, 0));
 					player.setSpecialActivated(false);
 				} else {
-					if (player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
+					if(player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
 						player.message("You do not have enough special energy left!");
 						return true;
 					}

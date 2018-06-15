@@ -36,7 +36,7 @@ public abstract class SequencedMinigame extends Minigame {
 	/**
 	 * Creates a new {@link SequencedMinigame}.
 	 * @param minigame {@link #getMinigame()}.
-	 * @param safety   {@link #getSafety()}.
+	 * @param safety {@link #getSafety()}.
 	 */
 	public SequencedMinigame(String minigame, MinigameSafety safety) {
 		super(minigame, safety, MinigameType.SEQUENCED);

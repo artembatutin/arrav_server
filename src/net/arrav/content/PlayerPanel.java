@@ -300,8 +300,8 @@ public enum PlayerPanel {
 	
 	/**
 	 * Refreshes the tab asset for a specified player
-	 * @param player    the player we're refreshing this {@code enumerator} for.
-	 * @param text      the new string to set.
+	 * @param player the player we're refreshing this {@code enumerator} for.
+	 * @param text the new string to set.
 	 * @param skipCheck The condition if we should skip the check.
 	 */
 	public void refresh(Player player, String text, boolean skipCheck) {
@@ -311,7 +311,7 @@ public enum PlayerPanel {
 	/**
 	 * Refreshes the tab asset for a specified player
 	 * @param player the player we're refreshing this {@code enumerator} for.
-	 * @param text   the new string to set.
+	 * @param text the new string to set.
 	 */
 	public void refresh(Player player, String text) {
 		player.text(16026 + ordinal(), text, false);

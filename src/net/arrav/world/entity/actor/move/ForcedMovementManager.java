@@ -53,7 +53,7 @@ public final class ForcedMovementManager {
 	/**
 	 * Submits the forced movement to the world.
 	 * @param character the character doing the forced movement.
-	 * @param movement  the movement to submit.
+	 * @param movement the movement to submit.
 	 */
 	public static void submit(Actor character, ForcedMovement movement) {
 		if(prerequisites(character)) {
@@ -65,8 +65,8 @@ public final class ForcedMovementManager {
 	
 	/**
 	 * Submits the forced movement to the world.
-	 * @param character         the character doing the forced movement.
-	 * @param movement          the movement to submit.
+	 * @param character the character doing the forced movement.
+	 * @param movement the movement to submit.
 	 * @param skipPrerequisites flag to skip  prerequisites.
 	 */
 	public static void submit(Actor character, ForcedMovement movement, boolean skipPrerequisites) {

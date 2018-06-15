@@ -12,8 +12,8 @@ import net.arrav.util.TextUtils;
 import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.object.DynamicObject;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.DynamicObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 

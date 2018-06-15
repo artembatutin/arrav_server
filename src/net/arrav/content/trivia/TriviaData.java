@@ -40,32 +40,32 @@ public enum TriviaData {
 	_31("How many levels you need to go on second floor mansion?", "2000", "two thousands"),
 	_32("If you want a new monster drop, where can you suggest a drop?", "monster database", "monster panel", "monster db"),
 	_33("Who has the shop with the ingredients to dye your whip/darkbow?", "slayer master", "spria");
-
+	
 	/**
 	 * Caches our enum values.
 	 */
 	public static final TriviaData[] VALUES = values();
-
+	
 	/**
 	 * The question for this trivia.
 	 */
 	public final String question;
-
+	
 	/**
 	 * The possible answers for this trivia
 	 */
 	public final String[] answers;
-
+	
 	/**
 	 * Constructs a new {@link TriviaData}.
 	 * @param question {@link #question}.
-	 * @param answers  {@link #answers}.
+	 * @param answers {@link #answers}.
 	 */
 	TriviaData(String question, String... answers) {
 		this.question = question;
 		this.answers = answers;
 	}
-
+	
 	/**
 	 * Gets a random question.
 	 * @return a random question.

@@ -145,10 +145,10 @@ public final class Herb extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link GrimyHerb} enum.
-		 * @param level      {@link #level}.
-		 * @param grimy      {@link #grimy}.
-		 * @param clean      {@link #clean}.
-		 * @param level      {@link #level}.
+		 * @param level {@link #level}.
+		 * @param grimy {@link #grimy}.
+		 * @param clean {@link #clean}.
+		 * @param level {@link #level}.
 		 * @param experience {@link #experience}.
 		 */
 		GrimyHerb(int level, int grimy, int clean, double experience) {

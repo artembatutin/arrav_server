@@ -6,8 +6,5 @@ package net.arrav.content.skill.agility;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum AgilityCourseType {
-	GNOME_AGILITY,
-	BARBARIAN_AGILITY,
-	WILDERNESS_AGILITY,
-	SHORTCUTS
+	GNOME_AGILITY, BARBARIAN_AGILITY, WILDERNESS_AGILITY, SHORTCUTS
 }

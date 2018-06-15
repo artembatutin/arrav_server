@@ -11,7 +11,7 @@ import net.arrav.world.entity.actor.combat.CombatType;
 import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 

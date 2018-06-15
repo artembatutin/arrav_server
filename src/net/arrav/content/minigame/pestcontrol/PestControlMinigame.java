@@ -23,7 +23,7 @@ import net.arrav.world.entity.actor.player.assets.Rights;
 import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -87,7 +87,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	
 	@Override
 	public void enter(Player player) {
-	
+
 	}
 	
 	@Override
@@ -132,8 +132,7 @@ public final class PestControlMinigame extends SequencedMinigame {
 	@Override
 	public boolean canTeleport(Player player, Position position) {
 		//ladders.
-		return position.same(new Position(2645, 2601)) || position.same(new Position(2643, 2601)) || position.same(new Position(2668, 2601)) || position.same(new Position(2670, 2601)) || position.same(new Position(2647, 2585)) || position.same(new Position(2647, 2587)) || position
-				.same(new Position(2666, 2585)) || position.same(new Position(2666, 2587));
+		return position.same(new Position(2645, 2601)) || position.same(new Position(2643, 2601)) || position.same(new Position(2668, 2601)) || position.same(new Position(2670, 2601)) || position.same(new Position(2647, 2585)) || position.same(new Position(2647, 2587)) || position.same(new Position(2666, 2585)) || position.same(new Position(2666, 2587));
 	}
 	
 	@Override

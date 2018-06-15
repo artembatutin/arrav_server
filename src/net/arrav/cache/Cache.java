@@ -9,25 +9,25 @@ import java.nio.MappedByteBuffer;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Cache {
-
+	
 	/**
 	 * Represents the size of a index file.
 	 * Calculating the total size of a index file. the total size may be that of a {@code long}.
 	 */
 	public static final int INDEX_SIZE = 6;
-
+	
 	/**
 	 * Represents the size of a sector header.
 	 * Calculating the total size of the sector header. the total size may be that of a {@code long}.
 	 */
 	public static final int SECTOR_HEADER_SIZE = 8;
-
+	
 	/**
 	 * Represents the size of a sector header.
 	 * Calculating the total size of the sector header. the total size may be that of a {@code long}
 	 */
 	private static final int SECTOR_SIZE = 520;
-
+	
 	/**
 	 * Byte buffer array.
 	 * <p>
@@ -36,30 +36,30 @@ public final class Cache {
 	 * </p>
 	 */
 	private static final byte[] buffer = new byte[SECTOR_SIZE];
-
+	
 	/**
 	 * A byte channel that contains a series of variable-length bytes which
 	 * represent a sector.
 	 */
 	private final MappedByteBuffer dataChannel;
-
+	
 	/**
 	 * A byte channel that contains a series of variable-length bytes which
 	 * represent a index.
 	 */
 	private final MappedByteBuffer indexChannel;
-
+	
 	/**
 	 * Represents the id of this {@link Cache}.
 	 */
 	private final int index;
-
+	
 	/**
 	 * Constructs a new {@link Cache} with the specified sector and index
 	 * channels and id.
 	 * @param dataChannel The cache sectors byte channel.
-	 * @param indexChannel  The cache sectors index channel.
-	 * @param index            This caches index.
+	 * @param indexChannel The cache sectors index channel.
+	 * @param index This caches index.
 	 */
 	Cache(MappedByteBuffer dataChannel, MappedByteBuffer indexChannel, int index) {
 		this.dataChannel = dataChannel;
@@ -124,5 +124,5 @@ public final class Cache {
 		}
 		return ByteBuffer.wrap(fileBuffer);
 	}
-
+	
 }

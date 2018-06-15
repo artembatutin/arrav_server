@@ -10,7 +10,7 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Position;
 import net.arrav.world.locale.loc.SquareLocation;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.EnumSet;
 

@@ -72,7 +72,7 @@ public final class MobDeath extends ActorDeath<Mob> {
 	@Override
 	public void postDeath() {
 		try {
-			if (getActor().isRespawn()) {
+			if(getActor().isRespawn()) {
 				World.get().submit(new Task(getActor().getDefinition().getRespawnTime(), false) {
 					@Override
 					public void execute() {

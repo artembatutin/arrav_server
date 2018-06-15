@@ -6,7 +6,7 @@ import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.move.ForcedMovement;
 import net.arrav.world.entity.actor.move.ForcedMovementManager;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 public class EdgevilleDitch extends ActionInitializer {
 	@Override

@@ -28,7 +28,7 @@ public abstract class DestructionSkillAction extends SkillAction {
 	
 	/**
 	 * Creates a new {@link DestructionSkillAction}.
-	 * @param player   the player this skill action is for.
+	 * @param player the player this skill action is for.
 	 * @param position the position the player should face.
 	 */
 	public DestructionSkillAction(Player player, Optional<Position> position) {
@@ -63,11 +63,11 @@ public abstract class DestructionSkillAction extends SkillAction {
 	
 	/**
 	 * The method executed upon destruction of the item.
-	 * @param t       the task executing this method.
+	 * @param t the task executing this method.
 	 * @param success determines if the destruction was successful or not.
 	 */
 	public void onDestruct(Task t, boolean success) {
-	
+
 	}
 	
 	/**

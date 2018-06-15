@@ -32,7 +32,7 @@ public final class AreaManager {
 	/**
 	 * Checks if the specified {@code entity} is in the area specified {@code area}.
 	 * @param entity the entity to check for.
-	 * @param area   the area to check the entity for.
+	 * @param area the area to check the entity for.
 	 * @return <true> if the entity is, <false> otherwise.
 	 */
 	public boolean inArea(Entity entity, String area) {
@@ -41,7 +41,7 @@ public final class AreaManager {
 	
 	/**
 	 * Checks if the specified {@code node} is in the area specified {@code area}.
-	 * @param pos  the position to check for.
+	 * @param pos the position to check for.
 	 * @param area the area to check the node for.
 	 * @return <true> if the node is, <false> otherwise.
 	 */

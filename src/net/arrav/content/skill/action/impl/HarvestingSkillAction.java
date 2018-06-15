@@ -38,7 +38,7 @@ public abstract class HarvestingSkillAction extends SkillAction {
 	
 	/**
 	 * Creates a new {@link HarvestingSkillAction}.
-	 * @param player   the player this skill action is for.
+	 * @param player the player this skill action is for.
 	 * @param position the position the player should face.
 	 */
 	public HarvestingSkillAction(Player player, Optional<Position> position) {
@@ -98,12 +98,12 @@ public abstract class HarvestingSkillAction extends SkillAction {
 	
 	/**
 	 * The method executed upon harvest of the items.
-	 * @param t       the task executing this method.
-	 * @param items   the items being harvested.
+	 * @param t the task executing this method.
+	 * @param items the items being harvested.
 	 * @param success determines if the harvest was successful or not.
 	 */
 	public void onHarvest(Task t, Item[] items, boolean success) {
-	
+
 	}
 	
 	/**

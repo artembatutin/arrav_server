@@ -79,7 +79,7 @@ public abstract class Location {
 	/**
 	 * Determines if the specified position is in <b>any</b> of the specified
 	 * locations.
-	 * @param position  the position to determine if in the locations.
+	 * @param position the position to determine if in the locations.
 	 * @param locations the locations to determine if in this position.
 	 * @return {@code true} if the position is in any of these locations,
 	 * {@code false} otherwise.

@@ -1,6 +1,7 @@
 package net.arrav.world.entity.actor.combat.magic.lunars.spell.impl;
 
 import net.arrav.content.dialogue.impl.OptionDialogue;
+import net.arrav.content.skill.magic.Spellbook;
 import net.arrav.task.LinkedTaskSequence;
 import net.arrav.task.Task;
 import net.arrav.world.Animation;
@@ -11,7 +12,6 @@ import net.arrav.world.entity.actor.combat.magic.MagicRune;
 import net.arrav.world.entity.actor.combat.magic.RequiredRune;
 import net.arrav.world.entity.actor.combat.magic.lunars.LunarSpell;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.content.skill.magic.Spellbook;
 
 import java.util.Optional;
 
@@ -97,7 +97,7 @@ public final class SpellbookSwap extends LunarSpell {
 		
 		/**
 		 * Constructs a new {@link SpellbookSwapTask}.
-		 * @param player    {@link #player}.
+		 * @param player {@link #player}.
 		 * @param spellbook {@link #spellbook}.
 		 */
 		public SpellbookSwapTask(Player player, Spellbook spellbook) {

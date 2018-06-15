@@ -71,9 +71,7 @@ public final class Bank {
 		}
 		shiftAll();
 		player.resetingPin = false;
-		if((player.bankPin.length() < 4 && setPin)
-				|| (player.bankPin.length() >= 4 && ! player.bankPin
-				.equals(player.enterPin))) {
+		if((player.bankPin.length() < 4 && setPin) || (player.bankPin.length() >= 4 && !player.bankPin.equals(player.enterPin))) {
 			BankPin.loadUpPinInterface(player);
 			return;
 		}
@@ -135,7 +133,7 @@ public final class Bank {
 	 * used for when a player is manually withdrawing an item using the banking tab
 	 * interface.
 	 * @param bankSlot the slot from the player's banking tab.
-	 * @param amount   the amount of the item being withdrawn.
+	 * @param amount the amount of the item being withdrawn.
 	 * @return {@code true} if the item was withdrawn, {@code false} otherwise.
 	 */
 	public boolean withdraw(Player player, int tab, int bankSlot, int amount) {
@@ -152,8 +150,8 @@ public final class Bank {
 	
 	/**
 	 * Handles the item tab switching in the bank.
-	 * @param tab     the tab being grabbed from.
-	 * @param slot    the slot of the item grabbed.
+	 * @param tab the tab being grabbed from.
+	 * @param slot the slot of the item grabbed.
 	 * @param nextTab the tab moving to.
 	 */
 	public boolean tabTransfer(int tab, int slot, int nextTab) {
@@ -175,8 +173,8 @@ public final class Bank {
 	 * Transfers the item in {@code slot} to {@code newSlot}. If an item already
 	 * exists in the new slot, the items in this container will be shifted to
 	 * accommodate for the transfer.
-	 * @param tab     the selected tab sent by the client.
-	 * @param slot    the slot of the item to transfer.
+	 * @param tab the selected tab sent by the client.
+	 * @param slot the slot of the item to transfer.
 	 * @param newSlot the slot to transfer the item to.
 	 * @return {@code true} if the transfer was successful, {@code false}
 	 * otherwise.
@@ -187,8 +185,8 @@ public final class Bank {
 	
 	/**
 	 * Swaps the positions of two items in this container.
-	 * @param tab       the selected tab sent by the client.
-	 * @param slot      the slot of the first item to swap.
+	 * @param tab the selected tab sent by the client.
+	 * @param slot the slot of the first item to swap.
 	 * @param otherSlot the slot of the second item to swap.
 	 */
 	public void swap(int tab, int slot, int otherSlot) {
@@ -198,9 +196,9 @@ public final class Bank {
 	/**
 	 * Deposits an item to this bank that currently exists in a specified {@link ItemContainer}.
 	 * This is used for when a player is manually depositing an item using the banking tab interface.
-	 * @param slot    the slot from the specified {@link ItemContainer}.
-	 * @param amount  the amount of the item being deposited.
-	 * @param from    The container we are withdrawing from.
+	 * @param slot the slot from the specified {@link ItemContainer}.
+	 * @param amount the amount of the item being deposited.
+	 * @param from The container we are withdrawing from.
 	 * @param refresh The flag to determine if we refresh the container.
 	 * @return {@code true} if the item was deposited, {@code false} otherwise.
 	 */
@@ -301,9 +299,9 @@ public final class Bank {
 	/**
 	 * Sets the container of items to {@code items}. The container will not hold
 	 * any references to the array, nor the item instances in the array.
-	 * @param i     the index of the tab to be selected.
+	 * @param i the index of the tab to be selected.
 	 * @param items the new array of items, the capacities of this must be equal
-	 *              to or lesser than the container.
+	 * to or lesser than the container.
 	 */
 	public final void setItems(int i, Item[] items) {
 		tabs[i].fillItems(items);
@@ -313,7 +311,7 @@ public final class Bank {
 	 * Sets the container of items to {@code items}. The container will not hold
 	 * any references to the array, nor the item instances in the array.
 	 * @param items the new array of items, the capacities of this must be equal
-	 *              to or lesser than the container.
+	 * to or lesser than the container.
 	 */
 	public final void setItems(Item[] items) {
 		tabs[getSelectedTab()].fillItems(items);

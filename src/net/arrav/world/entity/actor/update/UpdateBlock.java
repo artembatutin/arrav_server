@@ -59,8 +59,8 @@ public abstract class UpdateBlock<E extends Actor> {
 	/**
 	 * Writes the data for this update block into {@code buf}.
 	 * @param player The player for whom we are updating.
-	 * @param mob    The {@link Actor} this update block is being written for.
-	 * @param buf    The buffer to write the data to.
+	 * @param mob The {@link Actor} this update block is being written for.
+	 * @param buf The buffer to write the data to.
 	 */
 	public abstract int write(Player player, E mob, ByteBuf buf);
 	

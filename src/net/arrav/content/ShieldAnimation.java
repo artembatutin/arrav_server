@@ -44,7 +44,7 @@ public final class ShieldAnimation {
 	 * The method executed when shield {@code item} is equipped that assigns a
 	 * shield animation to {@code player}.
 	 * @param player the player equipping the item.
-	 * @param item   the item the player is equipping.
+	 * @param item the item the player is equipping.
 	 */
 	public static void execute(Player player, Item item) {
 		if(item == null)

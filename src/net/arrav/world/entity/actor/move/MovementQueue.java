@@ -52,7 +52,7 @@ public final class MovementQueue {
 	 * The flag that determines if movement is locked.
 	 */
 	private boolean lockMovement;
-
+	
 	/**
 	 * Condition if the player is within the need boundary so he can stop moving towards it's destination.
 	 */
@@ -405,8 +405,8 @@ public final class MovementQueue {
 		
 		/**
 		 * Creates a new {@link Point}.
-		 * @param x         the {@code X} coordinate.
-		 * @param y         the {@code Y} coordinate.
+		 * @param x the {@code X} coordinate.
+		 * @param y the {@code Y} coordinate.
 		 * @param direction the direction to this point.
 		 */
 		public Point(int x, int y, Direction direction) {

@@ -48,7 +48,7 @@ public enum TabInterface {
 	/**
 	 * Sends the interface to the selected tab.
 	 * @param player The player used in the context.
-	 * @param id     The id of the interface to send.
+	 * @param id The id of the interface to send.
 	 */
 	public void sendInterface(Player player, int id) {
 		//		if(this == ATTACK) {

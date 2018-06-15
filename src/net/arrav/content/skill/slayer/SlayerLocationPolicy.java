@@ -22,7 +22,7 @@ public final class SlayerLocationPolicy {
 	/**
 	 * Constructs a new {@link SlayerLocationPolicy}.
 	 * @param positions {@link #positions}.
-	 * @param price     {@link #price}.
+	 * @param price {@link #price}.
 	 */
 	public SlayerLocationPolicy(Position[] positions, int price) {
 		this.positions = positions;

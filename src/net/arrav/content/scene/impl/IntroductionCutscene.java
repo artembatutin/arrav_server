@@ -74,8 +74,7 @@ public final class IntroductionCutscene extends Cutscene {
 				}), new StatementDialogue("This shiny portal allows you to", "get anywhere: @red@skills, minigames, bosses.").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3085, 3511), 340, 6, 12));
 					player.out(new SendCameraAngle(new Position(3081, 3514), 320, 6, 12));
-				}), new StatementDialogue("Spria is the slayer master, ask her for any tasks.")
-						, new StatementDialogue("This is @red@Party Pete", "He changes arrav tokens into precious goods.").attach(() -> {
+				}), new StatementDialogue("Spria is the slayer master, ask her for any tasks."), new StatementDialogue("This is @red@Party Pete", "He changes arrav tokens into precious goods.").attach(() -> {
 					player.out(new SendCameraMovement(new Position(3091, 3511), 340, 6, 12));
 					player.out(new SendCameraAngle(new Position(3094, 3515), 250, 4, 10));
 				}), new GiveItemDialogue(new Item(7478, 20), "You can get arrav tokens by donating on our website.", Optional.empty()).attach(() -> {
@@ -113,7 +112,7 @@ public final class IntroductionCutscene extends Cutscene {
 	
 	@Override
 	public void onCancel() {
-	
+
 	}
 	
 	private Dialogue complete() {

@@ -15,11 +15,11 @@ public class SuggestedDrop extends Drop {
 	
 	/**
 	 * Creates a new {@link SuggestedDrop}.
-	 * @param npc     the npc concerning.
-	 * @param id      the identification of this {@code Drop}.
+	 * @param npc the npc concerning.
+	 * @param id the identification of this {@code Drop}.
 	 * @param minimum the minimum amount that will be dropped.
 	 * @param maximum the maximum amount that will be dropped.
-	 * @param chance  the chance of this item being dropped.
+	 * @param chance the chance of this item being dropped.
 	 */
 	public SuggestedDrop(int npc, int id, int minimum, int maximum, Chance chance) {
 		super(id, minimum, maximum, chance);

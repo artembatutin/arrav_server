@@ -26,7 +26,7 @@ public final class Healer extends FamiliarAbility {
 
 	/**
 	 * Constructs a new {@link Healer}.
-	 * @param ticks  {@link #ticks}.
+	 * @param ticks {@link #ticks}.
 	 * @param amount {@link #amount}.
 	 */
 	public Healer(int ticks, int amount) {

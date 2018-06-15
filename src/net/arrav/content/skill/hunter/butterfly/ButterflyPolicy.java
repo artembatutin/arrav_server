@@ -19,7 +19,7 @@ public final class ButterflyPolicy {
 	/**
 	 * Constructs a new {@link ButterflyPolicy}.
 	 * @param requirement {@link #requirement}.
-	 * @param experience  {@link #experience}.
+	 * @param experience {@link #experience}.
 	 */
 	public ButterflyPolicy(int requirement, int experience) {
 		this.requirement = requirement;

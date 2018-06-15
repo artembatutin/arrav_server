@@ -26,7 +26,7 @@ public final class MobDropLog extends LogDetails {
 
 	/**
 	 * Constructs a new {@link MobDropLog}.
-	 * @param npc  {@link #npc}.
+	 * @param npc {@link #npc}.
 	 * @param item {@link #item}.
 	 */
 	public MobDropLog(Player player, MobDefinition npc, Item item) {

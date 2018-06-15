@@ -24,7 +24,7 @@ public final class PouchCreation extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link PouchCreation} skill action.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
+	 * @param data {@link #data}.
 	 */
 	public PouchCreation(Player player, SummoningData data) {
 		super(player, Optional.empty());

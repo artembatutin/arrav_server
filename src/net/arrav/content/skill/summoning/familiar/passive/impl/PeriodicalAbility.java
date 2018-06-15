@@ -28,7 +28,7 @@ public class PeriodicalAbility implements PassiveAbility {
 
 	/**
 	 * Constructs a new {@link PeriodicalAbility}.
-	 * @param ticks  {@link #ticks}.
+	 * @param ticks {@link #ticks}.
 	 * @param action {@link #action}.
 	 */
 	public PeriodicalAbility(int ticks, Consumer<Player> action) {
@@ -93,7 +93,7 @@ public class PeriodicalAbility implements PassiveAbility {
 		/**
 		 * Constructs a new {@link PeriodicalAbilityTask}.
 		 * @param ability {@link #ability}.
-		 * @param player  {@link #player}.
+		 * @param player {@link #player}.
 		 */
 		public PeriodicalAbilityTask(PeriodicalAbility ability, Player player) {
 			super(1, false);

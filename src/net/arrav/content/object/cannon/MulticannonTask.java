@@ -129,9 +129,9 @@ public class MulticannonTask extends Task {
 	}
 
 	/**
-	 *  Applies damage to the victim.
-	 *  4* exp multiplier is based on:
-	 *  {@link net.arrav.world.entity.actor.combat.strategy.basic.RangedStrategy#BASE_EXPERIENCE_MULTIPLIER}
+	 * Applies damage to the victim.
+	 * 4* exp multiplier is based on:
+	 * {@link net.arrav.world.entity.actor.combat.strategy.basic.RangedStrategy#BASE_EXPERIENCE_MULTIPLIER}
 	 */
 	
 	private void fire() {

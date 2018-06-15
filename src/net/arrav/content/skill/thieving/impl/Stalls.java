@@ -13,8 +13,8 @@ import net.arrav.world.entity.actor.combat.hit.Hitsplat;
 import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.object.DynamicObject;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.DynamicObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -44,7 +44,7 @@ public final class Stalls extends Thieving {
 	/**
 	 * Constructs a new {@link Stalls}.
 	 * @param player {@link #getPlayer()}.
-	 * @param stall  the stall this player is stealing from.
+	 * @param stall the stall this player is stealing from.
 	 * @param object the object this player is interacting with.
 	 */
 	private Stalls(Player player, StallData stall, DynamicObject object) {
@@ -137,8 +137,8 @@ public final class Stalls extends Thieving {
 
 	@Override
 	public void onStop(boolean success) {
-				if(success && stall == StallData.SEED)
-					World.get().submit(new StallTask(this, object));
+		if(success && stall == StallData.SEED)
+			World.get().submit(new StallTask(this, object));
 	}
 
 	@Override
@@ -223,12 +223,12 @@ public final class Stalls extends Thieving {
 
 		/**
 		 * Constructs a new {@link StallData} enumerator.
-		 * @param objectId     {@link #objectId}.
+		 * @param objectId {@link #objectId}.
 		 * @param emptyStallId {@link #emptyStallId}.
-		 * @param requirement  {@link #requirement}.
-		 * @param loot         {@link #loot}.
-		 * @param experience   {@link #experience}.
-		 * @param respawnTime  {@link #respawnTime}.
+		 * @param requirement {@link #requirement}.
+		 * @param loot {@link #loot}.
+		 * @param experience {@link #experience}.
+		 * @param respawnTime {@link #respawnTime}.
 		 */
 		StallData(int[] objectId, int emptyStallId, int requirement, Item[] loot, int experience, int respawnTime) {
 			this.objectId = objectId;
@@ -264,7 +264,7 @@ public final class Stalls extends Thieving {
 
 		/**
 		 * Constructs a new {@link StallTask}.
-		 * @param stall  the stall being used.
+		 * @param stall the stall being used.
 		 * @param object the stall's object node.
 		 */
 		StallTask(Stalls stall, DynamicObject object) {

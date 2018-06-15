@@ -3,18 +3,20 @@ package net.arrav.net;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
 import net.arrav.GameConstants;
+import net.arrav.net.codec.crypto.IsaacRandom;
 import net.arrav.net.codec.game.GamePacketType;
 import net.arrav.net.codec.game.GameState;
-import net.arrav.net.codec.crypto.IsaacRandom;
+import net.arrav.net.codec.login.LoginCode;
 import net.arrav.net.codec.login.LoginResponse;
 import net.arrav.net.codec.login.LoginState;
-import net.arrav.net.codec.login.LoginCode;
 import net.arrav.net.host.HostListType;
 import net.arrav.net.host.HostManager;
 import net.arrav.net.packet.OutgoingPacket;
-import net.arrav.util.TextUtils;
 import net.arrav.world.World;
 import net.arrav.world.entity.EntityState;
 import net.arrav.world.entity.actor.player.Player;
@@ -29,8 +31,6 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Logger;
 
-import static com.google.common.base.Preconditions.checkState;
-
 /**
  * Player's session which handles I/O operations.
  * @author Artem Batutin <artembatutin@gmail.com>
@@ -42,66 +42,115 @@ public class Session {
 	 */
 	private static final Logger LOGGER = Logger.getLogger(Session.class.getName());
 	
-	/** Game stream capacity. */
+	/**
+	 * Game stream capacity.
+	 */
 	private final static int BUFFER_SIZE = 5000;
-	/** The cap limit of outgoing packets per session. */
+	/**
+	 * The cap limit of outgoing packets per session.
+	 */
 	public static int UPDATE_LIMIT = 200;
-	/** Invalid constants of an unknown mac address. */
+	/**
+	 * Invalid constants of an unknown mac address.
+	 */
 	private static String INVALID_MAC = "0";
 	
-	/** The {@link Channel} to send and receive messages through. */
+	/**
+	 * The {@link Channel} to send and receive messages through.
+	 */
 	private final Channel channel;
-	/** The ip address that the connection was received from. */
+	/**
+	 * The ip address that the connection was received from.
+	 */
 	private final String hostAddress;
-	/** The mac address the connection was received from. */
+	/**
+	 * The mac address the connection was received from.
+	 */
 	private String macAddress;
 	
-	/** Condition if session is handling game process. */
+	/**
+	 * Condition if session is handling game process.
+	 */
 	private boolean isGame;
-	/** Condition if this session is active. */
+	/**
+	 * Condition if this session is active.
+	 */
 	private boolean active = true;
 	
-	/** The player's username hash received from client. */
+	/**
+	 * The player's username hash received from client.
+	 */
 	private long usernameHash;
-	/** The player's username on login. */
+	/**
+	 * The player's username on login.
+	 */
 	private String username;
-	/** The player's password on login. */
+	/**
+	 * The player's password on login.
+	 */
 	private String password;
-	/** The player associated with this session. */
+	/**
+	 * The player associated with this session.
+	 */
 	private Player player;
 	
 	/* Incoming and outgoing packet queues. */
-	/** The queue of {@link ByteBuf}s. */
+	/**
+	 * The queue of {@link ByteBuf}s.
+	 */
 	private Queue<ByteBuf> incoming;
-	/** The queue of {@link OutgoingPacket}s. */
+	/**
+	 * The queue of {@link OutgoingPacket}s.
+	 */
 	private Queue<OutgoingPacket> outgoing;
 	
 	/* ISAAC cypher. */
-	/** The message encryptor. */
+	/**
+	 * The message encryptor.
+	 */
 	private IsaacRandom encryptor;
-	/** The message decryptor. */
+	/**
+	 * The message decryptor.
+	 */
 	private IsaacRandom decryptor;
 	
 	
 	/* Login request decoding. */
-	/** A cryptographically secure random number generator.*/
+	/**
+	 * A cryptographically secure random number generator.
+	 */
 	private static final Random RANDOM = new SecureRandom();
-	/** The current state of decoding the protocol. */
+	/**
+	 * The current state of decoding the protocol.
+	 */
 	private LoginState loginState = LoginState.HANDSHAKE;
-	/** The size of the last portion of the protocol. */
+	/**
+	 * The size of the last portion of the protocol.
+	 */
 	private int rsaBlockSize;
 	
 	/* Game packet decoding. */
-	/** The state of the message currently being decoded. */
+	/**
+	 * The state of the message currently being decoded.
+	 */
 	private GameState gameState = GameState.OPCODE;
-	/** The opcode of the message currently being decoded. */
+	/**
+	 * The opcode of the message currently being decoded.
+	 */
 	private int opcode = -1;
-	/** The size of the message currently being decoded. */
+	/**
+	 * The size of the message currently being decoded.
+	 */
 	private int size = -1;
-	/** The type of the message currently being decoded. */
+	/**
+	 * The type of the message currently being decoded.
+	 */
 	private GamePacketType type = GamePacketType.RAW;
-	/** The main game stream buffer to encode all outgoing packets. */
+	/**
+	 * The main game stream buffer to encode all outgoing packets.
+	 */
 	private ByteBuf stream;
+	
 	/**
 	 * Creates a new {@link Session}.
 	 * @param channel The {@link Channel} to send and receive messages through.
@@ -167,7 +216,6 @@ public class Session {
 	public void enqueue(OutgoingPacket pkt) {
 		outgoing.offer(pkt);
 	}
-	
 	
 	/**
 	 * Handling an incoming packet/message.
@@ -403,7 +451,7 @@ public class Session {
 	/**
 	 * Decodes the handshake portion of the login protocol.
 	 * @param ctx The channel handler context.
-	 * @param in  The data that is being decoded.
+	 * @param in The data that is being decoded.
 	 * @throws Exception If any exceptions occur while decoding this portion of the protocol.
 	 */
 	private void decodeHandshake(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
@@ -423,7 +471,7 @@ public class Session {
 	/**
 	 * Decodes the portion of the login protocol to sucessfully login.
 	 * @param ctx The channel handler context.
-	 * @param in  The data that is being decoded.
+	 * @param in The data that is being decoded.
 	 * @throws Exception If any exceptions occur while decoding this portion of the protocol.
 	 */
 	private void decodeLoginBlock(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
@@ -494,7 +542,7 @@ public class Session {
 	 * @return host address as string.
 	 */
 	static String address(ChannelHandlerContext ctx) {
-		return ((InetSocketAddress )ctx.channel().remoteAddress()).getAddress().getHostAddress();
+		return ((InetSocketAddress) ctx.channel().remoteAddress()).getAddress().getHostAddress();
 	}
 	
 	/**
@@ -507,7 +555,7 @@ public class Session {
 		incoming = new ConcurrentLinkedQueue<>();
 		isGame = true;
 	}
-
+	
 	/**
 	 * Returns {@code true} if mac is valid.
 	 * @param mac mac address to verify.

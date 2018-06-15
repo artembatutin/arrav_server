@@ -85,12 +85,12 @@ public enum Skillcape {
 	
 	/**
 	 * Constructs a new {@link Skillcape}.
-	 * @param item      {@link #item}.
-	 * @param hood      {@link #hood}.
+	 * @param item {@link #item}.
+	 * @param hood {@link #hood}.
 	 * @param animation {@link #animation}.
-	 * @param graphic   {@link #graphic}.
-	 * @param skill     {@link #skill}.
-	 * @param master    {@link #master}.
+	 * @param graphic {@link #graphic}.
+	 * @param skill {@link #skill}.
+	 * @param master {@link #master}.
 	 */
 	Skillcape(int item, int hood, int animation, int graphic, int skill, int master) {
 		this.item = item;
@@ -104,7 +104,7 @@ public enum Skillcape {
 	/**
 	 * Verifies if the player can wear the skill cape.
 	 * @param player The player wearing a new item.
-	 * @param item   The item the player is trying to wear.
+	 * @param item The item the player is trying to wear.
 	 * @return {@code false} if the player hasn't met the criteria, {@code true} otherwise.
 	 */
 	public static boolean verifySkillCape(Player player, Item item) {
@@ -173,7 +173,7 @@ public enum Skillcape {
 	/**
 	 * Attempts to reward the player by giving him the skillcape.
 	 * @param player the player to give the skillcape to.
-	 * @param item   the item id.
+	 * @param item the item id.
 	 * @return {@code true} if the player got into the dialogue stage, {@code false} otherwise.
 	 */
 	public static boolean buy(Player player, int item) {

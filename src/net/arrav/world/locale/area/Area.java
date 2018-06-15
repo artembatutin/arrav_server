@@ -23,7 +23,7 @@ public final class Area {
 	
 	/**
 	 * Constructs a new {@link Area}.
-	 * @param name     {@link #name}.
+	 * @param name {@link #name}.
 	 * @param location {@link #location}.
 	 */
 	public Area(String name, ObjectList<AreaLocation> location) {
@@ -56,7 +56,7 @@ public final class Area {
 		 * Constructs a new {@link AreaLocation}.
 		 * @param location {@link #location}.
 		 * @param teleport {@link #teleport}.
-		 * @param summon   {@link #summon}.
+		 * @param summon {@link #summon}.
 		 */
 		public AreaLocation(Location location, boolean teleport, boolean summon) {
 			this.location = location;

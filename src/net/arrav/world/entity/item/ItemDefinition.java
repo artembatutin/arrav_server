@@ -112,22 +112,22 @@ public final class ItemDefinition {
 	
 	/**
 	 * Creates a new {@link ItemDefinition}.
-	 * @param id               the identifier for the item.
-	 * @param name             the proper name of the item.
-	 * @param equipmentType    the equipment type of this item.
-	 * @param tradeable        the flag that determines if this item is tradeable.
-	 * @param weapon           the flag that determines if this item is a weapon.
-	 * @param twoHanded        the flag that determines if this item is two-handed.
-	 * @param stackable        the flag that determines if this item is stackable.
-	 * @param alchable         the flag that determines if this item is alchable.
-	 * @param noted            the flag that determines if this item is noted.
-	 * @param lended           the flag that determines if this item is lended.
-	 * @param lowAlchValue     the low alch value of this item.
-	 * @param highAlchValue    the high alch value of this item.
-	 * @param weight           the weight value of this item.
-	 * @param bonus            the array of bonuses for this item.
+	 * @param id the identifier for the item.
+	 * @param name the proper name of the item.
+	 * @param equipmentType the equipment type of this item.
+	 * @param tradeable the flag that determines if this item is tradeable.
+	 * @param weapon the flag that determines if this item is a weapon.
+	 * @param twoHanded the flag that determines if this item is two-handed.
+	 * @param stackable the flag that determines if this item is stackable.
+	 * @param alchable the flag that determines if this item is alchable.
+	 * @param noted the flag that determines if this item is noted.
+	 * @param lended the flag that determines if this item is lended.
+	 * @param lowAlchValue the low alch value of this item.
+	 * @param highAlchValue the high alch value of this item.
+	 * @param weight the weight value of this item.
+	 * @param bonus the array of bonuses for this item.
 	 * @param inventoryActions the array of inventory actions for this item.
-	 * @param groundActions    the array of ground actions for this item.
+	 * @param groundActions the array of ground actions for this item.
 	 */
 	public ItemDefinition(int id, String name, EquipmentType equipmentType, boolean tradeable, boolean weapon, boolean twoHanded, boolean stackable, boolean alchable, boolean noted, int noteId, boolean lended, int lendId, int lowAlchValue, int highAlchValue, double weight, int[] bonus, String[] inventoryActions, String[] groundActions) {
 		this.id = id;

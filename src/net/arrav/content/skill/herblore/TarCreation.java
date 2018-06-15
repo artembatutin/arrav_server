@@ -27,8 +27,8 @@ public final class TarCreation extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link TarCreation}.
-	 * @param player     {@link #getPlayer()}.
-	 * @param firstItem  the first item that was used on the second item.
+	 * @param player {@link #getPlayer()}.
+	 * @param firstItem the first item that was used on the second item.
 	 * @param secondItem the second item that was used on by the first item.
 	 */
 	public TarCreation(Player player, Item firstItem, Item secondItem) {
@@ -55,8 +55,8 @@ public final class TarCreation extends ProducingSkillAction {
 	
 	/**
 	 * Produces guam tars if the player has the requirements required.
-	 * @param player     {@link #getPlayer()};
-	 * @param firstItem  the first item that was used on the second item.
+	 * @param player {@link #getPlayer()};
+	 * @param firstItem the first item that was used on the second item.
 	 * @param secondItem the second item that was used on by the first item.
 	 * @return <true> if the produce was successful, <false> otherwise.
 	 */
@@ -184,10 +184,10 @@ public final class TarCreation extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link TarCreation} enumerator.
-		 * @param tar         {@link #tar}.
-		 * @param herb        {@link #herb}.
+		 * @param tar {@link #tar}.
+		 * @param herb {@link #herb}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
+		 * @param experience {@link #experience}.
 		 */
 		private GuamTar(int herb, int tar, int requirement, double experience) {
 			this.herb = new Item(herb);

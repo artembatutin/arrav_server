@@ -10,7 +10,7 @@ public class DefaultMob extends Mob {
 	
 	/**
 	 * Creates a new {@link Mob}.
-	 * @param id       the identification for this NPC.
+	 * @param id the identification for this NPC.
 	 * @param position the position of this character in the world.
 	 */
 	public DefaultMob(int id, Position position) {

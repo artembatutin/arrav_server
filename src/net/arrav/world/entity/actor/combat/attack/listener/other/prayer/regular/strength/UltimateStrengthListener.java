@@ -6,9 +6,9 @@ import net.arrav.world.entity.actor.player.Player;
 
 public class UltimateStrengthListener extends SimplifiedListener<Player> {
 
-    @Override
-    public int modifyStrengthLevel(Player attacker, Actor defender, int damage) {
-        return damage * 23 / 20;
-    }
+	@Override
+	public int modifyStrengthLevel(Player attacker, Actor defender, int damage) {
+		return damage * 23 / 20;
+	}
 
 }

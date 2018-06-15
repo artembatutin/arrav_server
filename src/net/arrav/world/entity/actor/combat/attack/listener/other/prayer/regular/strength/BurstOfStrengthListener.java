@@ -6,9 +6,9 @@ import net.arrav.world.entity.actor.player.Player;
 
 public class BurstOfStrengthListener extends SimplifiedListener<Player> {
 
-    @Override
-    public int modifyStrengthLevel(Player attacker, Actor defender, int damage) {
-        return damage * 21 / 20;
-    }
+	@Override
+	public int modifyStrengthLevel(Player attacker, Actor defender, int damage) {
+		return damage * 21 / 20;
+	}
 
 }

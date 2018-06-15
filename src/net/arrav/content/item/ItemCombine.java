@@ -93,7 +93,7 @@ public enum ItemCombine {
 	
 	/**
 	 * Creates a new combination without any animation or graphic.
-	 * @param product     the product being created.
+	 * @param product the product being created.
 	 * @param ingredients the ingredients used.
 	 */
 	ItemCombine(Item product, Item... ingredients) {
@@ -105,9 +105,9 @@ public enum ItemCombine {
 	
 	/**
 	 * Creates a new item combination with a {@link Animation} and {@link Graphic}.
-	 * @param product     the product being created.
-	 * @param anim        the animation being handled on combination.
-	 * @param graphic     the graphic being handled on combination.
+	 * @param product the product being created.
+	 * @param anim the animation being handled on combination.
+	 * @param graphic the graphic being handled on combination.
 	 * @param ingredients the ingredients used.
 	 */
 	ItemCombine(Item product, Animation anim, Graphic graphic, Item... ingredients) {

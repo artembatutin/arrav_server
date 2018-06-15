@@ -6,10 +6,10 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.arrav.GameConstants;
 import net.arrav.content.PlayerPanel;
 import net.arrav.content.commands.impl.UpdateCommand;
+import net.arrav.net.Session;
 import net.arrav.net.database.Database;
 import net.arrav.net.database.pool.ConnectionPool;
 import net.arrav.net.packet.out.SendYell;
-import net.arrav.net.Session;
 import net.arrav.task.Task;
 import net.arrav.task.TaskManager;
 import net.arrav.util.Stopwatch;
@@ -110,17 +110,17 @@ public final class World extends AbstractScheduledService {
 	public static long millis;
 	
 	static {
-//		int amtCpu = Runtime.getRuntime().availableProcessors();
-//		try {
-//			score = new Database(Arrav.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_score", Arrav.DEBUG ? "edge_avro" : "root", Arrav.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		try {
-//			donation = new Database(Arrav.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_store", Arrav.DEBUG ? "edge_avro" : "root", Arrav.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
+		//		int amtCpu = Runtime.getRuntime().availableProcessors();
+		//		try {
+		//			score = new Database(Arrav.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_score", Arrav.DEBUG ? "edge_avro" : "root", Arrav.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
+		//		} catch(Exception e) {
+		//			e.printStackTrace();
+		//		}
+		//		try {
+		//			donation = new Database(Arrav.DEBUG ? "192.99.101.90" : "127.0.0.1", "edge_store", Arrav.DEBUG ? "edge_avro" : "root", Arrav.DEBUG ? "%GL5{)hAJBU(MB3h" : "rooty412JlW", amtCpu);
+		//		} catch(Exception e) {
+		//			e.printStackTrace();
+		//		}
 	}
 	
 	@Override
@@ -157,7 +157,7 @@ public final class World extends AbstractScheduledService {
 		} else if(UPDATE_LIMIT < 200) {
 			UPDATE_LIMIT += 20;
 		}
-		System.out.println("took: " + millis + " - players: " + players.size()+ " - mobs: " + mobs.size() + " - logins: " + logs);
+		System.out.println("took: " + millis + " - players: " + players.size() + " - mobs: " + mobs.size() + " - logins: " + logs);
 	}
 	
 	@Override
@@ -358,7 +358,7 @@ public final class World extends AbstractScheduledService {
 	
 	/**
 	 * Sends {@code message} to all online players with an announcement dependent of {@code announcement}.
-	 * @param message      the message to send to all online players.
+	 * @param message the message to send to all online players.
 	 * @param announcement determines if this message is an announcement.
 	 */
 	public void message(String message, boolean announcement) {
@@ -379,9 +379,9 @@ public final class World extends AbstractScheduledService {
 	
 	/**
 	 * Sends {@code message} to all online players as a yell.
-	 * @param author  author yelling.
+	 * @param author author yelling.
 	 * @param message the message being yelled.
-	 * @param rights  the rights of the author.
+	 * @param rights the rights of the author.
 	 */
 	public void yell(String author, String message, Rights rights) {
 		Player p;
@@ -468,8 +468,8 @@ public final class World extends AbstractScheduledService {
 	public ActorList<Mob> getMobs() {
 		return mobs;
 	}
-
-
+	
+	
 	/* CONSTANTS DECLARATIONS */
 	
 	/**

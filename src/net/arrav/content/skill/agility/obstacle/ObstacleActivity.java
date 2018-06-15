@@ -40,11 +40,11 @@ public abstract class ObstacleActivity {
 	
 	/**
 	 * Constructs a new {@link ObstacleActivity}.
-	 * @param start       {@link #start}.
+	 * @param start {@link #start}.
 	 * @param destination {@link #destination}.
-	 * @param animation   {@link #animation}.
+	 * @param animation {@link #animation}.
 	 * @param requirement {@link #requirement}.
-	 * @param experience  {@link #experience}.
+	 * @param experience {@link #experience}.
 	 */
 	public ObstacleActivity(Position start, Position destination, Animation animation, int requirement, double experience) {
 		this.start = start;
@@ -56,11 +56,11 @@ public abstract class ObstacleActivity {
 	
 	/**
 	 * Constructs a new {@link ObstacleActivity}.
-	 * @param start       {@link #start}.
+	 * @param start {@link #start}.
 	 * @param destination {@link #destination}.
-	 * @param animation   {@link #animation}.
+	 * @param animation {@link #animation}.
 	 * @param requirement {@link #requirement}.
-	 * @param experience  {@link #experience}.
+	 * @param experience {@link #experience}.
 	 */
 	public ObstacleActivity(Position start, Position destination, int animation, int requirement, double experience) {
 		this(start, destination, new Animation(animation), requirement, experience);
@@ -110,23 +110,23 @@ public abstract class ObstacleActivity {
 	 * Holds functionality for submitting to the task.
 	 */
 	public void onSubmit(Player player) {
-	
+
 	}
 	
 	/**
 	 * The functionality handled on execution.
 	 * @param player the player this task is attached to.
-	 * @param t      the task for this obstacle action.
+	 * @param t the task for this obstacle action.
 	 */
 	public void execute(Player player, Task t) {
-	
+
 	}
 	
 	/**
 	 * Holds functionality for cancelling the task.
 	 */
 	public void onCancel(Player player) {
-	
+
 	}
 	
 	/**

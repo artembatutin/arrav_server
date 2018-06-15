@@ -44,7 +44,7 @@ public final class ClanManager {
 	/**
 	 * Attempts to register a clan chat for the specified {@code player}.
 	 * @param player the player attempting to register a clan.
-	 * @param name   the name of the clan to be created.
+	 * @param name the name of the clan to be created.
 	 */
 	public void create(Player player, String name) {
 		if(player.getClan().isPresent()) {
@@ -63,7 +63,7 @@ public final class ClanManager {
 	/**
 	 * Attempts to join a clan chat for the specified {@code player}.
 	 * @param player the player attempting to join.
-	 * @param name   the name of the clan to join.
+	 * @param name the name of the clan to join.
 	 */
 	public void join(Player player, String name) {
 		if(name.length() == 0) {
@@ -163,7 +163,7 @@ public final class ClanManager {
 	
 	/**
 	 * Updates the clan chat for the specified {@code members}
-	 * @param update  the clan update to update the interface for.
+	 * @param update the clan update to update the interface for.
 	 * @param members the members to update the interface for.
 	 */
 	public void update(ClanChatUpdate update, ObjectList<ClanMember> members) {

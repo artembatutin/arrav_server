@@ -32,7 +32,7 @@ public final class ArrowCreation extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link ArrowCreation}.
-	 * @param player     {@link #getPlayer()}
+	 * @param player {@link #getPlayer()}
 	 * @param definition the definition we're currently handling.
 	 */
 	private ArrowCreation(Player player, ArrowData definition) {
@@ -160,10 +160,10 @@ public final class ArrowCreation extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link ArrowData} enumerator.
-		 * @param tips        {@link #tips}.
-		 * @param arrow       {@link #arrow}.
+		 * @param tips {@link #tips}.
+		 * @param arrow {@link #arrow}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
+		 * @param experience {@link #experience}.
 		 */
 		ArrowData(int tips, int arrow, int requirement, double experience) {
 			this.tips = new Item(tips);

@@ -100,11 +100,11 @@ public interface SmithingTable {
 		
 		/**
 		 * Constructs a new {@link BronzeTable}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
-		 * @param produced     {@link #produced}.
-		 * @param name         {@link #name}.
+		 * @param produced {@link #produced}.
+		 * @param name {@link #name}.
 		 */
 		BronzeTable(int requirement, double experience, int barsRequired, Item produced, String name) {
 			this.requirement = requirement;
@@ -116,10 +116,10 @@ public interface SmithingTable {
 		
 		/**
 		 * Constructs a new {@link BronzeTable}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
-		 * @param produced     {@link #produced}.
+		 * @param produced {@link #produced}.
 		 */
 		BronzeTable(int requirement, double experience, int barsRequired, Item produced) {
 			this.requirement = requirement;
@@ -218,11 +218,11 @@ public interface SmithingTable {
 		
 		/**
 		 * Constructs a new {@link IronTable}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
-		 * @param produced     {@link #produced}.
-		 * @param name         {@link #name}.
+		 * @param produced {@link #produced}.
+		 * @param name {@link #name}.
 		 */
 		IronTable(int requirement, double experience, int barsRequired, Item produced, String name) {
 			this.requirement = requirement;
@@ -234,10 +234,10 @@ public interface SmithingTable {
 		
 		/**
 		 * Constructs a new {@link IronTable}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
-		 * @param produced     {@link #produced}.
+		 * @param produced {@link #produced}.
 		 */
 		IronTable(int requirement, double experience, int barsRequired, Item produced) {
 			this.requirement = requirement;
@@ -335,11 +335,11 @@ public interface SmithingTable {
 		
 		/**
 		 * Constructs a new {@link SteelTable}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
-		 * @param produced     {@link #produced}.
-		 * @param name         {@link #name}.
+		 * @param produced {@link #produced}.
+		 * @param name {@link #name}.
 		 */
 		SteelTable(int requirement, double experience, int barsRequired, Item produced, String name) {
 			this.requirement = requirement;
@@ -351,10 +351,10 @@ public interface SmithingTable {
 		
 		/**
 		 * Constructs a new {@link SteelTable}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
-		 * @param produced     {@link #produced}.
+		 * @param produced {@link #produced}.
 		 */
 		SteelTable(int requirement, double experience, int barsRequired, Item produced) {
 			this.requirement = requirement;
@@ -452,11 +452,11 @@ public interface SmithingTable {
 		
 		/**
 		 * Constructs a new {@link MithrilTable}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
-		 * @param produced     {@link #produced}.
-		 * @param name         {@link #name}.
+		 * @param produced {@link #produced}.
+		 * @param name {@link #name}.
 		 */
 		MithrilTable(int requirement, double experience, int barsRequired, Item produced, String name) {
 			this.requirement = requirement;
@@ -468,10 +468,10 @@ public interface SmithingTable {
 		
 		/**
 		 * Constructs a new {@link MithrilTable}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
-		 * @param produced     {@link #produced}.
+		 * @param produced {@link #produced}.
 		 */
 		MithrilTable(int requirement, double experience, int barsRequired, Item produced) {
 			this.requirement = requirement;
@@ -569,11 +569,11 @@ public interface SmithingTable {
 		
 		/**
 		 * Constructs a new {@link AdamantTable}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
-		 * @param produced     {@link #produced}.
-		 * @param name         {@link #name}.
+		 * @param produced {@link #produced}.
+		 * @param name {@link #name}.
 		 */
 		AdamantTable(int requirement, double experience, int barsRequired, Item produced, String name) {
 			this.requirement = requirement;
@@ -585,10 +585,10 @@ public interface SmithingTable {
 		
 		/**
 		 * Constructs a new {@link AdamantTable}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
-		 * @param produced     {@link #produced}.
+		 * @param produced {@link #produced}.
 		 */
 		AdamantTable(int requirement, double experience, int barsRequired, Item produced) {
 			this.requirement = requirement;
@@ -686,11 +686,11 @@ public interface SmithingTable {
 		
 		/**
 		 * Constructs a new {@link RuniteTable}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
-		 * @param produced     {@link #produced}.
-		 * @param name         {@link #name}.
+		 * @param produced {@link #produced}.
+		 * @param name {@link #name}.
 		 */
 		RuniteTable(int requirement, double experience, int barsRequired, Item produced, String name) {
 			this.requirement = requirement;
@@ -702,10 +702,10 @@ public interface SmithingTable {
 		
 		/**
 		 * Constructs a new {@link RuniteTable}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
 		 * @param barsRequired {@link #barsRequired}.
-		 * @param produced     {@link #produced}.
+		 * @param produced {@link #produced}.
 		 */
 		RuniteTable(int requirement, double experience, int barsRequired, Item produced) {
 			this.requirement = requirement;

@@ -19,7 +19,7 @@ public class ForagerRightClickAbility extends Forager {
 
 	/**
 	 * Constructs a new {@link ForagerPassiveAbility}.
-	 * @param action       {@link #action}.
+	 * @param action {@link #action}.
 	 * @param collectables the collectables this forager can hold.
 	 */
 	public ForagerRightClickAbility(Consumer<Player> action, int... collectables) {

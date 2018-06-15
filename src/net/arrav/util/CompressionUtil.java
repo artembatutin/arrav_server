@@ -35,19 +35,19 @@ public final class CompressionUtil {
 	 * replaced with 'h' and '1' as that is what our {@link FileSystem file
 	 * system} compresses the header as.
 	 * </p>
-	 * @param data   The compressed, b-zipped data.
+	 * @param data The compressed, b-zipped data.
 	 * @param offset The offset position of the data.
 	 * @param length The length of the data.
 	 * @return The uncompressed data.
 	 * @throws IOException If some I/O exception occurs.
 	 */
 	public static byte[] unbzip2Headerless(byte[] data, int offset, int length) throws IOException {
-	    /* Strip the header from the data. */
+		/* Strip the header from the data. */
 		byte[] bzip2 = new byte[length + 2];
 		bzip2[0] = 'h';
 		bzip2[1] = '1';
 		System.arraycopy(data, offset, bzip2, 2, length);
-
+		
 		/* Uncompress the headerless data */
 		return unbzip2(bzip2);
 	}
@@ -66,7 +66,7 @@ public final class CompressionUtil {
 	 * Suppresses the default-public constructor preventing this class from
 	 * being instantiated by other classes.
 	 * @throws UnsupportedOperationException If this class is instantiated
-	 *                                       within itself.
+	 * within itself.
 	 */
 	private CompressionUtil() {
 		throw new UnsupportedOperationException("static-utility classes may not be instantiated.");

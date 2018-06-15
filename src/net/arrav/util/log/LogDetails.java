@@ -25,8 +25,8 @@ public abstract class LogDetails {
 
 	/**
 	 * Constructs a new {@link LogDetails}.
-	 * @param username    {@link #username}.
-	 * @param catagory    {@link #catagory}.
+	 * @param username {@link #username}.
+	 * @param catagory {@link #catagory}.
 	 * @param information {@link #information}.
 	 */
 	public LogDetails(String username, String catagory, String information) {

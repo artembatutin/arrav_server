@@ -55,7 +55,7 @@ public final class BloatedLeech extends Familiar {
 	private static final Conversation[] CONVERSATION = new Conversation[]{new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-		
+
 		}
 		
 		@Override
@@ -70,7 +70,7 @@ public final class BloatedLeech extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-		
+
 		}
 		
 		@Override
@@ -85,7 +85,7 @@ public final class BloatedLeech extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-		
+
 		}
 		
 		@Override
@@ -100,7 +100,7 @@ public final class BloatedLeech extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-		
+
 		}
 		
 		@Override

@@ -18,17 +18,17 @@ import java.util.Optional;
  * @author Artem Batutin
  */
 public final class LunarSpells {
-
+	
 	/**
 	 * Caches the item spells.
 	 */
 	private static final ImmutableSet<LunarItemSpell> ITEM_SPELLS = ImmutableSet.of(new BakePie());
-
+	
 	/**
 	 * Caches the button spells.
 	 */
 	private static final ImmutableSet<LunarButtonSpell> BUTTON_SPELLS = ImmutableSet.of(new CureMe(), new Humidify(), new HunterKit(), new CureGroup(), new TanLeather(), new Dream(), new StringJewellery(), new PlankMake(), new HealGroup(), new Vengeance());
-
+	
 	/**
 	 * Caches the combat spells.
 	 */
@@ -44,10 +44,10 @@ public final class LunarSpells {
 			player.closeWidget();
 		}, "Modern Magicks", "Ancient Magicks", "Nevermind"));
 	}
-
+	
 	/**
 	 * Gets the item spells.
-	 * @param spellId     the spell id casted.
+	 * @param spellId the spell id casted.
 	 * @param interfaceId the interface id the spell casts on.
 	 * @return an optional containing the spell, {@link Optional#empty()} otherwise.
 	 */
@@ -58,7 +58,7 @@ public final class LunarSpells {
 		}
 		return Optional.empty();
 	}
-
+	
 	/**
 	 * Gets the button spells.
 	 * @param buttonId the button id casted.
@@ -71,7 +71,7 @@ public final class LunarSpells {
 		}
 		return Optional.empty();
 	}
-
+	
 	/**
 	 * Gets the combat spells.
 	 * @param spellId the spell id casted.
@@ -84,10 +84,10 @@ public final class LunarSpells {
 		}
 		return Optional.empty();
 	}
-
+	
 	/**
 	 * Attempts to cast the button spells.
-	 * @param player   the player casting the spell.
+	 * @param player the player casting the spell.
 	 * @param buttonId the button id of the spell.
 	 * @return {@code true} if the spell was casted, {@code false} otherwise.
 	 */
@@ -102,12 +102,12 @@ public final class LunarSpells {
 		spell.effect(player, Optional.empty());
 		return true;
 	}
-
+	
 	/**
 	 * Attempts to cast the item spells.
-	 * @param player      the player casting the spell.
-	 * @param item        the item the spell was casted on.
-	 * @param spellId     the spell id of the spell.
+	 * @param player the player casting the spell.
+	 * @param item the item the spell was casted on.
+	 * @param spellId the spell id of the spell.
 	 * @param interfaceId the interface id of the spell.
 	 * @return {@code true} if the spell was executed, {@code false} otherwise.
 	 */
@@ -125,11 +125,11 @@ public final class LunarSpells {
 		spell.effect(player, item);
 		return true;
 	}
-
+	
 	/**
 	 * Attempts to cast the combat spells.
-	 * @param player  the player casting the spell.
-	 * @param other   the other entity getting casted at.
+	 * @param player the player casting the spell.
+	 * @param other the other entity getting casted at.
 	 * @param spellId the spell identification.
 	 * @return {@code true} if the spell was casted, {@code false} otherwise.
 	 */

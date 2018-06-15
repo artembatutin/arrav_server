@@ -45,7 +45,7 @@ public enum BirdNest {
 
 	/**
 	 * Constructs a new {@link BirdNest} enum.
-	 * @param nest   {@link #nest}.
+	 * @param nest {@link #nest}.
 	 * @param rarity {@link #rarity}.
 	 * @param reward {@link #reward}.
 	 */

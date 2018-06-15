@@ -30,9 +30,9 @@ public final class CircleLocation extends Location {
 	
 	/**
 	 * Creates a new {@link CircleLocation}.
-	 * @param x      the center {@code X} coordinate.
-	 * @param y      the center {@code Y} coordinate.
-	 * @param z      the center {@code Z} coordinate.
+	 * @param x the center {@code X} coordinate.
+	 * @param y the center {@code Y} coordinate.
+	 * @param z the center {@code Z} coordinate.
 	 * @param radius the radius of this location from the center coordinates.
 	 */
 	public CircleLocation(int x, int y, int z, int radius) {

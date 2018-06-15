@@ -55,7 +55,7 @@ public final class SpiritTerrorbird extends Familiar {
 	private static final Conversation[] CONVERSATION = new Conversation[]{new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-		
+
 		}
 		
 		@Override
@@ -68,7 +68,7 @@ public final class SpiritTerrorbird extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-		
+
 		}
 		
 		@Override
@@ -81,7 +81,7 @@ public final class SpiritTerrorbird extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-		
+
 		}
 		
 		@Override
@@ -95,7 +95,7 @@ public final class SpiritTerrorbird extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-		
+
 		}
 		
 		@Override
@@ -112,7 +112,7 @@ public final class SpiritTerrorbird extends Familiar {
 	}, new Conversation() {
 		@Override
 		public void send(Player player, int index) {
-		
+
 		}
 		
 		@Override

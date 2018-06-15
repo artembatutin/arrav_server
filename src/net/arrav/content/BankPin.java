@@ -1,6 +1,5 @@
 package net.arrav.content;
 
-import net.arrav.content.dialogue.impl.OptionDialogue;
 import net.arrav.content.dialogue.impl.StatementDialogue;
 import net.arrav.net.packet.out.SendCloseInterface;
 import net.arrav.net.packet.out.SendInterface;
@@ -8,18 +7,14 @@ import net.arrav.net.packet.out.SendMoveComponent;
 import net.arrav.world.entity.actor.player.Player;
 
 public class BankPin {
-
+	
 	private static final int[] actionButtons = {58025, 58026, 58027, 58028, 58029, 58030, 58031, 58032, 58033, 58034};
 	private static final int[] sendFrames = {14883, 14884, 14885, 14886, 14887, 14888, 14889, 14890, 14891, 14892};
 	private static final int[] starFrames = {14913, 14914, 14915, 14916};
-	private static final String[] pinNames = {"First click the FIRST digit."
-			, "Now click the SECOND digit."
-			, "Time for the THIRD digit."
-			, "Finally, the FOURTH digit."};
-
+	private static final String[] pinNames = {"First click the FIRST digit.", "Now click the SECOND digit.", "Time for the THIRD digit.", "Finally, the FOURTH digit."};
+	
 	/**
 	 * Sets up the pin interface
-	 * @param player
 	 */
 	public static void loadUpPinInterface(Player player) {
 		if(player.bankPin.length() < 4) {
@@ -39,31 +34,29 @@ public class BankPin {
 			player.out(new SendInterface(7424));
 		}
 	}
-
+	
 	/**
 	 * Handles clicking the button's action.
-	 * @param player
-	 * @param button
 	 */
 	public static void pinButtonAction(Player player, int button) {
 		int index = -1;
-
+		
 		for(int i = 0; i < 10; i++) {
 			if(button == player.pinOrder[i]) {
 				index = i;
 				break;
 			}
 		}
-
-		if(index == - 1) {
+		
+		if(index == -1) {
 			return;
 		}
-
+		
 		if(player.bankPin.length() < 4) {
-			player.bankPin += ""+index;
+			player.bankPin += "" + index;
 			if(player.bankPin.length() >= 4) {
 				player.message("Pin set successfully.");
-				player.getDialogueBuilder().append(new StatementDialogue("Your bank pin has been set to @blu@"+ player.bankPin +"@bla@, Please Write it down.").attachAfter(() -> player.getBank().open(false)));
+				player.getDialogueBuilder().append(new StatementDialogue("Your bank pin has been set to @blu@" + player.bankPin + "@bla@, Please Write it down.").attachAfter(() -> player.getBank().open(false)));
 				player.enterPin = player.bankPin;
 			} else {
 				randomizeButtons(player);
@@ -76,7 +69,7 @@ public class BankPin {
 			setStars(player);
 			if(player.enterPin.length() >= 4 && player.enterPin.equals(player.bankPin)) {
 				player.message("Pin entered correctly.");
-				if(! player.resetingPin) {
+				if(!player.resetingPin) {
 					player.resetingPin = false;
 					player.getBank().open(false);
 				} else
@@ -93,7 +86,7 @@ public class BankPin {
 			}
 		}
 	}
-
+	
 	private static void setStars(Player player) {
 		for(int i = 0; i < 4; i++) {
 			if(player.enterPin.length() > i)
@@ -102,7 +95,7 @@ public class BankPin {
 				player.text(starFrames[i], "@or1@?");
 		}
 	}
-
+	
 	public static int random(int range) {
 		return (int) (java.lang.Math.random() * (range + 1));
 	}
@@ -126,5 +119,5 @@ public class BankPin {
 			}
 		}
 	}
-
+	
 }

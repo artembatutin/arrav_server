@@ -4,11 +4,11 @@ import net.arrav.action.ActionInitializer;
 import net.arrav.action.impl.ObjectAction;
 import net.arrav.content.dialogue.impl.OptionDialogue;
 import net.arrav.content.skill.Skills;
+import net.arrav.content.skill.magic.Spellbook;
+import net.arrav.content.skill.prayer.PrayerBook;
 import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.content.skill.prayer.PrayerBook;
-import net.arrav.content.skill.magic.Spellbook;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 public class HomeAltar extends ActionInitializer {
 	@Override

@@ -89,14 +89,14 @@ enum RockData {
 	
 	/**
 	 * Constructs a new {@link RockData}.
-	 * @param object        {@link #object}.
-	 * @param item          {@link #item}.
-	 * @param requirement   {@link #requirement}.
-	 * @param experience    {@link #experience}.
-	 * @param respawnTime   {@link #respawnTime}.
+	 * @param object {@link #object}.
+	 * @param item {@link #item}.
+	 * @param requirement {@link #requirement}.
+	 * @param experience {@link #experience}.
+	 * @param respawnTime {@link #respawnTime}.
 	 * @param prospectdelay {@link #prospectdelay}.
-	 * @param oreCount      {@link #oreCount}.
-	 * @param success       {@link #success}.
+	 * @param oreCount {@link #oreCount}.
+	 * @param success {@link #success}.
 	 */
 	RockData(TransformableObject[] object, int item, int requirement, double experience, int respawnTime, int prospectdelay, int oreCount, double success) {
 		this.object = object;

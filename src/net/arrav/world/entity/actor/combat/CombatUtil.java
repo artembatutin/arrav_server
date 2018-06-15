@@ -48,7 +48,7 @@ public final class CombatUtil {
 	 * @param weapon the weapon you have equipped.
 	 * @return the ranged distance.
 	 * @throws IllegalArgumentException if the weapon interface type is
-	 *                                  invalid.
+	 * invalid.
 	 */
 	public static int getRangedDistance(WeaponInterface weapon) {
 		switch(weapon) {
@@ -77,7 +77,7 @@ public final class CombatUtil {
 	 * Sends an action to {@link Actor} instance which is within a {@code distance}.
 	 * @param attacker attacker.
 	 * @param defender defender.
-	 * @param action   action consumer.
+	 * @param action action consumer.
 	 */
 	public static void areaAction(Actor attacker, Actor defender, Consumer<Actor> action) {
 		areaAction(attacker, defender, 1, 9, action);
@@ -88,49 +88,70 @@ public final class CombatUtil {
 	 * @param attacker attacker.
 	 * @param defender defender.
 	 * @param distance distance parsed.
-	 * @param max      the max amount of actors action applied.
-	 * @param action   action consumer.
+	 * @param max the max amount of actors action applied.
+	 * @param action action consumer.
 	 */
 	public static void areaAction(Actor attacker, Actor defender, int distance, int max, Consumer<Actor> action) {
 		action.accept(defender);
-		if(!attacker.inMulti() || !defender.inMulti()) return;
+		if(!attacker.inMulti() || !defender.inMulti())
+			return;
 		int added = 0;
 		for(Player other : defender.getLocalPlayers()) {
-			if(other == null) continue;
-			if(other.getInstance() != defender.getInstance()) continue;
-			if(!other.getPosition().withinDistance(defender.getPosition(), distance)) continue;
-			if(other.same(attacker) || other.same(defender)) continue;
-			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
-			if(!other.inMulti()) continue;
-			if (attacker.isPlayer() && attacker.inWilderness() && other.inWilderness()) continue;
+			if(other == null)
+				continue;
+			if(other.getInstance() != defender.getInstance())
+				continue;
+			if(!other.getPosition().withinDistance(defender.getPosition(), distance))
+				continue;
+			if(other.same(attacker) || other.same(defender))
+				continue;
+			if(other.getCurrentHealth() <= 0 || other.isDead())
+				continue;
+			if(!other.inMulti())
+				continue;
+			if(attacker.isPlayer() && attacker.inWilderness() && other.inWilderness())
+				continue;
 			action.accept(other);
-			if(++added == max) return;
+			if(++added == max)
+				return;
 		}
 		for(Mob other : defender.getLocalMobs()) {
-			if(other == null) continue;
-			if(other.getInstance() != defender.getInstance()) continue;
-			if(!other.getPosition().withinDistance(defender.getPosition(), distance)) continue;
-			if(other.same(attacker) || other.same(defender)) continue;
-			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
-			if(!other.getDefinition().isAttackable()) continue;
-			if(!other.inMulti()) continue;
+			if(other == null)
+				continue;
+			if(other.getInstance() != defender.getInstance())
+				continue;
+			if(!other.getPosition().withinDistance(defender.getPosition(), distance))
+				continue;
+			if(other.same(attacker) || other.same(defender))
+				continue;
+			if(other.getCurrentHealth() <= 0 || other.isDead())
+				continue;
+			if(!other.getDefinition().isAttackable())
+				continue;
+			if(!other.inMulti())
+				continue;
 			action.accept(other);
-			if(++added == max) return;
+			if(++added == max)
+				return;
 		}
 	}
 	
 	public static <A extends Actor> List<A> actorsWithinDistance(Actor player, Set<A> actors, int radius) {
 		List<A> collected = new LinkedList<>();
 		for(A other : actors) {
-			if(other == null) continue;
-			if(!other.getPosition().withinDistance(player.getPosition(), radius)) continue;
-			if(other.same(player)) continue;
-			if(other.getCurrentHealth() <= 0 || other.isDead()) continue;
+			if(other == null)
+				continue;
+			if(!other.getPosition().withinDistance(player.getPosition(), radius))
+				continue;
+			if(other.same(player))
+				continue;
+			if(other.getCurrentHealth() <= 0 || other.isDead())
+				continue;
 			collected.add(other);
 		}
 		return collected;
 	}
-
+	
 	/**
 	 * Gets the corresponding combat prayer to {@code type}.
 	 * @param type the combat type to get the prayer for.
@@ -149,12 +170,12 @@ public final class CombatUtil {
 				throw new IllegalArgumentException("Invalid combat type: " + type);
 		}
 	}
-
+	
 	/**
 	 * Gets the hit delay for the specified {@code type}.
 	 * @param attacker the character doing the hit
 	 * @param defender the victim being hit
-	 * @param type     the combat type of this hit
+	 * @param type the combat type of this hit
 	 * @return the delay for the combat type
 	 * @throws IllegalArgumentException if the combat type is invalid
 	 */
@@ -199,7 +220,7 @@ public final class CombatUtil {
 	/**
 	 * Calculates the combat level difference for wilderness player vs. player
 	 * combat.
-	 * @param combatLevel      the combat level of the first person.
+	 * @param combatLevel the combat level of the first person.
 	 * @param otherCombatLevel the combat level of the other person.
 	 * @return the combat level difference.
 	 */
@@ -217,7 +238,7 @@ public final class CombatUtil {
 	 * Calculates a pseudo-random hit for {@code character} based on {@code
 	 * victim} and {@code type}.
 	 * @param victim the victim of this hit that will be used as a factor.
-	 * @param hit    the hit being processed in the combat.
+	 * @param hit the hit being processed in the combat.
 	 * @return the generated hit, will most likely return a different result if
 	 * called on two different occasions even with the same arguments.
 	 */
@@ -250,14 +271,14 @@ public final class CombatUtil {
 		
 		return new Animation(actor.toMob().getDefinition().getDefenceAnimation(), Animation.AnimationPriority.LOW);
 	}
-
+	
 	static boolean validateMobs(Actor attacker, Actor defender) {
-		if (!validate(attacker) || !validate(defender)) {
+		if(!validate(attacker) || !validate(defender)) {
 			attacker.getCombat().reset(true, true);
 			return false;
 		}
-
-		if (!canAttack(attacker, defender)) {
+		
+		if(!canAttack(attacker, defender)) {
 			attacker.getCombat().reset(true, true);
 			return false;
 		}
@@ -267,29 +288,29 @@ public final class CombatUtil {
 	public static boolean canAttack(Actor attacker, Actor defender) {
 		boolean multi = attacker.inMulti() && defender.inMulti();
 		boolean attacked = defender.getCombat().isUnderAttack();
-		if (attacked && !multi && !attacker.getCombat().isAttacking(defender)) {
-			if (attacker.isPlayer()) {
+		if(attacked && !multi && !attacker.getCombat().isAttacking(defender)) {
+			if(attacker.isPlayer()) {
 				Player player = attacker.toPlayer();
 				player.message("This player is already in combat.");
 			}
 			attacker.getCombat().reset(true, true);
 			return false;
 		}
-		if (attacker.isPlayer() && defender.isPlayer()) {
+		if(attacker.isPlayer() && defender.isPlayer()) {
 			Player player = attacker.toPlayer();
 			Player victim = defender.toPlayer();
 			Optional<Minigame> optional = MinigameHandler.getMinigame(player);
-			if (!optional.isPresent()) {
-				if (Location.inFunPvP(attacker) && Location.inFunPvP(victim)) {
+			if(!optional.isPresent()) {
+				if(Location.inFunPvP(attacker) && Location.inFunPvP(victim)) {
 					return true;
 				}
-				if (!attacker.inWilderness() || !victim.inWilderness()) {
+				if(!attacker.inWilderness() || !victim.inWilderness()) {
 					player.message("Both you and " + victim.getFormatUsername() + " need to be in the wilderness to fight!");
 					player.getCombat().reset(true, true);
 					return false;
 				}
 				int combatDifference = CombatUtil.combatLevelDifference(player.determineCombatLevel(), victim.determineCombatLevel());
-				if (combatDifference > player.getWildernessLevel() || combatDifference > victim.getWildernessLevel()) {
+				if(combatDifference > player.getWildernessLevel() || combatDifference > victim.getWildernessLevel()) {
 					player.message("Your combat level difference is too great to attack that player here.");
 					player.getCombat().reset(true, true);
 					return false;
@@ -312,40 +333,40 @@ public final class CombatUtil {
 		int hitsplatDelay = getHitsplatDelay(CombatType.MAGIC);
 		return generateDragonfire(attacker, defender, max, hitDelay, hitsplatDelay, prayer);
 	}
-
+	
 	public static CombatHit generateDragonfire(Mob attacker, Actor defender, int max, int hitDelay, int hitsplatDelay, boolean prayer) {
 		int damage;
-
-		if (defender.isPlayer()) {
+		
+		if(defender.isPlayer()) {
 			Player player = defender.toPlayer();
 			prayer &= player.getPrayerActive().contains(Prayer.PROTECT_FROM_MAGIC);
 			boolean shield = player.getEquipment().containsAny(1540, 11283);
 			boolean potion = player.getAntifireDetails().isPresent();
-
-			if (shield && potion) {
+			
+			if(shield && potion) {
 				max = 0;
-			} else if (potion) {
+			} else if(potion) {
 				AntifireDetails.AntifireType type = player.getAntifireDetails().get().getType();
 				max -= type.getReduction();
-				if (max <= 0) {
+				if(max <= 0) {
 					max = 0;
 				}
-			} else if (shield) {
+			} else if(shield) {
 				max -= 500;
-			} else if (prayer) {
+			} else if(prayer) {
 				max -= 450;
 			}
-
+			
 			damage = max == 0 ? 0 : RandomUtils.inclusive(max);
-			if (damage >= 150) {
+			if(damage >= 150) {
 				player.out(new SendMessage("You are horribly burned by the dragonfire!"));
-			} else if (!shield && !potion && !prayer && damage < 90 && damage > 0) {
+			} else if(!shield && !potion && !prayer && damage < 90 && damage > 0) {
 				player.out(new SendMessage("You manage to resist some of the dragonfire."));
 			}
 		} else {
 			damage = max == 0 ? 0 : RandomUtils.inclusive(max);
 		}
-
+		
 		Hit hit = new Hit(damage, Hitsplat.NORMAL, HitIcon.NONE, true, attacker.getSlot());
 		return new CombatHit(hit, hitDelay, hitsplatDelay);
 	}
@@ -358,7 +379,7 @@ public final class CombatUtil {
 	public static CombatStrategy<Mob>[] createStrategyArray(CombatStrategy<Mob>... strategies) {
 		return strategies;
 	}
-
+	
 	/**
 	 * Determines if {@code character} is wearing full void.
 	 * @param character the character to determine this for.
@@ -366,11 +387,11 @@ public final class CombatUtil {
 	 * {@code false} otherwise.
 	 */
 	public static boolean isFullVoid(Actor character) {
-		if (character.isMob()) {
+		if(character.isMob()) {
 			return character.toMob().getDefinition().getName().contains("Void Knight");
 		}
 		Item top = ((Player) character).getEquipment().get(Equipment.CHEST_SLOT);
 		return top != null && !(top.getId() != 8839 && top.getId() != 10611) && character.toPlayer().getEquipment().containsAll(8840, 8842);
 	}
-
+	
 }

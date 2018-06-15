@@ -2,9 +2,9 @@ package net.arrav.content.object.star;
 
 import net.arrav.content.dialogue.impl.StatementDialogue;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.object.DynamicObject;
-import net.arrav.world.object.ObjectDirection;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.DynamicObject;
+import net.arrav.world.entity.object.ObjectDirection;
+import net.arrav.world.entity.object.ObjectType;
 
 /**
  * Represents a single shooting star object.
@@ -44,7 +44,7 @@ public final class ShootingStar extends DynamicObject {
 	
 	/**
 	 * Attempts to mine this star.
-	 * @param player   the player attempting to mine the star.
+	 * @param player the player attempting to mine the star.
 	 * @param objectId the object id interacted with.
 	 * @return {@code true} if the player mined, {@code false} otherwise.
 	 */
@@ -59,7 +59,7 @@ public final class ShootingStar extends DynamicObject {
 	
 	/**
 	 * Attempts to prospect this star.
-	 * @param player   the player attempting to prospect the star.
+	 * @param player the player attempting to prospect the star.
 	 * @param objectId the object id interacted with.
 	 * @return {@code true} if the player prospected, {@code false} otherwise.
 	 */
@@ -68,8 +68,7 @@ public final class ShootingStar extends DynamicObject {
 			return false;
 		}
 		int percent = (int) ((float) getElements() / data.stardust * 100);
-		player.getDialogueBuilder()
-				.append(new StatementDialogue("This is a size-" + this.data.size + " star. A mining level of at least " + this.data.levelRequirement + " is required to", "mine this layer. It has been mined about " + percent + " percent of the way", "to the next layer."));
+		player.getDialogueBuilder().append(new StatementDialogue("This is a size-" + this.data.size + " star. A mining level of at least " + this.data.levelRequirement + " is required to", "mine this layer. It has been mined about " + percent + " percent of the way", "to the next layer."));
 		return true;
 	}
 	

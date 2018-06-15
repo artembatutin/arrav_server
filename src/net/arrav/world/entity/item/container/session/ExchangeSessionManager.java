@@ -241,7 +241,7 @@ public final class ExchangeSessionManager {
 	 * Checks if the session is still available.
 	 * @param requester the player who requested.
 	 * @param requested the player who's being requested.
-	 * @param type      the session type we're checking availability for.
+	 * @param type the session type we're checking availability for.
 	 * @return an exchange session wrapped in an optional if the session is still available,
 	 * {@link Optional#empty()}. otherwise.
 	 */
@@ -295,7 +295,7 @@ public final class ExchangeSessionManager {
 	 * Finalizes the exchange session procedure for the specified {@code player}
 	 * in a session.
 	 * @param player the player to finalize for.
-	 * @param type   the type of finalization we're appending.
+	 * @param type the type of finalization we're appending.
 	 */
 	public void finalize(Player player, ExchangeSessionActionType type) {
 		if(!SESSIONS.isEmpty()) {

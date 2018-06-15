@@ -13,7 +13,7 @@ import net.arrav.content.skill.agility.obstacle.impl.Movable;
 import net.arrav.content.skill.agility.obstacle.impl.Walkable;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -32,8 +32,8 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 
 	/**
 	 * Constructs a new {@link GnomeStrongholdAgility} course.
-	 * @param player   {@link #getPlayer()}.
-	 * @param object   {@link #getObject()}.
+	 * @param player {@link #getPlayer()}.
+	 * @param object {@link #getObject()}.
 	 * @param obstacle the obstacle this player is trying to cross.
 	 */
 	private GnomeStrongholdAgility(Player player, GameObject object, GnomeAgilityData obstacle) {
@@ -118,8 +118,7 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 		/**
 		 * Advanced course
 		 */
-		ADVANCED_TREE_BRANCH_UP(new int[]{85531}, ObstacleType.TREE_BRANCH_UP_ADVANCED, player1 -> new Climbable(new Position(player1.getPosition()
-				.getX(), 3420, 2), new Position(2472, 3419, 3), ObstacleType.TREE_BRANCH_UP_ADVANCED.getAnimation(), 2, 85, 25)),
+		ADVANCED_TREE_BRANCH_UP(new int[]{85531}, ObstacleType.TREE_BRANCH_UP_ADVANCED, player1 -> new Climbable(new Position(player1.getPosition().getX(), 3420, 2), new Position(2472, 3419, 3), ObstacleType.TREE_BRANCH_UP_ADVANCED.getAnimation(), 2, 85, 25)),
 		RUN_ACROSS_SIGNPOST(new int[]{85584}, ObstacleType.RUN_ACROSS_SIGNPOST, player1 -> new Movable(new Position(2476, 3418, 3), new Position(2484, 3418, 3), ObstacleType.RUN_ACROSS_SIGNPOST.getAnimation(), 105, 6, 60, 25)),
 		POLE_SWING(new int[]{85532}, ObstacleType.POLE_SWING, PoleSwing::new),
 		JUMP_OVER_BARRIER(new int[]{85542}, ObstacleType.JUMP_OVER_BARRIER, player1 -> new JumpOverBarrier());
@@ -146,8 +145,8 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
-		 * @param objectIds      {@link #objectIds}.
-		 * @param message        {@link #message}.
+		 * @param objectIds {@link #objectIds}.
+		 * @param message {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
@@ -160,8 +159,8 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
-		 * @param objectIds      {@link #objectIds}.
-		 * @param message        {@link #message}.
+		 * @param objectIds {@link #objectIds}.
+		 * @param message {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
@@ -174,8 +173,8 @@ public final class GnomeStrongholdAgility extends AgilityCourse {
 
 		/**
 		 * Constructs a new {@link GnomeAgilityData}.
-		 * @param objectIds      {@link #objectIds}.
-		 * @param type           {@link #message}.
+		 * @param objectIds {@link #objectIds}.
+		 * @param type {@link #message}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
 		GnomeAgilityData(int[] objectIds, ObstacleType type, ObstacleAction obstacleAction) {

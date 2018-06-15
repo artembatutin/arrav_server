@@ -40,7 +40,7 @@ class ActorFollowTask extends Task {
 	/**
 	 * Creates a new {@link ActorFollowTask}.
 	 * @param actor the actor this process is being executed for.
-	 * @param leader    the actor being followed in this process.
+	 * @param leader the actor being followed in this process.
 	 */
 	ActorFollowTask(Actor actor, Actor leader) {
 		super(1, true);
@@ -110,7 +110,7 @@ class ActorFollowTask extends Task {
 		//combat within boundary
 		CombatType type = CombatType.NONE;
 		if(combat) {
-			if (!actor.getPosition().withinDistance(leader.getPosition(), 45)) {
+			if(!actor.getPosition().withinDistance(leader.getPosition(), 45)) {
 				actor.getCombat().reset(true, true);
 				return;
 			}

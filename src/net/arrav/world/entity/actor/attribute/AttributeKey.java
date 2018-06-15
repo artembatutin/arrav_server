@@ -10,9 +10,9 @@ import net.arrav.world.Direction;
 import net.arrav.world.entity.actor.combat.attack.FightType;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.DynamicObject;
-import net.arrav.world.object.ObjectDirection;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.DynamicObject;
+import net.arrav.world.entity.object.ObjectDirection;
+import net.arrav.world.entity.object.ObjectType;
 
 import java.util.IdentityHashMap;
 
@@ -110,7 +110,7 @@ public final class AttributeKey<T> {
 	/**
 	 * Aliases {@code name} with an initial value of {@code initialValue} that will be written to and read from the character
 	 * file.
-	 * @param name         The name of this key.
+	 * @param name The name of this key.
 	 * @param initialValue The initial value of this key.
 	 */
 	public static <T> void forPersistent(String name, T initialValue) {
@@ -119,7 +119,7 @@ public final class AttributeKey<T> {
 	
 	/**
 	 * Aliases {@code name} with an initial value of {@code initialValue}.
-	 * @param name         The name of this key.
+	 * @param name The name of this key.
 	 * @param initialValue The initial value of this key.
 	 */
 	public static <T> void forTransient(String name, T initialValue) {
@@ -148,7 +148,7 @@ public final class AttributeKey<T> {
 	
 	/**
 	 * Creates a new {@link AttributeKey}.
-	 * @param name         The name of this alias.
+	 * @param name The name of this alias.
 	 * @param initialValue The initial value of this alias.
 	 * @param isPersistent If the value of this alias should be serialized.
 	 */

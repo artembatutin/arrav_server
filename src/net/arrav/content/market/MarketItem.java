@@ -57,12 +57,12 @@ public class MarketItem {
 	
 	/**
 	 * Creating the {@link MarketItem}.
-	 * @param id             the id of this item.
-	 * @param value          the value of this item.
-	 * @param price          the price of this item.
-	 * @param stock          the stock amount of this item.
+	 * @param id the id of this item.
+	 * @param value the value of this item.
+	 * @param price the price of this item.
+	 * @param stock the stock amount of this item.
 	 * @param unlimitedStock the unlimitedStock condition.
-	 * @param searchable     the searchable condition.
+	 * @param searchable the searchable condition.
 	 */
 	public MarketItem(int id, int value, int price, int stock, boolean unlimitedStock, boolean searchable) {
 		this.id = id;

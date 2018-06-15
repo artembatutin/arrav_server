@@ -12,9 +12,9 @@ public interface IncomingPacket {
 	
 	/**
 	 * Handles the message designated to {@code opcode}.
-	 * @param player  the player this message is being handled for.
-	 * @param opcode  the opcode of this message.
-	 * @param size    the size of this message.
+	 * @param player the player this message is being handled for.
+	 * @param opcode the opcode of this message.
+	 * @param size the size of this message.
 	 * @param buf the data contained within this message.
 	 */
 	void handle(Player player, int opcode, int size, ByteBuf buf);

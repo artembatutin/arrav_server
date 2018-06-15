@@ -94,7 +94,7 @@ public final class ForcedMovement {
 	/**
 	 * Constructs a new {@code ForceMovement} {@code Task}.
 	 * @param character the character.
-	 * @param second    the destination.
+	 * @param second the destination.
 	 * @param animation the animation.
 	 */
 	public static ForcedMovement create(Actor character, Position second, Animation animation) {
@@ -109,7 +109,7 @@ public final class ForcedMovement {
 	/**
 	 * Constructs a new {@code ForceMovement} {@code Task}.
 	 * @param character the character.
-	 * @param second    the destination.
+	 * @param second the destination.
 	 * @param animation the animation.
 	 */
 	public static ForcedMovement create(Actor character, Position second, boolean animation) {
@@ -119,7 +119,7 @@ public final class ForcedMovement {
 	/**
 	 * Constructs a new {@code ForceMovement} {@code Task}.
 	 * @param character the character.
-	 * @param second    the destination.
+	 * @param second the destination.
 	 */
 	public static ForcedMovement create(Actor character, Position second) {
 		return create(character, second, false);
@@ -127,7 +127,7 @@ public final class ForcedMovement {
 	
 	/**
 	 * Gets the direction value.
-	 * @param start       The start location.
+	 * @param start The start location.
 	 * @param destination The second.
 	 * @return The direction object.
 	 */

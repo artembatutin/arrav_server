@@ -12,7 +12,7 @@ import net.arrav.content.skill.prayer.PrayerBoneAltar;
 import net.arrav.net.packet.in.ItemOnObjectPacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 /**
  * Action handling item on object actions.

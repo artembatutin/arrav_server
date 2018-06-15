@@ -1,6 +1,7 @@
 package net.arrav.world.entity.actor.combat.magic.lunars;
 
 import net.arrav.content.skill.Skills;
+import net.arrav.content.skill.magic.Spellbook;
 import net.arrav.util.Stopwatch;
 import net.arrav.world.Animation;
 import net.arrav.world.Graphic;
@@ -9,7 +10,6 @@ import net.arrav.world.entity.actor.combat.magic.MagicRune;
 import net.arrav.world.entity.actor.combat.magic.MagicSpell;
 import net.arrav.world.entity.actor.combat.magic.RequiredRune;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.content.skill.magic.Spellbook;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;

@@ -61,8 +61,8 @@ public final class Pickpocketing extends Thieving {
 	/**
 	 * Constructs a new {@link Pickpocketing}.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   the definition of this theft.
-	 * @param mob    the mob this player is stealing from.
+	 * @param data the definition of this theft.
+	 * @param mob the mob this player is stealing from.
 	 */
 	private Pickpocketing(Player player, PickpocketData data, Mob mob) {
 		super(player, mob.getPosition());
@@ -95,15 +95,14 @@ public final class Pickpocketing extends Thieving {
 	 * The lower the return value, the lower the failure rate
 	 * @return an integer to determine how often you will fail.
 	 */
-//	private double failureRate() {
-//		double successRate = (5/833)*getPlayer().getSkills()[Skills.THIEVING].getLevel() + 17/49;
-//		return (levelFactor + npcFactor) / 2;
-//	}
-
+	//	private double failureRate() {
+	//		double successRate = (5/833)*getPlayer().getSkills()[Skills.THIEVING].getLevel() + 17/49;
+	//		return (levelFactor + npcFactor) / 2;
+	//	}
 	@Override
 	public boolean failure() {
 		if(mob.getDefinition().getName().contains("Master")) {
-			return !RandomUtils.success(((((double) 5/833)*getPlayer().getSkills()[Skills.THIEVING].getLevel()) + ((double) 17/49)));
+			return !RandomUtils.success(((((double) 5 / 833) * getPlayer().getSkills()[Skills.THIEVING].getLevel()) + ((double) 17 / 49)));
 		}
 		return (RandomUtils.inclusive(getPlayer().getSkills()[Skills.THIEVING].getLevel() + RandomUtils.inclusive(5)) < (RandomUtils.inclusive(definition.requirement) + RandomUtils.inclusive((5))));
 	}

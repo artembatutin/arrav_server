@@ -36,7 +36,7 @@ public final class Pet extends Follower {
 	
 	/**
 	 * Constructs a new {@link Pet}.
-	 * @param data     the data to construct this pet from.
+	 * @param data the data to construct this pet from.
 	 * @param position the position this pet should be spawned at.
 	 */
 	public Pet(PetData data, Position position) {
@@ -62,8 +62,8 @@ public final class Pet extends Follower {
 	/**
 	 * Attempts to feed the pet the player has spawned.
 	 * @param player the player feeding the pet.
-	 * @param mob    the mob representing the pet.
-	 * @param food   the item representing the food.
+	 * @param mob the mob representing the pet.
+	 * @param food the item representing the food.
 	 * @return {@code true} if the pet was fed, {@code false} if not.
 	 */
 	public static boolean feed(Player player, Mob mob, Item food) {
@@ -106,7 +106,7 @@ public final class Pet extends Follower {
 	/**
 	 * Attempts to spawn the pet.
 	 * @param player the player spawning the pet.
-	 * @param item   the item that represents the pet.
+	 * @param item the item that represents the pet.
 	 * @return {@code true} if the pet was spawned, {@code false} otherwise.
 	 */
 	public static boolean canDrop(Player player, Item item) {
@@ -179,7 +179,7 @@ public final class Pet extends Follower {
 	/**
 	 * Attempts to pickup the pet.
 	 * @param player the player picking up the pet.
-	 * @param mob    the mob that was picked up.
+	 * @param mob the mob that was picked up.
 	 * @return {@code true} if the pet was picked up, {@code false} otherwise.
 	 */
 	public static boolean pickup(Player player, Mob mob) {
@@ -215,7 +215,7 @@ public final class Pet extends Follower {
 	/**
 	 * Attempts to set the interface for the specified player.
 	 * @param player the player to set the interface for.
-	 * @param pet    the pet that was spawned.
+	 * @param pet the pet that was spawned.
 	 */
 	private static void setInterface(Player player, Pet pet) {
 		player.text(19021, pet.getDefinition().getName());

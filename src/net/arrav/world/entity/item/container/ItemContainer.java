@@ -141,8 +141,8 @@ public class ItemContainer implements Iterable<Item> {
 	/**
 	 * Creates a new {@link ItemContainer}.
 	 * @param capacity {@link #capacity()}.
-	 * @param policy   {@link #policy}.
-	 * @param items    {@link #items}.
+	 * @param policy {@link #policy}.
+	 * @param items {@link #items}.
 	 */
 	public ItemContainer(int capacity, StackPolicy policy, Item[] items) {
 		this.capacity = capacity;
@@ -153,7 +153,7 @@ public class ItemContainer implements Iterable<Item> {
 	/**
 	 * Creates a new {@link ItemContainer}.
 	 * @param capacity {@link #capacity()}.
-	 * @param policy   {@link #policy}.
+	 * @param policy {@link #policy}.
 	 */
 	public ItemContainer(int capacity, StackPolicy policy) {
 		this(capacity, policy, new Item[capacity]);
@@ -195,9 +195,9 @@ public class ItemContainer implements Iterable<Item> {
 	
 	/**
 	 * Attempts to add {@code item} into this container, preferably at {@code preferredIndex}.
-	 * @param item           The {@link Item} to add.
+	 * @param item The {@link Item} to add.
 	 * @param preferredIndex The preferable index to add {@code item} to.
-	 * @param refresh        The condition if we will be refreshing our container.
+	 * @param refresh The condition if we will be refreshing our container.
 	 * @return amount of slots filled, -1 if failed, 0 if added stackable portion.
 	 */
 	public int add(Item item, int preferredIndex, boolean refresh) {
@@ -335,7 +335,7 @@ public class ItemContainer implements Iterable<Item> {
 	
 	/**
 	 * Attempts to remove {@code item} from this container, preferably from {@code preferredIndex}.
-	 * @param item           The {@link Item} to remove.
+	 * @param item The {@link Item} to remove.
 	 * @param preferredIndex The preferable index to remove {@code item} from.
 	 * @return amount of slots cleared, -1 if failed, 0 if removed stackable portion.
 	 */
@@ -345,9 +345,9 @@ public class ItemContainer implements Iterable<Item> {
 	
 	/**
 	 * Attempts to remove {@code item} from this container, preferably from {@code preferredIndex}.
-	 * @param item           The {@link Item} to remove.
+	 * @param item The {@link Item} to remove.
 	 * @param preferredIndex The preferable index to remove {@code item} from.
-	 * @param refresh        The condition if we will be refreshing our container.
+	 * @param refresh The condition if we will be refreshing our container.
 	 * @return amount of slots cleared, -1 if failed, 0 if removed stackable portion.
 	 */
 	public int remove(Item item, int preferredIndex, boolean refresh) {
@@ -552,8 +552,8 @@ public class ItemContainer implements Iterable<Item> {
 	
 	/**
 	 * Replaces the first occurrence of the {@link Item} having the identifier {@code oldId} with {@code newId}.
-	 * @param oldId   The old identifier to replace.
-	 * @param newId   The new identifier to replace.
+	 * @param oldId The old identifier to replace.
+	 * @param newId The new identifier to replace.
 	 * @param refresh The condition if the coontainer will be refreshed.
 	 * @return {@code true} if the replace operation was successful, {@code false otherwise}.
 	 */
@@ -593,8 +593,8 @@ public class ItemContainer implements Iterable<Item> {
 	
 	/**
 	 * Computes the amount of indexes required to hold {@code items} in this container.
-	 * @param raw      The flag if container beholds aren't considered.
-	 * @param negate   if the stacking changes must be negated.
+	 * @param raw The flag if container beholds aren't considered.
+	 * @param negate if the stacking changes must be negated.
 	 * @param forItems The items to compute the index count for.
 	 * @return The slot count the items would take in this container.
 	 */
@@ -642,7 +642,7 @@ public class ItemContainer implements Iterable<Item> {
 	/**
 	 * Determines if this container has the capacity for {@code item}.
 	 * @param cleared The amount of items cleared taken in consideration.
-	 * @param item    The {@link Item} to determine this for.
+	 * @param item The {@link Item} to determine this for.
 	 * @return {@code true} if {@code item} can be added, {@code false} otherwise.
 	 */
 	public final boolean hasCapacityFor(int cleared, Item... item) {
@@ -653,7 +653,7 @@ public class ItemContainer implements Iterable<Item> {
 	/**
 	 * Creates a copy of the underlying container and removes the items specified from it
 	 * and after tries to deposit the specified items to it.
-	 * @param add    the items to deposit to this container.
+	 * @param add the items to deposit to this container.
 	 * @param remove the items that should be removed before adding.
 	 * @return {@code true} if {@code item} can be added, {@code false} otherwise.
 	 */
@@ -786,7 +786,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * Sends one item on the interface at a specific slot.
 	 * @param player The player sending the update to.
 	 * @param widget The widget to send the {@code Item}s on.
-	 * @param slot   The slot id of the new item to be sent.
+	 * @param slot The slot id of the new item to be sent.
 	 */
 	public final void refreshSingle(Player player, int widget, int slot) {
 		player.out(new SendItemOnInterfaceSlot(widget, items[slot], slot));
@@ -803,10 +803,10 @@ public class ItemContainer implements Iterable<Item> {
 	
 	/**
 	 * Swaps the {@link Item}s on {@code oldIndex} and {@code newIndex}.
-	 * @param insert   If the {@code Item} should be inserted.
+	 * @param insert If the {@code Item} should be inserted.
 	 * @param oldIndex The old index.
 	 * @param newIndex The new index.
-	 * @param refresh  The condition that determines if we will refresh the container.
+	 * @param refresh The condition that determines if we will refresh the container.
 	 */
 	public final void swap(boolean insert, int oldIndex, int newIndex, boolean refresh) {
 		checkArgument(oldIndex >= 0 && oldIndex < capacity, "oldIndex out of range");
@@ -852,7 +852,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * Transfers the item in {@code slot} to {@code newSlot}. If an item already
 	 * exists in the new slot, the items in this container will be shifted to
 	 * accommodate for the transfer.
-	 * @param slot    the slot of the item to transfer.
+	 * @param slot the slot of the item to transfer.
 	 * @param newSlot the slot to transfer the item to.
 	 * @return {@code true} if the transfer was successful, {@code false}
 	 * otherwise.
@@ -1006,7 +1006,7 @@ public class ItemContainer implements Iterable<Item> {
 	 * Fills the container of items to {@code items}. The container will not hold
 	 * any references to the array, nor the item instances in the array.
 	 * @param items the new array of items, the capacities of this must be equal
-	 *              to or lesser than the container.
+	 * to or lesser than the container.
 	 */
 	public final void fillItems(Item[] items) {
 		Preconditions.checkArgument(items.length <= capacity);
@@ -1075,8 +1075,8 @@ public class ItemContainer implements Iterable<Item> {
 	
 	/**
 	 * Sets the {@code index} to {@code item}.
-	 * @param index   The index to set.
-	 * @param item    The {@link Item} to set on the index.
+	 * @param index The index to set.
+	 * @param item The {@link Item} to set on the index.
 	 * @param refresh The condition if the container must be refreshed.
 	 */
 	public final void set(int index, Item item, boolean refresh) {

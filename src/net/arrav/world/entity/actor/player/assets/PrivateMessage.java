@@ -112,9 +112,9 @@ public final class PrivateMessage {
 	
 	/**
 	 * Attempts to send {@code message} to the player with {@code name}.
-	 * @param name    the player with this name to send the message to.
+	 * @param name the player with this name to send the message to.
 	 * @param message the message to send to the player.
-	 * @param size    the size of the message to send.
+	 * @param size the size of the message to send.
 	 */
 	public void sendPrivateMessage(long name, byte[] message, int size) {
 		int rights = player.getRights() == PLAYER && player.isIronMan() ? IRON_MAN.getProtocolValue() : player.getRights().getProtocolValue();

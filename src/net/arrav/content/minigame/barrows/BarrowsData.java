@@ -58,11 +58,11 @@ public enum BarrowsData {
 	
 	/**
 	 * Constructs a new {@link BarrowsData} enumerator.
-	 * @param npcId         {@link #npcId}.
+	 * @param npcId {@link #npcId}.
 	 * @param sarcophagusId {@link #sarcophagusId}.
-	 * @param stairId       {@link #stairId}.
-	 * @param location      {@link #location}.
-	 * @param cave          {@link #cave}.
+	 * @param stairId {@link #stairId}.
+	 * @param location {@link #location}.
+	 * @param cave {@link #cave}.
 	 */
 	BarrowsData(int npcId, int sarcophagusId, int stairId, CircleLocation location, Position spawn, Position cave) {
 		this.npcId = npcId;

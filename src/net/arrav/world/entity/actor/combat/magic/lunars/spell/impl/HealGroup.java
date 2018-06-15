@@ -4,10 +4,10 @@ import net.arrav.world.Animation;
 import net.arrav.world.Graphic;
 import net.arrav.world.entity.actor.Actor;
 import net.arrav.world.entity.actor.combat.CombatUtil;
+import net.arrav.world.entity.actor.combat.hit.Hit;
 import net.arrav.world.entity.actor.combat.magic.MagicRune;
 import net.arrav.world.entity.actor.combat.magic.RequiredRune;
 import net.arrav.world.entity.actor.combat.magic.lunars.spell.LunarButtonSpell;
-import net.arrav.world.entity.actor.combat.hit.Hit;
 import net.arrav.world.entity.actor.player.Player;
 
 import java.util.List;

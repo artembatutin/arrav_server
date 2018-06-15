@@ -61,14 +61,14 @@ public enum Tree {
 
 	/**
 	 * Constructs a new {@link Tree} enumerator.
-	 * @param object      {@link #object}.
-	 * @param item        {@link #item}.
+	 * @param object {@link #object}.
+	 * @param item {@link #item}.
 	 * @param requirement {@link #requirement}.
-	 * @param experience  {@link #experience}.
+	 * @param experience {@link #experience}.
 	 * @param respawnTime {@link #respawnTime}.
-	 * @param success     {@link #success}.
-	 * @param logCount    {@link #logCount}.
-	 * @param obstacle    {@link #obstacle}.
+	 * @param success {@link #success}.
+	 * @param logCount {@link #logCount}.
+	 * @param obstacle {@link #obstacle}.
 	 */
 	Tree(TransformableObject[] object, int item, int requirement, double experience, int respawnTime, double success, int logCount, boolean obstacle) {
 		this.object = object;

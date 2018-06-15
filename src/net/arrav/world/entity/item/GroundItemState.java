@@ -6,7 +6,5 @@ package net.arrav.world.entity.item;
  * @author lare96 <http://github.com/lare96>
  */
 public enum GroundItemState {
-	SEEN_BY_OWNER,
-	SEEN_BY_EVERYONE,
-	HIDDEN
+	SEEN_BY_OWNER, SEEN_BY_EVERYONE, HIDDEN
 }

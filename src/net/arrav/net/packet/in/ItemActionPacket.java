@@ -42,7 +42,7 @@ public final class ItemActionPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the first slot of an item action.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the buffer for reading the sent data.
 	 */
 	private void firstClick(Player player, ByteBuf buf) {
@@ -68,7 +68,7 @@ public final class ItemActionPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the third slot of an item action.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the buffer for reading the sent data.
 	 */
 	private void secondClick(Player player, ByteBuf buf) {
@@ -110,7 +110,7 @@ public final class ItemActionPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the third slot of an item action.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the buffer for reading the sent data.
 	 */
 	private void thirdClick(Player player, ByteBuf buf) {

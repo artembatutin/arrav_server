@@ -19,8 +19,8 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.item.GroundItemState;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.entity.object.ObjectType;
 
 import java.util.Iterator;
 import java.util.Objects;

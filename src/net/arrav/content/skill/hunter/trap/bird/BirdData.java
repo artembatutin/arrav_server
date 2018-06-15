@@ -42,11 +42,11 @@ public enum BirdData {
 
 	/**
 	 * Constructs a new {@link BirdData}.
-	 * @param npcId       {@link #npcId}.
-	 * @param objectId    {@link #objectId}
+	 * @param npcId {@link #npcId}.
+	 * @param objectId {@link #objectId}
 	 * @param requirement {@link #requirement}.
-	 * @param experience  {@link #experience}.
-	 * @param reward      {@link #reward}.
+	 * @param experience {@link #experience}.
+	 * @param reward {@link #reward}.
 	 */
 	BirdData(int npcId, int objectId, int requirement, double experience, int... reward) {
 		this.npcId = npcId;

@@ -7,7 +7,7 @@ import net.arrav.net.packet.out.SendConfig;
 import net.arrav.world.entity.actor.player.Player;
 
 public class BankingButton extends ActionInitializer {
-
+	
 	@Override
 	public void init() {
 		ButtonAction e = new ButtonAction() {
@@ -80,5 +80,5 @@ public class BankingButton extends ActionInitializer {
 		for(int i = 100; i <= 109; i++)
 			e.register(i);
 	}
-
+	
 }

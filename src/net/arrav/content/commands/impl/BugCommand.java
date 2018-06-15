@@ -3,8 +3,6 @@ package net.arrav.content.commands.impl;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.arrav.content.commands.Command;
 import net.arrav.content.commands.CommandSignature;
-import net.arrav.content.minigame.rfd.RFDMinigame;
-import net.arrav.content.scene.impl.IntroductionCutscene;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
 

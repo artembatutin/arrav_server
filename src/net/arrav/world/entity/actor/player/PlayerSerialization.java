@@ -20,6 +20,8 @@ import net.arrav.content.skill.construction.House;
 import net.arrav.content.skill.construction.room.Room;
 import net.arrav.content.skill.farming.patch.Patch;
 import net.arrav.content.skill.farming.patch.PatchType;
+import net.arrav.content.skill.magic.Spellbook;
+import net.arrav.content.skill.prayer.PrayerBook;
 import net.arrav.content.skill.slayer.Slayer;
 import net.arrav.content.skill.summoning.SummoningData;
 import net.arrav.content.skill.summoning.familiar.Familiar;
@@ -34,13 +36,14 @@ import net.arrav.world.entity.actor.combat.attack.FightType;
 import net.arrav.world.entity.actor.combat.attack.listener.CombatListenerDispatcher;
 import net.arrav.world.entity.actor.combat.attack.listener.other.VengeanceListener;
 import net.arrav.world.entity.actor.player.assets.AntifireDetails;
-import net.arrav.content.skill.prayer.PrayerBook;
 import net.arrav.world.entity.actor.player.assets.Rights;
-import net.arrav.content.skill.magic.Spellbook;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.locale.Position;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -60,7 +63,7 @@ import static net.arrav.net.codec.login.LoginCode.*;
  * @author lare96 <http://github.com/lare96>
  */
 public final class PlayerSerialization {
-
+	
 	/**
 	 * Ensures a minimal character save size.
 	 */
@@ -158,8 +161,8 @@ public final class PlayerSerialization {
 				return NORMAL;
 			}
 			cf.setReadable(true);
-
-			try (FileInputStream in = new FileInputStream(cf)) {
+			
+			try(FileInputStream in = new FileInputStream(cf)) {
 				int size = (int) cf.length();
 				byte[] buf = new byte[size];
 				int readed = in.read(buf);
@@ -186,7 +189,7 @@ public final class PlayerSerialization {
 				}
 				Any attributes = data.get("attributes");
 				if(attributes != null) {
-					attributes.asMap().forEach((k,v) -> {
+					attributes.asMap().forEach((k, v) -> {
 						try {
 							String old = v.get("type").toString();
 							Class<?> type;
@@ -201,16 +204,16 @@ public final class PlayerSerialization {
 				}
 				Any achievements = data.get("achievements");
 				if(achievements != null) {
-					achievements.asMap().forEach((k,v) -> player.achievements.put(Achievement.valueOf(k), v.toInt()));
+					achievements.asMap().forEach((k, v) -> player.achievements.put(Achievement.valueOf(k), v.toInt()));
 				}
 				Any patches = data.get("patches");
 				if(patches != null) {
-					patches.asMap().forEach((k,v) -> player.patches.put(PatchType.valueOf(k), v.as(Patch.class)));
+					patches.asMap().forEach((k, v) -> player.patches.put(PatchType.valueOf(k), v.as(Patch.class)));
 				}
 			} catch(IOException e) {
 				e.printStackTrace();
 			}
-
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			return COULD_NOT_COMPLETE_LOGIN;
@@ -770,12 +773,12 @@ public final class PlayerSerialization {
 		@Override
 		public void fromJson(Player p, Any n) {
 			//if(!n.isJsonNull()) {
-				p.getFamiliar().ifPresent(ffs -> {
-					FamiliarAbility ability = ffs.getAbilityType();
-					if(ability.getType() == BEAST_OF_BURDEN) {
-						((FamiliarContainer) ability).getContainer().fillItems((n.as(Item[].class)));
-					}
-				});
+			p.getFamiliar().ifPresent(ffs -> {
+				FamiliarAbility ability = ffs.getAbilityType();
+				if(ability.getType() == BEAST_OF_BURDEN) {
+					((FamiliarContainer) ability).getContainer().fillItems((n.as(Item[].class)));
+				}
+			});
 			//}
 		}
 	}, new Token("house-rooms") {
@@ -788,7 +791,7 @@ public final class PlayerSerialization {
 		@Override
 		public void fromJson(Player p, Any n) {
 			//if(!n.isJsonNull()) {
-				p.getHouse().get().setRooms(n.as(Room[][][].class));
+			p.getHouse().get().setRooms(n.as(Room[][][].class));
 			//}
 		}
 	}};

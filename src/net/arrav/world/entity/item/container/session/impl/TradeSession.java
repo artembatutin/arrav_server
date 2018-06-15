@@ -25,8 +25,8 @@ public final class TradeSession extends ExchangeSession {
 	/**
 	 * Creates a new {@link TradeSession}.
 	 * @param player the player that controls this trade session.
-	 * @param other  the player that was invited to this trade session.
-	 * @param stage  the stage of this trade session.
+	 * @param other the player that was invited to this trade session.
+	 * @param stage the stage of this trade session.
 	 */
 	public TradeSession(Player player, Player other, int stage) {
 		super(Arrays.asList(player, other), stage, ExchangeSessionType.TRADE);
@@ -86,8 +86,7 @@ public final class TradeSession extends ExchangeSession {
 				continue;
 			}
 			int amount = this.getExchangeSession().get(player).computeAmountForId(item.getId());
-			tradeAmount = item.getDefinition()
-					.isStackable() ? amount >= 1000 && amount < 1000000 ? "@cya@" + (amount / 1000) + "K @whi@" + "(" + amount + ")" : amount >= 1000000 ? "@gre@" + (amount / 1000000) + " " + "million @whi@(" + amount + ")" : "" + amount : "(x" + amount + ")";
+			tradeAmount = item.getDefinition().isStackable() ? amount >= 1000 && amount < 1000000 ? "@cya@" + (amount / 1000) + "K @whi@" + "(" + amount + ")" : amount >= 1000000 ? "@gre@" + (amount / 1000000) + " " + "million @whi@(" + amount + ")" : "" + amount : "(x" + amount + ")";
 			tradeItems = count == 0 ? item.getDefinition().getName() : tradeItems + "\\n" + item.getDefinition().getName();
 			tradeItems = tradeItems + (item.getDefinition().isStackable() ? " x " : " ") + tradeAmount;
 			count++;

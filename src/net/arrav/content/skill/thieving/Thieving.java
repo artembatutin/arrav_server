@@ -18,7 +18,7 @@ public abstract class Thieving extends SkillAction {
 	
 	/**
 	 * Constructs a new {@link Thieving} {@link SkillAction}.
-	 * @param player   the player performing this skill action.
+	 * @param player the player performing this skill action.
 	 * @param position the position this player should face.
 	 */
 	public Thieving(Player player, Position position) {
@@ -47,7 +47,7 @@ public abstract class Thieving extends SkillAction {
 	 * @param success determines whether the theft was a success or not.
 	 */
 	public void onStop(boolean success) {
-	
+
 	}
 	
 	/**

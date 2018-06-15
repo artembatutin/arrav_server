@@ -14,7 +14,7 @@ import net.arrav.world.entity.actor.move.ForcedMovementManager;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -48,7 +48,7 @@ public abstract class AgilityCourse extends SkillAction {
 	 * Constructs a new {@link AgilityCourse}.
 	 * @param player the player we're handling functionality for.
 	 * @param object the object being interacted with.
-	 * @param type   the type of this agility course.
+	 * @param type the type of this agility course.
 	 */
 	public AgilityCourse(Player player, GameObject object, AgilityCourseType type) {
 		super(player, Optional.empty());
@@ -75,7 +75,7 @@ public abstract class AgilityCourse extends SkillAction {
 	public abstract Optional<String> crossedMessage();
 	
 	public void onSuccess() {
-	
+
 	}
 	
 	@Override

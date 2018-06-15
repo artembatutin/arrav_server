@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 public final class SendObjectRemoval implements OutgoingPacket {
 	

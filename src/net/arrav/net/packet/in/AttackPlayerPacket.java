@@ -42,7 +42,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 	
 	/**
 	 * Attempts to attack a player with a magic spell.
-	 * @param player  the player to attempt to attack.
+	 * @param player the player to attempt to attack.
 	 * @param buf the buffer for reading the sent data.
 	 */
 	private void attackMagic(Player player, ByteBuf buf) {
@@ -65,7 +65,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 	/**
 	 * Attempts to attack a player with any other form of combat such as melee
 	 * or ranged.
-	 * @param player  the player to attempt to attack.
+	 * @param player the player to attempt to attack.
 	 * @param buf the buffer for reading the sent data.
 	 */
 	private void attackOther(Player player, ByteBuf buf) {
@@ -83,7 +83,7 @@ public final class AttackPlayerPacket implements IncomingPacket {
 	 * Determines if an attack can be made by the {@code attacker} on
 	 * {@code victim}.
 	 * @param attacker the player that is trying to attack.
-	 * @param victim   the player that is being targeted.
+	 * @param victim the player that is being targeted.
 	 * @return {@code true} if an attack can be made, {@code false} otherwise.
 	 */
 	private boolean checkAttack(Player attacker, Player victim) {

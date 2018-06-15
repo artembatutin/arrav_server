@@ -27,7 +27,7 @@ public final class PizzaTopping extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link PizzaTopping}.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
+	 * @param data {@link #data}.
 	 */
 	public PizzaTopping(Player player, ToppingData data) {
 		super(player, Optional.empty());
@@ -42,7 +42,7 @@ public final class PizzaTopping extends ProducingSkillAction {
 	/**
 	 * Attempts to add a topping to the plain pizza.
 	 * @param player {@link #getPlayer()}.
-	 * @param used   the item used.
+	 * @param used the item used.
 	 * @param usedOn the item used on.
 	 * @return {@code true} if the skill action was started, {@code false} otherwise.
 	 */
@@ -149,10 +149,10 @@ public final class PizzaTopping extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link ToppingData}.
-		 * @param itemId      {@link #ingredient}.
-		 * @param produced    {@link #product}.
+		 * @param itemId {@link #ingredient}.
+		 * @param produced {@link #product}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
+		 * @param experience {@link #experience}.
 		 */
 		ToppingData(int itemId, int produced, int requirement, double experience) {
 			this.ingredient = new Item(itemId);

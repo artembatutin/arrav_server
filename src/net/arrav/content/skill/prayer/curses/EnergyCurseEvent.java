@@ -21,7 +21,7 @@ public class EnergyCurseEvent extends Task {
 
 	@Override
 	public void execute() {
-		if (defender.isDead() || attacker.isDead()) {
+		if(defender.isDead() || attacker.isDead()) {
 			cancel();
 			return;
 		}

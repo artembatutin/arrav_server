@@ -14,7 +14,7 @@ import net.arrav.world.locale.Boundary;
  * @author Michael | Chex
  */
 public abstract class MagicStrategy<T extends Actor> extends CombatStrategy<T> {
-
+	
 	private static final int BASE_EXPERIENCE_MULTIPLIER = 2;
 	
 	@Override
@@ -23,14 +23,14 @@ public abstract class MagicStrategy<T extends Actor> extends CombatStrategy<T> {
 		MovementQueue otherMovement = defender.getMovementQueue();
 		FightType fightType = attacker.getCombat().getFightType();
 		int distance = getAttackDistance(attacker, fightType);
-
+		
 		if(!movement.isMovementDone() && !otherMovement.isMovementDone() && !movement.isLockMovement() && !attacker.isFrozen()) {
 			distance += 1;
 		}
-		if (movement.isRunning()) {
+		if(movement.isRunning()) {
 			distance += 1;
 		}
-
+		
 		if(!new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance)) {
 			return false;
 		}
@@ -41,7 +41,7 @@ public abstract class MagicStrategy<T extends Actor> extends CombatStrategy<T> {
 	public boolean canAttack(T attacker, Actor defender) {
 		return true;
 	}
-
+	
 	protected static void addCombatExperience(Player player, double base, Hit... hits) {
 		int exp = 0;
 		for(Hit hit : hits) {

@@ -73,7 +73,7 @@ public enum Emote {
 		this.animation = animation;
 		this.graphic = graphic;
 	}
-
+	
 	public static void action() {
 		for(Emote emote : Emote.values()) {
 			new ButtonAction() {

@@ -44,8 +44,8 @@ public enum PetType {
 	/**
 	 * Constructs a new {@link PetType}.
 	 * @param growthRate {@link #growthRate}.
-	 * @param shout      {@link #shout}.
-	 * @param foods      {@link #foods}.
+	 * @param shout {@link #shout}.
+	 * @param foods {@link #foods}.
 	 */
 	PetType(double growthRate, String shout, PetFoodType... foods) {
 		this.foods = foods;

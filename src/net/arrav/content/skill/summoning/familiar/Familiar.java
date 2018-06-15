@@ -96,7 +96,7 @@ public abstract class Familiar extends Follower {
 	/**
 	 * Attempts to summon this familiar dependant on the {@code login} flag.
 	 * @param player the player to summon this familiar for.
-	 * @param login  whether we're summoning dependant on login.
+	 * @param login whether we're summoning dependant on login.
 	 */
 	public void summon(Player player, boolean login) {
 		/* Checks if the familiar is a large npc. */
@@ -220,8 +220,8 @@ public abstract class Familiar extends Follower {
 	 * The method which should be overriden if this familiar has an
 	 * ability where an item can be used on it.
 	 * @param player the player whom is using an item on the mob.
-	 * @param mob    the mob whom's being interacted by a player.
-	 * @param item   the item being used on the mob.
+	 * @param mob the mob whom's being interacted by a player.
+	 * @param item the item being used on the mob.
 	 * @return <true> if theres an action, <false> otherwise.
 	 */
 	public boolean itemOnNpc(Player player, Mob mob, Item item) {
@@ -258,8 +258,8 @@ public abstract class Familiar extends Follower {
 	/**
 	 * Attempts to interact with this familiar
 	 * @param player the player whom is interacting with the familiar.
-	 * @param mob    the mob this player is interacting with.
-	 * @param id     the action id being interacted with.
+	 * @param mob the mob this player is interacting with.
+	 * @param id the action id being interacted with.
 	 */
 	public abstract void interact(Player player, Mob mob, int id);
 	
@@ -310,7 +310,7 @@ public abstract class Familiar extends Follower {
 		
 		/**
 		 * Constructs a new {@link FamiliarSpawnTask}.
-		 * @param player   the player this familiar belongs too.
+		 * @param player the player this familiar belongs too.
 		 * @param familiar the familiar this task is active for.
 		 */
 		FamiliarSpawnTask(Player player, Familiar familiar) {

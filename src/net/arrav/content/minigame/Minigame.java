@@ -21,7 +21,7 @@ import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.container.impl.Equipment;
 import net.arrav.world.entity.item.container.impl.EquipmentType;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -52,8 +52,8 @@ public abstract class Minigame {
 	/**
 	 * Creates a new {@link Minigame}.
 	 * @param minigame the enumerated type which defines the current minigame.
-	 * @param safety   the current name of this minigame.
-	 * @param type     the current type of this minigame;
+	 * @param safety the current name of this minigame.
+	 * @param type the current type of this minigame;
 	 */
 	public Minigame(String minigame, MinigameSafety safety, MinigameType type) {
 		this.minigame = minigame;
@@ -76,7 +76,7 @@ public abstract class Minigame {
 	/**
 	 * Determines if this player can click the mob.
 	 * @param player the player the message was sent for.
-	 * @param mob    the mob that was clicked by the player.
+	 * @param mob the mob that was clicked by the player.
 	 * @return <true> if the player can click the mob, <false> otherwise.
 	 */
 	public boolean onFirstClickNpc(Player player, Mob mob) {
@@ -87,7 +87,7 @@ public abstract class Minigame {
 	/**
 	 * Determines if this player can click the mob.
 	 * @param player the player the message was sent for.
-	 * @param mob    the mob that was clicked by the player.
+	 * @param mob the mob that was clicked by the player.
 	 * @return <true> if the player can click the mob, <false> otherwise.
 	 */
 	public boolean onSecondClickNpc(Player player, Mob mob) {
@@ -162,7 +162,7 @@ public abstract class Minigame {
 	 * Determines if a player can use an item on an object.
 	 * @param player the player to determine this for.
 	 * @param object the object the item is being used on.
-	 * @param item   the item being used on the object.
+	 * @param item the item being used on the object.
 	 * @return {@code true} if the player can, {@code false} otherwise.
 	 */
 	public boolean onItemOnObject(Player player, GameObject object, Item item) {
@@ -181,7 +181,7 @@ public abstract class Minigame {
 	/**
 	 * The method executed when {@code player} hits {@code other}.
 	 * @param player the player who inflicts damage on another character.
-	 * @param other  the character that gets the damage by the player.
+	 * @param other the character that gets the damage by the player.
 	 */
 	public void onInflictDamage(Player player, Actor other, Hit[] inflicted) {
 	
@@ -190,7 +190,7 @@ public abstract class Minigame {
 	/**
 	 * The method executed when {@code player} kills {@code other}.
 	 * @param player the player that killed another character.
-	 * @param other  the character that was killed by the player.
+	 * @param other the character that was killed by the player.
 	 */
 	public void onKill(Player player, Actor other) {
 	
@@ -215,8 +215,8 @@ public abstract class Minigame {
 	/**
 	 * Determines if the player can drop the item.
 	 * @param player the player to check for.
-	 * @param item   the item being dropped.
-	 * @param slot   the slot being dropped from.
+	 * @param item the item being dropped.
+	 * @param slot the slot being dropped from.
 	 * @return <true> if the player can, <false> otherwise.
 	 */
 	public boolean canDrop(Player player, Item item, int slot) {
@@ -227,7 +227,7 @@ public abstract class Minigame {
 	/**
 	 * Determines if the player can pick up an item from the floor.
 	 * @param player the player attempting to pick up an item from the floor.
-	 * @param node   the item node that is being picked up.
+	 * @param node the item node that is being picked up.
 	 * @return {@code true} if the player can, {@code false} otherwise.
 	 */
 	public boolean canPickup(Player player, GroundItem node) {
@@ -240,7 +240,7 @@ public abstract class Minigame {
 	 * this method differs with {@link #canPickup(Player, GroundItem)} as this method is executed
 	 * after the item from the ground has been added to the inventory.
 	 * @param player the player attempting to pick up an item from the floor.
-	 * @param item   the item that was picked up.
+	 * @param item the item that was picked up.
 	 */
 	public void onPickup(Player player, Item item) {
 	
@@ -270,7 +270,7 @@ public abstract class Minigame {
 	/**
 	 * Determines if this player can consume food.
 	 * @param player the player to check for.
-	 * @param food   the food that the player attempted to consume.
+	 * @param food the food that the player attempted to consume.
 	 * @return <true> if the player can, <false> otherwise.
 	 */
 	public boolean canEat(Player player, FoodConsumable food) {
@@ -292,8 +292,8 @@ public abstract class Minigame {
 	 * Determines if {@code player} can equip {@code item} to
 	 * {@code equipmentSlot}.
 	 * @param player the player attempting to equip the item.
-	 * @param item   the item that is being equipped.
-	 * @param type   the type of equipment being equipped.
+	 * @param item the item that is being equipped.
+	 * @param type the type of equipment being equipped.
 	 * @return <true> if the player can equip the item, <false> otherwise.
 	 */
 	public boolean canEquip(Player player, Item item, EquipmentType type) {
@@ -304,8 +304,8 @@ public abstract class Minigame {
 	 * Determines if {@code player} can unequip {@code item} from
 	 * {@code equipmentSlot}.
 	 * @param player the player attempting to unequip the item.
-	 * @param item   the item that is being unequipped.
-	 * @param type   the type of equipment being unequipped.
+	 * @param item the item that is being unequipped.
+	 * @param type the type of equipment being unequipped.
 	 * @return <true> if the player can equip the item, <false> otherwise.
 	 */
 	public boolean canUnequip(Player player, Item item, EquipmentType type) {
@@ -315,7 +315,7 @@ public abstract class Minigame {
 	/**
 	 * Determines if {@code player} can trade {@code other}.
 	 * @param player the player attempting to trade the other player.
-	 * @param other  the player that is being traded with.
+	 * @param other the player that is being traded with.
 	 * @return <true> if the players can trade, <false> otherwise.
 	 */
 	public boolean canTrade(Player player, Player other) {
@@ -326,8 +326,8 @@ public abstract class Minigame {
 	/**
 	 * Determines if {@code player} can attack {@code other}.
 	 * @param player the player attempting to attack the character.
-	 * @param other  the character that is being targeted.
-	 * @param type   the combat type the other player is being hit with.
+	 * @param other the character that is being targeted.
+	 * @param type the combat type the other player is being hit with.
 	 * @return <true> if the player can attack, <false> otherwise.
 	 */
 	public boolean canHit(Player player, Actor other, CombatType type) {
@@ -346,7 +346,7 @@ public abstract class Minigame {
 	
 	/**
 	 * Determines if {@code player} can teleport somewhere.
-	 * @param player   the player attempting to teleport.
+	 * @param player the player attempting to teleport.
 	 * @param position the destination the player is teleporting to.
 	 * @return <true> if the player can teleport, <false> otherwise.
 	 */
@@ -357,7 +357,7 @@ public abstract class Minigame {
 	
 	/**
 	 * Does an action on a player before starting teleport.
-	 * @param player   player teleporting out.
+	 * @param player player teleporting out.
 	 * @param position position teleporting to.
 	 */
 	public void onTeleportBefore(Player player, Position position) {
@@ -476,8 +476,7 @@ public abstract class Minigame {
 	 * @author lare96 <http://github.com/lare96>
 	 */
 	public enum MinigameType {
-		NORMAL,
-		SEQUENCED
+		NORMAL, SEQUENCED
 	}
 	
 	/**
@@ -489,12 +488,10 @@ public abstract class Minigame {
 		/**
 		 * This safety is similar to when a player dies while he is skulled.
 		 */
-		DANGEROUS,
-		/**
+		DANGEROUS, /**
 		 * Indicates the default safety is applied
 		 */
-		DEFAULT,
-		/**
+		DEFAULT, /**
 		 * Indicates the minigame is fully safe and no items will be lost on death
 		 */
 		SAFE

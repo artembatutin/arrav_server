@@ -6,8 +6,8 @@ import net.arrav.content.item.FoodConsumable;
 import net.arrav.content.item.PotionConsumable;
 import net.arrav.content.minigame.Minigame;
 import net.arrav.content.skill.prayer.Prayer;
-import net.arrav.world.entity.actor.player.Player;
 import net.arrav.content.skill.prayer.PrayerBook;
+import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
 
 /**
@@ -59,11 +59,6 @@ public abstract class GuildRoom extends Minigame {
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum GuildRoomType {
-		CYCLOPS_ROOM,
-		ANIMATION_ROOM,
-		DUMMY_ROOM,
-		CATAPULT_ROOM,
-		SHOT_PUT_ROOM,
-		JIMMYS_CHALLENGE;
+		CYCLOPS_ROOM, ANIMATION_ROOM, DUMMY_ROOM, CATAPULT_ROOM, SHOT_PUT_ROOM, JIMMYS_CHALLENGE;
 	}
 }

@@ -4,7 +4,7 @@ import net.arrav.cache.FileSystem;
 import net.arrav.cache.archive.Archive;
 import net.arrav.util.ByteBufferUtil;
 import net.arrav.util.LoggerUtils;
-import net.arrav.world.object.ObjectDefinition;
+import net.arrav.world.entity.object.ObjectDefinition;
 
 import java.nio.ByteBuffer;
 import java.util.logging.Logger;
@@ -57,7 +57,7 @@ public final class ObjectDefinitionDecoder implements Runnable {
 	/**
 	 * Parses a single game object definition by reading object info from a
 	 * buffer.
-	 * @param id     The id of the object.
+	 * @param id The id of the object.
 	 * @param buffer The buffer.
 	 */
 	private static void decode(int id, ByteBuffer buffer) {

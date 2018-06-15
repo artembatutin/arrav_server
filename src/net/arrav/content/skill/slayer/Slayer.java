@@ -124,13 +124,7 @@ public final class Slayer {
 					} else {
 						player.getDialogueBuilder().last();
 					}
-				}, "Can I get a new task?", "How many kills are left?", "Nevermind"), new PlayerDialogue("How many kills are left?"), new NpcDialogue(master.getNpcId(), player.getSlayer()
-						.isPresent() ? new String[]{"You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer()
-						.get()
-						.toString() + "."} : new String[]{"You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."}).attach(() -> player.closeWidget()), new PlayerDialogue("Can I get a new task?"), new NpcDialogue(master
-						.getNpcId(), player.getSlayer()
-						.isPresent() ? new String[]{"You already are assigned to a slayer task..."} : new String[]{"Come speak to me or another slayer master ", "in order to get assigned to a task."}).attach(() -> player.closeWidget()), new PlayerDialogue("Nevermind")
-						.attach(() -> player.closeWidget()));
+				}, "Can I get a new task?", "How many kills are left?", "Nevermind"), new PlayerDialogue("How many kills are left?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You must kill another " + player.getSlayer().get().amount + " " + player.getSlayer().get().toString() + "."} : new String[]{"You don't have a slayer task, come speak to ", "me or another slayer master in order to get assigned ", "to a task."}).attach(() -> player.closeWidget()), new PlayerDialogue("Can I get a new task?"), new NpcDialogue(master.getNpcId(), player.getSlayer().isPresent() ? new String[]{"You already are assigned to a slayer task..."} : new String[]{"Come speak to me or another slayer master ", "in order to get assigned to a task."}).attach(() -> player.closeWidget()), new PlayerDialogue("Nevermind").attach(() -> player.closeWidget()));
 				return true;
 			}
 		};
@@ -163,10 +157,7 @@ public final class Slayer {
 					player.getDialogueBuilder().append(new NpcDialogue(master.getNpcId(), "'Ello, and what are you after, then?"), new OptionDialogue(t -> {
 						if(t.equals(OptionDialogue.OptionType.FIRST_OPTION)) {
 							Optional<Slayer> task = getTask(player, master);
-							Dialogue[] dialogues = player.getSlayer()
-									.isPresent() ? new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "You already have a slayer task.", "Speak to me once you have completed it.")} : !task.isPresent() ? new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master
-									.getNpcId(), "There was no task found, please try again shortly.")} : new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "Excellent, you're doing great, your new task", "is to kill " + task
-									.get().amount + " " + TextUtils.capitalize(task.get().getKey().toLowerCase() + ".")).attach(() -> player.setSlayer(Optional.of(task.get())))};
+							Dialogue[] dialogues = player.getSlayer().isPresent() ? new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "You already have a slayer task.", "Speak to me once you have completed it.")} : !task.isPresent() ? new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "There was no task found, please try again shortly.")} : new Dialogue[]{new PlayerDialogue("I need another assignment."), new NpcDialogue(master.getNpcId(), "Excellent, you're doing great, your new task", "is to kill " + task.get().amount + " " + TextUtils.capitalize(task.get().getKey().toLowerCase() + ".")).attach(() -> player.setSlayer(Optional.of(task.get())))};
 							player.getDialogueBuilder().append(dialogues);
 						} else if(t.equals(OptionDialogue.OptionType.SECOND_OPTION)) {
 							teleport(player, master);
@@ -181,8 +172,7 @@ public final class Slayer {
 						} else {
 							player.getDialogueBuilder().skip();
 						}
-					}, "Buy the slayer gem", "Nevermind"), new RequestItemDialogue(new Item(995, 100000), new Item(4155), "You hand over 100,000 coins to buy \\na slayer gem.", Optional.empty()).attach(() -> player.closeWidget()), new PlayerDialogue("Nevermind")
-							.attach(() -> player.closeWidget()));
+					}, "Buy the slayer gem", "Nevermind"), new RequestItemDialogue(new Item(995, 100000), new Item(4155), "You hand over 100,000 coins to buy \\na slayer gem.", Optional.empty()).attach(() -> player.closeWidget()), new PlayerDialogue("Nevermind").attach(() -> player.closeWidget()));
 					return true;
 				}
 			};
@@ -193,7 +183,7 @@ public final class Slayer {
 	/**
 	 * Checks if the specified {@code player} can attack the {@code mob}.
 	 * @param player the player to check for.
-	 * @param mob    the mob being attacked.
+	 * @param mob the mob being attacked.
 	 * @return <true> if the player can, <false> otherwise.
 	 */
 	public static boolean canAttack(Player player, Mob mob) {
@@ -208,7 +198,7 @@ public final class Slayer {
 	 * Decrements the remaining slayer task by 1 if the specified {@code mob}
 	 * was assigned as a task.
 	 * @param player the player to decrement this for.
-	 * @param mob    the mob to check for.
+	 * @param mob the mob to check for.
 	 * @return <true> if the remaining slayer task was decremented, <false> otherwise.
 	 */
 	public static boolean decrement(Player player, Mob mob) {
@@ -374,8 +364,7 @@ public final class Slayer {
 		
 		app.chain(new PlayerDialogue("Nah, i'll stay here").attachAfter(() -> player.closeWidget()));
 		
-		Dialogue dialogue = location.getPrice() == 0 ? new StatementDialogue("You teleport to your task for free.").attach(() -> player.move(RandomUtils.random(location.getPositions()))) : new RequestItemDialogue(new Item(995, price), "You handed " + price + " coins over to be \\nteleported to your assignment.", Optional
-				.of(() -> player.move(RandomUtils.random(location.getPositions())))).attachAfter(() -> player.closeWidget());
+		Dialogue dialogue = location.getPrice() == 0 ? new StatementDialogue("You teleport to your task for free.").attach(() -> player.move(RandomUtils.random(location.getPositions()))) : new RequestItemDialogue(new Item(995, price), "You handed " + price + " coins over to be \\nteleported to your assignment.", Optional.of(() -> player.move(RandomUtils.random(location.getPositions())))).attachAfter(() -> player.closeWidget());
 		
 		app.chain(dialogue);
 		

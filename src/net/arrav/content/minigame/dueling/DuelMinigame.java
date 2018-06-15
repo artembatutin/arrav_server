@@ -26,7 +26,7 @@ import net.arrav.world.entity.item.container.session.impl.DuelSession;
 import net.arrav.world.entity.region.TraversalMap;
 import net.arrav.world.locale.Position;
 import net.arrav.world.locale.loc.SquareLocation;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -85,7 +85,7 @@ public final class DuelMinigame extends Minigame {
 	
 	/**
 	 * Applies the staked items to the winner and clears the minigame session.
-	 * @param loser  the loser who lost the duel.
+	 * @param loser the loser who lost the duel.
 	 * @param winner the winner who won the duel.
 	 * @param logout whether the duel was won through the opponent logging out.
 	 */

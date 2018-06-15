@@ -38,7 +38,7 @@ public final class InstanceManager {
 	
 	/**
 	 * Isolates a single {@link Entity} in a specific {@code instance}.
-	 * @param entity   the entity to be isolated.
+	 * @param entity the entity to be isolated.
 	 * @param instance the selected instance.
 	 */
 	public void isolate(Entity entity, int instance) {

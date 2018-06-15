@@ -6,9 +6,9 @@ import net.arrav.world.entity.actor.player.Player;
 
 public class IncredibleReflexesListener extends SimplifiedListener<Player> {
 
-    @Override
-    public int modifyAttackLevel(Player attacker, Actor defender, int damage) {
-        return damage * 23 / 20;
-    }
+	@Override
+	public int modifyAttackLevel(Player attacker, Actor defender, int damage) {
+		return damage * 23 / 20;
+	}
 
 }

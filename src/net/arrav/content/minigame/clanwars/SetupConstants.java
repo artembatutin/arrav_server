@@ -60,7 +60,6 @@ public enum SetupConstants {
 
 	public static final ImmutableMap<Integer, SetupConstants> VALUES = ImmutableMap.copyOf(Stream.of(SetupConstants.values()).collect(Collectors.toMap(p -> p.getButton(), Function.identity())));
 
-	
 	SetupConstants(int button, int config, int string, RuleCategory category) {
 		this.button = button;
 		this.config = config;

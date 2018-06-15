@@ -33,7 +33,7 @@ public class NpcMagicStrategy extends MagicStrategy<Mob> {
 	public void start(Mob attacker, Actor defender, Hit[] hits) {
 		Animation animation = projectileDefinition.getAnimation().orElse(getAttackAnimation(attacker, defender));
 		attacker.animation(animation);
-		defender.toPlayer().message("anim: " +animation.getId());
+		defender.toPlayer().message("anim: " + animation.getId());
 		projectileDefinition.getStart().ifPresent(attacker::graphic);
 		projectileDefinition.sendProjectile(attacker, defender, true);
 	}

@@ -4,7 +4,6 @@ import com.google.gson.*;
 import net.arrav.world.World;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.PlayerCredentials;
-import net.arrav.world.entity.actor.player.PlayerSerialization;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.container.impl.Bank;
 

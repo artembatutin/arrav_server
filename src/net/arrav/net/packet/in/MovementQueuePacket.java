@@ -46,7 +46,7 @@ public final class MovementQueuePacket implements IncomingPacket {
 				reset = true;
 			}
 		} else if(opcode == 98) {
-		
+
 		}
 		
 		if(player.isFrozen()) {

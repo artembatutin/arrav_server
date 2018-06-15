@@ -35,11 +35,11 @@ public final class DuelLog extends LogDetails {
 
 	/**
 	 * Constructs a new {@link DuelLog}.
-	 * @param player  {@link #getUsername()}.
-	 * @param other   {@link #otherUsername}.
+	 * @param player {@link #getUsername()}.
+	 * @param other {@link #otherUsername}.
 	 * @param wonDuel {@link #wonDuel}.
-	 * @param items   {@link #items}.
-	 * @param risked  {@link #risked}.
+	 * @param items {@link #items}.
+	 * @param risked {@link #risked}.
 	 */
 	public DuelLog(Player player, Player other, boolean wonDuel, ItemContainer items, ItemContainer risked) {
 		super(player.getFormatUsername(), "Duelling");

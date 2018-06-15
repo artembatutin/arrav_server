@@ -19,9 +19,10 @@ public class RangedWeaponDefinition {
 	}
 
 	public boolean isValid(RangedAmmunition ammunition) {
-		if (ammunition == null) return false;
-		for (RangedAmmunition ammo : allowed) {
-			if (ammo == ammunition) {
+		if(ammunition == null)
+			return false;
+		for(RangedAmmunition ammo : allowed) {
+			if(ammo == ammunition) {
 				return true;
 			}
 		}

@@ -19,7 +19,7 @@ import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.locale.Position;
 import net.arrav.world.locale.loc.SquareLocation;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -198,7 +198,7 @@ public final class AnimationRoom extends GuildRoom {
 		
 		/**
 		 * Constructs a new {@link AnimatedArmour}.
-		 * @param data     {@link #data}.
+		 * @param data {@link #data}.
 		 * @param position the position to spawn this npc at.
 		 */
 		AnimatedArmour(ArmourData data, Position position) {
@@ -247,9 +247,9 @@ public final class AnimationRoom extends GuildRoom {
 			
 			/**
 			 * Constructs a new {@link ArmourData}.
-			 * @param npcId  {@link #npcId}.
+			 * @param npcId {@link #npcId}.
 			 * @param tokens {@link #tokens}.
-			 * @param set    {@link #set}.
+			 * @param set {@link #set}.
 			 */
 			ArmourData(int npcId, int tokens, int... set) {
 				this.npcId = npcId;

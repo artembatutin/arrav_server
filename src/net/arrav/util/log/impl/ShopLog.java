@@ -30,7 +30,7 @@ public final class ShopLog extends LogDetails {
 	/**
 	 * Constructs a new {@link ShopLog}.
 	 * @param player {@link #getUsername()}.
-	 * @param sold   {@link #sold}.
+	 * @param sold {@link #sold}.
 	 * @param bought {@link #bought}.
 	 */
 	public ShopLog(Player player, Item sold, Item bought) {

@@ -6,9 +6,9 @@ import net.arrav.world.entity.actor.player.Player;
 
 public class EagleEyeListener extends SimplifiedListener<Player> {
 
-    @Override
-    public int modifyRangedLevel(Player attacker, Actor defender, int damage) {
-        return damage * 23 / 20;
-    }
+	@Override
+	public int modifyRangedLevel(Player attacker, Actor defender, int damage) {
+		return damage * 23 / 20;
+	}
 
 }

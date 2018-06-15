@@ -30,14 +30,14 @@ public abstract class LunarItemSpell extends LunarSpell {
 	/**
 	 * The spell casted on the specified {@code item}.
 	 * @param caster the player casting the spell.
-	 * @param item   the item the spell was used on.
+	 * @param item the item the spell was used on.
 	 */
 	public abstract void effect(Player caster, Item item);
 
 	/**
 	 * Determines if this spell can be casted.
 	 * @param caster the caster who is casting the spell.
-	 * @param item   the item the spell was casted on.
+	 * @param item the item the spell was casted on.
 	 * @return {@code true} if the spell can be casted, {@code false} otherwise.
 	 */
 	public abstract boolean canCast(Player caster, Item item);

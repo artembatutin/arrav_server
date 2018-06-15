@@ -12,6 +12,6 @@ public final class IdleStatePacket implements IncomingPacket {
 	
 	@Override
 	public void handle(Player player, int opcode, int size, ByteBuf buf) {
-	
+
 	}
 }

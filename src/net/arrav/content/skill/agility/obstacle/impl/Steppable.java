@@ -34,12 +34,12 @@ public class Steppable extends ObstacleActivity {
 	
 	/**
 	 * Constructs a new {@link Steppable} Obstacle Activity.
-	 * @param start       {@link #getStart()}.
-	 * @param steppables  {@link #steppables}.
+	 * @param start {@link #getStart()}.
+	 * @param steppables {@link #steppables}.
 	 * @param destination {@link #getDestination()}.
-	 * @param animation   {@link #getAnimation()}.
+	 * @param animation {@link #getAnimation()}.
 	 * @param requirement {@link #getRequirement()}.
-	 * @param experience  {@link #getExperience()}.
+	 * @param experience {@link #getExperience()}.
 	 */
 	public Steppable(Position start, Position[] steppables, Position destination, Animation animation, int requirement, double experience) {
 		super(start, destination, animation, requirement, experience);

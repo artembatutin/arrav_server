@@ -302,7 +302,7 @@ public enum FoodConsumable {
 	/**
 	 * Creates a new {@link FoodConsumable}.
 	 * @param healAmount the amount of hit points this food heals.
-	 * @param ids        the identifiers which represent this food type.
+	 * @param ids the identifiers which represent this food type.
 	 */
 	FoodConsumable(int healAmount, int... ids) {
 		this.ids = ids;

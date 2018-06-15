@@ -119,6 +119,7 @@ public class CombatAutocastButton extends ActionInitializer {
 		e.register(1094);
 		e.register(1097);
 	}
+
 	public void register(CombatSpell spell, int... buttons) {
 		ButtonAction e = new ButtonAction() {
 			@Override

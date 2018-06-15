@@ -16,7 +16,7 @@ public interface Conversation {
 	 * The method which holds functionality for the player when the dialogue's pointer
 	 * reaches equality with the {@code index}.
 	 * @param player the player the extra functionality is for.
-	 * @param index  the index of the current dialogue present in this conversation.
+	 * @param index the index of the current dialogue present in this conversation.
 	 */
 	void send(Player player, int index);
 	

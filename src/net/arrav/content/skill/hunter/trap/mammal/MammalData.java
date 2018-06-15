@@ -40,10 +40,10 @@ public enum MammalData {
 	
 	/**
 	 * Constructs a new {@link MammalData}.
-	 * @param npcId       {@link #npcId}.
+	 * @param npcId {@link #npcId}.
 	 * @param requirement {@link #requirement}.
-	 * @param experience  {@link #experience}.
-	 * @param reward      {@link #reward}.
+	 * @param experience {@link #experience}.
+	 * @param reward {@link #reward}.
 	 */
 	MammalData(int npcId, int requirement, double experience, int... reward) {
 		this.npcId = npcId;

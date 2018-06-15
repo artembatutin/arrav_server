@@ -8,8 +8,7 @@ import net.arrav.world.entity.actor.player.Player;
  * @author Artem Batutin <artembatutin@gmail.com>
  */
 public enum PrayerBook {
-	NORMAL(5608),
-	CURSES(21356);
+	NORMAL(5608), CURSES(21356);
 	
 	/**
 	 * The identifier for this prayer interface.
@@ -40,7 +39,7 @@ public enum PrayerBook {
 	/**
 	 * Attempts to convert the prayerbook for {@code player} to {@code book}.
 	 * @param player the player to convert the spellbook for.
-	 * @param book   the type of prayer to convert to.
+	 * @param book the type of prayer to convert to.
 	 */
 	public static void convert(Player player, PrayerBook book) {
 		if(player.getPrayerBook() == book) {

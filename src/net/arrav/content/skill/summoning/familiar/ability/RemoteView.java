@@ -34,7 +34,7 @@ public final class RemoteView extends FamiliarAbility {
 	
 	/**
 	 * Attempts to view {@code direction} with the camera packet.
-	 * @param player    the player attempting to view this direction.
+	 * @param player the player attempting to view this direction.
 	 * @param direction the direction to view.
 	 */
 	public void view(Player player, Optional<Direction> direction) {

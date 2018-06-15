@@ -247,8 +247,8 @@ public final class PlayerDeath extends ActorDeath<Player> {
 	/**
 	 * Calculates and drops all of the items from {@code player} for
 	 * {@code killer}.
-	 * @param player  the player whose items are being dropped.
-	 * @param killer  the killer who the items are being dropped for.
+	 * @param player the player whose items are being dropped.
+	 * @param killer the killer who the items are being dropped for.
 	 * @param dropAll indicates no-items will be kept except the untradables.
 	 */
 	private void dropItems(Player player, Optional<Player> killer, boolean dropAll) {

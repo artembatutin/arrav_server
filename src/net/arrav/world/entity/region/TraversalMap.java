@@ -7,12 +7,12 @@ import net.arrav.world.Direction;
 import net.arrav.world.World;
 import net.arrav.world.locale.Boundary;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.*;
+import net.arrav.world.entity.object.*;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import static net.arrav.world.object.ObjectType.*;
+import static net.arrav.world.entity.object.ObjectType.*;
 
 /**
  * Contains traversal data for a set of regions.
@@ -29,8 +29,8 @@ public final class TraversalMap {
 	 * Marks a {@link GameObject} with the specified attributes on the
 	 * specified {@link Position} to the {@code TraversalMap}.
 	 * @param object The game object.
-	 * @param add    The condition if the object is added.
-	 * @param list   the condition if the region object list will be affected.
+	 * @param add The condition if the object is added.
+	 * @param list the condition if the region object list will be affected.
 	 */
 	public static void markObject(Region reg, GameObject object, boolean add, boolean list) {
 		if(object.getId() > ObjectDefinition.DEFINITIONS.length) {
@@ -82,23 +82,26 @@ public final class TraversalMap {
 		if(object.getObjectType().getGroup() == ObjectGroup.GROUND_DECORATION && !def.hasActions()) {
 			return;
 		}
+		
 		if(reg == null)
 			reg = World.getRegions().getRegion(position).orElse(null);
-		if(add && list) {
-			reg.addObj(object);
-		} else if(list) {
-			reg.removeObj(object);
-		}
 		
+		if(reg != null) {
+			if(add && list) {
+				reg.addObj(object);
+			} else if(list) {
+				reg.removeObj(object);
+			}
+		}
 	}
 	
 	/**
 	 * Informs the region of an existing wall.
-	 * @param orientation  The orientation of the wall.
-	 * @param height       The walls height.
-	 * @param x            The walls x coordinate.
-	 * @param y            The walls y coordinate.
-	 * @param type         The type of wall.
+	 * @param orientation The orientation of the wall.
+	 * @param height The walls height.
+	 * @param x The walls x coordinate.
+	 * @param y The walls y coordinate.
+	 * @param type The type of wall.
 	 * @param impenetrable Whether or not this wall can be passed through.
 	 */
 	private static void markWall(Region reg, ObjectDirection orientation, int height, int x, int y, ObjectType type, boolean impenetrable) {
@@ -223,11 +226,11 @@ public final class TraversalMap {
 	
 	/**
 	 * Informs the region of an existing wall being removed.
-	 * @param orientation  The orientation of the wall.
-	 * @param height       The walls height.
-	 * @param x            The walls x coordinate.
-	 * @param y            The walls y coordinate.
-	 * @param type         The type of wall.
+	 * @param orientation The orientation of the wall.
+	 * @param height The walls height.
+	 * @param x The walls x coordinate.
+	 * @param y The walls y coordinate.
+	 * @param type The type of wall.
 	 * @param impenetrable Whether or not this wall can be passed through.
 	 */
 	private static void unmarkWall(Region reg, ObjectDirection orientation, int height, int x, int y, ObjectType type, boolean impenetrable) {
@@ -353,10 +356,10 @@ public final class TraversalMap {
 	/**
 	 * Marks the specified set of coordinates blocked, unable to be passed
 	 * through.
-	 * @param height     The height.
-	 * @param x          The x coordinate.
-	 * @param y          The y coordinate.
-	 * @param block      The condition if the tile is blocked.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param block The condition if the tile is blocked.
 	 * @param projectile The condition if the tile is blocked for projectiles.
 	 */
 	public static void mark(Region region, int height, int x, int y, boolean block, boolean projectile) {
@@ -387,13 +390,13 @@ public final class TraversalMap {
 	
 	/**
 	 * Marks the specified coordinates occupied by some object.
-	 * @param height       The height.
-	 * @param x            The x coordinate.
-	 * @param y            The y coordinate.
-	 * @param sizeX        The width of the occupation.
-	 * @param sizeY        The length of the occupation.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param sizeX The width of the occupation.
+	 * @param sizeY The length of the occupation.
 	 * @param impenetrable Whether or not this occupation can be passed through.
-	 * @param add          Flag if the occupant is added or removed.
+	 * @param add Flag if the occupant is added or removed.
 	 */
 	public static void markOccupant(Region region, int height, int x, int y, int sizeX, int sizeY, boolean impenetrable, boolean add) {
 		int flag = TraversalConstants.BLOCKED;
@@ -413,403 +416,19 @@ public final class TraversalMap {
 	/**
 	 * Marks the specified coordinates a bridge.
 	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
 	 */
 	public static void markBridge(Region region, int height, int x, int y) {
 		set(region, height, x, y, TraversalConstants.BRIDGE);
 	}
 	
 	/**
-	 * Tests if the specified position can be traversed north.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @param size   The size of the entity attempting to traverse north.
-	 * @return <code>true</code> if it is possible to traverse north otherwise
-	 * <code>false</code>
-	 */
-	public static boolean isTraversableNorth(int height, int x, int y, int size) {
-		for(int offsetX = 0; offsetX < size; offsetX++) {
-			for(int offsetY = 0; offsetY < size; offsetY++) {
-				if(!isTraversableNorth(height, x + offsetX, y + offsetY)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed north.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @return <code>true</code> if it is possible to traverse north otherwise
-	 * <code>false</code>.
-	 */
-	public static boolean isTraversableNorth(int height, int x, int y) {
-		return isTraversableNorth(height, x, y, false);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed north.
-	 * @param height       The height.
-	 * @param x            The x coordinate.
-	 * @param y            The y coordinate.
-	 * @param impenetrable Whether or not this occupation can be traversed.
-	 * @return <code>true</code> if it is possible to traverse north otherwise
-	 * <code>false</code>.
-	 */
-	public static boolean isTraversableNorth(int height, int x, int y, boolean impenetrable) {
-		if(impenetrable) {
-			return isInactive(height, x, y + 1, TraversalConstants.IMPENETRABLE_BLOCKED | TraversalConstants.IMPENETRABLE_WALL_SOUTH);
-		}
-		return isInactive(height, x, y + 1, TraversalConstants.WALL_SOUTH | TraversalConstants.BLOCKED);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed south.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @param size   The size of the entity attempting to traverse south.
-	 * @return <code>true</code> if it is possible to traverse south otherwise
-	 * <code>false</code>
-	 */
-	public static boolean isTraversableSouth(int height, int x, int y, int size) {
-		for(int offsetX = 0; offsetX < size; offsetX++) {
-			for(int offsetY = 0; offsetY < size; offsetY++) {
-				if(!isTraversableSouth(height, x + offsetX, y + offsetY)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed south.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @return <code>true</code> if it is possible to traverse south otherwise
-	 * <code>false</code>.
-	 */
-	public static boolean isTraversableSouth(int height, int x, int y) {
-		return isTraversableSouth(height, x, y, false);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed south.
-	 * @param height       The height.
-	 * @param x            The x coordinate.
-	 * @param y            The y coordinate.
-	 * @param impenetrable Whether or not this occupation can be traversed.
-	 * @return <code>true</code> if it is possible to traverse south otherwise
-	 * <code>false</code>.
-	 */
-	public static boolean isTraversableSouth(int height, int x, int y, boolean impenetrable) {
-		if(impenetrable) {
-			return isInactive(height, x, y - 1, TraversalConstants.IMPENETRABLE_BLOCKED | TraversalConstants.IMPENETRABLE_WALL_NORTH);
-		}
-		return isInactive(height, x, y - 1, TraversalConstants.WALL_NORTH | TraversalConstants.BLOCKED);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed east.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @param size   The size of the entity attempting to traverse east.
-	 * @return <code>true</code> if it is possible to traverse east otherwise
-	 * <code>false</code>
-	 */
-	public static boolean isTraversableEast(int height, int x, int y, int size) {
-		for(int offsetX = 0; offsetX < size; offsetX++) {
-			for(int offsetY = 0; offsetY < size; offsetY++) {
-				if(!isTraversableEast(height, x + offsetX, y + offsetY)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed east.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @return <code>true</code> if it is possible to traverse east otherwise
-	 * <code>false</code>.
-	 */
-	public static boolean isTraversableEast(int height, int x, int y) {
-		return isTraversableEast(height, x, y, false);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed east.
-	 * @param height       The height.
-	 * @param x            The x coordinate.
-	 * @param y            The y coordinate.
-	 * @param impenetrable Whether or not this occupation can be traversed.
-	 * @return <code>true</code> if it is possible to traverse east otherwise
-	 * <code>false</code>.
-	 */
-	public static boolean isTraversableEast(int height, int x, int y, boolean impenetrable) {
-		if(impenetrable) {
-			return isInactive(height, x + 1, y, TraversalConstants.IMPENETRABLE_BLOCKED | TraversalConstants.IMPENETRABLE_WALL_WEST);
-		}
-		return isInactive(height, x + 1, y, TraversalConstants.WALL_WEST | TraversalConstants.BLOCKED);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed west.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @param size   The size of the entity attempting to traverse west.
-	 * @return <code>true</code> if it is possible to traverse west otherwise
-	 * <code>false</code>
-	 */
-	public static boolean isTraversableWest(int height, int x, int y, int size) {
-		for(int offsetX = 0; offsetX < size; offsetX++) {
-			for(int offsetY = 0; offsetY < size; offsetY++) {
-				if(!isTraversableWest(height, x + offsetX, y + offsetY)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed west.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @return <code>true</code> if it is possible to traverse west otherwise
-	 * <code>false</code>.
-	 */
-	public static boolean isTraversableWest(int height, int x, int y) {
-		return isTraversableWest(height, x, y, false);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed west.
-	 * @param height       The height.
-	 * @param x            The x coordinate.
-	 * @param y            The y coordinate.
-	 * @param impenetrable Whether or not this occupation can be traversed.
-	 * @return <code>true</code> if it is possible to traverse west otherwise
-	 * <code>false</code>.
-	 */
-	public static boolean isTraversableWest(int height, int x, int y, boolean impenetrable) {
-		if(impenetrable) {
-			return isInactive(height, x - 1, y, TraversalConstants.IMPENETRABLE_BLOCKED | TraversalConstants.IMPENETRABLE_WALL_EAST);
-		}
-		return isInactive(height, x - 1, y, TraversalConstants.WALL_EAST | TraversalConstants.BLOCKED);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed north east.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @param size   The size of the entity attempting to traverse north east.
-	 * @return <code>true</code> if it is possible to traverse north east
-	 * otherwise <code>false</code>
-	 */
-	public static boolean isTraversableNorthEast(int height, int x, int y, int size) {
-		for(int offsetX = 0; offsetX < size; offsetX++) {
-			for(int offsetY = 0; offsetY < size; offsetY++) {
-				if(!isTraversableNorthEast(height, x + offsetX, y + offsetY)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed north east.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @return <code>true</code> if it is possible to traverse north east
-	 * otherwise <code>false</code>.
-	 */
-	public static boolean isTraversableNorthEast(int height, int x, int y) {
-		return isTraversableNorthEast(height, x, y, false);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed north east.
-	 * @param height       The height.
-	 * @param x            The x coordinate.
-	 * @param y            The y coordinate.
-	 * @param impenetrable Whether or not this occupation can be traversed.
-	 * @return <code>true</code> if it is possible to traverse north east
-	 * otherwise <code>false</code>.
-	 */
-	public static boolean isTraversableNorthEast(int height, int x, int y, boolean impenetrable) {
-		if(impenetrable) {
-			return isInactive(height, x + 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_WALL_SOUTH | TraversalConstants.IMPENETRABLE_WALL_SOUTH_WEST) && isInactive(height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_BLOCKED) && isInactive(height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH | TraversalConstants.IMPENETRABLE_BLOCKED);
-		}
-		return isInactive(height, x + 1, y + 1, TraversalConstants.WALL_WEST | TraversalConstants.WALL_SOUTH | TraversalConstants.WALL_SOUTH_WEST | TraversalConstants.BLOCKED) && isInactive(height, x + 1, y, TraversalConstants.WALL_WEST | TraversalConstants.BLOCKED) && isInactive(height, x, y + 1, TraversalConstants.WALL_SOUTH | TraversalConstants.BLOCKED);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed north west.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @param size   The size of the entity attempting to traverse north west.
-	 * @return <code>true</code> if it is possible to traverse north west
-	 * otherwise <code>false</code>
-	 */
-	public static boolean isTraversableNorthWest(int height, int x, int y, int size) {
-		for(int offsetX = 0; offsetX < size; offsetX++) {
-			for(int offsetY = 0; offsetY < size; offsetY++) {
-				if(!isTraversableNorthWest(height, x + offsetX, y + offsetY)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed north west.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @return <code>true</code> if it is possible to traverse north west
-	 * otherwise <code>false</code>.
-	 */
-	public static boolean isTraversableNorthWest(int height, int x, int y) {
-		return isTraversableNorthWest(height, x, y, false);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed north west.
-	 * @param height       The height.
-	 * @param x            The x coordinate.
-	 * @param y            The y coordinate.
-	 * @param impenetrable Whether or not this occupation can be traversed.
-	 * @return <code>true</code> if it is possible to traverse north west
-	 * otherwise <code>false</code>.
-	 */
-	public static boolean isTraversableNorthWest(int height, int x, int y, boolean impenetrable) {
-		if(impenetrable) {
-			return isInactive(height, x - 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_SOUTH | TraversalConstants.IMPENETRABLE_WALL_SOUTH_EAST) && isInactive(height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_BLOCKED) && isInactive(height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH | TraversalConstants.IMPENETRABLE_BLOCKED);
-		}
-		return isInactive(height, x - 1, y + 1, TraversalConstants.WALL_EAST | TraversalConstants.WALL_SOUTH | TraversalConstants.WALL_SOUTH_EAST | TraversalConstants.BLOCKED) && isInactive(height, x - 1, y, TraversalConstants.WALL_EAST | TraversalConstants.BLOCKED) && isInactive(height, x, y + 1, TraversalConstants.WALL_SOUTH | TraversalConstants.BLOCKED);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed south east.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @param size   The size of the entity attempting to traverse south east.
-	 * @return <code>true</code> if it is possible to traverse south east
-	 * otherwise <code>false</code>
-	 */
-	public static boolean isTraversableSouthEast(int height, int x, int y, int size) {
-		for(int offsetX = 0; offsetX < size; offsetX++) {
-			for(int offsetY = 0; offsetY < size; offsetY++) {
-				if(!isTraversableSouthEast(height, x + offsetX, y + offsetY)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed south east.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @return <code>true</code> if it is possible to traverse south east
-	 * otherwise <code>false</code>.
-	 */
-	public static boolean isTraversableSouthEast(int height, int x, int y) {
-		return isTraversableSouthEast(height, x, y, false);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed south east.
-	 * @param height       The height.
-	 * @param x            The x coordinate.
-	 * @param y            The y coordinate.
-	 * @param impenetrable Whether or not this occupation can be traversed.
-	 * @return <code>true</code> if it is possible to traverse south east
-	 * otherwise <code>false</code>.
-	 */
-	private static boolean isTraversableSouthEast(int height, int x, int y, boolean impenetrable) {
-		if(impenetrable) {
-			return isInactive(height, x + 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_WALL_NORTH | TraversalConstants.IMPENETRABLE_WALL_NORTH_WEST) && isInactive(height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_BLOCKED) && isInactive(height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH | TraversalConstants.IMPENETRABLE_BLOCKED);
-		}
-		return isInactive(height, x + 1, y - 1, TraversalConstants.WALL_WEST | TraversalConstants.WALL_NORTH | TraversalConstants.WALL_NORTH_WEST | TraversalConstants.BLOCKED) && isInactive(height, x + 1, y, TraversalConstants.WALL_WEST | TraversalConstants.BLOCKED) && isInactive(height, x, y - 1, TraversalConstants.WALL_NORTH | TraversalConstants.BLOCKED);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed south west.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @param size   The size of the entity attempting to traverse south west.
-	 * @return <code>true</code> if it is possible to traverse south west
-	 * otherwise <code>false</code>
-	 */
-	public static boolean isTraversableSouthWest(int height, int x, int y, int size) {
-		for(int offsetX = 0; offsetX < size; offsetX++) {
-			for(int offsetY = 0; offsetY < size; offsetY++) {
-				if(!isTraversableSouthWest(height, x + offsetX, y + offsetY)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed south west.
-	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @return <code>true</code> if it is possible to traverse south west
-	 * otherwise <code>false</code>.
-	 */
-	public static boolean isTraversableSouthWest(int height, int x, int y) {
-		return isTraversableSouthWest(height, x, y, false);
-	}
-	
-	/**
-	 * Tests if the specified position can be traversed south west.
-	 * @param height       The height.
-	 * @param x            The x coordinate.
-	 * @param y            The y coordinate.
-	 * @param impenetrable Whether or not this occupation can be traversed.
-	 * @return <code>true</code> if it is possible to traverse south west
-	 * otherwise <code>false</code>.
-	 */
-	public static boolean isTraversableSouthWest(int height, int x, int y, boolean impenetrable) {
-		if(impenetrable) {
-			return isInactive(height, x - 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_NORTH | TraversalConstants.IMPENETRABLE_WALL_NORTH_EAST) && isInactive(height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_BLOCKED) && isInactive(height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH | TraversalConstants.IMPENETRABLE_BLOCKED);
-		}
-		return isInactive(height, x - 1, y - 1, TraversalConstants.WALL_EAST | TraversalConstants.WALL_NORTH | TraversalConstants.WALL_NORTH_EAST | TraversalConstants.BLOCKED) && isInactive(height, x - 1, y, TraversalConstants.WALL_EAST | TraversalConstants.BLOCKED) && isInactive(height, x, y - 1, TraversalConstants.WALL_NORTH | TraversalConstants.BLOCKED);
-	}
-	
-	/**
 	 * Sets a flag on the specified position.
 	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @param flag   The flag to put on this tile.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param flag The flag to put on this tile.
 	 */
 	public static void set(Region region, int height, int x, int y, int flag) {
 		if(region == null)
@@ -823,9 +442,9 @@ public final class TraversalMap {
 	 * Checks whether or not the specified flag is not active on the specified
 	 * position.
 	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @param flag   The flag to check.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param flag The flag to check.
 	 * @return <code>true</code> if the specified flag is not active on the
 	 * specified position, otherwise <code>false</code>.
 	 */
@@ -856,9 +475,9 @@ public final class TraversalMap {
 	/**
 	 * Unsets the specified flag from the specified position.
 	 * @param height The height.
-	 * @param x      The x coordinate.
-	 * @param y      The y coordinate.
-	 * @param flag   The flag to unset from the specified position.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param flag The flag to unset from the specified position.
 	 */
 	private static void unset(Region region, int height, int x, int y, int flag) {
 		if(region == null)
@@ -869,11 +488,395 @@ public final class TraversalMap {
 	}
 	
 	/**
+	 * Tests if the specified position can be traversed north.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param size The size of the entity attempting to traverse north.
+	 * @return <code>true</code> if it is possible to traverse north otherwise
+	 * <code>false</code>
+	 */
+	public static boolean isTraversableNorth(int height, int x, int y, int size) {
+		for(int offsetX = 0; offsetX < size; offsetX++) {
+			for(int offsetY = 0; offsetY < size; offsetY++) {
+				if(!isTraversableNorth(height, x + offsetX, y + offsetY)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed north.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @return <code>true</code> if it is possible to traverse north otherwise
+	 * <code>false</code>.
+	 */
+	public static boolean isTraversableNorth(int height, int x, int y) {
+		return isTraversableNorth(height, x, y, false);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed north.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param impenetrable Whether or not this occupation can be traversed.
+	 * @return <code>true</code> if it is possible to traverse north otherwise
+	 * <code>false</code>.
+	 */
+	public static boolean isTraversableNorth(int height, int x, int y, boolean impenetrable) {
+		if(impenetrable) {
+			return isInactive(height, x, y + 1, TraversalConstants.IMPENETRABLE_BLOCKED | TraversalConstants.IMPENETRABLE_WALL_SOUTH);
+		}
+		return isInactive(height, x, y + 1, TraversalConstants.WALL_SOUTH | TraversalConstants.BLOCKED);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed south.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param size The size of the entity attempting to traverse south.
+	 * @return <code>true</code> if it is possible to traverse south otherwise
+	 * <code>false</code>
+	 */
+	public static boolean isTraversableSouth(int height, int x, int y, int size) {
+		for(int offsetX = 0; offsetX < size; offsetX++) {
+			for(int offsetY = 0; offsetY < size; offsetY++) {
+				if(!isTraversableSouth(height, x + offsetX, y + offsetY)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed south.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @return <code>true</code> if it is possible to traverse south otherwise
+	 * <code>false</code>.
+	 */
+	public static boolean isTraversableSouth(int height, int x, int y) {
+		return isTraversableSouth(height, x, y, false);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed south.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param impenetrable Whether or not this occupation can be traversed.
+	 * @return <code>true</code> if it is possible to traverse south otherwise
+	 * <code>false</code>.
+	 */
+	public static boolean isTraversableSouth(int height, int x, int y, boolean impenetrable) {
+		if(impenetrable) {
+			return isInactive(height, x, y - 1, TraversalConstants.IMPENETRABLE_BLOCKED | TraversalConstants.IMPENETRABLE_WALL_NORTH);
+		}
+		return isInactive(height, x, y - 1, TraversalConstants.WALL_NORTH | TraversalConstants.BLOCKED);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed east.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param size The size of the entity attempting to traverse east.
+	 * @return <code>true</code> if it is possible to traverse east otherwise
+	 * <code>false</code>
+	 */
+	public static boolean isTraversableEast(int height, int x, int y, int size) {
+		for(int offsetX = 0; offsetX < size; offsetX++) {
+			for(int offsetY = 0; offsetY < size; offsetY++) {
+				if(!isTraversableEast(height, x + offsetX, y + offsetY)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed east.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @return <code>true</code> if it is possible to traverse east otherwise
+	 * <code>false</code>.
+	 */
+	public static boolean isTraversableEast(int height, int x, int y) {
+		return isTraversableEast(height, x, y, false);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed east.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param impenetrable Whether or not this occupation can be traversed.
+	 * @return <code>true</code> if it is possible to traverse east otherwise
+	 * <code>false</code>.
+	 */
+	public static boolean isTraversableEast(int height, int x, int y, boolean impenetrable) {
+		if(impenetrable) {
+			return isInactive(height, x + 1, y, TraversalConstants.IMPENETRABLE_BLOCKED | TraversalConstants.IMPENETRABLE_WALL_WEST);
+		}
+		return isInactive(height, x + 1, y, TraversalConstants.WALL_WEST | TraversalConstants.BLOCKED);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed west.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param size The size of the entity attempting to traverse west.
+	 * @return <code>true</code> if it is possible to traverse west otherwise
+	 * <code>false</code>
+	 */
+	public static boolean isTraversableWest(int height, int x, int y, int size) {
+		for(int offsetX = 0; offsetX < size; offsetX++) {
+			for(int offsetY = 0; offsetY < size; offsetY++) {
+				if(!isTraversableWest(height, x + offsetX, y + offsetY)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed west.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @return <code>true</code> if it is possible to traverse west otherwise
+	 * <code>false</code>.
+	 */
+	public static boolean isTraversableWest(int height, int x, int y) {
+		return isTraversableWest(height, x, y, false);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed west.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param impenetrable Whether or not this occupation can be traversed.
+	 * @return <code>true</code> if it is possible to traverse west otherwise
+	 * <code>false</code>.
+	 */
+	public static boolean isTraversableWest(int height, int x, int y, boolean impenetrable) {
+		if(impenetrable) {
+			return isInactive(height, x - 1, y, TraversalConstants.IMPENETRABLE_BLOCKED | TraversalConstants.IMPENETRABLE_WALL_EAST);
+		}
+		return isInactive(height, x - 1, y, TraversalConstants.WALL_EAST | TraversalConstants.BLOCKED);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed north east.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param size The size of the entity attempting to traverse north east.
+	 * @return <code>true</code> if it is possible to traverse north east
+	 * otherwise <code>false</code>
+	 */
+	public static boolean isTraversableNorthEast(int height, int x, int y, int size) {
+		for(int offsetX = 0; offsetX < size; offsetX++) {
+			for(int offsetY = 0; offsetY < size; offsetY++) {
+				if(!isTraversableNorthEast(height, x + offsetX, y + offsetY)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed north east.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @return <code>true</code> if it is possible to traverse north east
+	 * otherwise <code>false</code>.
+	 */
+	public static boolean isTraversableNorthEast(int height, int x, int y) {
+		return isTraversableNorthEast(height, x, y, false);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed north east.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param impenetrable Whether or not this occupation can be traversed.
+	 * @return <code>true</code> if it is possible to traverse north east
+	 * otherwise <code>false</code>.
+	 */
+	public static boolean isTraversableNorthEast(int height, int x, int y, boolean impenetrable) {
+		if(impenetrable) {
+			return isInactive(height, x + 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_WALL_SOUTH | TraversalConstants.IMPENETRABLE_WALL_SOUTH_WEST) && isInactive(height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_BLOCKED) && isInactive(height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH | TraversalConstants.IMPENETRABLE_BLOCKED);
+		}
+		return isInactive(height, x + 1, y + 1, TraversalConstants.WALL_WEST | TraversalConstants.WALL_SOUTH | TraversalConstants.WALL_SOUTH_WEST | TraversalConstants.BLOCKED) && isInactive(height, x + 1, y, TraversalConstants.WALL_WEST | TraversalConstants.BLOCKED) && isInactive(height, x, y + 1, TraversalConstants.WALL_SOUTH | TraversalConstants.BLOCKED);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed north west.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param size The size of the entity attempting to traverse north west.
+	 * @return <code>true</code> if it is possible to traverse north west
+	 * otherwise <code>false</code>
+	 */
+	public static boolean isTraversableNorthWest(int height, int x, int y, int size) {
+		for(int offsetX = 0; offsetX < size; offsetX++) {
+			for(int offsetY = 0; offsetY < size; offsetY++) {
+				if(!isTraversableNorthWest(height, x + offsetX, y + offsetY)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed north west.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @return <code>true</code> if it is possible to traverse north west
+	 * otherwise <code>false</code>.
+	 */
+	public static boolean isTraversableNorthWest(int height, int x, int y) {
+		return isTraversableNorthWest(height, x, y, false);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed north west.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param impenetrable Whether or not this occupation can be traversed.
+	 * @return <code>true</code> if it is possible to traverse north west
+	 * otherwise <code>false</code>.
+	 */
+	public static boolean isTraversableNorthWest(int height, int x, int y, boolean impenetrable) {
+		if(impenetrable) {
+			return isInactive(height, x - 1, y + 1, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_SOUTH | TraversalConstants.IMPENETRABLE_WALL_SOUTH_EAST) && isInactive(height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_BLOCKED) && isInactive(height, x, y + 1, TraversalConstants.IMPENETRABLE_WALL_SOUTH | TraversalConstants.IMPENETRABLE_BLOCKED);
+		}
+		return isInactive(height, x - 1, y + 1, TraversalConstants.WALL_EAST | TraversalConstants.WALL_SOUTH | TraversalConstants.WALL_SOUTH_EAST | TraversalConstants.BLOCKED) && isInactive(height, x - 1, y, TraversalConstants.WALL_EAST | TraversalConstants.BLOCKED) && isInactive(height, x, y + 1, TraversalConstants.WALL_SOUTH | TraversalConstants.BLOCKED);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed south east.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param size The size of the entity attempting to traverse south east.
+	 * @return <code>true</code> if it is possible to traverse south east
+	 * otherwise <code>false</code>
+	 */
+	public static boolean isTraversableSouthEast(int height, int x, int y, int size) {
+		for(int offsetX = 0; offsetX < size; offsetX++) {
+			for(int offsetY = 0; offsetY < size; offsetY++) {
+				if(!isTraversableSouthEast(height, x + offsetX, y + offsetY)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed south east.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @return <code>true</code> if it is possible to traverse south east
+	 * otherwise <code>false</code>.
+	 */
+	public static boolean isTraversableSouthEast(int height, int x, int y) {
+		return isTraversableSouthEast(height, x, y, false);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed south east.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param impenetrable Whether or not this occupation can be traversed.
+	 * @return <code>true</code> if it is possible to traverse south east
+	 * otherwise <code>false</code>.
+	 */
+	private static boolean isTraversableSouthEast(int height, int x, int y, boolean impenetrable) {
+		if(impenetrable) {
+			return isInactive(height, x + 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_WALL_NORTH | TraversalConstants.IMPENETRABLE_WALL_NORTH_WEST) && isInactive(height, x + 1, y, TraversalConstants.IMPENETRABLE_WALL_WEST | TraversalConstants.IMPENETRABLE_BLOCKED) && isInactive(height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH | TraversalConstants.IMPENETRABLE_BLOCKED);
+		}
+		return isInactive(height, x + 1, y - 1, TraversalConstants.WALL_WEST | TraversalConstants.WALL_NORTH | TraversalConstants.WALL_NORTH_WEST | TraversalConstants.BLOCKED) && isInactive(height, x + 1, y, TraversalConstants.WALL_WEST | TraversalConstants.BLOCKED) && isInactive(height, x, y - 1, TraversalConstants.WALL_NORTH | TraversalConstants.BLOCKED);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed south west.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param size The size of the entity attempting to traverse south west.
+	 * @return <code>true</code> if it is possible to traverse south west
+	 * otherwise <code>false</code>
+	 */
+	public static boolean isTraversableSouthWest(int height, int x, int y, int size) {
+		for(int offsetX = 0; offsetX < size; offsetX++) {
+			for(int offsetY = 0; offsetY < size; offsetY++) {
+				if(!isTraversableSouthWest(height, x + offsetX, y + offsetY)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed south west.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @return <code>true</code> if it is possible to traverse south west
+	 * otherwise <code>false</code>.
+	 */
+	public static boolean isTraversableSouthWest(int height, int x, int y) {
+		return isTraversableSouthWest(height, x, y, false);
+	}
+	
+	/**
+	 * Tests if the specified position can be traversed south west.
+	 * @param height The height.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param impenetrable Whether or not this occupation can be traversed.
+	 * @return <code>true</code> if it is possible to traverse south west
+	 * otherwise <code>false</code>.
+	 */
+	public static boolean isTraversableSouthWest(int height, int x, int y, boolean impenetrable) {
+		if(impenetrable) {
+			return isInactive(height, x - 1, y - 1, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_WALL_NORTH | TraversalConstants.IMPENETRABLE_WALL_NORTH_EAST) && isInactive(height, x - 1, y, TraversalConstants.IMPENETRABLE_WALL_EAST | TraversalConstants.IMPENETRABLE_BLOCKED) && isInactive(height, x, y - 1, TraversalConstants.IMPENETRABLE_WALL_NORTH | TraversalConstants.IMPENETRABLE_BLOCKED);
+		}
+		return isInactive(height, x - 1, y - 1, TraversalConstants.WALL_EAST | TraversalConstants.WALL_NORTH | TraversalConstants.WALL_NORTH_EAST | TraversalConstants.BLOCKED) && isInactive(height, x - 1, y, TraversalConstants.WALL_EAST | TraversalConstants.BLOCKED) && isInactive(height, x, y - 1, TraversalConstants.WALL_NORTH | TraversalConstants.BLOCKED);
+	}
+	
+	/**
 	 * Tests whether or not a specified position is traversable in the specified
 	 * direction.
-	 * @param from      The position.
+	 * @param from The position.
 	 * @param direction The direction to traverse.
-	 * @param size      The size of the entity attempting to traverse.
+	 * @param size The size of the entity attempting to traverse.
 	 * @return <code>true</code> if the direction is traversable otherwise
 	 * <code>false</code>.
 	 */
@@ -884,10 +887,10 @@ public final class TraversalMap {
 	/**
 	 * Tests whether or not a specified position is traversable in the specified
 	 * direction.
-	 * @param from      The position.
-	 * @param boundary  The boundary of this check.
+	 * @param from The position.
+	 * @param boundary The boundary of this check.
 	 * @param direction The direction to traverse.
-	 * @param size      The size of the entity attempting to traverse.
+	 * @param size The size of the entity attempting to traverse.
 	 * @return <code>true</code> if the direction is traversable otherwise
 	 * <code>false</code>.
 	 */
@@ -919,8 +922,8 @@ public final class TraversalMap {
 	/**
 	 * Tests whether or not a specified position is traversable in the specified
 	 * direction.
-	 * @param from         The position.
-	 * @param direction    The direction to traverse.
+	 * @param from The position.
+	 * @param direction The direction to traverse.
 	 * @param impenetrable The condition if impenetrability must be checked.
 	 * @return <code>true</code> if the direction is traversable otherwise
 	 * <code>false</code>.
@@ -981,9 +984,9 @@ public final class TraversalMap {
 	/**
 	 * Returns a {@link ObjectList} of positions that are traversable from the
 	 * specified position.
-	 * @param from    The position moving from.
+	 * @param from The position moving from.
 	 * @param exclude the position to exclude
-	 * @param size    The size of the mob attempting to traverse.
+	 * @param size The size of the mob attempting to traverse.
 	 * @return A {@link ObjectList} of positions.
 	 */
 	public static Position getRandomNearby(Position from, Position exclude, int size) {
@@ -1035,8 +1038,8 @@ public final class TraversalMap {
 	
 	/**
 	 * Returns a {@link Optional} {@link Position} of a random traversable tile.
-	 * @param from       The position moving from.
-	 * @param size       The size of the mob attempting to traverse.
+	 * @param from The position moving from.
+	 * @param size The size of the mob attempting to traverse.
 	 * @param exceptions The exceptions of traversable positions.
 	 * @return A random traversable position.
 	 */
@@ -1082,8 +1085,8 @@ public final class TraversalMap {
 	/**
 	 * Returns a {@link ObjectList} of position that are settable from the
 	 * specified position depending on the leader's and follower's entity sizes.
-	 * @param from         the position.
-	 * @param leaderSize   the leader's entity size.
+	 * @param from the position.
+	 * @param leaderSize the leader's entity size.
 	 * @param followerSize the follower's entity size.
 	 * @return A {@link ObjectList} of positions.
 	 */
@@ -1131,8 +1134,8 @@ public final class TraversalMap {
 	/**
 	 * Returns a {@link ObjectList} of position that are settable leader the
 	 * specified position depending on the leader's and follower's entity sizes.
-	 * @param leader       the position.
-	 * @param leaderSize   the leader's entity size.
+	 * @param leader the position.
+	 * @param leaderSize the leader's entity size.
 	 * @param followerSize the follower's entity size.
 	 * @return A {@link ObjectList} of positions.
 	 */
@@ -1194,6 +1197,5 @@ public final class TraversalMap {
 	public static boolean blockedWest(Position position) {
 		return !isTraversableWest(position.getZ(), position.getX(), position.getY(), false);
 	}
-	
 	
 }

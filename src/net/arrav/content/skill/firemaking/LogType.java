@@ -52,10 +52,10 @@ public enum LogType {
 	
 	/**
 	 * Constructs a new {@link LogType}.
-	 * @param logId       {@link #log}.
+	 * @param logId {@link #log}.
 	 * @param requirement {@link #requirement}.
-	 * @param timer       {@link #timer}.
-	 * @param experience  {@link #experience}.
+	 * @param timer {@link #timer}.
+	 * @param experience {@link #experience}.
 	 */
 	LogType(int logId, int requirement, int timer, double experience) {
 		this.log = new Item(logId);
@@ -74,7 +74,7 @@ public enum LogType {
 	
 	/**
 	 * Gets the definition for this log type.
-	 * @param id       the identifier to check for matches.
+	 * @param id the identifier to check for matches.
 	 * @param secondId the second identifier to check for matches.
 	 * @return an Optional with the found value, {@link Optional#empty} otherwise.
 	 */

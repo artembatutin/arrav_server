@@ -38,10 +38,10 @@ public final class SlayerKeyPolicy {
 	
 	/**
 	 * Constructs a new {@link SlayerKeyPolicy}.
-	 * @param key               {@link #key}.
-	 * @param difficulty        {@link #difficulty}.
-	 * @param minAmount         the minimum amount.
-	 * @param maxAmount         the maximum amount.
+	 * @param key {@link #key}.
+	 * @param difficulty {@link #difficulty}.
+	 * @param minAmount the minimum amount.
+	 * @param maxAmount the maximum amount.
 	 * @param combatRequirement {@link #requirement}.
 	 */
 	SlayerKeyPolicy(String key, SlayerDifficulty difficulty, int minAmount, int maxAmount, int combatRequirement, Item... rewards) {

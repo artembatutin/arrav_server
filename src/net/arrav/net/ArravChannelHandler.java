@@ -3,8 +3,10 @@ package net.arrav.net;
 import com.google.common.base.Objects;
 import com.google.common.collect.ConcurrentHashMultiset;
 import com.google.common.collect.Multiset;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import net.arrav.Arrav;
@@ -23,7 +25,8 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	/**
 	 * A default access level constructor to discourage external instantiation outside of the {@code net.arrav.net} package.
 	 */
-	ArravChannelHandler() { }
+	ArravChannelHandler() {
+	}
 	
 	/**
 	 * A concurrent {@link Multiset} containing active connections.
@@ -58,7 +61,7 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) {
 		Session session = ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
-		if (session == null) {
+		if(session == null) {
 			throw new IllegalStateException("session == null");
 		}
 		session.unregister();
@@ -81,11 +84,11 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		try {
 			Session session = ctx.channel().attr(NetworkConstants.SESSION_KEY).get();
-			if (session == null) {
+			if(session == null) {
 				throw new IllegalStateException("session == null");
 			}
 			session.handleMessage(ctx, msg);
-		} catch (Exception ex) {
+		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
 	}

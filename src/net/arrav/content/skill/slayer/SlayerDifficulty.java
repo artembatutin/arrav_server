@@ -5,9 +5,7 @@ package net.arrav.content.skill.slayer;
  * @author <a href="http://www.rune-server.org/members/Stand+Up/">Stan</a>
  */
 public enum SlayerDifficulty {
-	EASY(1),
-	MODERATE(2),
-	HARD(3);
+	EASY(1), MODERATE(2), HARD(3);
 	
 	/**
 	 * The value that matches this difficulty level.

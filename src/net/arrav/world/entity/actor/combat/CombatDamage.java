@@ -26,12 +26,12 @@ public final class CombatDamage {
 
 	private Hit lastHit;
 
-    /**
+	/**
 	 * Registers damage in the backing collection for {@code character}. This
 	 * method has no effect if the character isn't a {@code PLAYER} or if
 	 * {@code amount} is below {@code 0}.
 	 * @param character the character to register damage for.
-	 * @param hit    the hit to register.
+	 * @param hit the hit to register.
 	 */
 	public void add(Actor character, Hit hit) {
 		if(hit.getDamage() > 0) {

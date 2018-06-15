@@ -24,9 +24,9 @@ public final class Graphic {
 	
 	/**
 	 * Creates a new {@link Graphic}.
-	 * @param id     the identification for this graphic.
+	 * @param id the identification for this graphic.
 	 * @param height the height of this graphic.
-	 * @param delay  the delay of this graphic.
+	 * @param delay the delay of this graphic.
 	 */
 	public Graphic(int id, int height, int delay) {
 		this.id = id;
@@ -36,7 +36,7 @@ public final class Graphic {
 	
 	/**
 	 * Creates a new {@link Graphic} with a {@code delay} of {@code 0}.
-	 * @param id     the identification for this graphic.
+	 * @param id the identification for this graphic.
 	 * @param height the height for this graphic.
 	 */
 	public Graphic(int id, int height) {

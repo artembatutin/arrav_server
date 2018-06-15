@@ -27,8 +27,8 @@ public final class Animation {
 	
 	/**
 	 * Creates a new {@link Animation}.
-	 * @param id       the identification for this animation.
-	 * @param delay    the delay for this animation.
+	 * @param id the identification for this animation.
+	 * @param delay the delay for this animation.
 	 * @param priority the priority of this animation.
 	 */
 	public Animation(int id, int delay, AnimationPriority priority) {
@@ -39,7 +39,7 @@ public final class Animation {
 	
 	/**
 	 * Creates a new {@link Animation} with a delay of {@code 0}.
-	 * @param id    the identification for this animation.
+	 * @param id the identification for this animation.
 	 * @param delay the delay for this animation.
 	 */
 	public Animation(int id, int delay) {
@@ -48,7 +48,7 @@ public final class Animation {
 	
 	/**
 	 * Creates a new {@link Animation} with a delay of {@code 0}.
-	 * @param id       the identification for this animation.
+	 * @param id the identification for this animation.
 	 * @param priority the priority of this animation.
 	 */
 	public Animation(int id, AnimationPriority priority) {
@@ -117,9 +117,7 @@ public final class Animation {
 	 * @author lare96 <http://github.com/lare96>
 	 */
 	public enum AnimationPriority {
-		LOW(0),
-		NORMAL(1),
-		HIGH(2);
+		LOW(0), NORMAL(1), HIGH(2);
 		
 		/**
 		 * The value of this priority. A higher value indicates a greater priority.

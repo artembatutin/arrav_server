@@ -31,8 +31,8 @@ public final class DoughCreation extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link DoughCreation}.
-	 * @param player  {@link #getPlayer()}.
-	 * @param data    {@link #data}.
+	 * @param player {@link #getPlayer()}.
+	 * @param data {@link #data}.
 	 * @param counter {@link #counter}.
 	 */
 	public DoughCreation(Player player, DoughData data, int counter) {
@@ -43,7 +43,7 @@ public final class DoughCreation extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to start the skill action.
-	 * @param player   {@link #getPlayer()}.
+	 * @param player {@link #getPlayer()}.
 	 * @param buttonId the button the player clicked.
 	 * @return <true> if the skill action was started, <false> otherwise.
 	 */
@@ -66,7 +66,7 @@ public final class DoughCreation extends ProducingSkillAction {
 	/**
 	 * Creates the item the player was creating dough for.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
+	 * @param data {@link #data}.
 	 * @param amount {@link #amount}.
 	 * @return <true> if the skill action was started, <false> otherwise.
 	 */
@@ -78,7 +78,7 @@ public final class DoughCreation extends ProducingSkillAction {
 	/**
 	 * Attempts to open the dough creation interface.
 	 * @param player the player using the dough creation interface.
-	 * @param used   the item used.
+	 * @param used the item used.
 	 * @param usedOn the item that was used on.
 	 * @return {@code true} if the skill action was started, {@code false} otherwise.
 	 */
@@ -237,11 +237,11 @@ public final class DoughCreation extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link DoughCreation}.
-		 * @param buttonId   {@link #buttonId}.
+		 * @param buttonId {@link #buttonId}.
 		 * @param modelFrame {@link #modelFrame}.
-		 * @param nameFrame  {@link #nameFrame}.
-		 * @param produced   {@link #produced}.
-		 * @param amount     {@link #amount}.
+		 * @param nameFrame {@link #nameFrame}.
+		 * @param produced {@link #produced}.
+		 * @param amount {@link #amount}.
 		 */
 		DoughData(int buttonId, int modelFrame, int nameFrame, int produced, int amount) {
 			this.buttonId = buttonId;
@@ -254,8 +254,8 @@ public final class DoughCreation extends ProducingSkillAction {
 		/**
 		 * Constructs a new {@link DoughCreation}.
 		 * @param buttonId {@link #buttonId}.
-		 * @param data     the data to register the produced item from.
-		 * @param amount   {@link #amount}.
+		 * @param data the data to register the produced item from.
+		 * @param amount {@link #amount}.
 		 */
 		DoughData(int buttonId, DoughData data, int amount) {
 			this.buttonId = buttonId;

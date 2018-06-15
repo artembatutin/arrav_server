@@ -20,24 +20,24 @@ import static net.arrav.content.achievements.Achievement.TRIVIABOT;
  * @since 3-6-2017.
  */
 public final class TriviaEntry {
-
+	
 	/**
 	 * The current trivia question being asked.
 	 */
 	public TriviaData current = TriviaData.random();
-
+	
 	/**
 	 * The list of attempted answers.
 	 */
 	public final ObjectList<String> attempted_answers = new ObjectArrayList<>();
-
+	
 	/**
 	 * Sends a message to the entire world asking the trivia question.
 	 */
 	public void ask() {
 		World.get().message("@red@[Trivia Bot]: @blu@" + current.question);
 	}
-
+	
 	/**
 	 * Sends a reminder to the world.
 	 */
@@ -45,7 +45,7 @@ public final class TriviaEntry {
 		World.get().message("@red@[Trivia Bot]: @blu@The last question hasn't been answered yet!");
 		ask();
 	}
-
+	
 	/**
 	 * The trivia question that should be send to the player on login.
 	 * @param player the player to send the question to.
@@ -54,7 +54,7 @@ public final class TriviaEntry {
 		if(current != null)
 			player.message("@red@[Trivia Bot]: @blu@" + current.question);
 	}
-
+	
 	/**
 	 * Attempts to answer the current trivia question.
 	 * @param player the player attempting to answer.
@@ -69,7 +69,7 @@ public final class TriviaEntry {
 			player.message("@red@[Trivia Bot]: @blu@You think you're funny, don't you? Guess what? You ain't.");
 			return;
 		}
-
+		
 		answer = answer.toLowerCase();
 		for(String a : current.answers) {
 			if(answer.equals(a)) {
@@ -77,18 +77,18 @@ public final class TriviaEntry {
 				return;
 			}
 		}
-
+		
 		if(!attempted_answers.contains(answer)) {
 			attempted_answers.add(answer);
 		}
-
+		
 		if(RandomUtils.inclusive(5) == 0) {
 			player.forceChat("Whoops! I just entered a wrong trivia answer!");
 		}
-
+		
 		player.message("@red@[Trivia Bot]: @blu@Sorry, the answer you have entered is incorrect! Try again!");
 	}
-
+	
 	/**
 	 * The functionality that occurs when a player successfully answers a trivia question.
 	 * @param player the player whom answered the trivia question.
@@ -96,7 +96,7 @@ public final class TriviaEntry {
 	 */
 	private void answered(Player player, String answer) {
 		World.get().message("@red@[Trivia Bot]: @bla@" + player.getFormatUsername() + "@blu@ has answered the question correctly! @red@Answer: " + answer + "@blu@.");
-
+		
 		if(!attempted_answers.isEmpty()) {
 			List<String> attemptedAnswers = attempted_answers.stream().filter(a -> Arrays.stream(GameConstants.BAD_STRINGS).noneMatch(a::contains)).collect(Collectors.toList());
 			World.get().message("@red@[Trivia Bot]: @blu@Attempted answers: @red@" + attemptedAnswers.toString() + "@blu@!");
@@ -107,7 +107,7 @@ public final class TriviaEntry {
 		player.message("@red@[Trivia Bot]: @blu@" + TextUtils.formatPrice(amount) + " coins were added into your bank.");
 		reset();
 	}
-
+	
 	/**
 	 * Resets the current question and it's attempted answers.
 	 */

@@ -9,15 +9,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
 
 public class Synchronizer {
-
+	
 	private final Phaser phaser = new Phaser(1);
-
+	
 	private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
+	
 	/**
 	 * The pre-update of preparing players and mobs.
 	 * @param players players list.
-	 * @param mobs    the mobs list.
+	 * @param mobs the mobs list.
 	 */
 	public void preUpdate(ActorList<Player> players, ActorList<Mob> mobs) {
 		//long time = System.currentTimeMillis();
@@ -31,7 +31,7 @@ public class Synchronizer {
 				e.printStackTrace();
 			}
 		}
-
+		
 		for(Player p : players) {
 			if(p == null)
 				continue;
@@ -41,7 +41,7 @@ public class Synchronizer {
 				e.printStackTrace();
 			}
 		}
-
+		
 		//		int pCount = players.size();
 		//		phaser.bulkRegister(pCount);
 		//		for(Player player : players) {
@@ -62,7 +62,7 @@ public class Synchronizer {
 		//		}
 		//		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-PLAYER]: " + (System.currentTimeMillis() - time));
-
+		
 		//time = System.currentTimeMillis();
 		//		int mCount = mobs.size();
 		//		phaser.bulkRegister(mCount);
@@ -85,7 +85,7 @@ public class Synchronizer {
 		//		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[PRE-NPC]: " + (System.currentTimeMillis() - time));
 	}
-
+	
 	/**
 	 * The main tick update for players.
 	 * @param players players list.
@@ -113,11 +113,11 @@ public class Synchronizer {
 		phaser.arriveAndAwaitAdvance();
 		//System.out.println("[SYNC]: " + (System.currentTimeMillis() - time));
 	}
-
+	
 	/**
 	 * The post-update process of resetting players and mobs.
 	 * @param players players list.
-	 * @param mobs    mobs list.
+	 * @param mobs mobs list.
 	 */
 	public void postUpdate(ActorList<Player> players, ActorList<Mob> mobs) {
 		//long time = System.currentTimeMillis();
@@ -127,7 +127,7 @@ public class Synchronizer {
 			player.postUpdate();
 		}
 		//System.out.println("[POST-PLAYER]: " + (System.currentTimeMillis() - time));
-
+		
 		//time = System.currentTimeMillis();
 		for(Mob mob : mobs) {
 			if(mob == null)
@@ -136,5 +136,5 @@ public class Synchronizer {
 		}
 		//System.out.println("[POST-NPC]: " + (System.currentTimeMillis() - time));
 	}
-
+	
 }

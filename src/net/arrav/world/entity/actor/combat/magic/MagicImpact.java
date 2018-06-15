@@ -33,16 +33,16 @@ public enum MagicImpact {
 	STUN((attacker, defender, hit, extra) -> lowerSkill(defender, Skills.ATTACK, 10)),
 
 	MAGIC_DART((attacker, defender, hit, extra) -> {
-		if (attacker.isPlayer() && hit.isAccurate()) {
+		if(attacker.isPlayer() && hit.isAccurate()) {
 			Player player = attacker.toPlayer();
 			int damage = 10 + player.getSkills()[Skills.MAGIC].getLevel() / 10;
 
-			if (defender.isMob() && player.getSlayer().isPresent()) {
+			if(defender.isMob() && player.getSlayer().isPresent()) {
 				Mob mob = defender.toMob();
 				Slayer slayer = player.getSlayer().get();
 				String key = mob.getDefinition().getSlayerKey();
 
-				if (key != null && slayer.getKey().equals(key)) {
+				if(key != null && slayer.getKey().equals(key)) {
 					damage = 13 + player.getSkills()[Skills.MAGIC].getLevel() / 6;
 				}
 			}
@@ -76,10 +76,10 @@ public enum MagicImpact {
 	KBD_SHOCK((attacker, defender, hit, extra) -> kbdShock(defender)),
 	
 	AHRIM_BLAST((attacker, defender, hit, extra) -> {
-//        if (hit.isAccurate() && Math.random() < 0.20) {
-//            defender.skills.get(Skills.STRENGTH).removeLevel(5);
-//            defender.skills.refresh(Skills.STRENGTH);
-//        }
+		//        if (hit.isAccurate() && Math.random() < 0.20) {
+		//            defender.skills.get(Skills.STRENGTH).removeLevel(5);
+		//            defender.skills.refresh(Skills.STRENGTH);
+		//        }
 	});
 	
 	private final CombatImpact effect;
@@ -249,12 +249,13 @@ public enum MagicImpact {
 	}
 
 	private static CombatHit hitEvent(Actor attacker, Actor defender, Actor actor, int max, List<Hit> extra) {
-		if (!defender.same(actor)) {
+		if(!defender.same(actor)) {
 			int hitDelay = CombatUtil.getHitDelay(attacker, defender, CombatType.MAGIC);
 			int hitsplatDelay = CombatUtil.getHitsplatDelay(CombatType.MAGIC);
 			CombatHit hit = new CombatHit(FormulaFactory.nextMagicHit(attacker, actor, max), hitDelay, hitsplatDelay);
 			attacker.getCombat().submitHits(actor, hit);
-			if (extra != null) extra.add(hit);
+			if(extra != null)
+				extra.add(hit);
 			return hit;
 		}
 		return null;

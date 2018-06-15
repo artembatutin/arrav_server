@@ -50,9 +50,9 @@ public enum PetData {
 	
 	/**
 	 * Constructs a new {@link PetData}.
-	 * @param stage     {@link #stage}.
+	 * @param stage {@link #stage}.
 	 * @param petPolicy {@link #petPolicy}.
-	 * @param type      {@link #type}.
+	 * @param type {@link #type}.
 	 */
 	PetData(int stage, PetPolicy petPolicy, PetType type) {
 		this.stage = stage;

@@ -26,7 +26,7 @@ public final class CrossbowLimbing extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link CrossbowLimbing}.
-	 * @param player     {@link #getPlayer()}
+	 * @param player {@link #getPlayer()}
 	 * @param definition the definition we're currently handling.
 	 */
 	public CrossbowLimbing(Player player, CrossbowData definition) {
@@ -161,12 +161,12 @@ public final class CrossbowLimbing extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link CrossbowData} enumerator.
-		 * @param stock       {@link #stock}.
-		 * @param limb        {@link #limb}.
-		 * @param crossbow_u  {@link #crossbow_u}.
+		 * @param stock {@link #stock}.
+		 * @param limb {@link #limb}.
+		 * @param crossbow_u {@link #crossbow_u}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
-		 * @param animation   {@link #animation}.
+		 * @param experience {@link #experience}.
+		 * @param animation {@link #animation}.
 		 */
 		CrossbowData(int stock, int crossbow_u, int limb, int requirement, double experience, int animation) {
 			this.stock = new Item(stock);

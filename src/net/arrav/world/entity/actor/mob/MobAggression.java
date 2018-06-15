@@ -53,7 +53,7 @@ public final class MobAggression {
 	
 	/**
 	 * Determines if {@code mob} is able to target {@code player}.
-	 * @param mob    the mob trying to target the player.
+	 * @param mob the mob trying to target the player.
 	 * @param player the player that is being targeted by the NPC.
 	 * @return {@code true} if the player can be targeted, {@code false}
 	 * otherwise.

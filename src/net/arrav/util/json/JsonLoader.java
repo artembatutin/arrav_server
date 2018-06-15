@@ -38,7 +38,7 @@ public abstract class JsonLoader implements Runnable {
 	
 	/**
 	 * A dynamic method that allows the user to read and modify the parsed data.
-	 * @param reader  the reader for retrieving the parsed data.
+	 * @param reader the reader for retrieving the parsed data.
 	 * @param builder the builder for retrieving the parsed data.
 	 */
 	public abstract void load(JsonObject reader, Gson builder);
@@ -71,13 +71,13 @@ public abstract class JsonLoader implements Runnable {
 	 * A method called on the start of this loading.
 	 */
 	public void start() {
-	
+
 	}
 	
 	/**
 	 * A method called on the end of this loading.
 	 */
 	public void end() {
-	
+
 	}
 }

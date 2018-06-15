@@ -13,7 +13,6 @@ import net.arrav.world.entity.actor.player.assets.Rights;
  */
 public final class RestoreSpecialTask extends Task {
 	
-	
 	/**
 	 * Creates a new {@link RestoreSpecialTask}.
 	 */

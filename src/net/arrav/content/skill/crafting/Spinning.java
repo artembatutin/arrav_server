@@ -12,7 +12,7 @@ import net.arrav.util.TextUtils;
 import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -35,7 +35,7 @@ public final class Spinning extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link Spinning}.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
+	 * @param data {@link #data}.
 	 * @param amount {@link #amount}.
 	 */
 	public Spinning(Player player, SpinningData data, int amount) {
@@ -46,7 +46,7 @@ public final class Spinning extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to register a certain amount of spinning products.
-	 * @param player   the player creating the spinning products.
+	 * @param player the player creating the spinning products.
 	 * @param buttonId the button the player interacted with.
 	 * @return {@code true} if the player created any products, {@code false} otherwise.
 	 */
@@ -69,7 +69,7 @@ public final class Spinning extends ProducingSkillAction {
 	/**
 	 * Starts the skill action.
 	 * @param player the player to start the skill action for.
-	 * @param data   the data this skill action is dependent of.
+	 * @param data the data this skill action is dependent of.
 	 * @param amount the amount of times this task should run.
 	 */
 	public static void create(Player player, SpinningData data, int amount) {
@@ -195,10 +195,10 @@ public final class Spinning extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link SpinningData}.
-		 * @param item        {@link #item}.
-		 * @param produced    {@link #produced}.
+		 * @param item {@link #item}.
+		 * @param produced {@link #produced}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
+		 * @param experience {@link #experience}.
 		 */
 		SpinningData(int item, int produced, int requirement, double experience) {
 			this.item = new Item(item);

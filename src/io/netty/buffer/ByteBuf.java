@@ -36,21 +36,16 @@ import java.nio.charset.UnsupportedCharsetException;
  * A random and sequential accessible sequence of zero or more bytes (octets).
  * This interface provides an abstract view for one or more primitive byte
  * arrays ({@code byte[]}) and {@linkplain ByteBuffer NIO buffers}.
- *
  * <h3>Creation of a buffer</h3>
- *
  * It is recommended to create a new buffer using the helper methods in
  * {@link Unpooled} rather than calling an individual implementation's
  * constructor.
- *
  * <h3>Random Access Indexing</h3>
- *
  * Just like an ordinary primitive byte array, {@link ByteBuf} uses
  * <a href="http://en.wikipedia.org/wiki/Zero-based_numbering">zero-based indexing</a>.
  * It means the index of the first byte is always {@code 0} and the index of the last byte is
  * always {@link #capacity() capacity - 1}.  For example, to iterate all bytes of a buffer, you
  * can do the following, regardless of its internal implementation:
- *
  * <pre>
  * {@link ByteBuf} buffer = ...;
  * for (int i = 0; i &lt; buffer.capacity(); i ++) {
@@ -58,15 +53,12 @@ import java.nio.charset.UnsupportedCharsetException;
  *     System.out.println((char) b);
  * }
  * </pre>
- *
  * <h3>Sequential Access Indexing</h3>
- *
  * {@link ByteBuf} provides two pointer variables to support sequential
  * read and write operations - {@link #readerIndex() readerIndex} for a read
  * operation and {@link #writerIndex() writerIndex} for a write operation
  * respectively.  The following diagram shows how a buffer is segmented into
  * three areas by the two pointers:
- *
  * <pre>
  *      +-------------------+------------------+------------------+
  *      | discardable bytes |  readable bytes  |  writable bytes  |
@@ -75,9 +67,7 @@ import java.nio.charset.UnsupportedCharsetException;
  *      |                   |                  |                  |
  *      0      <=      readerIndex   <=   writerIndex    <=    capacity
  * </pre>
- *
  * <h4>Readable bytes (the actual content)</h4>
- *
  * This segment is where the actual data is stored.  Any operation whose name
  * starts with {@code read} or {@code skip} will get or skip the data at the
  * current {@link #readerIndex() readerIndex} and increase it by the number of
@@ -88,7 +78,6 @@ import java.nio.charset.UnsupportedCharsetException;
  * If there's not enough content left, {@link IndexOutOfBoundsException} is
  * raised.  The default value of newly allocated, wrapped or copied buffer's
  * {@link #readerIndex() readerIndex} is {@code 0}.
- *
  * <pre>
  * // Iterates the readable bytes of a buffer.
  * {@link ByteBuf} buffer = ...;
@@ -96,9 +85,7 @@ import java.nio.charset.UnsupportedCharsetException;
  *     System.out.println(buffer.readByte());
  * }
  * </pre>
- *
  * <h4>Writable bytes</h4>
- *
  * This segment is a undefined space which needs to be filled.  Any operation
  * whose name starts with {@code write} will write the data at the current
  * {@link #writerIndex() writerIndex} and increase it by the number of written
@@ -111,7 +98,6 @@ import java.nio.charset.UnsupportedCharsetException;
  * {@link #writerIndex() writerIndex} is {@code 0}.  The default value of
  * wrapped or copied buffer's {@link #writerIndex() writerIndex} is the
  * {@link #capacity() capacity} of the buffer.
- *
  * <pre>
  * // Fills the writable bytes of a buffer with random integers.
  * {@link ByteBuf} buffer = ...;
@@ -119,94 +105,73 @@ import java.nio.charset.UnsupportedCharsetException;
  *     buffer.writeInt(random.nextInt());
  * }
  * </pre>
- *
  * <h4>Discardable bytes</h4>
- *
  * This segment contains the bytes which were read already by a read operation.
  * Initially, the size of this segment is {@code 0}, but its size increases up
  * to the {@link #writerIndex() writerIndex} as read operations are executed.
  * The read bytes can be discarded by calling {@link #discardReadBytes()} to
  * reclaim unused area as depicted by the following diagram:
- *
  * <pre>
  *  BEFORE discardReadBytes()
- *
  *      +-------------------+------------------+------------------+
  *      | discardable bytes |  readable bytes  |  writable bytes  |
  *      +-------------------+------------------+------------------+
  *      |                   |                  |                  |
  *      0      <=      readerIndex   <=   writerIndex    <=    capacity
- *
- *
  *  AFTER discardReadBytes()
- *
  *      +------------------+--------------------------------------+
  *      |  readable bytes  |    writable bytes (got more space)   |
  *      +------------------+--------------------------------------+
  *      |                  |                                      |
  * readerIndex (0) <= writerIndex (decreased)        <=        capacity
  * </pre>
- *
  * Please note that there is no guarantee about the content of writable bytes
  * after calling {@link #discardReadBytes()}.  The writable bytes will not be
  * moved in most cases and could even be filled with completely different data
  * depending on the underlying buffer implementation.
- *
  * <h4>Clearing the buffer indexes</h4>
- *
  * You can set both {@link #readerIndex() readerIndex} and
  * {@link #writerIndex() writerIndex} to {@code 0} by calling {@link #clear()}.
  * It does not clear the buffer content (e.g. filling with {@code 0}) but just
  * clears the two pointers.  Please also note that the semantic of this
  * operation is different from {@link ByteBuffer#clear()}.
- *
  * <pre>
  *  BEFORE clear()
- *
  *      +-------------------+------------------+------------------+
  *      | discardable bytes |  readable bytes  |  writable bytes  |
  *      +-------------------+------------------+------------------+
  *      |                   |                  |                  |
  *      0      <=      readerIndex   <=   writerIndex    <=    capacity
- *
- *
  *  AFTER clear()
- *
  *      +---------------------------------------------------------+
  *      |             writable bytes (got more space)             |
  *      +---------------------------------------------------------+
  *      |                                                         |
  *      0 = readerIndex = writerIndex            <=            capacity
  * </pre>
- *
  * <h3>Search operations</h3>
- *
  * For simple single-byte searches, use {@link #indexOf(int, int, byte)} and {@link #bytesBefore(int, int, byte)}.
  * {@link #bytesBefore(byte)} is especially useful when you deal with a {@code NUL}-terminated string.
  * For complicated searches, use {@link #forEachByte(int, int, ByteProcessor)} with a {@link ByteProcessor}
  * implementation.
- *
  * <h3>Mark and reset</h3>
- *
  * There are two marker indexes in every buffer. One is for storing
  * {@link #readerIndex() readerIndex} and the other is for storing
  * {@link #writerIndex() writerIndex}.  You can always reposition one of the
  * two indexes by calling a reset method.  It works in a similar fashion to
  * the mark and reset methods in {@link InputStream} except that there's no
  * {@code readlimit}.
- *
  * <h3>Derived buffers</h3>
- *
  * You can create a view of an existing buffer by calling one of the following methods:
  * <ul>
- *   <li>{@link #duplicate()}</li>
- *   <li>{@link #slice()}</li>
- *   <li>{@link #slice(int, int)}</li>
- *   <li>{@link #readSlice(int)}</li>
- *   <li>{@link #retainedDuplicate()}</li>
- *   <li>{@link #retainedSlice()}</li>
- *   <li>{@link #retainedSlice(int, int)}</li>
- *   <li>{@link #readRetainedSlice(int)}</li>
+ * <li>{@link #duplicate()}</li>
+ * <li>{@link #slice()}</li>
+ * <li>{@link #slice(int, int)}</li>
+ * <li>{@link #readSlice(int)}</li>
+ * <li>{@link #retainedDuplicate()}</li>
+ * <li>{@link #retainedSlice()}</li>
+ * <li>{@link #retainedSlice(int, int)}</li>
+ * <li>{@link #readRetainedSlice(int)}</li>
  * </ul>
  * A derived buffer will have an independent {@link #readerIndex() readerIndex},
  * {@link #writerIndex() writerIndex} and marker indexes, while it shares
@@ -214,37 +179,26 @@ import java.nio.charset.UnsupportedCharsetException;
  * <p>
  * In case a completely fresh copy of an existing buffer is required, please
  * call {@link #copy()} method instead.
- *
  * <h4>Non-retained and retained derived buffers</h4>
- *
  * Note that the {@link #duplicate()}, {@link #slice()}, {@link #slice(int, int)} and {@link #readSlice(int)} does NOT
  * call {@link #retain()} on the returned derived buffer, and thus its reference count will NOT be increased. If you
  * need to create a derived buffer with increased reference count, consider using {@link #retainedDuplicate()},
  * {@link #retainedSlice()}, {@link #retainedSlice(int, int)} and {@link #readRetainedSlice(int)} which may return
  * a buffer implementation that produces less garbage.
- *
  * <h3>Conversion to existing JDK types</h3>
- *
  * <h4>Byte array</h4>
- *
  * If a {@link ByteBuf} is backed by a byte array (i.e. {@code byte[]}),
  * you can access it directly via the {@link #array()} method.  To determine
  * if a buffer is backed by a byte array, {@link #hasArray()} should be used.
- *
  * <h4>NIO Buffers</h4>
- *
  * If a {@link ByteBuf} can be converted into an NIO {@link ByteBuffer} which shares its
  * content (i.e. view buffer), you can get it via the {@link #nioBuffer()} method.  To determine
  * if a buffer can be converted into an NIO buffer, use {@link #nioBufferCount()}.
- *
  * <h4>Strings</h4>
- *
  * Various {@link #toString(Charset)} methods convert a {@link ByteBuf}
  * into a {@link String}.  Please note that {@link #toString()} is not a
  * conversion method.
- *
  * <h4>I/O Streams</h4>
- *
  * Please refer to {@link ByteBufInputStream} and
  * {@link ByteBufOutputStream}.
  */
@@ -252,19 +206,33 @@ import java.nio.charset.UnsupportedCharsetException;
 public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	
 	/* Custom game packet data. */
-	/** The C-String terminator value. */
+	/**
+	 * The C-String terminator value.
+	 */
 	public static final int TERMINATOR_VALUE = 10;
-	/** An array of the bit masks used for writing bits.*/
+	/**
+	 * An array of the bit masks used for writing bits.
+	 */
 	private static final int[] BIT_MASK = {0, 0x1, 0x3, 0x7, 0xf, 0x1f, 0x3f, 0x7f, 0xff, 0x1ff, 0x3ff, 0x7ff, 0xfff, 0x1fff, 0x3fff, 0x7fff, 0xffff, 0x1ffff, 0x3ffff, 0x7ffff, 0xfffff, 0x1fffff, 0x3fffff, 0x7fffff, 0xffffff, 0x1ffffff, 0x3ffffff, 0x7ffffff, 0xfffffff, 0x1fffffff, 0x3fffffff, 0x7fffffff, -1};
-	/** Encrypts packet identifiers. */
+	/**
+	 * Encrypts packet identifiers.
+	 */
 	private IsaacRandom encryptor;
-	/** The {@link GamePacketType} of the message currently being built. */
+	/**
+	 * The {@link GamePacketType} of the message currently being built.
+	 */
 	private GamePacketType msgType;
-	/** The opcode, {@code -1} if this message does not have an opcode. */
+	/**
+	 * The opcode, {@code -1} if this message does not have an opcode.
+	 */
 	private int opcode;
-	/** The writer index where the size has been written for the current message being built. */
+	/**
+	 * The writer index where the size has been written for the current message being built.
+	 */
 	private int sizeIndex;
-	/** The current bit position when writing bits. */
+	/**
+	 * The current bit position when writing bits.
+	 */
 	private int bitIndex = -1;
 	
 	/**
@@ -299,7 +267,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	
 	/**
 	 * Constructs a new message.
-	 * @param id   The id of the message.
+	 * @param id The id of the message.
 	 * @param type The type of message to build.
 	 */
 	public void message(int id, GamePacketType type) {
@@ -389,7 +357,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Puts {@code numBits} into the buffer with the value {@code value}.
 	 * @param numBits The number of bits to put into the buffer.
-	 * @param value   The value.
+	 * @param value The value.
 	 * @throws IllegalArgumentException If the number of bits is not between 1 and 31 inclusive.
 	 */
 	public void putBits(int numBits, int value) {
@@ -432,7 +400,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Writes a value as a {@code byte}.
 	 * @param value The value to write.
-	 * @param type  The byte transformation type
+	 * @param type The byte transformation type
 	 * @return An instance of this byte message.
 	 */
 	public void put(int value, ByteTransform type) {
@@ -464,7 +432,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Writes a value as a {@code short}.
 	 * @param value The value to write.
-	 * @param type  The byte transformation type
+	 * @param type The byte transformation type
 	 * @param order The byte endianness type.
 	 * @return An instance of this byte message.
 	 * @throws UnsupportedOperationException If middle or inverse-middle value types are selected.
@@ -498,7 +466,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Writes a value as a big-endian {@code short}.
 	 * @param value The value to write.
-	 * @param type  The byte transformation type
+	 * @param type The byte transformation type
 	 * @return An instance of this byte message.
 	 */
 	public void putShort(int value, ByteTransform type) {
@@ -518,7 +486,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Writes a value as an {@code int}.
 	 * @param value The value to write.
-	 * @param type  The byte transformation type
+	 * @param type The byte transformation type
 	 * @param order The byte endianness type.
 	 * @return An instance of this byte message.
 	 */
@@ -563,7 +531,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Writes a value as a big-endian {@code int}.
 	 * @param value The value to write.
-	 * @param type  The byte transformation type
+	 * @param type The byte transformation type
 	 * @return An instance of this byte message.
 	 */
 	public void putInt(int value, ByteTransform type) {
@@ -583,7 +551,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Writes a value as a {@code long}.
 	 * @param value The value to write.
-	 * @param type  The byte transformation type
+	 * @param type The byte transformation type
 	 * @param order The byte endianness type.
 	 * @return An instance of this byte message.
 	 * @throws UnsupportedOperationException If middle or inverse-middle value types are selected.
@@ -629,7 +597,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Writes a value as a big-endian {@code long}.
 	 * @param value The value to write.
-	 * @param type  The byte transformation type
+	 * @param type The byte transformation type
 	 * @return An instance of this byte message.
 	 */
 	public void putLong(long value, ByteTransform type) {
@@ -672,7 +640,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Reads a value as a {@code byte}.
 	 * @param signed if the byte is signed.
-	 * @param type   The byte transformation type
+	 * @param type The byte transformation type
 	 * @return The value of the byte.
 	 */
 	public int get(boolean signed, ByteTransform type) {
@@ -734,8 +702,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Reads a {@code short} value.
 	 * @param signed If the short is signed.
-	 * @param type   The byte transformation type
-	 * @param order  The byte endianness type.
+	 * @param type The byte transformation type
+	 * @param order The byte endianness type.
 	 * @return The value of the short.
 	 * @throws UnsupportedOperationException if middle or inverse-middle value types are selected.
 	 */
@@ -787,7 +755,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Reads a big-endian {@code short}.
 	 * @param signed If the short is signed.
-	 * @param type   The byte transformation type
+	 * @param type The byte transformation type
 	 * @return The value of the short.
 	 */
 	public int getShort(boolean signed, ByteTransform type) {
@@ -806,7 +774,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Reads a standard {@code short}.
 	 * @param signed If the short is signed.
-	 * @param order  The byte endianness type.
+	 * @param order The byte endianness type.
 	 * @return The value of the short.
 	 */
 	public int getShort(boolean signed, net.arrav.net.codec.ByteOrder order) {
@@ -815,7 +783,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	
 	/**
 	 * Reads a signed {@code short}.
-	 * @param type  The byte transformation type
+	 * @param type The byte transformation type
 	 * @param order The byte endianness type.
 	 * @return The value of the short.
 	 */
@@ -826,8 +794,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Reads an {@code int}.
 	 * @param signed If the integer is signed.
-	 * @param type   The byte transformation type
-	 * @param order  The byte endianness type.
+	 * @param type The byte transformation type
+	 * @param order The byte endianness type.
 	 * @return The value of the integer.
 	 */
 	public int getInt(boolean signed, ByteTransform type, net.arrav.net.codec.ByteOrder order) {
@@ -890,7 +858,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Reads a big-endian {@code int}.
 	 * @param signed If the integer is signed.
-	 * @param type   The byte transformation type
+	 * @param type The byte transformation type
 	 * @return The value of the integer.
 	 */
 	public int getInt(boolean signed, ByteTransform type) {
@@ -909,7 +877,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Reads a standard {@code int}.
 	 * @param signed If the integer is signed.
-	 * @param order  The byte endianness type.
+	 * @param order The byte endianness type.
 	 * @return The value of the integer.
 	 */
 	public int getInt(boolean signed, net.arrav.net.codec.ByteOrder order) {
@@ -918,7 +886,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	
 	/**
 	 * Reads a signed {@code int}.
-	 * @param type  The byte transformation type
+	 * @param type The byte transformation type
 	 * @param order The byte endianness type.
 	 * @return The value of the integer.
 	 */
@@ -928,7 +896,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	
 	/**
 	 * Reads a signed {@code long} value.
-	 * @param type  The byte transformation type
+	 * @param type The byte transformation type
 	 * @param order The byte endianness type.
 	 * @return The value of the long.
 	 * @throws UnsupportedOperationException if middle or inverse-middle value types are selected.
@@ -1001,7 +969,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Reads the amount of bytes into a byte array, starting at the current position.
 	 * @param amount The amount of bytes.
-	 * @param type   The byte transformation type of each byte.
+	 * @param type The byte transformation type of each byte.
 	 * @return A buffer filled with the data.
 	 */
 	public byte[] getBytes(int amount, ByteTransform type) {
@@ -1016,7 +984,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Reads the amount of bytes from the buffer in reverse, starting at {@code current_position + amount} and reading in
 	 * reverse until the current position.
 	 * @param amount The amount of bytes to read.
-	 * @param type   The byte transformation type of each byte.
+	 * @param type The byte transformation type of each byte.
 	 * @return A buffer filled with the data.
 	 */
 	public byte[] getBytesReverse(int amount, ByteTransform type) {
@@ -1073,7 +1041,6 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Returns the <a href="http://en.wikipedia.org/wiki/Endianness">endianness</a>
 	 * of this buffer.
-	 *
 	 * @deprecated use the Little Endian accessors, e.g. {@code getShortLE}, {@code getIntLE}
 	 * instead of creating a buffer with swapped {@code endianness}.
 	 */
@@ -1087,7 +1054,6 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * specified {@code endianness} is identical to this buffer's byte order, this method can
 	 * return {@code this}.  This method does not modify {@code readerIndex} or {@code writerIndex}
 	 * of this buffer.
-	 *
 	 * @deprecated use the Little Endian accessors, e.g. {@code getShortLE}, {@code getIntLE}
 	 * instead of creating a buffer with swapped {@code endianness}.
 	 */
@@ -1096,7 +1062,6 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	
 	/**
 	 * Return the underlying buffer instance if this buffer is a wrapper of another buffer.
-	 *
 	 * @return {@code null} if this buffer is not a wrapper
 	 */
 	public abstract ByteBuf unwrap();
@@ -1124,11 +1089,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	
 	/**
 	 * Sets the {@code readerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code readerIndex} is
-	 *            less than {@code 0} or
-	 *            greater than {@code this.writerIndex}
+	 * @throws IndexOutOfBoundsException if the specified {@code readerIndex} is
+	 * less than {@code 0} or
+	 * greater than {@code this.writerIndex}
 	 */
 	public abstract ByteBuf readerIndex(int readerIndex);
 	
@@ -1139,11 +1102,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	
 	/**
 	 * Sets the {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code writerIndex} is
-	 *            less than {@code this.readerIndex} or
-	 *            greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code writerIndex} is
+	 * less than {@code this.readerIndex} or
+	 * greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf writerIndex(int writerIndex);
 	
@@ -1152,51 +1113,41 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * in one shot.  This method is useful when you have to worry about the
 	 * invocation order of {@link #readerIndex(int)} and {@link #writerIndex(int)}
 	 * methods.  For example, the following code will fail:
-	 *
 	 * <pre>
 	 * // Create a buffer whose readerIndex, writerIndex and capacity are
 	 * // 0, 0 and 8 respectively.
 	 * {@link ByteBuf} buf = {@link Unpooled}.buffer(8);
-	 *
 	 * // IndexOutOfBoundsException is thrown because the specified
 	 * // readerIndex (2) cannot be greater than the current writerIndex (0).
 	 * buf.readerIndex(2);
 	 * buf.writerIndex(4);
 	 * </pre>
-	 *
 	 * The following code will also fail:
-	 *
 	 * <pre>
 	 * // Create a buffer whose readerIndex, writerIndex and capacity are
 	 * // 0, 8 and 8 respectively.
 	 * {@link ByteBuf} buf = {@link Unpooled}.wrappedBuffer(new byte[8]);
-	 *
 	 * // readerIndex becomes 8.
 	 * buf.readLong();
-	 *
 	 * // IndexOutOfBoundsException is thrown because the specified
 	 * // writerIndex (4) cannot be less than the current readerIndex (8).
 	 * buf.writerIndex(4);
 	 * buf.readerIndex(2);
 	 * </pre>
-	 *
 	 * By contrast, this method guarantees that it never
 	 * throws an {@link IndexOutOfBoundsException} as long as the specified
 	 * indexes meet basic constraints, regardless what the current index
 	 * values of the buffer are:
-	 *
 	 * <pre>
 	 * // No matter what the current state of the buffer is, the following
 	 * // call always succeeds as long as the capacity of the buffer is not
 	 * // less than 4.
 	 * buf.setIndex(2, 4);
 	 * </pre>
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code readerIndex} is less than 0,
-	 *         if the specified {@code writerIndex} is less than the specified
-	 *         {@code readerIndex} or if the specified {@code writerIndex} is
-	 *         greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code readerIndex} is less than 0,
+	 * if the specified {@code writerIndex} is less than the specified
+	 * {@code readerIndex} or if the specified {@code writerIndex} is
+	 * greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setIndex(int readerIndex, int writerIndex);
 	
@@ -1265,10 +1216,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Repositions the current {@code readerIndex} to the marked
 	 * {@code readerIndex} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the current {@code writerIndex} is less than the marked
-	 *         {@code readerIndex}
+	 * @throws IndexOutOfBoundsException if the current {@code writerIndex} is less than the marked
+	 * {@code readerIndex}
 	 */
 	public abstract ByteBuf resetReaderIndex();
 	
@@ -1283,10 +1232,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Repositions the current {@code writerIndex} to the marked
 	 * {@code writerIndex} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the current {@code readerIndex} is greater than the marked
-	 *         {@code writerIndex}
+	 * @throws IndexOutOfBoundsException if the current {@code readerIndex} is greater than the marked
+	 * {@code writerIndex}
 	 */
 	public abstract ByteBuf resetWriterIndex();
 	
@@ -1313,11 +1260,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * is equal to or greater than the specified value.  If there is enough
 	 * writable bytes in this buffer, this method returns with no side effect.
 	 * Otherwise, it raises an {@link IllegalArgumentException}.
-	 *
-	 * @param minWritableBytes
-	 *        the expected minimum number of writable bytes
-	 * @throws IndexOutOfBoundsException
-	 *         if {@link #writerIndex()} + {@code minWritableBytes} &gt; {@link #maxCapacity()}
+	 * @param minWritableBytes the expected minimum number of writable bytes
+	 * @throws IndexOutOfBoundsException if {@link #writerIndex()} + {@code minWritableBytes} &gt; {@link #maxCapacity()}
 	 */
 	public abstract ByteBuf ensureWritable(int minWritableBytes);
 	
@@ -1325,20 +1269,17 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Tries to make sure the number of {@linkplain #writableBytes() the writable bytes}
 	 * is equal to or greater than the specified value.  Unlike {@link #ensureWritable(int)},
 	 * this method does not raise an exception but returns a code.
-	 *
-	 * @param minWritableBytes
-	 *        the expected minimum number of writable bytes
-	 * @param force
-	 *        When {@link #writerIndex()} + {@code minWritableBytes} &gt; {@link #maxCapacity()}:
-	 *        <ul>
-	 *        <li>{@code true} - the capacity of the buffer is expanded to {@link #maxCapacity()}</li>
-	 *        <li>{@code false} - the capacity of the buffer is unchanged</li>
-	 *        </ul>
+	 * @param minWritableBytes the expected minimum number of writable bytes
+	 * @param force When {@link #writerIndex()} + {@code minWritableBytes} &gt; {@link #maxCapacity()}:
+	 * <ul>
+	 * <li>{@code true} - the capacity of the buffer is expanded to {@link #maxCapacity()}</li>
+	 * <li>{@code false} - the capacity of the buffer is unchanged</li>
+	 * </ul>
 	 * @return {@code 0} if the buffer has enough writable bytes, and its capacity is unchanged.
-	 *         {@code 1} if the buffer does not have enough bytes, and its capacity is unchanged.
-	 *         {@code 2} if the buffer has enough writable bytes, and its capacity has been increased.
-	 *         {@code 3} if the buffer does not have enough bytes, but its capacity has been
-	 *                   increased to its maximum.
+	 * {@code 1} if the buffer does not have enough bytes, and its capacity is unchanged.
+	 * {@code 2} if the buffer has enough writable bytes, and its capacity has been increased.
+	 * {@code 3} if the buffer does not have enough bytes, but its capacity has been
+	 * increased to its maximum.
 	 */
 	public abstract int ensureWritable(int minWritableBytes, boolean force);
 	
@@ -1346,10 +1287,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Gets a boolean at the specified absolute (@code index) in this buffer.
 	 * This method does not modify the {@code readerIndex} or {@code writerIndex}
 	 * of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 1} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 1} is greater than {@code this.capacity}
 	 */
 	public abstract boolean getBoolean(int index);
 	
@@ -1357,21 +1296,17 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Gets a byte at the specified absolute {@code index} in this buffer.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 1} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 1} is greater than {@code this.capacity}
 	 */
-	public abstract byte  getByte(int index);
+	public abstract byte getByte(int index);
 	
 	/**
 	 * Gets an unsigned byte at the specified absolute {@code index} in this
 	 * buffer.  This method does not modify {@code readerIndex} or
 	 * {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 1} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 1} is greater than {@code this.capacity}
 	 */
 	public abstract short getUnsignedByte(int index);
 	
@@ -1379,10 +1314,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Gets a 16-bit short integer at the specified absolute {@code index} in
 	 * this buffer.  This method does not modify {@code readerIndex} or
 	 * {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 2} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 2} is greater than {@code this.capacity}
 	 */
 	public abstract short getShort(int index);
 	
@@ -1390,10 +1323,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Gets a 16-bit short integer at the specified absolute {@code index} in
 	 * this buffer in Little Endian Byte Order. This method does not modify
 	 * {@code readerIndex} or {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 2} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 2} is greater than {@code this.capacity}
 	 */
 	public abstract short getShortLE(int index);
 	
@@ -1401,10 +1332,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Gets an unsigned 16-bit short integer at the specified absolute
 	 * {@code index} in this buffer.  This method does not modify
 	 * {@code readerIndex} or {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 2} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 2} is greater than {@code this.capacity}
 	 */
 	public abstract int getUnsignedShort(int index);
 	
@@ -1413,10 +1342,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@code index} in this buffer in Little Endian Byte Order.
 	 * This method does not modify {@code readerIndex} or
 	 * {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 2} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 2} is greater than {@code this.capacity}
 	 */
 	public abstract int getUnsignedShortLE(int index);
 	
@@ -1424,21 +1351,17 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Gets a 24-bit medium integer at the specified absolute {@code index} in
 	 * this buffer.  This method does not modify {@code readerIndex} or
 	 * {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 3} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 3} is greater than {@code this.capacity}
 	 */
-	public abstract int   getMedium(int index);
+	public abstract int getMedium(int index);
 	
 	/**
 	 * Gets a 24-bit medium integer at the specified absolute {@code index} in
 	 * this buffer in the Little Endian Byte Order. This method does not
 	 * modify {@code readerIndex} or {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 3} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 3} is greater than {@code this.capacity}
 	 */
 	public abstract int getMediumLE(int index);
 	
@@ -1446,110 +1369,90 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Gets an unsigned 24-bit medium integer at the specified absolute
 	 * {@code index} in this buffer.  This method does not modify
 	 * {@code readerIndex} or {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 3} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 3} is greater than {@code this.capacity}
 	 */
-	public abstract int   getUnsignedMedium(int index);
+	public abstract int getUnsignedMedium(int index);
 	
 	/**
 	 * Gets an unsigned 24-bit medium integer at the specified absolute
 	 * {@code index} in this buffer in Little Endian Byte Order.
 	 * This method does not modify {@code readerIndex} or
 	 * {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 3} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 3} is greater than {@code this.capacity}
 	 */
-	public abstract int   getUnsignedMediumLE(int index);
+	public abstract int getUnsignedMediumLE(int index);
 	
 	/**
 	 * Gets a 32-bit integer at the specified absolute {@code index} in
 	 * this buffer.  This method does not modify {@code readerIndex} or
 	 * {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 4} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 4} is greater than {@code this.capacity}
 	 */
-	public abstract int   getInt(int index);
+	public abstract int getInt(int index);
 	
 	/**
 	 * Gets a 32-bit integer at the specified absolute {@code index} in
 	 * this buffer with Little Endian Byte Order. This method does not
 	 * modify {@code readerIndex} or {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 4} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 4} is greater than {@code this.capacity}
 	 */
-	public abstract int   getIntLE(int index);
+	public abstract int getIntLE(int index);
 	
 	/**
 	 * Gets an unsigned 32-bit integer at the specified absolute {@code index}
 	 * in this buffer.  This method does not modify {@code readerIndex} or
 	 * {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 4} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 4} is greater than {@code this.capacity}
 	 */
-	public abstract long  getUnsignedInt(int index);
+	public abstract long getUnsignedInt(int index);
 	
 	/**
 	 * Gets an unsigned 32-bit integer at the specified absolute {@code index}
 	 * in this buffer in Little Endian Byte Order. This method does not
 	 * modify {@code readerIndex} or {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 4} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 4} is greater than {@code this.capacity}
 	 */
-	public abstract long  getUnsignedIntLE(int index);
+	public abstract long getUnsignedIntLE(int index);
 	
 	/**
 	 * Gets a 64-bit long integer at the specified absolute {@code index} in
 	 * this buffer.  This method does not modify {@code readerIndex} or
 	 * {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 8} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 8} is greater than {@code this.capacity}
 	 */
-	public abstract long  getLong(int index);
+	public abstract long getLong(int index);
 	
 	/**
 	 * Gets a 64-bit long integer at the specified absolute {@code index} in
 	 * this buffer in Little Endian Byte Order. This method does not
 	 * modify {@code readerIndex} or {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 8} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 8} is greater than {@code this.capacity}
 	 */
-	public abstract long  getLongLE(int index);
+	public abstract long getLongLE(int index);
 	
 	/**
 	 * Gets a 2-byte UTF-16 character at the specified absolute
 	 * {@code index} in this buffer.  This method does not modify
 	 * {@code readerIndex} or {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 2} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 2} is greater than {@code this.capacity}
 	 */
-	public abstract char  getChar(int index);
+	public abstract char getChar(int index);
 	
 	/**
 	 * Gets a 32-bit floating point number at the specified absolute
 	 * {@code index} in this buffer.  This method does not modify
 	 * {@code readerIndex} or {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 4} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 4} is greater than {@code this.capacity}
 	 */
 	public abstract float getFloat(int index);
 	
@@ -1558,10 +1461,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@code index} in this buffer in Little Endian Byte Order.
 	 * This method does not modify {@code readerIndex} or
 	 * {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 4} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 4} is greater than {@code this.capacity}
 	 */
 	public float getFloatLE(int index) {
 		return Float.intBitsToFloat(getIntLE(index));
@@ -1571,10 +1472,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Gets a 64-bit floating point number at the specified absolute
 	 * {@code index} in this buffer.  This method does not modify
 	 * {@code readerIndex} or {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 8} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 8} is greater than {@code this.capacity}
 	 */
 	public abstract double getDouble(int index);
 	
@@ -1583,10 +1482,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@code index} in this buffer in Little Endian Byte Order.
 	 * This method does not modify {@code readerIndex} or
 	 * {@code writerIndex} of this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 8} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 8} is greater than {@code this.capacity}
 	 */
 	public double getDoubleLE(int index) {
 		return Double.longBitsToDouble(getLongLE(index));
@@ -1602,11 +1499,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@link #getBytes(int, ByteBuf, int, int)} does not.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * the source buffer (i.e. {@code this}).
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + dst.writableBytes} is greater than
-	 *            {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + dst.writableBytes} is greater than
+	 * {@code this.capacity}
 	 */
 	public abstract ByteBuf getBytes(int index, ByteBuf dst);
 	
@@ -1619,14 +1514,11 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@link #getBytes(int, ByteBuf, int, int)} does not.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * the source buffer (i.e. {@code this}).
-	 *
 	 * @param length the number of bytes to transfer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0},
-	 *         if {@code index + length} is greater than
-	 *            {@code this.capacity}, or
-	 *         if {@code length} is greater than {@code dst.writableBytes}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0},
+	 * if {@code index + length} is greater than
+	 * {@code this.capacity}, or
+	 * if {@code length} is greater than {@code dst.writableBytes}
 	 */
 	public abstract ByteBuf getBytes(int index, ByteBuf dst, int length);
 	
@@ -1635,17 +1527,14 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * the specified absolute {@code index}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex}
 	 * of both the source (i.e. {@code this}) and the destination.
-	 *
 	 * @param dstIndex the first index of the destination
-	 * @param length   the number of bytes to transfer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0},
-	 *         if the specified {@code dstIndex} is less than {@code 0},
-	 *         if {@code index + length} is greater than
-	 *            {@code this.capacity}, or
-	 *         if {@code dstIndex + length} is greater than
-	 *            {@code dst.capacity}
+	 * @param length the number of bytes to transfer
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0},
+	 * if the specified {@code dstIndex} is less than {@code 0},
+	 * if {@code index + length} is greater than
+	 * {@code this.capacity}, or
+	 * if {@code dstIndex + length} is greater than
+	 * {@code dst.capacity}
 	 */
 	public abstract ByteBuf getBytes(int index, ByteBuf dst, int dstIndex, int length);
 	
@@ -1654,11 +1543,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * the specified absolute {@code index}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + dst.length} is greater than
-	 *            {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + dst.length} is greater than
+	 * {@code this.capacity}
 	 */
 	public abstract ByteBuf getBytes(int index, byte[] dst);
 	
@@ -1667,17 +1554,14 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * the specified absolute {@code index}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex}
 	 * of this buffer.
-	 *
 	 * @param dstIndex the first index of the destination
-	 * @param length   the number of bytes to transfer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0},
-	 *         if the specified {@code dstIndex} is less than {@code 0},
-	 *         if {@code index + length} is greater than
-	 *            {@code this.capacity}, or
-	 *         if {@code dstIndex + length} is greater than
-	 *            {@code dst.length}
+	 * @param length the number of bytes to transfer
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0},
+	 * if the specified {@code dstIndex} is less than {@code 0},
+	 * if {@code index + length} is greater than
+	 * {@code this.capacity}, or
+	 * if {@code dstIndex + length} is greater than
+	 * {@code dst.length}
 	 */
 	public abstract ByteBuf getBytes(int index, byte[] dst, int dstIndex, int length);
 	
@@ -1687,11 +1571,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * reaches its limit.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer while the destination's {@code position} will be increased.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + dst.remaining()} is greater than
-	 *            {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + dst.remaining()} is greater than
+	 * {@code this.capacity}
 	 */
 	public abstract ByteBuf getBytes(int index, ByteBuffer dst);
 	
@@ -1700,15 +1582,11 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * specified absolute {@code index}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
 	 * @param length the number of bytes to transfer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + length} is greater than
-	 *            {@code this.capacity}
-	 * @throws IOException
-	 *         if the specified stream threw an exception during I/O
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + length} is greater than
+	 * {@code this.capacity}
+	 * @throws IOException if the specified stream threw an exception during I/O
 	 */
 	public abstract ByteBuf getBytes(int index, OutputStream out, int length) throws IOException;
 	
@@ -1717,17 +1595,12 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * specified absolute {@code index}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
 	 * @param length the maximum number of bytes to transfer
-	 *
 	 * @return the actual number of bytes written out to the specified channel
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + length} is greater than
-	 *            {@code this.capacity}
-	 * @throws IOException
-	 *         if the specified channel threw an exception during I/O
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + length} is greater than
+	 * {@code this.capacity}
+	 * @throws IOException if the specified channel threw an exception during I/O
 	 */
 	public abstract int getBytes(int index, GatheringByteChannel out, int length) throws IOException;
 	
@@ -1736,29 +1609,22 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * to the specified channel starting at the given file position.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer. This method does not modify the channel's position.
-	 *
 	 * @param position the file position at which the transfer is to begin
 	 * @param length the maximum number of bytes to transfer
-	 *
 	 * @return the actual number of bytes written out to the specified channel
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + length} is greater than
-	 *            {@code this.capacity}
-	 * @throws IOException
-	 *         if the specified channel threw an exception during I/O
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + length} is greater than
+	 * {@code this.capacity}
+	 * @throws IOException if the specified channel threw an exception during I/O
 	 */
 	public abstract int getBytes(int index, FileChannel out, long position, int length) throws IOException;
 	
 	/**
 	 * Gets a {@link CharSequence} with the given length at the given index.
-	 *
 	 * @param length the length to read
 	 * @param charset that should be used
 	 * @return the sequence
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.readableBytes}
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.readableBytes}
 	 */
 	public abstract CharSequence getCharSequence(int index, int length, Charset charset);
 	
@@ -1767,10 +1633,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * buffer.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 1} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 1} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setBoolean(int index, boolean value);
 	
@@ -1779,10 +1643,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * buffer.  The 24 high-order bits of the specified value are ignored.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 1} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 1} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setByte(int index, int value);
 	
@@ -1792,10 +1654,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * value are ignored.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 2} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 2} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setShort(int index, int value);
 	
@@ -1805,10 +1665,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * The 16 high-order bits of the specified value are ignored.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 2} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 2} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setShortLE(int index, int value);
 	
@@ -1818,10 +1676,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * byte is ignored in the specified value.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 3} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 3} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setMedium(int index, int value);
 	
@@ -1832,10 +1688,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * specified value.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 3} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 3} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setMediumLE(int index, int value);
 	
@@ -1844,10 +1698,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@code index} in this buffer.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 4} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 4} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setInt(int index, int value);
 	
@@ -1857,10 +1709,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * .
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 4} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 4} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setIntLE(int index, int value);
 	
@@ -1869,10 +1719,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@code index} in this buffer.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 8} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 8} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setLong(int index, long value);
 	
@@ -1881,10 +1729,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@code index} in this buffer in Little Endian Byte Order.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 8} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 8} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setLongLE(int index, long value);
 	
@@ -1894,10 +1740,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * The 16 high-order bits of the specified value are ignored.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 2} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 2} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setChar(int index, int value);
 	
@@ -1906,10 +1750,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * absolute {@code index} in this buffer.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 4} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 4} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setFloat(int index, float value);
 	
@@ -1918,10 +1760,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * absolute {@code index} in this buffer in Little Endian Byte Order.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 4} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 4} is greater than {@code this.capacity}
 	 */
 	public ByteBuf setFloatLE(int index, float value) {
 		return setIntLE(index, Float.floatToRawIntBits(value));
@@ -1932,10 +1772,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * absolute {@code index} in this buffer.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 8} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 8} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setDouble(int index, double value);
 	
@@ -1944,10 +1782,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * absolute {@code index} in this buffer in Little Endian Byte Order.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         {@code index + 8} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * {@code index + 8} is greater than {@code this.capacity}
 	 */
 	public ByteBuf setDoubleLE(int index, double value) {
 		return setLongLE(index, Double.doubleToRawLongBits(value));
@@ -1963,11 +1799,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@link #setBytes(int, ByteBuf, int, int)} does not.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * the source buffer (i.e. {@code this}).
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + src.readableBytes} is greater than
-	 *            {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + src.readableBytes} is greater than
+	 * {@code this.capacity}
 	 */
 	public abstract ByteBuf setBytes(int index, ByteBuf src);
 	
@@ -1980,14 +1814,11 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@link #setBytes(int, ByteBuf, int, int)} does not.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * the source buffer (i.e. {@code this}).
-	 *
 	 * @param length the number of bytes to transfer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0},
-	 *         if {@code index + length} is greater than
-	 *            {@code this.capacity}, or
-	 *         if {@code length} is greater than {@code src.readableBytes}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0},
+	 * if {@code index + length} is greater than
+	 * {@code this.capacity}, or
+	 * if {@code length} is greater than {@code src.readableBytes}
 	 */
 	public abstract ByteBuf setBytes(int index, ByteBuf src, int length);
 	
@@ -1996,17 +1827,14 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * the specified absolute {@code index}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex}
 	 * of both the source (i.e. {@code this}) and the destination.
-	 *
 	 * @param srcIndex the first index of the source
-	 * @param length   the number of bytes to transfer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0},
-	 *         if the specified {@code srcIndex} is less than {@code 0},
-	 *         if {@code index + length} is greater than
-	 *            {@code this.capacity}, or
-	 *         if {@code srcIndex + length} is greater than
-	 *            {@code src.capacity}
+	 * @param length the number of bytes to transfer
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0},
+	 * if the specified {@code srcIndex} is less than {@code 0},
+	 * if {@code index + length} is greater than
+	 * {@code this.capacity}, or
+	 * if {@code srcIndex + length} is greater than
+	 * {@code src.capacity}
 	 */
 	public abstract ByteBuf setBytes(int index, ByteBuf src, int srcIndex, int length);
 	
@@ -2015,11 +1843,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * the specified absolute {@code index}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + src.length} is greater than
-	 *            {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + src.length} is greater than
+	 * {@code this.capacity}
 	 */
 	public abstract ByteBuf setBytes(int index, byte[] src);
 	
@@ -2028,13 +1854,11 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * the specified absolute {@code index}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0},
-	 *         if the specified {@code srcIndex} is less than {@code 0},
-	 *         if {@code index + length} is greater than
-	 *            {@code this.capacity}, or
-	 *         if {@code srcIndex + length} is greater than {@code src.length}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0},
+	 * if the specified {@code srcIndex} is less than {@code 0},
+	 * if {@code index + length} is greater than
+	 * {@code this.capacity}, or
+	 * if {@code srcIndex + length} is greater than {@code src.length}
 	 */
 	public abstract ByteBuf setBytes(int index, byte[] src, int srcIndex, int length);
 	
@@ -2044,11 +1868,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * reaches its limit.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + src.remaining()} is greater than
-	 *            {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + src.remaining()} is greater than
+	 * {@code this.capacity}
 	 */
 	public abstract ByteBuf setBytes(int index, ByteBuffer src);
 	
@@ -2057,17 +1879,12 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * starting at the specified absolute {@code index}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
 	 * @param length the number of bytes to transfer
-	 *
 	 * @return the actual number of bytes read in from the specified channel.
-	 *         {@code -1} if the specified channel is closed.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + length} is greater than {@code this.capacity}
-	 * @throws IOException
-	 *         if the specified stream threw an exception during I/O
+	 * {@code -1} if the specified channel is closed.
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + length} is greater than {@code this.capacity}
+	 * @throws IOException if the specified stream threw an exception during I/O
 	 */
 	public abstract int setBytes(int index, InputStream in, int length) throws IOException;
 	
@@ -2076,17 +1893,12 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * starting at the specified absolute {@code index}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
 	 * @param length the maximum number of bytes to transfer
-	 *
 	 * @return the actual number of bytes read in from the specified channel.
-	 *         {@code -1} if the specified channel is closed.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + length} is greater than {@code this.capacity}
-	 * @throws IOException
-	 *         if the specified channel threw an exception during I/O
+	 * {@code -1} if the specified channel is closed.
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + length} is greater than {@code this.capacity}
+	 * @throws IOException if the specified channel threw an exception during I/O
 	 */
 	public abstract int setBytes(int index, ScatteringByteChannel in, int length) throws IOException;
 	
@@ -2095,18 +1907,13 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * to this buffer starting at the specified absolute {@code index}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer. This method does not modify the channel's position.
-	 *
 	 * @param position the file position at which the transfer is to begin
 	 * @param length the maximum number of bytes to transfer
-	 *
 	 * @return the actual number of bytes read in from the specified channel.
-	 *         {@code -1} if the specified channel is closed.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + length} is greater than {@code this.capacity}
-	 * @throws IOException
-	 *         if the specified channel threw an exception during I/O
+	 * {@code -1} if the specified channel is closed.
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + length} is greater than {@code this.capacity}
+	 * @throws IOException if the specified channel threw an exception during I/O
 	 */
 	public abstract int setBytes(int index, FileChannel in, long position, int length) throws IOException;
 	
@@ -2115,61 +1922,48 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * absolute {@code index}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
 	 * @param length the number of <tt>NUL</tt>s to write to the buffer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code index} is less than {@code 0} or
-	 *         if {@code index + length} is greater than {@code this.capacity}
+	 * @throws IndexOutOfBoundsException if the specified {@code index} is less than {@code 0} or
+	 * if {@code index + length} is greater than {@code this.capacity}
 	 */
 	public abstract ByteBuf setZero(int index, int length);
 	
 	/**
 	 * Writes the specified {@link CharSequence} at the current {@code writerIndex} and increases
 	 * the {@code writerIndex} by the written bytes.
-	 *
 	 * @param index on which the sequence should be written
 	 * @param sequence to write
 	 * @param charset that should be used.
 	 * @return the written number of bytes.
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is not large enough to write the whole sequence
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is not large enough to write the whole sequence
 	 */
 	public abstract int setCharSequence(int index, CharSequence sequence, Charset charset);
 	
 	/**
 	 * Gets a boolean at the current {@code readerIndex} and increases
 	 * the {@code readerIndex} by {@code 1} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 1}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 1}
 	 */
 	public abstract boolean readBoolean();
 	
 	/**
 	 * Gets a byte at the current {@code readerIndex} and increases
 	 * the {@code readerIndex} by {@code 1} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 1}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 1}
 	 */
-	public abstract byte  readByte();
+	public abstract byte readByte();
 	
 	/**
 	 * Gets an unsigned byte at the current {@code readerIndex} and increases
 	 * the {@code readerIndex} by {@code 1} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 1}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 1}
 	 */
 	public abstract short readUnsignedByte();
 	
 	/**
 	 * Gets a 16-bit short integer at the current {@code readerIndex}
 	 * and increases the {@code readerIndex} by {@code 2} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 2}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 2}
 	 */
 	public abstract short readShort();
 	
@@ -2177,141 +1971,111 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Gets a 16-bit short integer at the current {@code readerIndex}
 	 * in the Little Endian Byte Order and increases the {@code readerIndex}
 	 * by {@code 2} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 2}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 2}
 	 */
 	public abstract short readShortLE();
 	
 	/**
 	 * Gets an unsigned 16-bit short integer at the current {@code readerIndex}
 	 * and increases the {@code readerIndex} by {@code 2} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 2}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 2}
 	 */
-	public abstract int   readUnsignedShort();
+	public abstract int readUnsignedShort();
 	
 	/**
 	 * Gets an unsigned 16-bit short integer at the current {@code readerIndex}
 	 * in the Little Endian Byte Order and increases the {@code readerIndex}
 	 * by {@code 2} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 2}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 2}
 	 */
-	public abstract int   readUnsignedShortLE();
+	public abstract int readUnsignedShortLE();
 	
 	/**
 	 * Gets a 24-bit medium integer at the current {@code readerIndex}
 	 * and increases the {@code readerIndex} by {@code 3} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 3}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 3}
 	 */
-	public abstract int   readMedium();
+	public abstract int readMedium();
 	
 	/**
 	 * Gets a 24-bit medium integer at the current {@code readerIndex}
 	 * in the Little Endian Byte Order and increases the
 	 * {@code readerIndex} by {@code 3} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 3}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 3}
 	 */
-	public abstract int   readMediumLE();
+	public abstract int readMediumLE();
 	
 	/**
 	 * Gets an unsigned 24-bit medium integer at the current {@code readerIndex}
 	 * and increases the {@code readerIndex} by {@code 3} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 3}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 3}
 	 */
-	public abstract int   readUnsignedMedium();
+	public abstract int readUnsignedMedium();
 	
 	/**
 	 * Gets an unsigned 24-bit medium integer at the current {@code readerIndex}
 	 * in the Little Endian Byte Order and increases the {@code readerIndex}
 	 * by {@code 3} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 3}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 3}
 	 */
-	public abstract int   readUnsignedMediumLE();
+	public abstract int readUnsignedMediumLE();
 	
 	/**
 	 * Gets a 32-bit integer at the current {@code readerIndex}
 	 * and increases the {@code readerIndex} by {@code 4} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 4}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 4}
 	 */
-	public abstract int   readInt();
+	public abstract int readInt();
 	
 	/**
 	 * Gets a 32-bit integer at the current {@code readerIndex}
 	 * in the Little Endian Byte Order and increases the {@code readerIndex}
 	 * by {@code 4} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 4}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 4}
 	 */
-	public abstract int   readIntLE();
+	public abstract int readIntLE();
 	
 	/**
 	 * Gets an unsigned 32-bit integer at the current {@code readerIndex}
 	 * and increases the {@code readerIndex} by {@code 4} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 4}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 4}
 	 */
-	public abstract long  readUnsignedInt();
+	public abstract long readUnsignedInt();
 	
 	/**
 	 * Gets an unsigned 32-bit integer at the current {@code readerIndex}
 	 * in the Little Endian Byte Order and increases the {@code readerIndex}
 	 * by {@code 4} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 4}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 4}
 	 */
-	public abstract long  readUnsignedIntLE();
+	public abstract long readUnsignedIntLE();
 	
 	/**
 	 * Gets a 64-bit integer at the current {@code readerIndex}
 	 * and increases the {@code readerIndex} by {@code 8} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 8}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 8}
 	 */
-	public abstract long  readLong();
+	public abstract long readLong();
 	
 	/**
 	 * Gets a 64-bit integer at the current {@code readerIndex}
 	 * in the Little Endian Byte Order and increases the {@code readerIndex}
 	 * by {@code 8} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 8}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 8}
 	 */
-	public abstract long  readLongLE();
+	public abstract long readLongLE();
 	
 	/**
 	 * Gets a 2-byte UTF-16 character at the current {@code readerIndex}
 	 * and increases the {@code readerIndex} by {@code 2} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 2}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 2}
 	 */
-	public abstract char  readChar();
+	public abstract char readChar();
 	
 	/**
 	 * Gets a 32-bit floating point number at the current {@code readerIndex}
 	 * and increases the {@code readerIndex} by {@code 4} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 4}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 4}
 	 */
 	public abstract float readFloat();
 	
@@ -2319,9 +2083,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Gets a 32-bit floating point number at the current {@code readerIndex}
 	 * in Little Endian Byte Order and increases the {@code readerIndex}
 	 * by {@code 4} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 4}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 4}
 	 */
 	public float readFloatLE() {
 		return Float.intBitsToFloat(readIntLE());
@@ -2330,9 +2092,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Gets a 64-bit floating point number at the current {@code readerIndex}
 	 * and increases the {@code readerIndex} by {@code 8} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 8}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 8}
 	 */
 	public abstract double readDouble();
 	
@@ -2340,9 +2100,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Gets a 64-bit floating point number at the current {@code readerIndex}
 	 * in Little Endian Byte Order and increases the {@code readerIndex}
 	 * by {@code 8} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.readableBytes} is less than {@code 8}
+	 * @throws IndexOutOfBoundsException if {@code this.readableBytes} is less than {@code 8}
 	 */
 	public double readDoubleLE() {
 		return Double.longBitsToDouble(readLongLE());
@@ -2354,13 +2112,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * by the number of the transferred bytes (= {@code length}).
 	 * The returned buffer's {@code readerIndex} and {@code writerIndex} are
 	 * {@code 0} and {@code length} respectively.
-	 *
 	 * @param length the number of bytes to transfer
-	 *
 	 * @return the newly created buffer which contains the transferred bytes
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.readableBytes}
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.readableBytes}
 	 */
 	public abstract ByteBuf readBytes(int length);
 	
@@ -2371,13 +2125,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * <p>
 	 * Also be aware that this method will NOT call {@link #retain()} and so the
 	 * reference count will NOT be increased.
-	 *
 	 * @param length the size of the new slice
-	 *
 	 * @return the newly created slice
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.readableBytes}
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.readableBytes}
 	 */
 	public abstract ByteBuf readSlice(int length);
 	
@@ -2389,13 +2139,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Note that this method returns a {@linkplain #retain() retained} buffer unlike {@link #readSlice(int)}.
 	 * This method behaves similarly to {@code readSlice(...).retain()} except that this method may return
 	 * a buffer implementation that produces less garbage.
-	 *
 	 * @param length the size of the new slice
-	 *
 	 * @return the newly created slice
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.readableBytes}
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.readableBytes}
 	 */
 	public abstract ByteBuf readRetainedSlice(int length);
 	
@@ -2408,10 +2154,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * increases the {@code writerIndex} of the destination by the number of
 	 * the transferred bytes while {@link #readBytes(ByteBuf, int, int)}
 	 * does not.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code dst.writableBytes} is greater than
-	 *            {@code this.readableBytes}
+	 * @throws IndexOutOfBoundsException if {@code dst.writableBytes} is greater than
+	 * {@code this.readableBytes}
 	 */
 	public abstract ByteBuf readBytes(ByteBuf dst);
 	
@@ -2423,10 +2167,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * except that this method increases the {@code writerIndex} of the
 	 * destination by the number of the transferred bytes (= {@code length})
 	 * while {@link #readBytes(ByteBuf, int, int)} does not.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.readableBytes} or
-	 *         if {@code length} is greater than {@code dst.writableBytes}
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.readableBytes} or
+	 * if {@code length} is greater than {@code dst.writableBytes}
 	 */
 	public abstract ByteBuf readBytes(ByteBuf dst, int length);
 	
@@ -2434,15 +2176,12 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Transfers this buffer's data to the specified destination starting at
 	 * the current {@code readerIndex} and increases the {@code readerIndex}
 	 * by the number of the transferred bytes (= {@code length}).
-	 *
 	 * @param dstIndex the first index of the destination
-	 * @param length   the number of bytes to transfer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code dstIndex} is less than {@code 0},
-	 *         if {@code length} is greater than {@code this.readableBytes}, or
-	 *         if {@code dstIndex + length} is greater than
-	 *            {@code dst.capacity}
+	 * @param length the number of bytes to transfer
+	 * @throws IndexOutOfBoundsException if the specified {@code dstIndex} is less than {@code 0},
+	 * if {@code length} is greater than {@code this.readableBytes}, or
+	 * if {@code dstIndex + length} is greater than
+	 * {@code dst.capacity}
 	 */
 	public abstract ByteBuf readBytes(ByteBuf dst, int dstIndex, int length);
 	
@@ -2450,9 +2189,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Transfers this buffer's data to the specified destination starting at
 	 * the current {@code readerIndex} and increases the {@code readerIndex}
 	 * by the number of the transferred bytes (= {@code dst.length}).
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code dst.length} is greater than {@code this.readableBytes}
+	 * @throws IndexOutOfBoundsException if {@code dst.length} is greater than {@code this.readableBytes}
 	 */
 	public abstract ByteBuf readBytes(byte[] dst);
 	
@@ -2460,14 +2197,11 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Transfers this buffer's data to the specified destination starting at
 	 * the current {@code readerIndex} and increases the {@code readerIndex}
 	 * by the number of the transferred bytes (= {@code length}).
-	 *
 	 * @param dstIndex the first index of the destination
-	 * @param length   the number of bytes to transfer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code dstIndex} is less than {@code 0},
-	 *         if {@code length} is greater than {@code this.readableBytes}, or
-	 *         if {@code dstIndex + length} is greater than {@code dst.length}
+	 * @param length the number of bytes to transfer
+	 * @throws IndexOutOfBoundsException if the specified {@code dstIndex} is less than {@code 0},
+	 * if {@code length} is greater than {@code this.readableBytes}, or
+	 * if {@code dstIndex + length} is greater than {@code dst.length}
 	 */
 	public abstract ByteBuf readBytes(byte[] dst, int dstIndex, int length);
 	
@@ -2476,50 +2210,37 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * the current {@code readerIndex} until the destination's position
 	 * reaches its limit, and increases the {@code readerIndex} by the
 	 * number of the transferred bytes.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code dst.remaining()} is greater than
-	 *            {@code this.readableBytes}
+	 * @throws IndexOutOfBoundsException if {@code dst.remaining()} is greater than
+	 * {@code this.readableBytes}
 	 */
 	public abstract ByteBuf readBytes(ByteBuffer dst);
 	
 	/**
 	 * Transfers this buffer's data to the specified stream starting at the
 	 * current {@code readerIndex}.
-	 *
 	 * @param length the number of bytes to transfer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.readableBytes}
-	 * @throws IOException
-	 *         if the specified stream threw an exception during I/O
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.readableBytes}
+	 * @throws IOException if the specified stream threw an exception during I/O
 	 */
 	public abstract ByteBuf readBytes(OutputStream out, int length) throws IOException;
 	
 	/**
 	 * Transfers this buffer's data to the specified stream starting at the
 	 * current {@code readerIndex}.
-	 *
 	 * @param length the maximum number of bytes to transfer
-	 *
 	 * @return the actual number of bytes written out to the specified channel
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.readableBytes}
-	 * @throws IOException
-	 *         if the specified channel threw an exception during I/O
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.readableBytes}
+	 * @throws IOException if the specified channel threw an exception during I/O
 	 */
 	public abstract int readBytes(GatheringByteChannel out, int length) throws IOException;
 	
 	/**
 	 * Gets a {@link CharSequence} with the given length at the current {@code readerIndex}
 	 * and increases the {@code readerIndex} by the given length.
-	 *
 	 * @param length the length to read
 	 * @param charset that should be used
 	 * @return the sequence
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.readableBytes}
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.readableBytes}
 	 */
 	public abstract CharSequence readCharSequence(int length, Charset charset);
 	
@@ -2527,34 +2248,25 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Transfers this buffer's data starting at the current {@code readerIndex}
 	 * to the specified channel starting at the given file position.
 	 * This method does not modify the channel's position.
-	 *
 	 * @param position the file position at which the transfer is to begin
 	 * @param length the maximum number of bytes to transfer
-	 *
 	 * @return the actual number of bytes written out to the specified channel
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.readableBytes}
-	 * @throws IOException
-	 *         if the specified channel threw an exception during I/O
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.readableBytes}
+	 * @throws IOException if the specified channel threw an exception during I/O
 	 */
 	public abstract int readBytes(FileChannel out, long position, int length) throws IOException;
 	
 	/**
 	 * Increases the current {@code readerIndex} by the specified
 	 * {@code length} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.readableBytes}
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.readableBytes}
 	 */
 	public abstract ByteBuf skipBytes(int length);
 	
 	/**
 	 * Sets the specified boolean at the current {@code writerIndex}
 	 * and increases the {@code writerIndex} by {@code 1} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 1}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 1}
 	 */
 	public abstract ByteBuf writeBoolean(boolean value);
 	
@@ -2562,9 +2274,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Sets the specified byte at the current {@code writerIndex}
 	 * and increases the {@code writerIndex} by {@code 1} in this buffer.
 	 * The 24 high-order bits of the specified value are ignored.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 1}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 1}
 	 */
 	public abstract ByteBuf writeByte(int value);
 	
@@ -2572,9 +2282,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Sets the specified 16-bit short integer at the current
 	 * {@code writerIndex} and increases the {@code writerIndex} by {@code 2}
 	 * in this buffer.  The 16 high-order bits of the specified value are ignored.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 2}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 2}
 	 */
 	public abstract ByteBuf writeShort(int value);
 	
@@ -2583,9 +2291,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Order at the current {@code writerIndex} and increases the
 	 * {@code writerIndex} by {@code 2} in this buffer.
 	 * The 16 high-order bits of the specified value are ignored.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 2}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 2}
 	 */
 	public abstract ByteBuf writeShortLE(int value);
 	
@@ -2593,9 +2299,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Sets the specified 24-bit medium integer at the current
 	 * {@code writerIndex} and increases the {@code writerIndex} by {@code 3}
 	 * in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 3}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 3}
 	 */
 	public abstract ByteBuf writeMedium(int value);
 	
@@ -2604,18 +2308,14 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@code writerIndex} in the Little Endian Byte Order and
 	 * increases the {@code writerIndex} by {@code 3} in this
 	 * buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 3}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 3}
 	 */
 	public abstract ByteBuf writeMediumLE(int value);
 	
 	/**
 	 * Sets the specified 32-bit integer at the current {@code writerIndex}
 	 * and increases the {@code writerIndex} by {@code 4} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 4}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 4}
 	 */
 	public abstract ByteBuf writeInt(int value);
 	
@@ -2623,9 +2323,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Sets the specified 32-bit integer at the current {@code writerIndex}
 	 * in the Little Endian Byte Order and increases the {@code writerIndex}
 	 * by {@code 4} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 4}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 4}
 	 */
 	public abstract ByteBuf writeIntLE(int value);
 	
@@ -2633,9 +2331,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Sets the specified 64-bit long integer at the current
 	 * {@code writerIndex} and increases the {@code writerIndex} by {@code 8}
 	 * in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 8}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 8}
 	 */
 	public abstract ByteBuf writeLong(long value);
 	
@@ -2644,9 +2340,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@code writerIndex} in the Little Endian Byte Order and
 	 * increases the {@code writerIndex} by {@code 8}
 	 * in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 8}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 8}
 	 */
 	public abstract ByteBuf writeLongLE(long value);
 	
@@ -2654,9 +2348,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Sets the specified 2-byte UTF-16 character at the current
 	 * {@code writerIndex} and increases the {@code writerIndex} by {@code 2}
 	 * in this buffer.  The 16 high-order bits of the specified value are ignored.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 2}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 2}
 	 */
 	public abstract ByteBuf writeChar(int value);
 	
@@ -2664,9 +2356,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Sets the specified 32-bit floating point number at the current
 	 * {@code writerIndex} and increases the {@code writerIndex} by {@code 4}
 	 * in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 4}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 4}
 	 */
 	public abstract ByteBuf writeFloat(float value);
 	
@@ -2674,9 +2364,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Sets the specified 32-bit floating point number at the current
 	 * {@code writerIndex} in Little Endian Byte Order and increases
 	 * the {@code writerIndex} by {@code 4} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 4}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 4}
 	 */
 	public ByteBuf writeFloatLE(float value) {
 		return writeIntLE(Float.floatToRawIntBits(value));
@@ -2686,9 +2374,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Sets the specified 64-bit floating point number at the current
 	 * {@code writerIndex} and increases the {@code writerIndex} by {@code 8}
 	 * in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 8}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 8}
 	 */
 	public abstract ByteBuf writeDouble(double value);
 	
@@ -2696,9 +2382,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Sets the specified 64-bit floating point number at the current
 	 * {@code writerIndex} in Little Endian Byte Order and increases
 	 * the {@code writerIndex} by {@code 8} in this buffer.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is less than {@code 8}
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is less than {@code 8}
 	 */
 	public ByteBuf writeDoubleLE(double value) {
 		return writeLongLE(Double.doubleToRawLongBits(value));
@@ -2713,10 +2397,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * increases the {@code readerIndex} of the source buffer by the number of
 	 * the transferred bytes while {@link #writeBytes(ByteBuf, int, int)}
 	 * does not.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code src.readableBytes} is greater than
-	 *            {@code this.writableBytes}
+	 * @throws IndexOutOfBoundsException if {@code src.readableBytes} is greater than
+	 * {@code this.writableBytes}
 	 */
 	public abstract ByteBuf writeBytes(ByteBuf src);
 	
@@ -2728,12 +2410,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * except that this method increases the {@code readerIndex} of the source
 	 * buffer by the number of the transferred bytes (= {@code length}) while
 	 * {@link #writeBytes(ByteBuf, int, int)} does not.
-	 *
 	 * @param length the number of bytes to transfer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.writableBytes} or
-	 *         if {@code length} is greater then {@code src.readableBytes}
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.writableBytes} or
+	 * if {@code length} is greater then {@code src.readableBytes}
 	 */
 	public abstract ByteBuf writeBytes(ByteBuf src, int length);
 	
@@ -2741,15 +2420,12 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Transfers the specified source buffer's data to this buffer starting at
 	 * the current {@code writerIndex} and increases the {@code writerIndex}
 	 * by the number of the transferred bytes (= {@code length}).
-	 *
 	 * @param srcIndex the first index of the source
-	 * @param length   the number of bytes to transfer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code srcIndex} is less than {@code 0},
-	 *         if {@code srcIndex + length} is greater than
-	 *            {@code src.capacity}, or
-	 *         if {@code length} is greater than {@code this.writableBytes}
+	 * @param length the number of bytes to transfer
+	 * @throws IndexOutOfBoundsException if the specified {@code srcIndex} is less than {@code 0},
+	 * if {@code srcIndex + length} is greater than
+	 * {@code src.capacity}, or
+	 * if {@code length} is greater than {@code this.writableBytes}
 	 */
 	public abstract ByteBuf writeBytes(ByteBuf src, int srcIndex, int length);
 	
@@ -2757,9 +2433,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Transfers the specified source array's data to this buffer starting at
 	 * the current {@code writerIndex} and increases the {@code writerIndex}
 	 * by the number of the transferred bytes (= {@code src.length}).
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code src.length} is greater than {@code this.writableBytes}
+	 * @throws IndexOutOfBoundsException if {@code src.length} is greater than {@code this.writableBytes}
 	 */
 	public abstract ByteBuf writeBytes(byte[] src);
 	
@@ -2767,15 +2441,12 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Transfers the specified source array's data to this buffer starting at
 	 * the current {@code writerIndex} and increases the {@code writerIndex}
 	 * by the number of the transferred bytes (= {@code length}).
-	 *
 	 * @param srcIndex the first index of the source
-	 * @param length   the number of bytes to transfer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if the specified {@code srcIndex} is less than {@code 0},
-	 *         if {@code srcIndex + length} is greater than
-	 *            {@code src.length}, or
-	 *         if {@code length} is greater than {@code this.writableBytes}
+	 * @param length the number of bytes to transfer
+	 * @throws IndexOutOfBoundsException if the specified {@code srcIndex} is less than {@code 0},
+	 * if {@code srcIndex + length} is greater than
+	 * {@code src.length}, or
+	 * if {@code length} is greater than {@code this.writableBytes}
 	 */
 	public abstract ByteBuf writeBytes(byte[] src, int srcIndex, int length);
 	
@@ -2784,10 +2455,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * the current {@code writerIndex} until the source buffer's position
 	 * reaches its limit, and increases the {@code writerIndex} by the
 	 * number of the transferred bytes.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code src.remaining()} is greater than
-	 *            {@code this.writableBytes}
+	 * @throws IndexOutOfBoundsException if {@code src.remaining()} is greater than
+	 * {@code this.writableBytes}
 	 */
 	public abstract ByteBuf writeBytes(ByteBuffer src);
 	
@@ -2795,31 +2464,21 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Transfers the content of the specified stream to this buffer
 	 * starting at the current {@code writerIndex} and increases the
 	 * {@code writerIndex} by the number of the transferred bytes.
-	 *
 	 * @param length the number of bytes to transfer
-	 *
 	 * @return the actual number of bytes read in from the specified stream
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.writableBytes}
-	 * @throws IOException
-	 *         if the specified stream threw an exception during I/O
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.writableBytes}
+	 * @throws IOException if the specified stream threw an exception during I/O
 	 */
-	public abstract int  writeBytes(InputStream in, int length) throws IOException;
+	public abstract int writeBytes(InputStream in, int length) throws IOException;
 	
 	/**
 	 * Transfers the content of the specified channel to this buffer
 	 * starting at the current {@code writerIndex} and increases the
 	 * {@code writerIndex} by the number of the transferred bytes.
-	 *
 	 * @param length the maximum number of bytes to transfer
-	 *
 	 * @return the actual number of bytes read in from the specified channel
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.writableBytes}
-	 * @throws IOException
-	 *         if the specified channel threw an exception during I/O
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.writableBytes}
+	 * @throws IOException if the specified channel threw an exception during I/O
 	 */
 	public abstract int writeBytes(ScatteringByteChannel in, int length) throws IOException;
 	
@@ -2828,16 +2487,11 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * to this buffer starting at the current {@code writerIndex} and increases the
 	 * {@code writerIndex} by the number of the transferred bytes.
 	 * This method does not modify the channel's position.
-	 *
 	 * @param position the file position at which the transfer is to begin
 	 * @param length the maximum number of bytes to transfer
-	 *
 	 * @return the actual number of bytes read in from the specified channel
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.writableBytes}
-	 * @throws IOException
-	 *         if the specified channel threw an exception during I/O
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.writableBytes}
+	 * @throws IOException if the specified channel threw an exception during I/O
 	 */
 	public abstract int writeBytes(FileChannel in, long position, int length) throws IOException;
 	
@@ -2845,11 +2499,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Fills this buffer with <tt>NUL (0x00)</tt> starting at the current
 	 * {@code writerIndex} and increases the {@code writerIndex} by the
 	 * specified {@code length}.
-	 *
 	 * @param length the number of <tt>NUL</tt>s to write to the buffer
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.writableBytes}
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.writableBytes}
 	 */
 	public abstract ByteBuf writeZero(int length);
 	
@@ -2857,12 +2508,10 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * Writes the specified {@link CharSequence} at the current {@code writerIndex} and increases
 	 * the {@code writerIndex} by the written bytes.
 	 * in this buffer.
-	 *
 	 * @param sequence to write
 	 * @param charset that should be used
 	 * @return the written number of bytes
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code this.writableBytes} is not large enough to write the whole sequence
+	 * @throws IndexOutOfBoundsException if {@code this.writableBytes} is not large enough to write the whole sequence
 	 */
 	public abstract int writeCharSequence(CharSequence sequence, Charset charset);
 	
@@ -2876,9 +2525,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * <p>
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
 	 * @return the absolute index of the first occurrence if found.
-	 *         {@code -1} otherwise.
+	 * {@code -1} otherwise.
 	 */
 	public abstract int indexOf(int fromIndex, int toIndex, byte value);
 	
@@ -2889,9 +2537,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * <p>
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
 	 * @return the number of bytes between the current {@code readerIndex}
-	 *         and the first occurrence if found. {@code -1} otherwise.
+	 * and the first occurrence if found. {@code -1} otherwise.
 	 */
 	public abstract int bytesBefore(byte value);
 	
@@ -2902,12 +2549,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * <p>
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
 	 * @return the number of bytes between the current {@code readerIndex}
-	 *         and the first occurrence if found. {@code -1} otherwise.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code length} is greater than {@code this.readableBytes}
+	 * and the first occurrence if found. {@code -1} otherwise.
+	 * @throws IndexOutOfBoundsException if {@code length} is greater than {@code this.readableBytes}
 	 */
 	public abstract int bytesBefore(int length, byte value);
 	
@@ -2918,47 +2562,39 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * <p>
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
 	 * @return the number of bytes between the specified {@code index}
-	 *         and the first occurrence if found. {@code -1} otherwise.
-	 *
-	 * @throws IndexOutOfBoundsException
-	 *         if {@code index + length} is greater than {@code this.capacity}
+	 * and the first occurrence if found. {@code -1} otherwise.
+	 * @throws IndexOutOfBoundsException if {@code index + length} is greater than {@code this.capacity}
 	 */
 	public abstract int bytesBefore(int index, int length, byte value);
 	
 	/**
 	 * Iterates over the readable bytes of this buffer with the specified {@code processor} in ascending order.
-	 *
 	 * @return {@code -1} if the processor iterated to or beyond the end of the readable bytes.
-	 *         The last-visited index If the {@link ByteProcessor#process(byte)} returned {@code false}.
+	 * The last-visited index If the {@link ByteProcessor#process(byte)} returned {@code false}.
 	 */
 	public abstract int forEachByte(ByteProcessor processor);
 	
 	/**
 	 * Iterates over the specified area of this buffer with the specified {@code processor} in ascending order.
 	 * (i.e. {@code index}, {@code (index + 1)},  .. {@code (index + length - 1)})
-	 *
 	 * @return {@code -1} if the processor iterated to or beyond the end of the specified area.
-	 *         The last-visited index If the {@link ByteProcessor#process(byte)} returned {@code false}.
+	 * The last-visited index If the {@link ByteProcessor#process(byte)} returned {@code false}.
 	 */
 	public abstract int forEachByte(int index, int length, ByteProcessor processor);
 	
 	/**
 	 * Iterates over the readable bytes of this buffer with the specified {@code processor} in descending order.
-	 *
 	 * @return {@code -1} if the processor iterated to or beyond the beginning of the readable bytes.
-	 *         The last-visited index If the {@link ByteProcessor#process(byte)} returned {@code false}.
+	 * The last-visited index If the {@link ByteProcessor#process(byte)} returned {@code false}.
 	 */
 	public abstract int forEachByteDesc(ByteProcessor processor);
 	
 	/**
 	 * Iterates over the specified area of this buffer with the specified {@code processor} in descending order.
 	 * (i.e. {@code (index + length - 1)}, {@code (index + length - 2)}, ... {@code index})
-	 *
-	 *
 	 * @return {@code -1} if the processor iterated to or beyond the beginning of the specified area.
-	 *         The last-visited index If the {@link ByteProcessor#process(byte)} returned {@code false}.
+	 * The last-visited index If the {@link ByteProcessor#process(byte)} returned {@code false}.
 	 */
 	public abstract int forEachByteDesc(int index, int length, ByteProcessor processor);
 	
@@ -3063,11 +2699,9 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	/**
 	 * Returns the maximum number of NIO {@link ByteBuffer}s that consist this buffer.  Note that {@link #nioBuffers()}
 	 * or {@link #nioBuffers(int, int)} might return a less number of {@link ByteBuffer}s.
-	 *
 	 * @return {@code -1} if this buffer has no underlying {@link ByteBuffer}.
-	 *         the number of the underlying {@link ByteBuffer}s if this buffer has at least one underlying
-	 *         {@link ByteBuffer}.  Note that this method does not return {@code 0} to avoid confusion.
-	 *
+	 * the number of the underlying {@link ByteBuffer}s if this buffer has at least one underlying
+	 * {@link ByteBuffer}.  Note that this method does not return {@code 0} to avoid confusion.
 	 * @see #nioBuffer()
 	 * @see #nioBuffer(int, int)
 	 * @see #nioBuffers()
@@ -3083,10 +2717,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * modify {@code readerIndex} or {@code writerIndex} of this buffer.  Please note that the
 	 * returned NIO buffer will not see the changes of this buffer if this buffer is a dynamic
 	 * buffer and it adjusted its capacity.
-	 *
-	 * @throws UnsupportedOperationException
-	 *         if this buffer cannot create a {@link ByteBuffer} that shares the content with itself
-	 *
+	 * @throws UnsupportedOperationException if this buffer cannot create a {@link ByteBuffer} that shares the content with itself
 	 * @see #nioBufferCount()
 	 * @see #nioBuffers()
 	 * @see #nioBuffers(int, int)
@@ -3100,10 +2731,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * modify {@code readerIndex} or {@code writerIndex} of this buffer.  Please note that the
 	 * returned NIO buffer will not see the changes of this buffer if this buffer is a dynamic
 	 * buffer and it adjusted its capacity.
-	 *
-	 * @throws UnsupportedOperationException
-	 *         if this buffer cannot create a {@link ByteBuffer} that shares the content with itself
-	 *
+	 * @throws UnsupportedOperationException if this buffer cannot create a {@link ByteBuffer} that shares the content with itself
 	 * @see #nioBufferCount()
 	 * @see #nioBuffers()
 	 * @see #nioBuffers(int, int)
@@ -3122,11 +2750,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * modify {@code readerIndex} or {@code writerIndex} of this buffer.  Please note that the
 	 * returned NIO buffer will not see the changes of this buffer if this buffer is a dynamic
 	 * buffer and it adjusted its capacity.
-	 *
-	 *
-	 * @throws UnsupportedOperationException
-	 *         if this buffer cannot create a {@link ByteBuffer} that shares the content with itself
-	 *
+	 * @throws UnsupportedOperationException if this buffer cannot create a {@link ByteBuffer} that shares the content with itself
 	 * @see #nioBufferCount()
 	 * @see #nioBuffer()
 	 * @see #nioBuffer(int, int)
@@ -3140,10 +2764,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * not modify {@code readerIndex} or {@code writerIndex} of this buffer.  Please note that the
 	 * returned NIO buffer will not see the changes of this buffer if this buffer is a dynamic
 	 * buffer and it adjusted its capacity.
-	 *
-	 * @throws UnsupportedOperationException
-	 *         if this buffer cannot create a {@link ByteBuffer} that shares the content with itself
-	 *
+	 * @throws UnsupportedOperationException if this buffer cannot create a {@link ByteBuffer} that shares the content with itself
 	 * @see #nioBufferCount()
 	 * @see #nioBuffer()
 	 * @see #nioBuffer(int, int)
@@ -3159,18 +2780,14 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	
 	/**
 	 * Returns the backing byte array of this buffer.
-	 *
-	 * @throws UnsupportedOperationException
-	 *         if there no accessible backing byte array
+	 * @throws UnsupportedOperationException if there no accessible backing byte array
 	 */
 	public abstract byte[] array();
 	
 	/**
 	 * Returns the offset of the first byte within the backing byte array of
 	 * this buffer.
-	 *
-	 * @throws UnsupportedOperationException
-	 *         if there no accessible backing byte array
+	 * @throws UnsupportedOperationException if there no accessible backing byte array
 	 */
 	public abstract int arrayOffset();
 	
@@ -3182,9 +2799,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	
 	/**
 	 * Returns the low-level memory address that point to the first byte of ths backing data.
-	 *
-	 * @throws UnsupportedOperationException
-	 *         if this buffer does not support accessing the low-level memory address
+	 * @throws UnsupportedOperationException if this buffer does not support accessing the low-level memory address
 	 */
 	public abstract long memoryAddress();
 	
@@ -3194,10 +2809,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
 	 * {@code buf.toString(buf.readerIndex(), buf.readableBytes(), charsetName)}.
 	 * This method does not modify {@code readerIndex} or {@code writerIndex} of
 	 * this buffer.
-	 *
-	 * @throws UnsupportedCharsetException
-	 *         if the specified character set name is not supported by the
-	 *         current VM
+	 * @throws UnsupportedCharsetException if the specified character set name is not supported by the
+	 * current VM
 	 */
 	public abstract String toString(Charset charset);
 	

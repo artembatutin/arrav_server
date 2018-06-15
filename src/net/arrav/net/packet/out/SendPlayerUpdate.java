@@ -101,8 +101,8 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 	
 	/**
 	 * Adds {@code addPlayer} in the view of {@code player}.
-	 * @param msg       The main update message.
-	 * @param player    The {@link Player} this update message is being sent for.
+	 * @param msg The main update message.
+	 * @param player The {@link Player} this update message is being sent for.
 	 * @param addPlayer The {@code Player} being added.
 	 */
 	private void addPlayer(ByteBuf msg, Player player, Player addPlayer) {
@@ -118,7 +118,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 	/**
 	 * Handles running, walking, and teleportation movement for {@code player}.
 	 * @param player The {@link Player} to handle running and walking for.
-	 * @param msg    The main update message.
+	 * @param msg The main update message.
 	 */
 	private void handleMovement(Player player, ByteBuf msg) {
 		boolean needsUpdate = !player.getFlags().isEmpty();

@@ -4,9 +4,9 @@ import net.arrav.content.commands.Command;
 import net.arrav.content.commands.CommandSignature;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
-import net.arrav.world.object.DynamicObject;
-import net.arrav.world.object.ObjectDirection;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.DynamicObject;
+import net.arrav.world.entity.object.ObjectDirection;
+import net.arrav.world.entity.object.ObjectType;
 
 @CommandSignature(alias = {"obj", "object", "spawnobject"}, rights = {Rights.ADMINISTRATOR}, syntax = "Spawns an object, ::obj id")
 public final class SpawnObjectCommand implements Command {

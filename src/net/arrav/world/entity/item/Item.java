@@ -35,7 +35,7 @@ public final class Item {
 	
 	/**
 	 * Creates a new {@link Item}.
-	 * @param id     the identification of this item.
+	 * @param id the identification of this item.
 	 * @param amount the quantity of this item.
 	 */
 	public Item(int id, int amount) {

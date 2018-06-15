@@ -6,7 +6,7 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -42,7 +42,7 @@ public abstract class Entity {
 	/**
 	 * Creates a new {@link Entity}.
 	 * @param position the position of this node in the world.
-	 * @param type     the type of node that this node is.
+	 * @param type the type of node that this node is.
 	 */
 	public Entity(Position position, EntityType type) {
 		this.type = requireNonNull(type);

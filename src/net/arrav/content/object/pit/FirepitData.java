@@ -43,8 +43,8 @@ public enum FirepitData {
 	/**
 	 * Constructs a new {@link FirepitData}.
 	 * @param objectId {@link #objectId}.
-	 * @param log      {@link #log}.
-	 * @param count    {@link #count}.
+	 * @param log {@link #log}.
+	 * @param count {@link #count}.
 	 */
 	FirepitData(int objectId, LogType log, int count) {
 		this.objectId = objectId;

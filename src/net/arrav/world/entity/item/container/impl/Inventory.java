@@ -65,9 +65,9 @@ public class Inventory extends ItemContainer {
 	/**
 	 * Attempts to add the {@code items} to the inventory, if inventory is full
 	 * it'll execute the {@code action} for the remaining items that were not added.
-	 * @param action  the action to execute if the item couldn't be added.
+	 * @param action the action to execute if the item couldn't be added.
 	 * @param message the optional message to sent if the items were not added.
-	 * @param items   the items to be added.
+	 * @param items the items to be added.
 	 */
 	public void addOrExecute(Consumer<Item> action, Optional<String> message, List<Item> items) {
 		boolean val = false;
@@ -89,9 +89,9 @@ public class Inventory extends ItemContainer {
 	/**
 	 * Attempts to add the {@code items} to the inventory, if inventory is full
 	 * it'll execute the {@code action} for the remaining items that were not added.
-	 * @param action  the action to execute if the item couldn't be added.
+	 * @param action the action to execute if the item couldn't be added.
 	 * @param message the optional message to sent if the items were not added.
-	 * @param items   the items to be added.
+	 * @param items the items to be added.
 	 */
 	public void addOrExecute(Consumer<Item> action, Optional<String> message, Item... items) {
 		addOrExecute(action, message, Arrays.asList(items));
@@ -100,9 +100,9 @@ public class Inventory extends ItemContainer {
 	/**
 	 * Attempts to add the {@code items} to the inventory, if inventory is full
 	 * it'll execute the {@code action} for the remaining items that were not added.
-	 * @param action  the action to execute if the item couldn't be added.
+	 * @param action the action to execute if the item couldn't be added.
 	 * @param message the message to be sent if some of the items were not added.
-	 * @param items   the items to be added.
+	 * @param items the items to be added.
 	 */
 	public void addOrExecute(Consumer<Item> action, String message, Item... items) {
 		addOrExecute(action, Optional.of(message), Arrays.asList(items));
@@ -111,9 +111,9 @@ public class Inventory extends ItemContainer {
 	/**
 	 * Attempts to add the {@code items} to the inventory, if inventory is full
 	 * it'll execute the {@code action} for the remaining items that were not added.
-	 * @param action  the action to execute if the item couldn't be added.
+	 * @param action the action to execute if the item couldn't be added.
 	 * @param message the message to be sent if some of the items were not added.
-	 * @param items   the items to be added.
+	 * @param items the items to be added.
 	 */
 	public void addOrExecute(Consumer<Item> action, String message, List<Item> items) {
 		addOrExecute(action, Optional.of(message), items);
@@ -123,7 +123,7 @@ public class Inventory extends ItemContainer {
 	 * Attempts to add the {@code items} to the inventory, if inventory is full
 	 * it'll execute the {@code action} for the remaining items that were not added.
 	 * @param action the action to execute if the item couldn't be added.
-	 * @param items  the items to be added.
+	 * @param items the items to be added.
 	 */
 	public void addOrExecute(Consumer<Item> action, List<Item> items) {
 		addOrExecute(action, Optional.empty(), items);
@@ -133,7 +133,7 @@ public class Inventory extends ItemContainer {
 	 * Attempts to add the {@code items} to the inventory, if inventory is full
 	 * it'll execute the {@code action} for the remaining items that were not added.
 	 * @param action the action to execute if the item couldn't be added.
-	 * @param items  the items to be added.
+	 * @param items the items to be added.
 	 */
 	public void addOrExecute(Consumer<Item> action, Item... items) {
 		addOrExecute(action, Arrays.asList(items));

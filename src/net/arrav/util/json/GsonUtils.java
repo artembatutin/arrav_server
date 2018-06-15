@@ -19,8 +19,8 @@ public final class GsonUtils {
 	/**
 	 * Gets {@code element} as {@code clazz} type.
 	 * @param element The element to get as {@code clazz}.
-	 * @param clazz   The new type of {@code element}.
-	 * @param <T>     The underlying type.
+	 * @param clazz The new type of {@code element}.
+	 * @param <T> The underlying type.
 	 * @return The {@code element} as {@code T}.
 	 */
 	public static <T> T getAsType(JsonElement element, Class<T> clazz) {

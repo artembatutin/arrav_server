@@ -61,9 +61,9 @@ public final class ButterflyCatching extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link ButterflyCatching}.
-	 * @param player     {@link #getPlayer()}.
-	 * @param data       {@link #data}.
-	 * @param mob        {@link #mob}.
+	 * @param player {@link #getPlayer()}.
+	 * @param data {@link #data}.
+	 * @param mob {@link #mob}.
 	 * @param barehanded {@link #barehanded}.
 	 */
 	public ButterflyCatching(Player player, ButterflyData data, Mob mob, boolean barehanded) {
@@ -254,13 +254,13 @@ public final class ButterflyCatching extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link ButterflyData}.
-		 * @param npc                 {@link #npc}.
-		 * @param reward              {@link #reward}.
-		 * @param barehandGraphic     {@link #barehandGraphic}.
-		 * @param releaseGraphic      {@link #releasedGraphic}.
-		 * @param regularRequirement  {@link #regularRequirement}.
+		 * @param npc {@link #npc}.
+		 * @param reward {@link #reward}.
+		 * @param barehandGraphic {@link #barehandGraphic}.
+		 * @param releaseGraphic {@link #releasedGraphic}.
+		 * @param regularRequirement {@link #regularRequirement}.
 		 * @param barehandRequirement {@link #barehandRequirement}.
-		 * @param agilityRequirement  {@link #agilityRequirement}.
+		 * @param agilityRequirement {@link #agilityRequirement}.
 		 */
 		ButterflyData(int npc, int reward, int barehandGraphic, int releaseGraphic, ButterflyPolicy regularRequirement, ButterflyPolicy barehandRequirement, ButterflyPolicy agilityRequirement) {
 			this.npc = npc;

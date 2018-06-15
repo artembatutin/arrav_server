@@ -14,16 +14,12 @@ public enum MobType {
 	/*
 	 * Godwards soldiers.
 	 */
-	ARMADYL_SOLDIER(false),
-	BANDOS_SOLIDER(false),
-	SARADOMIN_SOLDIER(false),
-	ZAMORAK_SOLDIER(false),
+	ARMADYL_SOLDIER(false), BANDOS_SOLIDER(false), SARADOMIN_SOLDIER(false), ZAMORAK_SOLDIER(false),
 	
 	/*
 	 * Hunting
 	 */
-	HUNTING_MAMMAL(false),
-	HUNTING_BIRD(false),;
+	HUNTING_MAMMAL(false), HUNTING_BIRD(false),;
 	
 	private final boolean aggressive;
 	

@@ -43,8 +43,7 @@ public final class InputXOptionPacket implements IncomingPacket {
 				if(player.getMarketShop() == null)
 					return;
 				player.getAttr().get("shop_item").set(player.getInventory().get(slot).getId());
-				player.out(new SendEnterAmount("How many you would like to sell?", t -> () -> player.getMarketShop()
-						.sell(player, new Item(player.getAttr().get("shop_item").getInt(), Integer.parseInt(t)), player.getAttr().get("enter_x_item_slot").getInt())));
+				player.out(new SendEnterAmount("How many you would like to sell?", t -> () -> player.getMarketShop().sell(player, new Item(player.getAttr().get("shop_item").getInt(), Integer.parseInt(t)), player.getAttr().get("enter_x_item_slot").getInt())));
 				break;
 			case 5064://Inventory -> bank or bob
 				if(player.getAttr().get("banking").getBoolean() || player.getAttr().get("bob").getBoolean()) {

@@ -36,7 +36,7 @@ public enum FireLighter {
 	
 	/**
 	 * Constructs a new {@link FireLighter}.
-	 * @param itemId   {@link #item}.
+	 * @param itemId {@link #item}.
 	 * @param objectId {@link #objectId}.
 	 */
 	FireLighter(int itemId, int objectId) {
@@ -55,7 +55,7 @@ public enum FireLighter {
 	
 	/**
 	 * Gets the definition for this fire lighter.
-	 * @param id       the identifier to check for matches.
+	 * @param id the identifier to check for matches.
 	 * @param secondId the second identifier to check for matches.
 	 * @return an Optional with the found value, {@link Optional#empty} otherwise.
 	 */

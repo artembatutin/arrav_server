@@ -26,7 +26,7 @@ public final class BowStringing extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link BowStringing}.
-	 * @param player     {@link #getPlayer()}
+	 * @param player {@link #getPlayer()}
 	 * @param definition the definition we're currently handling.
 	 */
 	public BowStringing(Player player, StringingData definition) {
@@ -161,11 +161,11 @@ public final class BowStringing extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link StringingData} enumerator.
-		 * @param unstrung    {@link #unstrung}.
-		 * @param strung      {@link #strung}.
+		 * @param unstrung {@link #unstrung}.
+		 * @param strung {@link #strung}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
-		 * @param animation   {@link #animation}.
+		 * @param experience {@link #experience}.
+		 * @param animation {@link #animation}.
 		 */
 		StringingData(int unstrung, int strung, int requirement, double experience, int animation) {
 			this.unstrung = new Item(unstrung);

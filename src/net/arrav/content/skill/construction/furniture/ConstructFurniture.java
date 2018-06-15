@@ -27,7 +27,7 @@ public final class ConstructFurniture extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link ConstructFurniture} skill action.
 	 * @param player the player we're starting this action for.
-	 * @param plan   the furniture planned to be built.
+	 * @param plan the furniture planned to be built.
 	 */
 	public ConstructFurniture(Player player, ConstructionPlan plan) {
 		super(player, Optional.empty());
@@ -54,8 +54,7 @@ public final class ConstructFurniture extends ProducingSkillAction {
 					actualX += Constants.getXOffsetForObjectId(find.getObjectId(), find, roomRot);
 					int actualY = Constants.BASE_Y + (myTiles[1] * 8);
 					actualY += Constants.getYOffsetForObjectId(find.getObjectId(), find, roomRot);
-					if(find.getHotSpotId() == plan.getSelected()
-							.getHotSpotId() && (plan.getObjectX() == actualX && plan.getObjectY() == actualY && myRoomType == find.getRoomType() || find.getCarpetDim() != null && myRoomType == find.getRoomType())) {
+					if(find.getHotSpotId() == plan.getSelected().getHotSpotId() && (plan.getObjectX() == actualX && plan.getObjectY() == actualY && myRoomType == find.getRoomType() || find.getCarpetDim() != null && myRoomType == find.getRoomType())) {
 						s = find;
 						break;
 					}

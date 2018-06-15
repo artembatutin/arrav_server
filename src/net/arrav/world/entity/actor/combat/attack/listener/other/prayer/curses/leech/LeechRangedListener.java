@@ -11,20 +11,20 @@ import net.arrav.world.entity.actor.player.Player;
 import static net.arrav.world.Animation.AnimationPriority.HIGH;
 
 public class LeechRangedListener extends SimplifiedListener<Player> {
-
-    @Override
-    public void start(Player attacker, Actor defender, Hit[] hits) {
-        if (attacker.curseManager.isActivated(Prayer.LEECH_RANGED)) {
-            defender.graphic(new Graphic(2232, 0, 2));
-            attacker.animation(new Animation(12575, HIGH));
-            attacker.message("You leech the targets ranged.");
-            attacker.curseManager.deactivate(Prayer.LEECH_RANGED);
-        }
-    }
-
-    @Override
-    public int modifyRangedLevel(Player attacker, Actor defender, int level) {
-        return attacker.curseManager.modifyOutgoingLevel(level, 5, 10, Prayer.LEECH_RANGED);
-    }
-
+	
+	@Override
+	public void start(Player attacker, Actor defender, Hit[] hits) {
+		if(attacker.curseManager.isActivated(Prayer.LEECH_RANGED)) {
+			defender.graphic(new Graphic(2232, 0, 2));
+			attacker.animation(new Animation(12575, HIGH));
+			attacker.message("You leech the targets ranged.");
+			attacker.curseManager.deactivate(Prayer.LEECH_RANGED);
+		}
+	}
+	
+	@Override
+	public int modifyRangedLevel(Player attacker, Actor defender, int level) {
+		return attacker.curseManager.modifyOutgoingLevel(level, 5, 10, Prayer.LEECH_RANGED);
+	}
+	
 }

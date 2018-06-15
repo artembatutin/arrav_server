@@ -5,9 +5,7 @@ package net.arrav.content.skill.slayer;
  * @author <a href="http://www.rune-server.org/members/Stand+Up/">Stan</a>
  */
 public enum SlayerMaster {
-	TURAEL(8461, 1),
-	SPRIA(8462, 1),
-	MAZCHNA(8464, 20);
+	TURAEL(8461, 1), SPRIA(8462, 1), MAZCHNA(8464, 20);
 	
 	/**
 	 * The identifier for this slayer master id.
@@ -21,7 +19,7 @@ public enum SlayerMaster {
 	
 	/**
 	 * Constructs a new {@link SlayerMaster}.
-	 * @param npcId       {@link #npcId}.
+	 * @param npcId {@link #npcId}.
 	 * @param requirement {@link #requirement}.
 	 */
 	SlayerMaster(int npcId, int requirement) {

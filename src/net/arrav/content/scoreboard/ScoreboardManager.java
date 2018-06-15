@@ -149,9 +149,7 @@ public final class ScoreboardManager {
 					}
 				}, "Who are you?", "What is the individual scoreboard?", "Claim pending rewards."));
 				ap.chain(new PlayerDialogue("Who are you?"));
-				ap.chain(new NpcDialogue(npc.getId(), "I am the scoreboard manager, I keep track of the ", "scoreboard of Main. Once a week on every monday, I", "reset the leaderboards and reward certain players on", "the rankings.").attachAfter(() -> ap
-						.getBuilder()
-						.go(-3)));
+				ap.chain(new NpcDialogue(npc.getId(), "I am the scoreboard manager, I keep track of the ", "scoreboard of Main. Once a week on every monday, I", "reset the leaderboards and reward certain players on", "the rankings.").attachAfter(() -> ap.getBuilder().go(-3)));
 				ap.chain(new PlayerDialogue("What is the individual scoreboard?"));
 				ap.chain(new NpcDialogue(npc.getId(), "The individual scoreboard, is a scoreboard for individuals.", "It keeps track of certain statistics for players however,", "whenever you die your killstreak does not reset."));
 				ap.chain(new NpcDialogue(npc.getId(), "Instead, once every week on monday, all your individual ", "statistics will be reset and I will reward the top-3 players", "on the leaderboards."));

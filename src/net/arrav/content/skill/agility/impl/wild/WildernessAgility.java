@@ -13,9 +13,9 @@ import net.arrav.content.skill.agility.obstacle.impl.Walkable;
 import net.arrav.net.packet.out.SendObjectAnimation;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
-import net.arrav.world.object.ObjectDirection;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.entity.object.ObjectDirection;
+import net.arrav.world.entity.object.ObjectType;
 
 import java.util.Optional;
 
@@ -36,7 +36,7 @@ public final class WildernessAgility extends AgilityCourse {
 	 * Constructs a new {@link WildernessAgilityData} course.
 	 * @param player {@link #getPlayer()}.
 	 * @param object {@link #getObject()}.
-	 * @param data   the obstacle this player is trying to cross.
+	 * @param data the obstacle this player is trying to cross.
 	 */
 	public WildernessAgility(Player player, GameObject object, WildernessAgilityData data) {
 		super(player, object, AgilityCourseType.WILDERNESS_AGILITY);
@@ -102,8 +102,7 @@ public final class WildernessAgility extends AgilityCourse {
 				player1.out(new SendObjectAnimation(new Position(3005, 3952, 0), 497, ObjectType.GENERAL_PROP, ObjectDirection.EAST));
 			}
 		}),
-		STEPPING_STONES(new int[]{37704}, ObstacleType.STEPPING_STONE, player1 -> new Steppable(new Position(3002, 3960, 0), new Position[]{new Position(3001, 3960, 0), new Position(3000, 3960, 0), new Position(2999, 3960, 0), new Position(2998, 3960, 0), new Position(2997, 3960, 0)}, new Position(2996, 3960, 0), ObstacleType.STEPPING_STONE
-				.getAnimation(), 52, 20)),
+		STEPPING_STONES(new int[]{37704}, ObstacleType.STEPPING_STONE, player1 -> new Steppable(new Position(3002, 3960, 0), new Position[]{new Position(3001, 3960, 0), new Position(3000, 3960, 0), new Position(2999, 3960, 0), new Position(2998, 3960, 0), new Position(2997, 3960, 0)}, new Position(2996, 3960, 0), ObstacleType.STEPPING_STONE.getAnimation(), 52, 20)),
 		LOG_BALANCE(new int[]{2297}, ObstacleType.LOG_BALANCE, player1 -> new Walkable(new Position(3002, 3945, 0), new Position(2994, 3945, 0), ObstacleType.LOG_BALANCE.getAnimation(), 52, 20)),
 		CLIMB_ROCKS(new int[]{2328}, ObstacleType.ROCKS, player1 -> new ClimbRocks(player1));
 		
@@ -129,8 +128,8 @@ public final class WildernessAgility extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link WildernessAgilityData}.
-		 * @param objectIds      {@link #objectIds}.
-		 * @param message        {@link #message}.
+		 * @param objectIds {@link #objectIds}.
+		 * @param message {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
@@ -143,8 +142,8 @@ public final class WildernessAgility extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link WildernessAgilityData}.
-		 * @param objectIds      {@link #objectIds}.
-		 * @param message        {@link #message}.
+		 * @param objectIds {@link #objectIds}.
+		 * @param message {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
@@ -157,8 +156,8 @@ public final class WildernessAgility extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link WildernessAgilityData}.
-		 * @param objectIds      {@link #objectIds}.
-		 * @param type           {@link #message} and {@link #crossedMessage}.
+		 * @param objectIds {@link #objectIds}.
+		 * @param type {@link #message} and {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
 		WildernessAgilityData(int[] objectIds, ObstacleType type, ObstacleAction obstacleAction) {

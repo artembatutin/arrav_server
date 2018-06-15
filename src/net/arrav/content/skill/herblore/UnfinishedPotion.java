@@ -27,8 +27,8 @@ public final class UnfinishedPotion extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link UnfinishedPotion}.
-	 * @param player     {@link #getPlayer()}.
-	 * @param firstItem  the first item that was used on the second item.
+	 * @param player {@link #getPlayer()}.
+	 * @param firstItem the first item that was used on the second item.
 	 * @param secondItem the second item that was used on by the first item.
 	 */
 	public UnfinishedPotion(Player player, Item firstItem, Item secondItem) {
@@ -49,8 +49,8 @@ public final class UnfinishedPotion extends ProducingSkillAction {
 	
 	/**
 	 * Produces unfinished potions if the player has the requirements required.
-	 * @param player     {@link #getPlayer()};
-	 * @param firstItem  the first item that was used on the second item.
+	 * @param player {@link #getPlayer()};
+	 * @param firstItem the first item that was used on the second item.
 	 * @param secondItem the second item that was used on by the first item.
 	 * @return <true> if the produce was successful, <false> otherwise.
 	 */
@@ -171,9 +171,9 @@ public final class UnfinishedPotion extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link UnfinishedPotionData} enum.
-		 * @param herb   {@link #herb}.
+		 * @param herb {@link #herb}.
 		 * @param unfpot {@link #unfpot}.
-		 * @param level  {@link #level}.
+		 * @param level {@link #level}.
 		 */
 		UnfinishedPotionData(int herb, int unfpot, int level) {
 			this.herb = new Item(herb);

@@ -42,8 +42,8 @@ public final class ClanMember {
 	/**
 	 * Constructs a new {@link ClanMember}.
 	 * @param player {@link #player}.
-	 * @param clan   {@link #clan}.
-	 * @param rank   {@link #rank}.
+	 * @param clan {@link #clan}.
+	 * @param rank {@link #rank}.
 	 */
 	ClanMember(Player player, ClanChat clan, ClanChatRank rank) {
 		this.player = player;
@@ -171,7 +171,7 @@ public final class ClanMember {
 	/**
 	 * Updates the rank of this clan member.
 	 * @param interfaceId the interface id to get the member to promote.
-	 * @param action      the right click action set.
+	 * @param action the right click action set.
 	 */
 	public void rank(int interfaceId, int action) {
 		if(rank != ClanChatRank.OWNER) {

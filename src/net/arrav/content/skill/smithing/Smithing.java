@@ -16,7 +16,7 @@ import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -40,9 +40,9 @@ public final class Smithing extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link Smithing} skill.
-	 * @param player     {@link #getPlayer()}.
+	 * @param player {@link #getPlayer()}.
 	 * @param definition {@link #definition}.
-	 * @param amount     {@link #amount}.
+	 * @param amount {@link #amount}.
 	 */
 	public Smithing(Player player, SmithingTable definition, int amount) {
 		super(player, Optional.empty());
@@ -52,10 +52,10 @@ public final class Smithing extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to forge the item clicked for the specified {@code player}.
-	 * @param player      {@link #getPlayer()}.
+	 * @param player {@link #getPlayer()}.
 	 * @param interfaceId the interface id clicked.
-	 * @param slot        the slot.
-	 * @param amount      the amount that should be produced.
+	 * @param slot the slot.
+	 * @param amount the amount that should be produced.
 	 * @return <true> if the skill action was started, <false> otherwise.
 	 */
 	public static boolean forge(Player player, int interfaceId, int slot, int amount) {
@@ -89,7 +89,7 @@ public final class Smithing extends ProducingSkillAction {
 	 * Opens the smithing interface and sets all the values for
 	 * the specified {code player}.
 	 * @param player {@link #getPlayer()}
-	 * @param item   the item that was used on the object.
+	 * @param item the item that was used on the object.
 	 * @param object the object the item was used on.
 	 * @return <true> if the interface opened, <false> otherwise.
 	 */
@@ -123,33 +123,32 @@ public final class Smithing extends ProducingSkillAction {
 			
 			player.getDialogueBuilder().append(
 					
-					new StatementDialogue("You set to work, trying to attach the ancient draconic visage to your", "anti-dragonbreath shield. It's not easy to work with the ancient artifact", "and it takes all of your skill as a master smith."), new PlayerDialogue("Here goes nothing...")
-							.attach(() -> {
-								player.getActivityManager().disable();
-								
-								player.closeWidget();
-								
-								player.animation(new Animation(898));
-								SendGraphic.local(player, 2123, object.getPosition().copy(), 50);
-								LinkedTaskSequence seq = new LinkedTaskSequence();
-								seq.connect(3, () -> {
-									
-									player.getInventory().removeAll(new Item(1540), new Item(11286));
-									
-									player.getInventory().add(new Item(11283));
-									
-									Skills.experience(player, 2_000, Skills.SMITHING);
-									
-									player.getActivityManager().enable();
-									
-									player.getDialogueBuilder().append(
-											
-											new StatementDialogue("Even for an expert armourer it is not an easy task, but eventually it", "is ready. You have crafted the draconic visage and anti-dragonbreath", "shield into a dragonfire shield.")
-									
-									);
-								});
-								seq.start();
-							})
+					new StatementDialogue("You set to work, trying to attach the ancient draconic visage to your", "anti-dragonbreath shield. It's not easy to work with the ancient artifact", "and it takes all of your skill as a master smith."), new PlayerDialogue("Here goes nothing...").attach(() -> {
+						player.getActivityManager().disable();
+
+						player.closeWidget();
+
+						player.animation(new Animation(898));
+						SendGraphic.local(player, 2123, object.getPosition().copy(), 50);
+						LinkedTaskSequence seq = new LinkedTaskSequence();
+						seq.connect(3, () -> {
+
+							player.getInventory().removeAll(new Item(1540), new Item(11286));
+
+							player.getInventory().add(new Item(11283));
+
+							Skills.experience(player, 2_000, Skills.SMITHING);
+
+							player.getActivityManager().enable();
+
+							player.getDialogueBuilder().append(
+
+									new StatementDialogue("Even for an expert armourer it is not an easy task, but eventually it", "is ready. You have crafted the draconic visage and anti-dragonbreath", "shield into a dragonfire shield.")
+
+							);
+						});
+						seq.start();
+					})
 			
 			);
 			return true;
@@ -289,13 +288,7 @@ public final class Smithing extends ProducingSkillAction {
 	/**
 	 * The map which contains all the bar ids with their respective tables.
 	 */
-	private static final Int2ObjectArrayMap<SmithingTable[]> TABLE = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, SmithingTable[]>builder().put(2349, SmithingTable.BronzeTable.values())
-			.put(2351, SmithingTable.IronTable.values())
-			.put(2353, SmithingTable.SteelTable.values())
-			.put(2359, SmithingTable.MithrilTable.values())
-			.put(2361, SmithingTable.AdamantTable.values())
-			.put(2363, SmithingTable.RuniteTable.values())
-			.build());
+	private static final Int2ObjectArrayMap<SmithingTable[]> TABLE = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, SmithingTable[]>builder().put(2349, SmithingTable.BronzeTable.values()).put(2351, SmithingTable.IronTable.values()).put(2353, SmithingTable.SteelTable.values()).put(2359, SmithingTable.MithrilTable.values()).put(2361, SmithingTable.AdamantTable.values()).put(2363, SmithingTable.RuniteTable.values()).build());
 	
 	/**
 	 * The array containing all of the frames data.

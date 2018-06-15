@@ -49,17 +49,18 @@ public enum MagicRune {
 	}
 
 	public static MagicRune forMainId(int id) {
-		for (MagicRune rune : values()) {
-			if (rune.mainId == id)
+		for(MagicRune rune : values()) {
+			if(rune.mainId == id)
 				return rune;
 		}
 		return null;
 	}
 
 	public boolean isStaff(int id) {
-		if (staffs == null) return false;
-		for (int staff : staffs) {
-			if (staff == id) {
+		if(staffs == null)
+			return false;
+		for(int staff : staffs) {
+			if(staff == id) {
 				return true;
 			}
 		}
@@ -67,9 +68,10 @@ public enum MagicRune {
 	}
 
 	public boolean containsCombo(ItemContainer container, int amount) {
-		if (combos == null) return false;
-		for (int combo : combos) {
-			if (container.contains(new Item(combo, amount))) {
+		if(combos == null)
+			return false;
+		for(int combo : combos) {
+			if(container.contains(new Item(combo, amount))) {
 				return true;
 			}
 		}
@@ -79,19 +81,19 @@ public enum MagicRune {
 	public static boolean hasRunes(Player player, Item[] required) {
 		Item weapon = player.getEquipment().get(Equipment.WEAPON_SLOT);
 
-		for (Item item : required) {
+		for(Item item : required) {
 			MagicRune rune = forMainId(item.getId());
 
-			if (rune == null)
+			if(rune == null)
 				continue;
 
-			if (weapon != null && rune.isStaff(weapon.getId()))
+			if(weapon != null && rune.isStaff(weapon.getId()))
 				continue;
 
-			if (player.getInventory().contains(new Item(rune.mainId, item.getAmount())))
+			if(player.getInventory().contains(new Item(rune.mainId, item.getAmount())))
 				continue;
 
-			if (rune.containsCombo(player.getInventory(), item.getAmount()))
+			if(rune.containsCombo(player.getInventory(), item.getAmount()))
 				continue;
 
 			/* does not have runes */
@@ -106,23 +108,23 @@ public enum MagicRune {
 		boolean refresh = false;
 		player.getInventory().setFiringEvents(false);
 
-		for (Item item : required) {
+		for(Item item : required) {
 			MagicRune rune = forMainId(item.getId());
 
-			if (rune == null)
+			if(rune == null)
 				continue;
 
-			if (weapon != null && rune.isStaff(weapon.getId()))
+			if(weapon != null && rune.isStaff(weapon.getId()))
 				continue;
 
-			if (player.getInventory().contains(new Item(rune.mainId, item.getAmount()))) {
+			if(player.getInventory().contains(new Item(rune.mainId, item.getAmount()))) {
 				refresh |= player.getInventory().remove(new Item(rune.mainId, item.getAmount())) > -1;
 				continue;
 			}
 
-			if (rune.combos != null && rune.containsCombo(player.getInventory(), item.getAmount())) {
-				for (int combo : rune.combos) {
-					if (player.getInventory().contains(new Item(combo, item.getAmount()))) {
+			if(rune.combos != null && rune.containsCombo(player.getInventory(), item.getAmount())) {
+				for(int combo : rune.combos) {
+					if(player.getInventory().contains(new Item(combo, item.getAmount()))) {
 						refresh |= player.getInventory().remove(new Item(combo, item.getAmount())) > -1;
 						break;
 					}
@@ -131,12 +133,13 @@ public enum MagicRune {
 		}
 
 		player.getInventory().setFiringEvents(true);
-		if (refresh) player.getInventory().refreshBulk(player, Inventory.INVENTORY_DISPLAY_ID);
+		if(refresh)
+			player.getInventory().refreshBulk(player, Inventory.INVENTORY_DISPLAY_ID);
 	}
 
 	public static boolean hasRunes(Player player, RequiredRune[] runes) {
 		List<Item> required = new LinkedList<>();
-		for (RequiredRune rune : runes) {
+		for(RequiredRune rune : runes) {
 			required.add(new Item(rune.getMainId(), rune.getAmount()));
 		}
 		return hasRunes(player, required.toArray(new Item[required.size()]));
@@ -144,7 +147,7 @@ public enum MagicRune {
 
 	public static void remove(Player player, RequiredRune[] runes) {
 		List<Item> required = new LinkedList<>();
-		for (RequiredRune rune : runes) {
+		for(RequiredRune rune : runes) {
 			required.add(new Item(rune.getMainId(), rune.getAmount()));
 		}
 		remove(player, required.toArray(new Item[required.size()]));

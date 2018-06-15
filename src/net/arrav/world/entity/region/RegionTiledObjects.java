@@ -2,13 +2,13 @@ package net.arrav.world.entity.region;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import net.arrav.world.object.GameObject;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.entity.object.ObjectType;
 
 import java.util.function.Consumer;
 
-import static net.arrav.world.object.ObjectGroup.INTERACTABLE_OBJECT;
-import static net.arrav.world.object.ObjectGroup.WALL;
+import static net.arrav.world.entity.object.ObjectGroup.INTERACTABLE_OBJECT;
+import static net.arrav.world.entity.object.ObjectGroup.WALL;
 
 /**
  * A class acting as a container for objects on a single tile.

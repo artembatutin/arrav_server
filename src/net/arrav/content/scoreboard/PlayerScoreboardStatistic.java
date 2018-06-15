@@ -35,11 +35,11 @@ public final class PlayerScoreboardStatistic {
 	
 	/**
 	 * Constructs a new {@link PlayerScoreboardStatistic}.
-	 * @param username          {@link #username}.
+	 * @param username {@link #username}.
 	 * @param highestKillstreak {@link #highestKillstreak}.
 	 * @param currentKillstreak {@link #currentKillstreak}.
-	 * @param kills             {@link #kills}.
-	 * @param deaths            {@link #deaths}.
+	 * @param kills {@link #kills}.
+	 * @param deaths {@link #deaths}.
 	 */
 	public PlayerScoreboardStatistic(String username, int highestKillstreak, int currentKillstreak, int kills, int deaths) {
 		this.username = username;

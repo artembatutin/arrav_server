@@ -79,7 +79,7 @@ public final class ShootingStarManager {
 	
 	/**
 	 * Attempts to mine the shooting star.
-	 * @param player   the player attempting to mine.
+	 * @param player the player attempting to mine.
 	 * @param objectId the object id clicked to mine.
 	 * @return {@code true} if the object was mined, {@code false} otherwise.
 	 */

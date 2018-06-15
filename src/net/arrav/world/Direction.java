@@ -91,9 +91,9 @@ public enum Direction {
 	
 	/**
 	 * Creates a new {@link Direction}.
-	 * @param id       the identification of this direction.
-	 * @param x        the {@code x} movement of this direction.
-	 * @param y        the {@code y} movement of this direction.
+	 * @param id the identification of this direction.
+	 * @param x the {@code x} movement of this direction.
+	 * @param y the {@code y} movement of this direction.
 	 * @param opposite the opposite {@link #id} direction.
 	 */
 	Direction(int id, int x, int y, int opposite) {

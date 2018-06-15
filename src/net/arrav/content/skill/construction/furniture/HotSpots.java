@@ -7,7 +7,7 @@ import net.arrav.content.skill.construction.data.Constants;
 import net.arrav.content.skill.construction.room.RoomManipulation;
 import net.arrav.net.packet.out.SendObjectsConstruction;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.awt.*;
 

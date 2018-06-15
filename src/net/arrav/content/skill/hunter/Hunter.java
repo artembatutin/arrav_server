@@ -17,7 +17,7 @@ import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.region.TraversalMap;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -45,7 +45,7 @@ public final class Hunter {
 
 	/**
 	 * Attempts to abandon the specified {@code trap} for the player.
-	 * @param trap   the trap that was abandoned.
+	 * @param trap the trap that was abandoned.
 	 * @param logout if the abandon was due to the player logging out.
 	 */
 	public static void abandon(Player player, Trap trap, boolean logout) {
@@ -77,7 +77,7 @@ public final class Hunter {
 	/**
 	 * Attempts to lay down the specified {@code trap} for the specified {@code player}.
 	 * @param player the player to lay the trap for.
-	 * @param trap   the trap to lay down for the player.
+	 * @param trap the trap to lay down for the player.
 	 * @return {@code true} if the trap was laid, {@code false} otherwise.
 	 */
 	public static boolean lay(Player player, Trap trap) {

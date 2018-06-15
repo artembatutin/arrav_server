@@ -10,7 +10,7 @@ import net.arrav.content.skill.agility.obstacle.impl.Steppable;
 import net.arrav.content.skill.agility.obstacle.impl.Walkable;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -27,8 +27,8 @@ public final class Shortcuts extends AgilityCourse {
 	
 	/**
 	 * Constructs a new {@link Shortcuts}.
-	 * @param player     {@link #getPlayer()}.
-	 * @param object     {@link #getObject()}.
+	 * @param player {@link #getPlayer()}.
+	 * @param object {@link #getObject()}.
 	 * @param definition {@link #definition}.
 	 */
 	public Shortcuts(Player player, GameObject object, ShortcutsData definition) {
@@ -105,10 +105,8 @@ public final class Shortcuts extends AgilityCourse {
 				return true;
 			}
 		}),
-		BRIMHAVEN_OBSTACLE_ROCKS(new int[]{5111}, ObstacleType.STEPPING_STONE, player -> new Steppable(new Position(2647, 9557), new Position[]{new Position(2647, 9558), new Position(2647, 9559), new Position(2647, 9560), new Position(2648, 9560), new Position(2649, 9560), new Position(2649, 9561)}, new Position(2649, 9562), ObstacleType.STEPPING_STONE
-				.getAnimation(), 30, 0)),
-		BRIMHAVEN_OBSTACLE_ROCKS_OTHERWAY(new int[]{5110}, ObstacleType.STEPPING_STONE, player -> new Steppable(new Position(2649, 9562), new Position[]{new Position(2649, 9561), new Position(2649, 9560), new Position(2648, 9560), new Position(2647, 9560), new Position(2647, 9559), new Position(2647, 9558)}, new Position(2647, 9557), ObstacleType.STEPPING_STONE
-				.getAnimation(), 30, 0));
+		BRIMHAVEN_OBSTACLE_ROCKS(new int[]{5111}, ObstacleType.STEPPING_STONE, player -> new Steppable(new Position(2647, 9557), new Position[]{new Position(2647, 9558), new Position(2647, 9559), new Position(2647, 9560), new Position(2648, 9560), new Position(2649, 9560), new Position(2649, 9561)}, new Position(2649, 9562), ObstacleType.STEPPING_STONE.getAnimation(), 30, 0)),
+		BRIMHAVEN_OBSTACLE_ROCKS_OTHERWAY(new int[]{5110}, ObstacleType.STEPPING_STONE, player -> new Steppable(new Position(2649, 9562), new Position[]{new Position(2649, 9561), new Position(2649, 9560), new Position(2648, 9560), new Position(2647, 9560), new Position(2647, 9559), new Position(2647, 9558)}, new Position(2647, 9557), ObstacleType.STEPPING_STONE.getAnimation(), 30, 0));
 		
 		/**
 		 * The object identification for this object.
@@ -132,8 +130,8 @@ public final class Shortcuts extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link ShortcutsData}.
-		 * @param objectIds      {@link #objectIds}.
-		 * @param message        {@link #message}.
+		 * @param objectIds {@link #objectIds}.
+		 * @param message {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
@@ -146,8 +144,8 @@ public final class Shortcuts extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link ShortcutsData}.
-		 * @param objectIds      {@link #objectIds}.
-		 * @param message        {@link #message}.
+		 * @param objectIds {@link #objectIds}.
+		 * @param message {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
@@ -160,8 +158,8 @@ public final class Shortcuts extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link ShortcutsData}.
-		 * @param objectIds      {@link #objectIds}.
-		 * @param type           {@link #message}.
+		 * @param objectIds {@link #objectIds}.
+		 * @param type {@link #message}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
 		ShortcutsData(int[] objectIds, ObstacleType type, ObstacleAction obstacleAction) {

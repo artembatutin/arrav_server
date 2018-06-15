@@ -23,7 +23,7 @@ public final class DartCreation extends ProducingSkillAction {
 	
 	/**
 	 * Creates a new {@link ProducingSkillAction}.
-	 * @param player     the player this skill action is for.
+	 * @param player the player this skill action is for.
 	 * @param definition the dart this skill action gathers data from.
 	 */
 	public DartCreation(Player player, DartData definition) {

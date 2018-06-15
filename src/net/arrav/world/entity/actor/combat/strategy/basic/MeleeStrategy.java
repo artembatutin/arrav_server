@@ -23,7 +23,7 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
 		MovementQueue otherMovement = defender.getMovementQueue();
 		FightType fightType = attacker.getCombat().getFightType();
 		int distance = getAttackDistance(attacker, fightType);
-		if (movement.isRunning()) {
+		if(movement.isRunning()) {
 			distance += 1;
 		}
 		if(!new Boundary(attacker.getPosition(), attacker.size()).within(defender.getPosition(), defender.size(), distance)) {
@@ -37,8 +37,7 @@ public abstract class MeleeStrategy<T extends Actor> extends CombatStrategy<T> {
 	public boolean canAttack(T attacker, Actor defender) {
 		return true;
 	}
-
-
+	
 	public static void addCombatExperience(Player player, Hit... hits) {
 		int exp = 0;
 		for(Hit hit : hits) {

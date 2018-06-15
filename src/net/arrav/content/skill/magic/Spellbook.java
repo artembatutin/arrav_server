@@ -34,8 +34,7 @@ public enum Spellbook {
 				}
 			}.attach(player));
 		}
-	},
-	ANCIENT(12855) {
+	}, ANCIENT(12855) {
 		@Override
 		public void execute(Player player, Position position) {
 			player.animation(new Animation(1979));
@@ -57,8 +56,7 @@ public enum Spellbook {
 				}
 			}.attach(player));
 		}
-	},
-	LUNAR(29999) {
+	}, LUNAR(29999) {
 		@Override
 		public void execute(Player player, Position position) {//TODO replace this to correct lunar home teleport
 			player.animation(new Animation(714));
@@ -102,7 +100,7 @@ public enum Spellbook {
 	/**
 	 * The method executed when {@code player} teleports to {@code position}
 	 * while converted to this spellbook type.
-	 * @param player   the player that is teleporting.
+	 * @param player the player that is teleporting.
 	 * @param position the position the player is teleporting to.
 	 */
 	public abstract void execute(Player player, Position position);
@@ -118,7 +116,7 @@ public enum Spellbook {
 	/**
 	 * Attempts to convert the spellbook for {@code player} to {@code book}.
 	 * @param player the player to convert the spellbook for.
-	 * @param book   the type of spellbook to convert to.
+	 * @param book the type of spellbook to convert to.
 	 */
 	public static void convert(Player player, Spellbook book) {
 		if(player.getSpellbook() == book) {

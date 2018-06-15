@@ -10,7 +10,7 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.ItemDefinition;
 import net.arrav.world.entity.region.Region;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;

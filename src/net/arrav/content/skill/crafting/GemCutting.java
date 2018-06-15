@@ -33,8 +33,8 @@ public final class GemCutting extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link GemCutting}.
-	 * @param player    {@link #getPlayer()}.
-	 * @param data      {@link #data}.
+	 * @param player {@link #getPlayer()}.
+	 * @param data {@link #data}.
 	 * @param fletching {@link #fletching}.
 	 */
 	public GemCutting(Player player, GemCraftingData data) {
@@ -46,8 +46,8 @@ public final class GemCutting extends ProducingSkillAction {
 	/**
 	 * Attempts to cut the gem for the specified {@code player}.
 	 * @param player {@link #getPlayer()}.
-	 * @param item   the item used.
-	 * @param item2  the item used on.
+	 * @param item the item used.
+	 * @param item2 the item used on.
 	 * @return <true> if the skill action was started, <false> otherwise.
 	 */
 	public static boolean cut(Player player, Item item, Item item2) {
@@ -193,12 +193,12 @@ public final class GemCutting extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link GemCraftingData}.
-		 * @param gem         {@link #gem}.
-		 * @param produce     {@link #produce}.
+		 * @param gem {@link #gem}.
+		 * @param produce {@link #produce}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
+		 * @param experience {@link #experience}.
 		 * @param animationId {@link #animation}.
-		 * @param fletching   {@link #fletching}.
+		 * @param fletching {@link #fletching}.
 		 */
 		GemCraftingData(Item gem, Item produce, int requirement, double experience, int animationId, boolean fletching) {
 			this.gem = gem;
@@ -211,10 +211,10 @@ public final class GemCutting extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link GemCraftingData}.
-		 * @param gem         {@link #gem}.
-		 * @param produce     {@link #produce}.
+		 * @param gem {@link #gem}.
+		 * @param produce {@link #produce}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
+		 * @param experience {@link #experience}.
 		 * @param animationId {@link #animation}.
 		 */
 		GemCraftingData(Item gem, Item produce, int requirement, double experience, int animationId) {

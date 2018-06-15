@@ -1,6 +1,5 @@
 package net.arrav.action.impl;
 
-import net.arrav.GameConstants;
 import net.arrav.action.Action;
 import net.arrav.content.minigame.fightcaves.FightcavesMinigame;
 import net.arrav.content.minigame.nexchamber.NexMinigame;
@@ -22,12 +21,10 @@ import net.arrav.content.skill.runecrafting.Runecrafting;
 import net.arrav.content.skill.smithing.Smelting;
 import net.arrav.content.skill.thieving.impl.Stalls;
 import net.arrav.content.skill.woodcutting.Woodcutting;
-import net.arrav.content.teleport.TeleportType;
 import net.arrav.content.wilderness.Obelisk;
 import net.arrav.net.packet.in.ObjectActionPacket;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 /**
  * Action handling object action clicks.

@@ -58,8 +58,7 @@ public final class StarSprite extends Mob {
 					ap.chain(new PlayerDialogue(Expression.CONFUSED, "Ehh? This is where you say, \"Thank you for saving me", "oh noble warrior, do you want a reward in return?\""));
 					
 					boolean stardust = player.getInventory().contains(new Item(StarMining.STARDUST.getId(), EXCHANGE_FOR_BLOOD_COINS));
-					String[] message = stardust ? new String[]{"Eh, I see you have stardust on you, perhaps you", "would want to trade it for blood coins?"} : player.getInventory()
-							.contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of " + EXCHANGE_FOR_BLOOD_COINS + " stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
+					String[] message = stardust ? new String[]{"Eh, I see you have stardust on you, perhaps you", "would want to trade it for blood coins?"} : player.getInventory().contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of " + EXCHANGE_FOR_BLOOD_COINS + " stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
 					
 					ap.chain(new NpcDialogue(8091, message).attachAfter(() -> {
 						if(!stardust) {
@@ -91,8 +90,7 @@ public final class StarSprite extends Mob {
 		DialogueAppender ap = new DialogueAppender(player);
 		
 		boolean stardust = player.getInventory().contains(new Item(StarMining.STARDUST.getId(), EXCHANGE_FOR_BLOOD_COINS));
-		String[] message = stardust ? new String[]{"Howmuch stardust would you like to convert to", "blood coins?"} : player.getInventory()
-				.contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of " + EXCHANGE_FOR_BLOOD_COINS + " stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
+		String[] message = stardust ? new String[]{"Howmuch stardust would you like to convert to", "blood coins?"} : player.getInventory().contains(StarMining.STARDUST) ? new String[]{"Only if you had a minimum of " + EXCHANGE_FOR_BLOOD_COINS + " stardust we could", "of had talked...."} : new String[]{"Only if you had some stardust on you we could", "of had talked...."};
 		
 		ap.chain(new NpcDialogue(8091, message).attachAfter(() -> {
 			if(!stardust) {

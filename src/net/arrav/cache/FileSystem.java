@@ -124,9 +124,9 @@ public final class FileSystem {
 	/**
 	 * Constructs a new {@link FileSystem} with the specified {@link Cache}s and
 	 * {@link Archive}s
-	 * @param caches   All of the {@link Cache}s within this {@link FileSystem}.
+	 * @param caches All of the {@link Cache}s within this {@link FileSystem}.
 	 * @param archives All of the {@link Archive}s within this
-	 *                 {@link FileSystem}.
+	 * {@link FileSystem}.
 	 */
 	private FileSystem(Cache[] caches, Archive[] archives) {
 		this.caches = caches;

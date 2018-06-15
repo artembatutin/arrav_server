@@ -197,7 +197,7 @@ public enum DuelingRules {
 	
 	/**
 	 * Constructs a new {@link DuelingRules}.
-	 * @param buttonId         {@link #buttonId}.
+	 * @param buttonId {@link #buttonId}.
 	 * @param interfaceMessage {@link #interfaceMessage}.
 	 */
 	DuelingRules(int buttonId, String interfaceMessage) {
@@ -208,8 +208,8 @@ public enum DuelingRules {
 	
 	/**
 	 * Constructs a new {@link DuelingRules}.
-	 * @param buttonId         {@link #buttonId}.
-	 * @param slot             {@link #slot}.
+	 * @param buttonId {@link #buttonId}.
+	 * @param slot {@link #slot}.
 	 * @param interfaceMessage {@link #interfaceMessage}.
 	 */
 	DuelingRules(int buttonId, int slot, String interfaceMessage) {

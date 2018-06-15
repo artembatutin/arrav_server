@@ -6,7 +6,9 @@ import net.arrav.world.Projectile;
 import net.arrav.world.entity.actor.Actor;
 import net.arrav.world.entity.actor.player.Player;
 
-/** @author Omicron */
+/**
+ * @author Omicron
+ */
 public class SpecialCurseEvent extends Task {
 	private final Actor defender;
 	private final Player attacker;
@@ -19,7 +21,7 @@ public class SpecialCurseEvent extends Task {
 
 	@Override
 	public void execute() {
-		if (defender.isDead() || attacker.isDead()) {
+		if(defender.isDead() || attacker.isDead()) {
 			cancel();
 			return;
 		}

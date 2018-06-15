@@ -19,7 +19,7 @@ public class Boundary {
 	/**
 	 * Constructs a single rectangle boundary check.
 	 * @param start the start position.
-	 * @param end   the end position
+	 * @param end the end position
 	 */
 	public Boundary(Position start, Position end) {
 		this.start = start;
@@ -28,7 +28,7 @@ public class Boundary {
 	
 	/**
 	 * Constructs a single square boundary check.
-	 * @param pos  the start position.
+	 * @param pos the start position.
 	 * @param size the size of the entity.
 	 */
 	public Boundary(Position pos, int size) {
@@ -39,7 +39,7 @@ public class Boundary {
 	/**
 	 * Determines if the other {@link Position} with it's size is inside the boundary.
 	 * @param other the other position.
-	 * @param size  the other entity size.
+	 * @param size the other entity size.
 	 * @return {@code true} the other entity is inside the boundary, {@code false} otherwise.
 	 */
 	public boolean inside(Position other, int size) {
@@ -54,7 +54,7 @@ public class Boundary {
 	/**
 	 * Determines if the other {@link Position} with it's size is within a distance the boundary.
 	 * @param other the other position.
-	 * @param size  the other entity size.
+	 * @param size the other entity size.
 	 * @return {@code true} the other entity is within the boundary, {@code false} otherwise.
 	 */
 	public boolean within(Position other, int size, int distance) {

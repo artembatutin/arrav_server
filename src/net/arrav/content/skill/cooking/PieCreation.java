@@ -30,7 +30,7 @@ public final class PieCreation extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link PieCreation}.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
+	 * @param data {@link #data}.
 	 */
 	public PieCreation(Player player, PieData data) {
 		super(player, Optional.empty());
@@ -40,7 +40,7 @@ public final class PieCreation extends ProducingSkillAction {
 	/**
 	 * Attempts to register a pie.
 	 * @param player the player to register this for.
-	 * @param used   the item used.
+	 * @param used the item used.
 	 * @param usedOn the item used on.
 	 * @return {@code true} if the skill action got started, {@code false} otherwise.
 	 */
@@ -160,8 +160,8 @@ public final class PieCreation extends ProducingSkillAction {
 		/**
 		 * Constructs a new {@link PieData}.
 		 * @param ingredient {@link #ingredient}.
-		 * @param shell      {@link #shell}.
-		 * @param produced   {@link #produced}.
+		 * @param shell {@link #shell}.
+		 * @param produced {@link #produced}.
 		 */
 		PieData(int ingredient, int shell, int produced) {
 			this.ingredient = new Item(ingredient);

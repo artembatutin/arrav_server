@@ -11,7 +11,6 @@ import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
 import net.arrav.world.entity.item.container.session.ExchangeSession;
 import net.arrav.world.entity.item.container.session.ExchangeSessionManager;
 import net.arrav.world.entity.item.container.session.impl.DuelSession;
-import net.arrav.world.entity.item.container.session.impl.TradeSession;
 
 /**
  * The message sent from the client when a player sends some sort of request to
@@ -38,7 +37,7 @@ public final class RequestPacket implements IncomingPacket {
 	
 	/**
 	 * Handles a trade request for {@code player}.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
 	private void tradeRequest(Player player, ByteBuf buf) {
@@ -57,7 +56,7 @@ public final class RequestPacket implements IncomingPacket {
 	
 	/**
 	 * Handles a duel request for {@code player}.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
 	private void duelRequest(Player player, ByteBuf buf) {
@@ -74,7 +73,7 @@ public final class RequestPacket implements IncomingPacket {
 	/**
 	 * Determines if {@code player} can be a valid request to {@code other}.
 	 * @param player the player making the request.
-	 * @param other  the player being requested.
+	 * @param other the player being requested.
 	 * @return {@code true} if the player can make a request, {@code false}
 	 * otherwise.
 	 */

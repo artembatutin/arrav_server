@@ -25,7 +25,7 @@ import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.locale.Position;
 import net.arrav.world.locale.loc.SquareLocation;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -223,7 +223,7 @@ public final class CyclopsRoom extends GuildRoom {
 		
 		/**
 		 * Constructs a new {@link CyclopsRoomTask}.
-		 * @param room   {@link #room}.
+		 * @param room {@link #room}.
 		 * @param player {@link #player}.
 		 */
 		public CyclopsRoomTask(CyclopsRoom room, Player player) {

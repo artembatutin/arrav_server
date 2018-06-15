@@ -27,7 +27,7 @@ public final class Farming extends HarvestingSkillAction {
 	
 	/**
 	 * Creates a new {@link HarvestingSkillAction}.
-	 * @param player   the player this skill action is for.
+	 * @param player the player this skill action is for.
 	 * @param position the position the player should face.
 	 */
 	public Farming(Player player, Optional<Position> position) {

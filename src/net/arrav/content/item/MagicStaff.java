@@ -39,7 +39,7 @@ public enum MagicStaff {
 	
 	/**
 	 * Creates a new {@link MagicStaff}.
-	 * @param ids   the current identifiers for this staff type.
+	 * @param ids the current identifiers for this staff type.
 	 * @param runes the runes that this staff type can replace.
 	 */
 	MagicStaff(int[] ids, int[] runes) {
@@ -50,7 +50,7 @@ public enum MagicStaff {
 	/**
 	 * Suppresses items in {@code required} if any of the items match the runes
 	 * that are represented by the staff {@code player} is wielding.
-	 * @param player   the player to suppress runes for.
+	 * @param player the player to suppress runes for.
 	 * @param required the array of runes to suppress.
 	 * @return the new array of items with suppressed runes removed.
 	 */

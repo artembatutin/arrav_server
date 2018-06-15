@@ -189,7 +189,7 @@ public abstract class Actor extends Entity {
 	/**
 	 * Creates a new {@link Actor}.
 	 * @param position the position of this entity in the world.
-	 * @param type     the type of node that this entity is.
+	 * @param type the type of node that this entity is.
 	 */
 	public Actor(Position position, EntityType type) {
 		super(position, type);
@@ -365,7 +365,7 @@ public abstract class Actor extends Entity {
 	/**
 	 * Executes {@code animation} for this entity.
 	 * @param animation the animation to execute, or {@code null} to reset the current
-	 *                  animation.
+	 * animation.
 	 */
 	public final void animation(Animation animation) {
 		if(animation == null)
@@ -375,7 +375,7 @@ public abstract class Actor extends Entity {
 			flags.flag(UpdateFlag.ANIMATION);
 		}
 	}
-
+	
 	public final void animation(int animation) {
 		animation(new Animation(animation));
 	}
@@ -391,7 +391,7 @@ public abstract class Actor extends Entity {
 		this.graphic = graphic.copy();
 		flags.flag(UpdateFlag.GRAPHIC);
 	}
-
+	
 	public final void graphic(int graphic) {
 		graphic(new Graphic(graphic));
 	}
@@ -670,7 +670,7 @@ public abstract class Actor extends Entity {
 	/**
 	 * Sets regional and placement updates on this {@link Actor}.
 	 * @param needsPlacement this flag describes if the entity needs placement.
-	 * @param region         this flag descibes if the entity needs to have region map update.
+	 * @param region this flag descibes if the entity needs to have region map update.
 	 */
 	public final void setUpdates(boolean needsPlacement, boolean region) {
 		this.needsPlacement = needsPlacement;
@@ -805,7 +805,7 @@ public abstract class Actor extends Entity {
 	 * @return combat handler.
 	 */
 	public abstract Combat<? extends Actor> getCombat();
-
+	
 	public abstract <T extends Actor> CombatStrategy<? super T> getStrategy();
 	
 	/**

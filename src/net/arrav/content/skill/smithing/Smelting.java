@@ -12,7 +12,7 @@ import net.arrav.task.Task;
 import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -40,10 +40,10 @@ public final class Smelting extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link Smelting}.
-	 * @param player     {@link #getPlayer()}.
+	 * @param player {@link #getPlayer()}.
 	 * @param definition {@link #definition}.
-	 * @param amount     {@link #amount}.
-	 * @param spell      {@link #spell}.
+	 * @param amount {@link #amount}.
+	 * @param spell {@link #spell}.
 	 */
 	public Smelting(Player player, SmeltingData definition, int amount, boolean spell) {
 		super(player, Optional.empty());
@@ -54,7 +54,7 @@ public final class Smelting extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to start smelting for the specified {@code player}.
-	 * @param player   the player whom is smelting the bar.
+	 * @param player the player whom is smelting the bar.
 	 * @param buttonId the button this player clicked.
 	 * @return <true> if the player could smelt, <false> otherwise.
 	 */
@@ -77,7 +77,7 @@ public final class Smelting extends ProducingSkillAction {
 	 * Smelts the {@code data} for the specified {@code player} and produces the
 	 * exact amount the player inputed if he has the requirements.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #definition}.
+	 * @param data {@link #definition}.
 	 * @param amount {@link #amount}.
 	 */
 	public static void smelt(Player player, SmeltingData data, int amount) {
@@ -285,10 +285,10 @@ public final class Smelting extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link SmeltingData} enumerator.
-		 * @param buttonId    {@link #buttonId}.
-		 * @param required    {@link #required}.
-		 * @param produced    {@link #produced}.
-		 * @param experience  {@link #experience}.
+		 * @param buttonId {@link #buttonId}.
+		 * @param required {@link #required}.
+		 * @param produced {@link #produced}.
+		 * @param experience {@link #experience}.
 		 * @param requirement {@link #requirement}.
 		 */
 		SmeltingData(int buttonId, Item[] required, Item[] produced, double experience, int requirement) {
@@ -302,9 +302,9 @@ public final class Smelting extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link SmeltingData} enumerator.
-		 * @param buttonId   {@link #buttonId}.
+		 * @param buttonId {@link #buttonId}.
 		 * @param definition the definition for this bar.
-		 * @param amount     {@link #amount}.
+		 * @param amount {@link #amount}.
 		 */
 		SmeltingData(int buttonId, SmeltingData definition, int amount) {
 			this.buttonId = buttonId;

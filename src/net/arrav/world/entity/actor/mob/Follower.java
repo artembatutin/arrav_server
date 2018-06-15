@@ -10,7 +10,7 @@ public class Follower extends Mob {
 	
 	/**
 	 * Constructs a new {@link Follower} {@link Mob}.
-	 * @param id       the identification for this follower.
+	 * @param id the identification for this follower.
 	 * @param position the position this follower spawns at.
 	 */
 	public Follower(int id, Position position) {

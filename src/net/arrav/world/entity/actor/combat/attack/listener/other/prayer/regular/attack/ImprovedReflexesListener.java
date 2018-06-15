@@ -6,9 +6,9 @@ import net.arrav.world.entity.actor.player.Player;
 
 public class ImprovedReflexesListener extends SimplifiedListener<Player> {
 
-    @Override
-    public int modifyAttackLevel(Player attacker, Actor defender, int damage) {
-        return damage * 11 / 10;
-    }
+	@Override
+	public int modifyAttackLevel(Player attacker, Actor defender, int damage) {
+		return damage * 11 / 10;
+	}
 
 }

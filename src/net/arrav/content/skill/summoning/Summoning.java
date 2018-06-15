@@ -78,7 +78,7 @@ public final class Summoning {
 	/**
 	 * Attempts to withdraw an item in a beast of burden or forager.
 	 * @param player the player attempting to store the item.
-	 * @param slot   the slot this player is storing from.
+	 * @param slot the slot this player is storing from.
 	 * @param amount the amount this player is storing.
 	 */
 	public static void withdraw(Player player, int slot, int amount) {
@@ -118,7 +118,7 @@ public final class Summoning {
 	/**
 	 * Attempts to store an item in a beast of burden.
 	 * @param player the player attempting to store the item.
-	 * @param slot   the slot this player is storing from.
+	 * @param slot the slot this player is storing from.
 	 * @param amount the amount this player is storing.
 	 */
 	public static void store(Player player, int slot, int amount) {
@@ -150,8 +150,8 @@ public final class Summoning {
 	 * The method which should be overriden if this familiar has an
 	 * ability where an item can be used on it.
 	 * @param player the player whom is using an item on the mob.
-	 * @param mob    the mob whom's being interacted by a player.
-	 * @param item   the item being used on the mob.
+	 * @param mob the mob whom's being interacted by a player.
+	 * @param item the item being used on the mob.
 	 * @return <true> if theres an action, <false> otherwise.
 	 */
 	public static boolean itemOnNpc(Player player, Mob mob, Item item) {
@@ -328,8 +328,8 @@ public final class Summoning {
 	/**
 	 * Interacts with the familiar and sends it's respective dialogue.
 	 * @param player the player interacting with the {@code mob}.
-	 * @param mob    the mob being interacted by the {@code player}.
-	 * @param id     the action id being interacted with.
+	 * @param mob the mob being interacted by the {@code player}.
+	 * @param id the action id being interacted with.
 	 * @return <true> if the dialogue was sent, <false> otherwise.
 	 */
 	public static boolean interact(Player player, Mob mob, int id) {

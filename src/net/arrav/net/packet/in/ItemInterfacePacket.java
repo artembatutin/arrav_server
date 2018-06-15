@@ -66,7 +66,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	
 	/**
 	 * Handles the first item slot click on an interface.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
 	private void firstSlot(Player player, ByteBuf buf) {
@@ -133,7 +133,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	
 	/**
 	 * Handles the second item slot click on an interface.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
 	private void secondSlot(Player player, ByteBuf buf) {
@@ -189,7 +189,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	
 	/**
 	 * Handles the third item slot click on an interface.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
 	private void thirdSlot(Player player, ByteBuf buf) {
@@ -244,7 +244,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	
 	/**
 	 * Handles the fourth item slot click on an interface.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
 	private void fourthSlot(Player player, ByteBuf buf) {
@@ -294,7 +294,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	
 	/**
 	 * Handles the equipping of an item for {@code player}.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
 	private void equipItem(Player player, ByteBuf buf) {
@@ -334,7 +334,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	
 	/**
 	 * Handles the swapping of items on an interface for {@code player}.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
 	private void swapSlots(Player player, ByteBuf buf) {
@@ -368,7 +368,7 @@ public final class ItemInterfacePacket implements IncomingPacket {
 	
 	/**
 	 * Handles the bank tab switching of items on the bank panel for the {@code player}.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer for reading the sent data.
 	 */
 	private void bankTab(Player player, ByteBuf buf) {

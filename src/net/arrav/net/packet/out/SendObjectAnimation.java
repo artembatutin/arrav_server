@@ -5,8 +5,8 @@ import net.arrav.net.codec.ByteTransform;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.ObjectDirection;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.ObjectDirection;
+import net.arrav.world.entity.object.ObjectType;
 
 public final class SendObjectAnimation implements OutgoingPacket {
 	

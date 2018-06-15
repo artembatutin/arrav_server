@@ -16,9 +16,9 @@ public class OperateEquipmentPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the message designated to {@code opcode}.
-	 * @param player  the player this message is being handled for.
-	 * @param opcode  the opcode of this message.
-	 * @param size    the size of this message.
+	 * @param player the player this message is being handled for.
+	 * @param opcode the opcode of this message.
+	 * @param size the size of this message.
 	 * @param buf the data contained within this message.
 	 */
 	@Override
@@ -51,7 +51,7 @@ public class OperateEquipmentPacket implements IncomingPacket {
 				}
 				break;
 			case 11283:
-					//TODO: TO DRAGON FIRE EXECUTE
+				//TODO: TO DRAGON FIRE EXECUTE
 				break;
 			case 1706:
 			case 1708:

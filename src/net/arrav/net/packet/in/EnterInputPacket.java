@@ -31,7 +31,7 @@ public final class EnterInputPacket implements IncomingPacket {
 	
 	/**
 	 * The enter amount packet which deals with numerical values.
-	 * @param player  the player this packet is sent for.
+	 * @param player the player this packet is sent for.
 	 * @param buf the buffer chained to this packet.
 	 */
 	private void enterAmount(Player player, ByteBuf buf) {
@@ -45,7 +45,7 @@ public final class EnterInputPacket implements IncomingPacket {
 	
 	/**
 	 * The enter syntax packet which deals with alphabetical values.
-	 * @param player  the player this packet is sent for.
+	 * @param player the player this packet is sent for.
 	 * @param buf the buffer chained to this packet.
 	 */
 	private void enterSyntax(Player player, ByteBuf buf) {

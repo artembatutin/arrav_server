@@ -3,11 +3,7 @@ package net.arrav.net.host;
 import com.google.common.collect.Sets;
 import net.arrav.world.entity.actor.player.Player;
 
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.Set;

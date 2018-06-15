@@ -37,10 +37,10 @@ public class Drop {
 	
 	/**
 	 * Creates a new {@link Drop}.
-	 * @param id      the identification of this {@code Drop}.
+	 * @param id the identification of this {@code Drop}.
 	 * @param minimum the minimum amount that will be dropped.
 	 * @param maximum the maximum amount that will be dropped.
-	 * @param chance  the chance of this item being dropped.
+	 * @param chance the chance of this item being dropped.
 	 */
 	public Drop(int id, int minimum, int maximum, Chance chance) {
 		this.id = id;

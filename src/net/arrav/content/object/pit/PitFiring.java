@@ -32,7 +32,7 @@ public final class PitFiring extends SkillAction {
 	/**
 	 * Constructs a new {@link PitFiring}.
 	 * @param player {@link #getPlayer()}.
-	 * @param pit    {@link #pit}.
+	 * @param pit {@link #pit}.
 	 */
 	PitFiring(Player player, FirepitObject pit) {
 		super(player, Optional.of(pit.getPosition()));

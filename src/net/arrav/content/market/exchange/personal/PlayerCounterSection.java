@@ -23,14 +23,14 @@ public abstract class PlayerCounterSection {
 	/**
 	 * Updating an item in this section.
 	 * @param player the hosted player.
-	 * @param item   the item being updated.
+	 * @param item the item being updated.
 	 */
 	public abstract void update(Player player, ExchangeItem item);
 
 	/**
 	 * Removing an item in this section.
 	 * @param player the hosted player.
-	 * @param item   the item being removed.
+	 * @param item the item being removed.
 	 */
 	public abstract void remove(Player player, ExchangeItem item);
 
@@ -67,7 +67,7 @@ public abstract class PlayerCounterSection {
 
 	/**
 	 * Updates the item container with the new item.
-	 * @param i    the index in which it locates.
+	 * @param i the index in which it locates.
 	 * @param item the item being updated.
 	 */
 	public void update(int i, ExchangeItem item) {

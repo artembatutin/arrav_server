@@ -6,9 +6,9 @@ import net.arrav.world.entity.actor.player.Player;
 
 public class SuperhumanStrengthListener extends SimplifiedListener<Player> {
 
-    @Override
-    public int modifyStrengthLevel(Player attacker, Actor defender, int damage) {
-        return damage * 11 / 10;
-    }
+	@Override
+	public int modifyStrengthLevel(Player attacker, Actor defender, int damage) {
+		return damage * 11 / 10;
+	}
 
 }

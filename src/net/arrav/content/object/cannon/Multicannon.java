@@ -13,10 +13,10 @@ import net.arrav.world.entity.item.container.impl.Inventory;
 import net.arrav.world.entity.region.Region;
 import net.arrav.world.entity.region.TraversalConstants;
 import net.arrav.world.locale.loc.Location;
-import net.arrav.world.object.DynamicObject;
-import net.arrav.world.object.GameObject;
-import net.arrav.world.object.ObjectDirection;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.DynamicObject;
+import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.entity.object.ObjectDirection;
+import net.arrav.world.entity.object.ObjectType;
 
 import java.util.Optional;
 
@@ -129,8 +129,8 @@ public class Multicannon extends DynamicObject {
 						break;
 					for(int y = 0; y < 2; y++) {
 						if(reg.getTile(player.getPosition().getZ(), (player.getPosition().getX() & 0x3F) + x, (player.getPosition().getY() & 0x3F) + y).getFlags() != TraversalConstants.NONE) {
-							player.message("tile: X:" +((player.getPosition().getX() & 0x3F) + x) + ", Y: "+((player.getPosition().getY() & 0x3F) + y) +"," +reg.getTile(0, (player.getPosition().getX() & 0x3F) + x, (player.getPosition().getY() & 0x3F) + y).getFlags());
-								clip = false;
+							player.message("tile: X:" + ((player.getPosition().getX() & 0x3F) + x) + ", Y: " + ((player.getPosition().getY() & 0x3F) + y) + "," + reg.getTile(0, (player.getPosition().getX() & 0x3F) + x, (player.getPosition().getY() & 0x3F) + y).getFlags());
+							clip = false;
 							break;
 						}
 						if(reg.getObjects(player.getPosition().move(x, y)).hasInteractive()) {

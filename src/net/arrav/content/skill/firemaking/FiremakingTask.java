@@ -4,10 +4,10 @@ import net.arrav.task.Task;
 import net.arrav.world.entity.item.GroundItemPolicy;
 import net.arrav.world.entity.item.GroundItemStatic;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.object.DynamicObject;
-import net.arrav.world.object.GameObject;
-import net.arrav.world.object.ObjectDirection;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.DynamicObject;
+import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.entity.object.ObjectDirection;
+import net.arrav.world.entity.object.ObjectType;
 
 /**
  * Represents the task for creating and deregistering fires.

@@ -32,8 +32,8 @@ public final class AmuletStringing extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link AmuletStringing}.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
-	 * @param spell  {@link #spell}.
+	 * @param data {@link #data}.
+	 * @param spell {@link #spell}.
 	 */
 	public AmuletStringing(Player player, AmuletData data, boolean spell) {
 		super(player, Optional.empty());
@@ -49,7 +49,7 @@ public final class AmuletStringing extends ProducingSkillAction {
 	/**
 	 * Attempts to start stringing any amulets.
 	 * @param player the player attempting the skill action.
-	 * @param used   the item used.
+	 * @param used the item used.
 	 * @param usedOn the item that got used on.
 	 * @return {@code true} if the skill action started, {@code false} otherwise.
 	 */
@@ -148,7 +148,7 @@ public final class AmuletStringing extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link AmuletData}.
-		 * @param itemId   {@link #item}.
+		 * @param itemId {@link #item}.
 		 * @param stringed {@link #stringed}.
 		 */
 		AmuletData(int itemId, int stringed) {

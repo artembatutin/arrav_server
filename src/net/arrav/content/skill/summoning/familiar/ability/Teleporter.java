@@ -25,7 +25,7 @@ public final class Teleporter extends FamiliarAbility {
 	/**
 	 * Constructs a new {@link Teleporter} ability type.
 	 * @param destination {@link #destination}.
-	 * @param policy      {@link #policy}.
+	 * @param policy {@link #policy}.
 	 */
 	public Teleporter(Position destination, Optional<TeleportPolicy> policy) {
 		super(FamiliarAbilityType.TELEPORTER);
@@ -97,7 +97,7 @@ public final class Teleporter extends FamiliarAbility {
 		
 		/**
 		 * Constructs a new {@link TeleportType}.
-		 * @param combat     {@link #combat}.
+		 * @param combat {@link #combat}.
 		 * @param percentage {@link #percentage}.
 		 */
 		public TeleportPolicy(boolean combat, int percentage) {

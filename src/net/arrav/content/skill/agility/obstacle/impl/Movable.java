@@ -28,13 +28,13 @@ public class Movable extends ObstacleActivity {
 	
 	/**
 	 * Constructs a new {@link Movable} Obstacle Activity.
-	 * @param start       {@link #getStart()}.
+	 * @param start {@link #getStart()}.
 	 * @param destination {@link #getDestination().
-	 * @param animation   {@link #getAnimation()}.
-	 * @param speed       {@link #speed}.
-	 * @param timer       {@link #timer}.
+	 * @param animation {@link #getAnimation()}.
+	 * @param speed {@link #speed}.
+	 * @param timer {@link #timer}.
 	 * @param requirement {@link #getRequirement()}.
-	 * @param experience  {@link #getExperience()}.
+	 * @param experience {@link #getExperience()}.
 	 */
 	public Movable(Position start, Position destination, Animation animation, int speed, OptionalInt timer, int requirement, double experience) {
 		super(start, destination, animation, requirement, experience);
@@ -45,13 +45,13 @@ public class Movable extends ObstacleActivity {
 	
 	/**
 	 * Constructs a new {@link Movable} Obstacle Activity.
-	 * @param start       {@link #getStart()}.
+	 * @param start {@link #getStart()}.
 	 * @param destination {@link #getDestination().
-	 * @param animation   {@link #getAnimation()}.
-	 * @param speed       {@link #speed}.
-	 * @param timer       {@link #timer}.
+	 * @param animation {@link #getAnimation()}.
+	 * @param speed {@link #speed}.
+	 * @param timer {@link #timer}.
 	 * @param requirement {@link #getRequirement()}.
-	 * @param experience  {@link #getExperience()}.
+	 * @param experience {@link #getExperience()}.
 	 */
 	public Movable(Position start, Position destination, Animation animation, int speed, int timer, int requirement, double experience) {
 		this(start, destination, animation, speed, OptionalInt.of(timer), requirement, experience);
@@ -91,7 +91,7 @@ public class Movable extends ObstacleActivity {
 	 * @param player the player we need to execute this functionality for.
 	 */
 	public void prerequisites(Player player) {
-	
+
 	}
 	
 	@Override

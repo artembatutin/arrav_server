@@ -1,6 +1,7 @@
 package net.arrav.world.entity.item.container.impl;
 
 import com.google.common.collect.ImmutableSet;
+import net.arrav.content.ShieldAnimation;
 import net.arrav.content.item.Requirement;
 import net.arrav.content.item.Skillcape;
 import net.arrav.content.minigame.MinigameHandler;
@@ -10,7 +11,6 @@ import net.arrav.world.entity.actor.combat.attack.listener.CombatListenerDispatc
 import net.arrav.world.entity.actor.combat.weapon.WeaponAnimation;
 import net.arrav.world.entity.actor.combat.weapon.WeaponInterface;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.content.ShieldAnimation;
 import net.arrav.world.entity.actor.update.UpdateFlag;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.ItemDefinition;
@@ -236,7 +236,7 @@ public final class Equipment extends ItemContainer {
 			ShieldAnimation.execute(player, equipItem);
 		}
 
-		if (type == EquipmentType.ARROWS) {
+		if(type == EquipmentType.ARROWS) {
 			player.getCombat().reset(false, false);
 		}
 
@@ -270,9 +270,9 @@ public final class Equipment extends ItemContainer {
 	/**
 	 * Unequips an {@link Item} from the underlying player's {@code Equipment}.
 	 * @param equipmentIndex The {@code Equipment} index to unequip the {@code Item} from.
-	 * @param container      The container to which we are putting the items on.
-	 * @param refresh        the condition if the container must be refreshed instantly.
-	 * @param preferredSlot  The slot id that may be preferred.
+	 * @param container The container to which we are putting the items on.
+	 * @param refresh the condition if the container must be refreshed instantly.
+	 * @param preferredSlot The slot id that may be preferred.
 	 * @return {@code true} if the item was unequipped, {@code false} otherwise.
 	 */
 	public boolean unequip(int equipmentIndex, ItemContainer container, boolean refresh, int preferredSlot) {

@@ -54,11 +54,11 @@ public enum ShootingStarData {
 	
 	/**
 	 * Constructs a new {@link ShootingStarData}.
-	 * @param size             {@link #size}.
-	 * @param objectId         {@link #objectId}.
+	 * @param size {@link #size}.
+	 * @param objectId {@link #objectId}.
 	 * @param levelRequirement {@link #levelRequirement}.
-	 * @param stardust         {@link #stardust}.
-	 * @param experience       {@link #experience}.
+	 * @param stardust {@link #stardust}.
+	 * @param experience {@link #experience}.
 	 */
 	ShootingStarData(int size, int objectId, int levelRequirement, int stardust, int experience) {
 		this.size = size;

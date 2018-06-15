@@ -17,11 +17,11 @@ public class Walkable extends ObstacleActivity {
 	
 	/**
 	 * Constructs a new {@link Walkable} Obstacle Activity.
-	 * @param start       {@link #getStart()}.
+	 * @param start {@link #getStart()}.
 	 * @param destination {@link #getDestination()}.
-	 * @param animation   {@link #getAnimation()}.
+	 * @param animation {@link #getAnimation()}.
 	 * @param requirement {@link #getRequirement()}.
-	 * @param experience  {@link #getExperience()}.
+	 * @param experience {@link #getExperience()}.
 	 */
 	public Walkable(Position start, Position destination, Animation animation, int requirement, double experience) {
 		super(start, destination, animation, requirement, experience);

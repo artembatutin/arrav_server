@@ -13,7 +13,7 @@ import net.arrav.util.TextUtils;
 import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -44,9 +44,9 @@ public final class PotClaying extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link PotClaying}.
 	 * @param player {@link #getPlayer()}.
-	 * @param pot    {@link #pot}.
+	 * @param pot {@link #pot}.
 	 * @param amount {@link #counter}.
-	 * @param fired  {@link #fired}.
+	 * @param fired {@link #fired}.
 	 */
 	public PotClaying(Player player, PotClayingData pot, int amount, boolean fired) {
 		super(player, Optional.empty());
@@ -62,7 +62,7 @@ public final class PotClaying extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to register a certain amount of pots.
-	 * @param player   the player to register this for.
+	 * @param player the player to register this for.
 	 * @param buttonId the button the player clicked.
 	 * @return {@code true} if the skill action was started, {@code false} otherwise.
 	 */
@@ -84,9 +84,9 @@ public final class PotClaying extends ProducingSkillAction {
 	/**
 	 * Creates the item the player was pot claying for.
 	 * @param player the player to register this for.
-	 * @param pot    the pot to register.
+	 * @param pot the pot to register.
 	 * @param amount the amount to register.
-	 * @param fired  determines if we're firing the pots.
+	 * @param fired determines if we're firing the pots.
 	 * @return <true> if the skill action was started, <false> otherwise.
 	 */
 	public static void create(Player player, PotClayingData pot, int amount, boolean fired) {
@@ -277,13 +277,13 @@ public final class PotClaying extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link PotClayingData}.
-		 * @param buttonId          {@link #buttonId}.
-		 * @param unfired           {@link #unfired}.
-		 * @param fired             {@link #fired}.
-		 * @param requirement       {@link #requirement}.
+		 * @param buttonId {@link #buttonId}.
+		 * @param unfired {@link #unfired}.
+		 * @param fired {@link #fired}.
+		 * @param requirement {@link #requirement}.
 		 * @param experienceUnfired {@link #experienceUnfired}.
-		 * @param experienceFired   {@link #experienceFired}.
-		 * @param amount            {@link #amount}.
+		 * @param experienceFired {@link #experienceFired}.
+		 * @param amount {@link #amount}.
 		 */
 		PotClayingData(int buttonId, PotPolicy unfired, PotPolicy fired, int requirement, int amount) {
 			this.buttonId = buttonId;
@@ -296,8 +296,8 @@ public final class PotClaying extends ProducingSkillAction {
 		/**
 		 * Constructs a new {@link PotClayingData}.
 		 * @param buttonId {@link #buttonId}.
-		 * @param data     the data to register the {@link PotClayingData} from.
-		 * @param amount   {@link #amount}.
+		 * @param data the data to register the {@link PotClayingData} from.
+		 * @param amount {@link #amount}.
 		 */
 		PotClayingData(int buttonId, PotClayingData data, int amount) {
 			this.buttonId = buttonId;
@@ -330,7 +330,7 @@ public final class PotClaying extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link PotPolicy}.
-		 * @param item       {@link #item}.
+		 * @param item {@link #item}.
 		 * @param experience {@link #experience}.
 		 */
 		public PotPolicy(int item, double experience) {

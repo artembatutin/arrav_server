@@ -2,15 +2,9 @@ package net.arrav.action.but;
 
 import net.arrav.action.ActionInitializer;
 import net.arrav.action.impl.ButtonAction;
-import net.arrav.content.TabInterface;
-import net.arrav.content.skill.magic.Spellbook;
-import net.arrav.net.packet.out.SendConfig;
 import net.arrav.world.entity.actor.combat.attack.FightType;
-import net.arrav.world.entity.actor.combat.magic.CombatSpell;
 import net.arrav.world.entity.actor.combat.weapon.WeaponInterface;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.entity.item.Item;
-import net.arrav.world.entity.item.container.impl.Equipment;
 
 public class CombatFightButton extends ActionInitializer {
 

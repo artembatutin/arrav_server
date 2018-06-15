@@ -40,8 +40,8 @@ public final class Firemaking extends DestructionSkillAction {
 	
 	/**
 	 * Constructs a new {@link Firemaking} skill action.
-	 * @param player     the player we're starting this action for.
-	 * @param firstItem  the first item this player used.
+	 * @param player the player we're starting this action for.
+	 * @param firstItem the first item this player used.
 	 * @param secondItem the second item the first item was used on.
 	 */
 	Firemaking(Player player, Item firstItem, Item secondItem, boolean familiar) {

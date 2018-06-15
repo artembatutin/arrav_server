@@ -3,13 +3,13 @@ package net.arrav.content.teleport.impl;
 import net.arrav.content.dialogue.impl.OptionDialogue;
 import net.arrav.content.minigame.MinigameHandler;
 import net.arrav.content.skill.construction.Construction;
+import net.arrav.content.skill.magic.Spellbook;
 import net.arrav.content.teleport.TeleportSpell;
 import net.arrav.content.teleport.TeleportType;
 import net.arrav.task.Task;
 import net.arrav.util.ActionListener;
 import net.arrav.world.World;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.content.skill.magic.Spellbook;
 import net.arrav.world.entity.actor.player.assets.activity.ActivityManager.ActivityType;
 import net.arrav.world.locale.Position;
 import net.arrav.world.locale.loc.Location;
@@ -41,7 +41,7 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 	
 	/**
 	 * Attempts to start teleporting to the specified {@code destination} and {@code type}.
-	 * @param player      the player whom is teleporting.
+	 * @param player the player whom is teleporting.
 	 * @param destination {@link #getDestination()}.
 	 * @return <true> if the player can teleport, <false> otherwise.
 	 */
@@ -52,9 +52,9 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 	
 	/**
 	 * Attempts to start teleporting to the specified {@code destination}.
-	 * @param player      the player whom is teleporting.
+	 * @param player the player whom is teleporting.
 	 * @param destination {@link #getDestination()}.
-	 * @param type        {@link #type}.
+	 * @param type {@link #type}.
 	 * @return <true> if the player can teleport, <false> otherwise.
 	 */
 	public static boolean startTeleport(Player player, Position destination, TeleportType type) {
@@ -63,10 +63,10 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 	
 	/**
 	 * Attempts to start teleporting to the specified {@code destination}.
-	 * @param player      the player whom is teleporting.
+	 * @param player the player whom is teleporting.
 	 * @param destination {@link #getDestination()}.
-	 * @param type        {@link #type}.
-	 * @param force       the condition if the teleport is being forced.
+	 * @param type {@link #type}.
+	 * @param force the condition if the teleport is being forced.
 	 * @return <true> if the player can teleport, <false> otherwise.
 	 */
 	public static boolean startTeleport(Player player, Position destination, TeleportType type, boolean force) {
@@ -128,7 +128,7 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 	/**
 	 * Finalize the teleport.
 	 * @param player the player being teleported.
-	 * @param spell  the spell being used to teleport.
+	 * @param spell the spell being used to teleport.
 	 */
 	public static void teleport(Player player, DefaultTeleportSpell spell) {
 		spell.resetPlayerFlags(player);
@@ -154,7 +154,7 @@ public final class DefaultTeleportSpell extends TeleportSpell {
 		/**
 		 * Constructs a new {@link DefaultTeleportSpellTask}.
 		 * @param player {@link #player}.
-		 * @param spell  {@link #spell}.
+		 * @param spell {@link #spell}.
 		 */
 		DefaultTeleportSpellTask(Player player, DefaultTeleportSpell spell) {
 			super(1, false);

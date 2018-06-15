@@ -15,41 +15,41 @@ import net.arrav.world.entity.actor.player.Player;
  */
 public final class DragonScimitar extends PlayerMeleeStrategy {
 
-    private static final Animation ANIMATION = new Animation(12031, Animation.AnimationPriority.HIGH);
-    private static final Graphic GRAPHIC = new Graphic(2118, 100);
+	private static final Animation ANIMATION = new Animation(12031, Animation.AnimationPriority.HIGH);
+	private static final Graphic GRAPHIC = new Graphic(2118, 100);
 
-    @Override
-    public void start(Player attacker, Actor defender, Hit[] hits) {
-        super.start(attacker, defender, hits);
-        attacker.graphic(GRAPHIC);
-    }
+	@Override
+	public void start(Player attacker, Actor defender, Hit[] hits) {
+		super.start(attacker, defender, hits);
+		attacker.graphic(GRAPHIC);
+	}
 
-    @Override
-    public void attack(Player player, Actor target, Hit hit) {
-        super.attack(player, target, hit);
+	@Override
+	public void attack(Player player, Actor target, Hit hit) {
+		super.attack(player, target, hit);
 
-        if (target.isPlayer() && hit.isAccurate()) {
-            Player victim = target.toPlayer();
-            Prayer.PROTECT_FROM_MAGIC.deactivate(victim);
-            Prayer.PROTECT_FROM_MELEE.deactivate(victim);
-            Prayer.PROTECT_FROM_MISSILES.deactivate(victim);
-            player.message("You have been injured");
-        }
-    }
+		if(target.isPlayer() && hit.isAccurate()) {
+			Player victim = target.toPlayer();
+			Prayer.PROTECT_FROM_MAGIC.deactivate(victim);
+			Prayer.PROTECT_FROM_MELEE.deactivate(victim);
+			Prayer.PROTECT_FROM_MISSILES.deactivate(victim);
+			player.message("You have been injured");
+		}
+	}
 
-    @Override
-    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
-        return 4;
-    }
+	@Override
+	public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
+		return 4;
+	}
 
-    @Override
-    public Animation getAttackAnimation(Player attacker, Actor defender) {
-        return ANIMATION;
-    }
+	@Override
+	public Animation getAttackAnimation(Player attacker, Actor defender) {
+		return ANIMATION;
+	}
 
-    @Override
-    public int modifyAccuracy(Player attacker, Actor defender, int roll) {
-        return roll * 2;
-    }
+	@Override
+	public int modifyAccuracy(Player attacker, Actor defender, int roll) {
+		return roll * 2;
+	}
 
 }

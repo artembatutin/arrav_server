@@ -23,7 +23,7 @@ public final class CombatEffectTask extends Task {
 	
 	/**
 	 * Creates a new {@link CombatEffectTask}.
-	 * @param c      the character that this task is for.
+	 * @param c the character that this task is for.
 	 * @param effect the combat effect that is being processed.
 	 */
 	public CombatEffectTask(Actor c, CombatEffect effect) {

@@ -38,7 +38,7 @@ public final class HideWorking extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link HideWorking} skill action.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
+	 * @param data {@link #data}.
 	 * @param amount {@link #amount}.
 	 */
 	private HideWorking(Player player, HideData data, int amount) {
@@ -59,7 +59,7 @@ public final class HideWorking extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to register a certain amount of products from hides.
-	 * @param player   the player to register this for.
+	 * @param player the player to register this for.
 	 * @param buttonId the button interacted with.
 	 * @return {@code true} if the skill action was started, {@code false} otherwise.
 	 */
@@ -81,7 +81,7 @@ public final class HideWorking extends ProducingSkillAction {
 	/**
 	 * Creates the item the player was hide working for.
 	 * @param player the player to register this for.
-	 * @param data   the data to register.
+	 * @param data the data to register.
 	 * @param amount the amount to register.
 	 */
 	public static void create(Player player, HideData data, int amount) {
@@ -91,9 +91,9 @@ public final class HideWorking extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to open the interface for the specified player.
-	 * @param player   the player to open this interface for.
+	 * @param player the player to open this interface for.
 	 * @param itemUsed the item that was used on another item.
-	 * @param usedOn   the other item that got used on by the first item.
+	 * @param usedOn the other item that got used on by the first item.
 	 */
 	public static boolean openInterface(Player player, Item itemUsed, Item usedOn) {
 		HideData data = HideData.getDefinition(itemUsed.getId(), usedOn.getId()).orElse(null);
@@ -335,12 +335,12 @@ public final class HideWorking extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link HideData}.
-		 * @param buttonId    {@link #buttonId}.
-		 * @param required    {@link #required}.
-		 * @param product     {@link #product}.
+		 * @param buttonId {@link #buttonId}.
+		 * @param required {@link #required}.
+		 * @param product {@link #product}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
-		 * @param amount      {@link #amount}.
+		 * @param experience {@link #experience}.
+		 * @param amount {@link #amount}.
 		 */
 		HideData(int buttonId, int required, int product, int requirement, double experience, int amount) {
 			this.buttonId = buttonId;
@@ -353,12 +353,12 @@ public final class HideWorking extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link HideData}.
-		 * @param buttonId    {@link #buttonId}.
-		 * @param required    {@link #required}.
-		 * @param product     {@link #product}.
+		 * @param buttonId {@link #buttonId}.
+		 * @param required {@link #required}.
+		 * @param product {@link #product}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
-		 * @param amount      {@link #amount}.
+		 * @param experience {@link #experience}.
+		 * @param amount {@link #amount}.
 		 */
 		HideData(int buttonId, Item required, int product, int requirement, double experience, int amount) {
 			this.buttonId = buttonId;
@@ -372,8 +372,8 @@ public final class HideWorking extends ProducingSkillAction {
 		/**
 		 * Constructs a new {@link HideData}.
 		 * @param buttonId {@link #buttonId}.
-		 * @param data     the data to construct a new {@link HideData} from.
-		 * @param amount   {@link #amount}.
+		 * @param data the data to construct a new {@link HideData} from.
+		 * @param amount {@link #amount}.
 		 */
 		HideData(int buttonId, HideData data, int amount) {
 			this.buttonId = buttonId;
@@ -393,11 +393,6 @@ public final class HideWorking extends ProducingSkillAction {
 		}
 	}
 	
-	private static final Int2ObjectArrayMap<HideData[]> GROUP = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, HideData[]>builder().put(6289, new HideData[]{HideData.SNAKESKIN_BODY, HideData.SNAKESKIN_CHAPS, HideData.SNAKESKIN_VAMBRACES, HideData.SNAKESKIN_BANDANA, HideData.SNAKESKIN_BOOTS})
-			.put(1745, new HideData[]{HideData.GREEN_DHIDE_BODY, HideData.GREEN_DHIDE_CHAPS, HideData.GREEN_DHIDE_VAMBRACES})
-			.put(2505, new HideData[]{HideData.BLUE_DHIDE_BODY, HideData.BLUE_DHIDE_CHAPS, HideData.BLUE_DHIDE_VAMBRACES})
-			.put(2507, new HideData[]{HideData.RED_DHIDE_BODY, HideData.RED_DHIDE_CHAPS, HideData.RED_DHIDE_VAMBRACES})
-			.put(2509, new HideData[]{HideData.BLACK_DHIDE_BODY, HideData.BLACK_DHIDE_CHAPS, HideData.BLACK_DHIDE_VAMBRACES})
-			.build());
+	private static final Int2ObjectArrayMap<HideData[]> GROUP = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, HideData[]>builder().put(6289, new HideData[]{HideData.SNAKESKIN_BODY, HideData.SNAKESKIN_CHAPS, HideData.SNAKESKIN_VAMBRACES, HideData.SNAKESKIN_BANDANA, HideData.SNAKESKIN_BOOTS}).put(1745, new HideData[]{HideData.GREEN_DHIDE_BODY, HideData.GREEN_DHIDE_CHAPS, HideData.GREEN_DHIDE_VAMBRACES}).put(2505, new HideData[]{HideData.BLUE_DHIDE_BODY, HideData.BLUE_DHIDE_CHAPS, HideData.BLUE_DHIDE_VAMBRACES}).put(2507, new HideData[]{HideData.RED_DHIDE_BODY, HideData.RED_DHIDE_CHAPS, HideData.RED_DHIDE_VAMBRACES}).put(2509, new HideData[]{HideData.BLACK_DHIDE_BODY, HideData.BLACK_DHIDE_CHAPS, HideData.BLACK_DHIDE_VAMBRACES}).build());
 	
 }

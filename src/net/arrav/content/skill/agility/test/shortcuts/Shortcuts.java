@@ -9,7 +9,7 @@ import net.arrav.content.skill.agility.test.obstacle.impl.WalkableObstacle;
 import net.arrav.task.LinkedTaskSequence;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.OptionalInt;
 import java.util.function.Function;
@@ -22,9 +22,9 @@ public final class Shortcuts extends Agility {
 
 	/**
 	 * Constructs a new {@link Shortcuts}.
-	 * @param player     {@link #player}.
-	 * @param object     {@link #object}.
-	 * @param crossing   {@link #crossing}.
+	 * @param player {@link #player}.
+	 * @param object {@link #object}.
+	 * @param crossing {@link #crossing}.
 	 * @param travelback {@link #travelback}.
 	 */
 	public Shortcuts(Player player, GameObject object, Obstacle crossing, boolean travelback) {

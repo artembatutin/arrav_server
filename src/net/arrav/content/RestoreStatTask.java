@@ -40,7 +40,7 @@ public final class RestoreStatTask extends Task {
 			if(player.isDead()) {
 				continue;
 			}
-
+			
 			Skill hp = player.getSkills()[Skills.HITPOINTS];
 			int maxCons = player.getMaximumHealth();
 			int currentCons = hp.getLevel();

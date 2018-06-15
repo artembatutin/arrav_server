@@ -45,7 +45,7 @@ public final class ThreadUtil {
 	/**
 	 * Builds a {@link ThreadFactory} using the specified {@code String} name-format, priority and the
 	 * {@link #DEFAULT_EXCEPTION_HANDLER}.
-	 * @param name     The name-format used when creating threads. Must not be {@code null}.
+	 * @param name The name-format used when creating threads. Must not be {@code null}.
 	 * @param priority The priority used when creating threads. Must be {@code 1 <= priority <= 10}.
 	 * @return The {@link ThreadFactory}. Will never be {@code null}.
 	 */
@@ -56,9 +56,9 @@ public final class ThreadUtil {
 	/**
 	 * Creates a {@link ThreadFactory} using the specified {@code String} name-format, priority and
 	 * {@link UncaughtExceptionHandler}.
-	 * @param name     The name-format used when creating threads. Must not be {@code null}.
+	 * @param name The name-format used when creating threads. Must not be {@code null}.
 	 * @param priority The priority used when creating threads. Must be {@code 1 <= priority <= 10}.
-	 * @param handler  The {@link UncaughtExceptionHandler} used when creating threads. Must not be {@code null}.
+	 * @param handler The {@link UncaughtExceptionHandler} used when creating threads. Must not be {@code null}.
 	 * @return The {@link ThreadFactory}. Will never be {@code null}.
 	 */
 	public static ThreadFactory create(String name, int priority, UncaughtExceptionHandler handler) {

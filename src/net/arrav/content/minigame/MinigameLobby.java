@@ -85,7 +85,7 @@ public abstract class MinigameLobby {
 	/**
 	 * Any functionality that should occur while the task is running.
 	 * @param current the current timing.
-	 * @param t       the task running for this lobby.
+	 * @param t the task running for this lobby.
 	 */
 	public void onCountdown(int current, Task t) {
 	

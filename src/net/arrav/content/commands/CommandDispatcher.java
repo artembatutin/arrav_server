@@ -34,7 +34,7 @@ public final class CommandDispatcher {
 	/**
 	 * Executes the specified {@code string} if it's a command.
 	 * @param player the player executing the command.
-	 * @param parts  the string which represents a command.
+	 * @param parts the string which represents a command.
 	 */
 	public static void execute(Player player, String[] parts, String command) {
 		if(ExchangeSessionManager.get().inAnySession(player)) {
@@ -80,7 +80,7 @@ public final class CommandDispatcher {
 	/**
 	 * Sends the correct syntax of usage to the player for the
 	 * specified {@code command}.
-	 * @param player  the player to send this syntax for.
+	 * @param player the player to send this syntax for.
 	 * @param command the command that was misinterpreted.
 	 */
 	private static void sendSyntax(Player player, Command command) {
@@ -91,7 +91,7 @@ public final class CommandDispatcher {
 	
 	/**
 	 * Checks if the player has the privileges to execute this command.
-	 * @param player  the player executing this command.
+	 * @param player the player executing this command.
 	 * @param command the command that was executed.
 	 * @return <true> if the command was executed, <false> otherwise.
 	 */

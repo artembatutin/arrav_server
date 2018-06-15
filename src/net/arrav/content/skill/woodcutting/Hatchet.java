@@ -52,10 +52,10 @@ public enum Hatchet {
 
 	/**
 	 * Constructs a new {@link Hatchet} enumerator.
-	 * @param item        {@link #item}.
+	 * @param item {@link #item}.
 	 * @param requirement {@link #requirement}.
-	 * @param animation   {@link #animation}.
-	 * @param speed       {@link #speed}.
+	 * @param animation {@link #animation}.
+	 * @param speed {@link #speed}.
 	 */
 	private Hatchet(int item, int requirement, int animation, double speed) {
 		this.item = new Item(item);

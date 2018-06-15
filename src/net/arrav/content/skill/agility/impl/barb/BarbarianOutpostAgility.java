@@ -19,9 +19,9 @@ import net.arrav.world.entity.actor.move.ForcedMovement;
 import net.arrav.world.entity.actor.move.ForcedMovementManager;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
-import net.arrav.world.object.ObjectDirection;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.entity.object.ObjectDirection;
+import net.arrav.world.entity.object.ObjectType;
 
 import java.util.Optional;
 
@@ -40,8 +40,8 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 	
 	/**
 	 * Constructs a new {@link BarbarianOutpostAgility} course.
-	 * @param player   {@link #getPlayer()}.
-	 * @param object   {@link #getObject()}.
+	 * @param player {@link #getPlayer()}.
+	 * @param object {@link #getObject()}.
 	 * @param obstacle the obstacle this player is trying to cross.
 	 */
 	private BarbarianOutpostAgility(Player player, GameObject object, BarbarianAgilityData obstacle) {
@@ -221,8 +221,8 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link BarbarianAgilityData}.
-		 * @param objectId       {@link #objectId}.
-		 * @param message        {@link #message}.
+		 * @param objectId {@link #objectId}.
+		 * @param message {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
@@ -235,8 +235,8 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link BarbarianAgilityData}.
-		 * @param objectId       {@link #objectId}.
-		 * @param message        {@link #message}.
+		 * @param objectId {@link #objectId}.
+		 * @param message {@link #message}.
 		 * @param crossedMessage {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
@@ -249,8 +249,8 @@ public final class BarbarianOutpostAgility extends AgilityCourse {
 		
 		/**
 		 * Constructs a new {@link BarbarianAgilityData}.
-		 * @param objectId       {@link #objectId}.
-		 * @param type           {@link #message} and {@link #crossedMessage}.
+		 * @param objectId {@link #objectId}.
+		 * @param type {@link #message} and {@link #crossedMessage}.
 		 * @param obstacleAction {@link #obstacleAction}.
 		 */
 		BarbarianAgilityData(int[] objectId, ObstacleType type, ObstacleAction obstacleAction) {

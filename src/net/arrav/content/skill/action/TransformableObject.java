@@ -18,7 +18,7 @@ public final class TransformableObject {
 	
 	/**
 	 * Constructs a new {@link TransformableObject}.
-	 * @param objectId      {@link #objectId}.
+	 * @param objectId {@link #objectId}.
 	 * @param transformable {@link #transformable}.
 	 */
 	public TransformableObject(int objectId, int transformable) {

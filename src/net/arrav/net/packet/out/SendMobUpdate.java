@@ -98,7 +98,7 @@ public final class SendMobUpdate implements OutgoingPacket {
 	
 	/**
 	 * Adds {@code addMob} in the view of {@code player}.
-	 * @param msg    The main update message.
+	 * @param msg The main update message.
 	 * @param player The {@link Player} this update message is being sent for.
 	 * @param addMob The {@link Mob} being added.
 	 */

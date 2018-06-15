@@ -14,9 +14,9 @@ public class AchievementHandler {
 	 * Activates the achievement for the individual player. Increments the
 	 * completed amount for the player. If the player has completed the
 	 * achievement, they will receive their reward.
-	 * @param player      The player activating the achievement.
+	 * @param player The player activating the achievement.
 	 * @param achievement The achievement for activation.
-	 * @param increase    The amount to increase the achievement.
+	 * @param increase The amount to increase the achievement.
 	 */
 	public static void activate(Player player, Achievement achievement, int increase) {
 		final int prev = player.achievements.computeIfAbsent(achievement, a -> 0);
@@ -46,7 +46,7 @@ public class AchievementHandler {
 	
 	/**
 	 * Updates the text on the panel.
-	 * @param player      the player updating for.
+	 * @param player the player updating for.
 	 * @param achievement the achievement.
 	 */
 	public static void update(Player player, Achievement achievement) {
@@ -58,7 +58,7 @@ public class AchievementHandler {
 	
 	/**
 	 * Gets the tier level achieved.
-	 * @param player      player checking for.
+	 * @param player player checking for.
 	 * @param achievement the achievement.
 	 * @return the tier level achieved.
 	 */
@@ -79,7 +79,7 @@ public class AchievementHandler {
 	
 	/**
 	 * Checks if the reward is completed.
-	 * @param player      The player checking the achievement.
+	 * @param player The player checking the achievement.
 	 * @param achievement The achievement for checking.
 	 */
 	public static boolean completed(Player player, Achievement achievement) {
@@ -105,7 +105,7 @@ public class AchievementHandler {
 	/**
 	 * Checks if a player has completed all the available achievements.
 	 * @param player The player checking if they have completed all the available
-	 *               achievements.
+	 * achievements.
 	 * @return If the player has completed all the available acheievements.
 	 */
 	public static boolean completedAll(Player player) {

@@ -33,7 +33,7 @@ public final class Glassblowing extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link Glassblowing}.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
+	 * @param data {@link #data}.
 	 * @param amount {@link #amount}.
 	 */
 	public Glassblowing(Player player, GlassblowingData data, int amount) {
@@ -44,7 +44,7 @@ public final class Glassblowing extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to start the skill action.
-	 * @param player   {@link #getPlayer()}.
+	 * @param player {@link #getPlayer()}.
 	 * @param buttonId the button the player clicked.
 	 * @return <true> if the skill action was started, <false> otherwise.
 	 */
@@ -66,7 +66,7 @@ public final class Glassblowing extends ProducingSkillAction {
 	/**
 	 * Creates the item the player was glassblowing for.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
+	 * @param data {@link #data}.
 	 * @param amount {@link #amount}.
 	 * @return <true> if the skill action was started, <false> otherwise.
 	 */
@@ -79,8 +79,8 @@ public final class Glassblowing extends ProducingSkillAction {
 	 * Attempts to use the {@code item}, on the other {@code item2} and open the
 	 * glassblowing interface if the correct items were used.
 	 * @param player {@link #getPlayer()}.
-	 * @param item   the item used.
-	 * @param item2  the item used on.
+	 * @param item the item used.
+	 * @param item2 the item used on.
 	 * @return <true> if the interface was opened, <false> otherwise.
 	 */
 	public static boolean openInterface(Player player, Item item, Item item2) {
@@ -248,10 +248,10 @@ public final class Glassblowing extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link GlassblowingData} enumerator.
-		 * @param buttonId    {@link #buttonId}.
-		 * @param produce     {@link #produce}.
+		 * @param buttonId {@link #buttonId}.
+		 * @param produce {@link #produce}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
+		 * @param experience {@link #experience}.
 		 */
 		private GlassblowingData(int buttonId, Item produce, int requirement, double experience) {
 			this.buttonId = buttonId;
@@ -264,8 +264,8 @@ public final class Glassblowing extends ProducingSkillAction {
 		/**
 		 * Constructs a new {@link GlassblowingData} enumerator.
 		 * @param buttonId {@link #buttonId}.
-		 * @param data     the data for what we're creating.
-		 * @param amount   {@link #amount}.
+		 * @param data the data for what we're creating.
+		 * @param amount {@link #amount}.
 		 */
 		private GlassblowingData(int buttonId, GlassblowingData data, int amount) {
 			this.buttonId = buttonId;

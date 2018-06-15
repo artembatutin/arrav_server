@@ -3,7 +3,7 @@ package net.arrav.content.object.pit;
 import net.arrav.content.skill.firemaking.FireLighter;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 /**
  * The manager class for the fire pit event objects.
@@ -43,7 +43,7 @@ public final class FirepitManager {
 	 * Attempts to fire the fire pit object.
 	 * @param player the player firing the fire pit.
 	 * @param object the object representing the fire pit.
-	 * @param item   the item that was used on the fire pit.
+	 * @param item the item that was used on the fire pit.
 	 * @return {@code true} if the pit was fired, {@code false} otherwise.
 	 */
 	public boolean fire(Player player, GameObject object, Item item) {

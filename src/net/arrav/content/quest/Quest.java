@@ -35,9 +35,9 @@ public abstract class Quest {
 	
 	/**
 	 * Constructs a new {@link Quest}.
-	 * @param name     {@link #name}.
+	 * @param name {@link #name}.
 	 * @param guidance {@link #guidance}.
-	 * @param tasks    {@link #tasks}.
+	 * @param tasks {@link #tasks}.
 	 */
 	public Quest(String name, String guidance, QuestTask[] tasks) {
 		this.name = name;

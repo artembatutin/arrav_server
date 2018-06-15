@@ -19,7 +19,7 @@ public abstract class TaskListener extends Task {
 	/**
 	 * Create a new {@link TaskListener}.
 	 * @param shutdown if the listener should shutdown after execution.
-	 * @param rate     the rate in which the listener will listen.
+	 * @param rate the rate in which the listener will listen.
 	 */
 	public TaskListener(boolean shutdown, int rate) {
 		super(rate, true);

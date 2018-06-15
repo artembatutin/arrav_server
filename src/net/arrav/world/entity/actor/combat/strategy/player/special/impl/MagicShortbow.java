@@ -32,7 +32,6 @@ public class MagicShortbow extends PlayerRangedStrategy {
 		//new Projectile(player, defender, 249, 58, 40, 43, 31, CombatType.RANGED).sendProjectile();
 		new Projectile(player, defender, 249, 40, 10, 44, 35, CombatType.RANGED).sendProjectile();
 
-
 		World.get().submit(new Task(1, false) {
 			@Override
 			public void execute() {

@@ -142,7 +142,7 @@ public class MarketShop {
 	/**
 	 * Sends the determined selling value of {@code item} to {@code player}.
 	 * @param player the player to send the value to.
-	 * @param item   the item to send the value of.
+	 * @param item the item to send the value of.
 	 */
 	public void sendSellingPrice(Player player, Item item) {
 		String itemName = item.getDefinition().getName();
@@ -161,7 +161,7 @@ public class MarketShop {
 	/**
 	 * Sends the determined purchase value of {@code item} to {@code player}.
 	 * @param player the player to send the value to.
-	 * @param item   the item to send the value of.
+	 * @param item the item to send the value of.
 	 */
 	private void sendPurchasePrice(Player player, Item item) {
 		MarketItem shopItem = MarketItem.get(item.getId());
@@ -197,7 +197,7 @@ public class MarketShop {
 	/**
 	 * The method that allows {@code player} to purchase {@code item}.
 	 * @param player the player who will purchase this item.
-	 * @param item   the item that will be purchased.
+	 * @param item the item that will be purchased.
 	 * @return {@code true} if the player purchased the item, {@code false}
 	 * otherwise.
 	 */
@@ -253,7 +253,7 @@ public class MarketShop {
 	/**
 	 * The method that allows {@code player} to sell {@code item}.
 	 * @param player the player who will sell this item.
-	 * @param item   the item that will be sold.
+	 * @param item the item that will be sold.
 	 * @return {@code true} if the player sold the item, {@code false}
 	 * otherwise.
 	 */
@@ -338,7 +338,7 @@ public class MarketShop {
 	/**
 	 * Determines the price of {@code item} based on the currency.
 	 * @param player the player to check for the flag if price is calculated for the merchant.
-	 * @param item   the item to determine the price of.
+	 * @param item the item to determine the price of.
 	 * @return the price of the item based on the currency.
 	 */
 	private int determinePrice(Player player, Item item) {

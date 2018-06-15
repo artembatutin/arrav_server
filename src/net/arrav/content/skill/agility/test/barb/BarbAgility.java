@@ -14,9 +14,9 @@ import net.arrav.world.entity.actor.move.ForcedMovement;
 import net.arrav.world.entity.actor.move.ForcedMovementManager;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
-import net.arrav.world.object.ObjectDirection;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.entity.object.ObjectDirection;
+import net.arrav.world.entity.object.ObjectType;
 
 import java.util.OptionalInt;
 import java.util.function.Function;
@@ -29,8 +29,8 @@ public final class BarbAgility extends Agility {
 	
 	/**
 	 * Constructs a new {@link Agility}.
-	 * @param player   {@link #player}.
-	 * @param object   {@link #object}.
+	 * @param player {@link #player}.
+	 * @param object {@link #object}.
 	 * @param crossing {@link #crossing}.
 	 */
 	private BarbAgility(Player player, GameObject object, Obstacle crossing) {

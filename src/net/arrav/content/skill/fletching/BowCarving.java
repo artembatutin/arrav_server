@@ -45,9 +45,9 @@ public final class BowCarving extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link BowCarving} skill action.
-	 * @param player     {@link #getPlayer()}.
+	 * @param player {@link #getPlayer()}.
 	 * @param definition {@link #definition}.
-	 * @param beaver     {@link #beaver}.
+	 * @param beaver {@link #beaver}.
 	 */
 	public BowCarving(Player player, Log definition, boolean beaver) {
 		super(player, Optional.empty());
@@ -58,7 +58,7 @@ public final class BowCarving extends ProducingSkillAction {
 	
 	/**
 	 * Fletches all the possible items a player can fletch.
-	 * @param player   the player we're fletching items for.
+	 * @param player the player we're fletching items for.
 	 * @param buttonId the button id pressed.
 	 * @return <true> if this action started, <false> otherwise.
 	 */
@@ -85,9 +85,9 @@ public final class BowCarving extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to start fletching for the {@code player}.
-	 * @param player     {@link #getPlayer()}.
+	 * @param player {@link #getPlayer()}.
 	 * @param producable {@link #current}.
-	 * @param amount     the amount to register.
+	 * @param amount the amount to register.
 	 */
 	public static void fletch(Player player, ProduciblePolicy producable, int amount) {
 		BowCarving fletch = (BowCarving) player.getAttr().get("fletching_bowcarving").get();
@@ -99,8 +99,8 @@ public final class BowCarving extends ProducingSkillAction {
 	
 	/**
 	 * Opens the interface for the player.
-	 * @param player     the player we're opening this interface for.
-	 * @param firstItem  the item this player used on the {@code secondItem}.
+	 * @param player the player we're opening this interface for.
+	 * @param firstItem the item this player used on the {@code secondItem}.
 	 * @param secondItem the secondItem that was used by the {@code firstItem}.
 	 * @return <true> if this interface opened, <false> otherwise.
 	 */
@@ -281,7 +281,7 @@ public final class BowCarving extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link Log} enumerator.
-		 * @param logId       {@link #log}.
+		 * @param logId {@link #log}.
 		 * @param producibles {@link #producibles}.
 		 */
 		Log(int logId, ProduciblePolicy... producibles) {
@@ -364,10 +364,10 @@ public final class BowCarving extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link ProduciblePolicy}.
-		 * @param producible  {@link #producible}.
+		 * @param producible {@link #producible}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
-		 * @param button      {@link #button}.
+		 * @param experience {@link #experience}.
+		 * @param button {@link #button}.
 		 */
 		public ProduciblePolicy(Item producible, int requirement, double experience, ButtonConfiguration... button) {
 			this.producible = producible;
@@ -379,9 +379,9 @@ public final class BowCarving extends ProducingSkillAction {
 		/**
 		 * Constructs a new {@link ProduciblePolicy}.
 		 * @param producibleId {@link #producible}.
-		 * @param requirement  {@link #requirement}.
-		 * @param experience   {@link #experience}.
-		 * @param button       {@link #button}.
+		 * @param requirement {@link #requirement}.
+		 * @param experience {@link #experience}.
+		 * @param button {@link #button}.
 		 */
 		public ProduciblePolicy(int producibleId, int requirement, double experience, ButtonConfiguration... button) {
 			this(new Item(producibleId), requirement, experience, button);
@@ -407,7 +407,7 @@ public final class BowCarving extends ProducingSkillAction {
 		/**
 		 * Constructs a new {@link ButtonConfiguration}.
 		 * @param buttonId {@link #buttonId}.
-		 * @param amount   {@link #amount}.
+		 * @param amount {@link #amount}.
 		 */
 		public ButtonConfiguration(int buttonId, int amount) {
 			this.buttonId = buttonId;

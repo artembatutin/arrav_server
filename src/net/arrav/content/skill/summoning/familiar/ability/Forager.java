@@ -49,7 +49,7 @@ public abstract class Forager extends FamiliarContainer {
 	 * Any extra functionality that should be handled when the
 	 * item is added to the container.
 	 * @param player the player we're executing this functionality for.
-	 * @param item   the item that was added to the container.
+	 * @param item the item that was added to the container.
 	 */
 	public void onStore(Player player, final Item item) {
 		//should be overriden.

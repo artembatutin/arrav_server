@@ -68,7 +68,7 @@ public final class ByteBufferUtil {
 	 * We use a {@link ByteArrayOutputStream} as it is self expanding. We don't want to waste precious time determining
 	 * a fixed length for the {@code String}.
 	 * </p>
-	 * @param buffer     The ByteBuffer to read from.
+	 * @param buffer The ByteBuffer to read from.
 	 * @param terminator The terminator which denotes when to stop reading.
 	 * @return The read String.
 	 */
@@ -101,7 +101,7 @@ public final class ByteBufferUtil {
 	/**
 	 * Puts a 'smart' (either a {@code byte} or {@code short}.
 	 * @param buffer The buffer.
-	 * @param value  The value to write.
+	 * @param value The value to write.
 	 */
 	public static void putSmart(ByteBuffer buffer, int value) {
 		if(value < 128) {

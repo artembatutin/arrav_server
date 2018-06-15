@@ -2,7 +2,6 @@ package net.arrav.action.but;
 
 import net.arrav.action.ActionInitializer;
 import net.arrav.action.impl.ButtonAction;
-import net.arrav.net.packet.out.SendConfig;
 import net.arrav.world.entity.actor.player.Player;
 
 public class ViewingOrbButton extends ActionInitializer {

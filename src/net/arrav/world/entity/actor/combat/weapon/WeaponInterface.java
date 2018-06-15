@@ -78,17 +78,17 @@ public enum WeaponInterface {
 	
 	/**
 	 * Creates a new {@link WeaponInterface}.
-	 * @param id           the identification of the interface that will be
-	 *                     displayed.
-	 * @param nameLine     the identification of the line the weapon name will
-	 *                     be displayed on.
-	 * @param speed        the base attack speed of weapons using this
-	 *                     interface.
-	 * @param fightTypes   the fight types that correspond with this interface.
-	 * @param specialBar   the identification of the special bar for this
-	 *                     interface.
+	 * @param id the identification of the interface that will be
+	 * displayed.
+	 * @param nameLine the identification of the line the weapon name will
+	 * be displayed on.
+	 * @param speed the base attack speed of weapons using this
+	 * interface.
+	 * @param fightTypes the fight types that correspond with this interface.
+	 * @param specialBar the identification of the special bar for this
+	 * interface.
 	 * @param specialMeter the identification of the special meter for this
-	 *                     interface.
+	 * interface.
 	 */
 	WeaponInterface(int id, int nameLine, int speed, FightType[] fightTypes, int specialBar, int specialMeter) {
 		this.id = id;
@@ -102,11 +102,11 @@ public enum WeaponInterface {
 	/**
 	 * Creates a new {@link WeaponInterface} for interfaces that have no special
 	 * bar or meter.
-	 * @param id         the identification of the interface that will be
-	 *                   displayed.
-	 * @param nameLine   the identification of the line the weapon name will be
-	 *                   displayed on.
-	 * @param speed      the base attack speed of weapons using this interface.
+	 * @param id the identification of the interface that will be
+	 * displayed.
+	 * @param nameLine the identification of the line the weapon name will be
+	 * displayed on.
+	 * @param speed the base attack speed of weapons using this interface.
 	 * @param fightTypes the fight types that correspond with this interface.
 	 */
 	WeaponInterface(int id, int nameLine, int speed, FightType[] fightTypes) {
@@ -135,8 +135,8 @@ public enum WeaponInterface {
 	 * The method executed when weapon {@code item} is equipped or unequipped
 	 * that assigns a weapon interface to {@code player}.
 	 * @param player the player equipping the item.
-	 * @param item   the item the player is equipping, or {@code null} if a
-	 *               weapon was unequipped.
+	 * @param item the item the player is equipping, or {@code null} if a
+	 * weapon was unequipped.
 	 */
 	public static void execute(Player player, Item item) {
 		WeaponInterface weapon = item == null ? null : INTERFACES.get(item.getId());

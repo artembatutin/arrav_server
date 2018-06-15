@@ -33,8 +33,8 @@ public class Log {
 	
 	/**
 	 * Constructs a new {@link Log}.
-	 * @param username    {@link #username}.
-	 * @param date        {@link #date}.
+	 * @param username {@link #username}.
+	 * @param date {@link #date}.
 	 * @param information {@link #information}.
 	 */
 	public Log(String username, String date, String catagory, String information) {
@@ -46,8 +46,8 @@ public class Log {
 	
 	/**
 	 * Constructs a new {@link Log}.
-	 * @param username    {@link #username}.
-	 * @param catagory    {@link #catagory}.
+	 * @param username {@link #username}.
+	 * @param catagory {@link #catagory}.
 	 * @param information {@link #information}.
 	 */
 	public Log(String username, String catagory, String information) {

@@ -16,9 +16,9 @@ public final class Attributes {
 	/**
 	 * The first slot action from the {@link ItemInterfacePacket} packet, any attribute
 	 * action should be utilised here.
-	 * @param player      the player we're utilizing this action for.
+	 * @param player the player we're utilizing this action for.
 	 * @param interfaceId the interface id of this interface.
-	 * @param slot        the item slot.
+	 * @param slot the item slot.
 	 * @return <true> if the action was completed, <false> otherwise.
 	 */
 	public static boolean firstSlot(Player player, int interfaceId, int slot) {
@@ -46,9 +46,9 @@ public final class Attributes {
 	/**
 	 * The second slot action from the {@link ItemInterfacePacket} packet, any attribute
 	 * action should be utilised here.
-	 * @param player      the player we're utilizing this action for.
+	 * @param player the player we're utilizing this action for.
 	 * @param interfaceId the interface id of this interface.
-	 * @param slot        the item slot.
+	 * @param slot the item slot.
 	 * @return <true> if the action was completed, <false> otherwise.
 	 */
 	public static boolean secondSlot(Player player, int interfaceId, int slot) {
@@ -76,9 +76,9 @@ public final class Attributes {
 	/**
 	 * The third slot action from the {@link ItemInterfacePacket} packet, any attribute
 	 * action should be utilised here.
-	 * @param player      the player we're utilizing this action for.
+	 * @param player the player we're utilizing this action for.
 	 * @param interfaceId the interface id of this interface.
-	 * @param slot        the item slot.
+	 * @param slot the item slot.
 	 * @return <true> if the action was completed, <false> otherwise.
 	 */
 	public static boolean thirdSlot(Player player, int interfaceId, int slot) {
@@ -106,10 +106,10 @@ public final class Attributes {
 	/**
 	 * The fourth slot action from the {@link ItemInterfacePacket} packet, any attribute
 	 * action should be utilised here.
-	 * @param player      the player we're utilizing this action for.
+	 * @param player the player we're utilizing this action for.
 	 * @param interfaceId the interface id of this interface.
-	 * @param itemId      the item id.
-	 * @param slot        the item slot.
+	 * @param itemId the item id.
+	 * @param slot the item slot.
 	 * @return <true> if the action was completed, <false> otherwise.
 	 */
 	public static boolean fourthSlot(Player player, int interfaceId, int itemId, int slot) {

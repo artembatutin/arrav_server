@@ -5,10 +5,10 @@ import net.arrav.world.entity.actor.combat.attack.listener.SimplifiedListener;
 import net.arrav.world.entity.actor.player.Player;
 
 public class MysticLoreListener extends SimplifiedListener<Player> {
-
-    @Override
-    public int modifyMagicLevel(Player attacker, Actor defender, int level) {
-        return level * 11 / 10;
-    }
-
+	
+	@Override
+	public int modifyMagicLevel(Player attacker, Actor defender, int level) {
+		return level * 11 / 10;
+	}
+	
 }

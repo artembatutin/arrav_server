@@ -6,9 +6,7 @@ import net.arrav.action.impl.ObjectAction;
 import net.arrav.content.teleport.TeleportType;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
-
-import static net.arrav.content.teleport.TeleportType.NORMAL;
+import net.arrav.world.entity.object.GameObject;
 
 public class KalphiteQueenRope extends ActionInitializer {
 	@Override

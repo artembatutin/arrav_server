@@ -39,7 +39,7 @@ public final class SocialPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the adding of a new friend.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer used for reading sent data.
 	 */
 	private void addFriend(Player player, ByteBuf buf) {
@@ -51,7 +51,7 @@ public final class SocialPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the removing of an existing friend.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer used for reading sent data.
 	 */
 	private void removeFriend(Player player, ByteBuf buf) {
@@ -63,7 +63,7 @@ public final class SocialPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the adding of a new ignore.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer used for reading sent data.
 	 */
 	private void addIgnore(Player player, ByteBuf buf) {
@@ -75,7 +75,7 @@ public final class SocialPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the removing of an existing ignore.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer used for reading sent data.
 	 */
 	private void removeIgnore(Player player, ByteBuf buf) {
@@ -87,7 +87,7 @@ public final class SocialPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the sending of a private message.
-	 * @param player  the player to handle this for.
+	 * @param player the player to handle this for.
 	 * @param buf the payload buffer used for reading sent data.
 	 */
 	private void sendMessage(Player player, int size, ByteBuf buf) {

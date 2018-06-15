@@ -6,9 +6,9 @@ import net.arrav.world.entity.actor.player.Player;
 
 public class ThickSkinListener extends SimplifiedListener<Player> {
 
-    @Override
-    public int modifyDefenceLevel(Actor attacker, Player defender, int damage) {
-        return damage * 21 / 20;
-    }
+	@Override
+	public int modifyDefenceLevel(Actor attacker, Player defender, int damage) {
+		return damage * 21 / 20;
+	}
 
 }

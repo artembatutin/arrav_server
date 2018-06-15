@@ -64,7 +64,7 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 	/**
 	 * Attempts to store the item with the specified {@code amount} in the container.
 	 * @param player the player we're storing this item for.
-	 * @param slot   the slot we're storing from.
+	 * @param slot the slot we're storing from.
 	 */
 	public final void store(Player player, Item item, int slot) {
 		if(player == null || item == null) {
@@ -120,7 +120,7 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 	/**
 	 * Attempts to store the item with the specified {@code amount} in the container.
 	 * @param player the player we're withdrawing this item for.
-	 * @param item   the item we are withdrawing.
+	 * @param item the item we are withdrawing.
 	 */
 	public final boolean withdraw(Player player, Item item) {
 		if(player == null || item == null)

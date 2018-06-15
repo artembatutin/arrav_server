@@ -10,8 +10,8 @@ import net.arrav.world.Animation;
 import net.arrav.world.World;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.object.DynamicObject;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.DynamicObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -53,7 +53,7 @@ public final class Mining extends HarvestingSkillAction {
 	/**
 	 * Constructs a new {@link Mining}.
 	 * @param player {@link #player}.
-	 * @param rock   the mining rock.
+	 * @param rock the mining rock.
 	 * @param object the rock object.
 	 */
 	public Mining(Player player, RockData rock, GameObject object) {

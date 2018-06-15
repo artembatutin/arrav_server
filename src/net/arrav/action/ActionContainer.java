@@ -15,7 +15,7 @@ public class ActionContainer<E extends Action> {
 	
 	/**
 	 * Registering an listener to the container.
-	 * @param i        the identifier.
+	 * @param i the identifier.
 	 * @param listener listener to register.
 	 */
 	public void register(int i, E listener) {

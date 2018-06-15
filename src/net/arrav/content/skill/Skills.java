@@ -173,7 +173,7 @@ public final class Skills {
 	 * Attempts to add {@code amount} of experience for {@code player}.
 	 * @param player the player to add the experience for.
 	 * @param amount the amount of experience that will be added.
-	 * @param skill  the skill to add the experience for.
+	 * @param skill the skill to add the experience for.
 	 */
 	public static void experience(Player player, double amount, int skill) {
 		if(amount <= 0)
@@ -268,7 +268,7 @@ public final class Skills {
 	 * Sends {@code skill} to the client which will refresh it for
 	 * {@code player}.
 	 * @param player the player to refresh the skill for.
-	 * @param skill  the skill that will be refreshed.
+	 * @param skill the skill that will be refreshed.
 	 */
 	public static void refresh(Player player, int skill) {
 		Skill s = player.getSkills()[skill];
@@ -322,7 +322,7 @@ public final class Skills {
 	/**
 	 * Determines whether to give a trimmed or untrimmed skillcape to the
 	 * player.
-	 * @param player    the player to give a skillcape to.
+	 * @param player the player to give a skillcape to.
 	 * @param skillcape the skillcape to determine for.
 	 * @return A trimmed skillcape if the player has more than 1 level 99, or
 	 * an untrimmed skillcape if it's the players first 99.
@@ -351,7 +351,7 @@ public final class Skills {
 	/**
 	 * Restores {@code skill} back to its original level for {@code player}.
 	 * @param player the player to restore the skill for.
-	 * @param skill  the skill to restore.
+	 * @param skill the skill to restore.
 	 */
 	public static void restore(Player player, int skill) {
 		player.getSkills()[skill].setLevel(player.getSkills()[skill].getRealLevel() * (skill == 3 ? 10 : 1), skill != 3);

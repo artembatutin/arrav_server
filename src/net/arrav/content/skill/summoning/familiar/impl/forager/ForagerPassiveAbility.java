@@ -79,7 +79,7 @@ public class ForagerPassiveAbility extends Forager {
 		
 		/**
 		 * Constructs a new {@link ForagerTask}.
-		 * @param player  {@link #player}.
+		 * @param player {@link #player}.
 		 * @param forager {@link #forager}.
 		 */
 		public ForagerTask(Player player, ForagerPassiveAbility forager) {

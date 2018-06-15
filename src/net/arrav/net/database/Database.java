@@ -15,12 +15,12 @@ import java.util.concurrent.Executors;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public final class Database {
-
+	
 	/**
 	 * The pool for this connection.
 	 */
 	private final ConnectionPool pool;
-
+	
 	public Database(String ip, String database, String username, String password, int threads) {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://" + ip + ":3306/" + database + "?autoReconnect=true&useSSL=false&serverTimezone=UTC");
@@ -32,7 +32,7 @@ public final class Database {
 		HikariDataSource ds = new HikariDataSource(config);
 		pool = new HikariPool(ds, MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(threads)));
 	}
-
+	
 	/**
 	 * Gets the {@link ConnectionPool}
 	 * @return pooling instance.
@@ -40,7 +40,7 @@ public final class Database {
 	public ConnectionPool getPool() {
 		return pool;
 	}
-
+	
 	/**
 	 * Gets the {@link Connection}.
 	 * @return Sql connection instance.

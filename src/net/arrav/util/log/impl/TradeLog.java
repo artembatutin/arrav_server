@@ -31,8 +31,8 @@ public final class TradeLog extends LogDetails {
 	/**
 	 * Constructs a new {@link TradeLog}.
 	 * @param player {@link #getUsername()}.
-	 * @param sold   {@link #sold}.
-	 * @param other  {@link #otherUsername}.
+	 * @param sold {@link #sold}.
+	 * @param other {@link #otherUsername}.
 	 * @param bought {@link #bought}.
 	 */
 	public TradeLog(Player player, ItemContainer sold, Player other, ItemContainer bought) {

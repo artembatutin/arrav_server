@@ -65,7 +65,7 @@ public final class QuestManager {
 	/**
 	 * Determines if the player has completed the certain task.
 	 * @param quests the quests to check the task from.
-	 * @param name   the name which identifies the task.
+	 * @param name the name which identifies the task.
 	 * @return {@code true} if the player has completed the task, {@code false} otherwise.
 	 */
 	public boolean hasCompletedCertainTask(Quests quests, String name) {
@@ -75,7 +75,7 @@ public final class QuestManager {
 	/**
 	 * Attempts to complete a certain task.
 	 * @param quests the quests to complete a task from.
-	 * @param name   the name of the task to complete.
+	 * @param name the name of the task to complete.
 	 */
 	public void completeCertainTask(Quests quests, String name) {
 		if(!started(quests)) {

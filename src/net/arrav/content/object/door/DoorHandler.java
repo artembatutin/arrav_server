@@ -4,8 +4,8 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.arrav.action.impl.ObjectAction;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
-import net.arrav.world.object.ObjectDefinition;
+import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.entity.object.ObjectDefinition;
 
 import static net.arrav.content.teleport.TeleportType.DOOR;
 

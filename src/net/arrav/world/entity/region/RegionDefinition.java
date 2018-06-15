@@ -40,9 +40,9 @@ public class RegionDefinition {
 	/**
 	 * Constructs a new {@link RegionDefinition} with the specified hash, terrain
 	 * file id, object file id and preload state.
-	 * @param hash        The hash of the region coordinates.
+	 * @param hash The hash of the region coordinates.
 	 * @param terrainFile The terrain file id.
-	 * @param objectFile  The object file id.
+	 * @param objectFile The object file id.
 	 */
 	public RegionDefinition(int hash, int terrainFile, int objectFile, boolean isNew) {
 		this.hash = hash;

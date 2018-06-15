@@ -63,9 +63,9 @@ public enum SkillData {
 	
 	/**
 	 * Creates a new {@link SkillData}.
-	 * @param id      the identification for this skill in the skills array.
+	 * @param id the identification for this skill in the skills array.
 	 * @param chatbox the chatbox interface displayed on level up.
-	 * @param button  the skill interface button identifier.
+	 * @param button the skill interface button identifier.
 	 */
 	SkillData(int id, int chatbox, int button) {
 		this.id = id;

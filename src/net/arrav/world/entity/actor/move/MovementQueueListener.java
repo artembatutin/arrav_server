@@ -74,7 +74,7 @@ public final class MovementQueueListener {
 		/**
 		 * Creates a new {@link MovementQueueListenerTask}.
 		 * @param character the character that the queued task will be ran for.
-		 * @param task      the queued task that will be executed by this listener.
+		 * @param task the queued task that will be executed by this listener.
 		 */
 		public MovementQueueListenerTask(Actor character, Runnable task) {
 			this.character = character;

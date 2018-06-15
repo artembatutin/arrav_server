@@ -130,11 +130,11 @@ public enum FightType {
 	/**
 	 * Creates a new {@link FightType}.
 	 * @param animationPrioritized {@link #animationPrioritized}.
-	 * @param animation            the animation executed when this type is active.
-	 * @param parent               the parent config identification.
-	 * @param child                the child config identification.
-	 * @param bonus                the type of bonus this type will apply.
-	 * @param style                the style active when this type is active.
+	 * @param animation the animation executed when this type is active.
+	 * @param parent the parent config identification.
+	 * @param child the child config identification.
+	 * @param bonus the type of bonus this type will apply.
+	 * @param style the style active when this type is active.
 	 */
 	FightType(boolean animationPrioritized, int animation, int parent, int child, int bonus, FightStyle style) {
 		this.animationPrioritized = animationPrioritized;
@@ -148,10 +148,10 @@ public enum FightType {
 	/**
 	 * Creates a new {@link FightType}.
 	 * @param animation the animation executed when this type is active.
-	 * @param parent    the parent config identification.
-	 * @param child     the child config identification.
-	 * @param bonus     the type of bonus this type will apply.
-	 * @param style     the style active when this type is active.
+	 * @param parent the parent config identification.
+	 * @param child the child config identification.
+	 * @param bonus the type of bonus this type will apply.
+	 * @param style the style active when this type is active.
 	 */
 	FightType(int animation, int parent, int child, int bonus, FightStyle style) {
 		this.animationPrioritized = false;

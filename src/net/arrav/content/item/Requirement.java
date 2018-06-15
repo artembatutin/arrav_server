@@ -51,7 +51,7 @@ public final class Requirement {
 	 * Determines if {@code player} can equip {@code item} based on its
 	 * equipment requirements.
 	 * @param player the player that is equipping the item.
-	 * @param item   the item being equipped.
+	 * @param item the item being equipped.
 	 * @return {@code true} if the player can equip the item, {@code false}
 	 * otherwise.
 	 */

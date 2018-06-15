@@ -38,7 +38,7 @@ public abstract class Task {
 	/**
 	 * Creates a new {@link Task}.
 	 * @param instant If this {@code Task} executes upon being submitted.
-	 * @param delay   The dynamic delay of this {@code Task}.
+	 * @param delay The dynamic delay of this {@code Task}.
 	 */
 	public Task(int delay, boolean instant) {
 		if(delay <= 0)

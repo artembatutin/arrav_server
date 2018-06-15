@@ -20,7 +20,7 @@ import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.container.impl.Equipment;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -35,9 +35,7 @@ public class FarmingAction {
 					farming.patch = player.patches.get(patchType);
 					if(farming.patch != null && farming.patch.getSeedType() != null) {
 						boolean fullyGrown = farming.patch.isFullyGrown();
-						final String stateMessage = farming.patch.getGrowthState() != GrowthState.WATERED ? farming.patch.getSeedType() != null && (farming.patch.getSeedType().getSeedClass() == SeedClass.BUSHES || farming.patch.getSeedType()
-								.getSeedClass() == SeedClass.TREES || farming.patch.getSeedType()
-								.getSeedClass() == SeedClass.MUSHROOMS || farming.patch.getSeedType() == FlowerSeed.WHITE_LILY) ? "The crops are looking healthy." : "The crops are looking healthy; should probably water them to keep it that way!" : "The crops are looking healthy and watered!";
+						final String stateMessage = farming.patch.getGrowthState() != GrowthState.WATERED ? farming.patch.getSeedType() != null && (farming.patch.getSeedType().getSeedClass() == SeedClass.BUSHES || farming.patch.getSeedType().getSeedClass() == SeedClass.TREES || farming.patch.getSeedType().getSeedClass() == SeedClass.MUSHROOMS || farming.patch.getSeedType() == FlowerSeed.WHITE_LILY) ? "The crops are looking healthy." : "The crops are looking healthy; should probably water them to keep it that way!" : "The crops are looking healthy and watered!";
 						if(farming.patch.getSeedType().getSeedClass() == SeedClass.TREES) {
 							if(option == 1) {
 								if(!farming.patch.hasAttribute(PatchAttribute.CHECKED_HEALTH)) {
@@ -79,8 +77,7 @@ public class FarmingAction {
 								if(farming.patch.getGrowthState() == GrowthState.DISEASED) {
 									if(farming.patch.getSeedType().getSeedClass() == SeedClass.TREES || farming.patch.getSeedType().getSeedClass() == SeedClass.BUSHES) {
 										int wep = player.getEquipment().getSlot(Equipment.WEAPON_SLOT);
-										boolean hasSecateurs = wep == FarmingConstants.MAGIC_SECATEURS || wep == FarmingConstants.SECATEURS_ITEM_ID || player.getInventory()
-												.containsAny(FarmingConstants.MAGIC_SECATEURS, FarmingConstants.SECATEURS_ITEM_ID);
+										boolean hasSecateurs = wep == FarmingConstants.MAGIC_SECATEURS || wep == FarmingConstants.SECATEURS_ITEM_ID || player.getInventory().containsAny(FarmingConstants.MAGIC_SECATEURS, FarmingConstants.SECATEURS_ITEM_ID);
 										if(hasSecateurs) {
 											player.animation(FarmingConstants.SECATEURS_ANIMATION);
 											farming.patch.setGrowthState(GrowthState.GROWING);
@@ -93,8 +90,7 @@ public class FarmingAction {
 									return true;
 								}
 								
-								String message = !fullyGrown ? "This tree is still growing..." : farming.patch.getHarvestedItem().getAmount() < farming.patch.getProduct()
-										.getAmount() ? "This tree seems sturdy enough to chop down." : "This tree has recently been chopped down.";
+								String message = !fullyGrown ? "This tree is still growing..." : farming.patch.getHarvestedItem().getAmount() < farming.patch.getProduct().getAmount() ? "This tree seems sturdy enough to chop down." : "This tree has recently been chopped down.";
 								player.message(message);
 								return true;
 							} else if(option == 4) {

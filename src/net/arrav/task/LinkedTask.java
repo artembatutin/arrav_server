@@ -22,7 +22,7 @@ public abstract class LinkedTask {
 	
 	/**
 	 * Creates a new {@link LinkedTask}.
-	 * @param name  the name of this link.
+	 * @param name the name of this link.
 	 * @param delay the delay of this link.
 	 */
 	public LinkedTask(String name, int delay) {

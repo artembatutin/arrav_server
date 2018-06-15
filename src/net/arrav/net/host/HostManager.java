@@ -27,7 +27,7 @@ public final class HostManager {
 	/**
 	 * Determines if two players are connected from the same network.
 	 * @param player the player to determine for.
-	 * @param other  the other player to determine for.
+	 * @param other the other player to determine for.
 	 * @return {@code true} if the two players are connected from same network, {@code false} otherwise.
 	 */
 	public static boolean same(Player player, Player other) {

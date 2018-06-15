@@ -12,14 +12,7 @@ import java.util.Optional;
  * @author <a href="http://www.runeserver.org/members/stand+up/">Stand Up</a>
  */
 public enum ForcedMovementDirection {
-	NORTH(0),
-	EAST(1),
-	SOUTH(2),
-	WEST(3),
-	NORTH_EAST(4),
-	SOUTH_EAST(5),
-	SOUTH_WEST(6),
-	NORTH_WEST(7);
+	NORTH(0), EAST(1), SOUTH(2), WEST(3), NORTH_EAST(4), SOUTH_EAST(5), SOUTH_WEST(6), NORTH_WEST(7);
 	
 	/**
 	 * Caches our enum values.

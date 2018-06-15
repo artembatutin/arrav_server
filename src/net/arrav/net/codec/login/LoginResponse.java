@@ -1,9 +1,7 @@
 package net.arrav.net.codec.login;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
-import net.arrav.net.Session;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
 
@@ -31,8 +29,8 @@ public final class LoginResponse {
 	/**
 	 * Creates a new {@link LoginResponse}.
 	 * @param response The actual login response.
-	 * @param rights   The {@link Player}s authority level.
-	 * @param iron     The iron man flag condition.
+	 * @param rights The {@link Player}s authority level.
+	 * @param iron The iron man flag condition.
 	 */
 	public LoginResponse(LoginCode response, Rights rights, boolean iron) {
 		this.response = response;

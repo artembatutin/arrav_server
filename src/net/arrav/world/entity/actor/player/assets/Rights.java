@@ -35,7 +35,7 @@ public enum Rights {
 	/**
 	 * Create a new {@link Rights}.
 	 * @param protocolValue the value of this rank as seen by the protocol.
-	 * @param value         the value of this rank as seen by the server.
+	 * @param value the value of this rank as seen by the server.
 	 */
 	Rights(int protocolValue, int value) {
 		this.protocolValue = protocolValue;

@@ -64,7 +64,7 @@ public final class MobActionPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the melee and ranged attacks on an NPC.
-	 * @param player  the player this will be handled for.
+	 * @param player the player this will be handled for.
 	 * @param buf the payload buffer that will read the sent data.
 	 */
 	private void attackOther(Player player, ByteBuf buf) {
@@ -78,7 +78,7 @@ public final class MobActionPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the magic attacks on an NPC.
-	 * @param player  the player this will be handled for.
+	 * @param player the player this will be handled for.
 	 * @param buf the payload buffer that will read the sent data.
 	 */
 	private void attackMagic(Player player, ByteBuf buf) {
@@ -96,13 +96,13 @@ public final class MobActionPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the first click NPC slot.
-	 * @param player  the player this will be handled for.
+	 * @param player the player this will be handled for.
 	 * @param buf the payload buffer that will read the sent data.
 	 */
 	private void firstClick(Player player, ByteBuf buf) {
 		int index = buf.getShort(true, ByteOrder.LITTLE);
 		Mob mob = World.get().getMobs().get(index - 1);
-		if (mob == null)
+		if(mob == null)
 			return;
 		Position position = mob.getPosition().copy();
 		if(mob.getId() == 4650) {
@@ -133,7 +133,7 @@ public final class MobActionPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the second click NPC slot.
-	 * @param player  the player this will be handled for.
+	 * @param player the player this will be handled for.
 	 * @param buf the payload buffer that will read the sent data.
 	 */
 	private void secondClick(Player player, ByteBuf buf) {
@@ -164,7 +164,7 @@ public final class MobActionPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the third click NPC slot.
-	 * @param player  the player this will be handled for.
+	 * @param player the player this will be handled for.
 	 * @param buf the payload buffer that will read the sent data.
 	 */
 	private void thirdClick(Player player, ByteBuf buf) {
@@ -192,7 +192,7 @@ public final class MobActionPacket implements IncomingPacket {
 	
 	/**
 	 * Handles the fourth click NPC slot.
-	 * @param player  the player this will be handled for.
+	 * @param player the player this will be handled for.
 	 * @param buf the payload buffer that will read the sent data.
 	 */
 	private void fourthClick(Player player, ByteBuf buf) {
@@ -222,7 +222,7 @@ public final class MobActionPacket implements IncomingPacket {
 	/**
 	 * Determines if {@code player} can make an attack on {@code mob}.
 	 * @param player the player attempting to make an attack.
-	 * @param mob    the mob being attacked.
+	 * @param mob the mob being attacked.
 	 * @return {@code true} if the player can make an attack, {@code false}
 	 * otherwise.
 	 */

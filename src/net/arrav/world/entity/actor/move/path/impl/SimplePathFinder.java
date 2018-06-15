@@ -19,7 +19,7 @@ import static net.arrav.world.Direction.*;
 public final class SimplePathFinder extends PathFinder {
 	/**
 	 * A default method to find a path for the specified {@link Actor}.
-	 * @param character   The character to find the path for.
+	 * @param character The character to find the path for.
 	 * @param destination The destination of the path.
 	 * @return A {@link Deque} of {@link Position steps} to the specified destination.
 	 */
@@ -29,9 +29,9 @@ public final class SimplePathFinder extends PathFinder {
 	
 	/**
 	 * A default method to find a path for the specified position.
-	 * @param origin      The original start position.
+	 * @param origin The original start position.
 	 * @param destination The destination of the path.
-	 * @param size        The entity's size.
+	 * @param size The entity's size.
 	 * @return A {@link Deque} of {@link Position steps} to the specified destination.
 	 */
 	public Path find(Position origin, Position destination, int size) {
@@ -42,10 +42,10 @@ public final class SimplePathFinder extends PathFinder {
 	
 	/**
 	 * Performs the path finding calculations to find the path using the A* algorithm.
-	 * @param origin      The path finder's start position.
+	 * @param origin The path finder's start position.
 	 * @param destination The path finder's destination.
-	 * @param size        The entity's size.
-	 * @param positions   The current searched deque of moves.
+	 * @param size The entity's size.
+	 * @param positions The current searched deque of moves.
 	 * @return The path to pursue to reach the destination.
 	 */
 	private Deque<Position> addWalks(Position origin, Position destination, int size, Deque<Position> positions) {
@@ -174,7 +174,7 @@ public final class SimplePathFinder extends PathFinder {
 		/**
 		 * Constructs {@code Entity}.
 		 * @param position The current position.
-		 * @param delta    The delta position to move.
+		 * @param delta The delta position to move.
 		 */
 		public Node(Position position, Position delta) {
 			this.position = position;

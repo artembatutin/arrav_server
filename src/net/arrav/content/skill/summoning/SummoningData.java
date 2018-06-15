@@ -634,13 +634,13 @@ public enum SummoningData {
 	
 	/**
 	 * Constructs a new {@code SummoningData} {@code Object}.
-	 * @param pouchId          The pouch item id.
-	 * @param levelRequired    The level required to create.
+	 * @param pouchId The pouch item id.
+	 * @param levelRequired The level required to create.
 	 * @param createExperience The experience gained when creating a pouch.
-	 * @param npcId            The familiar's NPC id.
+	 * @param npcId The familiar's NPC id.
 	 * @param summonExperience The experience gained when summoning.
-	 * @param summonCost       The amount of summoning points to drain when summoned.
-	 * @param items            The items required to create this familiar.
+	 * @param summonCost The amount of summoning points to drain when summoned.
+	 * @param items The items required to create this familiar.
 	 */
 	SummoningData(int slot, int pouchId, int levelRequired, double createExperience, int npcId, double summonExperience, int summonCost, int life, Item... items) {
 		this.slot = slot;

@@ -17,33 +17,33 @@ import net.arrav.world.entity.actor.player.Player;
  */
 public class SaradominSword extends PlayerMeleeStrategy {
 
-    private static final Graphic GRAPHIC = new Graphic(1194);
-    private static final Animation ANIMATION = new Animation(11993, Animation.AnimationPriority.HIGH);
+	private static final Graphic GRAPHIC = new Graphic(1194);
+	private static final Animation ANIMATION = new Animation(11993, Animation.AnimationPriority.HIGH);
 
-    @Override
-    public void start(Player attacker, Actor defender, Hit[] hits) {
-        super.start(attacker, defender, hits);
-        defender.graphic(GRAPHIC);
-    }
+	@Override
+	public void start(Player attacker, Actor defender, Hit[] hits) {
+		super.start(attacker, defender, hits);
+		defender.graphic(GRAPHIC);
+	}
 
-    @Override
-    public CombatHit[] getHits(Player attacker, Actor defender) {
-        return new CombatHit[] { nextMeleeHit(attacker, defender), nextMagicHit(attacker, defender, FormulaFactory.getMaxHit(attacker, defender, CombatType.MELEE), 1, 0) };
-    }
+	@Override
+	public CombatHit[] getHits(Player attacker, Actor defender) {
+		return new CombatHit[]{nextMeleeHit(attacker, defender), nextMagicHit(attacker, defender, FormulaFactory.getMaxHit(attacker, defender, CombatType.MELEE), 1, 0)};
+	}
 
-    @Override
-    public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
-        return 4;
-    }
+	@Override
+	public int getAttackDelay(Player attacker, Actor defender, FightType fightType) {
+		return 4;
+	}
 
-    @Override
-    public Animation getAttackAnimation(Player attacker, Actor defender) {
-        return ANIMATION;
-    }
+	@Override
+	public Animation getAttackAnimation(Player attacker, Actor defender) {
+		return ANIMATION;
+	}
 
-    @Override
-    public int modifyAccuracy(Player attacker, Actor defender, int roll) {
-        return (int) (roll * 1.10);
-    }
+	@Override
+	public int modifyAccuracy(Player attacker, Actor defender, int roll) {
+		return (int) (roll * 1.10);
+	}
 
 }

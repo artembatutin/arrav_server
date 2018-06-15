@@ -55,7 +55,7 @@ public enum ObstacleType {
 	/**
 	 * Constructs a new {@link ObstacleType}.
 	 * @param animation {@link #animation}.
-	 * @param prior     {@link #prior}.
+	 * @param prior {@link #prior}.
 	 * @param following {@link #following}.
 	 */
 	ObstacleType(int animation, String prior, String following) {

@@ -30,9 +30,9 @@ public final class ClanChatSettings {
 	
 	/**
 	 * The actional interface click attempting to change the clan chat settings.
-	 * @param clicker     the clan member changing something.
+	 * @param clicker the clan member changing something.
 	 * @param interfaceId the interface id clicked.
-	 * @param action      the action id changed.
+	 * @param action the action id changed.
 	 */
 	public void click(ClanMember clicker, int interfaceId, int action) {
 		if(!(interfaceId == 391 || interfaceId == 392 || interfaceId == 393))

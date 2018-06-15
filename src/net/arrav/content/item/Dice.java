@@ -21,8 +21,8 @@ public final class Dice {
 	
 	/**
 	 * Attempts to roll the dice.
-	 * @param player   the player rolling the dice.
-	 * @param data     the dice data.
+	 * @param player the player rolling the dice.
+	 * @param data the dice data.
 	 * @param clanchat determines if this roll is in the clan chat.
 	 * @return {@code true} if the dice was rolled, {@code false} otherwise.
 	 */
@@ -189,10 +189,10 @@ public final class Dice {
 		
 		/**
 		 * Constructs a new {@link DiceData}.
-		 * @param itemId  {@link #item}.
+		 * @param itemId {@link #item}.
 		 * @param graphic {@link #graphic}.
-		 * @param amount  {@link #amount}.
-		 * @param format  {@link #format}.
+		 * @param amount {@link #amount}.
+		 * @param format {@link #format}.
 		 */
 		DiceData(int itemId, int graphic, int amount, String format) {
 			this.item = new Item(itemId);

@@ -35,9 +35,9 @@ public final class MinigameHandler {
 	/**
 	 * The method that executes {@code function} for {@code player} that returns
 	 * a result.
-	 * @param player       the player to execute the function for.
+	 * @param player the player to execute the function for.
 	 * @param defaultValue the default value to return if the player isn't in a minigame.
-	 * @param function     the function to execute that returns a result.
+	 * @param function the function to execute that returns a result.
 	 */
 	public static boolean execute(Player player, Function<Minigame, Boolean> function) {
 		Optional<Minigame> minigame = getMinigame(player);

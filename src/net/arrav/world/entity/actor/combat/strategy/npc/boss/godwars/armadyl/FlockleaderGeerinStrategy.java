@@ -4,7 +4,6 @@ import net.arrav.world.entity.actor.Actor;
 import net.arrav.world.entity.actor.combat.projectile.CombatProjectile;
 import net.arrav.world.entity.actor.combat.strategy.npc.NpcRangedStrategy;
 import net.arrav.world.entity.actor.mob.Mob;
-import net.arrav.world.entity.actor.mob.impl.godwars.GeneralGraardor;
 import net.arrav.world.entity.actor.mob.impl.godwars.KreeArra;
 
 /**
@@ -13,16 +12,15 @@ import net.arrav.world.entity.actor.mob.impl.godwars.KreeArra;
  * https://github.com/ophionB | https://www.rune-server.ee/members/ophion/
  */
 public class FlockleaderGeerinStrategy extends NpcRangedStrategy {
-
-    public FlockleaderGeerinStrategy() {
-        super(CombatProjectile.getDefinition("Flockleader geerin"));
-    }
-
-    @Override
-    public boolean canAttack(Mob attacker, Actor defender) {
-        return defender.isPlayer() && KreeArra.CHAMBER.inLocation(defender.getPosition());
-
-    }
-
-
+	
+	public FlockleaderGeerinStrategy() {
+		super(CombatProjectile.getDefinition("Flockleader geerin"));
+	}
+	
+	@Override
+	public boolean canAttack(Mob attacker, Actor defender) {
+		return defender.isPlayer() && KreeArra.CHAMBER.inLocation(defender.getPosition());
+		
+	}
+	
 }

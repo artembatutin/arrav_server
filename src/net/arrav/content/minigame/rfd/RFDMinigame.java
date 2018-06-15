@@ -16,7 +16,7 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.locale.InstanceManager;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -92,7 +92,7 @@ public final class RFDMinigame extends SequencedMinigame {
 	
 	@Override
 	public void login(Player player) {
-	
+
 	}
 	
 	@Override

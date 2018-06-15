@@ -40,7 +40,7 @@ public final class SquareLocation extends Location {
 	 * @param swY the south-west {@code Y} corner of the box.
 	 * @param neX the north-east {@code X} corner of the box.
 	 * @param neY the north-east {@code Y} corner of the box.
-	 * @param z   the {@code Z} level of the box.
+	 * @param z the {@code Z} level of the box.
 	 */
 	public SquareLocation(int swX, int swY, int neX, int neY, int z) {
 		this.swX = swX;
@@ -52,9 +52,9 @@ public final class SquareLocation extends Location {
 	
 	/**
 	 * Creates a new {@link SquareLocation} from the center position and radius.
-	 * @param x      the center {@code X} coordinate.
-	 * @param y      the center {@code Y} coordinate.
-	 * @param z      the center {@code Z} coordinate.
+	 * @param x the center {@code X} coordinate.
+	 * @param y the center {@code Y} coordinate.
+	 * @param z the center {@code Z} coordinate.
 	 * @param radius the radius of this location from the center coordinates.
 	 */
 	public SquareLocation(int x, int y, int z, int radius) {

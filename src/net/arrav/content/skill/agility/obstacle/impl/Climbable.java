@@ -20,11 +20,11 @@ public class Climbable extends ObstacleActivity {
 	
 	/**
 	 * Constructs a new {@link Climbable} Obstacle Activity.
-	 * @param start       {@link #getStart()}.
-	 * @param animation   {@link #getAnimation()}.
-	 * @param delay       {@link #delay}.
+	 * @param start {@link #getStart()}.
+	 * @param animation {@link #getAnimation()}.
+	 * @param delay {@link #delay}.
 	 * @param requirement {@link #getRequirement()}.
-	 * @param experience  {@link #getExperience()}.
+	 * @param experience {@link #getExperience()}.
 	 */
 	public Climbable(Position start, Position end, Animation animation, int delay, int requirement, double experience) {
 		super(start, end, animation, requirement, experience);

@@ -27,9 +27,9 @@ public final class GroundItemStatic extends GroundItem {
 	
 	/**
 	 * Creates a new {@link GroundItemStatic}.
-	 * @param item     the item concealed within this node.
+	 * @param item the item concealed within this node.
 	 * @param position the position this node is on.
-	 * @param policy   the current item policy of this node.
+	 * @param policy the current item policy of this node.
 	 */
 	public GroundItemStatic(Item item, Position position, GroundItemPolicy policy) {
 		super(item, position, null);
@@ -39,7 +39,7 @@ public final class GroundItemStatic extends GroundItem {
 	
 	/**
 	 * Creates a new {@link GroundItemStatic} with the default policy.
-	 * @param item     the item concealed within this node.
+	 * @param item the item concealed within this node.
 	 * @param position the position this node is on.
 	 */
 	public GroundItemStatic(Item item, Position position) {

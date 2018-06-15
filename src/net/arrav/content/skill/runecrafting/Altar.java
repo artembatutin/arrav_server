@@ -59,13 +59,13 @@ public enum Altar {
 
 	/**
 	 * Constructs an {@link Altar} enumerator.
-	 * @param objectId    {@link #objectId}.
-	 * @param rune        {@link #rune}.
-	 * @param experience  {@link #experience}
+	 * @param objectId {@link #objectId}.
+	 * @param rune {@link #rune}.
+	 * @param experience {@link #experience}
 	 * @param requirement {@link #requirement}.
-	 * @param position    {@link #position}.
-	 * @param diverse     {@link #diverse}.
-	 * @param talisman    {@link #talisman}.
+	 * @param position {@link #position}.
+	 * @param diverse {@link #diverse}.
+	 * @param talisman {@link #talisman}.
 	 */
 	Altar(int objectId, Rune rune, int requirement, double experience, Position position, boolean diverse, int talisman) {
 		this.objectId = objectId;

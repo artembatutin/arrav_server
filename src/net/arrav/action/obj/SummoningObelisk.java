@@ -4,7 +4,7 @@ import net.arrav.action.ActionInitializer;
 import net.arrav.action.impl.ObjectAction;
 import net.arrav.content.skill.Skills;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 public class SummoningObelisk extends ActionInitializer {
 	@Override

@@ -2,8 +2,8 @@ package net.arrav.util.json.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import net.arrav.util.json.JsonLoader;
 import net.arrav.content.ShieldAnimation;
+import net.arrav.util.json.JsonLoader;
 import net.arrav.world.entity.item.ItemDefinition;
 
 import java.util.Arrays;

@@ -13,7 +13,7 @@ import net.arrav.util.TextUtils;
 import net.arrav.world.Animation;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -38,7 +38,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link JewelleryMoulding}.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
+	 * @param data {@link #data}.
 	 * @param amount {@link #amount}.
 	 */
 	public JewelleryMoulding(Player player, JewelleryData data, int amount) {
@@ -70,7 +70,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 	/**
 	 * Attempts to mould jewellery.
 	 * @param player {@link #getPlayer()}.
-	 * @param item   the item to mould.
+	 * @param item the item to mould.
 	 * @param amount the amount to mould.
 	 * @return {@code true} if the item was moulded, {@code false} otherwise.
 	 */
@@ -96,8 +96,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 				JewelleryData[] rings = GROUP.get(RING_MOULD.getId());
 				if(player.getInventory().contains(RING_MOULD)) {
 					for(int i = 0; i < rings.length; i++) {
-						boolean check = rings[i].required.isPresent() ? player.getInventory()
-								.contains(rings[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(rings[i].requirement) : player.getSkills()[Skills.CRAFTING].reqLevel(rings[i].requirement);
+						boolean check = rings[i].required.isPresent() ? player.getInventory().contains(rings[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(rings[i].requirement) : player.getSkills()[Skills.CRAFTING].reqLevel(rings[i].requirement);
 						if(check && player.getInventory().contains(GOLD_BAR)) {
 							player.out(new SendItemOnInterfaceSlot(4233, rings[i].product, i));
 						} else {
@@ -120,8 +119,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 				
 				if(player.getInventory().contains(NECKLACE_MOULD)) {
 					for(int i = 0; i < necklaces.length; i++) {
-						boolean check = necklaces[i].required.isPresent() ? player.getInventory()
-								.contains(necklaces[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(necklaces[i].requirement) : player.getSkills()[Skills.CRAFTING].reqLevel(necklaces[i].requirement);
+						boolean check = necklaces[i].required.isPresent() ? player.getInventory().contains(necklaces[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(necklaces[i].requirement) : player.getSkills()[Skills.CRAFTING].reqLevel(necklaces[i].requirement);
 						if(check && player.getInventory().contains(GOLD_BAR)) {
 							player.out(new SendItemOnInterfaceSlot(4239, necklaces[i].product, i));
 						} else {
@@ -143,8 +141,7 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 				JewelleryData[] amulets = GROUP.get(AMULET_MOULD.getId());
 				if(player.getInventory().contains(AMULET_MOULD)) {
 					for(int i = 0; i < amulets.length; i++) {
-						boolean check = amulets[i].required.isPresent() ? player.getInventory()
-								.contains(amulets[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(amulets[i].requirement) : player.getSkills()[Skills.CRAFTING].reqLevel(amulets[i].requirement);
+						boolean check = amulets[i].required.isPresent() ? player.getInventory().contains(amulets[i].required.get()) && player.getSkills()[Skills.CRAFTING].reqLevel(amulets[i].requirement) : player.getSkills()[Skills.CRAFTING].reqLevel(amulets[i].requirement);
 						if(check && player.getInventory().contains(GOLD_BAR)) {
 							player.out(new SendItemOnInterfaceSlot(4245, amulets[i].product, i));
 						} else {
@@ -292,10 +289,10 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link JewelleryData}.
-		 * @param required    {@link #required}.
-		 * @param product     {@link #product}.
+		 * @param required {@link #required}.
+		 * @param product {@link #product}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
+		 * @param experience {@link #experience}.
 		 */
 		JewelleryData(int required, int product, int requirement, double experience) {
 			this.required = Optional.of(new Item(required));
@@ -306,9 +303,9 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link JewelleryData}.
-		 * @param product     {@link #product}.
+		 * @param product {@link #product}.
 		 * @param requirement {@link #requirement}.
-		 * @param experience  {@link #experience}.
+		 * @param experience {@link #experience}.
 		 */
 		JewelleryData(int product, int requirement, double experience) {
 			this.required = Optional.empty();
@@ -329,9 +326,6 @@ public final class JewelleryMoulding extends ProducingSkillAction {
 		return Optional.empty();
 	}
 	
-	private static final Int2ObjectArrayMap<JewelleryData[]> GROUP = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, JewelleryData[]>builder().put(RING_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_RING, JewelleryData.SAPPHIRE_RING, JewelleryData.EMERALD_RING, JewelleryData.RUBY_RING, JewelleryData.DIAMOND_RING, JewelleryData.DRAGONSTONE_RING, JewelleryData.ONYX_RING})
-			.put(NECKLACE_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_NECKLACE, JewelleryData.SAPPHIRE_NECKLACE, JewelleryData.EMERALD_NECKLACE, JewelleryData.RUBY_NECKLACE, JewelleryData.DIAMOND_NECKLACE, JewelleryData.DRAGON_NECKLACE, JewelleryData.ONYX_NECKLACE})
-			.put(AMULET_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_AMULET, JewelleryData.SAPPHIRE_AMULET, JewelleryData.EMERALD_AMULET, JewelleryData.RUBY_AMULET, JewelleryData.DIAMOND_AMULET, JewelleryData.DRAGONSTONE_AMULET, JewelleryData.ONYX_AMULET})
-			.build());
+	private static final Int2ObjectArrayMap<JewelleryData[]> GROUP = new Int2ObjectArrayMap<>(ImmutableMap.<Integer, JewelleryData[]>builder().put(RING_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_RING, JewelleryData.SAPPHIRE_RING, JewelleryData.EMERALD_RING, JewelleryData.RUBY_RING, JewelleryData.DIAMOND_RING, JewelleryData.DRAGONSTONE_RING, JewelleryData.ONYX_RING}).put(NECKLACE_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_NECKLACE, JewelleryData.SAPPHIRE_NECKLACE, JewelleryData.EMERALD_NECKLACE, JewelleryData.RUBY_NECKLACE, JewelleryData.DIAMOND_NECKLACE, JewelleryData.DRAGON_NECKLACE, JewelleryData.ONYX_NECKLACE}).put(AMULET_MOULD.getId(), new JewelleryData[]{JewelleryData.GOLD_AMULET, JewelleryData.SAPPHIRE_AMULET, JewelleryData.EMERALD_AMULET, JewelleryData.RUBY_AMULET, JewelleryData.DIAMOND_AMULET, JewelleryData.DRAGONSTONE_AMULET, JewelleryData.ONYX_AMULET}).build());
 	
 }

@@ -6,7 +6,7 @@ import net.arrav.content.dialogue.impl.OptionDialogue;
 import net.arrav.content.dialogue.impl.StatementDialogue;
 import net.arrav.content.skill.construction.Construction;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 public class HousePortal extends ActionInitializer {
 	@Override

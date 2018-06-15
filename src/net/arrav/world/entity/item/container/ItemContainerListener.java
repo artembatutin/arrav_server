@@ -12,10 +12,10 @@ public interface ItemContainerListener {
 	/**
 	 * Fired when an {@link Item} is added, removed, or replaced.
 	 * @param container The {@link ItemContainer} firing the event.
-	 * @param oldItem   The old item being removed from this container.
-	 * @param newItem   The new item being added to this container.
-	 * @param slot      The slot the update is occurring on.
-	 * @param update    The condition if we have to update this container.
+	 * @param oldItem The old item being removed from this container.
+	 * @param newItem The new item being added to this container.
+	 * @param slot The slot the update is occurring on.
+	 * @param update The condition if we have to update this container.
 	 */
 	default void singleUpdate(ItemContainer container, Item oldItem, Item newItem, int slot, boolean update) {
 	}

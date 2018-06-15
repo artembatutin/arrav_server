@@ -56,9 +56,9 @@ import net.arrav.content.teleport.TeleportType;
 import net.arrav.content.teleport.impl.DefaultTeleportSpell;
 import net.arrav.content.trivia.TriviaTask;
 import net.arrav.content.wilderness.WildernessActivity;
+import net.arrav.net.Session;
 import net.arrav.net.packet.OutgoingPacket;
 import net.arrav.net.packet.out.*;
-import net.arrav.net.Session;
 import net.arrav.task.Task;
 import net.arrav.util.ActionListener;
 import net.arrav.util.MutableNumber;
@@ -75,7 +75,6 @@ import net.arrav.world.entity.actor.combat.Combat;
 import net.arrav.world.entity.actor.combat.attack.FightType;
 import net.arrav.world.entity.actor.combat.effect.CombatEffect;
 import net.arrav.world.entity.actor.combat.effect.CombatEffectTask;
-import net.arrav.world.entity.actor.combat.formula.FormulaModifier;
 import net.arrav.world.entity.actor.combat.hit.Hit;
 import net.arrav.world.entity.actor.combat.hit.Hitsplat;
 import net.arrav.world.entity.actor.combat.magic.CombatSpell;
@@ -168,9 +167,9 @@ public final class Player extends Actor {
 	 * The cached player's farming patches progress.
 	 */
 	public Object2ObjectArrayMap<PatchType, Patch> patches = new Object2ObjectArrayMap<>(PatchType.VALUES.size());
-
+	
 	public final _ExchangeSessionManager exchange_manager = new _ExchangeSessionManager(this);
-
+	
 	/**
 	 * Uniquely spawned mob/npcs for this player.
 	 */
@@ -315,18 +314,18 @@ public final class Player extends Actor {
 	 * The overload effect for this player.
 	 */
 	private OverloadEffectTask overloadEffect;
-
+	
 	public CurseManager curseManager = new CurseManager();
-
+	
 	public final ImmutableMap<String, Stopwatch> consumeDelay = ImmutableMap.of("SPECIAL", new Stopwatch().reset(), "FOOD", new Stopwatch().reset(), "DRINKS", new Stopwatch().reset());
 	
 	/**
 	 * The collection of stopwatches used for various timing operations.
 	 */
 	private final Stopwatch wildernessActivity = new Stopwatch().reset(), slashTimer = new Stopwatch().reset(), specRestorePotionTimer = new Stopwatch().reset(), tolerance = new Stopwatch(), lastEnergy = new Stopwatch().reset(), buryTimer = new Stopwatch(), logoutTimer = new Stopwatch(), diceTimer = new Stopwatch();
-
+	
 	public final Stopwatch leechDelay = new Stopwatch().reset();
-
+	
 	/**
 	 * The collection of counters used for various counting operations.
 	 */
@@ -376,12 +375,12 @@ public final class Player extends Actor {
 	 * The spell that has been selected to auto-cast.
 	 */
 	private CombatSpell autocastSpell;
-
+	
 	/**
 	 * The spell that has been selected to single-cast.
 	 */
 	private CombatSpell singleCast;
-
+	
 	/**
 	 * The current viewing orb that this player has openShop.
 	 */
@@ -958,7 +957,7 @@ public final class Player extends Actor {
 	/**
 	 * Attempts to teleport to the {@code destination}.
 	 * @param destination the destination to teleport to.
-	 * @param type        the type which this player will be teleported on.
+	 * @param type the type which this player will be teleported on.
 	 */
 	public void teleport(Position destination, TeleportType type) {
 		DefaultTeleportSpell.startTeleport(this, destination, type);
@@ -1035,28 +1034,28 @@ public final class Player extends Actor {
 			out(new SendEnergy());
 		}
 	}
-
-    @Override
-    public CombatStrategy<Player> getStrategy() {
-        if (isSingleCast()) {
-            return new PlayerMagicStrategy(singleCast);
-        }
-
-        if (isAutocast()) {
-            return new PlayerMagicStrategy(autocastSpell);
-        }
-
+	
+	@Override
+	public CombatStrategy<Player> getStrategy() {
+		if(isSingleCast()) {
+			return new PlayerMagicStrategy(singleCast);
+		}
+		
+		if(isAutocast()) {
+			return new PlayerMagicStrategy(autocastSpell);
+		}
+		
 		Item item = equipment.get(Equipment.WEAPON_SLOT);
-
-		if (item != null) {
+		
+		if(item != null) {
 			RangedWeaponDefinition def = CombatRangedBowLoader.DEFINITIONS.get(item.getId());
-
-			if (def != null) {
+			
+			if(def != null) {
 				RangedAmmunition ammo = RangedAmmunition.find(equipment.get(def.getSlot()));
 				rangedDefinition = def;
 				rangedAmmo = ammo;
-				if (isSpecialActivated()) {
-					if (combatSpecial == null || combatSpecial.getStrategy() == null) {
+				if(isSpecialActivated()) {
+					if(combatSpecial == null || combatSpecial.getStrategy() == null) {
 						setSpecialActivated(false);
 					} else {
 						return combatSpecial.getStrategy();
@@ -1065,19 +1064,19 @@ public final class Player extends Actor {
 				return PlayerRangedStrategy.get();
 			}
 		}
-
-        if (isSpecialActivated()) {
-            if (combatSpecial == null || combatSpecial.getStrategy() == null) {
-                setSpecialActivated(false);
-            } else {
-                return combatSpecial.getStrategy();
-            }
-        }
-
-        return PlayerMeleeStrategy.get();
-    }
-
-    /**
+		
+		if(isSpecialActivated()) {
+			if(combatSpecial == null || combatSpecial.getStrategy() == null) {
+				setSpecialActivated(false);
+			} else {
+				return combatSpecial.getStrategy();
+			}
+		}
+		
+		return PlayerMeleeStrategy.get();
+	}
+	
+	/**
 	 * Gets the formatted version of the username for this player.
 	 * @return the formatted username.
 	 */
@@ -1253,7 +1252,7 @@ public final class Player extends Actor {
 	public void message(String message) {
 		out(new SendMessage(message));
 	}
-
+	
 	/**
 	 * @return {@link #enterInputListener}.
 	 */
@@ -1313,7 +1312,7 @@ public final class Player extends Actor {
 			overloadEffect = null;
 		}
 	}
-
+	
 	/**
 	 * Gets the array of skills that can be trained by this player.
 	 * @return the skills that can be trained.
@@ -1469,11 +1468,11 @@ public final class Player extends Actor {
 	public MutableNumber getSkullTimer() {
 		return skullTimer;
 	}
-
+	
 	public double getRunEnergy() {
 		return runEnergy;
 	}
-
+	
 	/**
 	 * Sets the run energy percentage counter value.
 	 * @return the new value to set.
@@ -1538,7 +1537,7 @@ public final class Player extends Actor {
 	public boolean isAutocast() {
 		return autocastSpell != null;
 	}
-
+	
 	/**
 	 * Checks whether or not an auto-cast spell is set.
 	 * @return {@code true} if there is an active auto-cast spell
@@ -1546,7 +1545,7 @@ public final class Player extends Actor {
 	public boolean isSingleCast() {
 		return singleCast != null;
 	}
-
+	
 	/**
 	 * Checks whether or not an auto-cast spell is set.
 	 * @return {@code true} if there is an active auto-cast spell
@@ -1554,7 +1553,7 @@ public final class Player extends Actor {
 	public void setSingleCast(CombatSpell spell) {
 		singleCast = spell;
 	}
-
+	
 	/**
 	 * Gets the combat special that has been activated.
 	 * @return the activated combat special.
@@ -1798,7 +1797,7 @@ public final class Player extends Actor {
 	public void setChatColor(int chatColor) {
 		this.chatColor = chatColor;
 	}
-
+	
 	/**
 	 * Everything bank pin related
 	 */
@@ -2237,15 +2236,14 @@ public final class Player extends Actor {
 	public void appendBonus(int index, int bonus) {
 		getEquipment().getBonuses()[index] += bonus;
 	}
-
+	
 	public void setBonus(int index, int bonus) {
 		getEquipment().getBonuses()[index] = bonus;
 	}
-
 	
 	@Override
 	public int getSkillLevel(int skill) {
 		return skills[skill].getLevel();
 	}
-
+	
 }

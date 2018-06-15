@@ -6,9 +6,9 @@ import net.arrav.world.entity.actor.player.Player;
 
 public class RockSkinListener extends SimplifiedListener<Player> {
 
-    @Override
-    public int modifyDefenceLevel(Actor attacker, Player defender, int damage) {
-        return damage * 11 / 10;
-    }
+	@Override
+	public int modifyDefenceLevel(Actor attacker, Player defender, int damage) {
+		return damage * 11 / 10;
+	}
 
 }

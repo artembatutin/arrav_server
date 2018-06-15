@@ -32,8 +32,8 @@ public final class FinishedPotion extends ProducingSkillAction {
 	
 	/**
 	 * Constructs a new {@link UnfinishedPotion}.
-	 * @param player     {@link #getPlayer()}.
-	 * @param firstItem  the first item that was used on the second item.
+	 * @param player {@link #getPlayer()}.
+	 * @param firstItem the first item that was used on the second item.
 	 * @param secondItem the second item that was used on by the first item.
 	 */
 	public FinishedPotion(Player player, Item firstItem, Item secondItem) {
@@ -48,8 +48,8 @@ public final class FinishedPotion extends ProducingSkillAction {
 	
 	/**
 	 * Produces finished potions if the player has the requirements required.
-	 * @param player     {@link #getPlayer()};
-	 * @param firstItem  the first item that was used on the second item.
+	 * @param player {@link #getPlayer()};
+	 * @param firstItem the first item that was used on the second item.
 	 * @param secondItem the second item that was used on by the first item.
 	 * @return <true> if the produce was successful, <false> otherwise.
 	 */
@@ -203,11 +203,11 @@ public final class FinishedPotion extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link FinishedPotionData} enum.
-		 * @param finishedPotion   {@link #finishedPotion}.
+		 * @param finishedPotion {@link #finishedPotion}.
 		 * @param unfinishedPotion {@link #unfinishedPotion}.
-		 * @param requiredItem     {@link #requiredItem}.
-		 * @param level            {@link #level}.
-		 * @param experience       {@link #experience}.
+		 * @param requiredItem {@link #requiredItem}.
+		 * @param level {@link #level}.
+		 * @param experience {@link #experience}.
 		 */
 		FinishedPotionData(int finishedPotion, int unfinishedPotion, int[] requiredItem, int level, double experience) {
 			this.finishedPotion = new Item(finishedPotion);
@@ -219,11 +219,11 @@ public final class FinishedPotion extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link FinishedPotionData} enum.
-		 * @param finishedPotion   {@link #finishedPotion}.
+		 * @param finishedPotion {@link #finishedPotion}.
 		 * @param unfinishedPotion {@link #unfinishedPotion}.
-		 * @param requiredItem     {@link #requiredItem}.
-		 * @param level            {@link #level}.
-		 * @param experience       {@link #experience}.
+		 * @param requiredItem {@link #requiredItem}.
+		 * @param level {@link #level}.
+		 * @param experience {@link #experience}.
 		 */
 		FinishedPotionData(int finishedPotion, int unfinishedPotion, int requiredItem, int level, double experience) {
 			this.finishedPotion = new Item(finishedPotion);
@@ -244,10 +244,7 @@ public final class FinishedPotion extends ProducingSkillAction {
 		 * {@link Optional#empty} otherwise.
 		 */
 		public static Optional<FinishedPotionData> getDefinition(int ingredient, int secondIngredient) {
-			return VALUES.stream()
-					.filter(potion -> potion.unfinishedPotion.getId() == ingredient || potion.unfinishedPotion.getId() == secondIngredient)
-					.filter(potion -> Arrays.stream(potion.requiredItem).anyMatch(id -> id.getId() == ingredient || id.getId() == secondIngredient))
-					.findAny();
+			return VALUES.stream().filter(potion -> potion.unfinishedPotion.getId() == ingredient || potion.unfinishedPotion.getId() == secondIngredient).filter(potion -> Arrays.stream(potion.requiredItem).anyMatch(id -> id.getId() == ingredient || id.getId() == secondIngredient)).findAny();
 		}
 	}
 }

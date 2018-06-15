@@ -363,7 +363,7 @@ public class Position {
 	 * @param y1 the y coordinate of the top left corner
 	 * @param x2 the x coordinate of the bottom right corner.
 	 * @param y2 the y coordinate of the bottom right corner.
-	 * @param z  the z coordinate of the height.
+	 * @param z the z coordinate of the height.
 	 * @return {@code true} if the coordinate is within this rectangle.
 	 */
 	public boolean within(int x1, int y1, int x2, int y2, int z) {
@@ -385,7 +385,7 @@ public class Position {
 	/**
 	 * Determines if this position is within {@code amount} distance of
 	 * {@code other}.
-	 * @param other  the position to check the distance for.
+	 * @param other the position to check the distance for.
 	 * @param amount the distance to check.
 	 * @return {@code true} if this position is within the distance,
 	 * {@code false} otherwise.

@@ -19,7 +19,7 @@ public final class IndexedItem {
 	
 	/**
 	 * Creates a new {@link IndexedItem}.
-	 * @param item  The {@link Item} being wrapped.
+	 * @param item The {@link Item} being wrapped.
 	 * @param index The value describing the index.
 	 */
 	public IndexedItem(Item item, int index) {

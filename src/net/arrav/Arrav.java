@@ -47,7 +47,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static io.netty.util.ResourceLeakDetector.Level.DISABLED;
-import static io.netty.util.ResourceLeakDetector.Level.PARANOID;
 
 /**
  * The main class that will register and bind the server effectively.
@@ -165,7 +164,7 @@ public final class Arrav {
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		EventLoopGroup loopGroup;
 		//If epoll possible, better to use it (for linux systems).
-		if (Epoll.isAvailable()) {
+		if(Epoll.isAvailable()) {
 			loopGroup = new EpollEventLoopGroup();
 			bootstrap.channel(EpollServerSocketChannel.class);
 		} else {

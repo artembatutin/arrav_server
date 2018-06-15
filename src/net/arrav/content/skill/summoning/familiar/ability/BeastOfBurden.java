@@ -23,7 +23,7 @@ public final class BeastOfBurden extends FamiliarContainer {
 	/**
 	 * Constructs a new {@link BeastOfBurden}.
 	 * @param uniqueItems {@link #uniqueItems}.
-	 * @param size        the amount this familiar can carry.
+	 * @param size the amount this familiar can carry.
 	 */
 	public BeastOfBurden(Optional<ImmutableList<Item[]>> uniqueItems, int size) {
 		super(FamiliarAbilityType.BEAST_OF_BURDEN, size);

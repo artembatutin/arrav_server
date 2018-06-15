@@ -164,8 +164,7 @@ public final class Patch {
 				if(seedId == FlowerSeed.WHITE_LILY.getSeed().getId()) {
 					protectedPatch = true;
 				} else if(seedId == FlowerSeed.MARIGOLD.getSeed().getId()) {
-					protectedPatch = getSeedType().getSeed().getId() == AllotmentSeed.ONION.getSeed().getId() || getSeedType().getSeed().getId() == AllotmentSeed.TOMATO.getSeed().getId() || getSeedType().getSeed()
-							.getId() == AllotmentSeed.POTATO.getSeed().getId();
+					protectedPatch = getSeedType().getSeed().getId() == AllotmentSeed.ONION.getSeed().getId() || getSeedType().getSeed().getId() == AllotmentSeed.TOMATO.getSeed().getId() || getSeedType().getSeed().getId() == AllotmentSeed.POTATO.getSeed().getId();
 					
 				} else if(seedId == FlowerSeed.NASTURTIUM.getSeed().getId()) {
 					protectedPatch = getSeedType().getSeed().getId() == AllotmentSeed.WATERMELON.getSeed().getId();

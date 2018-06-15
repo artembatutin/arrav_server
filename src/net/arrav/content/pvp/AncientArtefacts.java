@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package net.arrav.content.pvp;
 
@@ -36,41 +36,41 @@ public enum AncientArtefacts {
 	private Chance chance;
 	private int id;
 	private int price;
-
+	
 	private static final ImmutableSet<AncientArtefacts> VALUES = Sets.immutableEnumSet(EnumSet.allOf(AncientArtefacts.class));
-
+	
 	AncientArtefacts(int id, int price, Chance chance) {
 		this.setId(id);
 		this.setPrice(price);
 		this.setChance(chance);
 	}
-
+	
 	public Chance getChance() {
 		return chance;
 	}
-
+	
 	public void setChance(Chance chance) {
 		this.chance = chance;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
-
+	
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
 	public int getPrice() {
 		return price;
 	}
-
+	
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
+	
 	public static Optional<AncientArtefacts> getItem(int itemId) {
 		return VALUES.stream().filter(t -> t.getId() == itemId).findAny();
 	}
-
+	
 }

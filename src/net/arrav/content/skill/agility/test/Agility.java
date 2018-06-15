@@ -8,7 +8,7 @@ import net.arrav.task.Task;
 import net.arrav.world.entity.EntityState;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import java.util.Optional;
 
@@ -37,8 +37,8 @@ public abstract class Agility extends SkillAction {
 
 	/**
 	 * Constructs a new {@link SkillAction}.
-	 * @param player   {@link #player}.
-	 * @param object   {@link #object}.
+	 * @param player {@link #player}.
+	 * @param object {@link #object}.
 	 * @param crossing {@link #crossing}.
 	 */
 	public Agility(Player player, GameObject object, Obstacle crossing, boolean travelback) {

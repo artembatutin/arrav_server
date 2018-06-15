@@ -30,10 +30,10 @@ public class ExchangeItem {
 
 	/**
 	 * Creates a new {@link ExchangeItem}.
-	 * @param id           the identification of this item.
-	 * @param amount       the quantity of this item.
+	 * @param id the identification of this item.
+	 * @param amount the quantity of this item.
 	 * @param desiredPrice the desired price, being sold or bought.
-	 * @param state        the exchangable state of this item.
+	 * @param state the exchangable state of this item.
 	 */
 	public ExchangeItem(int id, int amount, int desiredPrice, ExchangeItemState state) {
 		this.id = id;

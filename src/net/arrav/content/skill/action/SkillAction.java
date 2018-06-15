@@ -30,7 +30,7 @@ public abstract class SkillAction {
 	
 	/**
 	 * Constructs a new {@link SkillAction}.
-	 * @param player   {@link #player}.
+	 * @param player {@link #player}.
 	 * @param position {@link #position}.
 	 */
 	public SkillAction(Player player, Optional<Position> position) {

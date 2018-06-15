@@ -11,8 +11,8 @@ import net.arrav.world.Animation;
 import net.arrav.world.Graphic;
 import net.arrav.world.World;
 import net.arrav.world.entity.actor.combat.attack.listener.CombatListener;
-import net.arrav.world.entity.actor.combat.attack.listener.other.prayer.curses.leech.*;
 import net.arrav.world.entity.actor.combat.attack.listener.other.prayer.curses.TurmoilListener;
+import net.arrav.world.entity.actor.combat.attack.listener.other.prayer.curses.leech.*;
 import net.arrav.world.entity.actor.combat.attack.listener.other.prayer.regular.ChivalryListener;
 import net.arrav.world.entity.actor.combat.attack.listener.other.prayer.regular.PietyListener;
 import net.arrav.world.entity.actor.combat.attack.listener.other.prayer.regular.attack.ClarityOfThoughtListener;
@@ -51,152 +51,127 @@ public enum Prayer {
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{ROCK_SKIN, STEEL_SKIN});
 		}
-	},
-	BURST_OF_STRENGTH(PrayerBook.NORMAL, new BurstOfStrengthListener(), 21234, 20, -1, 4, 84, 67051, 631) {
+	}, BURST_OF_STRENGTH(PrayerBook.NORMAL, new BurstOfStrengthListener(), 21234, 20, -1, 4, 84, 67051, 631) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	},
-	CLARITY_OF_THOUGHT(PrayerBook.NORMAL, new ClarityOfThoughtListener(), 21235, 20, -1, 7, 85, 67052, 632) {
+	}, CLARITY_OF_THOUGHT(PrayerBook.NORMAL, new ClarityOfThoughtListener(), 21235, 20, -1, 7, 85, 67052, 632) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	},
-	SHARP_EYE(PrayerBook.NORMAL, new SharpListener(), 77100, 20, -1, 8, 700, 67053, 633) {
+	}, SHARP_EYE(PrayerBook.NORMAL, new SharpListener(), 77100, 20, -1, 8, 700, 67053, 633) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	},
-	MYSTIC_WILL(PrayerBook.NORMAL, new MysticWillListener(), 77102, 20, -1, 8, 701, 67054, 634) {
+	}, MYSTIC_WILL(PrayerBook.NORMAL, new MysticWillListener(), 77102, 20, -1, 8, 701, 67054, 634) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, SHARP_EYE, HAWK_EYE, EAGLE_EYE, MYSTIC_LORE, MYSTIC_MIGHT, CHIVALRY, PIETY});
 		}
-	},
-	ROCK_SKIN(PrayerBook.NORMAL, new RockSkinListener(), 21236, 10, -1, 10, 86, 67055, 635) {
+	}, ROCK_SKIN(PrayerBook.NORMAL, new RockSkinListener(), 21236, 10, -1, 10, 86, 67055, 635) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{THICK_SKIN, STEEL_SKIN});
 		}
-	},
-	SUPERHUMAN_STRENGTH(PrayerBook.NORMAL, new SuperhumanStrengthListener(), 21237, 10, -1, 13, 87, 67056, 636) {
+	}, SUPERHUMAN_STRENGTH(PrayerBook.NORMAL, new SuperhumanStrengthListener(), 21237, 10, -1, 13, 87, 67056, 636) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{BURST_OF_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	},
-	IMPROVED_REFLEXES(PrayerBook.NORMAL, new ImprovedReflexesListener(), 21238, 10, -1, 16, 88, 67057, 637) {
+	}, IMPROVED_REFLEXES(PrayerBook.NORMAL, new ImprovedReflexesListener(), 21238, 10, -1, 16, 88, 67057, 637) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	},
-	RAPID_RESTORE(PrayerBook.NORMAL, 21239, 60, -1, 19, 89, 67058, 638) {
+	}, RAPID_RESTORE(PrayerBook.NORMAL, 21239, 60, -1, 19, 89, 67058, 638) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.empty();
 		}
-	},
-	RAPID_HEAL(PrayerBook.NORMAL, 21240, 30, -1, 22, 90, 67059, 639) {
+	}, RAPID_HEAL(PrayerBook.NORMAL, 21240, 30, -1, 22, 90, 67059, 639) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.empty();
 		}
-	},
-	PROTECT_ITEM(PrayerBook.NORMAL, 21241, 30, -1, 25, 91, 67060, 640) {
+	}, PROTECT_ITEM(PrayerBook.NORMAL, 21241, 30, -1, 25, 91, 67060, 640) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.empty();
 		}
-	},
-	HAWK_EYE(PrayerBook.NORMAL, new HawkEyeListener(), 77104, 10, -1, 6, 702, 67061, 641) {
+	}, HAWK_EYE(PrayerBook.NORMAL, new HawkEyeListener(), 77104, 10, -1, 6, 702, 67061, 641) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	},
-	MYSTIC_LORE(PrayerBook.NORMAL, new MysticLoreListener(), 77106, 10, -1, 6, 703, 67062, 642) {
+	}, MYSTIC_LORE(PrayerBook.NORMAL, new MysticLoreListener(), 77106, 10, -1, 6, 703, 67062, 642) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, SHARP_EYE, HAWK_EYE, EAGLE_EYE, MYSTIC_WILL, MYSTIC_MIGHT, CHIVALRY, PIETY});
 		}
-	},
-	STEEL_SKIN(PrayerBook.NORMAL, new SteelSkinListener(), 21242, 5, -1, 28, 92, 67063, 643) {
+	}, STEEL_SKIN(PrayerBook.NORMAL, new SteelSkinListener(), 21242, 5, -1, 28, 92, 67063, 643) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{THICK_SKIN, ROCK_SKIN});
 		}
-	},
-	ULTIMATE_STRENGTH(PrayerBook.NORMAL, new UltimateStrengthListener(), 21243, 5, -1, 31, 93, 67064, 644) {
+	}, ULTIMATE_STRENGTH(PrayerBook.NORMAL, new UltimateStrengthListener(), 21243, 5, -1, 31, 93, 67064, 644) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	},
-	INCREDIBLE_REFLEXES(PrayerBook.NORMAL, new IncredibleReflexesListener(), 21244, 5, -1, 34, 94, 67065, 645) {
+	}, INCREDIBLE_REFLEXES(PrayerBook.NORMAL, new IncredibleReflexesListener(), 21244, 5, -1, 34, 94, 67065, 645) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, EAGLE_EYE, CHIVALRY, PIETY});
 		}
-	},
-	PROTECT_FROM_MAGIC(PrayerBook.NORMAL, 21245, 5, 2, 37, 95, 67066, 646) {
+	}, PROTECT_FROM_MAGIC(PrayerBook.NORMAL, 21245, 5, 2, 37, 95, 67066, 646) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MISSILES, PROTECT_FROM_MELEE, RETRIBUTION, REDEMPTION, SMITE});
 		}
-	},
-	PROTECT_FROM_MISSILES(PrayerBook.NORMAL, 21246, 5, 1, 40, 96, 67067, 647) {
+	}, PROTECT_FROM_MISSILES(PrayerBook.NORMAL, 21246, 5, 1, 40, 96, 67067, 647) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MAGIC, PROTECT_FROM_MELEE, RETRIBUTION, REDEMPTION, SMITE});
 		}
-	},
-	PROTECT_FROM_MELEE(PrayerBook.NORMAL, 21247, 5, 0, 43, 97, 67068, 648) {
+	}, PROTECT_FROM_MELEE(PrayerBook.NORMAL, 21247, 5, 0, 43, 97, 67068, 648) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, RETRIBUTION, REDEMPTION, SMITE});
 		}
-	},
-	EAGLE_EYE(PrayerBook.NORMAL, new EagleEyeListener(), 77109, 5, -1, 44, 704, 67069, 649) {
+	}, EAGLE_EYE(PrayerBook.NORMAL, new EagleEyeListener(), 77109, 5, -1, 44, 704, 67069, 649) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, HAWK_EYE, CHIVALRY, PIETY});
 		}
-	},
-	MYSTIC_MIGHT(PrayerBook.NORMAL, new MysticMightListener(), 77111, 5, -1, 45, 705, 67070, 650) {
+	}, MYSTIC_MIGHT(PrayerBook.NORMAL, new MysticMightListener(), 77111, 5, -1, 45, 705, 67070, 650) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, SHARP_EYE, HAWK_EYE, EAGLE_EYE, MYSTIC_LORE, MYSTIC_WILL, CHIVALRY, PIETY});
 		}
-	},
-	RETRIBUTION(PrayerBook.NORMAL, 2171, 20, 3, 46, 98, 67071, 651) {
+	}, RETRIBUTION(PrayerBook.NORMAL, 2171, 20, 3, 46, 98, 67071, 651) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MELEE, PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, REDEMPTION, SMITE});
 		}
-	},
-	REDEMPTION(PrayerBook.NORMAL, 2172, 10, 5, 49, 99, 67072, 652) {
+	}, REDEMPTION(PrayerBook.NORMAL, 2172, 10, 5, 49, 99, 67072, 652) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MELEE, PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, RETRIBUTION, SMITE});
 		}
-	},
-	SMITE(PrayerBook.NORMAL, 2173, 3, 4, 52, 100, 67073, 653) {
+	}, SMITE(PrayerBook.NORMAL, 2173, 3, 4, 52, 100, 67073, 653) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{PROTECT_FROM_MELEE, PROTECT_FROM_MAGIC, PROTECT_FROM_MISSILES, REDEMPTION, RETRIBUTION});
 		}
-	},
-	CHIVALRY(PrayerBook.NORMAL, new ChivalryListener(), 77113, 2.5, -1, 60, 706, 67074, 654) {
+	}, CHIVALRY(PrayerBook.NORMAL, new ChivalryListener(), 77113, 2.5, -1, 60, 706, 67074, 654) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{THICK_SKIN, ROCK_SKIN, STEEL_SKIN, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, EAGLE_EYE, HAWK_EYE, PIETY});
 		}
-	},
-	PIETY(PrayerBook.NORMAL, new PietyListener(), 77115, 2.5, -1, 70, 707, 67075, 655) {
+	}, PIETY(PrayerBook.NORMAL, new PietyListener(), 77115, 2.5, -1, 70, 707, 67075, 655) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{THICK_SKIN, ROCK_SKIN, STEEL_SKIN, BURST_OF_STRENGTH, SUPERHUMAN_STRENGTH, ULTIMATE_STRENGTH, CLARITY_OF_THOUGHT, IMPROVED_REFLEXES, INCREDIBLE_REFLEXES, MYSTIC_WILL, MYSTIC_LORE, MYSTIC_MIGHT, SHARP_EYE, EAGLE_EYE, HAWK_EYE, CHIVALRY});
@@ -214,32 +189,27 @@ public enum Prayer {
 		public Optional<Prayer[]> deactivate() {
 			return Optional.empty();
 		}
-	},
-	SAP_WARRIOR(PrayerBook.CURSES, 83111, 4.16, -1, 50, 725, 67051, 631) {
+	}, SAP_WARRIOR(PrayerBook.CURSES, 83111, 4.16, -1, 50, 725, 67051, 631) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{LEECH_ATTACK, TURMOIL});
 		}
-	},
-	SAP_RANGER(PrayerBook.CURSES, 83113, 4.16, -1, 52, 726, 67052, 632) {
+	}, SAP_RANGER(PrayerBook.CURSES, 83113, 4.16, -1, 52, 726, 67052, 632) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{LEECH_RANGED, TURMOIL});
 		}
-	},
-	SAP_MAGE(PrayerBook.CURSES, 83115, 4.16, -1, 54, 727, 67053, 633) {
+	}, SAP_MAGE(PrayerBook.CURSES, 83115, 4.16, -1, 54, 727, 67053, 633) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{LEECH_MAGIC, TURMOIL});
 		}
-	},
-	SAP_SPIRIT(PrayerBook.CURSES, 83117, 4.16, -1, 56, 728, 67054, 634) {
+	}, SAP_SPIRIT(PrayerBook.CURSES, 83117, 4.16, -1, 56, 728, 67054, 634) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{LEECH_SPECIAL_ATTACK, TURMOIL});
 		}
-	},
-	BERSERKER(PrayerBook.CURSES, 83119, 30, -1, 59, 729, 67055, 635) {
+	}, BERSERKER(PrayerBook.CURSES, 83119, 30, -1, 59, 729, 67055, 635) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.empty();
@@ -251,116 +221,102 @@ public enum Prayer {
 			player.graphic(new Graphic(2266));
 			return true;
 		}
-	},
-	DEFLECT_SUMMONING(PrayerBook.CURSES, 83121, 5, 12, 62, 730, 67056, 636) {
+	}, DEFLECT_SUMMONING(PrayerBook.CURSES, 83121, 5, 12, 62, 730, 67056, 636) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{WRATH, SOUL_SPLIT});
 		}
-	},
-	DEFLECT_MAGIC(PrayerBook.CURSES, 83123, 5, 10, 65, 731, 67057, 637) {
+	}, DEFLECT_MAGIC(PrayerBook.CURSES, 83123, 5, 10, 65, 731, 67057, 637) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_MISSILES, DEFLECT_MELEE, WRATH, SOUL_SPLIT});
 		}
-	},
-	DEFLECT_MISSILES(PrayerBook.CURSES, 83125, 5, 11, 68, 732, 67058, 638) {
+	}, DEFLECT_MISSILES(PrayerBook.CURSES, 83125, 5, 11, 68, 732, 67058, 638) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_MAGIC, DEFLECT_MELEE, WRATH, SOUL_SPLIT});
 		}
-	},
-	DEFLECT_MELEE(PrayerBook.CURSES, 83127, 5, 9, 71, 733, 67059, 639) {
+	}, DEFLECT_MELEE(PrayerBook.CURSES, 83127, 5, 9, 71, 733, 67059, 639) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_MISSILES, DEFLECT_MAGIC, WRATH, SOUL_SPLIT});
 		}
-	},
-	LEECH_ATTACK(PrayerBook.CURSES, new LeechAttackListener(), 83129, 5.83, -1, 74, 734, 67060, 640) {
-        @Override
-        public boolean onDeactivation(Player player) {
-            player.curseManager.reset(this);
-            return true;
-        }
+	}, LEECH_ATTACK(PrayerBook.CURSES, new LeechAttackListener(), 83129, 5.83, -1, 74, 734, 67060, 640) {
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.curseManager.reset(this);
+			return true;
+		}
 
-        @Override
+		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SAP_WARRIOR, TURMOIL});
 		}
-	},
-	LEECH_RANGED(PrayerBook.CURSES, new LeechRangedListener(), 83131, 5.83, -1, 76, 735, 67061, 641) {
-        @Override
-        public boolean onDeactivation(Player player) {
-            player.curseManager.reset(this);
-            return true;
-        }
+	}, LEECH_RANGED(PrayerBook.CURSES, new LeechRangedListener(), 83131, 5.83, -1, 76, 735, 67061, 641) {
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.curseManager.reset(this);
+			return true;
+		}
 
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SAP_RANGER, TURMOIL});
 		}
-	},
-	LEECH_MAGIC(PrayerBook.CURSES, new LeechMagicListener(), 83133, 5.83, -1, 78, 736, 67062, 642) {
-        @Override
-        public boolean onDeactivation(Player player) {
-            player.curseManager.reset(this);
-            return true;
-        }
+	}, LEECH_MAGIC(PrayerBook.CURSES, new LeechMagicListener(), 83133, 5.83, -1, 78, 736, 67062, 642) {
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.curseManager.reset(this);
+			return true;
+		}
 
-        @Override
+		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SAP_MAGE, TURMOIL});
 		}
-	},
-	LEECH_DEFENCE(PrayerBook.CURSES, new LeechDefenceListener(), 83135, 5.83, -1, 80, 737, 67063, 643) {
-        @Override
-        public boolean onDeactivation(Player player) {
-            player.curseManager.reset(this);
-            return true;
-        }
-
-        @Override
-		public Optional<Prayer[]> deactivate() {
-			return Optional.of(new Prayer[]{TURMOIL});
+	}, LEECH_DEFENCE(PrayerBook.CURSES, new LeechDefenceListener(), 83135, 5.83, -1, 80, 737, 67063, 643) {
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.curseManager.reset(this);
+			return true;
 		}
-	},
-	LEECH_STRENGTH(PrayerBook.CURSES, new LeechStrengthListener(), 83137, 5.83, -1, 82, 738, 67064, 644) {
-        @Override
-        public boolean onDeactivation(Player player) {
-            player.curseManager.reset(this);
-            return true;
-        }
 
-        @Override
-		public Optional<Prayer[]> deactivate() {
-			return Optional.of(new Prayer[]{TURMOIL});
-		}
-	},
-	LEECH_ENERGY(PrayerBook.CURSES, 83139, 5.5, -1, 84, 739, 67065, 645) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{TURMOIL});
 		}
-	},
-	LEECH_SPECIAL_ATTACK(PrayerBook.CURSES, 83141, 6.6, -1, 86, 740, 67066, 646) {
+	}, LEECH_STRENGTH(PrayerBook.CURSES, new LeechStrengthListener(), 83137, 5.83, -1, 82, 738, 67064, 644) {
+		@Override
+		public boolean onDeactivation(Player player) {
+			player.curseManager.reset(this);
+			return true;
+		}
+
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{TURMOIL});
 		}
-	},
-	WRATH(PrayerBook.CURSES, 83143, 16.6, 16, 89, 741, 67067, 647) {
+	}, LEECH_ENERGY(PrayerBook.CURSES, 83139, 5.5, -1, 84, 739, 67065, 645) {
+		@Override
+		public Optional<Prayer[]> deactivate() {
+			return Optional.of(new Prayer[]{TURMOIL});
+		}
+	}, LEECH_SPECIAL_ATTACK(PrayerBook.CURSES, 83141, 6.6, -1, 86, 740, 67066, 646) {
+		@Override
+		public Optional<Prayer[]> deactivate() {
+			return Optional.of(new Prayer[]{TURMOIL});
+		}
+	}, WRATH(PrayerBook.CURSES, 83143, 16.6, 16, 89, 741, 67067, 647) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_SUMMONING, DEFLECT_MAGIC, DEFLECT_MISSILES, DEFLECT_MELEE, SOUL_SPLIT});
 		}
-	},
-	SOUL_SPLIT(PrayerBook.CURSES, 83145, 3.33, 17, 92, 742, 67068, 648) {
+	}, SOUL_SPLIT(PrayerBook.CURSES, 83145, 3.33, 17, 92, 742, 67068, 648) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{DEFLECT_SUMMONING, DEFLECT_MAGIC, DEFLECT_MISSILES, DEFLECT_MELEE, WRATH});
 		}
-	},
-	TURMOIL(PrayerBook.CURSES, new TurmoilListener(), 83147, 3.66, -1, 95, 743, 67069, 649) {
+	}, TURMOIL(PrayerBook.CURSES, new TurmoilListener(), 83147, 3.66, -1, 95, 743, 67069, 649) {
 		@Override
 		public Optional<Prayer[]> deactivate() {
 			return Optional.of(new Prayer[]{SAP_WARRIOR, SAP_RANGER, SAP_MAGE, SAP_SPIRIT, LEECH_ATTACK, LEECH_RANGED, LEECH_MAGIC, LEECH_DEFENCE, LEECH_STRENGTH, LEECH_ENERGY, LEECH_SPECIAL_ATTACK});
@@ -433,13 +389,13 @@ public enum Prayer {
 	
 	/**
 	 * Creates a new {@link Prayer}.
-	 * @param buttonId    the identification for this prayer.
-	 * @param drainRate   the amount of ticks it takes for prayer to be drained.
-	 * @param headIcon    the head icon present when this prayer is activated.
-	 * @param level       the level required to use this prayer.
-	 * @param config      the config to make the prayer button light up when activated.
+	 * @param buttonId the identification for this prayer.
+	 * @param drainRate the amount of ticks it takes for prayer to be drained.
+	 * @param headIcon the head icon present when this prayer is activated.
+	 * @param level the level required to use this prayer.
+	 * @param config the config to make the prayer button light up when activated.
 	 * @param quickPrayer the quick prayer button id.
-	 * @param checkmark   the quick prayer check mark condition.
+	 * @param checkmark the quick prayer check mark condition.
 	 */
 	Prayer(PrayerBook type, int buttonId, double drainRate, int headIcon, int level, int config, int quickPrayer, int checkmark) {
 		this(type, null, buttonId, drainRate, headIcon, level, config, quickPrayer, checkmark);
@@ -447,13 +403,13 @@ public enum Prayer {
 
 	/**
 	 * Creates a new {@link Prayer}.
-	 * @param buttonId    the identification for this prayer.
-	 * @param drainRate   the amount of ticks it takes for prayer to be drained.
-	 * @param headIcon    the head icon present when this prayer is activated.
-	 * @param level       the level required to use this prayer.
-	 * @param config      the config to make the prayer button light up when activated.
+	 * @param buttonId the identification for this prayer.
+	 * @param drainRate the amount of ticks it takes for prayer to be drained.
+	 * @param headIcon the head icon present when this prayer is activated.
+	 * @param level the level required to use this prayer.
+	 * @param config the config to make the prayer button light up when activated.
 	 * @param quickPrayer the quick prayer button id.
-	 * @param checkmark   the quick prayer check mark condition.
+	 * @param checkmark the quick prayer check mark condition.
 	 */
 	Prayer(PrayerBook type, CombatListener<Player> formulaModifier, int buttonId, double drainRate, int headIcon, int level, int config, int quickPrayer, int checkmark) {
 		this.type = type;
@@ -521,7 +477,7 @@ public enum Prayer {
 	 * Activates this combat prayer for {@code player}. If
 	 * {@code deactivateIfActivated} is flagged {@code true} then if this prayer
 	 * is already activated it will be deactivated instead.
-	 * @param player                the player to activate this prayer for.
+	 * @param player the player to activate this prayer for.
 	 * @param deactivateIfActivated if this prayer should be deactivated.
 	 * @return <true> if the prayer was activated, <false> otherwise.
 	 */
@@ -575,7 +531,7 @@ public enum Prayer {
 	
 	/**
 	 * Activates the quick prayers for specified {@link Player}.
-	 * @param player   The player we are activating the quick prayers for.
+	 * @param player The player we are activating the quick prayers for.
 	 * @param buttonId The button identifier to activate the prayer.
 	 */
 	public static boolean activateQuickPrayer(Player player, int buttonId) {
@@ -621,7 +577,7 @@ public enum Prayer {
 	
 	/**
 	 * Toggles this combat prayer for {@code player}.
-	 * @param player   the player to toggle this prayer for.
+	 * @param player the player to toggle this prayer for.
 	 * @param buttonId The button identification to check for.
 	 */
 	public static boolean toggleQuickPrayer(Player player, int buttonId) {
@@ -715,7 +671,7 @@ public enum Prayer {
 
 	/**
 	 * Determines if any of the specified prayers are activated.
-	 * @param player  the player's prayers to check.
+	 * @param player the player's prayers to check.
 	 * @param prayers the prayers to check if active.
 	 * @return {@code true} if any of the prayers are active for the player,
 	 * {@code false} otherwise.

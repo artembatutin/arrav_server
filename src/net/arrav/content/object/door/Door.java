@@ -3,15 +3,15 @@ package net.arrav.content.object.door;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.DynamicObject;
-import net.arrav.world.object.GameObject;
-import net.arrav.world.object.ObjectDirection;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.DynamicObject;
+import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.entity.object.ObjectDirection;
+import net.arrav.world.entity.object.ObjectType;
 
 import java.util.Optional;
 
-import static net.arrav.world.object.ObjectDirection.*;
-import static net.arrav.world.object.ObjectType.STRAIGHT_WALL;
+import static net.arrav.world.entity.object.ObjectDirection.*;
+import static net.arrav.world.entity.object.ObjectType.STRAIGHT_WALL;
 
 /**
  * Represents a single door.
@@ -85,9 +85,7 @@ public class Door {
 						direction = WEST;
 					}
 				} else {
-					GameObject[] adjacants = {reg.getObject(STRAIGHT_WALL, pos.move(-1, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(0, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos
-							.move(-1, 0)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, 0)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(-1, -1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(0, -1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos
-							.move(1, -1)).orElse(null)};
+					GameObject[] adjacants = {reg.getObject(STRAIGHT_WALL, pos.move(-1, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(0, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(-1, 0)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, 0)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(-1, -1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(0, -1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, -1)).orElse(null)};
 					for(GameObject ad : adjacants) {
 						if(ad == null)
 							continue;
@@ -124,9 +122,7 @@ public class Door {
 						direction2 = EAST;
 					}
 				} else {
-					GameObject[] adjacants = {reg.getObject(STRAIGHT_WALL, pos.move(-1, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(0, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos
-							.move(-1, 0)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, 0)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(-1, -1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(0, -1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos
-							.move(1, -1)).orElse(null)};
+					GameObject[] adjacants = {reg.getObject(STRAIGHT_WALL, pos.move(-1, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(0, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, 1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(-1, 0)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, 0)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(-1, -1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(0, -1)).orElse(null), reg.getObject(STRAIGHT_WALL, pos.move(1, -1)).orElse(null)};
 					for(GameObject ad : adjacants) {
 						if(ad == null)
 							continue;

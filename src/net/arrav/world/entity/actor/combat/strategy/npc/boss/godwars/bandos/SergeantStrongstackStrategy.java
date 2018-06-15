@@ -10,11 +10,11 @@ import net.arrav.world.entity.actor.mob.impl.godwars.GeneralGraardor;
  * Date: 04/02/2018
  * https://github.com/ophionB | https://www.rune-server.ee/members/ophion/
  */
-public class SergeantStrongstackStrategy extends NpcMeleeStrategy{
-
-    @Override
-    public boolean canAttack(Mob attacker, Actor defender) {
-        return defender.isPlayer() && GeneralGraardor.CHAMBER.inLocation(defender.getPosition());
-    }
-
+public class SergeantStrongstackStrategy extends NpcMeleeStrategy {
+	
+	@Override
+	public boolean canAttack(Mob attacker, Actor defender) {
+		return defender.isPlayer() && GeneralGraardor.CHAMBER.inLocation(defender.getPosition());
+	}
+	
 }

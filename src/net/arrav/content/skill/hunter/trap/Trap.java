@@ -6,10 +6,10 @@ import net.arrav.task.Task;
 import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
-import net.arrav.world.object.DynamicObject;
-import net.arrav.world.object.GameObject;
-import net.arrav.world.object.ObjectDirection;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.DynamicObject;
+import net.arrav.world.entity.object.GameObject;
+import net.arrav.world.entity.object.ObjectDirection;
+import net.arrav.world.entity.object.ObjectType;
 
 /**
  * Represents a single trap on the world.
@@ -45,7 +45,7 @@ public abstract class Trap {
 	/**
 	 * Constructs a new {@link Trap}.
 	 * @param player {@link #player}.
-	 * @param type   {@link #type}.
+	 * @param type {@link #type}.
 	 */
 	public Trap(Player player, TrapType type) {
 		this.player = player;
@@ -253,7 +253,7 @@ public abstract class Trap {
 		/**
 		 * Constructs a new {@link TrapType}.
 		 * @param objectId {@link #objectId}.
-		 * @param itemId   {@link #itemId}.
+		 * @param itemId {@link #itemId}.
 		 */
 		TrapType(int objectId, int itemId) {
 			this.objectId = objectId;
@@ -282,10 +282,7 @@ public abstract class Trap {
 	 * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
 	 */
 	public enum TrapState {
-		PENDING,
-		CATCHING,
-		CAUGHT,
-		FALLEN
+		PENDING, CATCHING, CAUGHT, FALLEN
 	}
 
 }

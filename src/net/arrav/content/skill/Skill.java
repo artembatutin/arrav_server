@@ -106,7 +106,7 @@ public final class Skill {
 	
 	/**
 	 * Increments this level by {@code amount} to {@code maximum}.
-	 * @param amount  the amount to increase this level by.
+	 * @param amount the amount to increase this level by.
 	 * @param maximum the maximum level to increase this to.
 	 */
 	public void increaseLevel(int amount, int maximum) {
@@ -128,7 +128,7 @@ public final class Skill {
 	/**
 	 * Decrements this level by {@code amount} to a minimum of {@code 0}.
 	 * @param amount the amount to decrease this level by.
-	 * @param zero   determines if this skill can be decreased to zero.
+	 * @param zero determines if this skill can be decreased to zero.
 	 */
 	public void decreaseLevel(int amount, boolean zero) {
 		decreaseLevel(amount, 0, zero);
@@ -147,7 +147,7 @@ public final class Skill {
 	 * Decrements this level by {@code maximum} to {@code minimum}.
 	 * @param maximum the amount to decrease this level by.
 	 * @param minimum the minimum amount to decrease this level by.
-	 * @param zero    determines if this level can be decreased down to zero.
+	 * @param zero determines if this level can be decreased down to zero.
 	 */
 	public void decreaseLevel(int maximum, int minimum, boolean zero) {
 		boolean check = zero ? level < 1 : level <= 1;
@@ -207,7 +207,7 @@ public final class Skill {
 	
 	/**
 	 * Sets the value for {@link Skill#level}.
-	 * @param level       the new value to set.
+	 * @param level the new value to set.
 	 * @param restriction if the level should be modified before being set.
 	 */
 	public void setLevel(int level, boolean restriction) {

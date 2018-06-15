@@ -13,15 +13,7 @@ import java.util.Optional;
  * @author <a href="http://www.rune-server.org/members/stand+up/">Stand Up</a>
  */
 public enum ClanChatRank {
-	MEMBER(0),
-	FRIEND(1),
-	RECRUIT(2),
-	CORPORAL(3),
-	SERGEANT(4),
-	LIEUTENANT(5),
-	CAPTAIN(6),
-	GENERAL(7),
-	OWNER(8);
+	MEMBER(0), FRIEND(1), RECRUIT(2), CORPORAL(3), SERGEANT(4), LIEUTENANT(5), CAPTAIN(6), GENERAL(7), OWNER(8);
 	
 	private static final ObjectList<ClanChatRank> RANKS = new ObjectArrayList<>(ClanChatRank.values());
 	

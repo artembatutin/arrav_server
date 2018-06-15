@@ -38,7 +38,7 @@ public final class CombatData<T extends Actor> {
 	 * Constructs a new {@code CombatHitData} object.
 	 * @param attacker the attacker
 	 * @param defender the defender
-	 * @param hit      the combat hit
+	 * @param hit the combat hit
 	 * @param strategy the strategy
 	 * @param lastHit whether or not this hit is the first one
 	 */

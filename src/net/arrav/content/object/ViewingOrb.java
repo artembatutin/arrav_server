@@ -51,8 +51,8 @@ public final class ViewingOrb {
 	
 	/**
 	 * Creates a new {@link ViewingOrb}.
-	 * @param player    the player that is viewing the orb.
-	 * @param centre    the centre position corresponding to the viewing orb.
+	 * @param player the player that is viewing the orb.
+	 * @param centre the centre position corresponding to the viewing orb.
 	 * @param northWest the north-west position corresponding to the viewing orb.
 	 * @param northEast the north-east position corresponding to the viewing orb.
 	 * @param southWest the south-west position corresponding to the viewing orb.
@@ -109,9 +109,9 @@ public final class ViewingOrb {
 	/**
 	 * Moves the player to {@code position} and updates the navigation interface
 	 * with the position that the player is being moved to.
-	 * @param positionName   the name of the position being moved to.
+	 * @param positionName the name of the position being moved to.
 	 * @param positionLineId the interface string id of the position being moved to.
-	 * @param position       the position being moved to.
+	 * @param position the position being moved to.
 	 */
 	public void move(String positionName, int positionLineId, Position position) {
 		if(position.same(player.getPosition()))

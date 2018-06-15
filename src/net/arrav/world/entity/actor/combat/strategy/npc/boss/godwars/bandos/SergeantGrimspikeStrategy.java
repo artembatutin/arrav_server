@@ -12,16 +12,15 @@ import net.arrav.world.entity.actor.mob.impl.godwars.GeneralGraardor;
  * https://github.com/ophionB | https://www.rune-server.ee/members/ophion/
  */
 public class SergeantGrimspikeStrategy extends NpcRangedStrategy {
-
-    public SergeantGrimspikeStrategy() {
-        super(CombatProjectile.getDefinition("Sergeant grimspike"));
-    }
-
-    @Override
-    public boolean canAttack(Mob attacker, Actor defender) {
-        return defender.isPlayer() && GeneralGraardor.CHAMBER.inLocation(defender.getPosition());
-
-    }
-
-
+	
+	public SergeantGrimspikeStrategy() {
+		super(CombatProjectile.getDefinition("Sergeant grimspike"));
+	}
+	
+	@Override
+	public boolean canAttack(Mob attacker, Actor defender) {
+		return defender.isPlayer() && GeneralGraardor.CHAMBER.inLocation(defender.getPosition());
+		
+	}
+	
 }

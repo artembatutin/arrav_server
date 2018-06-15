@@ -49,7 +49,7 @@ public enum RFDData {
 	 * Constructs a new {@link RFDData}.
 	 * @param index {@link #index}.
 	 * @param npcId {@link #npcId}.
-	 * @param ids   {@link #ids}.
+	 * @param ids {@link #ids}.
 	 */
 	RFDData(int index, int npcId, int... ids) {
 		this.index = index;

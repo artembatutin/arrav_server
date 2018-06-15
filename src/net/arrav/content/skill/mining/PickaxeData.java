@@ -68,12 +68,12 @@ public enum PickaxeData {
 	
 	/**
 	 * Constructs a new {@link PickaxeData} enumerator.
-	 * @param item        {@link #item}.
-	 * @param head        {@link #head}.
-	 * @param broken      {@link #broken}.
-	 * @param animation   {@link #animation}.
+	 * @param item {@link #item}.
+	 * @param head {@link #head}.
+	 * @param broken {@link #broken}.
+	 * @param animation {@link #animation}.
 	 * @param requirement {@link #requirement}.
-	 * @param speed       {@link #speed}.
+	 * @param speed {@link #speed}.
 	 */
 	private PickaxeData(int item, int head, int broken, int animation, int requirement, double speed) {
 		this.item = new Item(item);
@@ -86,10 +86,10 @@ public enum PickaxeData {
 	
 	/**
 	 * Constructs a new {@link PickaxeData} enumerator.
-	 * @param item        {@link #item}.
-	 * @param animation   {@link #animation}.
+	 * @param item {@link #item}.
+	 * @param animation {@link #animation}.
 	 * @param requirement {@link #requirement}.
-	 * @param speed       {@link #speed}.
+	 * @param speed {@link #speed}.
 	 */
 	private PickaxeData(int item, int animation, int requirement, double speed) {
 		this.item = new Item(item);

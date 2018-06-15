@@ -64,7 +64,7 @@ public final class Projectile {
 	 * The delay of the projectile.
 	 */
 	private final int delay;
-
+	
 	/**
 	 * The instance on which this projectile is being active.
 	 */
@@ -72,16 +72,16 @@ public final class Projectile {
 	
 	/**
 	 * Creates a new {@link Projectile}.
-	 * @param start        the starting position of the projectile.
-	 * @param end          the ending position of the projectile.
-	 * @param lockon       the lock on value of the projectile.
+	 * @param start the starting position of the projectile.
+	 * @param end the ending position of the projectile.
+	 * @param lockon the lock on value of the projectile.
 	 * @param projectileId the id of the projectile.
-	 * @param speed        the speed of the projectile.
-	 * @param delay        the delay of the projectile.
-	 * @param startHeight  the starting height of the projectile.
-	 * @param endHeight    the ending height of the projectile.
-	 * @param instance     the world instance on which the projectile is active.
-	 * @param type         the combat type of this projectile
+	 * @param speed the speed of the projectile.
+	 * @param delay the delay of the projectile.
+	 * @param startHeight the starting height of the projectile.
+	 * @param endHeight the ending height of the projectile.
+	 * @param instance the world instance on which the projectile is active.
+	 * @param type the combat type of this projectile
 	 */
 	public Projectile(Position start, Position end, int lockon, int projectileId, int speed, int delay, int startHeight, int endHeight, int instance, CombatType type) {
 		this.start = start;
@@ -98,14 +98,14 @@ public final class Projectile {
 	/**
 	 * Creates a new {@link Projectile} based on the difference between the
 	 * {@code source} and {@code victim}.
-	 * @param source       the character that is firing this projectile.
-	 * @param victim       the victim that this projectile is being fired at.
+	 * @param source the character that is firing this projectile.
+	 * @param victim the victim that this projectile is being fired at.
 	 * @param projectileId the id of the projectile.
-	 * @param speed        the speed of the projectile.
-	 * @param delay        the delay of the projectile.
-	 * @param startHeight  the starting height of the projectile.
-	 * @param endHeight    the ending height of the projectile.
-	 * @param type         the combat type of this projectile
+	 * @param speed the speed of the projectile.
+	 * @param delay the delay of the projectile.
+	 * @param startHeight the starting height of the projectile.
+	 * @param endHeight the ending height of the projectile.
+	 * @param type the combat type of this projectile
 	 */
 	public Projectile(Actor source, Actor victim, int projectileId, int speed, int delay, int startHeight, int endHeight, CombatType type) {
 		this(source.getCenterPosition(), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), projectileId, speed, delay, startHeight, endHeight, source.getInstance(), type);
@@ -114,13 +114,13 @@ public final class Projectile {
 	/**
 	 * Creates a new {@link Projectile} based on the difference between the
 	 * {@code source} and {@code victim}.
-	 * @param source       the character that is firing this projectile.
-	 * @param victim       the victim that this projectile is being fired at.
+	 * @param source the character that is firing this projectile.
+	 * @param victim the victim that this projectile is being fired at.
 	 * @param projectileId the id of the projectile.
-	 * @param speed        the speed of the projectile.
-	 * @param delay        the delay of the projectile.
-	 * @param startHeight  the starting height of the projectile.
-	 * @param endHeight    the ending height of the projectile.
+	 * @param speed the speed of the projectile.
+	 * @param delay the delay of the projectile.
+	 * @param startHeight the starting height of the projectile.
+	 * @param endHeight the ending height of the projectile.
 	 */
 	public Projectile(Actor source, Actor victim, int projectileId, int speed, int delay, int startHeight, int endHeight) {
 		this(source.getCenterPosition(), victim.getCenterPosition(), (victim.isPlayer() ? -victim.getSlot() - 1 : victim.getSlot() + 1), projectileId, speed, delay, startHeight, endHeight, source.getInstance(), null);
@@ -208,7 +208,7 @@ public final class Projectile {
 	public int getDelay() {
 		return delay;
 	}
-
+	
 	/**
 	 * Gets the instance on which this projectile is being active.
 	 * @return the instance of this projectile.

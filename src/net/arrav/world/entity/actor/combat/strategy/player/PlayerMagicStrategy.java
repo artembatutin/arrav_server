@@ -7,10 +7,10 @@ import net.arrav.world.entity.actor.combat.CombatImpact;
 import net.arrav.world.entity.actor.combat.CombatType;
 import net.arrav.world.entity.actor.combat.CombatUtil;
 import net.arrav.world.entity.actor.combat.attack.FightType;
-import net.arrav.world.entity.actor.combat.magic.MagicRune;
-import net.arrav.world.entity.actor.combat.magic.CombatSpell;
 import net.arrav.world.entity.actor.combat.hit.CombatHit;
 import net.arrav.world.entity.actor.combat.hit.Hit;
+import net.arrav.world.entity.actor.combat.magic.CombatSpell;
+import net.arrav.world.entity.actor.combat.magic.MagicRune;
 import net.arrav.world.entity.actor.combat.strategy.basic.MagicStrategy;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
@@ -59,14 +59,14 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 			spell.getStart().ifPresent(attacker::graphic);
 			spell.sendProjectile(attacker, defender);
 
-			if (spell.getEffect().isPresent()) {
+			if(spell.getEffect().isPresent()) {
 				List<Hit> extra = new LinkedList<>();
-				for (Hit hit : hits) {
+				for(Hit hit : hits) {
 					Predicate<CombatImpact> filter = effect -> effect.canAffect(attacker, defender, hit);
 					Consumer<CombatImpact> execute = effect -> effect.impact(attacker, defender, hit, extra);
 					spell.getEffect().filter(filter).ifPresent(execute);
 				}
-				if (extra.isEmpty()) {
+				if(extra.isEmpty()) {
 					Collections.addAll(extra, hits);
 					addCombatExperience(attacker, spell.getBaseExperience(), extra.toArray(new Hit[0]));
 				} else {
@@ -76,7 +76,7 @@ public class PlayerMagicStrategy extends MagicStrategy<Player> {
 				addCombatExperience(attacker, spell.getBaseExperience(), hits);
 			}
 
-			if (attacker.isSingleCast()) {
+			if(attacker.isSingleCast()) {
 				attacker.facePosition(defender.getPosition());
 				attacker.setSingleCast(null);
 				attacker.getCombat().reset(true, true);

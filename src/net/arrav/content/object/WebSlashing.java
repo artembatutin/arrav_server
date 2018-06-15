@@ -6,7 +6,7 @@ import net.arrav.util.rand.RandomUtils;
 import net.arrav.world.Animation;
 import net.arrav.world.World;
 import net.arrav.world.entity.actor.player.Player;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 /**
  * Holds support for slashing webs found allover runescape.

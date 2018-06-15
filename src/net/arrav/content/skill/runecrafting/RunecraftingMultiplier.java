@@ -19,7 +19,7 @@ public final class RunecraftingMultiplier {
 	/**
 	 * Constructs a new {@link RunecraftingMultiplier}.
 	 * @param requirement {@link #requirement}.
-	 * @param multiply    {@link #multiply}.
+	 * @param multiply {@link #multiply}.
 	 */
 	RunecraftingMultiplier(int requirement, int multiply) {
 		this.requirement = requirement;

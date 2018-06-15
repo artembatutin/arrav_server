@@ -16,13 +16,13 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class NpcRangedStrategy extends RangedStrategy<Mob> {
-
+	
 	private final CombatProjectile projectileDefinition;
 	
 	public NpcRangedStrategy(CombatProjectile projectileDefinition) {
 		this.projectileDefinition = projectileDefinition;
 	}
-
+	
 	@Override
 	public void start(Mob attacker, Actor defender, Hit[] hits) {
 		Animation animation = projectileDefinition.getAnimation().orElse(getAttackAnimation(attacker, defender));

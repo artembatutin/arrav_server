@@ -33,8 +33,8 @@ final class BankTab extends ItemContainer {
 	
 	/**
 	 * Creates a new bank tab.
-	 * @param player   the player instance.
-	 * @param slot     the slot of our bank tab.
+	 * @param player the player instance.
+	 * @param slot the slot of our bank tab.
 	 * @param capacity the capacity of our bank tab.
 	 */
 	BankTab(Player player, int slot, int capacity) {
@@ -45,11 +45,11 @@ final class BankTab extends ItemContainer {
 	
 	/**
 	 * Deposits an {@link Item} from the underlying player's {@link Inventory}.
-	 * @param player         The player depositing an item.
+	 * @param player The player depositing an item.
 	 * @param inventoryIndex The {@code Inventory} index that the {@code Item} will be deposited from.
-	 * @param amount         The amount of the {@code Item} to deposit.
-	 * @param refresh        The flag if the tab must be refreshed after the operation.
-	 * @param container      The container from which we will withdraw.
+	 * @param amount The amount of the {@code Item} to deposit.
+	 * @param refresh The flag if the tab must be refreshed after the operation.
+	 * @param container The container from which we will withdraw.
 	 * @return {@code true} if the {@code Item} was successfully deposited, {@code false} otherwise.
 	 */
 	boolean deposit(Player player, int inventoryIndex, int amount, boolean refresh, ItemContainer container) {
@@ -87,8 +87,8 @@ final class BankTab extends ItemContainer {
 	/**
 	 * Withdraws an {@link Item} from the underlying player's {@code Bank}.
 	 * @param bankIndex The {@code Bank} index that the {@code Item} will be deposited from.
-	 * @param amount    The amount of the {@code Item} to withdraw.
-	 * @param refresh   the flag if the container must be sent as a packet.
+	 * @param amount The amount of the {@code Item} to withdraw.
+	 * @param refresh the flag if the container must be sent as a packet.
 	 * @return {@code true} if the {@code Item} was successfully deposited, {@code false} otherwise.
 	 */
 	boolean withdraw(Player player, int bankIndex, int amount, boolean refresh) {

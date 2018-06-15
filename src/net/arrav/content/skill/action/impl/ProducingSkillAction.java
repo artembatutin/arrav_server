@@ -28,7 +28,7 @@ public abstract class ProducingSkillAction extends SkillAction {
 	
 	/**
 	 * Creates a new {@link ProducingSkillAction}.
-	 * @param player   the player this skill action is for.
+	 * @param player the player this skill action is for.
 	 * @param position the position the player should face.
 	 */
 	public ProducingSkillAction(Player player, Optional<Position> position) {
@@ -88,11 +88,11 @@ public abstract class ProducingSkillAction extends SkillAction {
 	
 	/**
 	 * The method executed upon production of an item.
-	 * @param t       the task executing this method.
+	 * @param t the task executing this method.
 	 * @param success determines if the production was successful or not.
 	 */
 	public void onProduce(Task t, boolean success) {
-	
+
 	}
 	
 	/**

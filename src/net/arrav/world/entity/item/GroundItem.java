@@ -45,9 +45,9 @@ public class GroundItem extends Entity {
 	
 	/**
 	 * Creates new {@link GroundItem}.
-	 * @param item     the item concealed within this node.
+	 * @param item the item concealed within this node.
 	 * @param position the position this node is on.
-	 * @param player   the player attached to this node.
+	 * @param player the player attached to this node.
 	 */
 	public GroundItem(Item item, Position position, Player player) {
 		super(position, EntityType.ITEM);

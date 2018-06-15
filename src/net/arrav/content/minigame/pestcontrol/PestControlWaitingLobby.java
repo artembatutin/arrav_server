@@ -15,7 +15,7 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.Item;
 import net.arrav.world.entity.item.ItemCache;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.GameObject;
+import net.arrav.world.entity.object.GameObject;
 
 import static net.arrav.content.minigame.Minigame.MinigameSafety.SAFE;
 import static net.arrav.world.entity.item.ItemCache.*;
@@ -112,7 +112,7 @@ public final class PestControlWaitingLobby extends MinigameLobby {
 	
 	@Override
 	public void onDestruct() {
-	
+
 	}
 	
 	public int seconds() {

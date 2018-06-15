@@ -34,7 +34,7 @@ public final class ItemOnPlayerPacket implements IncomingPacket {
 		
 		player.getMovementListener().append(() -> {
 			if(player.getPosition().withinDistance(usedOn.getPosition(), 1)) {
-			
+
 			}
 		});
 		player.getActivityManager().execute(ActivityManager.ActivityType.ITEM_ON_PLAYER);

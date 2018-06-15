@@ -20,7 +20,7 @@ public class Spinner extends Pest {
 	
 	/**
 	 * Creates a new {@link Mob}.
-	 * @param id     the identification for this NPC.
+	 * @param id the identification for this NPC.
 	 * @param portal the portal to defend.
 	 */
 	public Spinner(int id, PestPortal portal, Position spawn) {

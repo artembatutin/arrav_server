@@ -4,9 +4,9 @@ import net.arrav.content.skill.firemaking.LogType;
 import net.arrav.util.TextUtils;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.locale.Position;
-import net.arrav.world.object.DynamicObject;
-import net.arrav.world.object.ObjectDirection;
-import net.arrav.world.object.ObjectType;
+import net.arrav.world.entity.object.DynamicObject;
+import net.arrav.world.entity.object.ObjectDirection;
+import net.arrav.world.entity.object.ObjectType;
 
 import java.util.Optional;
 
@@ -81,7 +81,7 @@ public final class FirepitObject extends DynamicObject {
 	/**
 	 * Determines if the specified {@code log} can be added to the fire pit.
 	 * @param player the player attempting to add the log.
-	 * @param log    the log that was added.
+	 * @param log the log that was added.
 	 * @return {@code true} if the log is permissible, {@code false} otherwise.
 	 */
 	public boolean isPermissable(Player player, int log) {

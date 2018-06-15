@@ -44,9 +44,9 @@ public final class Tanning extends ProducingSkillAction {
 	/**
 	 * Constructs a new {@link Tanning} skill action.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
+	 * @param data {@link #data}.
 	 * @param amount {@link #amount}.
-	 * @param spell  {@link #spell}.
+	 * @param spell {@link #spell}.
 	 */
 	public Tanning(Player player, TanningData data, int amount, boolean spell) {
 		super(player, Optional.empty());
@@ -57,7 +57,7 @@ public final class Tanning extends ProducingSkillAction {
 	
 	/**
 	 * Attempts to register a certain amount of tanning products.
-	 * @param player   the player creating the tanning products.
+	 * @param player the player creating the tanning products.
 	 * @param buttonId the button the player interacted with.
 	 * @return {@code true} if the player created any products, {@code false} otherwise.
 	 */
@@ -85,9 +85,9 @@ public final class Tanning extends ProducingSkillAction {
 	/**
 	 * Creates the item the player was tanning for.
 	 * @param player {@link #getPlayer()}.
-	 * @param data   {@link #data}.
+	 * @param data {@link #data}.
 	 * @param amount {@link #amount}.
-	 * @param spell  {@link #spell}.
+	 * @param spell {@link #spell}.
 	 * @return <true> if the skill action was started, <false> otherwise.
 	 */
 	public static void create(Player player, TanningData data, int amount, boolean spell) {
@@ -98,8 +98,8 @@ public final class Tanning extends ProducingSkillAction {
 	/**
 	 * Attempts to openShop the interface for the specified player.
 	 * @param player the player to openShop the interface for.
-	 * @param item   the item being used on the mob.
-	 * @param mob    the mob that the item was used on.
+	 * @param item the item being used on the mob.
+	 * @param mob the mob that the item was used on.
 	 * @return {@code true} if the interface was opened, {@code false} otherwise.
 	 */
 	public static boolean openInterface(Player player, Item item, Mob mob) {
@@ -286,14 +286,14 @@ public final class Tanning extends ProducingSkillAction {
 		
 		/**
 		 * Constructs a new {@link TanningData}.
-		 * @param buttonId   {@link #buttonId}.
-		 * @param cost       {@link #cost}.
-		 * @param nameFrame  {@link #nameFrame}.
+		 * @param buttonId {@link #buttonId}.
+		 * @param cost {@link #cost}.
+		 * @param nameFrame {@link #nameFrame}.
 		 * @param priceFrame {@link #priceFrame}.
 		 * @param modelFrame {@link #modelFrame}.
-		 * @param required   {@link #required}.
-		 * @param product    {@link #product}.
-		 * @param count      {@link #count}.
+		 * @param required {@link #required}.
+		 * @param product {@link #product}.
+		 * @param count {@link #count}.
 		 */
 		TanningData(int buttonId, int cost, int nameFrame, int priceFrame, int modelFrame, int required, int product, int count) {
 			this.buttonId = buttonId;
@@ -309,8 +309,8 @@ public final class Tanning extends ProducingSkillAction {
 		/**
 		 * Constructs a new {@link TanningData}.
 		 * @param buttonId {@link #buttonId}.
-		 * @param data     the tanning data to construct a new one from.
-		 * @param count    {@link #count}.
+		 * @param data the tanning data to construct a new one from.
+		 * @param count {@link #count}.
 		 */
 		TanningData(int buttonId, TanningData data, int count) {
 			this.buttonId = buttonId;

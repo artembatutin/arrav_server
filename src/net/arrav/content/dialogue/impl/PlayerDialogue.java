@@ -21,7 +21,7 @@ public final class PlayerDialogue extends Dialogue {
 	/**
 	 * Creates a new {@link PlayerDialogue}.
 	 * @param expression the expression that this player will display.
-	 * @param text       the text that will be displayed on the dialogue.
+	 * @param text the text that will be displayed on the dialogue.
 	 */
 	public PlayerDialogue(Expression expression, String... text) {
 		super(text);

@@ -22,8 +22,8 @@ public final class BarrowBrother extends Mob {
 	
 	/**
 	 * Constructs a new {@link BarrowBrother}.
-	 * @param data     {@link #data}.
-	 * @param player   the player this brother is spawned for.
+	 * @param data {@link #data}.
+	 * @param player the player this brother is spawned for.
 	 * @param position the position to spawn this brother at.
 	 */
 	BarrowBrother(BarrowsData data, Player player, Position position) {

@@ -28,36 +28,36 @@ public enum CombatSpecial {
 	ANCHOR(new int[]{10887}, 50, new Anchor()),
 	SARADOMIN_SWORD(new int[]{11730}, 65, new SaradominSword()),
 	//		DRAGON_2H_SWORD(new int[]{7158}, 60, 1, 1, CombatType.MELEE, WeaponInterface.TWO_HANDED_SWORD) {
-//			@Override
-//			public CombatHit container(Player player, Actor target) {
-//				player.animation(new Animation(3157, Animation.AnimationPriority.HIGH));
-//				player.graphic(new Graphic(559));
-//				return new CombatHit(player, target, 1, CombatType.MELEE, false) {
-//					@Override
-//					public void postAttack(int counter) {
-//						if(player.inMulti()) {
-//							Set<? extends Actor> local = null;
-//							if(target.isPlayer()) {
-//								local = player.getLocalPlayers();
-//							} else if(target.isMob()) {
-//								local = player.getLocalMobs();
-//							}
-//							if(local == null)
-//								return;
-//							for(Actor character : local) {
-//								if(character == null)
-//									continue;
-//								if(character.getPosition().withinDistance(target.getPosition(), 1) && !character.same(target) && !character.same(player) && character.getCurrentHealth() > 0 && !character.isDead()) {
-//									Hit hit = CombatUtil.calculateRandomHit(player, target, CombatType.MELEE, 0, true);
-//									character.damage(hit);
-//									character.getCombat().getDamageCache().add(player, hit.getDamage());
-//								}
-//							}
-//						}
-//					}
-//				};
-//			}
-//		},
+	//			@Override
+	//			public CombatHit container(Player player, Actor target) {
+	//				player.animation(new Animation(3157, Animation.AnimationPriority.HIGH));
+	//				player.graphic(new Graphic(559));
+	//				return new CombatHit(player, target, 1, CombatType.MELEE, false) {
+	//					@Override
+	//					public void postAttack(int counter) {
+	//						if(player.inMulti()) {
+	//							Set<? extends Actor> local = null;
+	//							if(target.isPlayer()) {
+	//								local = player.getLocalPlayers();
+	//							} else if(target.isMob()) {
+	//								local = player.getLocalMobs();
+	//							}
+	//							if(local == null)
+	//								return;
+	//							for(Actor character : local) {
+	//								if(character == null)
+	//									continue;
+	//								if(character.getPosition().withinDistance(target.getPosition(), 1) && !character.same(target) && !character.same(player) && character.getCurrentHealth() > 0 && !character.isDead()) {
+	//									Hit hit = CombatUtil.calculateRandomHit(player, target, CombatType.MELEE, 0, true);
+	//									character.damage(hit);
+	//									character.getCombat().getDamageCache().add(player, hit.getDamage());
+	//								}
+	//							}
+	//						}
+	//					}
+	//				};
+	//			}
+	//		},
 	DRAGON_BATTLEAXE(new int[]{1377}, 100, null) {
 		@Override
 		public void enable(Player player) {
@@ -184,7 +184,7 @@ public enum CombatSpecial {
 	//			};
 	//		}
 	//	},
-		MAGIC_SHORTBOW(new int[]{861}, 50, new MagicShortbow()),
+	MAGIC_SHORTBOW(new int[]{861}, 50, new MagicShortbow()),
 	//	MAGIC_LONGBOW(new int[]{859}, 35, 1, 5, CombatType.RANGED, WeaponInterface.LONGBOW) {
 	//		@Override
 	//		public CombatHit container(Player player, Actor target) {
@@ -209,28 +209,28 @@ public enum CombatSpecial {
 	//			return new CombatHit(player, target, 1, CombatType.RANGED, true);
 	//		}
 	//	},
-//		DARKLIGHT(new int[]{6746}, 50, 1.15, 1, CombatType.MELEE, WeaponInterface.LONGSWORD) {
-//			@Override
-//			public CombatHit container(Player player, Actor target) {
-//				player.animation(new Animation(2890, Animation.AnimationPriority.HIGH));
-//				player.graphic(new Graphic(483, 100));
-//				return new CombatHit(player, target, 1, CombatType.MELEE, true) {
-//					@Override
-//					public void postAttack(int counter) {
-//						if(!target.isPlayer()) {
-//							return;
-//						}
-//						Skill[] skills = target.toPlayer().getSkills();
-//						List<Skill> weaken = Arrays.asList(skills[Skills.ATTACK], skills[Skills.STRENGTH], skills[Skills.DEFENCE]);
-//
-//						weaken.forEach(skill -> {
-//							int modifier = 1 + (skill.getLevel() / 100) * 5;
-//							skill.decreaseLevel(modifier);
-//						});
-//					}
-//				};
-//			}
-//		},
+	//		DARKLIGHT(new int[]{6746}, 50, 1.15, 1, CombatType.MELEE, WeaponInterface.LONGSWORD) {
+	//			@Override
+	//			public CombatHit container(Player player, Actor target) {
+	//				player.animation(new Animation(2890, Animation.AnimationPriority.HIGH));
+	//				player.graphic(new Graphic(483, 100));
+	//				return new CombatHit(player, target, 1, CombatType.MELEE, true) {
+	//					@Override
+	//					public void postAttack(int counter) {
+	//						if(!target.isPlayer()) {
+	//							return;
+	//						}
+	//						Skill[] skills = target.toPlayer().getSkills();
+	//						List<Skill> weaken = Arrays.asList(skills[Skills.ATTACK], skills[Skills.STRENGTH], skills[Skills.DEFENCE]);
+	//
+	//						weaken.forEach(skill -> {
+	//							int modifier = 1 + (skill.getLevel() / 100) * 5;
+	//							skill.decreaseLevel(modifier);
+	//						});
+	//					}
+	//				};
+	//			}
+	//		},
 	DARK_BOW(new int[]{11235}, 55, new DarkBow()),
 	ZAMORAK_GODSWORD(new int[]{11700}, 50, new ZamorakGodsword()),
 	SARADOMIN_GODSWORD(new int[]{11698}, 60, new SaradominGodsword()),
@@ -244,7 +244,7 @@ public enum CombatSpecial {
 	GRANITE_MAUL(new int[]{4153}, 50, new GraniteMaul()) {
 		@Override
 		public void enable(Player player) {
-			if (player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
+			if(player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
 				player.out(new SendMessage("You do not have enough special energy left!"));
 				return;
 			}
@@ -255,7 +255,7 @@ public enum CombatSpecial {
 			Combat<Player> combat = player.getCombat();
 			Actor defender = combat.getLastDefender();
 
-			if (combat.isAttacking(defender)) {
+			if(combat.isAttacking(defender)) {
 				combat.submitStrategy(defender, GraniteMaul.get());
 			}
 		}
@@ -278,7 +278,7 @@ public enum CombatSpecial {
 
 	/**
 	 * Creates a new {@link CombatSpecial}.
-	 * @param ids    the identifiers for the weapons that perform this special.
+	 * @param ids the identifiers for the weapons that perform this special.
 	 * @param amount the amount of special energy drained by this attack.
 	 */
 	CombatSpecial(int[] ids, int amount, CombatStrategy<Player> strategy) {
@@ -332,8 +332,8 @@ public enum CombatSpecial {
 	 * @param player the player to update the interface for.
 	 */
 	public static void assign(Player player) {
-		if (player.getWeapon().getSpecialBar() == -1) {
-			if (player.getCombatSpecial() != null) {
+		if(player.getWeapon().getSpecialBar() == -1) {
+			if(player.getCombatSpecial() != null) {
 				player.getCombatSpecial().disable(player);
 			}
 			player.setCombatSpecial(null);
@@ -341,8 +341,8 @@ public enum CombatSpecial {
 		}
 
 		Item item = player.getEquipment().get(Equipment.WEAPON_SLOT);
-		if (item == null) {
-			if (player.getCombatSpecial() != null) {
+		if(item == null) {
+			if(player.getCombatSpecial() != null) {
 				player.getCombatSpecial().disable(player);
 			}
 			player.setCombatSpecial(null);
@@ -350,8 +350,8 @@ public enum CombatSpecial {
 		}
 
 		Optional<CombatSpecial> special = Arrays.stream(CombatSpecial.values()).filter(c -> Arrays.stream(c.getIds()).anyMatch(id -> item.getId() == id)).findFirst();
-		if (special.isPresent()) {
-			if (player.getCombatSpecial() != null) {
+		if(special.isPresent()) {
+			if(player.getCombatSpecial() != null) {
 				player.getCombatSpecial().disable(player);
 			}
 
@@ -363,15 +363,14 @@ public enum CombatSpecial {
 		player.out(new SendInterfaceLayer(player.getWeapon().getSpecialBar(), true));
 		player.setCombatSpecial(null);
 
-		if (player.getCombatSpecial() != null) {
+		if(player.getCombatSpecial() != null) {
 			player.getCombatSpecial().disable(player);
 		}
 	}
 
-
 	public void enable(Player player) {
-		if (!player.isSpecialActivated()) {
-			if (player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
+		if(!player.isSpecialActivated()) {
+			if(player.getSpecialPercentage().intValue() < player.getCombatSpecial().getAmount()) {
 				player.out(new SendMessage("You do not have enough special energy left!"));
 				return;
 			}
@@ -382,7 +381,7 @@ public enum CombatSpecial {
 	}
 
 	public void disable(Player player) {
-		if (player.isSpecialActivated()) {
+		if(player.isSpecialActivated()) {
 			player.out(new SendConfig(301, 0));
 			player.setSpecialActivated(false);
 		}
