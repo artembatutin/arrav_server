@@ -57,7 +57,7 @@ public final class Hunter {
 			GLOBAL_TRAPS.get(player).getTraps().forEach(t -> {
 				t.setAbandoned(true);
 				t.getObject().publish();
-				t.getObject().getRegion().ifPresent(r -> r.register(new GroundItem(new Item(t.getType().getItemId()), t.getObject().getPosition().copy(), player)));
+				new GroundItem(new Item(t.getType().getItemId()), t.getObject().getPosition().copy(), player).create();
 			});
 			GLOBAL_TRAPS.get(player).getTraps().clear();
 		} else {
@@ -65,7 +65,7 @@ public final class Hunter {
 			trap.setAbandoned(true);
 			trap.getObject().remove();
 			player.message("You have abandoned your trap...");
-			trap.getObject().getRegion().ifPresent(r -> r.register(new GroundItem(new Item(trap.getType().getItemId()), trap.getObject().getPosition().copy(), player)));
+			new GroundItem(new Item(trap.getType().getItemId()), trap.getObject().getPosition().copy(), player).create();
 		}
 
 		if(GLOBAL_TRAPS.get(player).getTraps().isEmpty()) {

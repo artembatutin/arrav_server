@@ -284,7 +284,7 @@ public final class PlayerDeath extends ActorDeath<Player> {
 			}
 		}
 		Player viewer = killer.orElse(player);
-		Region reg = player.getRegion().orElse(null);
+		Region reg = player.getRegion();
 		if(drop.size() > 0) {
 			player.getEquipment().clear();
 			player.getInventory().clear();

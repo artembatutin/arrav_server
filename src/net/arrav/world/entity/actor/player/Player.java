@@ -100,6 +100,7 @@ import net.arrav.world.entity.item.container.impl.Equipment;
 import net.arrav.world.entity.item.container.impl.Inventory;
 import net.arrav.world.entity.item.container.session.ExchangeSessionManager;
 import net.arrav.world.entity.item.container.session.test._ExchangeSessionManager;
+import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Position;
 import net.arrav.world.locale.loc.Location;
 
@@ -889,10 +890,11 @@ public final class Player extends Actor {
 		dialogueChain.interrupt();
 		getMovementQueue().reset();
 		closeWidget();
-		getRegion().ifPresent(prev -> {
+		Region prev = getRegion();
+		if(prev != null) {
 			if(prev.getPosition() == getLastRegion())
 				setUpdateRegion(false);
-		});
+		}
 		if(getLastRegion() == null)
 			setLastRegion(getPosition().copy());
 		super.setPosition(destination.copy());

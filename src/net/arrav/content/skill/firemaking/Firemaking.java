@@ -96,7 +96,7 @@ public final class Firemaking extends DestructionSkillAction {
 	@Override
 	public boolean init() {
 		Position p = getPlayer().getPosition();
-		Region reg = getPlayer().getRegion().orElse(null);
+		Region reg = getPlayer().getRegion();
 		if(reg == null)
 			return false;
 		if(!familiar && reg.getObjects(p).hasInteractive() || !TraversalMap.isTraversable(p, Direction.WEST, getPlayer().size()) && !TraversalMap.isTraversable(p, Direction.EAST, getPlayer().size()) || Location.isAtHome(getPlayer())) {

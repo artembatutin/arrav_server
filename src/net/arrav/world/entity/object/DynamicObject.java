@@ -102,7 +102,7 @@ public class DynamicObject extends GameObject {
 	}
 	
 	@Override
-	public Optional<Region> getRegion() {
+	public Region getRegion() {
 		return World.getRegions().getRegion(position);
 	}
 	
@@ -120,7 +120,7 @@ public class DynamicObject extends GameObject {
 	
 	@Override
 	public StaticObject toStatic() {
-		return new StaticObject(getRegion().orElse(null), getId(), position.getLocalX(), position.getLocalY(), getZ(), getDirection(), getObjectType());
+		return new StaticObject(getRegion(), getId(), position.getLocalX(), position.getLocalY(), getZ(), getDirection(), getObjectType());
 	}
 	
 	@Override

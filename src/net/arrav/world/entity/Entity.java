@@ -149,7 +149,7 @@ public abstract class Entity {
 	 * Gets the region on which the entity is standing.
 	 * @return the region of this object.
 	 */
-	public Optional<Region> getRegion() {
+	public Region getRegion() {
 		return World.getRegions().getRegion(getPosition());
 	}
 	

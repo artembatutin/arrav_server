@@ -73,7 +73,8 @@ public final class RegionDecoder implements Runnable {
 		final int x = (hash >> 8 & 0xFF) * 64;
 		final int y = (hash & 0xFF) * 64;
 		final boolean isNew = def.isNew();
-		World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6)).ifPresent(r -> {
+		Region r = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6));
+		if(r != null) {
 			try {
 				ObjectList<Position> downHeights = new ObjectArrayList<>();
 				ByteBuffer terrainData = fs.getFile(FileSystem.MAP_INDEX, def.getTerrainFile());
@@ -96,7 +97,7 @@ public final class RegionDecoder implements Runnable {
 			} catch(Exception e) {
 				errors++;
 			}
-		});
+		}
 	}
 	
 	/**
@@ -182,10 +183,10 @@ public final class RegionDecoder implements Runnable {
 			position = position.move(0, 0, -1);
 		}
 		if((flags & RegionTile.FLAG_BLOCKED) != 0) {
-			TraversalMap.mark(region, position.getZ(), position.getX(), position.getY(), true, false);
+			TraversalMap.mark(position.getZ(), position.getX(), position.getY(), true, false);
 		}
 		if((flags & RegionTile.FLAG_BRIDGE) != 0) {
-			TraversalMap.markBridge(region, position.getZ(), position.getX(), position.getY() - 1);
+			TraversalMap.markBridge(position.getZ(), position.getX(), position.getY() - 1);
 		}
 	}
 	

@@ -42,7 +42,7 @@ final class FiremakingTask extends Task {
 	
 	@Override
 	public void execute() {
-		object.getRegion().ifPresent(r -> r.register(new GroundItemStatic(new Item(592), object.getPosition(), GroundItemPolicy.TIMEOUT)));
+		new GroundItemStatic(new Item(592), object.getPosition(), GroundItemPolicy.TIMEOUT).create();
 		object.remove();
 		this.cancel();
 	}

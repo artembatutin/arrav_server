@@ -28,7 +28,7 @@ public final class RegionManager {
 	 * @param pos The position.
 	 * @return The region in accordance with this {@code pos}.
 	 */
-	public Optional<Region> getRegion(Position pos) {
+	public Region getRegion(Position pos) {
 		return getRegion(pos.getRegion());
 	}
 	
@@ -37,12 +37,12 @@ public final class RegionManager {
 	 * @param regionId The region id.
 	 * @return The region in accordance with {@code coordinates}.
 	 */
-	public Optional<Region> getRegion(int regionId) {
+	public Region getRegion(int regionId) {
 		if(regionId < 0 || regionId >= regions.length || !exists(regionId))
-			return Optional.empty();
+			return null;
 		if(regions[regionId] == null)
 			regions[regionId] = new Region(regionId, this);
-		return Optional.of(regions[regionId]);
+		return regions[regionId];
 	}
 	
 	/**
@@ -107,8 +107,10 @@ public final class RegionManager {
 	 * @return The surrounding regions.
 	 */
 	public ObjectList<Region> getAllSurroundingRegions(int region) {
-		Optional<Region> r = getRegion(region);
-		return r.map(Region::getSurroundingRegions).orElse(null);
+		Region r = getRegion(region);
+		if(r != null)
+			return r.getSurroundingRegions();
+		return null;
 	}
 	
 	public Region[] getRegions() {

@@ -135,7 +135,7 @@ public final class Cooking extends ProducingSkillAction {
 	private boolean checkCooking() {
 		if(counter == 0)
 			return false;
-		Region reg = object.getRegion().orElse(null);
+		Region reg = object.getRegion();
 		if(reg == null)
 			return false;
 		if(!spell && object.getDefinition().getName().contains("fire") && !reg.getObject(object.getId(), object.getLocalPos()).isPresent()) {

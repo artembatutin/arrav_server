@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.arrav.action.impl.ObjectAction;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.update.UpdateFlag;
+import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.DynamicObject;
 import net.arrav.world.entity.object.GameObject;
@@ -38,12 +39,15 @@ public class BarChair extends DynamicObject {
 		}
 		final Position cp = getPosition();
 		if(table == null) {
-			getRegion().ifPresent(r -> r.interactAction(TABLE_ID, d -> {
-				Position p = d.getPosition();
-				if(cp.move(-1, 0).same(p) || cp.move(1, 0).same(p) || cp.move(0, 1).same(p) || cp.move(0, -1).same(p)) {
-					table = d;
-				}
-			}));
+			Region r = getRegion();
+			if(r != null) {
+				r.interactAction(TABLE_ID, d -> {
+					Position p = d.getPosition();
+					if(cp.move(-1, 0).same(p) || cp.move(1, 0).same(p) || cp.move(0, 1).same(p) || cp.move(0, -1).same(p)) {
+						table = d;
+					}
+				});
+			}
 		}
 		player.move(cp);
 		if(table != null) {

@@ -85,7 +85,7 @@ public final class GroundItemStatic extends GroundItem {
 		if(player.getInventory().add(super.getItem()) != -1) {
 			switch(policy) {
 				case TIMEOUT:
-					getRegion().ifPresent(r -> r.unregister(this));
+					remove();
 					break;
 				case RESPAWN:
 					dispose();

@@ -30,6 +30,6 @@ public final class ItemNodeLoader extends JsonLoader {
 		int amount = reader.get("amount").getAsInt();
 		Position position = Objects.requireNonNull(builder.fromJson(reader.get("position"), Position.class));
 		GroundItem item = new GroundItemStatic(new Item(id, amount), position, GroundItemPolicy.RESPAWN);
-		item.getRegion().ifPresent(r -> r.register(item));
+		item.create();
 	}
 }

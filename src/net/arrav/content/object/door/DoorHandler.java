@@ -3,6 +3,7 @@ package net.arrav.content.object.door;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.arrav.action.impl.ObjectAction;
 import net.arrav.world.entity.actor.player.Player;
+import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
 import net.arrav.world.entity.object.ObjectDefinition;
@@ -46,7 +47,8 @@ public class DoorHandler {
 				}
 				
 			} else {
-				object.getRegion().ifPresent(r -> {
+				Region r = object.getRegion();
+				if(r != null) {
 					Door door = new Door(object, r);
 					door.append(player);
 					doors.put(door.getCurrentOne(), door);
@@ -54,7 +56,7 @@ public class DoorHandler {
 					if(sec != null) {
 						doors.put(sec, door);
 					}
-				});
+				}
 			}
 			return true;
 		}

@@ -24,14 +24,20 @@ public class StaticObject extends GameObject {
 	
 	public StaticObject(Region region, int id, int x, int y, int height, ObjectDirection direction, ObjectType type) {
 		super(id, direction, type);
-		this.region = region;
 		this.packedCoordinates = (height & 0x3f) << 12 | (x & 0x3f) << 6 | (y & 0x3f);
+		if(region == null)
+			this.region = World.getRegions().getRegion(getRegionPos());
+		else
+			this.region = region;
 	}
 	
 	public StaticObject(Region region, int id, int packedCoordinates, ObjectDirection direction, ObjectType type) {
 		super(id, direction, type);
-		this.region = region;
 		this.packedCoordinates = packedCoordinates;
+		if(region == null)
+			this.region = World.getRegions().getRegion(getRegionPos());
+		else
+			this.region = region;
 	}
 	
 	@Override
@@ -85,17 +91,15 @@ public class StaticObject extends GameObject {
 	}
 	
 	@Override
-	public Optional<Region> getRegion() {
-		if(region == null)
-			return Optional.empty();
-		return Optional.of(region);
+	public Region getRegion() {
+		return region;
 	}
 	
 	@Override
 	public StaticObject setPosition(Position pos) {
 		//Removing from the region as it has been changed.
 		remove();
-		return new StaticObject(World.getRegions().getRegion(pos).orElse(null), getId(), pos.getX(), pos.getY(), pos.getZ(), getDirection(), getObjectType());
+		return new StaticObject(World.getRegions().getRegion(pos), getId(), pos.getX(), pos.getY(), pos.getZ(), getDirection(), getObjectType());
 	}
 	
 	@Override

@@ -22,6 +22,7 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
 import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.item.Item;
+import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Position;
 import net.arrav.world.entity.object.GameObject;
 
@@ -206,14 +207,15 @@ public final class PestControlMinigame extends SequencedMinigame {
 					pest.getCombat().attack(voidKnight);
 					continue;
 				}
-				pest.getRegion().ifPresent(r -> {
+				Region r = pest.getRegion();
+				if(r != null) {
 					for(Player p : r.getPlayers()) {
 						if(p.getPosition().withinDistance(pest.getPosition(), pest.ranged() ? 10 : 5)) {
 							pest.getCombat().attack(p);
 							break;
 						}
 					}
-				});
+				}
 			}
 		}
 		return true;

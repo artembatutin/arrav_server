@@ -21,6 +21,7 @@ import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.activity.ActivityManager;
 import net.arrav.world.entity.actor.update.UpdateFlag;
 import net.arrav.world.entity.actor.update.UpdateFlagHolder;
+import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Position;
 
 import java.util.Set;
@@ -204,8 +205,14 @@ public abstract class Actor extends Entity {
 	public void postUpdate() {
 		//Updating the region that the actor has entered.
 		if(regionChanged != null) {
-			World.getRegions().getRegion(regionChanged.getRegion()).ifPresent(r -> r.remove(this));
-			World.getRegions().getRegion(getPosition().getRegion()).ifPresent(r -> r.add(this));
+			Region prev = World.getRegions().getRegion(regionChanged.getRegion());
+			if(prev != null) {
+				prev.remove(this);
+			}
+			Region next = World.getRegions().getRegion(getPosition().getRegion());
+			if(next != null) {
+				next.add(this);
+			}
 			regionChanged = null;
 		}
 		primaryDirection = Direction.NONE;

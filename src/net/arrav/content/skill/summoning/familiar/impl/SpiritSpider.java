@@ -51,7 +51,7 @@ public final class SpiritSpider extends Familiar {
 			return;
 		}
 		GroundItemStatic eggs = new GroundItemStatic(new Item(223), t.getFamiliar().get().getPosition());
-		eggs.getRegion().ifPresent(r -> r.register(eggs));
+		eggs.create();
 	});
 	
 	@Override

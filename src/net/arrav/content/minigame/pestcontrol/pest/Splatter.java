@@ -8,6 +8,7 @@ import net.arrav.world.entity.actor.combat.hit.HitIcon;
 import net.arrav.world.entity.actor.combat.hit.Hitsplat;
 import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.mob.MobDeath;
+import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Position;
 
 public class Splatter extends Pest {
@@ -56,7 +57,8 @@ public class Splatter extends Pest {
 	public void appendDeath() {
 		setDead(true);
 		World.get().submit(new MobDeath(this));
-		getRegion().ifPresent(reg -> {
+		Region reg = getRegion();
+		if(reg != null) {
 			//hitting players.
 			reg.getPlayers().forEach(p -> {
 				if(p.getPosition().withinDistance(getPosition(), 1)) {
@@ -72,7 +74,7 @@ public class Splatter extends Pest {
 					}
 				}
 			});
-		});
+		}
 	}
 	
 }

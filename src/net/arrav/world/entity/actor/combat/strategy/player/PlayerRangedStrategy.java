@@ -151,7 +151,7 @@ public class PlayerRangedStrategy extends RangedStrategy<Player> {
 
 		if(attacker.rangedAmmo.isDroppable()) {
 			GroundItem groundItem = new GroundItem(new Item(next.getId(), attacker.rangedAmmo.getRemoval()), defender.getPosition(), attacker);
-			groundItem.getRegion().ifPresent(r -> r.register(groundItem, true));
+			groundItem.create(true);
 		}
 
 		if(next.getAmount() == 0) {

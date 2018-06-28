@@ -15,6 +15,7 @@ import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.item.Item;
+import net.arrav.world.entity.region.Region;
 
 /**
  * A {@link Task} handling the {@link Multicannon} shooting.
@@ -42,7 +43,8 @@ public class MulticannonTask extends Task {
 			cannon.player.message("Your cannon is now on the floor because you weren't close enough to repair it in time.");
 			cancel();
 			cannon.remove();
-			cannon.getRegion().ifPresent(r -> {
+			Region r = cannon.getRegion();
+			if(r != null) {
 				if(cannon.getElements() > 0) {
 					r.register(new GroundItem(new Item(2, cannon.getElements()), cannon.getPosition(), cannon.player));
 				}
@@ -50,7 +52,7 @@ public class MulticannonTask extends Task {
 				r.register(new GroundItem(new Item(8), cannon.getPosition(), cannon.player));
 				r.register(new GroundItem(new Item(10), cannon.getPosition(), cannon.player));
 				r.register(new GroundItem(new Item(12), cannon.getPosition(), cannon.player));
-			});
+			}
 		} else if(cannon.getElements() < 1) {
 			cannon.player.message("Your cannon has run out of ammo!");
 			cancel();

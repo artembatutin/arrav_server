@@ -546,15 +546,33 @@ public final class Region extends Entity {
 			return null;
 		if(surroundingRegions == null) {
 			ObjectList<Region> regions = new ObjectArrayList<>();
-			manager.getRegion(regionId).ifPresent(regions::add);
-			manager.getRegion(regionId + 256).ifPresent(regions::add);
-			manager.getRegion(regionId - 256).ifPresent(regions::add);
-			manager.getRegion(regionId + 1).ifPresent(regions::add);
-			manager.getRegion(regionId - 1).ifPresent(regions::add);
-			manager.getRegion(regionId + 257).ifPresent(regions::add);
-			manager.getRegion(regionId - 255).ifPresent(regions::add);
-			manager.getRegion(regionId + 255).ifPresent(regions::add);
-			manager.getRegion(regionId - 257).ifPresent(regions::add);
+			Region reg = manager.getRegion(regionId);
+			if(reg != null)
+				regions.add(reg);
+			reg = manager.getRegion(regionId + 256);
+			if(reg != null)
+				regions.add(reg);
+			reg = manager.getRegion(regionId - 256);
+			if(reg != null)
+				regions.add(reg);
+			reg = manager.getRegion(regionId + 1);
+			if(reg != null)
+				regions.add(reg);
+			reg = manager.getRegion(regionId - 1);
+			if(reg != null)
+				regions.add(reg);
+			reg = manager.getRegion(regionId + 257);
+			if(reg != null)
+				regions.add(reg);
+			reg = manager.getRegion(regionId - 255);
+			if(reg != null)
+				regions.add(reg);
+			reg = manager.getRegion(regionId + 255);
+			if(reg != null)
+				regions.add(reg);
+			reg = manager.getRegion(regionId - 257);
+			if(reg != null)
+				regions.add(reg);
 			surroundingRegions = regions;
 		}
 		return surroundingRegions;

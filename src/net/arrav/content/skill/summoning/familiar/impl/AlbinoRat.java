@@ -44,7 +44,7 @@ public final class AlbinoRat extends Familiar {
 			return;
 		}
 		GroundItemStatic cheese = new GroundItemStatic(new Item(1985), t.getFamiliar().get().getPosition());
-		cheese.getRegion().ifPresent(r -> r.register(cheese));
+		cheese.create();
 	});
 	
 	@Override

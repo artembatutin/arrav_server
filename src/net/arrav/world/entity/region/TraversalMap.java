@@ -84,7 +84,7 @@ public final class TraversalMap {
 		}
 		
 		if(reg == null)
-			reg = World.getRegions().getRegion(position).orElse(null);
+			reg = World.getRegions().getRegion(position);
 		
 		if(reg != null) {
 			if(add && list) {
@@ -366,7 +366,7 @@ public final class TraversalMap {
 		int localX = x & 0x3F;
 		int localY = y & 0x3F;
 		
-		Region region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6)).orElse(null);
+		Region region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6));
 		if(region == null)
 			return;
 		
@@ -430,7 +430,7 @@ public final class TraversalMap {
 	 * @param flag The flag to put on this tile.
 	 */
 	public static void set(int height, int x, int y, int flag) {
-		Region region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6)).orElse(null);
+		Region region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6));
 		if(region == null)
 			return;
 		region.getTile(height, x & 0x3F, y & 0x3F).set(flag);
@@ -444,7 +444,7 @@ public final class TraversalMap {
 	 * @param flag The flag to unset from the specified position.
 	 */
 	private static void unset(int height, int x, int y, int flag) {
-		Region region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6)).orElse(null);
+		Region region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6));
 		if(region == null)
 			return;
 		region.getTile(height, x & 0x3F, y & 0x3F).unset(flag);
@@ -464,7 +464,7 @@ public final class TraversalMap {
 		int localX = x & 0x3F;
 		int localY = y & 0x3F;
 		
-		Region region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6)).orElse(null);
+		Region region = World.getRegions().getRegion(((x >> 6) << 8) + (y >> 6));
 		if(region == null) {
 			return false;
 		}

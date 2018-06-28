@@ -59,7 +59,8 @@ public abstract class GameObject {
 	}
 	
 	public void visible(boolean on) {
-		getRegion().ifPresent(r -> {
+		Region r = getRegion();
+		if(r != null) {
 			ObjectList<Region> surrounding = r.getSurroundingRegions();
 			if(surrounding != null) {
 				for(Region s : surrounding) {
@@ -77,7 +78,7 @@ public abstract class GameObject {
 					}
 				}
 			}
-		});
+		}
 	}
 	
 	/**
@@ -186,7 +187,7 @@ public abstract class GameObject {
 	 * Gets the region of this object.
 	 * @return region of this object.
 	 */
-	public abstract Optional<Region> getRegion();
+	public abstract Region getRegion();
 	
 	/**
 	 * Setting a new position for this object.
@@ -210,22 +211,24 @@ public abstract class GameObject {
 	 * @return <code>true</code> if it is, <code>false</code> otherwise.
 	 */
 	public boolean isReg() {
-		Region region = getRegion().orElse(null);
+		Region region = getRegion();
 		return region != null && region.getObject(getId(), getLocalPos()).isPresent();
 	}
 	
 	public synchronized void publish() {
-		getRegion().ifPresent(r -> {
+		Region r = getRegion();
+		if(r != null) {
 			r.addObj(this);
 			clip(r);
-		});
+		}
 	}
 	
 	public synchronized void remove() {
-		getRegion().ifPresent(r -> {
+		Region r = getRegion();
+		if(r != null) {
 			r.removeObj(this);
 			unclip(r);
-		});
+		}
 	}
 	
 	/**
@@ -266,7 +269,7 @@ public abstract class GameObject {
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
 	public boolean delete() {
-		Region region = getRegion().orElse(null);
+		Region region = getRegion();
 		return region != null && region.getRemovedObjects().add(this);
 	}
 	
@@ -275,7 +278,7 @@ public abstract class GameObject {
 	 * @return {@code true} if it was added successfully, otherwise {@code false}.
 	 */
 	public boolean restore() {
-		Region region = getRegion().orElse(null);
+		Region region = getRegion();
 		return region != null && region.getRemovedObjects().remove(this);
 	}
 	
@@ -310,6 +313,7 @@ public abstract class GameObject {
 	public ObjectDefinition getDefinition() {
 		return ObjectDefinition.DEFINITIONS[id];
 	}
+	
 	
 	@Override
 	public String toString() {

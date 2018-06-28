@@ -155,7 +155,7 @@ public abstract class FamiliarContainer extends FamiliarAbility {
 	final void dropAll(Position position) {
 		container.forEach(item -> {
 			GroundItemStatic ground = new GroundItemStatic(item, position);
-			ground.getRegion().ifPresent(r -> r.register(ground));
+			ground.create();
 		});
 		container.clear();
 	}

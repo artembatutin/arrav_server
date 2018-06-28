@@ -9,6 +9,7 @@ import net.arrav.world.entity.actor.combat.hit.Hit;
 import net.arrav.world.entity.actor.combat.hit.HitIcon;
 import net.arrav.world.entity.actor.combat.hit.Hitsplat;
 import net.arrav.world.entity.actor.mob.Mob;
+import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Position;
 
 public class Spinner extends Pest {
@@ -39,14 +40,15 @@ public class Spinner extends Pest {
 			World.get().submit(new Task(1, false) {
 				@Override
 				protected void execute() {
-					getRegion().ifPresent(reg -> {
+					Region reg = getRegion();
+					if(reg != null) {
 						reg.getPlayers().forEach(p -> {
 							if(p.getPosition().withinDistance(getPosition(), 2)) {
 								p.poison(PoisonType.DEFAULT_NPC);
 								p.damage(new Hit(50, Hitsplat.POISON, HitIcon.NONE));
 							}
 						});
-					});
+					}
 					cancel();
 				}
 			});

@@ -93,7 +93,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 				});
 			}
 		}
-		Region reg = World.getRegions().getRegion(position).orElse(null);
+		Region reg = World.getRegions().getRegion(position);
 		if(reg == null)
 			return;
 		Optional<GameObject> o = reg.getObject(objectId, position.toLocalPacked());
@@ -176,7 +176,7 @@ public final class ObjectActionPacket implements IncomingPacket {
 		Position position = new Position(objectX, objectY, player.getPosition().getZ());
 		if(spell < 0 || objectId < 0 || objectX < 0 || objectY < 0)
 			return;
-		Region reg = World.getRegions().getRegion(position).orElse(null);
+		Region reg = World.getRegions().getRegion(position);
 		if(reg == null)
 			return;
 		Optional<GameObject> o = reg.getObject(objectId, position.toLocalPacked());

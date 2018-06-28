@@ -230,7 +230,10 @@ public final class World extends AbstractScheduledService {
 				if(actor == null) {
 					break;
 				}
-				actor.getRegion().ifPresent(r -> r.add(actor));
+				Region reg = actor.getRegion();
+				if(reg != null) {
+					reg.add(actor);
+				}
 			}
 		}
 	}
@@ -253,7 +256,10 @@ public final class World extends AbstractScheduledService {
 				if(actor == null) {
 					break;
 				}
-				actor.getRegion().ifPresent(r -> r.remove(actor));
+				Region reg = actor.getRegion();
+				if(reg != null) {
+					reg.remove(actor);
+				}
 			}
 		}
 	}

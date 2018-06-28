@@ -10,6 +10,7 @@ import net.arrav.world.entity.actor.mob.Mob;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.item.GroundItem;
 import net.arrav.world.entity.item.Item;
+import net.arrav.world.entity.region.Region;
 import net.arrav.world.locale.Position;
 
 import java.util.HashMap;
@@ -48,14 +49,15 @@ public final class DropManager {
 			pos = new Position(2346, 3700);
 		}
 		final Position p = pos;
-		victim.getRegion().ifPresent(r -> {
+		Region r = victim.getRegion();
+		if(r != null) {
 			List<Item> dropItems = table.toItems(killer, victim);
 			for(Item drop : dropItems) {
 				if(drop == null)
 					continue;
 				r.register(new GroundItem(drop, p, killer));
 			}
-		});
+		}
 	}
 	
 	public static Int2ObjectOpenHashMap<DropTable> getTables() {

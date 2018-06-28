@@ -68,9 +68,10 @@ public enum BirdNest {
 		BirdNest randomNest = RandomUtils.random(VALUES.asList());
 
 		if(RandomUtils.inclusive(100) <= randomNest.rarity + (modifier ? 10 : 0)) {
-			player.message("A bird's nest falls out of the tree.");
 			GroundItem nest = new GroundItem(new Item(randomNest.nest), player.getPosition(), player);
-			nest.getRegion().ifPresent(r -> r.register(nest));
+			if(nest.create()) {
+				player.message("A bird's nest falls out of the tree.");
+			}
 		}
 	}
 

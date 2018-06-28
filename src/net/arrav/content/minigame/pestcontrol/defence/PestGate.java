@@ -32,7 +32,7 @@ public class PestGate {
 	private Position[] positions;
 
 	public PestGate(GameObject clicked) {
-		door = new Door(clicked, clicked.getRegion().get());
+		door = new Door(clicked, clicked.getRegion());
 		positions = new Position[]{door.getCurrentOne(), door.getCurrentSecond()};
 	}
 

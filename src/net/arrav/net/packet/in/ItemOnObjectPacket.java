@@ -51,7 +51,7 @@ public final class ItemOnObjectPacket implements IncomingPacket {
 		if(item.getId() != itemId) {
 			return;
 		}
-		Region reg = World.getRegions().getRegion(position).orElse(null);
+		Region reg = World.getRegions().getRegion(position);
 		if(reg == null)
 			return;
 		Optional<GameObject> o = reg.getObject(objectId, position.toLocalPacked());

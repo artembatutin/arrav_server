@@ -9,6 +9,7 @@ import net.arrav.world.World;
 import net.arrav.world.entity.EntityState;
 import net.arrav.world.entity.actor.player.Player;
 import net.arrav.world.entity.actor.player.assets.Rights;
+import net.arrav.world.entity.region.Region;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -192,16 +193,21 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 			e.printStackTrace();
 		}
 		try {
-			if(actor.isPlayer())//thread safe
-				actor.getRegion().ifPresent(r -> r.add(actor));
-			else
+			if(actor.isPlayer()) {//thread safe
+				Region r = actor.getRegion();
+				if(r != null) {
+					r.add(actor);
+				}
+			} else {
 				World.get().add(actor);
+			}
 			//Activating npc if region active.
 			if(actor.isMob()) {
-				actor.getRegion().ifPresent(r -> {
+				Region r = actor.getRegion();
+				if(r != null) {
 					if(r.getState() == EntityState.ACTIVE)
 						actor.toMob().setActive(true);
-				});
+				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

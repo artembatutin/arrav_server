@@ -46,7 +46,8 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 			}
 			
 			int added = 0;
-			player.getRegion().ifPresent(r -> {
+			Region r = player.getRegion();
+			if(r != null) {
 				processPlayers(r, player, blockMsg, buf, added);
 				ObjectList<Region> surrounding = r.getSurroundingRegions();
 				if(surrounding != null) {
@@ -54,7 +55,7 @@ public final class SendPlayerUpdate implements OutgoingPacket {
 						processPlayers(s, player, blockMsg, buf, added);
 					}
 				}
-			});
+			}
 			
 			if(blockMsg.writerIndex() > 0) {
 				buf.putBits(11, 2047);

@@ -56,7 +56,10 @@ public enum Obelisk {
 			ObjectAction a = new ObjectAction() {
 				@Override
 				public boolean click(Player player, GameObject object, int click) {
-					player.getRegion().ifPresent(r -> World.get().submit(new ObeliskTask(ob, r)));
+					Region reg = player.getRegion();
+					if(reg != null) {
+						World.get().submit(new ObeliskTask(ob, reg));
+					}
 					return true;
 				}
 			};

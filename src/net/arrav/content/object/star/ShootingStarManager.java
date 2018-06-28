@@ -6,6 +6,7 @@ import net.arrav.util.rand.RandomUtils;
 import net.arrav.world.World;
 import net.arrav.world.entity.EntityState;
 import net.arrav.world.entity.actor.player.Player;
+import net.arrav.world.entity.region.Region;
 
 import java.util.concurrent.TimeUnit;
 
@@ -53,7 +54,8 @@ public final class ShootingStarManager {
 	 */
 	public void spawn() {
 		star = generateStar();
-		if(!star.getRegion().isPresent()) {
+		Region reg = star.getRegion();
+		if(reg == null) {
 			star = null;
 		} else {
 			star.publish();

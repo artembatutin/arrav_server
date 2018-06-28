@@ -72,7 +72,7 @@ public final class DropItemPacket implements IncomingPacket {
 		player.getInventory().policy = ItemContainer.StackPolicy.NEVER;
 		int removed = player.getInventory().remove(new Item(id, amount), slot);
 		if(removed == 1) {//if removed 1 slot.
-			player.getRegion().ifPresent(r -> r.register(new GroundItem(new Item(id, amount), player.getPosition(), player)));
+			new GroundItem(new Item(id, amount), player.getPosition(), player).create();
 		} else {
 			player.getInventory().updateSingle(null, null, slot, true);
 		}

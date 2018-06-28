@@ -174,8 +174,39 @@ public class GroundItem extends Entity {
 	 * Gets the region on which the item is standing.
 	 * @return the region of this item.
 	 */
-	public Optional<Region> getRegion() {
+	public Region getRegion() {
 		return World.getRegions().getRegion(getPosition());
+	}
+	
+	/**
+	 * Creates the {@link GroundItem} on the regional map.
+	 * @return if successfully created.
+	 */
+	public boolean create() {
+		return create(false);
+	}
+	
+	/**
+	 * Creates the {@link GroundItem} on the regional map.
+	 * @param stack if stacking ground items.
+	 * @return if successfully created.
+	 */
+	public boolean create(boolean stack) {
+		Region reg = getRegion();
+		if(reg == null)
+			return false;
+		return reg.register(this, stack);
+	}
+	
+	/**
+	 * Removes from the {@link GroundItem} on the regional map.
+	 * @return if successfully removed.
+	 */
+	public boolean remove() {
+		Region reg = getRegion();
+		if(reg == null)
+			return false;
+		return reg.unregister(this);
 	}
 	
 }

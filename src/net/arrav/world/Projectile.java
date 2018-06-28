@@ -131,9 +131,8 @@ public final class Projectile {
 	 * container.
 	 */
 	public Projectile sendProjectile() {
-		int regionId = start.getRegion();
-		RegionManager m = World.getRegions();
-		m.getRegion(regionId).ifPresent(r -> {
+		Region r = World.getRegions().getRegion(start.getRegion());
+		if(r != null) {
 			r.getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
 			ObjectList<Region> surrounding = r.getSurroundingRegions();
 			if(surrounding != null) {
@@ -141,7 +140,7 @@ public final class Projectile {
 					s.getPlayers().forEach(p -> p.out(new SendProjectile(start, offset, speed, projectileId, startHeight, endHeight, lockon, delay)));
 				}
 			}
-		});
+		}
 		return this;
 	}
 	
