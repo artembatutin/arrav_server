@@ -14,6 +14,7 @@ import net.arrav.content.commands.impl.UpdateCommand;
 import net.arrav.net.codec.login.LoginCode;
 import net.arrav.net.host.HostListType;
 import net.arrav.net.host.HostManager;
+import net.arrav.world.World;
 
 /**
  * A {@link ChannelInboundHandlerAdapter} implementation that handles upstream messages from Netty.
@@ -36,6 +37,10 @@ public final class ArravChannelHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) {
 		String address = Session.address(ctx);
+		if(World.get().getPlayers().remaining() < 1) {
+			Session.write(ctx, LoginCode.WORLD_FULL);
+			return;
+		}
 		if(UpdateCommand.inProgess == 2) {
 			Session.write(ctx, LoginCode.SERVER_BEING_UPDATED);
 			return;

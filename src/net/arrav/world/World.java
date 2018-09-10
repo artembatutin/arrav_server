@@ -9,6 +9,7 @@ import net.arrav.content.commands.impl.UpdateCommand;
 import net.arrav.net.Session;
 import net.arrav.net.database.Database;
 import net.arrav.net.database.pool.ConnectionPool;
+import net.arrav.net.packet.out.SendLogout;
 import net.arrav.net.packet.out.SendYell;
 import net.arrav.task.Task;
 import net.arrav.task.TaskManager;
@@ -87,7 +88,7 @@ public final class World extends AbstractScheduledService {
 	/**
 	 * The collection of active players.
 	 */
-	private final ActorList<Player> players = new ActorList<>(2048);
+	private final ActorList<Player> players = new ActorList<>(900);
 	
 	/**
 	 * A collection of {@link Player}s registered by their username hashes.
@@ -199,7 +200,10 @@ public final class World extends AbstractScheduledService {
 				if(player == null) {
 					break;
 				}
-				System.out.println(player.credentials.username);
+				if(players.remaining() < 1) {
+					player.getSession().getChannel().close();
+					continue;
+				}
 				if(playerByNames.containsKey(player.credentials.usernameHash)) {
 					player.getSession().getChannel().close();
 				} else if(players.add(player)) {
@@ -272,6 +276,7 @@ public final class World extends AbstractScheduledService {
 		if(player.getCombat().inCombat())
 			player.getLogoutTimer().reset();
 		player.setState(AWAITING_REMOVAL);
+		player.out(new SendLogout());
 		logouts.add(player);
 	}
 	

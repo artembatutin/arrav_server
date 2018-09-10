@@ -596,7 +596,6 @@ public enum Prayer {
 				de.deselectQuickPrayer(player);
 			}
 		}
-		System.out.println(prayer.get());
 		player.getSelectedQuickPrayers().add(prayer.get());
 		player.out(new SendConfig(prayer.get().getCheckmark(), 1));
 		return true;

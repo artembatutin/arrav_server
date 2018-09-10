@@ -51,7 +51,6 @@ public class BarChair extends DynamicObject {
 		}
 		player.move(cp);
 		if(table != null) {
-			System.out.println(table.getPosition());
 			player.facePosition(table.getPosition());
 		}
 		this.sitter = player;

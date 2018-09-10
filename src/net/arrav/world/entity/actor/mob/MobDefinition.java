@@ -500,7 +500,6 @@ public final class MobDefinition {
 					}
 				}
 			}
-			System.out.println(def.getId() + " - " + def.getName() + (" - melee: " + def.getCombat().attackMelee) + (" - range: " + def.getCombat().attackRanged) + (" - magic: " + def.getCombat().attackMagic));
 		}
 	}
 	

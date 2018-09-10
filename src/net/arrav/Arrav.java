@@ -47,6 +47,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static io.netty.util.ResourceLeakDetector.Level.DISABLED;
+import static io.netty.util.ResourceLeakDetector.Level.PARANOID;
 
 /**
  * The main class that will register and bind the server effectively.
@@ -170,7 +171,7 @@ public final class Arrav {
 		} else {
 			loopGroup = new NioEventLoopGroup();
 		}
-		ResourceLeakDetector.setLevel(DEBUG ? DISABLED : DISABLED);
+		ResourceLeakDetector.setLevel(DEBUG ? PARANOID : DISABLED);
 		bootstrap.group(loopGroup);
 		bootstrap.channel(NioServerSocketChannel.class);
 		bootstrap.childHandler(new ArravChannelInitializer());

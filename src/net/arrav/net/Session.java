@@ -195,6 +195,7 @@ public class Session {
 	 * Unregisters this session.
 	 */
 	void unregister() {
+		terminate();//in case player didn't logged out.
 		if(stream != null) {
 			if(stream.refCnt() != 0)
 				stream.release();
@@ -202,7 +203,6 @@ public class Session {
 		if(player != null) {
 			LOGGER.info("Unregistered session for " + player.getFormatUsername());
 		}
-		terminate();//in case player didn't logged out.
 		player = null;
 		if(incoming != null) {
 			incoming.clear();
@@ -265,9 +265,9 @@ public class Session {
 	 * Writes the given {@link OutgoingPacket} to the stream.
 	 */
 	public void write(OutgoingPacket packet) {
-		//if(channel.isActive() && channel.isRegistered()) {
-		packet.write(player, stream);
-		//}
+		if(channel.isActive() && channel.isRegistered()) {
+			packet.write(player, stream);
+		}
 	}
 	
 	/**
@@ -416,7 +416,8 @@ public class Session {
 		// Validate the username and password, change login code if needed
 		// for invalid credentials or the world being full.
 		boolean invalidCredentials = !username.matches("^[a-zA-Z0-9_ ]{1,12}$") || password.isEmpty() || password.length() > 20;
-		code = invalidCredentials ? LoginCode.INVALID_CREDENTIALS : World.get().getPlayers().remaining() == 0 ? LoginCode.WORLD_FULL : code;
+		System.out.println("REMAINING SPACES: " + World.get().getPlayers().remaining());
+		code = invalidCredentials ? LoginCode.INVALID_CREDENTIALS : World.get().getPlayers().remaining() < 1 ? LoginCode.WORLD_FULL : code;
 		
 		// Validating player login possibility.
 		if(code == LoginCode.NORMAL && World.get().getPlayer(usernameHash).isPresent()) {
@@ -475,11 +476,12 @@ public class Session {
 	 * @throws Exception If any exceptions occur while decoding this portion of the protocol.
 	 */
 	private void decodeLoginBlock(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-		if(in.readableBytes() >= 1) {
+		if(rsaBlockSize == 0 && in.readableBytes() >= 1) {
 			//RSA size
 			rsaBlockSize = in.readUnsignedByte();
 			if(rsaBlockSize == 0) {
 				write(ctx, LoginCode.COULD_NOT_COMPLETE_LOGIN);
+				return;
 			}
 		}
 		if(in.readableBytes() >= rsaBlockSize) {

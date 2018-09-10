@@ -327,7 +327,7 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 	 * @return The amount of free spaces remaining in this list.
 	 */
 	public int remaining() {
-		return capacity() - size();
+		return capacity() - size() - 1;
 	}
 	
 	/**

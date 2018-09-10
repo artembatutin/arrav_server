@@ -683,14 +683,14 @@ public final class Player extends Actor {
 							p.animation(2108);
 							break;
 						case 1:
-							p.forceChat("very hotz");
+							p.forceChat("sis");
 							break;
 						case 2:
 							p.getMovementQueue().smartWalk(getPosition().move(xx, yy));
 							break;
 						case 3:
 							p.graphic(60);
-							p.forceChat("rock falllingz");
+							p.forceChat("bro");
 							break;
 					}
 				}
