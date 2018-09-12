@@ -19,6 +19,11 @@ public final class NetworkConstants {
 	public static final int PORT_ONLINE = 43594;
 	
 	/**
+	 * Number of skippable cycles without any incoming data.
+	 */
+	static final int SESSION_TIMEOUT_CYCLE_COUNT = 60;
+	
+	/**
 	 * The input timeout value that determines how long a session can go without
 	 * reading data from the client in {@code SECONDS}.
 	 */

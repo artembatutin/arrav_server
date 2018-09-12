@@ -7,6 +7,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
+import net.arrav.Arrav;
 import net.arrav.GameConstants;
 import net.arrav.net.codec.crypto.IsaacRandom;
 import net.arrav.net.codec.game.GamePacketType;
@@ -17,6 +18,7 @@ import net.arrav.net.codec.login.LoginState;
 import net.arrav.net.host.HostListType;
 import net.arrav.net.host.HostManager;
 import net.arrav.net.packet.OutgoingPacket;
+import net.arrav.util.TextUtils;
 import net.arrav.world.World;
 import net.arrav.world.entity.EntityState;
 import net.arrav.world.entity.actor.player.Player;
@@ -29,6 +31,7 @@ import java.security.SecureRandom;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 /**
@@ -131,6 +134,10 @@ public class Session {
 	
 	/* Game packet decoding. */
 	/**
+	 * The number of skipped responded cycles.
+	 */
+	private AtomicInteger skippedCycles = new AtomicInteger();
+	/**
 	 * The state of the message currently being decoded.
 	 */
 	private GameState gameState = GameState.OPCODE;
@@ -149,7 +156,11 @@ public class Session {
 	/**
 	 * The main game stream buffer to encode all outgoing packets.
 	 */
-	private ByteBuf stream;
+	private ByteBuf outBuf;
+	/**
+	 * The main game stream buffer to decode all incoming data.
+	 */
+	private ByteBuf inBuf;
 	
 	/**
 	 * Creates a new {@link Session}.
@@ -158,6 +169,7 @@ public class Session {
 	Session(Channel channel) {
 		this.channel = channel;
 		this.hostAddress = channel == null ? "" : ((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress();
+		inBuf = channel.alloc().buffer(256);
 	}
 	
 	/**
@@ -167,14 +179,18 @@ public class Session {
 	 */
 	void handleMessage(ChannelHandlerContext ctx, Object msg) throws Exception {
 		ByteBuf in = (ByteBuf) msg;
+		inBuf.writeBytes(in);
 		try {
 			if(isGame) {
-				game(in);
+				game();
 			} else {
-				login(ctx, in);
+				login(ctx);
 			}
 		} finally {
 			in.release();
+			if(inBuf.readableBytes() < 1) {
+				inBuf.clear();
+			}
 		}
 	}
 	
@@ -196,18 +212,25 @@ public class Session {
 	 */
 	void unregister() {
 		terminate();//in case player didn't logged out.
-		if(stream != null) {
-			if(stream.refCnt() != 0)
-				stream.release();
+		if(outBuf != null) {
+			if(outBuf.refCnt() != 0)
+				outBuf.release(outBuf.refCnt());
+		}
+		if(inBuf != null) {
+			if(inBuf.refCnt() != 0)
+				inBuf.release(inBuf.refCnt());
+		}
+		if(incoming != null) {
+			for(ByteBuf b : incoming) {
+				b.release();
+			}
+			incoming.clear();
+			outgoing.clear();
 		}
 		if(player != null) {
 			LOGGER.info("Unregistered session for " + player.getFormatUsername());
 		}
 		player = null;
-		if(incoming != null) {
-			incoming.clear();
-			outgoing.clear();
-		}
 	}
 	
 	/**
@@ -266,7 +289,12 @@ public class Session {
 	 */
 	public void write(OutgoingPacket packet) {
 		if(channel.isActive() && channel.isRegistered()) {
-			packet.write(player, stream);
+			packet.write(player, outBuf);
+		}
+		if (!Arrav.DEBUG && skippedCycles.incrementAndGet() > NetworkConstants.SESSION_TIMEOUT_CYCLE_COUNT) {
+			if (player != null && player.getState() == EntityState.ACTIVE) {
+				World.get().getPlayers().remove(player);
+			}
 		}
 	}
 	
@@ -281,36 +309,35 @@ public class Session {
 		Channel channel = getChannel();
 		if(channel.isActive()) {
 			channel.eventLoop().execute(() -> {
-				channel.writeAndFlush(stream.retain(), channel.voidPromise());
-				stream.clear();
+				channel.writeAndFlush(outBuf.retain(), channel.voidPromise());
+				outBuf.clear();
 			});
 		}
 	}
 	
-	private void game(ByteBuf in) {
+	private void game() {
 		switch(gameState) {
 			case OPCODE:
-				opcode(in);
+				opcode();
 				break;
 			case SIZE:
-				size(in);
+				size();
 				break;
 			case PAYLOAD:
-				payload(in);
+				payload();
 				break;
 		}
 	}
 	
 	/**
 	 * Decodes the opcode of the {@link ByteBuf}.
-	 * @param in The data being decoded.
 	 */
-	private void opcode(ByteBuf in) {
-		if(in.isReadable()) {
-			opcode = in.readUnsignedByte();
+	private void opcode() {
+		if(inBuf.isReadable()) {
+			opcode = inBuf.readUnsignedByte();
 			opcode = (opcode - decryptor.nextInt()) & 0xFF;
 			size = NetworkConstants.MESSAGE_SIZES[opcode];
-			
+			skippedCycles.set(0);
 			if(size == -1) {
 				type = GamePacketType.VARIABLE_BYTE;
 			} else if(size == -2) {
@@ -321,57 +348,55 @@ public class Session {
 			
 			if(opcode == 0) {
 				//reset timeout.
-				opcode(in);
+				opcode();
 				return;
 			}
 			
 			if(size == 0) {
 				if(NetworkConstants.MESSAGES[opcode] != null)
 					queueMessage(Unpooled.EMPTY_BUFFER);
-				opcode(in);
+				opcode();
 				return;
 			}
 			
 			gameState = size == -1 || size == -2 ? GameState.SIZE : GameState.PAYLOAD;
 			if(gameState == GameState.SIZE) {
-				size(in);
+				size();
 			} else {
-				payload(in);
+				payload();
 			}
 		}
 	}
 	
 	/**
 	 * Decodes the size of the {@link ByteBuf}.
-	 * @param in The data being decoded.
 	 */
-	private void size(ByteBuf in) {
+	private void size() {
 		int bytes = size == -1 ? Byte.BYTES : Short.BYTES;
-		if(in.isReadable(bytes)) {
+		if(inBuf.isReadable(bytes)) {
 			size = 0;
 			for(int i = 0; i < bytes; i++) {
-				size |= in.readUnsignedByte() << 8 * (bytes - 1 - i);
+				size |= inBuf.readUnsignedByte() << 8 * (bytes - 1 - i);
 			}
 			gameState = GameState.PAYLOAD;
-			payload(in);
+			payload();
 		}
 	}
 	
 	/**
 	 * Decodes the payload of the {@link ByteBuf}.
-	 * @param in The data being decoded.
 	 */
-	private void payload(ByteBuf in) {
-		if(in.isReadable(size)) {
+	private void payload() {
+		if(inBuf.isReadable(size)) {
 			if(NetworkConstants.MESSAGES[opcode] == null) {
-				in.skipBytes(size);//skip bytes.
+				inBuf.skipBytes(size);//skip bytes.
 				LOGGER.info("Skipped unhandled packet " + opcode + " - " + size);
 				resetMessage();
-				opcode(in);
+				opcode();
 			} else {
-				ByteBuf newBuffer = in.readBytes(size);
+				ByteBuf newBuffer = inBuf.readBytes(size);
 				queueMessage(newBuffer);
-				opcode(in);
+				opcode();
 			}
 		}
 	}
@@ -438,26 +463,30 @@ public class Session {
 		World.get().queueLogin(player);
 	}
 	
-	private void login(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+	/**
+	 * Decodes a login message;
+	 * @param ctx channel context.
+	 * @throws Exception ex.
+	 */
+	private void login(ChannelHandlerContext ctx) throws Exception {
 		switch(loginState) {
 			case HANDSHAKE:
-				decodeHandshake(ctx, in);
+				decodeHandshake(ctx);
 				loginState = LoginState.LOGIN_BLOCK;
 				break;
 			case LOGIN_BLOCK:
-				decodeLoginBlock(ctx, in);
+				decodeLoginBlock(ctx);
 		}
 	}
 	
 	/**
 	 * Decodes the handshake portion of the login protocol.
 	 * @param ctx The channel handler context.
-	 * @param in The data that is being decoded.
 	 * @throws Exception If any exceptions occur while decoding this portion of the protocol.
 	 */
-	private void decodeHandshake(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-		if(in.readableBytes() >= 1) {
-			int build = in.get();
+	private void decodeHandshake(ChannelHandlerContext ctx) throws Exception {
+		if(inBuf.readableBytes() >= 1) {
+			int build = inBuf.get();
 			if(build != GameConstants.CLIENT_BUILD) {
 				write(ctx, LoginCode.WRONG_BUILD_NUMBER);
 				return;
@@ -472,26 +501,25 @@ public class Session {
 	/**
 	 * Decodes the portion of the login protocol to sucessfully login.
 	 * @param ctx The channel handler context.
-	 * @param in The data that is being decoded.
 	 * @throws Exception If any exceptions occur while decoding this portion of the protocol.
 	 */
-	private void decodeLoginBlock(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-		if(rsaBlockSize == 0 && in.readableBytes() >= 1) {
+	private void decodeLoginBlock(ChannelHandlerContext ctx) throws Exception {
+		if(rsaBlockSize == 0 && inBuf.readableBytes() >= 1) {
 			//RSA size
-			rsaBlockSize = in.readUnsignedByte();
+			rsaBlockSize = inBuf.readUnsignedByte();
 			if(rsaBlockSize == 0) {
 				write(ctx, LoginCode.COULD_NOT_COMPLETE_LOGIN);
 				return;
 			}
 		}
-		if(in.readableBytes() >= rsaBlockSize) {
-			int expectedSize = in.readUnsignedByte();
+		if(inBuf.readableBytes() >= rsaBlockSize) {
+			int expectedSize = inBuf.readUnsignedByte();
 			if(expectedSize != rsaBlockSize - 1) {
 				write(ctx, LoginCode.COULD_NOT_COMPLETE_LOGIN);
 				return;
 			}
 			byte[] rsaBytes = new byte[rsaBlockSize - 1];
-			in.readBytes(rsaBytes);
+			inBuf.readBytes(rsaBytes);
 			byte[] rsaData = new BigInteger(rsaBytes).toByteArray();
 			ByteBuf rsaBuffer = Unpooled.wrappedBuffer(rsaData);
 			try {
@@ -512,7 +540,8 @@ public class Session {
 				}
 				username = rsaBuffer.getCString().toLowerCase().replaceAll("_", " ").toLowerCase().trim();
 				password = rsaBuffer.getCString().toLowerCase();
-				if(World.get().getPlayer(username).isPresent()) {
+				usernameHash = TextUtils.nameToHash(username);
+				if(World.get().getPlayer(usernameHash).isPresent()) {
 					write(ctx, LoginCode.ACCOUNT_ONLINE);
 					return;
 				}
@@ -551,8 +580,8 @@ public class Session {
 	 * Prepares the session for the game process.
 	 */
 	public void initGame() {
-		stream = alloc().buffer(BUFFER_SIZE);
-		stream.outgoing(encryptor);
+		outBuf = alloc().buffer(BUFFER_SIZE);
+		outBuf.outgoing(encryptor);
 		outgoing = new ConcurrentLinkedQueue<>();
 		incoming = new ConcurrentLinkedQueue<>();
 		isGame = true;

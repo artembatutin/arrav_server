@@ -145,6 +145,7 @@ public final class Arrav {
 				}
 			});
 			time = System.currentTimeMillis() - time;
+			System.gc();//cleaning up startup.
 			LOGGER.info("Arrav is now online (" + time + ").");
 			STARTING = false;
 		} catch(Exception e) {

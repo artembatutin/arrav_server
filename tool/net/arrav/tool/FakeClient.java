@@ -57,10 +57,10 @@ public final class FakeClient {
 							rsa.writeInt(random.nextInt());
 							rsa.writeInt(random.nextInt());
 
-							//rsa.writeInt(0); // uid
+							rsa.writeInt(0); // uid
 
 							//buffer.writeLong(encryptName("Bot" + count.get()));
-							rsa.putCString("Bot" + count.get());
+							rsa.putCString("Bot" + count.incrementAndGet());
 							rsa.putCString("123456");
 
 							byte[] rsaBytes = new byte[rsa.readableBytes()];
@@ -78,7 +78,6 @@ public final class FakeClient {
 
 							ctx.writeAndFlush(out, ctx.voidPromise());
 							loggedIn = true;
-							count.incrementAndGet();
 						} else {
 							int pktId = in.readUnsignedByte();
 							System.out.println("received pkt id: " + pktId);
@@ -87,8 +86,7 @@ public final class FakeClient {
 				});
 			}
 		});
-
-		for (int i = 0; i < 6000; i++) {
+		for (int i = 0; i < 4000; i++) {
 			// Start the client.
 			System.out.println("connecting bot " + i);
 			Channel f = b.connect("127.0.0.1", 43594).sync().channel(); //(5)

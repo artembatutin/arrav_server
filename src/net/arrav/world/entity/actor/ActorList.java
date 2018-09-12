@@ -222,11 +222,11 @@ public class ActorList<E extends Actor> implements Iterable<E> {
 	 */
 	public boolean remove(E actor) {
 		if(actor.getState() != EntityState.ACTIVE && actor.getState() != EntityState.AWAITING_REMOVAL) {
-			System.out.println("Couldn't remove: " + actor.toString() + " because not active.");
+			//System.out.println("Couldn't remove: " + actor.toString() + " because not active.");
 			return true;
 		}
 		if(actor.getSlot() == -1) {
-			System.out.println("Couldn't remove: " + actor.toString() + " because of slot.");
+			//System.out.println("Couldn't remove: " + actor.toString() + " because of slot.");
 			return true;
 		}
 		int index = actor.getSlot();

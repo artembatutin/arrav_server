@@ -88,7 +88,7 @@ public final class World extends AbstractScheduledService {
 	/**
 	 * The collection of active players.
 	 */
-	private final ActorList<Player> players = new ActorList<>(900);
+	private final ActorList<Player> players = new ActorList<>(2048);
 	
 	/**
 	 * A collection of {@link Player}s registered by their username hashes.
